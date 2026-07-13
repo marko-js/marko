@@ -21,14 +21,14 @@ const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => _text($scope["#text/0"], $scope._.count));
 const $if_content__setup = $if_content__count;
 const $if = /*@__PURE__*/ _if("#text/4", "<p class=detail>detail <!></p>", "Db%l", $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/10", ($scope) => $if($scope, $scope.show ? 0 : 1));
-const $count = /*@__PURE__*/ _let("count/11", ($scope) => {
+const $show = /*@__PURE__*/ _let_persisted("show/10", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $count = /*@__PURE__*/ _let_persisted("count/11", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$if_content__count($scope);
 	$for_content__count($scope);
 });
 const $for = /*@__PURE__*/ _for_of("#ul/5", "<li><!>:<!></li>", "D%c%l", $for_content__setup, $for_content__$params);
-const $list = /*@__PURE__*/ _let("list/12", ($scope) => $for($scope, [$scope.list, function(item) {
+const $list = /*@__PURE__*/ _let_persisted("list/12", ($scope) => $for($scope, [$scope.list, function(item) {
 	return item;
 }]));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => {
@@ -50,5 +50,5 @@ function $setup($scope) {
 }
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

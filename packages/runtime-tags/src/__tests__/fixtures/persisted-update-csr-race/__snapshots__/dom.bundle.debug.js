@@ -32,7 +32,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => {
+const $count = /*@__PURE__*/ _let_persisted("count/8", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$count__closure($scope);
 });
@@ -51,6 +51,6 @@ const $input = ($scope, input) => {
 	$input_note($scope, input.note);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($try_content__input_note);
-const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);
-enableBranches();
+const $input_note = /*@__PURE__*/ _const_persisted("input_note", $input_note__closure);
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

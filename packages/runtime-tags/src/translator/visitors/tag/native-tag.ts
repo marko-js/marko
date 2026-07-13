@@ -847,7 +847,10 @@ export default {
               callRuntime(
                 hasChangeHandler
                   ? staticControllable.helper
-                  : `${staticControllable.helper}_default`,
+                  : isPersisted() &&
+                      staticControllable.helper === "_attr_input_value"
+                    ? "_attr_input_value_default_persisted"
+                    : `${staticControllable.helper}_default`,
                 scopeIdentifier,
                 visitAccessor,
                 ...values,

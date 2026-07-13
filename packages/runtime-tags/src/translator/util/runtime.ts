@@ -16,7 +16,8 @@ import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 
-export type DOMRuntimeHelpers = keyof typeof import("../../dom");
+export type DOMRuntimeHelpers =
+  keyof typeof import("../../dom") | keyof typeof import("../../dom-persisted");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 
 // Marked `@__PURE__` (see callRuntime) so a bundler may drop a call whose
@@ -50,7 +51,10 @@ const pureDOMFunctions = new Set<string>([
   "_hoist",
   "_let",
   "_let_change",
+  "_let_change_persisted",
+  "_let_persisted",
   "_const",
+  "_const_persisted",
   "_load_signal",
   "_load_setup",
   "_load_template",
@@ -59,6 +63,20 @@ const pureDOMFunctions = new Set<string>([
   "_load_idle_trigger",
   "_load_media_trigger",
   "_load_race_trigger",
+] satisfies DOMRuntimeHelpers[]);
+
+const updateDOMFunctions = new Set<string>([
+  "_load_ready",
+  "_update_branch",
+  "_update_content",
+  "_update_dynamic",
+  "_update_for",
+  "_update_html",
+  "_update_load",
+  "_update_pair",
+  "_update_scope",
+  "_update_seed",
+  "_update_signal",
 ] satisfies DOMRuntimeHelpers[]);
 
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
@@ -70,7 +88,13 @@ export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
     );
   }
   const { output } = getMarkoOpts();
-  return importNamed(getFile(), getRuntimePath(output), name);
+  return importNamed(
+    getFile(),
+    output === "dom" && updateDOMFunctions.has(name)
+      ? getPersistedRuntimePath()
+      : getRuntimePath(output),
+    name,
+  );
 }
 
 export function callRuntime(
@@ -105,6 +129,11 @@ export function getRuntimePath(output: string) {
   return `${runtimeInfo.name}/${
     optimize ? "" : "debug/"
   }${output === "html" ? "html" : "dom"}`;
+}
+
+export function getPersistedRuntimePath() {
+  const { optimize } = getMarkoOpts();
+  return `${runtimeInfo.name}/${optimize ? "" : "debug/"}dom-persisted`;
 }
 
 function filterArguments<A>(args: (A | Falsy)[]) {

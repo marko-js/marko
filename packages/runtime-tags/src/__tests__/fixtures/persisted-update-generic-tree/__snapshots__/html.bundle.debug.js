@@ -23,7 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		tone: input.tone
 	});
 	_html(`<h2>${_escape(_hole_value($scope0_id, "UpdateHole:#text/1", input.heading, _persisted_reason()))}${_el_resume($scope0_id, "#text/1", $sg__input_heading)}</h2><p${_attr_class(_hole_value($scope0_id, "UpdateAttr:class:#p/2", ["meta", input.flagged && "flagged"], _persisted_reason()))}>${_escape(_hole_value($scope0_id, "UpdateHole:#text/3", input.meta, _persisted_reason()))}${_el_resume($scope0_id, "#text/3", _serialize_guard($scope0_reason, 5))}</p>${_el_resume($scope0_id, "#p/2", _serialize_guard($scope0_reason, 4))}</section>`);
-	(_serialize_guard($scope0_reason, 1) || _persisted_reason()) && writeScope($scope0_id, { "#childScope/0": ($sg__input_heading__OR__input_tone || _persisted_reason()) && _existing_scope($childScope) }, "__tests__/tags/card.marko", 0);
+	_serialize_guard($scope0_reason, 1) | _persisted_reason() && writeScope($scope0_id, { "#childScope/0": $sg__input_heading__OR__input_tone | _persisted_reason() && _existing_scope($childScope) }, "__tests__/tags/card.marko", 0);
 });
 
 // tags/counter.marko
@@ -45,7 +45,7 @@ var widget_default = _template("__tests__/tags/widget.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	counter_default({});
 	_html("</div>");
-	($sg__input_label || _persisted_reason()) && writeScope($scope0_id, { "#childScope/1": _persisted_reason() && _existing_scope($childScope) }, "__tests__/tags/widget.marko", 0);
+	$sg__input_label | _persisted_reason() && writeScope($scope0_id, { "#childScope/1": _persisted_reason() && _existing_scope($childScope) }, "__tests__/tags/widget.marko", 0);
 });
 
 // template.marko
@@ -76,8 +76,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count: _state_reason() && count,
-		"#childScope/2": ($sg__input_heading__OR__input_tone__OR__input_meta__OR__input_flagged || _persisted_reason()) && _existing_scope($childScope),
-		"#childScope/3": ($sg__input_widget || _persisted_reason()) && _existing_scope($childScope2)
+		"#childScope/2": $sg__input_heading__OR__input_tone__OR__input_meta__OR__input_flagged | _persisted_reason() && _existing_scope($childScope),
+		"#childScope/3": $sg__input_widget | _persisted_reason() && _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

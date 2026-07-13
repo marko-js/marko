@@ -116,9 +116,7 @@ UPDATE: .toggle::text "expand" => "collapse"
 ```
 UPDATE: h1::text "Trailhead 40L Pack" => "Summit 65L Pack"
 INSERT: section > ul
-REMOVE: section > ul + p
-INSERT: section > ul > li
-INSERT: section > ul > li:nth-of-type(1) + li
+REMOVE: section > p
 ```
 
 # Update
@@ -184,9 +182,7 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 UPDATE: h1::text "Summit 65L Pack" => "Trailhead 40L Pack"
 INSERT: section > p
-REMOVE: section > p + ul
-UPDATE: section > p::text@12 "" => "Trailhead 40L Pack"
-UPDATE: section > p::text@32 "" => "A dependable pack for long hauls."
+REMOVE: section > ul
 ```
 
 # Update

@@ -3,17 +3,17 @@ const $PanelB_content__setup = ($scope) => _text($scope.a, getLabel?.($scope.$.t
 const $PanelB_content = _content_resume("a5", "<section class=b>B: <!></section>", "Db%l", $PanelB_content__setup);
 const $PanelA_content__setup = ($scope) => _text($scope.a, getLabel?.($scope.$.topic));
 const $PanelA_content = _content_resume("a3", "<span class=a>A: <!></span>", "Db%l", $PanelA_content__setup);
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a2");
 const $for_update = _update_for(2, "a1", (branch, args) => $for_content__update(args[0], branch));
 const $for_content__update = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa", 0);
+	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

@@ -13,7 +13,7 @@ const clickCount = (container: Element) =>
 // parent `ready` state it flips never updates -- `.status` stays "waiting"
 // after the fragment resolves instead of "ready".
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   skip_csr: true,
   equivalent: false,
   steps: [
@@ -22,7 +22,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "reports",
         range: "day",

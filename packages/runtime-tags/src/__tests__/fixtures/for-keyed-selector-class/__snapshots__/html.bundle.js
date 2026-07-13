@@ -21,11 +21,11 @@ var template_default = _template("a", (input) => {
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
 		_html(`<tr${selected === row.id ? " class=danger" : ""}><td><button class=select>${_escape(row.label)}${_el_resume($scope1_id, "c")}</button>${_el_resume($scope1_id, "b")}</td></tr>${_el_resume($scope1_id, "a")}`);
-		_script($scope1_id, "a1");
+		_script($scope1_id, "a0");
 		writeScope($scope1_id, { f: row?.id });
 	}, "id", $scope0_id, "a", 1, 1, 1, "</tbody>", 1);
 	_html(`</table><button class=remove>remove selected</button>${_el_resume($scope0_id, "b")}<button class=rotate>rotate</button>${_el_resume($scope0_id, "c")}<button class=clear>clear</button>${_el_resume($scope0_id, "d")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		e: selected,
 		f: rows

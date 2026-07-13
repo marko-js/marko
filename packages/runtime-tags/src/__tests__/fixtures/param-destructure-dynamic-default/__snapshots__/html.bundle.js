@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
-	const ChildA = { content: _content("a1", ({ id, foo, foo: $foo }) => {
+	const ChildA = { content: _content("a0", ({ id, foo, foo: $foo }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__foo = _serialize_guard($scope1_reason, 1);
 		const { bar: $bar } = void 0 !== $foo ? $foo : { bar: 2 };
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		id: "b"
 	});
 	ChildA.content({ id: "c" });
-	const ChildB = { content: _content("a2", (input) => {
+	const ChildB = { content: _content("a1", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $sg__foo2 = _serialize_guard($scope2_reason, 1);
 		const { foo, foo: $foo2 } = input;
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 	});
 	ChildB.content({ id: "f" });
 	_html(`<button>Increment default</button>${_el_resume($scope0_id, "g")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		h: count,
 		i: $count__closures

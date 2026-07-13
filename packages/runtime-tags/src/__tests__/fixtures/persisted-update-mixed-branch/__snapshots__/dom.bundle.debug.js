@@ -33,7 +33,7 @@ const $else_content__setup = ($scope) => {
 	$else_content__setup__script($scope);
 };
 const $else_content__count = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/2"], $scope._.count));
-const $count = /*@__PURE__*/ _let("count/5", $else_content__count);
+const $count = /*@__PURE__*/ _let_persisted("count/5", $else_content__count);
 function $setup($scope) {
 	$count($scope, 0);
 }
@@ -45,6 +45,6 @@ const $input = ($scope, input) => {
 	$input_err($scope, input.err);
 	$input_title($scope, input.title);
 };
-const $input_title = /*@__PURE__*/ _const("input_title", $else_content__input_title);
-enableBranches();
+const $input_title = /*@__PURE__*/ _const_persisted("input_title", $else_content__input_title);
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

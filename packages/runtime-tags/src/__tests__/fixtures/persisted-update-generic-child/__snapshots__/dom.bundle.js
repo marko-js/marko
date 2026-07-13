@@ -1,22 +1,22 @@
 // tags/badge.marko
-enableBranches();
+enableBranchesPersisted();
 
 // tags/panel.marko
-enableBranches();
+enableBranchesPersisted();
 
 // tags/toggle.marko
-const $on = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "on" : "off"));
+const $on = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "on" : "off"));
 const $setup__script$1 = _script_update("d0", ($scope) => _on($scope.a, "click", function() {
 	$on($scope, !$scope.g);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
-const $count = /*@__PURE__*/ _let(14, ($scope) => _text($scope.b, $scope.o));
+const $count = /*@__PURE__*/ _let_persisted(14, ($scope) => _text($scope.b, $scope.o));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.o + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/toggle.marko.update.mjs
 const $on_seed = _update_signal("d1");

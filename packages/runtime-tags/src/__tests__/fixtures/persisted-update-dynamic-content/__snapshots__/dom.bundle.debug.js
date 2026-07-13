@@ -1,10 +1,9 @@
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("__tests__/tags/layout.marko_0_open/var");
-const $dynamic_update = _update_signal("__tests__/tags/layout.marko_0/update_dynamic_#text/2");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
-	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", $dynamic_update);
+	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
 var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
 
@@ -33,7 +32,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template$1 = "<aside><button class=toggle> </button></aside><section><!></section>";
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let_persisted("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -44,7 +43,7 @@ function $setup$1($scope) {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-enableBranches();
+enableBranchesPersisted();
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
@@ -83,10 +82,10 @@ const $Overview_content__input_summary = /*@__PURE__*/ _closure_get("input_summa
 	}
 });
 const $Overview_content = _content_resume("__tests__/template.marko_1_content", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
-const $count = /*@__PURE__*/ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
 const $input_view__OR__Overview__OR__Specs = /*@__PURE__*/ _or(13, ($scope) => $input_content($scope["#childScope/3"], $scope.input_view === "specs" ? $scope.Specs : $scope.Overview), 2);
-const $Overview = /*@__PURE__*/ _const("Overview", $input_view__OR__Overview__OR__Specs);
-const $Specs = /*@__PURE__*/ _const("Specs", $input_view__OR__Overview__OR__Specs);
+const $Overview = /*@__PURE__*/ _const_persisted("Overview", $input_view__OR__Overview__OR__Specs);
+const $Specs = /*@__PURE__*/ _const_persisted("Specs", $input_view__OR__Overview__OR__Specs);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -98,11 +97,11 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input_title__closure = /*@__PURE__*/ _closure($Overview_content__input_title);
-const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
+const $input_title = /*@__PURE__*/ _const_persisted("input_title", ($scope) => {
 	_text($scope["#text/0"], $scope.input_title);
 	$input_title__closure($scope);
 });
-const $input_view = /*@__PURE__*/ _const("input_view", $input_view__OR__Overview__OR__Specs);
+const $input_view = /*@__PURE__*/ _const_persisted("input_view", $input_view__OR__Overview__OR__Specs);
 const $input = ($scope, input) => {
 	$input_title($scope, input.title);
 	$input_summary($scope, input.summary);
@@ -110,8 +109,8 @@ const $input = ($scope, input) => {
 	$input_view($scope, input.view);
 };
 const $input_summary__closure = /*@__PURE__*/ _closure($Overview_content__input_summary);
-const $input_summary = /*@__PURE__*/ _const("input_summary", $input_summary__closure);
+const $input_summary = /*@__PURE__*/ _const_persisted("input_summary", $input_summary__closure);
 const $input_specs__closure = /*@__PURE__*/ _closure($Specs_content__input_specs);
-const $input_specs = /*@__PURE__*/ _const("input_specs", $input_specs__closure);
-enableBranches();
+const $input_specs = /*@__PURE__*/ _const_persisted("input_specs", $input_specs__closure);
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

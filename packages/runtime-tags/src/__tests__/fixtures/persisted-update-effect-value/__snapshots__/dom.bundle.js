@@ -1,12 +1,12 @@
 // template.marko
-const $label = /*@__PURE__*/ _const(3, _script_update("a0", ($scope) => {
+const $label = /*@__PURE__*/ _const_persisted(3, _script_update("a0", ($scope) => {
 	{
 		const el = document.querySelector("div.target");
 		el.dataset.label = $scope.d;
 		el.textContent = `effect saw ${$scope.d}`;
 	}
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $label_update = _update_signal("a1");

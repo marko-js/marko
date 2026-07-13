@@ -1,23 +1,23 @@
 // tags/layout.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("c2");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac", 0);
+	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 var layout_marko_update_default = _resume("c3", $update$1);
 
@@ -48,7 +48,7 @@ var gadget_marko_update_default = _resume("b2", $update);
 // tags/gadget.marko
 const $template = "<div class=gadget><span class=gadget__label> </span><button class=gadget__tap>taps <!></button></div>";
 const $walks = "E l Db%m";
-const $taps = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $taps = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script = _script_update("b0", ($scope) => _on($scope.b, "click", function() {
 	$taps($scope, $scope.g + 1);
 }));
@@ -58,7 +58,7 @@ function $setup($scope) {
 }
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-enableBranches();
+enableBranchesPersisted();
 var gadget_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 
 // tags/v:gadget.marko.setup.js

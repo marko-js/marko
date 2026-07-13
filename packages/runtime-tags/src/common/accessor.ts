@@ -47,17 +47,6 @@ export enum AccessorPrefix {
   // `_have`/`_try` in dom/update.ts and html/writer.ts). Deliberately not
   // an enum member for the same client-bundle-size reason as "Z".
   // Persisted resume only.
-  // "U" is reserved for a `<try>` boundary's `<@placeholder by=>` identity
-  // (`BOUNDARY_BY_PREFIX`): stashed on the PARENT scope as
-  // `<siteId> <identity>` whenever a persisted render evaluates a `by=`
-  // (documents, fragments, and update fills alike -- `_update_branch`
-  // copies the patch value onto the live scope so the NEXT navigation's
-  // echo compares against the latest identity). `_have` echoes it into
-  // the same "!"-keyed flat map as the pending half, value `"=" +
-  // identity` (pending's sentinel `"1"` wins when both exist); a
-  // navigation whose newly-evaluated identity differs recedes the matched
-  // boundary to its placeholder (see designs/persisted-pages-recede.md).
-  // Deliberately not an enum member, same rule as "Z"/"T". Persisted only.
 }
 
 export enum AccessorProp {

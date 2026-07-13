@@ -59,7 +59,7 @@ container.querySelector("button.count").click();
 UPDATE: .count::text@8 "0" => "1"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"dashboard","user":"ada"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"dashboard","user":"ada"}}`
 ```html
 <section
   class="frame"
@@ -171,7 +171,7 @@ UPDATE: .bump::text@6 "0" => "1"
 UPDATE: .greeting::text@6 "ada" => "grace"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"home","user":"grace"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"home","user":"grace"}}`
 ```html
 <section
   class="frame"

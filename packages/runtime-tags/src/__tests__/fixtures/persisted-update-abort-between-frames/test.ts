@@ -21,12 +21,11 @@ const clickCount = (container: Element) =>
 // applier or possession state: fragment + boundary body apply normally.
 const topics = {
   persisted: true,
-  persistedSeed: true,
   persistedFragment: true,
 };
 
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   // The compute is server-only by design, so a plain client render of this
   // template is impossible.
   skip_csr: true,

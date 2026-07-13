@@ -23,7 +23,7 @@ const clickCount = (container: Element) =>
 // renders nested hops inline into the enclosing capture instead, so the
 // dashboard's fragment carries the widget's markup directly.
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   // The label compute is server-only by design, so a plain client render of
   // the swapped-in widget is impossible.
   skip_csr: true,

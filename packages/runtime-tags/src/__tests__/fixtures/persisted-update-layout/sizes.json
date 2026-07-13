@@ -3,26 +3,26 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 304,
-        "brotli": 188
+        "brotli": 186
       },
       "files": {
-        "tags/layout/layout.marko": 285,
-        "template.marko": 395
+        "tags/layout/layout.marko": 304,
+        "template.marko": 414
       }
     },
     "update.js": {
       "total": {
-        "min": 6459,
-        "brotli": 2724
+        "min": 6545,
+        "brotli": 2721
       },
       "files": {
-        "tags/layout/layout.marko.update.mjs": 416,
+        "tags/layout/layout.marko.update.mjs": 353,
         "template.marko.update.mjs": 483
       }
     }
   },
   "html": {
-    "min": 559,
-    "brotli": 340
+    "min": 643,
+    "brotli": 393
   }
 }

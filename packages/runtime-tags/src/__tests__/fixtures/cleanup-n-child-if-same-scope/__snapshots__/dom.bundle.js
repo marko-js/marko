@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__setup__script = _script("a1", ($scope) => {
+const $if_content__setup__script = _script("a0", ($scope) => {
 	$scope._.b.innerHTML += "\nmounted";
 	$signal($scope, 0).onabort = () => {
 		$scope._.b.innerHTML += "\ndestroyed";
@@ -11,6 +11,6 @@ const $if_content__setup = ($scope) => {
 };
 const $if = /*@__PURE__*/ _if(2, "<div>a</div><span>b</span><p>c</p>", "d", $if_content__setup);
 const $show = /*@__PURE__*/ _let(3, ($scope) => $if($scope, $scope.d ? 0 : 1));
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.d);
 }));

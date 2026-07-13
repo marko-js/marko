@@ -28,7 +28,7 @@ const tapGadget = (container: Element) =>
 // shared fragment scopes (patch IS live) -- values are baked, so there is
 // no patch to merge. Root client state survives throughout.
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   skip_csr: true,
   equivalent: false,
   steps: [
@@ -39,7 +39,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "detail",
         title: "Widget One",
@@ -56,7 +55,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "home",
         title: "",
@@ -70,7 +68,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "detail",
         title: "Widget Two",

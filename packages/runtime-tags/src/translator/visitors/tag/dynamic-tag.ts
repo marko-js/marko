@@ -24,13 +24,7 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import {
-  isOptimize,
-  isOutputHTML,
-  isPersisted,
-  isPersistedEntryBuild,
-  isPersistedFragments,
-} from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { recordRegisterIdFootprint } from "../../util/preallocate-register-ids";
 import {
@@ -459,14 +453,10 @@ export default {
         // scope ids drift between the document and update renders (matched
         // scopes elide), but this compile constant is identical in both, so the
         // client can echo what it holds at a site and the server match it.
-        // Fragment-first builds only: a plain `persisted: true` build keeps its
-        // registered renderers and replays same-route swaps fine-grained
-        // through `_update_dynamic`, so compiling no site id there keeps a miss
-        // from forcing a fragment down a path whose replay machinery was never
-        // removed (see agent-feedback/bugs.md on the fragment/replay
-        // shared-tag-variable disagreement). The html runtime stashes it on the
-        // hop scope so the client reads it back (`_dynamic_tag`/`_have`).
-        const siteId = isPersistedFragments()
+        // The html runtime stashes the site id on the hop scope so the client
+        // can echo the renderer it already holds. Renderer changes are then
+        // delivered as resumable fragments.
+        const siteId = isPersisted()
           ? t.stringLiteral(
               getUpdateDynamicRegisterId(
                 tagSection,
@@ -553,29 +543,13 @@ export default {
         // Update renders link the rendered branch explicitly (see the html
         // runtime's `_dynamic_tag`); the merge dispatches the content's
         // registered update merge by the serialized renderer id. The signal
-        // registers so the merge can replay it when the patch's renderer id
-        // differs from the live one (a cross-route navigation's divergence
-        // point) -- the runtime's own branch swap, fed the registered renderer.
+        // merge validates and descends when the renderer still matches; a
+        // mismatch is accompanied by a resumable fragment.
         if (isPersisted() && serializeReason) {
           const accessor = getScopeAccessorLiteral(nodeBinding);
-          const signalId = getUpdateDynamicRegisterId(
-            tagSection,
-            accessor.value,
-          );
-          // Fragment-first builds never replay: divergence arrives as a
-          // fragment frame, so the signal registration (and the registered
-          // renderer construction it would resolve) is dead weight -- the
-          // update merge compiles without a replay argument and a
-          // fragment-less mismatch fails the apply into the router's
-          // full-navigation fallback.
-          if (isPersistedEntryBuild() && !isPersistedFragments()) {
-            signal.register = true;
-            signal.registerId = signalId;
-          }
           addUpdateMerge(tagSection, {
             kind: "dynamic",
             accessor,
-            signalId,
           });
         }
         let tagVarSignal: Signal | undefined;

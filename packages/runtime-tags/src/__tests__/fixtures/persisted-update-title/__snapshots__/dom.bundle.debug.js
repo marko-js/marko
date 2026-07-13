@@ -10,7 +10,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 // template.marko
 const $template = "<button> </button><title></title><p> </p><output></output>";
 const $walks = " D l bD lb";
-const $count = /*@__PURE__*/ _let("count/4", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/4", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -20,5 +20,5 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

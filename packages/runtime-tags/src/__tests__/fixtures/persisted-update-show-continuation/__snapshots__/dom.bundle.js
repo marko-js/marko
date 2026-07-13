@@ -1,9 +1,9 @@
 // template.marko
-const $n = /*@__PURE__*/ _let(13, ($scope) => _text($scope.c, $scope.n));
+const $n = /*@__PURE__*/ _let_persisted(13, ($scope) => _text($scope.c, $scope.n));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, $scope.n + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $n_seed = _update_signal("a1");

@@ -23,7 +23,7 @@ var card_default = _template("c", (input) => {
 		tone: input.tone
 	});
 	_html(`<h2>${_escape(_hole_value($scope0_id, "Qb", input.heading, _persisted_reason()))}${_el_resume($scope0_id, "b", $sg__input_heading)}</h2><p${_attr_class(_hole_value($scope0_id, "Nclass:c", ["meta", input.flagged && "flagged"], _persisted_reason()))}>${_escape(_hole_value($scope0_id, "Qd", input.meta, _persisted_reason()))}${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 5))}</p>${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 4))}</section>`);
-	(_serialize_guard($scope0_reason, 1) || _persisted_reason()) && writeScope($scope0_id, { a: ($sg__input_heading__OR__input_tone || _persisted_reason()) && _existing_scope($childScope) });
+	_serialize_guard($scope0_reason, 1) | _persisted_reason() && writeScope($scope0_id, { a: $sg__input_heading__OR__input_tone | _persisted_reason() && _existing_scope($childScope) });
 });
 
 // tags/counter.marko
@@ -45,7 +45,7 @@ var widget_default = _template("e", (input) => {
 	const $childScope = _peek_scope_id();
 	counter_default({});
 	_html("</div>");
-	($sg__input_label || _persisted_reason()) && writeScope($scope0_id, { b: _persisted_reason() && _existing_scope($childScope) });
+	$sg__input_label | _persisted_reason() && writeScope($scope0_id, { b: _persisted_reason() && _existing_scope($childScope) });
 });
 
 // template.marko
@@ -76,8 +76,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		l: _state_reason() && count,
-		c: ($sg__input_heading__OR__input_tone__OR__input_meta__OR__input_flagged || _persisted_reason()) && _existing_scope($childScope),
-		d: ($sg__input_widget || _persisted_reason()) && _existing_scope($childScope2)
+		c: $sg__input_heading__OR__input_tone__OR__input_meta__OR__input_flagged | _persisted_reason() && _existing_scope($childScope),
+		d: $sg__input_widget | _persisted_reason() && _existing_scope($childScope2)
 	});
 	_resume_branch($scope0_id);
 }, 1);

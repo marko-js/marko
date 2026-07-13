@@ -1,25 +1,25 @@
 // tags/widget.marko
-const $clicks = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $clicks = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script$2 = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
 	$clicks($scope, $scope.g + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/layout.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
 _enable_catch();
 const $placeholder_content = _content_resume("a8", "<p class=loading>crunching numbers…</p>", "b");
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/widget.marko.update.mjs
 const $clicks_seed = _update_signal("c1");
@@ -35,7 +35,7 @@ const $open_seed = _update_signal("b2");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac", 0);
+	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 var layout_marko_update_default = _resume("b3", $update$1);
 

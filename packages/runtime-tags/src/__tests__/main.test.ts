@@ -61,12 +61,11 @@ export type TestConfig = {
   /**
    * Compiles the fixture with the `persisted` compiler option (single-page
    * server-first updates). Pair with `$global.persisted` in the fixture
-   * input to exercise persisted-mode serialization. `"fragments"` compiles
-   * fragment-first (the @marko/run router's contract): persisted entries
-   * ship no fills-path construction material for never-rendered content --
-   * pair navigations with `$global.persistedFragment`.
+   * input to exercise persisted-mode serialization. Persisted entries ship no
+   * fills-path construction material for never-rendered content; pair
+   * divergent navigations with `$global.persistedFragment`.
    */
-  persisted?: boolean | "fragments";
+  persisted?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -375,8 +374,8 @@ function testFixtures(interop?: true) {
                     // `have?.()` call is unconditional -- see its
                     // `runtime/persisted.ts`) and sends the header whenever it's
                     // non-empty, so this harness matches that regardless of
-                    // build mode: fragment-first builds need it for dynamic-tag
-                    // hop swaps (dropped fills-path construction graph -- a
+                    // build mode: persisted builds need it for dynamic-tag hop
+                    // swaps (dropped fills-path construction graph -- a
                     // renderer mismatch ships a fragment instead of failing the
                     // apply), and every persisted build now also needs it for a
                     // client-pending `<try>` boundary (see the "!"-prefixed half
@@ -390,12 +389,8 @@ function testFixtures(interop?: true) {
                       if (have) {
                         // The full echo is sent for every persisted build,
                         // exactly like the run router: the server side is
-                        // responsible for ignoring what doesn't apply to its
-                        // build mode (dynamic-tag hop entries only force
-                        // fragments under `persisted: "fragments"` -- see the
-                        // `state.fragments` gate on `possessionMiss` in
-                        // html/dynamic-tag.ts; "!"-prefixed pending-boundary
-                        // entries apply to every mode).
+                        // responsible for applying dynamic-tag possession and
+                        // pending-boundary entries to the current render.
                         const decoded = JSON.parse(have);
                         if (Object.keys(decoded).length) {
                           persistedMode.possessed = decoded;

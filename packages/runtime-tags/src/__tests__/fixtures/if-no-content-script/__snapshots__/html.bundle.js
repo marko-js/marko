@@ -7,12 +7,12 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_script($scope1_id, "a1");
+			_script($scope1_id, "a0");
 			writeScope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "d");
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, { e: count });
 	_resume_branch($scope0_id);
 }, 1);

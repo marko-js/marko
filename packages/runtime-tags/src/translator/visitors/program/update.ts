@@ -7,9 +7,12 @@ import {
   getAccessorPrefix,
   getAccessorProp,
 } from "../../util/get-accessor-char";
-import { isPersistedFragments } from "../../util/marko-config";
 import { getScopeAccessorLiteral } from "../../util/references";
-import { callRuntime, getRuntimePath, importRuntime } from "../../util/runtime";
+import {
+  callRuntime,
+  getPersistedRuntimePath,
+  importRuntime,
+} from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSectionForBody,
@@ -181,7 +184,7 @@ export default {
             ),
             t.exportSpecifier(t.identifier("_have"), t.identifier("have")),
           ],
-          t.stringLiteral(getRuntimePath("dom")),
+          t.stringLiteral(getPersistedRuntimePath()),
         ),
       );
 
@@ -535,23 +538,9 @@ function buildMerge(
         getAccessorPrefix().ConditionalRenderer + merge.accessor.value;
       const branchScopesKey =
         getAccessorPrefix().BranchScopes + merge.accessor.value;
-      // Fragment-first builds compile no replay path: divergence arrives as a
-      // fragment frame, and a fragment-less renderer mismatch fails the apply
-      // loudly (see `_update_dynamic`) instead of constructing from a
-      // registered renderer the build does not ship.
-      let replayExpression: t.Expression = t.numericLiteral(0);
-      if (!isPersistedFragments()) {
-        const signalIdentifier = generateUidIdentifier("dynamic_update");
-        hoistedDeclarations.push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              signalIdentifier,
-              callRuntime("_update_signal", t.stringLiteral(merge.signalId)),
-            ),
-          ]),
-        );
-        replayExpression = signalIdentifier;
-      }
+      // Divergence arrives as a fragment frame. A renderer mismatch without
+      // its fragment fails loudly instead of constructing from client-shipped
+      // render code.
       return [
         ifPresent(
           rendererKey,
@@ -562,7 +551,6 @@ function buildMerge(
               liveIdentifier,
               t.stringLiteral(rendererKey),
               t.stringLiteral(branchScopesKey),
-              t.cloneNode(replayExpression, true),
             ),
           ),
         ),
@@ -601,7 +589,7 @@ function buildMerge(
         // parks the patch until it loads. The trigger-gated loader also
         // registers under its asset/ready id so a fragment delivering the
         // child's markup can start the load and replay its parked keyed resume
-        // batch (see `_load_ready` in dom/load.ts).
+        // batch (see `_load_ready` in dom/update.ts).
         if (merge.loadReady && !emittedLoadReady.has(merge.loadReady.id)) {
           emittedLoadReady.add(merge.loadReady.id);
           hoistedDeclarations.push(

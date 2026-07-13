@@ -18,8 +18,8 @@ const $v = /*@__PURE__*/ _let(4, ($scope) => {
 	_attr_input_value($scope, "d", $scope.e, $valueChange($scope));
 	$v__OR__rest($scope);
 });
-const $rest__script = _script("a3", ($scope) => _attrs_script($scope, "d"));
-const $setup__script = _script("a1", ($scope) => {
+const $rest__script = _script("a1", ($scope) => _attrs_script($scope, "d"));
+const $setup__script = _script("a3", ($scope) => {
 	_on($scope.a, "click", function() {
 		$v($scope, $scope.e + "!");
 	});

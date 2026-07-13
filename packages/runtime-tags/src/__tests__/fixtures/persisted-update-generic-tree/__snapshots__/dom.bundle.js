@@ -1,25 +1,25 @@
 // tags/badge.marko
-enableBranches();
+enableBranchesPersisted();
 
 // tags/card.marko
-enableBranches();
+enableBranchesPersisted();
 
 // tags/counter.marko
-const $n = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $n = /*@__PURE__*/ _let_persisted(2, ($scope) => _text($scope.b, $scope.c));
 const $setup__script$1 = _script_update("d0", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, $scope.c + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/widget.marko
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
-const $count = /*@__PURE__*/ _let(11, ($scope) => _text($scope.b, $scope.l));
+const $count = /*@__PURE__*/ _let_persisted(11, ($scope) => _text($scope.b, $scope.l));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.l + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/counter.marko.update.mjs
 const $n_seed = _update_signal("d1");

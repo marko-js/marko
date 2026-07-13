@@ -21,8 +21,8 @@ const clickPanel = (container: Element) =>
 // fully-applied frame) mounts fine, and the loaded child's click handlers
 // and `<let>` state work throughout.
 //
-// And the lazy child's server-fed input follows navigations through both
-// halves of `_update_load` (dom/update.ts):
+// The child is deliberately rendered through a dynamic tag. Its server-fed
+// input follows navigations through the lazy dynamic merge queue:
 // - The "beta" navigation lands while the module is still loading: its
 //   patch PARKS on the pending queue and replays the moment the module
 //   registers (the panel first paints already showing "beta" -- a
@@ -38,17 +38,32 @@ export const config: TestConfig = {
   // render never produces, so the DOM trees are intentionally inequivalent.
   equivalent: false,
   steps: [
-    { title: "First", label: "alpha", $global: { persisted: true } },
+    {
+      title: "First",
+      label: "alpha",
+      show: true,
+      $global: { persisted: true },
+    },
     clickCount,
     // Patch applies while the lazy module is still unloaded.
-    navigate({ title: "Second", label: "beta", $global: { persisted: true } }),
+    navigate({
+      title: "Second",
+      label: "beta",
+      show: true,
+      $global: { persisted: true },
+    }),
     // Idle fires, the module loads, and its deferred render must show the
     // post-navigation value.
     flushIdle,
     wait,
     clickPanel,
     // The loaded child now updates fine-grained; its click state survives.
-    navigate({ title: "Third", label: "gamma", $global: { persisted: true } }),
+    navigate({
+      title: "Third",
+      label: "gamma",
+      show: true,
+      $global: { persisted: true },
+    }),
     clickPanel,
   ],
 };

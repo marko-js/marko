@@ -10,8 +10,8 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id) }, { class: 1 }, "c", $scope0_id, "button")}>a</button>${_el_resume($scope0_id, "c")}<button class=b${_attrs_partial({ onClick: _resume(function() {
 		log = `${log}b(${count})`;
 	}, "a1", $scope0_id) }, { class: 1 }, "d", $scope0_id, "button")}>b</button>${_el_resume($scope0_id, "d")}<div class=state>${_escape(enabled)}${_el_resume($scope0_id, "e")}:<!>${_escape(count)}${_el_resume($scope0_id, "f")}</div><div class=log>${_escape(log)}${_el_resume($scope0_id, "g")}</div>`);
-	_script($scope0_id, "a3");
 	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		h: enabled,
 		i: count,

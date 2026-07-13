@@ -1,6 +1,6 @@
 // tags/child.marko
-const $valueChange2__script = _script("b0", ($scope) => $scope.d(2));
-const $rest__script = _script("b1", ($scope) => _attrs_script($scope, "a"));
+const $valueChange2__script = _script("b1", ($scope) => $scope.d(2));
+const $rest__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 
 // template.marko
 const $child_content__value = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b));

@@ -1,5 +1,5 @@
-// size: 6524 (min) 2856 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 6445 (min) 2816 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-SF4WsvH2.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -62,7 +62,6 @@ let decodeAccessor = (num) =>
   },
   cloneCache = {},
   registeredValues = {},
-  curRenders,
   branchesEnabled,
   _for_of = /* @__PURE__ */ loop(([all, by = bySecondArg], cb) => {
     typeof by == "string"
@@ -77,15 +76,7 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
-  };
+  catchEnabled;
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -278,16 +269,7 @@ function createCloneableHTML(html, ns) {
   );
 }
 function enableBranches() {
-  if (!branchesEnabled) {
-    ((branchesEnabled = 1), skipDestroyedRenders());
-    for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
-  }
-}
-function runResumeEffects(render) {
-  try {
-    runEffects(render.m([]), 1);
-  } finally {
-  }
+  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
 }
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
@@ -605,6 +587,16 @@ function $signalReset(scope, id) {
 function abort(ctrl) {
   ctrl.abort();
 }
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return (
+    (renderer.mount = mount),
+    (renderer._ = renderer),
+    _resume(id, renderer)
+  );
+};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,

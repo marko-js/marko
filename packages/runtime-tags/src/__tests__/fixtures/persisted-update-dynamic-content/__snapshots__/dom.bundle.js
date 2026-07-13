@@ -1,9 +1,9 @@
 // tags/layout.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
 const $for_content__spec_name = ($scope, spec_name) => _text($scope.a, spec_name);
@@ -35,19 +35,18 @@ const $Overview_content__input_summary = /*@__PURE__*/ _closure_get(15, ($scope)
 	if (!updating) _text($scope.b, $scope._.h);
 });
 const $Overview_content = _content_resume("a2", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
-const $count = /*@__PURE__*/ _let(10, ($scope) => _text($scope.c, $scope.k));
+const $count = /*@__PURE__*/ _let_persisted(10, ($scope) => _text($scope.c, $scope.k));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("b2");
-const $dynamic_update = _update_signal("b1");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac", $dynamic_update);
+	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 var layout_marko_update_default = _resume("b3", $update$1);
 

@@ -1,12 +1,12 @@
 // template.marko
-const $mirror = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $mirror = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_refresh("a0", ($scope) => {
 	$mirror($scope, $scope.$.stock);
 	_on($scope.a, "click", function() {
 		$mirror($scope, $scope.d - 1);
 	});
 });
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $mirror_seed = _update_signal("a1");

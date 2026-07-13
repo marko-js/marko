@@ -1,12 +1,12 @@
 // tags/layout.marko.update.mjs
 const $update$2 = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", 0);
+	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$2);
 
 // tags/frame.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", 0);
+	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 var frame_marko_update_default = _resume("__tests__/tags/frame.marko_0_update", $update$1);
 
@@ -38,7 +38,7 @@ const $input_content_direct$1 = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content$1 = $dynamicTag$1;
 const $input$1 = ($scope, input) => $input_content$1($scope, input.content);
-enableBranches();
+enableBranchesPersisted();
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$2, $walks$2, $setup$2, $input$1);
 
 // tags/frame.marko
@@ -49,13 +49,13 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-enableBranches();
+enableBranchesPersisted();
 var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $template$1, "D%l", $setup$1, $input);
 
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-const $Dashboard_content__tally = /*@__PURE__*/ _let("tally/3", ($scope) => _text($scope["#text/1"], $scope.tally));
+const $Dashboard_content__tally = /*@__PURE__*/ _let_persisted("tally/3", ($scope) => _text($scope["#text/1"], $scope.tally));
 const $Dashboard_content__setup__script = _script_update("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Dashboard_content__tally($scope, $scope.tally + 1);
 }));
@@ -69,7 +69,7 @@ const $frame_content__Home__OR__Dashboard = /*@__PURE__*/ _or(4, ($scope) => $in
 const $frame_content__Home = /*@__PURE__*/ _closure_get("Home", ($scope) => {
 	if (!updating) $frame_content__Home__OR__Dashboard($scope);
 });
-const $frame_content__count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $frame_content__count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $frame_content__setup__script = _script_update("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$frame_content__count($scope, $scope.count + 1);
 }));
@@ -85,13 +85,13 @@ const $frame_content__Dashboard = /*@__PURE__*/ _closure_get("Dashboard", ($scop
 });
 const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$2), /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$2), $frame_content__setup);
 const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>welcome home</p>", "b");
-const $Home = /*@__PURE__*/ _const("Home");
-const $Dashboard = /*@__PURE__*/ _const("Dashboard");
+const $Home = /*@__PURE__*/ _const_persisted("Home");
+const $Dashboard = /*@__PURE__*/ _const_persisted("Dashboard");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $frame_content($scope));
 	if (!updating) $Home($scope, { content: $Home_content($scope) });
 	if (!updating) $Dashboard($scope, { content: $Dashboard_content($scope) });
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

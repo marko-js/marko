@@ -11,7 +11,20 @@
     href="/search?page=3&amp;q=a">3</a><!--M_*12 a--><!--M_|11 a 12--><!--M_)2 b 11-->
 </nav><!--M_]1 c 2-->
 <script>
-  WALKER_RUNTIME("M")("_");
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
   M._.r = [_ => [1, {
     l: 0,
     n: new Set([_(8), _(12)]),

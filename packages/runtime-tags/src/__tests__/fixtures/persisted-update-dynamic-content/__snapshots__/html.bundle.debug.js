@@ -4,7 +4,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<aside><button class=toggle>${open ? "collapse" : "expand"}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
-	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason());
+	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "__tests__/tags/layout.marko_0/update_dynamic_#text/2");
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/layout.marko_0");
 	writeScope($scope0_id, { open: _state_reason() && open }, "__tests__/tags/layout.marko", 0, { open: "1:6" });
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ClosureScopes:input_title": $sg__input_title && $input_title__closures,
 		"ClosureScopes:input_summary": $sg__input_summary && $input_summary__closures,
 		"ClosureScopes:input_specs": $sg__input_specs && $input_specs__closures,
-		"#childScope/3": ($sg__input_view || _persisted_reason()) && _existing_scope($childScope)
+		"#childScope/3": $sg__input_view | _persisted_reason() && _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_summary: ["input.summary"],

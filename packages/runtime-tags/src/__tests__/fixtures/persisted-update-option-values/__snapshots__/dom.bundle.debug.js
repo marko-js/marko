@@ -24,7 +24,7 @@ const $cfg_options = ($scope, cfg_options) => {
 		return opt.key;
 	}]);
 };
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -33,5 +33,5 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

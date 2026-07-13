@@ -20,7 +20,7 @@ var thing_default = _template("c", (input) => {
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $setHtml_getter = _hoist($scope0_id, "a1");
+	const $setHtml_getter = _hoist($scope0_id, "a0");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
@@ -45,9 +45,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "d", 1, 0, $sg__input_show, 0, 1);
 	{
 		const $scope5_id = _scope_id();
-		_script($scope5_id, "a5");
+		_script($scope5_id, "a1");
 		writeScope($scope5_id, { _: _scope_with_id($scope0_id) });
 	}
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a2");
 	$si__input_show && writeScope($scope0_id, { h: input.show });
 }, 1);

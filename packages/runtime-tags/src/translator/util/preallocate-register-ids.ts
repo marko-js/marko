@@ -118,7 +118,7 @@ export function recordRegisterIdFootprint(
   section: Section,
   footprint: RegisterIdFootprint,
 ) {
-  getFootprints(section).push(footprint);
+  if (isPersisted()) getFootprints(section).push(footprint);
 }
 
 /**

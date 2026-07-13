@@ -13,7 +13,7 @@ const clickCount = (container: Element) =>
 // a fine-grained fragment instead of failing ("update diverged") into a
 // full navigation. Client state above the hop survives every direction.
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   // The note compute is server-only by design, so a plain client render of
   // either branch is impossible.
   skip_csr: true,

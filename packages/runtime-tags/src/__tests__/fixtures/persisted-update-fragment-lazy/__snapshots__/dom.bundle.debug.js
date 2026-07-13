@@ -3,7 +3,7 @@ const $open_seed = _update_signal("__tests__/tags/layout.marko_0_open/var");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
-	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", 0);
+	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
 var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
 
@@ -34,7 +34,7 @@ var gadget_marko_update_default = _resume("__tests__/tags/gadget.marko_0_update"
 // tags/gadget.marko
 const $template = "<div class=gadget><span class=gadget__label> </span><button class=gadget__tap>taps <!></button></div>";
 const $walks = "E l Db%m";
-const $taps = /*@__PURE__*/ _let("taps/6", ($scope) => _text($scope["#text/2"], $scope.taps));
+const $taps = /*@__PURE__*/ _let_persisted("taps/6", ($scope) => _text($scope["#text/2"], $scope.taps));
 const $setup__script = _script_update("__tests__/tags/gadget.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$taps($scope, $scope.taps + 1);
 }));
@@ -44,14 +44,14 @@ function $setup($scope) {
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-enableBranches();
+enableBranchesPersisted();
 var gadget_default = /*@__PURE__*/ _template("__tests__/tags/gadget.marko", $template, $walks, $setup, $input);
 
 // tags/layout.marko
 const $template$1 = "<aside><button class=toggle> </button></aside><section><!></section>";
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let_persisted("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -62,7 +62,7 @@ function $setup$1($scope) {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-enableBranches();
+enableBranchesPersisted();
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
@@ -78,10 +78,10 @@ const $Detail_content__setup = ($scope) => {
 };
 const $Detail_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<h2 class=title> </h2><!><!><!>", "D l%/&c", $Detail_content__setup);
 const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>welcome home</p>", "b");
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $Home__OR__Detail = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "detail" ? $scope.Detail : $scope.Home));
-const $Home = /*@__PURE__*/ _const("Home", $Home__OR__Detail);
-const $Detail = /*@__PURE__*/ _const("Detail", $Home__OR__Detail);
+const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Detail);
+const $Detail = /*@__PURE__*/ _const_persisted("Detail", $Home__OR__Detail);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -92,7 +92,7 @@ function $setup($scope) {
 	if (!updating) $Detail($scope, { content: $Detail_content($scope) });
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // tags/v:gadget.marko.setup.js

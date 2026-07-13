@@ -1,29 +1,29 @@
 // tags/layout.marko
-enableBranches();
+enableBranchesPersisted();
 
 // tags/frame.marko
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
-const $Dashboard_content__tally = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $Dashboard_content__tally = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $Dashboard_content__setup__script = _script_update("a4", ($scope) => _on($scope.a, "click", function() {
 	$Dashboard_content__tally($scope, $scope.d + 1);
 }));
-const $frame_content__count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $frame_content__count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $frame_content__setup__script = _script_update("a1", ($scope) => _on($scope.a, "click", function() {
 	$frame_content__count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/layout.marko.update.mjs
 const $update$2 = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa", 0);
+	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 var layout_marko_update_default = _resume("c1", $update$2);
 
 // tags/frame.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa", 0);
+	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 var frame_marko_update_default = _resume("b1", $update$1);
 

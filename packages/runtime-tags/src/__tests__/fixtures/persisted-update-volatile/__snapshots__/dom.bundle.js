@@ -1,9 +1,9 @@
 // template.marko
-const $count = /*@__PURE__*/ _let(8, ($scope) => _text($scope.e, $scope.i));
+const $count = /*@__PURE__*/ _let_persisted(8, ($scope) => _text($scope.e, $scope.i));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.d, "click", function() {
 	$count($scope, $scope.i + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");

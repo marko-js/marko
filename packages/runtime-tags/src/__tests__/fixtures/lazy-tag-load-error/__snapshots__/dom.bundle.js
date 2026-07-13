@@ -8,12 +8,12 @@ const $if_content__setup = ($scope) => {
 };
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content_resume("b3", "<div id=error> </div>", "D l", 0, $catch_content__$params);
-const $placeholder_content = _content_resume("b2", "<div id=loading>loading</div>", "b");
+const $catch_content = _content_resume("b1", "<div id=error> </div>", "D l", 0, $catch_content__$params);
+const $placeholder_content = _content_resume("b0", "<div id=loading>loading</div>", "b");
 const $try_content__if = /*@__PURE__*/ _if(0, "<!><!><!><!>", "b%/&c", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__if($scope, $scope._.c ? 0 : 1));
 const $show = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($try_content__show));
-const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, true);
 }));
 

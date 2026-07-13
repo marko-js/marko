@@ -36,13 +36,13 @@ const $for_content__search_category = /*@__PURE__*/ _for_selector("#div/0", "sea
 const $for_content__setup = ($scope) => {
 	if (!updating) $for_content__search_category._($scope);
 };
-const $for_content__cat = /*@__PURE__*/ _const("cat", ($scope) => {
+const $for_content__cat = /*@__PURE__*/ _const_persisted("cat", ($scope) => {
 	_text($scope["#text/1"], $scope.cat);
 	$for_content__search_category__OR__cat($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__cat($scope, $params2[0]);
 const $pattern2 = ($scope, $pattern) => $search_category($scope, $pattern[0]?.category);
-const $search_category = /*@__PURE__*/ _const("search_category", $for_content__search_category);
+const $search_category = /*@__PURE__*/ _const_persisted("search_category", $for_content__search_category);
 const $for = /*@__PURE__*/ _for_of("#div/0", "<span class=chip> </span>", " D l", $for_content__setup, $for_content__$params);
 const $categories = ($scope, categories) => {
 	if (!updating) $for($scope, [categories, function(cat) {
@@ -53,13 +53,13 @@ function $setup$1($scope) {
 	if (!updating) $pattern2($scope, $scope.$global.search);
 	if (!updating) $categories($scope, getCategories());
 }
-enableBranches();
+enableBranchesPersisted();
 var chip_list_default = /*@__PURE__*/ _template("__tests__/tags/chip-list.marko", $template$1, " b", $setup$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)(" b");
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -68,5 +68,5 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

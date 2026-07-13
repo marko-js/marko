@@ -26,6 +26,10 @@ describe("runtime-tags/translator-api", () => {
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
         "@marko/runtime-tags/debug/dom",
       ]);
+      assert.deepEqual(
+        translator.getRuntimeEntryFiles("dom-persisted", false),
+        ["@marko/runtime-tags/debug/dom-persisted"],
+      );
     });
 
     it("returns the optimized runtime entries when optimized", () => {
@@ -34,6 +38,9 @@ describe("runtime-tags/translator-api", () => {
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
         "@marko/runtime-tags/dom",
+      ]);
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom-persisted", true), [
+        "@marko/runtime-tags/dom-persisted",
       ]);
     });
 

@@ -47,7 +47,7 @@ const $try_content__setup = ($scope) => {
 	if (!updating) $try_content__input_related($scope);
 	$await_content($scope);
 };
-const $count = /*@__PURE__*/ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%c", $try_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
@@ -70,6 +70,6 @@ const $input = ($scope, input) => {
 	$input_note($scope, input.note);
 };
 const $input_related__closure = /*@__PURE__*/ _closure($try_content__input_related);
-const $input_related = /*@__PURE__*/ _const("input_related", $input_related__closure);
-enableBranches();
+const $input_related = /*@__PURE__*/ _const_persisted("input_related", $input_related__closure);
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

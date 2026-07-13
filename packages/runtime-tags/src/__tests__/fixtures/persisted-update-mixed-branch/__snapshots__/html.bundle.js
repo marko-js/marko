@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", 1 | _persisted_reason() || $sg__input_err, _serialize_guard($scope0_reason, 0), $sg__input_err);
+	}, $scope0_id, "a", 1 | _persisted_reason() | $sg__input_err, _serialize_guard($scope0_reason, 0), $sg__input_err);
 	writeScope($scope0_id, {
 		e: (_serialize_if($scope0_reason, 1) || _update_reason()) && input.title,
 		f: _state_reason() && count

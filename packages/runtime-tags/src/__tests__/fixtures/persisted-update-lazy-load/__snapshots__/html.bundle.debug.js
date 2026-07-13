@@ -12,17 +12,20 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 // template.marko
 const $Panel_withLoadAssets = withLoadAssets(panel_default, "ready:__tests__/tags/panel.marko", [{ type: "idle" }]);
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<h1>${_escape(_hole_value($scope0_id, "UpdateHole:#text/0", input.title, _persisted_reason()))}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</h1><button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
-	const $childScope = _peek_scope_id();
-	_set_serialize_reason($sg__input_label);
-	$Panel_withLoadAssets({ label: input.label });
+	_html(`<h1>${_escape(_hole_value($scope0_id, "UpdateHole:#text/0", input.title, _persisted_reason()))}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))}</h1><button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_dynamic_tag($scope0_id, "#text/3", input.show ? $Panel_withLoadAssets : null, { label: input.label }, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "__tests__/template.marko_0/update_dynamic_#text/3");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		count: _state_reason() && count,
-		"#childScope/4": ($sg__input_label || _persisted_reason()) && _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "3:6" });
+		input_show: (_serialize_if($scope0_reason, 3) || _update_reason()) && input.show,
+		input_label: (_serialize_if($scope0_reason, 2) || _update_reason()) && input.label,
+		count: _state_reason() && count
+	}, "__tests__/template.marko", 0, {
+		input_show: ["input.show"],
+		input_label: ["input.label"],
+		count: "3:6"
+	});
 	_resume_branch($scope0_id);
 }, 1);

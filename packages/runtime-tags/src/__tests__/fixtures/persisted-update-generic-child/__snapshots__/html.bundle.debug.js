@@ -61,9 +61,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count: _state_reason() && count,
-		"#childScope/2": ($sg__input_label__OR__input_tone || _persisted_reason()) && _existing_scope($childScope),
-		"#childScope/3": ($sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded || _persisted_reason()) && _existing_scope($childScope2),
-		"#childScope/4": ($sg__input_name || _persisted_reason()) && _existing_scope($childScope3)
+		"#childScope/2": $sg__input_label__OR__input_tone | _persisted_reason() && _existing_scope($childScope),
+		"#childScope/3": $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded | _persisted_reason() && _existing_scope($childScope2),
+		"#childScope/4": $sg__input_name | _persisted_reason() && _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

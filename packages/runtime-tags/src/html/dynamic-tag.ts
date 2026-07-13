@@ -89,12 +89,7 @@ export let _dynamic_tag = (
     siteId !== undefined && state.loopKey !== undefined
       ? siteId + " " + state.loopKey
       : siteId;
-  // `siteId` (and so `siteKey`) is compiled only in `persisted: "fragments"`
-  // builds: a plain `persisted: true` build keeps its registered renderers
-  // and replays same-route swaps through `_update_dynamic`, so its hops carry
-  // no site id and a miss can never force a fragment (fragment and replay
-  // paths disagree about who wires shared tag variables -- see
-  // agent-feedback/bugs.md).
+  // `siteId` (and so `siteKey`) is compiled only in persisted builds.
   const possessionKnown =
     possessed !== undefined && siteKey !== undefined && siteKey in possessed;
   const possessionMiss =

@@ -1,4 +1,4 @@
-// size: 161 (min) 119 (brotli)
+// size: 161 (min) 138 (brotli)
 //#region packages/runtime-tags/src/__tests__/fixtures/basic-counter/template.marko
 const $template = "<div><button> </button></div>";
 const $walks = "D D m";

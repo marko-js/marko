@@ -1,12 +1,12 @@
 // tags/chip-list.marko
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/chip-list.marko.update.mjs
 const $for_update = _update_for(0, "b0", (branch, args) => _update_scope(args[0], branch));

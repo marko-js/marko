@@ -119,7 +119,7 @@ export function isNavigate(value: any): value is Navigate {
 
 /**
  * Extract the persisted render mode from a fixture's ergonomic `$global` flags
- * (`persisted` / `persistedSeed` / `persistedFragment`) to pass as `render()`'s
+ * (`persisted` / `persistedFragment`) to pass as `render()`'s
  * second argument — the same translation @marko/run's context render does from
  * its request-derived flags. Fixtures keep the readable flags; the mode never
  * touches `$global`. Undefined when not persisted.
@@ -130,10 +130,13 @@ export function persistedModeFrom(
   const persisted = $global?.persisted;
   if (!persisted) return undefined;
   const update = persisted === "update";
+  const fragment = update && !!$global!.persistedFragment;
   return {
     update,
-    seed: update && !!$global!.persistedSeed,
-    fragment: update && !!$global!.persistedFragment,
+    // Cross-route fragments always need their fresh state seeded. Keeping one
+    // fixture flag mirrors @marko/run's single `"fragment"` render mode.
+    seed: fragment,
+    fragment,
   };
 }
 

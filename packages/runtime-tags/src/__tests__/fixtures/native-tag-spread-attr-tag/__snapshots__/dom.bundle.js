@@ -1,6 +1,6 @@
 // tags/my-box.marko
-const $input_head__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
-const $input_foot__script = _script("b1", ($scope) => _attrs_script($scope, "b"));
+const $input_head__script = _script("b1", ($scope) => _attrs_script($scope, "a"));
+const $input_foot__script = _script("b0", ($scope) => _attrs_script($scope, "b"));
 
 // template.marko
 const $head_content__n = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));

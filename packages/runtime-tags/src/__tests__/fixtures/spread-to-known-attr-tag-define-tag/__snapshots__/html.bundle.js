@@ -2,7 +2,7 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Child = { content: _content("a0", (input) => {
+	const Child = { content: _content("a1", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__input_option = _serialize_guard($scope1_reason, 1);
 		_html(`<select${_attr_class(input.class)}>`);
@@ -11,12 +11,12 @@ var template_default = _template("a", (input) => {
 			_html("<option");
 			_attrs_content(option, "a", $scope3_id, "option");
 			_html(`</option>${_el_resume($scope3_id, "a")}`);
-			_script($scope3_id, "a2");
+			_script($scope3_id, "a0");
 			writeScope($scope3_id, {});
 		}, 0, $scope1_id, "a", $sg__input_option, _serialize_guard($scope1_reason, 0), $sg__input_option, "</select>", 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}) };
-	({ content: _content("a1", ({ class: _class, ...rest }) => {
+	({ content: _content("a2", ({ class: _class, ...rest }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		const $childScope = _peek_scope_id();

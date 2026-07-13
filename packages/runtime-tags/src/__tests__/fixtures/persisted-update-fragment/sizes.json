@@ -6,27 +6,27 @@
         "brotli": 304
       },
       "files": {
-        "tags/store.marko": 358,
-        "tags/widget.marko": 268,
-        "tags/layout.marko": 285,
-        "template.marko": 533
+        "tags/store.marko": 377,
+        "tags/widget.marko": 287,
+        "tags/layout.marko": 304,
+        "template.marko": 562
       }
     },
     "update.js": {
       "total": {
-        "min": 7062,
-        "brotli": 2912
+        "min": 7328,
+        "brotli": 3023
       },
       "files": {
         "tags/store.marko.update.mjs": 284,
         "tags/widget.marko.update.mjs": 317,
-        "tags/layout.marko.update.mjs": 349,
+        "tags/layout.marko.update.mjs": 346,
         "template.marko.update.mjs": 901
       }
     }
   },
   "html": {
-    "min": 559,
-    "brotli": 335
+    "min": 635,
+    "brotli": 376
   }
 }

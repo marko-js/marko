@@ -18,7 +18,7 @@ const items = (a: string, b: string) => [
 ];
 
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   skip_csr: true,
   equivalent: false,
   steps: [

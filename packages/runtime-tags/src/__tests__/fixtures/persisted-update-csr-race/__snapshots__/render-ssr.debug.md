@@ -31,6 +31,7 @@ INSERT: section > p::text("clicked ")
 INSERT: section > p::text@0 + ::text("0")
 INSERT: section > p::text@8 + ::text(" times -- ")
 INSERT: section > p::text@9 + ::text("Ships tomorrow")
+UPDATE: section > p > #comment "M_* #text/1" => "M_*4 #text/1"
 REMOVE: section::text("loading…")
 INSERT: section > p
 ```

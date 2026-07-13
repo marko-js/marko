@@ -15,8 +15,8 @@ var my_box_default = _template("b", (input) => {
 	_attrs_content(input, "a", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "a")}<button type=button class=toggle>toggle</button>${_el_resume($scope0_id, "b")}<div class=echo>`);
 	_if(() => {}, $scope0_id, "c", 1, 1, 1, "</div>");
-	_script($scope0_id, "b1");
 	_script($scope0_id, "b0");
+	_script($scope0_id, "b1");
 	writeScope($scope0_id, {
 		e: input,
 		f: show

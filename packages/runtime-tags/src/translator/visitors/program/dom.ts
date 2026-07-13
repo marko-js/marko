@@ -2,11 +2,7 @@ import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
 import { isSectionRendererElided } from "../../util/binding-has-prop";
-import {
-  isPersisted,
-  isPersistedEntryBuild,
-  isPersistedFragments,
-} from "../../util/marko-config";
+import { isPersisted, isPersistedEntryBuild } from "../../util/marko-config";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -145,20 +141,10 @@ export default {
               ]);
             } else {
               let renderer = callRuntime(
-                // Persisted entry builds register content so a persisted
-                // update can swap a dynamic tag to a renderer the live page has
-                // never rendered (a cross-route navigation's divergence point),
-                // resolved from the registry by the serialized id.
-                // Fragment-first builds deliver that divergence as a fragment
-                // frame instead, so the registration -- the one module-level
-                // side effect pinning the section's construction material (and
-                // its child imports) into navigation chunks -- is dropped and
-                // the material tree-shakes.
-                (
-                  isPersistedEntryBuild()
-                    ? !isPersistedFragments()
-                    : getSectionRegisterReasons(childSection)
-                )
+                // Persisted entries never register content construction:
+                // divergent content arrives as a resumable HTML fragment.
+                !isPersistedEntryBuild() &&
+                  getSectionRegisterReasons(childSection)
                   ? "_content_resume"
                   : "_content",
                 t.stringLiteral(getResumeRegisterId(childSection, "content")),
@@ -284,7 +270,7 @@ export default {
       // pre-navigation interactivity reads undefined.
       if (isPersisted() && !isPersistedEntryBuild()) {
         program.node.body.push(
-          t.expressionStatement(callRuntime("_enable_branches")),
+          t.expressionStatement(callRuntime("_enable_branches_persisted")),
         );
       }
 

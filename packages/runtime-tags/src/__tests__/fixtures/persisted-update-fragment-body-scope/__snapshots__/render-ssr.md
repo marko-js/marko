@@ -58,7 +58,7 @@ INSERT: section > .loading
 REMOVE: section > p
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"reports","range":"day"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"reports","range":"day"}}`
 ```html
 <button
   class="count"

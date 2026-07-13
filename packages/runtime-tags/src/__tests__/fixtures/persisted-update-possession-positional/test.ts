@@ -31,7 +31,7 @@ const clickCount = (container: Element) =>
 const items = (a: string, b: string) => [{ view: a }, { view: b }];
 
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   skip_csr: true,
   equivalent: false,
   // The collision above makes the apply diverge -- see the comment above

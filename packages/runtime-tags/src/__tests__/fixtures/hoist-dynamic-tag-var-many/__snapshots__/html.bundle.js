@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_hoist($scope0_id, "a3");
+	_hoist($scope0_id, "a0");
 	_for_to(5, 0, 1, () => {
 		const $scope1_id = _scope_id();
 		const $Child_scope = _peek_scope_id();
@@ -37,12 +37,12 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			const $Child_scope3 = _peek_scope_id();
 			let setHtml3 = _dynamic_tag($scope4_id, "a", child_default, {});
-			_var($scope4_id, "b", $Child_scope3, "a4");
+			_var($scope4_id, "b", $Child_scope3, "a3");
 			writeScope($scope4_id, { c: setHtml3 });
 		}, 0, $scope3_id, "a", 1, 0, 0);
 		_html("</ul>");
 		writeScope($scope3_id, {});
 	}, 0, $scope0_id, "c", 1, 0, 0, 0, 1);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a4");
 	_resume_branch($scope0_id);
 }, 1);

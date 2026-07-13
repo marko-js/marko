@@ -18,6 +18,6 @@ const $ChildA_content__count = /*@__PURE__*/ _closure_get(8, ($scope) => {
 });
 const $ChildA_content__$bar = /*@__PURE__*/ _const(8, $ChildA_content__count__OR__$bar);
 const $count = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($ChildA_content__count, $ChildB_content__count));
-const $setup__script = _script("a0", ($scope) => _on($scope.g, "click", function() {
+const $setup__script = _script("a2", ($scope) => _on($scope.g, "click", function() {
 	$count($scope, $scope.h + 1);
 }));

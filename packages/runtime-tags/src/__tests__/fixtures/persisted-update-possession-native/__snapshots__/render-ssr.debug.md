@@ -138,23 +138,3 @@ UPDATE: .count::text@8 "2" => "3"
 ```
 
 # Update `{"$global":{"persisted":true,"view":"plain","topic":"trends"}}`
-```html
-<button
-  class="count"
->
-  clicked 3
-</button>
-<section
-  class="shell"
->
-  <blockquote
-    class="hop"
-  >
-    plain: trends notes
-  </blockquote>
-</section>
-```
-## Change
-```
-UPDATE: .hop::text@7 "growth notes" => "trends notes"
-```

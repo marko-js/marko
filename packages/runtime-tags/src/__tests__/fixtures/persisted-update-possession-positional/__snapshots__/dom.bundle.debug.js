@@ -2,7 +2,7 @@
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $for_update = _update_for("#ul/2", "__tests__/template.marko_2_content/update", (branch, args) => $for_content__update(args[0], branch));
 const $for_content__update = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", 0);
+	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
@@ -35,13 +35,13 @@ const $for_content__setup = ($scope) => {
 const $for_content__PanelB = /*@__PURE__*/ _for_closure("#ul/2", ($scope) => {
 	if (!updating) $for_content__PanelA__OR__PanelB__OR__item_view($scope);
 });
-const $for_content__item_view = /*@__PURE__*/ _const("item_view", $for_content__PanelA__OR__PanelB__OR__item_view);
+const $for_content__item_view = /*@__PURE__*/ _const_persisted("item_view", $for_content__PanelA__OR__PanelB__OR__item_view);
 const $for_content__$params = ($scope, $params2) => $for_content__item_view($scope, $params2[0]?.view);
 const $PanelA_content__setup = ($scope) => _text($scope["#text/0"], getLabel?.($scope.$global.topic));
 const $PanelA_content = _content_resume("__tests__/template.marko_1_content", "<span class=a>A: <!></span>", "Db%l", $PanelA_content__setup);
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $PanelA = /*@__PURE__*/ _const("PanelA");
-const $PanelB = /*@__PURE__*/ _const("PanelB");
+const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $PanelA = /*@__PURE__*/ _const_persisted("PanelA");
+const $PanelB = /*@__PURE__*/ _const_persisted("PanelB");
 const $for = /*@__PURE__*/ _for_of("#ul/2", "<li><!></li>", "D%l", $for_content__setup, $for_content__$params);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
@@ -53,5 +53,5 @@ function $setup($scope) {
 	if (!updating) $for($scope, [$scope.$global.items]);
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

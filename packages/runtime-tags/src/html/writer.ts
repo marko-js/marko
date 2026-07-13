@@ -20,6 +20,8 @@ import { RendererProp } from "../common/types";
 import { attrAssignment } from "./attrs";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
+  PERSISTED_REORDER_RUNTIME_CODE,
+  PERSISTED_WALKER_RUNTIME_CODE,
   REORDER_RUNTIME_CODE,
   WALKER_RUNTIME_CODE,
 } from "./inlined-runtimes.debug";
@@ -72,13 +74,6 @@ enum RuntimeKey {
 // common/accessor.ts and dom/update.ts's matching constant and `_have`.
 // Persisted resume only.
 const BOUNDARY_SITE_PREFIX = MARKO_DEBUG ? "BoundarySite:" : "T";
-
-// A `<@placeholder by=>` boundary's identity stash (`<siteId> <identity>` on
-// the parent scope; reserved "U"): the next navigation's echo compares
-// against it and recedes the boundary to its placeholder on a mismatch. See
-// common/accessor.ts, `_have` in dom/update.ts, and
-// designs/persisted-pages-recede.md. Persisted only.
-const BOUNDARY_BY_PREFIX = MARKO_DEBUG ? "BoundaryBy:" : "U";
 
 // Pending-boundary stash tombstone bookkeeping (see `Chunk.boundarySite`/
 // `tryPlaceholder`): scope id, stash key ("" once tombstoned), and the
@@ -375,7 +370,7 @@ export function _state_reason() {
   // live state stays hostile-patch-proof.
   if (state.update) {
     if (!state.seed) return undefined;
-    // Fragment mode knows the fresh subtree server-side: seed values and
+    // Persisted navigation knows a fresh subtree server-side: seed values and
     // resume-only wiring narrow to the fragment's chunks and to
     // fills-path structural branch renders (fresh-by-patch loop items,
     // conditional branches, await bodies). Everything else is matched --
@@ -814,7 +809,7 @@ function forBranches(
   if (state.update && !$chunk.fragment && (serializeBranch as number) & 2) {
     const branchScopes: ScopeInternals[] = [];
     // Patch-list branches may be created fresh client-side; their seed
-    // data serializes even when fragment mode narrows the page-wide seed.
+    // data serializes even when fragment delivery narrows the page-wide seed.
     state.freshBranchDepth++;
     iterate((itemKey, sameAsIndex, render) => {
       const branchId = _peek_scope_id();
@@ -928,7 +923,7 @@ export function _if(
   }
 
   // A patch-list branch may be created fresh client-side; its seed data
-  // serializes even when fragment mode narrows the page-wide seed.
+  // serializes even when fragment delivery narrows the page-wide seed.
   const updateStructural =
     state.update && !$chunk.fragment && (serializeBranch as number) & 2;
   if (updateStructural) state.freshBranchDepth++;
@@ -1156,7 +1151,7 @@ export function _await<T>(
     if (state.update && !$chunk.fragment) {
       const branchId = _peek_scope_id();
       // The body may attach to a freshly created (detached) await branch
-      // client-side; its seed data serializes even when fragment mode
+      // client-side; its seed data serializes even when fragment delivery
       // narrows the page-wide seed.
       state.freshBranchDepth++;
       withBranchId(branchId, render);
@@ -1284,7 +1279,6 @@ export function _try(
     : undefined;
   const placeholderContent = normalizeDynamicRenderer(input.placeholder) as
     ServerRenderer | undefined;
-  const placeholderBy = (input.placeholder as { by?: unknown } | undefined)?.by;
 
   // A matched try whose site the client echoed as still showing its
   // placeholder (`x-marko-have`, the "!"-prefixed half -- see `_have` in
@@ -1292,9 +1286,7 @@ export function _try(
   // into, so this update render delivers the body as markup -- a boundary-
   // body entry the applier swaps in where the placeholder sits, the same
   // two-frame channel fragment-delivered awaits use (see
-  // designs/persisted-pages-roadmap.md, "Correctness"). The same flat map
-  // carries `<@placeholder by=>` identities (value `"=" + identity`;
-  // pending's `"1"` wins), so the pending check is by value, not key presence.
+  // designs/persisted-pages-roadmap.md, "Correctness").
   const { state } = $chunk.boundary;
   const possessed = state.possessed;
   const siteKey =
@@ -1306,39 +1298,8 @@ export function _try(
       ? possessed["!" + siteKey]
       : undefined;
   const pendingEcho = state.update && !$chunk.fragment && echoed === "1";
-  // `<@placeholder by=>` recede (designs/persisted-pages-recede.md): the
-  // author keyed this boundary's content by an identity, the client echoed
-  // the identity it holds, and this render's identity differs -- the old body
-  // is *different content*, so it ships as markup (a keyed remount, the
-  // boundary-body shape above) rather than merged into. If still pending at
-  // first flush, the placeholder ships first as a reset entry
-  // (`state.writeRecedes`/`flushScript`) so the user sees pending UI, not the
-  // stale body; a body that resolves by first flush ships alone (the
-  // same-frame swap never paints the placeholder -- flash suppression). A
-  // missing echo (page resumed before the boundary carried `by=`)
-  // conservatively keeps the in-place fill.
-  const recede =
-    state.update &&
-    !$chunk.fragment &&
-    !pendingEcho &&
-    placeholderContent !== undefined &&
-    placeholderBy !== undefined &&
-    typeof echoed === "string" &&
-    echoed.slice(1) !== "" + placeholderBy;
-
-  // The identity stash the next navigation's echo compares against, written
-  // on every persisted render that evaluates a `by=` (documents and fragment
-  // captures land it on the resumed/walker scope directly; update fills reach
-  // the live scope through `_update_branch`'s copy).
-  if (siteId !== undefined && placeholderBy !== undefined) {
-    writeScope(scopeId, {
-      [BOUNDARY_BY_PREFIX + accessor]: siteId + " " + placeholderBy,
-    });
-  }
-
-  if (pendingEcho || recede) {
-    const boundaryBody = () =>
-      tryBoundaryBody(content, branchId, recede ? placeholderContent : 0);
+  if (pendingEcho) {
+    const boundaryBody = () => tryBoundaryBody(content, branchId);
     if (catchContent !== undefined) {
       tryCatch(boundaryBody, catchContent || (() => {}));
     } else {
@@ -1404,19 +1365,7 @@ export function _try(
 // boundary body uses (`state.reorder`/`Chunk.reorderId`, keyed by this try's
 // branch id): resolved synchronously it flushes on this frame; still pending
 // at flush, `flushScript`'s update reorder branch ships it on a later frame.
-//
-// Two callers, differing only in the placeholder argument: a pending-echoed
-// boundary passes none (the client already shows its placeholder); a
-// `<@placeholder by=>` recede passes the placeholder renderer -- captured now
-// and held on `state.writeRecedes`, shipped as a placeholder-reset entry by
-// the FIRST flush only if this body is still pending then (`flushScript`); a
-// body that resolved in time ships alone and the same-frame swap never paints
-// the placeholder.
-function tryBoundaryBody(
-  content: () => void,
-  branchId: number,
-  placeholder?: (() => void) | 0,
-) {
+function tryBoundaryBody(content: () => void, branchId: number) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const root = chunk.fork(boundary, null);
@@ -1450,39 +1399,6 @@ function tryBoundaryBody(
   // triggers (reordered chunks queue up front -- no completion-time
   // registration).
   boundary.state.reorder(body);
-
-  if (placeholder) {
-    // Capture the placeholder as resumable markup, bracketed like
-    // `flushPlaceholder`'s fragment branch (the reserved "!" accessor token)
-    // so the applier's walker binds it to `PlaceholderBranch` on the adopted
-    // live try branch; the body entry later swaps it out through the existing
-    // placeholder path.
-    const { state } = boundary;
-    const ph = chunk.fork(boundary, null);
-    ph.fragment = true;
-    ph.writeHTML = Chunk.prototype.writeHTML;
-    const placeholderBranchId = state.scopeId++;
-    ph.render(() => {
-      $chunk.lastNodeMarkScope = -1;
-      $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
-      placeholder();
-      $chunk.lastNodeMarkScope = -1;
-      $chunk.writeHTML(
-        state.mark(
-          ResumeSymbol.BranchEnd,
-          branchId + " ! " + placeholderBranchId,
-        ),
-      );
-    });
-    const phEnd = ph.consume();
-    if (phEnd.async) {
-      boundary.abort(
-        new Error("An @placeholder cannot contain async content."),
-      );
-    }
-    phEnd.consumed = true;
-    (state.writeRecedes ||= []).push([branchId, phEnd.html, body]);
-  }
 }
 
 function tryPlaceholder(
@@ -1664,12 +1580,6 @@ export class State implements SerializeState {
   public fragmentTaken = false;
   public fragmentAnchor = "";
   public writeFragments: Chunk[] | null = null;
-  /** `<@placeholder by=>` recedes captured this cycle (see `tryBoundaryBody`):
-   * `[tryBranchId, placeholderHtml, bodyChunk]`. The FIRST flush emits a
-   * placeholder-reset entry for each whose body chunk that flush's reorder
-   * pass did not consume (a body resolved in time ships alone), then clears
-   * the list -- a placeholder is only ever frame-1 content. */
-  public writeRecedes: [number, string, Chunk][] | null = null;
   // The possession echo (`x-marko-have`): what renderer the client currently
   // holds at each participating dynamic-hop site, so a same-route renderer
   // swap ships a fragment for exactly that hop instead of failing the apply.
@@ -1686,7 +1596,7 @@ export class State implements SerializeState {
   /** Depth of fills-path structural branch renders (update-mode loop
    * items, conditional branches, await bodies): content the client will
    * construct fresh from the patch, so seed-mode state and resume-only
-   * wiring serialize for it even when fragment mode narrows the
+   * wiring serialize for it even when fragment delivery narrows the
    * page-wide seed (see `_state_reason`). */
   public freshBranchDepth = 0;
   constructor(
@@ -2230,7 +2140,9 @@ export class Chunk {
       state.hasMainRuntime = true;
       scripts = concatScripts(
         scripts,
-        WALKER_RUNTIME_CODE +
+        (state.persistedMode
+          ? PERSISTED_WALKER_RUNTIME_CODE
+          : WALKER_RUNTIME_CODE) +
           '("' +
           $global.runtimeId +
           '")("' +
@@ -2316,32 +2228,6 @@ export class Chunk {
         }
       }
       state.writeReorders = carried;
-    }
-
-    // `<@placeholder by=>` recede placeholders: shipped as a reset entry
-    // (`[tryBranchId, 1, prefix, html, scopeIds?]` -- the applier replaces the
-    // matched try's stale body with the placeholder and binds its
-    // `PlaceholderBranch`) only when the recede's body did not make this same
-    // flush (the reorder pass above marks consumed bodies). One-shot: a
-    // placeholder is only ever first-frame content; later frames carry the
-    // body.
-    if (state.update && state.writeRecedes) {
-      for (const [branchId, html, body] of state.writeRecedes) {
-        if (!body.consumed) {
-          state.resumes = concatSequence(
-            state.resumes,
-            "[" +
-              branchId +
-              ",1," +
-              JSON.stringify(state.commentPrefix) +
-              "," +
-              JSON.stringify(html) +
-              takeFragmentScopeIds(state) +
-              "]",
-          );
-        }
-      }
-      state.writeRecedes = null;
     }
 
     // Additional simultaneous same-route swaps captured on detached chunks
@@ -2453,7 +2339,12 @@ export class Chunk {
           state.hasReorderRuntime = true;
           scripts = concatScripts(
             scripts,
-            REORDER_RUNTIME_CODE + "(" + runtimePrefix + ")",
+            (state.persistedMode
+              ? PERSISTED_REORDER_RUNTIME_CODE
+              : REORDER_RUNTIME_CODE) +
+              "(" +
+              runtimePrefix +
+              ")",
           );
         }
 

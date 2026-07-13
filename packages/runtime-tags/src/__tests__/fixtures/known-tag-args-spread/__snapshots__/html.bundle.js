@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const $input__closures = /* @__PURE__ */ new Set();
 	let x = 1;
 	const args = [x, 2];
-	const MyTag = { content: _content("a1", (a, b) => {
+	const MyTag = { content: _content("a0", (a, b) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__b = _serialize_guard($scope1_reason, 2);
 		_html(`<div>${_escape(a)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 1))}|${_sep($sg__b)}${_escape(b)}${_el_resume($scope1_id, "b", $sg__b)}|${_sep($sg__input)}${_escape(JSON.stringify(input))}${_el_resume($scope1_id, "c", $sg__input)}</div>`);
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		row: attrTag({ r: x })
 	});
 	_html(`<button>inc <!>${_escape(x)}${_el_resume($scope0_id, "e")}</button>${_el_resume($scope0_id, "d")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		h: x,
 		j: $si__input && $input__closures,

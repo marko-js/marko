@@ -1,13 +1,13 @@
 // template.marko
 const $if_content__count = /*@__PURE__*/ _if_closure(3, 0, ($scope) => _attr_class($scope.a, $scope._.g && $scope.$.params.tag && "hot"));
-const $count = /*@__PURE__*/ _let(6, ($scope) => {
+const $count = /*@__PURE__*/ _let_persisted(6, ($scope) => {
 	_text($scope.b, $scope.g);
 	$if_content__count($scope);
 });
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.g + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $globals_update = _update_signal("a4");

@@ -1,4 +1,4 @@
-# Render `{"title":"First","label":"alpha","$global":{"persisted":true}}`
+# Render `{"title":"First","label":"alpha","show":true,"$global":{"persisted":true}}`
 ```html
 <h1>
   First
@@ -29,7 +29,7 @@ container.querySelector("button.count").click();
 UPDATE: .count::text@8 "0" => "1"
 ```
 
-# Update `{"title":"Second","label":"beta","$global":{"persisted":true}}`
+# Update `{"title":"Second","label":"beta","show":true,"$global":{"persisted":true}}`
 ```html
 <h1>
   Second
@@ -45,7 +45,7 @@ UPDATE: .count::text@8 "0" => "1"
 UPDATE: h1::text "First" => "Second"
 ```
 
-# Update `{"title":"Second","label":"beta","$global":{"persisted":true}}`
+# Update `{"title":"Second","label":"beta","show":true,"$global":{"persisted":true}}`
 
 # Update
 ```html
@@ -92,7 +92,7 @@ container.querySelector("button.panel").click();
 UPDATE: .panel::text@9 "0" => "1"
 ```
 
-# Update `{"title":"Third","label":"gamma","$global":{"persisted":true}}`
+# Update `{"title":"Third","label":"gamma","show":true,"$global":{"persisted":true}}`
 ```html
 <h1>
   Third
@@ -105,15 +105,16 @@ UPDATE: .panel::text@9 "0" => "1"
 <button
   class="panel"
 >
-  beta hit 1
+  gamma hit 1
 </button>
 ```
 ## Change
 ```
 UPDATE: h1::text "Second" => "Third"
+UPDATE: .panel::text@0 "beta" => "gamma"
 ```
 
-# Update `{"title":"Third","label":"gamma","$global":{"persisted":true}}`
+# Update `{"title":"Third","label":"gamma","show":true,"$global":{"persisted":true}}`
 
 # Update
 ```js
@@ -136,6 +137,5 @@ container.querySelector("button.panel").click();
 ```
 ## Change
 ```
-UPDATE: .panel::text@0 "beta" => "gamma"
 UPDATE: .panel::text@10 "1" => "2"
 ```

@@ -1,7 +1,7 @@
 // template.marko
 const Child = /*@__PURE__*/ _load_template("a", () => import("./child.mjs").then((mod) => mod.default));
 _enable_catch();
-const $placeholder_content = _content_resume("b2", "loading...", "b");
+const $placeholder_content = _content_resume("b0", "loading...", "b");
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $try_content__show__OR__value = /*@__PURE__*/ _or(1, ($scope) => $try_content__dynamicTag($scope, $scope._.d ? Child : null, () => ({
 	label: "x",
@@ -11,7 +11,7 @@ const $try_content__show = /*@__PURE__*/ _closure_get(5, $try_content__show__OR_
 const $try_content__value = /*@__PURE__*/ _closure_get(6, $try_content__show__OR__value);
 const $show = /*@__PURE__*/ _let(3, /* @__PURE__ */ _closure($try_content__show));
 const $value = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($try_content__value));
-const $setup__script = _script("b0", ($scope) => {
+const $setup__script = _script("b2", ($scope) => {
 	_on($scope.a, "click", function() {
 		$show($scope, !$scope.d);
 	});

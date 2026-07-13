@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1 | _persisted_reason() || $sg__input_err, _serialize_guard($scope0_reason, 0), $sg__input_err);
+	}, $scope0_id, "#text/0", 1 | _persisted_reason() | $sg__input_err, _serialize_guard($scope0_reason, 0), $sg__input_err);
 	writeScope($scope0_id, {
 		input_title: (_serialize_if($scope0_reason, 1) || _update_reason()) && input.title,
 		count: _state_reason() && count

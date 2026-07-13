@@ -17,7 +17,7 @@ const clickCount = (container: Element) =>
 // header scopes elide in the update render, which the marko-ecommerce `/swap`
 // demo reproduces and where scope-id keying did fall back to a full nav.)
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   skip_csr: true,
   equivalent: false,
   steps: [

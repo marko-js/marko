@@ -6,17 +6,17 @@
         "brotli": 152
       },
       "files": {
-        "tags/badge.marko": 58,
-        "tags/card.marko": 57,
-        "tags/counter.marko": 259,
-        "tags/widget.marko": 59,
-        "template.marko": 262
+        "tags/badge.marko": 67,
+        "tags/card.marko": 66,
+        "tags/counter.marko": 278,
+        "tags/widget.marko": 68,
+        "template.marko": 281
       }
     },
     "update.js": {
       "total": {
-        "min": 4128,
-        "brotli": 1669
+        "min": 4237,
+        "brotli": 1709
       },
       "files": {
         "tags/counter.marko.update.mjs": 280,
@@ -26,7 +26,7 @@
     }
   },
   "html": {
-    "min": 710,
-    "brotli": 389
+    "min": 786,
+    "brotli": 433
   }
 }

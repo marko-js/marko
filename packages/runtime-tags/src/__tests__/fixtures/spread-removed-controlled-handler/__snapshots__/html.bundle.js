@@ -9,8 +9,8 @@ var template_default = _template("a", (input) => {
 			value = next;
 		}, "a0", $scope0_id)
 	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<span>value=[<!>${_escape(value)}${_el_resume($scope0_id, "b")}]</span><button>drop</button>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "a2");
 	_script($scope0_id, "a1");
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

@@ -35,7 +35,7 @@ const $try_content__setup = ($scope) => {
 const $try_content__input_tick = /*@__PURE__*/ _closure_get("input_tick", ($scope) => {
 	if (!updating) $try_content__input_note__OR__input_tick($scope);
 });
-const $clicks = /*@__PURE__*/ _let("clicks/7", ($scope) => _text($scope["#text/1"], $scope.clicks));
+const $clicks = /*@__PURE__*/ _let_persisted("clicks/7", ($scope) => _text($scope["#text/1"], $scope.clicks));
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%c", $try_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clicks($scope, $scope.clicks + 1);
@@ -50,8 +50,8 @@ const $input = ($scope, input) => {
 	$input_tick($scope, input.tick);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($try_content__input_note);
-const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);
+const $input_note = /*@__PURE__*/ _const_persisted("input_note", $input_note__closure);
 const $input_tick__closure = /*@__PURE__*/ _closure($try_content__input_tick);
-const $input_tick = /*@__PURE__*/ _const("input_tick", $input_tick__closure);
-enableBranches();
+const $input_tick = /*@__PURE__*/ _const_persisted("input_tick", $input_tick__closure);
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

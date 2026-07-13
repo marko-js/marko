@@ -26,14 +26,14 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // template.marko
 const $classlayout_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.b, $scope._.b));
-const $classlayout_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $classlayout_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._, $scope._.b + 1);
 }));
 const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__count($scope);
 	$classlayout_content__setup__script($scope);
 };
-const $classlayout_content = _content_resume("a1", "<button id=tags> </button>", " D l", $classlayout_content__setup);
+const $classlayout_content = _content_resume("a0", "<button id=tags> </button>", " D l", $classlayout_content__setup);
 const $count = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($classlayout_content__count));
 
 // v:template.marko.hydrate-6.js

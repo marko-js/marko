@@ -13,7 +13,7 @@ const clickCount = (container: Element) =>
 // different one the server ships a fragment for exactly that hop, so the swap
 // applies fine-grained -- the `<let/count>` button state survives it.
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   // The label compute is server-only by design, so a plain client render of
   // the swapped-in panel is impossible.
   skip_csr: true,

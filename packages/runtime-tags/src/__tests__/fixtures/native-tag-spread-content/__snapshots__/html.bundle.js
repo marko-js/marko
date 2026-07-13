@@ -12,7 +12,7 @@ var my_div_default = _template("b", (input) => {
 	_html(`</button>${_el_resume($scope0_id, "b")}<span${_attrs(input, "c", $scope0_id, "span")}>Overridden</span>${_el_resume($scope0_id, "c")}<output${_attrs(input, "d", $scope0_id, "output")}>`);
 	_attr_content("d", $scope0_id, void 0);
 	_html(`</output>${_el_resume($scope0_id, "d")}`);
-	const CustomContent = { content: _content_resume("b2", () => {
+	const CustomContent = { content: _content_resume("b0", () => {
 		_scope_id();
 		_scope_reason();
 		_html("Custom content");
@@ -28,7 +28,7 @@ var my_div_default = _template("b", (input) => {
 	_attr_content("g", $scope0_id, CustomContent, 0);
 	_html("</em>");
 	_script($scope0_id, "b1");
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b2");
 	writeScope($scope0_id, { k: CustomContent?.content });
 });
 

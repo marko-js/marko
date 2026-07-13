@@ -19,7 +19,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template = "<h1> </h1><a>link</a><button> </button><section></section>";
 const $walks = "D l b D l b";
 const $if_content__setup = ($scope) => _text($scope["#text/0"], $scope.$global.params.sale);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
+const $count = /*@__PURE__*/ _let_persisted("count/5", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	_attr_class($scope["#section/4"], $scope.count && $scope.$global.params.tag && "hot");
 });
@@ -34,5 +34,5 @@ function $setup($scope) {
 	if (!updating) $if($scope, $scope.$global.params.sale ? 0 : 1);
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

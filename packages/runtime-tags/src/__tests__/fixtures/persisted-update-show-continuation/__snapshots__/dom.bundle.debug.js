@@ -10,7 +10,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 // template.marko
 const $template = "<h1> </h1><button class=inc>count <!></button><!><p class=detail> </p><span class=extra> </span><!><!>";
 const $walks = "D l Db%l%bD lD l%c";
-const $n = /*@__PURE__*/ _let("n/13", ($scope) => _text($scope["#text/2"], $scope.n));
+const $n = /*@__PURE__*/ _let_persisted("n/13", ($scope) => _text($scope["#text/2"], $scope.n));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));
@@ -29,5 +29,5 @@ const $input = ($scope, input) => {
 	$input_detail($scope, input.detail);
 	$input_extra($scope, input.extra);
 };
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

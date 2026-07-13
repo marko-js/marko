@@ -33,7 +33,7 @@ container.querySelector("button.count").click();
 UPDATE: .count::text@8 "0" => "1"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"reports","topic":"sales"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"reports","topic":"sales"}}`
 ```html
 <button
   class="count"
@@ -73,7 +73,7 @@ container.querySelector("button.count").click();
 UPDATE: .count::text@8 "1" => "2"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"home"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"home"}}`
 ```html
 <button
   class="count"
@@ -113,7 +113,7 @@ container.querySelector("button.count").click();
 UPDATE: .count::text@8 "2" => "3"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"reports","topic":"growth"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"reports","topic":"growth"}}`
 ```html
 <button
   class="count"

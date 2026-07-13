@@ -6,8 +6,8 @@ var child_default = _template("b", (input) => {
 	_html("<div");
 	_attrs_content(rest, "a", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "b1");
 	_script($scope0_id, "b0");
+	_script($scope0_id, "b1");
 	writeScope($scope0_id, { d: $valueChange });
 });
 

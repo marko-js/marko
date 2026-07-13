@@ -5,7 +5,7 @@ function $_return($scope) {
 _resume("b0", $_return);
 
 // template.marko
-const $setHtml_getter = _hoist_resume("a1", 2, "B1");
-const $setup__script = _script("a0", ($scope) => {
+const $setHtml_getter = _hoist_resume("a0", 2, "B1");
+const $setup__script = _script("a2", ($scope) => {
 	for (const fn of $setHtml_getter($scope)) fn("Hoist from custom tag");
 });

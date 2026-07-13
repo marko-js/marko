@@ -225,7 +225,16 @@ function resolveAwait(
 ) {
   const awaitBranch = scope[branchAccessor] as BranchScope;
   if (awaitBranch[AccessorProp.DetachedAwait]) {
-    attachAwaitBranch(scope, nodeAccessor as string, awaitBranch);
+    awaitBranch[AccessorProp.PendingScopes] =
+      awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
+    setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
+    awaitBranch[AccessorProp.DetachedAwait] = 0;
+
+    insertBranchBefore(
+      awaitBranch,
+      (scope[nodeAccessor] as ChildNode).parentNode!,
+      scope[nodeAccessor] as ChildNode,
+    );
     referenceNode.remove();
   }
   params?.(awaitBranch, [value]);

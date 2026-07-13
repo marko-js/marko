@@ -1,7 +1,7 @@
 // template.marko
 const $if_content__checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(1, ($scope) => _attr_input_checkedValue($scope, "a", $scope._.g, $scope._.h, "b"));
 const $if_content__checkedValue = /*@__PURE__*/ _if_closure(1, 0, $if_content__checkedValue__OR__$checkedValueChange);
-const $if_content__setup__script = _script("a2", ($scope) => _attr_input_checkedValue_script($scope, "a"));
+const $if_content__setup__script = _script("a1", ($scope) => _attr_input_checkedValue_script($scope, "a"));
 const $if_content__setup = ($scope) => {
 	$if_content__checkedValue._($scope);
 	$if_content__$checkedValueChange._($scope);
@@ -19,7 +19,7 @@ const $checkedValue = /*@__PURE__*/ _let(6, ($scope) => {
 	$checkedValue__OR__$checkedValueChange($scope);
 	$if_content__checkedValue($scope);
 });
-const $setup__script = _script("a1", ($scope) => {
+const $setup__script = _script("a2", ($scope) => {
 	_attr_input_checkedValue_script($scope, "a");
 	_attr_input_checkedValue_script($scope, "c");
 	_on($scope.e, "click", function() {

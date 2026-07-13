@@ -6,14 +6,14 @@
         "brotli": 140
       },
       "files": {
-        "tags/chip-list.marko": 62,
-        "template.marko": 261
+        "tags/chip-list.marko": 71,
+        "template.marko": 280
       }
     },
     "update.js": {
       "total": {
-        "min": 4361,
-        "brotli": 1833
+        "min": 4475,
+        "brotli": 1866
       },
       "files": {
         "tags/chip-list.marko.update.mjs": 309,
@@ -22,7 +22,7 @@
     }
   },
   "html": {
-    "min": 671,
-    "brotli": 365
+    "min": 747,
+    "brotli": 409
   }
 }

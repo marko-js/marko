@@ -42,6 +42,8 @@ INSERT: section > ul > li:nth-of-type(1) + li
 INSERT: section > ul > li:nth-of-type(2)::text("Hip Belt")
 INSERT: section > ul > li:nth-of-type(2)::text@0 + ::text(" costs ")
 INSERT: section > ul > li:nth-of-type(2)::text@8 + ::text("39")
+UPDATE: section > ul > li:nth-of-type(1) > #comment "M_* b" => "M_*5 b"
+UPDATE: section > ul > li:nth-of-type(2) > #comment "M_* b" => "M_*6 b"
 REMOVE: section::text("loading related…")
 INSERT: section > ul
 ```

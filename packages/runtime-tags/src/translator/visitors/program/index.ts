@@ -124,7 +124,7 @@ export default {
       analyzeUpdateGeneric(program);
       // After the generic classification: the enumeration reads the
       // updateGeneric flag to know whether update keys exist at all.
-      preallocateRegisterIds(program);
+      if (isPersisted()) preallocateRegisterIds(program);
     },
   },
   translate: {
@@ -186,7 +186,12 @@ export default {
             : t.callExpression(t.import(), [t.stringLiteral(relativePath)]);
           program.node.body = [
             t.importDeclaration(
-              [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
+              [
+                t.importSpecifier(
+                  t.identifier("ready"),
+                  t.identifier(isPersisted() ? "readyPersisted" : "ready"),
+                ),
+              ],
               t.stringLiteral(getRuntimePath("dom")),
             ),
             t.expressionStatement(

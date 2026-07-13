@@ -9,7 +9,7 @@ const $Reports_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
-	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", 0);
+	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
 _update_content("__tests__/template.marko_2_content", $Reports_content__update);
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
@@ -39,11 +39,11 @@ const $Reports_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%c", 
 const $Reports_content__setup = ($scope) => $Reports_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 const $Reports_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<!><!><!>", "b%c", $Reports_content__setup);
 const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>welcome home</p>", "b");
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $Home__OR__Reports = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.$global.view === "reports" ? $scope.Reports : $scope.Home));
-const $Home = /*@__PURE__*/ _const("Home", $Home__OR__Reports);
-const $Reports = /*@__PURE__*/ _const("Reports", $Home__OR__Reports);
+const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Reports);
+const $Reports = /*@__PURE__*/ _const_persisted("Reports", $Home__OR__Reports);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -53,5 +53,5 @@ function $setup($scope) {
 	if (!updating) $Reports($scope, { content: $Reports_content($scope) });
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

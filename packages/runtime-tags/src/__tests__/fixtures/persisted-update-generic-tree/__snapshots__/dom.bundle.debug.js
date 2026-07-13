@@ -33,7 +33,7 @@ const $input$3 = ($scope, input) => {
 	$input_tone$2($scope, input.tone);
 	$input_label$1($scope, input.label);
 };
-enableBranches();
+enableBranchesPersisted();
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$4, $walks$4, $setup$4, $input$3);
 
 // tags/card.marko
@@ -53,13 +53,13 @@ const $input$2 = ($scope, input) => {
 	$input_flagged$1($scope, input.flagged);
 	$input_meta$1($scope, input.meta);
 };
-enableBranches();
+enableBranchesPersisted();
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$3, $walks$3, $setup$3, $input$2);
 
 // tags/counter.marko
 const $template$2 = "<button class=counter> </button>";
 const $walks$2 = " D l";
-const $n = /*@__PURE__*/ _let("n/2", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = /*@__PURE__*/ _let_persisted("n/2", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script$1 = _script_update("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));
@@ -67,7 +67,7 @@ function $setup$2($scope) {
 	$n($scope, 0);
 	$setup__script$1($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$2, $walks$2, $setup$2);
 
 // tags/widget.marko
@@ -78,13 +78,13 @@ function $setup$1($scope) {
 	$setup$2($scope["#childScope/1"]);
 }
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
-enableBranches();
+enableBranchesPersisted();
 var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button class=bump>clicked <!></button>${_w0}${_w1}`)($template$3, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` Db%l/${_w0}&/${_w1}&`)($walks$3, $walks$1);
-const $count = /*@__PURE__*/ _let("count/11", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/11", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -105,5 +105,5 @@ const $input = ($scope, input) => {
 	$input_flagged($scope, input.flagged);
 	$input_widget($scope, input.widget);
 };
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

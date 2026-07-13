@@ -1,5 +1,5 @@
 // tags/item-form.marko
-const $qty = /*@__PURE__*/ _let(7, ($scope) => _attr_input_value($scope, "a", $scope.h, $valueChange($scope)));
+const $qty = /*@__PURE__*/ _let_persisted(7, ($scope) => _attr_input_value($scope, "a", $scope.h, $valueChange($scope)));
 const $setup__script = _script_update("b1", ($scope) => {
 	_attr_input_value_script($scope, "a");
 	_on($scope.c, "click", function() {
@@ -12,10 +12,10 @@ function $valueChange($scope) {
 	};
 }
 _resume("b0", $valueChange);
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
-enableBranches();
+enableBranchesPersisted();
 
 // tags/item-form.marko.update.mjs
 const $qty_seed = _update_signal("b2");

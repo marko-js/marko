@@ -32,6 +32,7 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
+        persistedFragment: true,
         view: "item",
         productId: 2,
         data: { cart: [] },
@@ -48,7 +49,7 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
+        persistedFragment: true,
         view: "cart",
         tag: "dev",
         data: { cart: [2] },

@@ -24,7 +24,7 @@ export const config: TestConfig = {
   // no fills-path construction material -- the define contents' render
   // graphs tree-shake out of the update chunk (see sizes.json), and the
   // hop's update merge compiles without a replay path.
-  persisted: "fragments",
+  persisted: true,
   // The computes are server-only by design, so a plain client render of
   // this template is impossible.
   skip_csr: true,
@@ -38,7 +38,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "dashboard",
         user: "ada",
@@ -80,7 +79,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "home",
       },

@@ -4,7 +4,7 @@ var layout_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
-	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason());
+	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "b1");
 	_html("</section>");
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, { g: _state_reason() && open });
@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 		o: $sg__input_title && $input_title__closures,
 		p: $sg__input_summary && $input_summary__closures,
 		q: $sg__input_specs && $input_specs__closures,
-		d: ($sg__input_view || _persisted_reason()) && _existing_scope($childScope)
+		d: $sg__input_view | _persisted_reason() && _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
 }, 1);

@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_set_serialize_reason($sg__input_related);
 		price_default({ amount: item.price });
 		_html(` ${_sep($sg__input_related)}${_escape(_hole_value($scope2_id, "Qb", item.name, _persisted_reason()))}${_el_resume($scope2_id, "b", $sg__input_related)}</li>`);
-		($sg__input_related || _persisted_reason()) && writeScope($scope2_id, { a: _existing_scope($childScope) });
+		$sg__input_related | _persisted_reason() && writeScope($scope2_id, { a: _existing_scope($childScope) });
 	}, function(item) {
 		return item.id;
 	}, $scope0_id, "f", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);

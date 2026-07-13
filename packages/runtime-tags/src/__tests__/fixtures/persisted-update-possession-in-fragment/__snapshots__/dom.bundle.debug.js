@@ -1,13 +1,13 @@
 // tags/layout.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", 0);
+	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $Widget_content__update = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", 0);
+	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
@@ -30,7 +30,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-enableBranches();
+enableBranchesPersisted();
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, "D%l", $setup$1, $input);
 
 // template.marko
@@ -61,12 +61,12 @@ const $Widget_content__WidgetY = /*@__PURE__*/ _closure_get("WidgetY", ($scope) 
 });
 const $WidgetX_content__setup = ($scope) => _text($scope["#text/0"], getLabel?.($scope.$global.topic));
 const $WidgetX_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span class=x>Widget X: <!></span>", "Db%l", $WidgetX_content__setup);
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $WidgetX = /*@__PURE__*/ _const("WidgetX");
-const $WidgetY = /*@__PURE__*/ _const("WidgetY");
+const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $WidgetX = /*@__PURE__*/ _const_persisted("WidgetX");
+const $WidgetY = /*@__PURE__*/ _const_persisted("WidgetY");
 const $Home__OR__Dashboard = /*@__PURE__*/ _or(8, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "dashboard" ? $scope.Dashboard : $scope.Home));
-const $Home = /*@__PURE__*/ _const("Home", $Home__OR__Dashboard);
-const $Dashboard = /*@__PURE__*/ _const("Dashboard", $Home__OR__Dashboard);
+const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Dashboard);
+const $Dashboard = /*@__PURE__*/ _const_persisted("Dashboard", $Home__OR__Dashboard);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -79,5 +79,5 @@ function $setup($scope) {
 	if (!updating) $Dashboard($scope, { content: $Dashboard_content($scope) });
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

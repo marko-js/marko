@@ -22,7 +22,6 @@ import {
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
-  ResumeSymbol,
   type Scope,
 } from "../common/types";
 import { _for_of, attachAwaitBranch } from "./control-flow";
@@ -39,10 +38,8 @@ import {
   _html,
   _text,
   _text_content,
-  removeChildNodes,
 } from "./dom";
 import { refreshEffects, run, runEffects, runId, setUpdating } from "./queue";
-import { setParentBranch } from "./renderer";
 import {
   _resume,
   bumpNavEpoch,
@@ -50,12 +47,28 @@ import {
   getRegisteredWithScope,
   getUpdateRoot,
   isReady,
+  readyPersisted,
   registeredValues,
 } from "./resume";
-import { removeAndDestroyBranch } from "./scope";
-import { getDebugKey } from "./walker";
+import {
+  applyBoundaryBody,
+  applyFragment,
+  BOUNDARY_SITE_PREFIX,
+  type FragmentContext,
+} from "./update-fragment";
 
 type UpdateSignal = (scope: Scope, value: unknown) => void;
+
+/** Starts a persisted lazy child when its keyed resume batch arrives. */
+export function _load_ready(readyId: string, load: () => Promise<unknown>) {
+  _resume(readyId, () => {
+    load().then(
+      () => readyPersisted(readyId),
+      () => 0,
+    );
+  });
+}
+
 type FragmentEntry = [
   anchorScopeId: number,
   accessor: string,
@@ -71,17 +84,6 @@ type FragmentEntry = [
 type BoundaryBodyEntry = [
   tryBranchId: number,
   kind: 0,
-  markerPrefix: string,
-  html: string,
-  scopeIds?: number[],
-];
-// A `<@placeholder by=>` recede: the matched try's stale body is replaced
-// by its placeholder (bracketed markup binding `PlaceholderBranch`) ahead
-// of the body's own later entry (the 1 in the kind slot discriminates from
-// BoundaryBodyEntry; fragment entries carry an accessor string there).
-type PlaceholderResetEntry = [
-  tryBranchId: number,
-  kind: 1,
   markerPrefix: string,
   html: string,
   scopeIds?: number[],
@@ -106,118 +108,7 @@ type UpdateFill =
   // HTML (see designs/persisted-pages-architecture.md, "Fragment frames").
   | FragmentEntry
   | BoundaryBodyEntry
-  | PlaceholderResetEntry
   | ReadyBatchEntry;
-
-/**
- * The possession echo (`x-marko-have`): what renderer the live page holds at
- * each dynamic-tag hop, so a same-route navigation whose update renders a
- * different renderer there ships a fragment for exactly that hop (see the html
- * writer's `possessed` / `_dynamic_tag`) instead of failing into a full
- * navigation. Walks the resumed scope tree collecting, per hop, a build-stable
- * site id -> renderer id from the string-valued `ConditionalRenderer:` keys --
- * dynamic tags serialize a renderer id string there, while `<if>`/loop
- * branches store a numeric branch index, so control flow is excluded for free.
- * The site id is read off a sibling key the html runtime stashed under
- * `HOP_SITE_PREFIX` ("Z"): the compiler's per-site register id, not the
- * runtime scope id -- document and update renders number scopes differently,
- * but the register id is a compile constant identical in both. A hop repeated
- * across a keyed `<for>` shares one site id, so the key appends the
- * iteration's loop key (`siteId + " " + loopKey`); positional loops expose no
- * loop key and still collide. Returns the map JSON-encoded, or "" when the
- * page holds no hops (header then omitted).
- *
- * The same walk also collects pending `<try>` boundaries: a matched boundary
- * whose placeholder shipped carries its site id under `BOUNDARY_SITE_PREFIX`
- * ("T"), tombstoned to `0` once the body resolves -- so a string value means
- * "still showing its placeholder". These echo into the same map under a
- * `"!"`-prefixed key (the reserved placeholder token, so it never collides
- * with a hop's site-id key) with sentinel `"1"`, and the server delivers the
- * matching try's body as a boundary-body entry instead of ordinary fills.
- *
- * `root` defaults to the resumed render's root; callers that already hold it
- * (the router pairs the root once for the apply) pass it to avoid re-pairing.
- */
-export function _have(root: Scope | undefined = getUpdateRoot()): string {
-  if (!root) return "";
-  const prefix = AccessorPrefix.ConditionalRenderer;
-  const possessed: Record<string, string> = {};
-  const seen = new Set<Scope>();
-  const stack: Scope[] = [root];
-  let found: undefined | 1;
-  while (stack.length) {
-    const scope = stack.pop()!;
-    if (seen.has(scope)) continue;
-    seen.add(scope);
-    for (const key in scope) {
-      const value = scope[key];
-      if (
-        typeof value === "string" &&
-        key.length > prefix.length &&
-        key.slice(0, prefix.length) === prefix
-      ) {
-        // Key by the site's build-stable id (stashed by the html runtime),
-        // not the runtime scope id -- document and update renders number
-        // scopes differently, but this id is a compile constant common to
-        // both. A hop with no stashed id (should not happen) is skipped -- at
-        // worst its swap falls back to a full nav.
-        const siteId = scope[HOP_SITE_PREFIX + key.slice(prefix.length)];
-        if (typeof siteId === "string") {
-          found = 1;
-          // Repeated hops (in a keyed `<for>`) share the site id, so append
-          // the iteration's loop key to distinguish them -- the server does
-          // the same from its live loop key (see `_dynamic_tag`).
-          const loopKey = scope[AccessorProp.LoopKey];
-          possessed[loopKey === undefined ? siteId : siteId + " " + loopKey] =
-            value;
-        }
-      } else if (
-        typeof value === "string" &&
-        key.length > BOUNDARY_SITE_PREFIX.length &&
-        key.slice(0, BOUNDARY_SITE_PREFIX.length) === BOUNDARY_SITE_PREFIX
-      ) {
-        found = 1;
-        const loopKey = scope[AccessorProp.LoopKey];
-        possessed["!" + value + (loopKey === undefined ? "" : " " + loopKey)] =
-          "1";
-      } else if (
-        typeof value === "string" &&
-        key.length > BOUNDARY_BY_PREFIX.length &&
-        key.slice(0, BOUNDARY_BY_PREFIX.length) === BOUNDARY_BY_PREFIX
-      ) {
-        // `<@placeholder by=>` identity (`<siteId> <identity>`): echoed as
-        // `"=" + identity` under the same "!"-keyed entry the pending half
-        // uses. Pending's `"1"` wins when both exist -- a boundary still
-        // showing its placeholder gets its body delivered as markup regardless
-        // of identity (no stale body to recede).
-        found = 1;
-        const sep = value.indexOf(" ");
-        const loopKey = scope[AccessorProp.LoopKey];
-        const entryKey =
-          "!" +
-          value.slice(0, sep) +
-          (loopKey === undefined ? "" : " " + loopKey);
-        if (possessed[entryKey] !== "1") {
-          possessed[entryKey] = "=" + value.slice(sep + 1);
-        }
-      } else if (value && typeof value === "object") {
-        // Follow scope links (child/owner/branch scopes carry a numeric id)
-        // and scope collections (`#BranchScopes` set, closure-scope arrays);
-        // dom nodes and plain data terminate. `seen` guards the owner cycle.
-        if (typeof (value as Scope)[AccessorProp.Id] === "number") {
-          stack.push(value as Scope);
-        } else if (value instanceof Set || Array.isArray(value)) {
-          for (const child of value as Iterable<unknown>) {
-            if (child && typeof child === "object") {
-              stack.push(child as Scope);
-            }
-          }
-        }
-      }
-    }
-  }
-  return found ? JSON.stringify(possessed) : "";
-}
 
 /**
  * Applies an update-render payload to a live (resumed) render.
@@ -235,13 +126,7 @@ export function applyUpdate(
   merge: (patch: Scope, live: Scope) => void,
   fills:
     | UpdateFill[]
-    | Exclude<
-        UpdateFill,
-        | FragmentEntry
-        | BoundaryBodyEntry
-        | PlaceholderResetEntry
-        | ReadyBatchEntry
-      >,
+    | Exclude<UpdateFill, FragmentEntry | BoundaryBodyEntry | ReadyBatchEntry>,
   liveRoot = getUpdateRoot(),
 ) {
   createUpdate(merge, liveRoot)(fills);
@@ -297,7 +182,7 @@ export function createUpdate(
       typeof data === "number"
         ? registryId
           ? // Update payloads may reference registrations the build
-            // intentionally dropped: fragment-first builds ship no content
+            // intentionally dropped: persisted builds ship no divergent content
             // renderers (divergence arrives as fragment frames), yet a matched
             // scope's spine still serializes renderer values by registry id.
             // Resolve to undefined -- nothing construction-related reads them
@@ -416,11 +301,6 @@ export function createUpdate(
           // no-op; deferring to the compiled dispatch lets a same-frame or
           // later-frame entry apply identically.
           getScope(fill[0])[PENDING_BODY_KEY] = fill;
-        } else if (fill[1] === 1) {
-          // A `<@placeholder by=>` recede's placeholder-reset entry --
-          // same stash-and-dispatch discipline as the body entry above,
-          // consumed by `_update_branch` before any body stash.
-          getScope(fill[0])[PENDING_PLACEHOLDER_KEY] = fill;
         } else {
           // Stash the fragment on its anchor's patch scope under the
           // reserved "P" prefix; the hop's merge consumes it (see
@@ -502,13 +382,7 @@ export function createUpdate(
 }
 
 let activePairs: Map<Scope, Scope> | undefined;
-let activeUpdate:
-  | {
-      getScope: (id: number) => Scope;
-      stamp: (scope: Scope, id: number) => boolean;
-      adopt: (id: number, scope: Scope) => Scope;
-    }
-  | undefined;
+let activeUpdate: FragmentContext | undefined;
 
 /**
  * Emitted at the top of compiled merge functions for sections with effects:
@@ -559,47 +433,13 @@ export function _update_branch(
   if (liveBranch[AccessorProp.DetachedAwait]) {
     attachAwaitBranch(live, accessor as string, liveBranch);
   }
-  // The `<@placeholder by=>` identity stash rides every update's fills;
-  // copying it here keeps the next navigation's echo comparing against the
-  // latest identity (fast in-place fills included).
-  const byKey = BOUNDARY_BY_PREFIX + (accessor as string);
-  if (typeof patch[byKey] === "string") {
-    live[byKey] = patch[byKey];
-  }
-  // Entry stashes are read through both the patch branch and the live branch:
-  // a placeholder reset adopts the live branch as the patch id (below), so a
-  // later frame's body entry stashes onto the live branch while this
-  // dispatch's `patchBranch` still resolves the pre-adoption patch object.
-  const resetEntry = ((patchBranch as BranchScope)[PENDING_PLACEHOLDER_KEY] ||
-    liveBranch[PENDING_PLACEHOLDER_KEY]) as PlaceholderResetEntry | undefined;
-  if (resetEntry) {
-    delete (patchBranch as BranchScope)[PENDING_PLACEHOLDER_KEY];
-    delete liveBranch[PENDING_PLACEHOLDER_KEY];
-    applyPlaceholderReset(
-      liveBranch,
-      resetEntry[2],
-      resetEntry[3],
-      resetEntry[4],
-      resetEntry[0],
-    );
-    // The boundary is genuinely pending again -- restore the pending-echo
-    // stash (site id parsed off the identity stash) so a navigation that
-    // supersedes this one before the body arrives takes the existing
-    // markup-delivery path for a client-side placeholder.
-    const by = live[byKey] as string | undefined;
-    if (by) {
-      live[BOUNDARY_SITE_PREFIX + (accessor as string)] = by.slice(
-        0,
-        by.indexOf(" "),
-      );
-    }
-  }
   const bodyEntry = ((patchBranch as BranchScope)[PENDING_BODY_KEY] ||
     liveBranch[PENDING_BODY_KEY]) as BoundaryBodyEntry | undefined;
   if (bodyEntry) {
     delete (patchBranch as BranchScope)[PENDING_BODY_KEY];
     delete liveBranch[PENDING_BODY_KEY];
     applyBoundaryBody(
+      activeUpdate!,
       liveBranch,
       bodyEntry[2],
       bodyEntry[3],
@@ -666,6 +506,22 @@ const flushPendingLoadUpdates = () => {
   }
 };
 
+const pendingDynamicUpdates: [patch: Scope, live: Scope, rendererId: string][] =
+  [];
+const flushPendingDynamicUpdates = () => {
+  for (let i = pendingDynamicUpdates.length; i--;) {
+    const [patch, live, rendererId] = pendingDynamicUpdates[i];
+    const merge = registeredValues[rendererId + UPDATE_MERGE_SUFFIX] as
+      UpdateMerge | undefined;
+    if (merge && live[AccessorProp.Gen]) {
+      pendingDynamicUpdates.splice(i, 1);
+      merge(patch, live);
+    } else if (!live[AccessorProp.Gen]) {
+      pendingDynamicUpdates.splice(i, 1);
+    }
+  }
+};
+
 // Keyed resume batches parked until their lazy module declares ready (see
 // `parkBatch` in `createUpdate` -- each batch's fills replay through the
 // apply that delivered it).
@@ -715,10 +571,16 @@ function installReadyUpdates() {
   if (!readyUpdatesInstalled) {
     readyUpdatesInstalled = 1;
     enableReadyUpdates(() => {
-      // Keyed batches first: a parked lazy-child merge below may read patch
-      // data the batch carries.
-      flushParkedReadyBatches();
-      flushPendingLoadUpdates();
+      setUpdating(1, runId);
+      try {
+        // Keyed batches first: parked lazy merges may read their patch data.
+        flushParkedReadyBatches();
+        flushPendingLoadUpdates();
+        flushPendingDynamicUpdates();
+        run();
+      } finally {
+        setUpdating(0);
+      }
     });
   }
 }
@@ -728,7 +590,6 @@ export function _update_dynamic(
   live: Scope,
   rendererKey: string,
   branchKey: string,
-  replay?: UpdateSignal | 0,
 ) {
   const rendererId = patch[rendererKey];
   if (typeof rendererId !== "string") return;
@@ -740,45 +601,26 @@ export function _update_dynamic(
   if (fragment && patchBranch && live[rendererKey] !== rendererId) {
     // The divergence point arrived as a fragment frame: swap the branch by
     // inserting the server-rendered subtree instead of client-constructing it
-    // from a registered renderer graph. Consume the entry (streamed frames
-    // re-dispatch this merge), then fall through to the ordinary merge
-    // dispatch: fragment subtrees share one object between patch and live
-    // scopes, so the merge's fills self-apply idempotently (hole-value keys
-    // were suppressed during capture) and later frames (async boundary bodies)
-    // dispatch through the same path into the fragment's scopes.
+    // from a registered renderer graph. Consume the entry and stop: its values
+    // are already baked into the HTML and its resume data has initialized the
+    // new scopes. Replaying the route merge against those intentionally sparse
+    // scopes can manufacture invalid inputs. Later async frames contain no
+    // fragment entry and take the ordinary merge path below.
     delete patch[FRAGMENT_PREFIX + accessor];
-    stampFragmentScopes(fragment[4]);
     applyFragment(
+      activeUpdate!,
       live,
       accessor,
       patchBranch as BranchScope,
       fragment[2],
       fragment[3],
+      fragment[4],
     );
     live[rendererKey] = rendererId;
-  } else if (replay && live[rendererKey] !== rendererId) {
-    // The patch rendered a different renderer than the live page holds -- a
-    // cross-route navigation's divergence point. Resolve the registered
-    // renderer (persisted builds register all content) bound to the patch
-    // branch's own owner scope -- its values are the update's data, so the
-    // fresh branch's closures read correct values (client-state reactivity
-    // from the owner into a swapped branch is inert, acceptable for stateless
-    // pass-through owners like route wrappers) -- and replay the dynamic tag's
-    // signal: the runtime swaps in a fresh branch from the renderer's static
-    // parts, and the merge below fills it from the patch. An unresolved id
-    // (target code not loaded) leaves the live branch untouched -- the sparse
-    // skip.
-    const renderer = getRegisteredWithScope(
-      rendererId,
-      (patchBranch?.[AccessorProp.Owner] as Scope) ||
-        (live[AccessorProp.Owner] as Scope) ||
-        live,
-    );
-    if (!renderer) return;
-    replay(live, renderer);
+    return;
   } else if (live[rendererKey] !== rendererId) {
-    // Fragment-first builds compile no replay: divergence is fragment-
-    // delivered, so a mismatch without a fragment entry (eg a same-route
+    // Divergence is fragment-delivered, so a mismatch without a fragment
+    // entry (eg a same-route
     // navigation changed a dynamic tag's renderer) cannot apply. Fail loudly
     // -- the router falls back to a full navigation -- rather than dispatching
     // the new content's merge against the stale branch. A mismatch with no
@@ -786,7 +628,7 @@ export function _update_dynamic(
     if (live[branchKey]) {
       throw new Error(
         MARKO_DEBUG
-          ? `A persisted update changed a dynamic tag's renderer (${rendererId}) without a fragment entry; fragment-first builds cannot construct it client-side.`
+          ? `A persisted update changed a dynamic tag's renderer (${rendererId}) without a fragment entry; persisted pages do not construct divergent content client-side.`
           : "update diverged",
       );
     }
@@ -799,17 +641,15 @@ export function _update_dynamic(
   if (patchBranch && liveBranch) {
     if (merge) {
       merge(patchBranch, liveBranch);
-    } else {
+    } else if (isNativeDynamicBranch(liveBranch, rendererId)) {
       // A tag-name renderer (native-tag branch) registers no merge, and its
       // body's content hop is runtime-created by the native wrapper
       // (html/dynamic-tag.ts), so no compiled merge line exists at any level.
       // Descend generically: place the branch scope's typed captures (dynamic
       // attrs on the element), then recurse into the nested hop through the
-      // same renderer-id-keyed link. Fragment subtrees are inert here as
-      // everywhere (patch IS live: captures suppressed, renderer keys already
-      // equal). Known misfire: a `_load_template` lazy dynamic-tag target,
-      // whose merge is genuinely unregistered until it loads -- see
-      // agent-feedback/bugs.md.
+      // same renderer-id-keyed link. A component renderer whose lazy module is
+      // not registered yet is parked below instead of being mistaken for a
+      // native branch.
       _update_scope(patchBranch, liveBranch);
       for (const key in patchBranch) {
         if (
@@ -824,12 +664,37 @@ export function _update_dynamic(
             key,
             AccessorPrefix.BranchScopes +
               key.slice(AccessorPrefix.ConditionalRenderer.length),
-            0,
           );
         }
       }
+    } else {
+      // The matching renderer is a lazy component whose update merge has not
+      // registered yet. Keep only the newest patch for this live branch and
+      // replay it when the module declares ready.
+      for (const pending of pendingDynamicUpdates) {
+        if (pending[1] === liveBranch && pending[2] === rendererId) {
+          pending[0] = patchBranch;
+          return;
+        }
+      }
+      installReadyUpdates();
+      pendingDynamicUpdates.push([patchBranch, liveBranch, rendererId]);
     }
   }
+}
+
+function isNativeDynamicBranch(branch: Scope, rendererId: string) {
+  const start = branch[AccessorProp.StartNode];
+  const end = branch[AccessorProp.EndNode];
+  const element =
+    start === end
+      ? start
+      : start?.nextSibling?.nextSibling === end
+        ? start.nextSibling
+        : undefined;
+  return (
+    element?.nodeType === 1 && (element as Element).localName === rendererId
+  );
 }
 
 // ---- Fragment frames --------------------------------------------------
@@ -842,380 +707,12 @@ export function _update_dynamic(
 // Reserved accessor prefix "P" carries the entry on the anchor's patch scope.
 const FRAGMENT_PREFIX = "P";
 
-// The build-stable per-site id the possession echo (`_have`) reads, stashed on
-// each hop scope by the html runtime under this reserved prefix ("Z", not an
-// AccessorPrefix enum member so it stays out of client bundles). Matches
-// `HOP_SITE_PREFIX` in html/dynamic-tag; same MARKO_DEBUG gate so document and
-// live builds agree within a build.
-const HOP_SITE_PREFIX = MARKO_DEBUG ? "HopSite:" : "Z";
-
-// A `<try>` placeholder boundary's build-stable site id, stashed on its parent
-// scope when a document render's placeholder ships and tombstoned to `0` once
-// the boundary resolves (server-side at the body's first flush, or client-side
-// in `_update_branch` when an update-delivered body applies). A string value
-// is what `_have` reads as "still pending". Reserved prefix "T", mirroring
-// `HOP_SITE_PREFIX`.
-const BOUNDARY_SITE_PREFIX = MARKO_DEBUG ? "BoundarySite:" : "T";
-
-// A `<@placeholder by=>` boundary's identity stash (`<siteId> <identity>` on
-// the parent scope; reserved "U"). `_have` echoes it as `"=" + identity` under
-// the same "!"-keyed entry the pending half uses (pending's `"1"` wins); the
-// server recedes the boundary to its placeholder when a navigation's
-// newly-evaluated identity differs. Kept current by `_update_branch`, which
-// copies the patch's stash onto the live scope on every dispatch. See
-// designs/persisted-pages-recede.md.
-const BOUNDARY_BY_PREFIX = MARKO_DEBUG ? "BoundaryBy:" : "U";
-
 // A boundary-body entry stashed on the try's own patch scope (the object
 // `_update_branch`'s `patchBranch` resolves to) so the compiled branch
 // dispatch can apply it once pairing resolves the live branch -- see
 // `applyBoundaryBody`. Bare reserved token (not a letter, so it never collides
 // with an `AccessorProp`/`AccessorPrefix` key regardless of key length).
 const PENDING_BODY_KEY = "!";
-
-// A `<@placeholder by=>` recede's placeholder-reset entry, stashed the same
-// way and consumed by `_update_branch` before any body stash. Same bare
-// reserved-token rule as "!".
-const PENDING_PLACEHOLDER_KEY = "?";
-
-// Every scope a fragment (or boundary body) serialized joins the live tree
-// -- including dom-less scopes (state and tag-variable wiring only) the
-// markup walk can never reach. Stamping gives them live identity: $global,
-// generation (their payload effects run), and self-pairing.
-function stampFragmentScopes(ids: number[] | undefined) {
-  if (ids) {
-    const { getScope, stamp } = activeUpdate!;
-    for (const id of ids) {
-      stamp(getScope(id), id);
-    }
-  }
-}
-
-function applyFragment(
-  live: Scope,
-  accessor: string,
-  branch: BranchScope,
-  markerPrefix: string,
-  html: string,
-) {
-  const { stamp } = activeUpdate!;
-  const marker = live[accessor] as ChildNode;
-  const old = live[AccessorPrefix.BranchScopes + accessor] as
-    BranchScope | undefined;
-  const tpl = document.createElement("template");
-  tpl.innerHTML = html;
-  const { touched, orphans } = walkFragment(tpl.content, markerPrefix);
-  // Branch boundary nodes must be owned by the branch, so bookend the content
-  // with empty text nodes (the resume walker's discipline). The fragment's
-  // edge nodes can be marker comments the runtime later consumes -- e.g. a
-  // single-node conditional toggling on replaces its marker -- leaving the
-  // boundary dangling and sending a later branch removal past the fragment.
-  const first = tpl.content.insertBefore(new Text(), tpl.content.firstChild);
-  const last = tpl.content.appendChild(new Text());
-  marker.parentNode!.insertBefore(tpl.content, marker);
-  if (old) removeAndDestroyBranch(old);
-  stamp(branch, 0);
-  branch[AccessorProp.StartNode] = first;
-  branch[AccessorProp.EndNode] = last;
-  branch[AccessorProp.Owner] ||= live;
-  setParentBranch(
-    branch,
-    live[AccessorProp.ClosestBranch] as BranchScope | undefined,
-  );
-  live[AccessorPrefix.BranchScopes + accessor] = branch;
-  // Top-level inner branches join the hop branch's tree so destroy cascades
-  // reach them; scopes with no enclosing bracket link coarsely to the hop
-  // branch (deferred-owner precision is a follow-up).
-  for (const orphan of orphans) {
-    if (!orphan[AccessorProp.ParentBranch]) {
-      setParentBranch(orphan, branch);
-    }
-  }
-  for (const scope of touched) {
-    scope[AccessorProp.ClosestBranch] ||= branch;
-  }
-}
-
-/**
- * Applies a boundary-body entry: a `<try>` placeholder boundary's resolved
- * body. Two shapes reach here (see `_update_branch`):
- *
- * - **Fragment-created**: the body arrives after the fragment frame that
- *   shipped the placeholder, bracketed as a dedicated `PlaceholderBranch` (the
- *   reserved "!" accessor token). The new markup swaps in where that
- *   placeholder branch sits, which is then destroyed.
- * - **Matched (document-resumed)**: no separate placeholder branch exists -- a
- *   document render's placeholder resumes as the try's own branch, so the
- *   still-pending try's own Start/EndNode range shows the placeholder. The new
- *   markup replaces that range's contents wholesale, keeping the branch's own
- *   boundary nodes so its identity survives the swap.
- *
- * In both cases the body's markup walks like a fragment (its scope data
- * already landed through this frame's fills). No-ops if the try branch is gone
- * or destroyed; `_update_branch` already resolved a live, paired branch, so
- * that only guards a race within the same apply.
- */
-function applyBoundaryBody(
-  tryBranch: BranchScope,
-  markerPrefix: string,
-  html: string,
-  scopeIds?: number[],
-  patchBranchId?: number,
-) {
-  if (!tryBranch[AccessorProp.Gen]) return;
-  const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
-  // Adopt the live try branch as the patch id the body's markup references
-  // (matched boundaries: the update render numbered this try in its own id
-  // space, and the walk below must bind node refs and the body's branch wiring
-  // onto the live scope graph, or the next navigation's fills dispatch into
-  // stale placeholder-era links and sparse-skip). Fragment-created boundaries
-  // already ARE their patch scope, so the adopt no-ops there; either way this
-  // frame's later fills and streamed follow-up frames now merge onto the live
-  // branch directly.
-  if (patchBranchId) activeUpdate!.adopt(patchBranchId, tryBranch);
-  // Give the body's dom-less scopes (state/tag-variable wiring only, the
-  // markup walk can't reach them) live identity, as the fragment path stamps
-  // `fragment[4]`. Without this their payload effects are generation-gated out
-  // and `$global` reads on them see undefined.
-  stampFragmentScopes(scopeIds);
-  const tpl = document.createElement("template");
-  tpl.innerHTML = html;
-  const { touched, orphans } = walkFragment(tpl.content, markerPrefix);
-  if (placeholderBranch) {
-    tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
-      tpl.content,
-      placeholderBranch[AccessorProp.StartNode],
-    );
-    removeAndDestroyBranch(placeholderBranch);
-  } else {
-    const start = tryBranch[AccessorProp.StartNode];
-    const end = tryBranch[AccessorProp.EndNode];
-    if (start !== end && start.nextSibling !== end) {
-      removeChildNodes(
-        start.nextSibling as ChildNode,
-        end.previousSibling as ChildNode,
-      );
-    }
-    end.parentNode!.insertBefore(tpl.content, end);
-  }
-  for (const orphan of orphans) {
-    if (!orphan[AccessorProp.ParentBranch]) {
-      setParentBranch(orphan, tryBranch);
-    }
-  }
-  for (const scope of touched) {
-    scope[AccessorProp.ClosestBranch] ||= tryBranch;
-  }
-}
-
-/**
- * Applies a `<@placeholder by=>` recede: the matched try's identity changed
- * and its new body is still pending, so the stale body is replaced by the
- * boundary's placeholder ahead of the body's own entry. The markup is
- * bracketed like a fragment-shipped pending boundary's placeholder (the
- * reserved "!" accessor token), so the walk binds it to `PlaceholderBranch` on
- * the adopted live try branch -- the body entry then swaps it out through
- * `applyBoundaryBody`'s placeholder path with no new machinery. Content
- * replacement keeps the try branch's own boundary nodes (its identity
- * survives); `by=` is also the author's declaration that state inside the
- * boundary does not survive a key change.
- */
-function applyPlaceholderReset(
-  tryBranch: BranchScope,
-  markerPrefix: string,
-  html: string,
-  scopeIds?: number[],
-  patchBranchId?: number,
-) {
-  if (!tryBranch[AccessorProp.Gen]) return;
-  // Adopt the live branch as the patch id the placeholder's brackets
-  // reference, as `applyBoundaryBody`'s matched path does -- the "!" bracket's
-  // parent token is this try's update-render id, and `PlaceholderBranch` must
-  // bind onto the live scope graph.
-  if (patchBranchId) activeUpdate!.adopt(patchBranchId, tryBranch);
-  stampFragmentScopes(scopeIds);
-  const tpl = document.createElement("template");
-  tpl.innerHTML = html;
-  const { touched, orphans } = walkFragment(tpl.content, markerPrefix);
-  const start = tryBranch[AccessorProp.StartNode];
-  const end = tryBranch[AccessorProp.EndNode];
-  if (start !== end && start.nextSibling !== end) {
-    removeChildNodes(
-      start.nextSibling as ChildNode,
-      end.previousSibling as ChildNode,
-    );
-  }
-  end.parentNode!.insertBefore(tpl.content, end);
-  for (const orphan of orphans) {
-    if (!orphan[AccessorProp.ParentBranch]) {
-      setParentBranch(orphan, tryBranch);
-    }
-  }
-  for (const scope of touched) {
-    scope[AccessorProp.ClosestBranch] ||= tryBranch;
-  }
-}
-
-// A sync-only port of the resume walker's visit processing (dom/resume.ts
-// `render.m` + `createVisitBranches`) against patch scopes: node visits bind
-// element/text refs (continuation form included), branch brackets establish
-// start/end nodes, owners, branch lists, and the parent branch tree, plus the
-// placeholder bracket ("!") for pending boundary bodies. No await counters or
-// reorder anchors -- async content is only supported behind placeholder
-// boundaries (each body arrives as its own entry). Unifying with the resume
-// walker is a follow-up.
-function walkFragment(root: ParentNode, prefix: string) {
-  const { getScope, stamp } = activeUpdate!;
-  const visits: Comment[] = [];
-  const treeWalker = document.createTreeWalker(root, 128 /* comments */);
-  for (let node; (node = treeWalker.nextNode());) {
-    if ((node as Comment).data.startsWith(prefix)) {
-      visits.push(node as Comment);
-    }
-  }
-
-  const touched: Scope[] = [];
-  const scopeOf = (id: string) => {
-    const scope = getScope(+id);
-    if (stamp(scope, +id)) touched.push(scope);
-    return scope;
-  };
-
-  const branchStarts: Comment[] = [];
-  const branchScopesStack: (BranchScope[] | undefined)[] = [];
-  const orphanBranches: BranchScope[] = [];
-  let curBranchScopes: BranchScope[] | undefined;
-  let lastNodeScopeId = "";
-  let visitText = "";
-  let tokenIndex = 0;
-  let lastToken = "";
-  const nextToken = () =>
-    (lastToken = visitText.slice(
-      tokenIndex,
-      (tokenIndex =
-        visitText.indexOf(" ", tokenIndex) + 1 || visitText.length + 1) - 1,
-    ));
-
-  for (const visit of visits) {
-    visitText = visit.data;
-    tokenIndex = prefix.length;
-    const visitType = visitText[tokenIndex++] as ResumeSymbol;
-
-    if (visitType === ResumeSymbol.Node) {
-      const scopeId = nextToken();
-      const scope = scopeOf(
-        scopeId ? (lastNodeScopeId = scopeId) : lastNodeScopeId,
-      );
-      const accessor = nextToken();
-      const prev = visit.previousSibling;
-      scope[accessor] =
-        prev && (prev.nodeType < 8 || (prev as Comment).data)
-          ? prev
-          : visit.parentNode!.insertBefore(new Text(), visit);
-      continue;
-    }
-
-    lastNodeScopeId = "";
-    let visitScope: Scope | undefined;
-    let accessor: string | undefined;
-    let singleNode = false;
-    let endedBranches: BranchScope[] | undefined;
-    let startVisit: ChildNode = visit;
-    const parent = visit.parentNode!;
-
-    if (visitType !== ResumeSymbol.BranchStart) {
-      visitScope = scopeOf(nextToken());
-      if (nextToken() === "!") {
-        // A placeholder bracket (see the server's `flushPlaceholder`): the
-        // ended branch is the try branch's placeholder branch -- swapped
-        // out when the boundary body's entry arrives -- and there is no
-        // node ref to bind.
-        accessor = AccessorProp.PlaceholderBranch;
-      } else {
-        visitScope[lastToken] =
-          visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
-          visitType === ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-            ? parent
-            : visit;
-        accessor = AccessorPrefix.BranchScopes + lastToken;
-      }
-      singleNode =
-        visitType !== ResumeSymbol.BranchEnd &&
-        visitType !== ResumeSymbol.BranchEndOnlyChildInParent;
-      nextToken();
-    } else {
-      // For starts the first token is the optional first ended branch id
-      // (loop-iteration flush markers).
-      nextToken();
-    }
-
-    let i = orphanBranches.length;
-    let branchId: number;
-    while ((branchId = +lastToken)) {
-      const branch = scopeOf(lastToken) as BranchScope;
-      (endedBranches ||= []).push(branch);
-
-      if (singleNode) {
-        while (
-          startVisit.previousSibling &&
-          ~visits.indexOf((startVisit = startVisit.previousSibling) as Comment)
-        );
-        branch[AccessorProp.Owner] ??= visitScope!;
-        branch[AccessorProp.EndNode] = branch[AccessorProp.StartNode] =
-          startVisit;
-        if (visitType === ResumeSymbol.BranchEndNativeTag) {
-          branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : "a"] = startVisit;
-        }
-      } else {
-        curBranchScopes = curBranchScopes
-          ? (curBranchScopes.push(branch), curBranchScopes)
-          : [branch];
-        if (accessor) {
-          visitScope![accessor] =
-            curBranchScopes.length > 1 ? curBranchScopes : curBranchScopes[0];
-          for (const scope of curBranchScopes) {
-            scope[AccessorProp.Owner] ??= visitScope!;
-          }
-          curBranchScopes = branchScopesStack.pop();
-        }
-        startVisit = branchStarts.pop()!;
-        if (parent !== startVisit.parentNode) {
-          parent.prepend(startVisit);
-        }
-        branch[AccessorProp.StartNode] = startVisit;
-        branch[AccessorProp.EndNode] =
-          visit.previousSibling === startVisit
-            ? startVisit
-            : parent.insertBefore(new Text(), visit);
-      }
-
-      while (i && orphanBranches[--i][AccessorProp.Id] > branchId) {
-        setParentBranch(orphanBranches.pop()!, branch);
-      }
-
-      nextToken();
-    }
-
-    if (endedBranches) {
-      for (const ended of endedBranches) orphanBranches.push(ended);
-      if (singleNode) {
-        visitScope![accessor!] =
-          endedBranches.length > 1 ? endedBranches.reverse() : endedBranches[0];
-      }
-    }
-
-    if (visitType === ResumeSymbol.BranchStart) {
-      if (!endedBranches) {
-        branchScopesStack.push(curBranchScopes);
-        curBranchScopes = undefined;
-      }
-      branchStarts.push(visit);
-    }
-  }
-
-  return { touched, orphans: orphanBranches };
-}
 
 // The typed patch-key prefixes hole captures serialize under (mirrors of the
 // translator's `getUpdateHolePrefix`/`getUpdateHtmlPrefix`/`getUpdateAttrPrefix`).
@@ -1271,7 +768,15 @@ export function _update_scope(patch: Scope, live: Scope) {
         } else {
           const tag = (live[accessor] as Element).tagName;
           if (name === "value" && (tag === "INPUT" || tag === "TEXTAREA")) {
-            _attr_input_value_default(live, accessor, value);
+            const input = live[accessor] as HTMLInputElement;
+            if (tag === "INPUT" && isFormMetadataInput(input)) {
+              // This generic path applies a captured attr hole directly.
+              // Metadata/button inputs are not user-editable state, so their
+              // live value must follow the server-rendered attribute.
+              _attr(input, "value", value);
+            } else {
+              _attr_input_value_default(live, accessor, value);
+            }
           } else if (name === "value" && tag === "SELECT") {
             _attr_select_value_default(live, accessor, value);
           } else if (name === "checked" && tag === "INPUT") {
@@ -1287,6 +792,21 @@ export function _update_scope(patch: Scope, live: Scope) {
         }
       }
     }
+  }
+}
+
+function isFormMetadataInput(el: HTMLInputElement) {
+  switch (el.type) {
+    case "button":
+    case "checkbox":
+    case "hidden":
+    case "image":
+    case "radio":
+    case "reset":
+    case "submit":
+      return true;
+    default:
+      return false;
   }
 }
 

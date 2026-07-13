@@ -126,23 +126,17 @@ UPDATE: .count::text@8 "0" => "1"
   >
     added 0 of 2 (0 in cart)
   </button>
+  loading recommendations…
 </section>
 ```
 ## Change
 ```
-REMOVE: .add + nav
-REMOVE: .add + p
-INSERT: section > :is(.thumb, .title, .price, .add)
-UPDATE: .thumb[src] null => "/images/2.svg"
-UPDATE: .thumb[alt] null => "Product 2"
-UPDATE: .title::text " " => "Product 2"
-UPDATE: .price::text@1 "" => "200.50"
-UPDATE: .add::text@11 "" => "2"
-UPDATE: .add::text@14 "" => "0"
-UPDATE: .add::text@6 "" => "0"
+INSERT: section > :is(.thumb, .title, .price, .add, ::text("loading recommendations…"))
+REMOVE: section > nav
+REMOVE: section > p
 ```
 
-# Update `{"$global":{"persisted":true,"view":"item","productId":2,"data":{"cart":[]},"serializedGlobals":{"data":true}}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"item","productId":2,"data":{"cart":[]},"serializedGlobals":{"data":true}}}`
 ```html
 <button
   class="count"
@@ -192,8 +186,7 @@ UPDATE: .add::text@6 "" => "0"
 ## Change
 ```
 INSERT: .add + .recs
-INSERT: .recs > li
-INSERT: .recs > li:nth-of-type(1) + li
+REMOVE: .recs + ::text("loading recommendations…")
 ```
 
 # Update
@@ -252,7 +245,7 @@ UPDATE: .add::text@6 "0" => "1"
 UPDATE: .add::text@14 "0" => "1"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"view":"cart","tag":"dev","data":{"cart":[2]},"serializedGlobals":{"data":true}}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"cart","tag":"dev","data":{"cart":[2]},"serializedGlobals":{"data":true}}}`
 ```html
 <button
   class="count"
@@ -303,18 +296,12 @@ UPDATE: .add::text@14 "0" => "1"
 ```
 ## Change
 ```
-INSERT: section > .tags
-REMOVE: .total + img
-REMOVE: .total + h2
-REMOVE: .total + div
-REMOVE: .total + button
-REMOVE: .total + ul
-INSERT: .tags > b
-INSERT: .tags > b:nth-of-type(1) + .on
-INSERT: .on + b
-INSERT: .tags + :is(.cart, .total)
-UPDATE: .total::text@7 "" => "200.5"
-INSERT: .cart > li
+INSERT: section > :is(.tags, .cart, .total)
+REMOVE: section > img
+REMOVE: section > h2
+REMOVE: section > div
+REMOVE: section > button
+REMOVE: section > ul
 ```
 
 # Update

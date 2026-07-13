@@ -10,7 +10,7 @@ const clickBump = (container: Element) =>
 // template.marko): the echo-proven frame hop stays a matched patch and
 // the divergence one hop deeper takes the fragment.
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   // Possession proofs need the html runtime's hop-site stashes; a client
   // render never writes them.
   skip_csr: true,
@@ -23,7 +23,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "dashboard",
         user: "ada",
@@ -40,7 +39,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "home",
         user: "grace",

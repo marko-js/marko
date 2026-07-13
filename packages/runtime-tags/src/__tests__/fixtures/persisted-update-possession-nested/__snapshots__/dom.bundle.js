@@ -1,23 +1,23 @@
 // tags/shell.marko
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/shell.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa", 0);
+	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 var shell_marko_update_default = _resume("b1", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");
 const $Page_content__update = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa", 0);
+	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

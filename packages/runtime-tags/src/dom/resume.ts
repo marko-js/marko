@@ -72,10 +72,13 @@ export function enableBranches() {
   if (!branchesEnabled) {
     branchesEnabled = 1;
     skipDestroyedRenders();
-    // Branch modules may execute after a flush's walk already ran (module
-    // ordering, lazy chunks, persisted update entries): reprocess the branch
-    // visits those walks retained. No-op before runtime init (`for..in` over
-    // undefined iterates nothing).
+  }
+}
+
+/** Persisted entries can enable branches after the initial resume walk. */
+export function enableBranchesPersisted() {
+  if (!branchesEnabled) {
+    enableBranches();
     for (const renderId in curRenders) {
       runResumeEffects(curRenders[renderId]);
     }
@@ -87,16 +90,15 @@ export function ready(readyId: string) {
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
-  // A lazy module just landed: flush persisted-update patches parked while
-  // it was loading (see dom/update.ts `_update_load`). Hooked so
-  // non-persisted builds carry only this call.
+}
+
+/** Persisted lazy entries additionally replay updates parked while loading. */
+export function readyPersisted(readyId: string) {
+  ready(readyId);
   flushReadyUpdates();
 }
 
-/** Flushes parked lazy-child patches (see dom/update.ts `_update_load`).
- * Called by `ready()` and the CSR lazy path (dom/load.ts `insertLoaded`);
- * the slot lives in this core module so neither the load runtime nor the
- * persisted applier imports the other. */
+/** Flushes parked lazy-child patches (see dom/update.ts `_update_load`). */
 export let flushReadyUpdates: () => void = () => {};
 export function enableReadyUpdates(hook: () => void) {
   flushReadyUpdates = hook;
@@ -423,45 +425,26 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
 
           let retained = 0;
-          let lastNodeVisitScopeId = "";
           for (visit of (visits = render.v)) {
             lastTokenIndex = render.i.length;
             visitText = visit.data!;
             visitType = visitText[lastTokenIndex++] as ResumeSymbol;
+            visitScope = getScope(nextToken(/* read scope id */));
 
             if (visitType === ResumeSymbol.Node) {
-              // Node visits may use the continuation form (`M_* <accessor>`,
-              // an empty scope-id token) reusing the previous Node visit's
-              // scope id, mirroring the writer's per-chunk run register:
-              // persisted documents emit runs of same-scope markers, and
-              // every possibly-reordered chunk opens with a full form. The
-              // leading space keeps this key in the inline walker lookup
-              // disjoint from the reorder runtime's anchor keys.
-              const scopeId = nextToken(/* scope id; empty = continuation */);
-              visitScope = getScope(
-                scopeId
-                  ? (lastNodeVisitScopeId = scopeId)
-                  : lastNodeVisitScopeId,
-              );
-              const accessor = nextToken(/* read accessor */);
               const prev = visit.previousSibling;
-              visitScope[accessor] =
+              visitScope[nextToken(/* read accessor */)] =
                 prev &&
                 (prev.nodeType < 8 /* Node.COMMENT_NODE */ ||
                   (prev as Comment).data)
                   ? prev
                   : visit.parentNode!.insertBefore(new Text(), visit);
-            } else if (
-              ((lastNodeVisitScopeId = ""),
-              (visitScope = getScope(nextToken(/* read scope id */))),
-              branchesEnabled)
-            ) {
+            } else if (branchesEnabled) {
               (visitBranches ||= createVisitBranches())();
-            } else {
-              // A module that enables branches may not have executed yet
-              // (module ordering, lazy chunks, persisted update entries) --
-              // compact the visit in place; `enableBranches`/`ready`
-              // rewalk to reprocess.
+            } else if (render.b) {
+              // Pending ready data means a lazily loaded module may still
+              // enable branches; its visits ride the same flush as the
+              // ready data, so they are compacted in place to reprocess.
               visits[retained++] = visit;
             }
           }

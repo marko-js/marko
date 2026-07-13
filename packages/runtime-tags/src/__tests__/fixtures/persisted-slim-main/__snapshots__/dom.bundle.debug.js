@@ -110,10 +110,10 @@ const $search = ($scope, search) => {
 	if (!updating) $results($scope, getResults(search));
 };
 const $search_page__closure = /*@__PURE__*/ _closure($for_content__search_page);
-const $search_page = /*@__PURE__*/ _const("search_page", $search_page__closure);
+const $search_page = /*@__PURE__*/ _const_persisted("search_page", $search_page__closure);
 const $search_q__closure = /*@__PURE__*/ _closure($else_content__search_q);
-const $search_q = /*@__PURE__*/ _const("search_q", $search_q__closure);
-const $count = /*@__PURE__*/ _let("count/11", ($scope) => _text($scope["#text/1"], $scope.count));
+const $search_q = /*@__PURE__*/ _const_persisted("search_q", $search_q__closure);
+const $count = /*@__PURE__*/ _let_persisted("count/11", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -126,7 +126,7 @@ const $if = /*@__PURE__*/ _if("#text/2", "<ul class=items></ul><nav class=pagina
 const $results_total = ($scope, results_total) => {
 	if (!updating) $if($scope, results_total ? 0 : 1);
 };
-const $results_items = /*@__PURE__*/ _const("results_items", $if_content__results_items);
-const $results_totalPages = /*@__PURE__*/ _const("results_totalPages", $if_content__results_totalPages);
-enableBranches();
+const $results_items = /*@__PURE__*/ _const_persisted("results_items", $if_content__results_items);
+const $results_totalPages = /*@__PURE__*/ _const_persisted("results_totalPages", $if_content__results_totalPages);
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

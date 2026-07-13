@@ -33,6 +33,7 @@ export {
   _attr_input_checkedValue_script,
   _attr_input_value,
   _attr_input_value_default,
+  _attr_input_value_default_persisted,
   _attr_input_value_script,
   _attr_select_value,
   _attr_select_value_default,
@@ -70,7 +71,6 @@ export {
   _load_idle_trigger,
   _load_media_trigger,
   _load_race_trigger,
-  _load_ready,
   _load_setup,
   _load_signal,
   _load_template,
@@ -88,11 +88,13 @@ export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
   enableBranches as _enable_branches,
+  enableBranchesPersisted as _enable_branches_persisted,
   _resume,
   _var_resume,
   init,
   initEmbedded,
   ready,
+  readyPersisted,
 } from "./dom/resume";
 export { _assert_init } from "./dom/scope";
 export {
@@ -100,6 +102,7 @@ export {
   _closure,
   _closure_get,
   _const,
+  _const_persisted,
   _el_read,
   _for_closure,
   _for_selector,
@@ -109,6 +112,8 @@ export {
   _if_closure,
   _let,
   _let_change,
+  _let_change_persisted,
+  _let_persisted,
   _or,
   _return,
   _return_change,
@@ -117,18 +122,3 @@ export {
   _var_change,
 } from "./dom/signals";
 export { _template } from "./dom/template";
-export {
-  _have,
-  _update_branch,
-  _update_content,
-  _update_dynamic,
-  _update_for,
-  _update_html,
-  _update_load,
-  _update_pair,
-  _update_scope,
-  _update_seed,
-  _update_signal,
-  applyUpdate,
-  createUpdate,
-} from "./dom/update";

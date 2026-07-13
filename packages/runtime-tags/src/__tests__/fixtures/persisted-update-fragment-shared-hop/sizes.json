@@ -6,25 +6,25 @@
         "brotli": 153
       },
       "files": {
-        "tags/layout.marko": 59,
-        "tags/frame.marko": 58,
-        "template.marko": 568
+        "tags/layout.marko": 68,
+        "tags/frame.marko": 67,
+        "template.marko": 597
       }
     },
     "update.js": {
       "total": {
-        "min": 6310,
-        "brotli": 2599
+        "min": 6574,
+        "brotli": 2697
       },
       "files": {
-        "tags/layout.marko.update.mjs": 217,
-        "tags/frame.marko.update.mjs": 215,
+        "tags/layout.marko.update.mjs": 214,
+        "tags/frame.marko.update.mjs": 212,
         "template.marko.update.mjs": 793
       }
     }
   },
   "html": {
-    "min": 591,
-    "brotli": 354
+    "min": 667,
+    "brotli": 398
   }
 }

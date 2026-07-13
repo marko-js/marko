@@ -11,7 +11,6 @@ import {
 import { addAwaitCounter, renderCatch } from "./control-flow";
 import { _enable_catch, queueAsyncRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
-import { _resume, flushReadyUpdates, ready } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -61,25 +60,6 @@ export function _load_template(id: string, load: () => Promise<Renderer>) {
     ),
   ) as Template & Renderer;
   return lazyTemplate;
-}
-
-/**
- * Registers a lazy child's loader under its asset/ready id (the compile
- * constant the server's `withLoadAssets` wrapper uses) so a persisted update
- * delivering the child's server-rendered markup can start the load without a
- * document script; the applier fires this when the child's keyed resume
- * batch arrives (see dom/update.ts). The loader resolves the child template
- * plus its `?update` merge, and declaring `ready` afterward replays the
- * parked batch against the inserted markup. Emitted by `?update` entry
- * compiles only, so plain builds never carry it.
- */
-export function _load_ready(readyId: string, load: () => Promise<unknown>) {
-  _resume(readyId, () => {
-    load().then(
-      () => ready(readyId),
-      () => 0,
-    );
-  });
 }
 
 export function _load_setup(
@@ -151,7 +131,6 @@ function insertLoaded(
                 e[LoadSignalValue.Signal]!._(branch, e[LoadSignalValue.Value]),
               );
               insert();
-              flushReadyUpdates();
             });
           }
         },
@@ -161,7 +140,6 @@ function insertLoaded(
   } else {
     setupBranch(renderer, branch);
     insert();
-    flushReadyUpdates();
   }
 }
 

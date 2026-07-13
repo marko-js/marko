@@ -89,7 +89,7 @@ INSERT: section > :is(.greeting, .loading, .footer)
 REMOVE: section > p
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"reports","user":"ada","range":"day","focus":"views","stamp":"today"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"reports","user":"ada","range":"day","focus":"views","stamp":"today"}}`
 ```html
 <button
   class="count"
@@ -347,7 +347,7 @@ container.querySelector("button.widget").click();
 UPDATE: .widget::text@13 "1" => "2"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"home"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"home"}}`
 ```html
 <button
   class="count"

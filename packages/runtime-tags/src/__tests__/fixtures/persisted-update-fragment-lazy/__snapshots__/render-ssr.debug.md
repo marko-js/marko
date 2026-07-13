@@ -51,7 +51,7 @@ container.querySelector("button.count").click();
 UPDATE: .count::text@8 "0" => "1"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"detail","title":"Widget One","label":"alpha"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"detail","title":"Widget One","label":"alpha"}}`
 ```html
 <button
   class="count"
@@ -137,7 +137,7 @@ container.querySelector(".gadget__tap").click();
 UPDATE: .gadget__tap::text@5 "0" => "1"
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"home","title":"","label":""}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"home","title":"","label":""}}`
 ```html
 <button
   class="count"
@@ -166,7 +166,7 @@ REMOVE: section > h2
 REMOVE: section > div
 ```
 
-# Update `{"$global":{"persisted":true,"persistedSeed":true,"persistedFragment":true,"view":"detail","title":"Widget Two","label":"beta"}}`
+# Update `{"$global":{"persisted":true,"persistedFragment":true,"view":"detail","title":"Widget Two","label":"beta"}}`
 ```html
 <button
   class="count"

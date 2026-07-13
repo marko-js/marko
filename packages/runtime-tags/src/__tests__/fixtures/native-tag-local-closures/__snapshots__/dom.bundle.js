@@ -1,8 +1,8 @@
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a3", " ", " b"), { 4($scope) {
+const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a2", " ", " b"), { 4($scope) {
 	_text($scope.a, $scope.e);
 } });
-const $for_content__item__script = _script("a2", ($scope) => _attrs_script($scope, "a"));
+const $for_content__item__script = _script("a0", ($scope) => _attrs_script($scope, "a"));
 const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
 	_attrs_content($scope, "a", $scope.c);
 	$for_content__item__script($scope);
@@ -17,6 +17,6 @@ const $size = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 	$Child_content__input_item($scope.a, $item);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$size($scope, $scope.c + 1);
 }));

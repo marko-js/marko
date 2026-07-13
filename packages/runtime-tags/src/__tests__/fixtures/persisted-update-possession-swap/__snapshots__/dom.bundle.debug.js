@@ -1,6 +1,6 @@
 // tags/layout.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", 0);
+	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
 
@@ -26,7 +26,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-enableBranches();
+enableBranchesPersisted();
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, "D%l", $setup$1, $input);
 
 // template.marko
@@ -36,10 +36,10 @@ const $PanelB_content__setup = ($scope) => _text($scope["#text/0"], getLabel?.($
 const $PanelB_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<section class=b>Panel B: <!></section><span class=b2>beta detail</span>", "Db%lb", $PanelB_content__setup);
 const $PanelA_content__setup = ($scope) => _text($scope["#text/0"], getLabel?.($scope.$global.topic));
 const $PanelA_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=a>Panel A: <!></p><span class=a2>alpha detail</span>", "Db%lb", $PanelA_content__setup);
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $PanelA__OR__PanelB = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "b" ? $scope.PanelB : $scope.PanelA));
-const $PanelA = /*@__PURE__*/ _const("PanelA", $PanelA__OR__PanelB);
-const $PanelB = /*@__PURE__*/ _const("PanelB", $PanelA__OR__PanelB);
+const $PanelA = /*@__PURE__*/ _const_persisted("PanelA", $PanelA__OR__PanelB);
+const $PanelB = /*@__PURE__*/ _const_persisted("PanelB", $PanelA__OR__PanelB);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -50,5 +50,5 @@ function $setup($scope) {
 	if (!updating) $PanelB($scope, { content: $PanelB_content($scope) });
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

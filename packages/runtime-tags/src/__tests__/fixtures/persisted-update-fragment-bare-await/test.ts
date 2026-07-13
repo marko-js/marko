@@ -11,7 +11,7 @@ const clickCount = (container: Element) =>
 // router's full-navigation fallback) rather than emit a corrupt frame. See
 // `html/writer.ts`'s `_await`: `chunk.fragment && !chunk.fragmentAsync`.
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   // The compute is server-only by design, so a plain client render of this
   // template is impossible.
   skip_csr: true,
@@ -23,7 +23,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "reports",
         range: "day",

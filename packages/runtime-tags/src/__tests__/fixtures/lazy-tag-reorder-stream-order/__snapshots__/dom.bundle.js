@@ -1,6 +1,6 @@
 // template.marko
 _enable_catch();
-const $placeholder_content = _content_resume("b3", "loading", "b");
+const $placeholder_content = _content_resume("b0", "loading", "b");
 
 // child.marko
 const $count = /*@__PURE__*/ _let(8, ($scope) => _text($scope.c, $scope.i));

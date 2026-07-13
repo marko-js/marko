@@ -5,14 +5,14 @@ const $for_content__item = ($scope, item) => _text($scope.a, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $if_content__count = /*@__PURE__*/ _if_closure(4, 0, ($scope) => _text($scope.a, $scope._.l));
 const $if = /*@__PURE__*/ _if(4, "<p class=detail>detail <!></p>", "Db%l", $if_content__count);
-const $show = /*@__PURE__*/ _let(10, ($scope) => $if($scope, $scope.k ? 0 : 1));
-const $count = /*@__PURE__*/ _let(11, ($scope) => {
+const $show = /*@__PURE__*/ _let_persisted(10, ($scope) => $if($scope, $scope.k ? 0 : 1));
+const $count = /*@__PURE__*/ _let_persisted(11, ($scope) => {
 	_text($scope.d, $scope.l);
 	$if_content__count($scope);
 	$for_content__count($scope);
 });
 const $for = /*@__PURE__*/ _for_of(5, "<li><!>:<!></li>", "D%c%l", $for_content__setup, $for_content__$params);
-const $list = /*@__PURE__*/ _let(12, ($scope) => $for($scope, [$scope.m, function(item) {
+const $list = /*@__PURE__*/ _let_persisted(12, ($scope) => $for($scope, [$scope.m, function(item) {
 	return item;
 }]));
 const $setup__script = _script_update("a0", ($scope) => {
@@ -26,7 +26,7 @@ const $setup__script = _script_update("a0", ($scope) => {
 		$list($scope, [...$scope.m, `c${$scope.l}`]);
 	});
 });
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $show_seed = _update_signal("a1");

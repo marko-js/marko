@@ -142,7 +142,13 @@ function withPersistedGuard(
   const persisted = callRuntime(
     "_persisted_reason" satisfies HTMLRuntimeHelpers,
   );
-  return guard ? t.logicalExpression("||", guard, persisted) : persisted;
+  return guard ? mergeGuardBits(guard, persisted) : persisted;
+}
+
+function mergeGuardBits(left: t.Expression, right: t.Expression) {
+  return isPersisted()
+    ? t.binaryExpression("|", left, right)
+    : t.logicalExpression("||", left, right);
 }
 
 const paramPartCache = new WeakMap<
@@ -193,12 +199,12 @@ export function getSerializeGuardForAny(
               getDebugNames(reason.state),
             );
       }
-      expr = expr ? t.logicalExpression("||", expr, mixedGuard) : mixedGuard;
+      expr = expr ? mergeGuardBits(expr, mixedGuard) : mixedGuard;
       continue;
     }
 
     const guard = getSerializeGuard(section, reason, false)!;
-    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
+    expr = expr ? mergeGuardBits(expr, guard) : guard;
   }
 
   return expr;
@@ -327,7 +333,11 @@ function getOrHoist(
   let orExpr: t.Expression | undefined;
   for (const [paramsSection, params] of groupParamsBySection(reason.param)) {
     const expr = buildGuardExpr(paramsSection, params, isGuard);
-    orExpr = orExpr ? t.logicalExpression("||", orExpr, expr) : expr;
+    orExpr = orExpr
+      ? isGuard
+        ? mergeGuardBits(orExpr, expr)
+        : t.logicalExpression("||", orExpr, expr)
+      : expr;
   }
 
   return orExpr;

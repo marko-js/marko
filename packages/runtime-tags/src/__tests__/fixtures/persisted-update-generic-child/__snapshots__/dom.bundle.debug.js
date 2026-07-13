@@ -30,14 +30,14 @@ const $input$3 = ($scope, input) => {
 	$input_tone$1($scope, input.tone);
 	$input_label$1($scope, input.label);
 };
-enableBranches();
+enableBranchesPersisted();
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$3, $walks$3, $setup$3, $input$3);
 
 // tags/panel.marko
 const $template$2 = "<details><summary> </summary><p> </p></details>";
 const $walks$2 = " E lD m";
 const $setup$2 = () => {};
-const $input_expanded = /*@__PURE__*/ _const("input_expanded", ($scope) => _attr_details_or_dialog_open_default($scope, "#details/0", $scope.input_expanded));
+const $input_expanded = /*@__PURE__*/ _const_persisted("input_expanded", ($scope) => _attr_details_or_dialog_open_default($scope, "#details/0", $scope.input_expanded));
 const $input_title = ($scope, input_title) => _text($scope["#text/1"], input_title);
 const $input_body = ($scope, input_body) => _text($scope["#text/2"], input_body);
 const $input$2 = ($scope, input) => {
@@ -45,13 +45,13 @@ const $input$2 = ($scope, input) => {
 	$input_title($scope, input.title);
 	$input_body($scope, input.body);
 };
-enableBranches();
+enableBranchesPersisted();
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$2, $walks$2, $setup$2, $input$2);
 
 // tags/toggle.marko
 const $template$1 = "<button class=toggle> </button><em> </em>";
 const $walks$1 = " D lD l";
-const $on = /*@__PURE__*/ _let("on/6", ($scope) => _text($scope["#text/1"], $scope.on ? "on" : "off"));
+const $on = /*@__PURE__*/ _let_persisted("on/6", ($scope) => _text($scope["#text/1"], $scope.on ? "on" : "off"));
 const $setup__script$1 = _script_update("__tests__/tags/toggle.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$on($scope, !$scope.on);
 }));
@@ -61,13 +61,13 @@ function $setup$1($scope) {
 }
 const $input_name$1 = ($scope, input_name) => _text($scope["#text/2"], input_name);
 const $input$1 = ($scope, input) => $input_name$1($scope, input.name);
-enableBranches();
+enableBranchesPersisted();
 var toggle_default = /*@__PURE__*/ _template("__tests__/tags/toggle.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<button>clicked <!></button>${_w0}${_w1}${_w2}`)($template$3, $template$2, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => ` Db%l/${_w0}&/${_w1}&/${_w2}&`)($walks$3, $walks$2, $walks$1);
-const $count = /*@__PURE__*/ _let("count/14", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/14", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -93,5 +93,5 @@ const $input_panel = ($scope, input_panel) => {
 	$input_panel_body($scope, input_panel?.body);
 	$input_panel_expanded($scope, input_panel?.expanded);
 };
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

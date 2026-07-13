@@ -76,7 +76,7 @@ container.querySelector("button.add").click();
   <input
     name="itemId"
     type="hidden"
-    value="2"
+    value="3"
   />
   <button
     class="add"
@@ -88,8 +88,7 @@ container.querySelector("button.add").click();
 ## Change
 ```
 UPDATE: .title[value] "Item 2" => "Item 3"
-UPDATE: form > input:nth-of-type(2)[value] "2" => "2"
-UPDATE: form > input:nth-of-type(2)[value] "3" => "2"
+UPDATE: form > input:nth-of-type(2)[value] "2" => "3"
 UPDATE: .category > option:nth-of-type(1)[selected] null => ""
 UPDATE: .category > option:nth-of-type(2)[selected] "" => null
 ```

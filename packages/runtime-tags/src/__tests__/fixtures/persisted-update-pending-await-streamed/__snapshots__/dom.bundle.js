@@ -1,11 +1,11 @@
 // template.marko
 _enable_catch();
 const $placeholder_content = _content_resume("a4", "loading…", "b");
-const $clicks = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $clicks = /*@__PURE__*/ _let_persisted(7, ($scope) => _text($scope.b, $scope.h));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$clicks($scope, $scope.h + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $clicks_seed = _update_signal("a2");

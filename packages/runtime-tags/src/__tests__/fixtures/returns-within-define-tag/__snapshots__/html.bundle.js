@@ -2,7 +2,7 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Once = { content: _content("a8", ({ value }) => {
+	const Once = { content: _content("a4", ({ value }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		let call = 1;
@@ -24,9 +24,9 @@ var template_default = _template("a", (input) => {
 	let onClickOnce = Once.content({ value: _resume(function() {
 		clickOnceCount++;
 	}, "a1", $scope0_id) });
-	_var($scope0_id, "b", $childScope, "a4");
+	_var($scope0_id, "b", $childScope, "a5");
 	_html(`<button class=once>${_escape(clickOnceCount)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
-	const Twice = { content: _content("a9", ({ value }) => {
+	const Twice = { content: _content("a6", ({ value }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		let call = 2;
@@ -48,10 +48,10 @@ var template_default = _template("a", (input) => {
 	let onClickTwice = Twice.content({ value: _resume(function() {
 		clickTwiceCount++;
 	}, "a3", $scope0_id) });
-	_var($scope0_id, "f", $childScope2, "a6");
+	_var($scope0_id, "f", $childScope2, "a7");
 	_html(`<button class=twice>${_escape(clickTwiceCount)}${_el_resume($scope0_id, "h")}</button>${_el_resume($scope0_id, "g")}`);
-	_script($scope0_id, "a7");
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a8");
+	_script($scope0_id, "a9");
 	writeScope($scope0_id, {
 		i: clickOnceCount,
 		j: onClickOnce,

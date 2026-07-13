@@ -21,17 +21,6 @@ export function isPersisted() {
   return !!getMarkoOpts().persisted;
 }
 
-// Fragment-first persisted builds (`persisted: "fragments"`, the @marko/run
-// router's contract): divergence — content a live page has never rendered —
-// always arrives as a fragment frame, so the fills-path client construction
-// of it never runs. `?persisted` entries therefore skip content-renderer and
-// dynamic-replay registrations, letting server-only construction material
-// (template/walks/setup and the child-import chains they pull) tree-shake
-// out of navigation chunks entirely.
-export function isPersistedFragments() {
-  return getMarkoOpts().persisted === "fragments";
-}
-
 // The `?update` entry compile: `entry: "update"` with dom output runs the
 // full dom translation (so sections/accessors/register ids match the main
 // module) but emits compiled patch-merge functions instead of the template.

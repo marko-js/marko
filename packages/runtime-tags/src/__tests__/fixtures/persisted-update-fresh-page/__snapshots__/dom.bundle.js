@@ -1,19 +1,19 @@
 // tags/actions.marko
-const $list = _var_resume("b0", /*@__PURE__*/ _const(10, ($scope) => $list_length($scope, $scope.k?.length)));
+const $list = _var_resume("b0", /*@__PURE__*/ _const_persisted(10, ($scope) => $list_length($scope, $scope.k?.length)));
 const $list_length = ($scope, list_length) => _text($scope.f, list_length);
-const $added = /*@__PURE__*/ _let(12, ($scope) => _text($scope.d, $scope.m));
+const $added = /*@__PURE__*/ _let_persisted(12, ($scope) => _text($scope.d, $scope.m));
 const $setup__script$2 = _script_update("b1", ($scope) => _on($scope.c, "click", function() {
 	$added($scope, $scope.m + 1);
 	_var_change($scope.a, [...$scope.k, $scope.j]);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/layout.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
 _enable_catch();
@@ -32,7 +32,7 @@ const $else_content__entries = /*@__PURE__*/ _if_closure(3, 1, ($scope) => {
 	}]);
 });
 const $else_content__setup = $else_content__entries;
-const $Cart_content__entries = /*@__PURE__*/ _const(7, ($scope) => {
+const $Cart_content__entries = /*@__PURE__*/ _const_persisted(7, ($scope) => {
 	$Cart_content__entries_length($scope, $scope.h?.length);
 	$else_content__entries($scope);
 });
@@ -40,18 +40,18 @@ const $Cart_content__list__OR__products = /*@__PURE__*/ _or(6, ($scope) => $Cart
 	product: $scope.f.find((p) => p.id === id),
 	id
 }))), 1, 1);
-const $Cart_content__products = /*@__PURE__*/ _let(5, $Cart_content__list__OR__products);
-const $Cart_content__list = _var_resume("a2", /*@__PURE__*/ _const(4, ($scope) => {
+const $Cart_content__products = /*@__PURE__*/ _let_persisted(5, $Cart_content__list__OR__products);
+const $Cart_content__list = _var_resume("a2", /*@__PURE__*/ _const_persisted(4, ($scope) => {
 	$Cart_content__products($scope, getProducts?.($scope.e) || []);
 	$Cart_content__list__OR__products($scope);
 }));
 const $Cart_content__if = /*@__PURE__*/ _if(3, "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/shared-list.marko.update.mjs
 const $value_seed = _update_signal("d2");
@@ -76,11 +76,10 @@ var actions_marko_update_default = _resume("b4", $update$2);
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("c2");
-const $dynamic_update = _update_signal("c1");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac", $dynamic_update);
+	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 var layout_marko_update_default = _resume("c3", $update$1);
 
@@ -127,15 +126,6 @@ _update_content("a5", $Cart_content__update);
 var template_marko_update_default = _resume("a12", $update);
 
 // data.js
-function getProduct(id) {
-	if (typeof window !== "undefined") throw new Error("getProduct is server-only");
-	return {
-		id,
-		title: `Product ${id}`,
-		price: id * 100 + .5,
-		image: `/images/${id}.svg`
-	};
-}
 function getRecommendations(id) {
 	if (typeof window !== "undefined") throw new Error("getRecommendations is server-only");
 	return resolveAfter([{
@@ -151,15 +141,10 @@ const getProducts = typeof window === "undefined" ? (ids) => ids.map((id) => ({
 	title: `Product ${id}`,
 	price: id * 100 + .5
 })) : void 0;
-const getTags = typeof window === "undefined" ? () => [
-	"all",
-	"dev",
-	"news"
-] : void 0;
 
 // tags/shared-list.marko
 const subsByKey = {};
-const $value = /*@__PURE__*/ _let(3, ($scope) => _return($scope, $scope.d));
+const $value = /*@__PURE__*/ _let_persisted(3, ($scope) => _return($scope, $scope.d));
 const $input_name__script = _script_refresh("d1", ($scope) => {
 	{
 		const subs = subsByKey[$scope.c] ??= /* @__PURE__ */ new Set();
@@ -175,4 +160,4 @@ function $valueChange($scope) {
 	};
 }
 _resume("d0", $valueChange);
-enableBranches();
+enableBranchesPersisted();

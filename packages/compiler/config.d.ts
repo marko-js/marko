@@ -58,17 +58,11 @@ declare const Config: {
    * feature flag — constant across a build; the `entry` option selects which
    * per-template artifact each compile emits.
    *
-   * `"fragments"` additionally commits the build to fragment-delivered
-   * divergence (the @marko/run persisted router's contract): `?persisted`
-   * entries stop registering content renderers and dynamic-tag replay
-   * signals — the fills-path construction of never-rendered content those
-   * registrations existed for — so server-only construction material
-   * tree-shakes out of navigation chunks. A dynamic tag whose renderer
-   * changes in an update without a fragment entry fails the apply loudly
-   * (feeding the router's full-navigation fallback) instead of silently
-   * keeping the stale branch.
+   * Divergent content is delivered as resumable HTML fragments, so persisted
+   * entries omit fills-path construction renderers and dynamic-tag replay.
+   * Server-only construction code therefore stays out of navigation chunks.
    */
-  persisted?: boolean | "fragments";
+  persisted?: boolean;
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated */

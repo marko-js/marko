@@ -2,40 +2,40 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 1078,
-        "brotli": 561
+        "min": 1073,
+        "brotli": 570
       },
       "files": {
-        "tags/actions.marko": 504,
-        "tags/layout.marko": 285,
-        "template.marko": 2139
+        "tags/actions.marko": 533,
+        "tags/layout.marko": 304,
+        "template.marko": 2188
       }
     },
     "update.js": {
       "total": {
-        "min": 11120,
-        "brotli": 4438
+        "min": 10351,
+        "brotli": 4234
       },
       "files": {
         "tags/shared-list.marko.update.mjs": 402,
         "tags/actions.marko.update.mjs": 468,
-        "tags/layout.marko.update.mjs": 409,
+        "tags/layout.marko.update.mjs": 346,
         "template.marko.update.mjs": 1936
       }
     },
     "shared-list.mjs": {
       "total": {
-        "min": 20816,
-        "brotli": 7958
+        "min": 15148,
+        "brotli": 6152
       },
       "files": {
-        "data.js": 729,
-        "tags/shared-list.marko": 608
+        "data.js": 428,
+        "tags/shared-list.marko": 627
       }
     }
   },
   "html": {
-    "min": 871,
-    "brotli": 484
+    "min": 955,
+    "brotli": 556
   }
 }

@@ -20,7 +20,7 @@ export const config: TestConfig = {
   // Fragment-first (the run router's contract) -- async boundary bodies
   // arrive through the reorder channel either way; the persisted entry
   // just stops shipping the construction material fills-path swaps needed.
-  persisted: "fragments",
+  persisted: true,
   // The computes are server-only by design, so a plain client render of
   // this template is impossible.
   skip_csr: true,
@@ -34,7 +34,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "reports",
         user: "ada",
@@ -64,7 +63,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "home",
       },

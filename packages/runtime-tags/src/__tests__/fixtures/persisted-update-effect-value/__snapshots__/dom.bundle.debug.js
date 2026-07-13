@@ -17,10 +17,10 @@ const $label__script = _script_update("__tests__/template.marko_0_label", ($scop
 		el.textContent = `effect saw ${$scope.label}`;
 	}
 });
-const $label = /*@__PURE__*/ _const("label", $label__script);
+const $label = /*@__PURE__*/ _const_persisted("label", $label__script);
 const $input_label = ($scope, input_label) => {
 	if (!updating) $label($scope, input_label);
 };
 const $input = ($scope, input) => $input_label($scope, input.label);
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "c", $setup, $input);

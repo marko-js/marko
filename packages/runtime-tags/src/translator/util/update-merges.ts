@@ -119,7 +119,6 @@ export type UpdateMerge =
   | {
       kind: "dynamic";
       accessor: t.StringLiteral | t.NumericLiteral;
-      signalId: string;
     }
   | {
       /** Single-branch boundary (`<await>`/`<try>` body) dispatch. */

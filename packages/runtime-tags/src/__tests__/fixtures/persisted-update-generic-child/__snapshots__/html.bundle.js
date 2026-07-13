@@ -61,9 +61,9 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		o: _state_reason() && count,
-		c: ($sg__input_label__OR__input_tone || _persisted_reason()) && _existing_scope($childScope),
-		d: ($sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded || _persisted_reason()) && _existing_scope($childScope2),
-		e: ($sg__input_name || _persisted_reason()) && _existing_scope($childScope3)
+		c: $sg__input_label__OR__input_tone | _persisted_reason() && _existing_scope($childScope),
+		d: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded | _persisted_reason() && _existing_scope($childScope2),
+		e: $sg__input_name | _persisted_reason() && _existing_scope($childScope3)
 	});
 	_resume_branch($scope0_id);
 }, 1);

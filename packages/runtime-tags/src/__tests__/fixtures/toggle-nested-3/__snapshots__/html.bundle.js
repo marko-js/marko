@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 				{
 					const $scope2_id = _scope_id();
 					_html(`<button id=count>${_escape(count)}${_el_resume($scope2_id, "b")}</button>${_el_resume($scope2_id, "a")}`);
-					_script($scope2_id, "a2");
+					_script($scope2_id, "a0");
 					_subscribe($count__closures, writeScope($scope2_id, {}));
 					return 0;
 				}
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b");
 	_html(" hello</div>");
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		c: outer,
 		d: inner,

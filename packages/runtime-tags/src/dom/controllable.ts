@@ -183,6 +183,31 @@ export function _attr_input_value_default(
     setInputValue(el, restoreValue);
   }
 }
+
+// Persisted builds use this variant because an update merge may invoke the
+// value signal directly instead of applying a captured attr hole. Editable
+// fields remain user-owned; metadata/button inputs must track the server value
+// or a progressively enhanced form would submit stale data.
+export function _attr_input_value_default_persisted(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  value: unknown,
+) {
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  switch (el.type) {
+    case "button":
+    case "checkbox":
+    case "hidden":
+    case "image":
+    case "radio":
+    case "reset":
+    case "submit":
+      _attr(el, "value", value);
+      break;
+    default:
+      _attr_input_value_default(scope, nodeAccessor, value);
+  }
+}
 export function _attr_input_value(
   scope: Scope,
   nodeAccessor: Accessor,

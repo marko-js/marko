@@ -1,6 +1,6 @@
 // template.marko
 const $if_content2__count = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.b, $scope._._.e), ($scope) => $scope._._);
-const $if_content2__setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
+const $if_content2__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._._, $scope._._.e + 1);
 }));
 const $if_content2__setup = ($scope) => {
@@ -20,6 +20,6 @@ const $if = /*@__PURE__*/ _if(1, "<button id=inner></button><!><!>", " b%c", $if
 const $outer = /*@__PURE__*/ _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
 const $inner = /*@__PURE__*/ _let(3, $if_content__inner);
 const $count = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($if_content2__count));
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$outer($scope, !$scope.c);
 }));

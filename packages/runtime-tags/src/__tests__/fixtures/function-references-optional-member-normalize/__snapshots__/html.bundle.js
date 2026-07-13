@@ -16,9 +16,9 @@ var template_default = _template("a", (input) => {
 		baz: _resume(() => void 0, "a2", $scope0_id)
 	};
 	_html(`<div></div>${_el_resume($scope0_id, "a")}<div></div>${_el_resume($scope0_id, "b")}<div></div>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "a5");
-	_script($scope0_id, "a4");
 	_script($scope0_id, "a3");
+	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
 	writeScope($scope0_id, {
 		d: foo,
 		e: void 0,

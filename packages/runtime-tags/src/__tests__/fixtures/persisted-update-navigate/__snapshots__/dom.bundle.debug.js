@@ -27,7 +27,7 @@ const $input_amount = ($scope, input_amount) => {
 	_text($scope["#text/1"], input_amount.toFixed(2));
 };
 const $input$1 = ($scope, input) => $input_amount($scope, input.amount);
-enableBranches();
+enableBranchesPersisted();
 var price_default = /*@__PURE__*/ _template("__tests__/tags/price.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
@@ -48,7 +48,7 @@ const $if_content__setup = ($scope) => {
 	if (!updating) $if_content__input_product_sale_percent._($scope);
 };
 const $input_product_featured__OR__expanded = /*@__PURE__*/ _or(16, ($scope) => _attr_class($scope["#section/4"], $scope.expanded && $scope.input_product_featured && "spotlight"));
-const $expanded = /*@__PURE__*/ _let("expanded/15", ($scope) => {
+const $expanded = /*@__PURE__*/ _let_persisted("expanded/15", ($scope) => {
 	_text($scope["#text/3"], $scope.expanded ? "Hide" : "Show");
 	$input_product_featured__OR__expanded($scope);
 });
@@ -61,7 +61,7 @@ function $setup($scope) {
 }
 const $input_product_name = ($scope, input_product_name) => _text($scope["#text/0"], input_product_name);
 const $input_product_slug = ($scope, input_product_slug) => _attr($scope["#a/1"], "href", `/products/${input_product_slug}/specs`);
-const $input_product_featured = /*@__PURE__*/ _const("input_product_featured", $input_product_featured__OR__expanded);
+const $input_product_featured = /*@__PURE__*/ _const_persisted("input_product_featured", $input_product_featured__OR__expanded);
 const $if = /*@__PURE__*/ _if("#section/4", "<em>Save <!>%</em>", "Db%l", $if_content__setup);
 const $input_product_sale = ($scope, input_product_sale) => {
 	$input_product_sale_percent($scope, input_product_sale?.percent);
@@ -83,6 +83,6 @@ const $input_product = ($scope, input_product) => {
 	$input_product_featured($scope, input_product?.featured);
 	$input_product_sale($scope, input_product?.sale);
 };
-const $input_product_sale_percent = /*@__PURE__*/ _const("input_product_sale_percent", $if_content__input_product_sale_percent);
-enableBranches();
+const $input_product_sale_percent = /*@__PURE__*/ _const_persisted("input_product_sale_percent", $if_content__input_product_sale_percent);
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

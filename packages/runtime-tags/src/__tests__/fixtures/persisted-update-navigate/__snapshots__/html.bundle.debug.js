@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_set_serialize_reason($sg__input_related);
 		price_default({ amount: item.price });
 		_html(` ${_sep($sg__input_related)}${_escape(_hole_value($scope2_id, "UpdateHole:#text/1", item.name, _persisted_reason()))}${_el_resume($scope2_id, "#text/1", $sg__input_related)}</li>`);
-		($sg__input_related || _persisted_reason()) && writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "11:4");
+		$sg__input_related | _persisted_reason() && writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "11:4");
 	}, function(item) {
 		return item.id;
 	}, $scope0_id, "#ul/5", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);

@@ -6,23 +6,23 @@
         "brotli": 161
       },
       "files": {
-        "tags/shell.marko": 58,
-        "template.marko": 261
+        "tags/shell.marko": 67,
+        "template.marko": 280
       }
     },
     "update.js": {
       "total": {
-        "min": 6139,
-        "brotli": 2562
+        "min": 6403,
+        "brotli": 2681
       },
       "files": {
-        "tags/shell.marko.update.mjs": 215,
-        "template.marko.update.mjs": 590
+        "tags/shell.marko.update.mjs": 212,
+        "template.marko.update.mjs": 587
       }
     }
   },
   "html": {
-    "min": 574,
-    "brotli": 357
+    "min": 650,
+    "brotli": 401
   }
 }

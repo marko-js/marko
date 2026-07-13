@@ -14,7 +14,7 @@ const clickCount = (container: Element) =>
 // `flushPlaceholder` (the `body.async && this.fragment` branch's
 // `cur.next` scan).
 export const config: TestConfig = {
-  persisted: "fragments",
+  persisted: true,
   // The computes are server-only by design, so a plain client render of
   // this template is impossible.
   skip_csr: true,
@@ -26,7 +26,6 @@ export const config: TestConfig = {
     navigate({
       $global: {
         persisted: true,
-        persistedSeed: true,
         persistedFragment: true,
         view: "reports",
         topic: "sales",

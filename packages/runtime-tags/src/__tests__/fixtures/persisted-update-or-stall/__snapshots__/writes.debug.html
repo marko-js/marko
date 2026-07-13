@@ -1,7 +1,52 @@
 <button>clicked <!>0<!--M_*1 #text/1--></button><!--M_* #button/0--><!--M_[-->
 <p class=empty>hidden</p><!--M_]1 #text/2 2-->
 <script>
-  WALKER_RUNTIME("M")("_");
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
   M._.r = [_ => [0, {
       show: !1,
       info: {

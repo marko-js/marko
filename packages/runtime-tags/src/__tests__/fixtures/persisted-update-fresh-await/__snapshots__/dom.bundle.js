@@ -1,11 +1,11 @@
 // template.marko
 _enable_catch();
 const $placeholder_content = _content_resume("a5", "loading reviews…", "b");
-const $count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $count = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.g + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a6", (branch, args) => _update_scope(args[0], branch));

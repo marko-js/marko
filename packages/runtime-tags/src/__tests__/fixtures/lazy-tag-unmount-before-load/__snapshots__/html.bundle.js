@@ -24,7 +24,7 @@ var template_default = _template("b", (input) => {
 					_scope_id();
 					$Child_withLoadAssets({ value: 1 });
 				}, 0);
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("b2", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
@@ -33,7 +33,7 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b");
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b2");
 	writeScope($scope0_id, { c: show });
 	_resume_branch($scope0_id);
 }, 1);

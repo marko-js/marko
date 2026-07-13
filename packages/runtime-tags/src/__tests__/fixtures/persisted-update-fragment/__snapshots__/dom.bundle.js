@@ -1,5 +1,5 @@
 // tags/store.marko
-const $value = /*@__PURE__*/ _let(0, ($scope) => _return($scope, $scope.a));
+const $value = /*@__PURE__*/ _let_persisted(0, ($scope) => _return($scope, $scope.a));
 const $setup__script$3 = _script_refresh("c1", ($scope) => $value($scope, $scope.$.seed));
 function $valueChange($scope) {
 	return function(next) {
@@ -7,32 +7,32 @@ function $valueChange($scope) {
 	};
 }
 _resume("c0", $valueChange);
-enableBranches();
+enableBranchesPersisted();
 
 // tags/widget.marko
-const $clicks = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $clicks = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script$2 = _script_update("d0", ($scope) => _on($scope.a, "click", function() {
 	$clicks($scope, $scope.g + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/layout.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
 const $Dashboard_content__setup__script = _script_update("a4", ($scope) => _on($scope.d, "click", function() {
 	_var_change($scope.b, $scope.l + 1);
 }));
-const $Dashboard_content__tally = _var_resume("a3", /*@__PURE__*/ _const(11, ($scope) => _text($scope.e, $scope.l)));
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $Dashboard_content__tally = _var_resume("a3", /*@__PURE__*/ _const_persisted(11, ($scope) => _text($scope.e, $scope.l)));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/store.marko.update.mjs
 const $value_seed = _update_signal("c2");
@@ -56,7 +56,7 @@ const $open_seed = _update_signal("b2");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac", 0);
+	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 var layout_marko_update_default = _resume("b3", $update$1);
 

@@ -4,9 +4,9 @@ const $input__script = _script("b0", ($scope) => $scope.b.value()?.classList.add
 
 // template.marko
 const $el2_getter = /*@__PURE__*/ _hoist(0, "Ac");
-const $el_getter = _hoist_resume("a1", 0, "Aa", "Aa");
-const $if_content2__$el_getter = _el("a2", 0);
-const $setup__script = _script("a0", ($scope) => {
+const $el_getter = _hoist_resume("a0", 0, "Aa", "Aa");
+const $if_content2__$el_getter = _el("a1", 0);
+const $setup__script = _script("a2", ($scope) => {
 	{
 		const el = $el_getter($scope)();
 		if (el) el.innerHTML = "Hello World";

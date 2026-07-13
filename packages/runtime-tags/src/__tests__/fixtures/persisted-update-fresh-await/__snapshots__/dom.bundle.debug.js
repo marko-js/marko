@@ -79,7 +79,7 @@ const $if_content__setup = ($scope) => {
 	if (!updating) $if_content__input_productId._($scope);
 	$if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -89,11 +89,11 @@ function $setup($scope) {
 }
 const $if = /*@__PURE__*/ _if("#text/2", "<h2>Product <!></h2><!><!>", "Db%l%c", $if_content__setup, "<p>pick a product</p>", "b");
 const $input_productId__closure = /*@__PURE__*/ _closure($try_content__input_productId);
-const $input_productId = /*@__PURE__*/ _const("input_productId", ($scope) => {
+const $input_productId = /*@__PURE__*/ _const_persisted("input_productId", ($scope) => {
 	if (!updating) $if($scope, $scope.input_productId ? 0 : 1);
 	$if_content__input_productId($scope);
 	$input_productId__closure($scope);
 });
 const $input = ($scope, input) => $input_productId($scope, input.productId);
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

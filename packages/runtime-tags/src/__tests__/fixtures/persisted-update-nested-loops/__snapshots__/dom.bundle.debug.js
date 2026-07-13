@@ -62,7 +62,7 @@ const $for_content3__region = /*@__PURE__*/ _closure_get("region", ($scope) => {
 const $for_content3__setup = ($scope) => {
 	if (!updating) $for_content3__region($scope);
 };
-const $for_content3__r = /*@__PURE__*/ _const("r", ($scope) => {
+const $for_content3__r = /*@__PURE__*/ _const_persisted("r", ($scope) => {
 	_text($scope["#text/1"], $scope.r);
 	$for_content3__region__OR__r($scope);
 });
@@ -78,7 +78,7 @@ const $for_content2__path = /*@__PURE__*/ _closure_get("path", ($scope) => {
 const $for_content2__setup = ($scope) => {
 	if (!updating) $for_content2__path($scope);
 };
-const $for_content2__page_slug = /*@__PURE__*/ _const("page_slug", $for_content2__path__OR__page_slug);
+const $for_content2__page_slug = /*@__PURE__*/ _const_persisted("page_slug", $for_content2__path__OR__page_slug);
 const $for_content2__page_title = ($scope, page_title) => _text($scope["#text/1"], page_title);
 const $for_content2__$params = ($scope, $params3) => {
 	$for_content2__page_slug($scope, $params3[0]?.slug);
@@ -94,10 +94,10 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__section_pages($scope, $params2[0]?.pages);
 };
 const $path__closure = /*@__PURE__*/ _closure($for_content2__path);
-const $path = /*@__PURE__*/ _const("path", $path__closure);
+const $path = /*@__PURE__*/ _const_persisted("path", $path__closure);
 const $region__closure = /*@__PURE__*/ _closure($for_content3__region);
-const $region = /*@__PURE__*/ _const("region", $region__closure);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $region = /*@__PURE__*/ _const_persisted("region", $region__closure);
+const $count = /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $for = /*@__PURE__*/ _for_of("#nav/2", "<div><h4> </h4><!></div>", "E l%l", 0, $for_content__$params);
 const $if = /*@__PURE__*/ _if("#text/3", "<p></p>", " b", $if_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -111,5 +111,5 @@ function $setup($scope) {
 	if (!updating) $if($scope, REGIONS.length ? 0 : 1);
 	$setup__script($scope);
 }
-enableBranches();
+enableBranchesPersisted();
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

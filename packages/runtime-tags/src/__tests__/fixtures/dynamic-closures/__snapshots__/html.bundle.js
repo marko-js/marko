@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const b = 2;
 	let c = 3;
 	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
-	custom_tag_default({ content: _content("a1", () => {
+	custom_tag_default({ content: _content("a0", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`${_escape(a)} ${_escape(b)} <!>${_escape(c)}${_el_resume($scope1_id, "c")}`);
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}
 	_html("</div>");
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, { g: $c__closures });
 	_resume_branch($scope0_id);
 }, 1);

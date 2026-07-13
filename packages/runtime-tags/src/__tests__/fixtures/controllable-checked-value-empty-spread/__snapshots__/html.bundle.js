@@ -10,8 +10,8 @@ var template_default = _template("a", (input) => {
 		value: "",
 		...rest
 	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<output>${_escape("value=")}${_el_resume($scope0_id, "c")}</output>`);
-	_script($scope0_id, "a1");
 	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		d: v,
 		e: rest

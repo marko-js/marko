@@ -5,10 +5,10 @@ function $_return($scope) {
 _resume("b0", $_return);
 
 // template.marko
-const $setHtml3_getter = _hoist_resume("a3", 2, "Aa", "Ac");
+const $setHtml3_getter = _hoist_resume("a0", 2, "Aa", "Ac");
 const $setHtml2_getter = /*@__PURE__*/ _hoist(2, "Ab");
 const $setHtml_getter = /*@__PURE__*/ _hoist(2, "Aa");
-const $setup__script = _script("a0", ($scope) => {
+const $setup__script = _script("a1", ($scope) => {
 	$setHtml_getter($scope)()("First Only");
 	$setHtml2_getter($scope)()("First Only");
 	{

@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", x, {
 		header: attrTag({
 			class: "my-header",
-			content: _content_resume("a1", () => {
+			content: _content_resume("a0", () => {
 				_scope_reason();
 				_scope_id();
 				_html("Header content");
@@ -28,13 +28,13 @@ var template_default = _template("a", (input) => {
 		}),
 		footer: attrTag({
 			class: "my-footer",
-			content: _content_resume("a2", () => {
+			content: _content_resume("a1", () => {
 				_scope_reason();
 				_scope_id();
 				_html("Footer content");
 			}, $scope0_id)
 		})
-	}, _content_resume("a0", () => {
+	}, _content_resume("a2", () => {
 		_scope_id();
 		_scope_reason();
 		_html("Body content");

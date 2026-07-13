@@ -2,16 +2,16 @@
 const $input_onReady__script = _script_update("c0", ($scope) => _lifecycle($scope, { onMount: function() {
 	$scope.c();
 } }));
-enableBranches();
+enableBranchesPersisted();
 
 // tags/layout.marko
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
 _enable_catch();
-const $await_content__ready = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting"));
+const $await_content__ready = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting"));
 const $placeholder_content = _content_resume("a7", "<p class=loading>loading…</p>", "b");
-const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
@@ -21,7 +21,7 @@ function $onReady($scope) {
 	};
 }
 _resume("a0", $onReady);
-enableBranches();
+enableBranchesPersisted();
 
 // tags/mounter.marko.update.mjs
 const $input_onReady_update = _update_signal("c1");
@@ -33,7 +33,7 @@ var mounter_marko_update_default = _resume("c2", $update$2);
 
 // tags/layout.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa", 0);
+	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 var layout_marko_update_default = _resume("b1", $update$1);
 

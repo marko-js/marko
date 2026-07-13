@@ -1,25 +1,24 @@
 // tags/layout/layout.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "Close" : "Menu"));
+const $open = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "Close" : "Menu"));
 const $setup__script = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
-enableBranches();
+enableBranchesPersisted();
 
 // template.marko
 const $layout_content__setup__script = _script_update("a1", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._, $scope._.e + 1);
 }));
 const $layout_content__count = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.c, $scope._.e));
-const $count = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($layout_content__count));
-enableBranches();
+const $count = /*@__PURE__*/ _let_persisted(4, /* @__PURE__ */ _closure($layout_content__count));
+enableBranchesPersisted();
 
 // tags/layout/layout.marko.update.mjs
 const $open_seed = _update_signal("b2");
-const $dynamic_update = _update_signal("b1");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac", $dynamic_update);
+	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 var layout_marko_update_default = _resume("b3", $update$1);
 

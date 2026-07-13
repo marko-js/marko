@@ -8,11 +8,11 @@ _resume("b0", $_return);
 const $input_value__script = _script("c0", ($scope) => $scope.c);
 
 // template.marko
-const $if_content5__setup = _script("a5", ($scope) => $setHtml3_getter($scope._)()("Hello world"));
+const $if_content5__setup = _script("a1", ($scope) => $setHtml3_getter($scope._)()("Hello world"));
 const $setHtml3_getter = /*@__PURE__*/ _hoist(2, "Ad");
 const $setHtml2_getter = /*@__PURE__*/ _hoist(2, "Ac");
-const $setHtml_getter = _hoist_resume("a1", 2, "Aa", "Aa");
-const $setup__script = _script("a0", ($scope) => {
+const $setHtml_getter = _hoist_resume("a0", 2, "Aa", "Aa");
+const $setup__script = _script("a2", ($scope) => {
 	$setHtml_getter($scope)()("Hello world");
 	$setHtml2_getter($scope)()("Hello world");
 });

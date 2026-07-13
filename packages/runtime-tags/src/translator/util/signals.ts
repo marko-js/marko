@@ -464,7 +464,17 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     return callRuntime(
-      isLet ? (signal.extraArgs ? "_let_change" : "_let") : "_const",
+      isLet
+        ? signal.extraArgs
+          ? isPersisted()
+            ? "_let_change_persisted"
+            : "_let_change"
+          : isPersisted()
+            ? "_let_persisted"
+            : "_let"
+        : isPersisted()
+          ? "_const_persisted"
+          : "_const",
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
