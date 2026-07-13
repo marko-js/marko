@@ -5,8 +5,8 @@
       "brotli": 167
     },
     "update.js": {
-      "min": 7054,
-      "brotli": 3025
+      "min": 7452,
+      "brotli": 3167
     },
     "abort-signal.mjs": {
       "min": 14069,

@@ -167,8 +167,8 @@ export default {
       body.push(defaultExport);
       // Re-export the appliers so consumers (the client router) need no
       // knowledge of the runtime module path this entry compiled against (debug
-      // vs optimized). `createUpdate` is the per-navigation streaming form (one
-      // call per response frame); `have` (runtime `_have`) builds the
+      // vs optimized). `createPatch` is the per-navigation streaming parser and
+      // applier (one call per response frame); `have` (runtime `_have`) builds the
       // possession echo the router sends as `x-marko-have`.
       body.push(
         t.exportNamedDeclaration(
@@ -179,8 +179,8 @@ export default {
               t.identifier("applyUpdate"),
             ),
             t.exportSpecifier(
-              t.identifier("createUpdate"),
-              t.identifier("createUpdate"),
+              t.identifier("createPatch"),
+              t.identifier("createPatch"),
             ),
             t.exportSpecifier(t.identifier("_have"), t.identifier("have")),
           ],

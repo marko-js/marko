@@ -95,14 +95,16 @@ must seed fresh scopes and carry structural fragments. Fragments are patch
 contents, not a separately configurable behavior.
 
 The wire format is trusted application output encoded by Marko's serializer,
-not user JSON. The client uses the same nonce-bearing script path as document
-resumes. MIME, same-origin routing, build
+not user JSON. Run transports and splits the stream but does not interpret it.
+Each generated update entry exposes Marko's `createPatch`, which executes frames
+through the same nonce-bearing script path as document resumes, validates their
+fills, and passes them to the compiled merge. MIME, same-origin routing, build
 identity, and fallback checks are part of the protocol boundary.
 
 ## Applying matched structure
 
-`createUpdate` owns one navigation epoch and patch-scope table. For each frame
-it:
+`createPatch` owns frame decoding and delegates valid fills to `createUpdate`,
+which owns one navigation epoch and patch-scope table. For each frame they:
 
 1. decodes serializer values and extends patch scopes;
 2. pairs patch scopes to live scopes top-down using compiled child identity;

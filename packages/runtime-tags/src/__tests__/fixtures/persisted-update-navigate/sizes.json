@@ -11,8 +11,8 @@
       }
     },
     "update.js": {
-      "min": 4700,
-      "brotli": 1999
+      "min": 5098,
+      "brotli": 2148
     }
   },
   "html": {
