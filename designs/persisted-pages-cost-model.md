@@ -12,20 +12,21 @@ to the non-persisted build of the same app.
 ## Current evidence
 
 On 2026-07-13, production builds of the same `marko-ecommerce` item route
-reported 10.0 kB raw / 5.0 kB gzip with `persisted: false` and 22.8 kB raw /
-10.3 kB gzip with `persisted: true`. The persisted build keeps the navigation
-engine (1.1 kB gzip), update applier (3.1 kB gzip), and route update modules out
-of the initial graph, and browser inspection confirms that server-only
-divergent panel markup is absent from all client JavaScript.
+reported 10.0 kB raw / 5.0 kB gzip with `persisted: false` and 21.4 kB raw /
+9.9 kB gzip with `persisted: true`. The persisted build keeps the generated
+route trie, navigation engine (1.1 kB gzip), update applier (3.1 kB gzip), and
+route update modules out of the initial graph. Moving the route trie behind the
+first eligible navigation removed 1.4 kB raw / 0.4 kB gzip from every initial
+route without adding a sequential load: it fetches in parallel with the
+navigation engine. Browser inspection also confirms that server-only divergent
+panel markup is absent from all client JavaScript.
 
 That is useful phase-separation evidence, not an acceptable first-load result.
-The largest eager regression is the shared Marko resume chunk (7.4 kB gzip in
+The largest eager regression is the shared Marko resume chunk (about 7.5 kB gzip in
 the persisted build versus 4.1 kB in the ordinary build): update-only consumers
 of the published multi-entry runtime cause additional shared symbols to be
-retained in the eager chunk. The route matcher and event shell are the next
-visible cost (1.8 kB gzip in this application). Release remains blocked until
-the shared runtime boundary is narrowed and representative budgets show minor,
-ratcheted overhead.
+retained in the eager chunk. Release remains blocked until the shared runtime
+boundary is narrowed and representative budgets show minor, ratcheted overhead.
 
 ## Required comparisons
 
