@@ -13,7 +13,8 @@ import {
   AccessorPrefix,
   AccessorProp,
   type Falsy,
-  type PersistedRenderMode,
+  type PersistedPatch,
+  type PersistedRender,
   ResumeSymbol,
 } from "../common/types";
 import { RendererProp } from "../common/types";
@@ -348,7 +349,7 @@ export function _scope_reason() {
 // record carries per-key entries for it.
 export function _persisted_reason() {
   const { state } = $chunk.boundary;
-  return state.update ? 3 : state.persistedMode ? 2 : 0;
+  return state.update ? 3 : state.persisted ? 2 : 0;
 }
 
 // Value-class guards for persisted builds, split by compile-time source
@@ -558,7 +559,7 @@ export function _el_resume(
   // reordered async content always opens with a full-form marker, so a
   // register carried across a boundary is overwritten before any continuation
   // is read. Non-persisted documents are byte-identical.
-  if (state.persistedMode) {
+  if (state.persisted) {
     if ($chunk.lastNodeMarkScope === scopeId) {
       return state.mark(ResumeSymbol.Node, " " + accessor);
     }
@@ -1583,7 +1584,7 @@ export class State implements SerializeState {
   // The possession echo (`x-marko-have`): what renderer the client currently
   // holds at each participating dynamic-hop site, so a same-route renderer
   // swap ships a fragment for exactly that hop instead of failing the apply.
-  public possessed?: PersistedRenderMode["possessed"];
+  public possessed?: PersistedPatch["possessed"];
   // The nearest enclosing keyed-loop iteration's key while its body renders
   // (undefined outside a keyed loop) -- disambiguates the site ids of a
   // dynamic-tag hop repeated across loop iterations for the possession echo
@@ -1601,29 +1602,30 @@ export class State implements SerializeState {
   public freshBranchDepth = 0;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
-    // The persisted render mode, passed to `render()` (not smuggled through
+    // Persisted request facts, passed to `render()` (not smuggled through
     // `$global`); kept as the source of truth so a Boundary reset can rethread
-    // it, with the hot-read flags below derived from it. Absent = non-persisted.
-    public persistedMode?: PersistedRenderMode,
+    // them, with the hot-read flags below derived here. Absent = non-persisted.
+    public persisted?: PersistedRender,
   ) {
     if ($global.cspNonce) {
       this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
     }
-    if (persistedMode) {
+    if (persisted) {
       // Persisted renders are render-wide state, not a threaded reason: the
       // spine gates (`_serialize_guard`/`_persisted_reason`) read these cached
       // flags directly, so the network-as-parent needs no root reason seed
-      // (threaded reasons stay pure stateful group masks). Update renders
+      // (threaded reasons stay pure stateful group masks). Patch renders
       // serialize request-derived values (the values ARE the payload) via the
       // source-classified `_update_reason`/`_state_reason` gates. The producer
-      // (@marko/run's router or the test harness) already folded seed/fragment
-      // behind update, so trust them.
-      this.update = persistedMode.update;
-      this.seed = persistedMode.seed;
-      this.fragments = persistedMode.fragment;
-      this.possessed = persistedMode.possessed;
+      // The route identities are request facts; structural delivery is derived
+      // here rather than exposed as another feature mode.
+      const patch = persisted.patch;
+      this.update = !!patch;
+      this.seed = this.fragments =
+        !!patch && patch.fromRoute !== patch.targetRoute;
+      this.possessed = patch?.possessed;
       // Update responses carry no document: no walker bootstrap to emit.
-      this.hasMainRuntime = persistedMode.update;
+      this.hasMainRuntime = !!patch;
     }
   }
 
@@ -1718,7 +1720,7 @@ export class Boundary extends AbortController {
     this.signal.addEventListener("abort", () => {
       this.count = 0;
       // Reset render progress for the retry but preserve the render mode.
-      this.state = new State(this.state.$global, this.state.persistedMode);
+      this.state = new State(this.state.$global, this.state.persisted);
       this.onNext();
     });
 
@@ -2140,7 +2142,7 @@ export class Chunk {
       state.hasMainRuntime = true;
       scripts = concatScripts(
         scripts,
-        (state.persistedMode
+        (state.persisted
           ? PERSISTED_WALKER_RUNTIME_CODE
           : WALKER_RUNTIME_CODE) +
           '("' +
@@ -2339,7 +2341,7 @@ export class Chunk {
           state.hasReorderRuntime = true;
           scripts = concatScripts(
             scripts,
-            (state.persistedMode
+            (state.persisted
               ? PERSISTED_REORDER_RUNTIME_CODE
               : REORDER_RUNTIME_CODE) +
               "(" +

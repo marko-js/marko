@@ -23,7 +23,8 @@ import {
   isThrows,
   isWait,
   type Navigate,
-  persistedModeFrom,
+  persistedPatchFrom,
+  persistedRenderFrom,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -278,12 +279,12 @@ function testFixtures(interop?: true) {
               const { template } = await runner.runServer();
               // The persisted render mode rides `render()`'s options argument,
               // extracted from the fixture's ergonomic `$global` flags (see
-              // persistedModeFrom) -- `$global` and the snapshot's Render header
+              // persistedRenderFrom) -- `$global` and the snapshot's Render header
               // stay pristine. Only pass the argument when persisted: a class
               // (marko 5) interop template reads render()'s second argument as a
               // stream, so a non-persisted render must stay a one-arg call.
               // Navigate steps pass their own below.
-              const persisted = persistedModeFrom(
+              const persisted = persistedRenderFrom(
                 input.$global as Record<string, unknown> | undefined,
               );
               for await (const data of template.render(
@@ -366,10 +367,9 @@ function testFixtures(interop?: true) {
                     let html = "";
                     const navigateGlobal = {
                       ...(navigateInput.$global as object),
-                      persisted: "update",
                       renderId: "navigate",
                     };
-                    const persistedMode = persistedModeFrom(navigateGlobal);
+                    const persistedRender = persistedPatchFrom(navigateGlobal);
                     // The real client always computes the echo (`@marko/run`'s
                     // `have?.()` call is unconditional -- see its
                     // `runtime/persisted.ts`) and sends the header whenever it's
@@ -384,7 +384,7 @@ function testFixtures(interop?: true) {
                     // entry): it walks the live tree and returns the JSON the
                     // run router sends as `x-marko-have`, decoded here the same
                     // way the run server does.
-                    if (persistedMode) {
+                    if (persistedRender?.patch) {
                       const have = updateEntry.__have(liveRoot as any);
                       if (have) {
                         // The full echo is sent for every persisted build,
@@ -393,13 +393,13 @@ function testFixtures(interop?: true) {
                         // pending-boundary entries to the current render.
                         const decoded = JSON.parse(have);
                         if (Object.keys(decoded).length) {
-                          persistedMode.possessed = decoded;
+                          persistedRender.patch.possessed = decoded;
                         }
                       }
                     }
                     for await (const chunk of template.render(
                       { ...navigateInput, $global: navigateGlobal },
-                      { persisted: persistedMode },
+                      { persisted: persistedRender },
                     )) {
                       html += chunk;
                     }

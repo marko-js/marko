@@ -118,30 +118,22 @@ export interface $Global {
  * is user/request data (in @marko/run `$global` _is_ the request context).
  */
 export interface RenderOptions {
-  persisted?: PersistedRenderMode;
+  persisted?: PersistedRender;
 }
 
 /**
- * @internal The persisted render mode (single-page server-first updates),
- * carried on `RenderOptions.persisted` rather than smuggled through `$global`.
- * Omitted = the byte-identical non-persisted document.
- *
- * - `update`: an update (patch) response for an already-persisted page rather
- *   than a document — request-derived values (computed holes, conditional
- *   outcomes, branch lists) serialize so the client can merge them onto its
- *   live scope tree, and effects for matched scopes are suppressed.
- * - `seed`: the target subtree is created fresh on the client (a cross-route
- *   update), so state values serialize too — seeded only into scopes created
- *   during the apply (matched scopes' live state is never overwritten).
- * - `fragment`: the first content-hop branch renders as a fragment frame
- *   (resumable HTML inserted and resumed at the hop's anchor) instead of
- *   serializing for client-side construction. See
- *   designs/persisted-pages-architecture.md ("Fragment frames").
+ * @internal Request facts for a persisted-pages render. An empty object renders
+ * the initial document. `patch` identifies an enhanced navigation; the renderer
+ * derives whether fresh structure is required by comparing its route ids.
  */
-export interface PersistedRenderMode {
-  update: boolean;
-  seed: boolean;
-  fragment: boolean;
+export interface PersistedRender {
+  patch?: PersistedPatch;
+}
+
+/** @internal An enhanced-navigation request within one persisted build. */
+export interface PersistedPatch {
+  fromRoute: string;
+  targetRoute: string;
   /**
    * @internal The possession echo (`x-marko-have`): for each dynamic-hop site
    * the client holds, the site's build-stable id → the renderer id it

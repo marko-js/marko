@@ -1,4 +1,4 @@
-import type { PersistedRenderMode } from "../../common/types";
+import type { PersistedRender } from "../../common/types";
 
 declare global {
   var __RESOLVE_STATE__: {
@@ -118,25 +118,26 @@ export function isNavigate(value: any): value is Navigate {
 }
 
 /**
- * Extract the persisted render mode from a fixture's ergonomic `$global` flags
+ * Build persisted request facts from a fixture's ergonomic `$global` flags
  * (`persisted` / `persistedFragment`) to pass as `render()`'s
  * second argument — the same translation @marko/run's context render does from
  * its request-derived flags. Fixtures keep the readable flags; the mode never
  * touches `$global`. Undefined when not persisted.
  */
-export function persistedModeFrom(
+export function persistedRenderFrom(
   $global: Record<string, unknown> | undefined,
-): PersistedRenderMode | undefined {
-  const persisted = $global?.persisted;
-  if (!persisted) return undefined;
-  const update = persisted === "update";
-  const fragment = update && !!$global!.persistedFragment;
+): PersistedRender | undefined {
+  return $global?.persisted ? {} : undefined;
+}
+
+export function persistedPatchFrom(
+  $global: Record<string, unknown> | undefined,
+): PersistedRender {
   return {
-    update,
-    // Cross-route fragments always need their fresh state seeded. Keeping one
-    // fixture flag mirrors @marko/run's single `"fragment"` render mode.
-    seed: fragment,
-    fragment,
+    patch: {
+      fromRoute: $global?.persistedFragment ? "previous" : "current",
+      targetRoute: "current",
+    },
   };
 }
 

@@ -1,8 +1,9 @@
 # Persisted pages: architecture
 
 This document describes the reviewable architecture, not the history of the
-prototype. The feature has one mode: `persisted: true`. Matched structure is
-updated with sparse values; divergent structure is delivered as resumable HTML.
+prototype. The feature has one flag: `persisted: true`. Marko automatically
+updates matched structure with sparse values and delivers divergent structure
+as resumable HTML.
 
 ## Build artifacts
 
@@ -57,11 +58,12 @@ documents additionally carry the minimum addressable spine and one internal
 build identity used for negotiation. The page resumes through Marko's existing
 registry and scope protocol.
 
-`@marko/run` registers a small navigation shell after resume. It receives a
-generated matcher containing route indices and lazy loaders, not route pattern
-strings or server handlers. The shell validates native events; fetch
-negotiation, streaming parsing, and history application load on the first
-enhanced navigation. Anchor and form listeners are progressive enhancement:
+`@marko/run` registers a small navigation shell after resume. The generated
+matcher contains route indices and lazy loaders, not route pattern strings or
+server handlers, and loads alongside the navigation engine on first use. The
+shell validates native events; route matching, fetch negotiation, streaming
+parsing, and history application load on the first enhanced navigation. Anchor
+and form listeners are progressive enhancement:
 unsupported targets, modified clicks, downloads, external URLs, and responses
 outside the protocol follow browser behavior.
 
@@ -85,6 +87,12 @@ would render a document, but the writer suppresses ordinary document bytes and
 flushes newline-delimited serializer frames. Each frame is applied as an atomic
 signal batch. Completed frames can update the page while later async work is
 still pending.
+
+Applications do not select document, update, or fragment modes. The generated
+router privately records the current and target route identities. A negotiated
+request produces a patch; Marko derives from those identities whether the patch
+must seed fresh scopes and carry structural fragments. Fragments are patch
+contents, not a separately configurable behavior.
 
 The wire format is trusted application output encoded by Marko's serializer,
 not user JSON. The client uses the normal evaluator when policy permits and a
