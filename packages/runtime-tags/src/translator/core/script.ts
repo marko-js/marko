@@ -108,7 +108,6 @@ export default {
       const { value } = valueAttr;
       const referencedBindings = value.extra?.referencedBindings;
       if (isOutputDOM()) {
-        const { value } = valueAttr;
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
         let inlineBody: t.Statement | t.Statement[] | null = null;
