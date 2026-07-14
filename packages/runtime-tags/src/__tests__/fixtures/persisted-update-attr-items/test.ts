@@ -11,6 +11,7 @@ const clickCount = (container: Element) =>
 // can re-render it (the loop data is server-only, the global never fires).
 export const config: TestConfig = {
   persisted: true,
+  dom_bundle_excludes: ["getCategories is server-only"],
   // The computes genuinely cannot run in the browser, so a plain client
   // render of this template is impossible by design.
   skip_csr: true,

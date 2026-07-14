@@ -52,10 +52,8 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: .count + section
-REMOVE: section + p
-UPDATE: section > p::text@6 "" => "70"
-UPDATE: section > h2::text " " => "Part 7"
+INSERT: p + section
+REMOVE: .count + p
 ```
 
 # Update
@@ -100,8 +98,8 @@ UPDATE: .count::text@8 "1" => "70"
 ```
 ## Change
 ```
-INSERT: .count + p
-REMOVE: p + section
+INSERT: p
+REMOVE: .count + section
 ```
 
 # Update

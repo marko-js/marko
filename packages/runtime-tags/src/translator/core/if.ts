@@ -17,7 +17,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
-import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
+import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import {
@@ -74,6 +74,25 @@ const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
   [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][]
 >();
+
+/**
+ * True when this `<if>`'s own test is request-derived with no client-state
+ * component: the branch outcome is entirely server-owned, so a persisted
+ * build never needs (and must never ship) client construction for it -- a
+ * changed outcome arrives only as a resumable fragment (see
+ * html/dynamic-tag.ts for the analogous hop). A mixed test (state plus
+ * request-derived bits, eg `$global`) keeps the ordinary combined
+ * selection+render callback: a legitimate client-driven toggle must still be
+ * able to construct the branch itself.
+ */
+function isRequestDerivedOnlyIf(ifTagExtra: t.NodeExtra) {
+  const sources = getSerializeSourcesForExpr(ifTagExtra);
+  return (
+    isPersisted() &&
+    isReasonDynamic(sources) &&
+    !isStateSerializeReason(sources)
+  );
+}
 
 export const IfTag = {
   analyze(tag) {
@@ -189,6 +208,7 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
+          const ifTagExtra = ifTag.node.extra!;
           const nodeBinding = getOptimizedOnlyChildNodeBinding(
             ifTag,
             ifTagSection,
@@ -199,8 +219,23 @@ export const IfTag = {
             nodeBinding,
           );
           const nextTag = tag.getNextSibling();
+          // A request-derived test splits selection from rendering: `cb`
+          // (built below from `selectorExpr`) only picks the branch, and
+          // `branchRenderers` (only for this case) holds each branch's own
+          // render function, so the runtime can redirect a possession
+          // mismatch into a resumable fragment before any of the chosen
+          // branch's content -- which may not run client-side -- renders.
+          const splitSelection = isRequestDerivedOnlyIf(ifTagExtra);
           let branchSerializeReasons: SerializeReasons | undefined;
           let statement: t.Statement | undefined;
+          // No explicit `<else>`: the selector's fallback matches the
+          // combined (non-split) cb's implicit `undefined` return (no
+          // branch matched), not `branches.length` -- `branches[index]`
+          // resolves either sentinel to `undefined` the same way, but every
+          // OTHER convention downstream (`_if`'s `branchIndex ?? -1`,
+          // `_update_if`'s "-1 means no branch") is keyed off `undefined`.
+          let selectorExpr: t.Expression = t.identifier("undefined");
+          const branchRenderers: t.Expression[] = [];
           let singleChild = true;
 
           for (const [, branchBody] of branches) {
@@ -246,23 +281,33 @@ export const IfTag = {
                     branchSerializeReasons = [branchSerializeReason];
                   }
                 }
-                bodyStatements.push(
-                  t.returnStatement(t.numericLiteral(i)) as any,
-                );
+                if (!splitSelection) {
+                  bodyStatements.push(
+                    t.returnStatement(t.numericLiteral(i)) as any,
+                  );
+                }
               }
             }
 
             const [testAttr] = branchTag.node.attributes;
-            const curStatement = toFirstStatementOrBlock(bodyStatements);
 
-            if (testAttr) {
-              statement = t.ifStatement(
-                testAttr.value,
-                curStatement,
-                statement,
+            if (splitSelection) {
+              branchRenderers[i] = t.arrowFunctionExpression(
+                [],
+                t.blockStatement(bodyStatements as t.Statement[]),
               );
+              selectorExpr = testAttr
+                ? t.conditionalExpression(
+                    testAttr.value,
+                    t.numericLiteral(i),
+                    selectorExpr,
+                  )
+                : t.numericLiteral(i);
             } else {
-              statement = curStatement;
+              const curStatement = toFirstStatementOrBlock(bodyStatements);
+              statement = testAttr
+                ? t.ifStatement(testAttr.value, curStatement, statement)
+                : curStatement;
             }
 
             branchTag.remove();
@@ -285,10 +330,9 @@ export const IfTag = {
               markerSerializeReason,
               !statefulSerializeArg,
             );
-            const cbNode = t.arrowFunctionExpression(
-              [],
-              t.blockStatement([statement!]),
-            );
+            const cbNode = splitSelection
+              ? t.arrowFunctionExpression([], selectorExpr)
+              : t.arrowFunctionExpression([], t.blockStatement([statement!]));
 
             statement = t.expressionStatement(
               callRuntime(
@@ -309,6 +353,15 @@ export const IfTag = {
                     ? t.numericLiteral(0)
                     : undefined,
                 singleChild ? t.numericLiteral(1) : undefined,
+                splitSelection
+                  ? t.stringLiteral(
+                      getUpdateIfRegisterId(
+                        ifTagSection,
+                        getScopeAccessorLiteral(nodeBinding).value,
+                      ),
+                    )
+                  : undefined,
+                splitSelection ? t.arrayExpression(branchRenderers) : undefined,
               ),
             );
           }
@@ -368,13 +421,20 @@ export const IfTag = {
 
           const signal = getSignal(ifTagSection, nodeRef, "if");
           // Request-derived conditionals participate in persisted update
-          // renders: the server writes the branch outcome explicitly (G2) and
-          // the update entry replays it through this same signal, so persisted
-          // entry builds register it and update entries record a merge (the
-          // main module's copy stays unregistered -- resume never invokes it,
-          // so hydration bundles may tree-shake it). Stable branch outcomes (a
-          // constant test, render-once by contract) also participate when a
-          // BRANCH carries request-derived content, so body merges still
+          // renders: the server writes the branch outcome explicitly (G2)
+          // and the update entry dispatches it through the generic
+          // `_update_if` (dom/update.ts) -- same-branch content merges
+          // dispatch by branch index, a branch change applies a resumable
+          // fragment (or fails loudly without one; persisted pages never
+          // construct divergent content client-side -- see
+          // html/dynamic-tag.ts for the analogous hop). This signal's own
+          // full branch-construction closure (`signal.build` below) stays
+          // unregistered for the update merge -- it exists only for CSR/
+          // mount reachability -- so an optimized persisted split never
+          // pulls it (and whatever user code its branches close over) into
+          // the update entry. Stable branch outcomes (a constant test,
+          // render-once by contract) also participate when a BRANCH
+          // carries request-derived content, so body merges still
           // dispatch; client-state-driven conditionals stay excluded.
           const ifTagSources = getSerializeSourcesForExpr(ifTagExtra);
           if (
@@ -392,19 +452,9 @@ export const IfTag = {
                   ),
               ))
           ) {
-            const accessor = getScopeAccessorLiteral(nodeRef);
-            const signalId = getUpdateIfRegisterId(
-              ifTagSection,
-              accessor.value,
-            );
-            if (isPersistedEntryBuild()) {
-              signal.register = true;
-              signal.registerId = signalId;
-            }
             addUpdateMerge(ifTagSection, {
               kind: "if",
-              accessor,
-              signalId,
+              accessor: getScopeAccessorLiteral(nodeRef),
               branchBodySections: branches.map(
                 ([, branchBodySection]) => branchBodySection,
               ),

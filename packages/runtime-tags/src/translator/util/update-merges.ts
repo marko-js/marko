@@ -73,7 +73,6 @@ export type UpdateMerge =
   | {
       kind: "if";
       accessor: t.StringLiteral | t.NumericLiteral;
-      signalId: string;
       branchBodySections: (Section | undefined)[];
     }
   | {
@@ -275,8 +274,14 @@ export function getUpdateVarRegisterId(section: Section, binding: Binding) {
   return getResumeRegisterId(section, binding, "var");
 }
 
-// Conditional signals hang off dom node bindings whose names (`#text`)
-// repeat within a section, so their register id keys off the accessor.
+// A request-derived `<if>`'s build-stable per-site id (same recipe as
+// `getUpdateDynamicRegisterId`/`getUpdateBoundaryRegisterId`): identical
+// across the document and update renders, keyed off the accessor since
+// conditional dom node bindings (`#text`) repeat within a section. The html
+// runtime stashes it on the owner scope so a later navigation's possession
+// echo (`_have`, dom/update-fragment.ts) can name this site; it is not a
+// resume register id (the dom `<if>` signal itself is never registered for
+// the update merge -- see core/if.ts).
 export function getUpdateIfRegisterId(
   section: Section,
   accessor: string | number,

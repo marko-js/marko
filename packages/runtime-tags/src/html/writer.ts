@@ -903,6 +903,14 @@ function forBranches(
   );
 }
 
+// Build-stable per-site id a request-derived `<if>` stashes on its owner
+// scope (`"Z"`, not an `AccessorPrefix` member so it stays out of every
+// client bundle) so a later navigation's possession echo can name this
+// site (mirrors html/dynamic-tag.ts's `HOP_SITE_PREFIX`; the two never
+// collide because they key off disjoint node accessors). Persisted resume
+// only.
+const IF_SITE_PREFIX = MARKO_DEBUG ? "HopSite:" : "Z";
+
 export function _if(
   cb: () => void | number,
   scopeId: number,
@@ -912,6 +920,8 @@ export function _if(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  siteId?: string,
+  branches?: ((() => void) | 0)[],
 ) {
   const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
@@ -927,9 +937,52 @@ export function _if(
   // serializes even when fragment delivery narrows the page-wide seed.
   const updateStructural =
     state.update && !$chunk.fragment && (serializeBranch as number) & 2;
+  let branchIndex: number | undefined;
+  let takeFragment = false;
+
+  if (branches) {
+    // A request-derived conditional never client-constructs a branch (see
+    // html/dynamic-tag.ts for the analogous hop): `cb` here only selects the
+    // outcome -- rendering is deferred to `branches[branchIndex]` so a
+    // possession mismatch (the client's last echo, `_have` in
+    // dom/update-fragment.ts, names a different branch at this site) is
+    // known BEFORE any of the branch's content -- which may not run
+    // client-side -- renders, and can redirect that render into a resumable
+    // fragment instead of a plain (client-replayed) patch.
+    branchIndex = cb() as number | undefined;
+    if (updateStructural) {
+      const possessed = state.possessed;
+      const siteKey =
+        siteId !== undefined && state.loopKey !== undefined
+          ? siteId + " " + state.loopKey
+          : siteId;
+      const possessedBranch =
+        possessed !== undefined && siteKey !== undefined
+          ? possessed[siteKey]
+          : undefined;
+      takeFragment = possessedBranch !== (branchIndex ?? -1) + "";
+    }
+  }
+
   if (updateStructural) state.freshBranchDepth++;
-  const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
+  if (branches) {
+    const render =
+      branchIndex === undefined ? undefined : branches[branchIndex];
+    if (render) {
+      if (takeFragment) {
+        _fragment(scopeId, accessor, () => withBranchId(branchId, render));
+      } else if (resumeBranch) {
+        withBranchId(branchId, render);
+      } else {
+        render();
+      }
+    }
+  } else {
+    branchIndex = (resumeBranch ? withBranchId(branchId, cb) : cb()) as
+      number | undefined;
+  }
   if (updateStructural) state.freshBranchDepth--;
+
   const shouldWriteBranch = resumeBranch && branchIndex !== undefined;
 
   // Update renders always write the conditional outcome (absence means
@@ -943,12 +996,32 @@ export function _if(
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
       [AccessorPrefix.BranchScopes + accessor]:
         branchIndex === undefined ? undefined : writeScope(branchId, {}),
+      // Stashed unconditionally (not only on a fragment/mismatch) so the
+      // NEXT navigation's echo can prove this one matched or diverged.
+      ...(siteId !== undefined
+        ? { [IF_SITE_PREFIX + accessor]: siteId }
+        : null),
     });
     writeBranchEnd(scopeId, accessor, serializeStateful, 0, parentEndTag);
     return;
   }
 
-  if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
+  if (siteId !== undefined) {
+    // A structural (request-derived) conditional stashes its outcome + site
+    // id unconditionally (even a falsy/no-branch outcome the marker
+    // optimization below would otherwise skip): a later navigation's
+    // possession echo (`_have`, dom/update-fragment.ts) can only prove this
+    // site MATCHED or DIVERGED if every render leaves a value to compare
+    // against.
+    writeScope(scopeId, {
+      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
+      [AccessorPrefix.BranchScopes + accessor]:
+        shouldWriteBranch && !resumeMarker
+          ? writeScope(branchId, {})
+          : undefined,
+      [IF_SITE_PREFIX + accessor]: siteId,
+    });
+  } else if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
     writeScope(scopeId, {
       // TODO: technically conditional renderer should only be written when either the
       // condition is stateful, or if there are direct closures.

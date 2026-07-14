@@ -10,7 +10,6 @@ const $for_update = _update_for(0, "a5", (branch, args) => _update_scope(args[0]
 const $for_update2 = _update_for(1, "a4", (branch, args) => _update_scope(args[0], branch));
 const $count_seed = _update_signal("a3");
 const $for_update3 = _update_for(2, "a1", (branch, args) => $for_content__update(args[0], branch));
-const $if_update = _update_signal("a2");
 const $if_content__update = (patch, live) => {
 	if ("Aa" in patch) $for_update(live, [patch["Aa"], "M"]);
 };
@@ -23,20 +22,9 @@ const $update = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $count_seed, patch["g"]);
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("Ac" in patch) $for_update3(live, [patch["Ac"], "M"]);
-	if ("Dd" in patch) {
-		$if_update(live, patch["Dd"]);
-		const $patchBranch = patch["Ad"], $liveBranch = live["Ad"], $branchMerge = $if_content__update;
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("Dd" in patch) _update_if(patch, live, "Dd", "Ad", [$if_content__update]);
 };
 const _merge = _resume("a6", $update);
 function createPatch() {
 	return createPatch$1(_merge);
 }
-
-// data.ts
-const REGIONS = [
-	"na",
-	"eu",
-	"apac"
-];

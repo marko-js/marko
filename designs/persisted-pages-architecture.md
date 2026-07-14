@@ -168,6 +168,9 @@ tree is compatible.
 
 - Non-persisted output is unchanged.
 - Initial page entries do not depend on `marko/dom-persisted`.
+- Persisted compilation never revives user code that an ordinary optimized DOM
+  build tree-shakes; server-derived results cross the wire only as patch values
+  or resumable fragments.
 - Compiler analysis, not runtime inspection, selects serialized values.
 - Client-owned values are never overwritten by an update render.
 - New structure is rendered on the server and arrives resumable.

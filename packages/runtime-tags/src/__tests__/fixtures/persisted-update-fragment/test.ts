@@ -25,6 +25,15 @@ export const config: TestConfig = {
   // graphs tree-shake out of the update chunk (see sizes.json), and the
   // hop's update merge compiles without a replay path.
   persisted: true,
+  dom_bundle_excludes: [
+    "getSession",
+    "getMetrics",
+    "hello ",
+    "views",
+    "sales",
+    "welcome home",
+    "admin tools enabled",
+  ],
   // The computes are server-only by design, so a plain client render of
   // this template is impossible.
   skip_csr: true,

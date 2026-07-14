@@ -33,7 +33,12 @@ export function _have(root: Scope | undefined = getUpdateRoot()): string {
     for (const key in scope) {
       const value = scope[key];
       if (
-        typeof value === "string" &&
+        // Dynamic-tag hops echo a string renderer id; a structural `<if>`
+        // echoes its numeric branch index the same way (same key prefix,
+        // same `HopSite:` sibling stash -- see the html runtime's `_if`),
+        // stringified so the server's possession compare (a JSON-decoded
+        // string) matches either shape.
+        (typeof value === "string" || typeof value === "number") &&
         key.length > prefix.length &&
         key.slice(0, prefix.length) === prefix
       ) {
@@ -42,7 +47,7 @@ export function _have(root: Scope | undefined = getUpdateRoot()): string {
           found = 1;
           const loopKey = scope[AccessorProp.LoopKey];
           possessed[loopKey === undefined ? siteId : siteId + " " + loopKey] =
-            value;
+            "" + value;
         }
       } else if (
         typeof value === "string" &&
@@ -105,7 +110,14 @@ export function applyFragment(
   context.stamp(branch, 0);
   branch[AccessorProp.StartNode] = first;
   branch[AccessorProp.EndNode] = last;
-  branch[AccessorProp.Owner] ||= live;
+  // Force (not `||=`): a compiled closure inside the captured content may
+  // have serialized an explicit "_" owner reference through the ordinary
+  // (patch-local) fills path -- eg a nested `<const>` whose value signal
+  // lives on an ancestor section (see core/if.ts's `persisted-update-
+  // server-derived` fixture) -- which would otherwise stick as a stale
+  // patch-scope placeholder instead of the real live scope this fragment
+  // attaches to.
+  branch[AccessorProp.Owner] = live;
   setParentBranch(
     branch,
     live[AccessorProp.ClosestBranch] as BranchScope | undefined,

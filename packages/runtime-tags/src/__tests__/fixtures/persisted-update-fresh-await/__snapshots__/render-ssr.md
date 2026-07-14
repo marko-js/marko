@@ -39,12 +39,12 @@ UPDATE: .count::text@8 "0" => "1"
 <h2>
   Product 7
 </h2>
+loading reviews…
 ```
 ## Change
 ```
-INSERT: .count + h2
-REMOVE: h2 + p
-UPDATE: h2::text@8 "" => "7"
+INSERT: h2, ::text("loading reviews…")
+REMOVE: .count + p
 ```
 
 # Update `{"productId":7,"$global":{"persisted":true}}`
@@ -69,8 +69,7 @@ UPDATE: h2::text@8 "" => "7"
 ## Change
 ```
 INSERT: h2 + ul
-INSERT: ul > li
-INSERT: ul > li:nth-of-type(1) + li
+REMOVE: ul + ::text("loading reviews…")
 ```
 
 # Update
@@ -113,9 +112,9 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 ## Change
 ```
-INSERT: .count + p
-REMOVE: p + h2
-REMOVE: p + ul
+INSERT: p
+REMOVE: .count + h2
+REMOVE: .count + ul
 ```
 
 # Update `{"productId":3,"$global":{"persisted":true}}`
@@ -139,10 +138,6 @@ REMOVE: p + ul
 ```
 ## Change
 ```
-INSERT: .count + h2
-REMOVE: ul + p
-UPDATE: h2::text@8 "" => "3"
-INSERT: h2 + ul
-INSERT: ul > li
-INSERT: ul > li:nth-of-type(1) + li
+INSERT: h2, ul
+REMOVE: .count + p
 ```

@@ -1,7 +1,6 @@
 // template.marko.update.mjs
 const $expanded_seed = _update_signal("__tests__/template.marko_0_expanded/var");
 const $input_product_featured_update = _update_signal("__tests__/template.marko_0_input_product_featured/var");
-const $if_update = _update_signal("__tests__/template.marko_0/update_if_#section/4");
 const $for_update = _update_for("#ul/5", "__tests__/template.marko_2_content/update", (branch, args) => _update_scope(args[0], branch));
 const $update = (patch, live) => {
 	_update_pair(patch, live);
@@ -9,11 +8,7 @@ const $update = (patch, live) => {
 	if ("input_product_featured" in patch) $input_product_featured_update(live, patch["input_product_featured"]);
 	if ("input_product_sale_percent" in patch) live["input_product_sale_percent"] = patch["input_product_sale_percent"];
 	_update_scope(patch, live);
-	if ("ConditionalRenderer:#section/4" in patch) {
-		$if_update(live, patch["ConditionalRenderer:#section/4"]);
-		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = live["BranchScopes:#section/4"], $branchMerge = _update_scope;
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("ConditionalRenderer:#section/4" in patch) _update_if(patch, live, "ConditionalRenderer:#section/4", "BranchScopes:#section/4", [_update_scope]);
 	if ("BranchScopes:#ul/5" in patch) $for_update(live, [patch["BranchScopes:#ul/5"], "#LoopKey"]);
 };
 const _merge = _resume("__tests__/template.marko_0_update", $update);

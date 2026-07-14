@@ -1,15 +1,9 @@
 // template.marko.update.mjs
-const $if_update = _update_signal("__tests__/template.marko_2/update_if_#text/0");
 const $for_update = _update_for("#ul/0", "__tests__/template.marko_5_content/update", (branch, args) => _update_scope(args[0], branch));
 const $for_update2 = _update_for("#nav/1", "__tests__/template.marko_2_content/update", (branch, args) => $for_content__update(args[0], branch));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $if_update2 = _update_signal("__tests__/template.marko_0/update_if_#text/2");
 const $for_content__update = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) {
-		$if_update(live, patch["ConditionalRenderer:#text/0"]);
-		const $patchBranch = patch["BranchScopes:#text/0"], $liveBranch = live["BranchScopes:#text/0"], $branchMerge = [0, _update_scope][patch["ConditionalRenderer:#text/0"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("ConditionalRenderer:#text/0" in patch) _update_if(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, _update_scope]);
 };
 const $if_content__update = (patch, live) => {
 	if ("BranchScopes:#ul/0" in patch) $for_update(live, [patch["BranchScopes:#ul/0"], "#LoopKey"]);
@@ -22,11 +16,7 @@ const $update = (patch, live) => {
 	if ("search_q" in patch) live["search_q"] = patch["search_q"];
 	if ("results_items" in patch) live["results_items"] = patch["results_items"];
 	if ("results_totalPages" in patch) live["results_totalPages"] = patch["results_totalPages"];
-	if ("ConditionalRenderer:#text/2" in patch) {
-		$if_update2(live, patch["ConditionalRenderer:#text/2"]);
-		const $patchBranch2 = patch["BranchScopes:#text/2"], $liveBranch2 = live["BranchScopes:#text/2"], $branchMerge2 = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
-		if ($patchBranch2 && $liveBranch2 && $branchMerge2) $branchMerge2($patchBranch2, $liveBranch2);
-	}
+	if ("ConditionalRenderer:#text/2" in patch) _update_if(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", [$if_content__update, 0]);
 };
 const _merge = _resume("__tests__/template.marko_0_update", $update);
 function createPatch() {

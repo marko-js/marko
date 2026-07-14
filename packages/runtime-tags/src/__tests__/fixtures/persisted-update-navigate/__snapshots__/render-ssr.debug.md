@@ -225,11 +225,10 @@ UPDATE: button::text "Hide" => "Show"
 <button>
   Show
 </button>
-<section>
-  <em>
-    Save 20%
-  </em>
-</section>
+<em>
+  Save 20%
+</em>
+<section />
 <ul>
   <li>
     <span
@@ -264,8 +263,7 @@ UPDATE: button::text "Hide" => "Show"
 ```
 UPDATE: h1::text "Summit 65L Pack" => "Trailhead 40L Pack"
 UPDATE: a[href] "/products/summit-65/specs" => "/products/trailhead-40/specs"
-INSERT: section > em
-UPDATE: section > em::text@5 "" => "20"
+INSERT: button + em
 REMOVE: ul > li:nth-of-type(2) + li
 INSERT: ul > li
 ```

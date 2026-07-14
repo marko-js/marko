@@ -8,7 +8,6 @@ enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");
-const $if_update = _update_signal("a0");
 const $else_content__update = (patch, live) => {
 	_update_pair(patch, live);
 	_update_scope(patch, live);
@@ -16,11 +15,7 @@ const $else_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	if ("f" in patch) _update_seed(live, $count_seed, patch["f"]);
 	if ("e" in patch) live["e"] = patch["e"];
-	if ("Da" in patch) {
-		$if_update(live, patch["Da"]);
-		const $patchBranch = patch["Aa"], $liveBranch = live["Aa"], $branchMerge = [0, $else_content__update][patch["Da"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("Da" in patch) _update_if(patch, live, "Da", "Aa", [0, $else_content__update]);
 };
 const _merge = _resume("a3", $update);
 function createPatch() {

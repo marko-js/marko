@@ -65,8 +65,8 @@ UPDATE: button::text "1" => "2"
 ## Change
 ```
 INSERT: h2
-REMOVE: h2 + h1
-REMOVE: h2 + button
+REMOVE: h1
+REMOVE: button
 ```
 
 # Update `{"title":"Back","$global":{"persisted":true}}`
@@ -75,13 +75,11 @@ REMOVE: h2 + button
   Back
 </h1>
 <button>
-  2
+  0
 </button>
 ```
 ## Change
 ```
 INSERT: h1, button
-REMOVE: button + h2
-UPDATE: h1::text " " => "Back"
-UPDATE: button::text " " => "2"
+REMOVE: h2
 ```

@@ -428,70 +428,36 @@ function buildMerge(
         getAccessorPrefix().ConditionalRenderer + merge.accessor.value;
       const branchScopesKey =
         getAccessorPrefix().BranchScopes + merge.accessor.value;
-      const signalIdentifier = generateUidIdentifier("if_update");
-      hoistedDeclarations.push(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            signalIdentifier,
-            callRuntime("_update_signal", t.stringLiteral(merge.signalId)),
-          ),
-        ]),
-      );
-
-      const bodyStatements: t.Statement[] = [
-        t.expressionStatement(
-          t.callExpression(signalIdentifier, [
-            liveIdentifier,
-            patchGet(rendererKey),
-          ]),
-        ),
-      ];
-
+      // Same-branch content merges dispatch by branch index (no client
+      // construction needed); a branch change applies a resumable fragment
+      // (or fails loudly without one) -- see `_update_if` in dom/update.ts
+      // and html/dynamic-tag.ts for the analogous hop's `_update_dynamic`.
       const branchMerges = merge.branchBodySections.map(
         (branchSection) => branchSection && mergeIdentifiers.get(branchSection),
       );
-      if (branchMerges.some(Boolean)) {
-        const patchBranch = generateUidIdentifier("patchBranch");
-        const liveBranch = generateUidIdentifier("liveBranch");
-        const branchMerge = generateUidIdentifier("branchMerge");
-        bodyStatements.push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(patchBranch, patchGet(branchScopesKey)),
-            t.variableDeclarator(liveBranch, liveGet(branchScopesKey)),
-            t.variableDeclarator(
-              branchMerge,
-              branchMerges.length === 1
-                ? t.cloneNode(branchMerges[0]!, true)
-                : t.memberExpression(
-                    t.arrayExpression(
-                      branchMerges.map((identifier) =>
-                        identifier
-                          ? t.cloneNode(identifier, true)
-                          : t.numericLiteral(0),
-                      ),
+      return [
+        ifPresent(
+          rendererKey,
+          t.expressionStatement(
+            callRuntime(
+              "_update_if",
+              t.identifier("patch"),
+              liveIdentifier,
+              t.stringLiteral(rendererKey),
+              t.stringLiteral(branchScopesKey),
+              branchMerges.some(Boolean)
+                ? t.arrayExpression(
+                    branchMerges.map((identifier) =>
+                      identifier
+                        ? t.cloneNode(identifier, true)
+                        : t.numericLiteral(0),
                     ),
-                    patchGet(rendererKey),
-                    true,
-                  ),
-            ),
-          ]),
-          t.ifStatement(
-            t.logicalExpression(
-              "&&",
-              t.logicalExpression("&&", patchBranch, liveBranch),
-              branchMerge,
-            ),
-            t.expressionStatement(
-              t.callExpression(t.cloneNode(branchMerge, true), [
-                t.cloneNode(patchBranch, true),
-                t.cloneNode(liveBranch, true),
-              ]),
+                  )
+                : undefined,
             ),
           ),
-        );
-      }
-
-      return [ifPresent(rendererKey, t.blockStatement(bodyStatements))];
+        ),
+      ];
     }
     case "for": {
       const branchScopesKey =

@@ -1,6 +1,5 @@
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $if_update = _update_signal("__tests__/template.marko_0/update_if_#text/0");
 const $else_content__update = (patch, live) => {
 	_update_pair(patch, live);
 	_update_scope(patch, live);
@@ -8,11 +7,7 @@ const $else_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
-	if ("ConditionalRenderer:#text/0" in patch) {
-		$if_update(live, patch["ConditionalRenderer:#text/0"]);
-		const $patchBranch = patch["BranchScopes:#text/0"], $liveBranch = live["BranchScopes:#text/0"], $branchMerge = [0, $else_content__update][patch["ConditionalRenderer:#text/0"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("ConditionalRenderer:#text/0" in patch) _update_if(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, $else_content__update]);
 };
 const _merge = _resume("__tests__/template.marko_0_update", $update);
 function createPatch() {

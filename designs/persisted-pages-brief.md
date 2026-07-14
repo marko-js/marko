@@ -45,7 +45,9 @@ These are requirements, not follow-up optimizations:
 2. Initial persisted-page JavaScript excludes the update applier, route merge
    programs, and code used only to render new structure.
 3. Values are serialized only when the client cannot preserve or derive them.
-4. Server-only page construction code never ships solely to support navigation.
+4. Persisted compilation never revives user code that an ordinary optimized DOM
+   build removes. Server-only page construction and expressions stay on the
+   server; only their patch values or rendered fragments cross the wire.
 5. The protocol composes with serializer values, streamed async boundaries,
    keyed reorder, lazy modules, and compiled signals.
 6. Links and forms remain valid HTML interactions and server responses remain

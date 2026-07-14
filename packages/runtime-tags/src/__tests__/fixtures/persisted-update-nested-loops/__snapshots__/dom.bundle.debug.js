@@ -3,7 +3,6 @@ const $for_update = _update_for("#p/0", "__tests__/template.marko_4_content/upda
 const $for_update2 = _update_for("#text/1", "__tests__/template.marko_2_content/update", (branch, args) => _update_scope(args[0], branch));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $for_update3 = _update_for("#nav/2", "__tests__/template.marko_1_content/update", (branch, args) => $for_content__update(args[0], branch));
-const $if_update = _update_signal("__tests__/template.marko_0/update_if_#text/3");
 const $if_content__update = (patch, live) => {
 	if ("BranchScopes:#p/0" in patch) $for_update(live, [patch["BranchScopes:#p/0"], "#LoopKey"]);
 };
@@ -16,11 +15,7 @@ const $update = (patch, live) => {
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("path" in patch) live["path"] = patch["path"];
 	if ("BranchScopes:#nav/2" in patch) $for_update3(live, [patch["BranchScopes:#nav/2"], "#LoopKey"]);
-	if ("ConditionalRenderer:#text/3" in patch) {
-		$if_update(live, patch["ConditionalRenderer:#text/3"]);
-		const $patchBranch = patch["BranchScopes:#text/3"], $liveBranch = live["BranchScopes:#text/3"], $branchMerge = $if_content__update;
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("ConditionalRenderer:#text/3" in patch) _update_if(patch, live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3", [$if_content__update]);
 };
 const _merge = _resume("__tests__/template.marko_0_update", $update);
 function createPatch() {

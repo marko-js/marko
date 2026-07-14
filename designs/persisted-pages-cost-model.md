@@ -53,8 +53,12 @@ focused cases identify what a byte belongs to.
 1. **Zero opt-out cost.** Non-persisted compiler output, server HTML, and client
    bundle snapshots remain unchanged. No persisted virtual entry is reachable.
 2. **Phase separation.** The initial persisted page graph excludes
-   `marko/dom-persisted`, compiled update merges, alternate-route modules, and
-   server construction code. Tests inspect the graph, not only minified size.
+   `marko/dom-persisted`, compiled update merges, and alternate-route modules.
+   No user expression, import, module statement, or renderer that an ordinary
+   optimized DOM build tree-shakes may reappear in any persisted DOM or update
+   chunk; its result must arrive only as a patch value or resumable fragment.
+   Tests inspect the graph and explicit user-code sentinels, not only minified
+   size.
 3. **Serialization discipline.** A fixture proves each excluded class:
    client state, resume-only wiring, client-derived values, and unchanged sparse
    keys. Structural fragments contain only the newly appearing branch.

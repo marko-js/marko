@@ -62,7 +62,6 @@ const _merge$1 = _resume("b3", $update$1);
 
 // template.marko.update.mjs
 const $for_update = _update_for(6, "a5", (branch, args) => _update_scope(args[0], branch));
-const $if_update = _update_signal("a6");
 const $count_seed = _update_signal("a1");
 const $Dashboard_content__update = (patch, live) => {
 	_update_pair(patch, live);
@@ -70,7 +69,7 @@ const $Dashboard_content__update = (patch, live) => {
 	if ("b" in patch) _merge$3(patch["b"], live["b"]);
 	if ("f" in patch) _merge$2(patch["f"], live["f"]);
 	if ("Ag" in patch) $for_update(live, [patch["Ag"], "M"]);
-	if ("Dh" in patch) $if_update(live, patch["Dh"]);
+	if ("Dh" in patch) _update_if(patch, live, "Dh", "Ah");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

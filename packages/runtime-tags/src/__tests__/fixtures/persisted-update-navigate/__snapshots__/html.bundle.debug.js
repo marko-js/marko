@@ -12,14 +12,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let expanded = false;
 	_html(`<h1>${_escape(_hole_value($scope0_id, "UpdateHole:#text/0", input.product.name, _persisted_reason()))}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</h1><a${_attr("href", _hole_value($scope0_id, "UpdateAttr:href:#a/1", `/products/${input.product.slug}/specs`, _persisted_reason()))}>specs</a>${_el_resume($scope0_id, "#a/1", _serialize_guard($scope0_reason, 1))}<button>${expanded ? "Hide" : "Show"}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}<section${expanded && input.product.featured ? " class=spotlight" : ""}>`);
-	_if(() => {
-		if (input.product.sale) {
-			const $scope1_id = _scope_id();
-			_html(`<em>Save ${_sep($sg__input_product_sale_percent)}${_escape(_hole_value($scope1_id, "UpdateHole:#text/0", input.product.sale.percent, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_product_sale_percent)}%</em>`);
-			$sg__input_product_sale && writeScope($scope1_id, { _: $sg__input_product_sale_percent && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
-			return 0;
-		}
-	}, $scope0_id, "#section/4", $sg__input_product_sale, 1 | _persisted_reason(), $sg__input_product_sale, "</section>", 1);
+	_if(() => input.product.sale ? 0 : undefined, $scope0_id, "#section/4", $sg__input_product_sale, 1 | _persisted_reason(), $sg__input_product_sale, "</section>", 1, "__tests__/template.marko_0/update_if_#section/4", [() => {
+		const $scope1_id = _scope_id();
+		_html(`<em>Save ${_sep($sg__input_product_sale_percent)}${_escape(_hole_value($scope1_id, "UpdateHole:#text/0", input.product.sale.percent, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_product_sale_percent)}%</em>`);
+		$sg__input_product_sale && writeScope($scope1_id, { _: $sg__input_product_sale_percent && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
+	}]);
 	_html("<ul>");
 	_for_of(input.related, (item) => {
 		const $scope2_id = _scope_id();

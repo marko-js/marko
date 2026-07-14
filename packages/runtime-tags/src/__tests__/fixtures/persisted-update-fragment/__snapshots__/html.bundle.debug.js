@@ -87,14 +87,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, function(metric) {
 			return metric.name;
 		}, $scope2_id, "#ul/6", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
-		_if(() => {
-			if ($global().admin) {
-				const $scope4_id = _scope_id();
-				_html("<p class=admin>admin tools enabled</p>");
-				_persisted_reason() && writeScope($scope4_id, {}, "__tests__/template.marko", "20:4");
-				return 0;
-			}
-		}, $scope2_id, "#text/7", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1);
+		_if(() => $global().admin ? 0 : undefined, $scope2_id, "#text/7", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "__tests__/template.marko_2/update_if_#text/7", [() => {
+			const $scope4_id = _scope_id();
+			_html("<p class=admin>admin tools enabled</p>");
+			_persisted_reason() && writeScope($scope4_id, {}, "__tests__/template.marko", "20:4");
+		}]);
 		_script($scope2_id, "__tests__/template.marko_2");
 		writeScope($scope2_id, {
 			tally: _state_reason() && tally,

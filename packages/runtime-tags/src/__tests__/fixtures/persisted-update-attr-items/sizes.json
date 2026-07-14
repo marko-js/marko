@@ -12,8 +12,8 @@
     },
     "update.js": {
       "total": {
-        "min": 4779,
-        "brotli": 1989
+        "min": 4804,
+        "brotli": 2001
       },
       "files": {
         "tags/chip-list.marko.update.mjs": 289,

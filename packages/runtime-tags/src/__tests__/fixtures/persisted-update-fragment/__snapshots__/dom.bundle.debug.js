@@ -35,7 +35,6 @@ function createPatch$1() {
 
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/6", "__tests__/template.marko_3_content/update", (branch, args) => _update_scope(args[0], branch));
-const $if_update = _update_signal("__tests__/template.marko_2/update_if_#text/7");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $Dashboard_content__update = (patch, live) => {
 	_update_pair(patch, live);
@@ -43,9 +42,7 @@ const $Dashboard_content__update = (patch, live) => {
 	if ("#childScope/1" in patch) _merge$3(patch["#childScope/1"], live["#childScope/1"]);
 	if ("#childScope/5" in patch) _merge$2(patch["#childScope/5"], live["#childScope/5"]);
 	if ("BranchScopes:#ul/6" in patch) $for_update(live, [patch["BranchScopes:#ul/6"], "#LoopKey"]);
-	if ("ConditionalRenderer:#text/7" in patch) {
-		$if_update(live, patch["ConditionalRenderer:#text/7"]);
-	}
+	if ("ConditionalRenderer:#text/7" in patch) _update_if(patch, live, "ConditionalRenderer:#text/7", "BranchScopes:#text/7");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

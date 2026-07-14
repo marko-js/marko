@@ -59,6 +59,8 @@ export type TestConfig = {
   error_compiler?: true | string[];
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** User-code sentinels that must tree-shake from the optimized DOM graph. */
+  dom_bundle_excludes?: string[];
   /**
    * Compiles the fixture with the `persisted` compiler option (single-page
    * server-first updates). Pair with `$global.persisted` in the fixture
@@ -233,6 +235,14 @@ function testFixtures(interop?: true) {
             await snapMode(async () => {
               const runner = await ssrRunner();
               const { snapshot, sizes } = await runner[`${output}Bundle`]();
+              if (optimize && output === "dom") {
+                for (const excluded of config.dom_bundle_excludes || []) {
+                  assert.ok(
+                    !snapshot.includes(excluded),
+                    `optimized DOM bundle must exclude ${JSON.stringify(excluded)}`,
+                  );
+                }
+              }
               if (optimize && sizes) stats.dom = sizes;
               return stripFixtureDir(snapshot);
             }, `${output}.bundle.js`);

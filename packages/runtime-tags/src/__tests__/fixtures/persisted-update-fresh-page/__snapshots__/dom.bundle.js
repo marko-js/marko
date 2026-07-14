@@ -85,7 +85,6 @@ const _merge$1 = _resume("c3", $update$1);
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a11", (branch, args) => _update_scope(args[0], branch));
-const $if_update = _update_signal("a6");
 const $products_seed = _update_signal("a4");
 const $for_update2 = _update_for(2, "a3", (branch, args) => _update_scope(args[0], branch));
 const $count_seed = _update_signal("a1");
@@ -105,11 +104,7 @@ const $Item_content__update = (patch, live) => {
 	if ("d" in patch) live["d"] = patch["d"];
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
-	if ("Da" in patch) {
-		$if_update(live, patch["Da"]);
-		const $patchBranch = patch["Aa"], $liveBranch = live["Aa"], $branchMerge = [0, $else_content2__update][patch["Da"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("Da" in patch) _update_if(patch, live, "Da", "Aa", [0, $else_content2__update]);
 };
 const $Cart_content__update = (patch, live) => {
 	if ("f" in patch) _update_seed(live, $products_seed, patch["f"]);
@@ -129,16 +124,6 @@ function createPatch() {
 }
 
 // data.js
-function getRecommendations(id) {
-	if (typeof window !== "undefined") throw new Error("getRecommendations is server-only");
-	return resolveAfter([{
-		id: id + 1,
-		title: `Product ${id + 1}`
-	}, {
-		id: id + 2,
-		title: `Product ${id + 2}`
-	}], 1);
-}
 const getProducts = typeof window === "undefined" ? (ids) => ids.map((id) => ({
 	id,
 	title: `Product ${id}`,

@@ -52,11 +52,8 @@ UPDATE: button::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + :is(.pair, .bump, .combo)
-REMOVE: .combo + p
-UPDATE: .combo::text@0 "" => "Q"
-UPDATE: .combo::text@2 "" => "n"
-UPDATE: .pair::text " " => "n-m"
+INSERT: .pair, .bump, .combo
+REMOVE: button:nth-of-type(1) + p
 ```
 
 # Update
@@ -70,7 +67,7 @@ container.querySelector("button.bump").click();
 <p
   class="pair"
 >
-  n-m!
+  undefined!
 </p>
 <button
   class="bump"
@@ -85,7 +82,7 @@ container.querySelector("button.bump").click();
 ```
 ## Change
 ```
-UPDATE: .pair::text "n-m" => "n-m!"
+UPDATE: .pair::text "n-m" => "undefined!"
 ```
 
 # Update
@@ -99,7 +96,7 @@ container.querySelector("button:not(.bump)").click();
 <p
   class="pair"
 >
-  n-m!
+  undefined!
 </p>
 <button
   class="bump"

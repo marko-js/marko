@@ -145,7 +145,8 @@ UPDATE: button::text "11" => "12"
 ```
 ## Change
 ```
-REMOVE: .hot > :is(em, button)
+REMOVE: .hot > em
+REMOVE: .hot > button
 ```
 
 # Update `{"$global":{"persisted":true,"title":"Persisted Page","params":{"id":7,"tag":"featured","sale":35},"serializedGlobals":{"title":true,"params":true}}}`
@@ -161,24 +162,22 @@ REMOVE: .hot > :is(em, button)
 <button>
   12
 </button>
+<em>
+  Sale 35% off
+</em>
+<button
+  class="buy"
+>
+  buy
+</button>
 <section
   class="hot"
->
-  <em>
-    Sale 35% off
-  </em>
-  <button
-    class="buy"
-  >
-    buy
-  </button>
-</section>
+/>
 ```
 ## Change
 ```
 UPDATE: a[href] "/items/42" => "/items/7"
-INSERT: .hot > :is(em, .buy)
-UPDATE: .hot > em::text@5 "" => "35"
+INSERT: button:nth-of-type(1) + :is(em, .buy)
 ```
 
 # Update
@@ -197,22 +196,21 @@ container.querySelector("section + button, h1 ~ button:not(.buy)").click();
 <button>
   13
 </button>
+<em>
+  Sale 35% off
+</em>
+<button
+  class="buy"
+>
+  buy
+</button>
 <section
   class="hot"
->
-  <em>
-    Sale 35% off
-  </em>
-  <button
-    class="buy"
-  >
-    buy
-  </button>
-</section>
+/>
 ```
 ## Change
 ```
-UPDATE: button::text "12" => "13"
+UPDATE: button:nth-of-type(1)::text "12" => "13"
 ```
 
 # Update
@@ -231,22 +229,21 @@ container.querySelector("button.buy").click();
 <button>
   23
 </button>
+<em>
+  Sale 35% off
+</em>
+<button
+  class="buy"
+>
+  buy
+</button>
 <section
   class="hot"
->
-  <em>
-    Sale 35% off
-  </em>
-  <button
-    class="buy"
-  >
-    buy
-  </button>
-</section>
+/>
 ```
 ## Change
 ```
-UPDATE: button::text "13" => "23"
+UPDATE: button:nth-of-type(1)::text "13" => "23"
 ```
 
 # Update `{"$global":{"persisted":true,"title":"Persisted Page","params":{"id":7,"tag":"","sale":35},"serializedGlobals":{"title":true,"params":true}}}`
@@ -262,16 +259,15 @@ UPDATE: button::text "13" => "23"
 <button>
   23
 </button>
-<section>
-  <em>
-    Sale 35% off
-  </em>
-  <button
-    class="buy"
-  >
-    buy
-  </button>
-</section>
+<em>
+  Sale 35% off
+</em>
+<button
+  class="buy"
+>
+  buy
+</button>
+<section />
 ```
 ## Change
 ```

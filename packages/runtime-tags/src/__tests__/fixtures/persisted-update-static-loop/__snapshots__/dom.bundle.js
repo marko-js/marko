@@ -13,7 +13,6 @@ enableBranchesPersisted();
 const $globals_update = _update_signal("a4");
 const $count_seed = _update_signal("a3");
 const $for_update = _update_for(2, "a1", (branch, args) => _update_scope(args[0], branch));
-const $if_update = _update_signal("a2");
 const $if_content__update = (patch, live) => {
 	_update_scope(patch, live);
 	$globals_update(live);
@@ -22,11 +21,7 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $count_seed, patch["g"]);
 	if ("Ac" in patch) $for_update(live, [patch["Ac"], "M"]);
-	if ("Dd" in patch) {
-		$if_update(live, patch["Dd"]);
-		const $patchBranch = patch["Ad"], $liveBranch = live["Ad"], $branchMerge = $if_content__update;
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("Dd" in patch) _update_if(patch, live, "Dd", "Ad", [$if_content__update]);
 };
 const _merge = _resume("a5", $update);
 function createPatch() {

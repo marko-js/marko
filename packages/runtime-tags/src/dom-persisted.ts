@@ -10,6 +10,7 @@ export {
   _update_dynamic,
   _update_for,
   _update_html,
+  _update_if,
   _update_load,
   _update_pair,
   _update_scope,

@@ -149,47 +149,43 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $Item_content__product_id__closures = new Set();
 		const $scope6_reason = _scope_reason();
 		const product = $global().productId && getProduct($global().productId);
-		_if(() => {
-			if (!product) {
-				const $scope9_id = _scope_id();
-				_html("<h2>not found</h2>");
-				_persisted_reason() && writeScope($scope9_id, {}, "__tests__/template.marko", "36:4");
-				return 0;
-			} else {
-				const $scope7_id = _scope_id();
-				_html(`<img${_attr("src", _hole_value($scope7_id, "UpdateAttr:src:#img/0", product.image, _persisted_reason()))}${_attr("alt", _hole_value($scope7_id, "UpdateAttr:alt:#img/0", product.title, _persisted_reason()))} class=thumb>${_el_resume($scope7_id, "#img/0", _persisted_reason())}<h2 class=title>${_escape(_hole_value($scope7_id, "UpdateHole:#text/1", product.title, _persisted_reason()))}${_el_resume($scope7_id, "#text/1", _persisted_reason())}</h2><div class=price>$${_sep(_persisted_reason())}${_escape(_hole_value($scope7_id, "UpdateHole:#text/2", product.price.toFixed(2), _persisted_reason()))}${_el_resume($scope7_id, "#text/2", _persisted_reason())}</div>`);
-				const $childScope2 = _peek_scope_id();
-				_set_serialize_reason(_persisted_reason());
-				actions_default({ id: product.id });
-				_try($scope7_id, "#text/4", _content_resume("__tests__/template.marko_8_content", () => {
-					const $scope8_id = _scope_id();
-					const $scope8_reason = _scope_reason();
-					_await($scope8_id, "#text/0", getRecommendations(product.id), (recs) => {
-						const $scope11_id = _scope_id();
-						_html("<ul class=recs>");
-						_for_of(recs, (rec) => {
-							const $scope12_id = _scope_id();
-							_html(`<li>${_escape(_hole_value($scope12_id, "UpdateHole:#text/0", rec.title, _persisted_reason()))}${_el_resume($scope12_id, "#text/0", _persisted_reason())}</li>`);
-							_persisted_reason() && writeScope($scope12_id, {}, "__tests__/template.marko", "48:12");
-						}, function(rec) {
-							return rec.id;
-						}, $scope11_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
-						_persisted_reason() && writeScope($scope11_id, {}, "__tests__/template.marko", "46:8");
-					}, _persisted_reason());
-					_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }, "__tests__/template.marko", "44:6"));
-					_resume_branch($scope8_id);
-				}, $scope7_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_10_content", () => {
-					_scope_reason();
-					const $scope10_id = _scope_id();
-					_html("loading recommendations…");
-				}, $scope7_id) }) }, "__tests__/template.marko_7/update_boundary_#text/4");
-				_persisted_reason() && writeScope($scope7_id, {
-					_: _scope_with_id($scope6_id),
-					"#childScope/3": _existing_scope($childScope2)
-				}, "__tests__/template.marko", "39:4");
-				return 1;
-			}
-		}, $scope6_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason());
+		_if(() => !product ? 0 : 1, $scope6_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), void 0, void 0, "__tests__/template.marko_6/update_if_#text/0", [() => {
+			const $scope9_id = _scope_id();
+			_html("<h2>not found</h2>");
+			_persisted_reason() && writeScope($scope9_id, {}, "__tests__/template.marko", "36:4");
+		}, () => {
+			const $scope7_id = _scope_id();
+			_html(`<img${_attr("src", _hole_value($scope7_id, "UpdateAttr:src:#img/0", product.image, _persisted_reason()))}${_attr("alt", _hole_value($scope7_id, "UpdateAttr:alt:#img/0", product.title, _persisted_reason()))} class=thumb>${_el_resume($scope7_id, "#img/0", _persisted_reason())}<h2 class=title>${_escape(_hole_value($scope7_id, "UpdateHole:#text/1", product.title, _persisted_reason()))}${_el_resume($scope7_id, "#text/1", _persisted_reason())}</h2><div class=price>$${_sep(_persisted_reason())}${_escape(_hole_value($scope7_id, "UpdateHole:#text/2", product.price.toFixed(2), _persisted_reason()))}${_el_resume($scope7_id, "#text/2", _persisted_reason())}</div>`);
+			const $childScope2 = _peek_scope_id();
+			_set_serialize_reason(_persisted_reason());
+			actions_default({ id: product.id });
+			_try($scope7_id, "#text/4", _content_resume("__tests__/template.marko_8_content", () => {
+				const $scope8_id = _scope_id();
+				const $scope8_reason = _scope_reason();
+				_await($scope8_id, "#text/0", getRecommendations(product.id), (recs) => {
+					const $scope11_id = _scope_id();
+					_html("<ul class=recs>");
+					_for_of(recs, (rec) => {
+						const $scope12_id = _scope_id();
+						_html(`<li>${_escape(_hole_value($scope12_id, "UpdateHole:#text/0", rec.title, _persisted_reason()))}${_el_resume($scope12_id, "#text/0", _persisted_reason())}</li>`);
+						_persisted_reason() && writeScope($scope12_id, {}, "__tests__/template.marko", "48:12");
+					}, function(rec) {
+						return rec.id;
+					}, $scope11_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+					_persisted_reason() && writeScope($scope11_id, {}, "__tests__/template.marko", "46:8");
+				}, _persisted_reason());
+				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }, "__tests__/template.marko", "44:6"));
+				_resume_branch($scope8_id);
+			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_10_content", () => {
+				_scope_reason();
+				const $scope10_id = _scope_id();
+				_html("loading recommendations…");
+			}, $scope7_id) }) }, "__tests__/template.marko_7/update_boundary_#text/4");
+			_persisted_reason() && writeScope($scope7_id, {
+				_: _scope_with_id($scope6_id),
+				"#childScope/3": _existing_scope($childScope2)
+			}, "__tests__/template.marko", "39:4");
+		}]);
 		_persisted_reason() && writeScope($scope6_id, { "ClosureScopes:product_id": $Item_content__product_id__closures }, "__tests__/template.marko", "34:2", {
 			product_image: ["product.image", "35:10"],
 			product_title: ["product.title", "35:10"],

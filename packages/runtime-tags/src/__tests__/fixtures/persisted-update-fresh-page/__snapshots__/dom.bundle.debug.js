@@ -39,7 +39,6 @@ function createPatch$1() {
 
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/0", "__tests__/template.marko_12_content/update", (branch, args) => _update_scope(args[0], branch));
-const $if_update = _update_signal("__tests__/template.marko_6/update_if_#text/0");
 const $products_seed = _update_signal("__tests__/template.marko_1_products/var");
 const $for_update2 = _update_for("#nav/2", "__tests__/template.marko_3_content/update", (branch, args) => _update_scope(args[0], branch));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
@@ -59,11 +58,7 @@ const $Item_content__update = (patch, live) => {
 	if ("product_title" in patch) live["product_title"] = patch["product_title"];
 	if ("product_price" in patch) live["product_price"] = patch["product_price"];
 	if ("product_id" in patch) live["product_id"] = patch["product_id"];
-	if ("ConditionalRenderer:#text/0" in patch) {
-		$if_update(live, patch["ConditionalRenderer:#text/0"]);
-		const $patchBranch = patch["BranchScopes:#text/0"], $liveBranch = live["BranchScopes:#text/0"], $branchMerge = [0, $else_content2__update][patch["ConditionalRenderer:#text/0"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("ConditionalRenderer:#text/0" in patch) _update_if(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, $else_content2__update]);
 };
 const $Cart_content__update = (patch, live) => {
 	if ("products" in patch) _update_seed(live, $products_seed, patch["products"]);

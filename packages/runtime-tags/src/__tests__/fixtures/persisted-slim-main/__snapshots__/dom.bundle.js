@@ -6,17 +6,11 @@ const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", f
 enableBranchesPersisted();
 
 // template.marko.update.mjs
-const $if_update = _update_signal("a5");
 const $for_update = _update_for(0, "a3", (branch, args) => _update_scope(args[0], branch));
 const $for_update2 = _update_for(1, "a4", (branch, args) => $for_content__update(args[0], branch));
 const $count_seed = _update_signal("a2");
-const $if_update2 = _update_signal("a1");
 const $for_content__update = (patch, live) => {
-	if ("Da" in patch) {
-		$if_update(live, patch["Da"]);
-		const $patchBranch = patch["Aa"], $liveBranch = live["Aa"], $branchMerge = [0, _update_scope][patch["Da"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("Da" in patch) _update_if(patch, live, "Da", "Aa", [0, _update_scope]);
 };
 const $if_content__update = (patch, live) => {
 	if ("Aa" in patch) $for_update(live, [patch["Aa"], "M"]);
@@ -29,11 +23,7 @@ const $update = (patch, live) => {
 	if ("g" in patch) live["g"] = patch["g"];
 	if ("j" in patch) live["j"] = patch["j"];
 	if ("k" in patch) live["k"] = patch["k"];
-	if ("Dc" in patch) {
-		$if_update2(live, patch["Dc"]);
-		const $patchBranch2 = patch["Ac"], $liveBranch2 = live["Ac"], $branchMerge2 = [$if_content__update, 0][patch["Dc"]];
-		if ($patchBranch2 && $liveBranch2 && $branchMerge2) $branchMerge2($patchBranch2, $liveBranch2);
-	}
+	if ("Dc" in patch) _update_if(patch, live, "Dc", "Ac", [$if_content__update, 0]);
 };
 const _merge = _resume("a6", $update);
 function createPatch() {

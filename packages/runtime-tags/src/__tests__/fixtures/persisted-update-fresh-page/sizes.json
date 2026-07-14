@@ -2,8 +2,8 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 1073,
-        "brotli": 570
+        "min": 1071,
+        "brotli": 554
       },
       "files": {
         "tags/actions.marko": 533,
@@ -13,23 +13,23 @@
     },
     "update.js": {
       "total": {
-        "min": 10644,
-        "brotli": 4340
+        "min": 9808,
+        "brotli": 3909
       },
       "files": {
         "tags/shared-list.marko.update.mjs": 380,
         "tags/actions.marko.update.mjs": 426,
         "tags/layout.marko.update.mjs": 329,
-        "template.marko.update.mjs": 1910
+        "template.marko.update.mjs": 1686
       }
     },
     "shared-list.mjs": {
       "total": {
-        "min": 15148,
-        "brotli": 6152
+        "min": 12368,
+        "brotli": 5233
       },
       "files": {
-        "data.js": 428,
+        "data.js": 177,
         "tags/shared-list.marko": 627
       }
     }

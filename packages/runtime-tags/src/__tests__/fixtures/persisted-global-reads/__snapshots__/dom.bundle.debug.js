@@ -1,6 +1,5 @@
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $if_update = _update_signal("__tests__/template.marko_0/update_if_#section/4");
 const $globals_update = _update_signal("__tests__/template.marko_0/update_globals");
 const $if_content__update = (patch, live) => {
 	_update_pair(patch, live);
@@ -10,11 +9,7 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	_update_scope(patch, live);
-	if ("ConditionalRenderer:#section/4" in patch) {
-		$if_update(live, patch["ConditionalRenderer:#section/4"]);
-		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = live["BranchScopes:#section/4"], $branchMerge = $if_content__update;
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("ConditionalRenderer:#section/4" in patch) _update_if(patch, live, "ConditionalRenderer:#section/4", "BranchScopes:#section/4", [$if_content__update]);
 	$globals_update(live);
 };
 const _merge = _resume("__tests__/template.marko_0_update", $update);

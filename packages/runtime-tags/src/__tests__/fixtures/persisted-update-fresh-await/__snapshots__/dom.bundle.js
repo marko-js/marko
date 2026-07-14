@@ -10,7 +10,6 @@ enableBranchesPersisted();
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a6", (branch, args) => _update_scope(args[0], branch));
 const $count_seed = _update_signal("a2");
-const $if_update = _update_signal("a1");
 const $await_content__update = (patch, live) => {
 	if ("Aa" in patch) $for_update(live, [patch["Aa"], "M"]);
 };
@@ -25,27 +24,9 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $count_seed, patch["g"]);
 	if ("f" in patch) live["f"] = patch["f"];
-	if ("Dc" in patch) {
-		$if_update(live, patch["Dc"]);
-		const $patchBranch = patch["Ac"], $liveBranch = live["Ac"], $branchMerge = [$if_content__update, 0][patch["Dc"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("Dc" in patch) _update_if(patch, live, "Dc", "Ac", [$if_content__update, 0]);
 };
 const _merge = _resume("a7", $update);
 function createPatch() {
 	return createPatch$1(_merge);
-}
-
-// data.js
-function getReviews(id) {
-	if (typeof window !== "undefined") throw new Error("getReviews is server-only");
-	return resolveAfter([{
-		id: 1,
-		text: `Product ${id} works great`,
-		stars: 5
-	}, {
-		id: 2,
-		text: `Product ${id} is okay`,
-		stars: 3
-	}], 1);
 }

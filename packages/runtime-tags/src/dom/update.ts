@@ -50,6 +50,7 @@ import {
   readyPersisted,
   registeredValues,
 } from "./resume";
+import { removeAndDestroyBranch } from "./scope";
 import {
   applyBoundaryBody,
   applyFragment,
@@ -680,6 +681,89 @@ export function _update_dynamic(
       installReadyUpdates();
       pendingDynamicUpdates.push([patchBranch, liveBranch, rendererId]);
     }
+  }
+}
+
+/**
+ * A request-derived `<if>`'s update dispatch (compiled from `core/if.ts`'s
+ * "if" update merge): the branch outcome itself never client-constructs.
+ * The SAME branch as the live scope's dispatches its content merge by
+ * index -- an ordinary sparse patch, no user code. A CHANGED branch applies
+ * a resumable fragment (see `applyFragment`) instead of building it from a
+ * client-registered renderer graph, mirroring `_update_dynamic`'s hop
+ * handling; a mismatch with no fragment entry fails loudly rather than
+ * replaying content against the stale branch.
+ */
+export function _update_if(
+  patch: Scope,
+  live: Scope,
+  rendererKey: string,
+  branchKey: string,
+  branchMerges?: (UpdateMerge | 0)[],
+) {
+  const newBranch = patch[rendererKey] as number;
+  if (typeof newBranch !== "number") return;
+  const patchBranch = patch[branchKey] as Scope | undefined;
+  const liveBranch = live[branchKey] as Scope | undefined;
+  const liveBranchIndex =
+    (live[rendererKey] as number) ?? (liveBranch ? 0 : -1);
+
+  if (liveBranchIndex !== newBranch) {
+    if (newBranch === -1) {
+      // The outcome went from a real branch to none: nothing to deliver
+      // (no fragment ever ships for a removal), so just tear down the
+      // stale live branch -- the same effect `setConditionalRenderer`'s
+      // client-driven path has for a state-owned conditional.
+      if (liveBranch) {
+        removeAndDestroyBranch(liveBranch as BranchScope);
+        live[branchKey] = undefined;
+      }
+      live[rendererKey] = newBranch;
+      return;
+    }
+
+    const accessor = branchKey.slice(AccessorPrefix.BranchScopes.length);
+    const fragment = patch[FRAGMENT_PREFIX + accessor] as
+      FragmentEntry | undefined;
+    if (fragment && patchBranch) {
+      // The divergence point arrived as a fragment frame: swap the branch by
+      // inserting the server-rendered subtree instead of client-constructing
+      // it from a registered renderer graph. Consume the entry and stop --
+      // its values are already baked into the html and its resume data has
+      // initialized the new scopes.
+      delete patch[FRAGMENT_PREFIX + accessor];
+      applyFragment(
+        activeUpdate!,
+        live,
+        accessor,
+        patchBranch as BranchScope,
+        fragment[2],
+        fragment[3],
+        fragment[4],
+      );
+      live[rendererKey] = newBranch;
+      return;
+    }
+    // Divergence is fragment-delivered, so a mismatch without a fragment
+    // entry cannot apply -- fail loudly (the router falls back to a full
+    // navigation) rather than dispatching the new content's merge against
+    // the stale branch. A mismatch with no live branch has nothing to go
+    // stale: adopt the new outcome so a later navigation compares right.
+    if (liveBranch) {
+      throw new Error(
+        MARKO_DEBUG
+          ? "A persisted update changed an <if> branch without a fragment entry; persisted pages do not construct divergent content client-side."
+          : "update diverged",
+      );
+    }
+    live[rendererKey] = newBranch;
+    return;
+  }
+
+  live[rendererKey] = newBranch;
+  const merge = branchMerges?.[newBranch];
+  if (patchBranch && liveBranch && merge) {
+    merge(patchBranch, liveBranch);
   }
 }
 

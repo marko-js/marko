@@ -11,7 +11,6 @@ enableBranchesPersisted();
 // template.marko.update.mjs
 const $details_price_update = _update_signal("a4");
 const $count_seed = _update_signal("a2");
-const $if_update = _update_signal("a1");
 const $if_content__update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("f" in patch) $details_price_update(live, patch["f"]);
@@ -21,22 +20,9 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $count_seed, patch["g"]);
 	if ("f" in patch) live["f"] = patch["f"];
-	if ("Dc" in patch) {
-		$if_update(live, patch["Dc"]);
-		const $patchBranch = patch["Ac"], $liveBranch = live["Ac"], $branchMerge = [$if_content__update, 0][patch["Dc"]];
-		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
-	}
+	if ("Dc" in patch) _update_if(patch, live, "Dc", "Ac", [$if_content__update, 0]);
 };
 const _merge = _resume("a5", $update);
 function createPatch() {
 	return createPatch$1(_merge);
-}
-
-// data.js
-function getDetails(id) {
-	if (typeof window !== "undefined") throw new Error("getDetails is server-only");
-	return {
-		name: `Part ${id}`,
-		price: id * 10
-	};
 }

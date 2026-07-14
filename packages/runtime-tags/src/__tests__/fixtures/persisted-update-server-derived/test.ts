@@ -13,6 +13,13 @@ const clickCopy = (container: Element) =>
 // handlers inside the fresh branch still read the patched value.
 export const config: TestConfig = {
   persisted: true,
+  dom_bundle_excludes: [
+    "getDetails",
+    "server-only",
+    "Part ",
+    "costs ",
+    "use price",
+  ],
   // The compute genuinely cannot run in the browser, so a plain client
   // render of this template is impossible by design.
   skip_csr: true,

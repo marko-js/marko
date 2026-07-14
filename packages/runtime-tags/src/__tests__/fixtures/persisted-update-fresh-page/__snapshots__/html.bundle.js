@@ -137,47 +137,43 @@ var template_default = _template("a", (input) => {
 		const $Item_content__product_id__closures = /* @__PURE__ */ new Set();
 		_scope_reason();
 		const product = $global().productId && getProduct($global().productId);
-		_if(() => {
-			if (!product) {
-				const $scope9_id = _scope_id();
-				_html("<h2>not found</h2>");
-				_persisted_reason() && writeScope($scope9_id, {});
-				return 0;
-			} else {
-				const $scope7_id = _scope_id();
-				_html(`<img${_attr("src", _hole_value($scope7_id, "Nsrc:a", product.image, _persisted_reason()))}${_attr("alt", _hole_value($scope7_id, "Nalt:a", product.title, _persisted_reason()))} class=thumb>${_el_resume($scope7_id, "a", _persisted_reason())}<h2 class=title>${_escape(_hole_value($scope7_id, "Qb", product.title, _persisted_reason()))}${_el_resume($scope7_id, "b", _persisted_reason())}</h2><div class=price>$${_sep(_persisted_reason())}${_escape(_hole_value($scope7_id, "Qc", product.price.toFixed(2), _persisted_reason()))}${_el_resume($scope7_id, "c", _persisted_reason())}</div>`);
-				const $childScope2 = _peek_scope_id();
-				_set_serialize_reason(_persisted_reason());
-				actions_default({ id: product.id });
-				_try($scope7_id, "e", _content_resume("a9", () => {
-					const $scope8_id = _scope_id();
-					_scope_reason();
-					_await($scope8_id, "a", getRecommendations(product.id), (recs) => {
-						const $scope11_id = _scope_id();
-						_html("<ul class=recs>");
-						_for_of(recs, (rec) => {
-							const $scope12_id = _scope_id();
-							_html(`<li>${_escape(_hole_value($scope12_id, "Qa", rec.title, _persisted_reason()))}${_el_resume($scope12_id, "a", _persisted_reason())}</li>`);
-							_persisted_reason() && writeScope($scope12_id, {});
-						}, function(rec) {
-							return rec.id;
-						}, $scope11_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
-						_persisted_reason() && writeScope($scope11_id, {});
-					}, _persisted_reason());
-					_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }));
-					_resume_branch($scope8_id);
-				}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a10", () => {
-					_scope_reason();
-					_scope_id();
-					_html("loading recommendations…");
-				}, $scope7_id) }) }, "a8");
-				_persisted_reason() && writeScope($scope7_id, {
-					_: _scope_with_id($scope6_id),
-					d: _existing_scope($childScope2)
-				});
-				return 1;
-			}
-		}, $scope6_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason());
+		_if(() => !product ? 0 : 1, $scope6_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), void 0, void 0, "a6", [() => {
+			const $scope9_id = _scope_id();
+			_html("<h2>not found</h2>");
+			_persisted_reason() && writeScope($scope9_id, {});
+		}, () => {
+			const $scope7_id = _scope_id();
+			_html(`<img${_attr("src", _hole_value($scope7_id, "Nsrc:a", product.image, _persisted_reason()))}${_attr("alt", _hole_value($scope7_id, "Nalt:a", product.title, _persisted_reason()))} class=thumb>${_el_resume($scope7_id, "a", _persisted_reason())}<h2 class=title>${_escape(_hole_value($scope7_id, "Qb", product.title, _persisted_reason()))}${_el_resume($scope7_id, "b", _persisted_reason())}</h2><div class=price>$${_sep(_persisted_reason())}${_escape(_hole_value($scope7_id, "Qc", product.price.toFixed(2), _persisted_reason()))}${_el_resume($scope7_id, "c", _persisted_reason())}</div>`);
+			const $childScope2 = _peek_scope_id();
+			_set_serialize_reason(_persisted_reason());
+			actions_default({ id: product.id });
+			_try($scope7_id, "e", _content_resume("a9", () => {
+				const $scope8_id = _scope_id();
+				_scope_reason();
+				_await($scope8_id, "a", getRecommendations(product.id), (recs) => {
+					const $scope11_id = _scope_id();
+					_html("<ul class=recs>");
+					_for_of(recs, (rec) => {
+						const $scope12_id = _scope_id();
+						_html(`<li>${_escape(_hole_value($scope12_id, "Qa", rec.title, _persisted_reason()))}${_el_resume($scope12_id, "a", _persisted_reason())}</li>`);
+						_persisted_reason() && writeScope($scope12_id, {});
+					}, function(rec) {
+						return rec.id;
+					}, $scope11_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+					_persisted_reason() && writeScope($scope11_id, {});
+				}, _persisted_reason());
+				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }));
+				_resume_branch($scope8_id);
+			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a10", () => {
+				_scope_reason();
+				_scope_id();
+				_html("loading recommendations…");
+			}, $scope7_id) }) }, "a8");
+			_persisted_reason() && writeScope($scope7_id, {
+				_: _scope_with_id($scope6_id),
+				d: _existing_scope($childScope2)
+			});
+		}]);
 		_persisted_reason() && writeScope($scope6_id, { j: $Item_content__product_id__closures });
 	}) };
 	const $childScope3 = _peek_scope_id();
