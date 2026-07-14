@@ -134,7 +134,7 @@ export default {
         }
 
         const display = tag.node.attributes[0].value;
-        if (!t.isIdentifier(display) && !isLiteral(display)) {
+        if (!t.isIdentifier(display)) {
           // Read once; referenced by both bracketing runtime calls.
           const displayRef = generateUidIdentifier("show");
           tag.insertBefore(
@@ -312,18 +312,6 @@ function isSingleNodeBody(tag: t.NodePath<t.MarkoTag>) {
   }
 
   return elements === 1;
-}
-
-function isLiteral(expr: t.Expression) {
-  switch (expr.type) {
-    case "BooleanLiteral":
-    case "NumericLiteral":
-    case "StringLiteral":
-    case "NullLiteral":
-      return true;
-    default:
-      return false;
-  }
 }
 
 function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
