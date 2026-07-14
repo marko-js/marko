@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.1
+
+### Patch Changes
+
+- [#3423](https://github.com/marko-js/marko/pull/3423) [`7b70362`](https://github.com/marko-js/marko/commit/7b70362ec027e2f735b8782d38b388da7da3e193) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Guide coding agents to the marko cheat sheet on compile errors.
+
 ## 5.41.0
 
 ### Minor Changes

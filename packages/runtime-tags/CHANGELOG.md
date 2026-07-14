@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.3.6
+
+### Patch Changes
+
+- [#3423](https://github.com/marko-js/marko/pull/3423) [`7b70362`](https://github.com/marko-js/marko/commit/7b70362ec027e2f735b8782d38b388da7da3e193) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Guide coding agents to the marko cheat sheet on compile errors.
+
+- [#3420](https://github.com/marko-js/marko/pull/3420) [`f2a63bd`](https://github.com/marko-js/marko/commit/f2a63bd7cb4358fe818a079406edfc0549ef0874) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve compiler diagnostics for common mistakes: `<for key=>` suggests `by=`, a bare line of root-level text suggests the text syntax, and camelCase `style=` object keys warn to use kebab-case.
+
+- Updated dependencies [[`7b70362`](https://github.com/marko-js/marko/commit/7b70362ec027e2f735b8782d38b388da7da3e193)]:
+  - @marko/compiler@5.41.1
+
 ## 6.3.5
 
 ### Patch Changes
