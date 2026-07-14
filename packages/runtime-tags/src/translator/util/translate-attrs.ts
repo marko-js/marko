@@ -95,28 +95,15 @@ export function translateAttrs(
               contentKey,
             );
 
-            if (attrTagMeta.repeated) {
-              const prevProp = findObjectProperty(
-                attrTagMeta.name,
-                contentProperties,
+            const prevProp = attrTagMeta.repeated
+              ? findObjectProperty(attrTagMeta.name, contentProperties)
+              : undefined;
+            if (prevProp) {
+              prevProp.value = callRuntime(
+                "attrTags",
+                prevProp.value as t.Expression,
+                propsToExpression(translatedAttrTag.properties),
               );
-              if (prevProp) {
-                prevProp.value = callRuntime(
-                  "attrTags",
-                  prevProp.value as t.Expression,
-                  propsToExpression(translatedAttrTag.properties),
-                );
-              } else {
-                contentProperties.push(
-                  toObjectProperty(
-                    attrTagMeta.name,
-                    callRuntime(
-                      "attrTag",
-                      propsToExpression(translatedAttrTag.properties),
-                    ),
-                  ),
-                );
-              }
             } else {
               contentProperties.push(
                 toObjectProperty(
