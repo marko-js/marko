@@ -1376,16 +1376,16 @@ export function finalizeReferences() {
 function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
   let scopeOffset: Binding | undefined;
 
+  const trackScopeOffset = (source: Binding) => {
+    if (
+      source.scopeOffset &&
+      (!scopeOffset || scopeOffset.id < source.scopeOffset.id)
+    ) {
+      scopeOffset = source.scopeOffset;
+    }
+  };
   for (const binding of intersection) {
     if (binding.section === section && binding.sources) {
-      const trackScopeOffset = (source: Binding) => {
-        if (
-          source.scopeOffset &&
-          (!scopeOffset || scopeOffset.id < source.scopeOffset.id)
-        ) {
-          scopeOffset = source.scopeOffset;
-        }
-      };
       forEach(binding.sources.state, trackScopeOffset);
       forEach(binding.sources.param, trackScopeOffset);
     }
