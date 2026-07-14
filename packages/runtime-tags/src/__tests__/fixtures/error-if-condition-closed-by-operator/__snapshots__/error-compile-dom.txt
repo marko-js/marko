@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-if-condition-closed-by-operator/template.marko:1:5
+    > 1 | <if=foo.length > 0>
+        |     ^^^^^^^^^^ A `>` in this unenclosed [`<if>` condition](https://markojs.com/docs/reference/core-tag#if--else) closes the tag, so the condition is only `foo.length` and the rest becomes body text. Wrap a comparison in parentheses, e.g. `<if=(foo.length > …)>` — or remove the space before `>` if you meant to close the tag.
+      2 |   <span>positive</span>
+      3 | </if>
+      4 |

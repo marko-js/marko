@@ -157,6 +157,7 @@ import PriceChart from "<price-chart>" with { load: "visible#chart" }
 | `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                                    |
 | `<let x=0>`                                                 | `<let/x=0>`                                                                          |
 | `<if(cond)>`                                                | `<if=cond>`                                                                          |
+| `<if=count > 0>` (unenclosed `>` ends the tag)              | `<if=(count > 0)>` — parenthesize a condition containing `>`                         |
 | `items.push(x)`                                             | `items = items.concat(x)`                                                            |
 | `input.renderBody`                                          | `input.content`                                                                      |
 | `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                                      |

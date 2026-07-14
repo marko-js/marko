@@ -506,16 +506,49 @@ function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
   switch (getTagName(tag)) {
     case "if":
       assertHasValueAttribute(tag);
+      assertConditionNotClosedByOperator(tag, tag.node.attributes[0]);
       break;
     case "else-if":
       assertHasValueAttribute(tag);
+      assertConditionNotClosedByOperator(tag, tag.node.attributes[0]);
       assertHasPrecedingCondition(tag);
       break;
     case "else":
       assertOptionalIfAttribute(tag);
+      assertConditionNotClosedByOperator(tag, tag.node.attributes[0]);
       assertHasPrecedingCondition(tag);
       break;
   }
+}
+
+// A top-level `>` inside an *unenclosed* attribute value closes the tag, so
+// `<if=foo.length > 0>` is parsed as `<if=(foo.length)>` with ` 0>` leaking into
+// the body as text, with no error. Detect the tell: the condition
+// expression is immediately followed by whitespace and then the `>` that closed
+// the tag, with more (truncated right-hand-side) content after it on the same
+// line. `<` never closes a tag, so only `>` (and `>=`/`>>`/`>>>`) is ambiguous;
+// an enclosed value ends with a `)`/`]` before the `>`, so it is never flagged.
+// The spaceless `<if=a>0>` form is intentionally not flagged: it is
+// indistinguishable from the legitimate inline `<if=cond>text</if>`.
+function assertConditionNotClosedByOperator(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute | t.MarkoSpreadAttribute | undefined,
+) {
+  if (!attr || !t.isMarkoAttribute(attr)) return;
+  const { value } = attr;
+  if (value.start == null || value.end == null) return;
+
+  const { code } = tag.hub.file;
+  const truncated = /^\s+>([^\n]*)/.exec(code.slice(value.end));
+  if (!truncated || !/\S/.test(truncated[1])) return;
+
+  const tagName = getTagName(tag);
+  const conditionSource = code.slice(value.start, value.end);
+  throw tag.hub.buildError(
+    value,
+    `A \`>\` in this unenclosed [\`<${tagName}>\` condition](https://markojs.com/docs/reference/core-tag#if--else) closes the tag, so the condition is only \`${conditionSource}\` and the rest becomes body text. Wrap a comparison in parentheses, e.g. \`<${tagName}=(${conditionSource} > …)>\` — or remove the space before \`>\` if you meant to close the tag.`,
+    Error,
+  );
 }
 
 function assertHasPrecedingCondition(tag: t.NodePath<t.MarkoTag>) {
