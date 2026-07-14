@@ -172,7 +172,6 @@ export default {
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, tagExtra);
 
-      const byAttr = getKnownAttrValues(tag.node).by;
       const keyBinding = getLoopKeyBinding(byAttr, paramsBinding, forType!);
       if (keyBinding) {
         if (!byAttr) {
