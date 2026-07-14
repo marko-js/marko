@@ -57,7 +57,22 @@ export function stringifyClassObject(name: string, value: unknown) {
   return value ? name : "";
 }
 
+const warnedStyleKeys = MARKO_DEBUG ? new Set<string>() : undefined;
 export function stringifyStyleObject(name: string, value: unknown) {
+  if (
+    MARKO_DEBUG &&
+    /[A-Z]/.test(name) &&
+    !name.includes("-") &&
+    !warnedStyleKeys!.has(name)
+  ) {
+    // Runtime counterpart to the compile-time check, for dynamic style objects.
+    warnedStyleKeys!.add(name);
+    console.warn(
+      `\`${name}\` is not a CSS property name; \`style\` object keys are written verbatim, so it renders as invalid CSS. Use \`${name
+        .replace(/[A-Z]/g, (m) => "-" + m.toLowerCase())
+        .replace(/^ms-/, "-ms-")}\`.`,
+    );
+  }
   return value || value === 0 ? name + ":" + value : "";
 }
 

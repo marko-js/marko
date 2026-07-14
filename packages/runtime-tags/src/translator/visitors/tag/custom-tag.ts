@@ -390,8 +390,12 @@ function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   }
   let didYouMean = "";
   const knownWrongTagHint = tagName && knownWrongTags.get(tagName);
+  const proseText = tagName && getProseText(tag);
   if (knownWrongTagHint) {
     didYouMean = ` ${knownWrongTagHint}`;
+  } else if (proseText) {
+    // A bare line of words parses as a tag; the author likely meant text.
+    didYouMean = ` If this line is meant to be text, prefix it with \`--\` (e.g. \`-- ${proseText}\`) or wrap it in an element such as \`<p>${proseText}</p>\`.`;
   } else if (tagName) {
     const closestTag = closest(
       tagName,
@@ -406,6 +410,55 @@ function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
     .buildCodeFrameError(
       `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.${didYouMean}`,
     );
+}
+
+// A concise-mode word tag with only boolean word-attributes and no var/params/
+// body is likely stray prose; returns the reconstructed sentence, else undefined.
+const wordReg = /^[A-Za-z]+$/;
+function getProseText(tag: t.NodePath<t.MarkoTag>) {
+  const { node } = tag;
+  const tagName = getTagName(tag);
+  if (
+    !tagName ||
+    !wordReg.test(tagName) ||
+    node.var ||
+    node.body.params.length ||
+    node.body.body.length ||
+    !node.attributes.length ||
+    // An explicit `<Modal open/>` is a deliberate tag, not prose.
+    !isConciseModeTag(node)
+  ) {
+    return;
+  }
+  return collectProseWords(node, tagName);
+}
+
+// HTML mode: `loc` starts on `<`, before the name. Concise mode: they align.
+function isConciseModeTag(node: t.MarkoTag) {
+  const tagLoc = node.loc;
+  const nameLoc = node.name.loc;
+  if (!tagLoc || !nameLoc) return false;
+  return (
+    tagLoc.start.line === nameLoc.start.line &&
+    tagLoc.start.column === nameLoc.start.column
+  );
+}
+
+function collectProseWords(node: t.MarkoTag, tagName: string) {
+  let text = tagName;
+  for (const attr of node.attributes) {
+    if (
+      attr.type !== "MarkoAttribute" ||
+      attr.default ||
+      !wordReg.test(attr.name) ||
+      attr.value.type !== "BooleanLiteral" ||
+      attr.value.value !== true
+    ) {
+      return;
+    }
+    text += " " + attr.name;
+  }
+  return text;
 }
 
 function importOrSelfReferenceName(

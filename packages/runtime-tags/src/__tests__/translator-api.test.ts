@@ -219,4 +219,100 @@ describe("runtime-tags/translator-api", () => {
       assert.equal(isEmbed(compileHTML(page, false)), false);
     });
   });
+
+  describe("camelCase style key warning", () => {
+    const warnings = (src: string) =>
+      (
+        compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+        }).meta.diagnostics ?? []
+      )
+        .filter((d) => d.type === "warning")
+        .map((d) => d.label);
+
+    it("warns on a camelCased style object key and suggests kebab-case", () => {
+      const [label, ...rest] = warnings(
+        '<div style={ backgroundColor: "red" }>Hi</div>',
+      );
+      assert.equal(rest.length, 0);
+      assert.match(label, /`backgroundColor` is not a CSS property name/);
+      assert.match(label, /`background-color`/);
+    });
+
+    it("warns for camelCase keys inside a style array and vendor prefixes", () => {
+      assert.match(
+        warnings(
+          '<div style=["display:block", { marginRight: 16 }]>Hi</div>',
+        )[0],
+        /`margin-right`/,
+      );
+      assert.match(
+        warnings('<div style={ WebkitTransform: "scale(2)" }>Hi</div>')[0],
+        /`-webkit-transform`/,
+      );
+      // The Microsoft `ms` prefix is lowercase, so it needs the leading dash added.
+      assert.match(
+        warnings('<div style={ msFlexAlign: "center" }>Hi</div>')[0],
+        /`-ms-flex-align`/,
+      );
+    });
+
+    it("does not warn on kebab-case keys, custom properties, or computed keys", () => {
+      assert.equal(
+        warnings('<div style={ "background-color": "red" }>Hi</div>').length,
+        0,
+      );
+      assert.equal(
+        warnings('<div style={ "--fooBar": "1px" }>Hi</div>').length,
+        0,
+      );
+      assert.equal(warnings('<div style={ color: "red" }>Hi</div>').length, 0);
+      assert.equal(
+        warnings('<let/k="color"><div style={ [k]: "red" }>Hi</div>').length,
+        0,
+      );
+      assert.equal(
+        warnings('<div style="background-color: red">Hi</div>').length,
+        0,
+      );
+      assert.equal(warnings('<div style={ 0: "1px" }>Hi</div>').length, 0);
+    });
+  });
+
+  describe("diagnostic branch coverage", () => {
+    const compileError = (src: string) => {
+      try {
+        compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+        });
+      } catch (err) {
+        return (err as Error).message;
+      }
+      return "";
+    };
+
+    it("tailors the `<for key=>` suggestion to the loop type", () => {
+      assert.match(
+        compileError("<for|k, v| in={ a: 1 } key=k>${k}</for>"),
+        /keys items with the `by=` attribute.*`by=\(key, value\) => key`/s,
+      );
+      assert.match(
+        compileError("<for|i| to=3 key=i>${i}</for>"),
+        /keys items with the `by=` attribute.*`by=\(num\) => key`/s,
+      );
+    });
+
+    it("only hints text syntax for concise-mode prose, not real tags", () => {
+      // Angle-bracket tag with boolean attrs: no prose hint.
+      const html = compileError("<Modal open/>");
+      assert.match(html, /Unable to find entry point/);
+      assert.doesNotMatch(html, /meant to be text/);
+      // Concise word tag with a valued attribute: also not prose.
+      assert.doesNotMatch(compileError("Foo bar=1"), /meant to be text/);
+    });
+  });
 });

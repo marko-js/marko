@@ -102,6 +102,23 @@ export default {
       allowAttrs.push("by");
     }
 
+    // Redirect the React/Vue `key=` habit to `by=` before the generic error.
+    const keyAttr = tag.node.attributes.find(
+      (attr) => attr.type === "MarkoAttribute" && attr.name === "key",
+    );
+    if (keyAttr) {
+      throw tag.hub.buildError(
+        keyAttr,
+        `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) keys items with the \`by=\` attribute, not \`key=\`. ${
+          forType === "of"
+            ? 'Use `by="propName"` or `by=(item, index) => key`'
+            : forType === "in"
+              ? "Use `by=(key, value) => key`"
+              : "Use `by=(num) => key`"
+        }.`,
+      );
+    }
+
     assertAllowedAttributes(tag, allowAttrs);
 
     if (isAttrTag) return;

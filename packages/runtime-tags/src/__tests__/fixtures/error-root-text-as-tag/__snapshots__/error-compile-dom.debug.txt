@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-root-text-as-tag/template.marko:1:1
+    > 1 | Welcome to the dashboard
+        | ^^^^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<Welcome>`. If this line is meant to be text, prefix it with `--` (e.g. `-- Welcome to the dashboard`) or wrap it in an element such as `<p>Welcome to the dashboard</p>`.
+      2 |

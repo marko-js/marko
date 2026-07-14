@@ -4,6 +4,7 @@ import {
   assertNoAttributeTags,
   assertNoParams,
   computeNode,
+  diagnosticWarn,
   getProgram,
   getTagDef,
 } from "@marko/compiler/babel-utils";
@@ -139,6 +140,7 @@ export default {
           seen[attr.name] = attr;
           assertValidNativeAttrName(tag, attr);
           assertNativeAttrValueType(tag, attr);
+          if (attr.name === "style") warnCamelCaseStyleKeys(tag, attr);
 
           if (injectNonce && attr.name === "nonce") {
             injectNonce = false;
@@ -1246,6 +1248,51 @@ function assertNativeAttrValueType(
       `The \`${name}\` attribute cannot be a plain object (it would render as \`[object Object]\`).`,
       Error,
     );
+  }
+}
+
+// `style=` keys are written verbatim, so a camelCased DOM name like
+// `backgroundColor` becomes invalid CSS. Warn with the kebab-case equivalent.
+function warnCamelCaseStyleKeys(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+) {
+  const { value } = attr;
+  const objects =
+    value.type === "ObjectExpression"
+      ? [value]
+      : value.type === "ArrayExpression"
+        ? value.elements.filter(
+            (el): el is t.ObjectExpression => el?.type === "ObjectExpression",
+          )
+        : [];
+
+  for (const object of objects) {
+    for (const prop of object.properties) {
+      if (prop.type !== "ObjectProperty" || prop.computed) continue;
+      const { key } = prop;
+      const name =
+        key.type === "Identifier"
+          ? key.name
+          : key.type === "StringLiteral"
+            ? key.value
+            : undefined;
+      if (
+        name &&
+        !name.startsWith("--") &&
+        !name.includes("-") &&
+        /[A-Z]/.test(name)
+      ) {
+        const kebab = name
+          .replace(/[A-Z]/g, (m) => "-" + m.toLowerCase())
+          // The lowercase `ms` prefix needs a leading dash: `-ms-…`.
+          .replace(/^ms-/, "-ms-");
+        diagnosticWarn(tag, {
+          label: `\`${name}\` is not a CSS property name; the [\`style=\` object](https://markojs.com/docs/reference/native-tag#style) writes keys out verbatim (unlike the camelCased DOM style API), so this renders as invalid CSS the browser ignores. Use the kebab-case name \`${kebab}\`.`,
+          loc: key.loc ?? undefined,
+        });
+      }
+    }
   }
 }
 

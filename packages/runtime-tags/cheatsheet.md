@@ -14,7 +14,8 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
    - object: `user = { ...user, name }`
 5. Events: method shorthand `onClick() { ... }` or `onClick=fn`. Handler gets the DOM event: `onSubmit(e) { e.preventDefault(); save() }`. Don't sync input values through `onInput`/`onChange` listeners — that's what change handlers (next rule) are for, and they make the data's owner explicit.
 6. Native inputs are UNCONTROLLED by default: `value=` only sets the initial value. Adding the matching `*Change` handler is what makes them controlled — `valueChange` on `<input>`/`<textarea>`/`<select>`, `checkedChange` on checkboxes/radios, `openChange` on `<details>`/`<dialog>`. `value:=text` is the shorthand for `value=text valueChange(v) { text = v }`. (`<textarea value:=text/>` — value attribute, not body.)
-7. Write the change handler yourself when updates need transforming — number inputs give STRINGS: `<input type="number" value=n valueChange(v) { n = +v }>`.
+7. Transform in the handler when needed — number inputs give STRINGS: `<input type="number" value=n valueChange(v) { n = +v }>`, or `value:parseFloat:=n`.
+8. Radio/checkbox groups: `checkedValue:=picked` on each input (shared var, distinct `value=`) — the match is checked; array var for multi-checkbox. Dropdown: `<select value:=picked>`.
 
 ## Canonical component (copy this shape)
 
@@ -109,7 +110,8 @@ Don't fetch while rendering: start data loads early, pass the PROMISE through th
 
 - Repeated attr tags (many `<@tab ...>`) arrive as the SINGULAR prop `input.tab`, which is iterable but NOT an array: `input.tab[i]` and `input.tab.length` are undefined. To index or count, spread first: `<const/tabs=[...input.tab ?? []]>` then `tabs[active]`/`tabs.length`. Looping directly is fine: `<for|tab| of=input.tab>`.
 - Conditional attrs: `false`/`null` attrs are omitted from HTML. `aria-selected` etc. want strings: `aria-selected=(i === active && "true")`.
-- `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces).
+- `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces). `style=` keys are kebab-case CSS names (`{ "background-color": c }`), not camelCase.
+- `<id/x>` mints a collision-free id for label/input wiring (`<label for=x>`/`<input id=x>`) — don't hardcode ids in reusable tags; `<id/x=input.id>` reuses a caller's.
 
 ## Client-side effects (rare — prefer state/const)
 
@@ -124,6 +126,26 @@ Don't fetch while rendering: start data loads early, pass the PROMISE through th
 ```
 
 `<style>` = real CSS, extracted & global. `<script>` = reactive effect, NOT an HTML script tag.
+
+Imperative libs (charts, maps) needing mount/update/destroy: use `<lifecycle>`, not a hand-wired `<script>`. `this` persists across all three; return an object from `onMount` to stash the instance:
+
+```marko
+<canvas/canvas/>
+<lifecycle
+  onMount() { return { chart: new Chart(canvas(), data) } }
+  onUpdate() { this.chart.setData(data) }         // re-runs when `data` changes
+  onDestroy() { this.chart.destroy() }
+/>
+```
+
+## Lazy loading
+
+Defer a tag's JS into its own bundle until a trigger fires: `render`, `visible#sel`, `idle`, `media(...)`, `on-click#sel` (combine with `|`). Server HTML renders immediately; `<try>` shows a `@placeholder` while loading. Don't hand-roll an `IntersectionObserver`.
+
+```marko
+import PriceChart from "<price-chart>" with { load: "visible#chart" }
+<div#chart><PriceChart symbol=input.symbol/></div>
+```
 
 ## DON'T (these are errors or silently wrong)
 
@@ -144,3 +166,9 @@ Don't fetch while rendering: start data loads early, pass the PROMISE through th
 | `by=item` using the loop variable                           | `by="propName"` or `by=(item) => key` — `by=` is evaluated outside the loop          |
 | `onInput(e) { q = e.target.value }` to sync an input        | `value:=q` — the change handler owns the value                                       |
 | fetching inside the component that renders the data         | start the promise early (route handler / top of template), pass it down to `<await>` |
+| `style={ backgroundColor: c }` (camelCase keys)             | `style={ "background-color": c }` (kebab-case)                                       |
+| `this.querySelector` / `this.getRootNode()` in `<script>`   | element ref getter: `<div/el>` then `el()` (there is no `this`)                      |
+| `<div/my-el>` / `<input/card-input>` (hyphen in tag var)    | valid JS identifier: `<div/myEl>`                                                    |
+| hand-rolled radios `checked=x checkedChange(v){…}`          | `checkedValue:=picked` on each radio (shared var, distinct `value=`)                 |
+| hand-rolled `IntersectionObserver` to defer a widget's JS   | `import W from "<w>" with { load: "visible#sel" }`                                   |
+| imperative lib wired through `<script>` mount + cleanup     | `<lifecycle onMount/onUpdate/onDestroy>` (keeps `this` across all three)             |

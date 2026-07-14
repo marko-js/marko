@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-key-attribute/template.marko:2:29
+      1 | <ul>
+    > 2 |   <for|item| of=input.items key=item.id>
+        |                             ^^^^^^^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) keys items with the `by=` attribute, not `key=`. Use `by="propName"` or `by=(item, index) => key`.
+      3 |     <li>${item.name}</li>
+      4 |   </for>
+      5 | </ul>

@@ -93,4 +93,42 @@ describe("runtime-tags/common/helpers", () => {
       }
     });
   });
+
+  describe("camelCase style key warning", () => {
+    const captureWarns = (fn: () => void) => {
+      const calls: string[] = [];
+      const original = console.warn;
+      console.warn = (msg: string) => calls.push(msg);
+      try {
+        fn();
+      } finally {
+        console.warn = original;
+      }
+      return calls;
+    };
+
+    it("warns once and suggests kebab-case for a camelCase key", () => {
+      const calls = captureWarns(() => {
+        styleValue({ paddingTop: "4px" });
+        styleValue({ paddingTop: "8px" });
+      });
+      assert.equal(calls.length, 1);
+      assert.match(calls[0], /`paddingTop` is not a CSS property name/);
+      assert.match(calls[0], /`padding-top`/);
+    });
+
+    it("adds the leading dash for the lowercase ms prefix", () => {
+      const calls = captureWarns(() => styleValue({ msFlexAlign: "center" }));
+      assert.match(calls[0], /`-ms-flex-align`/);
+    });
+
+    it("does not warn for kebab keys, custom properties, or plain names", () => {
+      const calls = captureWarns(() => {
+        styleValue({ "background-color": "red" });
+        styleValue({ "--fooBar": "1px" });
+        styleValue({ color: "red" });
+      });
+      assert.equal(calls.length, 0);
+    });
+  });
 });
