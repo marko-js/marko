@@ -13,10 +13,11 @@ Translator-agnostic compiler: parses `.marko` into a Babel AST (custom node type
 
 ## Translator contract
 
-A translator module exports: `translate` (required visitor), `taglibs` (required, `[[id, props]]`), optional `transform` / `analyze` visitors, `tagDiscoveryDirs`, `optionalTaglibs`, `preferAPI` (`"tags"` | `"class"`), and `getRuntimeEntryFiles(output, optimize)`. Loading is resolved from `config.translator` or auto-detected from the app's dependencies (`util/try-load-translator.js`, default logic in `config.js`).
+A translator module exports: `translate` (required visitor), `taglibs` (required, `[[id, props]]`), optional `transform` / `analyze` visitors, `tagDiscoveryDirs`, `optionalTaglibs`, `preferAPI` (`"tags"` | `"class"`), `getRuntimeEntryFiles(output, optimize)`, and optionally `cheatsheet` (a module-relative path to an LLM syntax reference; `tryLoadTranslator` resolves it to a cwd-relative path and `util/agent-fix-guide.js` points coding agents at it on compile errors). Loading is resolved from `config.translator` or auto-detected from the app's dependencies (`util/try-load-translator.js`, default logic in `config.js`).
 
 ## Notes
 
 - `output: "source"` / `"migrate"` re-print `.marko` source (tooling/codemods) — no translator codegen.
 - Bumping any `@babel/*` version requires regenerating the corresponding patch in root `patches/` (patch-package); the custom AST types and generated `dist/types.d.ts` (`npm run build-babel-types -w @marko/compiler`) depend on them.
 - Adding a core tag in a translator shows up in taglib-lookup expectations here and in `packages/runtime-class/test/taglib-lookup/`.
+- `util/agent-fix-guide.js` — when a terminal coding agent is detected (env markers) and the loaded translator declares a `cheatsheet`, thrown compile errors get a one-line pointer to it (relative to `cwd`) appended at the `compile[Sync]` boundary. No-op for humans, for runtimes without a cheat sheet, and for inline translator objects (so error snapshots, which compile with an inline translator object, are unaffected).

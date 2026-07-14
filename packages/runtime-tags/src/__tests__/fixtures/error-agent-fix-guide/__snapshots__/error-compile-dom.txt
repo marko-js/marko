@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-agent-fix-guide/template.marko:2:16
+      1 | <let/count=0>
+    > 2 | Welcome aboard ${count}
+        |                ^^^^^^^^ Invalid attribute name.
+      3 |
+
+Fix guide: READ packages/runtime-tags/cheatsheet.md before writing a fix.

@@ -51,6 +51,11 @@ export type TestConfig = {
   skip_csr?: boolean;
   skip_ssr?: boolean;
   error_compiler?: true | string[];
+  /**
+   * Compiles the error fixture as if a coding agent were driving the terminal,
+   * so the snapshot captures the compiler's cheat-sheet fix-guide.
+   */
+  fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
 };
@@ -66,6 +71,17 @@ const slots = process.env.MARKO_TEST_SLOTS
   : null;
 function inShard(index: number) {
   return slots === null || slots.has(index % slotTotal);
+}
+
+function noop() {}
+
+function forceCodingAgent() {
+  const prev = process.env.CLAUDECODE;
+  process.env.CLAUDECODE = "1";
+  return () => {
+    if (prev === undefined) delete process.env.CLAUDECODE;
+    else process.env.CLAUDECODE = prev;
+  };
 }
 
 describe("runtime-tags/translator", () => {
@@ -199,14 +215,24 @@ function testFixtures(interop?: true) {
             if (config.error_compiler) {
               await snapMode(
                 () => {
-                  for (const f of config.error_compiler === true
-                    ? [templateFile]
-                    : (config.error_compiler as string[]).map(resolve)) {
-                    compiler.compileFileSync(f, {
-                      ...getModeOpts(),
-                      linkAssets: { runtime: "asset-runtime", onAsset() {} },
-                      output,
-                    });
+                  // The fix-guide only fires for an agent-driven terminal and a
+                  // translator resolved from a specifier, so force both here.
+                  const restore = config.fix_guide ? forceCodingAgent() : noop;
+                  try {
+                    for (const f of config.error_compiler === true
+                      ? [templateFile]
+                      : (config.error_compiler as string[]).map(resolve)) {
+                      compiler.compileFileSync(f, {
+                        ...getModeOpts(),
+                        ...(config.fix_guide && {
+                          translator: "@marko/runtime-tags/translator",
+                        }),
+                        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+                        output,
+                      });
+                    }
+                  } finally {
+                    restore();
                   }
                 },
                 `error-compile-${output}.txt`,

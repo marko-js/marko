@@ -18,6 +18,10 @@ import MarkoText from "./visitors/text";
 
 export { version } from "../../package.json";
 
+// LLM cheat sheet location, relative to this module. The compiler resolves it
+// against the translator's path and points terminal coding agents here on error.
+export const cheatsheet = "../../cheatsheet.md";
+
 const visitors = extractVisitors({
   Program,
   Function,

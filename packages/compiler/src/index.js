@@ -13,6 +13,7 @@ import path from "path";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
+import appendAgentFixGuide from "./util/agent-fix-guide";
 import { buildCodeFrameError } from "./util/build-code-frame";
 import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
@@ -32,16 +33,24 @@ export function configure(newConfig) {
 
 export async function compile(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
-  const babelConfig = await loadBabelConfig(filename, markoConfig);
-  const babelResult = await transformAsync(src, babelConfig);
-  return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
+  try {
+    const babelConfig = await loadBabelConfig(filename, markoConfig);
+    const babelResult = await transformAsync(src, babelConfig);
+    return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
+  } catch (err) {
+    throw appendAgentFixGuide(err, markoConfig.translator);
+  }
 }
 
 export function compileSync(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
-  const babelConfig = loadBabelConfigSync(filename, markoConfig);
-  const babelResult = transformSync(src, babelConfig);
-  return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
+  try {
+    const babelConfig = loadBabelConfigSync(filename, markoConfig);
+    const babelResult = transformSync(src, babelConfig);
+    return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
+  } catch (err) {
+    throw appendAgentFixGuide(err, markoConfig.translator);
+  }
 }
 
 export async function compileFile(filename, config) {
