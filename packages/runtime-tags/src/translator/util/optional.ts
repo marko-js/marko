@@ -292,51 +292,6 @@ export function mapToString<T>(
   return "";
 }
 
-export function filterMap<T, R>(
-  data: Opt<T>,
-  cb: (item: T) => undefined | R,
-): Opt<R> {
-  if (data !== undefined) {
-    if (Array.isArray(data)) {
-      const len = data.length;
-      let result: Opt<R>;
-      let i = 0;
-
-      while (i < len) {
-        let item = cb(data[i++]);
-
-        if (item !== undefined) {
-          result = item;
-
-          while (i < len) {
-            item = cb(data[i++]);
-
-            if (item !== undefined) {
-              result = [result, item];
-
-              while (i < len) {
-                item = cb(data[i++]);
-
-                if (item !== undefined) {
-                  result.push(item);
-                }
-              }
-
-              return result;
-            }
-          }
-
-          return result;
-        }
-      }
-
-      return result;
-    }
-
-    return cb(data);
-  }
-}
-
 export function findSorted<T>(
   compare: Compare<T>,
   data: T[],
