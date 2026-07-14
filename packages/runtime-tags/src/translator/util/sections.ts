@@ -437,23 +437,20 @@ function ensureParamReasonGroup(
   reason: ParamSerializeReasonGroup["reason"],
 ) {
   const { paramReasonGroups } = section;
+  if (paramReasonGroups) {
+    const found = findSorted(compareParamGroups, paramReasonGroups, {
+      reason,
+    } as ParamSerializeReasonGroup);
+    if (found) return found;
+  }
+
   const group: ParamSerializeReasonGroup = {
     id: Symbol(getDebugNames(reason)),
     reason,
   };
-
-  if (paramReasonGroups) {
-    const found = findSorted(compareParamGroups, paramReasonGroups, group);
-    if (found) return found;
-
-    section.paramReasonGroups = addSorted(
-      compareParamGroups,
-      paramReasonGroups,
-      group,
-    );
-  } else {
-    section.paramReasonGroups = [group];
-  }
+  section.paramReasonGroups = paramReasonGroups
+    ? addSorted(compareParamGroups, paramReasonGroups, group)
+    : [group];
 }
 
 export function getParamReasonGroupIndex(
