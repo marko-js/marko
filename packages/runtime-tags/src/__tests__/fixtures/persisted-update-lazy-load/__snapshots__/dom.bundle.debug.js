@@ -6,7 +6,7 @@ const $update = (patch, live) => {
 	if ("input_show" in patch) live["input_show"] = patch["input_show"];
 	if ("input_label" in patch) live["input_label"] = patch["input_label"];
 	_update_scope(patch, live);
-	if ("ConditionalRenderer:#text/3" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3");
+	if ("ConditionalRenderer:#text/3" in patch || "BranchScopes:#text/3" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3");
 };
 const _merge = _resume("__tests__/template.marko_0_update", $update);
 function createPatch() {

@@ -13,7 +13,7 @@ const $update = (patch, live) => {
 	if ("h" in patch) live["h"] = patch["h"];
 	if ("i" in patch) live["i"] = patch["i"];
 	_update_scope(patch, live);
-	if ("Dd" in patch) _update_dynamic(patch, live, "Dd", "Ad");
+	if ("Dd" in patch || "Ad" in patch) _update_dynamic(patch, live, "Dd", "Ad");
 };
 const _merge = _resume("a3", $update);
 function createPatch() {

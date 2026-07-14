@@ -32,7 +32,7 @@ const $PanelAsync_content__update = (patch, live) => {
 	if ("Aa" in patch) _update_branch(patch, live, "a", $try_content__update);
 };
 const $for_content__update = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
+	if ("Da" in patch || "Aa" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

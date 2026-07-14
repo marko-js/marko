@@ -17,13 +17,13 @@ enableBranchesPersisted();
 
 // tags/layout.marko.update.mjs
 const $update$2 = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
+	if ("Da" in patch || "Aa" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 const _merge$2 = _resume("c1", $update$2);
 
 // tags/frame.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
+	if ("Da" in patch || "Aa" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
 const _merge$1 = _resume("b1", $update$1);
 

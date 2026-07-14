@@ -12,7 +12,7 @@ const $count_seed = _update_signal("a2");
 const $for_update = _update_for_keyed(2, (p, l) => $for_content__update(p, l));
 const $for_content2__update = (patch, live) => {
 	_update_scope(patch, live);
-	if ("Db" in patch) _update_dynamic(patch, live, "Db", "Ab");
+	if ("Db" in patch || "Ab" in patch) _update_dynamic(patch, live, "Db", "Ab");
 };
 const $for_content__update = (patch, live) => {
 	if ("Aa" in patch) _update_for(patch["Aa"], live["Aa"], $for_content2__update);

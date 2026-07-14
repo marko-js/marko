@@ -8,7 +8,7 @@ const $PanelAsync_content__update = (patch, live) => {
 	if ("BranchScopes:#text/0" in patch) _update_branch(patch, live, "#text/0", $try_content__update);
 };
 const $for_content__update = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
+	if ("ConditionalRenderer:#text/0" in patch || "BranchScopes:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

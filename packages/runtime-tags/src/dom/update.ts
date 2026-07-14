@@ -600,7 +600,16 @@ export function _update_dynamic(
   rendererKey: string,
   branchKey: string,
 ) {
-  const rendererId = patch[rendererKey];
+  const rendererId = patch[rendererKey] ?? live[rendererKey];
+  if (rendererId === 0) {
+    const liveBranch = live[branchKey] as BranchScope | undefined;
+    if (liveBranch) {
+      removeAndDestroyBranch(liveBranch);
+      live[branchKey] = undefined;
+    }
+    live[rendererKey] = 0;
+    return;
+  }
   if (typeof rendererId !== "string") return;
   const patchBranch = patch[branchKey] as Scope | undefined;
   const accessor = branchKey.slice(AccessorPrefix.BranchScopes.length);
@@ -665,7 +674,7 @@ export function _update_dynamic(
           key.length > AccessorPrefix.ConditionalRenderer.length &&
           key.slice(0, AccessorPrefix.ConditionalRenderer.length) ===
             AccessorPrefix.ConditionalRenderer &&
-          typeof patchBranch[key] === "string"
+          (typeof patchBranch[key] === "string" || patchBranch[key] === 0)
         ) {
           _update_dynamic(
             patchBranch,

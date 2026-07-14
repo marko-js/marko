@@ -69,7 +69,10 @@ import {
   toObjectProperty,
   toPropertyName,
 } from "../../util/to-property-name";
-import { propsToExpression } from "../../util/translate-attrs";
+import {
+  assertPersistedSpreadSupported,
+  propsToExpression,
+} from "../../util/translate-attrs";
 import {
   addUpdateGlobalsStatement,
   addUpdateMerge,
@@ -400,7 +403,7 @@ export default {
 
         write`<${tagName}`;
 
-        const usedAttrs = getUsedAttrs(tagName, tag.node);
+        const usedAttrs = getUsedAttrs(tagName, tag);
         const {
           staticAttrs,
           staticControllable,
@@ -796,7 +799,7 @@ export default {
           skipExpression,
           spreadExpression,
           injectNonce,
-        } = getUsedAttrs(tagName, tag.node);
+        } = getUsedAttrs(tagName, tag);
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
         const isTextOnly = isTextOnlyNativeTag(tag);
         const hasChildren = !!tag.node.body.body.length;
@@ -1228,8 +1231,9 @@ function getRelatedControllable(
   }
 }
 
-function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
+function getUsedAttrs(tagName: string, tagPath: t.NodePath<t.MarkoTag>) {
   const seen: Record<string, t.MarkoAttribute> = {};
+  const tag = tagPath.node;
   const { attributes } = tag;
   const maybeStaticAttrs = new Set<t.MarkoAttribute>();
   const skipProps = new Set<string>();
@@ -1243,6 +1247,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
+      assertPersistedSpreadSupported(tagPath, value);
       if (!spreadProps) {
         spreadProps = [];
         staticControllable = getRelatedControllable(tagName, seen);

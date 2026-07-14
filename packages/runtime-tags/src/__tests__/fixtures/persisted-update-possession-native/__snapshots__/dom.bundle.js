@@ -12,7 +12,7 @@ const $count_seed = _update_signal("a2");
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
+	if ("Dc" in patch || "Ac" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 _update_content("a4", _update_scope);
 _update_content("a3", _update_scope);

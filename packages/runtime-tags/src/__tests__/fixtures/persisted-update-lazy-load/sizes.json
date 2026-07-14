@@ -5,8 +5,8 @@
       "brotli": 150
     },
     "update.js": {
-      "min": 479,
-      "brotli": 265
+      "min": 491,
+      "brotli": 290
     },
     "panel.marko.update.mjs": {
       "min": 406,

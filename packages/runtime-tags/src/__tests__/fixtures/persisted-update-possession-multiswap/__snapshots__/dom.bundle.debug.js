@@ -2,7 +2,7 @@
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $for_update = _update_for_keyed("#ul/2", (p, l) => $for_content__update(p, l));
 const $for_content__update = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
+	if ("ConditionalRenderer:#text/0" in patch || "BranchScopes:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

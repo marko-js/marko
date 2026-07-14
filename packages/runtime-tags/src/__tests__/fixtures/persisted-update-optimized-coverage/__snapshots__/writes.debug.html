@@ -1,0 +1,63 @@
+<button>count <!>0<!--M_*1 #text/1--></button><!--M_* #button/0-->
+<div><!--M_[-->
+  <h2>server title 1<!--M_*2 #text/0--></h2><!--M_)1 #div/2 2-->
+</div>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#div/2": 0,
+      "HopSite:#div/2": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-optimized-coverage/template.marko_0/update_if_#div/2",
+      count: 0,
+      "ClosureScopes:input_title": new Set
+    }, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-optimized-coverage/template.marko_0 1"
+  ];
+  M._.w()
+</script>

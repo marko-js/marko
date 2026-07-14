@@ -1,0 +1,61 @@
+<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_* a-->
+<header><!--M_[-->
+  <h2>server title 1<!--M_*3 a--></h2><!--M_]2 a 3-->
+</header>
+<main><!--M_[-->
+  <section><!--M_[-->
+    <p>server title 1<!--M_*6 a--></p><!--M_]5 a 6-->
+  </section><!--M_]2 b 4-->
+</main>
+<ul>
+  <li><!--M_[-->one<!--M_*8 a--><!--M_]7 a 8--></li>
+  <li><!--M_[-->two<!--M_*10 a--><!--M_]9 a 10--></li><!--M_}2 c 9 7-->
+</ul>
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [1, {
+    h: 0,
+    k: new Set([_(3), _(6)]),
+    c: _(2)
+  }, {
+    Da: "a2",
+    Za: "c0",
+    Db: "a3",
+    Zb: "c1"
+  }, {
+    _: _(1)
+  }, {
+    _: _(1),
+    a: _(5)
+  }, {
+    Da: "a4",
+    Za: "b0"
+  }, {
+    _: _(4),
+    Ck: 1
+  }, {
+    Da: "a5",
+    Za: "c3",
+    M: 0,
+    Fc: "c2"
+  }, 1, {
+    Da: "a5",
+    Za: "c3",
+    M: 1,
+    Fc: "c2"
+  }], "a0 1"];
+  M._.w()
+</script>

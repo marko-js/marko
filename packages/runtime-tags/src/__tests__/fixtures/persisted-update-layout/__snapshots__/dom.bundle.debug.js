@@ -3,7 +3,7 @@ const $open_seed = _update_signal("__tests__/tags/layout/layout.marko_0_open/var
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
-	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
+	if ("ConditionalRenderer:#text/2" in patch || "BranchScopes:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
 const _merge$1 = _resume("__tests__/tags/layout/layout.marko_0_update", $update$1);
 function createPatch$1() {

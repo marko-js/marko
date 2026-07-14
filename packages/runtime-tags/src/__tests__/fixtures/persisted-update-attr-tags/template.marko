@@ -1,0 +1,22 @@
+import { getTitle, getRows } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<panel>
+  <@header>
+    <h2>${getTitle(input.id)}</h2>
+  </@header>
+  <if=input.show>
+    <@body>
+      <inner>
+        <@part>
+          <p>${getTitle(input.id)}</p>
+        </@part>
+      </inner>
+    </@body>
+  </if>
+  <for|row| of=getRows(input.id)>
+    <@item value=row>${row}</@item>
+  </for>
+</panel>

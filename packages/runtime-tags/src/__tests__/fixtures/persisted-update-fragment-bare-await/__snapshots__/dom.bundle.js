@@ -13,7 +13,7 @@ const $Reports_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
+	if ("Dc" in patch || "Ac" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 _update_content("a4", $Reports_content__update);
 const _merge = _resume("a5", $update);

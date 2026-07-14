@@ -3,7 +3,7 @@ const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $for_update = _update_for_keyed("#text/2", (p, l) => $for_content__update(p, l));
 const $for_content2__update = (patch, live) => {
 	_update_scope(patch, live);
-	if ("ConditionalRenderer:#text/1" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/1", "BranchScopes:#text/1");
+	if ("ConditionalRenderer:#text/1" in patch || "BranchScopes:#text/1" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/1", "BranchScopes:#text/1");
 };
 const $for_content__update = (patch, live) => {
 	if ("BranchScopes:#ul/0" in patch) _update_for(patch["BranchScopes:#ul/0"], live["BranchScopes:#ul/0"], $for_content2__update);

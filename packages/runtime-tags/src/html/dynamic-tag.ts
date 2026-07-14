@@ -60,6 +60,8 @@ export let _dynamic_tag = (
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
+  const updateStructural =
+    state.update && (serializeReason as unknown as number) !== 0;
   let rendered: boolean;
   let result: unknown;
 
@@ -270,7 +272,7 @@ export let _dynamic_tag = (
       // A replay-constructed hop branch (renderer mismatch client-side)
       // seeds like other patch-list branches (see `_state_reason`).
       const updateStructural =
-        state.update && (serializeReason as unknown as number) & 2;
+        state.update && (serializeReason as unknown as number) !== 0;
       if (updateStructural) state.freshBranchDepth++;
       result = withBranchId(branchId, render);
       if (updateStructural) state.freshBranchDepth--;
@@ -311,6 +313,18 @@ export let _dynamic_tag = (
       });
     }
   } else {
+    if (updateStructural) {
+      // A request-derived dynamic tag can disappear (attribute-tag bodies are
+      // one common source). The explicit zero lets the update merge remove
+      // the matched branch; omitting the renderer would mean "unchanged".
+      _scope(scopeId, {
+        [AccessorPrefix.ConditionalRenderer + accessor]: 0,
+        [AccessorPrefix.BranchScopes + accessor]: undefined,
+        ...(siteId !== undefined
+          ? { [HOP_SITE_PREFIX + accessor]: siteId }
+          : null),
+      });
+    }
     _scope_id();
   }
 

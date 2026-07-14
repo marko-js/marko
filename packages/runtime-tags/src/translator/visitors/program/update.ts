@@ -360,6 +360,7 @@ function buildMergeStatements(
     statements.push(
       ...buildMerge(
         merge,
+        patchIdentifier,
         liveIdentifier,
         mergeIdentifiers,
         hoistedDeclarations,
@@ -402,6 +403,7 @@ function buildMerge(
     UpdateMerge,
     { kind: "text" | "html" | "attr" | "controllable" }
   >,
+  patchIdentifier: t.Identifier,
   liveIdentifier: t.Identifier,
   mergeIdentifiers: Map<Section, t.Identifier>,
   hoistedDeclarations: t.Statement[],
@@ -550,8 +552,20 @@ function buildMerge(
       // its fragment fails loudly instead of constructing from client-shipped
       // render code.
       return [
-        ifPresent(
-          rendererKey,
+        t.ifStatement(
+          t.logicalExpression(
+            "||",
+            t.binaryExpression(
+              "in",
+              toKeyLiteral(rendererKey),
+              patchIdentifier,
+            ),
+            t.binaryExpression(
+              "in",
+              toKeyLiteral(branchScopesKey),
+              patchIdentifier,
+            ),
+          ),
           t.expressionStatement(
             callRuntime(
               "_update_dynamic",

@@ -12,7 +12,7 @@ const $Reports_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
-	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
+	if ("ConditionalRenderer:#text/2" in patch || "BranchScopes:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
 _update_content("__tests__/template.marko_4_content", _update_scope);
 _update_content("__tests__/template.marko_2_content", $Reports_content__update);

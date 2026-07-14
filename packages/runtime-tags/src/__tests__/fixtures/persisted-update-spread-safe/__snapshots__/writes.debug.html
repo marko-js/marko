@@ -1,0 +1,66 @@
+<button>clicked <!>0<!--M_*1 #text/1--></button><!--M_* #button/0--><input
+  data-request="request title" title="client title"
+  class=client><!--M_* #input/2-->
+<div data-request="request title" title="client title" class=client>dynamic
+</div><!--M_* #div/3-->
+<div class=client data-request="request title"></div><!--M_*2 #div/0-->
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      input_title: "request title",
+      attrs: {
+        title: "client title",
+        class: "client"
+      },
+      count: 0,
+      "#childScope/4": _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-spread-safe/template.marko_0_input_title_attrs 1 packages/runtime-tags/src/__tests__/fixtures/persisted-update-spread-safe/template.marko_0 1"
+  ];
+  M._.w()
+</script>

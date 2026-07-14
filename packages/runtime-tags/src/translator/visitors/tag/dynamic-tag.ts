@@ -74,6 +74,7 @@ import {
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import { toMemberExpression } from "../../util/to-property-name";
 import {
+  assertPersistedSpreadSupported,
   getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
@@ -409,6 +410,11 @@ export default {
         undefined,
         isClassAPI ? "renderBody" : "content",
       );
+      for (const arg of node.arguments || []) {
+        if (t.isSpreadElement(arg)) {
+          assertPersistedSpreadSupported(tag, arg.argument);
+        }
+      }
       const args: (t.Expression | t.SpreadElement)[] = [];
       let hasTagArgs = false;
 

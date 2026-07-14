@@ -11,7 +11,7 @@ function createPatch$2() {
 
 // tags/layout.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
+	if ("ConditionalRenderer:#text/0" in patch || "BranchScopes:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
 const _merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update$1);
 function createPatch$1() {

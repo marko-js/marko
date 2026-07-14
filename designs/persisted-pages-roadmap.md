@@ -18,13 +18,14 @@ not belong on the persisted-pages critical path.
   controllables supplied through spreads, mixed state/`$global` values, and
   `<select>` re-synchronization after option values change. User edits must not
   be overwritten accidentally.
-- **Compiler coverage:** audit attribute tags, hoisted references, dynamic
-  spreads, text-only elements, and all loop/conditional forms for source
-  classification, sparse capture, deterministic ids, and fragment anchors.
-  Request-derived `<if>`/`<else-if>`/`<else>` conditionals now use possession-
-  derived fragments (build-stable site ids, split selection/render, `_have`
-  echo) instead of retaining a branch renderer in the update graph; extend the
-  same treatment to remaining structural forms.
+- **Compiler coverage:** focused persisted fixtures now provide evidence for
+  attribute tags, hoisted references, text-only nodes, an
+  `<if>`/`<else-if>`/`<else>` chain, and representative native, dynamic, and
+  custom content (`persisted-update-optimized-coverage`). Its optimized DOM
+  audit excludes the server-only `getTitle`/`server title` sentinels while
+  navigations exercise each branch. Request-derived spreads without a sparse
+  protocol remain unsupported; static/analyzable spreads, client-state-only
+  spreads, and the existing controllable/event paths remain available.
 - **Pairing integrity:** turn unpairable scopes, duplicate ids, unexpected
   renderers, missing fragments, and stale boundary bodies into explicit protocol
   failures covered by fallback tests in optimized builds.
