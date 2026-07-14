@@ -7,7 +7,7 @@ enableBranchesPersisted();
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a2");
-const $for_update = _update_for(2, "a1", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed(2, (p, l) => _update_scope(p, l));
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $count_seed, patch["g"]);

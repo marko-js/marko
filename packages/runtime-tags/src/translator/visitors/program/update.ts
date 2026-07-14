@@ -463,45 +463,80 @@ function buildMerge(
       const branchScopesKey =
         getAccessorPrefix().BranchScopes + merge.accessor.value;
       const bodyMerge = mergeIdentifiers.get(merge.bodySection);
-      const signalIdentifier = generateUidIdentifier("for_update");
-      const branchIdentifier = t.identifier("branch");
-      const argsIdentifier = t.identifier("args");
-      hoistedDeclarations.push(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            signalIdentifier,
-            callRuntime(
-              "_update_for",
-              t.cloneNode(merge.encodedAccessor, true),
-              t.stringLiteral(merge.contentId),
-              bodyMerge
-                ? t.arrowFunctionExpression(
-                    [branchIdentifier, argsIdentifier],
-                    t.callExpression(bodyMerge, [
-                      t.memberExpression(
-                        argsIdentifier,
-                        t.numericLiteral(0),
-                        true,
-                      ),
-                      branchIdentifier,
-                    ]),
-                  )
-                : t.numericLiteral(0),
+
+      if (merge.siteId) {
+        // Request-derived: a genuinely new key or positional index applies as a resumable
+        // fragment instead of client construction -- see `_update_for_keyed`
+        // in dom/update.ts. It consumes the same
+        // `[branches, loopKeyPropName]` value shape a state-driven loop's
+        // signal would get.
+        const signalIdentifier = generateUidIdentifier("for_update");
+        const patchBranchIdentifier = t.identifier("p");
+        const liveBranchIdentifier = t.identifier("l");
+        hoistedDeclarations.push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              signalIdentifier,
+              callRuntime(
+                "_update_for_keyed",
+                t.cloneNode(merge.encodedAccessor, true),
+                // Hoisted declarations land before every per-section merge
+                // function in the compiled module (see this file's program
+                // exit), so a direct reference to `bodyMerge` here would be
+                // a forward (TDZ) read when that section has its own
+                // compiled merge. Deferring the read behind a delegate
+                // (only actually called once dispatch reaches a real
+                // branch, long after every top-level const has initialized)
+                // avoids it -- the plain (non-hoisted) branch below needs no
+                // such delegate, since it only ever runs from inside this
+                // same section's own (already-lazy) merge function body.
+                bodyMerge
+                  ? t.arrowFunctionExpression(
+                      [patchBranchIdentifier, liveBranchIdentifier],
+                      t.callExpression(t.cloneNode(bodyMerge, true), [
+                        patchBranchIdentifier,
+                        liveBranchIdentifier,
+                      ]),
+                    )
+                  : t.numericLiteral(0),
+              ),
+            ),
+          ]),
+        );
+        return [
+          ifPresent(
+            branchScopesKey,
+            t.expressionStatement(
+              t.callExpression(signalIdentifier, [
+                liveIdentifier,
+                t.arrayExpression([
+                  patchGet(branchScopesKey),
+                  t.stringLiteral(getAccessorProp().LoopKey),
+                ]),
+              ]),
             ),
           ),
-        ]),
-      );
+        ];
+      }
+
+      // Stable (render-once) list: a plain index-paired merge, no diff, no
+      // client construction -- see `_update_for` in dom/update.ts. Not
+      // hoisted (it runs from inside this section's own merge function
+      // body), so a direct reference to `bodyMerge` is safe here.
+      // Stable (render-once) list: a plain index-paired merge, no diff, no
+      // client construction -- see `_update_for` in dom/update.ts. Not
+      // hoisted (it runs from inside this section's own merge function
+      // body), so a direct reference to `bodyMerge` is safe here.
       return [
         ifPresent(
           branchScopesKey,
           t.expressionStatement(
-            t.callExpression(signalIdentifier, [
-              liveIdentifier,
-              t.arrayExpression([
-                patchGet(branchScopesKey),
-                t.stringLiteral(getAccessorProp().LoopKey),
-              ]),
-            ]),
+            callRuntime(
+              "_update_for",
+              patchGet(branchScopesKey),
+              liveGet(branchScopesKey),
+              bodyMerge ? t.cloneNode(bodyMerge, true) : t.numericLiteral(0),
+            ),
           ),
         ),
       ];

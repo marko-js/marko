@@ -86,7 +86,7 @@ var template_default = _template("a", (input) => {
 			_persisted_reason() && writeScope($scope3_id, {});
 		}, function(metric) {
 			return metric.name;
-		}, $scope2_id, "g", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+		}, $scope2_id, "g", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a5");
 		_if(() => $global().admin ? 0 : void 0, $scope2_id, "h", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a6", [() => {
 			const $scope4_id = _scope_id();
 			_html("<p class=admin>admin tools enabled</p>");

@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_persisted_reason() && writeScope($scope1_id, {}, "__tests__/template.marko", "5:4");
 	}, function(opt) {
 		return opt.key;
-	}, $scope0_id, "#select/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</select>", 1);
+	}, $scope0_id, "#select/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</select>", 1, "__tests__/template.marko_0/update_for_#select/2");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count: _state_reason() && count }, "__tests__/template.marko", 0, { count: "2:6" });
 	_resume_branch($scope0_id);

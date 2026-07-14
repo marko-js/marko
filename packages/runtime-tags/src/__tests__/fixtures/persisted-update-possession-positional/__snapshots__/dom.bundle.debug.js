@@ -1,6 +1,6 @@
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $for_update = _update_for("#ul/2", "__tests__/template.marko_2_content/update", (branch, args) => $for_content__update(args[0], branch));
+const $for_update = _update_for_keyed("#ul/2", (p, l) => $for_content__update(p, l));
 const $for_content__update = (patch, live) => {
 	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };

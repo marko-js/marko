@@ -1,0 +1,12 @@
+import { CELLS } from "./data";
+
+<p>root</p>
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<for|item| of=$global.items by="id">
+  <article>
+    <for|cell| of=CELLS by="id">
+      <span>${item.id}:${item.view}:${cell.id}</span>
+    </for>
+  </article>
+</for>

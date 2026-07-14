@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 				$sg__input_related && writeScope($scope4_id, {});
 			}, function(item) {
 				return item.id;
-			}, $scope3_id, "a", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);
+			}, $scope3_id, "a", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1, "a5");
 			$sg__input_related && writeScope($scope3_id, {});
 		}, $sg__input_related);
 		$sg__input_related && _subscribe($input_related__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));

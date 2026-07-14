@@ -9,7 +9,6 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
-import { generateUidIdentifier } from "../util/generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -62,10 +61,7 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { getMemberExpressionPropString } from "../util/to-property-name";
-import {
-  addUpdateMerge,
-  getUpdateContentRegisterId,
-} from "../util/update-merges";
+import { addUpdateMerge, getUpdateForRegisterId } from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -73,6 +69,22 @@ import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to" | "until";
 const kStatefulReason = Symbol("<for> stateful reason");
+
+/**
+ * True when a `<for>`'s own LIST is request-derived with no client-state
+ * component. The update renderer gives every iteration a stable key (the
+ * user's `by=` key, or its positional index), so additions can arrive as
+ * resumable fragments without shipping client construction material. A
+ * mixed list (state plus request-derived bits) remains outside this path.
+ */
+function isRequestDerivedFor(tagExtra: t.NodeExtra) {
+  const sources = getSerializeSourcesForExpr(tagExtra);
+  return (
+    isPersisted() &&
+    isReasonDynamic(sources) &&
+    !isStateSerializeReason(sources)
+  );
+}
 
 export default {
   analyze(tag) {
@@ -187,6 +199,7 @@ export default {
       kind: "for",
       bodySection,
       extra: tagExtra,
+      binding: nodeBinding,
     });
   },
   translate: translateByTarget({
@@ -218,6 +231,7 @@ export default {
         const tagSection = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
+        const tagExtra = node.extra!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         const forAttrs = getKnownAttrValues(node);
@@ -300,17 +314,37 @@ export default {
             statefulSerializeArg,
           );
 
+          // A request-derived-only list's per-site id: the client's
+          // possession echo tells the server whether each keyed (or
+          // positional-indexed) iteration is already live. New iterations
+          // ship as resumable fragments instead of client construction
+          // material (see html/writer.ts's `_for`).
+          const forSiteId = isRequestDerivedFor(tagExtra)
+            ? getUpdateForRegisterId(
+                tagSection,
+                getScopeAccessorLiteral(nodeBinding).value,
+              )
+            : undefined;
+
           if (skipParentEnd) {
             getParentTag(tag)!.node.extra![kSkipEndTag] = true;
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
+          } else if (forSiteId !== undefined) {
+            forTagArgs.push(t.numericLiteral(0));
           }
 
           if (singleChild) {
-            if (!skipParentEnd) {
+            if (!skipParentEnd && forSiteId === undefined) {
               forTagArgs.push(t.numericLiteral(0));
             }
 
             forTagArgs.push(t.numericLiteral(1));
+          } else if (forSiteId !== undefined) {
+            forTagArgs.push(t.numericLiteral(0));
+          }
+
+          if (forSiteId !== undefined) {
+            forTagArgs.push(t.stringLiteral(forSiteId));
           }
         }
 
@@ -371,35 +405,41 @@ export default {
         });
 
         const forType = getForType(node)!;
+        const forAttrs = getKnownAttrValues(node);
         const signal = getSignal(tagSection, nodeRef, "for");
         // Request-derived loops participate in persisted update renders: the
-        // server writes the branch list + keys explicitly (G3/G4) and the
-        // update entry reconciles it with a `_for_of` built from this loop's
-        // branch content, so persisted entry builds hoist that content into a
-        // registered `[template, walks, setup]` and update entries record a
-        // merge. The strings are shared, not duplicated -- the loop signal
-        // reads them from the same registered array. The main module's copy
-        // keeps the plain (unregistered) shape so hydration bundles may
-        // tree-shake it. Stable branch sets (a constant `of`, render-once by
-        // contract) also participate when the BODY carries request-derived
-        // content: the branches never change but their merges (placement holes,
-        // mixed-statement re-invocations) must still dispatch.
-        // Client-state-driven sets stay excluded.
+        // server writes the branch list + keys explicitly (G3/G4). A stable
+        // (render-once) list -- the branches never change, only their body's
+        // request-derived content does -- dispatches a plain index-paired
+        // merge with no client construction at all (`_update_for` in
+        // dom/update.ts). A request-derived list additionally gets a
+        // build-stable per-site id (`getUpdateForRegisterId`): a genuinely
+        // new keyed item, or a new positional index, arrives as a resumable
+        // fragment instead of ever being built from client-shipped renderer
+        // material (see html/writer.ts's `_for` and dom/update.ts's
+        // `_update_for_keyed`). Client-state-driven sets stay excluded.
         const tagSources = getSerializeSourcesForExpr(tagExtra);
+        const isListDynamic = isReasonDynamic(tagSources);
         const updateStructural =
           isPersisted() &&
           !isStateSerializeReason(tagSources) &&
-          (isReasonDynamic(tagSources) ||
+          (isListDynamic ||
             isRequestDerivedSerializeReason(
               getSerializeReason(bodySection, kBranchSerializeReason),
             ));
+        const isRequestDerived = isRequestDerivedFor(tagExtra);
         if (updateStructural) {
           addUpdateMerge(tagSection, {
             kind: "for",
             accessor: getScopeAccessorLiteral(nodeRef),
             encodedAccessor: getScopeAccessorLiteral(nodeRef, true),
-            contentId: getUpdateContentRegisterId(bodySection),
             bodySection,
+            siteId: isRequestDerived
+              ? getUpdateForRegisterId(
+                  tagSection,
+                  getScopeAccessorLiteral(nodeRef).value,
+                )
+              : undefined,
           });
           // The patch's branch list is authoritative for participating
           // loops, so the loop's own input invocation is skipped while a
@@ -414,7 +454,7 @@ export default {
           const rendererArgs = replaceNullishAndEmptyFunctionsWith0(
             getBranchRendererArgs(bodySection),
           );
-          if (!(updateStructural && isPersistedEntryBuild())) {
+          if (!(isRequestDerived && isPersistedEntryBuild())) {
             return callRuntime(
               forTypeToDOMRuntime(forType),
               getScopeAccessorLiteral(nodeRef, true),
@@ -422,33 +462,9 @@ export default {
             );
           }
 
-          const contentIdentifier = generateUidIdentifier(
-            `${bodySection.name}_content`,
-          );
-          signal.prependStatements = [
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                contentIdentifier,
-                callRuntime(
-                  "_resume",
-                  t.stringLiteral(getUpdateContentRegisterId(bodySection)),
-                  t.arrayExpression(rendererArgs.slice(0, 3)),
-                ),
-              ),
-            ]),
-            ...(signal.prependStatements || []),
-          ];
-          return callRuntime(
-            forTypeToDOMRuntime(forType),
-            getScopeAccessorLiteral(nodeRef, true),
-            t.memberExpression(contentIdentifier, t.numericLiteral(0), true),
-            t.memberExpression(contentIdentifier, t.numericLiteral(1), true),
-            t.memberExpression(contentIdentifier, t.numericLiteral(2), true),
-            ...rendererArgs.slice(3),
-          );
+          return t.numericLiteral(0);
         };
 
-        const forAttrs = getKnownAttrValues(node);
         const loopArgs = getBaseArgsInForTag(forType, forAttrs);
         if (forAttrs.by) {
           loopArgs.push(forAttrs.by);

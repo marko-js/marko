@@ -169,7 +169,15 @@ UPDATE: .bump::text "0" => "1"
 ## Change
 ```
 UPDATE: nav > div:nth-of-type(1) > a:nth-of-type(1)[class] "link active" => "link"
+REMOVE: nav > div:nth-of-type(1) > h4 + a
+INSERT: nav > div:nth-of-type(1) > h4 + a
+REMOVE: nav > div:nth-of-type(1) > h4 + a
+INSERT: nav > div:nth-of-type(1) > a:nth-of-type(1) + a
 UPDATE: .link.active[class] "link" => "link active"
+REMOVE: nav > div:nth-of-type(2) > h4 + .link.active
+INSERT: nav > div:nth-of-type(2) > h4 + .link.active
+REMOVE: nav > div:nth-of-type(2) > h4 + a
+INSERT: .link.active + a
 ```
 
 # Update

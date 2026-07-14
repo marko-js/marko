@@ -1,6 +1,6 @@
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $for_update = _update_for("#select/2", "__tests__/template.marko_1_content/update", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed("#select/2", (p, l) => _update_scope(p, l));
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);

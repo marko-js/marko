@@ -76,7 +76,7 @@ var template_default = _template("a", (input) => {
 					const $scope6_id = _scope_id();
 					_html(`<li${_attr_class(_hole_value($scope6_id, "Nclass:a", report.name === $global().focus && "focus", _persisted_reason()))}>${_escape(_hole_value($scope6_id, "Qb", report.name, _persisted_reason()))}${_el_resume($scope6_id, "b", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(_hole_value($scope6_id, "Qc", report.value, _persisted_reason()))}${_el_resume($scope6_id, "c", _persisted_reason())}</li>${_el_resume($scope6_id, "a", _persisted_reason())}`);
 					_persisted_reason() && writeScope($scope6_id, {});
-				}, 0, $scope4_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+				}, 0, $scope4_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a6");
 				_persisted_reason() && writeScope($scope4_id, {
 					_: _scope_with_id($scope3_id),
 					a: _existing_scope($childScope)

@@ -1,7 +1,6 @@
 // tags/chip-list.marko.update.mjs
-const $for_update = _update_for("#div/0", "__tests__/tags/chip-list.marko_1_content/update", (branch, args) => _update_scope(args[0], branch));
 const $update$1 = (patch, live) => {
-	if ("BranchScopes:#div/0" in patch) $for_update(live, [patch["BranchScopes:#div/0"], "#LoopKey"]);
+	if ("BranchScopes:#div/0" in patch) _update_for(patch["BranchScopes:#div/0"], live["BranchScopes:#div/0"], _update_scope);
 };
 const _merge$1 = _resume("__tests__/tags/chip-list.marko_0_update", $update$1);
 function createPatch$1() {

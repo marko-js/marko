@@ -1,0 +1,31 @@
+<p>root</p><button>0<!--M_*1 b--></button><!--M_* a-->
+<article><span>existing<!--M_*3 a-->:<!>a<!--M_* b-->:<!>only<!--M_* c--></span>
+</article><!--M_*2 a--><!--M_|1 c 2-->
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [1, {
+    d: 0
+  }, {
+    Aa: _(3),
+    M: "existing",
+    Fc: "a1"
+  }, {
+    _: _(2),
+    M: "only",
+    Fa: ""
+  }], "a0 1"];
+  M._.w()
+</script>

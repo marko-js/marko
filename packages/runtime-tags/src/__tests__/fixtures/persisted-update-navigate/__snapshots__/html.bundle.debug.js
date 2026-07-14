@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$sg__input_related | _persisted_reason() && writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "11:4");
 	}, function(item) {
 		return item.id;
-	}, $scope0_id, "#ul/5", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);
+	}, $scope0_id, "#ul/5", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1, "__tests__/template.marko_0/update_for_#ul/5");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		input_product_featured: input.product?.featured,

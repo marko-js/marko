@@ -86,7 +86,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const Cart = { content: _content("a5", () => {
+	const Cart = { content: _content("a4", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const $childScope = _peek_scope_id();
@@ -132,12 +132,12 @@ var template_default = _template("a", (input) => {
 		});
 		_resume_branch($scope1_id);
 	}) };
-	const Item = { content: _content("a7", () => {
+	const Item = { content: _content("a6", () => {
 		const $scope6_id = _scope_id();
 		const $Item_content__product_id__closures = /* @__PURE__ */ new Set();
 		_scope_reason();
 		const product = $global().productId && getProduct($global().productId);
-		_if(() => !product ? 0 : 1, $scope6_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), void 0, void 0, "a6", [() => {
+		_if(() => !product ? 0 : 1, $scope6_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), void 0, void 0, "a5", [() => {
 			const $scope9_id = _scope_id();
 			_html("<h2>not found</h2>");
 			_persisted_reason() && writeScope($scope9_id, {});
@@ -147,7 +147,7 @@ var template_default = _template("a", (input) => {
 			const $childScope2 = _peek_scope_id();
 			_set_serialize_reason(_persisted_reason());
 			actions_default({ id: product.id });
-			_try($scope7_id, "e", _content_resume("a9", () => {
+			_try($scope7_id, "e", _content_resume("a8", () => {
 				const $scope8_id = _scope_id();
 				_scope_reason();
 				_await($scope8_id, "a", getRecommendations(product.id), (recs) => {
@@ -159,16 +159,16 @@ var template_default = _template("a", (input) => {
 						_persisted_reason() && writeScope($scope12_id, {});
 					}, function(rec) {
 						return rec.id;
-					}, $scope11_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+					}, $scope11_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a10");
 					_persisted_reason() && writeScope($scope11_id, {});
 				}, _persisted_reason());
 				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }));
 				_resume_branch($scope8_id);
-			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a10", () => {
+			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a9", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading recommendations…");
-			}, $scope7_id) }) }, "a8");
+			}, $scope7_id) }) }, "a7");
 			_persisted_reason() && writeScope($scope7_id, {
 				_: _scope_with_id($scope6_id),
 				d: _existing_scope($childScope2)

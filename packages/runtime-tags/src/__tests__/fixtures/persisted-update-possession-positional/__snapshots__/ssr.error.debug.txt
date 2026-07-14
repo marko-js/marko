@@ -1,1 +1,0 @@
-A persisted update changed a dynamic tag's renderer (packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-positional/template.marko_1_content) without a fragment entry; persisted pages do not construct divergent content client-side.

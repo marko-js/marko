@@ -1,0 +1,20 @@
+import { ITEMS } from "./data";
+
+<define/PanelA>
+  <strong>A</strong>
+</define>
+<define/PanelB>
+  <strong>B</strong>
+</define>
+
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<for|group| of=$global.groups by="id">
+  <ul>
+    <for|item| of=ITEMS by="id">
+      <li>
+        ${item.id}: <${group.views[item.id] === "b" ? PanelB : PanelA}/>
+      </li>
+    </for>
+  </ul>
+</for>

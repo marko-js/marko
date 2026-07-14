@@ -1,5 +1,6 @@
 // data.js
 const getLabel = typeof window === "undefined" ? (topic) => `${topic}` : undefined;
+const serverLoopSentinel = typeof window === "undefined" ? () => "server-only loop sentinel" : undefined;
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -22,11 +23,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<ul>");
 	_for_of($global().items, (item) => {
 		const $scope2_id = _scope_id();
-		_dynamic_tag($scope2_id, "#text/0", item.view === "b" ? PanelB : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "__tests__/template.marko_2/update_dynamic_#text/0");
+		_html(`<em>LOOP_ONLY_MARKUP</em>${_escape(serverLoopSentinel?.())}`);
+		_dynamic_tag($scope2_id, "#text/1", item.view === "b" ? PanelB : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "__tests__/template.marko_2/update_dynamic_#text/1");
 		_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "14:4");
 	}, function(item) {
 		return item.id;
-	}, $scope0_id, "#ul/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>");
+	}, $scope0_id, "#ul/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 0, "__tests__/template.marko_0/update_for_#ul/2");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count: _state_reason() && count }, "__tests__/template.marko", 0, {
 		count: "3:6",

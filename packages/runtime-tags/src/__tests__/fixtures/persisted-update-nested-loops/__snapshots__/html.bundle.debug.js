@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<a${_attr_class(_hole_value($scope2_id, "UpdateAttr:class:#a/0", ["link", { active: path === page.slug }], _persisted_reason()))}>${_escape(_hole_value($scope2_id, "UpdateHole:#text/1", page.title, _persisted_reason()))}${_el_resume($scope2_id, "#text/1", _persisted_reason())}</a>${_el_resume($scope2_id, "#a/0", _persisted_reason())}`);
 			_persisted_reason() && _subscribe($path__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:8"));
-		}, "slug", $scope1_id, "#text/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1);
+		}, "slug", $scope1_id, "#text/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "__tests__/template.marko_1/update_for_#text/1");
 		_html("</div>");
 		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 	}, 0, $scope0_id, "#nav/2", _persisted_reason(), _persisted_reason(), 0, "</nav>", 1);

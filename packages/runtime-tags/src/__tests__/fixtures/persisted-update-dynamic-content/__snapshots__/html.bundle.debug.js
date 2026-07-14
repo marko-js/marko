@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$sg__input_specs && writeScope($scope3_id, {}, "__tests__/template.marko", "10:6");
 		}, function(spec) {
 			return spec.name;
-		}, $scope2_id, "#ul/0", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1);
+		}, $scope2_id, "#ul/0", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1, "__tests__/template.marko_2/update_for_#ul/0");
 		_serialize_guard($scope0_reason, 0) && _subscribe($sg__input_specs && $input_specs__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2"));
 		_resume_branch($scope2_id);
 	}, $scope0_id) };

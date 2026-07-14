@@ -2,31 +2,31 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 1071,
-        "brotli": 554
+        "min": 1070,
+        "brotli": 559
       },
       "files": {
         "tags/actions.marko": 533,
         "tags/layout.marko": 304,
-        "template.marko": 2188
+        "template.marko": 2187
       }
     },
     "update.js": {
       "total": {
-        "min": 9808,
-        "brotli": 3909
+        "min": 10569,
+        "brotli": 4115
       },
       "files": {
         "tags/shared-list.marko.update.mjs": 380,
         "tags/actions.marko.update.mjs": 426,
         "tags/layout.marko.update.mjs": 329,
-        "template.marko.update.mjs": 1686
+        "template.marko.update.mjs": 1586
       }
     },
     "shared-list.mjs": {
       "total": {
-        "min": 12368,
-        "brotli": 5233
+        "min": 13603,
+        "brotli": 5682
       },
       "files": {
         "data.js": 177,

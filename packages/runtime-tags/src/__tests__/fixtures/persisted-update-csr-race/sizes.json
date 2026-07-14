@@ -5,8 +5,8 @@
       "brotli": 223
     },
     "update.js": {
-      "min": 6379,
-      "brotli": 2650
+      "min": 6716,
+      "brotli": 2755
     }
   },
   "html": {

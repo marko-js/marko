@@ -17,7 +17,7 @@ enableBranchesPersisted();
 
 // template.marko
 _enable_catch();
-const $placeholder_content = _content_resume("a10", "loading recommendations…", "b");
+const $placeholder_content = _content_resume("a9", "loading recommendations…", "b");
 const $for_content2__entry_product_title = ($scope, entry_product_title) => _text($scope.a, entry_product_title);
 const $for_content2__entry_product_price = ($scope, entry_product_price) => _text($scope.b, entry_product_price);
 const $for_content2__$params = ($scope, $params3) => {
@@ -84,9 +84,8 @@ const $update$1 = (patch, live) => {
 const _merge$1 = _resume("c3", $update$1);
 
 // template.marko.update.mjs
-const $for_update = _update_for(0, "a11", (branch, args) => _update_scope(args[0], branch));
-const $products_seed = _update_signal("a4");
-const $for_update2 = _update_for(2, "a3", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed(0, (p, l) => _update_scope(p, l));
+const $products_seed = _update_signal("a3");
 const $count_seed = _update_signal("a1");
 const $await_content__update = (patch, live) => {
 	if ("Aa" in patch) $for_update(live, [patch["Aa"], "M"]);
@@ -109,16 +108,16 @@ const $Item_content__update = (patch, live) => {
 const $Cart_content__update = (patch, live) => {
 	if ("f" in patch) _update_seed(live, $products_seed, patch["f"]);
 	if ("a" in patch) _merge$3(patch["a"], live["a"]);
-	if ("Ac" in patch) $for_update2(live, [patch["Ac"], "M"]);
+	if ("Ac" in patch) _update_for(patch["Ac"], live["Ac"], _update_scope);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
 	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
-_update_content("a7", $Item_content__update);
-_update_content("a5", $Cart_content__update);
-const _merge = _resume("a12", $update);
+_update_content("a6", $Item_content__update);
+_update_content("a4", $Cart_content__update);
+const _merge = _resume("a11", $update);
 function createPatch() {
 	return createPatch$1(_merge);
 }

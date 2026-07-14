@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope2_id, "#text/0", item.view === "b" ? PanelB : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "__tests__/template.marko_2/update_dynamic_#text/0");
 		_html("</li>");
 		_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "14:4");
-	}, 0, $scope0_id, "#ul/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+	}, 0, $scope0_id, "#ul/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "__tests__/template.marko_0/update_for_#ul/2");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count: _state_reason() && count }, "__tests__/template.marko", 0, {
 		count: "3:6",

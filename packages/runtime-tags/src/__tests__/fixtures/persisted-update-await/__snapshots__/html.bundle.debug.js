@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				$sg__input_related && writeScope($scope4_id, {}, "__tests__/template.marko", "11:10");
 			}, function(item) {
 				return item.id;
-			}, $scope3_id, "#ul/0", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);
+			}, $scope3_id, "#ul/0", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1, "__tests__/template.marko_3/update_for_#ul/0");
 			$sg__input_related && writeScope($scope3_id, {}, "__tests__/template.marko", "9:6");
 		}, $sg__input_related);
 		$sg__input_related && _subscribe($input_related__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"));

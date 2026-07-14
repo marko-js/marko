@@ -79,8 +79,14 @@ export type UpdateMerge =
       kind: "for";
       accessor: t.StringLiteral | t.NumericLiteral;
       encodedAccessor: t.Expression;
-      contentId: string;
       bodySection: Section;
+      /**
+       * Build-stable per-site id (present only for a request-derived loop --
+       * see `getUpdateForRegisterId`): a genuinely new key or positional
+       * index arrives as a resumable fragment instead of client-registered
+       * construction material (`_update_for_keyed` in dom/update.ts).
+       */
+      siteId?: string;
     }
   | {
       kind: "child";
@@ -262,10 +268,6 @@ export function cloneUpdateGlobalsStatements(section: Section) {
   }
 }
 
-export function getUpdateContentRegisterId(bodySection: Section) {
-  return getResumeRegisterId(bodySection, "content", "update");
-}
-
 export function getUpdateGlobalsRegisterId(section: Section) {
   return getResumeRegisterId(section, undefined, "update_globals");
 }
@@ -287,6 +289,21 @@ export function getUpdateIfRegisterId(
   accessor: string | number,
 ) {
   return getResumeRegisterId(section, undefined, `update_if_${accessor}`);
+}
+
+// A request-derived `<for>`'s build-stable per-site id -- same recipe
+// as `getUpdateIfRegisterId`/`getUpdateDynamicRegisterId` (a compile
+// constant identical across the document and update renders), keyed off the
+// accessor since loop dom node bindings repeat within a section. The html
+// runtime stashes it directly on each matched item's own branch scope (not
+// a sibling accessor, unlike the if/dynamic-tag hop sites -- one loop item
+// IS one site occurrence) so a later navigation's possession echo (`_have`,
+// dom/update-fragment.ts) can tell a matched item from a genuine addition.
+export function getUpdateForRegisterId(
+  section: Section,
+  accessor: string | number,
+) {
+  return getResumeRegisterId(section, undefined, `update_for_${accessor}`);
 }
 
 // Same for dynamic-tag signals: update merges replay them to swap the

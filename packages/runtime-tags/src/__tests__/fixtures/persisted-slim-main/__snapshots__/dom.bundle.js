@@ -6,8 +6,8 @@ const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", f
 enableBranchesPersisted();
 
 // template.marko.update.mjs
-const $for_update = _update_for(0, "a3", (branch, args) => _update_scope(args[0], branch));
-const $for_update2 = _update_for(1, "a4", (branch, args) => $for_content__update(args[0], branch));
+const $for_update = _update_for_keyed(0, (p, l) => _update_scope(p, l));
+const $for_update2 = _update_for_keyed(1, (p, l) => $for_content__update(p, l));
 const $count_seed = _update_signal("a2");
 const $for_content__update = (patch, live) => {
 	if ("Da" in patch) _update_if(patch, live, "Da", "Aa", [0, _update_scope]);

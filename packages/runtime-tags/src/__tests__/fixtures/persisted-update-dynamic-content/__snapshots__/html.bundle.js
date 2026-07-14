@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			$sg__input_specs && writeScope($scope3_id, {});
 		}, function(spec) {
 			return spec.name;
-		}, $scope2_id, "a", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1);
+		}, $scope2_id, "a", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1, "a3");
 		_serialize_guard($scope0_reason, 0) && _subscribe($sg__input_specs && $input_specs__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope2_id);
 	}, $scope0_id) };

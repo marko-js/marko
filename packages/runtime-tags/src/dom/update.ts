@@ -13,18 +13,23 @@
 // duplicating them:
 // - value/conditional signals are registered with `_var_resume` by persisted
 //   dom builds and invoked here via `_update_signal`.
-// - loop branch content (`[template, walks, setup]`) is registered with
-//   `_resume` so `_update_for` can build a `_for_of` whose params signal is
-//   the update entry's own body merge (the main loop signal's params render
-//   from real items, which a patch scope is not).
+// - request-derived `<for>`s' genuinely NEW items arrive as resumable
+//   fragments (`_update_for_keyed` uses a fragment-only keyed diff, and a
+//   fresh key builds from a fragment instead of a registered renderer graph --
+//   see `createFragmentBranch` in dom/update-fragment.ts); everything else
+//   (stable/positional loops, matched or reordered keyed items) is a plain
+//   sparse merge with no client construction at all.
+import { decodeAccessor } from "../common/helpers";
+import { toArray } from "../common/opt";
 import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  type EncodedAccessor,
   type Scope,
 } from "../common/types";
-import { _for_of, attachAwaitBranch } from "./control-flow";
+import { _for_keyed, attachAwaitBranch } from "./control-flow";
 import {
   _attr_details_or_dialog_open_default,
   _attr_input_checked_default,
@@ -55,6 +60,7 @@ import {
   applyBoundaryBody,
   applyFragment,
   BOUNDARY_SITE_PREFIX,
+  createFragmentBranch,
   type FragmentContext,
 } from "./update-fragment";
 
@@ -928,30 +934,94 @@ export function _update_signal(id: string): UpdateSignal {
     (getRegisteredWithScope(id, scope) as (value: unknown) => void)(value);
 }
 
+/**
+ * A `<for>` whose branch SET is compiler-proven to never change on its own
+ * (a stable, render-once list; changing lists dispatch through
+ * `_update_for_keyed`): dispatch reduces to
+ * a plain index-paired merge -- matched items keep their live DOM, only
+ * their content changes, no client construction. A patch/live branch count
+ * mismatch would mean that proof was wrong, so this fails loudly (the router
+ * falls back to a full navigation) instead of pairing unrelated scopes by
+ * position.
+ */
 export function _update_for(
-  nodeAccessor: string | number,
-  contentId: string,
-  merge: (branchScope: Scope, args: unknown[]) => void,
-): UpdateSignal {
-  let signal: UpdateSignal | undefined;
-  return (scope, value) => {
-    if (!signal) {
-      const content = getRegisteredWithScope(contentId) as [any, any, any];
-      signal = _for_of(
-        nodeAccessor as string,
-        content[0],
-        content[1],
-        content[2],
-        merge as any,
-      ) as UpdateSignal;
+  patchBranches: BranchScope[] | BranchScope,
+  liveBranches: BranchScope[] | BranchScope | undefined,
+  merge: ((patchBranch: Scope, liveBranch: Scope) => void) | 0,
+) {
+  const patch = toArray(patchBranches);
+  const live = toArray(liveBranches);
+  // Fragment self-dispatch (see `_update_for_keyed`): a scope fragment-
+  // created this same apply is its own live scope, so its branch list is
+  // already the real (walker-bound) live branches -- nothing to reconcile.
+  if (patch[0]?.[AccessorProp.StartNode]) {
+    return;
+  }
+  if (patch.length !== live.length) {
+    throw new Error(
+      MARKO_DEBUG
+        ? "A persisted update changed a stable <for> loop's item count; persisted pages expected this list to never add or remove items on its own."
+        : "update diverged",
+    );
+  }
+  if (merge) {
+    for (let i = 0; i < patch.length; i++) {
+      merge(patch[i], live[i]!);
     }
+  }
+}
+
+/**
+ * A request-derived `<for>`'s update dispatch (compiled from
+ * `core/for.ts`'s "for" update merge): matched items (their key was already
+ * live, per the possession echo -- see `_have` in dom/update-fragment.ts)
+ * dispatch their content merge by index through the fragment-only keyed diff
+ * (dom/control-flow.ts) -- no client construction. A genuinely NEW key (or
+ * positional index) applies a resumable fragment (`createFragmentBranch`)
+ * instead of building it from a registered renderer graph; a missing
+ * fragment entry fails loudly rather than fabricating an empty branch.
+ * Removed/reordered keys (and positional indices) need no construction at
+ * all -- the client already has their DOM, so the diff just moves/destroys it.
+ */
+export function _update_for_keyed(
+  nodeAccessor: EncodedAccessor,
+  merge: ((patchBranch: Scope, liveBranch: Scope) => void) | 0,
+): UpdateSignal {
+  const accessor = (
+    MARKO_DEBUG ? nodeAccessor : decodeAccessor(nodeAccessor as number)
+  ) as string;
+  const fragmentKey = FRAGMENT_PREFIX + accessor;
+  const signal = _for_keyed(
+    nodeAccessor,
+    merge,
+    (_key, args, _global, parentScope) => {
+      const patchItem = args[0] as Scope;
+      const entry = patchItem[fragmentKey] as FragmentEntry | undefined;
+      if (!entry) {
+        throw new Error(
+          MARKO_DEBUG
+            ? "A persisted update added a keyed <for> item without a fragment entry; persisted pages do not construct new loop items client-side."
+            : "update diverged",
+        );
+      }
+      delete patchItem[fragmentKey];
+      return createFragmentBranch(
+        activeUpdate!,
+        patchItem as BranchScope,
+        parentScope,
+        entry[2],
+        entry[3],
+        entry[4],
+      );
+    },
+  );
+  return (scope, value) => {
     // Fragment subtrees share one object between patch and live scopes, so a
     // fragment-built loop's self-dispatch hands us the walker-bound live
     // branches as the "patch" list. There is nothing to reconcile -- and
-    // reconciling is destructive for positional loops, whose walker branches
-    // carry no keys (it would rebuild every branch from the registered template
-    // against patch scopes). A live branch is recognizable by its bound start
-    // node; fills-path patch branches are plain data objects.
+    // reconciling would rebuild every branch from scratch against patch
+    // scopes. A live branch is recognizable by its bound start node;
+    // fills-path patch branches are plain data objects.
     let branches = (value as unknown[])[0] as BranchScope[] | BranchScope;
     if (branches && !Array.isArray(branches)) {
       // A fragment-walked lone branch binds bare (resume-form, which the

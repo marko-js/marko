@@ -73,10 +73,14 @@ export type RegisterIdFootprint =
       branchBodySections: (Section | undefined)[];
     }
   | {
-      /** `<for>`: participating loops register branch content by id. */
+      /** `<for>`: a request-derived-only loop registers its build-stable
+       * per-site id (`getUpdateForRegisterId`), using the user's key or the
+       * positional index. A stable (render-once) list needs no id at all --
+       * its update dispatch is a plain index-paired merge (`_update_for`). */
       kind: "for";
       bodySection: Section;
       extra: t.NodeExtra;
+      binding: Binding;
     }
   | {
       /** Dynamic tag: renderer-id update signal + merge. */
@@ -241,21 +245,12 @@ export function preallocateRegisterIds(program: t.NodePath<t.Program>) {
         case "for":
           if (persisted) {
             const sources = getSerializeSourcesForExpr(footprint.extra);
-            if (
-              !isStateSerializeReason(sources) &&
-              (isReasonDynamic(sources) ||
-                isRequestDerivedSerializeReason(
-                  getSerializeReason(
-                    footprint.bodySection,
-                    kBranchSerializeReason,
-                  ),
-                ))
-            ) {
+            if (!isStateSerializeReason(sources) && isReasonDynamic(sources)) {
               add(
                 buildResumeRegisterKey(
-                  footprint.bodySection,
-                  "content",
-                  "update",
+                  section,
+                  undefined,
+                  `update_for_${getScopeAccessor(footprint.binding)}`,
                 ),
               );
             }

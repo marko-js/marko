@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope6_id = _scope_id();
 					_html(`<li${_attr_class(_hole_value($scope6_id, "UpdateAttr:class:#li/0", report.name === $global().focus && "focus", _persisted_reason()))}>${_escape(_hole_value($scope6_id, "UpdateHole:#text/1", report.name, _persisted_reason()))}${_el_resume($scope6_id, "#text/1", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(_hole_value($scope6_id, "UpdateHole:#text/2", report.value, _persisted_reason()))}${_el_resume($scope6_id, "#text/2", _persisted_reason())}</li>${_el_resume($scope6_id, "#li/0", _persisted_reason())}`);
 					_persisted_reason() && writeScope($scope6_id, {}, "__tests__/template.marko", "21:10");
-				}, 0, $scope4_id, "#ul/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+				}, 0, $scope4_id, "#ul/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "__tests__/template.marko_4/update_for_#ul/1");
 				_persisted_reason() && writeScope($scope4_id, {
 					_: _scope_with_id($scope3_id),
 					"#childScope/0": _existing_scope($childScope)

@@ -318,6 +318,8 @@ UPDATE: .metrics > li:nth-of-type(1)[class] "focus" => null
 UPDATE: .metrics > li:nth-of-type(1)::text@7 "10" => "70"
 UPDATE: .focus[class] null => "focus"
 UPDATE: .focus::text@8 "3" => "21"
+REMOVE: .metrics > li:nth-of-type(3) + .focus
+INSERT: .metrics > li:nth-of-type(1) + .focus
 INSERT: .focus + li
 INSERT: .metrics + .admin
 UPDATE: .bump::text@6 "8" => "5"

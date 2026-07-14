@@ -1,5 +1,8 @@
 import { assertValidTagName } from "../common/errors";
-import { normalizeDynamicRenderer } from "../common/helpers";
+import {
+  encodePossessionSite,
+  normalizeDynamicRenderer,
+} from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import {
   type Accessor,
@@ -76,19 +79,13 @@ export let _dynamic_tag = (
   const targetRendererId =
     (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
   const possessed = state.possessed;
-  // Repeated hops (a `<${...}/>` in a keyed `<for>`) share one site id, so
-  // disambiguate by the enclosing loop key -- the value the client reads off
-  // the iteration's `LoopKey` (see `_have`). Positional loops expose no key:
-  // iterations collide on the bare site id (`_have` keeps only the last
-  // iteration's renderer per site), so this check can fire for the wrong row.
-  // Safe only downstream: `_update_dynamic`'s `live[rendererKey] !==
-  // rendererId` guard (dom/update) rejects a misfired fragment, and a missed
-  // change throws "update diverged" into the full-navigation fallback rather
-  // than merging against a stale branch.
+  // Repeated hops (a `<${...}/>` in a `<for>`) share one site id, so
+  // disambiguate by the enclosing loop key or positional index -- the value
+  // the client reads off the iteration's `LoopKey` (see `_have`).
   const siteKey =
-    siteId !== undefined && state.loopKey !== undefined
-      ? siteId + " " + state.loopKey
-      : siteId;
+    siteId !== undefined
+      ? [...(state.loopPath || []), encodePossessionSite(siteId)].join("/")
+      : undefined;
   // `siteId` (and so `siteKey`) is compiled only in persisted builds.
   const possessionKnown =
     possessed !== undefined && siteKey !== undefined && siteKey in possessed;

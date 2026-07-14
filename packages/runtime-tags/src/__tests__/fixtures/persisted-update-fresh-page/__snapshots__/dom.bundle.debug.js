@@ -38,9 +38,8 @@ function createPatch$1() {
 }
 
 // template.marko.update.mjs
-const $for_update = _update_for("#ul/0", "__tests__/template.marko_12_content/update", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed("#ul/0", (p, l) => _update_scope(p, l));
 const $products_seed = _update_signal("__tests__/template.marko_1_products/var");
-const $for_update2 = _update_for("#nav/2", "__tests__/template.marko_3_content/update", (branch, args) => _update_scope(args[0], branch));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $await_content__update = (patch, live) => {
 	if ("BranchScopes:#ul/0" in patch) $for_update(live, [patch["BranchScopes:#ul/0"], "#LoopKey"]);
@@ -63,7 +62,7 @@ const $Item_content__update = (patch, live) => {
 const $Cart_content__update = (patch, live) => {
 	if ("products" in patch) _update_seed(live, $products_seed, patch["products"]);
 	if ("#childScope/0" in patch) _merge$3(patch["#childScope/0"], live["#childScope/0"]);
-	if ("BranchScopes:#nav/2" in patch) $for_update2(live, [patch["BranchScopes:#nav/2"], "#LoopKey"]);
+	if ("BranchScopes:#nav/2" in patch) _update_for(patch["BranchScopes:#nav/2"], live["BranchScopes:#nav/2"], _update_scope);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);

@@ -1,7 +1,7 @@
 // template.marko.update.mjs
 const $expanded_seed = _update_signal("__tests__/template.marko_0_expanded/var");
 const $input_product_featured_update = _update_signal("__tests__/template.marko_0_input_product_featured/var");
-const $for_update = _update_for("#ul/5", "__tests__/template.marko_2_content/update", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed("#ul/5", (p, l) => _update_scope(p, l));
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("expanded" in patch) _update_seed(live, $expanded_seed, patch["expanded"]);

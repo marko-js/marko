@@ -1,6 +1,6 @@
 // template.marko.update.mjs
-const $for_update = _update_for("#ul/0", "__tests__/template.marko_5_content/update", (branch, args) => _update_scope(args[0], branch));
-const $for_update2 = _update_for("#nav/1", "__tests__/template.marko_2_content/update", (branch, args) => $for_content__update(args[0], branch));
+const $for_update = _update_for_keyed("#ul/0", (p, l) => _update_scope(p, l));
+const $for_update2 = _update_for_keyed("#nav/1", (p, l) => $for_content__update(p, l));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $for_content__update = (patch, live) => {
 	if ("ConditionalRenderer:#text/0" in patch) _update_if(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, _update_scope]);

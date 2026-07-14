@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		$sg__input_related | _persisted_reason() && writeScope($scope2_id, { a: _existing_scope($childScope) });
 	}, function(item) {
 		return item.id;
-	}, $scope0_id, "f", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);
+	}, $scope0_id, "f", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1, "a2");
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		l: input.product?.featured,

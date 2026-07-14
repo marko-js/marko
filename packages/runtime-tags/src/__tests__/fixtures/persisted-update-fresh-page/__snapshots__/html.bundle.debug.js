@@ -171,7 +171,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_persisted_reason() && writeScope($scope12_id, {}, "__tests__/template.marko", "48:12");
 					}, function(rec) {
 						return rec.id;
-					}, $scope11_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+					}, $scope11_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "__tests__/template.marko_11/update_for_#ul/0");
 					_persisted_reason() && writeScope($scope11_id, {}, "__tests__/template.marko", "46:8");
 				}, _persisted_reason());
 				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }, "__tests__/template.marko", "44:6"));

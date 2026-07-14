@@ -11,7 +11,7 @@ function createPatch$1() {
 }
 
 // template.marko.update.mjs
-const $for_update = _update_for("#ul/0", "__tests__/template.marko_3_content/update", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed("#ul/0", (p, l) => _update_scope(p, l));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $Specs_content__update = (patch, live) => {
 	if ("BranchScopes:#ul/0" in patch) $for_update(live, [patch["BranchScopes:#ul/0"], "#LoopKey"]);

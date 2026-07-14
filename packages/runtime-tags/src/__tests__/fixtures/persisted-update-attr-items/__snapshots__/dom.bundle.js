@@ -9,11 +9,10 @@ const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", f
 enableBranchesPersisted();
 
 // tags/chip-list.marko.update.mjs
-const $for_update = _update_for(0, "b0", (branch, args) => _update_scope(args[0], branch));
 const $update$1 = (patch, live) => {
-	if ("Aa" in patch) $for_update(live, [patch["Aa"], "M"]);
+	if ("Aa" in patch) _update_for(patch["Aa"], live["Aa"], _update_scope);
 };
-const _merge$1 = _resume("b1", $update$1);
+const _merge$1 = _resume("b0", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");

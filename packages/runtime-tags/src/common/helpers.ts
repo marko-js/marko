@@ -125,6 +125,38 @@ export function isNotVoid(value: unknown) {
   return value != null && value !== false;
 }
 
+export function encodePossessionValue(value: unknown): string {
+  switch (typeof value) {
+    case "string":
+      return `s${value.length}:${value}`;
+    case "number":
+      return Number.isNaN(value)
+        ? "nNaN"
+        : value === Infinity
+          ? "n+Infinity"
+          : value === -Infinity
+            ? "n-Infinity"
+            : Object.is(value, -0)
+              ? "n-0"
+              : `n${value}`;
+    case "boolean":
+      return value ? "b1" : "b0";
+    case "undefined":
+      return "u";
+    case "object":
+      if (value === null) return "l";
+      break;
+    default:
+      break;
+  }
+  throw new TypeError("Possession keys must be primitive values.");
+}
+
+export function encodePossessionSite(siteId: string, key?: unknown): string {
+  const encodedKey = key === undefined ? "" : encodePossessionValue(key);
+  return `i${siteId.length}:${siteId}${encodedKey ? "=" + encodedKey : ""}`;
+}
+
 export function isPromise(value: unknown): value is Promise<unknown> {
   return (
     value != null && typeof (value as Promise<unknown>).then === "function"

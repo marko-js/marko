@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 					$sg__input_productId && writeScope($scope6_id, {});
 				}, function(review) {
 					return review.id;
-				}, $scope5_id, "a", $sg__input_productId, $sg__input_productId, $sg__input_productId, "</ul>", 1);
+				}, $scope5_id, "a", $sg__input_productId, $sg__input_productId, $sg__input_productId, "</ul>", 1, "a6");
 				$sg__input_productId && writeScope($scope5_id, {});
 			}, $sg__input_productId);
 			$sg__input_productId && _subscribe($input_productId__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));

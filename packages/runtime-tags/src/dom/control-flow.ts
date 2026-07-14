@@ -798,6 +798,19 @@ function loop<T extends unknown[] = unknown[]>(
     walks?: string | 0,
     setup?: SetupFn | 0,
     params?: Signal<unknown>,
+    // Persisted update override (see `_update_for_keyed` in dom/update.ts):
+    // a genuinely NEW key's branch must arrive as a resumable fragment, not
+    // client-constructed from `template`/`walks`/`setup` -- those are `0` for
+    // that caller. Ordinary (state-driven) loop call sites never pass this,
+    // so `createAndSetupBranch` below is unaffected and this closure costs
+    // nothing extra for them.
+    createFreshBranch?: (
+      key: unknown,
+      args: unknown[],
+      global: Scope[AccessorProp.Global],
+      parentScope: Scope,
+      parentNode: ParentNode,
+    ) => BranchScope,
   ) => {
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
@@ -835,19 +848,33 @@ function loop<T extends unknown[] = unknown[]>(
             (map, scope, i) => map.set(scope[AccessorProp.LoopKey] ?? i, scope),
             new Map<unknown, BranchScope>(),
           )).get(key);
+        let isFresh = false;
         if (branch) {
           hasPotentialMoves = oldScopesByKey!.delete(key);
         } else {
-          branch = createAndSetupBranch(
-            scope[AccessorProp.Global],
-            renderer,
-            scope,
-            parentNode,
-          );
+          isFresh = true;
+          branch = createFreshBranch
+            ? createFreshBranch(
+                key,
+                args,
+                scope[AccessorProp.Global],
+                scope,
+                parentNode,
+              )
+            : createAndSetupBranch(
+                scope[AccessorProp.Global],
+                renderer,
+                scope,
+                parentNode,
+              );
         }
         branch[AccessorProp.LoopKey] = key;
         newScopes.push(branch);
-        params?.(branch, args);
+        // A fresh branch built from a resumable fragment already carries its
+        // fully-rendered content (baked into the markup server-side); unlike
+        // a client-constructed skeleton, it must not also replay `params`
+        // (the content merge) against it.
+        if (!(isFresh && createFreshBranch)) params?.(branch, args);
       });
 
       const newLen = newScopes.length;
@@ -987,6 +1014,110 @@ function loop<T extends unknown[] = unknown[]>(
         afterReference = newScopes[start + i][AccessorProp.StartNode];
       }
     };
+  };
+}
+
+/**
+ * Reconciles a persisted request-derived loop from patch branch scopes. Unlike
+ * `loop`, this path has no renderer or setup fallback: every new branch must
+ * be supplied by the caller as a resumed fragment.
+ */
+export function _for_keyed(
+  nodeAccessor: EncodedAccessor,
+  params: ((patchBranch: Scope, liveBranch: Scope) => void) | 0,
+  createFreshBranch: (
+    key: unknown,
+    args: unknown[],
+    global: Scope[AccessorProp.Global],
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
+) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+  const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
+  enableBranches();
+  return (scope: Scope, value: unknown) => {
+    const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+    const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
+    const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
+    scope[keyedScopesAccessor] = null;
+    const parentNode = (
+      referenceNode.nodeType > NodeType.Element
+        ? referenceNode.parentNode ||
+          oldScopes[0]?.[AccessorProp.StartNode].parentNode
+        : referenceNode
+    ) as Element;
+    const [patchBranches, loopKeyAccessor] = value as [
+      Scope[],
+      string | undefined,
+    ];
+    if (!Array.isArray(patchBranches) || typeof loopKeyAccessor !== "string") {
+      throw new Error(
+        MARKO_DEBUG ? "Malformed persisted <for> update" : "update diverged",
+      );
+    }
+    const oldByKey = new Map<unknown, BranchScope>();
+    for (let i = 0; i < oldScopes.length; i++) {
+      oldByKey.set(oldScopes[i][AccessorProp.LoopKey] ?? i, oldScopes[i]);
+    }
+
+    for (let i = 0; i < patchBranches.length; i++) {
+      const patchBranch = patchBranches[i];
+      const key = patchBranch[loopKeyAccessor] ?? i;
+      let branch = oldByKey.get(key);
+      if (branch) {
+        oldByKey.delete(key);
+        if (params) params(patchBranch, branch);
+      } else {
+        branch = createFreshBranch(
+          key,
+          [patchBranch, i],
+          scope[AccessorProp.Global],
+          scope,
+          parentNode,
+        );
+      }
+      branch[AccessorProp.LoopKey] = key;
+      newScopes.push(branch);
+    }
+
+    const oldLen = oldScopes.length;
+    const hasSiblings = referenceNode !== parentNode;
+    let cursor: ChildNode | null = null;
+    if (hasSiblings) {
+      if (oldLen) {
+        if (!newScopes.length) {
+          parentNode.insertBefore(
+            referenceNode,
+            oldScopes[oldLen - 1][AccessorProp.EndNode].nextSibling,
+          );
+        }
+      } else if (newScopes.length) {
+        cursor = referenceNode.nextSibling;
+        referenceNode.remove();
+      }
+    }
+
+    for (const branch of oldByKey.values()) {
+      removeAndDestroyBranch(branch);
+    }
+    if (hasSiblings) {
+      if (referenceNode.parentNode) cursor = referenceNode.nextSibling;
+    } else {
+      cursor = parentNode.firstChild;
+    }
+    if (!hasSiblings && !newScopes.length) {
+      parentNode.textContent = "";
+      return;
+    }
+
+    for (const branch of newScopes) {
+      if (branch[AccessorProp.StartNode] !== cursor) {
+        insertBranchBefore(branch, parentNode, cursor);
+      }
+      cursor = branch[AccessorProp.EndNode].nextSibling;
+    }
   };
 }
 

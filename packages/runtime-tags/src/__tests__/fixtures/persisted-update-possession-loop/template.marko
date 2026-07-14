@@ -1,4 +1,4 @@
-import { getLabel } from "./data";
+import { getLabel, serverLoopSentinel } from "./data";
 
 <let/count=0/>
 <button.count onClick() { count++ }>clicked ${count}</button>
@@ -12,6 +12,8 @@ import { getLabel } from "./data";
 
 <ul>
   <for|item| of=$global.items by(item) { return item.id }>
+    <em>LOOP_ONLY_MARKUP</em>
+    ${serverLoopSentinel?.()}
     <${item.view === "b" ? PanelB : PanelA}/>
   </for>
 </ul>

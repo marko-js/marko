@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "28:4");
 	}, function(item) {
 		return item.id;
-	}, $scope0_id, "#ul/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>");
+	}, $scope0_id, "#ul/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 0, "__tests__/template.marko_0/update_for_#ul/2");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count: _state_reason() && count }, "__tests__/template.marko", 0, {
 		count: "3:6",

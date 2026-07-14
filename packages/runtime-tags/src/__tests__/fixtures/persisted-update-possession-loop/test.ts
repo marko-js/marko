@@ -25,6 +25,7 @@ const items = (a: string, b: string) => [
 
 export const config: TestConfig = {
   persisted: true,
+  dom_bundle_excludes: ["server-only loop sentinel", "LOOP_ONLY_MARKUP"],
   skip_csr: true,
   equivalent: false,
   steps: [
@@ -35,9 +36,30 @@ export const config: TestConfig = {
       $global: { persisted: true, topic: "x", items: items("b", "b") },
     }),
     clickCount,
-    // Row 2 B->A; row 1 holds at B (the other instance swaps independently).
+    // Reorder both existing keys and add a new key. The new row is delivered
+    // as a resumable fragment; existing rows move and receive sparse merges.
     navigate({
-      $global: { persisted: true, topic: "x", items: items("b", "a") },
+      $global: {
+        persisted: true,
+        topic: "x",
+        items: [
+          { id: 2, view: "a" },
+          { id: 3, view: "a" },
+          { id: 1, view: "b" },
+        ],
+      },
+    }),
+    clickCount,
+    // Remove the middle key and update the remaining keyed renderer.
+    navigate({
+      $global: {
+        persisted: true,
+        topic: "x",
+        items: [
+          { id: 1, view: "a" },
+          { id: 2, view: "b" },
+        ],
+      },
     }),
   ],
 };

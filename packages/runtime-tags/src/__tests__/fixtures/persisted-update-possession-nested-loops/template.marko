@@ -1,0 +1,10 @@
+<let/count=0/>
+<p>${count}</p>
+<for|group| of=$global.groups by="id">
+  <section>
+    <h3>${group.id}</h3>
+    <for|item| of=group.items by="id">
+      <button onClick() { count++ }>${group.id}:${item.id}</button>
+    </for>
+  </section>
+</for>

@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_persisted_reason() && writeScope($scope5_id, {}, "__tests__/template.marko", "9:6");
 		}, function(item) {
 			return item.id;
-		}, $scope1_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+		}, $scope1_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "__tests__/template.marko_1/update_for_#ul/0");
 		_html("<nav class=pagination>");
 		_for_to(results.totalPages, 1, 1, (page) => {
 			const $scope2_id = _scope_id();
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_persisted_reason() && _subscribe($search_q__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "18:8"));
 			}]);
 			_persisted_reason() && _subscribe($search_page__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "14:6", { "#LoopKey": "14:10" }));
-		}, 0, $scope1_id, "#nav/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</nav>");
+		}, 0, $scope1_id, "#nav/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</nav>", 0, "__tests__/template.marko_1/update_for_#nav/1");
 		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");
 	}, () => {
 		const $scope4_id = _scope_id();

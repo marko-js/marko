@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			_persisted_reason() && writeScope($scope5_id, {});
 		}, function(item) {
 			return item.id;
-		}, $scope1_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+		}, $scope1_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a3");
 		_html("<nav class=pagination>");
 		_for_to(results.totalPages, 1, 1, (page) => {
 			const $scope2_id = _scope_id();
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 				_persisted_reason() && _subscribe($search_q__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }));
 			}]);
 			_persisted_reason() && _subscribe($search_page__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
-		}, 0, $scope1_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</nav>");
+		}, 0, $scope1_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</nav>", 0, "a4");
 		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {
 		const $scope4_id = _scope_id();

@@ -9,6 +9,7 @@ export {
   _update_content,
   _update_dynamic,
   _update_for,
+  _update_for_keyed,
   _update_html,
   _update_if,
   _update_load,

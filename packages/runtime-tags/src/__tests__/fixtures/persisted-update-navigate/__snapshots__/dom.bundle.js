@@ -15,7 +15,7 @@ enableBranchesPersisted();
 // template.marko.update.mjs
 const $expanded_seed = _update_signal("a3");
 const $input_product_featured_update = _update_signal("a4");
-const $for_update = _update_for(5, "a2", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed(5, (p, l) => _update_scope(p, l));
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("p" in patch) _update_seed(live, $expanded_seed, patch["p"]);

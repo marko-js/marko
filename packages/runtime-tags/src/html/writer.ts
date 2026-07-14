@@ -5,7 +5,11 @@ import {
   assertValidLoopKey,
 } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
-import { isPromise, normalizeDynamicRenderer } from "../common/helpers";
+import {
+  encodePossessionSite,
+  isPromise,
+  normalizeDynamicRenderer,
+} from "../common/helpers";
 import { concat, forEach, type Opt, push } from "../common/opt";
 import {
   type $Global,
@@ -619,6 +623,13 @@ function withIsAsync<T, U>(cb: (value: U) => T, value: U): T {
   return withContext(kIsAsync, true, cb, value);
 }
 
+// A keyed `<for>`'s per-site id, stashed directly on each item branch scope
+// (see `forBranches` below). Request-derived loops use their build-stable site
+// id; ordinary keyed loops use the empty id, so both retain their key in the
+// nested possession path. Mirrors `BOUNDARY_SITE_PREFIX`'s existence-only echo
+// convention (dom/update-fragment.ts's `_have`).
+const FOR_SITE_PREFIX = MARKO_DEBUG ? "ForSite:" : "F";
+
 export function _for_of(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
@@ -630,6 +641,7 @@ export function _for_of(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  siteId?: string,
 ): void {
   forBranches(
     by,
@@ -647,6 +659,7 @@ export function _for_of(
     serializeStateful,
     parentEndTag,
     singleNode,
+    siteId,
   );
 }
 
@@ -661,6 +674,7 @@ export function _for_in(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  siteId?: string,
 ): void {
   forBranches(
     by,
@@ -679,6 +693,7 @@ export function _for_in(
     serializeStateful,
     parentEndTag,
     singleNode,
+    siteId,
   );
 }
 
@@ -695,6 +710,7 @@ export function _for_to(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  siteId?: string,
 ): void {
   forBranches(
     by,
@@ -714,6 +730,7 @@ export function _for_to(
     serializeStateful,
     parentEndTag,
     singleNode,
+    siteId,
   );
 }
 
@@ -730,6 +747,7 @@ export function _for_until(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  siteId?: string,
 ): void {
   forBranches(
     by,
@@ -749,6 +767,7 @@ export function _for_until(
     serializeStateful,
     parentEndTag,
     singleNode,
+    siteId,
   );
 }
 
@@ -771,6 +790,10 @@ function forBranches(
   serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
+  // Build-stable site id (see `FOR_SITE_PREFIX`), present only for a keyed
+  // loop whose LIST ITSELF is request-derived: a genuinely new key ships as
+  // a resumable fragment instead of a plain sparse merge.
+  siteId?: string,
 ) {
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
@@ -809,6 +832,7 @@ function forBranches(
   // brackets the fragment walker consumes.
   if (state.update && !$chunk.fragment && (serializeBranch as number) & 2) {
     const branchScopes: ScopeInternals[] = [];
+    const possessed = state.possessed;
     // Patch-list branches may be created fresh client-side; their seed
     // data serializes even when fragment delivery narrows the page-wide seed.
     state.freshBranchDepth++;
@@ -819,17 +843,48 @@ function forBranches(
       }
       withBranchId(branchId, () => {
         const prevLoopKey = state.loopKey;
+        const prevLoopPath = state.loopPath;
         // Only expose the key when the client's live scope carries a matching
         // `LoopKey` (keyed loop); positional iterations share the site id and
         // collide in the possession echo (a client-side guard makes that safe
-        // -- see the safety note in `_dynamic_tag`).
-        state.loopKey = sameAsIndex ? undefined : itemKey;
-        render();
+        // -- see the safety note in `_dynamic_tag`). Forced (not
+        // `sameAsIndex`-gated) when THIS site needs unambiguous per-item
+        // possession: an item whose key happens to equal its index must
+        // still be distinguishable from its siblings in `_have`'s echo.
+        state.loopKey =
+          siteId !== undefined ? itemKey : sameAsIndex ? undefined : itemKey;
+        const keyed = state.loopKey !== undefined;
+        if (keyed) {
+          state.loopPath = [
+            ...(prevLoopPath || []),
+            encodePossessionSite(siteId || "", state.loopKey),
+          ];
+        }
+        const siteKey =
+          siteId !== undefined
+            ? "!" + (state.loopPath || []).join("/")
+            : undefined;
+        if (
+          siteKey !== undefined &&
+          (possessed === undefined || possessed[siteKey] !== "1")
+        ) {
+          // A genuinely new key: the client holds nothing to merge sparse
+          // holes into, so this item's content ships as a resumable
+          // fragment instead of client-registered construction material
+          // (see `createFragmentBranch` in dom/update-fragment.ts).
+          _fragment(branchId, accessor, render);
+        } else {
+          render();
+        }
         state.loopKey = prevLoopKey;
+        state.loopPath = prevLoopPath;
         branchScopes.push(
           writeScope(branchId, {
             [AccessorProp.LoopKey]: itemKey,
             [AccessorProp.Owner]: scopeWithId(state, scopeId),
+            // Stashed unconditionally (matched or new) so the NEXT
+            // navigation's echo can prove this exact item is now live.
+            ...(keyed ? { [FOR_SITE_PREFIX + accessor]: siteId || "" } : null),
           }),
         );
       });
@@ -871,14 +926,30 @@ function forBranches(
 
     withBranchId(branchId, () => {
       const prevLoopKey = state.loopKey;
+      const prevLoopPath = state.loopPath;
       // Matches `resumeKeys && !sameAsIndex` below: the possession key carries
       // the loop key exactly when the client's live scope serialized one.
-      state.loopKey = resumeKeys && !sameAsIndex ? itemKey : undefined;
+      // Forced (not `sameAsIndex`-gated) for a site that needs unambiguous
+      // per-item possession -- see the matching branch above.
+      const keyed = siteId !== undefined || (resumeKeys && !sameAsIndex);
+      state.loopKey = keyed ? itemKey : undefined;
+      if (state.loopKey !== undefined) {
+        state.loopPath = [
+          ...(prevLoopPath || []),
+          encodePossessionSite(siteId || "", state.loopKey),
+        ];
+      }
       render();
       state.loopKey = prevLoopKey;
+      state.loopPath = prevLoopPath;
       const branchScope = writeScope(
         branchId,
-        resumeKeys && !sameAsIndex ? { [AccessorProp.LoopKey]: itemKey } : {},
+        keyed
+          ? {
+              [AccessorProp.LoopKey]: itemKey,
+              [FOR_SITE_PREFIX + accessor]: siteId || "",
+            }
+          : {},
       );
       if (!resumeMarker) {
         loopScopes = push(loopScopes, branchScope);
@@ -953,9 +1024,9 @@ export function _if(
     if (updateStructural) {
       const possessed = state.possessed;
       const siteKey =
-        siteId !== undefined && state.loopKey !== undefined
-          ? siteId + " " + state.loopKey
-          : siteId;
+        siteId !== undefined
+          ? [...(state.loopPath || []), encodePossessionSite(siteId)].join("/")
+          : undefined;
       const possessedBranch =
         possessed !== undefined && siteKey !== undefined
           ? possessed[siteKey]
@@ -1364,9 +1435,9 @@ export function _try(
   const { state } = $chunk.boundary;
   const possessed = state.possessed;
   const siteKey =
-    siteId !== undefined && state.loopKey !== undefined
-      ? siteId + " " + state.loopKey
-      : siteId;
+    siteId !== undefined
+      ? [...(state.loopPath || []), encodePossessionSite(siteId)].join("/")
+      : undefined;
   const echoed =
     possessed !== undefined && siteKey !== undefined
       ? possessed["!" + siteKey]
@@ -1663,6 +1734,7 @@ export class State implements SerializeState {
   // dynamic-tag hop repeated across loop iterations for the possession echo
   // (matches the client's per-iteration `LoopKey`). See `_dynamic_tag`.
   public loopKey: unknown;
+  public loopPath?: string[];
   /** Ids of scopes serialized during fragment capture since the last
    * entry emission (see `writeScope`); ride the entry so the applier can
    * stamp dom-less scopes the markup never references. */

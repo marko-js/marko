@@ -34,7 +34,7 @@ function createPatch$1() {
 }
 
 // template.marko.update.mjs
-const $for_update = _update_for("#ul/6", "__tests__/template.marko_3_content/update", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed("#ul/6", (p, l) => _update_scope(p, l));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $Dashboard_content__update = (patch, live) => {
 	_update_pair(patch, live);

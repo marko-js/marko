@@ -23,7 +23,7 @@ function createPatch$1() {
 }
 
 // template.marko.update.mjs
-const $for_update = _update_for("#ul/1", "__tests__/template.marko_6_content/update", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed("#ul/1", (p, l) => _update_scope(p, l));
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $await_content__update = (patch, live) => {
 	if ("#childScope/0" in patch) _merge$2(patch["#childScope/0"], live["#childScope/0"]);

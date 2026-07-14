@@ -11,12 +11,12 @@
       }
     },
     "update.js": {
-      "min": 6821,
-      "brotli": 2888
+      "min": 7436,
+      "brotli": 3014
     }
   },
   "html": {
-    "min": 1016,
-    "brotli": 524
+    "min": 1040,
+    "brotli": 530
   }
 }

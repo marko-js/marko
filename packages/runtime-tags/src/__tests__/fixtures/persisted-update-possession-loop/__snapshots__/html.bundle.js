@@ -1,5 +1,6 @@
 // data.js
 const getLabel = typeof window === "undefined" ? (topic) => `${topic}` : void 0;
+const serverLoopSentinel = typeof window === "undefined" ? () => "server-only loop sentinel" : void 0;
 
 // template.marko
 var template_default = _template("a", (input) => {
@@ -22,11 +23,12 @@ var template_default = _template("a", (input) => {
 	_html("<ul>");
 	_for_of($global().items, (item) => {
 		const $scope2_id = _scope_id();
-		_dynamic_tag($scope2_id, "a", item.view === "b" ? PanelB : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a4");
+		_html(`<em>LOOP_ONLY_MARKUP</em>${_escape(serverLoopSentinel?.())}`);
+		_dynamic_tag($scope2_id, "b", item.view === "b" ? PanelB : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a4");
 		_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, function(item) {
 		return item.id;
-	}, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>");
+	}, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 0, "a1");
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { d: _state_reason() && count });
 	_resume_branch($scope0_id);

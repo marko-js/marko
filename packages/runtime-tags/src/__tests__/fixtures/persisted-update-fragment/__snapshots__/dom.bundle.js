@@ -61,7 +61,7 @@ const $update$1 = (patch, live) => {
 const _merge$1 = _resume("b3", $update$1);
 
 // template.marko.update.mjs
-const $for_update = _update_for(6, "a5", (branch, args) => _update_scope(args[0], branch));
+const $for_update = _update_for_keyed(6, (p, l) => _update_scope(p, l));
 const $count_seed = _update_signal("a1");
 const $Dashboard_content__update = (patch, live) => {
 	_update_pair(patch, live);
