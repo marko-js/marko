@@ -283,8 +283,6 @@ export default {
               }
             }
           }
-        } else {
-          relatedControllable = getRelatedControllable(tagName, seen);
         }
 
         if (relatedControllable) {
