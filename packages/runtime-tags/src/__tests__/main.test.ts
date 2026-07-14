@@ -380,6 +380,7 @@ function testFixtures(interop?: true) {
                       renderId: "navigate",
                     };
                     const persistedRender = persistedPatchFrom(navigateGlobal);
+                    let have = "";
                     // The real client always computes the echo (`@marko/run`'s
                     // `have?.()` call is unconditional -- see its
                     // `runtime/persisted.ts`) and sends the header whenever it's
@@ -395,7 +396,7 @@ function testFixtures(interop?: true) {
                     // run router sends as `x-marko-have`, decoded here the same
                     // way the run server does.
                     if (persistedRender?.patch) {
-                      const have = updateEntry.have();
+                      have = updateEntry.have?.() || "";
                       if (have) {
                         // The full echo is sent for every persisted build,
                         // exactly like the run router: the server side is
@@ -425,6 +426,21 @@ function testFixtures(interop?: true) {
                     if (!frames.length) {
                       throw new Error(
                         "navigate(): update render carried no resume fills",
+                      );
+                    }
+                    if (process.env.MARKO_WIRE_MEASURE) {
+                      process.stdout.write(
+                        `MARKO_WIRE_MEASURE:${Buffer.from(
+                          JSON.stringify({
+                            fixture: entry,
+                            interop: !!interop,
+                            optimize,
+                            fromRoute: persistedRender?.patch?.fromRoute,
+                            targetRoute: persistedRender?.patch?.targetRoute,
+                            have,
+                            frames,
+                          }),
+                        ).toString("base64")}\n`,
                       );
                     }
 

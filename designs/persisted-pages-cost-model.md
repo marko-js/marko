@@ -28,6 +28,58 @@ of the published multi-entry runtime cause additional shared symbols to be
 retained in the eager chunk. Release remains blocked until the shared runtime
 boundary is narrowed and representative budgets show minor, ratcheted overhead.
 
+## Patch wire attribution baseline
+
+Run `npm run measure:wire` from `marko`. The command runs the optimized SSR
+fixture harness for real update renders and captures the newline-delimited frames
+before snapshot beautification; it does not infer payloads from source or regex
+the JavaScript. Babel parses each controlled frame expression, then assigns
+disjoint UTF-8 byte spans to frame/runtime syntax, scope fills and metadata,
+ordinary values, node/branch markers or references, effects/registry entries,
+fragment HTML/metadata, and lazy/async framing. The raw sum includes one newline
+per frame and must equal the payload byte length. Gzip and Brotli category values
+are proportional planning allocations of each payload's independently measured
+compressed total. They are not expected savings or marginal recompression
+results. The `x-marko-have` value is measured as raw header-value bytes only;
+HTTP header compression, framing, and fixed negotiation headers are excluded.
+
+Measured 2026-07-13 on the optimized runtime-tags fixtures (11 payloads, 12
+frames):
+
+| Case                                           | Payloads / frames |      Raw |     Gzip |   Brotli | `x-marko-have` raw |
+| ---------------------------------------------- | ----------------: | -------: | -------: | -------: | -----------------: |
+| Same-route sparse value/attribute update       |             1 / 1 |       84 |       91 |       88 |                  0 |
+| Cross-route fragment hop                       |             2 / 2 |      814 |      488 |      437 |                107 |
+| Cross-route fragment hop, same-route follow-up |             1 / 1 |      493 |      322 |      279 |                 72 |
+| Async multi-frame update                       |             2 / 3 |      370 |      301 |      269 |                 14 |
+| Keyed loop same/add/remove/reorder             |             3 / 3 |      919 |      612 |      553 |                269 |
+| Conditional branch divergence                  |             2 / 2 |      354 |      327 |      284 |                 28 |
+| **Total**                                      |       **11 / 12** | **3034** | **2141** | **1910** |                  — |
+
+Response attribution is: node/branch markers or references 840 raw (27.7%,
+549 gzip allocation), fragment HTML 691 (22.8%, 483), frame/runtime syntax 551
+(18.2%, 411), ordinary values 343 (11.3%, 256), scope fills/ids/metadata 320
+(10.5%, 237), effect/registry entries 111 (3.7%, 77), fragment metadata 178
+(5.9%, 128), and lazy/async framing 0 (0.0%, 0). The largest request-side echo
+is the keyed-loop case: 269 raw header-value bytes over three navigations.
+
+### Ranked next byte opportunities
+
+These are measurement-backed priorities, not optimizations implemented by this
+change. Raw bytes are the planning allocation; actual compressed savings
+require implementing a candidate and recompressing the resulting payload.
+
+1. **Node/branch markers and references** — present in all fragment-heavy and
+   fills frames; 840 raw bytes.
+2. **Fragment HTML (especially repeated resume markers)** — concentrated in the
+   two cross-route fragment payloads; 691 raw bytes.
+3. **Frame syntax plus fragment metadata** — paid on every frame (729 raw bytes
+   combined). Compacting repeated wrappers, anchors, and scope-id lists is the
+   protocol-level target.
+4. **Possession echo encoding** — 269 raw header-value bytes over three
+   keyed-loop requests. This is request overhead, not response payload, and
+   should only be changed if keyed-loop frequency justifies protocol complexity.
+
 ## Required comparisons
 
 Every measurement records `persisted: false` and `persisted: true` for identical
