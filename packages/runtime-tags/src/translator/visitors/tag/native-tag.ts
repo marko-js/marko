@@ -211,7 +211,7 @@ export default {
         const tagExtra = (node.extra ??= {});
         const tagSection = getOrCreateSection(tag);
         const nodeBinding = (tagExtra[kNativeTagBinding] = createBinding(
-          "#" + getCanonicalTagName(tag),
+          "#" + tagName,
           BindingType.dom,
           tagSection,
           undefined,
