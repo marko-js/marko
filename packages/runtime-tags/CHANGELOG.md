@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.3.7
+
+### Patch Changes
+
+- [#3362](https://github.com/marko-js/marko/pull/3362) [`1aeec4b`](https://github.com/marko-js/marko/commit/1aeec4bf050391fcb21d270e95a9c7387d52e35a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix values yielded/returned by a serialized sync generator registering for reference dedup at positions inside the generator's lazy body. Reusing such a value in the same flush resumed it as `undefined` (the binding assignment only ran if the generator was iterated), and reuse in a later flush emitted invalid JS that killed that flush's resume script. Values are now hoisted into eagerly evaluated arguments, matching the `Symbol.iterator` serialization strategy.
+
+- [#3357](https://github.com/marko-js/marko/pull/3357) [`4b85c0e`](https://github.com/marko-js/marko/commit/4b85c0ef3e0421d1257ac69e722f0e0200c131e7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serialized object keys made of digits beyond 2**53 (e.g. 64-bit/snowflake ids) resuming as a different key. Bare numeric keys are canonicalized through `ToString(ToNumber(...))`, so digit runs that do not survive that round trip are now quoted.
+
 ## 6.3.6
 
 ### Patch Changes
