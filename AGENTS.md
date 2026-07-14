@@ -40,6 +40,8 @@ npm run change                                           # add a changeset (requ
 
 Organize files top-down (progressive disclosure): public API/exports first, then orchestration, helpers, and low-level detail last — use function-declaration hoisting.
 
+Comments are a last resort and never exceed two lines: prefer self-describing code, and when one is needed it captures intent — never what the code was or what was removed.
+
 Marko language reference: <https://markojs.com/llms.txt> lists every docs page; append `.md` to any docs URL for markdown.
 
 ## Agent feedback
