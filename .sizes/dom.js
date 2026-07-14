@@ -1,4 +1,4 @@
-// size: 25992 (min) 9553 (brotli)
+// size: 25971 (min) 9576 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1554,32 +1554,31 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
     el.tagName)
   ) {
     case "INPUT":
-      if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
-        (_attr_input_checked(
-          scope,
-          nodeAccessor,
-          nextAttrs.checked,
-          nextAttrs.checkedChange,
-        ),
-          (skip = /^checked(?:Value)?(?:Change)?$/));
-      else if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs)
-        (_attr_input_checkedValue(
-          scope,
-          nodeAccessor,
-          nextAttrs.checkedValue,
-          nextAttrs.checkedValueChange,
-          nextAttrs.value,
-        ),
-          (skip = /^(?:value|checked(?:Value)?)(?:Change)?$/));
-      else if ("value" in nextAttrs || "valueChange" in nextAttrs)
-        (_attr_input_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        ),
-          (skip = /^value(?:Change)?$/));
-      else break;
+      "checked" in nextAttrs || "checkedChange" in nextAttrs
+        ? (_attr_input_checked(
+            scope,
+            nodeAccessor,
+            nextAttrs.checked,
+            nextAttrs.checkedChange,
+          ),
+          (skip = /^checked(?:Value)?(?:Change)?$/))
+        : "checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs
+          ? (_attr_input_checkedValue(
+              scope,
+              nodeAccessor,
+              nextAttrs.checkedValue,
+              nextAttrs.checkedValueChange,
+              nextAttrs.value,
+            ),
+            (skip = /^(?:value|checked(?:Value)?)(?:Change)?$/))
+          : ("value" in nextAttrs || "valueChange" in nextAttrs) &&
+            (_attr_input_value(
+              scope,
+              nodeAccessor,
+              nextAttrs.value,
+              nextAttrs.valueChange,
+            ),
+            (skip = /^value(?:Change)?$/));
       break;
     case "SELECT":
       ("value" in nextAttrs || "valueChange" in nextAttrs) &&

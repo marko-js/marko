@@ -293,8 +293,6 @@ export function _attrs(
           1,
         );
         skip = /^value(?:Change)?$|[\s/>"'=]/;
-      } else {
-        break;
       }
       break;
     case "select":

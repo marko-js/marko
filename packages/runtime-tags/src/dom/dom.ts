@@ -290,8 +290,6 @@ function attrsInternal(
           nextAttrs.valueChange,
         );
         skip = /^value(?:Change)?$/;
-      } else {
-        break;
       }
       break;
     case "SELECT":
