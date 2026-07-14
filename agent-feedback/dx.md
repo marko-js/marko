@@ -52,3 +52,9 @@ and merge the istanbul JSON at the end (the ~50s remap work splits cleanly
 per dump); prewarm the babel cache with one serial require pass in
 `scripts/test-parallel.js` before spawning workers on a cold cache (~6s net,
 needs a hardcoded heavy-module list that can rot).
+
+## `cspell` fails on `realpaths` in the compiler taglib finder (full-lint / CI red)
+
+`packages/compiler/src/taglib/finder/index.js:127` | 2026-07-14 | impact:low | effort:low
+
+`npm run lint` (and CI `@ci:lint`) reports one cspell error — `Unknown word (realpaths)` at `finder/index.js:127:24` — a legitimate term (plural of the POSIX `realpath`). It fails the whole-repo cspell pass, yet the pre-commit `lint-staged` run (staged files only) skips it, so it stays invisible until a full lint or CI run. Fix: add `realpaths` to `cspell.json` `words`. Pre-existing and unrelated to any in-flight change.
