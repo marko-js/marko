@@ -8,7 +8,6 @@ import { _html, $global, writeScript, writeWaitReady } from "./writer";
 const kAssets = Symbol();
 const kBlockIndex = Symbol();
 const kDeferIndex = Symbol();
-const { hasOwnProperty } = {};
 export interface VisibleTrigger {
   type: "visible";
   selector: string;
@@ -172,7 +171,7 @@ function toObjectExpression(options: object) {
   let result = "{";
   let sep = "";
   for (const key in options) {
-    if (hasOwnProperty.call(options, key)) {
+    if (Object.hasOwn(options, key)) {
       result +=
         sep +
         toObjectKey(key) +
