@@ -520,8 +520,7 @@ function forBranches(
 
   const { state } = $chunk.boundary;
   const resumeKeys = serializeMarker !== 0;
-  const resumeMarker =
-    serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
+  const resumeMarker = resumeKeys && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
   let loopScopes: Opt<ScopeInternals>;
 
