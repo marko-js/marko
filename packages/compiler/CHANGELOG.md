@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.2
+
+### Patch Changes
+
+- [#3428](https://github.com/marko-js/marko/pull/3428) [`9deacb1`](https://github.com/marko-js/marko/commit/9deacb173e1820ec079039d3c66e5d79f69b503d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep sourcemaps for extracted `<style>` blocks even when the main output map is skipped. The compiler no longer emits a sourcemap for entry outputs (`hydrate`, or a `page`/`load` entry) since the generated wrapper maps back to nothing useful, and the `<style>` extractor now derives its virtual dependency's sourcemap from the configured `sourceMaps` option instead of the (now conditionally disabled) Babel output setting. Together this lets a bundler integration enable `sourceMaps` for entry compiles to preserve CSS sourcemaps without also emitting a meaningless map for the entry wrapper.
+
 ## 5.41.1
 
 ### Patch Changes
