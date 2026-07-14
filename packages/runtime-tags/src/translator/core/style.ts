@@ -359,12 +359,12 @@ function getStyleImportPath(
   node: t.MarkoTag,
   names: string[] | undefined,
 ): string | null | undefined {
-  const { resolveVirtualDependency } = file.markoOpts;
+  const { resolveVirtualDependency, sourceMaps } = file.markoOpts;
   if (!resolveVirtualDependency) {
     return undefined;
   }
 
-  const { filename, sourceMaps } = file.opts;
+  const { filename } = file.opts;
   let ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1] || ".css";
 
   if (node.var && !/\.module\./.test(ext)) {

@@ -131,7 +131,9 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
     ...babelConfig,
     filename,
     sourceType: "module",
-    sourceMaps: markoConfig.sourceMaps,
+    // An entry wrapper's own map is meaningless; the translator still keeps
+    // extracted `<style>` maps off `markoConfig.sourceMaps` regardless.
+    sourceMaps: isEntryOutput(markoConfig) ? false : markoConfig.sourceMaps,
     code: markoConfig.code,
     ast: markoConfig.ast,
     plugins:
@@ -185,4 +187,8 @@ function getFs(config) {
 
 function isTranslatedOutput(output) {
   return output !== "source" && output !== "migrate";
+}
+
+function isEntryOutput({ output, entry }) {
+  return output === "hydrate" || entry != null;
 }
