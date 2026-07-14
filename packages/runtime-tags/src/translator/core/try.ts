@@ -87,13 +87,12 @@ export default {
   translate: translateByTarget({
     html: {
       enter(tag) {
-        if (!getSectionForBody(tag.get("body"))) {
+        const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody);
+        if (!bodySection) {
           tag.remove();
           return;
         }
-
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody)!;
 
         if (tag.node.extra?.attributeTags?.["@placeholder"]) {
           setTryHasPlaceholder(bodySection, true);
