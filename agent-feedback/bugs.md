@@ -160,3 +160,102 @@ In `_attr_select_value`'s `MutationObserver` (fired when `<option>`s are added/r
 `packages/runtime-tags/src/translator/util/state.ts:11` | 2026-07-14 | impact:low | effort:low
 
 `createProgramState`'s getter caches with `let state = map.get(getProgram()); if (!state) { map.set(getProgram(), (state = init())); }`. The `if (!state)` truthiness test treats any falsy stored value (`0`, `""`, `false`, `0n`, `NaN`) as absent, so the next read re-runs `init()` and overwrites the caller's value with the init default. Its sibling `createSectionState` (same file) correctly uses `??=` (nullish) for exactly this reason. Latent: the only two falsy-valued program states coincidentally never observe it — `getNextBindingId` (init `() => 0`, `references.ts:197`) is always set to `id + 1 >= 1` before the next read, and `getHasAnalyzeErrors` (init `() => false`, `analyze-errors.ts:13`) only ever stores `true`. A future `createProgramState` whose setter stores a falsy value differing from init would silently recompute. Fix: a `map.has(getProgram())` presence check, or align with `createSectionState`'s nullish pattern.
+
+## Inert Class parent drops client resume for a stateful Tags-API descendant
+
+`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts:293` | 2026-07-13 | impact:high | effort:high
+
+A Tags-API page that renders an inert Class-API component (no class block /
+component-browser) which itself renders a stateful Tags-API grandchild produces
+a dead (non-resuming) grandchild after SSR: clicking a `<button onClick>` in the
+grandchild does nothing, in **both** debug and optimize. In optimize the class
+boundary is additionally removed outright by the inert-child optimization here
+(`!classHydration && !tagsSerializeReason` → `tag.remove()`), because
+`getClassHydrationMode` (`packages/runtime-class/src/translator/index.js:714`)
+only detects interactivity via `meta.component` and never inspects a Tags-API
+child's `isInteractive` (which lives on `program.node.extra`, not
+`metadata.marko`). But disabling that removal does **not** fix the dead button,
+so the root cause is a deeper resume gap for stateful-tags-inside-inert-class,
+not just the optimization. Repro (CSR works, SSR-resume dead): tags page
+`// use tags` + `<class-wrapper/>`; `class-wrapper.marko` =
+`<div><tags-counter/></div>` (no class block); `tags-counter.marko` =
+`<let/n=0/><button onClick(){n++}>${n}</button>`. A fix likely needs the tags
+translator to surface interactivity on `metadata.marko`, `getClassHydrationMode`
+to return DESCENDANT for interactive tags children, and the boundary to actually
+resume.
+
+## `StringWriter.merge` reads a non-existent `this._writer`
+
+`packages/runtime-class/src/runtime/html/StringWriter.js:42` | 2026-07-13 | impact:low | effort:low
+
+In `merge`, when `otherWriter._data` holds a key absent from `this._data`, the
+else-branch does `this._data[key] = this._writer[key]` — but `StringWriter` has
+no `_writer` property (only `_content`/`_scripts`/`_data`), so `this._writer` is
+`undefined` and the access throws `TypeError`. It should be
+`otherWriter._data[key]`. Currently latent: `_data` effectively only ever holds
+the single `componentDefs` key, so both writers share that key and the
+`.push.apply` branch (line 40) is always taken; the bug surfaces the moment two
+merged writers carry divergent `_data` keys. This sits on the compat/init-
+components data path (`tags-compat/runtime-html.js` `___addComponentsFromContext`).
+
+## Interop feature-detection omits current Tags-only core tags
+
+`packages/runtime-tags/src/translator/interop/feature-detection.ts:176` | 2026-07-13 | impact:med | effort:low
+
+`getFeatureTypeFromCoreTagName` forces Tags for `const/debug/define/id/let/
+lifecycle/log/return/try` but omits three current, non-deprecated Tags-only core
+tags — `<show>`, `<html-script>`, `<html-style>` (`translator/core/index.ts:42-53`;
+none exist in the Class core taglib). In a mixed project (`tagDiscoveryDirs` not
+exclusively `tags`), a Marko 6 file whose only distinguishing feature is one of
+these (e.g. a repo-root global-style component using only `<html-style>`, no
+`<!-- use tags -->`) falls through to the default at lines 48-50 and is
+classified Class; every merged visitor then dispatches to the (nonexistent)
+Class handler (`isTagsAPI() ? enter6 : enter5` → `enter5` undefined) and the tag
+is left untranslated → compile error or wrong output. Also a maintenance hazard:
+each new Tags-only core tag must be hand-synced into this switch. Fix: add the
+missing names and a test asserting every core tag classifies.
+
+## Compat `___deserialize` override dereferences a possibly-undefined scope
+
+`packages/runtime-class/src/runtime/helpers/tags-compat/runtime-dom.js:73` | 2026-07-13 | impact:low | effort:low
+
+The compat `ComponentDef.___deserialize` override does
+`o[2] = domCompat.getScope(global, o[2]).m5i` with no null guard, but
+`compat.getScope` returns `getRenderScopes($global)?.[scopeId]`, which is
+legitimately `undefined` when the tags scope carrying `m5i` has not been resumed
+yet. Every other consumer uses optional chaining; the sibling comment at line 38
+even notes "a split parent may not be hydrated yet when the child resumes."
+Under the normal init6-before-init5 ordering the tags scope is registered first,
+so this is not hit today, but any streaming/out-of-order resume of a
+class-in-tags child before its `writeSetScopeForComponent` scope would throw
+`TypeError`. Defensive fix: `getScope(global, o[2])?.m5i`.
+
+## `COMPAT_REGISTRY` caches `[id, scopeId]` for the module lifetime
+
+`packages/runtime-tags/src/html/compat.ts:69` | 2026-07-13 | impact:med | effort:med
+
+`toJSON`'s `COMPAT_REGISTRY` is a module-global `WeakMap` keyed by the registered
+function, and the `_script(scopeId, SET_SCOPE_REGISTER_ID)` side-effect (line 79)
+runs only on the first `toJSON()` for that function object, ever. For any
+registered function reused across renders (a module-level/hoisted `renderBody`,
+or a memoized handler), render #2 returns render #1's cached `scopeId` (per-render
+scope counters reset via `new State`) and never re-emits the `SET_SCOPE`
+registration, so its serialized reference points at a stale scope id and the
+client `getRenderScopes(...)[id]` lookup misses → broken hydration / dead bridged
+handler. Server-side the WeakMap persists across requests, so this is a
+cross-request hazard. Fix: key the cache per-render/per-`State` rather than
+module-globally.
+
+## class→tags bridged render builds its head `Chunk` with null context
+
+`packages/runtime-tags/src/html/compat.ts:116` | 2026-07-13 | impact:med | effort:med
+
+`compat.render` builds the bridged tags child's head `Chunk` with `context: null`
+(the flagged TODO). With null context, inside the bridged subtree
+`isInResumedBranch()` is false and `$chunk.context?.[kBranchId]`/`[kIsAsync]` are
+undefined, so `_script` never calls `_resume_branch` and
+`AccessorProp.ClosestBranchId` is never written. A Class component embedded under
+an async/lazy Tags region (`tags(async) → class → tags(effect)`) then resumes its
+effect with no closest-branch association, attaching it to the wrong branch or
+none → hydration mismatch. Fix: thread the enclosing chunk's context into the
+bridged head chunk.

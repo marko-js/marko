@@ -175,3 +175,47 @@ Invoke-only propagation skips same-program `<define>` props because reads are in
 `packages/runtime-tags/src/translator/core/style.ts:154` | 2026-07-14 | impact:low | effort:low
 
 `dynamicStyleNameOffset` runs `t.traverseFast(getProgram().node, ...)` over the entire program AST for every dynamic `<style>` tag, summing `node.extra.dynamicStyle.names.length` for tags whose `node.start` precedes the current one. Because analyze is a depth-first traversal in ascending source position and the current tag's `dynamicStyle` extra is set only afterward, the offset is simply the running total of all previously-analyzed dynamic styles' name counts — maintainable with an O(1) program-scoped counter, exactly the `programStyleCounts` WeakMap idiom already used ~20 lines below in `getStyleImportPath`. As written it is O(K·N) (K dynamic-style tags × N program nodes), walking the whole tree K times. Impact is low because K is tiny in realistic templates. A replacement must keep disjoint, deterministic per-tag ranges; the current code keys on `node.start`, so an incremental counter relies on the normal source-order visit invariant.
+
+## Interop bridges a Class parent's `on-x` handler as a fresh closure each render
+
+`packages/runtime-class/src/runtime/helpers/dynamic-tag.js:191` | 2026-07-13 | impact:low | effort:low
+
+`addTagsEvents` calls `bindTagsEventHandler(component, handler, extraArgs)` to
+fold a Class parent's `on-x("method")` binding into the Tags child's `onX` input,
+allocating a **new** function every render (client path). The Tags child's input
+signal (`_const("input_onX", …)`) dirty-checks by identity, so every Class-parent
+re-render re-runs the child's event-attach signal (`_on(...)`) even though the
+target method is unchanged. `_on` is delegation-based so the re-attach itself is
+cheap, but the wasted signal re-execution is avoidable: cache the bound handler
+per `(component, methodName, extraArgs)` (string-method handlers are the common
+case and cache trivially) so the child sees a stable `onX` identity across
+renders.
+
+## `getClassHydrationMode` never memoizes its "no hydration" result
+
+`packages/runtime-class/src/translator/index.js:714` | 2026-07-13 | impact:low | effort:low
+
+`getClassHydrationMode` caches `meta.classHydration` only when it returns a
+truthy mode (SELF/DESCENDANT); the `undefined` (no-hydration) result is never
+stored, so `Object.hasOwn(meta, "classHydration")` stays false and every parent
+that references a shared inert child re-runs the full recursive descent over that
+child's subtree. In a wide/deep component graph this is repeated O(subtree) work
+per referencing parent. Memoizing the negative result (`meta.classHydration =
+undefined` with a presence sentinel, or a separate `visited`-scoped cache) makes
+it single-pass per file.
+
+## Compat resume runs the event resolver over every key of every boundary scope
+
+`packages/runtime-tags/src/dom/compat.ts:52` | 2026-07-13 | impact:low | effort:low
+
+The `SET_SCOPE_REGISTER_ID` resume iterates **all** enumerable keys of every
+compat boundary scope (including `$global`, `m5c`, `#Id`, `#StartNode`, …) and
+calls `classEventResolver` on each, even when the app has no bridged Class→Tags
+events. Related: `Component.prototype.___setCustomEvents` is patched on the
+prototype for **all** Class components (`tags-compat/runtime-dom.js:59`), so every
+component with custom events pays an extra `for…of` + `resolveRegistered` per
+event regardless of interop, and `compat.onFlush` permanently patches
+`Chunk.prototype.flushHTML` process-wide (`html/compat.ts:57`), taxing every pure
+Marko 6 chunk flush with a `writersByGlobal.get` miss once the class-compat
+module is loaded. Each is minor individually; worth gating the resolver loop on a
+"has bridged events" flag and scoping the patches.
