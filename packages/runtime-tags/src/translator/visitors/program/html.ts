@@ -244,7 +244,7 @@ function replaceBindingReadNode(node: t.Node) {
   }
 }
 
-export function replaceRegisteredFunctionNode(node: t.Node) {
+function replaceRegisteredFunctionNode(node: t.Node) {
   switch (node.type) {
     case "ClassMethod": {
       const replacement = getRegisteredFnExpression(node);
