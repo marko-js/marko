@@ -23,7 +23,7 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { setConditionalRenderer } from "./control-flow";
+import { rendererChanged, setConditionalRenderer } from "./control-flow";
 import {
   _attr_details_or_dialog_open,
   _attr_details_or_dialog_open_script,
@@ -367,9 +367,11 @@ export function _attr_content(
 ) {
   const content = normalizeClientRender(value);
   if (
-    scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] !==
-    (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] =
-      content?.[RendererProp.Id])
+    rendererChanged(
+      scope,
+      AccessorPrefix.ConditionalRenderer + nodeAccessor,
+      content,
+    )
   ) {
     setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
     if (content?.[RendererProp.Accessor]) {

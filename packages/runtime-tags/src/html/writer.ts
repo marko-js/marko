@@ -23,6 +23,7 @@ import {
   WALKER_RUNTIME_CODE,
 } from "./inlined-runtimes.debug";
 import {
+  getRegistered,
   K_SCOPE_ID,
   quote,
   register as serializerRegister,
@@ -146,8 +147,12 @@ export function _attr_content(
     if (shouldResume) {
       writeScope(scopeId, {
         [AccessorPrefix.BranchScopes + nodeAccessor]: writeScope(branchId, {}),
+        // A renderer registered with a scope resumes as the owned client
+        // renderer so instances of the same content stay distinguishable.
         [AccessorPrefix.ConditionalRenderer + nodeAccessor]:
-          render?.[RendererProp.Id],
+          render && getRegistered(render)?.scope
+            ? render
+            : render?.[RendererProp.Id],
       });
     }
   } else {
