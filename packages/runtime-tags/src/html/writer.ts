@@ -564,6 +564,9 @@ export function _el_resume(
   // register carried across a boundary is overwritten before any continuation
   // is read. Non-persisted documents are byte-identical.
   if (state.persisted) {
+    if ($chunk.fragment) {
+      state.fragmentMarkerScopeIds += "," + scopeId + ",";
+    }
     if ($chunk.lastNodeMarkScope === scopeId) {
       return state.mark(ResumeSymbol.Node, " " + accessor);
     }
@@ -1214,6 +1217,7 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   // pairing).
   if ($chunk.fragment) {
     (state.fragmentScopeIds ??= new Set()).add(scopeId);
+    if (state.loopKey !== undefined) state.fragmentKeyed = true;
   }
   Object.assign(scope, partialScope);
 
@@ -1736,9 +1740,13 @@ export class State implements SerializeState {
   public loopKey: unknown;
   public loopPath?: string[];
   /** Ids of scopes serialized during fragment capture since the last
-   * entry emission (see `writeScope`); ride the entry so the applier can
-   * stamp dom-less scopes the markup never references. */
+   * entry emission (see `writeScope`); keyed captures subtract ids reached
+   * by node markers before the entry stamps dom-less scopes. */
   public fragmentScopeIds: Set<number> | null = null;
+  // Node-marker scopes are already stamped by the fragment walker; keyed
+  // captures only carry the remaining dom-less scope ids.
+  public fragmentMarkerScopeIds = "";
+  public fragmentKeyed = false;
   /** Depth of fills-path structural branch renders (update-mode loop
    * items, conditional branches, await bodies): content the client will
    * construct fresh from the patch, so seed-mode state and resume-only
@@ -2270,14 +2278,12 @@ export class Chunk {
       }
       state.resumes = concatSequence(
         state.resumes,
-        "[" +
-          state.fragmentAnchor +
-          "," +
-          JSON.stringify(state.commentPrefix) +
-          "," +
-          JSON.stringify(html) +
-          takeFragmentScopeIds(state) +
-          "]",
+        writeFragmentEntry(
+          state,
+          state.fragmentAnchor,
+          html,
+          takeFragmentScopeIds(state),
+        ),
       );
       state.fragmentAnchor = "";
       html = "";
@@ -2361,14 +2367,12 @@ export class Chunk {
         }
         state.resumes = concatSequence(
           state.resumes,
-          "[" +
-            branchId +
-            ",0," +
-            JSON.stringify(state.commentPrefix) +
-            "," +
-            JSON.stringify(bodyHTML) +
-            takeFragmentScopeIds(state) +
-            "]",
+          writeFragmentEntry(
+            state,
+            branchId + ",0",
+            bodyHTML,
+            takeFragmentScopeIds(state),
+          ),
         );
         if (bodyEffects) {
           state.resumes = state.resumes + ',"' + bodyEffects + '"';
@@ -2414,14 +2418,12 @@ export class Chunk {
         }
         state.resumes = concatSequence(
           state.resumes,
-          "[" +
-            capture.fragmentAnchor +
-            "," +
-            JSON.stringify(state.commentPrefix) +
-            "," +
-            JSON.stringify(fragHTML) +
-            takeFragmentScopeIds(state) +
-            "]",
+          writeFragmentEntry(
+            state,
+            capture.fragmentAnchor,
+            fragHTML,
+            takeFragmentScopeIds(state),
+          ),
         );
         if (fragEffects) {
           state.resumes = state.resumes + ',"' + fragEffects + '"';
@@ -2638,9 +2640,37 @@ function noopWriteHTML() {}
 // marker-reachable scopes serialized -- the walker stamps those anyway).
 function takeFragmentScopeIds(state: State) {
   const ids = state.fragmentScopeIds;
-  if (!ids) return "";
+  if (!ids) {
+    state.fragmentMarkerScopeIds = "";
+    state.fragmentKeyed = false;
+    return "";
+  }
   state.fragmentScopeIds = null;
-  return ",[" + [...ids].join(",") + "]";
+  const markerIds = state.fragmentMarkerScopeIds;
+  state.fragmentMarkerScopeIds = "";
+  const unmarked = state.fragmentKeyed
+    ? [...ids].filter((id) => !markerIds.includes("," + id + ","))
+    : [...ids];
+  state.fragmentKeyed = false;
+  return unmarked.length ? ",[" + unmarked.join(",") + "]" : "";
+}
+
+function writeFragmentEntry(
+  state: State,
+  anchor: string,
+  html: string,
+  scopeIds: string,
+) {
+  return (
+    "[" +
+    anchor +
+    "," +
+    JSON.stringify(state.commentPrefix) +
+    "," +
+    JSON.stringify(html) +
+    scopeIds +
+    "]"
+  );
 }
 
 function flushSerializer(boundary: Boundary, serializeState: SerializeState) {

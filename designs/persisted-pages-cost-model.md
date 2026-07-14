@@ -98,6 +98,46 @@ amortizing the lazy update-runtime cost in roughly two raw or compressed
 navigations in the worst measured case. No initial page runtime or ordinary
 non-persisted output changes.
 
+### Scope-list inventory and second optimization
+
+The measured frames contain these concrete repeated opportunities:
+
+- 12 `_=>` scope-fill wrappers, 10 repeated `"a0 1"` effect entries, 41
+  `M<renderId>` marker-prefix occurrences, and four `new Set([_(2)])` values.
+- Fragment entries pay 178 raw bytes of metadata. Their anchors/accessors repeat
+  across same-route and keyed entries, while scope-id lists contain marker-owned
+  ids that the fragment walker already stamps. Scope fills contribute 312 raw
+  bytes after the root-id change (320 before it); consecutive ids use the existing
+  implicit-slot convention and non-consecutive ids need their explicit deltas.
+- Rejected candidates were marker-prefix interning, accessor/anchor defaults,
+  scope-id delta codecs, callback grouping, and omission of branch links: each
+  either increased Brotli or required a per-frame parser/codec. Empty scope-id
+  lists are already omitted, and `0`/empty tuple values remain ordinary values.
+
+The accepted second change is narrower: while a fragment capture renders keyed
+content, the writer records node-marker scope ids in a compact per-capture
+string and omits those ids from the trailing scope-id list. The walker stamps
+marker-reachable scopes itself; only dom-less ids remain on the wire. Non-keyed
+captures retain the old list exactly, preserving malformed fallback and all
+ordinary fragment behavior. The applier and fragment scope stamping model are
+unchanged.
+
+Measured 2026-07-14 against the 3026 / 2134 / 1899 baseline:
+
+| Case                                           | Baseline raw / gzip / Brotli | Optimized raw / gzip / Brotli |
+| ---------------------------------------------- | ---------------------------: | ----------------------------: |
+| Cross-route fragment hop                       |              813 / 487 / 433 |               805 / 481 / 441 |
+| Cross-route fragment hop, same-route follow-up |              493 / 322 / 279 |               491 / 321 / 280 |
+| Async multi-frame update                       |              368 / 299 / 277 |               368 / 299 / 277 |
+| Keyed loop same/add/remove/reorder             |              916 / 610 / 549 |               902 / 601 / 530 |
+| Conditional branch divergence                  |              352 / 325 / 273 |               352 / 325 / 273 |
+| Same-route sparse value/attribute update       |                 84 / 91 / 88 |                  84 / 91 / 88 |
+| **Total**                                      |       **3026 / 2134 / 1899** |        **3002 / 2118 / 1889** |
+
+The second change saves 24 raw, 16 gzip, and 10 Brotli bytes over 11 payloads.
+The production update runtime is unchanged (8590 min / 3378 Brotli in the
+representative fragment fixture), so the break-even is immediate.
+
 ### Ranked next byte opportunities
 
 These are measurement-backed priorities, not optimizations implemented by this
