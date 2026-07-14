@@ -354,7 +354,7 @@ export class Serializer {
     try {
       this.#state.boundary = boundary;
       this.#state.channel = channel;
-      return writeScopesRoot(this.#state, flushes);
+      return writeScopesRoot(this.#state, flushes, !!boundary.state?.update);
     } finally {
       this.#state.flush++;
       this.#state.buf = [];
@@ -404,13 +404,19 @@ export function getRegistered(val: WeakKey) {
 }
 
 // A payload with only scope data returns the fill array directly
-// (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
+// (`_=>[1,{a},{b},2,{e}]`). Update payloads omit the conventional root id 1
+// as an array hole (`_=>[,{a}]`); the patch applier knows that its first
+// non-global scope is the root. When there are trailing expressions (deferred
 // assigns/mutations, which may reference bindings created inside the fill
 // and so must evaluate after it) the fill is applied through the serialize
 // context instead and the payload ends in `,0` so an arbitrary value from
 // its last expression can never be misread as a fill — the browser only
 // applies a payload's return value when it is an array.
-function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
+function writeScopesRoot(
+  state: State,
+  flushes: ScopeFlush[],
+  compactRoot: boolean,
+) {
   const { buf } = state;
   let nextSlotId = -1;
   let fillIndex = -1;
@@ -432,7 +438,9 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
       // link), and `applyScopes` sums deltas signed.
       buf[openIndex] =
         nextSlotId === -1
-          ? "[" + scopeId + ",{"
+          ? compactRoot && scopeId === 1
+            ? "[,{"
+            : "[" + scopeId + ",{"
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;

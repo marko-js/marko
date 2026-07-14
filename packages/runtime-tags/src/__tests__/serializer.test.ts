@@ -1662,6 +1662,23 @@ describe("serializer", () => {
     assert.equal(scopes.get(3), undefined);
   });
 
+  it("omits the patch root scope id and round-trips the hole", () => {
+    const serializer = new Serializer();
+    const { scopes, apply } = createSerializeContext();
+    const boundary = {
+      signal: { aborted: false },
+      state: { update: true },
+    } as any as Boundary;
+    const payload = serializer.stringifyScopes(
+      [[1, {}, { value: "patch" }]],
+      boundary,
+    );
+
+    assert.equal(payload, `_=>[,{value:"patch"}]`);
+    apply(payload);
+    assert.equal(scopes.get(1)!.value, "patch");
+  });
+
   it("skips the payload entirely when every scope is empty", () => {
     const serializer = new Serializer();
     const boundary = { signal: { aborted: false } } as any as Boundary;
@@ -1708,7 +1725,7 @@ function createSerializeContext(ctx: Record<PropertyKey, unknown> = {}) {
           : scope;
       }
 
-      let id = data[0] as number;
+      let id = data[0] === undefined ? 1 : (data[0] as number);
       for (let i = 1; i < data.length; i++) {
         const item = data[i];
         if (typeof item === "number") {

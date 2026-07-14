@@ -166,7 +166,9 @@ export function createUpdate(
   const patchScopes: Record<number, Scope> = { 0: liveGlobal };
   const getScope = (id: number) => (patchScopes[id] ||= {} as Scope);
   const applyScopes = (partials: (Scope | number)[]) => {
-    let scopeId = partials[0] as number;
+    // Update serializers omit the fixed root id 1 as an array hole. Global
+    // fills still carry 0, and sparse/delta slots retain the normal grammar.
+    let scopeId = partials[0] === undefined ? 1 : (partials[0] as number);
     for (let i = 1; i < partials.length; i++) {
       const partial = partials[i];
       if (typeof partial === "number") {

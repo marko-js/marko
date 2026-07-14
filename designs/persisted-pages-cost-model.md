@@ -63,6 +63,41 @@ Response attribution is: node/branch markers or references 840 raw (27.7%,
 (5.9%, 128), and lazy/async framing 0 (0.0%, 0). The largest request-side echo
 is the keyed-loop case: 269 raw header-value bytes over three navigations.
 
+### Accepted serializer/frame-shape optimization
+
+The accepted change uses the existing scope-fill delta grammar. Update renders
+always allocate patch scope `1` as their first non-global scope, so the
+serializer emits that root as an array hole (`_=>[,{...}]`) instead of the
+literal `1`; global fills still use `0`, and later sparse/delta slots retain
+their existing meaning. The update applier defaults only an `undefined` first
+slot to `1`, so document/resume payloads and malformed JavaScript are not
+broadened.
+
+The representative token inventory was 12 `_=>` fill wrappers, 10 repeated
+`"a0 1"` effect entries, 41 `M<renderId>` marker-prefix occurrences, and four
+`new Set([_(2)])` values. Eight patch-root `1` tokens were removable in the
+11-payload measurement. A shared callback was rejected because only one frame
+had multiple fills; same-frame marker-prefix interning saved raw bytes but
+increased Brotli, and lowering string deduplication from 12 to 7/8 increased
+gzip despite a small Brotli win.
+
+| Case                                           | Baseline raw / gzip / Brotli | Optimized raw / gzip / Brotli |
+| ---------------------------------------------- | ---------------------------: | ----------------------------: |
+| Cross-route fragment hop                       |              814 / 488 / 437 |               813 / 487 / 433 |
+| Cross-route fragment hop, same-route follow-up |              493 / 322 / 279 |               493 / 322 / 279 |
+| Async multi-frame update                       |              370 / 301 / 269 |               368 / 299 / 277 |
+| Keyed loop same/add/remove/reorder             |              919 / 612 / 553 |               916 / 610 / 549 |
+| Conditional branch divergence                  |              354 / 327 / 284 |               352 / 325 / 273 |
+| Same-route sparse value/attribute update       |                 84 / 91 / 88 |                  84 / 91 / 88 |
+| **Total**                                      |       **3034 / 2141 / 1910** |        **3026 / 2134 / 1899** |
+
+The update runtime grew by 16 minified bytes and -1 to +18 Brotli bytes across
+the persisted fixtures (the representative fragment fixture is +16 / +7). The
+response saves 8 raw, 7 gzip, and 11 Brotli bytes over the measured 11 payloads,
+amortizing the lazy update-runtime cost in roughly two raw or compressed
+navigations in the worst measured case. No initial page runtime or ordinary
+non-persisted output changes.
+
 ### Ranked next byte opportunities
 
 These are measurement-backed priorities, not optimizations implemented by this
