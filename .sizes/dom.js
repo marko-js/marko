@@ -1,5 +1,5 @@
-// size: 26694 (min) 9682 (brotli)
-//#region packages/runtime-tags/dist/_abort-signal-SF4WsvH2.mjs
+// size: 26736 (min) 9725 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-WWO-Lp_Q.mjs
 let toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
     let str = "",
       sep = "",
@@ -2047,7 +2047,7 @@ function setConditionalRenderer(
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {
-  return (nodeAccessor, template, walks, setup, params) => {
+  return (nodeAccessor, template, walks, setup, params, createFreshBranch) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
       keyedScopesAccessor = "O" + nodeAccessor,
@@ -2068,22 +2068,21 @@ function loop(forEach) {
           hasPotentialMoves;
         forEach(value, (key, args) => {
           let branch =
-            oldLen &&
-            (oldScopesByKey ||= oldScopes.reduce(
-              (map, scope, i) => map.set(scope.M ?? i, scope),
-              /* @__PURE__ */ new Map(),
-            )).get(key);
+              oldLen &&
+              (oldScopesByKey ||= oldScopes.reduce(
+                (map, scope, i) => map.set(scope.M ?? i, scope),
+                /* @__PURE__ */ new Map(),
+              )).get(key),
+            isFresh = !1;
           (branch
             ? (hasPotentialMoves = oldScopesByKey.delete(key))
-            : (branch = createAndSetupBranch(
-                scope.$,
-                renderer,
-                scope,
-                parentNode,
-              )),
+            : ((isFresh = !0),
+              (branch = createFreshBranch
+                ? createFreshBranch(key, args, scope.$, scope, parentNode)
+                : createAndSetupBranch(scope.$, renderer, scope, parentNode))),
             (branch.M = key),
             newScopes.push(branch),
-            params?.(branch, args));
+            (isFresh && createFreshBranch) || params?.(branch, args));
         });
         let newLen = newScopes.length,
           hasSiblings = referenceNode !== parentNode,

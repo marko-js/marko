@@ -1,5 +1,5 @@
 // size: 3908 (min) 1728 (brotli)
-//#region packages/runtime-tags/dist/_abort-signal-SF4WsvH2.mjs
+//#region packages/runtime-tags/dist/_abort-signal-WWO-Lp_Q.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
