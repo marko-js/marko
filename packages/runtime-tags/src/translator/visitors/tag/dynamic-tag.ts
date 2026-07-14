@@ -335,9 +335,7 @@ export default {
                             "s",
                           ),
                           [
-                            t.stringLiteral(
-                              loadFileForTag(tag)!.metadata.marko.id,
-                            ),
+                            t.stringLiteral(classFile!.metadata.marko.id),
                             t.identifier((tagExpression as t.Identifier).name),
                             ...(preserveBoundary
                               ? [t.stringLiteral("preserve")]
@@ -351,7 +349,7 @@ export default {
                 : t.expressionStatement(
                     callRuntime(
                       "_resume",
-                      t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
+                      t.stringLiteral(classFile!.metadata.marko.id),
                       t.identifier((tagExpression as t.Identifier).name),
                     ),
                   ),
