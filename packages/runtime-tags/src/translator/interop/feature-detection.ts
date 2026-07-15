@@ -194,6 +194,7 @@ function getFeatureTypeFromCoreTagName(
     case "lifecycle":
     case "log":
     case "return":
+    case "show":
     case "try":
       return FeatureType.Tags;
     default:

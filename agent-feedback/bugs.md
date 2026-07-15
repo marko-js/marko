@@ -135,23 +135,6 @@ translator to surface interactivity on `metadata.marko`, `getClassHydrationMode`
 to return DESCENDANT for interactive tags children, and the boundary to actually
 resume.
 
-## Interop feature-detection omits current Tags-only core tags
-
-`packages/runtime-tags/src/translator/interop/feature-detection.ts:176` | 2026-07-13 | impact:med | effort:low
-
-`getFeatureTypeFromCoreTagName` forces Tags for `const/debug/define/id/let/
-lifecycle/log/return/try` but omits three current, non-deprecated Tags-only core
-tags — `<show>`, `<html-script>`, `<html-style>` (`translator/core/index.ts:42-53`;
-none exist in the Class core taglib). In a mixed project (`tagDiscoveryDirs` not
-exclusively `tags`), a Marko 6 file whose only distinguishing feature is one of
-these (e.g. a repo-root global-style component using only `<html-style>`, no
-`<!-- use tags -->`) falls through to the default at lines 48-50 and is
-classified Class; every merged visitor then dispatches to the (nonexistent)
-Class handler (`isTagsAPI() ? enter6 : enter5` → `enter5` undefined) and the tag
-is left untranslated → compile error or wrong output. Also a maintenance hazard:
-each new Tags-only core tag must be hand-synced into this switch. Fix: add the
-missing names and a test asserting every core tag classifies.
-
 ## Compat `___deserialize` override dereferences a possibly-undefined scope
 
 `packages/runtime-class/src/runtime/helpers/tags-compat/runtime-dom.js:73` | 2026-07-13 | impact:low | effort:low
