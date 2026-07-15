@@ -117,7 +117,7 @@ export default {
       }
 
       const isTextOnly = isTextOnlyNativeTag(tag);
-      const seen: Record<string, t.MarkoAttribute> = {};
+      const seen: Record<string, t.MarkoAttribute> = Object.create(null);
       const { attributes } = tag.node;
       let injectNonce = isInjectNonceTag(tagName);
       let hasDynamicAttributes = false;
@@ -1065,7 +1065,7 @@ function getRelatedControllable(
 }
 
 function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
-  const seen: Record<string, t.MarkoAttribute> = {};
+  const seen: Record<string, t.MarkoAttribute> = Object.create(null);
   const { attributes } = tag;
   const maybeStaticAttrs = new Set<t.MarkoAttribute>();
   const skipProps = new Set<string>();

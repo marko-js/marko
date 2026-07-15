@@ -25,8 +25,7 @@ const knownWrongAttrs: Record<string, string> = {
 };
 
 export function getWrongAttrSuggestion(name: string): string | undefined {
-  const exact = knownWrongAttrs[name];
-  if (exact) return exact;
+  if (Object.hasOwn(knownWrongAttrs, name)) return knownWrongAttrs[name];
 
   const colon = name.indexOf(":");
   if (colon > 0) {
