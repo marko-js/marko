@@ -76,12 +76,6 @@ inline runtime robust; weigh against inline-runtime byte cost.
 
 The analyze pass validates that any _present_ specifiers are default specifiers (lines 91–97) but never requires one to exist, so a `load` import carrying zero specifiers passes analysis. Translate then does `node.specifiers.find(t.isImportDefaultSpecifier)!` (line 108); `.find` returns `undefined`, the `!`/destructure throws an opaque "Cannot destructure property 'local' of undefined" instead of a `buildCodeFrameError`. Fix: in the analyze block, after the specifier loop, throw a code-frame error when `!node.specifiers.some(t.isImportDefaultSpecifier)`.
 
-## A top-level `return` in one `<script>` short-circuits sibling `<script>`/`<lifecycle>` effects
-
-`packages/runtime-tags/src/translator/core/script.ts:128` | 2026-07-14 | impact:low | effort:low
-
-The DOM path of `script.ts` `translate.exit` inlines a non-async, block-bodied `<script>` as bare statements (`inlineBody = hasDeclaration ? value.body : value.body.body`, line 128), then `addStatement("effect", section, referencedBindings, inlineBody)` (line 133). `addStatement`/`getSignal` key effect statements by the referenced-binding set identity, so multiple `<script>`/`<lifecycle>` tags in one section that reference nothing, or the same single binding, accumulate into ONE `signal.effect` array, emitted as a single `_script(id, (scope) => { ...all statements... })` arrow. A top-level `return` in an earlier inlined script therefore returns out of the whole shared arrow, silently skipping every following sibling's statements. Verified by compiling `<let/x=0/><script>if(!x) return; a(x)</script><script>b(x)</script>` for DOM: both bodies merge into one arrow where `b(x)` is skipped when `!x`, though the second script has no guard. This is a client-only quirk, not an SSR/CSR divergence (script effects are client-only; resume runs the same merged arrow). Fix: wrap each inlined block body in its own IIFE/arrow, or keep the block as a nested statement so `return` stays local.
-
 ## SSR controlled-form value normalization diverges from DOM for `0n`/`NaN`/`false`, causing a hydration mismatch
 
 `packages/runtime-tags/src/html/attrs.ts:516` | 2026-07-14 | impact:low | effort:low

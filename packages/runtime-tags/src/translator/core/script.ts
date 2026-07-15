@@ -116,15 +116,19 @@ export default {
           if (value.async || value.generator) {
             referencesScope = traverseContains(value, isScopeIdentifier);
           } else if (t.isBlockStatement(value.body)) {
-            let hasDeclaration = false;
-            for (const child of value.body.body) {
-              if (t.isDeclaration(child)) {
-                hasDeclaration = true;
-                break;
+            // A top-level `return` must stay local (IIFE fallback below), so only
+            // inline the body's statements when there is none.
+            if (!traverseContains(value.body, isReturnStatement)) {
+              let hasDeclaration = false;
+              for (const child of value.body.body) {
+                if (t.isDeclaration(child)) {
+                  hasDeclaration = true;
+                  break;
+                }
               }
-            }
 
-            inlineBody = hasDeclaration ? value.body : value.body.body;
+              inlineBody = hasDeclaration ? value.body : value.body.body;
+            }
           } else {
             inlineBody = t.expressionStatement(value.body);
           }
@@ -170,6 +174,22 @@ function isAwaitExpression(node: t.Node) {
     case "ClassPrivateMethod":
       return skip;
     case "AwaitExpression":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function isReturnStatement(node: t.Node) {
+  switch (node.type) {
+    case "FunctionDeclaration":
+    case "FunctionExpression":
+    case "ArrowFunctionExpression":
+    case "ClassMethod":
+    case "ObjectMethod":
+    case "ClassPrivateMethod":
+      return skip;
+    case "ReturnStatement":
       return true;
     default:
       return false;
