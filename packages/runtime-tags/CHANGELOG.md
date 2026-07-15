@@ -1,5 +1,25 @@
 # @marko/runtime-tags
 
+## 6.3.11
+
+### Patch Changes
+
+- [#3441](https://github.com/marko-js/marko/pull/3441) [`eed9e39`](https://github.com/marko-js/marko/commit/eed9e39ef82d0af6ceade1712fa38dad1e89e6e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Preserve the original server rendering error when a stream aborts while flushing an asynchronous placeholder.
+
+- [#3438](https://github.com/marko-js/marko/pull/3438) [`a86e699`](https://github.com/marko-js/marko/commit/a86e699038307e4e3b73aaddc947a269e2efd5e0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a dynamic tag name built with `??` (such as `<const/Tag = input.tag ?? Fallback/>` used as `<${Tag}/>`) being statically collapsed to the right-hand operand in the DOM output, so the left operand was ignored and the wrong tag rendered.
+
+- [#3439](https://github.com/marko-js/marko/pull/3439) [`2827414`](https://github.com/marko-js/marko/commit/28274146834496801a6202a30d7d18e452aa12d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix Marko 6 files in a mixed (interop) project being misclassified as Class API, and failing to compile, when their only distinguishing feature is the Tags-only `<show>` core tag. `<show>` is now recognized as a Tags API marker during feature detection.
+
+- [#3436](https://github.com/marko-js/marko/pull/3436) [`4a27f46`](https://github.com/marko-js/marko/commit/4a27f463dc970523bff6fa03d2059108c86d93a9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix native tag attributes whose names collide with `Object.prototype` members (such as `toString`, `valueOf`, `hasOwnProperty`, or `constructor`) being silently dropped from the output or raising a spurious `is not a valid attribute` error.
+
+- [#3443](https://github.com/marko-js/marko/pull/3443) [`88cfa70`](https://github.com/marko-js/marko/commit/88cfa70b34ab4fa8d1e5fa0c772660f173a4df1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Simplify grouping parameter-based serialization reasons during compilation.
+
+- [#3440](https://github.com/marko-js/marko/pull/3440) [`e95cf17`](https://github.com/marko-js/marko/commit/e95cf17de4b6ff4ae1b61346033d58082ff7df2c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix resumed nested branches attaching to the wrong parent when one marker closes multiple branches.
+
+- [#3442](https://github.com/marko-js/marko/pull/3442) [`650ed36`](https://github.com/marko-js/marko/commit/650ed360adba069b01c0e97f4bfbccb546cd7991) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a top-level `return` in a `<script>` tag short-circuiting the effects of following sibling `<script>`/`<lifecycle>` tags in the same section (they compile into a single shared effect). A script whose body has a top-level `return` is now kept as an isolated call so the `return` stays local.
+
+- [#3438](https://github.com/marko-js/marko/pull/3438) [`8ed981a`](https://github.com/marko-js/marko/commit/8ed981ab39aae311cb5c7099b4b3d9701adff91e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a lone spread that resolves to `null`, `undefined`, or `false` on a controllable element (such as `<input ...maybeNull>`) crashing the render with a `TypeError` instead of producing an attribute-less element. Both the server and client attribute helpers now guard the controllable path against a nullish spread.
+
 ## 6.3.10
 
 ### Patch Changes
