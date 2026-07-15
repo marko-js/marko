@@ -39,7 +39,7 @@ StringWriter.prototype = {
           if (this._data[key]) {
             this._data[key].push.apply(this._data[key], otherWriter._data[key]);
           } else {
-            this._data[key] = this._writer[key];
+            this._data[key] = otherWriter._data[key];
           }
         }
       } else {

@@ -135,20 +135,6 @@ translator to surface interactivity on `metadata.marko`, `getClassHydrationMode`
 to return DESCENDANT for interactive tags children, and the boundary to actually
 resume.
 
-## `StringWriter.merge` reads a non-existent `this._writer`
-
-`packages/runtime-class/src/runtime/html/StringWriter.js:42` | 2026-07-13 | impact:low | effort:low
-
-In `merge`, when `otherWriter._data` holds a key absent from `this._data`, the
-else-branch does `this._data[key] = this._writer[key]` — but `StringWriter` has
-no `_writer` property (only `_content`/`_scripts`/`_data`), so `this._writer` is
-`undefined` and the access throws `TypeError`. It should be
-`otherWriter._data[key]`. Currently latent: `_data` effectively only ever holds
-the single `componentDefs` key, so both writers share that key and the
-`.push.apply` branch (line 40) is always taken; the bug surfaces the moment two
-merged writers carry divergent `_data` keys. This sits on the compat/init-
-components data path (`tags-compat/runtime-html.js` `___addComponentsFromContext`).
-
 ## Interop feature-detection omits current Tags-only core tags
 
 `packages/runtime-tags/src/translator/interop/feature-detection.ts:176` | 2026-07-13 | impact:med | effort:low
