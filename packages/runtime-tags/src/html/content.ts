@@ -5,6 +5,8 @@ export function _to_text(val: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(val);
   }
+  // Numeric 0 is special-cased so it still renders; bigint `0n` deliberately is
+  // not, here or in the escape helpers below (not worth the size on these hot paths).
   return val || val === 0 ? val + "" : "";
 }
 

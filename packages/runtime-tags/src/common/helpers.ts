@@ -73,6 +73,8 @@ export function stringifyStyleObject(name: string, value: unknown) {
         .replace(/^ms-/, "-ms-")}\`.`,
     );
   }
+  // Numeric 0 renders (e.g. `width:0`); bigint `0n` deliberately is not
+  // special-cased (not worth the size on this hot helper).
   return value || value === 0 ? name + ":" + value : "";
 }
 

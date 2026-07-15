@@ -180,6 +180,8 @@ export function _attr_input_value_default(
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
+  // Kept inline (byte-identical to `normalizeStrProp`, defined below) rather than
+  // calling it, so the common value path doesn't pull that helper into value-only bundles.
   const normalizedValue = normalizeAttrValue(value) || "";
   if (el.defaultValue !== normalizedValue) {
     const restoreValue =

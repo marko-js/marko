@@ -45,6 +45,8 @@ export function _to_text(value: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(value);
   }
+  // Numeric 0 is special-cased so it still renders; bigint `0n` deliberately is
+  // not (not worth the DOM-runtime size).
   return value || value === 0 ? value + "" : "";
 }
 

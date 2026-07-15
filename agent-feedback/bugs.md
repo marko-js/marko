@@ -2,25 +2,6 @@
 
 Out-of-scope defects noticed while working on something else. Format and rules: [README.md](README.md).
 
-## `bigint` zero renders as empty string in text/escape helpers
-
-`src/html/content.ts:26` | 2026-07-03 | impact:low | effort:low
-
-Every text/escape helper special-cases numeric zero with `val === 0` so a
-falsy-but-renderable `0` yields `"0"` (`_to_text` line 8, `_unescaped` 15,
-`_escape` 26, `_escape_script` 38, `_escape_style` 49, `_escape_style_value`
-56, `_escape_comment` 67). A `bigint` zero `0n` is falsy and `0n === 0` is
-`false`, so `${0n}` renders `""` instead of `"0"` (a non-zero `bigint` such as
-`5n` is truthy and renders fine). The DOM runtime `src/dom/dom.ts:48` shares the
-pattern, so SSR and CSR agree — it is a consistent wrong value, not a hydration
-mismatch. A correct fix must add `|| val === 0n` (loose `== 0` would make `""`
-render as `"0"`) to all seven helpers plus `dom/dom.ts`.
-
-Decided not worth fixing: interpolating a `bigint` directly into the DOM text
-APIs is not something you would generally display to a user, so it does not
-justify the measurable bundle growth across these hot helpers (bundle size is a
-feature). Recorded for the record rather than as work to pick up.
-
 ## `Sorted.isSuperset` arithmetic is wrong but the current behavior is load-bearing
 
 `src/translator/util/optional.ts:103` | 2026-07-03 | impact:med | effort:med
@@ -137,23 +118,11 @@ The DOM path of `script.ts` `translate.exit` inlines a non-async, block-bodied `
 
 In `_attr_select_value`'s `MutationObserver` (fired when `<option>`s are added/removed), the decision to run `onChange` is `value.length !== el.selectedOptions.length || value.some((v, i) => v != el.selectedOptions[i].value)` (lines 352–353). `value` is `scope[ControlledValue]` in app-supplied order, while `el.selectedOptions` is always document order and selection is applied set-wise (`opt.selected = value.includes(opt.value)` in `setSelectValue`). So a set-equal but reordered controlled array (e.g. `value=["b","a"]` with options rendered `a,b`, both selected) flags a false mismatch on any option add/remove and fires `valueChange(getSelectValue(...))`, silently reordering the app model to document order with no user interaction. Native multi-select never preserves order (any real user change already document-orders the model), so impact is low — the only novel effect is a spurious change side-effect on unrelated option mutations, which stabilizes after one fire. Fix: compare as sets (length plus `every(v => selectedValues.has(v))`).
 
-## `bigint` zero in a style object is dropped by `stringifyStyleObject`
-
-`packages/runtime-tags/src/common/helpers.ts:61` | 2026-07-14 | impact:low | effort:low
-
-`stringifyStyleObject` emits `name + ":" + value` when `value || value === 0`, special-casing numeric zero so `style={ width: 0 }` renders `width:0`. A `bigint` zero (`0n`) is falsy and `0n === 0` is strictly `false`, so `style={ order: 0n }` returns `""` and the declaration is silently dropped — inconsistent with the `Number` `0` case (had it passed the guard, `"order:" + 0n` is `"order:0"`). This is the style-object analog of the recorded text/escape-helper `0n` issue, in a distinct function; both the SSR caller (`html/attrs.ts:38`) and DOM caller (`dom/dom.ts:102`) pass the raw user value through. Rare in practice (bigint style values are unusual); recorded for completeness. A correct fix adds `|| value === 0n` (loose `== 0` would also let `""` through).
-
 ## `assertExclusiveAttrs` uses truthiness, missing conflicts when a controllable value attribute is falsy
 
 `packages/runtime-tags/src/common/errors.ts:127` | 2026-07-14 | impact:low | effort:low
 
 `assertExclusiveAttrs` detects the presence of the `checkedValue` and `checked` value-attributes by truthiness (`if (attrs.checkedValue)` line 127, `if (attrs.checked)` lines 130/135). Mutual exclusivity is a property of an attribute being present, not of its value, so a legitimate falsy value — a radio `checkedValue={0}` / `checkedValue=""`, or a controlled `checked={false}` — makes the branch skip, the conflicting `checked` is never pushed, and the "…are mutually exclusive" error is silently not thrown. The runtime treats these as presence elsewhere (`"checkedValue" in nextAttrs`, `dom/dom.ts:209`), confirming presence is the intended test. Only these two are affected: the sibling `checkedChange`/`checkedValueChange`/`valueChange` are handlers where a falsy value legitimately means absent (consistent with `assertHandlerIsFunction`), so those correctly stay truthiness checks. `MARKO_DEBUG`-only, so a missed dev/test assertion rather than a production fault. Fix: `"checkedValue" in attrs` and `"checked" in attrs`.
-
-## Negative zero serializes as `"0"`, losing its sign on resume
-
-`packages/runtime-tags/src/html/serializer.ts:751` | 2026-07-14 | impact:low | effort:low
-
-`writeNumber` emits `val + ""` for every number, and `(-0) + ""` is `"0"`, so a serialized `-0` resumes on the client as `+0`. `Object.is(-0, +0)` is `false` and `1 / -0 === -Infinity` vs `1 / +0 === +Infinity`, so any scope binding, mutation value, attr-tag value, or array/Map/Set member equal to `-0` comes back sign-flipped; every other number form (`NaN`, `Infinity`, `1e21`, negative `bigint` values) round-trips. Latent — `-0` never originates from Marko-generated code or the runtime, only from user data equal to `-0`, and no fixture exercises it. Fix: `Object.is(val, -0) ? "-0" : val + ""`.
 
 ## `createProgramState` cache guard uses truthiness, would recompute a falsy stored value
 

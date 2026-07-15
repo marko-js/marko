@@ -20,6 +20,10 @@ While working on any task, record anything a future contributor should act on:
 4. Entries are **removed when resolved** (delete, don't mark done; git history is the archive).
 5. Verify claims before recording. A guess is not feedback.
 
+## Resolving a "won't fix" item
+
+When a maintainer has explicitly deemed an item "won't fix" / "not worth it", resolve it by adding a brief inline comment at the code site that captures the decision (so it is not re-filed), then remove the entry. Only on such an explicit call — never on your own initiative.
+
 ## Entry format
 
 ```md

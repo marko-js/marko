@@ -748,6 +748,8 @@ function writeString(
 }
 
 function writeNumber(state: State, val: number) {
+  // `-0` deliberately serializes as "0" and resumes as +0; not worth a hot-path
+  // check for a value that never originates from Marko-generated code.
   state.buf.push(val + "");
   return true;
 }

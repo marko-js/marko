@@ -44,9 +44,3 @@ three identical `_resume("…",_classDisplay)` (DOM) / `_s("…",_classDisplay)`
 (HTML) statements (the `??=` non-template branch at lines 360-377 duplicates the
 same way). Idempotent, so not incorrect, but N× redundant given "bundle size is a
 feature" — one registration per unique class file would suffice.
-
-## Leave the controllable value path's inlined `normalizeAttrValue(value) || ""` as-is
-
-`packages/runtime-tags/src/dom/controllable.ts:183` | 2026-07-14 | impact:low | effort:low
-
-`_attr_input_value_default` (line 183) and `_attr_input_value` (line 198) inline `normalizeAttrValue(value) || ""`, which is byte-for-byte the `normalizeStrProp` helper defined lower in the same file (line 521). Collapsing the two inlines to `normalizeStrProp(value)` reads cleaner but regresses bundle size: `normalizeStrProp` is otherwise only reached from the checked/checkedValue/select paths, so calling it from the common `value:=` binding path drags the helper into value-only bundles — measured +22 bytes minified on the `controllable-input-number-member-modifier-value` and `controllable-input-number-modifier-destructured` fixtures. Since "bundle size is a feature" and value-binding is the common controllable, keep the inline (or dedupe toward the inline form) rather than routing the hot path through the helper.
