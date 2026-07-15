@@ -76,12 +76,6 @@ inline runtime robust; weigh against inline-runtime byte cost.
 
 The analyze pass validates that any _present_ specifiers are default specifiers (lines 91–97) but never requires one to exist, so a `load` import carrying zero specifiers passes analysis. Translate then does `node.specifiers.find(t.isImportDefaultSpecifier)!` (line 108); `.find` returns `undefined`, the `!`/destructure throws an opaque "Cannot destructure property 'local' of undefined" instead of a `buildCodeFrameError`. Fix: in the analyze block, after the specifier loop, throw a code-frame error when `!node.specifiers.some(t.isImportDefaultSpecifier)`.
 
-## `??` tag-name expression drops its left operand, statically collapsing a dynamic tag to its fallback
-
-`packages/runtime-tags/src/translator/util/tag-name-type.ts:106` | 2026-07-14 | impact:med | effort:low
-
-`analyzeExpressionTagName` handles a `LogicalExpression` tag name by pushing the `left` operand only for `||` (lines 106–107); for `&&` and `??` it sets `nullable = true` and pushes only `right` (lines 108–112). That is correct for `&&` (its value is always the right side when truthy) but wrong for `??`: in `a ?? b` the value is the LEFT operand `a` when non-nullish, so `a` must drive the inferred type. When the right operand is a custom-tag import, inference sets `tagNameImported`/clears `tagNameDynamic` from `b` alone, hard-wiring the tag to `b`. Verified by compiling `<const/Comp=input.renderAs ?? DefaultComp/> <${Comp}/>` for DOM: `DefaultComp`'s `$template` is embedded into the walk and `input.renderAs ?? DefaultComp` is emitted as a dead expression, so `<${Comp}/>` always renders `DefaultComp` and `input.renderAs` is ignored — wrong output. The `||` form correctly compiles to a runtime `_dynamic_tag`; HTML output stays correct, making this a DOM-only wrong render and an SSR/CSR divergence. Fix: push `left` for `??` as well (only `&&` should omit it), and reconsider the unconditional `nullable = true` for `??` (`a ?? b` is only nullable when `b` is).
-
 ## Lone null/undefined/false spread on a controllable element crashes `_attrs` with a TypeError
 
 `packages/runtime-tags/src/dom/dom.ts:265` | 2026-07-14 | impact:med | effort:low

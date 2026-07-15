@@ -14,6 +14,11 @@ Body content
 >
   A 
 </div>
+<div
+  class="a b"
+>
+  A 
+</div>
 <h2
   class="a b"
 />
@@ -29,6 +34,11 @@ Body content
 <a
   class="a b"
 />
+<div
+  class="a b"
+>
+  A 
+</div>
 <h1 />
 <div />
 <div />

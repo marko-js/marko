@@ -103,10 +103,11 @@ function analyzeExpressionTagName(
         pending.push(path.get("alternate"));
       }
     } else if (path.isLogicalExpression()) {
-      if (path.node.operator === "||") {
-        pending.push(path.get("left"));
-      } else {
+      if (path.node.operator === "&&") {
         nullable = true;
+      } else {
+        // `a || b` and `a ?? b` can both resolve to the left operand.
+        pending.push(path.get("left"));
       }
 
       pending.push(path.get("right"));

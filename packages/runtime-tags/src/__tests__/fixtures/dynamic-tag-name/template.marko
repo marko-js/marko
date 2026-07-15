@@ -19,6 +19,7 @@ static const foo = '';
 </>
 
 <${tag || tagA} class=["a", "b"] other=other/>
+<${tag ?? tagA} class=["a", "b"] other=other/>
 
 <const/largeHeading = isLarge && "h1"/>
 <${largeHeading || "h2"} class=["a", "b"] other=other/>
@@ -32,6 +33,9 @@ static const foo = '';
 
 <const/tagConstB = show ? "div" : null/>
 <${tagConstB} class=["a", "b"] other=other/>
+
+<const/tagConstC = tag ?? tagA/>
+<${tagConstC} class=["a", "b"] other=other/>
 
 <${`h${1}`} />
 <${foo || 'div'} />

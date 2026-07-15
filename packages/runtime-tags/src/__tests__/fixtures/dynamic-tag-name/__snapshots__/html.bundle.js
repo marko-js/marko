@@ -22,7 +22,7 @@ var tag_b_default = _template("c", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show__OR__input_other = _serialize_guard($scope0_reason, 2), $sg__input_showTagA__OR__input_other = _serialize_guard($scope0_reason, 3), $sg__input_isLarge__OR__input_other = _serialize_guard($scope0_reason, 4), $sg__input_level__OR__input_other = _serialize_guard($scope0_reason, 6), $sg__input_other = _serialize_guard($scope0_reason, 9), $si__input_other = _serialize_if($scope0_reason, 9);
+	const $scope0_reason = _scope_reason(), $sg__input_show__OR__input_other = _serialize_guard($scope0_reason, 2), $sg__input_showTagA__OR__input_other = _serialize_guard($scope0_reason, 3), $sg__input_tag__OR__input_other = _serialize_guard($scope0_reason, 5), $sg__input_isLarge__OR__input_other = _serialize_guard($scope0_reason, 4), $sg__input_level__OR__input_other = _serialize_guard($scope0_reason, 6), $sg__input_other = _serialize_guard($scope0_reason, 9), $si__input_other = _serialize_if($scope0_reason, 9);
 	const $scope0_id = _scope_id();
 	const { content, x, show, showTagA, isLarge, tag, level, other } = input;
 	_dynamic_tag($scope0_id, "a", content, {
@@ -64,49 +64,59 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "i", tag || tag_a_default, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, _serialize_guard($scope0_reason, 5));
+	}, 0, 0, $sg__input_tag__OR__input_other);
+	_dynamic_tag($scope0_id, "j", tag ?? tag_a_default, {
+		class: ["a", "b"],
+		other
+	}, 0, 0, $sg__input_tag__OR__input_other);
 	const largeHeading = isLarge && "h1";
-	_dynamic_tag($scope0_id, "j", largeHeading || "h2", {
+	_dynamic_tag($scope0_id, "k", largeHeading || "h2", {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_isLarge__OR__input_other);
-	_dynamic_tag($scope0_id, "k", globalThis.x = "ab", {
+	_dynamic_tag($scope0_id, "l", globalThis.x = "ab", {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_other);
-	_dynamic_tag($scope0_id, "l", "h" + level, {
+	_dynamic_tag($scope0_id, "m", "h" + level, {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_level__OR__input_other);
-	_dynamic_tag($scope0_id, "m", `h${level}`, {
+	_dynamic_tag($scope0_id, "n", `h${level}`, {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_level__OR__input_other);
 	const tagConstA = "a";
-	_dynamic_tag($scope0_id, "n", tagConstA, {
+	_dynamic_tag($scope0_id, "o", tagConstA, {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_other);
 	const tagConstB = show ? "div" : null;
-	_dynamic_tag($scope0_id, "o", tagConstB, {
+	_dynamic_tag($scope0_id, "p", tagConstB, {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_show__OR__input_other);
-	_dynamic_tag($scope0_id, "p", `h1`, {}, 0, 0, 0);
-	_dynamic_tag($scope0_id, "q", "div", {}, 0, 0, 0);
-	_dynamic_tag($scope0_id, "r", "div", {}, 0, 0, 0);
+	const tagConstC = tag ?? tag_a_default;
+	_dynamic_tag($scope0_id, "q", tagConstC, {
+		class: ["a", "b"],
+		other
+	}, 0, 0, $sg__input_tag__OR__input_other);
+	_dynamic_tag($scope0_id, "r", `h1`, {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "s", "div", {}, 0, 0, 0);
+	_dynamic_tag($scope0_id, "t", "div", {}, 0, 0, 0);
+	_dynamic_tag($scope0_id, "u", "div", {}, 0, 0, 0);
 	_serialize_if($scope0_reason, 8) && writeScope($scope0_id, {
-		v: $si__input_other && content,
-		w: $si__input_other && x,
-		x: $si__input_other && show,
-		y: $si__input_other && showTagA,
-		z: $si__input_other && isLarge,
-		a0: $si__input_other && tag,
-		a1: $si__input_other && level,
-		a2: _serialize_if($scope0_reason, 7) && other,
-		aa: $si__input_other && largeHeading,
-		ac: $si__input_other && tagConstA,
-		ae: $si__input_other && tagConstB
+		x: $si__input_other && content,
+		y: $si__input_other && x,
+		z: $si__input_other && show,
+		a0: $si__input_other && showTagA,
+		a1: $si__input_other && isLarge,
+		a2: $si__input_other && tag,
+		a3: $si__input_other && level,
+		a4: _serialize_if($scope0_reason, 7) && other,
+		ac: $si__input_other && largeHeading,
+		ae: $si__input_other && tagConstA,
+		ag: $si__input_other && tagConstB,
+		ai: $si__input_other && tagConstC
 	});
 }, 1);
