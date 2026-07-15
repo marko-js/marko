@@ -1,0 +1,12 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <await|value|=resolveAfter("content", 1)>
+    ${value}
+  </await>
+  <@placeholder>
+    <await|value|=resolveAfter("placeholder", 2)>
+      ${value}
+    </await>
+  </@placeholder>
+</try>

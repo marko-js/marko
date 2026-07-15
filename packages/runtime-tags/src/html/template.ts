@@ -311,7 +311,9 @@ class ServerRendered implements RenderedTemplate {
         boundary.onNext = NOOP;
         onAbort(boundary.signal.reason);
       } else if (write || status === FlushStatus.complete) {
-        const html = (head = head.consume()).flushHTML();
+        head = head.consume();
+        if (boundary.signal.aborted) return;
+        const html = head.flushHTML();
         if (html) onWrite(html);
         if (status === FlushStatus.complete) {
           if (!tick) offTick(onNext);
