@@ -34,6 +34,15 @@ Prior to merging your PR, you will need to sign the [Open JS Foundation CLA](htt
 
 > **TIP:** If you're new to GitHub or open source you can check out this [free course](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) on how to contribute to an open source project.
 
+### Quick start locally
+
+```bash
+git clone https://github.com/marko-js/marko.git
+cd marko
+npm install
+npm test
+```
+
 ### Running tests
 
 Before submitting your PR, make sure that all new and previous tests pass and that [coverage](https://codecov.io/gh/marko-js/marko) has not decreased:
