@@ -21,7 +21,7 @@ npm run test:update -- --grep "..."                      # regenerate snapshots 
 npm run compile -- -o dom -d foo.marko                   # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
 npm run build                                            # all packages -> dist/ + .d.ts
 npm run build:sizes                                      # bundle-size table; diffs vs .sizes.json
-npm run lint                                             # eslint + prettier check + cspell
+npm run lint                                             # eslint + prettier check
 npm run format                                           # eslint --fix + prettier --write
 npm run change                                           # add a changeset (required for user-facing changes)
 ```
@@ -34,7 +34,6 @@ npm run change                                           # add a changeset (requ
 - **Bundle size is a feature.** The pre-commit hook runs lint-staged, a full build, and `build:sizes`, staging `.sizes.json`/`.sizes/` — that diff is the size impact of the change. Commits are slow by design.
 - **Snapshots and sizes are generated.** Never hand-edit `__snapshots__/**`, fixture `sizes.json`, or `.sizes*`; regenerate with `npm run test:update` and the commit hook.
 - **CI** (`.github/workflows/ci.yml`): build + lint on Node 26; tests on Node 22/24/26 (`MARKO_DEBUG=1`, c8 coverage). Releases go out via changesets on push to `main`.
-- `cspell` checks all `.md`/`.ts`/`.js`/`.marko` files — add genuinely new terms to `cspell.json`.
 
 ## Conventions
 
