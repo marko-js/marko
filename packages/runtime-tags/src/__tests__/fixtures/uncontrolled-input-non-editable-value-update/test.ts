@@ -1,0 +1,23 @@
+import assert from "node:assert/strict";
+
+import type { TestConfig } from "../../main.test";
+
+function update(container: Element) {
+  container.querySelector("button")!.click();
+}
+
+function assertUpdated(container: Element) {
+  for (const input of container.querySelectorAll<HTMLInputElement>("input")) {
+    assert.equal(input.value, "b", `${input.type} value`);
+  }
+
+  const form = container.querySelector("form")!;
+  const data = new form.ownerDocument.defaultView!.FormData(form);
+  assert.equal(data.get("checkbox"), "b");
+  assert.equal(data.get("hidden"), "b");
+  assert.equal(data.get("radio"), "b");
+}
+
+export const config: TestConfig = {
+  steps: [{}, update, assertUpdated],
+};
