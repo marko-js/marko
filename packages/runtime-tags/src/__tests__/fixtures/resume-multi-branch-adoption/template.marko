@@ -1,0 +1,14 @@
+<let/items=["first", "second"] />
+<button#clear onClick() { items = [] }>clear</button>
+<div/log/>
+
+<for|item| of=items>
+  <div>
+    <if=item>
+      <span>${item}</span>
+      <script>
+        $signal.onabort = () => log().append(`destroyed ${item}`);
+      </script>
+    </if>
+  </div>
+</for>

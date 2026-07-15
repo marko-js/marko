@@ -258,7 +258,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     : parent.insertBefore(new Text(), visit);
               }
 
-              while (i && orphanBranches[--i][AccessorProp.Id] > branchId) {
+              while (i && orphanBranches[i - 1][AccessorProp.Id] > branchId) {
+                i--;
                 setParentBranch(orphanBranches.pop()!, branch);
               }
 

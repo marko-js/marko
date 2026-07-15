@@ -1,0 +1,16 @@
+<button id=clear>clear</button><!--M_*1 #button/0-->
+<div></div><!--M_*1 #div/1-->
+<div><span>first<!--M_*3 #text/0--></span><!--M_}2 #div/0 3--></div>
+<div><span>second<!--M_*5 #text/0--></span><!--M_}4 #div/0 5--></div>
+<!--M_|1 #text/2 4 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      item: "first"
+    }, 1, {
+      item: "second"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/resume-multi-branch-adoption/template.marko_2_item 3 5 packages/runtime-tags/src/__tests__/fixtures/resume-multi-branch-adoption/template.marko_0 1"
+  ];
+  M._.w()
+</script>

@@ -1,0 +1,13 @@
+<button id=clear>clear</button><!--M_*1 a-->
+<div></div><!--M_*1 b-->
+<div><span>first<!--M_*3 a--></span><!--M_}2 a 3--></div>
+<div><span>second<!--M_*5 a--></span><!--M_}4 a 5--></div><!--M_|1 c 4 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    c: "first"
+  }, 1, {
+    c: "second"
+  }], "a0 3 5 a1 1"];
+  M._.w()
+</script>
