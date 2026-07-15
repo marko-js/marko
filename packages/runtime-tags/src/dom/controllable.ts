@@ -180,15 +180,14 @@ export function _attr_input_value_default(
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
+  // Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
+  if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
+    _attr(el, "value", value);
+    return;
+  }
   // Kept inline (byte-identical to `normalizeStrProp`, defined below) rather than
   // calling it, so the common value path doesn't pull that helper into value-only bundles.
   const normalizedValue = normalizeAttrValue(value) || "";
-  // Non-editable types: button, checkbox, hidden, image, radio, reset, submit.
-  if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
-    _attr(el, "value", value);
-    setInputValue(el, normalizedValue);
-    return;
-  }
   if (el.defaultValue !== normalizedValue) {
     const restoreValue =
       scope[AccessorProp.Gen] < runId ? el.value : normalizedValue;

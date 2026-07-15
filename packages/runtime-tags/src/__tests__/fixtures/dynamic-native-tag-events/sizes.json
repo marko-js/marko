@@ -1,8 +1,8 @@
 {
   "dom": {
     "template.marko.page.mjs": {
-      "min": 13301,
-      "brotli": 5099
+      "min": 13298,
+      "brotli": 5097
     }
   },
   "html": {
