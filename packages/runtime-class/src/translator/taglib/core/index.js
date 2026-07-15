@@ -11,7 +11,6 @@ import * as parseImport from "./parse-import";
 import * as parseModuleCode from "./parse-module-code";
 import * as parseServer from "./parse-server";
 import * as parseStatic from "./parse-static";
-import * as transformBody from "./transform-body";
 import * as transformStyle from "./transform-style";
 import * as translateAwait from "./translate-await";
 import * as translateFor from "./translate-for";
