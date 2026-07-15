@@ -415,19 +415,17 @@ export function getCommonSection(section: Section, other: Section) {
 }
 
 export function finalizeParamSerializeReasonGroups(section: Section) {
-  if (isReasonDynamic(section.serializeReason)) {
-    for (const [paramSection, params] of groupParamsBySection(
-      section.serializeReason.param,
-    )) {
-      ensureParamReasonGroup(paramSection, params);
-    }
-  }
+  ensureReasonGroups(section.serializeReason);
 
   for (const reason of section.serializeReasons.values()) {
-    if (isReasonDynamic(reason)) {
-      for (const [paramSection, params] of groupParamsBySection(reason.param)) {
-        ensureParamReasonGroup(paramSection, params);
-      }
+    ensureReasonGroups(reason);
+  }
+}
+
+function ensureReasonGroups(reason: Section["serializeReason"]) {
+  if (isReasonDynamic(reason)) {
+    for (const [paramSection, params] of groupParamsBySection(reason.param)) {
+      ensureParamReasonGroup(paramSection, params);
     }
   }
 }
@@ -438,9 +436,7 @@ function ensureParamReasonGroup(
 ) {
   const { paramReasonGroups } = section;
   if (paramReasonGroups) {
-    const found = findSorted(compareParamGroups, paramReasonGroups, {
-      reason,
-    } as ParamSerializeReasonGroup);
+    const found = findSorted(compareParamGroups, paramReasonGroups, { reason });
     if (found) return found;
   }
 
@@ -459,9 +455,7 @@ export function getParamReasonGroupIndex(
 ) {
   const index =
     section.paramReasonGroups &&
-    findIndexSorted(compareParamGroups, section.paramReasonGroups, {
-      reason,
-    } as ParamSerializeReasonGroup);
+    findIndexSorted(compareParamGroups, section.paramReasonGroups, { reason });
   if (index === undefined || index === -1) {
     throw new Error(
       "Invalid compiler state, cannot ask for a serialize reason group that was not analyzed.",
@@ -479,8 +473,8 @@ function bindingToSection(binding: Binding) {
 }
 
 function compareParamGroups(
-  a: ParamSerializeReasonGroup,
-  b: ParamSerializeReasonGroup,
+  a: Pick<ParamSerializeReasonGroup, "reason">,
+  b: Pick<ParamSerializeReasonGroup, "reason">,
 ) {
   return compareReferences(a.reason, b.reason);
 }
