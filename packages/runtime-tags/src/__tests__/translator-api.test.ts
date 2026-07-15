@@ -150,16 +150,32 @@ describe("runtime-tags/translator-api", () => {
   });
 
   describe("option validation", () => {
-    it("requires linkAssets for load imports", () => {
-      assert.throws(
-        () =>
-          compiler.compileFileSync(fixture("lazy-tag/template.marko"), {
+    it("compiles load imports eagerly when linkAssets is not configured", () => {
+      for (const output of ["html", "dom"] as const) {
+        const { code } = compiler.compileFileSync(
+          fixture("lazy-tag/template.marko"),
+          {
             ...baseConfig,
             cache: new Map(),
-            output: "html",
-          }),
-        /The `load` import attribute requires the `linkAssets` compiler option to be configured\./,
-      );
+            output,
+          },
+        );
+        assert.doesNotMatch(
+          code,
+          /load-tag|withLoadAssets|_load_template|import\(/,
+          `${output} output should not include lazy loading machinery`,
+        );
+        assert.doesNotMatch(
+          code,
+          /with\s*\{\s*load/,
+          `${output} output should strip the load import attribute`,
+        );
+        assert.match(
+          code,
+          /child\.marko/,
+          `${output} output should still import the child template`,
+        );
+      }
     });
 
     it("requires linkAssets for the entry option", () => {

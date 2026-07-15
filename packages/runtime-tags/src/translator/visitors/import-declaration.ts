@@ -57,25 +57,26 @@ export default {
       }
     }
 
-    const loadAttrValuePath =
-      node.attributes?.length &&
-      (importDecl.get("attributes") as t.NodePath<t.ImportAttribute>[])
-        .find(
+    const loadAttrPath = node.attributes?.length
+      ? (importDecl.get("attributes") as t.NodePath<t.ImportAttribute>[]).find(
           (p) =>
             (p.node.key.type === "Identifier"
               ? p.node.key.name
               : p.node.key.value) === "load",
         )
-        ?.get("value");
-    if (loadAttrValuePath) {
-      (node.extra ??= {}).loadImport = getLoadImportConfig(loadAttrValuePath);
-      const { file } = importDecl.hub;
-
+      : undefined;
+    if (loadAttrPath) {
+      // Without `linkAssets` there is no asset orchestration to drive lazy
+      // loading (eg `linked: false`); fall back to an eager tag import.
       if (!getMarkoOpts().linkAssets) {
-        throw importDecl.buildCodeFrameError(
-          "The `load` import attribute requires the `linkAssets` compiler option to be configured.",
-        );
+        loadAttrPath.remove();
+        return;
       }
+
+      (node.extra ??= {}).loadImport = getLoadImportConfig(
+        loadAttrPath.get("value"),
+      );
+      const { file } = importDecl.hub;
 
       const loadFile = tagImport && loadFileForImport(file, value);
       if (!loadFile) {

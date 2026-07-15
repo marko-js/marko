@@ -24,9 +24,11 @@ export function analyzeLoadImport(importDecl, tagEntry) {
 
   // Under hot reload every module is already eagerly loaded, so the lazy facade
   // buys nothing and its HMR-cached template collides with the real template's
-  // `_` slot, recursing on render (see load-tag-browser.js). Drop the attribute
-  // so the import compiles as a normal eager tag import in dev.
-  if (importDecl.hub.file.markoOpts.hot) {
+  // `_` slot, recursing on render (see load-tag-browser.js). Without `linkAssets`
+  // there is no asset orchestration for lazy loading either. Both cases drop the
+  // attribute so the import compiles as a normal eager tag import.
+  const { markoOpts } = importDecl.hub.file;
+  if (markoOpts.hot || !markoOpts.linkAssets) {
     loadAttrPath.remove();
     return;
   }
@@ -49,13 +51,6 @@ export function analyzeLoadImport(importDecl, tagEntry) {
         "Invalid load import, only a default specifier is allowed.",
       );
     }
-  }
-
-  const { markoOpts } = importDecl.hub.file;
-  if (!markoOpts.linkAssets) {
-    throw importDecl.buildCodeFrameError(
-      "The `load` import attribute requires the `linkAssets` compiler option to be configured.",
-    );
   }
 
   (importDecl.node.extra ??= {}).loadImport =
