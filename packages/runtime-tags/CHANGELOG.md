@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.10
+
+### Patch Changes
+
+- [#3434](https://github.com/marko-js/marko/pull/3434) [`b384bc0`](https://github.com/marko-js/marko/commit/b384bc03d3db5c2f02e80d9a1e9955d9e3c11655) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compile lazy `with { load }` imports as normal eager tag imports when the `linkAssets` compiler option isn't configured (eg `@marko/vite` with `linked: false`), instead of throwing.
+
 ## 6.3.9
 
 ### Patch Changes

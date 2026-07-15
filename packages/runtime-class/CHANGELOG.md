@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.19
+
+### Patch Changes
+
+- [#3434](https://github.com/marko-js/marko/pull/3434) [`b384bc0`](https://github.com/marko-js/marko/commit/b384bc03d3db5c2f02e80d9a1e9955d9e3c11655) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compile lazy `with { load }` imports as normal eager tag imports when the `linkAssets` compiler option isn't configured (eg `@marko/vite` with `linked: false`), instead of throwing.
+
+- [#3432](https://github.com/marko-js/marko/pull/3432) [`24df910`](https://github.com/marko-js/marko/commit/24df9102a59f4db1490cd1c74081b38fb930249f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove an unused internal translator module (`transform-body`). It duplicated the class translator's inline injection of `<init-components>`, `<await-reorderer>`, and `<_preferred-script-location>` into a document body, which runs in `tag/index.js`. Compiled output is unchanged.
+
+- Updated dependencies [[`b384bc0`](https://github.com/marko-js/marko/commit/b384bc03d3db5c2f02e80d9a1e9955d9e3c11655)]:
+  - @marko/runtime-tags@6.3.10
+
 ## 5.39.18
 
 ### Patch Changes
