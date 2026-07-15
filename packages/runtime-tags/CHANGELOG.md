@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.9
+
+### Patch Changes
+
+- [#3429](https://github.com/marko-js/marko/pull/3429) [`756200d`](https://github.com/marko-js/marko/commit/756200daef24e1d2e6ccb850cf6d8bb2441b1aaf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Slightly reduce runtime size by removing a redundant `else { break; }` branch from the DOM and HTML controllable-attribute handlers.
+
 ## 6.3.8
 
 ### Patch Changes
