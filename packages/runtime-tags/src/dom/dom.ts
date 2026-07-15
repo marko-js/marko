@@ -262,7 +262,9 @@ function attrsInternal(
   for (const name in events) events[name] = 0;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = 0;
-  switch (el.tagName) {
+  // A lone `null`/`undefined`/`false` spread reaches here unwrapped; skip the
+  // controllable switch (the attr loop below is a no-op on a nullish value).
+  switch (nextAttrs && el.tagName) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
         _attr_input_checked(

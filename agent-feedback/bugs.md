@@ -76,12 +76,6 @@ inline runtime robust; weigh against inline-runtime byte cost.
 
 The analyze pass validates that any _present_ specifiers are default specifiers (lines 91–97) but never requires one to exist, so a `load` import carrying zero specifiers passes analysis. Translate then does `node.specifiers.find(t.isImportDefaultSpecifier)!` (line 108); `.find` returns `undefined`, the `!`/destructure throws an opaque "Cannot destructure property 'local' of undefined" instead of a `buildCodeFrameError`. Fix: in the analyze block, after the specifier loop, throw a code-frame error when `!node.specifiers.some(t.isImportDefaultSpecifier)`.
 
-## Lone null/undefined/false spread on a controllable element crashes `_attrs` with a TypeError
-
-`packages/runtime-tags/src/dom/dom.ts:265` | 2026-07-14 | impact:med | effort:low
-
-`_attrs` guards its attribute-removal loop with `nextAttrs &&` (line 178) but calls `attrsInternal(scope, nodeAccessor, nextAttrs)` unconditionally (line 189). `attrsInternal`'s tag-specific switch probes attributes with the `in` operator without a null guard: `"checked" in nextAttrs` (line 265, INPUT), `"value" in nextAttrs` (298 SELECT / 309 TEXTAREA), `"open" in nextAttrs` (321 DETAILS/DIALOG). When `nextAttrs` is null/undefined the `in` operator throws `TypeError: Cannot use 'in' operator to search for 'checked' in null`, aborting the render. When a tag's only attribute is a single spread the compiler passes the raw value unwrapped — verified: `<input ...maybeNull>` emits `_attrs($scope, "#input/0", $scope.input_attrs)` — so a spread resolving to `null`/`undefined`/`false` reaches the switch directly. The same lone spread on a generic `<div>` renders fine (removal loop guarded; the final `for (const name in nextAttrs)` is a no-op on null), so behavior is inconsistent across tag types. Adding a second attribute wraps the spread in `{...}` (never null), so only a single lone spread is affected; `_attrs_partial` always builds a fresh `partial` object and is safe. Fix: default `nextAttrs` to `{}` in `attrsInternal`, or gate the switch on `nextAttrs &&`.
-
 ## A top-level `return` in one `<script>` short-circuits sibling `<script>`/`<lifecycle>` effects
 
 `packages/runtime-tags/src/translator/core/script.ts:128` | 2026-07-14 | impact:low | effort:low

@@ -259,7 +259,9 @@ export function _attrs(
   let result = "";
   let skip = /[\s/>"'=]/;
   let events: Record<string, unknown> | undefined;
-  switch (tagName) {
+  // A lone `null`/`undefined`/`false` spread reaches here unwrapped; skip the
+  // controllable switch (the attr loop below is a no-op on a nullish value).
+  switch (data && tagName) {
     case "input":
       if (MARKO_DEBUG) {
         assertExclusiveAttrs(data);
