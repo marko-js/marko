@@ -52,3 +52,71 @@ and merge the istanbul JSON at the end (the ~50s remap work splits cleanly
 per dump); prewarm the babel cache with one serial require pass in
 `scripts/test-parallel.js` before spawning workers on a cold cache (~6s net,
 needs a hardcoded heavy-module list that can rot).
+
+## No fixture discriminates cross-navigation parked-state leakage for keyed ready batches
+
+`packages/runtime-tags/src/dom/update.ts:158` | 2026-07-14 | impact:low | effort:med
+
+`createUpdate` now clears `pendingLoadUpdates`/`pendingDynamicUpdates`/
+`parkedReadyBatches` per navigation, and `persisted-update-lazy-double-nav`
+pins the two-navigations-while-loading race end to end (superseded parked
+patch, fragment-delivered `<if>` applied at replay). But the clearing itself
+is masked in that shape: `_update_load` already keeps only the newest patch
+per live scope, and a second same-route navigation re-serializes the lazy
+channel so its batch drains last either way. The scenario only the clearing
+prevents -- navigation 1 parks a keyed ready batch for a fragment-stamped
+subtree, navigation 2 (same route, subtree matched) does NOT re-deliver that
+channel, the module then loads and nav 1's stale scope fills/effects replay
+onto the live page -- needs the server to skip re-serializing a lazy
+channel on the second update, which the current update serializer never does
+(request-derived values ride every update). If a future serializer
+optimization makes update payloads delta-sparse across navigations, add a
+fixture for this before shipping it.
+
+## Mutation-tracker jsdom workaround silently hides real text updates in snapshots
+
+`packages/runtime-tags/src/__tests__/utils/track-mutations.ts:238` | 2026-07-14 | impact:low | effort:low
+
+`formatMutationRecord` drops characterData records where the new value starts
+with the old value and the boundary is whitespace, to filter jsdom's
+duplicate records (jsdom#3261). The filter also matches REAL updates of that
+shape: a fixture step changing text "draft" -> "draft edited" produces no
+`## Change` entry and (because formattedMutations is empty) no html block
+either, so the step looks like a no-op in `render-ssr.md` while the DOM did
+update. This cost real debugging time on a new controllable fixture; the
+committed `persisted-update-lazy-load` snapshot's missing label updates were
+initially indistinguishable from this. Fix direction: check jsdom's issue
+status (may be fixed), or only drop the record when an adjacent record shows
+the same target being re-reported, or at least emit the html block even when
+every mutation record was filtered.
+
+## `npm run build:sizes` dirties `.sizes*` on a clean checkout
+
+`.sizes/dom.js` | 2026-07-14 | impact:med | effort:low
+
+With lockfile-installed deps (rolldown 1.1.4, linux) and zero source changes,
+a fresh `node -r ~ts scripts/sizes` run rewrites `.sizes.json` (+8 min /
++2 brotli on `dom.js`) and all `.sizes/**` outputs: the minifier emits
+`for (; i && a[i - 1].x > y;) (i--, f())` where the committed files have
+`for (; i && a[--i].x > y;) f()`, and the shared-chunk hash flips
+(`_abort-signal-B6bKz-Eo` -> `_abort-signal-GQY_bOUg`). Verified identical
+drift with and without an unrelated source edit, so the committed `.sizes*`
+no longer reproduce from the committed lockfile — every next commit's
+pre-commit size diff will carry this unrelated noise. Fix: regenerate and
+commit `.sizes*` once (confirming which toolchain/platform produced the
+committed files), or pin the minifier the sizes script uses.
+
+## `npm test <file>` appends to the default spec glob instead of scoping to the file
+
+`.mocharc.json:1` | 2026-07-15 | impact:low | effort:low
+
+Passing an explicit test file (`npm test -- packages/runtime-tags/src/__tests__/marker-conformance.test.ts`)
+does not scope the run: mocha adds positional file args to the configured
+spec (`packages/*/@(src|test)/**/*.test.@(js|ts)`), so the whole suite runs
+anyway — silently, since the named file is also included. Scoping to one file
+requires bypassing the config
+(`npx mocha --no-config --no-package --timeout 10000 --require ~ts <file>`),
+which is undocumented and easy to get wrong (the `~ts` register hook and
+timeout must be repeated by hand). Either document that incantation in
+CLAUDE.md next to the `--grep` guidance, or add a small `test:file` script
+that forwards to mocha without the default spec.

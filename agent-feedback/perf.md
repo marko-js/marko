@@ -219,3 +219,18 @@ event regardless of interop, and `compat.onFlush` permanently patches
 Marko 6 chunk flush with a `writersByGlobal.get` miss once the class-compat
 module is loaded. Each is minor individually; worth gating the resolver loop on a
 "has bridged events" flag and scoping the patches.
+
+## Possession echo disagreement ships fragments where fills would do
+
+`packages/runtime-tags/src/dom/update-fragment.ts:30` | 2026-07-15 | impact:low | effort:med
+
+In the ecommerce validation, back-navigating over the `/search` keyed results
+list produced patches whose matched items arrived as fragments (now swapped
+in place, previously the fallback) in roughly a fifth of runs, meaning the
+server's `possessed[siteKey]` compare missed keys the page held even with the
+prior navigation fully settled. Correctness is unaffected -- fragments are
+authoritative -- but each miss trades sparse fills for fragment HTML bytes
+and replaces in-branch client state. Instrument `_have`'s emitted site keys
+against the server-side misses on that page shape to find which keys drop;
+suspect path-dependence in nested site keys for branches created by earlier
+patch frames versus the initial document render.

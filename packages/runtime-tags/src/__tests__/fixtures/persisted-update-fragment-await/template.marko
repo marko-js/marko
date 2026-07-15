@@ -1,0 +1,30 @@
+import { getProfile, getReports } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  <const/profile=getProfile?.($global.user)>
+  <h2.greeting>${profile.greeting}</h2>
+  <try>
+    <@placeholder>
+      <p.loading>crunching numbers…</p>
+    </@placeholder>
+    <await|reports|=getReports($global.range)>
+      <widget label=profile.plan/>
+      <ul.reports>
+        // Positional on purpose: fragment-walked positional branches carry
+        // no loop keys, pinning the applier's self-dispatch skip.
+        <for|report| of=reports>
+          <li class=(report.name === $global.focus && "focus")>${report.name}: ${report.value}</li>
+        </for>
+      </ul>
+    </await>
+  </try>
+  <p.footer>updated ${$global.stamp}</p>
+</define>
+
+<layout content=$global.view === "reports" ? Reports : Home/>

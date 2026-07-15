@@ -1,0 +1,12 @@
+// A client-owned mirror of request-derived data: the script's `$global`
+// read makes it a navigation-retriggered effect (`_script_refresh`), so a
+// persisted apply re-runs it against the matched scope and the mirror
+// re-seeds from the fresh global -- no `marko-run:navigate`-style event
+// listener needed. Local writes between navigations stay live.
+<let/mirror=$global.stock>
+<script>
+  mirror = $global.stock;
+</script>
+<button.take onClick() { mirror-- }>take</button>
+<p.mirror>${mirror} in stock</p>
+<p.server>server says ${$global.stock}</p>

@@ -1,0 +1,58 @@
+<h1>Alpha<!--M_*1 #text/0--></h1><button class=inc>count <!>
+    0<!--M_* #text/2--></button><!--M_* #button/1--><!--M_[-->
+<p class=detail>first detail<!--M_*1 #text/4--></p><span class=extra>first
+  extra<!--M_* #text/5--></span><!--M_]1 #text/6 2-->
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      n: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-show-continuation/template.marko_0 1"
+  ];
+  M._.w()
+</script>

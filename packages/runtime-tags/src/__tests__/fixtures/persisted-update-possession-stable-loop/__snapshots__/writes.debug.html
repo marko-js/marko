@@ -1,0 +1,80 @@
+<button>0<!--M_*1 #text/1--></button><!--M_* #button/0-->
+<ul>
+  <li>one<!--M_*3 #text/0-->: <!--M_[--><strong>A</strong><!--M_]3 #text/1 4-->
+  </li>
+  <li>two<!--M_*5 #text/0-->: <!--M_[--><strong>A</strong><!--M_]5 #text/1 6-->
+  </li>
+</ul><!--M_*2 #ul/0--><!--M_|1 #text/2 2-->
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      count: 0
+    }, {
+      "BranchScopes:#ul/0": [_(3), _(5)],
+      _: _(1),
+      "#LoopKey": "group",
+      "ForSite:#text/2": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-stable-loop/template.marko_0/update_for_#text/2"
+    }, {
+      "ConditionalRenderer:#text/1": _.a =
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-stable-loop/template.marko_1_content",
+      "RendererSite:#text/1": _.b =
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-stable-loop/template.marko_3/update_dynamic_#text/1",
+      _: _(2),
+      "#LoopKey": "one",
+      "ForSite:#ul/0": ""
+    }, 1, {
+      "ConditionalRenderer:#text/1": _.a,
+      "RendererSite:#text/1": _.b,
+      _: _(2),
+      "#LoopKey": "two",
+      "ForSite:#ul/0": ""
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-stable-loop/template.marko_0 1"
+  ];
+  M._.w()
+</script>

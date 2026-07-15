@@ -1,0 +1,164 @@
+<h1>Trailhead 40L Pack<!--M_*1 #text/0--></h1><button>clicked <!>
+    0<!--M_* #text/2--></button><!--M_* #button/1-->
+<section><!--M_[--><!--M_!^2-->loading related…<!--M_!2--><!--M_]1 #text/3 2-->
+</section>
+<footer>
+  <t hidden M_=2><!--M_#b--></t>
+  <script>
+    ((runtimeId) => (self[runtimeId] ||= (
+        renderId,
+        prefix = runtimeId + renderId,
+        prefixLen = prefix.length,
+        lookup = {},
+        visits = [],
+        doc = document,
+        walker = doc.createTreeWalker(
+          doc,
+          129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+        ),
+      ) =>
+      doc = (self[runtimeId][renderId] = {
+        i: prefix,
+        d: doc,
+        l: lookup,
+        v: visits,
+        x() {},
+        w(node, op, id, lastNodeScope) {
+          while ((node = walker.nextNode())) {
+            doc.x(
+              (op =
+                (op = node.data) &&
+                !op.indexOf(prefix) &&
+                ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                  prefixLen])),
+              id,
+              node,
+            );
+
+            if (op == "*") {
+              if (id[0] == " ") {
+                node.data = prefix + "*" + lastNodeScope + id;
+              } else {
+                lastNodeScope = id.slice(0, id.indexOf(" "));
+              }
+            } else if (op) {
+              lastNodeScope = "";
+            }
+
+            if (op > "#") {
+              visits.push(node);
+            }
+          }
+        },
+      }), self[runtimeId]))("M")("_");
+    M._.r = [_ => [1, {
+      "BoundarySite:#text/3": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-await/template.marko_0/update_boundary_#text/3",
+      count: 0,
+      "ClosureScopes:input_related": new Set([_(2)])
+    }, {
+      _: _(1),
+      "#BranchAccessor": "#text/3",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-await/template.marko_2_content"
+        )
+    }]];
+    ((runtime) => {
+      if (runtime.j) return;
+      let onNextSibling,
+        placeholder,
+        nextSibling,
+        // Nav epoch, captured at this reorder-runtime init. A persisted apply
+        // bumps this render's `runtime.n` (`dom/resume`'s `bumpNavEpoch`,
+        // from `dom/update`'s `createUpdate` before any frame applies), so a
+        // reorder completion whose epoch predates an applied navigation is
+        // dropped whole: the placeholder completion `c()` skips its cleanup
+        // walk and (by returning 1) the `runtime.j` script callbacks, and
+        // `replace` no-ops the swap. A stale chunk must not splice pre-nav
+        // content into the post-nav page, delete whatever now sits between
+        // markers a navigation left live, or run stale resume scripts.
+        // Streaming pages never advance `runtime.n`: `0 > 0` stays false.
+        epoch = runtime.n || 0,
+        placeholders = runtime.p = {},
+        replace = (id, container) =>
+        runtime.n > epoch || runtime.l[id].replaceWith(...container
+          .childNodes);
+      runtime.j = {};
+      runtime.x = (op, id, node, placeholderRoot, placeholderCb) => {
+        if (node == nextSibling) {
+          onNextSibling();
+        }
+
+        if (op == "#") {
+          (placeholders[id] = placeholder).i++;
+        } else if (op == "!") {
+          if (runtime.l[id] && placeholders[id]) {
+            nextSibling = node.nextSibling;
+            onNextSibling = () => placeholders[id].c();
+          }
+        } else if (node.tagName == "T" && (id = node.getAttribute(runtime
+            .i))) {
+          nextSibling = node.nextSibling;
+          onNextSibling = () => {
+            node.remove();
+            placeholderRoot || replace(id, node);
+            placeholder.c();
+          };
+          placeholder =
+            placeholders[id] ||
+            (placeholderRoot = placeholders[id] = {
+              i: runtime.l[id] ? 1 : 2,
+              c(start = runtime.l["^" + id]) {
+                if (runtime.n > epoch || --placeholderRoot.i) return 1;
+                for (;
+                  (nextSibling =
+                    runtime.l[id].previousSibling || start).remove(),
+                  start != nextSibling;
+
+                );
+                replace(id, node);
+              },
+            });
+          // repurpose "op" for callbacks ...carefully
+          if ((op = runtime.j[id])) {
+            placeholderCb = placeholder.c;
+            placeholder.c = () => placeholderCb() || op(runtime.r);
+          }
+        }
+      };
+    })(M._);
+    M._.w()
+  </script>
+
+  <!-- FLUSH -->
+
+  <t hidden M_=b><!--M_[-->
+    <ul>
+      <li>Rain Cover<!--M_*5 #text/0--> costs <!>24.5<!--M_* #text/1--></li>
+      <li>Hip Belt<!--M_*6 #text/0--> costs <!>39<!--M_* #text/1--></li>
+      <!--M_}4 #ul/0 6 5-->
+    </ul><!--M_]2 #text/0 4-->
+  </t>
+  <script>
+    M._.r.push(_ => [1, {
+      "BoundarySite:#text/3": 0
+    }, 3, {
+      "#LoopKey": 11,
+      "ForSite:#ul/0": _.a =
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-await/template.marko_3/update_for_#ul/0"
+    }, {
+      "#LoopKey": 12,
+      "ForSite:#ul/0": _.a
+    }]);
+    M._.w()
+  </script>
+
+  <!-- FLUSH -->
+
+  <!--M_[--><em>Ships tomorrow<!--M_*7 #text/0--></em><!--M_]1 #text/4 7-->
+</footer>
+<script>
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-await/template.marko_0 1"
+    );
+  M._.w()
+</script>

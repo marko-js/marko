@@ -24,8 +24,9 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
+import { recordRegisterIdFootprint } from "../../util/preallocate-register-ids";
 import {
   type Binding,
   BindingType,
@@ -73,14 +74,20 @@ import {
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import { toMemberExpression } from "../../util/to-property-name";
 import {
+  assertPersistedSpreadSupported,
   getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
+import {
+  addUpdateMerge,
+  getUpdateSiteRegisterId,
+  isUpdateDynamicTagSite,
+} from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { getTagRelativePath } from "./custom-tag";
+import { getChildImportPath, getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
@@ -127,6 +134,11 @@ export default {
 
       analyzeAttributeTags(tag);
 
+      // A bodiless dynamic tag leaves no section or binding footprint that
+      // distinguishes it in analyze data, but its update merge dispatches
+      // by renderer id -- record the flag update classification checks.
+      getProgram().node.extra.hasDynamicTags = true;
+
       const tagSection = getOrCreateSection(tag);
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
@@ -155,7 +167,15 @@ export default {
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
         ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
+        recordRegisterIdFootprint(tagSection, {
+          kind: "tagVar",
+          binding: tag.node.var!.extra!.binding!,
+        });
       }
+      recordRegisterIdFootprint(tagSection, {
+        kind: "dynamic",
+        binding: nodeBinding,
+      });
 
       startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
@@ -377,7 +397,7 @@ export default {
       } else if (t.isStringLiteral(tagExpression)) {
         tagExpression = importDefault(
           tag.hub.file,
-          getTagRelativePath(tag),
+          getChildImportPath(tag.hub.file, getTagRelativePath(tag)),
           tagExpression.value,
         );
       }
@@ -389,6 +409,11 @@ export default {
         undefined,
         isClassAPI ? "renderBody" : "content",
       );
+      for (const arg of node.arguments || []) {
+        if (t.isSpreadElement(arg)) {
+          assertPersistedSpreadSupported(tag, arg.argument);
+        }
+      }
       const args: (t.Expression | t.SpreadElement)[] = [];
       let hasTagArgs = false;
 
@@ -412,11 +437,41 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const serializeArg = getSerializeGuard(
+        let serializeArg = getSerializeGuard(
           tagSection,
           serializeReason,
-          true,
+          !isPersisted(),
         );
+        if (isPersisted()) {
+          // Persisted spine: dynamic-tag structure (eg a layout's
+          // `<${input.content}/>`) serializes whenever the persisted render
+          // flag is set -- parent-threaded reasons don't reach body-content
+          // props, and update merges descend through this link.
+          serializeArg = t.binaryExpression(
+            "|",
+            serializeArg!,
+            callRuntime("_persisted_reason"),
+          );
+        }
+        // A build-stable id for this dynamic-tag site (globally unique --
+        // filename + section + accessor), the possession echo's key: runtime
+        // scope ids drift between the document and update renders (matched
+        // scopes elide), but this compile constant is identical in both, so the
+        // client can echo what it holds at a site and the server match it.
+        // The html runtime stashes the site id on the hop scope so the client
+        // can echo the renderer it already holds. Renderer changes are then
+        // delivered as resumable fragments. A non-participating site (see
+        // `isUpdateDynamicTagSite`) still serializes its spine under the
+        // forced persisted reason above, but never diverges -- no id.
+        const siteId = isUpdateDynamicTagSite(tagSection, nodeBinding)
+          ? t.stringLiteral(
+              getUpdateSiteRegisterId(
+                tagSection,
+                "dynamic",
+                getScopeAccessor(nodeBinding),
+              ),
+            )
+          : undefined;
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -427,6 +482,7 @@ export default {
               t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              siteId,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -437,6 +493,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              siteId,
             );
 
         if (node.var) {
@@ -488,9 +545,20 @@ export default {
           replacement.skip();
         }
       } else {
-        const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
-        const signal = getSignal(section, nodeBinding, "dynamicTag");
+        const signal = getSignal(tagSection, nodeBinding, "dynamicTag");
+        // Update renders link the rendered branch explicitly (see the html
+        // runtime's `_dynamic_tag`); the merge dispatches the content's
+        // registered update merge by the serialized renderer id. The signal
+        // merge validates and descends when the renderer still matches; a
+        // mismatch is accompanied by a resumable fragment.
+        if (isUpdateDynamicTagSite(tagSection, nodeBinding)) {
+          const accessor = getScopeAccessorLiteral(nodeBinding);
+          addUpdateMerge(tagSection, {
+            kind: "dynamic",
+            accessor,
+          });
+        }
         let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
           const varBinding = tag.node.var.extra!.binding!;
@@ -574,7 +642,12 @@ export default {
         if (!isClassAPI) {
           enableDynamicTagResume(tag);
         }
-        addValue(section, tagExtra.referencedBindings, signal, tagExpression);
+        addValue(
+          tagSection,
+          tagExtra.referencedBindings,
+          signal,
+          tagExpression,
+        );
         tag.remove();
       }
     },

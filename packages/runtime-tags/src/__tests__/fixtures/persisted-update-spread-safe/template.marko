@@ -1,0 +1,7 @@
+<let/attrs={ title: "client title", class: "client" }/>
+<let/count=0/>
+
+<button onClick() { count++ }>clicked ${count}</button>
+<input data-request=input.title ...attrs>
+<${"div"} data-request=input.title ...attrs>dynamic</>
+<child data-request=input.title ...attrs/>

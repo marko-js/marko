@@ -51,10 +51,14 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
+  // Navigation epoch (persisted updates only) -- see `bumpNavEpoch`.
+  n?: number;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredValues: Record<string, unknown> = {};
+// Also read by `dom/update`'s patch-aware serialize context (fills access
+// registered values as `_._[id]`).
+export const registeredValues: Record<string, unknown> = {};
 let curRenders: Renders;
 let branchesEnabled: undefined | 1;
 let embedRenders:
@@ -71,11 +75,40 @@ export function enableBranches() {
   }
 }
 
+/** Persisted entries can enable branches after the initial resume walk. */
+export function enableBranchesPersisted() {
+  if (!branchesEnabled) {
+    enableBranches();
+    for (const renderId in curRenders) {
+      runResumeEffects(curRenders[renderId]);
+    }
+  }
+}
+
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+}
+
+/** Persisted lazy entries additionally replay updates parked while loading. */
+export function readyPersisted(readyId: string) {
+  ready(readyId);
+  flushReadyUpdates();
+}
+
+/** Flushes parked lazy-child patches (see dom/update.ts `_update_load`). */
+export let flushReadyUpdates: () => void = () => {};
+export function enableReadyUpdates(hook: () => void) {
+  flushReadyUpdates = hook;
+}
+
+/** Whether a lazy module has declared ready (its registrations are
+ * present). Persisted updates gate parked keyed resume batches on this, as
+ * `render.m` gates document `.b` batches. */
+export function isReady(readyId: string) {
+  return !!readyIds?.has(readyId);
 }
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
@@ -179,6 +212,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               ? (registeredValues[registryId] as RegisteredFn)(getScope(data))
               : getScope(data)
             : applyScopes(data)) as SerializeContext;
+        // KEEP IN SYNC with `walkFragment` in dom/update-fragment.ts, a
+        // standalone fork of this branch-visit grammar for persisted fragment
+        // frames: the marker token shapes (branch start/end variants,
+        // single-node back-scan, "!" placeholder accessor), the branch
+        // start/end-node pairing (branchStarts stack, inserted end Text), the
+        // node-marker continuation resets, and the orphan-branch parenting
+        // order must stay aligned. (The fork intentionally drops render-only
+        // concerns: await counters and deferred-owner linking.)
         const createVisitBranches = (
           branchScopesStack: Opt<BranchScope>[] = [],
           branchStarts: Comment[] = [],
@@ -465,6 +506,40 @@ function runResumeEffects(render: RenderData) {
   } finally {
     isResuming = 0;
   }
+}
+
+// Resolves the live root scope (patch scope 1 by convention) of a resumed
+// render for persisted updates, via the render's own effect machinery. Only
+// imported by `dom/update`, so plain apps never pay for it.
+export function getUpdateRoot() {
+  let root: Scope | undefined;
+  for (const id in curRenders) {
+    const render = curRenders[id];
+    registeredValues["__update_root"] = (scope: Scope) => (root = scope);
+    (render.r ||= []).push("__update_root 1");
+    runResumeEffects(render);
+    if (root) return root;
+  }
+  return root;
+}
+
+/**
+ * Bumped once per persisted apply attempt (`dom/update`'s `createUpdate`,
+ * before any frame applies) on the navigated render, identified by the
+ * `renderId` its live `$global` carries from `initGlobal` above. The inline
+ * `PERSISTED_REORDER_RUNTIME_CODE` script shares that render's
+ * `self[runtimeId]` entry (see `html/inlined-runtimes.ts`): it captures this
+ * value at its per-render init and drops a reorder completion whole (the
+ * placeholder cleanup walk, the `runtime.j` script callbacks, and the final
+ * swap) once the value has advanced, gating a reorder chunk for a boundary a
+ * navigation has since applied over. Scoped to the one render so an
+ * unrelated (eg embedded) render's pending await swap survives a persisted
+ * navigation it took no part in. Only imported by `dom/update`, so plain
+ * apps never pay for it, and ordinary streaming pages never advance it.
+ */
+export function bumpNavEpoch(global: Scope[AccessorProp.Global]) {
+  const render = curRenders[global.renderId as string];
+  if (render) render.n = (render.n || 0) + 1;
 }
 
 export function getRegisteredWithScope(id: string, scope?: Scope) {

@@ -1,0 +1,10 @@
+<let/count=0/>
+<h1>${$global.title}</h1>
+<a href=`/items/${$global.params.id}`>link</a>
+<button onClick() { count++ }>${count}</button>
+<section class=(count && $global.params.tag && "hot")>
+  <if=$global.params.sale>
+    <em>Sale ${$global.params.sale}% off</em>
+    <button.buy onClick() { count += 10 }>buy</button>
+  </if>
+</section>

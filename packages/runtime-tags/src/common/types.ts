@@ -110,6 +110,42 @@ export interface $Global {
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }
+
+/**
+ * @internal Per-render options — the second argument to `render()`, kept a
+ * generic bag (not a positional persisted flag) so future render-time options
+ * extend it without another signature change. Distinct from `$global`, which
+ * is user/request data (in @marko/run `$global` _is_ the request context).
+ */
+export interface RenderOptions {
+  persisted?: PersistedRender;
+}
+
+/**
+ * @internal Request facts for a persisted-pages render. An empty object renders
+ * the initial document. `patch` identifies an enhanced navigation; the renderer
+ * derives whether fresh structure is required by comparing its route ids.
+ */
+export interface PersistedRender {
+  patch?: PersistedPatch;
+}
+
+/** @internal An enhanced-navigation request within one persisted build. */
+export interface PersistedPatch {
+  fromRoute: string;
+  targetRoute: string;
+  /**
+   * @internal The possession echo (`x-marko-have`): for each dynamic-hop site
+   * the client holds, the site's build-stable id → the renderer id it
+   * currently shows. The id is the compiler's per-site register id (stashed on
+   * the hop scope so the client reads it back), not the runtime scope id --
+   * scope ids drift between the document and update renders, this constant does
+   * not. The server ships a fragment for a site whose target renderer differs
+   * from what the client echoed (same-route dynamic swaps included) rather than
+   * failing the apply. Absent map = no echo.
+   */
+  possessed?: { [siteId: string]: string };
+}
 export interface Input {
   [x: PropertyKey]: unknown;
 }
@@ -123,7 +159,7 @@ export interface Template {
     reference: Node,
     position?: InsertPosition,
   ): MountedTemplate;
-  render(input?: Input): RenderedTemplate;
+  render(input?: Input, options?: RenderOptions): RenderedTemplate;
 }
 
 export interface MountedTemplate {

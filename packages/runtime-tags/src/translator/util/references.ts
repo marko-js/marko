@@ -13,7 +13,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -54,8 +54,11 @@ import {
   finalizeSerializeReason,
   getSerializeReason,
   getSerializeSourcesForExpr,
+  getSerializeSourcesForExprs,
   getSerializeSourcesForRef,
   isForceSerialized,
+  isRequestDerivedSerializeReason,
+  isStateSerializeReason,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -90,6 +93,13 @@ export enum BindingType {
 export interface Sources {
   state: Opt<Binding>;
   param: Opt<InputBinding | ParamBinding>;
+  /**
+   * The value derives from `$global` (only tracked under the `persisted`
+   * compile option). Global sources never contribute to value serialization
+   * (a stateful parent cannot change `$global`); they gate markers/spine on
+   * the render's persisted flag alone, so they carry no per-key bindings.
+   */
+  global: true | undefined;
 }
 
 export interface Binding {
@@ -171,6 +181,7 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
+    readsGlobal?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     spreadFrom?: Binding;
@@ -612,6 +623,27 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
+/**
+ * Under the `persisted` compile option `$global` member reads taint their
+ * owning expression (a canonical-extra `readsGlobal` flag -- no bindings,
+ * no signals) so the serialize-reason system treats $global-derived holes
+ * as request-derived: they get resume markers and join the serialized spine
+ * when the render's persisted flag is set. Reads stay plain member accesses;
+ * updates `Object.assign` the fresh `serializedGlobals` onto the live global
+ * before section merges dispatch, and `?update` entries re-invoke
+ * global-reading statements so mixed state/global expressions re-run.
+ */
+export function trackGlobalReference(identifier: t.NodePath<t.Identifier>) {
+  const fnRoot = getFnRoot(identifier);
+  const exprRoot = getExprRoot(fnRoot || identifier);
+  const section = getOrCreateSection(exprRoot);
+  const exprExtra = getCanonicalExtra(
+    (exprRoot.node.extra ??= { section }) as ReferencedExtra,
+  );
+  exprExtra.readsGlobal = true;
+  section.hasGlobalReads = true;
+}
+
 function createBindingsAndTrackReferences(
   lVal: t.LVal,
   type: BindingType,
@@ -832,6 +864,7 @@ export function mergeReferences<T extends t.Node>(
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
+      if (extra.readsGlobal) targetExtra.readsGlobal = true;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           read.binding.reads.delete(extra);
@@ -1126,6 +1159,104 @@ export function finalizeReferences() {
     }
   });
 
+  // Persisted participation widening, in a separate children-first pass
+  // (sections are created parent-first, so the reverse order is depth-safe)
+  // so a nested branch's participation is visible when its enclosing branch
+  // is processed -- and so the mainline pass above keeps its exact
+  // `addSerializeExpr` queuing order (non-persisted output stays
+  // byte-identical by construction).
+  if (isPersisted()) {
+    forEachSectionReverse((section) => {
+      if (
+        section.parent &&
+        section.isBranch &&
+        section.sectionAccessor &&
+        section.upstreamExpression
+      ) {
+        // Direct `$global` reads have no closure binding to surface through
+        // `getDirectClosures`, but they make the branch's scopes
+        // navigation-refreshable all the same.
+        if (section.hasGlobalReads) {
+          addSerializeReason(section, globalSources, kBranchSerializeReason);
+        }
+        // Non-immediate closures compile to subscription sets, which update
+        // renders never invoke for request-derived values (patches deliver
+        // them through branch merges instead), so their request-derived
+        // sources make the branch participate exactly like a direct
+        // closure's would. (A sidebar link's `active` class reading a
+        // layout-level `$global`-derived const two sections up is this
+        // shape.)
+        const closureSources = getSerializeSourcesForRef(
+          section.referencedClosures,
+        );
+        if (closureSources && (closureSources.param || closureSources.global)) {
+          addSerializeReason(
+            section,
+            createSources(
+              undefined,
+              closureSources.param,
+              closureSources.global,
+            ),
+            kBranchSerializeReason,
+          );
+        }
+        // Stable branch sets (constant upstream expressions) with
+        // request-derived content participate in update renders, so their
+        // reconcile reference node must resume: thread the request-derived
+        // part of the immediate branch reason (closures + the flag above --
+        // upstream-expression contributions already reach the marker via
+        // the mainline pass's `addSerializeExpr`) to the parent's marker
+        // reason.
+        const branchReason = getSerializeReason(
+          section,
+          kBranchSerializeReason,
+        );
+        if (isRequestDerivedSerializeReason(branchReason)) {
+          const requestSources = createSources(
+            undefined,
+            branchReason.param,
+            branchReason.global,
+          );
+          addSerializeReason(
+            section.parent,
+            requestSources,
+            section.sectionAccessor.binding,
+          );
+          // Update dispatch reaches a participating branch only through its
+          // ancestors (parent merge -> branch list -> content merge), so an
+          // enclosing branch must participate whenever any descendant does.
+          // The children-first order makes this transitive.
+          if (section.parent.isBranch) {
+            addSerializeReason(
+              section.parent,
+              requestSources,
+              kBranchSerializeReason,
+            );
+          }
+          // A participating branch's params are patch-constructed: fresh
+          // subtrees fill from the patch's branch list and captures, never
+          // by re-running the input expression (which may be server-only --
+          // a `server import`ed nav list). Params from a source-less loop
+          // expression would otherwise classify render-once, so their holes
+          // never capture, leaving fresh branches with empty param-derived
+          // content. Taint them like a `$global` read (markers/captures
+          // gated on the persisted flag, no value-signal serialization) and
+          // flow it through everything derived from them. State-driven sets
+          // are excluded as in the update-merge gates -- the server never
+          // pairs into them.
+          if (
+            section.params &&
+            !isStateSerializeReason(
+              getSerializeSourcesForExprs(section.upstreamExpression),
+            )
+          ) {
+            addGlobalTaint(section.params);
+          }
+        }
+      }
+    });
+  }
+
   forEachSection(applySerializeExprs);
 
   forEachSection((section) => {
@@ -1418,7 +1549,7 @@ function getCollapsibleIntersectionSource(
     sources = mergeSources(sources, member.sources);
   }
 
-  if (!sources || (sources.state && sources.param)) {
+  if (!sources || sources.global || (sources.state && sources.param)) {
     return undefined;
   }
 
@@ -1447,6 +1578,51 @@ const [getResolvedSources] = createProgramState(() => new Set<Binding>());
 const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
+const globalSources: Sources = {
+  state: undefined,
+  param: undefined,
+  global: true,
+};
+
+/**
+ * The server-refreshable taint for persisted builds: `$global`-reading
+ * expressions serialize markers under the persisted flag and refresh on
+ * every navigation. `$global` (with input/params, which track through
+ * bindings) is deliberately the ONLY channel -- other server-varying
+ * expressions (`new Date()`, module state, impure calls) are computed once
+ * at page load and never refresh, matching the client reactive model where
+ * nothing drives a refs-less expression. Expression volatility is
+ * undecidable in general (`count && helper()`), so the contract is: if the
+ * server should refresh it, read it from `$global` or input.
+ */
+export function getGlobalExprSources(expr: t.NodeExtra) {
+  if (isPersisted() && expr.readsGlobal) return globalSources;
+}
+
+/**
+ * Marks a binding (a participating branch's params) request-derived with
+ * the same global taint `$global` reads carry, and flows it through
+ * everything whose value derives from it. Sources were already resolved
+ * when participation is decided, and aliases share their root's sources
+ * object, so the taint walks explicitly: property/plain aliases plus each
+ * read's downstream bindings. `let` bindings stay untouched -- they are
+ * client state and survive navigations whatever their initializer
+ * (mirroring `resolveDerivedSources`).
+ */
+function addGlobalTaint(binding: Binding) {
+  if (binding.sources?.global || binding.type === BindingType.let) return;
+  binding.sources = mergeSources(binding.sources, globalSources);
+  for (const alias of binding.aliases) {
+    addGlobalTaint(alias);
+  }
+  for (const [, alias] of binding.propertyAliases) {
+    addGlobalTaint(alias);
+  }
+  for (const read of binding.reads) {
+    forEach(read.downstream, addGlobalTaint);
+  }
+}
+
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
@@ -1521,6 +1697,16 @@ function resolveDerivedSources(binding: Binding) {
           }
         });
       }
+      // Volatile const/derived values (see `getGlobalExprSources`)
+      // propagate to everything downstream of the binding. `let` bindings
+      // are excluded -- they are client state and survive navigations by
+      // definition, whatever their initializer.
+      if (binding.type !== BindingType.let) {
+        binding.sources = mergeSources(
+          binding.sources,
+          getGlobalExprSources(expr),
+        );
+      }
     });
   }
 }
@@ -1528,18 +1714,21 @@ function resolveDerivedSources(binding: Binding) {
 export function createSources(
   state: Sources["state"],
   param: Sources["param"],
+  global?: Sources["global"],
 ): Sources {
-  if (!(state || param)) {
+  if (!(state || param || global)) {
     throw new Error(
       "Cannot create a serialize reason that does not reference state or a param.",
     );
   }
 
-  return { state, param };
+  return { state, param, global };
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
+
+  if (a.global !== b.global) return a.global ? 1 : -1;
 
   if (a.param) {
     if (!b.param) return 1;
@@ -1561,10 +1750,13 @@ export function compareSources(a: Sources, b: Sources) {
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
-  if (a.state === b.state && a.param === b.param) return a;
+  if (a.state === b.state && a.param === b.param && a.global === b.global)
+    return a;
+  if (a.state === b.state && a.param === b.param) return a.global ? a : b;
   return createSources(
     bindingUtil.union(a.state, b.state),
     unionParamSources(a.param, b.param),
+    a.global || b.global,
   );
 }
 

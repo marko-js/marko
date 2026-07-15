@@ -1,5 +1,5 @@
-// size: 6443 (min) 2822 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 6445 (min) 2816 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-A67JWtJv.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -76,15 +76,7 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
-  };
+  catchEnabled;
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -595,6 +587,16 @@ function $signalReset(scope, id) {
 function abort(ctrl) {
   ctrl.abort();
 }
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return (
+    (renderer.mount = mount),
+    (renderer._ = renderer),
+    _resume(id, renderer)
+  );
+};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,

@@ -241,6 +241,29 @@ function resolveAwait(
   return awaitBranch;
 }
 
+/**
+ * Sets up and inserts a detached (unresolved) await branch at its anchor.
+ * Shared by promise resolution above and persisted update applies, where a
+ * fresh subtree's await never ran its promise (compute is skipped while
+ * updating) and the body's own frame is the resolution.
+ */
+export function attachAwaitBranch(
+  scope: Scope,
+  nodeAccessor: string,
+  awaitBranch: BranchScope,
+) {
+  awaitBranch[AccessorProp.PendingScopes] =
+    awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
+  setupBranch(awaitBranch[AccessorProp.DetachedAwait] as Renderer, awaitBranch);
+  awaitBranch[AccessorProp.DetachedAwait] = 0;
+
+  insertBranchBefore(
+    awaitBranch,
+    (scope[nodeAccessor] as ChildNode).parentNode!,
+    scope[nodeAccessor] as ChildNode,
+  );
+}
+
 export function _await_content(
   nodeAccessor: EncodedAccessor,
   template?: string | 0,
@@ -964,6 +987,131 @@ function loop<T extends unknown[] = unknown[]>(
         afterReference = newScopes[start + i][AccessorProp.StartNode];
       }
     };
+  };
+}
+
+/**
+ * Reconciles a persisted request-derived loop from patch branch scopes. Unlike
+ * `loop`, this path has no renderer or setup fallback: every new branch must
+ * be supplied by the caller as a resumed fragment.
+ */
+export function _for_keyed(
+  nodeAccessor: EncodedAccessor,
+  params:
+    ((patchBranch: Scope, liveBranch: BranchScope) => BranchScope | void) | 0,
+  createFreshBranch: (
+    key: unknown,
+    args: unknown[],
+    global: Scope[AccessorProp.Global],
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
+) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+  const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
+  enableBranches();
+  return (scope: Scope, value: unknown) => {
+    const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+    const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
+    const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
+    scope[keyedScopesAccessor] = null;
+    const parentNode = (
+      referenceNode.nodeType > NodeType.Element
+        ? referenceNode.parentNode ||
+          oldScopes[0]?.[AccessorProp.StartNode].parentNode
+        : referenceNode
+    ) as Element;
+    const [patchBranches, loopKeyAccessor] = value as [
+      Scope[],
+      string | undefined,
+    ];
+    if (!Array.isArray(patchBranches) || typeof loopKeyAccessor !== "string") {
+      throw new Error(
+        MARKO_DEBUG ? "Malformed persisted <for> update" : "update diverged",
+      );
+    }
+    const oldByKey = new Map<unknown, BranchScope>();
+    for (let i = 0; i < oldScopes.length; i++) {
+      oldByKey.set(oldScopes[i][AccessorProp.LoopKey] ?? i, oldScopes[i]);
+    }
+
+    for (let i = 0; i < patchBranches.length; i++) {
+      const patchBranch = patchBranches[i];
+      const key = patchBranch[loopKeyAccessor] ?? i;
+      let branch = oldByKey.get(key);
+      if (branch) {
+        // A merge may return a replacement branch (a fragment swap): the old
+        // branch then stays in `oldByKey` and leaves with the removed keys,
+        // while the replacement joins the insertion walk as a fresh branch.
+        const replacement = params && params(patchBranch, branch);
+        if (replacement) {
+          branch = replacement;
+        } else {
+          oldByKey.delete(key);
+        }
+      } else {
+        branch = createFreshBranch(
+          key,
+          [patchBranch, i],
+          scope[AccessorProp.Global],
+          scope,
+          parentNode,
+        );
+      }
+      branch[AccessorProp.LoopKey] = key;
+      newScopes.push(branch);
+    }
+
+    const oldLen = oldScopes.length;
+    const hasSiblings = referenceNode !== parentNode;
+    let cursor: ChildNode | null = null;
+    if (hasSiblings) {
+      if (oldLen) {
+        if (!newScopes.length) {
+          parentNode.insertBefore(
+            referenceNode,
+            oldScopes[oldLen - 1][AccessorProp.EndNode].nextSibling,
+          );
+        } else {
+          // Anchor the reconcile at the first SURVIVING old branch (matched
+          // branches keep their DOM position through the removals below), so
+          // in-place branches are never moved -- and never past the loop's
+          // trailing siblings, which anchoring on the reference marker would
+          // do (it may sit after the content, or out of the DOM entirely
+          // once an empty->filled reconcile removed it). An all-fresh list
+          // falls back to the slot right after the old content.
+          cursor = oldScopes[oldLen - 1][AccessorProp.EndNode].nextSibling;
+          for (let i = 0; i < oldLen; i++) {
+            if (!oldByKey.has(oldScopes[i][AccessorProp.LoopKey] ?? i)) {
+              cursor = oldScopes[i][AccessorProp.StartNode];
+              break;
+            }
+          }
+        }
+      } else if (newScopes.length) {
+        cursor = referenceNode.nextSibling;
+        referenceNode.remove();
+      }
+    }
+
+    for (const branch of oldByKey.values()) {
+      removeAndDestroyBranch(branch);
+    }
+    if (!hasSiblings) {
+      if (!newScopes.length) {
+        parentNode.textContent = "";
+        return;
+      }
+      cursor = parentNode.firstChild;
+    }
+
+    for (const branch of newScopes) {
+      if (branch[AccessorProp.StartNode] !== cursor) {
+        insertBranchBefore(branch, parentNode, cursor);
+      }
+      cursor = branch[AccessorProp.EndNode].nextSibling;
+    }
   };
 }
 

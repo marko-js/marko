@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+// The click handler's only purpose is giving the root scope a resumable
+// effect: the harness's live-root pairing trick (main.test.ts's
+// `onNavigate`, mirroring `getUpdateRoot` in dom/resume.ts) replays
+// scope 1's own resume entry, which needs at least one to exist.
+<let/x=0/>
+<h1 onClick() { x++ }>${input.title}</h1>
+<section>
+  <try>
+    <@placeholder>loading…</@placeholder>
+    <await|data|=resolveAfter(input.data, input.tick)>
+      <p>${data}</p>
+    </await>
+  </try>
+</section>

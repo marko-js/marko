@@ -8,18 +8,19 @@ import {
   type BindingPropTree,
   getKnownFromPropTree,
 } from "./binding-prop-tree";
+import evaluate from "./evaluate";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPersisted } from "./marko-config";
 import {
   type AttrTagLookup,
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
-import { getScopeAccessor } from "./references";
+import { BindingType, getScopeAccessor } from "./references";
 import { callRuntime } from "./runtime";
 import {
   getScopeIdIdentifier,
@@ -27,7 +28,10 @@ import {
   getSectionRegisterReasons,
 } from "./sections";
 import { getScopeReasonDeclaration } from "./serialize-guard";
-import { isReasonDynamic } from "./serialize-reasons";
+import {
+  getSerializeSourcesForExpr,
+  isReasonDynamic,
+} from "./serialize-reasons";
 import { getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
 
@@ -149,6 +153,7 @@ export function translateAttrs(
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
+      assertPersistedSpreadSupported(tag, value);
       attrProperties.push(t.spreadElement(value));
     } else if (
       !seen.has(attr.name) &&
@@ -163,6 +168,34 @@ export function translateAttrs(
     properties: attrProperties.reverse().concat(contentProperties),
     statements,
   };
+}
+
+export function assertPersistedSpreadSupported(
+  tag: t.NodePath<t.MarkoTag>,
+  value: t.Expression,
+) {
+  if (!isPersisted()) return;
+
+  if (value.extra?.spreadFrom?.type === BindingType.let) return;
+
+  // `evaluate` uses compiler constant folding, so literal/object spreads are
+  // accepted without relying on their syntax or accidentally treating a
+  // request-derived object as static.
+  if (evaluate(value).confident) return;
+
+  const sources = getSerializeSourcesForExpr(
+    value.extra?.merged || value.extra || {},
+  );
+  if (!sources?.param && !sources?.global) return;
+
+  const mixed = !!sources.state;
+  throw tag
+    .get("name")
+    .buildCodeFrameError(
+      mixed
+        ? "Persisted pages cannot use a spread that mixes client state with request-derived values. The compiler cannot safely split the spread into sparse updates; use explicit attributes or a sparse spread protocol."
+        : "Persisted pages cannot use a request-derived spread without a sparse update protocol. Use explicit attributes or a supported controllable/event spread.",
+    );
 }
 
 export function getTranslatedBodyContentProperty(

@@ -354,7 +354,7 @@ export class Serializer {
     try {
       this.#state.boundary = boundary;
       this.#state.channel = channel;
-      return writeScopesRoot(this.#state, flushes);
+      return writeScopesRoot(this.#state, flushes, !!boundary.state?.patch);
     } finally {
       this.#state.flush++;
       this.#state.buf = [];
@@ -404,13 +404,19 @@ export function getRegistered(val: WeakKey) {
 }
 
 // A payload with only scope data returns the fill array directly
-// (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
+// (`_=>[1,{a},{b},2,{e}]`). Update payloads omit the conventional root id 1
+// as an array hole (`_=>[,{a}]`); the patch applier knows that its first
+// non-global scope is the root. When there are trailing expressions (deferred
 // assigns/mutations, which may reference bindings created inside the fill
 // and so must evaluate after it) the fill is applied through the serialize
 // context instead and the payload ends in `,0` so an arbitrary value from
 // its last expression can never be misread as a fill — the browser only
 // applies a payload's return value when it is an array.
-function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
+function writeScopesRoot(
+  state: State,
+  flushes: ScopeFlush[],
+  compactRoot: boolean,
+) {
   const { buf } = state;
   let nextSlotId = -1;
   let fillIndex = -1;
@@ -426,10 +432,16 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     // skip count (the browser creates scopes on demand).
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
+      // The delta may be negative: two partials can flush for the same slot
+      // under different identities (globals object and scope 0's record both
+      // land on slot 0 when a root mutable `<context>` stamps its branch
+      // link), and `applyScopes` sums deltas signed.
       buf[openIndex] =
         nextSlotId === -1
-          ? "[" + scopeId + ",{"
-          : (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
+          ? compactRoot && scopeId === 1
+            ? "[,{"
+            : "[" + scopeId + ",{"
+          : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
       buf.push("}");
@@ -1705,6 +1717,15 @@ function throwUnserializable(
 
     if (access) {
       message += ` (reading ${access})`;
+    }
+
+    if (state.boundary.state.patch) {
+      // Patch renders serialize request-derived values wholesale; ones that
+      // can't cross the wire (eg functions in `input`) degrade to sparse
+      // "unchanged" -- prop skipped, client keeps its live value -- rather
+      // than aborting the patch.
+      console.warn(message + " (skipped in patch render)");
+      return;
     }
 
     const err = new TypeError(message, { cause });

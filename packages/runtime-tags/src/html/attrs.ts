@@ -420,6 +420,14 @@ function writeControlledScope(
     assertHandlerIsFunction("valueChange", valueChange);
   }
 
+  // Controlled wiring is resume-only: patch renders target already-resumed
+  // pages (live handlers survive) and fresh branches wire their own from
+  // registered content. Fragment subtrees are resumes, not fresh
+  // constructions -- no setup runs against them, so the wiring rides the
+  // serialized data as in a document (mirrors `_var` in ./writer.ts).
+  const chunk = getChunk()!;
+  if (chunk.boundary.state.patch && !chunk.fragment) return;
+
   _scope(
     scopeId,
     serializeType

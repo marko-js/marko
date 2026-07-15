@@ -1,0 +1,34 @@
+import { getReport } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  // v1 limit (designs/persisted-pages-architecture.md, "Fragment frames"):
+  // the async catch machinery is reorder-based (placeholder marks,
+  // out-of-order swap scripts) with no update/fragment story yet, so a
+  // catch-only boundary (no `<@placeholder>` on ITS OWN try) around async
+  // content must abort the render rather than emit a corrupt frame -- even
+  // when (as here) the actual async boundary is a properly placeholder'd
+  // inner `<try>`: the outer catch-only try still goes genuinely async
+  // (its body chunk never settles synchronously), which is exactly what
+  // the catch machinery has no fragment story for.
+  <try>
+    <@catch|err|>
+      <p.failed>failed: ${err.message}</p>
+    </@catch>
+    <try>
+      <@placeholder>
+        <p.loading>loading…</p>
+      </@placeholder>
+      <await|data|=getReport($global.range)>
+        <p.report>${data}</p>
+      </await>
+    </try>
+  </try>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

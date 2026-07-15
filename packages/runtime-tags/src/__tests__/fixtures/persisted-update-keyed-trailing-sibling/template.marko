@@ -1,0 +1,8 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<ul>
+  <for|item| of=$global.items by="id">
+    <li>${item.id}:${item.label}</li>
+  </for>
+  <li.trailing>end</li>
+</ul>

@@ -1,0 +1,24 @@
+// A shared wrapper hop ABOVE the diverging page hop: `<frame>`'s content
+// hop stays matched across every navigation (same content renderer), and
+// the route divergence lives one hop deeper at `<layout content=>`. A
+// cross-route capture must NOT fire at the matched frame hop (the applier
+// would reject the already-equal fragment and the real renderer change
+// would arrive fragment-less -- "update diverged" and a full-navigation
+// fallback); the possession echo proves the frame hop matched, so the
+// walk descends and the layout hop takes the fragment. The `count` state
+// living under the frame hop (but outside the diverging content) is the
+// tripwire: it survives only if the frame subtree stays a matched patch.
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Dashboard>
+  <let/tally=0>
+  <button.bump onClick() { tally += 1 }>tally ${tally}</button>
+  <p.greeting>hello ${$global.user}</p>
+</define>
+
+<frame>
+  <let/count=0/>
+  <button.count onClick() { count++ }>clicked ${count}</button>
+  <layout content=$global.view === "dashboard" ? Dashboard : Home/>
+</frame>

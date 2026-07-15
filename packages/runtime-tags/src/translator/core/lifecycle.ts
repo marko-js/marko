@@ -9,6 +9,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
+import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import { getAllTagReferenceNodes, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -35,6 +36,7 @@ export default {
       getAllTagReferenceNodes(tag.node),
     );
     tagExtra.isEffect = true;
+    recordRegisterIdFootprint(section, { kind: "effect", extra: tagExtra });
     // `_lifecycle` registers cleanup via `$signal` at runtime, so the scope
     // must resume with its closest branch linked.
     section.hasAbortSignal = true;

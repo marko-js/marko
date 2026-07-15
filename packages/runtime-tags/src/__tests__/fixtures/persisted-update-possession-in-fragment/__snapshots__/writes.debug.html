@@ -1,0 +1,69 @@
+<button class=count>clicked <!>0<!--M_*1 #text/1--></button><!--M_* #button/0-->
+<section class=shell><!--M_[-->
+  <p class=home>welcome home</p><!--M_[--><span class=x>Widget X: <!>sales
+      report<!--M_*5 #text/0--></span><!--M_]4 #text/0 5--><!--M_]2 #text/0 3-->
+</section>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "#childScope/2": _(2)
+    }, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-in-fragment/template.marko_4_content",
+      "RendererSite:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-in-fragment/tags/layout.marko_0/update_dynamic_#text/0"
+    }, {
+      "#childScope/0": _(4)
+    }, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-in-fragment/template.marko_1_content",
+      "RendererSite:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-in-fragment/template.marko_2/update_dynamic_#text/0",
+      "#ClosestBranchId": 3
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-in-fragment/template.marko_0 1"
+  ];
+  M._.w()
+</script>

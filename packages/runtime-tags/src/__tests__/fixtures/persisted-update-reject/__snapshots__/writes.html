@@ -1,0 +1,63 @@
+<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_* a-->
+<section><!--M_[--><!--M_!^b--><!--M_!^2-->
+  <p class=loading>loading…</p><!--M_!2--><!--M_!b--><!--M_]1 c 2-->
+</section>
+<t hidden M_=2><!--M_#c--></t>
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [1, {
+    Tc: "a1",
+    d: 0
+  }, {
+    C: "c",
+    E: _(1, "a5"),
+    Q: _(1, "a4")
+  }], "a0 1"];
+  (e => {
+    if (e.j) return;
+    let i, l, r, p = e.n || 0,
+      t = e.p = {},
+      c = (i, l) => e.n > p || e.l[i].replaceWith(...l.childNodes);
+    e.j = {}, e.x = (n, a, d, o, g) => {
+      d == r && i(), "#" == n ? (t[a] = l).i++ : "!" == n ? e.l[a] && t[
+        a] && (r = d.nextSibling, i = () => t[a].c()) : "T" == d.tagName &&
+        (a = d.getAttribute(e.i)) && (r = d.nextSibling, i = () => {
+          d.remove(), o || c(a, d), l.c()
+        }, l = t[a] || (o = t[a] = {
+          i: e.l[a] ? 1 : 2,
+          c(i = e.l["^" + a]) {
+            if (e.n > p || --o.i) return 1;
+            for (;
+              (r = e.l[a].previousSibling || i).remove(), i != r;);
+            c(a, d)
+          }
+        }), (n = e.j[a]) && (g = l.c, l.c = () => g() || n(e.r)))
+    }
+  })(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->
+  <p class=feed>all systems go<!--M_*4 a--></p><!--M_]2 a 4-->
+</t>
+<script>
+  M._.r.push(_ => [1, {
+    Tc: 0
+  }]);
+  M._.w()
+</script>

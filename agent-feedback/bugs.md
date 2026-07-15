@@ -149,3 +149,77 @@ bridged head chunk.
 `packages/runtime-tags/src/dom/control-flow.ts:535` | 2026-07-14 | impact:high | effort:med
 
 The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` (`:535` for `_dynamic_tag`, `:647` for `_dynamic_tag_content`, plus the DOM `_attr_content`). `RendererProp.Id` is the template/section resume id, identical for every _instance_ of one content section — instances differ only by their `RendererProp.Owner` scope. So switching a dynamic tag between two instances of the same content — two `<attrs.content>` from two instances of one provider tag, or the list-detail `<${selected.content}/>` — is a silent no-op: no teardown or re-render, and closures stay subscribed to the old owner's scope. A control with two _distinct_ tag files behaves correctly, pinning the defect to the id-only comparison. Fix: compare `(id, owner)` — content renderer objects are recreated per render so identity alone over-fires, while the owner scope is stable per instance; the resume handshake must serialize a scope-registered renderer as its registered reference so the first post-resume update stays instance-aware.
+
+## An empty-bodied `<html-comment>` resumes as a text node instead of the comment
+
+`packages/runtime-tags/src/dom/resume.ts:402` | 2026-07-14 | impact:med | effort:med
+
+For an `<html-comment>${c}</html-comment>` whose body serializes empty, SSR writes `<!---->` immediately before the resume marker. The node-claim heuristic — `prev && (prev.nodeType < 8 /* COMMENT_NODE */ || (prev as Comment).data) ? prev : insertBefore(new Text())` — exists so an empty `<!>` separator is _not_ claimed (a fresh Text node is created instead), but it cannot distinguish an intentional empty comment: `prev` is a comment (`nodeType === 8`, so `< 8` is false) with empty `data` (falsy), so it builds a Text node as the binding rather than claiming the comment. After hydration, setting `c = "secret"` renders `secret` as visible text where a pure client render produces `<!--secret-->` — an SSR-resume vs CSR divergence. Fix: give the html-comment marker a dedicated resume symbol (e.g. `ResumeSymbol.NodeComment`) that claims the immediately-preceding sibling unconditionally, since the tag always writes its comment right before the marker.
+
+## Fragment-walked non-branch scopes get the fragment root as ClosestBranch, not their inner enclosing branch
+
+`packages/runtime-tags/src/dom/update-fragment.ts:198` | 2026-07-14 | impact:med | effort:med
+
+`applyFragment`/`createFragmentBranch`/`applyBoundaryBody` finish a walk with
+`for (const scope of touched) scope[ClosestBranch] ||= branch`, defaulting
+every walker-stamped non-branch scope to the fragment's ROOT branch. Document
+resume instead links a branch-owning scope to its true enclosing marker
+branch (the deferred-owner pass in `createVisitBranches`, dom/resume.ts) or
+applies a serialized `ClosestBranchId` fill -- but the update applier's
+patch-side `getScope` (dom/update.ts) never resolves `ClosestBranchId`, so a
+scope nested inside an INNER branch of a fragment (eg inside a keyed loop
+item or an `<if>` body within the capture) is left with
+`ClosestBranch = fragmentRoot`, skipping the inner branch. Consumers of the
+`ClosestBranch`/`ParentBranch` chain include destroy propagation and
+`getPossessionSiteKey` (dom/update-fragment.ts), whose loop-path segments
+come from walking that chain -- a hop/boundary/loop site nested under a
+fragment-created loop item could compute a possession path missing its loop
+segment, making the echo mismatch (safe but lossy: fragments ship for
+possessed sites) or collide. The marker-conformance test
+(`__tests__/marker-conformance.test.ts`) pins the divergence explicitly as a
+documented asymmetry; existing possession-in-fragment fixtures pass, so no
+current fixture nests a participating site under an inner fragment branch.
+A fix could adopt resume's deferred-owner linking into `walkFragment` (the
+KEEP IN SYNC comments currently declare it render-only) or resolve
+`ClosestBranchId` fills on patch scopes.
+
+## Malformed fragment/boundary scope-id lists degrade silently (dead wiring, no error)
+
+`packages/runtime-tags/src/dom/update-fragment.ts:134` | 2026-07-14 | impact:low | effort:high
+
+A corrupted `scopeIds` list on a fragment or boundary-body entry
+(`stampFragmentScopes`) is undetectable: a dropped id leaves that dom-less
+scope unstamped, so its effects are generation-gated out (dead event wiring,
+state writes that never render), while a nonexistent id stamps an empty
+garbage scope nothing reads. Pinned as degraded-not-loud by
+`persisted-update-corrupt-scope-list`. This is arguably inside the wire
+format's trust boundary (frames are trusted application output, and a
+truncated list is indistinguishable from a capture that serialized fewer
+scopes), but it is the one pairing-integrity case that neither throws nor
+no-ops cleanly. A loud check cannot key off "effect entry references an
+unpaired scope" because the superseded-subtree skip legitimately leaves a
+dropped entry's scopes unstamped (persisted-update-superseded-frame). Making
+it detectable would need a wire change, e.g. the entry carrying its expected
+serialized-scope count.
+
+## Sibling `run` repo: `pkg-toggle` round trip permanently moves toggle-only keys into `package.json`
+
+`../run/scripts/pkg-toggle.js:16` | 2026-07-15 | impact:med | effort:low
+
+(Recorded here because the `run` repo has no agent-feedback directory.) The
+toggle swaps each key of `package.toggle.json` with `package.json`
+(`[targetData[key], toggleData[key]] = [toggleData[key], targetData[key]]`).
+For a key that exists only in the toggle file (e.g. `typesVersions` in
+`packages/*/package.toggle.json`), the first toggle writes
+`toggleData[key] = undefined`, which `JSON.stringify` drops from the toggle
+file; the second toggle then never sees the key, so `package.json` keeps the
+publish-only field and the toggle file loses it — the round trip is not an
+identity. Observed after `marko-ecommerce`'s `scripts/setup.mjs` ran
+`node scripts/pkg-toggle` twice around `npm pack`: all eight
+`packages/{run,adapters/*}/package{,.toggle}.json` files were left dirty
+(`package.json` gained `typesVersions`). The `@ci:release` script does the
+same double toggle, so post-release checkouts carry the same drift and a
+subsequent toggle no longer switches those keys at all. Fix: use an explicit
+absent-key marker (or `Object.hasOwn` bookkeeping) so toggle-only keys are
+removed from the target on the way back instead of being dropped from the
+toggle file.

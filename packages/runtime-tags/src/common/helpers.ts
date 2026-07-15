@@ -141,6 +141,22 @@ export function isNotVoid(value: unknown) {
   return value != null && value !== false;
 }
 
+// Loop keys are contractually string | number (`assertValidLoopKey` rejects
+// everything else before any possession path can see it), so only those two
+// shapes need unambiguous round-tripping. `-0` collapsing onto `"n0"` is fine:
+// key maps use SameValueZero, so `-0` and `0` are the same key on both sides.
+export function encodePossessionValue(value: unknown): string {
+  if (MARKO_DEBUG && typeof value !== "string" && typeof value !== "number") {
+    throw new TypeError("Possession keys must be strings or numbers.");
+  }
+  return typeof value === "string" ? `s${value.length}:${value}` : `n${value}`;
+}
+
+export function encodePossessionSite(siteId: string, key?: unknown): string {
+  const encodedKey = key === undefined ? "" : encodePossessionValue(key);
+  return `i${siteId.length}:${siteId}${encodedKey ? "=" + encodedKey : ""}`;
+}
+
 export function isPromise(value: unknown): value is Promise<unknown> {
   return (
     value != null && typeof (value as Promise<unknown>).then === "function"

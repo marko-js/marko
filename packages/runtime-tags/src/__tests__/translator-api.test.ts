@@ -26,6 +26,10 @@ describe("runtime-tags/translator-api", () => {
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
         "@marko/runtime-tags/debug/dom",
       ]);
+      assert.deepEqual(
+        translator.getRuntimeEntryFiles("dom-persisted", false),
+        ["@marko/runtime-tags/debug/dom-persisted"],
+      );
     });
 
     it("returns the optimized runtime entries when optimized", () => {
@@ -34,6 +38,9 @@ describe("runtime-tags/translator-api", () => {
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
         "@marko/runtime-tags/dom",
+      ]);
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom-persisted", true), [
+        "@marko/runtime-tags/dom-persisted",
       ]);
     });
 
@@ -189,6 +196,21 @@ describe("runtime-tags/translator-api", () => {
           } as compiler.Config),
         /The "entry" option requires the `linkAssets` compiler option to be configured\./,
       );
+    });
+
+    it("requires the persisted option for persisted entry kinds", () => {
+      for (const entry of ["update", "persisted"] as const) {
+        assert.throws(
+          () =>
+            compiler.compileFileSync(fixture("basic-counter/template.marko"), {
+              ...baseConfig,
+              cache: new Map(),
+              output: "dom",
+              entry,
+            } as compiler.Config),
+          /The "(update|persisted)" entry kind requires the `persisted` compiler option to be enabled\./,
+        );
+      }
     });
 
     it("validates the runtimeId option", () => {

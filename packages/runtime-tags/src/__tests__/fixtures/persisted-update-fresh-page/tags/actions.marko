@@ -1,0 +1,7 @@
+<const/productId=input.id>
+<shared-list/list name="cart"/>
+<let/added=0>
+<button.add onClick() {
+  added++;
+  list = [...list, productId];
+}>added ${added} of ${productId} (${list.length} in cart)</button>

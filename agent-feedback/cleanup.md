@@ -44,3 +44,42 @@ three identical `_resume("…",_classDisplay)` (DOM) / `_s("…",_classDisplay)`
 (HTML) statements (the `??=` non-template branch at lines 360-377 duplicates the
 same way). Idempotent, so not incorrect, but N× redundant given "bundle size is a
 feature" — one registration per unique class file would suffice.
+
+## Residual "update render" phrasing outside the B2 rename scope
+
+`packages/runtime-tags/src/dom/queue.ts:23` | 2026-07-14 | impact:low | effort:low
+
+The B2 terminology pass renamed the patch-producing render mode to "patch
+render" (`State.patch`, `_patch_reason`, comment sweep in `html/writer.ts`,
+`html/serializer.ts`, `dom/update.ts`, `dom/update-merges.ts`; see
+`designs/persisted-pages-glossary.md`, "Naming conventions"). Files outside
+that scope still say "update render(s)" for the same concept: `dom/queue.ts:23`
+("update-render patch"), `common/types.ts:142`, several translator comments
+(`translator/util/serialize-guard.ts`,
+`translator/visitors/tag/native-tag.ts`, `translator/visitors/placeholder.ts`,
+`translator/util/signals.ts`, ...), fixture `test.ts` docs, and in @marko/run
+the dev strings/test names in `runtime/persisted-navigation.ts:92,144`,
+`__tests__/persisted-render.test.ts`, and `vite/types.ts:80`. (The Phase C
+sweep fixed `translator/util/update-merges.ts`,
+`translator/visitors/program/update.ts`, and `__tests__/main.test.ts`.) The
+run-side strings have no scheduled pass. Sweep the rest to "patch render"/
+"patch response".
+
+## Stale design-doc section pointers outside the Phase C file list
+
+`packages/runtime-tags/src/common/accessor.ts:48` | 2026-07-14 | impact:low | effort:low
+
+Comments cite design-doc sections that no longer exist after the B1 docs
+rewrite: `designs/persisted-pages-architecture.md` has no "Fragment frames" or
+"Possession echo" heading (the wire grammar now lives in
+`designs/persisted-pages-wire-format.md` under "Fragment entries" /
+"Possession echo"; the concept under architecture's "Structural divergence"),
+and `designs/persisted-pages-roadmap.md` has no "Correctness" section or
+numbered audit items (it was reorganized into "Release blockers" / "Known
+narrow gaps" / "Deferred until after the gates"). The Phase C sweep fixed the
+runtime/translator/harness sources; still stale: `common/accessor.ts:48`
+(roadmap "Correctness") and the fixture docs in
+`__tests__/fixtures/persisted-update-*/test.ts` ("Fragment frames",
+"Possession echo", roadmap "Correctness", and "Async correctness audit,
+item N" citations). Re-point them at the wire-format doc sections or the
+roadmap's current headings.

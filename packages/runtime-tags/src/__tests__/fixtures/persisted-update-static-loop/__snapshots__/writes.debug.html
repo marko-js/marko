@@ -1,0 +1,64 @@
+<button class=bump>0<!--M_*1 #text/1--></button><!--M_* #button/0--><span
+  class=active>home<!--M_*2 #text/1--></span><!--M_* #span/0--><span>tools<!--M_*3 #text/1--></span><!--M_* #span/0--><span>toys<!--M_*4 #text/1--></span><!--M_* #span/0--><!--M_|1 #text/2 4 3 2--><em>pick:
+  <!>home<!--M_*5 #text/1--></em><!--M_* #em/0--><!--M_|1 #text/3 5-->
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [0, {
+      params: {
+        pick: "home",
+        tag: ""
+      }
+    }, {
+      count: 0
+    }, 3, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-static-loop/template.marko_0 1"
+  ];
+  M._.w()
+</script>

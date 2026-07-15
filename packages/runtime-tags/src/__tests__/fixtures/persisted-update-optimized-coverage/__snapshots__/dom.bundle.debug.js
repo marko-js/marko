@@ -1,0 +1,114 @@
+// template.marko.update.mjs
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $elseif_content__update = (_patch, _live) => {
+	if ("title" in _patch) _live["title"] = _patch["title"];
+	if ("ConditionalRenderer:#text/0" in _patch || "BranchScopes:#text/0" in _patch) _update_dynamic(_patch, _live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
+};
+const $update = (_patch, _live) => {
+	_update_pair(_patch, _live);
+	if ("count" in _patch) _update_seed(_live, $count_seed, _patch["count"]);
+	if ("input_id" in _patch) _live["input_id"] = _patch["input_id"];
+	if ("input_tag" in _patch) _live["input_tag"] = _patch["input_tag"];
+	if ("ConditionalRenderer:#div/2" in _patch) _update_if(_patch, _live, "ConditionalRenderer:#div/2", "BranchScopes:#div/2", [
+		_update_scope,
+		$elseif_content__update,
+		0
+	]);
+};
+_update_content("__tests__/template.marko_5_content", _update_scope);
+_update_content("__tests__/template.marko_1_content", _update_scope);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+_update_content("__tests__/template.marko", _merge);
+function _createPatch() {
+	return createPatch(_merge);
+}
+
+// data.ts
+function getTitle(id) {
+	return `server title ${id}`;
+}
+
+// template.marko
+const $Panel_content__walks = "D l", $Panel_content__template = "<p> </p>";
+const $template = "<button>count <!></button><div></div>";
+const $walks = " Db%l b";
+const $inputtag_content__title = /*@__PURE__*/ _closure_get("title", ($scope) => {
+	if (!updating) {
+		_text($scope["#text/0"], $scope._.title);
+	}
+});
+const $inputtag_content__setup = ($scope) => {
+	if (!updating) $inputtag_content__title($scope);
+};
+const $inputtag_content = _content_resume("__tests__/template.marko_5_content", " ", " b", $inputtag_content__setup);
+const $else_content__input_id = /*@__PURE__*/ _if_closure("#div/2", 2, ($scope) => {
+	if (!updating) {
+		getTitle($scope._.input_id);
+	}
+});
+const $else_content__setup = ($scope) => {
+	if (!updating) $else_content__input_id._($scope);
+	$Panel_content__setup._($scope["#childScope/0"], $scope._);
+};
+const $elseif_content__title__closure = /*@__PURE__*/ _closure($inputtag_content__title);
+const $elseif_content__title = /*@__PURE__*/ _const_persisted("title", $elseif_content__title__closure);
+const $elseif_content__input_id = /*@__PURE__*/ _if_closure("#div/2", 1, ($scope) => {
+	if (!updating) {
+		if (!updating) $elseif_content__title($scope, getTitle($scope._.input_id));
+	}
+});
+const $elseif_content__setup = ($scope) => {
+	if (!updating) $elseif_content__input_id._($scope);
+	if (!updating) $elseif_content__input_tag._($scope);
+};
+const $elseif_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtag_content);
+const $elseif_content__input_tag = /*@__PURE__*/ _if_closure("#div/2", 1, ($scope) => {
+	if (!updating) {
+		$elseif_content__dynamicTag($scope, $scope._.input_tag);
+	}
+});
+const $if_content__title = ($scope, title) => _text($scope["#text/0"], title);
+const $if_content__input_id = /*@__PURE__*/ _if_closure("#div/2", 0, ($scope) => {
+	if (!updating) {
+		if (!updating) $if_content__title($scope, getTitle($scope._.input_id));
+	}
+});
+const $if_content__setup = ($scope) => {
+	if (!updating) $if_content__input_id._($scope);
+};
+const $Panel_content__input_title = /*@__PURE__*/ _closure_get("input_title", ($scope) => {
+	if (!updating) {
+		_text($scope["#text/0"], $scope._.input_title);
+	}
+});
+const $Panel_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
+	if (!updating) $Panel_content__input_title($scope);
+});
+const $count = /*@__PURE__*/ _let_persisted("count/9", ($scope) => _text($scope["#text/1"], $scope.count));
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
+const $if = /*@__PURE__*/ _if("#div/2", "<h2> </h2>", "D l", $if_content__setup, "<!><!><!>", "b%c", $elseif_content__setup, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $else_content__setup);
+const $input_kind = ($scope, input_kind) => {
+	if (!updating) $if($scope, input_kind === "native" ? 0 : input_kind === "dynamic" ? 1 : 2);
+};
+const $input = ($scope, input) => {
+	$input_title($scope, input.title);
+	$input_kind($scope, input.kind);
+	$input_id($scope, input.id);
+	$input_tag($scope, input.tag);
+};
+const $input_title__closure = /*@__PURE__*/ _closure($Panel_content__input_title);
+const $input_title = /*@__PURE__*/ _const_persisted("input_title", $input_title__closure);
+const $input_id = /*@__PURE__*/ _const_persisted("input_id", ($scope) => {
+	$if_content__input_id($scope);
+	$elseif_content__input_id($scope);
+	$else_content__input_id($scope);
+});
+const $input_tag = /*@__PURE__*/ _const_persisted("input_tag", $elseif_content__input_tag);
+enableBranchesPersisted();
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

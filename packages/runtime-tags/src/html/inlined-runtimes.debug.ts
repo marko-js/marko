@@ -34,13 +34,60 @@ export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||
     },
   })
 , self[runtimeId]))`;
+export const PERSISTED_WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||= (
+  renderId,
+  prefix = runtimeId + renderId,
+  prefixLen = prefix.length,
+  lookup = {},
+  visits = [],
+  doc = document,
+  walker = doc.createTreeWalker(
+    doc,
+    129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */,
+  ),
+) =>
+  doc = (self[runtimeId][renderId] = {
+    i: prefix,
+    d: doc,
+    l: lookup,
+    v: visits,
+    x() {},
+    w(node, op, id, lastNodeScope) {
+      while ((node = walker.nextNode())) {
+        doc.x(
+          (op =
+            (op = node.data) &&
+            !op.indexOf(prefix) &&
+            ((lookup[(id = op.slice(prefixLen + 1))] = node), op[prefixLen])),
+          id,
+          node,
+        );
+
+        if (op == "*") {
+          if (id[0] == " ") {
+            node.data = prefix + "*" + lastNodeScope + id;
+          } else {
+            lastNodeScope = id.slice(0, id.indexOf(" "));
+          }
+        } else if (op) {
+          lastNodeScope = "";
+        }
+
+        if (op > "#") {
+          visits.push(node);
+        }
+      }
+    },
+  })
+, self[runtimeId]))`;
 export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
   if (runtime.j) return;
   let onNextSibling,
     placeholder,
     nextSibling,
     placeholders = runtime.p = {},
-    replace = (id, container) => runtime.l[id].replaceWith(...container.childNodes);
+    replace = (id, container) =>
+      runtime.l[id].replaceWith(...container.childNodes);
   runtime.j = {};
   runtime.x = (op, id, node, placeholderRoot, placeholderCb) => {
     if (node == nextSibling) {
@@ -68,6 +115,70 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
             i: runtime.l[id] ? 1 : 2,
             c(start = runtime.l["^" + id]) {
               if (--placeholderRoot.i) return 1;
+              for (
+                ;
+                (nextSibling =
+                  runtime.l[id].previousSibling || start).remove(),
+                  start != nextSibling;
+
+              );
+              replace(id, node);
+            },
+          });
+      // repurpose "op" for callbacks ...carefully
+      if ((op = runtime.j[id])) {
+        placeholderCb = placeholder.c;
+        placeholder.c = () => placeholderCb() || op(runtime.r);
+      }
+    }
+  };
+})`;
+export const PERSISTED_REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
+  if (runtime.j) return;
+  let onNextSibling,
+    placeholder,
+    nextSibling,
+    // Nav epoch, captured at this reorder-runtime init. A persisted apply
+    // bumps this render's \`runtime.n\` (\`dom/resume\`'s \`bumpNavEpoch\`,
+    // from \`dom/update\`'s \`createUpdate\` before any frame applies), so a
+    // reorder completion whose epoch predates an applied navigation is
+    // dropped whole: the placeholder completion \`c()\` skips its cleanup
+    // walk and (by returning 1) the \`runtime.j\` script callbacks, and
+    // \`replace\` no-ops the swap. A stale chunk must not splice pre-nav
+    // content into the post-nav page, delete whatever now sits between
+    // markers a navigation left live, or run stale resume scripts.
+    // Streaming pages never advance \`runtime.n\`: \`0 > 0\` stays false.
+    epoch = runtime.n || 0,
+    placeholders = runtime.p = {},
+    replace = (id, container) =>
+      runtime.n > epoch || runtime.l[id].replaceWith(...container.childNodes);
+  runtime.j = {};
+  runtime.x = (op, id, node, placeholderRoot, placeholderCb) => {
+    if (node == nextSibling) {
+      onNextSibling();
+    }
+
+    if (op == "#") {
+      (placeholders[id] = placeholder).i++;
+    } else if (op == "!") {
+      if (runtime.l[id] && placeholders[id]) {
+        nextSibling = node.nextSibling;
+        onNextSibling = () => placeholders[id].c();
+      }
+    } else if (node.tagName == "T" && (id = node.getAttribute(runtime.i))) {
+      nextSibling = node.nextSibling;
+      onNextSibling = () => {
+        node.remove();
+        placeholderRoot || replace(id, node);
+        placeholder.c();
+      };
+      placeholder =
+        placeholders[id] ||
+        (placeholderRoot = placeholders[id] =
+          {
+            i: runtime.l[id] ? 1 : 2,
+            c(start = runtime.l["^" + id]) {
+              if (runtime.n > epoch || --placeholderRoot.i) return 1;
               for (
                 ;
                 (nextSibling =
