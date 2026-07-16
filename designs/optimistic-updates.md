@@ -1,13 +1,12 @@
 # Optimistic updates: design exploration
 
-Status: exploration, pre-RFC. Third revision: a first-principles rederivation
-that factors the earlier single-feature design into three independently
-shippable primitives and gives an explicit core-first landing order. The
-previous revisions (git history of this file) developed one integrated
-`<optimistic>` feature and progressively coupled it to the async machinery;
-this revision keeps their semantic findings but repackages them so the most
-broadly useful pieces land in `marko` itself first, without waiting on the
-mutation story or on persisted pages.
+Status: exploration, pre-RFC. Fourth revision. The third revision factored
+the design into independently shippable primitives (boundary
+pending/continuity, transactions, `<optimistic>`); this revision corrects
+how tag-owned state is exposed — `pending:=` misused the controllable
+convention, which implies the caller can own the value — and re-derives
+every pending surface from that correction. Earlier revisions live in this
+file's git history.
 
 It builds on the persisted-pages design family
 (`designs/persisted-pages-*.md` on the `claude/marko-persisted-pages-review-*`
@@ -60,54 +59,59 @@ Axioms, taken from the framework's own design:
 - **A2.** The server owns truth. Client state exists only where the compiler
   proves the client needs it.
 - **A3.** State is declared bindings updated by plain assignment; everything
-  else derives. New capabilities surface as ordinary state and change
-  handlers (the controllable convention), not new reactive kinds.
-- **A4.** Async is structural. "Not here yet" is expressed by where
+  else derives.
+- **A4.** Values flow through positions with fixed meanings: a tag
+  **exposes** a value it owns through its *tag variable* (element getters,
+  `<id>`, `<let>`, `<return>`); a tag **accepts** values through
+  *attributes*; an attribute paired with a *change handler* means the caller
+  can own that value (the controllable convention — inputs, `<let>`,
+  `<return>`). An attribute/change-handler pair on a value the caller can
+  never own is a lie in the syntax: `<try pending:=searching>` reads as
+  permission to *tell* the boundary to go pending.
+- **A5.** Async is structural. "Not here yet" is expressed by where
   `<await>`/`<try>` sit in the tree, not by status flags threaded through
   render code.
-- **A5.** Everything degrades to native behavior without JavaScript.
-- **A6.** Features cost nothing when unused.
+- **A6.** Everything degrades to native behavior without JavaScript.
+- **A7.** Features cost nothing when unused.
 
 Derivation:
 
-1. From A1+A2: a mutation is a request, and its confirmed effect arrives as
-   new server-derived input on its own channel. Any *provisional* display of
-   the expected outcome must therefore be an **overlay that can never write
-   truth** — reverting is the only exit. (Invariant: a guess is bounded and
-   revocable; assignment today is neither.)
-2. The overlay needs a lifetime. From A1+A5, the natural unit is the **user
+1. From A1+A2: a mutation is a request whose confirmed effect arrives as new
+   server-derived input on its own channel. Any *provisional* display of the
+   expected outcome must be an **overlay that can never write truth** —
+   reverting is the only exit.
+2. The overlay needs a lifetime. From A1+A6, the natural unit is the **user
    act**: from the triggering event until the page has presented the act's
-   outcome. No existing object has this extent — the DOM event is too short,
-   and promises the user happens to hold are invisible to Marko — so the
-   lifetime must be a first-class runtime concept that promises and routers
-   can extend. Call it a **transaction**.
-3. From A4: pendingness is *already* structural — a `<try>` boundary knows
+   outcome. No existing object has this extent, so it must be a first-class
+   runtime concept that promises and routers can extend: a **transaction**.
+3. From A5: pendingness is *already* structural — a `<try>` boundary knows
    when content it governs is unresolved. What is missing is not a new
-   pending system but two abilities on the existing one: **report** that
-   state to the app as ordinary state (A3), and **keep existing content**
-   while re-resolving instead of regressing to `@placeholder` (the
-   placeholder is the representation of "nothing yet"; when content exists,
-   the boundary can represent pending better).
-4. From A3: every observable this design adds — boundary pending, overlay
-   pending — surfaces through change handlers into user-owned `<let>`s, and
-   combined states are plain derivation (`saving || searching`), not
-   framework-inferred aggregates.
-5. From A6: each piece installs on use and is independently tree-shakable.
+   pending system but two abilities on the existing one: **expose** that
+   state (per A4: as a readonly tag variable, not a fake-controllable
+   attribute), and **keep existing content** while re-resolving instead of
+   regressing to `@placeholder` (the placeholder represents "nothing yet";
+   once content exists the boundary can represent pending better). These are
+   independent: one observes, the other is behavior.
+4. From A3+A4: there are no framework-owned pending flags. Boundary pending
+   is a tag variable; a guess's visibility is *derivable* (`view !==
+   source`); the pending of a gesture belongs to the gesture's element or
+   its transaction, not to any value it happened to touch. Combined states
+   are plain derivation, not framework-inferred aggregates.
+5. From A7: each piece installs on use and is independently tree-shakable.
 
-Two consequences of taking 3 and 4 seriously, and the largest deltas from
-the previous revision:
+The deltas this derivation forces on the previous revision:
 
-- **Continuity is not a mutation feature.** "Don't recede to placeholder"
-  belongs to `<try>` itself, opt-in, valuable for any client-side promise
-  swap — no transaction concept required.
-- **Cross-system inference is not a primitive.** The previous revision made
-  transactions automatically *hold* until async render work they caused
-  resolved, which required attributing boundary re-pends to transactions
-  through the render queue — the single most invasive piece of machinery in
-  that design. Under A3/A4 the same user-visible outcomes compose from parts
-  the app already names: transaction pending OR boundary pending. Automatic
-  attribution is demoted to a possible later refinement (§10.1), not a
-  foundation.
+- **No `pending:=` anywhere.** `<try>` exposes pending through a tag
+  variable. `<optimistic>` loses its pending attributes entirely — the
+  observable cases derive (§6.3), and the non-derivable case (disable a
+  control while the gesture is in flight) was never *value* pending at all;
+  it is *gesture* pending, owned by the form/transaction layer (§7.1).
+- **Continuity decouples from observation.** Declaring a variable must not
+  change behavior; keeping content on re-pend is its own decision — and the
+  honest question is whether it should simply be the default (§4.3).
+- **Cross-system inference stays out** (unchanged from rev 3): transaction
+  pending and boundary pending compose by derivation; automatic attribution
+  remains a deferred refinement (§10.1).
 
 ## 3. The primitives and what lands first
 
@@ -117,93 +121,115 @@ also the shipping recommendation.
 
 | Stage | Feature | Home | Depends on | Standalone value |
 | --- | --- | --- | --- | --- |
-| 1 | `<try pending:=x>`: boundary pending reporting + content continuity on re-pend (§4) | marko core | nothing | every client promise swap today (search-as-you-type, tab data, polling); also the vocabulary persisted boundary streaming needs |
+| 1 | `<try/pending>`: boundary pending as a readonly tag variable + content continuity on re-pend (§4) | marko core | nothing | every client promise swap today (search-as-you-type, tab data, polling); the vocabulary persisted boundary streaming needs |
 | 2 | Event transactions + `$waitUntil` (§5) | marko core | nothing (infra) | none alone — ships with stage 3 |
-| 3 | `<optimistic/view=source pending:=y>` (§6) | marko core | transactions | full optimistic story for non-persisted apps via manual `fetch` handlers |
-| 4 | Router transaction extension + navigation lifecycle (§8) | @marko/run | 2 | the persisted one-liner; pending/optimism for intercepted links and forms |
-| 5 | Refinements on evidence (§10): auto-hold/attribution, rebase, `$transaction`, submissions view, `<form pending:=...>`, mutation queueing, store tag | varies | 1–4 | — |
+| 3 | `<optimistic/view=source>` (§6) | marko core | transactions | full optimistic story for non-persisted apps via manual `fetch` handlers |
+| 4 | Router transaction extension + navigation lifecycle (§8) | @marko/run | 2 | the persisted one-liner; optimism for intercepted links and forms |
+| 5 | Refinements on evidence (§10): gesture pending, auto-hold/attribution, rebase, `$transaction`, submissions view, mutation queueing | varies | 1–4 | — |
 
 Notes on the ordering:
 
-- **Stage 1 first is the point.** It is the smallest, least controversial,
-  most broadly useful piece; it lands the `pending:=` reporting convention
-  that later stages reuse; it needs no mutation, transaction, or router
-  concepts; and its runtime already half-exists (§4.3). It should not wait
-  for the optimistic design to finish baking, and nothing in it blocks on
-  persisted pages' release gates.
+- **Stage 1 first is the point.** Smallest, least controversial, most
+  broadly useful; no mutation, transaction, or router concepts; its runtime
+  already half-exists (§4.3); nothing in it blocks on persisted pages'
+  release gates.
 - **Stages 2+3 ship together** (a transaction with no observer is inert) and
-  complete the core story: everything in §1 except router integration is
-  solved for a plain marko app with a `fetch` in a handler.
-- **Stage 4 is deliberately last** and deliberately thin: the router extends
-  a transaction it did not create, through a handshake that keeps run from
-  importing the optimistic runtime (§8.1). It works for the persisted router
-  and for any userland router the same way.
+  complete the core story for a plain marko app with a `fetch` in a handler.
+- **Stage 4 is deliberately thin**: the router extends a transaction it did
+  not create, through a handshake that keeps run from importing the
+  optimistic runtime (§8.1); any userland router can do the same.
 - The `<mut>`/`let-*` shared-store design is a parallel track, not a stage:
   it composes with these primitives (§7.3) but is its own document.
 
-## 4. Stage 1: boundary pending and continuity on `<try>`
+## 4. Stage 1: `<try>` pending and continuity
 
 ### 4.1 Surface
 
 ```marko
-<let/searching=false>
-<try pending:=searching>
+<try/searching>
   <await|results|=search(query)>
     <results-list results=results class={ stale: searching }/>
   </await>
   <@placeholder>Searching…</@placeholder>
   <@catch|err|>${err.message}</@catch>
 </try>
+
+<button disabled=searching>Search</button>
 ```
 
-`<try>` today accepts no attributes at all (`translator/core/try.ts:63`,
-`assertNoAttributes`); this adds `pending=` and `pendingChange=`, with
-`pending:=` as the usual sugar.
+`<try>` today accepts no tag variable and no attributes
+(`translator/core/try.ts:60-63`). This adds an optional **readonly tag
+variable**: a reactive boolean owned by the boundary. Readonly tag
+variables have precedent — native element variables reject assignment
+(`translator/util/references.ts:309`) — and tag variables are hoisted, so
+the flag is readable anywhere in the template, inside or outside the
+boundary, and can be exposed to a parent via `<return>` like any other
+value. No attribute, no change handler, nothing that implies the caller
+can set it.
 
 ### 4.2 Semantics
 
-- **Reporting.** `pendingChange(true)` fires when the boundary's outstanding
-  async count leaves zero, `pendingChange(false)` when it returns to zero —
-  edges only. The count is the existing `AwaitCounter` on the try branch, so
-  `<await>` promises and lazy-loaded children (`dom/load.ts:41`) are one
-  currency, and nested `<try>`s report to their own boundary only. Edges
-  fire synchronously with the transition, so the flag's downstream renders
+- `pending` is `true` while the boundary's outstanding async count is
+  nonzero — the existing `AwaitCounter`, so `<await>` promises and
+  lazy-loaded children (`dom/load.ts:41`) are one currency, and nested
+  `<try>`s each own their own variable. Transitions flush through the
+  normal scheduler like any tag-variable change, so downstream renders
   batch with the boundary work they describe.
-- **Continuity.** Declaring `pending=`/`pendingChange=` also switches the
-  boundary's *re-pend* behavior: when content is live and new async work
-  starts, the content stays in the DOM until the replacement resolves —
-  `@placeholder` does not re-show and the branch is not detached. The
-  placeholder remains the first-render representation ("nothing yet");
-  once content exists, the app has declared it will represent pending
-  inline (dim, spinner, `aria-busy`), which supersedes structural
-  regression. `@catch` is unaffected: errors always swap, an error is an
-  outcome.
-- **Kept content is frozen content.** Re-pending branches already park
-  their queued renders (`dom/control-flow.ts:98,132`); keeping the branch
-  visible does not change that. The retained content does not track other
-  state until the boundary resolves — the same staleness React accepts when
-  a transition shows the previous tree, and the reported flag exists
-  precisely so the app can dim it.
-- **SSR/resume:** the handler never fires server-side; streaming placeholder
-  behavior is unchanged; nothing serializes.
+- Initial render: `true` if the boundary starts pending (placeholder
+  showing), `false` otherwise. `@catch` swaps are unaffected — an error is
+  an outcome, and the flag returns to `false`.
+- SSR: the variable renders as `false` even where out-of-order streaming
+  means a placeholder is showing — expressions outside the boundary are
+  written before its resolution, and the placeholder *is* the server's
+  pending representation. The flag becomes live on resume. This asymmetry
+  is documented rather than hidden; it is the same one every client-only
+  signal has.
 
-Coupling reporting and continuity in one declaration is a judgment call: it
-reads as one decision ("I handle pending inline") and avoids a second
-attribute, but it forecloses "report but still regress" and "keep but not
-observe". If either combination turns out real, split into two attributes at
-RFC — the runtime work is identical (§13.1).
+### 4.3 Continuity
 
-### 4.3 Why this is small
+Independent of the variable: when a boundary with live content re-pends,
+keep the content in the DOM until the replacement resolves — do not re-show
+`@placeholder`, do not detach. The runtime already prefers this and gives up
+too early: a re-pending `<await>` *without* a placeholder keeps its old
+content and detaches only on the next animation frame if still pending
+(`dom/control-flow.ts:134-158`, with a guard for re-awaits that resolve
+before detach, `:114-117`), while the placeholder path re-shows
+unconditionally (`:95-101`). Re-pending branches already park their queued
+renders (`:98,:132`), so kept content is frozen content — the same
+staleness React accepts when a transition shows the previous tree, and the
+tag variable exists precisely so the app can dim it.
 
-The runtime already prefers continuity; it just gives up too early. A
-re-pending `<await>` *without* a placeholder keeps its old content and only
-detaches it on the next animation frame if still pending
-(`dom/control-flow.ts:134-158`), with a guard for re-awaits that resolve
-before detaching (`:114-117`). The placeholder path re-shows unconditionally
-(`:95-101`). Stage 1 extends the existing one-frame grace to "until the
-replacement resolves" and makes the placeholder path respect it, behind the
-opt-in. Both sites are already inside `_enable_catch`-installed machinery,
-so non-users pay nothing (A6).
+The open decision is the default. Options:
+
+- **(a) Keep-on-re-pend becomes the behavior.** The placeholder shows when
+  there is nothing yet (first render, `<if>` recreating the boundary);
+  content, once shown, is only replaced by newer content or `@catch`. No
+  opt-in, no new attribute; the rAF grace generalizes. This is the
+  recommendation *if* the compatibility review agrees no one depends on
+  regression — placeholder-on-re-pend is hard to defend as intent, and an
+  app that wants a hard reset can key the boundary's branch (`<if>` /
+  keyed `<for>`) to force recreation.
+- **(b) Opt-in boolean attribute** (`<try keep>` or similar) if (a) is
+  ruled out. A second knob, but honest and additive.
+
+Coupling continuity to *declaring the tag variable* — rev 3's shape, where
+observing implied behavior — is rejected: reading a value must not change
+what the tag does.
+
+### 4.4 Could you *tell* a `<try>` to go pending?
+
+The critique of `pending:=` cuts both ways: if the syntax implied
+writability, is writable pending itself coherent? Explored and deferred. A
+written `pending=true` on a settled boundary could mean (i) style-only —
+which the app's own state already does better, (ii) re-show the placeholder
+— destroying live content, the exact regression continuity removes, or
+(iii) hold/park the region's updates until released — a real capability
+(atomic region updates, view-transition staging) but one that can starve
+the very truth a transaction waits on, and nothing motivating it today
+survives contact with "the app can already style, and §10.1 can already
+hold". If a case emerges it arrives as a *new* input attribute with its own
+name and semantics, not as a change handler retrofitted onto the readonly
+variable. Tracked in §13.6.
 
 ## 5. Stage 2: event transactions
 
@@ -234,14 +260,11 @@ extend; it does no rendering of its own.
   flicker frame (§9.1).
 
 Nested dispatches (a handler synchronously dispatching another event) stack;
-the inner dispatch gets its own transaction.
-
-There is deliberately **one edge**. The previous revision gave transactions
-a second "settled once caused async resolves" edge, which required
-attributing render work to transactions; §2's derivation removes it — the
-app composes `saving || searching` when both matter (§7), and automatic
-attribution remains available as a refinement (§10.1) without changing this
-contract.
+the inner dispatch gets its own transaction. There is deliberately **one
+edge**: rev 2's second "settled once caused async resolves" edge required
+attributing render work to transactions; §2's derivation removes it — apps
+compose boundary and guess state by derivation (§7), and attribution
+remains available as a refinement (§10.1) without changing this contract.
 
 ### 5.2 Assignment windows
 
@@ -285,21 +308,22 @@ render invalidation would be a category error in both directions (§9.2).
 ### 6.1 Surface
 
 ```marko
-<let/saving=false>
-<optimistic/cart=$global.data.cart pending:=saving/>
+<optimistic/cart=$global.data.cart/>
 
 <div>Items in cart: ${cart.length}</div>
 
 <form method="POST" action="/cart" onSubmit() { cart = [] }>
-  <button disabled=saving name="_action" value="clear">Clear Cart</button>
+  <button disabled=cart !== $global.data.cart name="_action" value="clear">
+    Clear Cart
+  </button>
 </form>
 ```
 
 Requires a tag variable (identifier, not destructured — it must be
-assignable); accepts `value=`, `pending=`, `pendingChange=` only, matching
-`<let>`'s attribute discipline (`translator/core/let.ts:60`). Where truth is
-a `$global` expression rather than a local binding, the view takes the
-natural name — no `cart`/`optimisticCart` split.
+assignable); accepts **only `value=`**, matching `<let>`'s attribute
+discipline (`translator/core/let.ts:60`). Where truth is a `$global`
+expression rather than a local binding, the view takes the natural name —
+no `cart`/`optimisticCart` split.
 
 ### 6.2 Semantics
 
@@ -318,27 +342,34 @@ Let `source` be the `value=` expression and `view` the tag variable.
 arrives on its own channel (a patch, a `cart = ...` assignment, a store
 write), which is what makes releasing always safe.
 
-### 6.3 `pending:=` on `<optimistic>`
+### 6.3 Observing a guess — derivation, not a flag
 
-Same convention as `<try>` (§4): edges of "at least one unreleased
-transaction has written this instance", reported into user-owned state.
-`true` fires synchronously inside the dispatch that recorded the first
-override; `false` inside the releasing flush. Notes carried over from the
-previous revision, still load-bearing:
+Whether the page is currently showing a guess is derivable, because both
+sides are readable:
 
-- It is *not* `view !== source`: a guess equal to current truth is still
-  pending, which is why the signal exists rather than telling users to
-  derive it.
-- The `pending=` value side is inert — pending's truth lives in the
-  machinery and cannot be asserted from the template; the attribute exists
-  so `:=` composes. Debug builds error on `pending=` without
-  `pendingChange`. (Same RFC decision as §4's coupling: §13.1.)
-- The receiving state is ordinary application state: initialize it,
-  combine it (`<const/busy=savingCart || savingProfile>`), feed `aria-busy`.
-  Wiring two tags to the same `<let>` lets the last edge win — use two
-  flags and derive.
-- Don't write optimistic state in `pendingChange`: the `false` edge fires
-  outside any transaction window and hits §5.2's debug error naturally.
+```marko
+<const/showingGuess=cart !== $global.data.cart>
+```
+
+This works better than it first looks. Marko state is immutable-update by
+idiom, so a guess is a *new object* — `cart = []` differs by identity from
+a truth `[]` — and on release `view` re-derives to the *same reference* as
+`source`, making the comparison exact. The only value it cannot see is a
+transaction that assigned the source's own current reference back — the
+degenerate case where nothing observable was guessed. Rev 3 shipped a
+`pendingChange` attribute on `<optimistic>` to cover exactly that gap; per
+A4 it is gone, and the honest accounting is: the remaining uncovered need
+was never *value* pending. "Disable this button while the act is in
+flight" is **gesture pending** — it belongs to the form/transaction, not to
+whichever value the handler happened to guess — and is staged accordingly
+(§7.1). In manual-fetch handlers it is already expressible today
+(`saving = true; try { ... } finally { saving = false }`).
+
+If evidence later shows per-value pending is a real recurring need, the
+A4-honest shape exists: a companion tag exposing a readonly variable
+(`<pending/saving=cart>`), which earlier revisions explored and this one
+deliberately does not ship — no new data source until derivation is proven
+insufficient.
 
 ### 6.4 Concurrency
 
@@ -361,27 +392,25 @@ value = last entry; release removes by transaction and re-derives.
   would need a carve-out, and compose-from-the-view covers the common
   overlap (§10.2).
 
-## 7. Pending in practice: composition, not aggregation
+## 7. Pending in practice
 
-The two reported flags cover different questions — "is this value a guess?"
-(`<optimistic pending:=saving>`) and "is this region's async unresolved?"
-(`<try pending:=searching>`). Where an act should read as unfinished until
-both are done, the app says so:
+Boundary pending is a tag variable; guess visibility is derivation; their
+combinations are plain expressions:
 
 ```marko
-<const/busy=saving || searching>
+<try/searching> ... </try>
+<const/busy=searching || cart !== $global.data.cart>
 ```
 
-This is the deliberate replacement for the previous revision's automatic
-"hold the transaction until caused async resolves": same user-visible
-outcome, no attribution machinery, and the composition is inspectable state
-rather than inference. The known costs, honestly: it is manual (forgetting
-the `||` shows a button re-enabled while its results still resolve), and a
-boundary flag includes re-pends the transaction didn't cause (a background
-poll swapping the same promise) — over-broad but benign, and usually what a
-user perceives anyway. If evidence shows the manual composition is a
-recurring bug source, §10.1's auto-hold layers back in without changing any
-shipped semantics.
+This is the deliberate replacement for rev 2's automatic "hold the
+transaction until caused async resolves": same user-visible outcomes, no
+attribution machinery, and the composition is inspectable state rather than
+inference. The known costs, honestly: it is manual (forgetting a term shows
+a control re-enabled while its region resolves), and a boundary variable
+includes re-pends the act didn't cause (a background poll swapping the same
+promise) — over-broad but benign, and usually what a user perceives anyway.
+If evidence shows manual composition is a recurring bug source, §10.1
+layers the automatic hold back in without changing shipped semantics.
 
 Row-level treatment is also derivation:
 
@@ -393,19 +422,21 @@ Row-level treatment is also derivation:
 </for>
 ```
 
-### 7.1 The value-less mutation gap
+### 7.1 Gesture pending
 
-A mutation with no optimistic value — the demo's promo form wants its button
-disabled during the round trip, has nothing to guess, and under the
-persisted router the handler has no completion callback. An `<optimistic>`
-with a dummy value is not an answer. The shape most consistent with this
-design is the same reporting convention on the element that owns the
-gesture — `<form pending:=applying>` as a Marko-managed native-tag
-attribute wired to transactions whose originating event target is inside
-the element (containment checked once at transaction open, only when such
-attributes exist). Deliberately not in early stages: it touches native-tag
-attribute space and needs its own review; run navigation lifecycle events
-(§8.3) are the interim escape hatch. Tracked in §13.2.
+The remaining real gap: an act with no boundary and no guess — the demo's
+promo form wants its button disabled during the round trip, has nothing to
+assign, and under the persisted router the handler gets no completion
+callback. This is pending of the *gesture*, and per A4 it should be exposed
+where the gesture lives. Candidate shapes, all stage 5: a readonly variable
+on the form is impossible (native tag variables are the element getter), so
+the options are a companion tag scoped to an element
+(`<pending/applying=formEl>` — a readonly variable parameterized by an
+element ref, containment checked once at transaction open), or run-level
+navigation lifecycle events (§8.3) feeding ordinary state. Neither is
+fake-controllable; deciding between them needs the router work landed
+first. Until then: manual-fetch apps own the flag in the handler; persisted
+apps wait for stage 4's events. Tracked in §13.2.
 
 ### 7.2 Validation errors for free
 
@@ -465,9 +496,9 @@ userland router can extend transactions identically.
   override; router intercepts, extends, POSTs; PRG renegotiates and
   patches; `$global.data.cart` re-derives ($global-read promotion); the
   extension resolves after the final frame; the override releases against
-  already-correct truth; `saving` flips false. No JS → plain PRG. A user
-  `ev.preventDefault()` opts out of interception, which reads correctly:
-  the handler owns the transaction instead.
+  already-correct truth. No JS → plain PRG. A user `ev.preventDefault()`
+  opts out of interception, which reads correctly: the handler owns the
+  transaction instead.
 - **Release at stream end, deliberately.** A patch response embeds late
   async frames (a pending `<try>` on the target delivers its boundary body
   as a later frame), and the mutated value itself may live inside such a
@@ -484,33 +515,33 @@ userland router can extend transactions identically.
   run both → release, truth. Caveats: cross-connection server-side ordering
   is unowned (the persisted roadmap already lists "concurrent submissions";
   a client-side mutation queue is compatible with this design — queued
-  mutations are just later extensions, §13.6), and A's response is
+  mutations are just later extensions, §13.7), and A's response is
   discarded (benign under PRG).
 - **Continuity across applies** comes from stage 1, not from transactions:
-  a live `<try pending:=x>` boundary whose input patches to a new promise
-  keeps its content through the apply because frame applies flush through
-  the ordinary scheduler (`marko-pp/.../dom/update.ts:145`).
+  a live `<try>` boundary whose input patches to a new promise keeps its
+  content through the apply because frame applies flush through the
+  ordinary scheduler (`marko-pp/.../dom/update.ts:145`).
 - **The server-sent seam.** A fragment frame can carry a `@placeholder`
   whose body arrives as a later boundary-body frame; applying it replaces
   live settled content with a placeholder — the server-side twin of the
-  regression stage 1 suppresses client-side. The wire format already
-  separates fragment and body frames, so deferring the swap until the body
-  arrives (when the live boundary opted into continuity) is plausible, but
-  it interacts with possession and `diverge()` fallback rules — it needs
-  the persisted owners, with stage 1 supplying the vocabulary (§13.4).
+  regression stage 1 removes client-side. The wire format already separates
+  fragment and body frames, so deferring the swap until the body arrives is
+  plausible, but it interacts with possession and `diverge()` fallback
+  rules — it needs the persisted owners, with stage 1 supplying the
+  vocabulary (§13.4).
 
 ### 8.3 Navigation lifecycle events
 
 Today the shell dispatches only a success `marko-run:navigate` event after
 frames apply (`run-pp/.../persisted-navigation.ts:144`). Whatever handshake
 §8.1 picks, run should grow start/settle lifecycle events as the public,
-transaction-free observation point — they serve analytics, the value-less
-pending gap (§7.1) interim, and the eventual submissions view (§10.4).
+transaction-free observation point — they serve analytics, gesture pending
+(§7.1), and the eventual submissions view (§10.4).
 
 ## 9. Async machinery audit
 
-The remaining subsystem interactions, kept from the previous revisions'
-analysis (attribution-dependent items moved to §10.1):
+The remaining subsystem interactions, kept from earlier revisions'
+analysis (attribution-dependent items live in §10.1):
 
 1. **The queue.** Optimistic assignment is an external state write: set the
    slot synchronously, `schedule()` + `queueRender` — exactly `_let`'s
@@ -536,37 +567,36 @@ analysis (attribution-dependent items moved to §10.1):
 3. **`<await>` of the transaction's own promise.** `<await=submitPromise>`
    alongside `$waitUntil(submitPromise)` composes with no API and no
    deadlock: boundary resolution depends on the userland promise, never on
-   the transaction. With stage 1 on that boundary, the round trip also
-   keeps prior content. Promises are the shared currency between the
-   systems.
+   the transaction. With stage 1 continuity on that boundary, the round
+   trip also keeps prior content. Promises are the shared currency between
+   the systems.
 4. **Rejections.** Adoption and `$waitUntil` are `.finally`-shaped;
    unhandled-rejection reporting survives; `@catch` swaps are unaffected by
-   continuity (§4.2).
+   continuity (§4.3).
 5. **SSR, streaming, resume.** Transactions are client gestures.
    `$waitUntil` throws on HTML output like `$signal`; `<optimistic>`
-   degenerates to `<const>`; `pendingChange` cannot fire before resume
-   because handlers don't run before resume — pre-resume interactions are
-   native, which is progressive enhancement working. Nothing serializes;
-   resume cost is zero.
+   degenerates to `<const>`; overrides cannot exist before resume because
+   handlers don't run before resume — pre-resume interactions are native,
+   which is progressive enhancement working. Nothing serializes; resume
+   cost is zero. The `<try>` variable's SSR asymmetry is §4.2's.
 
 ## 10. Deferred refinements
 
 Each is additive over stages 1–4; none changes shipped semantics.
 
-1. **Automatic async hold (attribution).** The previous revision's design,
-   retained for when composition (§7) proves insufficient: transactions
-   gain a second *settle* edge (release + attributed boundaries resolved),
-   `pendingChange` moves to it, and boundary pends occurring in renders
-   caused by the transaction join its async set. Key findings to carry
-   forward: overrides must still release at the *promise* edge (holding
-   them would starve the truth renders being waited on); the settle check
-   must ride the end of a flush so a transaction cannot settle between
-   causing async work and observing it; `@catch` counts as resolution;
-   chained pends inherit through resolution renders; granularity options
-   are per-render provenance (precise, hot-path), per-flush (cheap,
-   over-holds on shared batches — the recommended start), and
-   global-while-unsettled. Over-holding is benign, under-holding breaks
-   the contract.
+1. **Automatic async hold (attribution).** Rev 2's design, retained for
+   when composition (§7) proves insufficient: transactions gain a second
+   *settle* edge (release + attributed boundaries resolved) and boundary
+   pends occurring in renders caused by the transaction join its async set.
+   Key findings to carry forward: overrides must still release at the
+   *promise* edge (holding them would starve the truth renders being
+   waited on); the settle check must ride the end of a flush so a
+   transaction cannot settle between causing async work and observing it;
+   `@catch` counts as resolution; chained pends inherit through resolution
+   renders; granularity options are per-render provenance (precise,
+   hot-path), per-flush (cheap, over-holds on shared batches — the
+   recommended start), and global-while-unsettled. Over-holding is benign,
+   under-holding breaks the contract.
 2. **Rebase/updater assignments** (§6.4): wait for real-world cases.
 3. **`$transaction` exposure** (a signal that aborts on supersession, and
    programmatic `startTransaction` for non-event contexts like sockets):
@@ -577,18 +607,21 @@ Each is additive over stages 1–4; none changes shipped semantics.
    router-carried mutations — the transaction registry filtered to
    host-extended transactions — enabling Remix-style derived optimism in
    @marko/run without new language surface.
-5. **`<form pending:=...>`** (§7.1): with the controllable native-attribute
-   family (`dom/controllable.ts`), not the tag layer.
-6. **Mutation queueing in the persisted router** (§8.2).
-7. **`<mut>`/`let-*` store tag** (§7.3): parallel design document.
-8. **View transitions:** deferred by the persisted roadmap; the transaction
+5. **Gesture pending** (§7.1): element-scoped readonly variable vs run
+   lifecycle events, after stage 4.
+6. **Writable boundary pending** (§4.4): only as a new named input with
+   real semantics (hold/park), likely alongside view-transition work —
+   never as a change handler on the readonly variable.
+7. **Mutation queueing in the persisted router** (§8.2).
+8. **`<mut>`/`let-*` store tag** (§7.3): parallel design document.
+9. **View transitions:** deferred by the persisted roadmap; the transaction
    release point and the stage-1 content swap are the natural
    `startViewTransition` boundaries — keep both paths shaped so a future
    integration wraps them.
 
 ## 11. Design space (why this shape)
 
-Compressed from the first revision; the models considered and where they
+Compressed from earlier revisions; the models considered and where they
 landed:
 
 - **A. Overlay tag + implicit event transactions** — adopted as stages 2+3.
@@ -603,16 +636,19 @@ landed:
   (§10.4). Best for derived views of queued work; requires client-side
   reducers duplicating server mutation semantics; can't cover
   handler-managed fetch.
-- **D. Store-level overlay** — deferred with the store design (§10.7).
+- **D. Store-level overlay** — deferred with the store design (§10.8).
 - **E. Local echo** (override until source next changes; no transactions) —
   rejected: fails bounded lifetime. A failed mutation or a same-value
   confirmation (absent-key-means-unchanged patches make this common) never
   releases the guess.
-- **Boundary continuity as a transaction feature** (previous revision) —
-  refactored: continuity is structural (`<try>`, stage 1) and pending is
-  compositional (§7), with automatic attribution demoted to §10.1. This is
-  the main first-principles correction: the earlier design inferred what
-  the app can say.
+- **Boundary continuity as a transaction feature** (rev 2) — refactored:
+  continuity is structural (`<try>`, stage 1), composition replaces
+  attribution (§7).
+- **`pending:=` controllable-style reporting** (rev 3) — rejected by A4:
+  the controllable convention implies the caller can own the value.
+  Boundary pending became a readonly tag variable (§4); `<optimistic>`
+  pending became derivation (§6.3); gesture pending moved to the gesture
+  (§7.1).
 
 ## 12. Honest weaknesses
 
@@ -623,72 +659,76 @@ landed:
    interim story, the store design the answer.
 3. **The transaction window is invisible** until a debug error teaches it
    (§5.2); extracted helpers hit it.
-4. **Compositional pending is manual.** Forgetting `saving || searching`
-   re-enables a button while its region resolves (§7); the mitigation is
-   §10.1, on evidence.
-5. **Snapshot overrides don't rebase** (§6.4).
-6. **A hung promise holds its transaction forever.** Contract honored
+4. **Compositional pending is manual** (§7): forgetting a term re-enables a
+   control while its region resolves; §10.1 is the mitigation, on evidence.
+5. **No built-in gesture pending until stage 5** (§7.1): persisted apps
+   can't express "this form is busy" before run lifecycle events land;
+   manual-fetch apps carry a handler-managed flag.
+6. **Snapshot overrides don't rebase** (§6.4).
+7. **A hung promise holds its transaction forever.** Contract honored
    literally — only the app knows a timeout policy. Debug warns after ~10s
    naming the binding and what is being waited on; production does nothing;
    `AbortSignal.timeout` bounds userland fetches, and the persisted
    router's fetches settle on every path.
-7. **`<try>` grows attributes** for the first time — small but real surface
-   expansion on a tag whose emptiness was a feature.
+8. **`<try>` gains a tag variable** — small but real surface expansion on a
+   tag whose emptiness was enforced, and its SSR value is asymmetric
+   (§4.2).
 
 ## 13. Open questions
 
-1. **Coupled vs split declarations** (§4.2, §6.3): does declaring
-   `pending:=` rightly imply continuity on `<try>`, and is the inert
-   `pending=` value side acceptable for `:=` sugar, or should both tags
-   accept only `pendingChange=`?
-2. **The value-less mutation gap** (§7.1): `<form pending:=...>`, run
-   lifecycle events, or both — and which first?
+1. **Continuity default** (§4.3): behavior (a) — keep-on-re-pend becomes
+   how boundaries work, with branch keying as the reset escape hatch — or
+   opt-in attribute (b)? (a) is better if compatibility review allows;
+   placeholder regression on re-pend is hard to defend as intent, and the
+   decision gets harder every release.
+2. **Gesture pending shape** (§7.1): element-scoped companion tag vs run
+   lifecycle events vs both — after stage 4.
 3. **Router handshake shape** (§8.1): runtime-global hook vs synchronous
    CustomEvent (which doubles as public lifecycle, §8.3).
 4. **Server-sent pending boundaries** (§8.2): defer placeholder-bearing
-   fragment swaps until their body frame when the live boundary opted into
-   continuity? Needs the persisted owners; interacts with possession and
+   fragment swaps until their body frame when the live boundary has
+   content? Needs the persisted owners; interacts with possession and
    fallback.
 5. **Earlier persisted release** (§8.2): a wire-format marker separating
    "route values complete" from "async frames continue".
-6. **Mutation queueing** (§8.2): with the persisted roadmap's "concurrent
+6. **Writable boundary pending** (§4.4): is there a motivating case for
+   hold/park semantics that §10.1 doesn't serve better?
+7. **Mutation queueing** (§8.2): with the persisted roadmap's "concurrent
    submissions" review.
-7. **Continuity default.** Stage 1 is opt-in for compatibility, but is
-   placeholder regression on re-pend *ever* the desired behavior when
-   content exists? If not, consider keep-on-re-pend as the default for all
-   boundaries (with the flag still opt-in) before the tags API stabilizes
-   further — a behavior change that gets harder every release.
 8. **Error routing** — should a rejected transaction surface to an
    enclosing `<try @catch>`? Powerful, but it makes event-time errors
    render-time errors; v1 is the handler's own `try`/`catch`.
-9. **Attribution granularity** if §10.1 ever lands: needs a fixture
-   discriminating per-flush over-attribution (unrelated write pending a new
-   boundary in a shared batch).
+9. **Richer boundary exposure later** — if `<try>` ever needs to expose
+   more than a boolean (error object, resolution count), does the variable
+   become an object, and is that compatible with shipping a boolean now?
+   Leaning: ship the boolean; a future object is a breaking change, so
+   decide the shape before stage 1 stabilizes.
 
 ## 14. Implementation and verification sketch
 
-Stage 1 (`<try>`): `core/try.ts` drops `assertNoAttributes` for the two
-attributes; `pendingChange` stored on a branch accessor; edge calls at the
-`AwaitCounter` 0↔n transitions (`dom/control-flow.ts:100,275`); continuity
-consults the handler's presence at the re-pend sites (placeholder re-show
-`:95-101`, rAF detach `:134-158`). Fixtures: report edges for await swap,
-lazy child, nested boundaries; re-pend keeps content with and without
-placeholder; first pend still shows placeholder; catch swaps; parked
-staleness; SSR unchanged.
+Stage 1 (`<try>`): `core/try.ts` drops `assertNoVar` and registers the
+readonly variable (assignment rejected through the same path as native
+element variables, `util/references.ts:300-312`); the variable's signal
+flips at the `AwaitCounter` 0↔n transitions
+(`dom/control-flow.ts:100,275`); continuity per §4.3's decision at the
+re-pend sites (placeholder re-show `:95-101`, rAF detach `:134-158`).
+Fixtures: variable edges for await swap, lazy child, nested boundaries,
+catch; readonly assignment is a compile error; re-pend keeps content with
+and without placeholder; first pend still shows placeholder; parked
+staleness; `<return>` of the variable; SSR false + resume liveness.
 
 Stages 2+3: `transaction.ts` (ambient, promise set, release edge, dispatch
 seam install, thenable adoption, host extension entry);
 `_optimistic`/`_optimistic_set` beside `_let`/`_let_change` in
 `dom/signals.ts` (source slot + override list, effective value precomputed
-into the read slot, pending edges at attach/release); `core/optimistic.ts`
-routing assignments through the existing `assignmentTo` machinery
-(`util/references.ts:546`); `$waitUntil` beside `$signal` with the
-server-render throw and handler-prologue capture. Fixtures: basic
-derive/revert; async handler success+failure; `$waitUntil` incl.
-post-await; outside-window error; sync-discard warn; concurrent
-transactions incl. out-of-order releases; pending edges incl.
-guess-equals-truth and same-batch flushing; write under pending `<try>`;
-`<for>` row patterns; fan-out store composition.
+into the read slot); `core/optimistic.ts` routing assignments through the
+existing `assignmentTo` machinery (`util/references.ts:546`); `$waitUntil`
+beside `$signal` with the server-render throw and handler-prologue capture.
+Fixtures: basic derive/revert; async handler success+failure; `$waitUntil`
+incl. post-await; outside-window error; sync-discard warn; concurrent
+transactions incl. out-of-order releases; view-vs-source derivation incl.
+release-restores-reference-identity; write under pending `<try>`; `<for>`
+row patterns; fan-out store composition.
 
 Stage 4: a few eager-shell lines in `navigateMatched` (extend at
 interception, settle around the navigation promise) + the handshake +
