@@ -1,0 +1,1 @@
+The attributes checkedValue and checked are mutually exclusive.

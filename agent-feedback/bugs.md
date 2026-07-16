@@ -88,12 +88,6 @@ inline runtime robust; weigh against inline-runtime byte cost.
 
 In `_attr_select_value`'s `MutationObserver` (fired when `<option>`s are added/removed), the decision to run `onChange` is `value.length !== el.selectedOptions.length || value.some((v, i) => v != el.selectedOptions[i].value)` (lines 352–353). `value` is `scope[ControlledValue]` in app-supplied order, while `el.selectedOptions` is always document order and selection is applied set-wise (`opt.selected = value.includes(opt.value)` in `setSelectValue`). So a set-equal but reordered controlled array (e.g. `value=["b","a"]` with options rendered `a,b`, both selected) flags a false mismatch on any option add/remove and fires `valueChange(getSelectValue(...))`, silently reordering the app model to document order with no user interaction. Native multi-select never preserves order (any real user change already document-orders the model), so impact is low — the only novel effect is a spurious change side-effect on unrelated option mutations, which stabilizes after one fire. Fix: compare as sets (length plus `every(v => selectedValues.has(v))`).
 
-## `assertExclusiveAttrs` uses truthiness, missing conflicts when a controllable value attribute is falsy
-
-`packages/runtime-tags/src/common/errors.ts:127` | 2026-07-14 | impact:low | effort:low
-
-`assertExclusiveAttrs` detects the presence of the `checkedValue` and `checked` value-attributes by truthiness (`if (attrs.checkedValue)` line 127, `if (attrs.checked)` lines 130/135). Mutual exclusivity is a property of an attribute being present, not of its value, so a legitimate falsy value — a radio `checkedValue={0}` / `checkedValue=""`, or a controlled `checked={false}` — makes the branch skip, the conflicting `checked` is never pushed, and the "…are mutually exclusive" error is silently not thrown. The runtime treats these as presence elsewhere (`"checkedValue" in nextAttrs`, `dom/dom.ts:209`), confirming presence is the intended test. Only these two are affected: the sibling `checkedChange`/`checkedValueChange`/`valueChange` are handlers where a falsy value legitimately means absent (consistent with `assertHandlerIsFunction`), so those correctly stay truthiness checks. `MARKO_DEBUG`-only, so a missed dev/test assertion rather than a production fault. Fix: `"checkedValue" in attrs` and `"checked" in attrs`.
-
 ## `createProgramState` cache guard uses truthiness, would recompute a falsy stored value
 
 `packages/runtime-tags/src/translator/util/state.ts:11` | 2026-07-14 | impact:low | effort:low

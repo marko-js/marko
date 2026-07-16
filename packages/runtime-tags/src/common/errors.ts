@@ -124,15 +124,15 @@ export function assertExclusiveAttrs(
       (exclusiveAttrs ||= []).push("checkedChange");
     }
 
-    if (attrs.checkedValue) {
+    if ("checkedValue" in attrs) {
       (exclusiveAttrs ||= []).push("checkedValue");
 
-      if (attrs.checked) {
+      if ("checked" in attrs) {
         exclusiveAttrs.push("checked");
       }
     } else if (attrs.checkedValueChange) {
       (exclusiveAttrs ||= []).push("checkedValueChange");
-      if (attrs.checked) {
+      if ("checked" in attrs) {
         exclusiveAttrs.push("checked");
       }
     }
