@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.3.12
+
+### Patch Changes
+
+- [#3448](https://github.com/marko-js/marko/pull/3448) [`860b235`](https://github.com/marko-js/marko/commit/860b235b6dfd4e5992d45b08b22611c7d28f7c7a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix the development-only `checkedValue`/`checked` mutual-exclusivity assertion missing the conflict when a spread supplies a falsy controllable value (e.g. `checkedValue={0}` or `checked={false}`). Presence is now tested with `in` instead of truthiness, matching how the runtime detects these attributes elsewhere.
+
+- [#3445](https://github.com/marko-js/marko/pull/3445) [`b3752c9`](https://github.com/marko-js/marko/commit/b3752c95faee33ea78fe909d31a50e1df583d27d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a resumable `<html-comment>` whose body serializes empty (e.g. `<html-comment>${value}</html-comment>` with an empty `value`) resuming as a stray text node instead of the comment. On the client an empty comment is indistinguishable from a separator marker, so a later update rendered as visible text rather than into the comment. Such a comment is now padded with a space during SSR so its resume marker claims the comment node.
+
+- [#3447](https://github.com/marko-js/marko/pull/3447) [`22c9e59`](https://github.com/marko-js/marko/commit/22c9e59fea432e52529d25de72e7d844aed98d38) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Replace the opaque `Cannot destructure property 'local' of undefined` crash with a clear compile-time diagnostic when a `load` import has no default specifier (e.g. `import "./foo.marko" with { load: "render" }` with nothing bound).
+
+- [#3444](https://github.com/marko-js/marko/pull/3444) [`f6312a0`](https://github.com/marko-js/marko/commit/f6312a020a2af426b366ee9909f7eebcac5445b8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update non-editable input values when their rendered value changes.
+
 ## 6.3.11
 
 ### Patch Changes
