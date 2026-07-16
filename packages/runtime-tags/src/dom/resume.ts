@@ -265,7 +265,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
               // Link deferred owners nested in this branch (see push below) so
               // their client-created branches join the tree; skips own branches.
-              while (j && deferredOwners[--j][AccessorProp.Id] > branchId) {
+              while (j && deferredOwners[j - 1][AccessorProp.Id] > branchId) {
+                j--;
                 const owner = deferredOwners.pop()!;
                 if (owner[AccessorProp.ClosestBranch] !== owner) {
                   owner[AccessorProp.ClosestBranch] = branch;

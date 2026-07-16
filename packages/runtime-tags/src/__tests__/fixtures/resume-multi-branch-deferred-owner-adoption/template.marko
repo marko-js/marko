@@ -1,0 +1,11 @@
+<let/items=["first", "second"] />
+<let/show=false />
+<button#show onClick() { show = true }>show</button>
+<button#clear onClick() { items = [] }>clear</button>
+<div/log/>
+
+<for|item| of=items>
+  <div>
+    <child item=item show=show log=log/>
+  </div>
+</for>

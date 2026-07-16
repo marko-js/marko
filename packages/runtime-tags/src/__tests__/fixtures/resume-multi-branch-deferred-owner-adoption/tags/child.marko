@@ -1,0 +1,4 @@
+<if=input.show>
+  <span>${input.item}</span>
+  <lifecycle onDestroy() { input.log().append(`destroyed ${input.item}`); }/>
+</if>

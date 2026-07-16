@@ -1,0 +1,32 @@
+<button id=show>show</button><!--M_*1 a--><button
+  id=clear>clear</button><!--M_*1 b-->
+<div></div><!--M_*1 c-->
+<div><!--M_|3 a--></div>
+<div><!--M_|5 a--></div><!--M_|1 d 4 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    f: !1
+  }, {
+    c: "first",
+    a: _(3)
+  }, {
+    c: {
+      item: "first",
+      show: !1,
+      log: _.a = _(1, "a0")
+    },
+    e: "first"
+  }, {
+    c: "second",
+    a: _(5)
+  }, {
+    c: {
+      item: "second",
+      show: !1,
+      log: _.a
+    },
+    e: "second"
+  }], "a1 1"];
+  M._.w()
+</script>

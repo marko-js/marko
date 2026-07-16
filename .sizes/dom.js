@@ -1,4 +1,4 @@
-// size: 26111 (min) 9626 (brotli)
+// size: 26115 (min) 9605 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -984,7 +984,8 @@ function init(runtimeId = "M") {
                           : parent.insertBefore(new Text(), visit)));
                   for (; i && orphanBranches[i - 1].L > branchId;)
                     (i--, setParentBranch(orphanBranches.pop(), branch));
-                  for (; j && deferredOwners[--j].L > branchId;) {
+                  for (; j && deferredOwners[j - 1].L > branchId;) {
+                    j--;
                     let owner = deferredOwners.pop();
                     owner.F !== owner && (owner.F = branch);
                   }
