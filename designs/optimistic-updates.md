@@ -692,3 +692,93 @@ fallback, boundary continuity across an apply, and the no-op action's
 
 Budgets (`.sizes.json`-enforced, zero when unused): stage 1 ≤0.3 kB;
 stages 2+3 ≤1.0 kB combined; stage 4 shell delta ≤0.1 kB.
+
+## Appendix: one component, both worlds
+
+The demo's add-to-cart (`marko-ecommerce/src/tags/product-actions.marko`),
+complete in each world. The five lines expressing the idea — the view, the
+guess composed from it, the action, the pending-disabled button — are
+identical; everything else is the router absorbing the round trip.
+
+Without persisted pages (stages 1–3; the handler owns the round trip):
+
+```marko
+client import { submit } from "../util/submit-form";
+
+export interface Input {
+  id: number;
+}
+
+// Truth: seeded by the server render, updated only from responses.
+<let/cartData=$global.data.cart>
+<optimistic/cart=cartData/>
+<let/error=null>
+<let/quantity=1>
+
+<action/addToCart=async (ev) => {
+  ev.preventDefault();
+  const i = cart.findIndex((item) => item.productId === input.id);
+  const prev = i !== -1 && cart[i];
+  cart = prev
+    ? cart.with(i, { ...prev, quantity: prev.quantity + quantity })
+    : [...cart, { productId: input.id, quantity }];
+  try {
+    cartData = (await submit(ev)).cart;  // truth from the response
+    error = null;
+  } catch (err) {
+    error = err.message;                 // the guess reverts on release
+  }
+}/>
+
+<div>Items in cart: ${cart.length}</div>
+<if=error>
+  <p class="cart-error">${error}</p>
+</if>
+
+<form method="POST" action="/cart" onSubmit=addToCart>
+  <input type="number" name="quantity" value:Number:=quantity min="1">
+  <input type="hidden" name="productId" value=input.id>
+  <button disabled=addToCart.pending name="_action" value="add">
+    Add to Cart
+  </button>
+</form>
+```
+
+With persisted pages (stage 4):
+
+```marko
+export interface Input {
+  id: number;
+}
+
+<optimistic/cart=$global.data.cart/>
+<let/quantity=1>
+
+<action/addToCart() {
+  const i = cart.findIndex((item) => item.productId === input.id);
+  const prev = i !== -1 && cart[i];
+  cart = prev
+    ? cart.with(i, { ...prev, quantity: prev.quantity + quantity })
+    : [...cart, { productId: input.id, quantity }];
+}/>
+
+<div>Items in cart: ${cart.length}</div>
+
+<form method="POST" action="/cart" onSubmit=addToCart>
+  <input type="number" name="quantity" value:Number:=quantity min="1">
+  <input type="hidden" name="productId" value=input.id>
+  <button disabled=addToCart.pending name="_action" value="add">
+    Add to Cart
+  </button>
+</form>
+```
+
+What the router absorbed: `preventDefault` (interception; the handler runs
+first), the fetch (the native POST becomes the PRG round trip), the truth
+channel (`$global.data.cart` patches and the override releases against it
+after the final frame), and error plumbing (validation errors arrive as a
+patched re-render; transport failures fall back to a document load).
+Without pending UI, the `<action>` disappears too — an inline handler's
+implicit transaction carries the guess:
+`onSubmit() { cart = [...cart, { productId: input.id, quantity }] }`.
+With no JavaScript, both worlds are a plain form POST.
