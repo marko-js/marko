@@ -150,12 +150,6 @@ The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` 
 
 The string-renderer branch of HTML `_dynamic_tag` never assigns `result` (the inline TODO calls this out), and the DOM branch creates the element but never sends its getter through the branch's `AccessorProp.TagVariable` callback (`dom/control-flow.ts:547`). Verified by adding `<${input.show && "div"}/el/><script>el().textContent = "set"</script>` to the `dynamic-tag-var` fixture: both CSR and SSR-resume left the `<div>` empty because `el` was never initialized, so its dependent effect never ran. Static native tags instead create a registered `_el(...)` getter; the dynamic-native path needs the equivalent getter tied to the created/resumed branch element in both runtimes.
 
-## Keep each page wrapper's asset resolver isolated
-
-`packages/runtime-tags/src/html/assets.ts:52` | 2026-07-15 | impact:high | effort:low
-
-`withPageAssets` assigns its `runtime` argument to the module-global `assetFlush`, while the returned page wrapper later calls `flush` through that shared binding. Creating page A with resolver A and then page B with resolver B makes a subsequent render of page A resolve both its `block` and `defer` assets through resolver B; a direct two-page probe produced `[runtime-b:block:page-a][runtime-b:defer:page-a]A`. Multi-page servers whose entry-specific asset runtimes share this module can therefore emit the wrong scripts/styles. Capture the resolver in the wrapper/global render state (or pass it into `flush`) rather than storing it process-wide.
-
 ## Preserve `File` and `Blob` entries when serializing `FormData`
 
 `packages/runtime-tags/src/html/serializer.ts:1286` | 2026-07-15 | impact:med | effort:med

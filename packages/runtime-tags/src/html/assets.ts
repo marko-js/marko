@@ -49,6 +49,8 @@ type AssetFlush = (
   type: "block" | "defer",
   asset: string,
 ) => string;
+// A Marko runtime bundles exactly one asset runtime, so every page sharing this
+// module shares the one resolver — module scope is intentional, not a leak.
 let assetFlush: AssetFlush;
 
 export function withLoadAssets(
