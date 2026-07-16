@@ -1,0 +1,16 @@
+<let/count=0/>
+<h1>${input.title}</h1>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Overview>
+  <p>Overview of ${input.title}: ${input.summary}</p>
+</define>
+<define/Specs>
+  <ul>
+    <for|spec| of=input.specs by(spec) { return spec.name }>
+      <li>${spec.name} is ${spec.value}</li>
+    </for>
+  </ul>
+</define>
+
+<layout content=input.view === "specs" ? Specs : Overview/>

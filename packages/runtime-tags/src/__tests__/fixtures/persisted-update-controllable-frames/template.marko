@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<input.sku value=input.sku>
+<select.ship value=input.ship>
+  <option value="ground">ground</option>
+  <option value="air">air</option>
+  <option value="sea">sea</option>
+</select>
+<try>
+  <@placeholder>loading…</@placeholder>
+  <await|eta|=resolveAfter(input.eta, input.tick)>
+    <p.eta>${eta}</p>
+  </await>
+</try>

@@ -12,6 +12,8 @@ export enum AccessorPrefix {
   Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
+  // PatchAttr stays outside this widely shipped enum; only patch compilation
+  // and application use it.
 }
 
 export enum AccessorProp {
@@ -72,6 +74,12 @@ export enum ClosureSignalProp {
 
 export enum KeyedScopesProp {
   PreviousKey = "PreviousKey:",
+}
+
+export enum FragmentContextProp {
+  GetScope = "getScope",
+  Stamp = "stamp",
+  Adopt = "adopt",
 }
 
 export enum LoadSignalValue {

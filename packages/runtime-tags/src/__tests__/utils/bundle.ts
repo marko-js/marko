@@ -9,13 +9,25 @@ import zlib from "zlib";
 import { importWithContext } from "./import-with-context";
 
 type RunDOM = typeof import("@marko/runtime-tags/dom").run;
+type DOMRuntime = typeof import("@marko/runtime-tags/dom");
+export interface UpdateEntryModule {
+  patch: (
+    fail?: (error: unknown) => void,
+  ) => (source: string) => boolean | string;
+  __ready: DOMRuntime["ready"];
+  __register: DOMRuntime["_resume"];
+}
 
 const markoExt = ".marko";
 const markoRe = /\.marko$/;
 const pageExt = ".page.mjs";
 const loadExt = ".load.mjs";
 const csrExt = ".csr.mjs";
-const entryRe = /\.marko\.(load|page|csr)?\.mjs$/;
+const updateExt = ".update.mjs";
+const persistedExt = ".persisted.mjs";
+const entryRe = /\.marko\.(load|page|csr|update|persisted)?\.mjs$/;
+const snapshotExcludeEntryRe = /\.marko\.(load|page|csr|update)?\.mjs$/;
+const persistedImportRe = /\.marko\?persisted$/;
 const assetRuntimeId = "\0asset-runtime";
 const assetRuntimeIdRe = /\0asset-runtime$/;
 const virtualFilePrefix = "v:";
@@ -32,6 +44,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
   clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
+  updateRunner?: (ctx: any) => Promise<UpdateEntryModule>;
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
 }> {
@@ -45,6 +58,10 @@ export async function createServerRunner<T extends Record<string, string>>(
   const csrEntryId = optimize
     ? undefined
     : path.join(cwd, path.basename(entries[entryNames[0]])) + csrExt;
+  // Persisted fixtures bundle the generated entry for ssr navigation steps.
+  const updateEntryId = config.persisted
+    ? path.join(cwd, path.basename(entries[entryNames[0]])) + updateExt
+    : undefined;
   const compileOpts: compiler.Config = {
     ...config,
     cache: new Map(),
@@ -59,23 +76,56 @@ export async function createServerRunner<T extends Record<string, string>>(
 
   const domBuilt = build({
     cwd,
-    ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
+    ...(csrEntryId || updateEntryId
+      ? {
+          input: {
+            ...(csrEntryId ? { csr: csrEntryId } : {}),
+            ...(updateEntryId ? { update: updateEntryId } : {}),
+          },
+        }
+      : {}),
     platform: "browser",
     treeshake: optimize,
     experimental: { nativeMagicString: true },
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
     plugins: [
+      {
+        // Hold direct dom-build entries until the html build's compiles finish
+        // so optimized register-id allocation order stays deterministic.
+        name: "html-compiles-first",
+        resolveId: {
+          filter: { id: /./ },
+          async handler(_id, importer) {
+            if (importer === undefined) await domEntry.done;
+            return null;
+          },
+        },
+      },
       virtual.plugin,
       domEntry.plugin,
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
       {
+        name: "persisted-imports",
+        resolveId: {
+          filter: { id: persistedImportRe },
+          handler(id, importer) {
+            return this.resolve(
+              id.replace(persistedImportRe, markoExt + persistedExt),
+              importer,
+            );
+          },
+        },
+      },
+      {
         name: "dom-entry",
         resolveId: {
           filter: { id: entryRe },
-          handler: (id) => path.resolve(cwd, id),
+          // Resolve nested entries from the importing template's directory.
+          handler: (id, importer) =>
+            path.resolve(importer ? path.dirname(importer) : cwd, id),
         },
         load: {
           filter: { id: entryRe },
@@ -90,6 +140,21 @@ import { ___componentLookup } from "marko/src/node_modules/@internal/components-
 export function run() { _run(); Object.values(___componentLookup).forEach((c) => c.update()); };`
                   : `export { run } from "@marko/runtime-tags/dom";`
               }`;
+            }
+
+            if (kind === "persisted") {
+              const { code } = compiler.compileFileSync(file, {
+                ...compileOpts,
+                output: "dom",
+                entry: "persisted",
+                sourceMaps: false,
+              });
+              return code;
+            }
+
+            if (kind === "update") {
+              return `export { patch } from "./${path.basename(file)}?persisted";
+export { ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`;
             }
 
             const isPage = kind === "page";
@@ -131,7 +196,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
         entryNames
           .map(
             (name) =>
-              `export { default as ${name} } from "${entries[name] + pageExt}";`,
+              `export { default as ${name}${config.persisted ? `, __marko_persisted_descriptor as ${name}Descriptor` : ""} } from "${entries[name] + pageExt}";`,
           )
           .join("\n"),
       ),
@@ -228,6 +293,18 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     csrEntryId &&
     domResult.output.find((c) => c.type === "chunk" && c.name === "csr")
       ?.fileName;
+  const updateFileName =
+    updateEntryId &&
+    domResult.output.find((c) => c.type === "chunk" && c.name === "update")
+      ?.fileName;
+  const updateRunner = updateFileName
+    ? (ctx: any) =>
+        importWithContext<UpdateEntryModule>(
+          path.join(domOut, updateFileName),
+          { browser: true },
+          ctx,
+        )
+    : undefined;
   const clientRunner = csrFileName
     ? (ctx: any): Promise<{ template: Template; run: RunDOM }> =>
         importWithContext(
@@ -244,6 +321,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
         Record<keyof T, Template>
       >,
     clientRunner,
+    updateRunner,
     domBundle: () => buildSnapshot(domResult, cwd, optimize),
     htmlBundle: () => buildSnapshot(htmlResult, cwd),
   };
@@ -272,7 +350,7 @@ async function buildSnapshot(
     const files: Record<string, number> = {};
     let fixtureCode = "";
     for (const id in modules) {
-      if (!id.startsWith(cwd) || entryRe.test(id)) continue;
+      if (!id.startsWith(cwd) || snapshotExcludeEntryRe.test(id)) continue;
       const { code, renderedLength } = modules[id];
       if (!renderedLength) continue;
       const relId = path.relative(cwd, id);
@@ -409,6 +487,8 @@ function markoPlugin(config: compiler.Config): Plugin {
 
 function entryPlugin(): {
   end(): void;
+  /** Resolves once the HTML build completes its shared register map. */
+  done: Promise<void>;
   get(id: string): string | undefined;
   add(name: string, id: string): void;
   plugin: Plugin;
@@ -420,6 +500,7 @@ function entryPlugin(): {
 
   return {
     end: end.resolve,
+    done: end.promise,
     get: (id) => (id ? seen.get(id) : undefined),
     add(name, id) {
       if (seen.has(id)) return;

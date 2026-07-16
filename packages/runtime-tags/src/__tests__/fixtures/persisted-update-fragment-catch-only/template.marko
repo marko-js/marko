@@ -1,0 +1,27 @@
+import { getReport } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  // A catch-only boundary around async content has no update/fragment story
+  // (async catch is reorder-based), so the capture must abort the render.
+  <try>
+    <@catch|err|>
+      <p.failed>failed: ${err.message}</p>
+    </@catch>
+    <try>
+      <@placeholder>
+        <p.loading>loading…</p>
+      </@placeholder>
+      <await|data|=getReport($global.range)>
+        <p.report>${data}</p>
+      </await>
+    </try>
+  </try>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

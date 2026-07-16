@@ -1,0 +1,1 @@
+async content inside a fragment frame requires a placeholder boundary

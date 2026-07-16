@@ -1,0 +1,467 @@
+# Render `{"plan":"basic","ship":"ground","extras":["warranty"],"gift":false,"promo":"SAVE10","promoCode":"SAVE10","$global":{"persisted":true}}`
+```html
+<button
+  class="count"
+>
+  clicked 0
+</button>
+<fieldset
+  class="plan"
+>
+  <input
+    checked=""
+    class="plan-basic"
+    name="plan"
+    type="radio"
+    value="basic"
+  />
+  <input
+    class="plan-pro"
+    name="plan"
+    type="radio"
+    value="pro"
+  />
+  <input
+    class="plan-max"
+    name="plan"
+    type="radio"
+    value="max"
+  />
+</fieldset>
+<fieldset
+  class="ship"
+>
+  <input
+    checked=""
+    class="ship-ground"
+    name="ship"
+    type="radio"
+    value="ground"
+  />
+  <input
+    class="ship-air"
+    name="ship"
+    type="radio"
+    value="air"
+  />
+</fieldset>
+<fieldset
+  class="extras"
+>
+  <input
+    checked=""
+    class="extra-warranty"
+    type="checkbox"
+    value="warranty"
+  />
+  <input
+    class="extra-setup"
+    type="checkbox"
+    value="setup"
+  />
+</fieldset>
+<input
+  class="gift"
+  type="checkbox"
+/>
+<input
+  checked=""
+  class="promo"
+  name="promo"
+  type="checkbox"
+  value="SAVE10"
+/>
+<output
+  class="note"
+>
+  none
+</output>
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+
+# Update `{"plan":"basic","ship":"ground","extras":["warranty"],"gift":false,"promo":"SAVE10","promoCode":"SAVE10","$global":{"persisted":true}}`
+
+# Update `{"plan":"basic","ship":"ground","extras":["warranty"],"gift":false,"promo":"SAVE10","promoCode":"SAVE10","$global":{"persisted":true}}`
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<fieldset
+  class="plan"
+>
+  <input
+    class="plan-basic"
+    default-checked=""
+    name="plan"
+    type="radio"
+    value="basic"
+  />
+  <input
+    checked=""
+    class="plan-pro"
+    name="plan"
+    type="radio"
+    value="pro"
+  />
+  <input
+    class="plan-max"
+    name="plan"
+    type="radio"
+    value="max"
+  />
+</fieldset>
+<fieldset
+  class="ship"
+>
+  <input
+    checked=""
+    class="ship-ground"
+    name="ship"
+    type="radio"
+    value="ground"
+  />
+  <input
+    class="ship-air"
+    name="ship"
+    type="radio"
+    value="air"
+  />
+</fieldset>
+<fieldset
+  class="extras"
+>
+  <input
+    checked=""
+    class="extra-warranty"
+    type="checkbox"
+    value="warranty"
+  />
+  <input
+    checked=""
+    class="extra-setup"
+    type="checkbox"
+    value="setup"
+  />
+</fieldset>
+<input
+  checked=""
+  class="gift"
+  type="checkbox"
+/>
+<input
+  checked=""
+  class="promo"
+  name="promo"
+  type="checkbox"
+  value="SAVE10"
+/>
+<output
+  class="note"
+>
+  none
+</output>
+```
+## Change
+```
+UPDATE: .count::text@8 "0" => "1"
+```
+
+# Update `{"plan":"max","ship":"air","extras":["setup"],"gift":false,"promo":"SAVE20","promoCode":"SAVE20","$global":{"persisted":true}}`
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<fieldset
+  class="plan"
+>
+  <input
+    class="plan-basic"
+    name="plan"
+    type="radio"
+    value="basic"
+  />
+  <input
+    class="plan-pro"
+    name="plan"
+    type="radio"
+    value="pro"
+  />
+  <input
+    class="plan-max"
+    default-checked=""
+    name="plan"
+    type="radio"
+    value="max"
+  />
+</fieldset>
+<fieldset
+  class="ship"
+>
+  <input
+    class="ship-ground"
+    default-checked=""
+    name="ship"
+    type="radio"
+    value="ground"
+  />
+  <input
+    checked=""
+    class="ship-air"
+    name="ship"
+    type="radio"
+    value="air"
+  />
+</fieldset>
+<fieldset
+  class="extras"
+>
+  <input
+    checked=""
+    class="extra-warranty"
+    type="checkbox"
+    value="warranty"
+  />
+  <input
+    checked=""
+    class="extra-setup"
+    type="checkbox"
+    value="setup"
+  />
+</fieldset>
+<input
+  checked=""
+  class="gift"
+  type="checkbox"
+/>
+<input
+  checked=""
+  class="promo"
+  name="promo"
+  type="checkbox"
+  value="SAVE20"
+/>
+<output
+  class="note"
+>
+  none
+</output>
+```
+## Change
+```
+UPDATE: .plan-basic[checked] "" => null
+UPDATE: .plan-max[checked] null => ""
+UPDATE: .extra-warranty[checked] "" => null
+UPDATE: .extra-setup[checked] null => ""
+UPDATE: .promo[value] "SAVE10" => "SAVE20"
+```
+
+# Update `{"plan":"max","ship":"air","extras":["setup"],"gift":false,"promo":"SAVE20","promoCode":"SAVE20","$global":{"persisted":true}}`
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<fieldset
+  class="plan"
+>
+  <input
+    class="plan-basic"
+    name="plan"
+    type="radio"
+    value="basic"
+  />
+  <input
+    class="plan-pro"
+    name="plan"
+    type="radio"
+    value="pro"
+  />
+  <input
+    class="plan-max"
+    default-checked=""
+    name="plan"
+    type="radio"
+    value="max"
+  />
+</fieldset>
+<fieldset
+  class="ship"
+>
+  <input
+    class="ship-ground"
+    default-checked=""
+    name="ship"
+    type="radio"
+    value="ground"
+  />
+  <input
+    checked=""
+    class="ship-air"
+    name="ship"
+    type="radio"
+    value="air"
+  />
+</fieldset>
+<fieldset
+  class="extras"
+>
+  <input
+    checked=""
+    class="extra-warranty"
+    type="checkbox"
+    value="warranty"
+  />
+  <input
+    checked=""
+    class="extra-setup"
+    type="checkbox"
+    value="setup"
+  />
+</fieldset>
+<input
+  checked=""
+  class="gift"
+  type="checkbox"
+/>
+<input
+  checked=""
+  class="promo"
+  name="promo"
+  type="checkbox"
+  value="SAVE20"
+/>
+<output
+  class="note"
+>
+  ship ground
+</output>
+```
+## Change
+```
+UPDATE: .note::text "none" => "ship ground"
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 2
+</button>
+<fieldset
+  class="plan"
+>
+  <input
+    checked=""
+    class="plan-basic"
+    name="plan"
+    type="radio"
+    value="basic"
+  />
+  <input
+    class="plan-pro"
+    name="plan"
+    type="radio"
+    value="pro"
+  />
+  <input
+    class="plan-max"
+    default-checked=""
+    name="plan"
+    type="radio"
+    value="max"
+  />
+</fieldset>
+<fieldset
+  class="ship"
+>
+  <input
+    class="ship-ground"
+    default-checked=""
+    name="ship"
+    type="radio"
+    value="ground"
+  />
+  <input
+    checked=""
+    class="ship-air"
+    name="ship"
+    type="radio"
+    value="air"
+  />
+</fieldset>
+<fieldset
+  class="extras"
+>
+  <input
+    checked=""
+    class="extra-warranty"
+    type="checkbox"
+    value="warranty"
+  />
+  <input
+    checked=""
+    class="extra-setup"
+    type="checkbox"
+    value="setup"
+  />
+</fieldset>
+<input
+  checked=""
+  class="gift"
+  type="checkbox"
+/>
+<input
+  checked=""
+  class="promo"
+  name="promo"
+  type="checkbox"
+  value="SAVE20"
+/>
+<output
+  class="note"
+>
+  ship ground
+</output>
+```
+## Change
+```
+UPDATE: .count::text@8 "1" => "2"
+```

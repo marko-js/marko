@@ -1,0 +1,36 @@
+<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_* a-->
+<fieldset class=plan><input value=basic checked type=radio name=plan
+    class=plan-basic><!--M_* c--><input value=pro type=radio name=plan
+    class=plan-pro><!--M_* d--><input value=max type=radio name=plan
+    class=plan-max><!--M_* e--></fieldset>
+<fieldset class=ship><input value=ground checked type=radio name=ship
+    class=ship-ground><!--M_* f--><input value=air type=radio name=ship
+    class=ship-air><!--M_* g--></fieldset>
+<fieldset class=extras><input value=warranty checked type=checkbox
+    class=extra-warranty><!--M_* h--><input value=setup type=checkbox
+    class=extra-setup><!--M_* i--></fieldset><input type=checkbox
+  class=gift><!--M_* j--><input value=SAVE10 checked type=checkbox name=promo
+  class=promo><!--M_* k--><output class=note>none<!--M_* l--></output>
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [1, {
+    Ef: _(1, "a0"),
+    Eg: _(1, "a1"),
+    w: 0
+  }], "a3 1"];
+  M._.h = "PA";
+  M._.w()
+</script>

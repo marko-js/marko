@@ -1,0 +1,68 @@
+<header><button>Menu<!--M_*2 #text/1--></button><!--M_* #button/0--></header>
+<main><!--M_[-->
+  <h1>Home<!--M_*3 #text/0--></h1><button
+    class=inc>0<!--M_* #text/2--></button><!--M_* #button/1--><!--M_]2 #text/2 3-->
+</main>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "ClosureScopes:input_title": new Set([_(3)]),
+      "ClosureScopes:count": new Set([_(3)]),
+      "#childScope/0": _(2)
+    }, {
+      "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-layout/template.marko_1_content",
+      open: !1
+    }, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-layout/template.marko_1 3 packages/runtime-tags/src/__tests__/fixtures/persisted-update-layout/tags/layout/layout.marko_0 2"
+  ];
+  M._.have = "SC";
+  M._.w()
+</script>

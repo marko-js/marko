@@ -1,5 +1,8 @@
 import { assertValidTagName } from "../common/errors";
-import { normalizeDynamicRenderer } from "../common/helpers";
+import {
+  encodePossessionSite,
+  normalizeDynamicRenderer,
+} from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import {
   type Accessor,
@@ -11,13 +14,17 @@ import {
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
+  _el_resume,
+  _fragment,
   _html,
   _peek_scope_id,
+  _reset_node_mark_run,
   _resume,
   _scope,
   _scope_id,
   _script,
   _set_serialize_reason,
+  getChunk,
   getScopeById,
   getState,
   withBranchId,
@@ -40,13 +47,39 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  siteId?: string,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
+  // The server never patches client-state-driven structure.
+  const updateStructural =
+    state.patch && (serializeReason as unknown as number) & 2;
   let rendered: boolean;
   let result: unknown;
+
+  // A mismatched dynamic hop delivers resumable HTML instead of construction
+  // code; native tag targets use the same path.
+  const targetRendererId =
+    (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
+  const possessed = state.possessed;
+  // The loop path disambiguates repeated instances of one compiled hop.
+  const siteKey =
+    siteId !== undefined
+      ? [...(state.loopPath || []), encodePossessionSite(siteId)].join("/")
+      : undefined;
+  // `siteId` (and so `siteKey`) is compiled only in persisted builds.
+  const possessionKnown =
+    possessed !== undefined && siteKey !== undefined && siteKey in possessed;
+  const possessionMiss =
+    possessionKnown && possessed![siteKey!] !== targetRendererId;
+  // Cross-route renders capture the first unproven hop; same-route renders
+  // capture each mismatch. Nested captures stay in their enclosing fragment.
+  const takeFragment =
+    !getChunk()!.fragment &&
+    (possessionMiss ||
+      (state.freshStructure && !state.fragmentTaken && !possessionKnown));
 
   if (typeof renderer === "string") {
     if (MARKO_DEBUG) {
@@ -57,7 +90,7 @@ export let _dynamic_tag = (
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
     rendered = true;
-    const renderNative = () => {
+    const renderNative = (inFragment?: 1) => {
       _scope_id();
       _html(
         `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
@@ -136,7 +169,12 @@ export let _dynamic_tag = (
         _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
       }
 
-      if (shouldResume || needsScript) {
+      if (inFragment) {
+        // Fragment native branches omit brackets so the walker cannot pair
+        // their anchor scope to itself; the applier binds the branch.
+        _html(_el_resume(branchId, MARKO_DEBUG ? `#${renderer}/0` : "a"));
+      } else if (shouldResume || needsScript) {
+        _reset_node_mark_run();
         _html(
           state.mark(
             ResumeSymbol.BranchEndNativeTag,
@@ -145,19 +183,32 @@ export let _dynamic_tag = (
         );
       }
     };
-    renderNative();
+
+    // Diverging native branches ship as fragments bound at the hop anchor.
+    if (shouldResume && takeFragment) {
+      _fragment(scopeId, accessor, () => renderNative(1));
+    } else {
+      renderNative();
+    }
 
     // TODO: this needs to set result the element getter
   } else {
     if (shouldResume) {
+      _reset_node_mark_run();
       _html(state.mark(ResumeSymbol.BranchStart, ""));
     }
 
     const render = () => {
       if (renderer) {
         try {
+          // A patch-participating hop leaves the reason unset so child guards
+          // bottom out at `_persisted_reason()`, keeping the patch-structural bit.
           _set_serialize_reason(
-            shouldResume && inputOrArgs !== undefined ? 1 : 0,
+            updateStructural
+              ? undefined
+              : shouldResume && inputOrArgs !== undefined
+                ? 1
+                : 0,
           );
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
@@ -173,10 +224,23 @@ export let _dynamic_tag = (
         return content();
       }
     };
-    result = shouldResume ? withBranchId(branchId, render) : render();
+    if (!shouldResume) {
+      result = render();
+    } else if (takeFragment) {
+      result = _fragment(scopeId, accessor, () =>
+        withBranchId(branchId, render),
+      );
+    } else {
+      // A replay-constructed hop branch (renderer mismatch client-side)
+      // seeds like other patch-list branches (see `_state_reason`).
+      if (updateStructural) state.freshBranchDepth++;
+      result = withBranchId(branchId, render);
+      if (updateStructural) state.freshBranchDepth--;
+    }
     rendered = _peek_scope_id() !== branchId;
 
     if (shouldResume) {
+      _reset_node_mark_run();
       _html(
         state.mark(
           ResumeSymbol.BranchEnd,
@@ -192,10 +256,33 @@ export let _dynamic_tag = (
         [AccessorPrefix.ConditionalRenderer + accessor]:
           (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
           renderer,
+        // Patch branches link explicitly; native renderers retain their tag so
+        // later frames cannot confuse them with component registry ids.
+        ...(updateStructural
+          ? {
+              [AccessorPrefix.BranchScopes + accessor]: _scope(
+                branchId,
+                typeof renderer === "string"
+                  ? { [AccessorProp.Renderer]: renderer }
+                  : {},
+              ),
+            }
+          : null),
       });
     }
   } else {
+    if (updateStructural) {
+      // Zero explicitly removes a request-derived branch; absence is unchanged.
+      _scope(scopeId, {
+        [AccessorPrefix.ConditionalRenderer + accessor]: 0,
+        [AccessorPrefix.BranchScopes + accessor]: undefined,
+      });
+    }
     _scope_id();
+  }
+
+  if (siteKey !== undefined) {
+    state.nextPossessed[siteKey] = rendered ? "" + targetRendererId : "0";
   }
 
   return result;
@@ -225,6 +312,7 @@ export const patchDynamicTag = (
       content,
       inputIsArgs,
       resume,
+      siteId,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -237,6 +325,7 @@ export const patchDynamicTag = (
         content,
         inputIsArgs,
         resume,
+        siteId,
       );
     };
   }

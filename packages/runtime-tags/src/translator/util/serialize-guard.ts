@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
+import { isPersisted } from "./marko-config";
 import { type OneMany, type Opt, some, Sorted } from "./optional";
 import {
   compareSources,
@@ -29,6 +30,11 @@ const sourcesUtil = new Sorted(compareSources);
 
 type DynamicSerializeReason = {
   state: undefined;
+  param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
+};
+
+type DynamicParamSerializeReason = DynamicSerializeReason & {
   param: OneMany<InputBinding | ParamBinding>;
 };
 
@@ -76,6 +82,9 @@ export function getSerializeGuard(
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
     if (!reason) return t.numericLiteral(0);
 
+    const mixedGuard = getMixedDynamicGuard(reason);
+    if (mixedGuard) return mixedGuard;
+
     return optional
       ? undefined
       : withLeadingComment(
@@ -84,7 +93,68 @@ export function getSerializeGuard(
         );
   }
 
-  return getOrHoist(reason, true);
+  return withPersistedGuard(reason, getParamGuard(reason));
+}
+
+function getMixedDynamicGuard(
+  reason: SerializeReason,
+): t.Expression | undefined {
+  if (
+    !isPersisted() ||
+    reason === true ||
+    !reason.state ||
+    !(reason.param || reason.global)
+  ) {
+    return;
+  }
+  return t.binaryExpression(
+    "|",
+    withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state)),
+    callRuntime("_persisted_reason" satisfies HTMLRuntimeHelpers),
+  );
+}
+
+function getParamGuard(reason: DynamicSerializeReason) {
+  return reason.param
+    ? getOrHoist(getParamPart(reason as DynamicParamSerializeReason), true)
+    : undefined;
+}
+
+function withPersistedGuard(
+  reason: DynamicSerializeReason,
+  guard: t.Expression | undefined,
+) {
+  if (!reason.global) return guard;
+  const persisted = callRuntime(
+    "_persisted_reason" satisfies HTMLRuntimeHelpers,
+  );
+  return guard ? mergeGuardBits(guard, persisted) : persisted;
+}
+
+function mergeGuardBits(left: t.Expression, right: t.Expression) {
+  return isPersisted()
+    ? t.binaryExpression("|", left, right)
+    : t.logicalExpression("||", left, right);
+}
+
+const paramPartCache = new WeakMap<
+  DynamicParamSerializeReason,
+  DynamicParamSerializeReason
+>();
+function getParamPart(reason: DynamicParamSerializeReason) {
+  if (!reason.global) return reason;
+  let paramPart = paramPartCache.get(reason);
+  if (!paramPart) {
+    paramPartCache.set(
+      reason,
+      (paramPart = {
+        state: undefined,
+        param: reason.param,
+        global: undefined,
+      }),
+    );
+  }
+  return paramPart;
 }
 
 export function getSerializeGuardForAny(
@@ -103,19 +173,74 @@ export function getSerializeGuardForAny(
   let expr!: t.Expression;
   for (const reason of reasons) {
     if (!isReasonDynamic(reason)) {
-      return optional
-        ? undefined
-        : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
+      const mixedGuard = getMixedDynamicGuard(reason);
+      if (!mixedGuard) {
+        return optional
+          ? undefined
+          : withLeadingComment(
+              t.numericLiteral(1),
+              getDebugNames(reason.state),
+            );
+      }
+      expr = expr ? mergeGuardBits(expr, mixedGuard) : mixedGuard;
+      continue;
     }
 
     const guard = getSerializeGuard(section, reason, false)!;
-    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
+    expr = expr ? mergeGuardBits(expr, guard) : guard;
   }
 
   return expr;
 }
 
+export function getResumeOnlyExpr(expr: t.Expression): t.Expression {
+  return isPersisted()
+    ? t.logicalExpression(
+        "&&",
+        callRuntime("_state_reason" satisfies HTMLRuntimeHelpers),
+        expr,
+      )
+    : expr;
+}
+
 export function getExprIfSerialized<
+  T extends undefined | SerializeReason,
+  R extends (T extends {} ? t.Expression : undefined),
+>(section: Section, reason: T, expr: t.Expression, valueSources?: Sources): R {
+  if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
+    if (!reason) return undefined as R;
+    if (isPersisted() && !isCrossSection(section, reason as Sources)) {
+      if (valueSources && !valueSources.state) {
+        return expr as R;
+      }
+      return t.logicalExpression(
+        "&&",
+        callRuntime("_state_reason" satisfies HTMLRuntimeHelpers),
+        expr,
+      ) as R;
+    }
+    return expr as R;
+  }
+
+  if (!reason.param) return undefined as R;
+
+  const guard = getOrHoist(
+    getParamPart(reason as DynamicParamSerializeReason),
+    false,
+  );
+  const withUpdate = isPersisted()
+    ? guard
+      ? t.logicalExpression(
+          "||",
+          guard,
+          callRuntime("_patch_reason" satisfies HTMLRuntimeHelpers),
+        )
+      : callRuntime("_patch_reason" satisfies HTMLRuntimeHelpers)
+    : guard;
+  return (withUpdate ? t.logicalExpression("&&", withUpdate, expr) : expr) as R;
+}
+
+export function getExprGuardSerialized<
   T extends undefined | SerializeReason,
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
@@ -123,12 +248,12 @@ export function getExprIfSerialized<
     return (reason && expr) as R;
   }
 
-  const guard = getOrHoist(reason, false);
+  const guard = withPersistedGuard(reason, getParamGuard(reason));
   return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
 }
 
 function getOrHoist(
-  reason: DynamicSerializeReason,
+  reason: DynamicParamSerializeReason,
   isGuard: boolean,
 ): t.Expression | undefined {
   const onlySection = getOnlySection(reason.param);
@@ -170,7 +295,11 @@ function getOrHoist(
   let orExpr: t.Expression | undefined;
   for (const [paramsSection, params] of groupParamsBySection(reason.param)) {
     const expr = buildGuardExpr(paramsSection, params, isGuard);
-    orExpr = orExpr ? t.logicalExpression("||", orExpr, expr) : expr;
+    orExpr = orExpr
+      ? isGuard
+        ? mergeGuardBits(orExpr, expr)
+        : t.logicalExpression("||", orExpr, expr)
+      : expr;
   }
 
   return orExpr;
@@ -178,7 +307,7 @@ function getOrHoist(
 
 function buildGuardExpr(
   paramsSection: Section,
-  params: DynamicSerializeReason["param"],
+  params: DynamicParamSerializeReason["param"],
   isGuard: boolean,
 ) {
   const serializeIdentifier = t.identifier(

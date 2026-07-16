@@ -1,0 +1,7 @@
+// A dom-less tag (state + tag-variable wiring, no markup): fragment markers
+// never reach its scope, so the applier stamps it from the entry's scope ids.
+<let/value=0/>
+<script>
+  value = $global.seed;
+</script>
+<return=value valueChange(next) { value = next + $global.step }>

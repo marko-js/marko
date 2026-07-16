@@ -1,0 +1,76 @@
+<h1>On Call<!--M_*1 #text/0--></h1><button class=count>clicked <!>
+    0<!--M_* #text/2--></button><!--M_* #button/1--><!--M_[-->
+<ul class=roster>
+  <li>ada<!--M_*3 #text/0--></li>
+  <li>grace<!--M_*4 #text/0--></li><!--M_}2 #ul/0 4 3-->
+</ul><!--M_]1 #text/3 2--><!--M_[-->
+<ul class=roster>
+  <li>ada<!--M_*6 #text/0--></li>
+  <li>grace<!--M_*7 #text/0--></li><!--M_}5 #ul/0 7 6-->
+</ul><!--M_]1 #text/4 5-->
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#text/3": _.a =
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-imported-child/tags/roster.marko",
+      "ConditionalRenderer:#text/4": _.a,
+      count: 0
+    }, 1, {
+      "#LoopKey": "ada"
+    }, {
+      "#LoopKey": "grace"
+    }, 1, {
+      "#LoopKey": "ada"
+    }, {
+      "#LoopKey": "grace"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-imported-child/template.marko_0 1"
+  ];
+  M._.have = "PDGBIAXQC.Dada.FgraceNBIBXRBNBICXRB";
+  M._.w()
+</script>

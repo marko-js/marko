@@ -9,6 +9,7 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { isPersisted } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
@@ -38,6 +39,7 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
+import { addUpdateMerge } from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -190,6 +192,15 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "await_promise");
         const valueExpr = node.attributes[0].value;
+
+        if (isPersisted()) {
+          signal.updateGuard = true;
+          addUpdateMerge(section, {
+            kind: "branch",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            bodySection,
+          });
+        }
 
         signal.build = () => {
           const branchRenderArgs = getBranchRendererArgs(bodySection);

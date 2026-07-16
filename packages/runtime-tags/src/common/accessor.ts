@@ -12,6 +12,11 @@ export enum AccessorPrefix {
   Lifecycle = "K",
   Promise = "L",
   TagVariableChange = "M",
+  // N/P/Q/R/S are patch-only Attr, FragmentHtml, PatchHole, PatchHtml, and
+  // PatchApplied prefixes kept outside this widely shipped enum.
+
+  // "T" is reserved for a persisted `<try>` placeholder's site id.
+  // It stays outside the enum so ordinary client bundles do not include it.
 }
 
 export enum AccessorProp {
@@ -72,6 +77,12 @@ export enum ClosureSignalProp {
 
 export enum KeyedScopesProp {
   PreviousKey = "_",
+}
+
+export enum FragmentContextProp {
+  GetScope = "g",
+  Stamp = "s",
+  Adopt = "a",
 }
 
 export enum LoadSignalValue {

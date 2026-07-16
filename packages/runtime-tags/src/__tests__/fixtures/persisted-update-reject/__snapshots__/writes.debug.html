@@ -1,0 +1,85 @@
+<button class=count>clicked <!>0<!--M_*1 #text/1--></button><!--M_* #button/0-->
+<section><!--M_[--><!--M_!^b--><!--M_!^2-->
+  <p class=loading>loading…</p><!--M_!2--><!--M_!b--><!--M_]1 #text/2 2-->
+</section>
+<t hidden M_=2><!--M_#c--></t>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      "BoundarySite:#text/2": "",
+      count: 0
+    }, {
+      "#BranchAccessor": "#text/2",
+      "#CatchContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-reject/template.marko_3_content"
+        ),
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-reject/template.marko_2_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-reject/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.have = "BA";
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->
+  <p class=feed>all systems go<!--M_*4 #text/0--></p><!--M_]2 #text/0 4-->
+</t>
+<script>
+  if (!M._.n) {
+    M._.r.push(_ => [1, {
+      "BoundarySite:#text/2": 0
+    }]);
+    M._.have = "PA";
+    M._.w()
+  }
+</script>

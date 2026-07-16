@@ -1,0 +1,17 @@
+import { getReport } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  // A bare `<await>` on a fragment's main chain would hold the whole frame
+  // open, so the capture must abort into the full-navigation fallback.
+  <await|data|=getReport($global.range)>
+    <p.report>${data}</p>
+  </await>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

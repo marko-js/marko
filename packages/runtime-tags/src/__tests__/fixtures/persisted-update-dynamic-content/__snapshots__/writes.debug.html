@@ -1,0 +1,72 @@
+<h1>Trailhead 40L Pack<!--M_*1 #text/0--></h1><button class=count>clicked <!>
+    0<!--M_* #text/2--></button><!--M_* #button/1-->
+<aside><button
+    class=toggle>expand<!--M_*2 #text/1--></button><!--M_* #button/0--></aside>
+<section><!--M_[-->
+  <p>Overview of <!>Trailhead 40L Pack<!--M_*3 #text/0-->: <!>A dependable pack
+        for long hauls.<!--M_* #text/1--></p><!--M_]2 #text/2 3-->
+</section>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "ClosureScopes:input_title": new Set([_(3)]),
+      "ClosureScopes:input_summary": new Set([_(3)]),
+      "ClosureScopes:input_specs": new Set,
+      "#childScope/3": _(2)
+    }, {
+      "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-content/template.marko_1_content",
+      open: !1
+    }, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-content/tags/layout.marko_0 2 packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-content/template.marko_0 1"
+  ];
+  M._.have = "SC";
+  M._.w()
+</script>

@@ -17,6 +17,15 @@ export function isOptimize() {
   return getMarkoOpts().optimize;
 }
 
+export function isPersisted() {
+  return !!getMarkoOpts().persisted;
+}
+
+// The `?persisted` entry combines the deferred render graph and patch merges.
+export function isPersistedEntryBuild() {
+  return getMarkoOpts().entry === "persisted" && isOutputDOM();
+}
+
 export function getReadyId(file: t.BabelFile = getFile()) {
   const { markoOpts } = file;
   if (!markoOpts.linkAssets) return undefined;

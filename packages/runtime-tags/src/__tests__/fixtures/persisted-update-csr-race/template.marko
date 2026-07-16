@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<h1>${input.title}</h1>
+<button onClick() { count++ }>clicked ${count}</button>
+<section>
+  <try>
+    <@placeholder>loading…</@placeholder>
+    <await|note|=resolveAfter(input.note, 1)>
+      <p>clicked ${count} times -- ${note}</p>
+    </await>
+  </try>
+</section>

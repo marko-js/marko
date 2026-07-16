@@ -1,0 +1,42 @@
+<button>clicked <!>0<!--M_*1 b--></button><!--M_* a--><select name=sort>
+  <option value=relevance>Relevance<!--M_*2 b--></option><!--M_* a-->
+  <option value=price-up>Price<!--M_*3 b--></option>
+  <!--M_* a--><!--M_}1 c 3 2-->
+</select>
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [0, {
+    cfg: [{
+      options: [{
+        key: "rel",
+        id: "relevance",
+        label: "Relevance"
+      }, {
+        key: "price",
+        id: "price-up",
+        label: "Price"
+      }]
+    }]
+  }, {
+    g: 0
+  }, {
+    M: "rel"
+  }, {
+    M: "price"
+  }], "a3 1"];
+  M._.h = "PBGBIAXQC.Fprice.Drel";
+  M._.w()
+</script>

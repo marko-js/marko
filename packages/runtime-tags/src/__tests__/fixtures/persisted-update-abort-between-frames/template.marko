@@ -1,0 +1,20 @@
+import { getReport } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  <try>
+    <@placeholder>
+      <p.loading>loading…</p>
+    </@placeholder>
+    <await|report|=getReport($global.topic)>
+      <p.report>${report}</p>
+    </await>
+  </try>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

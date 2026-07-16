@@ -1,0 +1,100 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_* #button/0--><!--M_[-->
+<ul class=items>
+  <li>alpha<!--M_*3 #text/0--></li>
+  <li>beta<!--M_*4 #text/0--></li>
+  <li>gamma<!--M_*5 #text/0--></li>
+  <li>delta<!--M_*6 #text/0--></li><!--M_}2 #ul/0 6 5 4 3-->
+</ul>
+<nav class=pagination><!--M_[--><a
+    href="/search?page=1&amp;q=a">1</a><!--M_*8 #a/0--><!--M_|7 #text/0 8--><!--M_[7--><span
+    class=current>2</span><!--M_|9 #text/0 10--><!--M_[9--><a
+    href="/search?page=3&amp;q=a">3</a><!--M_*12 #a/0--><!--M_|11 #text/0 12--><!--M_)2 #nav/1 11-->
+</nav><!--M_]1 #text/2 2-->
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#text/2": 0,
+      count: 0,
+      "ClosureScopes:search_q": new Set([_(8), _(12)]),
+      "ClosureScopes:search_page": new Set([_(7), _(9), _(11)])
+    }, {
+      _: _(1)
+    }, {
+      "#LoopKey": 1
+    }, {
+      "#LoopKey": 2
+    }, {
+      "#LoopKey": 3
+    }, {
+      "#LoopKey": 4
+    }, {
+      "ConditionalRenderer:#text/0": 1,
+      _: _(2),
+      "#LoopKey": 1
+    }, {
+      _: _(7)
+    }, {
+      "ConditionalRenderer:#text/0": 0,
+      _: _(2),
+      "#LoopKey": 2
+    }, {
+      _: _(9)
+    }, {
+      "ConditionalRenderer:#text/0": 1,
+      _: _(2),
+      "#LoopKey": 3
+    }, {
+      _: _(11)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-slim-main/template.marko_0 1"
+  ];
+  M._.have =
+    "PGGBIAXRBCDGBIBXRBCCNBIDXS.B0NCIBICICXS.B1NCIBIEICXS.B0NCIBIGICXS.B1";
+  M._.w()
+</script>

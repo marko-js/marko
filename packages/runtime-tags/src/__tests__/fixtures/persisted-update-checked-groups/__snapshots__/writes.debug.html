@@ -1,0 +1,75 @@
+<button class=count>clicked <!>0<!--M_*1 #text/1--></button><!--M_* #button/0-->
+<fieldset class=plan><input value=basic checked type=radio name=plan
+    class=plan-basic><!--M_* #input/2--><input value=pro type=radio name=plan
+    class=plan-pro><!--M_* #input/3--><input value=max type=radio name=plan
+    class=plan-max><!--M_* #input/4--></fieldset>
+<fieldset class=ship><input value=ground checked type=radio name=ship
+    class=ship-ground><!--M_* #input/5--><input value=air type=radio name=ship
+    class=ship-air><!--M_* #input/6--></fieldset>
+<fieldset class=extras><input value=warranty checked type=checkbox
+    class=extra-warranty><!--M_* #input/7--><input value=setup type=checkbox
+    class=extra-setup><!--M_* #input/8--></fieldset><input type=checkbox
+  class=gift><!--M_* #input/9--><input value=SAVE10 checked type=checkbox
+  name=promo class=promo><!--M_* #input/10--><output
+  class=note>none<!--M_* #text/11--></output>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#input/5": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-checked-groups/template.marko_0/checkedValueChange"
+        ),
+      "ControlledHandler:#input/6": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-checked-groups/template.marko_0/checkedValueChange2"
+        ),
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-checked-groups/template.marko_0 1"
+  ];
+  M._.have = "PA";
+  M._.w()
+</script>

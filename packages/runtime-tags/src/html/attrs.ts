@@ -420,6 +420,11 @@ function writeControlledScope(
     assertHandlerIsFunction("valueChange", valueChange);
   }
 
+  // Fragment subtrees resume without setup, so controlled wiring remains
+  // serialized.
+  const chunk = getChunk()!;
+  if (chunk.boundary.state.patch && !chunk.fragment) return;
+
   _scope(
     scopeId,
     serializeType

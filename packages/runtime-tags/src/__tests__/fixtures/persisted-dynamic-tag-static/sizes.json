@@ -1,0 +1,16 @@
+{
+  "dom": {
+    "update.js": {
+      "min": 2962,
+      "brotli": 1333
+    },
+    "template.mjs": {
+      "min": 6069,
+      "brotli": 2742
+    }
+  },
+  "html": {
+    "min": 560,
+    "brotli": 362
+  }
+}

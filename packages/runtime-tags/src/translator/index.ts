@@ -52,11 +52,11 @@ export const taglibs = [
 ];
 
 export function getRuntimeEntryFiles(
-  output: Config["output"],
+  output: Config["output"] | "dom-persisted",
   optimize: boolean,
 ) {
   return [
-    `${runtimeInfo.name}${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}`,
+    `${runtimeInfo.name}${optimize ? "" : "/debug"}/${output === "html" ? "html" : output === "dom-persisted" ? "dom-persisted" : "dom"}`,
   ];
 }
 

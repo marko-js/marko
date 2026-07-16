@@ -51,10 +51,15 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
+  // Navigation epoch (persisted updates only); post-bootstrap document
+  // flush scripts no-op once set -- see `bumpNavEpoch`.
+  n?: number;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredValues: Record<string, unknown> = {};
+// Also read by `dom/update`'s patch-aware serialize context (fills access
+// registered values as `_._[id]`).
+export const registeredValues: Record<string, unknown> = {};
 let curRenders: Renders;
 let branchesEnabled: undefined | 1;
 let embedRenders:
@@ -71,11 +76,38 @@ export function enableBranches() {
   }
 }
 
+/** Persisted entries can enable branches after the initial resume walk. */
+export function enableBranchesPersisted() {
+  if (!branchesEnabled) {
+    enableBranches();
+    for (const renderId in curRenders) {
+      runResumeEffects(curRenders[renderId]);
+    }
+  }
+}
+
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+}
+
+/** Persisted lazy entries additionally replay updates parked while loading. */
+export function readyPersisted(readyId: string) {
+  ready(readyId);
+  flushReadyUpdates();
+}
+
+/** Flushes parked lazy-child patches (see dom/update.ts `_update_load`). */
+export let flushReadyUpdates: () => void = () => {};
+export function enableReadyUpdates(hook: () => void) {
+  flushReadyUpdates = hook;
+}
+
+/** Whether a lazy module's registrations are ready. */
+export function isReady(readyId: string) {
+  return !!readyIds?.has(readyId);
 }
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
@@ -179,6 +211,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               ? (registeredValues[registryId] as RegisteredFn)(getScope(data))
               : getScope(data)
             : applyScopes(data)) as SerializeContext;
+        // Keep branch marker grammar aligned with `walkFragment`; its fork
+        // intentionally omits render-only bookkeeping.
         const createVisitBranches = (
           branchScopesStack: Opt<BranchScope>[] = [],
           branchStarts: Comment[] = [],
@@ -464,6 +498,32 @@ function runResumeEffects(render: RenderData) {
     runEffects(render.m!([]), 1);
   } finally {
     isResuming = 0;
+  }
+}
+
+// Resolves a resumed render's root through its effect channel.
+export function getUpdateRoot() {
+  let root: Scope | undefined;
+  for (const id in curRenders) {
+    const render = curRenders[id];
+    registeredValues["__update_root"] = (scope: Scope) => (root = scope);
+    (render.r ||= []).push("__update_root 1");
+    runResumeEffects(render);
+    if (root) return root;
+  }
+  return root;
+}
+
+/** Invalidates the navigated render's pending document stream. */
+export function bumpNavEpoch(global: Scope[AccessorProp.Global]) {
+  const render = curRenders[global.renderId as string];
+  render.n = (render.n || 0) + 1;
+  // Stale flushes are inert, so their splices can never fill pending reorder
+  // gates; drop the gates so parked live batches still drain.
+  for (const readyId in render.b) {
+    render.b[readyId] = render.b[readyId].filter(
+      (resume) => typeof resume !== "number",
+    );
   }
 }
 

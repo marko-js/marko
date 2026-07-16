@@ -1,0 +1,116 @@
+// tags/order-form.marko.persisted.mjs
+const $template$1 = "<form class=order><input type=number class=qty><input type=hidden name=itemId class=item><button class=buy>buy</button></form><p class=mirror>adding <!> to cart</p><output class=last> </output>";
+const $walks$1 = " D b lDb%lD l";
+const $itemId = _var_resume("__tests__/tags/order-form.marko_0_itemId/var", /*@__PURE__*/ _const_persisted("itemId", ($scope) => _attr($scope["#input/2"], "value", $scope.itemId)));
+const $input_id$1 = ($scope, input_id) => {
+	if (!updating) $itemId($scope, input_id);
+};
+const $qty = _var_resume("__tests__/tags/order-form.marko_0_qty/var", /*@__PURE__*/ _let_persisted("qty/9", ($scope) => {
+	_attr_input_value($scope, "#input/1", $scope.qty, $valueChange($scope));
+	_text($scope["#text/3"], $scope.qty);
+}));
+const $lastSubmit = _var_resume("__tests__/tags/order-form.marko_0_lastSubmit/var", /*@__PURE__*/ _let_persisted("lastSubmit/10", ($scope) => _text($scope["#text/4"], $scope.lastSubmit)));
+const $setup__script = _script_shared(($scope) => {
+	_on($scope["#form/0"], "submit", function(e) {
+		e.preventDefault();
+		$lastSubmit($scope, `${$scope.itemId} x ${$scope.qty}`);
+	});
+	_attr_input_value_script($scope, "#input/1");
+});
+function $setup$1($scope) {
+	$qty($scope, 1);
+	$lastSubmit($scope, "none");
+	$setup__script($scope);
+}
+const $input$1 = ($scope, input) => $input_id$1($scope, input.id);
+function $valueChange($scope) {
+	return (_new_qty) => {
+		$qty($scope, Number(_new_qty));
+	};
+}
+var order_form_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/order-form.marko", $template$1, $walks$1, $setup$1, $input$1);
+const $qty_seed = _update_signal("__tests__/tags/order-form.marko_0_qty/var");
+const $lastSubmit_seed = _update_signal("__tests__/tags/order-form.marko_0_lastSubmit/var");
+const $itemId_update = _update_signal("__tests__/tags/order-form.marko_0_itemId/var");
+const $update2$1 = (_patch, _live) => {
+	_update_pair(_patch, _live);
+	if ("qty" in _patch) _update_seed(_live, $qty_seed, _patch["qty"]);
+	if ("lastSubmit" in _patch) _update_seed(_live, $lastSubmit_seed, _patch["lastSubmit"]);
+	if ("itemId" in _patch) $itemId_update(_live, _patch["itemId"]);
+};
+const _merge$1 = _resume("__tests__/tags/order-form.marko_0_update", $update2$1);
+_update_content("__tests__/tags/order-form.marko", _merge$1);
+function _patch2$1(_fail) {
+	return patch(_merge$1, _fail);
+}
+
+// template.marko.persisted.mjs
+const $template = /*@__PURE__*/ ((_w0) => `<h1 class=name> </h1>${_w0}`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&`)($walks$1);
+const $input_name = ($scope, input_name) => _text($scope["#text/0"], input_name);
+function $setup($scope) {
+	$setup$1($scope["#childScope/1"]);
+}
+const $input_id = ($scope, input_id) => $input_id$1($scope["#childScope/1"], input_id);
+const $input = ($scope, input) => {
+	$input_name($scope, input.name);
+	$input_id($scope, input.id);
+};
+var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
+const $update2 = (_patch, _live) => {
+	$_holes(_patch, _live);
+	if ("#childScope/1" in _patch) _merge$1(_patch["#childScope/1"], _live["#childScope/1"]);
+};
+const _merge = _resume("__tests__/template.marko_0_update", $update2);
+_update_content("__tests__/template.marko", _merge);
+function _patch2(_fail) {
+	return patch(_merge, _fail);
+}
+
+// tags/order-form.marko
+const $template$1 = "<form class=order><input type=number class=qty><input type=hidden name=itemId class=item><button class=buy>buy</button></form><p class=mirror>adding <!> to cart</p><output class=last> </output>";
+const $walks$1 = " D b lDb%lD l";
+const $itemId = /*@__PURE__*/ _const_persisted("itemId", ($scope) => _attr($scope["#input/2"], "value", $scope.itemId));
+const $input_id$1 = ($scope, input_id) => {
+	if (!updating) $itemId($scope, input_id);
+};
+const $qty = /*@__PURE__*/ _let_persisted("qty/9", ($scope) => {
+	_attr_input_value($scope, "#input/1", $scope.qty, $valueChange($scope));
+	_text($scope["#text/3"], $scope.qty);
+});
+const $lastSubmit = /*@__PURE__*/ _let_persisted("lastSubmit/10", ($scope) => _text($scope["#text/4"], $scope.lastSubmit));
+const $setup__script = _script_update("__tests__/tags/order-form.marko_0", ($scope) => {
+	_on($scope["#form/0"], "submit", function(e) {
+		e.preventDefault();
+		$lastSubmit($scope, `${$scope.itemId} x ${$scope.qty}`);
+	});
+	_attr_input_value_script($scope, "#input/1");
+});
+function $setup$1($scope) {
+	$qty($scope, 1);
+	$lastSubmit($scope, "none");
+	$setup__script($scope);
+}
+const $input$1 = ($scope, input) => $input_id$1($scope, input.id);
+function $valueChange($scope) {
+	return (_new_qty) => {
+		$qty($scope, Number(_new_qty));
+	};
+}
+_resume("__tests__/tags/order-form.marko_0/valueChange", $valueChange);
+var order_form_default = /*@__PURE__*/ _template("__tests__/tags/order-form.marko", $template$1, $walks$1, $setup$1, $input$1);
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<h1 class=name> </h1>${_w0}`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&`)($walks$1);
+const $input_name = ($scope, input_name) => _text($scope["#text/0"], input_name);
+function $setup($scope) {
+	$setup$1($scope["#childScope/1"]);
+}
+const $input_id = ($scope, input_id) => $input_id$1($scope["#childScope/1"], input_id);
+const $input = ($scope, input) => {
+	$input_name($scope, input.name);
+	$input_id($scope, input.id);
+};
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

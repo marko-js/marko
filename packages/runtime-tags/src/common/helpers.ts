@@ -141,6 +141,19 @@ export function isNotVoid(value: unknown) {
   return value != null && value !== false;
 }
 
+// Loop keys are strings or numbers; SameValueZero makes -0 and 0 equivalent.
+export function encodePossessionValue(value: unknown): string {
+  if (MARKO_DEBUG && typeof value !== "string" && typeof value !== "number") {
+    throw new TypeError("Possession keys must be strings or numbers.");
+  }
+  return typeof value === "string" ? `s${value.length}:${value}` : `n${value}`;
+}
+
+export function encodePossessionSite(siteId: string, key?: unknown): string {
+  const encodedKey = key === undefined ? "" : encodePossessionValue(key);
+  return `i${siteId.length}:${siteId}${encodedKey ? "=" + encodedKey : ""}`;
+}
+
 export function isPromise(value: unknown): value is Promise<unknown> {
   return (
     value != null && typeof (value as Promise<unknown>).then === "function"

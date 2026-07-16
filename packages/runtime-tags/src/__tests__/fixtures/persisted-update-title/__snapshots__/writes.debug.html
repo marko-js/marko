@@ -1,0 +1,63 @@
+<button>0<!--M_*1 #text/1--></button><!--M_* #button/0-->
+<title>App — Home</title><!--M_* #title/2-->
+<meta name=description content="Home overview"><!--M_* #meta/3-->
+<link rel=canonical href="https://example.test/"><!--M_* #link/4-->
+<p>Home<!--M_* #text/5--></p><output></output>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [0, {
+      docTitle: "Home",
+      docPath: "/"
+    }, {
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-title/template.marko_0 1"
+  ];
+  M._.have = "PA";
+  M._.w()
+</script>

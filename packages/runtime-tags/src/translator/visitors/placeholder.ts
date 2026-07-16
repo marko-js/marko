@@ -4,9 +4,13 @@ import { isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
+import {
+  getPatchHolePrefix,
+  getPatchHtmlPrefix,
+} from "../util/get-accessor-char";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
@@ -20,6 +24,7 @@ import {
   ContentType,
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
   type Section,
 } from "../util/sections";
@@ -27,10 +32,16 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  isReasonDynamic,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
+import {
+  addUpdateGlobalsStatement,
+  addUpdateMerge,
+  isUpdateCoveredByClientSignals,
+} from "../util/update-merges";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -153,33 +164,75 @@ export default {
         }
 
         if (isHTML) {
+          const holeValue =
+            nodeBinding &&
+            isPersisted() &&
+            isReasonDynamic(markerSerializeReason) &&
+            !isUpdateCoveredByClientSignals(valueExtra)
+              ? callRuntime(
+                  "_hole_value",
+                  getScopeIdIdentifier(section),
+                  t.stringLiteral(
+                    (method === "_escape"
+                      ? getPatchHolePrefix()
+                      : getPatchHtmlPrefix()) +
+                      getScopeAccessorLiteral(nodeBinding).value,
+                  ),
+                  value,
+                  callRuntime("_persisted_reason"),
+                )
+              : undefined;
           write`${
             method === "_escape"
-              ? buildEscapedTextExpression(value)
-              : callRuntime(method as HTMLMethod | DOMMethod, value)
+              ? holeValue
+                ? callRuntime("_escape", holeValue)
+                : buildEscapedTextExpression(value)
+              : callRuntime(
+                  method as HTMLMethod | DOMMethod,
+                  holeValue || value,
+                )
           }`;
           if (nodeBinding) {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
           }
         } else {
+          // Update entries merge server-computed hole values (G1) for the
+          // same request-derived holes the html output captures.
+          if (
+            nodeBinding &&
+            isReasonDynamic(markerSerializeReason) &&
+            !isUpdateCoveredByClientSignals(valueExtra)
+          ) {
+            const accessor = getScopeAccessorLiteral(nodeBinding);
+            const isText = method === "_text";
+            addUpdateMerge(section, {
+              kind: isText ? "text" : "html",
+              key:
+                (isText ? getPatchHolePrefix() : getPatchHtmlPrefix()) +
+                accessor.value,
+              accessor,
+            });
+          }
+          const stmt = t.expressionStatement(
+            method === "_text"
+              ? callRuntime(
+                  "_text",
+                  createScopeReadExpression(nodeBinding!),
+                  value,
+                )
+              : callRuntime(
+                  "_html",
+                  scopeIdentifier,
+                  value,
+                  getScopeAccessorLiteral(nodeBinding!),
+                ),
+          );
+          addUpdateGlobalsStatement(section, valueExtra, stmt);
           addStatement(
             "render",
             section,
             valueExtra.referencedBindings,
-            t.expressionStatement(
-              method === "_text"
-                ? callRuntime(
-                    "_text",
-                    createScopeReadExpression(nodeBinding!),
-                    value,
-                  )
-                : callRuntime(
-                    "_html",
-                    scopeIdentifier,
-                    value,
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
-            ),
+            stmt,
             undefined,
             true,
           );

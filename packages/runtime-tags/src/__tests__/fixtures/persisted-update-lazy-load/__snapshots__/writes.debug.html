@@ -1,0 +1,71 @@
+<h1>First<!--M_*1 #text/0--></h1><button class=count>clicked <!>
+    0<!--M_* #text/2--></button><!--M_* #button/1--><!--M_[--><button
+  class=panel>alpha<!--M_*2 #text/1--> hit <!>
+    0<!--M_* #text/2--></button><!--M_* #button/0--><!--M_]1 #text/3 2-->
+<script>
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (self.requestIdleCallback || l)(l))(document.currentScript,
+    "\x3Cscript async type=module src=\"panel.marko.load.mjs\">\x3C/script>");
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-update-lazy-load/tags/panel.marko": [
+      _ => [2, {
+        hits: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-update-lazy-load/tags/panel.marko_0 2"
+    ]
+  };
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#text/3": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-lazy-load/tags/panel.marko",
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-lazy-load/template.marko_0 1"
+  ];
+  M._.have = "SA";
+  M._.w()
+</script>

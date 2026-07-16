@@ -1,0 +1,50 @@
+<section>
+  <h2>parent-alpha-marker<!--M_*2 a--></h2><button
+    data-key=parent-alpha-marker:shared-item>watch<!--M_*3 b--></button><!--M_* a--><button
+    data-key=parent-alpha-marker:alpha-item>watch<!--M_*4 b--></button><!--M_* a--><!--M_|2 b 4 3-->
+</section>
+<section>
+  <h2>parent-beta-marker<!--M_*5 a--></h2><button
+    data-key=parent-beta-marker:shared-item>watch<!--M_*6 b--></button><!--M_* a--><button
+    data-key=parent-beta-marker:beta-item>watch<!--M_*7 b--></button><!--M_* a--><!--M_|5 b 7 6-->
+</section><!--M_|1 a 5 2-->
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [2, {
+    M: "parent-alpha-marker"
+  }, {
+    g: !1,
+    _: _(2),
+    M: "shared-item"
+  }, {
+    g: !1,
+    _: _(2),
+    M: "alpha-item"
+  }, {
+    M: "parent-beta-marker"
+  }, {
+    g: !1,
+    _: _(5),
+    M: "shared-item"
+  }, {
+    g: !1,
+    _: _(5),
+    M: "beta-item"
+  }], "a5 3 4 6 7"];
+  M._.h =
+    "P!D.Tparent-alpha-marker.Sparent-beta-marker.Lshared-itemDGBIAXQC*A*BGCIAT*AIBXQC.Kalpha-item*CGCIAT*BIBXQC.Jbeta-item*C";
+  M._.w()
+</script>

@@ -16,11 +16,13 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
   dropNodes,
   getAllTagReferenceNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
@@ -43,6 +45,7 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
 } from "../util/serialize-reasons";
@@ -55,6 +58,13 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { getMemberExpressionPropString } from "../util/to-property-name";
+import {
+  addUpdateMerge,
+  getUpdateSiteRegisterId,
+  isUpdateRequestDerivedSite,
+  isUpdateStructuralMerge,
+  recordUpdatePossessionLoop,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -188,6 +198,7 @@ export default {
 
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;
+    recordUpdatePossessionLoop(tagSection, tagExtra, nodeBinding);
   },
   translate: translateByTarget({
     html: {
@@ -218,6 +229,7 @@ export default {
         const tagSection = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
+        const tagExtra = node.extra!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         const forAttrs = getKnownAttrValues(node);
@@ -243,7 +255,9 @@ export default {
           kStatefulReason,
         );
         if (
-          isStateSerializeReason(statefulSerializeReason) &&
+          (isPersisted()
+            ? isStateOnlySerializeReason(statefulSerializeReason)
+            : isStateSerializeReason(statefulSerializeReason)) &&
           isStaticSerializeReason(branchSerializeReason) &&
           isStaticSerializeReason(markerSerializeReason)
         ) {
@@ -294,17 +308,33 @@ export default {
             statefulSerializeArg,
           );
 
+          // The site id lets the server token distinguish live loop items.
+          const forSiteId = isUpdateRequestDerivedSite(tagExtra)
+            ? getUpdateSiteRegisterId(
+                tagSection,
+                "for",
+                getScopeAccessor(nodeBinding),
+              )
+            : undefined;
           if (skipParentEnd) {
             getParentTag(tag)!.node.extra![kSkipEndTag] = true;
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
+          } else if (forSiteId !== undefined) {
+            forTagArgs.push(t.numericLiteral(0));
           }
 
           if (singleChild) {
-            if (!skipParentEnd) {
+            if (!skipParentEnd && forSiteId === undefined) {
               forTagArgs.push(t.numericLiteral(0));
             }
 
             forTagArgs.push(t.numericLiteral(1));
+          } else if (forSiteId !== undefined) {
+            forTagArgs.push(t.numericLiteral(0));
+          }
+
+          if (forSiteId !== undefined) {
+            forTagArgs.push(t.stringLiteral(forSiteId));
           }
         }
 
@@ -365,18 +395,40 @@ export default {
         });
 
         const forType = getForType(node)!;
+        const forAttrs = getKnownAttrValues(node);
         const signal = getSignal(tagSection, nodeRef, "for");
+        const isRequestDerived = isUpdateRequestDerivedSite(tagExtra);
+        if (isUpdateStructuralMerge(tagExtra, [bodySection])) {
+          addUpdateMerge(tagSection, {
+            kind: "for",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            encodedAccessor: getScopeAccessorLiteral(nodeRef, true),
+            bodySection,
+            siteId: isRequestDerived
+              ? getUpdateSiteRegisterId(
+                  tagSection,
+                  "for",
+                  getScopeAccessor(nodeRef),
+                )
+              : undefined,
+          });
+          signal.updateGuard = true;
+        }
         signal.build = () => {
-          return callRuntime(
-            forTypeToDOMRuntime(forType),
-            getScopeAccessorLiteral(nodeRef, true),
-            ...replaceNullishAndEmptyFunctionsWith0(
-              getBranchRendererArgs(bodySection),
-            ),
+          const rendererArgs = replaceNullishAndEmptyFunctionsWith0(
+            getBranchRendererArgs(bodySection),
           );
+          if (!(isRequestDerived && isPersistedEntryBuild())) {
+            return callRuntime(
+              forTypeToDOMRuntime(forType),
+              getScopeAccessorLiteral(nodeRef, true),
+              ...rendererArgs,
+            );
+          }
+
+          return t.numericLiteral(0);
         };
 
-        const forAttrs = getKnownAttrValues(node);
         const loopArgs = getBaseArgsInForTag(forType, forAttrs);
         if (forAttrs.by) {
           loopArgs.push(forAttrs.by);

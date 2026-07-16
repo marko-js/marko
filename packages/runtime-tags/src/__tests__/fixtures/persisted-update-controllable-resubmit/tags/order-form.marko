@@ -1,0 +1,10 @@
+<const/itemId=input.id>
+<let/qty=1>
+<let/lastSubmit="none">
+<form.order onSubmit(e) { e.preventDefault(); lastSubmit = `${itemId} x ${qty}` }>
+  <input.qty type="number" value:Number:=qty>
+  <input.item type="hidden" name="itemId" value=itemId>
+  <button.buy>buy</button>
+</form>
+<p.mirror>adding ${qty} to cart</p>
+<output.last>${lastSubmit}</output>

@@ -9,12 +9,17 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPersisted } from "../util/marko-config";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
+import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
-import { addHTMLEffectCall, addStatement } from "../util/signals";
+import {
+  addHTMLEffectCall,
+  addStatement,
+  markEffectRetrigger,
+} from "../util/signals";
 import { skip, traverseContains } from "../util/traverse";
 import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
 
@@ -107,6 +112,13 @@ export default {
       const section = getSection(tag);
       const { value } = valueAttr;
       const referencedBindings = value.extra?.referencedBindings;
+      if (
+        isPersisted() &&
+        value.extra &&
+        getSerializeSourcesForExpr(value.extra)?.global
+      ) {
+        markEffectRetrigger(section, referencedBindings);
+      }
       if (isOutputDOM()) {
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);

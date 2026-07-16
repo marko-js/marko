@@ -1,0 +1,538 @@
+# Render `{"$global":{"persisted":true,"view":"home"}}`
+```html
+<button
+  class="count"
+>
+  clicked 0
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    expand
+  </button>
+</aside>
+<section>
+  <p
+    class="home"
+  >
+    welcome home
+  </p>
+</section>
+```
+
+# Update
+```js
+container.querySelector("button.count").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    expand
+  </button>
+</aside>
+<section>
+  <p
+    class="home"
+  >
+    welcome home
+  </p>
+</section>
+```
+## Change
+```
+UPDATE: .count::text@8 "0" => "1"
+```
+
+# Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"dashboard","user":"ada","range":"day","focus":"views","admin":false,"seed":5,"step":2,"serializedGlobals":{"seed":true,"step":true}}}`
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    expand
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello ada
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 5
+  </button>
+  <button
+    class="widget"
+  >
+    pro clicked 0
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li
+      class="focus"
+    >
+      views: 10
+    </li>
+    <li>
+      clicks: 3
+    </li>
+  </ul>
+</section>
+```
+## Change
+```
+INSERT: section > :is(.greeting, .bump, .widget, .metrics)
+REMOVE: section > p
+UPDATE: .bump::text@6 "0" => "5"
+```
+
+# Update
+```js
+container.querySelector("button.widget").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    expand
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello ada
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 5
+  </button>
+  <button
+    class="widget"
+  >
+    pro clicked 1
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li
+      class="focus"
+    >
+      views: 10
+    </li>
+    <li>
+      clicks: 3
+    </li>
+  </ul>
+</section>
+```
+## Change
+```
+UPDATE: .widget::text@12 "0" => "1"
+```
+
+# Update
+```js
+container.querySelector("button.bump").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    expand
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello ada
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 8
+  </button>
+  <button
+    class="widget"
+  >
+    pro clicked 1
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li
+      class="focus"
+    >
+      views: 10
+    </li>
+    <li>
+      clicks: 3
+    </li>
+  </ul>
+</section>
+```
+## Change
+```
+UPDATE: .bump::text@6 "5" => "8"
+```
+
+# Update
+```js
+container.querySelector("button.toggle").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    collapse
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello ada
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 8
+  </button>
+  <button
+    class="widget"
+  >
+    pro clicked 1
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li
+      class="focus"
+    >
+      views: 10
+    </li>
+    <li>
+      clicks: 3
+    </li>
+  </ul>
+</section>
+```
+## Change
+```
+UPDATE: .toggle::text "expand" => "collapse"
+```
+
+# Update `{"$global":{"persisted":true,"view":"dashboard","user":"grace","range":"week","focus":"clicks","admin":true,"seed":5,"step":2,"serializedGlobals":{"seed":true,"step":true}}}`
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    collapse
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello grace
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 5
+  </button>
+  <button
+    class="widget"
+  >
+    free clicked 1
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li>
+      views: 70
+    </li>
+    <li
+      class="focus"
+    >
+      clicks: 21
+    </li>
+    <li>
+      sales: 7
+    </li>
+  </ul>
+  <p
+    class="admin"
+  >
+    admin tools enabled
+  </p>
+</section>
+```
+## Change
+```
+UPDATE: .greeting::text "hello ada" => "hello grace"
+UPDATE: .widget::text@0 "pro" => "free"
+UPDATE: .metrics > li:nth-of-type(1)[class] "focus" => null
+UPDATE: .metrics > li:nth-of-type(1)::text@7 "10" => "70"
+UPDATE: .focus[class] null => "focus"
+UPDATE: .focus::text@8 "3" => "21"
+REMOVE: .metrics > li:nth-of-type(3) + .focus
+INSERT: .metrics > li:nth-of-type(1) + .focus
+INSERT: .focus + li
+INSERT: .metrics + .admin
+UPDATE: .bump::text@6 "8" => "5"
+```
+
+# Update
+```js
+container.querySelector("button.widget").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    collapse
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello grace
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 5
+  </button>
+  <button
+    class="widget"
+  >
+    free clicked 2
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li>
+      views: 70
+    </li>
+    <li
+      class="focus"
+    >
+      clicks: 21
+    </li>
+    <li>
+      sales: 7
+    </li>
+  </ul>
+  <p
+    class="admin"
+  >
+    admin tools enabled
+  </p>
+</section>
+```
+## Change
+```
+UPDATE: .widget::text@13 "1" => "2"
+```
+
+# Update
+```js
+container.querySelector("button.bump").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    collapse
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello grace
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 8
+  </button>
+  <button
+    class="widget"
+  >
+    free clicked 2
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li>
+      views: 70
+    </li>
+    <li
+      class="focus"
+    >
+      clicks: 21
+    </li>
+    <li>
+      sales: 7
+    </li>
+  </ul>
+  <p
+    class="admin"
+  >
+    admin tools enabled
+  </p>
+</section>
+```
+## Change
+```
+UPDATE: .bump::text@6 "5" => "8"
+```
+
+# Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"home"}}`
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    collapse
+  </button>
+</aside>
+<section>
+  <p
+    class="home"
+  >
+    welcome home
+  </p>
+</section>
+```
+## Change
+```
+INSERT: section > .home
+REMOVE: section > h2
+REMOVE: section > button
+REMOVE: section > button
+REMOVE: section > ul
+REMOVE: section > p
+```
+
+# Update
+```js
+container.querySelector("button.count").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 2
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    collapse
+  </button>
+</aside>
+<section>
+  <p
+    class="home"
+  >
+    welcome home
+  </p>
+</section>
+```
+## Change
+```
+UPDATE: .count::text@8 "1" => "2"
+```
+
+# Update
+```js
+container.querySelector("button.toggle").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 2
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    expand
+  </button>
+</aside>
+<section>
+  <p
+    class="home"
+  >
+    welcome home
+  </p>
+</section>
+```
+## Change
+```
+UPDATE: .toggle::text "collapse" => "expand"
+```

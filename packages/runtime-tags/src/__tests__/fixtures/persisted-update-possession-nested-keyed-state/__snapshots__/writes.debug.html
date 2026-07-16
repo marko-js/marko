@@ -1,0 +1,84 @@
+<section>
+  <h2>parent-alpha-marker<!--M_*2 #text/0--></h2><button
+    data-key=parent-alpha-marker:shared-item>watch<!--M_*3 #text/1--></button><!--M_* #button/0--><button
+    data-key=parent-alpha-marker:alpha-item>watch<!--M_*4 #text/1--></button><!--M_* #button/0--><!--M_|2 #text/1 4 3-->
+</section>
+<section>
+  <h2>parent-beta-marker<!--M_*5 #text/0--></h2><button
+    data-key=parent-beta-marker:shared-item>watch<!--M_*6 #text/1--></button><!--M_* #button/0--><button
+    data-key=parent-beta-marker:beta-item>watch<!--M_*7 #text/1--></button><!--M_* #button/0--><!--M_|5 #text/1 7 6-->
+</section><!--M_|1 #text/0 5 2-->
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [2, {
+      "#LoopKey": "parent-alpha-marker"
+    }, {
+      watched: !1,
+      _: _(2),
+      "#LoopKey": "shared-item"
+    }, {
+      watched: !1,
+      _: _(2),
+      "#LoopKey": "alpha-item"
+    }, {
+      "#LoopKey": "parent-beta-marker"
+    }, {
+      watched: !1,
+      _: _(5),
+      "#LoopKey": "shared-item"
+    }, {
+      watched: !1,
+      _: _(5),
+      "#LoopKey": "beta-item"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-possession-nested-keyed-state/template.marko_2 3 4 6 7"
+  ];
+  M._.have =
+    "P!D.Tparent-alpha-marker.Sparent-beta-marker.Lshared-itemDGBIAXQC*A*BGCIAT*AIBXQC.Kalpha-item*CGCIAT*BIBXQC.Jbeta-item*C";
+  M._.w()
+</script>

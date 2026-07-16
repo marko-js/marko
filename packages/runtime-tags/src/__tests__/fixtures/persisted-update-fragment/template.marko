@@ -1,0 +1,25 @@
+import { getMetrics, getSession } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Dashboard>
+  <const/session=getSession?.($global.user)>
+  <h2.greeting>${session.greeting}</h2>
+  <store/tally/>
+  <button.bump onClick() { tally += 1 }>tally ${tally}</button>
+  <widget label=session.plan/>
+  <ul.metrics>
+    <for|metric| of=getMetrics?.($global.range) by(metric) { return metric.name }>
+      <li class=(metric.name === $global.focus && "focus")>${metric.name}: ${metric.value}</li>
+    </for>
+  </ul>
+  <if=$global.admin>
+    <p.admin>admin tools enabled</p>
+  </if>
+</define>
+
+<layout content=$global.view === "dashboard" ? Dashboard : Home/>

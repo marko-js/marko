@@ -1,0 +1,16 @@
+// The token keeps the shared frame matched so the nested layout takes the
+// cross-route fragment and sibling state survives.
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Dashboard>
+  <let/tally=0>
+  <button.bump onClick() { tally += 1 }>tally ${tally}</button>
+  <p.greeting>hello ${$global.user}</p>
+</define>
+
+<frame>
+  <let/count=0/>
+  <button.count onClick() { count++ }>clicked ${count}</button>
+  <layout content=$global.view === "dashboard" ? Dashboard : Home/>
+</frame>

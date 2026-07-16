@@ -26,6 +26,10 @@ describe("runtime-tags/translator-api", () => {
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
         "@marko/runtime-tags/debug/dom",
       ]);
+      assert.deepEqual(
+        translator.getRuntimeEntryFiles("dom-persisted", false),
+        ["@marko/runtime-tags/debug/dom-persisted"],
+      );
     });
 
     it("returns the optimized runtime entries when optimized", () => {
@@ -34,6 +38,9 @@ describe("runtime-tags/translator-api", () => {
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
         "@marko/runtime-tags/dom",
+      ]);
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom-persisted", true), [
+        "@marko/runtime-tags/dom-persisted",
       ]);
     });
 
@@ -149,7 +156,64 @@ describe("runtime-tags/translator-api", () => {
     });
   });
 
+  describe("compile cache", () => {
+    // `persisted` shapes analysis (serialize reasons, registry ids, possession
+    // metadata), so one cache must not share entries across the flag.
+    const src = "<if=input.show><div/></if>";
+    const filename = path.join(__dirname, "persisted-cache.marko");
+    const compileWith = (
+      cache: Map<unknown, unknown>,
+      persisted: boolean,
+      entry?: "page",
+    ) =>
+      compiler.compileSync(src, filename, {
+        ...baseConfig,
+        cache,
+        output: "html",
+        persisted,
+        ...(entry
+          ? {
+              entry,
+              linkAssets: { runtime: "asset-runtime", onAsset() {} },
+            }
+          : null),
+      }).code;
+
+    it("does not reuse non-persisted analysis for a persisted compile", () => {
+      const cache = new Map();
+      compileWith(cache, false);
+      assert.match(
+        compileWith(cache, true, "page"),
+        /__marko_persisted_descriptor/,
+      );
+    });
+
+    it("keeps non-persisted output identical after a persisted compile", () => {
+      const cache = new Map();
+      const cold = compileWith(new Map(), false);
+      compileWith(cache, true);
+      assert.equal(compileWith(cache, false), cold);
+    });
+  });
+
   describe("option validation", () => {
+    it("exports the persisted route descriptor from page entries", () => {
+      const { code } = compiler.compileSync(
+        "<if=input.show><div/></if>",
+        path.join(__dirname, "persisted-page.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+          entry: "page",
+          persisted: true,
+          linkAssets: { runtime: "asset-runtime", onAsset() {} },
+        },
+      );
+      assert.match(code, /export const __marko_persisted_descriptor = \[\[/);
+      assert.match(code, /update_if/);
+    });
+
     it("compiles load imports eagerly when linkAssets is not configured", () => {
       for (const output of ["html", "dom"] as const) {
         const { code } = compiler.compileFileSync(
@@ -188,6 +252,19 @@ describe("runtime-tags/translator-api", () => {
             entry: "page",
           } as compiler.Config),
         /The "entry" option requires the `linkAssets` compiler option to be configured\./,
+      );
+    });
+
+    it("requires the persisted option for the persisted entry", () => {
+      assert.throws(
+        () =>
+          compiler.compileFileSync(fixture("basic-counter/template.marko"), {
+            ...baseConfig,
+            cache: new Map(),
+            output: "dom",
+            entry: "persisted",
+          } as compiler.Config),
+        /The "persisted" entry kind requires the `persisted` compiler option to be enabled\./,
       );
     });
 

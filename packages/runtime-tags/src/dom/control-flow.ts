@@ -241,6 +241,24 @@ function resolveAwait(
   return awaitBranch;
 }
 
+/** Attaches an await branch whose compute was skipped during an update. */
+export function attachAwaitBranch(
+  scope: Scope,
+  nodeAccessor: string,
+  awaitBranch: BranchScope,
+) {
+  awaitBranch[AccessorProp.PendingScopes] =
+    awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
+  setupBranch(awaitBranch[AccessorProp.DetachedAwait] as Renderer, awaitBranch);
+  awaitBranch[AccessorProp.DetachedAwait] = 0;
+
+  insertBranchBefore(
+    awaitBranch,
+    (scope[nodeAccessor] as ChildNode).parentNode!,
+    scope[nodeAccessor] as ChildNode,
+  );
+}
+
 export function _await_content(
   nodeAccessor: EncodedAccessor,
   template?: string | 0,
@@ -964,6 +982,114 @@ function loop<T extends unknown[] = unknown[]>(
         afterReference = newScopes[start + i][AccessorProp.StartNode];
       }
     };
+  };
+}
+
+/** Reconciles a persisted loop from resumed patch branches. */
+export function _for_keyed(
+  nodeAccessor: EncodedAccessor,
+  params:
+    ((patchBranch: Scope, liveBranch: BranchScope) => BranchScope | void) | 0,
+  createFreshBranch: (
+    key: unknown,
+    args: unknown[],
+    global: Scope[AccessorProp.Global],
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
+) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+  const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
+  enableBranches();
+  return (scope: Scope, value: unknown) => {
+    const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+    const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
+    const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
+    scope[keyedScopesAccessor] = null;
+    const parentNode = (
+      referenceNode.nodeType > NodeType.Element
+        ? referenceNode.parentNode ||
+          oldScopes[0]?.[AccessorProp.StartNode].parentNode
+        : referenceNode
+    ) as Element;
+    const [patchBranches, loopKeyAccessor] = value as [Scope[], string];
+    const oldByKey = new Map<unknown, BranchScope>();
+    for (let i = 0; i < oldScopes.length; i++) {
+      oldByKey.set(oldScopes[i][AccessorProp.LoopKey] ?? i, oldScopes[i]);
+    }
+
+    for (let i = 0; i < patchBranches.length; i++) {
+      const patchBranch = patchBranches[i];
+      const key = patchBranch[loopKeyAccessor] ?? i;
+      let branch = oldByKey.get(key);
+      if (branch) {
+        // Replacement fragments leave the old branch queued for removal.
+        const replacement = params && params(patchBranch, branch);
+        if (replacement) {
+          branch = replacement;
+        } else {
+          oldByKey.delete(key);
+        }
+      } else {
+        branch = createFreshBranch(
+          key,
+          [patchBranch, i],
+          scope[AccessorProp.Global],
+          scope,
+          parentNode,
+        );
+      }
+      branch[AccessorProp.LoopKey] = key;
+      newScopes.push(branch);
+    }
+
+    const oldLen = oldScopes.length;
+    const hasSiblings = referenceNode !== parentNode;
+    let cursor: ChildNode | null = null;
+    if (hasSiblings) {
+      if (oldLen) {
+        if (!newScopes.length) {
+          parentNode.insertBefore(
+            referenceNode,
+            oldScopes[oldLen - 1][AccessorProp.EndNode].nextSibling,
+          );
+        } else {
+          // Anchor at the first surviving branch, or after the old content.
+          cursor = oldScopes[oldLen - 1][AccessorProp.EndNode].nextSibling;
+          for (let i = 0; i < oldLen; i++) {
+            if (!oldByKey.has(oldScopes[i][AccessorProp.LoopKey] ?? i)) {
+              cursor = oldScopes[i][AccessorProp.StartNode];
+              break;
+            }
+          }
+        }
+      } else if (newScopes.length) {
+        cursor = referenceNode.nextSibling;
+        referenceNode.remove();
+      }
+    }
+
+    for (const branch of oldByKey.values()) {
+      removeAndDestroyBranch(branch);
+    }
+    if (!hasSiblings) {
+      if (!newScopes.length) {
+        parentNode.textContent = "";
+        return;
+      }
+      cursor = parentNode.firstChild;
+    }
+
+    // Per-branch inserts are O(1) in real engines; batching them into
+    // fragments only wins under jsdom's O(position) mutation accounting.
+    for (const branch of newScopes) {
+      if (branch[AccessorProp.StartNode] === cursor) {
+        cursor = branch[AccessorProp.EndNode].nextSibling;
+      } else {
+        insertBranchBefore(branch, parentNode, cursor);
+      }
+    }
   };
 }
 

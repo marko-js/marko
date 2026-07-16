@@ -9,14 +9,17 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { isPersisted } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   type Binding,
   BindingType,
   createBinding,
   getAllTagReferenceNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
+  onFinalizeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -42,6 +45,11 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../util/translate-attrs";
+import {
+  addUpdateMerge,
+  getUpdateSiteRegisterId,
+  isUpdateBoundarySite,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -83,6 +91,16 @@ export default {
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;
     }
+
+    if (isUpdateBoundarySite(tag.node)) {
+      onFinalizeReferences(() =>
+        getUpdateSiteRegisterId(
+          section,
+          "boundary",
+          getScopeAccessor(tagExtra[kDOMBinding]!),
+        ),
+      );
+    }
   },
   translate: translateByTarget({
     html: {
@@ -123,6 +141,18 @@ export default {
         writeHTMLResumeStatements(tagBody);
         tag.insertBefore(translatedAttrs.statements);
 
+        // Pending boundaries need a build-stable id across document and patch
+        // scope allocation.
+        const siteId = isUpdateBoundarySite(tag.node)
+          ? t.stringLiteral(
+              getUpdateSiteRegisterId(
+                section,
+                "boundary",
+                getScopeAccessor(nodeRef),
+              ),
+            )
+          : undefined;
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -132,6 +162,7 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                siteId,
               ),
             ),
           )[0]
@@ -172,6 +203,14 @@ export default {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
+
+        if (isPersisted()) {
+          addUpdateMerge(section, {
+            kind: "branch",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            bodySection,
+          });
+        }
 
         signal.build = () => {
           return callRuntime(

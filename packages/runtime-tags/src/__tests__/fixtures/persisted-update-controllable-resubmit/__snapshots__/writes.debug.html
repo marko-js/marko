@@ -1,0 +1,68 @@
+<h1 class=name>Alpha lamp<!--M_*1 #text/0--></h1>
+<form class=order><input value=1 type=number
+    class=qty><!--M_*2 #input/1--><input type=hidden name=itemId value=11
+    class=item><!--M_* #input/2--><button class=buy>buy</button></form>
+<!--M_* #form/0-->
+<p class=mirror>adding <!>1<!--M_* #text/3--> to cart</p><output
+  class=last>none<!--M_* #text/4--></output>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id, lastNodeScope) {
+        while ((node = walker.nextNode())) {
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((lookup[(id = op.slice(prefixLen + 1))] = node), op[
+                prefixLen])),
+            id,
+            node,
+          );
+
+          if (op == "*") {
+            if (id[0] == " ") {
+              node.data = prefix + "*" + lastNodeScope + id;
+            } else {
+              lastNodeScope = id.slice(0, id.indexOf(" "));
+            }
+          } else if (op) {
+            lastNodeScope = "";
+          }
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [1, {
+      "#childScope/1": _(2)
+    }, {
+      "ControlledHandler:#input/1": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit/tags/order-form.marko_0/valueChange"
+        ),
+      itemId: 11,
+      qty: 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit/tags/order-form.marko_0 2"
+  ];
+  M._.have = "PA";
+  M._.w()
+</script>
