@@ -150,12 +150,6 @@ The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` 
 
 The string-renderer branch of HTML `_dynamic_tag` never assigns `result` (the inline TODO calls this out), and the DOM branch creates the element but never sends its getter through the branch's `AccessorProp.TagVariable` callback (`dom/control-flow.ts:547`). Verified by adding `<${input.show && "div"}/el/><script>el().textContent = "set"</script>` to the `dynamic-tag-var` fixture: both CSR and SSR-resume left the `<div>` empty because `el` was never initialized, so its dependent effect never ran. Static native tags instead create a registered `_el(...)` getter; the dynamic-native path needs the equivalent getter tied to the created/resumed branch element in both runtimes.
 
-## Preserve `File` and `Blob` entries when serializing `FormData`
-
-`packages/runtime-tags/src/html/serializer.ts:1286` | 2026-07-15 | impact:med | effort:med
-
-`writeFormData` appends only entries whose value is a string and silently skips every `File`/`Blob`, even though those are standard `FormData` values. Verified with fields `text="ok"` and `file=new File(["body"], "x.txt")`: the payload reconstructed a `FormData` containing only `text`, with no abort or warning. This is worse than the serializer's normal unsupported-value behavior because hydration proceeds with incomplete state; serialize blob contents/name/type asynchronously, or reject the containing value explicitly until that is supported.
-
 ## Make conflicting load triggers for one shared asset deterministic
 
 `packages/runtime-tags/src/html/assets.ts:135` | 2026-07-15 | impact:med | effort:med

@@ -910,7 +910,7 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
     case globalThis.Headers:
       return writeHeaders(state, val as Headers);
     case globalThis.FormData:
-      return writeFormData(state, val as FormData);
+      return writeFormData(state, val as FormData, ref);
     case globalThis.ReadableStream:
       return writeReadableStream(state, val as ReadableStream<unknown>, ref);
     case globalThis.Request:
@@ -1287,15 +1287,19 @@ function writeHeaders(state: State, val: Headers) {
   return true;
 }
 
-function writeFormData(state: State, val: FormData) {
+function writeFormData(state: State, val: FormData, ref: Reference) {
   let sep = "[";
   let valStr: string = "";
-  for (const [key, value] of val as unknown as Iterable<[string, string]>) {
-    // TODO: support file/blob
-    if (typeof value === "string") {
-      valStr += sep + quote(key, 0) + "," + quote(value, 0);
-      sep = ",";
+  for (const [key, value] of val as unknown as Iterable<[string, unknown]>) {
+    if (typeof value !== "string") {
+      // `File`/`Blob` entries aren't serializable yet; fail like any other
+      // unsupported value rather than silently dropping the entry.
+      MARKO_DEBUG && throwUnserializable(state, value, ref, key);
+      return false;
     }
+
+    valStr += sep + quote(key, 0) + "," + quote(value, 0);
+    sep = ",";
   }
 
   if (sep === "[") {

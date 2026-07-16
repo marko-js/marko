@@ -907,6 +907,22 @@ describe("serializer", () => {
         `[_.a=["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(a[i-1],v)||f,new FormData),_.a]`,
       );
     });
+    it("aborts on File/Blob values instead of dropping them", () => {
+      const formData = new FormData();
+      formData.append("text", "ok");
+      formData.append("file", new File(["body"], "x.txt"));
+      const serializer = new Serializer();
+      let aborted: unknown;
+      const boundary = {
+        signal: { aborted: false },
+        abort(err: unknown) {
+          aborted = err;
+        },
+      } as any as Boundary;
+      serializer.stringifyScopes([[1, {}, { value: formData }]], boundary);
+      assert.ok(aborted instanceof TypeError);
+      assert.match((aborted as Error).message, /Unable to serialize/);
+    });
   });
 
   describe("generator", () => {
