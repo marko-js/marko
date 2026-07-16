@@ -4,12 +4,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const Home = { content: _content("a4", () => {
+	const Home = { content: _content("a2", () => {
 		_scope_id();
 		_scope_reason();
 		_html("<p class=home>welcome home</p>");
 	}) };
-	const Editor = { content: _content("a7", () => {
+	const Editor = { content: _content("a3", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		let text = "draft";
@@ -20,8 +20,8 @@ var template_default = _template("a", (input) => {
 		writeScope($scope2_id, {});
 		_resume_branch($scope2_id);
 	}) };
-	_dynamic_tag($scope0_id, "c", $global().view === "editor" ? Editor : Home, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a2");
-	_script($scope0_id, "a1");
+	_dynamic_tag($scope0_id, "c", $global().view === "editor" ? Editor : Home, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a1");
+	_script($scope0_id, "a6");
 	writeScope($scope0_id, { d: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

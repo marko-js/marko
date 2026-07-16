@@ -52,7 +52,7 @@
         },
       }), self[runtimeId]))("M")("_");
     M._.r = [_ => [1, {
-      "BoundarySite:#text/3": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-await/template.marko_0/update_boundary_#text/3",
+      "BoundarySite:#text/3": "",
       count: 0,
       "ClosureScopes:input_related": new Set([_(2)])
     }, {
@@ -67,16 +67,7 @@
       let onNextSibling,
         placeholder,
         nextSibling,
-        // Nav epoch, captured at this reorder-runtime init. A persisted apply
-        // bumps this render's `runtime.n` (`dom/resume`'s `bumpNavEpoch`,
-        // from `dom/update`'s `createUpdate` before any frame applies), so a
-        // reorder completion whose epoch predates an applied navigation is
-        // dropped whole: the placeholder completion `c()` skips its cleanup
-        // walk and (by returning 1) the `runtime.j` script callbacks, and
-        // `replace` no-ops the swap. A stale chunk must not splice pre-nav
-        // content into the post-nav page, delete whatever now sits between
-        // markers a navigation left live, or run stale resume scripts.
-        // Streaming pages never advance `runtime.n`: `0 > 0` stays false.
+        // Applied navigation epochs suppress stale reorder swaps and callbacks.
         epoch = runtime.n || 0,
         placeholders = runtime.p = {},
         replace = (id, container) =>
@@ -126,6 +117,7 @@
         }
       };
     })(M._);
+    M._.have = "BA";
     M._.w()
   </script>
 
@@ -142,13 +134,12 @@
     M._.r.push(_ => [1, {
       "BoundarySite:#text/3": 0
     }, 3, {
-      "#LoopKey": 11,
-      "ForSite:#ul/0": _.a =
-        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-await/template.marko_3/update_for_#ul/0"
+      "#LoopKey": 11
     }, {
-      "#LoopKey": 12,
-      "ForSite:#ul/0": _.a
+      "#LoopKey": 12
     }]);
+    M._.have =
+      "PBGBS~lDcGFja2FnZXMvcnVudGltZS10YWdzL3NyYy9fX3Rlc3RzX18vZml4dHVyZXMvcGVyc2lzdGVkLXVwZGF0ZS1hd2FpdC90ZW1wbGF0ZS5tYXJrb18zL3VwZGF0ZV9mb3JfI3VsLzAXLCWB";
     M._.w()
   </script>
 

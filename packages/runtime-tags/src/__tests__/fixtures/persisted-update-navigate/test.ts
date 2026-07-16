@@ -37,7 +37,7 @@ const inputB = {
 // Persisted single-page navigation: resume page A, flip client state, then
 // `navigate(inputB)` -- in ssr mode the harness renders a real update
 // patch payload and applies it through the
-// fixture's generated `?update` entry; in csr mode it is a plain input
+// fixture's generated persisted entry; in csr mode it is a plain input
 // update. The post-navigation clicks prove effects were not replayed for
 // matched scopes (a double-bound handler would make the toggle a no-op) and
 // that client state (`expanded`) survived the hostile `expanded: false`

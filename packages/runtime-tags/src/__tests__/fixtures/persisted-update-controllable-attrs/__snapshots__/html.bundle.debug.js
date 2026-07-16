@@ -18,7 +18,7 @@ var item_form_default = _template("__tests__/tags/item-form.marko", (input) => {
 	let qty = 1;
 	_html(`<form><input${_attr_input_value($scope0_id, "#input/0", qty, _resume((_new_qty) => {
 		qty = Number(_new_qty);
-	}, "__tests__/tags/item-form.marko_0/valueChange", $scope0_id))} type=number class=qty>${_el_resume($scope0_id, "#input/0")}<input${_attr_input_value($scope0_id, "#input/1", _hole_value($scope0_id, "PatchAttr:value:#input/1", itemId, _persisted_reason()))} type=hidden name=itemId>${_el_resume($scope0_id, "#input/1", _serialize_guard($scope0_reason, 0))}<button class=add>add</button>${_el_resume($scope0_id, "#button/2")}</form>`);
+	}, "__tests__/tags/item-form.marko_0/valueChange", $scope0_id))} type=number class=qty>${_el_resume($scope0_id, "#input/0")}<input type=hidden name=itemId${_attr("value", _hole_value($scope0_id, "PatchAttr:value:#input/1", itemId, _persisted_reason()))}>${_el_resume($scope0_id, "#input/1", _serialize_guard($scope0_reason, 0))}<button class=add>add</button>${_el_resume($scope0_id, "#button/2")}</form>`);
 	_script($scope0_id, "__tests__/tags/item-form.marko_0");
 	writeScope($scope0_id, { qty: _state_reason() && qty }, "__tests__/tags/item-form.marko", 0, { qty: "2:6" });
 	_resume_branch($scope0_id);

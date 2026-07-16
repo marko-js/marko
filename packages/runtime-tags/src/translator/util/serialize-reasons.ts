@@ -175,22 +175,12 @@ export function isStateSerializeReason(
   return !!reason && reason !== true && !!reason.state;
 }
 
-/**
- * A reason carrying any request-derived dimension (param/global), state-mixed
- * or not. Distinct from `isReasonDynamic` (request-derived AND state-free):
- * structural update participation keys off this, so a loop over a module
- * constant whose body reads `$global` still dispatches its body merges.
- */
 export function isRequestDerivedSerializeReason(
   reason: undefined | SerializeReason,
 ): reason is Sources {
   return !!reason && reason !== true && !!(reason.param || reason.global);
 }
 
-// A reason backed by state sources ONLY (no request-derived part): such
-// content never participates in update renders, so resume-only optimizations
-// that update payloads can't support (eg marker-linked branch owners) stay
-// sound for it.
 export function isStateOnlySerializeReason(
   reason: undefined | SerializeReason,
 ): reason is Sources {
@@ -210,9 +200,6 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  // `$global`-reading expressions taint request-derived in persisted builds.
-  // The taint merges WITH any tracked ref sources so mixed state/global
-  // expressions keep both dimensions.
   return mergeSources(
     isReferencedExtra(expr)
       ? getSerializeSourcesForRef(expr.referencedBindings)

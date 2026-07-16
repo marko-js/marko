@@ -1,0 +1,30 @@
+<button>0<!--M_*1 b--></button><!--M_* a-->
+<p>parent <!>same<!--M_*2 a--></p><!--M_|1 c 2--><!--M_|3 a-->
+<aside><!--M_[-->dynamic<!--M_]4 a 5--></aside><!--M_'1 e 4-->
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r, o) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (a[
+        r = l.slice(s + 1)] = e, l[s]), r, e), "*" == l ? (" " == r[0] ? e
+        .data = f + "*" + o + r : o = r.slice(0, r.indexOf(" "))) : l && (
+        o = ""), l > "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [1, {
+    De: "aside",
+    f: 0,
+    d: _(3)
+  }, {
+    M: "same"
+  }, 1, {
+    Da: "a3"
+  }], "a5 1"];
+  M._.h = "PCBBIBT.EsameS.B1NBICXS.Faside";
+  M._.w()
+</script>

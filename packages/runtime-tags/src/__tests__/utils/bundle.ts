@@ -10,10 +10,8 @@ import { importWithContext } from "./import-with-context";
 
 type RunDOM = typeof import("@marko/runtime-tags/dom").run;
 type DOMRuntime = typeof import("@marko/runtime-tags/dom");
-type DOMPersistedRuntime = typeof import("@marko/runtime-tags/dom-persisted");
 export interface UpdateEntryModule {
-  createPatch: () => (source: string) => boolean;
-  have: DOMPersistedRuntime["_have"];
+  patch: () => (source: string) => boolean | string;
   __ready: DOMRuntime["ready"];
   __register: DOMRuntime["_resume"];
 }
@@ -24,13 +22,9 @@ const pageExt = ".page.mjs";
 const loadExt = ".load.mjs";
 const csrExt = ".csr.mjs";
 const updateExt = ".update.mjs";
+const persistedExt = ".persisted.mjs";
 const entryRe = /\.marko\.(load|page|csr|update|persisted)?\.mjs$/;
-// Generated `?update` entries are snapshotted (they are translator output
-// worth reviewing); the other entry kinds are boilerplate and excluded --
-// including `?persisted` entries, which are the persisted dom compile the
-// dom bundle already shows (minus the registration gates).
-const snapshotExcludeEntryRe = /\.marko\.(load|page|csr|persisted)?\.mjs$/;
-const updateImportRe = /\.marko\?update$/;
+const snapshotExcludeEntryRe = /\.marko\.(load|page|csr|update)?\.mjs$/;
 const persistedImportRe = /\.marko\?persisted$/;
 const assetRuntimeId = "\0asset-runtime";
 const assetRuntimeIdRe = /\0asset-runtime$/;
@@ -49,13 +43,6 @@ export async function createServerRunner<T extends Record<string, string>>(
   runServer(): Promise<Record<keyof T, Template>>;
   clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
   updateRunner?: (ctx: any) => Promise<UpdateEntryModule>;
-  /**
-   * Raw compiled `?update` entry sources (pre-bundle), for exclusion
-   * checks the bundled output can't make: the bundler tree-shakes a
-   * wrongly-retained side-effect-free user import, so only the unbundled
-   * source shows its specifier.
-   */
-  updateEntrySources: string[];
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
 }> {
@@ -69,13 +56,10 @@ export async function createServerRunner<T extends Record<string, string>>(
   const csrEntryId = optimize
     ? undefined
     : path.join(cwd, path.basename(entries[entryNames[0]])) + csrExt;
-  // Persisted fixtures also bundle the template's generated update entry
-  // (the `?update` module) so ssr `navigate()` steps can import it into the
-  // live browser context.
+  // Persisted fixtures bundle the generated entry for ssr navigation steps.
   const updateEntryId = config.persisted
     ? path.join(cwd, path.basename(entries[entryNames[0]])) + updateExt
     : undefined;
-  const updateEntrySources: string[] = [];
   const compileOpts: compiler.Config = {
     ...config,
     cache: new Map(),
@@ -126,24 +110,12 @@ export async function createServerRunner<T extends Record<string, string>>(
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
       {
-        name: "update-imports",
-        resolveId: {
-          filter: { id: updateImportRe },
-          handler(id, importer) {
-            return this.resolve(
-              id.replace(updateImportRe, markoExt + updateExt),
-              importer,
-            );
-          },
-        },
-      },
-      {
         name: "persisted-imports",
         resolveId: {
           filter: { id: persistedImportRe },
           handler(id, importer) {
             return this.resolve(
-              id.replace(persistedImportRe, markoExt + ".persisted.mjs"),
+              id.replace(persistedImportRe, markoExt + persistedExt),
               importer,
             );
           },
@@ -153,9 +125,7 @@ export async function createServerRunner<T extends Record<string, string>>(
         name: "dom-entry",
         resolveId: {
           filter: { id: entryRe },
-          // Child `?update` imports are relative to the importing update
-          // entry (which may itself be nested, eg `tags/actions.marko`
-          // importing `./shared-list.marko?update`).
+          // Resolve nested entries from the importing template's directory.
           handler: (id, importer) =>
             path.resolve(importer ? path.dirname(importer) : cwd, id),
         },
@@ -175,11 +145,6 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
             }
 
             if (kind === "persisted") {
-              // The template's persisted entry: the render graph WITH
-              // registrations (the generated `?update` entry imports it).
-              // Shares the fixture's compiler cache: the cache holds the
-              // analyze result (translate runs on a clone), and analysis is
-              // identical across entry kinds.
               const { code } = compiler.compileFileSync(file, {
                 ...compileOpts,
                 output: "dom",
@@ -190,19 +155,8 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
             }
 
             if (kind === "update") {
-              const { code } = compiler.compileFileSync(file, {
-                ...compileOpts,
-                output: "dom",
-                entry: "update",
-                sourceMaps: false,
-              });
-              updateEntrySources.push(code);
-              // The harness drives updates through this chunk so everything
-              // (runtime instance included) stays inside the browser context.
-              return (
-                code +
-                `\nexport { ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`
-              );
+              return `export { patch } from "./${path.basename(file)}?persisted";
+export { ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`;
             }
 
             const isPage = kind === "page";
@@ -244,7 +198,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
         entryNames
           .map(
             (name) =>
-              `export { default as ${name} } from "${entries[name] + pageExt}";`,
+              `export { default as ${name}, __marko_persisted_descriptor as ${name}Descriptor } from "${entries[name] + pageExt}";`,
           )
           .join("\n"),
       ),
@@ -370,7 +324,6 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
       >,
     clientRunner,
     updateRunner,
-    updateEntrySources,
     domBundle: () => buildSnapshot(domResult, cwd, optimize),
     htmlBundle: () => buildSnapshot(htmlResult, cwd),
   };
@@ -536,16 +489,7 @@ function markoPlugin(config: compiler.Config): Plugin {
 
 function entryPlugin(): {
   end(): void;
-  /** Resolves at the html build's `buildEnd` (see `end`). The dom build
-   * gates ALL of its entry resolutions on this -- not just the asset
-   * sentinel -- so every html compile finishes before any dom-side compile
-   * runs. Optimized register ids are handed out in first-request order
-   * across the entry-kind compiles sharing one register map
-   * (`getTemplateId`'s `registered.children`); letting the two builds'
-   * synchronous compiles interleave on event-loop scheduling made that
-   * order load-dependent -- the `test:parallel` id-shift flake (see
-   * agent-feedback/bugs.md, "Optimized register-id allocation races when
-   * html/dom compiles run concurrently"). */
+  /** Resolves once the HTML build completes its shared register map. */
   done: Promise<void>;
   get(id: string): string | undefined;
   add(name: string, id: string): void;

@@ -1,3 +1,5 @@
+import assert from "node:assert/strict";
+
 import type { TestConfig } from "../../main.test";
 import { navigate } from "../../utils/resolve";
 
@@ -5,6 +7,10 @@ const clickCount = (container: Element) =>
   container.querySelector<HTMLButtonElement>("button.count")!.click();
 const clickToggle = (container: Element) =>
   container.querySelector<HTMLButtonElement>("button.toggle")!.click();
+const assertNoContentRegistryRefs = (frames: string[]) => {
+  assert.doesNotMatch(frames.join("\n"), /content:_(?:\._|\(\d+,)/);
+  return frames;
+};
 
 const inputA = {
   title: "Trailhead 40L Pack",
@@ -13,12 +19,7 @@ const inputA = {
   specs: [],
 };
 
-// Navigation target: the layout's `<${input.content}/>` hop renders a
-// DIFFERENT content section (the run cross-route shape: two routes'
-// otherwise-identical wrappers pass different page content through the same
-// layout). The live page has never rendered `Specs`, so the update must
-// swap in a fresh branch from the registered content and fill it (keyed
-// loop included) from the patch.
+// Cross-route navigation swaps page content through the shared layout.
 const inputB = {
   title: "Summit 65L Pack",
   summary: "",
@@ -38,9 +39,15 @@ export const config: TestConfig = {
     { ...inputA, $global: { persisted: true } },
     clickCount,
     clickToggle,
-    navigate({ ...inputB, $global: { persisted: true } }),
+    navigate(
+      { ...inputB, $global: { persisted: true } },
+      { mutateFrames: assertNoContentRegistryRefs },
+    ),
     clickCount,
-    navigate({ ...inputA, $global: { persisted: true } }),
+    navigate(
+      { ...inputA, $global: { persisted: true } },
+      { mutateFrames: assertNoContentRegistryRefs },
+    ),
     clickToggle,
   ],
 };

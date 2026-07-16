@@ -33,7 +33,7 @@ REMOVE: section::text("loading…")
 INSERT: section > .taps
 ```
 
-# Update `{"note":"second","tick":7,"$global":{"persisted":true}}` failed: update diverged
+# Update `{"note":"second","tick":7,"$global":{"persisted":true}}` failed: undefined
 
 # Update
 ```js

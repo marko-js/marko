@@ -50,11 +50,11 @@ var template_default = _template("a", (input) => {
 	});
 	let $body;
 	let $item;
-	if (input.show) $body = attrTag({ content: _content("a3", () => {
+	if (input.show) $body = attrTag({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		const $childScope = _peek_scope_id();
-		inner_default({ part: attrTag({ content: _content("a4", () => {
+		inner_default({ part: attrTag({ content: _content("a2", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<p>${_escape(_hole_value($scope3_id, "Qa", getTitle(input.id), _persisted_reason()))}${_el_resume($scope3_id, "a", $sg__input_id)}</p>`);
@@ -72,7 +72,7 @@ var template_default = _template("a", (input) => {
 	forOf(getRows(input.id), (row) => {
 		$item = attrTags($item, {
 			value: row,
-			content: _content("a5", () => {
+			content: _content("a3", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html(`${_escape(row)}${_el_resume($scope4_id, "a")}`);
@@ -83,7 +83,7 @@ var template_default = _template("a", (input) => {
 	panel_default({
 		body: $body,
 		item: $item,
-		header: attrTag({ content: _content("a2", () => {
+		header: attrTag({ content: _content("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<h2>${_escape(_hole_value($scope1_id, "Qa", getTitle(input.id), _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_id)}</h2>`);
@@ -91,7 +91,7 @@ var template_default = _template("a", (input) => {
 			_resume_branch($scope1_id);
 		}) })
 	});
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a5");
 	writeScope($scope0_id, {
 		h: _state_reason() && count,
 		k: $sg__input_id && $input_id__closures,

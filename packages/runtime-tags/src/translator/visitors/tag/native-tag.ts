@@ -33,11 +33,10 @@ import {
   getMarkoOpts,
   isOutputHTML,
   isPersisted,
-  isUpdateEntryBuild,
+  isPersistedEntryBuild,
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
-import { recordRegisterIdFootprint } from "../../util/preallocate-register-ids";
 import {
   type Binding,
   BindingType,
@@ -139,9 +138,6 @@ export default {
       const isTextOnly = isTextOnlyNativeTag(tag);
       const seen: Record<string, t.MarkoAttribute> = Object.create(null);
       const { attributes } = tag.node;
-      const hasSpread = attributes.some((attr) =>
-        t.isMarkoSpreadAttribute(attr),
-      );
       let injectNonce = isInjectNonceTag(tagName);
       let hasDynamicAttributes = false;
       let hasEventHandlers = false;
@@ -171,32 +167,10 @@ export default {
 
           if (isEventOrChangeHandler(attr.name)) {
             assertNativeHandlerAttr(tag, attr);
-            if (!isEventHandler(attr.name)) {
-              // Change handlers replay controllables through a signal
-              // effect even when the handler expression registers nothing
-              // itself (eg a plain `input.setX` reference), and that effect
-              // is invisible to analyze data otherwise -- record the
-              // footprint update classification disqualifies on.
-              getProgram().node.extra.hasChangeHandlers = true;
-              // The replay effect registers under the section id alone
-              // (undefined refs) -- see the html translate's
-              // `addHTMLEffectCall(tagSection, undefined)`. A spread makes
-              // the controllable dynamic and the replay rides the
-              // controllable script instead, so no id registers.
-              if (!hasSpread) {
-                recordRegisterIdFootprint(getOrCreateSection(tag), {
-                  kind: "effect",
-                });
-              }
-            }
           }
 
           if (isEventHandler(attr.name)) {
             valueExtra.isEffect = true;
-            recordRegisterIdFootprint(getOrCreateSection(tag), {
-              kind: "effect",
-              extra: valueExtra,
-            });
             // Attached once and only invoked, so reads inside can be lazy.
             valueExtra.invokeOnly = true;
             hasEventHandlers = true;
@@ -288,10 +262,6 @@ export default {
             tag.node,
             spreadReferenceNodes,
           );
-          recordRegisterIdFootprint(tagSection, {
-            kind: "effect",
-            extra: spreadExtra,
-          });
 
           spreadExtra.nativeTagSpread = true;
           // Functions in native tag attrs are only ever invoked (handlers)
@@ -419,13 +389,6 @@ export default {
 
         if (staticControllable) {
           const hasChangeHandler = !!staticControllable.attrs[1];
-          // Controllable values (`value`/`checked`/`open`) render through their
-          // helper rather than a plain attr write, so the update capture wraps
-          // the helper's value argument in place -- every downstream path (the
-          // generic write here, the select/textarea specials below) then
-          // evaluates the capture. Compiled merges replay it through the
-          // helper's `_default` variant. (`checkedValue` pairs two
-          // interdependent values and is not captured.)
           const controllableValueAttr =
             staticControllable.helper === "_attr_input_checkedValue"
               ? undefined
@@ -525,12 +488,6 @@ export default {
           const valueReferences = value.extra?.referencedBindings;
 
           if (tagName === "option" && name === "value") {
-            // Request-derived option values ride persisted updates like any
-            // attr hole: the dom compile records a plain `_attr` merge for
-            // them, so the capture here lets matched options update and
-            // keyed-reconcile-fresh options fill their value. Selection re-sync
-            // under an unchanged select value is a recorded follow-up
-            // (agent-feedback/bugs.md).
             const holeValue =
               !confident &&
               buildAttrHoleValue(nodeBinding, tagSection, name, value);
@@ -736,11 +693,6 @@ export default {
             ),
           );
         } else if (isTextOnly) {
-          // Persisted builds capture the whole computed text of
-          // request-derived text-only content (eg `<title>`) so update
-          // renders serialize it: `_text_content` replaces wholesale, so
-          // the capture is the concatenated literal rather than
-          // per-placeholder holes (whole-value escaping decodes the same).
           const textHole = buildTextContentHoleValue(
             nodeBinding,
             tagSection,
@@ -835,7 +787,7 @@ export default {
               nodeBinding,
               tagSection,
               staticControllable.helper,
-              defaultHelper,
+              defaultHelper as ControllableDefaultHelper,
               staticControllable.attrs[0].value,
             );
           }
@@ -919,11 +871,6 @@ export default {
                   }
 
                   if (meta.dynamicValues) {
-                    // Item-split values still merge the server-captured
-                    // whole value (the html compile captures it either
-                    // way); the shared gates exclude state-mixing values,
-                    // so the whole-value write never stomps client-owned
-                    // items.
                     recordAttrUpdateMerge(
                       nodeBinding,
                       tagSection,
@@ -1649,15 +1596,7 @@ function buildAttrExpression(
     : t.stringLiteral(serialized);
 }
 
-// Hoist a shared `name=` prefix out of a conditional with two literal branches
-// so it folds into the static HTML, e.g. `x ? ' class=on' : ' class=off'` ->
-// ` class=${x ? "on" : "off"}`. Each value keeps its own quoting.
-// Persisted builds capture the computed value of request-derived dynamic
-// attrs so update renders can serialize it (keyed
-// `PatchAttr:<name>:<elementAccessor>` -- per attr, so multi-attr elements
-// don't collide); `_hole_value` is a pass-through otherwise. Pure
-// state-driven attrs are excluded (the client owns those values), as are
-// elements with no node binding (nothing to place onto).
+// Captures request-derived dynamic attributes for persisted updates.
 function buildAttrHoleValue(
   nodeBinding: Binding | undefined,
   tagSection: Section,
@@ -1666,8 +1605,7 @@ function buildAttrHoleValue(
 ) {
   if (!nodeBinding || !isPersisted()) return;
   const sources = value.extra && getSerializeSourcesForExpr(value.extra);
-  // Browser-code reuse: skip the capture when the client's registered
-  // signal chain already re-renders this attr from patched scope values.
+  // Skip values already updated by the client's signal chain.
   if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
     return;
   const accessor = getScopeAccessorLiteral(nodeBinding);
@@ -1676,14 +1614,12 @@ function buildAttrHoleValue(
     getScopeIdIdentifier(tagSection),
     t.stringLiteral(getPatchAttrPrefix() + name + ":" + accessor.value),
     value,
-    // Captures only fire in update renders, which refresh everything that
-    // is not client-owned -- the render-global flag is the whole guard.
+    // The render-wide persisted reason is the complete capture guard.
     callRuntime("_persisted_reason"),
   );
 }
 
-// The dom-compile counterpart of `buildAttrHoleValue`: update entries merge
-// the server-captured attr value for the same request-derived attrs.
+// Merges server-captured request-derived attributes.
 function recordAttrUpdateMerge(
   nodeBinding: Binding | undefined,
   tagSection: Section,
@@ -1691,8 +1627,7 @@ function recordAttrUpdateMerge(
   helper: "_attr" | "_attr_class" | "_attr_style",
   value: t.Expression,
 ) {
-  if (!nodeBinding || !isUpdateEntryBuild()) return;
-  if (defaultHelper === "_attr_input_checkedValue_default") return;
+  if (!nodeBinding || !isPersistedEntryBuild()) return;
   const sources = value.extra && getSerializeSourcesForExpr(value.extra);
   if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
     return;
@@ -1706,13 +1641,7 @@ function recordAttrUpdateMerge(
   });
 }
 
-// The text-only tag counterpart of the `buildAttrHoleValue`/
-// `recordAttrUpdateMerge` pair: `<title>`/`<script>`/`<style>` content
-// replaces wholesale through `_text_content`, so the whole computed text
-// is captured (html) and merged (update entries) under a reserved
-// `textContent` pseudo-attr key -- text-only tags have no real attr of
-// that name to collide with. `<textarea>` never reaches these (its
-// content routes through the value controllable).
+// Captures request-derived content for text-only tags.
 function buildTextContentHoleValue(
   nodeBinding: Binding | undefined,
   tagSection: Section,
@@ -1739,7 +1668,7 @@ function recordTextContentUpdateMerge(
   tagSection: Section,
   value: t.Expression,
 ) {
-  if (!nodeBinding || !isUpdateEntryBuild()) return;
+  if (!nodeBinding || !isPersistedEntryBuild()) return;
   const sources = value.extra && getSerializeSourcesForExpr(value.extra);
   if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
     return;
@@ -1753,12 +1682,12 @@ function recordTextContentUpdateMerge(
   });
 }
 
-// The controllable counterpart of `recordAttrUpdateMerge`: these attrs
-// re-render through their helper's `_default` variant (scope + node
-// accessor -- it owns default-vs-live value semantics: an interactive
-// input's typed value survives, hidden/button-likes track the attribute),
-// not a plain attr write. Same gates and patch key as the html capture,
-// which wraps the helper's value argument.
+// Controllables merge through their default-value helper, not a plain attr.
+type ControllableDefaultHelper = Exclude<
+  ReturnType<typeof getDOMControllableDefaultHelper>,
+  "_attr_input_checkedValue_default"
+>;
+
 function recordControllableUpdateMerge(
   nodeBinding: Binding | undefined,
   tagSection: Section,
@@ -1766,10 +1695,10 @@ function recordControllableUpdateMerge(
     NonNullable<RelatedControllable>["helper"],
     "_attr_input_checkedValue"
   >,
-  defaultHelper: ReturnType<typeof getDOMControllableDefaultHelper>,
+  defaultHelper: ControllableDefaultHelper,
   value: t.Expression,
 ) {
-  if (!nodeBinding || !isUpdateEntryBuild()) return;
+  if (!nodeBinding || !isPersistedEntryBuild()) return;
   const sources = value.extra && getSerializeSourcesForExpr(value.extra);
   if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
     return;
@@ -1786,9 +1715,7 @@ function recordControllableUpdateMerge(
   });
 }
 
-// `_attr_input_value` -> `value`: controllable captures key off the
-// canonical attr name (on these tags those names always route through the
-// controllable carve-out, so they cannot collide with a plain attr hole).
+// `_attr_input_value` becomes the canonical `value` patch key.
 function controllableAttrName(helper: string) {
   return helper.slice(helper.lastIndexOf("_") + 1);
 }

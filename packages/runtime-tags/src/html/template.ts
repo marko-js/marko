@@ -27,19 +27,22 @@ export const _template = (
   renderer: ServerRenderer,
   page?: 1,
 ) => {
-  (renderer as unknown as Template).render = render;
-  (renderer as unknown as ServerRenderer)[RendererProp.Embed] = !page;
-  (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
+  const template = function (this: unknown, ...args: unknown[]) {
+    return renderer.apply(this, args);
+  } as ServerRenderer;
+  (template as unknown as Template).render = render;
+  template[RendererProp.Embed] = !page;
+  (template as unknown as any)._ = template; // This is added exclusively for the compat layer, maybe someday it can be removed.
 
   if (MARKO_DEBUG) {
-    (renderer as unknown as Template).mount = () => {
+    (template as unknown as Template).mount = () => {
       throw new Error(
         `mount() is not implemented for the HTML compilation of a Marko template`,
       );
     };
   }
 
-  return _content_resume(templateId, renderer) as unknown as Template;
+  return _content_resume(templateId, template) as unknown as Template;
 };
 
 function render(
@@ -287,9 +290,7 @@ class ServerRendered implements RenderedTemplate {
             reject(boundary.signal.reason);
             break;
           case FlushStatus.complete: {
-            // `consume` can abort (placeholder flush failure or unsupported-
-            // shape guard); the abort listener re-enters this handler and
-            // rejects, so only flush html when still live.
+            // `consume` may abort and re-enter through the boundary listener.
             const consumed = head.consume();
             if (!boundary.signal.aborted) resolve(consumed.flushHTML());
             break;

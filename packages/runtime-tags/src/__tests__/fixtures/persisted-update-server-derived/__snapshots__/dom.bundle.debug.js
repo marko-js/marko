@@ -1,21 +1,59 @@
-// template.marko.update.mjs
+// template.marko.persisted.mjs
+const $template = "<button class=count>clicked <!></button><!><!>";
+const $walks = " Db%l%c";
+const $if_content__details = ($scope, details) => {
+	$if_content__details_name($scope, details?.name);
+	$if_content__details_price($scope, details?.price);
+};
+const $if_content__input_detailId = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
+	if (!updating) {
+		if (!updating) $if_content__details($scope, getDetails($scope._.input_detailId));
+	}
+});
+const $if_content__setup = ($scope) => {
+	if (!updating) $if_content__input_detailId._($scope);
+};
+const $if_content__details_name = ($scope, details_name) => _text($scope["#text/0"], details_name);
+const $if_content__details_price__script = _script_shared(($scope) => _on($scope["#button/2"], "click", function() {
+	$count($scope._, $scope.details_price);
+}));
+const $if_content__details_price = _var_resume("__tests__/template.marko_1_details_price/var", /*@__PURE__*/ _const_persisted("details_price", ($scope) => {
+	_text($scope["#text/1"], $scope.details_price);
+	$if_content__details_price__script($scope);
+}));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
+const $if = /*@__PURE__*/ _if("#text/2", "<section><h2> </h2><p>costs <!></p><button class=copy>use price</button></section>", "E lDb%l l", $if_content__setup, "<p>no selection</p>", "b");
+const $input_detailId = /*@__PURE__*/ _const_persisted("input_detailId", ($scope) => {
+	if (!updating) $if($scope, $scope.input_detailId ? 0 : 1);
+	$if_content__input_detailId($scope);
+});
+const $input = ($scope, input) => $input_detailId($scope, input.detailId);
+var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 const $details_price_update = _update_signal("__tests__/template.marko_1_details_price/var");
+const $if_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $if_content__update = (_patch, _live) => {
 	_update_pair(_patch, _live);
 	if ("details_price" in _patch) $details_price_update(_live, _patch["details_price"]);
-	_update_scope(_patch, _live);
+	$if_content_holes(_patch, _live);
 };
-const $update = (_patch, _live) => {
+const $update2 = (_patch, _live) => {
 	_update_pair(_patch, _live);
 	if ("count" in _patch) _update_seed(_live, $count_seed, _patch["count"]);
 	if ("input_detailId" in _patch) _live["input_detailId"] = _patch["input_detailId"];
 	if ("ConditionalRenderer:#text/2" in _patch) _update_if(_patch, _live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", [$if_content__update, 0]);
 };
-const _merge = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", _merge);
-function _createPatch() {
-	return createPatch(_merge);
+function _patch2() {
+	return patch(_merge);
 }
 
 // data.js

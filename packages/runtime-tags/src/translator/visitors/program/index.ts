@@ -20,9 +20,8 @@ import {
   isOutputDOM,
   isOutputHTML,
   isPersisted,
-  isUpdateEntryBuild,
+  isPersistedEntryBuild,
 } from "../../util/marko-config";
-import { preallocateRegisterIds } from "../../util/preallocate-register-ids";
 import {
   BindingType,
   finalizeReferences,
@@ -30,9 +29,10 @@ import {
 } from "../../util/references";
 import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
-import { startSection } from "../../util/sections";
+import { forEachSection, startSection } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
-import { analyzeUpdateGeneric } from "../../util/update-merges";
+import { getResumeRegisterId } from "../../util/signals";
+import { getPersistedPossessionSiteIds } from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -44,19 +44,43 @@ export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
 }
 
+function buildPersistedDescriptor(entryFile: t.BabelFile) {
+  const files = new Map<string, t.BabelFile>();
+  const visit = (file: t.BabelFile, resolved: string) => {
+    if (files.has(resolved)) return;
+    files.set(resolved, file);
+    for (const tag of file.metadata.marko.analyzedTags || []) {
+      const child = resolveRelativeToEntry(entryFile, file, tag);
+      const childFile = loadFileForImport(entryFile, child);
+      if (childFile) visit(childFile, child);
+    }
+  };
+  visit(entryFile, entryFile.opts.filename!);
+
+  const sites = new Set<string>();
+  const renderers = new Set<string>();
+  for (const [, file] of [...files].sort(([a], [b]) => a.localeCompare(b))) {
+    for (const renderer of file.metadata.marko.persistedPossessionRenderers!) {
+      renderers.add(renderer);
+    }
+    for (const site of file.metadata.marko.persistedPossessionSites!) {
+      sites.add(site);
+    }
+  }
+
+  const strings = (values: Set<string>) =>
+    t.arrayExpression([...values].map((value) => t.stringLiteral(value)));
+  return t.arrayExpression([strings(sites), strings(renderers)]);
+}
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     domExports?: {
       template: string;
       walks: string;
       setup: string;
+      update: string;
       setupEmpty?: true;
-      /**
-       * The template's whole `?update` module is the generic interpreter
-       * (`analyzeUpdateGeneric`); parents dispatch its patch scopes through
-       * `_update_scope` directly instead of importing the module.
-       */
-      updateGeneric?: true;
       params: BindingPropTree | undefined;
     };
     styleFile?: string;
@@ -91,6 +115,7 @@ export default {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
+        update: generateUid("update"),
         params: undefined,
       };
 
@@ -109,6 +134,19 @@ export default {
       // skip finalization work that assumes an error-free template.
       if (hasAnalyzeErrors()) return;
       finalizeReferences();
+      if (isPersisted()) {
+        program.hub.file.metadata.marko.persistedPossessionSites = [
+          ...getPersistedPossessionSiteIds(),
+        ];
+        const renderers = [program.hub.file.metadata.marko.id];
+        forEachSection((section) => {
+          if (section !== program.node.extra!.section) {
+            renderers.push(getResumeRegisterId(section, "content"));
+          }
+        });
+        program.hub.file.metadata.marko.persistedPossessionRenderers =
+          renderers;
+      }
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
@@ -121,10 +159,7 @@ export default {
         // importing and calling it (checked when this template translates).
         programExtra.domExports!.setupEmpty = true;
       }
-      analyzeUpdateGeneric(program);
-      // After the generic classification: the enumeration reads the
-      // updateGeneric flag to know whether update keys exist at all.
-      if (isPersisted()) preallocateRegisterIds(program);
+      if (isPersisted()) getResumeRegisterId(section, "update");
     },
   },
   translate: {
@@ -140,24 +175,16 @@ export default {
           (output === "dom" && entry === "page") || output === "hydrate";
         const isServerEntry = output === "html" && entry === "page";
 
-        // The update/persisted entry kinds are bundler-resolved persisted
-        // artifacts with no assets to link; only the facade kinds bake
-        // linked-asset wiring in.
+        // Persisted entries have no assets to link; only facades bake wiring in.
         if ((entry === "page" || entry === "load") && !markoOpts.linkAssets) {
           throw program.buildCodeFrameError(
             'The "entry" option requires the `linkAssets` compiler option to be configured.',
           );
         }
 
-        // Without the option, analyze skips the register-id pre-allocation
-        // these entries' registrations depend on -- the compile would emit a
-        // wrong artifact with translate-time (compile-order-dependent) ids.
-        if (
-          (entry === "update" || entry === "persisted") &&
-          !markoOpts.persisted
-        ) {
+        if (entry === "persisted" && !markoOpts.persisted) {
           throw program.buildCodeFrameError(
-            `The "${entry}" entry kind requires the \`persisted\` compiler option to be enabled.`,
+            'The "persisted" entry kind requires the `persisted` compiler option to be enabled.',
           );
         }
 
@@ -173,11 +200,7 @@ export default {
           const entryFile = program.hub.file;
           const { filename } = entryFile.opts;
           const relativePath = resolveRelativePath(entryFile, filename);
-          // Persisted builds also load the template's `?update` merge module
-          // before declaring ready: a resumed lazy child must receive persisted
-          // update merges the moment it loads (a patch that arrived earlier is
-          // parked on its live scope -- see `_update_load` in dom/update.ts --
-          // and the ready() below flushes it).
+          // Persisted lazy children load their merge module before declaring ready.
           const loadExpr = isPersisted()
             ? t.callExpression(
                 t.memberExpression(
@@ -190,7 +213,7 @@ export default {
                       t.stringLiteral(relativePath),
                     ]),
                     t.callExpression(t.import(), [
-                      t.stringLiteral(relativePath + "?update"),
+                      t.stringLiteral(relativePath + "?persisted"),
                     ]),
                   ]),
                 ],
@@ -284,6 +307,18 @@ export default {
               t.stringLiteral(getRuntimePath("html")),
             ),
             t.exportAllDeclaration(t.stringLiteral(relativeImport)),
+            ...(isPersisted()
+              ? [
+                  t.exportNamedDeclaration(
+                    t.variableDeclaration("const", [
+                      t.variableDeclarator(
+                        t.identifier("__marko_persisted_descriptor"),
+                        buildPersistedDescriptor(entryFile),
+                      ),
+                    ]),
+                  ),
+                ]
+              : []),
             t.exportDefaultDeclaration(
               t.callExpression(t.identifier("withPageAssets"), pageAssetArgs),
             ),
@@ -302,10 +337,8 @@ export default {
     exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
-      } else if (isUpdateEntryBuild()) {
-        // `?update` entry: the dom visitors ran in full (identical analysis
-        // and register ids), but the emitted module is the compiled patch
-        // merge instead of the template.
+      } else if (isPersistedEntryBuild()) {
+        programDOM.translate.exit(program);
         programUpdate.translate.exit(program);
       } else {
         programDOM.translate.exit(program);

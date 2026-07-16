@@ -4,17 +4,11 @@ import { navigate } from "../../utils/resolve";
 const clickButton = (container: Element) =>
   container.querySelector("button")!.click();
 
-// The user imports are named `createPatch`/`have` -- the `?update` entry's
-// own export names. The generated patch factory must declare a program-scope
-// uid (a fixed `createPatch` declaration would be a duplicate binding), and
-// export-specifier `exported` names must not count as usage in
-// `pruneUnusedImports` (a pinned `have` import would revive the possibly
-// server-only module inside the update entry). The `"./data"` sentinel
-// catches the pinned import in the raw update entry, where tree-shaking
-// can't mask it.
+// User imports collide with the persisted entry's public API; the optimized
+// chunk must still exclude their server-only module.
 export const config: TestConfig = {
   persisted: true,
-  dom_bundle_excludes: ["server createPatch", "server have", '"./data"'],
+  dom_bundle_excludes: ["server patch", "server have", '"./data"'],
   // The imported helpers stand in for server-only computation; a plain
   // client render of this template is impossible by design.
   skip_csr: true,

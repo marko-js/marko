@@ -7,7 +7,6 @@ import {
   isOutputHTML,
   isPersisted,
   isPersistedEntryBuild,
-  isUpdateEntryBuild,
 } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
 import { getOrCreateSection } from "../util/sections";
@@ -68,14 +67,6 @@ export default {
       if (isHTML) {
         // handled in program exit for html currently.
       } else if (isPersistedEntryBuild()) {
-        // Module-scope client statements must stay single-instance: the
-        // persisted entry (`?persisted`, loaded with the first persisted
-        // navigation) would otherwise duplicate module STATE -- resume
-        // wires subscribers/handlers against the main module's copies, so
-        // a register-copy closure over a duplicated `client const` set
-        // notifies nobody. Import the bindings from the main module (which
-        // exports them, below) and skip re-running side-effect statements
-        // (the main module already ran them at hydration).
         const ids = Object.keys(scriptlet.getOuterBindingIdentifiers());
         if (ids.length) {
           scriptlet.replaceWith(
@@ -96,7 +87,7 @@ export default {
         const statements = scriptlet.replaceWithMultiple(node.body);
         // Persisted main modules export their module-scope bindings so the
         // persisted entry shares them (single-instance state, above).
-        if (isPersisted() && !isUpdateEntryBuild()) {
+        if (isPersisted() && !isPersistedEntryBuild()) {
           const ids: string[] = [];
           for (const statement of statements) {
             ids.push(...Object.keys(statement.getOuterBindingIdentifiers()));

@@ -26,9 +26,8 @@ not belong on the persisted-pages critical path.
   navigations exercise each branch. Request-derived spreads without a sparse
   protocol remain unsupported; static/analyzable spreads, client-state-only
   spreads, and the existing controllable/event paths remain available.
-- **Pairing integrity:** turn unpairable scopes, duplicate ids, unexpected
-  renderers, missing fragments, and stale boundary bodies into explicit protocol
-  failures covered by fallback tests in optimized builds.
+- **Race fallback:** keep stale boundary bodies and other genuine live-state
+  races on the document-fallback path in optimized builds.
 - **Async fragment matrix:** cover nested pending `<await>`/`<try>`, abort between
   frames, rejection, lazy resolution before and after its frame, and catch-only
   boundaries. Unsupported shapes must fail compilation or fall back clearly.

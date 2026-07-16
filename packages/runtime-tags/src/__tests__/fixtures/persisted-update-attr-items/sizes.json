@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 179,
-        "brotli": 133
+        "brotli": 132
       },
       "files": {
         "tags/chip-list.marko": 71,
@@ -12,17 +12,17 @@
     },
     "update.js": {
       "total": {
-        "min": 4839,
-        "brotli": 1992
+        "min": 3139,
+        "brotli": 1412
       },
       "files": {
-        "tags/chip-list.marko.update.mjs": 248,
-        "template.marko.update.mjs": 409
+        "tags/chip-list.marko.persisted.mjs": 418,
+        "template.marko.persisted.mjs": 631
       }
     }
   },
   "html": {
-    "min": 765,
-    "brotli": 414
+    "min": 758,
+    "brotli": 415
   }
 }

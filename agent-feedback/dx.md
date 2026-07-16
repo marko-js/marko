@@ -120,3 +120,23 @@ which is undocumented and easy to get wrong (the `~ts` register hook and
 timeout must be repeated by hand). Either document that incantation in
 CLAUDE.md next to the `--grep` guidance, or add a small `test:file` script
 that forwards to mocha without the default spec.
+
+## Deduplicate `@oxc-project/types` in the Run lockfile
+
+`../run/packages/run/src/vite/plugin.ts:773` | 2026-07-16 | impact:med | effort:low
+
+Run's `npm run build` fails before source-specific checking because `Program`
+from Rolldown's nested `@oxc-project/types` is incompatible with the root copy
+of the same package. All Run and adapter builds report the same duplicate-type
+error. Refresh or constrain the lockfile so Rolldown and Run resolve one copy.
+
+## Make Run's package toggle restore keys absent from source manifests
+
+`../run/scripts/pkg-toggle.js:13` | 2026-07-16 | impact:med | effort:low
+
+The toggle iterates only keys currently present in `package.toggle.json`. When
+the first pass swaps `typesVersions` into a source `package.json`, its new
+`undefined` value is omitted while writing the toggle file. The second pass no
+longer sees that key, leaving all four source manifests dirty and the toggle
+files incomplete. Iterate the union of source and toggle keys, or preserve an
+explicit missing-value sentinel, so the release/setup round trip is reversible.

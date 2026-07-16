@@ -23,14 +23,13 @@ var template_default = _template("a", (input) => {
 		...attrs
 	}, "d", $scope0_id, "div")}>dynamic</div>${_el_resume($scope0_id, "d")}`);
 	const $childScope = _peek_scope_id();
-	_update_child($scope0_id, "Se", $childScope);
 	_set_serialize_reason($sg__input_title);
 	child_default({
 		"data-request": input.title,
 		...attrs
 	});
 	_script($scope0_id, "a1");
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		h: input.title,
 		i: _state_reason() && attrs,

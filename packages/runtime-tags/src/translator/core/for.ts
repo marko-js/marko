@@ -17,7 +17,6 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
-import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import {
   type Binding,
   BindingType,
@@ -64,6 +63,7 @@ import {
   getUpdateSiteRegisterId,
   isUpdateRequestDerivedSite,
   isUpdateStructuralMerge,
+  recordUpdatePossessionLoop,
 } from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
@@ -198,12 +198,7 @@ export default {
 
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;
-    recordRegisterIdFootprint(tagSection, {
-      kind: "for",
-      bodySection,
-      extra: tagExtra,
-      binding: nodeBinding,
-    });
+    recordUpdatePossessionLoop(tagSection, bodySection, tagExtra, nodeBinding);
   },
   translate: translateByTarget({
     html: {
@@ -260,10 +255,6 @@ export default {
           kStatefulReason,
         );
         if (
-          // Purely state-driven loops keep marker-linked owners under the
-          // persisted option; anything patch-borne keeps serializing them
-          // (update payloads carry no markers) -- see the matching gate in
-          // core/if.ts.
           (isPersisted()
             ? isStateOnlySerializeReason(statefulSerializeReason)
             : isStateSerializeReason(statefulSerializeReason)) &&
@@ -317,11 +308,7 @@ export default {
             statefulSerializeArg,
           );
 
-          // A request-derived-only list's per-site id: the client's
-          // possession echo tells the server whether each keyed (or
-          // positional-indexed) iteration is already live. New iterations
-          // ship as resumable fragments instead of client construction
-          // material (see html/writer.ts's `_for`).
+          // The site id lets the server token distinguish live loop items.
           const forSiteId = isUpdateRequestDerivedSite(tagExtra)
             ? getUpdateSiteRegisterId(
                 tagSection,
@@ -329,7 +316,6 @@ export default {
                 getScopeAccessor(nodeBinding),
               )
             : undefined;
-
           if (skipParentEnd) {
             getParentTag(tag)!.node.extra![kSkipEndTag] = true;
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
@@ -411,16 +397,6 @@ export default {
         const forType = getForType(node)!;
         const forAttrs = getKnownAttrValues(node);
         const signal = getSignal(tagSection, nodeRef, "for");
-        // Participating loops (`isUpdateStructuralMerge`) get an update
-        // merge: a stable (render-once) list -- the branches never change,
-        // only their body's request-derived content does -- dispatches a
-        // plain index-paired merge with no client construction at all
-        // (`_update_for` in dom/update.ts). A request-derived list
-        // additionally gets a build-stable per-site id
-        // (`getUpdateSiteRegisterId`): a genuinely new keyed item, or a new
-        // positional index, arrives as a resumable fragment instead of ever
-        // being built from client-shipped renderer material (see
-        // html/writer.ts's `_for` and dom/update.ts's `_update_for_keyed`).
         const isRequestDerived = isUpdateRequestDerivedSite(tagExtra);
         if (isUpdateStructuralMerge(tagExtra, [bodySection])) {
           addUpdateMerge(tagSection, {
@@ -436,13 +412,6 @@ export default {
                 )
               : undefined,
           });
-          // The patch's branch list is authoritative for participating
-          // loops, so the loop's own input invocation is skipped while a
-          // patch applies (`updateGuard`). Refs-less inputs (a render-once
-          // module value, possibly behind a `server import`) invoke at
-          // fresh-branch setup with no upstream guard -- without this the
-          // setup's empty/undefined list reconciles away the branches the
-          // merge just built.
           signal.updateGuard = true;
         }
         signal.build = () => {

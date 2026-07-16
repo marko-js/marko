@@ -5,7 +5,7 @@ const ITEMS = [{ id: "one" }, { id: "two" }];
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const PanelA = { content: _content_resume("a3", () => {
+	const PanelA = { content: _content_resume("a2", () => {
 		_scope_id();
 		_scope_reason();
 		_html("<strong>A</strong>");
@@ -23,13 +23,13 @@ var template_default = _template("a", (input) => {
 		_for_of(ITEMS, (item) => {
 			const $scope3_id = _scope_id();
 			_html(`<li>${_escape(_hole_value($scope3_id, "Qa", item.id, _persisted_reason()))}${_el_resume($scope3_id, "a", _persisted_reason())}: `);
-			_dynamic_tag($scope3_id, "b", group.views[item.id] === "b" ? PanelB : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a4");
+			_dynamic_tag($scope3_id, "b", group.views[item.id] === "b" ? PanelB : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a1");
 			_html("</li>");
 			_persisted_reason() && writeScope($scope3_id, { _: _scope_with_id($scope2_id) });
 		}, "id", $scope2_id, "a", _persisted_reason(), _persisted_reason(), 0, "</ul>", 1);
 		_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
-	}, "id", $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a1");
-	_script($scope0_id, "a0");
+	}, "id", $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0");
+	_script($scope0_id, "a7");
 	writeScope($scope0_id, { f: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

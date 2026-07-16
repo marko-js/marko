@@ -19,13 +19,13 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
-import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import {
   compareSources,
   getScopeAccessor,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
+  onFinalizeReferences,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import {
@@ -98,13 +98,14 @@ export const IfTag = {
         binding: nodeBinding,
         prefix: getAccessorPrefix().BranchScopes,
       };
-      recordRegisterIdFootprint(ifTagSection, {
-        kind: "if",
-        binding: nodeBinding,
-        extra: ifTagExtra,
-        branchBodySections: branches.map(
-          ([, branchBodySection]) => branchBodySection,
-        ),
+      onFinalizeReferences(() => {
+        if (isUpdateRequestDerivedSite(ifTagExtra)) {
+          getUpdateSiteRegisterId(
+            ifTagSection,
+            "if",
+            getScopeAccessor(nodeBinding),
+          );
+        }
       });
       // TODO: remove all branches if none have body content.
 
@@ -153,12 +154,6 @@ export const IfTag = {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
           if (
-            // Update payloads carry no resume markers, so a branch that can
-            // be patch-borne (any request-derived part in its condition)
-            // keeps its serialized owner under the persisted option; purely
-            // state-driven branches never participate in updates (the
-            // server never pairs into client-state-driven structure), so
-            // their owners stay marker-linked.
             (isPersisted()
               ? isStateOnlySerializeReason(
                   getSerializeReason(ifTagSection, kStatefulReason),
@@ -203,21 +198,9 @@ export const IfTag = {
             nodeBinding,
           );
           const nextTag = tag.getNextSibling();
-          // A request-derived test splits selection from rendering: `cb`
-          // (built below from `selectorExpr`) only picks the branch, and
-          // `branchRenderers` (only for this case) holds each branch's own
-          // render function, so the runtime can redirect a possession
-          // mismatch into a resumable fragment before any of the chosen
-          // branch's content -- which may not run client-side -- renders.
           const splitSelection = isUpdateRequestDerivedSite(ifTagExtra);
           let branchSerializeReasons: SerializeReasons | undefined;
           let statement: t.Statement | undefined;
-          // No explicit `<else>`: the selector's fallback matches the
-          // combined (non-split) cb's implicit `undefined` return (no
-          // branch matched), not `branches.length` -- `branches[index]`
-          // resolves either sentinel to `undefined` the same way, but every
-          // OTHER convention downstream (`_if`'s `branchIndex ?? -1`,
-          // `_update_if`'s "-1 means no branch") is keyed off `undefined`.
           let selectorExpr: t.Expression = t.identifier("undefined");
           const branchRenderers: t.Expression[] = [];
           let singleChild = true;
@@ -245,9 +228,6 @@ export const IfTag = {
                   if (
                     branchSerializeReason === true ||
                     (branchSerializeReason.state &&
-                      // Persisted builds keep mixed reasons whole so the
-                      // branch guard preserves the request-derived bits
-                      // (see `getMixedDynamicGuard`).
                       !(
                         isPersisted() &&
                         (branchSerializeReason.param ||
@@ -405,17 +385,6 @@ export const IfTag = {
           }
 
           const signal = getSignal(ifTagSection, nodeRef, "if");
-          // Participating conditionals (`isUpdateStructuralMerge`) dispatch
-          // through the generic `_update_if` (dom/update.ts): same-branch
-          // content merges dispatch by branch index, a branch change applies
-          // a resumable fragment (or fails loudly without one; persisted
-          // pages never construct divergent content client-side -- see
-          // html/dynamic-tag.ts for the analogous hop). This signal's own
-          // full branch-construction closure (`signal.build` below) stays
-          // unregistered for the update merge -- it exists only for CSR/
-          // mount reachability -- so an optimized persisted split never
-          // pulls it (and whatever user code its branches close over) into
-          // the update entry.
           if (
             isUpdateStructuralMerge(
               ifTagExtra,
@@ -429,11 +398,6 @@ export const IfTag = {
                 ([, branchBodySection]) => branchBodySection,
               ),
             });
-            // The patch's branch outcome is authoritative for participating
-            // conditionals; refs-less (render-once) tests invoke at
-            // fresh-branch setup with no upstream guard and would replay
-            // the conditional against a value that may not exist in the
-            // browser (see the matching guard in core/for.ts).
             signal.updateGuard = true;
           }
           signal.build = () => {

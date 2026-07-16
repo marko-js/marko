@@ -9,7 +9,6 @@ import {
   hasAllKnownProps,
 } from "./binding-prop-tree";
 import { generateUidIdentifier } from "./generate-uid";
-import { getPatchChildPrefix } from "./get-accessor-char";
 import { getTagName } from "./get-tag-name";
 import { isOptimize, isPersisted } from "./marko-config";
 import {
@@ -27,7 +26,6 @@ import {
   type Opt,
   toIter,
 } from "./optional";
-import { recordRegisterIdFootprint } from "./preallocate-register-ids";
 import {
   addRead,
   type Binding,
@@ -104,7 +102,6 @@ const [getKnownTags] = createSectionState(
 const kContentSection = Symbol("known tag content section");
 const kChildScopeBinding = Symbol("known tag scope binding");
 const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
-const kChildUpdateGeneric = Symbol("known tag child update generic");
 const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
@@ -112,7 +109,6 @@ declare module "@marko/compiler/dist/types" {
     [kContentSection]?: Section;
     [kChildScopeBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
-    [kChildUpdateGeneric]?: boolean;
     [kKnownExprs]?: KnownExprs;
   }
 }
@@ -121,45 +117,16 @@ export function getKnownTagChildScopeBinding(tag: t.NodePath<t.MarkoTag>) {
   return tag.node.extra?.[kChildScopeBinding];
 }
 
-/**
- * True when this known tag's whole update dispatch is the generic
- * interpreter descending through the typed child link: the child template
- * proved its `?update` module is `_update_scope` (`updateGeneric`), and
- * the tag adds nothing a compiled line would carry (no tag variable's
- * change wiring, no lazy `load=` child whose live scope may not exist).
- * Resolved once at analyze (the child's flag is final there -- custom-tag
- * analyze reads sibling `domExports` flags the same way; an in-progress
- * circular child reads as non-generic on every pass) so the html
- * serialization, the update-merge record, and classification can never
- * drift apart.
- */
-export function isKnownTagChildUpdateGeneric(tag: t.NodePath<t.MarkoTag>) {
-  return !!tag.node.extra?.[kChildUpdateGeneric];
-}
-
-// Update classification needs to know a section renders known tags needing
-// compiled dispatch lines (anything but the typed-link generic descent)
-// from analyze data.
-export function sectionHasNonGenericKnownTags(section: Section) {
-  for (const tagExtra of getKnownTags(section)) {
-    if (!tagExtra[kChildUpdateGeneric]) return true;
-  }
-  return false;
-}
-
 export function knownTagAnalyze(
   tag: t.NodePath<t.MarkoTag>,
   contentSection: Section,
   propTree: BindingPropTree | undefined,
-  childUpdateGeneric?: boolean,
 ) {
   analyzeAttributeTags(tag);
 
   const section = getOrCreateSection(tag);
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {});
-  tagExtra[kChildUpdateGeneric] =
-    !!childUpdateGeneric && !tag.node.var && !tagExtra.tagNameLoad;
   const childScopeBinding = (tagExtra[kChildScopeBinding] = createBinding(
     "#childScope",
     BindingType.dom,
@@ -173,12 +140,6 @@ export function knownTagAnalyze(
   tagExtra[kContentSection] = contentSection;
 
   const varBinding = trackVarReferences(tag, BindingType.derived);
-  if (varBinding) {
-    recordRegisterIdFootprint(section, {
-      kind: "tagVar",
-      binding: varBinding,
-    });
-  }
 
   const exprs = (tagExtra[kKnownExprs] = analyzeParams(
     tagExtra,
@@ -215,12 +176,6 @@ export function knownTagAnalyze(
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
-  // Persisted spine: parent -> child scope links must serialize whenever the
-  // persisted render flag is set (a global-sourced reason is exactly that
-  // bit), even when nothing else on the parent references the child -- the
-  // update merge descends the patch tree through these links, and a root
-  // that passes no attrs (eg a route wrapper template) would otherwise elide
-  // its scope entirely, shifting the patch root off scope 1.
   if (isPersisted()) {
     addSerializeReason(
       section,
@@ -274,26 +229,6 @@ export function knownTagTranslateHTML(
       childScopeBinding,
       callRuntime("_existing_scope", peekScopeId),
     );
-
-    if (tagExtra[kChildUpdateGeneric]) {
-      // Update-generic children additionally serialize their link under
-      // the typed `PatchChild:` key (update renders only): the generic
-      // applier descends through it, so the parent compiles no dispatch
-      // line -- and can itself classify update-generic.
-      tag.insertBefore(
-        t.expressionStatement(
-          callRuntime(
-            "_update_child",
-            getScopeIdIdentifier(section),
-            t.stringLiteral(
-              getPatchChildPrefix() +
-                getScopeAccessorLiteral(childScopeBinding).value,
-            ),
-            t.cloneNode(peekScopeId),
-          ),
-        ),
-      );
-    }
 
     if (tagVar) {
       statements.push(

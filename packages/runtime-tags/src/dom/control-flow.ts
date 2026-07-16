@@ -241,12 +241,7 @@ function resolveAwait(
   return awaitBranch;
 }
 
-/**
- * Sets up and inserts a detached (unresolved) await branch at its anchor.
- * Shared by promise resolution above and persisted update applies, where a
- * fresh subtree's await never ran its promise (compute is skipped while
- * updating) and the body's own frame is the resolution.
- */
+/** Attaches an await branch whose compute was skipped during an update. */
 export function attachAwaitBranch(
   scope: Scope,
   nodeAccessor: string,
@@ -990,11 +985,7 @@ function loop<T extends unknown[] = unknown[]>(
   };
 }
 
-/**
- * Reconciles a persisted request-derived loop from patch branch scopes. Unlike
- * `loop`, this path has no renderer or setup fallback: every new branch must
- * be supplied by the caller as a resumed fragment.
- */
+/** Reconciles a persisted loop from resumed patch branches. */
 export function _for_keyed(
   nodeAccessor: EncodedAccessor,
   params:
@@ -1022,15 +1013,7 @@ export function _for_keyed(
           oldScopes[0]?.[AccessorProp.StartNode].parentNode
         : referenceNode
     ) as Element;
-    const [patchBranches, loopKeyAccessor] = value as [
-      Scope[],
-      string | undefined,
-    ];
-    if (!Array.isArray(patchBranches) || typeof loopKeyAccessor !== "string") {
-      throw new Error(
-        MARKO_DEBUG ? "Malformed persisted <for> update" : "update diverged",
-      );
-    }
+    const [patchBranches, loopKeyAccessor] = value as [Scope[], string];
     const oldByKey = new Map<unknown, BranchScope>();
     for (let i = 0; i < oldScopes.length; i++) {
       oldByKey.set(oldScopes[i][AccessorProp.LoopKey] ?? i, oldScopes[i]);
@@ -1041,9 +1024,7 @@ export function _for_keyed(
       const key = patchBranch[loopKeyAccessor] ?? i;
       let branch = oldByKey.get(key);
       if (branch) {
-        // A merge may return a replacement branch (a fragment swap): the old
-        // branch then stays in `oldByKey` and leaves with the removed keys,
-        // while the replacement joins the insertion walk as a fresh branch.
+        // Replacement fragments leave the old branch queued for removal.
         const replacement = params && params(patchBranch, branch);
         if (replacement) {
           branch = replacement;
@@ -1074,13 +1055,7 @@ export function _for_keyed(
             oldScopes[oldLen - 1][AccessorProp.EndNode].nextSibling,
           );
         } else {
-          // Anchor the reconcile at the first SURVIVING old branch (matched
-          // branches keep their DOM position through the removals below), so
-          // in-place branches are never moved -- and never past the loop's
-          // trailing siblings, which anchoring on the reference marker would
-          // do (it may sit after the content, or out of the DOM entirely
-          // once an empty->filled reconcile removed it). An all-fresh list
-          // falls back to the slot right after the old content.
+          // Anchor at the first surviving branch, or after the old content.
           cursor = oldScopes[oldLen - 1][AccessorProp.EndNode].nextSibling;
           for (let i = 0; i < oldLen; i++) {
             if (!oldByKey.has(oldScopes[i][AccessorProp.LoopKey] ?? i)) {

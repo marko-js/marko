@@ -4,6 +4,6 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const label = input.label;
 	_html("<div class=target></div><p class=static>page body</p>");
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, { d: label });
 }, 1);

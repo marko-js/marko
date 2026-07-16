@@ -4,13 +4,8 @@ import { navigate } from "../../utils/resolve";
 const clickButton = (container: Element) =>
   container.querySelector("button")!.click();
 
-// The user imports are named `patch`/`live` -- the same names the `?update`
-// entry's compiled merge functions once used for their bare parameters.
-// `pruneUnusedImports` keeps any import whose local name appears as an
-// identifier, so before the merge params became uids the collision revived
-// the (possibly server-only) module inside the update entry. The `"./data"`
-// sentinel catches the pinned import in the raw update entry, where
-// tree-shaking can't mask it.
+// User imports collide with natural patch parameter names; the optimized
+// persisted chunk must still exclude their server-only module.
 export const config: TestConfig = {
   persisted: true,
   dom_bundle_excludes: ["server patch", "server live", '"./data"'],

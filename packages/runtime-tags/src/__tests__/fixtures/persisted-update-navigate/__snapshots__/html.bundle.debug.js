@@ -22,7 +22,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html("<li>");
 		const $childScope = _peek_scope_id();
-		_update_child($scope2_id, "PatchChild:#childScope/0", $childScope);
 		_set_serialize_reason($sg__input_related);
 		price_default({ amount: item.price });
 		_html(` ${_sep($sg__input_related)}${_escape(_hole_value($scope2_id, "PatchHole:#text/1", item.name, _persisted_reason()))}${_el_resume($scope2_id, "#text/1", $sg__input_related)}</li>`);

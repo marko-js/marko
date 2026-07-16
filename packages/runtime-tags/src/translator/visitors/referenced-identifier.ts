@@ -19,9 +19,6 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-// Abort ids must be identical across every compile of a template (the dom
-// entry and its persisted `?update` entry address the same live scopes
-// with `$signal(scope, id)`). Analyze runs once per cached file and stamps
 // each id on its expression root's extra, so translates are REQUIRED to
 // agree by construction — they read, never allocate. The only
 // per-translate state is which roots already emitted their `$signalReset`
@@ -57,9 +54,6 @@ export default {
     if (identifier.scope.hasBinding(name)) return;
     if (name === "$global") {
       setReferencesScope(identifier);
-      // Under the persisted option, $global reads join the reactive graph as
-      // param-like sources so $global-derived holes get resume markers and
-      // spine serialization (values still read the live global object).
       if (isPersisted()) {
         trackGlobalReference(identifier);
       }

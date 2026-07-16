@@ -35,7 +35,7 @@ var shared_list_default = _template("d", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $return = $global().data[input.name];
-	_script($scope0_id, "d1");
+	_script($scope0_id, "d2");
 	writeScope($scope0_id, {
 		c: input.name,
 		U: _state_reason() && (_resume(function(next) {
@@ -54,10 +54,10 @@ var actions_default = _template("b", (input) => {
 	const productId = input.id;
 	const $childScope = _peek_scope_id();
 	let list = shared_list_default({ name: "cart" });
-	_var($scope0_id, "b", $childScope, "b0");
+	_var($scope0_id, "b", $childScope, "b1");
 	let added = 0;
 	_html(`<button class=add>added <!>${_escape(added)}${_el_resume($scope0_id, "d")} of ${_sep($sg__input_id)}${_escape(productId)}${_el_resume($scope0_id, "e", $sg__input_id)} (<!>${_escape(list.length)}${_el_resume($scope0_id, "f")} in cart)</button>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "b1");
+	_script($scope0_id, "b2");
 	writeScope($scope0_id, {
 		j: productId,
 		k: _state_reason() && list,
@@ -73,9 +73,9 @@ var layout_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
-	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "c1");
+	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "c0");
 	_html("</section>");
-	_script($scope0_id, "c0");
+	_script($scope0_id, "c2");
 	writeScope($scope0_id, { g: _state_reason() && open });
 	_resume_branch($scope0_id);
 });
@@ -86,12 +86,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const Cart = { content: _content("a4", () => {
+	const Cart = { content: _content("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const $childScope = _peek_scope_id();
 		let list = shared_list_default({ name: "cart" });
-		_var($scope1_id, "b", $childScope, "a2");
+		_var($scope1_id, "b", $childScope, "a15");
 		let products = getProducts?.(list) || [];
 		const entries = list.map((id) => ({
 			product: products.find((p) => p.id === id),
@@ -132,12 +132,12 @@ var template_default = _template("a", (input) => {
 		});
 		_resume_branch($scope1_id);
 	}) };
-	const Item = { content: _content("a6", () => {
+	const Item = { content: _content("a7", () => {
 		const $scope6_id = _scope_id();
 		const $Item_content__product_id__closures = /* @__PURE__ */ new Set();
 		_scope_reason();
 		const product = $global().productId && getProduct($global().productId);
-		_if(() => !product ? 0 : 1, $scope6_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), void 0, void 0, "a5", [() => {
+		_if(() => !product ? 0 : 1, $scope6_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), void 0, void 0, "a0", [() => {
 			const $scope9_id = _scope_id();
 			_html("<h2>not found</h2>");
 			_persisted_reason() && writeScope($scope9_id, {});
@@ -147,7 +147,7 @@ var template_default = _template("a", (input) => {
 			const $childScope2 = _peek_scope_id();
 			_set_serialize_reason(_persisted_reason());
 			actions_default({ id: product.id });
-			_try($scope7_id, "e", _content_resume("a8", () => {
+			_try($scope7_id, "e", _content_resume("a9", () => {
 				const $scope8_id = _scope_id();
 				_scope_reason();
 				_await($scope8_id, "a", getRecommendations(product.id), (recs) => {
@@ -159,16 +159,16 @@ var template_default = _template("a", (input) => {
 						_persisted_reason() && writeScope($scope12_id, {});
 					}, function(rec) {
 						return rec.id;
-					}, $scope11_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a10");
+					}, $scope11_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a16");
 					_persisted_reason() && writeScope($scope11_id, {});
 				}, _persisted_reason());
 				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }));
 				_resume_branch($scope8_id);
-			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a9", () => {
+			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a11", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading recommendations…");
-			}, $scope7_id) }) }, "a7");
+			}, $scope7_id) }) }, "a1");
 			_persisted_reason() && writeScope($scope7_id, {
 				_: _scope_with_id($scope6_id),
 				d: _existing_scope($childScope2)
@@ -179,7 +179,7 @@ var template_default = _template("a", (input) => {
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "item" ? Item : Cart });
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a17");
 	writeScope($scope0_id, {
 		d: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope3)

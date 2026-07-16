@@ -16,8 +16,8 @@ var template_default = _template("a", (input) => {
 			_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
 		}, "id", $scope1_id, "a", _persisted_reason(), _persisted_reason(), 0, "</article>", 1);
 		_persisted_reason() && writeScope($scope1_id, {});
-	}, "id", $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a1");
-	_script($scope0_id, "a0");
+	}, "id", $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0");
+	_script($scope0_id, "a4");
 	writeScope($scope0_id, { d: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

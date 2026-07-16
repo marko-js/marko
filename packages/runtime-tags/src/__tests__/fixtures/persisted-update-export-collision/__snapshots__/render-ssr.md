@@ -4,7 +4,7 @@
   clicked 0
 </button>
 <p>
-  server createPatch 3 / server have 3
+  server patch 3 / server have 3
 </p>
 ```
 
@@ -17,7 +17,7 @@ container.querySelector("button").click();
   clicked 1
 </button>
 <p>
-  server createPatch 3 / server have 3
+  server patch 3 / server have 3
 </p>
 ```
 ## Change
@@ -63,7 +63,7 @@ UPDATE: button::text@8 "1" => "2"
   clicked 2
 </button>
 <p>
-  server createPatch 5 / server have 5
+  server patch 5 / server have 5
 </p>
 ```
 ## Change
@@ -81,7 +81,7 @@ container.querySelector("button").click();
   clicked 3
 </button>
 <p>
-  server createPatch 5 / server have 5
+  server patch 5 / server have 5
 </p>
 ```
 ## Change

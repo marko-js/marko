@@ -10,7 +10,6 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM, isPersisted } from "../util/marko-config";
-import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
@@ -86,10 +85,6 @@ export default {
         }
         seenValueAttr = true;
         (attr.value.extra ??= {}).isEffect = true;
-        recordRegisterIdFootprint(getOrCreateSection(tag), {
-          kind: "effect",
-          extra: attr.value.extra,
-        });
         addSetupExpr(getOrCreateSection(tag), attr.value);
         getProgram().node.extra.isInteractive = true;
       } else {
@@ -117,10 +112,6 @@ export default {
       const section = getSection(tag);
       const { value } = valueAttr;
       const referencedBindings = value.extra?.referencedBindings;
-      // A `$global`-reading script re-runs on every persisted apply (its
-      // source is request-derived and every navigation refreshes it) --
-      // the registration below rides `_script_refresh` so the applier
-      // re-queues it for matched scopes.
       if (
         isPersisted() &&
         value.extra &&

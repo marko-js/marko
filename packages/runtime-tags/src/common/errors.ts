@@ -2,6 +2,11 @@ import { getWrongAttrSuggestion, htmlAttrNameReg } from "./helpers";
 
 const lowercaseEventHandlerReg = /^on[a-z]/;
 
+export function diverge(message?: string | false): never {
+  if (MARKO_DEBUG) throw new Error(message || "Update diverged");
+  throw 1;
+}
+
 export function assertValidAttrValue(name: string, value: unknown) {
   if (
     value &&

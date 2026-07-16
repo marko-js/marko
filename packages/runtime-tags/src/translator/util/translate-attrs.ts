@@ -178,9 +178,6 @@ export function assertPersistedSpreadSupported(
 
   if (value.extra?.spreadFrom?.type === BindingType.let) return;
 
-  // `evaluate` uses compiler constant folding, so literal/object spreads are
-  // accepted without relying on their syntax or accidentally treating a
-  // request-derived object as static.
   if (evaluate(value).confident) return;
 
   const sources = getSerializeSourcesForExpr(

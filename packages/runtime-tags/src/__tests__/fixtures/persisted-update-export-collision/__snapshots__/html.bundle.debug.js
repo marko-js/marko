@@ -1,6 +1,6 @@
 // data.js
-function createPatch(id) {
-	return `server createPatch ${id}`;
+function patch(id) {
+	return `server patch ${id}`;
 }
 function have(id) {
 	return `server have ${id}`;
@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => input.id ? 0 : 1, $scope0_id, "#text/2", $sg__input_id, $sg__input_id, $sg__input_id, 0, 1, "__tests__/template.marko_0/update_if_#text/2", [() => {
 		const $scope1_id = _scope_id();
-		const label = createPatch(input.id);
+		const label = patch(input.id);
 		_html(`<p>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", label, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_id)} / ${_sep($sg__input_id)}${_escape(_hole_value($scope1_id, "PatchHole:#text/1", have(input.id), _persisted_reason()))}${_el_resume($scope1_id, "#text/1", $sg__input_id)}</p>`);
 		$sg__input_id && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, () => {

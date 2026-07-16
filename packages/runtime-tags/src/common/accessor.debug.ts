@@ -12,11 +12,8 @@ export enum AccessorPrefix {
   Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
-  // "PatchAttr:" ("N" optimized) is reserved for patch-render attr hole
-  // values (composed `PatchAttr:<attrName>:<elementAccessor>`). It is
-  // deliberately not an enum member: only compiled HTML output and the
-  // update-only client runtime use it, and enum objects ship in every client
-  // bundle. See `getPatchAttrPrefix` in the translator.
+  // PatchAttr stays outside this widely shipped enum; only patch compilation
+  // and application use it.
 }
 
 export enum AccessorProp {
@@ -77,6 +74,12 @@ export enum ClosureSignalProp {
 
 export enum KeyedScopesProp {
   PreviousKey = "PreviousKey:",
+}
+
+export enum FragmentContextProp {
+  GetScope = "getScope",
+  Stamp = "stamp",
+  Adopt = "adopt",
 }
 
 export enum LoadSignalValue {

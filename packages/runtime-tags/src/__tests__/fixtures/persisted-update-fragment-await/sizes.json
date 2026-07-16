@@ -2,29 +2,29 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 435,
-        "brotli": 224
+        "min": 436,
+        "brotli": 226
       },
       "files": {
         "tags/widget.marko": 287,
         "tags/layout.marko": 304,
-        "template.marko": 397
+        "template.marko": 398
       }
     },
     "update.js": {
       "total": {
-        "min": 8753,
-        "brotli": 3423
+        "min": 7433,
+        "brotli": 3067
       },
       "files": {
-        "tags/widget.marko.update.mjs": 341,
-        "tags/layout.marko.update.mjs": 389,
-        "template.marko.update.mjs": 1054
+        "tags/widget.marko.persisted.mjs": 661,
+        "tags/layout.marko.persisted.mjs": 643,
+        "template.marko.persisted.mjs": 1654
       }
     }
   },
   "html": {
-    "min": 635,
-    "brotli": 376
+    "min": 639,
+    "brotli": 378
   }
 }

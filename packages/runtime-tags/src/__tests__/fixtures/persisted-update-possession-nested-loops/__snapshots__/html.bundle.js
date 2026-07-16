@@ -10,9 +10,9 @@ var template_default = _template("a", (input) => {
 		_for_of(group.items, (item) => {
 			const $scope2_id = _scope_id();
 			_html(`<button>${_escape(_hole_value($scope2_id, "Qb", group.id, _persisted_reason()))}${_el_resume($scope2_id, "b", _persisted_reason())}:${_sep(_persisted_reason())}${_escape(_hole_value($scope2_id, "Qc", item.id, _persisted_reason()))}${_el_resume($scope2_id, "c", _persisted_reason())}</button>${_el_resume($scope2_id, "a")}`);
-			_script($scope2_id, "a3");
+			_script($scope2_id, "a5");
 			writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
-		}, "id", $scope1_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a2");
+		}, "id", $scope1_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a1");
 		_html("</section>");
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, "id", $scope0_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0");

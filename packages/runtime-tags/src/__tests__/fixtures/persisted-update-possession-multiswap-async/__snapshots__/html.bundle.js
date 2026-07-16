@@ -23,10 +23,10 @@ var template_default = _template("a", (input) => {
 		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope3_id, "a", _persisted_reason())}</section>`);
 		_persisted_reason() && writeScope($scope3_id, {});
 	}, $scope0_id) };
-	const PanelAsync = { content: _content_resume("a7", () => {
+	const PanelAsync = { content: _content_resume("a6", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
-		_try($scope4_id, "a", _content_resume("a8", () => {
+		_try($scope4_id, "a", _content_resume("a7", () => {
 			const $scope5_id = _scope_id();
 			_scope_reason();
 			_await($scope5_id, "a", getReport($global().topic), (data) => {
@@ -34,21 +34,21 @@ var template_default = _template("a", (input) => {
 				_html(`<p class=report>${_escape(_hole_value($scope7_id, "Qa", data, _persisted_reason()))}${_el_resume($scope7_id, "a", _persisted_reason())}</p>`);
 				_persisted_reason() && writeScope($scope7_id, {});
 			}, _persisted_reason());
-		}, $scope4_id), { placeholder: attrTag({ content: _content_resume("a9", () => {
+		}, $scope4_id), { placeholder: attrTag({ content: _content_resume("a8", () => {
 			_scope_reason();
 			_scope_id();
 			_html("<p class=loading>loading…</p>");
-		}, $scope4_id) }) }, "a6");
+		}, $scope4_id) }) }, "a0");
 	}, $scope0_id) };
 	_html("<ul>");
 	_for_of($global().items, (item) => {
 		const $scope2_id = _scope_id();
-		_dynamic_tag($scope2_id, "a", item.view === "b" ? PanelB : item.view === "c" ? PanelAsync : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a4");
+		_dynamic_tag($scope2_id, "a", item.view === "b" ? PanelB : item.view === "c" ? PanelAsync : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "a2");
 		_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, function(item) {
 		return item.id;
 	}, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 0, "a1");
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a11");
 	writeScope($scope0_id, { d: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

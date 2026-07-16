@@ -1,9 +1,9 @@
-import { createPatch, have } from "./data";
+import { patch, have } from "./data";
 
 <let/count=0/>
 <button onClick() { count++ }>clicked ${count}</button>
 <if=input.id>
-  <const/label=createPatch(input.id)>
+  <const/label=patch(input.id)>
   <p>${label} / ${have(input.id)}</p>
 </if>
 <else>

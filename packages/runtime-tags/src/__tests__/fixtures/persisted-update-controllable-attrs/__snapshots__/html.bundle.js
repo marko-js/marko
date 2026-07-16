@@ -16,8 +16,8 @@ var item_form_default = _template("b", (input) => {
 	let qty = 1;
 	_html(`<form><input${_attr_input_value($scope0_id, "a", qty, _resume((_new_qty) => {
 		qty = Number(_new_qty);
-	}, "b0", $scope0_id))} type=number class=qty>${_el_resume($scope0_id, "a")}<input${_attr_input_value($scope0_id, "b", _hole_value($scope0_id, "Nvalue:b", itemId, _persisted_reason()))} type=hidden name=itemId>${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 0))}<button class=add>add</button>${_el_resume($scope0_id, "c")}</form>`);
-	_script($scope0_id, "b1");
+	}, "b0", $scope0_id))} type=number class=qty>${_el_resume($scope0_id, "a")}<input type=hidden name=itemId${_attr("value", _hole_value($scope0_id, "Nvalue:b", itemId, _persisted_reason()))}>${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 0))}<button class=add>add</button>${_el_resume($scope0_id, "c")}</form>`);
+	_script($scope0_id, "b2");
 	writeScope($scope0_id, { h: _state_reason() && qty });
 	_resume_branch($scope0_id);
 });

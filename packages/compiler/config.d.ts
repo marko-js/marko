@@ -1,4 +1,4 @@
-type EntryKind = "page" | "load" | "update" | "persisted";
+type EntryKind = "page" | "load" | "persisted";
 type LinkedEntryKind = "page" | "load";
 declare const Config: {
   /** `"hydrate"` is deprecated, use `output: "dom", entry: "page"` instead. */
@@ -11,14 +11,9 @@ declare const Config: {
    *   bootstraps hydration (`init()`).
    * - `"load"` — (dom) lazy-tag facade: ready-gated wrapper the `<load>`
    *   machinery imports instead of the module.
-   * - `"update"` — (dom, requires `persisted`) compiled merge program:
-   *   per-section `(patch, live)` functions that place an update render's
-   *   payload into live scopes; what `x.marko?update` resolves to.
-   * - `"persisted"` — (dom, requires `persisted`) the template's persisted
-   *   support module: the full render graph (renderers, walks, signals)
-   *   registered for update applies to resolve by id, loaded with the first
-   *   persisted navigation; what `x.marko?persisted` resolves to (imported
-   *   by the update entry).
+   * - `"persisted"` — (dom, requires `persisted`) the template's deferred
+   *   render graph and compiled patch merge API, loaded on the first persisted
+   *   navigation; what `x.marko?persisted` resolves to.
    */
   entry?: EntryKind;
   linkAssets?: {

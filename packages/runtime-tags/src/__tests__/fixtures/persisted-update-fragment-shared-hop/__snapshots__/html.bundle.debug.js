@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let tally = 0;
 		_html(`<button class=bump>tally <!>${_escape(tally)}${_el_resume($scope3_id, "#text/1")}</button>${_el_resume($scope3_id, "#button/0")}<p class=greeting>hello ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "PatchHole:#text/2", $global().user, _persisted_reason()))}${_el_resume($scope3_id, "#text/2", _persisted_reason())}</p>`);
 		_script($scope3_id, "__tests__/template.marko_3");
-		writeScope($scope3_id, { tally: _state_reason() && tally }, "__tests__/template.marko", "14:2", { tally: "15:8" });
+		writeScope($scope3_id, { tally: _state_reason() && tally }, "__tests__/template.marko", "6:2", { tally: "7:8" });
 		_resume_branch($scope3_id);
 	}) };
 	const $childScope2 = _peek_scope_id();
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		writeScope($scope2_id, {
 			count: _state_reason() && count,
 			"#childScope/2": _persisted_reason() && _existing_scope($childScope)
-		}, "__tests__/template.marko", "20:2", { count: "21:8" });
+		}, "__tests__/template.marko", "12:2", { count: "13:8" });
 		_resume_branch($scope2_id);
 	}) });
 	_persisted_reason() && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", 0);

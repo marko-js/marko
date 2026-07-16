@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 261,
-        "brotli": 153
+        "brotli": 177
       },
       "files": {
         "tags/layout.marko": 68,
@@ -13,18 +13,18 @@
     },
     "update.js": {
       "total": {
-        "min": 7286,
-        "brotli": 2936
+        "min": 5982,
+        "brotli": 2533
       },
       "files": {
-        "tags/layout.marko.update.mjs": 252,
-        "tags/frame.marko.update.mjs": 251,
-        "template.marko.update.mjs": 846
+        "tags/layout.marko.persisted.mjs": 257,
+        "tags/frame.marko.persisted.mjs": 256,
+        "template.marko.persisted.mjs": 1515
       }
     }
   },
   "html": {
-    "min": 667,
-    "brotli": 398
+    "min": 676,
+    "brotli": 414
   }
 }

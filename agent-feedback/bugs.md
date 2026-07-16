@@ -183,25 +183,6 @@ A fix could adopt resume's deferred-owner linking into `walkFragment` (the
 KEEP IN SYNC comments currently declare it render-only) or resolve
 `ClosestBranchId` fills on patch scopes.
 
-## Malformed fragment/boundary scope-id lists degrade silently (dead wiring, no error)
-
-`packages/runtime-tags/src/dom/update-fragment.ts:134` | 2026-07-14 | impact:low | effort:high
-
-A corrupted `scopeIds` list on a fragment or boundary-body entry
-(`stampFragmentScopes`) is undetectable: a dropped id leaves that dom-less
-scope unstamped, so its effects are generation-gated out (dead event wiring,
-state writes that never render), while a nonexistent id stamps an empty
-garbage scope nothing reads. Pinned as degraded-not-loud by
-`persisted-update-corrupt-scope-list`. This is arguably inside the wire
-format's trust boundary (frames are trusted application output, and a
-truncated list is indistinguishable from a capture that serialized fewer
-scopes), but it is the one pairing-integrity case that neither throws nor
-no-ops cleanly. A loud check cannot key off "effect entry references an
-unpaired scope" because the superseded-subtree skip legitimately leaves a
-dropped entry's scopes unstamped (persisted-update-superseded-frame). Making
-it detectable would need a wire change, e.g. the entry carrying its expected
-serialized-scope count.
-
 ## Sibling `run` repo: `pkg-toggle` round trip permanently moves toggle-only keys into `package.json`
 
 `../run/scripts/pkg-toggle.js:16` | 2026-07-15 | impact:med | effort:low
@@ -223,3 +204,35 @@ subsequent toggle no longer switches those keys at all. Fix: use an explicit
 absent-key marker (or `Object.hasOwn` bookkeeping) so toggle-only keys are
 removed from the target on the way back instead of being dropped from the
 toggle file.
+
+## Import update entries for templates selected by dynamic tags
+
+`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts:558` | 2026-07-15 | impact:high | effort:med
+
+A persisted update through `<${condition ? ImportedChild : "div"}/>` compiles
+the parent's `_update_dynamic` dispatch but does not include the imported
+child's `?update` registration. When the renderer remains `ImportedChild` and
+its request-derived keyed loop adds an item, the patch contains the child scope
+but no child merge runs, leaving the DOM unchanged. A static `<child/>` version
+correctly imports and dispatches the child update. Dynamic imported-template
+analysis should link the finite known renderer set's update entries, while
+truly runtime renderers still need registry/loader-driven dispatch.
+
+## Renderer-id dispatch for merge-less content sections parks forever
+
+`packages/runtime-tags/src/dom/update-merges.ts:313` | 2026-07-16 | impact:low | effort:low
+
+A non-root content section whose compiled persisted merge has zero statements
+gets no merge identifier, so the persisted entry emits no `_update_content`
+registration for it (`translator/visitors/program/update.ts`, the
+`mergeIdentifiers.get(section)` gate before `_update_content`). If a patch
+then delivers a dynamic-tag branch for that renderer id with both patch and
+live branch scopes present, `_update_dynamic` finds no registered merge and
+pushes the pair into `pendingDynamicUpdates` (installing the ready-updates
+hook), where it waits for a module registration that will never come. Nothing
+misapplies — a merge-less section has nothing to place, and destroyed live
+scopes are pruned on the next flush — but the entry lingers until its scope
+dies and the park path masks "renderer statically linked but merge-less" as
+"lazy module still loading". Register a shared noop for merge-less content
+sections, or skip the park when the renderer id resolves to a loaded,
+registration-free template.

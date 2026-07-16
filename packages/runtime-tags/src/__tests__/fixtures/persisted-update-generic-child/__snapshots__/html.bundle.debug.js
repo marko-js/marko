@@ -32,7 +32,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<button>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $childScope = _peek_scope_id();
-	_update_child($scope0_id, "PatchChild:#childScope/2", $childScope);
 	_set_serialize_reason({
 		0: $sg__input_label__OR__input_tone,
 		1: _serialize_guard($scope0_reason, 3),
@@ -43,7 +42,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		tone: input.tone
 	});
 	const $childScope2 = _peek_scope_id();
-	_update_child($scope0_id, "PatchChild:#childScope/3", $childScope2);
 	_set_serialize_reason({
 		0: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded,
 		1: _serialize_guard($scope0_reason, 6),

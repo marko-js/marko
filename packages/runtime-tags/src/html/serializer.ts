@@ -1,3 +1,4 @@
+import { RendererProp } from "../common/types";
 import type { Boundary } from "./writer";
 
 export const K_SCOPE_ID = Symbol("Scope ID");
@@ -338,9 +339,7 @@ export class Serializer {
   pending(channel?: SerializeChannel) {
     return hasMatchingMutations(this.#state.mutated, channel?.readyId);
   }
-  // The channel of the first pending ready gated mutation, if any;
-  // draining a channel removes its mutations, so callers loop until none
-  // remain.
+  // Returns the first pending ready channel for fixed-point draining.
   pendingReadyChannel() {
     for (const mutation of this.#state.mutated) {
       if (mutation.channel?.readyId) return mutation.channel;
@@ -354,7 +353,7 @@ export class Serializer {
     try {
       this.#state.boundary = boundary;
       this.#state.channel = channel;
-      return writeScopesRoot(this.#state, flushes, !!boundary.state?.patch);
+      return writeScopesRoot(this.#state, flushes, !!boundary.state.patch);
     } finally {
       this.#state.flush++;
       this.#state.buf = [];
@@ -403,15 +402,8 @@ export function getRegistered(val: WeakKey) {
   }
 }
 
-// A payload with only scope data returns the fill array directly
-// (`_=>[1,{a},{b},2,{e}]`). Update payloads omit the conventional root id 1
-// as an array hole (`_=>[,{a}]`); the patch applier knows that its first
-// non-global scope is the root. When there are trailing expressions (deferred
-// assigns/mutations, which may reference bindings created inside the fill
-// and so must evaluate after it) the fill is applied through the serialize
-// context instead and the payload ends in `,0` so an arbitrary value from
-// its last expression can never be misread as a fill — the browser only
-// applies a payload's return value when it is an array.
+// Patch fills omit root slot 1. Trailing expressions apply the fill through
+// the context and end in 0 so their result cannot be mistaken for a fill.
 function writeScopesRoot(
   state: State,
   flushes: ScopeFlush[],
@@ -427,15 +419,11 @@ function writeScopesRoot(
     const ref =
       state.refs.get(scope) || newScopeReference(state, scope, scopeId);
 
-    // The slot opener is patched in after the props are written — scopes
-    // that serialize no props are folded into the next emitted slot's
-    // skip count (the browser creates scopes on demand).
+    // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
-      // The delta may be negative: two partials can flush for the same slot
-      // under different identities (globals object and scope 0's record both
-      // land on slot 0 when a root mutable `<context>` stamps its branch
-      // link), and `applyScopes` sums deltas signed.
+      // Multiple identities may flush the same slot, so `applyScopes` accepts
+      // signed deltas.
       buf[openIndex] =
         nextSlotId === -1
           ? compactRoot && scopeId === 1
@@ -533,9 +521,8 @@ function writeAssigned(state: State) {
       if (mutation.value === undefined) {
         // Settling with undefined writes no argument (`_.x.f()`).
       } else if (writeProp(state, mutation.value, null, "")) {
-        // Mutation values have no parent accessor path, so a later reuse can
-        // only reach them through an eagerly claimed binding (strings dedup
-        // through `strs` and would otherwise crash resolving cross flush).
+        // Reused mutation values require eager bindings because they lack an
+        // accessor path.
         const valueRef =
           typeof mutation.value === "string"
             ? state.strs.get(mutation.value)
@@ -649,8 +636,16 @@ function writeReferenceOr(
   }
 
   const registered = REGISTRY.get(val);
-  if (registered)
+  if (registered) {
+    if (
+      state.boundary?.state.patch &&
+      typeof val === "function" &&
+      (val as { [RendererProp.Id]?: string })[RendererProp.Id] === registered.id
+    ) {
+      return false;
+    }
     return writeRegistered(state, val, parent, accessor, registered);
+  }
 
   state.refs.set(
     val,
@@ -699,10 +694,7 @@ function writeRegistered(
 ) {
   const { scope } = registered;
   if (scope) {
-    // Registered factories never eagerly read from the scope they close
-    // over (reads happen inside the returned implementations) and scopes
-    // are self-resolving, so the call is written inline at the value
-    // position. The reference dedups repeated uses to a single invocation.
+    // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(parent, accessor, state.flush, state.buf.length);
     ref.channel = state.channel;
     state.refs.set(val, ref);
@@ -710,11 +702,7 @@ function writeRegistered(
       ref.debug = DEBUG.get(val);
     }
 
-    // The factory is invoked through the serialize context (`_(1,"a3")`),
-    // which resolves the scope by id within its render — smaller than
-    // referencing the registry and scope separately (`_._.a3(_(1))`). The
-    // registry itself is global, so a bare id could not be resolved
-    // without the per render context.
+    // The serialize context resolves both registry id and render-local scope.
     const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
     trackScope(state, scope, scopeId);
     state.buf.push("_(" + scopeId + "," + quote(registered.id, 0) + ")");
@@ -724,11 +712,7 @@ function writeRegistered(
   return true;
 }
 
-// Strings longer than this are tracked for reuse — a repeat emits a
-// reference binding instead of the literal. Tracking costs no wire bytes
-// (the binding is only claimed on a second use); break even on the first
-// reuse is ~6 chars, the margin keeps the map from filling with tiny
-// strings.
+// Long strings gain a binding only when repeated.
 const STRING_DEDUP_LENGTH = 12;
 
 function writeString(
@@ -1021,9 +1005,7 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
   let needsId: undefined | boolean;
   let i = 0;
 
-  // Using the map constructor uses 2 bytes per entry (serialized as an array).
-  // If we are below the number of bytes of the reduce runtime, we'll output a plain
-  // constructor.
+  // Small maps cost less as constructor entries than with the reduce runtime.
   if (val.size < 25) {
     for (let [itemKey, itemValue] of val) {
       if (itemKey === val) {
@@ -1126,11 +1108,8 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
   return true;
 }
 
-// Writes the backing array argument for a Map/Set. The array has no
-// accessor, so members that may be referenced again later must reach it
-// through an eagerly claimed id binding (`needsId`, and always for the
-// self-reference wrapper form) — while primitive/scope-only members never
-// reference back through it and skip the binding entirely.
+// Reusable Map/Set members bind through their otherwise unreachable backing
+// array.
 function writeArrayArg(
   state: State,
   ref: Reference,
@@ -1160,9 +1139,7 @@ function writeArrayArg(
   state.buf.push(")");
 }
 
-// Direct Map/Set members that may be referenced again later bind through
-// the backing array, so its id must be claimed eagerly; primitives and
-// canonical scopes (self-resolving) never do.
+// Only reusable non-scope Map/Set members need backing-array ids.
 function isDedupedMember(val: unknown) {
   switch (typeof val) {
     case "object":
@@ -1194,10 +1171,7 @@ function writeArrayBuffer(state: State, val: ArrayBuffer) {
 }
 
 function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
-  // A view that doesn't span its whole buffer must serialize the full buffer
-  // (via the reference path below); the compact `new Ctor([...])` form would
-  // create a buffer sized only to this view, truncating it for any later view
-  // that shares the same buffer at a higher offset.
+  // Partial views serialize their full shared buffer for later sibling views.
   if (
     val.byteOffset ||
     val.byteLength < val.buffer.byteLength ||
@@ -1613,9 +1587,7 @@ function writeMaybeIterableProps(state: State, val: object, ref: Reference) {
   let sep = writeObjectProps(state, val, ref);
 
   if (hasSymbolIterator(val)) {
-    // Attr tags (and other self first iterables) yield the object itself
-    // first; `yield this` keeps that out of the iteration array so it does
-    // not need a deferred circular assignment.
+    // Self-first iterables use `yield this` to avoid a circular assignment.
     let yieldSelf = "";
     const iterArr: unknown[] = [];
     for (const item of val) {
@@ -1627,9 +1599,7 @@ function writeMaybeIterableProps(state: State, val: object, ref: Reference) {
     }
 
     if (iterArr.length) {
-      // Remaining items live in a bound array outside the generator body —
-      // the body only evaluates when iterated, so members cannot be
-      // written there without breaking reference dedup.
+      // Remaining items bind outside the lazily evaluated generator body.
       const iterRef = new Reference(
         ref,
         null,
@@ -1720,10 +1690,8 @@ function throwUnserializable(
     }
 
     if (state.boundary.state.patch) {
-      // Patch renders serialize request-derived values wholesale; ones that
-      // can't cross the wire (eg functions in `input`) degrade to sparse
-      // "unchanged" -- prop skipped, client keeps its live value -- rather
-      // than aborting the patch.
+      // Unserializable patch values stay sparse so the client keeps its live
+      // value.
       console.warn(message + " (skipped in patch render)");
       return;
     }
@@ -1789,9 +1757,7 @@ export function toObjectKey(name: string) {
   }
 
   if (name === "__proto__") {
-    // A bare or quoted `__proto__` object key sets the prototype rather than
-    // creating an own property; a computed key keeps it a normal property
-    // (`toAccess` passes the `[...]` form through).
+    // A computed `__proto__` key preserves an ordinary own property.
     return '["__proto__"]';
   }
 
@@ -1852,13 +1818,7 @@ export function toAccess(accessor: string) {
       : "." + accessor;
 }
 
-// Creates a JavaScript double quoted string and escapes all characters not listed as DoubleStringCharacters on
-// Also includes "<" to escape "</script>" and "\" to avoid invalid escapes in the output.
-// NUL is escaped (the HTML tokenizer replaces it with U+FFFD inside an inline
-// <script>) and so are unpaired surrogates (UTF-8 encoding the chunk would
-// replace them with U+FFFD); the `u` flag keeps well-formed pairs out of the
-// surrogate range match below.
-// http://www.ecma-international.org/ecma-262/5.1/#sec-7.8.4
+// Escapes script-closing characters, NUL, and unpaired UTF-16 surrogates.
 const unsafeQuoteReg = /["\\<\n\r\u2028\u2029\0\ud800-\udfff]/u;
 export function quote(str: string, startPos: number): string {
   if (!unsafeQuoteReg.test(str)) return '"' + str + '"';

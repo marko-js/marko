@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html("<section>");
-			_try($scope1_id, "a", _content_resume("a3", () => {
+			_try($scope1_id, "a", _content_resume("a2", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_await($scope2_id, "a", resolveAfter(input.note, input.tick), (note) => {
@@ -20,17 +20,17 @@ var template_default = _template("a", (input) => {
 				}, $sg__input_note__OR__input_tick);
 				_subscribe($sg__input_tick && $input_tick__closures, _subscribe($sg__input_note && $input_note__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) })));
 				_resume_branch($scope2_id);
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading…");
-			}, $scope1_id) }) }, "a2");
+			}, $scope1_id) }) }, "a0");
 			_html("</section>");
 			writeScope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c", 1, 1, 1, 0, 1);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a6");
 	writeScope($scope0_id, {
 		f: input.note,
 		g: input.tick,

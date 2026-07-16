@@ -164,26 +164,14 @@ export default {
         }
 
         if (isHTML) {
-          // Persisted builds capture the computed value of request-derived
-          // holes so update renders can serialize it under the hole's
-          // accessor (`_hole_value` is a pass-through otherwise). Pure
-          // state-driven holes are excluded -- the client owns those values.
           const holeValue =
             nodeBinding &&
             isPersisted() &&
             isReasonDynamic(markerSerializeReason) &&
-            // Browser-code reuse: skip the capture when the client's
-            // registered signal chain already re-renders this hole from
-            // patched scope values -- no double-shipping the computed value.
             !isUpdateCoveredByClientSignals(valueExtra)
               ? callRuntime(
                   "_hole_value",
                   getScopeIdIdentifier(section),
-                  // Keyed off the node-accessor namespace (like attr holes)
-                  // so patch keys never collide with walker-bound node refs
-                  // when a fragment subtree shares one scope object; html
-                  // holes get their own prefix so the generic applier can
-                  // dispatch range replacement by key alone.
                   t.stringLiteral(
                     (method === "_escape"
                       ? getPatchHolePrefix()
@@ -191,9 +179,6 @@ export default {
                       getScopeAccessorLiteral(nodeBinding).value,
                   ),
                   value,
-                  // Captures only fire in update renders, which refresh
-                  // everything that is not client-owned -- the render-global
-                  // flag is the whole guard.
                   callRuntime("_persisted_reason"),
                 )
               : undefined;

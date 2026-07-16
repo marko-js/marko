@@ -157,6 +157,23 @@ describe("runtime-tags/translator-api", () => {
   });
 
   describe("option validation", () => {
+    it("exports the persisted route descriptor from page entries", () => {
+      const { code } = compiler.compileSync(
+        "<if=input.show><div/></if>",
+        path.join(__dirname, "persisted-page.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+          entry: "page",
+          persisted: true,
+          linkAssets: { runtime: "asset-runtime", onAsset() {} },
+        },
+      );
+      assert.match(code, /export const __marko_persisted_descriptor = \[\[/);
+      assert.match(code, /update_if/);
+    });
+
     it("compiles load imports eagerly when linkAssets is not configured", () => {
       for (const output of ["html", "dom"] as const) {
         const { code } = compiler.compileFileSync(
@@ -198,19 +215,17 @@ describe("runtime-tags/translator-api", () => {
       );
     });
 
-    it("requires the persisted option for persisted entry kinds", () => {
-      for (const entry of ["update", "persisted"] as const) {
-        assert.throws(
-          () =>
-            compiler.compileFileSync(fixture("basic-counter/template.marko"), {
-              ...baseConfig,
-              cache: new Map(),
-              output: "dom",
-              entry,
-            } as compiler.Config),
-          /The "(update|persisted)" entry kind requires the `persisted` compiler option to be enabled\./,
-        );
-      }
+    it("requires the persisted option for the persisted entry", () => {
+      assert.throws(
+        () =>
+          compiler.compileFileSync(fixture("basic-counter/template.marko"), {
+            ...baseConfig,
+            cache: new Map(),
+            output: "dom",
+            entry: "persisted",
+          } as compiler.Config),
+        /The "persisted" entry kind requires the `persisted` compiler option to be enabled\./,
+      );
     });
 
     it("validates the runtimeId option", () => {

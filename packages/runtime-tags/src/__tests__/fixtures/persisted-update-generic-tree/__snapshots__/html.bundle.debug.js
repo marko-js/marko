@@ -12,7 +12,6 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section class=card>");
 	const $childScope = _peek_scope_id();
-	_update_child($scope0_id, "PatchChild:#childScope/0", $childScope);
 	_set_serialize_reason({
 		0: $sg__input_heading__OR__input_tone,
 		1: _serialize_guard($scope0_reason, 3),
@@ -55,7 +54,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<button class=bump>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $childScope = _peek_scope_id();
-	_update_child($scope0_id, "PatchChild:#childScope/2", $childScope);
 	_set_serialize_reason({
 		0: _serialize_guard($scope0_reason, 0),
 		1: $sg__input_heading__OR__input_tone__OR__input_meta__OR__input_flagged,

@@ -10,7 +10,6 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isPersisted } from "../util/marko-config";
-import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import {
   type Binding,
   BindingType,
@@ -113,7 +112,6 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
-    recordRegisterIdFootprint(section, { kind: "ownedBody", bodySection });
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -195,14 +193,6 @@ export default {
         const signal = getSignal(section, nodeRef, "await_promise");
         const valueExpr = node.attributes[0].value;
 
-        // Awaits participate in persisted update renders: the server serializes
-        // the parent -> body branch link when the body resolves (its own frame,
-        // in resolution order) and the update entry dispatches the body's merge
-        // from it. The promise compute is skipped while a patch applies
-        // (`updateGuard`) -- the expression may live behind a `server import`
-        // even when the body is static -- and a fresh subtree's await is
-        // resolved by the body's frame instead (attached from its detached
-        // branch by `_update_branch`).
         if (isPersisted()) {
           signal.updateGuard = true;
           addUpdateMerge(section, {

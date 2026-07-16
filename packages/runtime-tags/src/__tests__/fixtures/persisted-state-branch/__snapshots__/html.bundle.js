@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		return item;
 	}, $scope0_id, "f", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=add>add</button>${_el_resume($scope0_id, "g")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		k: _state_reason() && show,
 		l: _state_reason() && count,

@@ -5,7 +5,7 @@ import { html_beautify } from "js-beautify";
 import path from "path";
 
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { Input } from "../common/types";
+import type { Input, PersistedDescriptor } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
   type ChunkSizes,
@@ -40,6 +40,14 @@ import createMutationTracker from "./utils/track-mutations";
 type Step =
   Input | Wait | Flush | Throws | Navigate | ((container: Element) => unknown);
 type Steps = [Input, ...Step[]];
+
+function applyHave(have: string, metadata: string) {
+  if (metadata.startsWith("~=")) return metadata.slice(2);
+  const separator = metadata.indexOf(".", 2);
+  const prefix = parseInt(metadata.slice(2, separator), 36);
+  return have.slice(0, prefix) + metadata.slice(separator + 1);
+}
+
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
   embedded?: true;
@@ -66,9 +74,7 @@ export type TestConfig = {
   runtime_id?: string;
   /**
    * User-code sentinels that must tree-shake from the optimized DOM graph.
-   * Also asserted absent from the raw compiled `?update` entries, where a
-   * wrongly-retained import specifier is visible before tree-shaking masks
-   * it (so a module-path sentinel like `"./data"` works there).
+   * Asserted against the optimized bundle after tree shaking.
    */
   dom_bundle_excludes?: string[];
   /**
@@ -272,15 +278,6 @@ function testFixtures(interop?: true) {
                     !snapshot.includes(excluded),
                     `optimized DOM bundle must exclude ${JSON.stringify(excluded)}`,
                   );
-                  // Also checked pre-bundle: the bundler tree-shakes a
-                  // wrongly-retained side-effect-free user import, so only
-                  // the raw `?update` entry shows its specifier.
-                  for (const source of runner.updateEntrySources) {
-                    assert.ok(
-                      !source.includes(excluded),
-                      `compiled update entry must exclude ${JSON.stringify(excluded)}`,
-                    );
-                  }
                 }
               }
               if (optimize && sizes) stats.dom = sizes;
@@ -326,16 +323,17 @@ function testFixtures(interop?: true) {
             const capture = captureConsole();
 
             try {
-              const { template } = await runner.runServer();
-              // The persisted render mode rides `render()`'s options argument,
-              // extracted from the fixture's ergonomic `$global` flags (see
-              // persistedRenderFrom) -- `$global` and the snapshot's Render header
-              // stay pristine. Only pass the argument when persisted: a class
-              // (marko 5) interop template reads render()'s second argument as a
-              // stream, so a non-persisted render must stay a one-arg call.
-              // Navigate steps pass their own below.
+              const server = await runner.runServer();
+              const { template } = server;
+              const descriptor = (
+                server as unknown as {
+                  templateDescriptor: PersistedDescriptor;
+                }
+              ).templateDescriptor;
+              // Marko 5 treats the second argument as a stream, so omit it normally.
               const persisted = persistedRenderFrom(
                 input.$global as Record<string, unknown> | undefined,
+                descriptor,
               );
               for await (const data of template.render(
                 config.embedded
@@ -381,89 +379,53 @@ function testFixtures(interop?: true) {
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
             const updateRunner = runner.updateRunner;
+            let have = "";
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
               onNavigate: updateRunner
                 ? async (nav) => {
                     const navigateInput = nav.navigateInput as Input;
-                    // Pair with the live root BEFORE rendering the patch:
-                    // register a capture handler and drive it through the
-                    // page's own effect machinery. Reading it first lets the
-                    // patch render carry the possession echo (`x-marko-have`)
-                    // -- what the live page holds at each participating site
-                    // -- the same order the real client sends it (from its
-                    // live tree, before the server responds).
                     const updateEntry = await updateRunner(browser.ctx);
                     const runtimeId = config.runtime_id ?? DEFAULT_RUNTIME_ID;
                     const renders = (browser.window as any)[runtimeId];
                     const renderId = Object.keys(renders)[0];
-                    let liveRoot: unknown;
-                    updateEntry.__register(
-                      "__navigate_root",
-                      (scope: unknown) => (liveRoot = scope),
-                    );
-                    renders[renderId].r.push("__navigate_root 1");
                     updateEntry.__ready("__navigate");
-                    if (!liveRoot) {
-                      throw new Error(
-                        "navigate(): could not pair the live root scope",
-                      );
-                    }
 
-                    // Render the patch server-side (a stateless patch render
-                    // of the same template with the new input) and extract
-                    // its frames.
-                    const { template } = await runner.runServer();
+                    // Render the patch statelessly from the new input.
+                    const server = await runner.runServer();
+                    const { template } = server;
+                    const descriptor = (
+                      server as unknown as {
+                        templateDescriptor: PersistedDescriptor;
+                      }
+                    ).templateDescriptor;
                     let html = "";
                     const navigateGlobal = {
                       ...(navigateInput.$global as object),
                       renderId: "navigate",
                     };
-                    const persistedRender = persistedPatchFrom(navigateGlobal);
-                    let have = "";
-                    // The real client always computes the echo (`@marko/run`'s
-                    // `have?.()` call in its `runtime/persisted-navigation.ts`
-                    // is unconditional) and sends the header whenever it's
-                    // non-empty, so this harness matches that: persisted
-                    // builds need it for dynamic-tag hop swaps (dropped
-                    // fills-path construction graph -- a renderer mismatch
-                    // ships a fragment instead of failing the apply) and for
-                    // client-pending `<try>` boundaries (the "!"-prefixed
-                    // half of the echo -- `_have` in dom/update-fragment.ts).
-                    // `have` is the real client primitive (re-exported from
-                    // the `?update` entry): it walks the live tree and returns
-                    // the JSON the run router sends as `x-marko-have`, decoded
-                    // here the same way the run server does.
-                    if (persistedRender?.patch) {
-                      have = updateEntry.have?.() || "";
-                      // A mutated echo models a lost or stale client claim
-                      // (the run router omits oversized values; a claim can
-                      // go stale between reads) -- the server must degrade
-                      // to fragments or a loud apply failure, never a wrong
-                      // merge.
-                      if (nav.mutateHave) have = nav.mutateHave(have);
-                      if (have) {
-                        const decoded = JSON.parse(have);
-                        if (Object.keys(decoded).length) {
-                          persistedRender.patch.possessed = decoded;
-                        }
-                      }
+                    let requestHave = have;
+                    if (!requestHave) {
+                      requestHave =
+                        renders[renderId][optimize ? "h" : "have"] || "";
                     }
+                    if (nav.mutateHave) {
+                      requestHave = nav.mutateHave(requestHave);
+                    }
+                    const persistedRender = persistedPatchFrom(
+                      navigateGlobal,
+                      descriptor,
+                      requestHave,
+                    );
                     for await (const chunk of template.render(
                       { ...navigateInput, $global: navigateGlobal },
                       { persisted: persistedRender },
                     )) {
                       html += chunk;
                     }
-                    // Patch responses are a newline-delimited stream of
-                    // frames (see designs/persisted-pages-wire-format.md,
-                    // "Frame grammar"); frames apply one at a time -- async
-                    // boundary bodies arrive in later frames, in resolution
-                    // order.
+                    // Apply newline-delimited frames in resolution order.
                     let frames = html.split("\n").filter(Boolean);
-                    // Corrupted/replayed wire payloads (pairing-integrity
-                    // failure matrix): rewritten before any frame applies,
-                    // like a proxy corrupting the stream would be.
+                    // Fixture transforms run before any frame applies.
                     if (nav.mutateFrames) frames = nav.mutateFrames(frames);
                     if (!frames.length) {
                       throw new Error(
@@ -479,30 +441,29 @@ function testFixtures(interop?: true) {
                             optimize,
                             fromRoute: persistedRender?.patch?.fromRoute,
                             targetRoute: persistedRender?.patch?.targetRoute,
-                            have,
+                            have: requestHave,
                             frames,
                           }),
                         ).toString("base64")}\n`,
                       );
                     }
 
-                    // Intermediate frames log their own mutation batches
-                    // (the last frame's log is the step's, via runSteps) so
-                    // snapshots show the page settling frame by frame.
-                    const applyFrame = updateEntry.createPatch();
-                    // A truncated apply models the run router aborting a
-                    // superseded navigation between frames (its per-frame
-                    // `signal.aborted` check): the dropped frames never
-                    // reach the applier.
+                    // Log intermediate frames separately to show progressive settling.
+                    const applyFrame = updateEntry.patch();
+                    // Truncation models a superseded navigation between frames.
                     const frameCount = Math.min(
                       nav.abortAfterFrame ?? frames.length,
                       frames.length,
                     );
                     for (let i = 0; i < frameCount; i++) {
-                      if (!applyFrame(frames[i]!)) {
+                      const result = applyFrame(frames[i]!);
+                      if (!result) {
                         throw new Error(
                           `navigate(): frame ${i + 1} carried no resume fills`,
                         );
+                      }
+                      if (typeof result === "string") {
+                        have = applyHave(have, result);
                       }
                       await browser.runAsyncScripts();
                       run();
@@ -629,12 +590,7 @@ async function runSteps(
       if (opts.onNavigate) {
         tracker.beginUpdate();
         if (update.expectError) {
-          // A pairing-integrity protocol failure: the apply must throw (the
-          // run router's cue to fall back to a full document navigation) and
-          // must be clean -- the logged entry carries the error message plus
-          // any mutation records from the failing frame, so an empty Change
-          // section IS the "committed nothing" evidence, and later steps run
-          // against the untouched live page.
+          // A failed apply must throw so Run can replace the partial document.
           let error: unknown;
           try {
             await opts.onNavigate(update);

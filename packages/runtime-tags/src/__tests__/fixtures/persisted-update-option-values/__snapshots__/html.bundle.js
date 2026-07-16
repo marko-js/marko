@@ -11,8 +11,8 @@ var template_default = _template("a", (input) => {
 		_persisted_reason() && writeScope($scope1_id, {});
 	}, function(opt) {
 		return opt.key;
-	}, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</select>", 1, "a1");
-	_script($scope0_id, "a0");
+	}, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</select>", 1, "a0");
+	_script($scope0_id, "a3");
 	writeScope($scope0_id, { g: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

@@ -1,19 +1,28 @@
 // template.marko
 const $n = /*@__PURE__*/ _let_persisted(13, ($scope) => _text($scope.c, $scope.n));
-const $setup__script = _script_update("a0", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script_update("a1", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, $scope.n + 1);
 }));
 enableBranchesPersisted();
 
-// template.marko.update.mjs
-const $n_seed = _update_signal("a1");
-const $update = (_patch, _live) => {
+// template.marko.persisted.mjs
+const $n = _var_resume("a2", /*@__PURE__*/ _let_persisted(13, ($scope) => _text($scope.c, $scope.n)));
+const $setup__script = _script_shared(($scope) => _on($scope.b, "click", function() {
+	$n($scope, $scope.n + 1);
+}));
+const $n_seed = _update_signal("a2");
+const $_holes = /*@__PURE__*/ _update_scopes({
+	"Qa": /*@__PURE__*/ _update_text("a"),
+	"Qe": /*@__PURE__*/ _update_text("e"),
+	"Qf": /*@__PURE__*/ _update_text("f")
+});
+const $update2 = (_patch, _live) => {
 	_update_pair(_patch, _live);
 	if ("n" in _patch) _update_seed(_live, $n_seed, _patch["n"]);
-	_update_scope(_patch, _live);
+	$_holes(_patch, _live);
 };
-const _merge = _resume("a2", $update);
+const _merge = _resume("a0", $update2);
 _update_content("a", _merge);
-function _createPatch() {
-	return createPatch(_merge);
+function _patch2() {
+	return patch(_merge);
 }

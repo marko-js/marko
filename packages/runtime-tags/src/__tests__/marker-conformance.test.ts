@@ -6,6 +6,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  FragmentContextProp,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
@@ -272,20 +273,16 @@ describe("resume/walkFragment marker conformance", () => {
     const container = makeContainer(html, prefix);
     const scopes: Record<number, Scope> = {};
     const stamped = new Set<Scope>();
-    const { touched, orphans } = updateFragment.walkFragment(
-      container,
-      prefix,
-      {
-        getScope: (id) => (scopes[id] ||= {} as Scope),
-        stamp(scope, id) {
-          if (stamped.has(scope)) return false;
-          stamped.add(scope);
-          scope[AccessorProp.Id] = id;
-          return true;
-        },
-        adopt: (id, scope) => (scopes[id] = scope),
+    const [touched, orphans] = updateFragment.walkFragment(container, prefix, {
+      [FragmentContextProp.GetScope]: (id) => (scopes[id] ||= {} as Scope),
+      [FragmentContextProp.Stamp](scope, id) {
+        if (stamped.has(scope)) return false;
+        stamped.add(scope);
+        scope[AccessorProp.Id] = id;
+        return true;
       },
-    );
+      [FragmentContextProp.Adopt]: (id, scope) => (scopes[id] = scope),
+    });
     // The callers' epilogue for returned (top-level) orphans is
     // `setParentBranch(orphan, <inserted branch>)`; a document has no
     // enclosing branch, so apply only its self-link half (resume gives

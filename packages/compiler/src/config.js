@@ -6,7 +6,7 @@ const config = {
   output: "html",
 
   // Which derived artifact to compile for this template: a page/load
-  // entry facade or a persisted-pages update/persisted entry.
+  // entry facade or a persisted-pages entry.
   entry: undefined,
 
   /**

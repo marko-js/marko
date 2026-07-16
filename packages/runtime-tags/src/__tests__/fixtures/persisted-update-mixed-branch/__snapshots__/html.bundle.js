@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	}, () => {
 		const $scope1_id = _scope_id();
 		_html(`<h1>${_escape(_hole_value($scope1_id, "Qa", input.title, _persisted_reason()))}${_el_resume($scope1_id, "a", _serialize_guard($scope0_reason, 2))}</h1><button>${_escape(count)}${_el_resume($scope1_id, "c")}</button>${_el_resume($scope1_id, "b")}`);
-		_script($scope1_id, "a2");
+		_script($scope1_id, "a4");
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}]);
 	writeScope($scope0_id, {

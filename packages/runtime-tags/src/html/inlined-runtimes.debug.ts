@@ -1,3 +1,5 @@
+export const HAVE_RUNTIME_KEY = ".have";
+
 export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||= (
   renderId,
   prefix = runtimeId + renderId,
@@ -138,16 +140,7 @@ export const PERSISTED_REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
   let onNextSibling,
     placeholder,
     nextSibling,
-    // Nav epoch, captured at this reorder-runtime init. A persisted apply
-    // bumps this render's \`runtime.n\` (\`dom/resume\`'s \`bumpNavEpoch\`,
-    // from \`dom/update\`'s \`createUpdate\` before any frame applies), so a
-    // reorder completion whose epoch predates an applied navigation is
-    // dropped whole: the placeholder completion \`c()\` skips its cleanup
-    // walk and (by returning 1) the \`runtime.j\` script callbacks, and
-    // \`replace\` no-ops the swap. A stale chunk must not splice pre-nav
-    // content into the post-nav page, delete whatever now sits between
-    // markers a navigation left live, or run stale resume scripts.
-    // Streaming pages never advance \`runtime.n\`: \`0 > 0\` stays false.
+    // Applied navigation epochs suppress stale reorder swaps and callbacks.
     epoch = runtime.n || 0,
     placeholders = runtime.p = {},
     replace = (id, container) =>

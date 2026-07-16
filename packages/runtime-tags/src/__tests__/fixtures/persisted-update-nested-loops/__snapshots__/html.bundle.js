@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<a${_attr_class(_hole_value($scope2_id, "Nclass:a", ["link", { active: path === page.slug }], _persisted_reason()))}>${_escape(_hole_value($scope2_id, "Qb", page.title, _persisted_reason()))}${_el_resume($scope2_id, "b", _persisted_reason())}</a>${_el_resume($scope2_id, "a", _persisted_reason())}`);
 			_persisted_reason() && _subscribe($path__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
-		}, "slug", $scope1_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a3");
+		}, "slug", $scope1_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a5");
 		_html("</div>");
 		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "c", _persisted_reason(), _persisted_reason(), 0, "</nav>", 1);
@@ -60,7 +60,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "d", _persisted_reason(), _persisted_reason(), 0, 0, 1);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a6");
 	writeScope($scope0_id, {
 		g: _state_reason() && count,
 		h: _persisted_reason() && $path__closures,

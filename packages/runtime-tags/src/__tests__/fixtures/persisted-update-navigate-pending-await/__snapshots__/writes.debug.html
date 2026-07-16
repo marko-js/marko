@@ -50,7 +50,7 @@
       },
     }), self[runtimeId]))("M")("_");
   M._.r = [_ => [1, {
-      "BoundarySite:#text/2": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-navigate-pending-await/template.marko_0/update_boundary_#text/2",
+      "BoundarySite:#text/2": "",
       x: 0,
       "ClosureScopes:input_data": new Set([_(2)]),
       "ClosureScopes:input_tick": new Set([_(2)])
@@ -68,16 +68,7 @@
     let onNextSibling,
       placeholder,
       nextSibling,
-      // Nav epoch, captured at this reorder-runtime init. A persisted apply
-      // bumps this render's `runtime.n` (`dom/resume`'s `bumpNavEpoch`,
-      // from `dom/update`'s `createUpdate` before any frame applies), so a
-      // reorder completion whose epoch predates an applied navigation is
-      // dropped whole: the placeholder completion `c()` skips its cleanup
-      // walk and (by returning 1) the `runtime.j` script callbacks, and
-      // `replace` no-ops the swap. A stale chunk must not splice pre-nav
-      // content into the post-nav page, delete whatever now sits between
-      // markers a navigation left live, or run stale resume scripts.
-      // Streaming pages never advance `runtime.n`: `0 > 0` stays false.
+      // Applied navigation epochs suppress stale reorder swaps and callbacks.
       epoch = runtime.n || 0,
       placeholders = runtime.p = {},
       replace = (id, container) =>
@@ -126,6 +117,7 @@
       }
     };
   })(M._);
+  M._.have = "BA";
   M._.w()
 </script>
 
@@ -138,5 +130,6 @@
   M._.r.push(_ => [1, {
     "BoundarySite:#text/2": 0
   }]);
+  M._.have = "PA";
   M._.w()
 </script>

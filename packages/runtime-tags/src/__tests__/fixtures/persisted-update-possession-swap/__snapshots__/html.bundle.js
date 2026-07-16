@@ -17,13 +17,13 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const PanelA = { content: _content("a2", () => {
+	const PanelA = { content: _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<p class=a>Panel A: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</p><span class=a2>alpha detail</span>`);
 		_persisted_reason() && writeScope($scope1_id, {});
 	}) };
-	const PanelB = { content: _content("a3", () => {
+	const PanelB = { content: _content("a1", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html(`<section class=b>Panel B: ${_sep(_persisted_reason())}${_escape(_hole_value($scope2_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope2_id, "a", _persisted_reason())}</section><span class=b2>beta detail</span>`);
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "b" ? PanelB : PanelA });
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		d: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope)

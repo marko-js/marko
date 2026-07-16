@@ -1,79 +1,56 @@
-// Persisted navigation applier. This is a separate entry from `dom` so page
-// entries do not eagerly download update-only parsing, pairing, and fragment
-// machinery merely because a lazy `?update` entry uses the same runtime.
+// Kept separate so initial page entries do not load the navigation applier.
+import { diverge } from "./common/errors";
 import { createUpdate } from "./dom/update";
 
-export { _have } from "./dom/update-fragment";
 export {
   _load_ready,
+  _update_attr,
   _update_branch,
   _update_content,
+  _update_controllable,
   _update_dynamic,
   _update_for,
   _update_for_keyed,
+  _update_html,
   _update_if,
   _update_load,
+  _update_named_attr,
   _update_pair,
-  _update_scope,
+  _update_scopes,
   _update_seed,
   _update_signal,
+  _update_text,
 } from "./dom/update-merges";
 
 type PatchScript = HTMLScriptElement & {
-  $marko(value?: unknown): void;
+  $(read: () => unknown): void;
 };
 
 /** Creates a streaming persisted-patch consumer for one navigation. */
-export function createPatch(
-  merge: Parameters<typeof createUpdate>[0],
-  liveRoot?: Parameters<typeof createUpdate>[1],
-) {
-  const apply = createUpdate(merge, liveRoot);
+export function patch(merge: Parameters<typeof createUpdate>[0]) {
+  const apply = createUpdate(merge);
   const nonce =
     document.querySelector<HTMLScriptElement>("script[nonce]")?.nonce;
 
   return (source: string) => {
-    let ran: undefined | 1;
     let value: unknown;
     const script = document.createElement("script") as PatchScript;
-    script.$marko = (next) => (ran ? (value = next) : (ran = 1));
+    script.$ = (read) => (value = read());
     if (nonce) script.nonce = nonce;
-    // The first call flags that the frame's script executed BEFORE the
-    // payload expression evaluates: script errors do not propagate through
-    // `appendChild`, so this is the only way to tell an executed-but-broken
-    // frame from a body that is not a frame at all (a parse error runs
-    // neither call).
-    script.textContent = `document.currentScript.$marko(),document.currentScript.$marko(${source})`;
+    script.textContent = `document.currentScript.$(()=>${source})`;
     document.head.appendChild(script).remove();
 
-    const fills: unknown[] = [];
-    if (Array.isArray(value)) {
-      for (const item of value) {
-        if (
-          typeof item === "function" ||
-          typeof item === "string" ||
-          Array.isArray(item)
-        ) {
-          fills.push(item);
-        }
-      }
+    if (!value) {
+      diverge(MARKO_DEBUG && "a persisted update frame failed to execute");
     }
-    if (!fills.length) {
-      // A frame that executed but delivered no fills (threw mid-payload, or
-      // yielded a non-frame value) must not be silently skipped: a swallowed
-      // frame is a half-applied navigation. Throwing reaches the router's
-      // catch, which falls back to a full navigation. `false` remains the
-      // clean pre-apply signal for a non-frame body (negotiation mismatch).
-      if (ran) {
-        throw new Error(
-          MARKO_DEBUG
-            ? "a persisted update frame executed without producing fills"
-            : "update diverged",
-        );
-      }
-      return false;
-    }
-    apply(fills as Parameters<typeof apply>[0]);
-    return true;
+
+    const fills = value as Parameters<typeof apply>[0] & unknown[];
+    const last = fills[fills.length - 1];
+    const have =
+      typeof last === "string" && last[0] === "~"
+        ? (fills.pop() as string)
+        : undefined;
+    if (fills.length) apply(fills as Parameters<typeof apply>[0]);
+    return have || true;
   };
 }

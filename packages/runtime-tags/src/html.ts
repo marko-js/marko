@@ -83,7 +83,6 @@ export {
   _subscribe,
   _trailers,
   _try,
-  _update_child,
   _var,
   $global,
 } from "./html/writer";

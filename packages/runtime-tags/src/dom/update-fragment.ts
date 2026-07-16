@@ -1,134 +1,22 @@
-import { encodePossessionSite } from "../common/helpers";
 import {
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  FragmentContextProp,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
 import { removeChildNodes } from "./dom";
 import { setParentBranch } from "./renderer";
-import { getUpdateRoot } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 import { getDebugKey } from "./walker";
 
-// Dom-side copies of the site-id stash prefixes the persisted document
-// render writes (the producing constants of the same names live in
-// html/writer.ts): `Z` keys value-compare sites (dynamic-tag hops and
-// structural `<if>`s), `T` keys `<try>` placeholder boundaries.
-const RENDERER_SITE_PREFIX = MARKO_DEBUG ? "RendererSite:" : "Z";
 export const BOUNDARY_SITE_PREFIX = MARKO_DEBUG ? "BoundarySite:" : "T";
-// A keyed `<for>`'s per-item possession stash (written by `forBranches` in
-// html/writer.ts): request-derived loops store their build-stable site id,
-// while ordinary keyed loops store the empty id. Both preserve the loop key
-// in nested possession paths. This mirrors `BOUNDARY_SITE_PREFIX`'s
-// existence-only convention rather than the value-compare convention used by
-// `RENDERER_SITE_PREFIX`/`ConditionalRenderer`.
-const FOR_SITE_PREFIX = MARKO_DEBUG ? "ForSite:" : "F";
-
-/**
- * Builds the possession echo sent with a persisted navigation. Dynamic-tag
- * renderer ids and pending try-boundary ids are keyed by compiler-stable site
- * ids; loop keys disambiguate repeated sites in keyed loops.
- */
-export function _have(root: Scope | undefined = getUpdateRoot()): string {
-  if (!root) return "";
-  const prefix = AccessorPrefix.ConditionalRenderer;
-  const possessed: Record<string, string> = {};
-  const seen = new Set<Scope>();
-  const stack: Scope[] = [root];
-  let found: undefined | 1;
-  while (stack.length) {
-    const scope = stack.pop()!;
-    if (seen.has(scope)) continue;
-    seen.add(scope);
-    for (const key in scope) {
-      const value = scope[key];
-      if (
-        // Dynamic-tag hops echo a string renderer id; a structural `<if>`
-        // echoes its numeric branch index the same way (same key prefix,
-        // same `RendererSite:` sibling stash -- see the html runtime's `_if`),
-        // stringified so the server's possession compare (a JSON-decoded
-        // string) matches either shape.
-        (typeof value === "string" || typeof value === "number") &&
-        key.length > prefix.length &&
-        key.slice(0, prefix.length) === prefix
-      ) {
-        const siteId = scope[RENDERER_SITE_PREFIX + key.slice(prefix.length)];
-        if (typeof siteId === "string") {
-          found = 1;
-          possessed[getPossessionSiteKey(scope, siteId)] = "" + value;
-        }
-      } else if (
-        typeof value === "string" &&
-        key.length > BOUNDARY_SITE_PREFIX.length &&
-        key.slice(0, BOUNDARY_SITE_PREFIX.length) === BOUNDARY_SITE_PREFIX
-      ) {
-        found = 1;
-        possessed["!" + getPossessionSiteKey(scope, value)] = "1";
-      } else if (
-        typeof value === "string" &&
-        key.length > FOR_SITE_PREFIX.length &&
-        key.slice(0, FOR_SITE_PREFIX.length) === FOR_SITE_PREFIX
-      ) {
-        // A keyed `<for>` item stamps its site id directly on its own branch
-        // scope (which also carries `LoopKey`), unlike the boundary/hop cases
-        // above, which read a sibling accessor's value first.
-        found = 1;
-        possessed[
-          "!" + getPossessionSiteKey(scope, value, scope[AccessorProp.LoopKey])
-        ] = "1";
-      } else if (value && typeof value === "object") {
-        if (typeof (value as Scope)[AccessorProp.Id] === "number") {
-          stack.push(value as Scope);
-        } else if (value instanceof Set || Array.isArray(value)) {
-          for (const child of value as Iterable<unknown>) {
-            if (child && typeof child === "object") stack.push(child as Scope);
-          }
-        }
-      }
-    }
-  }
-  return found ? JSON.stringify(possessed) : "";
-}
-
-function getPossessionSiteKey(scope: Scope, siteId: string, loopKey?: unknown) {
-  const loopPath: string[] = [];
-  const addLoopPath = (branch: BranchScope) => {
-    let loopSiteId = "";
-    for (const key in branch) {
-      if (
-        key.length > FOR_SITE_PREFIX.length &&
-        key.slice(0, FOR_SITE_PREFIX.length) === FOR_SITE_PREFIX
-      ) {
-        if (typeof branch[key] === "string") loopSiteId = branch[key];
-        break;
-      }
-    }
-    const loopKey = branch[AccessorProp.LoopKey];
-    if (loopKey !== undefined) {
-      loopPath.push(encodePossessionSite(loopSiteId, loopKey));
-    }
-  };
-  if (scope[AccessorProp.ClosestBranch] !== scope) {
-    addLoopPath(scope as BranchScope);
-  }
-  let branch = scope[AccessorProp.ClosestBranch];
-  while (branch) {
-    addLoopPath(branch);
-    branch = branch[AccessorProp.ParentBranch];
-  }
-  loopPath.reverse();
-  const site = encodePossessionSite(siteId, loopKey);
-  return loopPath[loopPath.length - 1] === site
-    ? loopPath.join("/")
-    : [...loopPath, encodePossessionSite(siteId)].join("/");
-}
 
 export interface FragmentContext {
-  getScope(id: number): Scope;
-  stamp(scope: Scope, id: number): boolean;
-  adopt(id: number, scope: Scope): Scope;
+  [FragmentContextProp.GetScope](id: number): Scope;
+  [FragmentContextProp.Stamp](scope: Scope, id: number): boolean;
+  [FragmentContextProp.Adopt](id: number, scope: Scope): Scope;
 }
 
 function stampFragmentScopes(
@@ -136,17 +24,16 @@ function stampFragmentScopes(
   ids: number[] | undefined,
 ) {
   if (ids) {
-    for (const id of ids) context.stamp(context.getScope(id), id);
+    for (const id of ids) {
+      context[FragmentContextProp.Stamp](
+        context[FragmentContextProp.GetScope](id),
+        id,
+      );
+    }
   }
 }
 
-// Shared by `applyFragment` (a single scalar branch slot -- `<if>`/dynamic-tag
-// hops) and `createFragmentBranch` (a keyed `<for>` item joining a sibling
-// list): parses the captured markup, binds its resume markers, and wraps it
-// with boundary `Text` nodes so the range has a stable start/end regardless
-// of how many top-level nodes the content produced. The wrapped range stays
-// inside the (detached) template's content fragment -- callers that need it
-// live still owe it an actual DOM insertion.
+// Parses fragment markup and wraps its range in stable text anchors.
 function parseFragmentContent(
   context: FragmentContext,
   markerPrefix: string,
@@ -154,10 +41,10 @@ function parseFragmentContent(
 ) {
   const tpl = document.createElement("template");
   tpl.innerHTML = html;
-  const { touched, orphans } = walkFragment(tpl.content, markerPrefix, context);
+  const [touched, orphans] = walkFragment(tpl.content, markerPrefix, context);
   const first = tpl.content.insertBefore(new Text(), tpl.content.firstChild);
   const last = tpl.content.appendChild(new Text());
-  return { content: tpl.content, first, last, touched, orphans };
+  return [tpl.content, first, last, touched, orphans] as const;
 }
 
 export function applyFragment(
@@ -173,23 +60,17 @@ export function applyFragment(
   const marker = live[accessor] as ChildNode;
   const old = live[AccessorPrefix.BranchScopes + accessor] as
     BranchScope | undefined;
-  const { content, first, last, touched, orphans } = parseFragmentContent(
+  const [content, first, last, touched, orphans] = parseFragmentContent(
     context,
     markerPrefix,
     html,
   );
   marker.parentNode!.insertBefore(content, marker);
   if (old) removeAndDestroyBranch(old);
-  context.stamp(branch, 0);
+  context[FragmentContextProp.Stamp](branch, 0);
   branch[AccessorProp.StartNode] = first;
   branch[AccessorProp.EndNode] = last;
-  // Force (not `||=`): a compiled closure inside the captured content may
-  // have serialized an explicit "_" owner reference through the ordinary
-  // (patch-local) fills path -- eg a nested `<const>` whose value signal
-  // lives on an ancestor section (see core/if.ts's `persisted-update-
-  // server-derived` fixture) -- which would otherwise stick as a stale
-  // patch-scope placeholder instead of the real live scope this fragment
-  // attaches to.
+  // Replace any serialized patch-local owner with the live attachment scope.
   branch[AccessorProp.Owner] = live;
   setParentBranch(
     branch,
@@ -202,14 +83,7 @@ export function applyFragment(
   for (const scope of touched) scope[AccessorProp.ClosestBranch] ||= branch;
 }
 
-/**
- * Builds a keyed `<for>` item's branch from a resumable fragment (see
- * `_update_for_keyed` in ./update-merges.ts) instead of client-constructing
- * it from a registered renderer graph. Unlike `applyFragment`, the range stays
- * inside the detached template content -- `insertBranchBefore`
- * (dom/scope.ts) moves it into the live list at whatever position the
- * loop's own diff decides, which may not be adjacent to any single marker.
- */
+/** Builds a keyed branch whose range remains detached for insertion. */
 export function createFragmentBranch(
   context: FragmentContext,
   branch: BranchScope,
@@ -219,12 +93,12 @@ export function createFragmentBranch(
   scopeIds?: number[],
 ): BranchScope {
   stampFragmentScopes(context, scopeIds);
-  const { first, last, touched, orphans } = parseFragmentContent(
+  const [, first, last, touched, orphans] = parseFragmentContent(
     context,
     markerPrefix,
     html,
   );
-  context.stamp(branch, 0);
+  context[FragmentContextProp.Stamp](branch, 0);
   branch[AccessorProp.StartNode] = first;
   branch[AccessorProp.EndNode] = last;
   branch[AccessorProp.Owner] = owner;
@@ -244,16 +118,16 @@ export function applyBoundaryBody(
   tryBranch: BranchScope,
   markerPrefix: string,
   html: string,
-  scopeIds?: number[],
-  patchBranchId?: number,
+  scopeIds: number[] | undefined,
+  patchBranchId: number,
 ) {
   if (!tryBranch[AccessorProp.Gen]) return;
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
-  if (patchBranchId) context.adopt(patchBranchId, tryBranch);
+  context[FragmentContextProp.Adopt](patchBranchId, tryBranch);
   stampFragmentScopes(context, scopeIds);
   const tpl = document.createElement("template");
   tpl.innerHTML = html;
-  const { touched, orphans } = walkFragment(tpl.content, markerPrefix, context);
+  const [touched, orphans] = walkFragment(tpl.content, markerPrefix, context);
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
     placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
@@ -278,21 +152,14 @@ export function applyBoundaryBody(
   for (const scope of touched) scope[AccessorProp.ClosestBranch] ||= tryBranch;
 }
 
-/** Binds resume markers in server-rendered fragment HTML to patch scopes.
- *
- * KEEP IN SYNC with `createVisitBranches` (and the surrounding Node-visit
- * handling) in dom/resume.ts, which this forks for the fragment-frame case:
- * the marker token shapes (branch start/end variants, single-node back-scan,
- * "!" placeholder accessor), the branch start/end-node pairing (branchStarts
- * stack, inserted end Text), the node-marker scope-id continuation resets
- * (`lastNodeScopeId` cleared on every non-node visit), and the orphan-branch
- * parenting order must stay aligned. (This fork intentionally drops
- * render-only concerns: await counters and deferred-owner linking.) */
+/** Binds fragment markers; keep its grammar aligned with `dom/resume.ts`. */
 export function walkFragment(
   root: ParentNode,
   prefix: string,
-  { getScope, stamp }: FragmentContext,
+  context: FragmentContext,
 ) {
+  const getScope = context[FragmentContextProp.GetScope];
+  const stamp = context[FragmentContextProp.Stamp];
   const visits: Comment[] = [];
   const treeWalker = document.createTreeWalker(root, 128 /* comments */);
   for (let node; (node = treeWalker.nextNode());) {
@@ -406,9 +273,7 @@ export function walkFragment(
             : parent.insertBefore(new Text(), visit);
       }
 
-      // Probe without consuming: one visit can end several branches, and an
-      // orphan rejected by this branch id must stay probe-able by the next
-      // (mirrors resume.ts's createVisitBranches).
+      // Keep rejected orphans available when one visit ends several branches.
       while (i && orphanBranches[i - 1][AccessorProp.Id] > branchId) {
         i--;
         setParentBranch(orphanBranches.pop()!, branch);
@@ -433,5 +298,5 @@ export function walkFragment(
     }
   }
 
-  return { touched, orphans: orphanBranches };
+  return [touched, orphanBranches] as const;
 }

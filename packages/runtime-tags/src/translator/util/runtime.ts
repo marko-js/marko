@@ -63,10 +63,16 @@ const pureDOMFunctions = new Set<string>([
   "_load_idle_trigger",
   "_load_media_trigger",
   "_load_race_trigger",
+  "_update_attr",
+  "_update_controllable",
+  "_update_html",
+  "_update_named_attr",
+  "_update_scopes",
+  "_update_text",
 ] satisfies DOMRuntimeHelpers[]);
 
 const updateDOMFunctions = new Set<string>([
-  "createPatch",
+  "patch",
   "_load_ready",
   "_update_branch",
   "_update_content",
@@ -75,10 +81,15 @@ const updateDOMFunctions = new Set<string>([
   "_update_for_keyed",
   "_update_if",
   "_update_load",
+  "_update_attr",
+  "_update_controllable",
+  "_update_html",
+  "_update_named_attr",
   "_update_pair",
-  "_update_scope",
+  "_update_scopes",
   "_update_seed",
   "_update_signal",
+  "_update_text",
 ] satisfies DOMRuntimeHelpers[]);
 
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {

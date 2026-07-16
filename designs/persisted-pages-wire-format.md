@@ -4,27 +4,26 @@
 
 This is the protocol specification for persisted-page navigation: the request
 negotiation, the newline-delimited frame stream a patch response carries, the
-reserved key namespaces the frames and the live page share, and the possession
-echo a request sends. Every grammar rule here is implemented by
+reserved key namespaces the frames and the live page share, and the opaque
+possession token a request sends. Every grammar rule here is implemented by
 `packages/runtime-tags/src/html/writer.ts` and `html/serializer.ts` (producer),
-`src/dom-persisted.ts`, `src/dom/update.ts`, `src/dom/update-merges.ts`, and
-`src/dom/update-fragment.ts` (consumer), and `@marko/run`'s `runtime/persisted-protocol.ts` /
-`runtime/persisted-navigation.ts` / `runtime/internal.ts` (transport).
+`html/persisted-token.ts` (server codec), `src/dom-persisted.ts`,
+`src/dom/update.ts`, `src/dom/update-merges.ts`, and
+`src/dom/update-fragment.ts` (consumer), and `@marko/run` (transport).
 Vocabulary is defined in `persisted-pages-glossary.md`.
 
 ## Transport
 
 An enhanced navigation sends the original request again with negotiation
-headers
-(`createPatchRequestHeaders` in run's `persisted-protocol.ts`):
+headers:
 
-| Header          | Value                                                                  |
-| --------------- | ---------------------------------------------------------------------- |
-| `accept`        | `text/marko-patch`                                                     |
-| `x-marko-route` | target route's build-stable numeric index                              |
-| `x-marko-from`  | the live page's current route index                                    |
-| `x-marko-build` | build hash; both sides must be the same build                          |
-| `x-marko-have`  | possession echo (JSON, ASCII-escaped); omitted when empty or oversized |
+| Header          | Value                                                                        |
+| --------------- | ---------------------------------------------------------------------------- |
+| `accept`        | `text/marko-patch`                                                           |
+| `x-marko-route` | target route's build-stable numeric index                                    |
+| `x-marko-from`  | the live page's current route index                                          |
+| `x-marko-build` | build hash; both sides must be the same build                                |
+| `x-marko-have`  | opaque server-issued possession token; omitted when unavailable or oversized |
 
 The server accepts patch mode only when the matched route index and build hash
 equal the header values (`matchesPatchRequest`). Outcomes by method
@@ -33,12 +32,11 @@ equal the header values (`matchesPatchRequest`). Outcomes by method
 - **Matched GET/HEAD/POST**: the handler runs normally and `context.render`
   produces a patch response: a newline-delimited frame stream with
   `content-type: text/javascript;charset=UTF-8`, `cache-control: no-store`,
-  and `vary: accept`. A patch varies by live-page state (the echo) and must
+  and `vary: accept`. A patch varies by live-page state (the token) and must
   never enter a shared document cache.
 - **Mismatched GET/HEAD**: rejected before any handler runs with an empty
-  `409` response carrying `cache-control: no-store` and `vary: accept`
-  (`createPatchMismatchResponse`). The client performs the original document
-  navigation.
+  `409` response carrying `cache-control: no-store` and `vary: accept`. The
+  client performs the original document navigation.
 - **Mismatched POST**: never rejected. A mutation must always reach its
   handler; the handler runs and the response renders as an ordinary document,
   which the client recognizes as non-patch content and falls back on. The
@@ -57,11 +55,11 @@ carry `vary: accept`; a handler-supplied `ResponseInit` keeps its status and
 headers but the framework-owned `content-type`/`vary` pair is reapplied
 (`applyPersistedResponseHeaders`).
 
-Server-side, the negotiated request facts ride `render()`'s options argument
-as `{ persisted: { patch: { fromRoute, targetRoute, possessed? } } }`, kept
-off `$global` (which is the request context). The renderer derives everything
-else: `fromRoute !== targetRoute` selects fresh-structure delivery; no
-application-facing mode is exposed.
+Server-side, request facts ride `render()` options as `{ persisted: {
+descriptor, patch?: { fromRoute, targetRoute, have?, source? } } }`, kept off
+`$global`. `descriptor` is the required target-route dictionary; `source` is
+present only with a validated `have` token. Route identity selects
+fresh-structure delivery without exposing an application mode.
 
 ## Frame grammar
 
@@ -73,7 +71,7 @@ newline is an unambiguous frame delimiter; the router splits on it and applies
 each frame atomically, so completed frames update the page while later async
 work is still pending (`navigate` in run's `persisted-navigation.ts`).
 
-The applier (`createPatch` in `src/dom-persisted.ts`) executes each line
+The applier (`patch` in `src/dom-persisted.ts`) executes each line
 through a nonce-bearing script element and collects the resulting array's
 elements. A frame element is one of:
 
@@ -84,9 +82,11 @@ elements. A frame element is one of:
 | `[scopeId, "accessor", prefix, html, scopeIds?]` | fragment entry      |
 | `[branchId, 0, prefix, html, scopeIds?]`         | boundary-body entry |
 | `["readyId", ...fills]` (string in slot 0)       | ready batch         |
+| `"~=<token>"` or `"~+<prefix>.<suffix>"`         | possession metadata |
 
-Any other element shape is dropped; a frame that executes without producing at
-least one usable element is a protocol failure (see the trust boundary below).
+The first frame replaces possession metadata with `~=`. Later frames may use
+`~+`, where `prefix` is the base-36 length of the unchanged token prefix and
+`suffix` is the new tail. Metadata-only frames are valid.
 
 ### Scope fills
 
@@ -120,21 +120,6 @@ A fill callback receives the serialize context `_` and returns the fill array
 
 Patch scope ids are a patch-local id space. The compiled merge pairs patch
 scopes to live scopes top-down; scope ids are never document scope ids.
-
-Two consequences of the fill grammar are defined behavior rather than
-protocol failures (pinned by `persisted-update-corrupt-fills`):
-
-- **Duplicate ids merge, last key wins.** Two partials claiming the same
-  patch scope combine key-by-key with the later value winning -- the same
-  extension rule that lets later frames add keys to earlier scopes, applied
-  within one frame. The serializer never emits an intra-frame duplicate, but
-  the applier does not distinguish the cases.
-- **Unknown ids resolve to an empty patch scope.** A `_(N)` reference no
-  fill populates creates a scope with nothing to say, and absent keys mean
-  unchanged, so the merge no-ops. A corrupted link therefore leaves the
-  page stale (its orphaned fills are never read), not wrong-merged; within a
-  well-formed frame the grammar cannot distinguish a broken reference from
-  an intentional sparse skip (see the trust boundary below).
 
 ### Effect entries
 
@@ -185,7 +170,7 @@ patch keys are withheld: the values are baked into the markup, and the parsed
 fragment's scopes ARE the live scopes once stamped. The entry is authoritative
 for the site it addresses, uniformly across site kinds: it applies even when
 the live renderer, branch, or keyed item already matches (an omitted or
-malformed echo makes the server ship fragments for sites the page in fact
+malformed token makes the server ship fragments for sites the page in fact
 holds). A matched keyed `<for>` item carrying an entry is swapped in place --
 the keyed diff replaces the live branch with the fragment subtree, retiring
 the old branch through the same removal path as a departing key.
@@ -197,9 +182,9 @@ chunks that each emit their own entry (`State.writeFragments`).
 ### Boundary-body entries
 
 A `<try>` boundary whose placeholder shipped earlier (inside a fragment, or
-because the echo proved the live page still shows its placeholder) delivers
-its resolved body as a separate entry, discriminated from fragment entries by
-the `0` in the accessor slot:
+because the source token proves the live page still shows its placeholder)
+delivers its resolved body as a separate entry, discriminated from fragment
+entries by the `0` in the accessor slot:
 
 ```
 [tryBranchId, 0, markerPrefix, html, scopeIds?]
@@ -262,88 +247,58 @@ the long names; optimized builds use the single characters.
 | `D`   | `ConditionalRenderer:` | prefix       | outcome at a site: renderer id string (hop), branch index number (`<if>`; `-1` = no branch), `0` = removed hop                                                                                                                            |
 | `M`   | `#LoopKey`             | prop         | a keyed loop item's key on its own branch scope                                                                                                                                                                                           |
 | `R`   | `#Renderer`            | prop         | tag name stamped on a native-tag hop's branch scope in patches; `_update_dynamic` requires it to descend a native branch (a lazy component's register id can be a valid localName, so the discrimination is structural, never name-based) |
-| `Q`   | `PatchHole:`           | prefix       | captured text-hole value for the generic applier (`_text`)                                                                                                                                                                                |
+| `Q`   | `PatchHole:`           | prefix       | captured text-hole value consumed by the registered `_text` handler                                                                                                                                                                       |
 | `R`   | `PatchHtml:`           | prefix       | captured unsafe-html hole; replaces its DOM range and is consumed on apply                                                                                                                                                                |
 | `N`   | `PatchAttr:name:`      | prefix       | captured attribute/controllable value (`class`/`style`/`textContent`/controllables carve out their own helpers)                                                                                                                           |
-| `S`   | `PatchChild:`          | prefix       | parent-to-child scope link for update-generic children (generic descent, no compiled dispatch)                                                                                                                                            |
-| `Z`   | `RendererSite:`        | prefix       | build-stable site id of a dynamic-tag hop or structural `<if>`, stashed for the echo's value-compare entries                                                                                                                              |
-| `T`   | `BoundarySite:`        | prefix       | `<try>` placeholder boundary site id on the parent scope; a string value means "placeholder still showing", tombstoned to `0` when the body ships                                                                                         |
-| `F`   | `ForSite:`             | prefix       | keyed `<for>` item's site id on its own branch scope (empty string for ordinary keyed loops); existence-only echo entries                                                                                                                 |
+| `T`   | `BoundarySite:`        | prefix       | `<try>` placeholder state on the parent scope; a string means the placeholder is showing, tombstoned to `0` when the body ships                                                                                                           |
 | `P`   | (none)                 | client stash | fragment entry parked on its anchor's patch scope (`P<accessor>`), never serialized                                                                                                                                                       |
 | `!`   | (none)                 | client stash | boundary-body entry parked on the try's patch scope, never serialized                                                                                                                                                                     |
 
-`Z`, `T`, `F`, and the `PatchHole`/`PatchHtml`/`PatchAttr`/`PatchChild`
-family are deliberately not `AccessorPrefix` enum members so they stay out of
-non-persisted client bundles. The `!` character also appears in three other
-disjoint namespaces: the `!` prefix on possession-echo keys (existence-only
-entries), the `!` suffix on content-merge register ids
-(`UPDATE_MERGE_SUFFIX`), and the `!` accessor token in a fragment's
-placeholder branch-end marker. Each lives in a different lookup (scope key,
-header JSON key, registry id, marker token), so they never collide.
+`T` and the `PatchHole`/`PatchHtml`/`PatchAttr` family are deliberately not
+`AccessorPrefix` enum members so they stay out of non-persisted client
+bundles. The `!` character also appears in the server-only decoded possession
+map, content-merge register ids (`UPDATE_MERGE_SUFFIX`), and a fragment's
+placeholder branch-end marker. Each lives in a different lookup, so they do
+not collide.
 
-## Possession echo
+## Possession token
 
-`x-marko-have` is a JSON object built by walking the live scope tree (`_have`
-in `src/dom/update-fragment.ts`): for each participating site the page holds,
-one entry proving what is there. Site keys are `/`-joined paths of encoded
-segments (`encodePossessionSite`/`encodePossessionValue` in
-`common/helpers.ts`):
+`x-marko-have` is an opaque server-issued token describing the server-owned
+structure the live page should hold. The client never derives it from the DOM
+or decodes it. An initial document stores the token on its render runtime; each
+accepted patch frame replaces or advances it through its metadata element.
+The router forwards the current value on the next navigation.
 
-```
-segment  = "i" <idLength> ":" <siteId> [ "=" value ]
-value    = "s" <strLength> ":" <string>   (string loop key)
-         | "n" <number>                   (numeric loop key)
-sitePath = segment ("/" segment)*
-```
+The server entry for each route exports a descriptor tuple of stable site ids
+and renderer ids. Run supplies the live route’s descriptor as `source` and the
+rendered route’s descriptor as `target`. `html/persisted-token.ts` decodes the
+source token to the writer’s private `PersistedPossession` map and encodes the
+target facts with the target descriptor.
 
-Each enclosing keyed-loop iteration contributes a segment carrying its loop
-site id and key, outermost first, so a site repeated across (nested) loop
-iterations stays unambiguous. Loop keys are contractually `string | number`;
-`-0` collapses onto `n0` because key maps use SameValueZero. Entries come in
-two conventions:
+The token grammar is direct RFC `tchar`, canonical, and capped at 4096 bytes.
+It uses base-32 VLQ values over the base64url alphabet, descriptor ordinals for
+known sites and renderers, typed raw-string escapes, grouped presence facts,
+delta/range/bitset numeric key sets, and token-local string interning when the
+dictionary makes the complete token shorter. Common one-site renderer and
+pending-boundary facts use two-character scalar forms. `PA` is the canonical
+explicit empty replacement.
 
-- **Value-compare** (dynamic-tag hops and structural `<if>`s): the key is the
-  site path and the value is what the site shows: a renderer id string for a
-  hop, a stringified branch index for an `<if>`. The server ships a fragment
-  when the target differs, and descends normally when it matches.
-- **Existence-only** (prefixed `!`): the value is always `"1"`. A
-  `!`-prefixed boundary path means "this matched `<try>` still shows its
-  placeholder", so the server delivers the body as markup. A `!`-prefixed
-  loop-item path proves that exact keyed item is live, so the server ships
-  fragments only for genuinely new keys.
+The decoded server shape retains nested site paths and typed `string | number`
+loop keys. It distinguishes value comparisons (renderer or branch outcome)
+from existence facts (live keyed items and pending boundaries). Those details
+do not cross the client contract; they are free to change with the codec and
+descriptor version embodied by one build.
 
-Example (nested keyed loops, optimized ids):
-
-```
-{"!i2:a0=s1:a":"1",
- "!i2:a0=s1:a/i2:a2=s4:same":"1",
- "!i2:a0=s1:b":"1",
- "!i2:a0=s1:b/i2:a2=s4:same":"1"}
-```
-
-Outer loop site `a0` holds items keyed `"a"` and `"b"`; nested loop site `a2`
-holds an item keyed `"same"` under each.
-
-Site ids are the compiler's build-stable per-site register ids (preallocated
-during analysis), not runtime scope ids, which drift between the document and
-patch renders. The client reads them back off the resumed scope stashes (`Z`,
-`T`, `F` above).
-
-Fetch headers must be byte-safe, so the router escapes all non-ASCII
-characters to `\uXXXX` and omits the header entirely when the escaped value
-exceeds 4096 characters (`encodeHave` in run's `persisted-protocol.ts`).
-Omission (or a malformed value, which the server ignores) is safe but
-lossy: with no echo, every site is unproven, so a cross-route render captures
-at the first hop and a same-route render ships fragments for possessed sites.
-All of them apply authoritatively -- `<if>`/hop entries replace the branch,
-and keyed loops swap each matched item for its fragment subtree -- so the
-navigation still lands as a patch; the cost is fragment bytes and replaced
-in-branch client state instead of sparse fills.
+Missing, malformed, noncanonical, or oversized tokens are ignored. With no
+usable source facts, sites are unproven and the server chooses authoritative
+fragment delivery. The navigation remains correct, but may send more markup
+and replace client state inside those branches.
 
 ## Trust boundary
 
 Frames are same-origin application output encoded by Marko's serializer, not
-user JSON. Run transports and splits the stream but does not interpret it.
+user data. Run transports and splits the stream but does not interpret fills.
+It does retain the opaque possession metadata returned by each accepted frame.
 The applier executes each frame through a script element carrying the
 document's nonce (read from the first `script[nonce]` in the page), the same
 CSP-compatible path document resumes use; a page whose policy blocks inline
@@ -355,57 +310,43 @@ What the client validates:
   the request pins the route index and build hash the server must re-verify.
 - **MIME**: a response without the patch content type is never executed; it
   takes the document fallback.
-- **Frame shape**: a parse error runs nothing and reports a non-frame body; a
-  frame that executes but yields no usable fills throws (a swallowed frame
-  would be a half-applied navigation). Both reach the router's catch, which
-  falls back to a full navigation without committing history for an unapplied
-  patch.
-- **Pairing integrity**: compiled merges fail loudly on structural lies: a
-  renderer/branch mismatch without a fragment entry, a stable-loop count
-  change, a boundary body for a boundary that already settled. Failure
-  abandons the update and the router loads the target document; the applier
-  never guesses from surrounding DOM. A failed apply is terminal for the page
-  object as well as the navigation: fills merged before the throw are not
-  rolled back, which is safe only because the fallback replaces the document.
+- **Frame execution**: each nonempty line is trusted Marko output. Evaluation
+  or application errors reach the document fallback; metadata-only frames are
+  valid.
+- **Live-state races**: a boundary body arriving after its boundary settled is
+  rejected (`persisted-update-stale-boundary-body`). A failed apply is terminal
+  because earlier frame mutations are not rolled back; fallback replaces the
+  document.
 - **Epoch**: starting a navigation aborts the prior fetch and advances the
   navigation epoch, so frames and reorder chunks from a superseded navigation
   are ignored.
 
-What the client trusts: the values themselves. Fill values, fragment HTML,
-effect registry ids (resolved only against the page's own resume registry),
-and `$global` partials are trusted application output, exactly as a document
-render's resume payload is. The protocol boundary is negotiation (route,
-build, MIME, origin) plus structural integrity, not value inspection.
-Corruption that stays inside the trusted value layer is accordingly not
-detected: duplicate or unknown scope ids resolve through sparse-merge
-semantics (see "Scope fills"), and a corrupted fragment scope-id list
-silently strands its dom-less scopes' wiring (`stampFragmentScopes` cannot
-distinguish a truncated list from a capture that serialized fewer scopes;
-pinned by `persisted-update-corrupt-scope-list`, recorded in
-`agent-feedback/bugs.md`).
+What the client trusts: fill structure and values, fragment HTML, effect
+registry ids, and `$global` partials. These are compiler/serializer output, like
+a document resume payload; the protocol boundary is route, build, MIME, origin,
+and the untrusted `x-marko-have` token, not internal payload validation.
 
 ## Examples
 
 Real frames captured from the optimized fixture harness, abridged. Register
 ids (`a2`, `b1`), accessors (`c`, `g`), and scope ids are build-local.
+Possession metadata elements are omitted from these examples.
 
 ### Cross-route hop
 
-`persisted-update-fragment`, navigating dashboard back to home. The request
-echoed `{"i2:b1":"a7", "i2:a6":"0", "!i2:a5=s5:views":"1", ...}` (hop site
-`b1` holds the dashboard renderer `a7`); the target renderer is `a2`, so the
-hop diverges and the response is one frame:
+`persisted-update-fragment`, navigating dashboard back to home. The opaque
+source token proves that hop site `b1` holds the dashboard renderer `a7`; the
+target renderer is `a2`, so the hop diverges and the response is one frame:
 
 ```
-[_=>[,{c:_(2)},{Dc:"a2",Zc:"b1",Ac:_(3)}],
+[_=>[,{c:_(2)},{Dc:"a2",Ac:_(3)}],
  [2,"c","Mnavigate","<p class=home>welcome home</p>"],
  "b0 2 a0 1"]
 ```
 
 - The fill elides the root id (`[,{...}]` means scope 1), whose partial links
-  child scope 2. Scope 2 records the hop outcome: renderer `a2`
-  (`ConditionalRenderer:c`), the site stash (`RendererSite:c`), and the branch
-  link to scope 3.
+  child scope 2. Scope 2 records the hop outcome (`ConditionalRenderer:c` =
+  renderer `a2`) and the branch link to scope 3.
 - The fragment entry anchors at scope 2, accessor `c`; the markup carries no
   markers (static content) and no trailing scope-id list (nothing serialized
   during the capture; the applier stamps the anchor's branch scope itself).
@@ -417,16 +358,16 @@ hop diverges and the response is one frame:
 ### Same-route divergence, two fragments in one frame
 
 `persisted-update-fragment`, same dashboard route with a new list key and a
-newly-true `<if>`. The echo proved items `views`/`clicks` live; `sales` is
-new, and if site `a6` showed `-1`:
+newly-true `<if>`. The source token proves items `views`/`clicks` live;
+`sales` is new, and if site `a6` previously showed `-1`:
 
 ```
-[_=>[0,{seed:5,step:2},{c:_(2)},{Dc:"a7",Zc:"b1",Ac:_(3)},
-     {Qa:"hello grace",Ag:[_(6),_(7),_(8)],Dh:0,Ah:_(9),Zh:"a6",b:_(4),f:_(5)},
+[_=>[0,{seed:5,step:2},{c:_(2)},{Dc:"a7",Ac:_(3)},
+     {Qa:"hello grace",Ag:[_(6),_(7),_(8)],Dh:0,Ah:_(9),b:_(4),f:_(5)},
      1,{Qb:"free"},
-     {"Nclass:a":!1,Qb:"views",Qc:70,M:"views",_:_(3),Fg:"a5"},
-     {"Nclass:a":"focus",Qb:"clicks",Qc:21,M:"clicks",_:_(3),Fg:"a5"},
-     {M:"sales",_:_(3),Fg:"a5"}],
+     {"Nclass:a":!1,Qb:"views",Qc:70,M:"views",_:_(3)},
+     {"Nclass:a":"focus",Qb:"clicks",Qc:21,M:"clicks",_:_(3)},
+     {M:"sales",_:_(3)}],
  [8,"g","Mnavigate","<li>sales<!--Mnavigate*8 b-->: <!>7<!--Mnavigate* c--></li><!--Mnavigate* a-->",[9]],
  "c1 4 d0 5 a4 3 b0 2 a0 1",
  [3,"h","Mnavigate","<p class=admin>admin tools enabled</p>"]]
@@ -454,10 +395,10 @@ awaits. Frame 1 ships the fragment with the placeholder inside; frame 2
 follows when the body resolves:
 
 ```
-[_=>[,{c:_(2)},{Dc:"a4",Zc:"b1",Ac:_(3)},{g:new Set},{_:_(3),C:"b",Q:_(3,"a8")}],
+[_=>[,{c:_(2)},{Dc:"a4",Ac:_(3)},{g:new Set},{_:_(3),C:"b",Q:_(3,"a8")}],
  [2,"c","Mnavigate","<h2 class=greeting>hello ada<!--Mnavigate*3 a--></h2><!--Mnavigate[--><!--Mnavigate[--><p class=loading>crunching numbers…</p><!--Mnavigate]4 ! 5--><!--Mnavigate]3 b 4--><p class=footer>…</p>",[4,3]],
  "b0 2 a0 1"]
-[_=>[7,{_:_(4),a:_(8)},{g:0},{M:0,Fb:"a6"}],
+[_=>[7,{_:_(4),a:_(8)},{g:0},{M:0}],
  [4,0,"Mnavigate","<!--Mnavigate[--><button class=widget>pro<!--Mnavigate*8 b--> clicked <!>0<!--Mnavigate* c--></button><!--Mnavigate* a-->…<!--Mnavigate]4 a 7-->",[7]],
  "a7 7 c0 8"]
 ```

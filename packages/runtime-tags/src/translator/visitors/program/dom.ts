@@ -25,7 +25,6 @@ import {
   getSetup,
   getSignal,
   getSignalFn,
-  getSignals,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
   signalHasStatements,
@@ -69,11 +68,6 @@ export default {
                   "render",
                   childSection,
                   undefined,
-                  // Persisted builds skip request-derived closure renders in
-                  // branches created while an update patch applies: resume
-                  // never serializes those raw owner values (nothing re-runs
-                  // such closures client-side), so the branch merge places the
-                  // server-rendered holes instead.
                   isPersisted() && isUpdateDeliveredClosure(closure)
                     ? t.ifStatement(
                         t.unaryExpression("!", importRuntime("_updating")),
@@ -88,11 +82,8 @@ export default {
       });
     },
     exit(program) {
-      // Persisted entry builds (`?persisted`, loaded by the generated `?update`
-      // entry) register the value signals update entries invoke through the
-      // registry (must happen before signals are written). The main persisted
-      // dom module emits them unregistered so hydration bundles tree-shake what
-      // resume doesn't reference.
+      // Deferred entries register update signals; eager modules leave them
+      // unregistered so unused hydration graph can tree-shake.
       if (isPersistedEntryBuild()) {
         forEachSectionReverse(registerUpdateValueSignals);
         // Snapshot before any writeSignals call rewrites the originals.
@@ -205,11 +196,6 @@ export default {
       const written = writeSignals(section);
       writeRegisteredFns();
 
-      // Statements mixing client state with `$global` re-run client-side after
-      // an update patch's `$global` assign (the server can't compute them -- it
-      // doesn't know the live state operand). The persisted entry registers a
-      // per-section copy curried to the shape `_update_signal` invokes; reads
-      // resolve to scope reads so `$scope` is the only input.
       if (isPersistedEntryBuild()) {
         forEachSectionReverse((globalsSection) => {
           const statements = getUpdateGlobalsStatements(globalsSection);
@@ -240,34 +226,6 @@ export default {
           "Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it. Please open an issue with a reproduction.",
         );
       }
-      if (domExports.updateGeneric) {
-        // Parent update entries dispatch this template's patch scopes through
-        // the bare generic interpreter because analysis proved its update
-        // module would be exactly that, so that module (where the equivalent
-        // check lives) may never build. Effects (`_update_pair`) or `$global`
-        // re-runs in the render graph mean that proof was wrong.
-        let updateGenericBroken = !!getUpdateGlobalsStatements(section).length;
-        if (!updateGenericBroken) {
-          for (const signal of getSignals(section).values()) {
-            if (signal.effect.length) {
-              updateGenericBroken = true;
-              break;
-            }
-          }
-        }
-        if (updateGenericBroken) {
-          throw program.buildCodeFrameError(
-            "Marko internal error: analysis marked this template's update module as generic but its render graph has effects or $global re-runs. Please open an issue with a reproduction.",
-          );
-        }
-      }
-
-      // Slim persisted main modules may tree-shake every branch-machinery
-      // import (`_if`/`_for_of`/... construction is what calls `enableBranches`
-      // at module init), but the resume walker defers branch visits until
-      // branches are enabled -- element refs riding those visits must bind at
-      // hydration, not at the first navigation's `?persisted` entry load, or
-      // pre-navigation interactivity reads undefined.
       if (isPersisted() && !isPersistedEntryBuild()) {
         program.node.body.push(
           t.expressionStatement(callRuntime("_enable_branches_persisted")),

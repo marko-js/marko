@@ -1,5 +1,5 @@
-export function createPatch(id) {
-  return `server createPatch ${id}`;
+export function patch(id) {
+  return `server patch ${id}`;
 }
 
 export function have(id) {

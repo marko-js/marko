@@ -4,12 +4,7 @@ import { navigate } from "../../utils/resolve";
 const clickButton = (container: Element) =>
   container.querySelector("button")!.click();
 
-// A reason-less dynamic tag (`<${Wrapper}>` over a static module const)
-// renders once and can never change on navigation, so it does not
-// participate in persisted update renders: no per-site register id is
-// requested (this previously crashed the persisted html compile with the
-// register-id tripwire) and no dynamic merge compiles. The `$global`
-// caption keeps navigations observable around it.
+// A reason-less dynamic tag renders once and needs no persisted merge.
 export const config: TestConfig = {
   persisted: true,
   equivalent: false,

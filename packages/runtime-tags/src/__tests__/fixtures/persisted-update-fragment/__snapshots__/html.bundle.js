@@ -24,7 +24,7 @@ var store_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	let value = 0;
 	const $return = value;
-	_script($scope0_id, "c1");
+	_script($scope0_id, "c2");
 	writeScope($scope0_id, { U: _state_reason() && (_resume(function(next) {
 		value = next + $global().step;
 	}, "c0", $scope0_id) || void 0) });
@@ -38,7 +38,7 @@ var widget_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	let clicks = 0;
 	_html(`<button class=widget>${_escape(_hole_value($scope0_id, "Qb", input.label, _persisted_reason()))}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 0))} clicked <!>${_escape(clicks)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "d0");
+	_script($scope0_id, "d1");
 	writeScope($scope0_id, { g: _state_reason() && clicks });
 	_resume_branch($scope0_id);
 });
@@ -49,9 +49,9 @@ var layout_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
-	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "b1");
+	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "b0");
 	_html("</section>");
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b2");
 	writeScope($scope0_id, { g: _state_reason() && open });
 	_resume_branch($scope0_id);
 });
@@ -62,19 +62,19 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const Home = { content: _content("a2", () => {
+	const Home = { content: _content("a1", () => {
 		_scope_id();
 		_scope_reason();
 		_html("<p class=home>welcome home</p>");
 	}) };
-	const Dashboard = { content: _content("a7", () => {
+	const Dashboard = { content: _content("a2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		const session = getSession?.($global().user);
 		_html(`<h2 class=greeting>${_escape(_hole_value($scope2_id, "Qa", session.greeting, _persisted_reason()))}${_el_resume($scope2_id, "a", _persisted_reason())}</h2>`);
 		const $childScope = _peek_scope_id();
 		let tally = store_default({});
-		_var($scope2_id, "c", $childScope, "a3");
+		_var($scope2_id, "c", $childScope, "a6");
 		_html(`<button class=bump>tally <!>${_escape(tally)}${_el_resume($scope2_id, "e")}</button>${_el_resume($scope2_id, "d")}`);
 		const $childScope2 = _peek_scope_id();
 		_set_serialize_reason(_persisted_reason());
@@ -86,13 +86,13 @@ var template_default = _template("a", (input) => {
 			_persisted_reason() && writeScope($scope3_id, {});
 		}, function(metric) {
 			return metric.name;
-		}, $scope2_id, "g", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a5");
-		_if(() => $global().admin ? 0 : void 0, $scope2_id, "h", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a6", [() => {
+		}, $scope2_id, "g", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a7");
+		_if(() => $global().admin ? 0 : void 0, $scope2_id, "h", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0", [() => {
 			const $scope4_id = _scope_id();
 			_html("<p class=admin>admin tools enabled</p>");
 			_persisted_reason() && writeScope($scope4_id, {});
 		}]);
-		_script($scope2_id, "a4");
+		_script($scope2_id, "a8");
 		writeScope($scope2_id, {
 			l: _state_reason() && tally,
 			b: _existing_scope($childScope),
@@ -102,7 +102,7 @@ var template_default = _template("a", (input) => {
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "dashboard" ? Dashboard : Home });
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a9");
 	writeScope($scope0_id, {
 		d: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope3)

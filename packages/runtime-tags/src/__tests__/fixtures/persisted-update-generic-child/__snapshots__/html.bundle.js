@@ -20,7 +20,7 @@ var toggle_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	let on = false;
 	_html(`<button class=toggle>off${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<em>${_escape(_hole_value($scope0_id, "Qc", input.name, _persisted_reason()))}${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 0))}</em>`);
-	_script($scope0_id, "d0");
+	_script($scope0_id, "d1");
 	writeScope($scope0_id, { g: _state_reason() && on });
 	_resume_branch($scope0_id);
 });
@@ -32,7 +32,6 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<button>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
-	_update_child($scope0_id, "Sc", $childScope);
 	_set_serialize_reason({
 		0: $sg__input_label__OR__input_tone,
 		1: _serialize_guard($scope0_reason, 3),
@@ -43,7 +42,6 @@ var template_default = _template("a", (input) => {
 		tone: input.tone
 	});
 	const $childScope2 = _peek_scope_id();
-	_update_child($scope0_id, "Sd", $childScope2);
 	_set_serialize_reason({
 		0: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded,
 		1: _serialize_guard($scope0_reason, 6),
@@ -58,7 +56,7 @@ var template_default = _template("a", (input) => {
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason($sg__input_name);
 	toggle_default({ name: input.name });
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		o: _state_reason() && count,
 		c: $sg__input_label__OR__input_tone | _persisted_reason() && _existing_scope($childScope),

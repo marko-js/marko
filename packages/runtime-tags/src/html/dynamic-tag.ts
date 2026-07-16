@@ -27,7 +27,6 @@ import {
   getChunk,
   getScopeById,
   getState,
-  RENDERER_SITE_PREFIX,
   withBranchId,
 } from "./writer";
 
@@ -54,33 +53,18 @@ export let _dynamic_tag = (
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
-  // Request-derived (bit 2) only: a state-driven dynamic tag in a patch
-  // render must not write structural patch data (the server never pairs into
-  // client-state-driven structure) -- matches `_if`/`forBranches`'s gates.
+  // The server never patches client-state-driven structure.
   const updateStructural =
     state.patch && (serializeReason as unknown as number) & 2;
   let rendered: boolean;
   let result: unknown;
 
-  // A hop delivers its fresh branch as resumable HTML (a fragment the client
-  // inserts and resumes) instead of a client-constructed subtree; everything
-  // above the hop stays a matched-scope patch. Two triggers:
-  //  - `state.freshStructure`: cross-route swap, the whole diverging subtree
-  //    captured once at the first hop.
-  //  - a possession miss: the client echoed (`x-marko-have`) which renderer
-  //    it holds at this site (keyed by build-stable `siteId`, not the
-  //    drifting scope id) and this render differs -- a same-route swap.
-  //    Fragment-first dropped the construction graph, so the fragment is
-  //    what lets the swap apply instead of a full navigation.
-  // Native-tag targets behave identically: a hop to or between plain tag
-  // names has nothing to client-construct, and the echo carries the tag-name
-  // renderer value.
+  // A mismatched dynamic hop delivers resumable HTML instead of construction
+  // code; native tag targets use the same path.
   const targetRendererId =
     (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
   const possessed = state.possessed;
-  // Repeated hops (a `<${...}/>` in a `<for>`) share one site id, so
-  // disambiguate by the enclosing loop key or positional index -- the value
-  // the client reads off the iteration's `LoopKey` (see `_have`).
+  // The loop path disambiguates repeated instances of one compiled hop.
   const siteKey =
     siteId !== undefined
       ? [...(state.loopPath || []), encodePossessionSite(siteId)].join("/")
@@ -90,27 +74,8 @@ export let _dynamic_tag = (
     possessed !== undefined && siteKey !== undefined && siteKey in possessed;
   const possessionMiss =
     possessionKnown && possessed![siteKey!] !== targetRendererId;
-  // Cross-route capture (`state.freshStructure`) fires at the first hop the client
-  // does not provably possess with the same renderer; nested hops render
-  // inline into it. A hop the echo proves MATCHED (a shared layout hop, eg a
-  // `<context>` provider wrapping the page) stays a matched-scope patch and
-  // the walk descends to the true divergence -- capturing at a matched hop
-  // would ship a fragment the applier's `live[rendererKey] !== rendererId`
-  // guard rejects (already-equal), stranding the real change ("update
-  // diverged", full-navigation fallback). With no echo at all every hop is
-  // unproven and the first captures. A possession miss is the same-route
-  // form: each diverging site takes its own fragment (`_fragment` routes the
-  // first onto the main chain, the rest onto detached chunks).
-  //
-  // A possession miss while a fragment is already capturing (`$chunk.
-  // fragment`) is a hop nested inside a fresh subtree (eg a cross-route
-  // fragment containing a shared component the client possesses, stale, from
-  // another route). Nothing above it is a matched patch to apply against, so
-  // the hop renders inline into the enclosing capture, not its own detached
-  // fragment: a detached capture would write empty branch brackets into the
-  // enclosing fragment (brackets on the enclosing chunk, body on the detached
-  // one) and could never apply (shared patch/live scopes make the guard
-  // already-equal, always rejecting).
+  // Cross-route renders capture the first unproven hop; same-route renders
+  // capture each mismatch. Nested captures stay in their enclosing fragment.
   const takeFragment =
     !getChunk()!.fragment &&
     (possessionMiss ||
@@ -205,12 +170,8 @@ export let _dynamic_tag = (
       }
 
       if (inFragment) {
-        // Inside a fragment capture the branch bracket must NOT bake into the
-        // markup: its parent-scope token is the anchor scope, which the
-        // walker would stamp (self-pairing the patch scope, clobbering its
-        // matched pairing). The applier binds the branch (`applyFragment`),
-        // as for a component branch; only the element ref needs delivering, so
-        // a plain node marker binds it onto the fragment-owned branch scope.
+        // Fragment native branches omit brackets so the walker cannot pair
+        // their anchor scope to itself; the applier binds the branch.
         _html(_el_resume(branchId, MARKO_DEBUG ? `#${renderer}/0` : "a"));
       } else if (shouldResume || needsScript) {
         _reset_node_mark_run();
@@ -223,9 +184,7 @@ export let _dynamic_tag = (
       }
     };
 
-    // A diverging native-tag branch ships as a fragment (like a component
-    // branch): the element bakes into the capture, the applier binds the
-    // branch at the hop's anchor.
+    // Diverging native branches ship as fragments bound at the hop anchor.
     if (shouldResume && takeFragment) {
       _fragment(scopeId, accessor, () => renderNative(1));
     } else {
@@ -291,22 +250,8 @@ export let _dynamic_tag = (
         [AccessorPrefix.ConditionalRenderer + accessor]:
           (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
           renderer,
-        // Stash the site id so the client can echo what it holds here, keyed
-        // by a value that survives the document->patch scope-id drift
-        // (persisted only; non-persisted resume stays byte-identical).
-        ...(siteId !== undefined
-          ? { [RENDERER_SITE_PREFIX + accessor]: siteId }
-          : null),
-        // Patch renders link the branch scope explicitly (no markers/DOM to
-        // pair through); merges dispatch the content's registered update merge
-        // by the renderer id above. A tag-name renderer additionally stamps
-        // the tag name on the branch (the same key the needsScript path
-        // stashes) so the applier's discrimination between a native hop and
-        // a lazy component -- whose optimized register id can be a valid
-        // element localName -- is structural (see `_update_dynamic` in
-        // dom/update-merges.ts). Fragment-delivered native branches carry it too:
-        // a later frame of the same apply re-dispatches over the (by then
-        // live, shared) branch scope and must still take the native path.
+        // Patch branches link explicitly; native renderers retain their tag so
+        // later frames cannot confuse them with component registry ids.
         ...(updateStructural
           ? {
               [AccessorPrefix.BranchScopes + accessor]: _scope(
@@ -321,18 +266,17 @@ export let _dynamic_tag = (
     }
   } else {
     if (updateStructural) {
-      // A request-derived dynamic tag can disappear (attribute-tag bodies are
-      // one common source). The explicit zero lets the update merge remove
-      // the matched branch; omitting the renderer would mean "unchanged".
+      // Zero explicitly removes a request-derived branch; absence is unchanged.
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]: 0,
         [AccessorPrefix.BranchScopes + accessor]: undefined,
-        ...(siteId !== undefined
-          ? { [RENDERER_SITE_PREFIX + accessor]: siteId }
-          : null),
       });
     }
     _scope_id();
+  }
+
+  if (siteKey !== undefined) {
+    state.nextPossessed[siteKey] = rendered ? "" + targetRendererId : "0";
   }
 
   return result;

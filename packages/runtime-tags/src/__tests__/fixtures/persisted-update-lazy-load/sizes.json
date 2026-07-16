@@ -2,23 +2,23 @@
   "dom": {
     "template.marko.page.mjs": {
       "min": 183,
-      "brotli": 150
+      "brotli": 151
     },
     "update.js": {
-      "min": 502,
-      "brotli": 286
+      "min": 490,
+      "brotli": 285
     },
-    "panel.marko.update.mjs": {
-      "min": 417,
-      "brotli": 263
+    "panel.marko.persisted.mjs": {
+      "min": 650,
+      "brotli": 354
     },
     "panel.mjs": {
-      "min": 1005,
-      "brotli": 524
+      "min": 423,
+      "brotli": 242
     }
   },
   "html": {
-    "min": 829,
+    "min": 832,
     "brotli": 481
   }
 }

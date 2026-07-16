@@ -27,7 +27,7 @@ const clickPanel = (container: Element) =>
 //   patch PARKS on the pending queue and replays the moment the module
 //   registers (the panel first paints already showing "beta" -- a
 //   fine-grained text update, not a re-render).
-// - The "gamma" navigation lands after load: the child's `?update` merge
+// - The "gamma" navigation lands after load: the child's persisted merge
 //   (bundled into its lazy chunk, registered under the compile-constant
 //   id both compiles derive) dispatches directly, with the panel's own
 //   `<let>` click state preserved across both.

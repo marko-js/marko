@@ -23,7 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		...attrs
 	}, "#div/3", $scope0_id, "div")}>dynamic</div>${_el_resume($scope0_id, "#div/3")}`);
 	const $childScope = _peek_scope_id();
-	_update_child($scope0_id, "PatchChild:#childScope/4", $childScope);
 	_set_serialize_reason($sg__input_title);
 	child_default({
 		"data-request": input.title,
