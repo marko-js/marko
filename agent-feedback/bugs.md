@@ -156,12 +156,6 @@ The string-renderer branch of HTML `_dynamic_tag` never assigns `result` (the in
 
 `writeFormData` appends only entries whose value is a string and silently skips every `File`/`Blob`, even though those are standard `FormData` values. Verified with fields `text="ok"` and `file=new File(["body"], "x.txt")`: the payload reconstructed a `FormData` containing only `text`, with no abort or warning. This is worse than the serializer's normal unsupported-value behavior because hydration proceeds with incomplete state; serialize blob contents/name/type asynchronously, or reject the containing value explicitly until that is supported.
 
-## Preserve duplicate header fields during serialization
-
-`packages/runtime-tags/src/html/serializer.ts:1280` | 2026-07-15 | impact:med | effort:low
-
-`writeHeaders`, `writeRequest`, and `writeResponse` all feed header entries through `stringEntriesToProps`, creating an object literal. Repeated names become duplicate object keys, so all but the last value are discarded; two `set-cookie` fields serialize as `new Headers({"set-cookie":"a=1","set-cookie":"b=2"})` and resume as only `b=2`. Use the iterable/tuple form (`new Headers([[name, value], ...])`) whenever names repeat, or for all headers, so non-combinable fields such as `Set-Cookie` round-trip.
-
 ## Support bigint typed-array instances in the serializer
 
 `packages/runtime-tags/src/html/serializer.ts:886` | 2026-07-15 | impact:low | effort:low

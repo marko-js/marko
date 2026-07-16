@@ -858,6 +858,14 @@ describe("serializer", () => {
         `[_.a=new Headers({a:"1",b:"2"}),_.a]`,
       );
     });
+    it("repeated set-cookie", () =>
+      assertStringify(
+        new Headers([
+          ["set-cookie", "a=1"],
+          ["set-cookie", "b=2"],
+        ]),
+        `new Headers([["set-cookie","a=1"],["set-cookie","b=2"]])`,
+      ));
   });
 
   describe("FormData", () => {

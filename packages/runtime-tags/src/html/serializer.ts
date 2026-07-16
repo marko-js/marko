@@ -1278,8 +1278,8 @@ function writeURLSearchParams(state: State, val: URLSearchParams) {
 }
 
 function writeHeaders(state: State, val: Headers) {
-  const headers = stringEntriesToProps(val as any);
-  state.buf.push("new Headers" + (headers ? "({" + headers + "})" : ""));
+  const headers = stringEntriesToHeadersInit(val as any);
+  state.buf.push("new Headers" + (headers ? "(" + headers + ")" : ""));
   return true;
 }
 
@@ -1333,10 +1333,10 @@ function writeRequest(state: State, val: Request, ref: Reference) {
     sep = ",";
   }
 
-  const headers = stringEntriesToProps(val.headers as any);
+  const headers = stringEntriesToHeadersInit(val.headers as any);
   state.refs.set(val.headers, new Reference(ref, "headers", state.flush, null));
   if (headers) {
-    options += sep + "headers:{" + headers + "}";
+    options += sep + "headers:" + headers;
     sep = ",";
   }
 
@@ -1395,10 +1395,10 @@ function writeResponse(state: State, val: Response, ref: Reference) {
     sep = ",";
   }
 
-  const headers = stringEntriesToProps(val.headers as any);
+  const headers = stringEntriesToHeadersInit(val.headers as any);
   state.refs.set(val.headers, new Reference(ref, "headers", state.flush, null));
   if (headers) {
-    options += sep + "headers:{" + headers + "}";
+    options += sep + "headers:" + headers;
   }
 
   if (!val.body || val.bodyUsed) {
@@ -1990,15 +1990,31 @@ function hasSymbolIterator(
   return Symbol.iterator in (value as any);
 }
 
-function stringEntriesToProps(entries: Iterable<[string, string]>) {
+function stringEntriesToHeadersInit(entries: Iterable<[string, string]>) {
+  const list = [...entries];
+  if (!list.length) return "";
+  // A Headers iterator keeps `Set-Cookie` split; an object literal would drop
+  // all but the last, so a repeated name uses the tuple form to round-trip.
+  let duplicate = false;
+  const seen = new Set<string>();
+  for (const [key] of list) {
+    if (seen.has(key)) {
+      duplicate = true;
+      break;
+    }
+    seen.add(key);
+  }
+
   let result = "";
   let sep = "";
-  for (const [key, value] of entries) {
-    result += sep + toObjectKey(key) + ":" + quote(value, 0);
+  for (const [key, value] of list) {
+    result += duplicate
+      ? sep + "[" + quote(key, 0) + "," + quote(value, 0) + "]"
+      : sep + toObjectKey(key) + ":" + quote(value, 0);
     sep = ",";
   }
 
-  return result;
+  return duplicate ? "[" + result + "]" : "{" + result + "}";
 }
 
 function typedArrayToInitString(view: TypedArray) {
