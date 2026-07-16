@@ -58,18 +58,6 @@ but it is one flush-ordering change away from a silent hydration freeze. A
 queue (or firing the pending callback before re-assigning) would make the
 inline runtime robust; weigh against inline-runtime byte cost.
 
-## `fromIter` drops a falsy first item
-
-`packages/runtime-tags/src/translator/util/optional.ts:209` | 2026-07-13 | impact:low | effort:low
-
-`fromIter` accumulates into `one` and branches on `else if (one)` (line 209), testing truthiness instead of presence. A first-yielded falsy item (`0`, `""`, `false`, `0n`) fails the test, so the second item overwrites it rather than promoting to `[one, item]`, silently discarding the first element. Its sibling `Opt` builders (`push`/`concat`/`filter`) all guard on `!== undefined`. Latent — no current caller feeds a falsy-first iterable — but the inconsistency is a trap. Fix with an explicit `let hasOne = false` flag (or a sentinel) so falsy items are handled like the other helpers.
-
-## `getAllKnownPropNames` enumerates only one level of `rest`
-
-`packages/runtime-tags/src/translator/util/binding-prop-tree.ts:121` | 2026-07-13 | impact:low | effort:low
-
-`getAllKnownPropNames` collects `propTree.props` keys plus `propTree.rest?.props` keys, stopping after one `rest` level, while its siblings `getKnownFromPropTree` and `hasAllKnownProps` (same file) recurse the full `rest` chain. A prop at `rest.rest.props` is thus resolved as "known" by `getKnownFromPropTree` yet absent from the name set `known-tag.ts` builds as `remaining` (`new Set(getAllKnownPropNames(propTree))`, ~lines 494/1025), which tracks known props still to emit — a missing name means that prop is never wired from the spread. Currently unreachable: no fixture builds a 2-level rest chain (instrumenting the whole suite found none), so the fix is byte-identical on every fixture. Fix: `if (propTree.rest) keys.push(...getAllKnownPropNames(propTree.rest));`.
-
 ## SSR controlled-form value normalization diverges from DOM for `0n`/`NaN`/`false`, causing a hydration mismatch
 
 `packages/runtime-tags/src/html/attrs.ts:516` | 2026-07-14 | impact:low | effort:low
@@ -87,12 +75,6 @@ inline runtime robust; weigh against inline-runtime byte cost.
 `packages/runtime-tags/src/dom/controllable.ts:352` | 2026-07-14 | impact:low | effort:low
 
 In `_attr_select_value`'s `MutationObserver` (fired when `<option>`s are added/removed), the decision to run `onChange` is `value.length !== el.selectedOptions.length || value.some((v, i) => v != el.selectedOptions[i].value)` (lines 352–353). `value` is `scope[ControlledValue]` in app-supplied order, while `el.selectedOptions` is always document order and selection is applied set-wise (`opt.selected = value.includes(opt.value)` in `setSelectValue`). So a set-equal but reordered controlled array (e.g. `value=["b","a"]` with options rendered `a,b`, both selected) flags a false mismatch on any option add/remove and fires `valueChange(getSelectValue(...))`, silently reordering the app model to document order with no user interaction. Native multi-select never preserves order (any real user change already document-orders the model), so impact is low — the only novel effect is a spurious change side-effect on unrelated option mutations, which stabilizes after one fire. Fix: compare as sets (length plus `every(v => selectedValues.has(v))`).
-
-## `createProgramState` cache guard uses truthiness, would recompute a falsy stored value
-
-`packages/runtime-tags/src/translator/util/state.ts:11` | 2026-07-14 | impact:low | effort:low
-
-`createProgramState`'s getter caches with `let state = map.get(getProgram()); if (!state) { map.set(getProgram(), (state = init())); }`. The `if (!state)` truthiness test treats any falsy stored value (`0`, `""`, `false`, `0n`, `NaN`) as absent, so the next read re-runs `init()` and overwrites the caller's value with the init default. Its sibling `createSectionState` (same file) correctly uses `??=` (nullish) for exactly this reason. Latent: the only two falsy-valued program states coincidentally never observe it — `getNextBindingId` (init `() => 0`, `references.ts:197`) is always set to `id + 1 >= 1` before the next read, and `getHasAnalyzeErrors` (init `() => false`, `analyze-errors.ts:13`) only ever stores `true`. A future `createProgramState` whose setter stores a falsy value differing from init would silently recompute. Fix: a `map.has(getProgram())` presence check, or align with `createSectionState`'s nullish pattern.
 
 ## Inert Class parent drops client resume for a stateful Tags-API descendant
 

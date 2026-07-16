@@ -203,6 +203,7 @@ export function forEach<T>(
 export function fromIter<T>(data: Iterable<T>) {
   let one: T | undefined;
   let many: Many<T> | undefined;
+  // Items are never falsy, so `one`/`many` truthiness distinguishes unset from set.
   for (const item of data) {
     if (many) {
       many.push(item);

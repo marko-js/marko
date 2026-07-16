@@ -8,6 +8,7 @@ export function createProgramState<T>(init: () => T) {
   return [
     () => {
       let state = map.get(getProgram());
+      // Cached states are never falsy, so `!state` reliably means "not yet cached".
       if (!state) {
         map.set(getProgram(), (state = init()));
       }
