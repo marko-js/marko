@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.3.14
+
+### Patch Changes
+
+- [#3459](https://github.com/marko-js/marko/pull/3459) [`cd63fa1`](https://github.com/marko-js/marko/commit/cd63fa15ff47c5101c3efd182b2ea51222799cee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support serializing `BigInt64Array` and `BigUint64Array` for resumption. These views previously aborted with `Unable to serialize` because instance dispatch and the internal `TypedArray` type only covered number-backed arrays. They now round-trip, emitting bigint element literals with the `n` suffix and using the compact length form for zero-filled views.
+
+- [#3458](https://github.com/marko-js/marko/pull/3458) [`383f47d`](https://github.com/marko-js/marko/commit/383f47df0e2f07ab359a88dd75d825aa396c2287) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix duplicate header fields (notably multiple `Set-Cookie`) being lost when a `Headers`, `Request`, or `Response` is serialized for resumption. Headers were emitted as an object literal, collapsing repeated names to the last value; a repeated name now serializes as the tuple `Headers` form (`new Headers([[name, value], ...])`) so non-combinable fields round-trip.
+
+- [#3460](https://github.com/marko-js/marko/pull/3460) [`9347a7e`](https://github.com/marko-js/marko/commit/9347a7ed73d57a2587a72a0e83ae95dba0ef6d1c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop silently dropping `File`/`Blob` entries when serializing a `FormData` for resumption. Previously only string entries were kept, so a resumed form reconstructed a `FormData` missing its file entries with no error. Since these values are not yet serializable, they now fail like any other unsupported value (a clear error in development, and the whole value is skipped in production) instead of shipping incomplete state.
+
+- [#3454](https://github.com/marko-js/marko/pull/3454) [`c18a6a7`](https://github.com/marko-js/marko/commit/c18a6a7b262971faa4e0b58a9881c230cd26c485) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `${...}` interpolation in a nested selector's prelude after a pseudo-class colon (e.g. `<style>.foo { &:hover ${x} { … } }</style>`) silently compiling to an invalid `var(--…)` in selector position. The pseudo-class colon was mistaken for a declaration-value colon, suppressing the intended error; such interpolations now correctly report that a `<style>` interpolation only resolves in a declaration value.
+
 ## 6.3.13
 
 ### Patch Changes
