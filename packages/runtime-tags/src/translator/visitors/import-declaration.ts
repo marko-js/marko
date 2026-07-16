@@ -96,6 +96,12 @@ export default {
           );
         }
       }
+
+      if (!node.specifiers.some(t.isImportDefaultSpecifier)) {
+        throw importDecl.buildCodeFrameError(
+          "Invalid load import, a default specifier is required.",
+        );
+      }
     }
   },
   translate: {

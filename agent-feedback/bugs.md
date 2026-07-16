@@ -70,12 +70,6 @@ inline runtime robust; weigh against inline-runtime byte cost.
 
 `getAllKnownPropNames` collects `propTree.props` keys plus `propTree.rest?.props` keys, stopping after one `rest` level, while its siblings `getKnownFromPropTree` and `hasAllKnownProps` (same file) recurse the full `rest` chain. A prop at `rest.rest.props` is thus resolved as "known" by `getKnownFromPropTree` yet absent from the name set `known-tag.ts` builds as `remaining` (`new Set(getAllKnownPropNames(propTree))`, ~lines 494/1025), which tracks known props still to emit — a missing name means that prop is never wired from the spread. Currently unreachable: no fixture builds a 2-level rest chain (instrumenting the whole suite found none), so the fix is byte-identical on every fixture. Fix: `if (propTree.rest) keys.push(...getAllKnownPropNames(propTree.rest));`.
 
-## `load` import with no default specifier crashes translate instead of a diagnostic
-
-`packages/runtime-tags/src/translator/visitors/import-declaration.ts:108` | 2026-07-13 | impact:low | effort:low
-
-The analyze pass validates that any _present_ specifiers are default specifiers (lines 91–97) but never requires one to exist, so a `load` import carrying zero specifiers passes analysis. Translate then does `node.specifiers.find(t.isImportDefaultSpecifier)!` (line 108); `.find` returns `undefined`, the `!`/destructure throws an opaque "Cannot destructure property 'local' of undefined" instead of a `buildCodeFrameError`. Fix: in the analyze block, after the specifier loop, throw a code-frame error when `!node.specifiers.some(t.isImportDefaultSpecifier)`.
-
 ## SSR controlled-form value normalization diverges from DOM for `0n`/`NaN`/`false`, causing a hydration mismatch
 
 `packages/runtime-tags/src/html/attrs.ts:516` | 2026-07-14 | impact:low | effort:low
@@ -179,9 +173,3 @@ bridged head chunk.
 `packages/runtime-tags/src/dom/control-flow.ts:535` | 2026-07-14 | impact:high | effort:med
 
 The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` (`:535` for `_dynamic_tag`, `:647` for `_dynamic_tag_content`, plus the DOM `_attr_content`). `RendererProp.Id` is the template/section resume id, identical for every _instance_ of one content section — instances differ only by their `RendererProp.Owner` scope. So switching a dynamic tag between two instances of the same content — two `<attrs.content>` from two instances of one provider tag, or the list-detail `<${selected.content}/>` — is a silent no-op: no teardown or re-render, and closures stay subscribed to the old owner's scope. A control with two _distinct_ tag files behaves correctly, pinning the defect to the id-only comparison. Fix: compare `(id, owner)` — content renderer objects are recreated per render so identity alone over-fires, while the owner scope is stable per instance; the resume handshake must serialize a scope-registered renderer as its registered reference so the first post-resume update stays instance-aware.
-
-## An empty-bodied `<html-comment>` resumes as a text node instead of the comment
-
-`packages/runtime-tags/src/dom/resume.ts:402` | 2026-07-14 | impact:med | effort:med
-
-For an `<html-comment>${c}</html-comment>` whose body serializes empty, SSR writes `<!---->` immediately before the resume marker. The node-claim heuristic — `prev && (prev.nodeType < 8 /* COMMENT_NODE */ || (prev as Comment).data) ? prev : insertBefore(new Text())` — exists so an empty `<!>` separator is _not_ claimed (a fresh Text node is created instead), but it cannot distinguish an intentional empty comment: `prev` is a comment (`nodeType === 8`, so `< 8` is false) with empty `data` (falsy), so it builds a Text node as the binding rather than claiming the comment. After hydration, setting `c = "secret"` renders `secret` as visible text where a pure client render produces `<!--secret-->` — an SSR-resume vs CSR divergence. Fix: give the html-comment marker a dedicated resume symbol (e.g. `ResumeSymbol.NodeComment`) that claims the immediately-preceding sibling unconditionally, since the tag always writes its comment right before the marker.

@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-import-missing-specifier/template.marko:1:1
+    > 1 | import "./child.marko" with { load: "render" }
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid load import, a default specifier is required.
+      2 |
