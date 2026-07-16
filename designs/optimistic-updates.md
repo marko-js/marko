@@ -3,9 +3,10 @@
 Status: exploration, pre-RFC. This document maps the design space for an
 optimistic-update API in Marko 6 (`packages/runtime-tags`), evaluates candidate
 models, and develops the most promising one far enough to expose its gaps —
-pending states, concurrency, abort/cleanup, and integration with persisted
-pages. Nothing here is committed; §4 records the honest weaknesses of the
-recommended direction and §12 the open questions.
+pending states, concurrency, abort/cleanup, interaction with the async
+machinery, and integration with persisted pages. Nothing here is committed;
+§4 records the honest weaknesses of the recommended direction and §13 the
+open questions.
 
 It builds on the persisted-pages design family
 (`designs/persisted-pages-*.md` on the `claude/marko-persisted-pages-review-*`
@@ -75,7 +76,7 @@ Non-goals:
   `<mut>`/`let-*` family design.
 - Offline/queued mutations.
 - Replacing `<try>`/`<await>` pending semantics; those remain the async
-  placeholder system.
+  placeholder system (§11.2).
 
 ## 3. Design space
 
@@ -166,7 +167,7 @@ A's machinery has to justify.
 | Works without router (manual fetch) | yes | yes | no | yes | yes |
 | Bounded guess lifetime | yes | yes | yes | yes | **no** |
 | Rollback on failure | automatic | automatic | automatic | automatic | none |
-| Pending derivable | yes (§7) | best | yes | yes | no |
+| Pending observable | reported (§7) | best | yes | yes | no |
 | Concurrency story | §8 | manual | best | §8 | none |
 | Ambient magic | txn window | none | none | txn window | none |
 | New concepts | 1 tag + 1 rule | 3 | 1 tag + reducers | store design | 1 tag |
@@ -182,14 +183,16 @@ precisely (§6) — ambiguity there is where implicit designs rot.
 
 ## 4. Honest weaknesses of the recommended model
 
-Recorded up front; §12 tracks the ones without answers.
+Recorded up front; §13 tracks the ones without answers.
 
 1. **Two names for one value.** Every optimistic view doubles a binding
    (`cart` / `optimisticCart`), and any expression that reads the source
    directly silently ignores guesses. Inherent to overlay models (React's
-   `useOptimistic` shares it). Mitigation is convention (shadowing is
-   impossible; lint "source read in a template that declares an optimistic
-   view of it" is plausible), not design.
+   `useOptimistic` shares it). Softened where truth is not itself a local
+   binding — in a persisted app the view can simply take the natural name
+   (`<optimistic/cart=$global.data.cart>`) — and mitigable by convention or
+   lint ("source read in a template that declares an optimistic view of
+   it"), not by design.
 2. **Instance-local overrides.** `<optimistic>` in the product card does not
    move the cart badge in the header. Ambient transactions make the
    *synchronous fan-out write* compose (§9.5), but sharing itself remains
@@ -207,34 +210,37 @@ Recorded up front; §12 tracks the ones without answers.
 
 ## 5. Proposed surface
 
-Three additions, sized for a v1 the whole document defends:
+Two additions, sized for a v1 the whole document defends:
 
 ```marko
-<optimistic/optimisticCart=cart/>
-// `optimisticCart` mirrors `cart`. Assigning it inside an event handler
+<let/saving=false>
+<optimistic/cart=$global.data.cart pending:=saving/>
+// `cart` mirrors `$global.data.cart`. Assigning it inside an event handler
 // applies immediately and reverts when the handler's transaction settles.
+// The tag reports override activity through `pendingChange` (here via the
+// `:=` sugar) into ordinary user-owned state.
 
-<form method="POST" action="/cart" onSubmit() { optimisticCart = [] }>
+<form method="POST" action="/cart" onSubmit() { cart = [] }>
 // Persisted router: intercepts the submit, extends the transaction until the
 // PRG patch applies. No router: add `ev.preventDefault()` + async fetch and
 // the returned promise is the transaction.
-
-<pending/saving=optimisticCart/>
-// True while any unsettled transaction holds an override on the binding.
 
 $waitUntil(promise)
 // Inside a handler: extend the current transaction past its own promise.
 ```
 
 - `<optimistic>` requires a tag variable (identifier, not destructured —
-  it must be assignable) and accepts only `value=`, matching `<let>`'s
-  attribute discipline (`translator/core/let.ts:60`).
-- `<pending>` accepts `value=` as an optimistic binding, an element
-  reference, or an array of either (§7).
+  it must be assignable) and accepts `value=`, `pending=`, and
+  `pendingChange=`, matching `<let>`'s attribute discipline
+  (`translator/core/let.ts:60`).
 - `$waitUntil` joins `$global`/`$signal` as a translator-resolved
   identifier; it is a compile error on HTML output paths the same way
   `$signal` throws in server renders
   (`translator/visitors/referenced-identifier.ts:100`).
+
+There is no `<pending>` tag and no runtime-owned pending value: pending is
+*reported* through the established change-handler convention and lives in
+state the application already owns (§7).
 
 Naming: `optimistic` is the industry term (React precedent) and reads
 correctly at the assignment site. Rejected: a modifier on `<let>` (this is a
@@ -278,14 +284,14 @@ A transaction is the unit "one user intent, until settled".
 - **Settle:** when the pending count reaches zero (checked from a microtask
   after dispatch, so a sync handler with no extensions settles immediately).
   Resolution and rejection are identical: release. Rejection additionally
-  rethrows to the host (unhandled rejection) unless user code caught it —
-  the transaction does not swallow or route errors (§12.2).
+  keeps its unhandled-rejection reporting (§11.6) — the transaction does not
+  swallow or route errors (§13.2).
 - **Release ordering:** releases queue through `queueRender`/`schedule()`
   like any state write. A settle triggered by a resolved fetch whose handler
   also assigned truth flushes in the same batch — no truth-then-revert
   flicker frame. The persisted router resolves its extension after the final
   frame's synchronous flush (`run-pp/.../persisted-navigation.ts:126-144`),
-  giving the same single-batch property.
+  giving the same single-batch property (§11.5).
 
 Nested dispatches (a handler synchronously dispatching another event) stack:
 the inner dispatch gets its own transaction; the ambient is restored after.
@@ -326,28 +332,63 @@ lexical capture). Modeled on `ExtendableEvent.waitUntil`; callable multiple
 times; later calls during an extended window keep stacking. Debug-errors
 when no transaction is current. Not valid in `<script>`/render expressions —
 transactions are user intents, not render lifecycles; `$signal` already
-owns cleanup there.
+owns cleanup there (§11.4).
 
 ## 7. Pending states
 
-Three granularities matter in practice; the design covers them with one tag
-plus derivation:
+Pending is not a new data source. `<optimistic>` *reports* override activity
+through the established change-handler convention, into ordinary state the
+application already owns:
 
-1. **Value pending** — "this number is a guess": `<pending/saving=view>` is
-   true while any active override exists on `view`. Note this is *not*
-   `view !== source` — a guess equal to current truth is still pending
-   (and `!==` misses it), and this signal exists precisely so users don't
-   hand-derive it wrong.
-2. **Element pending** — "this form/link is busy":
-   `<pending/busy=formEl>` (a native tag variable) is true while any
-   unsettled transaction's originating event target was inside that element.
-   This covers the mutation-with-no-optimistic-value case — the demo's promo
-   form wants its button disabled during the round trip, and in a persisted
-   app the handler has no completion callback to reset manual state with.
-   Containment is checked once at transaction open, only when element-keyed
-   `<pending>` tags are registered.
-3. **Row/derived pending** — style-don't-remove patterns derive from the two
-   above plus membership:
+```marko
+<let/saving=false>
+<optimistic/cart=$global.data.cart pending:=saving/>
+
+<button disabled=saving aria-busy=saving>Clear Cart</button>
+```
+
+`pending:=saving` is the standard sugar for
+`pending=saving pendingChange(p) { saving = p }`; the explicit
+`pendingChange=` form works identically.
+
+### 7.1 Semantics
+
+- **What it reports:** transitions of "this instance holds at least one
+  active override". `pendingChange(true)` fires at the first override
+  attach, `pendingChange(false)` when the last one releases; edges only, no
+  repeats. Note this is *not* `view !== source` — a guess equal to current
+  truth is still pending, and `!==` would miss it; this signal exists so
+  users don't hand-derive it wrong.
+- **Timing:** edges fire synchronously with the transition — `true` inside
+  the dispatch that assigned the guess, `false` inside the settle context —
+  so the flag's downstream renders always flush in the same batch as the
+  guess/release renders. A pending flag can never be observed disagreeing
+  with the value it describes.
+- **The value side is inert.** Pending's truth lives in the transaction
+  machinery and cannot be asserted from the template; the `pending=`
+  attribute is accepted only so the `:=` sugar composes, and the runtime
+  never reads it. This is the one wrinkle: elsewhere in Marko the value
+  half of a value/change pair is meaningful (controlled inputs,
+  `<return>`). Debug builds error on `pending=` without `pendingChange`
+  (a write-only channel with no writer is always a mistake). The
+  alternative — accept only `pendingChange=` and forgo the sugar — is safer
+  but reads worse; decide at RFC (§13.1).
+- **SSR/resume:** the handler never fires server-side; the receiving
+  `<let>`'s own initial value is the SSR value. Nothing serializes.
+- **Ownership:** the receiving state is ordinary application state. It can
+  be initialized `true`, combined across tags
+  (`<const/busy=savingCart || savingProfile>`), fed to `aria-busy`, or set
+  manually for non-transaction reasons. The tag only reports edges — which
+  also means wiring two `<optimistic>` tags to the *same* `<let>` lets the
+  last edge win; use two flags and derive.
+- **Don't write optimistic state in `pendingChange`.** The `false` edge
+  fires in the settle context, outside any transaction window, so such a
+  write hits the §6.3 debug error naturally.
+
+### 7.2 What this covers, and what it doesn't
+
+Value-keyed pending covers the optimistic cases by construction, and
+row-level treatment derives from it plus membership:
 
 ```marko
 <optimistic/optimisticEntries=entries/>
@@ -360,16 +401,18 @@ plus derivation:
 (Iterate truth, style by optimistic membership — or iterate the optimistic
 list for hard removal. Both compose with `by=` keying.)
 
-`<pending>` is always false during SSR (there is no value to serialize;
-normal analysis decides the spine) and pairs naturally with
-`aria-busy=saving` — the docs guidance should say so (the unwritten
-`duplicate-form-submissions.md` guide is this feature's teaching moment).
-
-Deliberately absent: a page-global "is anything navigating" flag. That is
-router state and belongs to `@marko/run` (the persisted shell already owns
-the lifecycle and today emits only a success `marko-run:navigate` event,
-`run-pp/.../persisted-navigation.ts:144`); a core tag must not imply a
-router. Model C's submissions list is the natural home when it comes.
+Not covered: a mutation with **no optimistic value** — the demo's promo
+form wants its button disabled during the round trip, has nothing to guess,
+and under the persisted router the handler gets no completion callback to
+reset manual state with. An `<optimistic>` with a dummy value is not an
+answer. The shape most consistent with this design is the same reporting
+convention moved to the element that owns the gesture —
+`<form pending:=applying>` as a Marko-managed native-tag attribute wired to
+transactions whose originating event target is inside that element (the
+containment check runs once at transaction open, only when such attributes
+exist). That is deliberately *not* in v1: it touches native-tag attribute
+space and needs its own review; `@marko/run` navigation lifecycle events are
+the interim escape hatch. Tracked in §13.1.
 
 ## 8. Concurrency
 
@@ -380,10 +423,10 @@ transaction: `[{txn, value}...]` in write order; a transaction re-assigning
 replaces its entry in place. Effective value = last entry; release removes
 entries by transaction and re-derives. Consequences worth stating:
 
-- **Compose from the view, not the source.** `optimisticCart =
-  [...optimisticCart, item]` layers correctly over earlier unsettled guesses
-  because the view already includes them. This is the documented idiom (and
-  what the demo already does).
+- **Compose from the view, not the source.** `cart = [...cart, item]`
+  (where `cart` is the optimistic view) layers correctly over earlier
+  unsettled guesses because the view already includes them. This is the
+  documented idiom (and what the demo already does).
 - **Out-of-order settles are principled.** T1 guesses v1, T2 guesses v2, T2
   settles first → the view shows v1 (T1's intent is still unconfirmed),
   then truth when T1 settles. Odd-looking, correct, worth a docs example.
@@ -423,19 +466,20 @@ function-valued assignment as an updater, re-fold active updaters when
 `source` re-derives — but v1 ships snapshots only: the demo cases don't
 need rebase, function-valued *state* would need a carve-out, and
 compose-from-the-view already handles the common overlap (two guesses over
-the same value). Revisit with evidence (§12.4).
+the same value). Revisit with evidence (§13.4).
 
 ## 9. Worked examples
 
 ### 9.1 Persisted pages (the headline)
 
 ```marko
-<optimistic/optimisticCart=$global.data.cart/>
+<let/saving=false>
+<optimistic/cart=$global.data.cart pending:=saving/>
 
-<div>Items in cart: ${optimisticCart.length}</div>
+<div>Items in cart: ${cart.length}</div>
 
-<form method="POST" action="/cart" onSubmit() { optimisticCart = [] }>
-  <button name="_action" value="clear">Clear Cart</button>
+<form method="POST" action="/cart" onSubmit() { cart = [] }>
+  <button disabled=saving name="_action" value="clear">Clear Cart</button>
 </form>
 ```
 
@@ -449,6 +493,10 @@ releases against already-correct truth. Failure or fallback → document
 navigation; supersession → release. No JS → plain PRG. A user
 `ev.preventDefault()` opts out of interception entirely, which also reads
 correctly: the handler owns the transaction instead.
+
+Because truth here is a `$global` expression rather than a local binding,
+the optimistic view takes the natural name — there is no
+`cart`/`optimisticCart` split in the template at all.
 
 ### 9.2 Manual fetch (no persisted pages)
 
@@ -468,12 +516,12 @@ Same tag, same semantics; the transaction is the handler's returned promise.
 ### 9.3 Optimistic link navigation
 
 ```marko
-<optimistic/optimisticSort=$global.search.sort/>
-<pending/sorting=optimisticSort/>
+<let/sorting=false>
+<optimistic/sort=$global.search.sort pending:=sorting/>
 
 <a
   href=Run.href("/search", { search: { sort: "price" } })
-  onClick() { optimisticSort = "price" }
+  onClick() { sort = "price" }
   aria-busy=sorting
 >Price</a>
 ```
@@ -486,11 +534,11 @@ settle to the destination's truth.
 
 The demo's promo form POSTs and the server re-renders the same page with
 `promo.error` on invalid codes; the persisted router applies that direct
-POST response as an in-place patch. With `<pending/applying=promoForm>`
-disabling the button, an optimistic form that *fails validation* needs no
-new API: the transaction settles when the error patch applies, overrides
-revert, and the error content is already on screen. Rollback-plus-explain
-composes from existing pieces.
+POST response as an in-place patch. An optimistic guess elsewhere on the
+page that *fails validation* needs no new API: the transaction settles when
+the error patch applies, overrides revert, and the error content is already
+on screen. Rollback-plus-explain composes from existing pieces. (Disabling
+the promo button itself is the value-less pending gap — §7.2.)
 
 ### 9.5 Shared views: what composes and what doesn't
 
@@ -521,9 +569,10 @@ primitive it would use, not a competitor.
    wires settle once around the navigation promise rather than per-path.
 2. **`$signal` stays orthogonal.** A handler's `$signal` aborts on
    dependency invalidation/unmount (`dom/abort-signal.ts`), not on
-   transaction settle. Aborting the *work* (the fetch) on supersession is
-   the user's `AbortController` in v1; a `$transaction.signal` that aborts
-   on supersession is a coherent later addition (§12.6) but v1 avoids a
+   transaction settle — and see §11.4 for why the two must not be conflated.
+   Aborting the *work* (the fetch) on supersession is the user's
+   `AbortController` in v1; a `$transaction.signal` that aborts on
+   supersession is a coherent later addition (§13.6) but v1 avoids a
    second ambient object.
 3. **Hung transactions.** A never-settling promise holds its override
    forever; that is goal 4's contract honored literally (the guess is
@@ -535,19 +584,117 @@ primitive it would use, not a competitor.
 4. **Unload/destroy.** Full-document fallback and `instance.destroy()` make
    release moot; scope-generation guards already skip destroyed work.
 
-## 11. Implementation sketch
+## 11. Transactions and the async machinery
+
+Marko already has four async subsystems: the render/effect queue, the
+`<try>`/`<await>` placeholder system, `$signal` lifetimes, and (persisted)
+the streamed frame applier. Transactions must compose with each without
+becoming a fifth scheduler. Walked one at a time:
+
+### 11.1 The queue
+
+Optimistic assignment is an external state write: set the slot
+synchronously, `schedule()` + `queueRender`, exactly `_let`'s shape
+(`dom/signals.ts:43-49`). Release is the same path from the settle
+microtask. The no-flicker guarantee follows from sequencing alone: in
+`optimisticCart = guess; cart = (await f()).cart`, the truth write queues
+before the handler promise resolves, the settle callback runs after it, and
+both land in the same flush. Transactions never call `run()` directly and
+never bypass batching; a transaction is *not* a scheduling primitive — it
+adds no ordering rules the queue doesn't already have.
+
+### 11.2 `<try>` / `<await>` placeholders
+
+Deliberately disjoint, in both directions:
+
+- **Transactions never trigger placeholders.** A placeholder means "content
+  absent"; an override means "content provisional". Conflating them is how
+  React ended up needing `useTransition` to *suppress* Suspense fallbacks
+  during mutations; Marko avoids the problem by never routing transactions
+  through `AwaitCounter`. A transaction holds values, not branches.
+- **Parked work already behaves.** If an optimistic write targets state
+  under a `<try>` with outstanding awaits, its render parks on the branch
+  like any other; a later release doesn't queue a duplicate — `queueRender`
+  updates the parked entry's value in place and returns
+  (`dom/queue.ts:41-48`), so the branch unparks straight to the effective
+  value. No transaction-specific handling needed.
+- **Promises derived from optimistic values** flow through `<await>`
+  normally: `<const/preview=fetchPreview(cart)>` re-pends its boundary on
+  the guess and again on release-to-different-truth. That's coherent but
+  usually wasteful (speculative fetches from guesses); guidance, not
+  mechanism: optimistic values are for display, sources for derivation —
+  unless speculation is the point.
+
+### 11.3 `<await>` handed the transaction's own promise
+
+Nothing stops `<await=submitPromise>` where the handler also `$waitUntil`s
+the same promise — placeholder while pending, content and release in the
+same settle window. This is the correct meeting point of the two systems
+(value overlay *and* structural pending from one promise), and it needs no
+API: promises are the shared currency. Worth a docs example, mostly to show
+the systems compose without either knowing about the other.
+
+### 11.4 `$signal` self-abort
+
+An existing behavior transactions will make common: a handler that *reads*
+the binding it assigns (`cart = [...cart, item]`) has that binding in its
+attribute root's dependencies, so the assignment queues the root's
+`$signalReset` (`translator/visitors/referenced-identifier.ts:114-127`) and
+any `$signal` the handler captured aborts one flush later — including one
+passed to a fetch started in the same invocation. So: `$signal` inside an
+optimistic handler is almost always wrong; it means "my closure went
+stale", not "my intent was superseded". v1 guidance is a plain
+`AbortController` (or nothing — the persisted router manages its own);
+`$transaction.signal` (§13.6) is the eventual correct tool. This asymmetry
+is also why `$waitUntil` must not share `$signal`'s reset lifecycle:
+extending a transaction from a `<script>` would tie user intents to render
+invalidation, which is a category error in both directions.
+
+### 11.5 Persisted frame streaming
+
+The extension settles when `navigate()` resolves — at **stream end**, not
+first frame. This is deliberate: a patch response embeds late async frames
+(a pending `<try>` on the target page delivers its boundary body as a later
+frame in the same response), and the mutated value itself may live inside
+such a boundary, so no earlier point is provably truth-complete. The cost:
+a slow unrelated `<await>` on the target route holds the override and
+`pending` flag past the moment the cart value actually landed. Accepted for
+v1 (correctness first; the override releases to identical truth, so only
+`pending` duration is affected). A future protocol marker ("route values
+complete, async continues") would let run settle earlier without guessing —
+noted in §13.7. Between-frame interleaving needs no rules: other
+transactions settling mid-stream are just client writes between frames,
+which the persisted design already pins (`persisted-update-csr-race`).
+
+### 11.6 Rejection reporting
+
+Adoption must not swallow errors. Attaching settle via `.finally`-shaped
+wiring preserves the rejection for the host's `unhandledrejection` (or the
+user's own `catch`); `$waitUntil` follows `ExtendableEvent.waitUntil`
+precedent the same way. The transaction observes outcomes; it never
+consumes them.
+
+### 11.7 SSR, streaming, resume
+
+Transactions are client gestures. `$waitUntil` throws on HTML output like
+`$signal`; `<optimistic>` degenerates to `<const>` in server renders,
+including streamed ones; `pendingChange` cannot fire before resume because
+handlers don't run before resume — pre-resume interactions are native
+(that's progressive enhancement working, not a gap). Nothing about a
+transaction serializes, so resume cost is zero.
+
+## 12. Implementation sketch
 
 Compiler (all standard core-tag shape, `translator/core/`):
 
-- `core/optimistic.ts` — analyze like `<let>` (tag var required, `value=`
-  only); assignments route through the existing assignment-tracking
-  machinery (`util/references.ts:546`, the `assignmentTo`/change-handler
-  path) to a distinct setter instead of a change handler. DOM translate
-  emits `_optimistic(id, fn)` + assignments as
-  `_optimistic_set(scope, id, value)`; HTML translate degenerates to
-  `<const>`.
-- `core/pending.ts` — value form resolves its argument to an optimistic
-  binding at compile time (error otherwise); element form takes the ref.
+- `core/optimistic.ts` — analyze like `<let>` (tag var required; `value=`,
+  `pending=`, `pendingChange=` only); assignments route through the
+  existing assignment-tracking machinery (`util/references.ts:546`, the
+  `assignmentTo`/change-handler path) to a distinct setter instead of a
+  change handler. DOM translate emits `_optimistic(id, fn)` + assignments
+  as `_optimistic_set(scope, id, value)`; the pending handler stores on a
+  companion accessor like `_let_change`'s (`dom/signals.ts:56-64`). HTML
+  translate degenerates to `<const>`.
 - `$waitUntil` in `visitors/referenced-identifier.ts` beside `$signal`,
   including the server-render throw and the handler-prologue capture for
   lexical-window uses.
@@ -562,9 +709,10 @@ Runtime (`src/dom/`):
 - `_optimistic*` signal helpers beside `_let`/`_let_change` in
   `signals.ts`: source slot + override list per instance; effective value
   precomputed into the read slot so downstream reads stay one property
-  access; release paths go through `queueRender` + `schedule()`.
-- Budget: target ≤1.0 kB min for transaction + optimistic + pending
-  combined, tree-shaken to zero when unused; `.sizes.json` enforces.
+  access; pending edges fired synchronously at attach/release transitions;
+  release paths go through `queueRender` + `schedule()`.
+- Budget: target ≤1.0 kB min for transaction + optimistic combined,
+  tree-shaken to zero when unused; `.sizes.json` enforces.
 
 `@marko/run` (persisted shell, `runtime/persisted.ts`):
 
@@ -575,23 +723,28 @@ Runtime (`src/dom/`):
   (`self[runtimeId]`, cf. the `have` reader in `run-pp/.../codegen/index.ts`)
   or a synchronous CustomEvent contract. The hook is smaller and
   runtime-id-safe; the event doubles as a public lifecycle signal — decide
-  with run maintainers (§12.5).
+  with run maintainers (§13.5).
+
+A later `<form pending:=...>` (§7.2) would live with the controllable
+native-attribute family (`dom/controllable.ts`), not in the tag.
 
 Fixtures (harness already supports interaction steps, promise controls, and
 persisted `navigate()` steps): optimistic basic/derive/revert;
 async-handler success+failure; `$waitUntil` incl. post-await;
 outside-window debug error; sync-settle warn; concurrent transactions incl.
-out-of-order settles; `<pending>` value+element forms; `<for>` row patterns;
+out-of-order settles; pending edges incl. guess-equals-truth and
+same-batch flushing; optimistic write under a pending `<try>` (park +
+release); `<await>` of a transaction promise; `<for>` row patterns;
 persisted form PRG, direct-POST validation patch, supersession, fallback;
 fan-out store composition.
 
-## 12. Open questions
+## 13. Open questions
 
-1. **`<pending>` in v1?** The element-keyed form is what makes persisted
-   mutations without optimistic values (promo form) work at all; the value
-   form is derivable-ish but easy to derive wrong. Leaning: ship both;
-   they're small once transactions exist. Naming (`<pending>` vs `<busy>`)
-   open.
+1. **Pending surface details.** Is the inert `pending=` value side
+   acceptable for the sake of `:=` sugar, or should the tag accept only
+   `pendingChange=` (§7.1)? And the value-less-mutation gap: pursue
+   `<form pending:=...>` as a native controllable-style attribute, leave it
+   to run navigation events, or both (§7.2)?
 2. **Error routing.** Should a rejected transaction surface to an enclosing
    `<try @catch>` instead of an unhandled rejection? Powerful, but it makes
    event-time errors render-time errors and needs its own design. v1:
@@ -605,10 +758,15 @@ fan-out store composition.
 6. **`$transaction` object exposure** (signal for supersession-abort of
    user fetches, programmatic `startTransaction` for non-event contexts):
    deliberately withheld from v1 to keep one ambient concept; the internal
-   object exists from day one, so exposure is additive.
-7. **Mutation queueing in the persisted router** (§8.2): belongs with the
+   object exists from day one, so exposure is additive. §11.4's self-abort
+   gotcha is the strongest argument for eventually shipping it.
+7. **Earlier persisted settle** (§11.5): a protocol marker separating
+   "route values complete" from "async frames continue" would shorten
+   pending durations on routes with slow boundaries; belongs to the wire
+   format if pursued.
+8. **Mutation queueing in the persisted router** (§8.2): belongs with the
    roadmap's "concurrent submissions" review; this design works with either
    abort-and-replace or a queue.
-8. **View-transition interplay** (deferred in the persisted roadmap):
+9. **View-transition interplay** (deferred in the persisted roadmap):
    transaction settle is a natural `startViewTransition` boundary; keep the
    settle path shaped so a future integration can wrap it.
