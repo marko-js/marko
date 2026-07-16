@@ -2,27 +2,6 @@
 
 Out-of-scope defects noticed while working on something else. Format and rules: [README.md](README.md).
 
-## `Sorted.isSuperset` arithmetic is wrong but the current behavior is load-bearing
-
-`src/translator/util/optional.ts:103` | 2026-07-03 | impact:med | effort:med
-
-`isSuperset` walks `subset` from the top and rejects with
-`supLen - found <= i`, which compares the remaining superset slots against `i`
-(the count of _smaller_ elements) instead of `subLen - i` (the count still to
-place). It returns `false` for many genuine superset relationships, including
-two identical sorted arrays: `isSuperset([1,2,3],[1,2,3])` is `false`. The one caller,
-`isSupersetSources` (`references.ts:2395`), gates intersection serialization at
-`references.ts:1131`/`1145`. Naively correcting the arithmetic to
-`supLen - found < subLen - i` makes `isSupersetSources` return `true` for
-equal-source bindings, so both symmetric `addSerializeReason` calls are skipped
-and neither binding in the intersection serializes — this under-serializes and
-breaks resume (the `bound-attr-shapes` fixture throws `Unable to serialize
-"ControlledHandler:#input/2"`). The current over-serializing behavior is
-therefore relied upon for correctness. A real fix needs `isSupersetSources` to
-use a strict/proper-superset test (equal sources must not prune each other)
-_and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
-one-line change.
-
 ## CSR: rejected `<await>` under an ancestor `@placeholder` never dismisses the placeholder
 
 `packages/runtime-tags/src/dom/control-flow.ts:376` | 2026-07-10 | impact:med | effort:med

@@ -100,6 +100,8 @@ export class Sorted<T> {
 
     for (let i = subLen; i--;) {
       const found = findIndexSorted(this.compare, superset, subset[i]);
+      // Deliberately over-strict (`<= i`, not the exact `< subLen - i`):
+      // `isSupersetSources` needs this over-serialization for correct resume.
       if (found === -1 || supLen - found <= i) return false;
     }
 
