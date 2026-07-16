@@ -15,7 +15,9 @@ export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
   let runDecl = false;
 
   const endRun = (selector: boolean) => {
-    if (runPlaceholder && !runAfterColon && (selector || runDecl)) {
+    // In a selector/prelude a `:` is a pseudo-class, not a value colon, so
+    // `runAfterColon` only exempts an interpolation inside a declaration value.
+    if (runPlaceholder && (selector || (!runAfterColon && runDecl))) {
       throw tag.hub.buildError(
         runPlaceholder,
         selector ? styleSelectorMsg : stylePropertyMsg,
