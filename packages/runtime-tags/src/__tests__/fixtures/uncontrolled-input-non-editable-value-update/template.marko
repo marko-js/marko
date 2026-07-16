@@ -1,3 +1,4 @@
+<let/dynamicType="hidden"/>
 <let/value="a"/>
 <form>
   <input type="button" name="button" value=value>
@@ -7,6 +8,7 @@
   <input type="radio" name="radio" value=value>
   <input type="reset" name="reset" value=value>
   <input type="submit" name="submit" value=value>
+  <input type=dynamicType name="dynamic" value=value>
 </form>
 <button onClick() { value = "b" }>Update</button>
 <button onClick() { value = false }>Remove</button>

@@ -38,7 +38,7 @@ import {
   mergeReferences,
   trackDomVarReferences,
 } from "../../util/references";
-import { callRuntime, getHTMLRuntime } from "../../util/runtime";
+import { callRuntime, getHTMLRuntime, importRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
@@ -716,6 +716,8 @@ export default {
 
         if (staticControllable) {
           const hasChangeHandler = !!staticControllable.attrs[1];
+          const defaultHelper =
+            getDOMControllableDefaultHelper(staticControllable);
           const firstAttr = staticControllable.attrs.find(Boolean)!;
           const referencedBindings = firstAttr.value.extra?.referencedBindings;
           const values = (
@@ -723,6 +725,12 @@ export default {
               ? staticControllable.attrs
               : staticControllable.attrs.toSpliced(1, 1)
           ).map((attr) => attr?.value);
+          if (
+            hasChangeHandler &&
+            defaultHelper !== `${staticControllable.helper}_default`
+          ) {
+            values.push(importRuntime(defaultHelper));
+          }
 
           addStatement(
             "render",
@@ -730,9 +738,7 @@ export default {
             referencedBindings,
             t.expressionStatement(
               callRuntime(
-                hasChangeHandler
-                  ? staticControllable.helper
-                  : `${staticControllable.helper}_default`,
+                hasChangeHandler ? staticControllable.helper : defaultHelper,
                 scopeIdentifier,
                 visitAccessor,
                 ...values,
@@ -1026,10 +1032,16 @@ function getRelatedControllable(
       }
 
       if (attrs.value || attrs.valueChange) {
+        const valueMode = getInputValueMode(attrs.type);
+        if (valueMode === "attribute" && !attrs.valueChange) {
+          break;
+        }
+
         return {
           special: false,
           helper: "_attr_input_value",
           attrs: [attrs.value, attrs.valueChange],
+          valueMode,
         } as const;
       }
       break;
@@ -1062,6 +1074,38 @@ function getRelatedControllable(
       }
       break;
   }
+}
+
+function getInputValueMode(typeAttr: t.MarkoAttribute | undefined) {
+  if (!typeAttr) {
+    return;
+  }
+
+  const type = evaluate(typeAttr.value);
+  if (!type.confident) {
+    return "dynamic" as const;
+  }
+
+  if (typeof type.computed === "string") {
+    switch (type.computed.toLowerCase()) {
+      case "button":
+      case "checkbox":
+      case "hidden":
+      case "image":
+      case "radio":
+      case "reset":
+      case "submit":
+        return "attribute" as const;
+    }
+  }
+}
+
+function getDOMControllableDefaultHelper(
+  controllable: NonNullable<RelatedControllable>,
+) {
+  return controllable.helper === "_attr_input_value" && controllable.valueMode
+    ? (`_attr_input_value_${controllable.valueMode}_default` as const)
+    : (`${controllable.helper}_default` as const);
 }
 
 function getUsedAttrs(tagName: string, tag: t.MarkoTag) {

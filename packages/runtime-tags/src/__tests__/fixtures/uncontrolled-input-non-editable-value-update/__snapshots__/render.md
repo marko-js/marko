@@ -36,6 +36,11 @@
     type="submit"
     value="a"
   />
+  <input
+    name="dynamic"
+    type="hidden"
+    value="a"
+  />
 </form>
 <button>
   Update
@@ -86,6 +91,11 @@ container.querySelectorAll("button")[0].click();
     type="submit"
     value="b"
   />
+  <input
+    name="dynamic"
+    type="hidden"
+    value="b"
+  />
 </form>
 <button>
   Update
@@ -103,6 +113,7 @@ UPDATE: form > input:nth-of-type(4)[value] "a" => "b"
 UPDATE: form > input:nth-of-type(5)[value] "a" => "b"
 UPDATE: form > input:nth-of-type(6)[value] "a" => "b"
 UPDATE: form > input:nth-of-type(7)[value] "a" => "b"
+UPDATE: form > input:nth-of-type(8)[value] "a" => "b"
 ```
 
 # Update
@@ -114,6 +125,7 @@ _strict.default.equal(input.value, "b", `${input.type} value`);
   form.querySelector("[type=radio]").checked = true;
   const data = new form.ownerDocument.defaultView.FormData(form);
   _strict.default.equal(data.get("checkbox"), "b");
+  _strict.default.equal(data.get("dynamic"), "b");
   _strict.default.equal(data.get("hidden"), "b");
   _strict.default.equal(data.get("radio"), "b");
 }
@@ -155,6 +167,10 @@ container.querySelectorAll("button")[1].click();
     name="submit"
     type="submit"
   />
+  <input
+    name="dynamic"
+    type="hidden"
+  />
 </form>
 <button>
   Update
@@ -172,6 +188,7 @@ UPDATE: form > input:nth-of-type(4)[value] "b" => null
 UPDATE: form > input:nth-of-type(5)[value] "b" => null
 UPDATE: form > input:nth-of-type(6)[value] "b" => null
 UPDATE: form > input:nth-of-type(7)[value] "b" => null
+UPDATE: form > input:nth-of-type(8)[value] "b" => null
 ```
 
 # Update
@@ -182,6 +199,7 @@ _strict.default.equal(input.value, input.type === "checkbox" || input.type === "
   const form = container.querySelector("form");
   const data = new form.ownerDocument.defaultView.FormData(form);
   _strict.default.equal(data.get("checkbox"), "on");
+  _strict.default.equal(data.get("dynamic"), "");
   _strict.default.equal(data.get("hidden"), "");
   _strict.default.equal(data.get("radio"), "on");
 }

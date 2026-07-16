@@ -16,6 +16,7 @@ function assertUpdated(container: Element) {
   form.querySelector<HTMLInputElement>("[type=radio]")!.checked = true;
   const data = new form.ownerDocument.defaultView!.FormData(form);
   assert.equal(data.get("checkbox"), "b");
+  assert.equal(data.get("dynamic"), "b");
   assert.equal(data.get("hidden"), "b");
   assert.equal(data.get("radio"), "b");
 }
@@ -37,6 +38,7 @@ function assertRemoved(container: Element) {
   const form = container.querySelector("form")!;
   const data = new form.ownerDocument.defaultView!.FormData(form);
   assert.equal(data.get("checkbox"), "on");
+  assert.equal(data.get("dynamic"), "");
   assert.equal(data.get("hidden"), "");
   assert.equal(data.get("radio"), "on");
 }

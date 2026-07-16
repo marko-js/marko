@@ -180,11 +180,6 @@ export function _attr_input_value_default(
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  // Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
-  if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
-    _attr(el, "value", value);
-    return;
-  }
   // Kept inline (byte-identical to `normalizeStrProp`, defined below) rather than
   // calling it, so the common value path doesn't pull that helper into value-only bundles.
   const normalizedValue = normalizeAttrValue(value) || "";
@@ -195,11 +190,25 @@ export function _attr_input_value_default(
     setInputValue(el, restoreValue);
   }
 }
+export function _attr_input_value_dynamic_default(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  value: unknown,
+) {
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  // Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
+  if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
+    _attr(el, "value", value);
+  } else {
+    _attr_input_value_default(scope, nodeAccessor, value);
+  }
+}
 export function _attr_input_value(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
+  setDefault = _attr_input_value_default,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedValue = normalizeAttrValue(value) || "";
@@ -215,8 +224,15 @@ export function _attr_input_value(
   if (valueChange && scope[AccessorProp.Gen] < runId) {
     setInputValue(el, normalizedValue);
   } else {
-    _attr_input_value_default(scope, nodeAccessor, normalizedValue);
+    setDefault(scope, nodeAccessor, normalizedValue);
   }
+}
+export function _attr_input_value_attribute_default(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  value: unknown,
+) {
+  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
 }
 export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
   const el = scope[nodeAccessor] as HTMLInputElement;

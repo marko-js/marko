@@ -32,6 +32,7 @@ import {
   _attr_input_checkedValue,
   _attr_input_checkedValue_script,
   _attr_input_value,
+  _attr_input_value_dynamic_default,
   _attr_input_value_script,
   _attr_select_value,
   _attr_select_value_script,
@@ -292,6 +293,7 @@ function attrsInternal(
           nodeAccessor,
           nextAttrs.value,
           nextAttrs.valueChange,
+          _attr_input_value_dynamic_default,
         );
         skip = /^value(?:Change)?$/;
       }

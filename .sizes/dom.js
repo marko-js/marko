@@ -1,4 +1,4 @@
-// size: 26042 (min) 9583 (brotli)
+// size: 26111 (min) 9626 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1240,18 +1240,26 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
     }));
 }
 function _attr_input_value_default(scope, nodeAccessor, value) {
-  let el = scope[nodeAccessor];
-  if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
-    _attr(el, "value", value);
-    return;
-  }
-  let normalizedValue = normalizeAttrValue(value) || "";
+  let el = scope[nodeAccessor],
+    normalizedValue = normalizeAttrValue(value) || "";
   if (el.defaultValue !== normalizedValue) {
     let restoreValue = scope.H < runId ? el.value : normalizedValue;
     ((el.defaultValue = normalizedValue), setInputValue(el, restoreValue));
   }
 }
-function _attr_input_value(scope, nodeAccessor, value, valueChange) {
+function _attr_input_value_dynamic_default(scope, nodeAccessor, value) {
+  let el = scope[nodeAccessor];
+  /i[ot]|e[cns]|^[bi]/.test(el.type)
+    ? _attr(el, "value", value)
+    : _attr_input_value_default(scope, nodeAccessor, value);
+}
+function _attr_input_value(
+  scope,
+  nodeAccessor,
+  value,
+  valueChange,
+  setDefault = _attr_input_value_default,
+) {
   let el = scope[nodeAccessor],
     normalizedValue = normalizeAttrValue(value) || "";
   ((scope["E" + nodeAccessor] = valueChange),
@@ -1259,7 +1267,10 @@ function _attr_input_value(scope, nodeAccessor, value, valueChange) {
     (scope["F" + nodeAccessor] = valueChange ? 2 : 5),
     valueChange && scope.H < runId
       ? setInputValue(el, normalizedValue)
-      : _attr_input_value_default(scope, nodeAccessor, normalizedValue));
+      : setDefault(scope, nodeAccessor, normalizedValue));
+}
+function _attr_input_value_attribute_default(scope, nodeAccessor, value) {
+  _attr(scope[nodeAccessor], "value", value);
 }
 function _attr_input_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -1581,6 +1592,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
               nodeAccessor,
               nextAttrs.value,
               nextAttrs.valueChange,
+              _attr_input_value_dynamic_default,
             ),
             (skip = /^value(?:Change)?$/));
       break;
