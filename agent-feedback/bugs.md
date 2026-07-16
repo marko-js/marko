@@ -156,12 +156,6 @@ The string-renderer branch of HTML `_dynamic_tag` never assigns `result` (the in
 
 `writeFormData` appends only entries whose value is a string and silently skips every `File`/`Blob`, even though those are standard `FormData` values. Verified with fields `text="ok"` and `file=new File(["body"], "x.txt")`: the payload reconstructed a `FormData` containing only `text`, with no abort or warning. This is worse than the serializer's normal unsupported-value behavior because hydration proceeds with incomplete state; serialize blob contents/name/type asynchronously, or reject the containing value explicitly until that is supported.
 
-## Support bigint typed-array instances in the serializer
-
-`packages/runtime-tags/src/html/serializer.ts:886` | 2026-07-15 | impact:low | effort:low
-
-The known-value registry includes `BigInt64Array` and `BigUint64Array` constructors, but instance dispatch and the `TypedArray` union include only number-backed arrays; the two corresponding tests remain commented out at `src/__tests__/serializer.test.ts:812`. A direct `new BigInt64Array([1n, 2n])` probe aborts with `Unable to serialize (reading value)`. Add both constructors to dispatch and emit bigint element literals with the `n` suffix; the zero fast path must compare against `0n` for these views.
-
 ## Make conflicting load triggers for one shared asset deterministic
 
 `packages/runtime-tags/src/html/assets.ts:135` | 2026-07-15 | impact:med | effort:med

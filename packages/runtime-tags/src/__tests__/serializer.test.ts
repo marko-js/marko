@@ -809,10 +809,18 @@ describe("serializer", () => {
       assert.equal(result.head.buffer, result.tail.buffer);
     });
 
-    // it("BigInt64Array", () =>
-    //   assertStringify(new BigInt64Array([1n, 2n, 3n]), `new BigInt64Array([1n,2n,3n])`));
-    // it("BigUint64Array", () =>
-    //   assertStringify(new BigUint64Array([1n, 2n, 3n]), `new BigUint64Array([1n,2n,3n])`));
+    it("BigInt64Array", () =>
+      assertStringify(
+        new BigInt64Array([1n, 2n, 3n]),
+        `new BigInt64Array([1n,2n,3n])`,
+      ));
+    it("BigUint64Array", () =>
+      assertStringify(
+        new BigUint64Array([1n, 2n, 3n]),
+        `new BigUint64Array([1n,2n,3n])`,
+      ));
+    it("BigInt64Array zero-filled", () =>
+      assertStringify(new BigInt64Array(3), `new BigInt64Array(3)`));
   });
 
   describe("URL", () => {

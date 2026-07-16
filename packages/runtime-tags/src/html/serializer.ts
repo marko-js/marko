@@ -43,7 +43,9 @@ type TypedArray =
   | Int32Array
   | Uint32Array
   | Float32Array
-  | Float64Array;
+  | Float64Array
+  | BigInt64Array
+  | BigUint64Array;
 
 const REGISTRY = new WeakMap<WeakKey, Registered>();
 const KNOWN_SYMBOLS = (() => {
@@ -892,6 +894,8 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
     case Uint32Array:
     case Float32Array:
     case Float64Array:
+    case BigInt64Array:
+    case BigUint64Array:
       return writeTypedArray(state, val as TypedArray, ref);
     case WeakSet:
       return writeWeakSet(state);
@@ -2018,10 +2022,11 @@ function stringEntriesToHeadersInit(entries: Iterable<[string, string]>) {
 }
 
 function typedArrayToInitString(view: TypedArray) {
+  const suffix = typeof view[0] === "bigint" ? "n" : "";
   let result = "[";
   let sep = "";
   for (let i = 0; i < view.length; i++) {
-    result += sep + view[i];
+    result += sep + view[i] + suffix;
     sep = ",";
   }
 
@@ -2030,8 +2035,9 @@ function typedArrayToInitString(view: TypedArray) {
 }
 
 function hasOnlyZeros(typedArray: TypedArray) {
+  const zero = typeof typedArray[0] === "bigint" ? 0n : 0;
   for (let i = 0; i < typedArray.length; i++) {
-    if (typedArray[i] !== 0) return false;
+    if (typedArray[i] !== zero) return false;
   }
 
   return true;
