@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.22
+
+### Patch Changes
+
+- [#3451](https://github.com/marko-js/marko/pull/3451) [`c4d3870`](https://github.com/marko-js/marko/commit/c4d3870f1fec40fde4b19e28165ef70761d3b7de) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix cleanup for client-created branches under resumed child scopes.
+
+- Updated dependencies [[`c4d3870`](https://github.com/marko-js/marko/commit/c4d3870f1fec40fde4b19e28165ef70761d3b7de)]:
+  - @marko/runtime-tags@6.3.13
+
 ## 5.39.21
 
 ### Patch Changes
