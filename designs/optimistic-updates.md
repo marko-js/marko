@@ -44,11 +44,15 @@ Every gap an optimistic API must close is visible in that snippet:
 - **The guess overwrites the truth channel.** Guess and truth share one
   variable, so reconciliation is "whoever assigned last" rather than "truth,
   unless a guess is outstanding".
+- **Downstream async regresses.** When the confirmed truth swaps a promise
+  a `<try>` boundary is showing content for, the user watches UI they were
+  already shown "optimistically" recede to `@placeholder` and load again.
 
 Under persisted pages the truth channel becomes automatic (a form submission
 is intercepted, runs as a PRG mutation, and the followed redirect patches
 `$global`-derived values back into the live page), which makes the remaining
-manual part — the guess and its lifetime — the whole problem.
+manual parts — the guess, its lifetime, and the continuity of what the user
+is already seeing — the whole problem.
 
 ## 2. Goals and non-goals
 
@@ -63,10 +67,14 @@ Goals, in priority order:
 3. **Zero cost when unused.** No dispatch overhead, no serialized state, no
    retained runtime for templates that don't use the feature (same bar as
    `_enable_catch` / persisted's entry split).
-4. **Bounded lifetime.** Every guess has a defined end — success, failure, or
-   supersession — after which the UI reflects truth. No "until something
-   happens to re-render" semantics.
-5. **Answers for pending, concurrency, and abort** that fall out of the
+4. **Bounded lifetime, fully-rendered end.** Every guess has a defined end —
+   success, failure, or supersession — and the transaction is not over until
+   the render it caused has fully resolved, including async boundaries it
+   re-pended. No "until something happens to re-render" semantics, and no
+   "done" signal while caused work is still loading.
+5. **Visual continuity.** UI that has been represented optimistically must
+   not regress to `@placeholder` while the transaction resolves it.
+6. **Answers for pending, concurrency, and abort** that fall out of the
    model rather than bolt on.
 
 Non-goals:
@@ -75,8 +83,9 @@ Non-goals:
   Shared client state composition stays userland (see §9.5), pending a
   `<mut>`/`let-*` family design.
 - Offline/queued mutations.
-- Replacing `<try>`/`<await>` pending semantics; those remain the async
-  placeholder system (§11.2).
+- Replacing the `<try>`/`<await>` placeholder system. Transactions gate when
+  an already-settled boundary may *re-show* its placeholder (§11.2); they do
+  not create, replace, or reimplement boundaries.
 
 ## 3. Design space
 
@@ -89,8 +98,9 @@ A core `<optimistic/view=source>` tag derives `view` from `source` like a
 `<const>`, but `view` is assignable. Assignments record an *override* tied to
 the current **event transaction** — an implicit scope opened when Marko
 dispatches an event handler, closed when the handler's synchronous work, its
-returned promise, and any registered extensions settle. On settle the
-override is released and `view` re-derives from `source`.
+returned promise, any registered extensions, and the async render work it
+caused have settled. Overrides are released when the transaction's promise
+work settles and `view` re-derives from `source`.
 
 ```marko
 <optimistic/optimisticCart=cart/>
@@ -168,6 +178,7 @@ A's machinery has to justify.
 | Bounded guess lifetime | yes | yes | yes | yes | **no** |
 | Rollback on failure | automatic | automatic | automatic | automatic | none |
 | Pending observable | reported (§7) | best | yes | yes | no |
+| Placeholder continuity possible | yes (§11.2) | yes | router-only | yes | no |
 | Concurrency story | §8 | manual | best | §8 | none |
 | Ambient magic | txn window | none | none | txn window | none |
 | New concepts | 1 tag + 1 rule | 3 | 1 tag + reducers | store design | 1 tag |
@@ -202,11 +213,18 @@ Recorded up front; §13 tracks the ones without answers.
    debug error, not syntax. The lexical-capture rule softens it for inline
    handlers; extracted helpers still hit it.
 4. **Snapshot overrides don't rebase.** If truth changes mid-flight from an
-   independent source, a held snapshot hides it until settle (§8.3). React
+   independent source, a held snapshot hides it until release (§8.3). React
    solves this with updater re-application; deferred here with storage
    designed to admit it.
-5. **A hung promise holds the override forever.** Bounded-lifetime is only as
-   good as the promises joined to the transaction (§10.3).
+5. **A hung promise holds the transaction forever.** Bounded-lifetime is
+   only as good as the promises joined to the transaction and the async
+   boundaries attributed to it (§10.3).
+6. **Transactions now touch the boundary machinery.** The async hold and
+   placeholder continuity (§11.2) couple transactions to
+   `AwaitCounter`/placeholder internals and require render→transaction
+   attribution. It is the most invasive part of the design; the coupling is
+   kept to one directional point, but it is real complexity and real bytes,
+   and it rides the hot render path when enabled.
 
 ## 5. Proposed surface
 
@@ -216,9 +234,10 @@ Two additions, sized for a v1 the whole document defends:
 <let/saving=false>
 <optimistic/cart=$global.data.cart pending:=saving/>
 // `cart` mirrors `$global.data.cart`. Assigning it inside an event handler
-// applies immediately and reverts when the handler's transaction settles.
-// The tag reports override activity through `pendingChange` (here via the
-// `:=` sugar) into ordinary user-owned state.
+// applies immediately and reverts when the handler's transaction releases.
+// The tag reports transaction activity through `pendingChange` (here via
+// the `:=` sugar) into ordinary user-owned state; the flag stays true until
+// the transaction has fully settled, including async render work it caused.
 
 <form method="POST" action="/cart" onSubmit() { cart = [] }>
 // Persisted router: intercepts the submit, extends the transaction until the
@@ -261,9 +280,10 @@ Let `source` be the `value=` expression and `view` the tag variable.
 | Render / SSR / resume | `view === source`. Server output is identical to `<const>`; no extra serialization beyond what assignment analysis already requires. |
 | `source` re-derives | If no active override: `view` follows, normal dirty-check. If overridden: effective value unchanged (snapshot wins; §8.3), recorded source still updates so release is correct. |
 | Assignment in a transaction window | Records/replaces this transaction's override on this tag instance, sets `view` synchronously (reads in the same handler see it, matching `<let>` writes), queues downstream renders through the normal scheduler. |
-| Transaction settles (any outcome) | Its overrides are released. Each affected `view` re-derives: latest remaining active override in write order, else `source`. Dirty-checked, so a correct guess produces zero mutations. |
+| Transaction **releases** (its promise work settled, any outcome) | Its overrides are removed. Each affected `view` re-derives: latest remaining active override in write order, else `source`. Dirty-checked, so a correct guess produces zero mutations. |
+| Transaction **settles** (release + attributed async resolved; §6.2) | No value effect — `view` already re-derived at release. This is the edge `pendingChange(false)` reports (§7). |
 | Assignment outside any window | Debug: thrown error naming the binding and the rule. Optimized: unguarded (undefined behavior), per the `MARKO_DEBUG` convention. |
-| Scope destroyed mid-transaction | Nothing: overrides live on the scope; settle-time work on destroyed scopes is skipped by the existing generation checks (`dom/queue.ts:177`). |
+| Scope destroyed mid-transaction | Nothing: overrides live on the scope; release/settle work on destroyed scopes is skipped by the existing generation checks (`dom/queue.ts:177`). |
 
 `view` never writes back to `source` — there is no commit path, only revert.
 Truth arrives on its own channel (a patch, a `cart = ...` assignment, a
@@ -271,7 +291,8 @@ store write), which is what makes "release the override" always safe.
 
 ### 6.2 Event transactions
 
-A transaction is the unit "one user intent, until settled".
+A transaction is the unit "one user intent, until the page has fully
+rendered its outcome". Its lifecycle has two edges:
 
 - **Open:** lazily, at the first optimistic assignment, `$waitUntil`, or
   router extension during an event dispatch. Marko owns the only dispatch
@@ -280,18 +301,28 @@ A transaction is the unit "one user intent, until settled".
   the feature is compiled in (pattern: `_enable_catch`, `dom/queue.ts:190`).
 - **Join:** an optimistic assignment adds an override; `$waitUntil(p)` and
   the router's extension add pending promises; a handler that returns a
-  thenable has it adopted automatically.
-- **Settle:** when the pending count reaches zero (checked from a microtask
-  after dispatch, so a sync handler with no extensions settles immediately).
-  Resolution and rejection are identical: release. Rejection additionally
-  keeps its unhandled-rejection reporting (§11.6) — the transaction does not
-  swallow or route errors (§13.2).
-- **Release ordering:** releases queue through `queueRender`/`schedule()`
-  like any state write. A settle triggered by a resolved fetch whose handler
-  also assigned truth flushes in the same batch — no truth-then-revert
-  flicker frame. The persisted router resolves its extension after the final
-  frame's synchronous flush (`run-pp/.../persisted-navigation.ts:126-144`),
-  giving the same single-batch property (§11.5).
+  thenable has it adopted automatically. Additionally, async boundaries that
+  pend in renders attributed to the transaction join its async set (§11.2).
+- **Release point:** when the pending *promise* count reaches zero. Overrides
+  are removed here (truth must be allowed to flow; holding overrides longer
+  would starve the very renders being waited on). Resolution and rejection
+  are identical: release. Rejection additionally keeps its
+  unhandled-rejection reporting (§11.6) — the transaction does not swallow
+  or route errors (§13.2).
+- **Settle point:** after the release-triggered renders flush and every
+  async boundary attributed to the transaction has resolved. The settle
+  check runs at the end of a flush — after renders (where attribution
+  registers) — never between an assignment and its flush, so a transaction
+  cannot settle "between" causing async work and observing it. A sync
+  handler with no extensions and no attributed boundaries settles from the
+  first post-dispatch flush.
+- **Ordering:** all release/settle work queues through
+  `queueRender`/`schedule()` like any state write. A release triggered by a
+  resolved fetch whose handler also assigned truth flushes in the same
+  batch — no truth-then-revert flicker frame. The persisted router resolves
+  its extension after the final frame's synchronous flush
+  (`run-pp/.../persisted-navigation.ts:126-144`), giving the same
+  single-batch property (§11.5).
 
 Nested dispatches (a handler synchronously dispatching another event) stack:
 the inner dispatch gets its own transaction; the ambient is restored after.
@@ -320,10 +351,11 @@ inline handler is legal via the lexical window.
 Two debug diagnostics make the windows teachable:
 
 - assignment outside any window: error, names the binding;
-- a transaction that settles synchronously while holding overrides ("your
-  handler is sync, nothing extended the transaction — the guess was
-  discarded immediately"): warn, names the fix (`async`, `$waitUntil`, or
-  the persisted router).
+- a transaction that settles from the first post-dispatch flush while
+  holding overrides — nothing extended it and its renders pended no async
+  ("your handler is sync and caused no async work — the guess was discarded
+  immediately"): warn, names the fix (`async`, `$waitUntil`, or the
+  persisted router).
 
 ### 6.4 `$waitUntil`
 
@@ -336,9 +368,9 @@ owns cleanup there (§11.4).
 
 ## 7. Pending states
 
-Pending is not a new data source. `<optimistic>` *reports* override activity
-through the established change-handler convention, into ordinary state the
-application already owns:
+Pending is not a new data source. `<optimistic>` *reports* transaction
+activity through the established change-handler convention, into ordinary
+state the application already owns:
 
 ```marko
 <let/saving=false>
@@ -353,17 +385,21 @@ application already owns:
 
 ### 7.1 Semantics
 
-- **What it reports:** transitions of "this instance holds at least one
-  active override". `pendingChange(true)` fires at the first override
-  attach, `pendingChange(false)` when the last one releases; edges only, no
-  repeats. Note this is *not* `view !== source` — a guess equal to current
-  truth is still pending, and `!==` would miss it; this signal exists so
-  users don't hand-derive it wrong.
-- **Timing:** edges fire synchronously with the transition — `true` inside
-  the dispatch that assigned the guess, `false` inside the settle context —
-  so the flag's downstream renders always flush in the same batch as the
-  guess/release renders. A pending flag can never be observed disagreeing
-  with the value it describes.
+- **What it reports:** transitions of "at least one unsettled transaction
+  has written this instance". `pendingChange(true)` fires at the first
+  override attach; `pendingChange(false)` fires when the last such
+  transaction *settles* (§6.2) — not when its overrides release. Edges only,
+  no repeats. Two consequences worth stating: a guess equal to current truth
+  is still pending (`view !== source` would miss it — this signal exists so
+  users don't hand-derive it wrong), and there is a window where `view`
+  already equals confirmed truth but pending is still true because
+  transaction-attributed async is resolving. Pending means "intent not
+  fully rendered", not "value differs".
+- **Timing:** edges fire synchronously with their transition — `true` inside
+  the dispatch that assigned the guess, `false` inside the settling flush —
+  so the flag's downstream renders always batch with the work they
+  describe. A pending flag can never be observed disagreeing with the state
+  it summarizes.
 - **The value side is inert.** Pending's truth lives in the transaction
   machinery and cannot be asserted from the template; the `pending=`
   attribute is accepted only so the `:=` sugar composes, and the runtime
@@ -382,7 +418,7 @@ application already owns:
   also means wiring two `<optimistic>` tags to the *same* `<let>` lets the
   last edge win; use two flags and derive.
 - **Don't write optimistic state in `pendingChange`.** The `false` edge
-  fires in the settle context, outside any transaction window, so such a
+  fires in the settling flush, outside any transaction window, so such a
   write hits the §6.3 debug error naturally.
 
 ### 7.2 What this covers, and what it doesn't
@@ -425,11 +461,11 @@ entries by transaction and re-derives. Consequences worth stating:
 
 - **Compose from the view, not the source.** `cart = [...cart, item]`
   (where `cart` is the optimistic view) layers correctly over earlier
-  unsettled guesses because the view already includes them. This is the
+  unreleased guesses because the view already includes them. This is the
   documented idiom (and what the demo already does).
-- **Out-of-order settles are principled.** T1 guesses v1, T2 guesses v2, T2
-  settles first → the view shows v1 (T1's intent is still unconfirmed),
-  then truth when T1 settles. Odd-looking, correct, worth a docs example.
+- **Out-of-order releases are principled.** T1 guesses v1, T2 guesses v2, T2
+  releases first → the view shows v1 (T1's intent is still unconfirmed),
+  then truth when T1 releases. Odd-looking, correct, worth a docs example.
 
 ### 8.2 Double submit under the persisted router
 
@@ -440,12 +476,12 @@ prior POST's application (`run-pp/.../persisted-navigation.ts:62-65,81`).
 With transactions layered on:
 
 - submit A: txn A opens, override A applies, POST A departs;
-- submit B before A applies: router aborts A's application, txn A settles
-  (release A), txn B's override — composed from the view, so including A's
-  intent — remains;
+- submit B before A applies: router aborts A's application, txn A releases
+  (drop override A), txn B's override — composed from the view, so
+  including A's intent — remains;
 - B's response reflects the server having run A then B (same-connection
   ordering for same-session mutations is the normal case), patch applies,
-  txn B settles, view = truth.
+  txn B releases and settles, view = truth.
 
 The UI is coherent throughout, which is the transaction model's real win
 here. Two honest caveats: nothing orders A and B *server-side* if they race
@@ -460,8 +496,8 @@ benign).
 ### 8.3 Rebase (deferred)
 
 When truth changes mid-flight from an *independent* source, a snapshot
-override hides it until settle. React re-applies updater functions over new
-truth for this. The storage shape above admits it later — treat a
+override hides it until release. React re-applies updater functions over
+new truth for this. The storage shape above admits it later — treat a
 function-valued assignment as an updater, re-fold active updaters when
 `source` re-derives — but v1 ships snapshots only: the demo cases don't
 need rebase, function-valued *state* would need a carve-out, and
@@ -488,11 +524,12 @@ Flow: Marko's delegated handler runs first (document capture,
 `run-pp/.../persisted.ts:31-33`) and records the override. The router
 intercepts, extends the transaction, POSTs; the PRG redirect renegotiates
 and patches; `$global.data.cart` re-derives (persisted `$global`-read
-promotion); the extension resolves after the final frame; the override
-releases against already-correct truth. Failure or fallback → document
-navigation; supersession → release. No JS → plain PRG. A user
-`ev.preventDefault()` opts out of interception entirely, which also reads
-correctly: the handler owns the transaction instead.
+promotion); the extension resolves after the final frame; overrides release
+against already-correct truth; the transaction settles once any
+release-attributed boundaries resolve, and `saving` flips false. Failure or
+fallback → document navigation; supersession → release. No JS → plain PRG.
+A user `ev.preventDefault()` opts out of interception entirely, which also
+reads correctly: the handler owns the transaction instead.
 
 Because truth here is a `$global` expression rather than a local binding,
 the optimistic view takes the natural name — there is no
@@ -528,14 +565,17 @@ Same tag, same semantics; the transaction is the handler's returned promise.
 
 Transactions are event-scoped, not form-scoped, so intercepted GET
 navigations get the identical story — active states flip instantly and
-settle to the destination's truth.
+settle to the destination's truth. If the results list sits under a `<try>`
+whose promise re-derives from the new sort, the transaction holds until it
+resolves and the list keeps showing the previous results instead of a
+spinner (§11.2).
 
 ### 9.4 Validation errors for free
 
 The demo's promo form POSTs and the server re-renders the same page with
 `promo.error` on invalid codes; the persisted router applies that direct
 POST response as an in-place patch. An optimistic guess elsewhere on the
-page that *fails validation* needs no new API: the transaction settles when
+page that *fails validation* needs no new API: the transaction releases when
 the error patch applies, overrides revert, and the error content is already
 on screen. Rollback-plus-explain composes from existing pieces. (Disabling
 the promo button itself is the value-less pending gap — §7.2.)
@@ -563,26 +603,30 @@ primitive it would use, not a competitor.
 ## 10. Abort, cleanup, lifetime
 
 1. **Supersession** releases overrides (§8.2). The persisted integration
-   settles on every exit path of `navigate()` — success after the last
-   frame, silent abort, partial-apply replace, and document fallback
-   (`run-pp/.../persisted-navigation.ts:85,128,144,146-153`) — so the shell
-   wires settle once around the navigation promise rather than per-path.
+   settles its extension on every exit path of `navigate()` — success after
+   the last frame, silent abort, partial-apply replace, and document
+   fallback (`run-pp/.../persisted-navigation.ts:85,128,144,146-153`) — so
+   the shell wires it once around the navigation promise rather than
+   per-path.
 2. **`$signal` stays orthogonal.** A handler's `$signal` aborts on
    dependency invalidation/unmount (`dom/abort-signal.ts`), not on
-   transaction settle — and see §11.4 for why the two must not be conflated.
-   Aborting the *work* (the fetch) on supersession is the user's
+   transaction release — and see §11.4 for why the two must not be
+   conflated. Aborting the *work* (the fetch) on supersession is the user's
    `AbortController` in v1; a `$transaction.signal` that aborts on
    supersession is a coherent later addition (§13.6) but v1 avoids a
    second ambient object.
-3. **Hung transactions.** A never-settling promise holds its override
-   forever; that is goal 4's contract honored literally (the guess is
-   released *when the intent settles*, and only the app knows a timeout
-   policy). Debug builds warn after a threshold (~10s) naming the binding
-   and origin; production does nothing. Users bound lifetimes with
-   `AbortSignal.timeout` on their own fetches; the persisted router's
-   fetches already settle on every path.
+3. **Hung transactions.** A never-settling promise — or an attributed
+   boundary whose promise never resolves — holds the transaction (and
+   placeholder continuity, §11.2) indefinitely; that is goal 4's contract
+   honored literally, and only the app knows a timeout policy. Debug builds
+   warn after a threshold (~10s) naming the binding and what is being
+   waited on (promise vs boundary); production does nothing. Users bound
+   lifetimes with `AbortSignal.timeout` on their own fetches; the persisted
+   router's fetches already settle on every path.
 4. **Unload/destroy.** Full-document fallback and `instance.destroy()` make
-   release moot; scope-generation guards already skip destroyed work.
+   release moot; scope-generation guards already skip destroyed work. A
+   boundary attributed to a transaction that is destroyed with its branch
+   leaves the async set the same way (generation check at resolve).
 
 ## 11. Transactions and the async machinery
 
@@ -595,44 +639,84 @@ becoming a fifth scheduler. Walked one at a time:
 
 Optimistic assignment is an external state write: set the slot
 synchronously, `schedule()` + `queueRender`, exactly `_let`'s shape
-(`dom/signals.ts:43-49`). Release is the same path from the settle
-microtask. The no-flicker guarantee follows from sequencing alone: in
+(`dom/signals.ts:43-49`). Release is the same path from the release
+microtask; the settle check rides the end of a flush (§6.2). The no-flicker
+guarantee follows from sequencing alone: in
 `optimisticCart = guess; cart = (await f()).cart`, the truth write queues
-before the handler promise resolves, the settle callback runs after it, and
+before the handler promise resolves, the release callback runs after it, and
 both land in the same flush. Transactions never call `run()` directly and
-never bypass batching; a transaction is *not* a scheduling primitive — it
-adds no ordering rules the queue doesn't already have.
+never bypass batching; they add one thing to the queue's world: renders can
+carry an attribution to the transaction whose write queued them (§11.2), and
+renders queued *while running* an attributed render inherit it.
 
-### 11.2 `<try>` / `<await>` placeholders
+### 11.2 Async holds and placeholder continuity
 
-Deliberately disjoint, in both directions:
+The transaction's contract is "intent → fully rendered outcome", so async
+render work the transaction causes is part of its lifetime, and content the
+user is already looking at must not regress while that work resolves. Two
+rules, one attribution mechanism:
 
-- **Transactions never trigger placeholders.** A placeholder means "content
-  absent"; an override means "content provisional". Conflating them is how
-  React ended up needing `useTransition` to *suppress* Suspense fallbacks
-  during mutations; Marko avoids the problem by never routing transactions
-  through `AwaitCounter`. A transaction holds values, not branches.
-- **Parked work already behaves.** If an optimistic write targets state
-  under a `<try>` with outstanding awaits, its render parks on the branch
-  like any other; a later release doesn't queue a duplicate — `queueRender`
-  updates the parked entry's value in place and returns
-  (`dom/queue.ts:41-48`), so the branch unparks straight to the effective
-  value. No transaction-specific handling needed.
-- **Promises derived from optimistic values** flow through `<await>`
-  normally: `<const/preview=fetchPreview(cart)>` re-pends its boundary on
-  the guess and again on release-to-different-truth. That's coherent but
-  usually wasteful (speculative fetches from guesses); guidance, not
-  mechanism: optimistic values are for display, sources for derivation —
-  unless speculation is the point.
+**Hold.** When an async boundary pends — an `<await>` receiving a promise,
+or a lazy load gate; both speak `AwaitCounter`
+(`dom/control-flow.ts:275`, `dom/load.ts:41`) — during an attributed
+render, the boundary joins the transaction's async set. The transaction
+settles only after its promise set *and* async set are empty. Chained async
+(a resolved boundary's content render pends another boundary) inherits
+attribution through the resolution render. A boundary that rejects into
+`@catch` leaves the async set the same as resolving: the intent has a fully
+rendered outcome — an error is an outcome.
+
+**Continuity.** A boundary that already has live content and re-pends from
+an attributed render does not re-show `@placeholder`: the content branch
+stays in the DOM until the new value resolves, then swaps. This is not a
+new idea in the runtime — a re-pending `<await>` *without* a placeholder
+already keeps its old content and only detaches it on the next animation
+frame if still pending (`dom/control-flow.ts:134-158`), with a guard for
+re-awaits that resolve before detaching (`:114-117`), and re-pending
+branches already park their renders
+(`awaitBranch[PendingRenders] ||= []`, `:98,:132`). The transaction rule
+extends that one-frame grace to "until the boundary I caused resolves", and
+extends it to boundaries *with* placeholders (`:95-101`, where today
+`addAwaitCounter` re-shows the placeholder unconditionally). First-time
+pends are untouched: with no prior content there is nothing to keep, and
+`@placeholder` shows as today.
+
+Three consequences to be explicit about:
+
+- **Kept content is frozen content.** Parked renders mean the retained
+  branch does not track other state while it waits — the same staleness
+  React accepts when a transition shows the previous tree. It already
+  happens for one frame today; transactions make the window as long as the
+  attributed promise.
+- **Failure composes.** If the mutation fails, release reverts the view;
+  the boundary's promise re-derives from the reverted value; the boundary
+  re-pends (attributed to the same still-unsettled transaction), continuity
+  keeps the current content, and it resolves back to what truth warrants.
+  The user never sees a spinner for a round trip that changed nothing —
+  at the cost of a refetch (`<const>`-derived promises are new objects even
+  for reverted inputs; caching is userland).
+- **Attribution granularity is a real decision.** Options: (i) per-render
+  provenance — tag `PendingRender`s queued by transaction writes, set an
+  ambient while each runs, inherit on nested `queueRender`/boundary pends:
+  precise, touches the hot loop behind the enable flag; (ii) per-flush —
+  any boundary pending during a flush that contained the transaction's
+  renders attributes to it: cheaper, over-holds when unrelated writes
+  share the batch and pend a new boundary; (iii) global-while-unsettled:
+  simplest, over-holds most, but arguably matches user perception during a
+  navigation ("the page isn't done"). Recommendation: (ii) for v1 —
+  over-holding is benign (a held transaction ends when the stray boundary
+  resolves; continuity for it is at worst extra politeness) while
+  under-holding breaks the contract — with (i) as the upgrade path if
+  evidence demands. Tracked in §13.7.
 
 ### 11.3 `<await>` handed the transaction's own promise
 
 Nothing stops `<await=submitPromise>` where the handler also `$waitUntil`s
-the same promise — placeholder while pending, content and release in the
-same settle window. This is the correct meeting point of the two systems
-(value overlay *and* structural pending from one promise), and it needs no
-API: promises are the shared currency. Worth a docs example, mostly to show
-the systems compose without either knowing about the other.
+the same promise — placeholder (or kept content) while pending, content and
+release in the same settle window, no deadlock: boundary resolution depends
+on the userland promise, never on the transaction. This is the correct
+meeting point of the two systems and needs no API; promises are the shared
+currency.
 
 ### 11.4 `$signal` self-abort
 
@@ -652,23 +736,35 @@ invalidation, which is a category error in both directions.
 
 ### 11.5 Persisted frame streaming
 
-The extension settles when `navigate()` resolves — at **stream end**, not
+The extension releases when `navigate()` resolves — at **stream end**, not
 first frame. This is deliberate: a patch response embeds late async frames
 (a pending `<try>` on the target page delivers its boundary body as a later
 frame in the same response), and the mutated value itself may live inside
-such a boundary, so no earlier point is provably truth-complete. The cost:
-a slow unrelated `<await>` on the target route holds the override and
-`pending` flag past the moment the cart value actually landed. Accepted for
-v1 (correctness first; the override releases to identical truth, so only
-`pending` duration is affected). A future protocol marker ("route values
-complete, async continues") would let run settle earlier without guessing —
-noted in §13.7. Between-frame interleaving needs no rules: other
-transactions settling mid-stream are just client writes between frames,
-which the persisted design already pins (`persisted-update-csr-race`).
+such a boundary, so no earlier point is provably truth-complete. Client-side
+boundaries re-pended by patched values attribute to the navigation's
+transaction because frame applies flush through the ordinary scheduler
+(`marko-pp/.../dom/update.ts:145`) with the extension unsettled — so
+continuity holds across an apply: a settled boundary on the live page whose
+input patches to a new promise keeps its content rather than receding.
+
+One seam is left open rather than solved here: *server-sent* pending
+boundaries. A fragment frame can carry a `@placeholder` whose body arrives
+as a later boundary-body frame; applying it replaces live settled content
+with a placeholder — the server-side twin of the regression continuity
+suppresses client-side. Deferring that swap until the body frame arrives
+(the wire format already separates the two) would extend continuity to
+fragments, but it interacts with possession/`diverge()` fallback rules and
+the roadmap's async-fragment matrix, so it needs the persisted owners —
+tracked in §13.8. The cost of stream-end release stands regardless: a slow
+unrelated `<await>` on the target route extends the hold; accepted for v1,
+with a "route values complete" protocol marker as the future refinement
+(§13.9). Between-frame interleaving needs no new rules: other transactions
+releasing mid-stream are just client writes between frames, which the
+persisted design already pins (`persisted-update-csr-race`).
 
 ### 11.6 Rejection reporting
 
-Adoption must not swallow errors. Attaching settle via `.finally`-shaped
+Adoption must not swallow errors. Attaching release via `.finally`-shaped
 wiring preserves the rejection for the host's `unhandledrejection` (or the
 user's own `catch`); `$waitUntil` follows `ExtendableEvent.waitUntil`
 precedent the same way. The transaction observes outcomes; it never
@@ -701,18 +797,26 @@ Compiler (all standard core-tag shape, `translator/core/`):
 
 Runtime (`src/dom/`):
 
-- `transaction.ts` — ambient current-transaction, pending-count lifecycle,
-  the `enableTransactions()` install that wraps handler invocation in
-  `handleDelegated` via a reassignable seam (net-zero for non-users), the
-  thenable adoption of handler return values, and the extension entry point
+- `transaction.ts` — ambient current-transaction, promise + async-set
+  lifecycle with the release/settle edges, the `enableTransactions()`
+  install that wraps handler invocation in `handleDelegated` via a
+  reassignable seam (net-zero for non-users), thenable adoption of handler
+  return values, the flush-attribution ambient consulted by
+  `queueRender`/`AwaitCounter` when enabled, and the extension entry point
   for hosts.
 - `_optimistic*` signal helpers beside `_let`/`_let_change` in
   `signals.ts`: source slot + override list per instance; effective value
   precomputed into the read slot so downstream reads stay one property
-  access; pending edges fired synchronously at attach/release transitions;
-  release paths go through `queueRender` + `schedule()`.
-- Budget: target ≤1.0 kB min for transaction + optimistic combined,
-  tree-shaken to zero when unused; `.sizes.json` enforces.
+  access; pending edges fired synchronously at attach/settle transitions.
+- Continuity hooks in `control-flow.ts`: the re-pend paths
+  (`_await_promise` placeholder re-show at `:95-101`, the rAF detach at
+  `:134-158`) consult the active transaction's async set before swapping;
+  both sites are already behind `_enable_catch`-installed machinery, so
+  non-users pay nothing.
+- Budget: target ≤1.5 kB min for transaction + optimistic + hold/continuity
+  combined, tree-shaken to zero when unused; `.sizes.json` enforces. The
+  attribution ambient is the riskiest line item — it must be a single
+  module-level read on the queue paths when enabled.
 
 `@marko/run` (persisted shell, `runtime/persisted.ts`):
 
@@ -731,12 +835,17 @@ native-attribute family (`dom/controllable.ts`), not in the tag.
 Fixtures (harness already supports interaction steps, promise controls, and
 persisted `navigate()` steps): optimistic basic/derive/revert;
 async-handler success+failure; `$waitUntil` incl. post-await;
-outside-window debug error; sync-settle warn; concurrent transactions incl.
-out-of-order settles; pending edges incl. guess-equals-truth and
-same-batch flushing; optimistic write under a pending `<try>` (park +
-release); `<await>` of a transaction promise; `<for>` row patterns;
-persisted form PRG, direct-POST validation patch, supersession, fallback;
-fan-out store composition.
+outside-window debug error; sync-discard warn (no async caused); concurrent
+transactions incl. out-of-order releases; pending edges incl.
+guess-equals-truth, the released-but-unsettled window, and same-batch
+flushing; async hold: attributed boundary keeps transaction open, chained
+pends inherit, `@catch` counts as resolution; continuity: re-pend with
+placeholder keeps content, first pend still shows placeholder, kept content
+is frozen (parked renders), failure-revert refetch keeps content; `<await>`
+of a transaction promise; optimistic write under an already-pending `<try>`
+(park + release, `dom/queue.ts:41-48`); `<for>` row patterns; persisted
+form PRG, direct-POST validation patch, supersession, fallback, client
+boundary re-pend continuity across an apply; fan-out store composition.
 
 ## 13. Open questions
 
@@ -760,13 +869,23 @@ fan-out store composition.
    deliberately withheld from v1 to keep one ambient concept; the internal
    object exists from day one, so exposure is additive. §11.4's self-abort
    gotcha is the strongest argument for eventually shipping it.
-7. **Earlier persisted settle** (§11.5): a protocol marker separating
+7. **Attribution granularity** (§11.2): per-flush for v1, per-render
+   provenance if over-holding shows up in practice; needs a fixture that
+   discriminates the two (unrelated write pending a new boundary in a
+   shared batch).
+8. **Fragment/boundary-body continuity in persisted applies** (§11.5):
+   defer placeholder-bearing fragment swaps until their body frame when a
+   transaction holds? Interacts with possession and fallback rules; needs
+   the persisted owners.
+9. **Earlier persisted release** (§11.5): a protocol marker separating
    "route values complete" from "async frames continue" would shorten
-   pending durations on routes with slow boundaries; belongs to the wire
-   format if pursued.
-8. **Mutation queueing in the persisted router** (§8.2): belongs with the
-   roadmap's "concurrent submissions" review; this design works with either
-   abort-and-replace or a queue.
-9. **View-transition interplay** (deferred in the persisted roadmap):
-   transaction settle is a natural `startViewTransition` boundary; keep the
-   settle path shaped so a future integration can wrap it.
+   holds on routes with slow boundaries; belongs to the wire format if
+   pursued.
+10. **Mutation queueing in the persisted router** (§8.2): belongs with the
+    roadmap's "concurrent submissions" review; this design works with
+    either abort-and-replace or a queue.
+11. **Continuity beyond transactions.** Should "re-pends keep content"
+    eventually be `<try>`-level behavior (an opt-in attribute) rather than
+    transaction-gated? Transactions cover most user-initiated re-pends, so
+    v1 scoping answers the motivating cases without a global behavior
+    change; a `<try>` attribute remains open as the general tool.
