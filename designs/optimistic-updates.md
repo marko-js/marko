@@ -399,8 +399,21 @@ Declaring an `<action>` is only for observation:
 
 `<optimistic>` requires a tag variable (identifier — it must be assignable)
 and accepts only `value=`, matching `<let>`'s attribute discipline
-(`translator/core/let.ts:60`). Where truth is a `$global` expression the
-view takes the natural name — no `cart`/`optimisticCart` split.
+(`translator/core/let.ts:60`).
+
+**Variable naming is a convention, and the convention is: the view gets
+the natural name.** The view is what the template renders, what guesses
+compose from, and what nearly every expression reads — so it is `cart`,
+`entries`, `sort`. The *source* is the thing referenced once, in the
+declaration: either an expression (`$global.data.cart` — no second name at
+all, the common persisted case) or a qualified binding (`cartData`,
+`serverEntries`, `confirmedCart`). Never the reverse
+(`optimisticCart = ...` littered through handlers is the smell). A
+single-binding design that would eliminate the second name entirely was
+examined and rejected: guess writes and truth writes both happen inside
+handler bodies (`cart = guess; cartData = (await submit(ev)).cart`), so a
+lone binding cannot tell them apart without an explicit commit API — worse
+than a second name.
 
 ### 7.2 Semantics
 
@@ -439,6 +452,45 @@ release removes by transaction and re-derives.
   storage shape (function-valued assignment = updater) but waits for
   evidence.
 
+### 7.4 Naming the tag
+
+`optimistic` is the incumbent for discoverability — it is the industry term
+(React's `useOptimistic`, every "optimistic UI" tutorial), and whatever the
+tag is called, the *feature* keeps that name in docs and search. Against
+it: ten characters, an adjective where core tags are keywords, nouns, or
+verbs (`let`, `show`, `try`, `action`), and it leaks into variable names —
+the `optimisticCart` prefix habit §7.1's convention exists to break.
+
+Candidates, judged by how the declaration reads
+(`<x/cart=$global.data.cart/>` should say "cart is a __ of the truth"),
+what failure sounds like, and collisions:
+
+- **`<draft>`** — the best-looking: short, plain English, and "the draft is
+  discarded" is exactly the failure semantics (draft-PR precedent:
+  visible, submitted, not yet accepted). One real collision: Marko's own
+  teaching vocabulary uses "form drafts" for *pre-submit* user input (the
+  `<show>` guidance), and this value is *post-submit awaiting
+  confirmation*. Adopting it means owning that re-teaching.
+- **`<attempt>`** — the dark horse: collision-free, a noun, and the most
+  honest about revert-only semantics — an attempt is precisely a thing
+  that may not stick. "Assignments record an attempt; the attempt is
+  discarded when the act settles" teaches itself. Slightly unusual as API
+  vocabulary; nothing else in the ecosystem uses it, which cuts both ways.
+- **`<eager>`** — reads well and is short, but collides head-on with
+  `loading="eager"` and eager-loading vocabulary. Rejected.
+- **`<view>`** — the doc's own word for the variable, but hopelessly
+  overloaded (MVC views, view layers). Rejected.
+- **`<expect>`** — assertion-library collision. **`<echo>`** — backwards
+  metaphor (an echo follows; this value leads). **`<mirror>`** — implies
+  faithful following, the one thing it deliberately isn't.
+  **`<staged>`** — implies a commit path that intentionally does not
+  exist. All rejected.
+
+Recommendation: `optimistic` if discoverability dominates; `draft` if
+declaration-site aesthetics dominate and the form-draft collision is
+accepted; `attempt` if both matter and a fresh term is acceptable.
+Tracked in §12.11.
+
 ## 8. Composition in practice
 
 ```marko
@@ -452,12 +504,11 @@ ordinary scoping: declare the action in the row and each row observes its
 own act, while a table-level act is one declaration up:
 
 ```marko
-<optimistic/optimisticEntries=entries/>
-<for|entry| of=optimisticEntries by=(e) => e.product.id>
+<const/serverEntries=$global.data.cart.map(toEntry)>
+<optimistic/entries=serverEntries/>
+<for|entry| of=entries by=(e) => e.product.id>
   <action/remove() {
-    optimisticEntries = optimisticEntries.filter(
-      (e) => e.product.id !== entry.product.id,
-    );
+    entries = entries.filter((e) => e.product.id !== entry.product.id);
   }/>
   <tr>
     ...
@@ -651,6 +702,12 @@ submissions view (§11.5).
    error a natural home short of changing `@catch`'s contract.
 10. **Richer `<try>` exposure later**: boolean now vs object later is a
     breaking-change fork; decide before stage 1 stabilizes.
+11. **`<optimistic>` naming** (§7.4): `optimistic` (discoverable,
+    adjective, prefix-leaking) vs `draft` (best-reading, form-draft
+    vocabulary collision) vs `attempt` (honest revert semantics,
+    collision-free, novel). Whichever wins, the docs' feature name stays
+    "optimistic updates", and §7.1's view-gets-the-natural-name convention
+    stands regardless.
 
 ## 13. Implementation and verification sketch
 
