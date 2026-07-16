@@ -120,10 +120,8 @@ export function getKnownFromPropTree(
 
 export function getAllKnownPropNames(propTree: BindingPropTree) {
   const keys = propTree.props ? Object.keys(propTree.props) : [];
-  if (propTree.rest?.props) {
-    for (const key of Object.keys(propTree.rest.props)) {
-      keys.push(key);
-    }
+  if (propTree.rest) {
+    keys.push(...getAllKnownPropNames(propTree.rest));
   }
   return keys;
 }

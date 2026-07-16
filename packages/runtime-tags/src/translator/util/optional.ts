@@ -206,7 +206,7 @@ export function fromIter<T>(data: Iterable<T>) {
   for (const item of data) {
     if (many) {
       many.push(item);
-    } else if (one) {
+    } else if (one !== undefined) {
       many = [one, item];
     } else {
       one = item;

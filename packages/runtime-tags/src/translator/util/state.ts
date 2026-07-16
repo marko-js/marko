@@ -7,11 +7,11 @@ export function createProgramState<T>(init: () => T) {
   const map = new WeakMap<t.NodePath<t.Program>, T>();
   return [
     () => {
-      let state = map.get(getProgram());
-      if (!state) {
-        map.set(getProgram(), (state = init()));
+      const program = getProgram();
+      if (!map.has(program)) {
+        map.set(program, init());
       }
-      return state;
+      return map.get(program)!;
     },
     (value: T) => {
       map.set(getProgram(), value);
