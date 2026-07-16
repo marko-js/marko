@@ -1,6 +1,8 @@
 "use strict";
 
 var flushHereAndAfter = require("../../core-tags/core/__flush_here_and_after__");
+var initComponents = require("../../core-tags/components/init-components-tag");
+var awaitReorderer = require("../../core-tags/core/await/reorderer-renderer");
 var escapeScript = require("../html/helpers/escape-script-placeholder");
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var DEFAULT_RUNTIME_ID = "M";
@@ -57,6 +59,13 @@ exports.withPageAssets = function withPageAssets(
     }
 
     template._(input, out);
+
+    if (!hasAssets) {
+      // A partial-document page (no `<body>`) misses the tags `<body>` injects,
+      // so emit them here for hydration state + `<await>` reorder (no-op if present).
+      initComponents(input, out);
+      awaitReorderer(input, out);
+    }
   });
 };
 
