@@ -4,7 +4,7 @@ Out-of-scope defects noticed while working on something else. Format and rules: 
 
 ## `Sorted.isSuperset` arithmetic is wrong but the current behavior is load-bearing
 
-`src/translator/util/optional.ts:103` | 2026-07-03 | impact:med | effort:med
+`packages/runtime-tags/src/translator/util/optional.ts:103` | 2026-07-03 | impact:med | effort:med
 
 `isSuperset` walks `subset` from the top and rejects with
 `supLen - found <= i`, which compares the remaining superset slots against `i`
@@ -62,7 +62,7 @@ inline runtime robust; weigh against inline-runtime byte cost.
 
 `packages/runtime-tags/src/html/attrs.ts:516` | 2026-07-14 | impact:low | effort:low
 
-`normalizeStrAttrValue` computes `(value && value !== true) || value === 0 ? value + "" : ""`, so `0n` (falsy, `0n === 0` is false), `NaN`, and `false` all normalize to `""`. The DOM counterpart used for the identical selection/checked computation, `normalizeStrProp` (`dom/controllable.ts`) → `normalizeAttrValue` (`dom/dom.ts`), returns `value + ""`, giving `"0"`/`"NaN"`/`"false"`. This normalizer feeds `normalizedValueMatches`, which decides `selected` for controlled `<select>`/`<option>` and `checked` for `<input type=checkbox|radio>`, so SSR and CSR can select different options/checkboxes for the same value. Example: a controlled `<select value=0n>` with `<option value=0>` and `<option value="">` — SSR marks the empty option selected, CSR marks the `value=0` option selected, a genuine hydration mismatch. Distinct from the recorded text/escape-helper `0n` entry, which explicitly notes SSR and CSR _agree_; here the two paths use different formulas and disagree. Latent (no fixture feeds these as controlled values today). Fix: make `normalizeStrAttrValue` agree with the DOM normalizer for non-void, non-`true` values.
+`normalizeStrAttrValue` computes `(value && value !== true) || value === 0 ? value + "" : ""`, so `0n` (falsy, `0n === 0` is false), `NaN`, and `false` all normalize to `""`. The DOM counterpart used for the identical selection/checked computation, `normalizeStrProp` (`dom/controllable.ts`) → `normalizeAttrValue` (`dom/dom.ts`), returns `value + ""`, giving `"0"`/`"NaN"`/`"false"`. This normalizer feeds `normalizedValueMatches`, which decides `selected` for controlled `<select>`/`<option>` and `checked` for `<input type=checkbox|radio>`, so SSR and CSR can select different options/checkboxes for the same value. Example: a controlled `<select value=0n>` with `<option value=0>` and `<option value="">` — SSR marks the empty option selected, CSR marks the `value=0` option selected, a genuine hydration mismatch. Unlike ordinary text rendering, where the SSR and DOM helpers both deliberately render `0n` as empty, these controlled-value paths use different formulas and disagree. Latent (no fixture feeds these as controlled values today). Fix: make `normalizeStrAttrValue` agree with the DOM normalizer for non-void, non-`true` values.
 
 ## Multiple-select change observer compares controlled value to DOM selection index-by-index
 
@@ -143,3 +143,39 @@ bridged head chunk.
 `packages/runtime-tags/src/dom/control-flow.ts:535` | 2026-07-14 | impact:high | effort:med
 
 The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` (`:535` for `_dynamic_tag`, `:647` for `_dynamic_tag_content`, plus the DOM `_attr_content`). `RendererProp.Id` is the template/section resume id, identical for every _instance_ of one content section — instances differ only by their `RendererProp.Owner` scope. So switching a dynamic tag between two instances of the same content — two `<attrs.content>` from two instances of one provider tag, or the list-detail `<${selected.content}/>` — is a silent no-op: no teardown or re-render, and closures stay subscribed to the old owner's scope. A control with two _distinct_ tag files behaves correctly, pinning the defect to the id-only comparison. Fix: compare `(id, owner)` — content renderer objects are recreated per render so identity alone over-fires, while the owner scope is stable per instance; the resume handshake must serialize a scope-registered renderer as its registered reference so the first post-resume update stays instance-aware.
+
+## Initialize tag variables for dynamic native tags
+
+`packages/runtime-tags/src/html/dynamic-tag.ts:146` | 2026-07-15 | impact:med | effort:med
+
+The string-renderer branch of HTML `_dynamic_tag` never assigns `result` (the inline TODO calls this out), and the DOM branch creates the element but never sends its getter through the branch's `AccessorProp.TagVariable` callback (`dom/control-flow.ts:547`). Verified by adding `<${input.show && "div"}/el/><script>el().textContent = "set"</script>` to the `dynamic-tag-var` fixture: both CSR and SSR-resume left the `<div>` empty because `el` was never initialized, so its dependent effect never ran. Static native tags instead create a registered `_el(...)` getter; the dynamic-native path needs the equivalent getter tied to the created/resumed branch element in both runtimes.
+
+## Keep each page wrapper's asset resolver isolated
+
+`packages/runtime-tags/src/html/assets.ts:52` | 2026-07-15 | impact:high | effort:low
+
+`withPageAssets` assigns its `runtime` argument to the module-global `assetFlush`, while the returned page wrapper later calls `flush` through that shared binding. Creating page A with resolver A and then page B with resolver B makes a subsequent render of page A resolve both its `block` and `defer` assets through resolver B; a direct two-page probe produced `[runtime-b:block:page-a][runtime-b:defer:page-a]A`. Multi-page servers whose entry-specific asset runtimes share this module can therefore emit the wrong scripts/styles. Capture the resolver in the wrapper/global render state (or pass it into `flush`) rather than storing it process-wide.
+
+## Preserve `File` and `Blob` entries when serializing `FormData`
+
+`packages/runtime-tags/src/html/serializer.ts:1286` | 2026-07-15 | impact:med | effort:med
+
+`writeFormData` appends only entries whose value is a string and silently skips every `File`/`Blob`, even though those are standard `FormData` values. Verified with fields `text="ok"` and `file=new File(["body"], "x.txt")`: the payload reconstructed a `FormData` containing only `text`, with no abort or warning. This is worse than the serializer's normal unsupported-value behavior because hydration proceeds with incomplete state; serialize blob contents/name/type asynchronously, or reject the containing value explicitly until that is supported.
+
+## Preserve duplicate header fields during serialization
+
+`packages/runtime-tags/src/html/serializer.ts:1280` | 2026-07-15 | impact:med | effort:low
+
+`writeHeaders`, `writeRequest`, and `writeResponse` all feed header entries through `stringEntriesToProps`, creating an object literal. Repeated names become duplicate object keys, so all but the last value are discarded; two `set-cookie` fields serialize as `new Headers({"set-cookie":"a=1","set-cookie":"b=2"})` and resume as only `b=2`. Use the iterable/tuple form (`new Headers([[name, value], ...])`) whenever names repeat, or for all headers, so non-combinable fields such as `Set-Cookie` round-trip.
+
+## Support bigint typed-array instances in the serializer
+
+`packages/runtime-tags/src/html/serializer.ts:886` | 2026-07-15 | impact:low | effort:low
+
+The known-value registry includes `BigInt64Array` and `BigUint64Array` constructors, but instance dispatch and the `TypedArray` union include only number-backed arrays; the two corresponding tests remain commented out at `src/__tests__/serializer.test.ts:812`. A direct `new BigInt64Array([1n, 2n])` probe aborts with `Unable to serialize (reading value)`. Add both constructors to dispatch and emit bigint element literals with the `n` suffix; the zero fast path must compare against `0n` for these views.
+
+## Make conflicting load triggers for one shared asset deterministic
+
+`packages/runtime-tags/src/html/assets.ts:135` | 2026-07-15 | impact:med | effort:med
+
+`addAsset` deduplicates solely by asset id and silently ignores the triggers on every later registration. The existing `lazy-tag-shared-parent` shape proves separate parent modules can wrap the same child asset independently; if one imports it with `visible` and another with `idle`/an event, whichever parent renders first becomes the only trigger and the other condition can never load the shared module. Detect incompatible registrations before the first flush and combine their triggers, or emit a compile/debug error as the existing TODO suggests; do not let render order choose behavior.

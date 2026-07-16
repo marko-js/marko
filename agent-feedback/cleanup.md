@@ -44,3 +44,9 @@ three identical `_resume("…",_classDisplay)` (DOM) / `_s("…",_classDisplay)`
 (HTML) statements (the `??=` non-template branch at lines 360-377 duplicates the
 same way). Idempotent, so not incorrect, but N× redundant given "bundle size is a
 feature" — one registration per unique class file would suffice.
+
+## Represent metadata-only HTML effects without invalid AST sentinels
+
+`packages/runtime-tags/src/translator/util/signals.ts:1158` | 2026-07-15 | impact:low | effort:low
+
+`addHTMLEffectCall` deliberately passes `undefined as any` to `addStatement`, which pushes it into a `t.Statement[]`; `traverseReplace` and Babel generation happen to skip the falsy array member. The call exists to mark effect dependencies/side effects rather than to add executable syntax, but it violates the signal and Babel AST types and makes every downstream consumer tolerate an invalid node. Add an explicit metadata-only effect operation (or let `addStatement` accept an omitted statement without pushing it) and remove the cast/TODO.
