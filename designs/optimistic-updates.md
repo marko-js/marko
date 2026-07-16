@@ -1,16 +1,12 @@
 # Optimistic updates: design exploration
 
-Status: exploration, pre-RFC. Eighth revision. The seventh revision exposed
-act pending by enrolling app state (`$pending(saving)`); that is a language
-smell — the framework writing user state at a distance, through a call
-whose argument is secretly an assignment target, to *copy* a fact that
-should be *readable*. The root cause runs through every rejected shape in
-this file's history: they all tried to expose the act's state without
-making the act a value. This revision reifies the act: a declared
-**`<action>`** whose tag variable is the callable and whose readonly
-`.pending` property is the observation — a shape the ecosystem has
-independently converged on (§4), here given Marko's tag-variable and
-compile-time-reactivity treatment. Earlier revisions live in git history.
+Status: exploration, pre-RFC. Ninth revision: the overlay tag is named —
+**`<draft>`** (decision recorded in §7.4; `optimistic` remains the feature
+name in docs and search). The eighth revision reified the act as
+**`<action>`** after `$pending(saving)` exposed the root cause running
+through every earlier rejected shape: they all tried to expose the act's
+state without making the act a value. Earlier revisions live in git
+history.
 
 It builds on the persisted-pages design family
 (`designs/persisted-pages-*.md` on the `claude/marko-persisted-pages-review-*`
@@ -77,8 +73,9 @@ Derivation:
 1. From A1+A2: a mutation is a request whose confirmed effect arrives as new
    server-derived input on its own channel. Any *provisional* display of the
    expected outcome must be an **overlay that can never write truth** —
-   reverting is the only exit.
-2. The overlay needs a lifetime. From A1+A6, the natural unit is the **user
+   reverting is the only exit. That overlay is a **draft** of the server
+   state: visible, submitted, not yet accepted.
+2. The draft needs a lifetime. From A1+A6, the natural unit is the **user
    act**: from the triggering event until the page has presented the act's
    outcome. No existing object has this extent, so it must be a first-class
    runtime concept that promises and routers can extend: a **transaction**.
@@ -102,8 +99,8 @@ Derivation:
 | Stage | Feature | Home | Depends on | Standalone value |
 | --- | --- | --- | --- | --- |
 | 1 | `<try/pending>`: boundary pending as a readonly tag variable + content continuity on re-pend (§5) | marko core | nothing | every client promise swap today (search-as-you-type, tab data, polling); the vocabulary persisted boundary streaming needs |
-| 2 | Event transactions (infra) + `<action>` (§6) | marko core | nothing | named acts with guaranteed-reset `.pending` for any handler-managed fetch — before overlays exist |
-| 3 | `<optimistic/view=source>` (§7) | marko core | 2 | the full optimistic story for non-persisted apps |
+| 2 | Event transactions (infra) + `<action>` (§6) | marko core | nothing | named acts with guaranteed-reset `.pending` for any handler-managed fetch — before drafts exist |
+| 3 | `<draft/view=source>` (§7) | marko core | 2 | the full optimistic story for non-persisted apps |
 | 4 | Router transaction extension + navigation lifecycle (§9) | @marko/run | 2 | the persisted one-liner; optimism and busy-state for intercepted links and forms |
 | 5 | Refinements on evidence (§11): action concurrency modifiers, `.input`/`.error`, auto-hold, rebase, submissions view, mutation queueing | varies | 1–4 | — |
 
@@ -162,13 +159,13 @@ experience.
 
 Where this design sits: `<action>` is the convergent act-as-value shape,
 expressed the Marko way (a tag variable, compile-time-tracked property
-reads, native `<form>` wiring); `<optimistic>` is assign-based with
-automatic revert, scoped by the transaction rather than by a
-scheduler-transition, which removes React's "wrong ambient" confusion;
-derivation-style optimism remains a compatible later layer (§11.5);
-element-managed busy state is noted as a run-level candidate rather than
-core language (§11.6); ember/htmx-style declared concurrency is the
-strongest candidate extension to `<action>` (§11.1).
+reads, native `<form>` wiring); `<draft>` is assign-based with automatic
+revert, scoped by the transaction rather than by a scheduler-transition,
+which removes React's "wrong ambient" confusion; derivation-style optimism
+remains a compatible later layer (§11.5); element-managed busy state is
+noted as a run-level candidate rather than core language (§11.6);
+ember/htmx-style declared concurrency is the strongest candidate extension
+to `<action>` (§11.1).
 
 ## 5. Stage 1: `<try>` pending and continuity
 
@@ -270,14 +267,14 @@ A transaction is the lifetime of one act: opened when an act begins,
 extended by promises and hosts, released when all settle.
 
 - **Open:** lazily — when an `<action>` is invoked, or when an inline
-  handler makes an optimistic assignment, or when a host extends an event's
+  handler makes a draft assignment, or when a host extends an event's
   transaction. Marko owns the dispatch point (`dom/event.ts:47`); the
   wrapper installs via self-modifying `enableTransactions()` only when
   compiled in (pattern: `_enable_catch`). An `<action>` invoked *outside*
   any event (timers, sockets, imperative calls) still opens a transaction —
   reifying the act freed transactions from event dispatch.
-- **Join:** optimistic assignments add overrides (§7); a returned thenable
-  is adopted; hosts add extensions keyed by the event (§9.1).
+- **Join:** draft assignments add overrides (§7); a returned thenable is
+  adopted; hosts add extensions keyed by the event (§9.1).
 - **Release:** pending promise count reaches zero (checked from a microtask
   after invocation; sync + unextended releases immediately). Resolution and
   rejection are identical: release. Rejection keeps unhandled-rejection
@@ -321,8 +318,8 @@ act, which is exactly what a handler-less intercepted form needs (§8.1).
 - **Invoking is the act.** `onSubmit=clearCart` wires it as an ordinary
   handler (the dispatch's transaction is the invocation's); `clearCart()`
   from anywhere is equally a transaction. The body is a lexical window for
-  optimistic assignments including post-`await`; code it calls
-  synchronously is the ambient window (§6.3).
+  draft assignments including post-`await`; code it calls synchronously is
+  the ambient window (§6.3).
 - **The reset is the guarantee**: `.pending` returns to `false` on release
   — an edge the app cannot mis-write and, under a router extension, could
   not even observe by hand (§9.2).
@@ -344,7 +341,7 @@ server side of the act; the tag names the client side) but risks confusion
 with server-actions terminology; `<task>` (ember precedent) and
 `<handler>` are the alternates (§12.7).
 
-### 6.3 Windows for optimistic assignment
+### 6.3 Windows for draft assignment
 
 1. **Ambient window** — code executing synchronously during an invocation
    or dispatch, however deep the call stack (fan-out stores join the one
@@ -354,10 +351,10 @@ with server-actions terminology; `<task>` (ember precedent) and
    transaction.
 
 Everything else debug-errors. Inline handlers keep implicit transactions —
-the optimistic-only happy path never declares anything (§7.1). Debug
+the draft-only happy path never declares anything (§7.1). Debug
 diagnostics: assignment outside any window errors naming the binding; a
 transaction that releases from the first post-invocation check while
-holding overrides warns ("nothing extended the transaction — the guess was
+holding drafts warns ("nothing extended the transaction — the draft was
 discarded"), naming the fixes (`async` body, return a promise, or a router
 that extends).
 
@@ -370,12 +367,12 @@ hosts use the internal extension API. It returns (§11.7) only if
 action-external extension cases materialize — keeping the user-facing
 ambient surface of this whole design at **zero new identifiers**.
 
-## 7. Stage 3: `<optimistic>`
+## 7. Stage 3: `<draft>`
 
 ### 7.1 Surface
 
 ```marko
-<optimistic/cart=$global.data.cart/>
+<draft/cart=$global.data.cart/>
 
 <div>Items in cart: ${cart.length}</div>
 
@@ -389,7 +386,7 @@ extended by the router (stage 4) or by the handler's own returned promise.
 Declaring an `<action>` is only for observation:
 
 ```marko
-<optimistic/cart=$global.data.cart/>
+<draft/cart=$global.data.cart/>
 <action/clearCart() { cart = [] }/>
 
 <form method="POST" action="/cart" onSubmit=clearCart>
@@ -397,41 +394,41 @@ Declaring an `<action>` is only for observation:
 </form>
 ```
 
-`<optimistic>` requires a tag variable (identifier — it must be assignable)
-and accepts only `value=`, matching `<let>`'s attribute discipline
+`<draft>` requires a tag variable (identifier — it must be assignable) and
+accepts only `value=`, matching `<let>`'s attribute discipline
 (`translator/core/let.ts:60`).
 
-**Variable naming is a convention, and the convention is: the view gets
-the natural name.** The view is what the template renders, what guesses
+**Variable naming is a convention, and the convention is: the draft gets
+the natural name.** The draft is what the template renders, what guesses
 compose from, and what nearly every expression reads — so it is `cart`,
 `entries`, `sort`. The *source* is the thing referenced once, in the
 declaration: either an expression (`$global.data.cart` — no second name at
 all, the common persisted case) or a qualified binding (`cartData`,
-`serverEntries`, `confirmedCart`). Never the reverse
-(`optimisticCart = ...` littered through handlers is the smell). A
-single-binding design that would eliminate the second name entirely was
-examined and rejected: guess writes and truth writes both happen inside
-handler bodies (`cart = guess; cartData = (await submit(ev)).cart`), so a
-lone binding cannot tell them apart without an explicit commit API — worse
-than a second name.
+`serverEntries`, `confirmedCart`). Never the reverse (`draftCart = ...`
+littered through handlers is the smell). A single-binding design that
+would eliminate the second name entirely was examined and rejected: guess
+writes and truth writes both happen inside handler bodies
+(`cart = guess; cartData = (await submit(ev)).cart`), so a lone binding
+cannot tell them apart without an explicit commit API — worse than a
+second name.
 
 ### 7.2 Semantics
 
-Let `source` be the `value=` expression and `view` the tag variable.
+Let `source` be the `value=` expression and `draft` the tag variable.
 
-| Event | Effect on `view` |
+| Event | Effect on `draft` |
 | --- | --- |
-| Render / SSR / resume | `view === source`. Server output identical to `<const>`; no extra serialization beyond what assignment analysis already requires. |
-| `source` re-derives | No active override: `view` follows, normal dirty-check. Overridden: effective value unchanged (snapshot wins; §7.3); recorded source still updates so release is correct. |
-| Assignment in a window | Records/replaces this transaction's override on this instance, sets `view` synchronously (later reads in the same body see it), queues downstream renders normally. |
-| Transaction releases (any outcome) | Its overrides are removed; `view` re-derives: latest remaining active override in write order, else `source`. Dirty-checked — a correct guess produces zero mutations. |
+| Render / SSR / resume | `draft === source`. Server output identical to `<const>`; no extra serialization beyond what assignment analysis already requires. |
+| `source` re-derives | No active override: `draft` follows, normal dirty-check. Overridden: effective value unchanged (snapshot wins; §7.3); recorded source still updates so release is correct. |
+| Assignment in a window | Records/replaces this transaction's override on this instance, sets `draft` synchronously (later reads in the same body see it), queues downstream renders normally. |
+| Transaction releases (any outcome) | Its overrides are discarded; `draft` re-derives: latest remaining active override in write order, else `source`. Dirty-checked — a correct guess produces zero mutations. |
 | Assignment outside any window | Debug: thrown error naming the binding and the rule. Optimized: unguarded, per the `MARKO_DEBUG` convention. |
 | Scope destroyed mid-transaction | Nothing: overrides live on the scope; release work on destroyed scopes is skipped by generation checks (`dom/queue.ts:177`). |
 
-`view` never writes back to `source` — no commit path, only revert. Truth
-arrives on its own channel, which is what makes releasing always safe.
-Unlike React's `useOptimistic`, the revert scope is the transaction — an
-object with a defined lifetime — not "the enclosing transition", the
+`draft` never writes back to `source` — no commit path, only discard.
+Truth arrives on its own channel, which is what makes releasing always
+safe. Unlike React's `useOptimistic`, the revert scope is the transaction
+— an object with a defined lifetime — not "the enclosing transition", the
 ambient mismatch its docs warn about (§4).
 
 ### 7.3 Concurrency
@@ -440,56 +437,42 @@ Per instance, overrides form an ordered list keyed by transaction, in write
 order; re-assignment replaces in place; effective value = last entry;
 release removes by transaction and re-derives.
 
-- **Compose from the view, not the source**: `cart = [...cart, item]`
-  layers over earlier unreleased guesses because the view already includes
-  them — the documented idiom, and what makes double submit coherent
-  (§9.2).
+- **Compose from the draft, not the source**: `cart = [...cart, item]`
+  layers over earlier undischarged guesses because the draft already
+  includes them — the documented idiom, and what makes double submit
+  coherent (§9.2).
 - **Out-of-order releases are principled**: T1 guesses v1, T2 guesses v2,
-  T2 releases first → view shows v1 (T1 unconfirmed), then truth. A shared
-  action's `.pending` stays true throughout (refcount).
+  T2 releases first → the draft shows v1 (T1 unconfirmed), then truth. A
+  shared action's `.pending` stays true throughout (refcount).
 - **Rebase is deferred** (§11.2): snapshot overrides hide independent truth
   changes until release; React's updater re-application is admitted by the
   storage shape (function-valued assignment = updater) but waits for
   evidence.
 
-### 7.4 Naming the tag
+### 7.4 Naming
 
-`optimistic` is the incumbent for discoverability — it is the industry term
-(React's `useOptimistic`, every "optimistic UI" tutorial), and whatever the
-tag is called, the *feature* keeps that name in docs and search. Against
-it: ten characters, an adjective where core tags are keywords, nouns, or
-verbs (`let`, `show`, `try`, `action`), and it leaks into variable names —
-the `optimisticCart` prefix habit §7.1's convention exists to break.
+**Decision: `<draft>`.** The declaration reads as intended
+(`<draft/cart=$global.data.cart/>` — "cart is a draft of the server
+cart"), failure vocabulary teaches itself ("the draft is discarded"), and
+the draft-PR precedent carries the exact meaning: visible, submitted, not
+yet accepted. The variable-naming convention above keeps drafts on natural
+names, so the tag name never leaks into identifiers.
 
-Candidates, judged by how the declaration reads
-(`<x/cart=$global.data.cart/>` should say "cart is a __ of the truth"),
-what failure sounds like, and collisions:
+The accepted cost: Marko's teaching vocabulary has used "form drafts" for
+*pre-submit* user input (the `<show>` guidance), while this value is
+*post-submit awaiting confirmation*. When stage 3 ships, sweep docs to say
+"unsaved input" for the former; the words are better anyway. `optimistic`
+remains the feature name ("optimistic updates via `<draft>`") for search
+and cross-ecosystem discoverability.
 
-- **`<draft>`** — the best-looking: short, plain English, and "the draft is
-  discarded" is exactly the failure semantics (draft-PR precedent:
-  visible, submitted, not yet accepted). One real collision: Marko's own
-  teaching vocabulary uses "form drafts" for *pre-submit* user input (the
-  `<show>` guidance), and this value is *post-submit awaiting
-  confirmation*. Adopting it means owning that re-teaching.
-- **`<attempt>`** — the dark horse: collision-free, a noun, and the most
-  honest about revert-only semantics — an attempt is precisely a thing
-  that may not stick. "Assignments record an attempt; the attempt is
-  discarded when the act settles" teaches itself. Slightly unusual as API
-  vocabulary; nothing else in the ecosystem uses it, which cuts both ways.
-- **`<eager>`** — reads well and is short, but collides head-on with
-  `loading="eager"` and eager-loading vocabulary. Rejected.
-- **`<view>`** — the doc's own word for the variable, but hopelessly
-  overloaded (MVC views, view layers). Rejected.
-- **`<expect>`** — assertion-library collision. **`<echo>`** — backwards
-  metaphor (an echo follows; this value leads). **`<mirror>`** — implies
-  faithful following, the one thing it deliberately isn't.
-  **`<staged>`** — implies a commit path that intentionally does not
-  exist. All rejected.
-
-Recommendation: `optimistic` if discoverability dominates; `draft` if
-declaration-site aesthetics dominate and the form-draft collision is
-accepted; `attempt` if both matter and a fresh term is acceptable.
-Tracked in §12.11.
+Also considered: `optimistic` (the incumbent — discoverable but ten
+characters, an adjective among keyword/noun tags, and the source of the
+`optimisticCart` prefix habit), `attempt` (collision-free and honest about
+revert-only semantics; the runner-up), `eager` (collides with
+`loading="eager"`), `view` (MVC-poisoned), `expect` (assertion libraries),
+`echo` (backwards metaphor — an echo follows; a draft leads), `mirror`
+(implies faithful following), `staged` (implies a commit path that
+deliberately does not exist).
 
 ## 8. Composition in practice
 
@@ -505,7 +488,7 @@ own act, while a table-level act is one declaration up:
 
 ```marko
 <const/serverEntries=$global.data.cart.map(toEntry)>
-<optimistic/entries=serverEntries/>
+<draft/entries=serverEntries/>
 <for|entry| of=entries by=(e) => e.product.id>
   <action/remove() {
     entries = entries.filter((e) => e.product.id !== entry.product.id);
@@ -551,12 +534,12 @@ it is staged as a run-level candidate (§11.6), not core-language behavior.
 ### 8.3 Shared views
 
 Instance-locality is the loud limitation: an override recorded by the
-product card's `<optimistic>` does not move the header badge. Ambient
-fan-out composes today — a store tag's write path fanning to subscriber
-instances joins them all to one transaction (the demo's `let-global`
-pub/sub) — and shared *pending* exposure is a requirement flowing into the
-`<mut>`/`let-*` store design (§11.8). `<optimistic>` and `<action>` are
-the primitives such a tag would use, not competitors.
+product card's `<draft>` does not move the header badge. Ambient fan-out
+composes today — a store tag's write path fanning to subscriber instances
+joins them all to one transaction (the demo's `let-global` pub/sub) — and
+shared *pending* exposure is a requirement flowing into the `<mut>`/`let-*`
+store design (§11.8). `<draft>` and `<action>` are the primitives such a
+tag would use, not competitors.
 
 ## 9. Stage 4: host integration (@marko/run and persisted pages)
 
@@ -569,28 +552,28 @@ on window bubble, `run-pp/.../persisted.ts:31-33`), the shell bails on
 `ev.defaultPrevented`, and `navigate()` resolves on every exit path
 (`run-pp/.../persisted-navigation.ts:85,128,144,146-153`), so settle wires
 once around the navigation promise in `navigateMatched`. The handshake
-must not import the optimistic runtime: an optional hook on the runtime
-global generated code already reaches (`self[runtimeId]`, cf. the `have`
-reader in `run-pp/.../codegen/index.ts`) or a synchronous CustomEvent —
-decide with run maintainers (§12.3). Host-agnostic either way.
+must not import the draft runtime: an optional hook on the runtime global
+generated code already reaches (`self[runtimeId]`, cf. the `have` reader
+in `run-pp/.../codegen/index.ts`) or a synchronous CustomEvent — decide
+with run maintainers (§12.3). Host-agnostic either way.
 
 ### 9.2 Semantics under the persisted router
 
 - **Happy path** (§7.1): the handler (inline or action) records the guess;
   router intercepts, extends, POSTs; PRG renegotiates and patches;
   `$global.data.cart` re-derives; the extension resolves after the final
-  frame; overrides release against already-correct truth; `.pending` flips
+  frame; drafts release against already-correct truth; `.pending` flips
   false — an edge the handler could not observe itself, having no
   completion signal. `ev.preventDefault()` opts out; no JS is plain PRG.
-- **Release at stream end, deliberately**: patch responses embed late async
-  frames (boundary bodies), and the mutated value may live inside one — no
-  earlier point is provably truth-complete. Cost: a slow unrelated
-  `<await>` on the target extends the hold; a "route values complete"
-  protocol marker could shorten it (§12.5).
+- **Release at stream end, deliberately**: patch responses embed late
+  async frames (boundary bodies), and the mutated value may live inside
+  one — no earlier point is provably truth-complete. Cost: a slow
+  unrelated `<await>` on the target extends the hold; a "route values
+  complete" protocol marker could shorten it (§12.5).
 - **Double submit** stays coherent: the router aborts a prior GET but never
   network-aborts a POST (exactly-once mutation; only its application is
   superseded, `run-pp/.../persisted-navigation.ts:62-65,81`). Submit B
-  before A applies → txn A releases; B's override (composed from the view)
+  before A applies → txn A releases; B's draft (composed from the draft)
   carries A's intent; B's response reflects both; `.pending` refcount holds
   true throughout. Cross-connection server ordering is unowned (roadmap:
   "concurrent submissions"; a client mutation queue — TanStack's
@@ -615,9 +598,9 @@ submissions view (§11.5).
 
 ## 10. Async machinery audit
 
-1. **The queue.** Optimistic assignment is an external state write
-   (`_let`'s shape, `dom/signals.ts:43-49`); release is the same path from
-   the release microtask; `.pending` flips ride the same flushes. No new
+1. **The queue.** Draft assignment is an external state write (`_let`'s
+   shape, `dom/signals.ts:43-49`); release is the same path from the
+   release microtask; `.pending` flips ride the same flushes. No new
    ordering rules; transactions never call `run()`. A write targeting
    state under an await-pending `<try>` parks like any render; release
    updates the parked entry in place (`dom/queue.ts:41-48`).
@@ -636,7 +619,7 @@ submissions view (§11.5).
 4. **Rejections.** Adoption is `.finally`-shaped; unhandled-rejection
    reporting survives; `.pending` resets on rejection like any release;
    `@catch` is untouched by continuity.
-5. **SSR, streaming, resume.** Transactions are client-only; `<optimistic>`
+5. **SSR, streaming, resume.** Transactions are client-only; `<draft>`
    degenerates to `<const>`; action variables are registered functions;
    `.pending` and the `<try>` variable are constant `false` server-side
    (§5.2's asymmetry); pre-resume interactions are native. Nothing
@@ -656,8 +639,8 @@ submissions view (§11.5).
    object exists from day one, so exposure is additive).
 4. **Automatic async hold (attribution).** Rev 2's design, retained for
    acts whose consequences render outside any shared boundary: a second
-   *settle* edge (release + attributed boundaries resolved), overrides
-   still releasing at the promise edge, settle checks riding flush ends,
+   *settle* edge (release + attributed boundaries resolved), drafts still
+   releasing at the promise edge, settle checks riding flush ends,
    `@catch` counting as resolution, per-flush attribution first.
    Over-holding is benign; under-holding breaks the contract.
 5. **`.input`/`.result`/`.error` on actions + a submissions view.** Solid's
@@ -702,12 +685,9 @@ submissions view (§11.5).
    error a natural home short of changing `@catch`'s contract.
 10. **Richer `<try>` exposure later**: boolean now vs object later is a
     breaking-change fork; decide before stage 1 stabilizes.
-11. **`<optimistic>` naming** (§7.4): `optimistic` (discoverable,
-    adjective, prefix-leaking) vs `draft` (best-reading, form-draft
-    vocabulary collision) vs `attempt` (honest revert semantics,
-    collision-free, novel). Whichever wins, the docs' feature name stays
-    "optimistic updates", and §7.1's view-gets-the-natural-name convention
-    stands regardless.
+11. **`<draft>` naming**: decided (§7.4). Residual: sweep docs vocabulary
+    so "draft" is unambiguous — the `<show>` guidance says "unsaved
+    input" instead of "form drafts" — when stage 3 ships.
 
 ## 13. Implementation and verification sketch
 
@@ -729,16 +709,15 @@ edge, dispatch/invocation seams, thenable adoption, host extension entry);
 defaulting to noop; `.pending` reads compile through
 `getOrCreatePropertyAlias` (`util/references.ts:266`) to a companion
 accessor the runtime flips on invocation-count 0↔n — bypassing identity
-dirty-checking since the callable is stable); `_optimistic`/
-`_optimistic_set` beside `_let`/`_let_change` (source slot + override
-list, effective value precomputed into the read slot);
-`core/optimistic.ts` routing assignments through the existing
-`assignmentTo` machinery (`util/references.ts:546`). Fixtures: action
-declaration incl. shorthand + no-op form; `.pending` edges for sync,
-async, double-invoke refcount, imperative (non-event) invocation,
-rejection reset; `.pending` in `<for>` rows; passing the callable and the
-property to children; optimistic derive/revert; window errors +
-sync-discard warn; concurrent transactions incl. out-of-order releases;
+dirty-checking since the callable is stable); `_draft`/`_draft_set` beside
+`_let`/`_let_change` (source slot + override list, effective value
+precomputed into the read slot); `core/draft.ts` routing assignments
+through the existing `assignmentTo` machinery (`util/references.ts:546`).
+Fixtures: action declaration incl. shorthand + no-op form; `.pending`
+edges for sync, async, double-invoke refcount, imperative (non-event)
+invocation, rejection reset; `.pending` in `<for>` rows; passing the
+callable and the property to children; draft derive/revert; window errors
++ sync-discard warn; concurrent transactions incl. out-of-order releases;
 write under await-pending `<try>`; fan-out store composition.
 
 Stage 4: eager-shell lines in `navigateMatched` (extend at interception,
@@ -753,8 +732,8 @@ stages 2+3 ≤1.0 kB combined; stage 4 shell delta ≤0.1 kB.
 ## Appendix: one component, both worlds
 
 The demo's add-to-cart (`marko-ecommerce/src/tags/product-actions.marko`),
-complete in each world. The five lines expressing the idea — the view, the
-guess composed from it, the action, the pending-disabled button — are
+complete in each world. The five lines expressing the idea — the draft,
+the guess composed from it, the action, the pending-disabled button — are
 identical; everything else is the router absorbing the round trip.
 
 Without persisted pages (stages 1–3; the handler owns the round trip):
@@ -768,7 +747,7 @@ export interface Input {
 
 // Truth: seeded by the server render, updated only from responses.
 <let/cartData=$global.data.cart>
-<optimistic/cart=cartData/>
+<draft/cart=cartData/>
 <let/error=null>
 <let/quantity=1>
 
@@ -783,7 +762,7 @@ export interface Input {
     cartData = (await submit(ev)).cart;  // truth from the response
     error = null;
   } catch (err) {
-    error = err.message;                 // the guess reverts on release
+    error = err.message;                 // the draft is discarded on release
   }
 }/>
 
@@ -808,7 +787,7 @@ export interface Input {
   id: number;
 }
 
-<optimistic/cart=$global.data.cart/>
+<draft/cart=$global.data.cart/>
 <let/quantity=1>
 
 <action/addToCart() {
@@ -832,7 +811,7 @@ export interface Input {
 
 What the router absorbed: `preventDefault` (interception; the handler runs
 first), the fetch (the native POST becomes the PRG round trip), the truth
-channel (`$global.data.cart` patches and the override releases against it
+channel (`$global.data.cart` patches and the draft releases against it
 after the final frame), and error plumbing (validation errors arrive as a
 patched re-render; transport failures fall back to a document load).
 Without pending UI, the `<action>` disappears too — an inline handler's
