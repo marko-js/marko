@@ -26,20 +26,6 @@ INSERT: .a::text("1")
 ```js
 container.querySelector("button.a").click();
 ```
-```html
-<span>
-  1
-</span>
-<button
-  class="a"
->
-  2
-</button>
-```
-## Change
-```
-UPDATE: .a::text "1" => "2"
-```
 
 # Update
 ```html
@@ -49,7 +35,7 @@ UPDATE: .a::text "1" => "2"
 <button
   class="a"
 >
-  2
+  1
 </button>
 <button
   class="b"
@@ -74,7 +60,7 @@ container.querySelector("button.b").click();
 <button
   class="a"
 >
-  2
+  1
 </button>
 <button
   class="b"
