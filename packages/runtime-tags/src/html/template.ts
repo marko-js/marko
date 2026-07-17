@@ -281,9 +281,12 @@ class ServerRendered implements RenderedTemplate {
             boundary.onNext = NOOP;
             reject(boundary.signal.reason);
             break;
-          case FlushStatus.complete:
-            resolve(head.consume().flushHTML());
+          case FlushStatus.complete: {
+            // `consume` may abort and re-enter through the boundary listener.
+            const consumed = head.consume();
+            if (!boundary.signal.aborted) resolve(consumed.flushHTML());
             break;
+          }
         }
       })();
     }));
