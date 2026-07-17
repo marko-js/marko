@@ -1110,7 +1110,12 @@ export function writeRegisteredFns() {
         fn = t.functionDeclaration(
           t.identifier(registeredFn.id),
           [scopeIdentifier],
-          t.blockStatement(toReturnedFunction(registeredFn.node)),
+          t.blockStatement(
+            toReturnedFunction(
+              registeredFn.node,
+              registeredFnReturnWrappers.get(registeredFn.node),
+            ),
+          ),
         );
       } else if (
         registeredFn.node.type === "FunctionDeclaration" &&
@@ -1148,11 +1153,28 @@ export function writeRegisteredFns() {
   }
 }
 
-function toReturnedFunction(rawFn: t.Function) {
+// Lets a tag (e.g. `<action>`) wrap the closure a scope-reading registered
+// function returns, so the wrapping is reconstructed on resume rather than
+// applied only during a fresh render's setup.
+const registeredFnReturnWrappers = new WeakMap<
+  t.Function,
+  (expr: t.Expression) => t.Expression
+>();
+export function setRegisteredFnReturnWrapper(
+  node: t.Function,
+  wrap: (expr: t.Expression) => t.Expression,
+) {
+  registeredFnReturnWrappers.set(node, wrap);
+}
+
+function toReturnedFunction(
+  rawFn: t.Function,
+  wrap?: (expr: t.Expression) => t.Expression,
+) {
   const fn = simplifyFunction(rawFn);
   return fn.type === "FunctionDeclaration"
-    ? [fn, t.returnStatement(fn.id!)]
-    : [t.returnStatement(fn)];
+    ? [fn, t.returnStatement(wrap ? wrap(fn.id!) : fn.id!)]
+    : [t.returnStatement(wrap ? wrap(fn) : fn)];
 }
 
 export function addHTMLEffectCall(

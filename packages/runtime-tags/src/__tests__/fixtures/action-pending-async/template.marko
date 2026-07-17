@@ -1,0 +1,8 @@
+import { resolveAfter } from "../../utils/resolve";
+export interface Input {}
+
+<action/save=async () => {
+  await resolveAfter(1);
+}/>
+
+<button onClick=save disabled=save.pending>save</button>

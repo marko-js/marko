@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+export interface Input {}
+
+<let/serverCount=0/>
+<draft/count=serverCount/>
+<action/increment=async () => {
+  count = count + 5;
+  serverCount = await resolveAfter(serverCount + 1);
+}/>
+
+<button onClick=increment>go</button>
+<p id="draft">${count}</p>
+<p id="server">${serverCount}</p>
+<p id="pending">${String(increment.pending)}</p>

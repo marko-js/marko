@@ -147,6 +147,28 @@ import PriceChart from "<price-chart>" with { load: "visible#chart" }
 <div#chart><PriceChart symbol=input.symbol/></div>
 ```
 
+## Optimistic updates (`<draft>` + `<action>`)
+
+`<draft/x=source>` renders as its `source=` value but accepts provisional assignments; `<action/act=fn>` declares a user act and exposes `act.pending`. An assignment holds only for the act's lifetime (its body + returned promise), then the draft re-derives against the source — a guess the server confirms produces zero DOM work, and a failed one is discarded. Nothing serializes; without JS the form posts natively.
+
+```marko
+<let/cartData=$global.data.cart>
+<draft/cart=cartData/>
+<action/addToCart=async (e) => {
+  e.preventDefault();
+  cart = [...cart, { id: input.id, qty: 1 }];   // optimistic; layer off the draft
+  cartData = (await submit(e)).cart;             // truth arrives on its own channel
+}/>
+
+<form method="POST" action="/cart" onSubmit=addToCart>
+  <button disabled=addToCart.pending>Add to Cart</button>
+</form>
+```
+
+- Assign a draft only from an `<action>` body or an event handler; never write the source through a draft (there is no commit path). Compose from the draft (`cart = [...cart, x]`) so guesses layer.
+- `act.pending` is a readonly reactive boolean (refcounted across overlapping invocations), constant `false` during SSR. `<action/apply/>` with no body is a pending-only act.
+- Declare an `<action>` inside a `<for>` row for a per-row act.
+
 ## DON'T (these are errors or silently wrong)
 
 | Wrong (React/Vue/Marko5 habit)                              | Right                                                                                |

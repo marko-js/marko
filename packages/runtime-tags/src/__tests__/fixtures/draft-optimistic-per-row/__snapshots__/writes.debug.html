@@ -1,0 +1,34 @@
+<ul>
+  <li><button>a<!--M_*2 #text/1--></button><!--M_*2 #button/0--></li>
+  <li><button>b<!--M_*3 #text/1--></button><!--M_*3 #button/0--></li>
+  <li><button>c<!--M_*4 #text/1--></button><!--M_*4 #button/0--></li>
+  <!--M_}1 #ul/0 4 3 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      serverEntries: _.a = ["a", "b", "c"],
+      entries: _.a
+    }, {
+      entry: "a",
+      remove: _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/draft-optimistic-per-row/template.marko_1/remove"
+        ),
+      "#LoopKey": "a"
+    }, {
+      entry: "b",
+      remove: _(3,
+        "packages/runtime-tags/src/__tests__/fixtures/draft-optimistic-per-row/template.marko_1/remove"
+        ),
+      "#LoopKey": "b"
+    }, {
+      entry: "c",
+      remove: _(4,
+        "packages/runtime-tags/src/__tests__/fixtures/draft-optimistic-per-row/template.marko_1/remove"
+        ),
+      "#LoopKey": "c"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/draft-optimistic-per-row/template.marko_1_remove 2 3 4"
+  ];
+  M._.w()
+</script>

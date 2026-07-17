@@ -48,6 +48,7 @@ export {
   forUntil,
 } from "./html/for";
 export { _template } from "./html/template";
+export { _action } from "./html/transaction";
 export {
   _attr_content,
   _await,

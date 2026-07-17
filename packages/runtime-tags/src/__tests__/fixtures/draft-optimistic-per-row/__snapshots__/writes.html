@@ -1,0 +1,25 @@
+<ul>
+  <li><button>a<!--M_*2 b--></button><!--M_*2 a--></li>
+  <li><button>b<!--M_*3 b--></button><!--M_*3 a--></li>
+  <li><button>c<!--M_*4 b--></button><!--M_*4 a--></li><!--M_}1 a 4 3 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    b: _.a = ["a", "b", "c"],
+    c: _.a
+  }, {
+    d: "a",
+    f: _(2, "a0"),
+    M: "a"
+  }, {
+    d: "b",
+    f: _(3, "a0"),
+    M: "b"
+  }, {
+    d: "c",
+    f: _(4, "a0"),
+    M: "c"
+  }], "a1 2 3 4"];
+  M._.w()
+</script>

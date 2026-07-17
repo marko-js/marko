@@ -219,3 +219,20 @@ event regardless of interop, and `compat.onFlush` permanently patches
 Marko 6 chunk flush with a `writersByGlobal.get` miss once the class-compat
 module is loaded. Each is minor individually; worth gating the resolver loop on a
 "has bridged events" flag and scoping the patches.
+
+## Trim the `<draft>`/`<action>` transaction runtime toward its 1.0 kB budget
+
+`packages/runtime-tags/src/dom/transaction.ts:1` | 2026-07-17 | impact:low | effort:med
+
+The transaction runtime (`_draft` + `_action` + helpers) plus the HTML `_action`
+adds ~1214 bytes min / ~427 brotli to the `*` entry in `.sizes.json`; the
+optimistic-updates proposal budgeted ≤1.0 kB min. It is genuinely zero-cost when
+unused (the `counter`/`comments` fixtures are unchanged). Two clean paths could
+close the gap: (1) drop the runner's `.pending` getter and the compiler's
+property forwarding for `pending`, driving the pending `_let` only via the
+explicit `addValue(false)` init plus `_action`'s direct writes — this removes the
+`Object.defineProperty` and the odd DOM/HTML read asymmetry where HTML reads
+`action.pending` as a member while DOM reads a dedicated slot; (2) shorten
+`DraftControl`/`PendingCell` property names the way `Transaction` already uses
+single letters. Neither was pursued to avoid destabilizing resume late in the
+change.

@@ -1,0 +1,10 @@
+export interface Input {
+  items: string[];
+}
+
+<draft/list=input.items/>
+<ul>
+  <for|item| of=list>
+    <li>${item}</li>
+  </for>
+</ul>

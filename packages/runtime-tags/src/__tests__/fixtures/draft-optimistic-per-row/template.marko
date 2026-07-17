@@ -1,0 +1,17 @@
+import { resolveAfter } from "../../utils/resolve";
+export interface Input {}
+
+<let/serverEntries=["a", "b", "c"]/>
+<draft/entries=serverEntries/>
+
+<ul>
+  <for|entry| of=entries by=(e) => e>
+    <action/remove=async () => {
+      entries = entries.filter((e) => e !== entry);
+      serverEntries = await resolveAfter(serverEntries.filter((e) => e !== entry));
+    }/>
+    <li>
+      <button onClick=remove disabled=remove.pending>${entry}</button>
+    </li>
+  </for>
+</ul>

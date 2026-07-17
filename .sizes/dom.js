@@ -1,4 +1,4 @@
-// size: 26115 (min) 9605 (brotli)
+// size: 27329 (min) 10032 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -312,7 +312,9 @@ let empty = [],
       (renderer._ = renderer),
       _resume(id, renderer)
     );
-  };
+  },
+  currentTransaction,
+  draftControls = /* @__PURE__ */ new WeakMap();
 function attrTag(attrs) {
   return (
     (attrs[Symbol.iterator] = attrTagIterator),
@@ -2649,5 +2651,112 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+function _draft(id, fn) {
+  let accessor = decodeAccessor(id),
+    key = id,
+    draft = (scope, source) => {
+      let control = draftControls.get(scope)?.get(accessor);
+      control
+        ? (control.source = source)
+        : (scope[accessor] !== source || !(accessor in scope)) &&
+          ((scope[accessor] = source), fn?.(scope));
+    };
+  return (
+    (draft.d = (scope, value) => {
+      let transaction = (currentTransaction ||= ambientTransaction()),
+        controls = draftControls.get(scope);
+      controls ||
+        draftControls.set(scope, (controls = /* @__PURE__ */ new Map()));
+      let control = controls.get(accessor);
+      (control ||
+        controls.set(
+          accessor,
+          (control = {
+            scope,
+            accessor,
+            key,
+            fn,
+            source: scope[accessor],
+            entries: /* @__PURE__ */ new Map(),
+          }),
+        ),
+        control.entries.set(transaction, value),
+        (transaction.d ||= /* @__PURE__ */ new Set()).add(control),
+        writeDraft(control, value));
+    }),
+    draft
+  );
+}
+function writeDraft(control, value) {
+  let { scope, accessor } = control;
+  scope[accessor] !== value &&
+    ((scope[accessor] = value),
+    control.fn && (schedule(), queueRender(scope, control.fn, control.key)));
+}
+function _action(scope, accessor, pendingSignal, fn) {
+  let runner = scope[decodeAccessor(accessor)];
+  if (!runner) {
+    let cell = {
+      scope,
+      signal: pendingSignal,
+      n: 0,
+    };
+    ((runner = function (...args) {
+      return invokeAction(cell, runner.fn, this, args);
+    }),
+      (runner.cell = cell),
+      Object.defineProperty(runner, "pending", { get: () => cell.n > 0 }));
+  }
+  return ((runner.fn = fn), runner);
+}
+function invokeAction(cell, fn, thisArg, args) {
+  let transaction = { c: 1 };
+  setPending(cell, 1, transaction);
+  let previous = currentTransaction;
+  currentTransaction = transaction;
+  try {
+    let result = fn && fn.apply(thisArg, args);
+    return (
+      result &&
+        typeof result.then == "function" &&
+        (transaction.c++,
+        result.then(
+          () => settle(transaction),
+          () => settle(transaction),
+        )),
+      result
+    );
+  } finally {
+    ((currentTransaction = previous), settle(transaction));
+  }
+}
+function ambientTransaction() {
+  let transaction = { c: 1 };
+  return (queueMicrotask(() => settle(transaction)), transaction);
+}
+function settle(transaction) {
+  if (!--transaction.c) {
+    if (
+      ((transaction.x = 1),
+      transaction === currentTransaction && (currentTransaction = void 0),
+      transaction.d)
+    )
+      for (let control of transaction.d) {
+        control.entries.delete(transaction);
+        let value = control.source;
+        for (let held of control.entries.values()) value = held;
+        (control.entries.size ||
+          draftControls.get(control.scope)?.delete(control.accessor),
+          writeDraft(control, value));
+      }
+    if (transaction.p) for (let cell of transaction.p) setPending(cell, -1);
+  }
+}
+function setPending(cell, delta, transaction) {
+  transaction && (transaction.p ||= []).push(cell);
+  let was = cell.n;
+  ((cell.n += delta),
+    cell.signal && !was != !cell.n && cell.signal(cell.scope, cell.n > 0));
 }
 //#endregion
