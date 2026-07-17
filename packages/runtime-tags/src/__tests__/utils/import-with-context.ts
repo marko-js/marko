@@ -46,7 +46,9 @@ export async function importWithContext<T>(
           .then(() => mod)),
       );
 
-      cached.then(tick).finally(afterEvaluate);
+      // The importer receives evaluation failures through `cached`; this
+      // bookkeeping chain must not float them as unhandled rejections.
+      cached.then(tick).finally(afterEvaluate).catch(noop);
     }
 
     return cached;
@@ -84,3 +86,5 @@ export function waitForPendingModules(context: vm.Context) {
 function tick() {
   return Promise.resolve();
 }
+
+function noop() {}
