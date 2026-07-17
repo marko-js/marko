@@ -44,22 +44,18 @@ export default {
             if (closure.type !== BindingType.constant) {
               const closureSignal = getSignal(childSection, closure);
               if (signalHasStatements(closureSignal)) {
-                addStatement(
-                  "render",
-                  childSection,
-                  undefined,
-                  t.expressionStatement(
-                    t.callExpression(
-                      isDynamicClosure(childSection, closure)
-                        ? closureSignal.identifier
-                        : t.memberExpression(
-                            closureSignal.identifier,
-                            t.identifier("_"),
-                          ),
-                      [scopeIdentifier],
-                    ),
+                const invocation = t.expressionStatement(
+                  t.callExpression(
+                    isDynamicClosure(childSection, closure)
+                      ? closureSignal.identifier
+                      : t.memberExpression(
+                          closureSignal.identifier,
+                          t.identifier("_"),
+                        ),
+                    [scopeIdentifier],
                   ),
                 );
+                addStatement("render", childSection, undefined, invocation);
               }
             }
           });

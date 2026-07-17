@@ -609,15 +609,14 @@ export function getSignalFn(signal: Signal): t.Expression {
       continue;
     }
     if (signalHasStatements(value.signal)) {
-      signal.render.push(
-        t.expressionStatement(
-          t.callExpression(value.signal.identifier, [
-            scopeIdentifier,
-            value.value,
-            ...getTranslatedExtraArgs(value.signal),
-          ]),
-        ),
+      const invocation = t.expressionStatement(
+        t.callExpression(value.signal.identifier, [
+          scopeIdentifier,
+          value.value,
+          ...getTranslatedExtraArgs(value.signal),
+        ]),
       );
+      signal.render.push(invocation);
     } else {
       signal.render.push(
         t.expressionStatement(
@@ -918,15 +917,11 @@ export function addValue(
   }
 }
 
-export function getResumeRegisterId(
+function buildResumeRegisterKey(
   section: Section,
   referencedBindings: string | ReferencedBindings,
   type?: string,
 ) {
-  const {
-    markoOpts,
-    opts: { filename },
-  } = getFile();
   let name = "";
   if (referencedBindings) {
     if (typeof referencedBindings === "string") {
@@ -939,11 +934,20 @@ export function getResumeRegisterId(
       name += `_${referencedBindings.name}`;
     }
   }
-  return getTemplateId(
+  return `${section.id}${name}${type ? "/" + type : ""}`;
+}
+
+export function getResumeRegisterId(
+  section: Section,
+  referencedBindings: string | ReferencedBindings,
+  type?: string,
+) {
+  const {
     markoOpts,
-    filename as string,
-    `${section.id}${name}${type ? "/" + type : ""}`,
-  );
+    opts: { filename },
+  } = getFile();
+  const key = buildResumeRegisterKey(section, referencedBindings, type);
+  return getTemplateId(markoOpts, filename as string, key);
 }
 
 export function writeSignals(section: Section) {
@@ -972,6 +976,10 @@ export function writeSignals(section: Section) {
       const effectIdentifier = t.identifier(
         `${signal.identifier.name}__script`,
       );
+      const effectFn = t.arrowFunctionExpression(
+        [scopeIdentifier],
+        toFirstExpressionOrBlock(signal.effect),
+      );
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
@@ -979,10 +987,7 @@ export function writeSignals(section: Section) {
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings),
           ),
-          t.arrowFunctionExpression(
-            [scopeIdentifier],
-            toFirstExpressionOrBlock(signal.effect),
-          ),
+          effectFn,
         ),
       );
     }
