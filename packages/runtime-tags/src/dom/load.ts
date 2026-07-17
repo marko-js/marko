@@ -254,10 +254,19 @@ export function _load_has_trigger(selector: string): LoadTrigger {
 
 function hasWatcher() {
   const matched: Record<string, 1> = {};
+  // Browsers without `:has()` support fail open: every watch loads
+  // immediately, matching how the other triggers degrade when their target
+  // is missing.
+  const supported = CSS.supports("selector(:has(*))");
   let style: HTMLStyleElement | undefined;
   let id = 0;
   return (selector: string, cb: () => void) => {
-    if (matched[selector] === 1) {
+    if (!supported || matched[selector] === 1) {
+      if (MARKO_DEBUG && !supported) {
+        console.warn(
+          `This browser does not support \`:has()\`, required by the "has" lazy load trigger for "${selector}". The module was loaded immediately.`,
+        );
+      }
       cb();
     } else {
       const key = "m" + ++id;

@@ -1,14 +1,15 @@
 <span>1</span>
 <script>
   ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
-    h))) => (self.$h ||= ((o = {}, s, i = 0, D = document) => (k, c, t, e) => o[
-      k] === 1 ? c() : ((e = D.documentElement.insertBefore(D.createElement(
-        "t"), D.body)).setAttribute("m", t = "m" + (i += 1)), e.style
-      .cssText = "display:block;position:fixed;visibility:hidden", e
-      .onanimationstart = () => (o[k] = 1, e.remove(), c()), (s ||= D.head
-        .appendChild(D.createElement("style"))).append(":has(" + k +
-        ")>t[m=" + t + "]{animation:1ms m-h}@keyframes m-h{}")))())(
-      ".my-button:focus", l))(document.currentScript,
+    h))) => (self.$h ||= ((o = {}, s, i = 0, D = document, u = !CSS.supports(
+      "selector(:has(*))")) => (k, c, t, e) => u || o[k] === 1 ? c() : ((e =
+        D.documentElement.insertBefore(D.createElement("t"), D.body))
+      .setAttribute("m", t = "m" + (i += 1)), e.style.cssText =
+      "display:block;position:fixed;visibility:hidden", e.onanimationstart =
+      () => (o[k] = 1, e.remove(), c()), (s ||= D.head.appendChild(D
+        .createElement("style"))).append(":has(" + k + ")>t[m=" + t +
+        "]{animation:1ms m-h}@keyframes m-h{}")))())(".my-button:focus", l))(
+    document.currentScript,
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>")
 </script>
 

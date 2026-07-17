@@ -44,7 +44,7 @@ New in Marko 6 (no 5 equivalent — reach for these while converting):
 - `<show>` (toggle visibility, keep state/DOM), `<id>`, `<log>`, `<debug>`, `<define>`, `<try>`, `<lifecycle>`.
 - Controllable native attributes: `<input valueChange= checkedChange= checkedValueChange=>`, `<select value= valueChange=>`, `<textarea value=>`, `<details openChange=>`, `<dialog openChange=>`.
 - `$signal` (an `AbortSignal` for cleanup in any expression) and `$global`.
-- Lazy tag imports `with { load: "visible|idle|media|on*|render" }`.
+- Lazy tag imports `with { load: "visible|idle|media|has|on*|render" }`.
 
 ## Core tags
 

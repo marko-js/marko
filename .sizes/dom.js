@@ -1,4 +1,4 @@
-// size: 26687 (min) 9834 (brotli)
+// size: 26727 (min) 9822 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2650,10 +2650,11 @@ function _load_has_trigger(selector) {
 }
 function hasWatcher() {
   let matched = {},
+    supported = CSS.supports("selector(:has(*))"),
     style,
     id = 0;
   return (selector, cb) => {
-    if (matched[selector] === 1) cb();
+    if (!supported || matched[selector] === 1) cb();
     else {
       let key = "m" + ++id,
         sentinel = document.documentElement.insertBefore(

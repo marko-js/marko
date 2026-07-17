@@ -54,10 +54,13 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
   };
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;
-  // jsdom does not implement the `CSS` namespace.
+  // jsdom does not implement the `CSS` namespace. `supports` reports true so
+  // the `has` trigger takes its normal watch path (its fail-open path is for
+  // browsers without `:has()`).
   window.CSS ??= {
     escape: (sel: string) =>
       sel.replace(/[^a-zA-Z0-9\u00a0-\uffff\w-]/g, (c) => "\\" + c),
+    supports: (_condition: string): boolean => true,
   } as typeof CSS;
   window.IntersectionObserver = class IntersectionObserver {
     #entry: IOEntry;
