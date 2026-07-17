@@ -34,7 +34,7 @@ mechanism shared by all three integrations rather than three bespoke ones.
 
 ## Design summary
 
-Two additions, total:
+One core tag, one convention, and one implementor-tier function:
 
 - **One core tag — `<optimistic>`**: a `<const>` you can assign to. The
   assignment is an *overlay* on top of the source expression. It lasts
@@ -43,12 +43,16 @@ Two additions, total:
   expression — in the same render batch as everything else that lands at
   settle.
 
-- **One public function — `transaction(fn)`**: entangles async work that the
-  reactive graph cannot see. Implicit transitions cover async that flows
-  through state (`<await>` values re-evaluating); `transaction()` covers the
-  rest — a manual `fetch` in a handler, or a persisted-pages implementor's
-  fetch-and-patch cycle. It is the only integration API: frameworks and
-  authors use the same function.
+- **One convention — return the promise.** A handler that returns a thenable
+  entangles it into the turn: the turn isn't settled until that promise is.
+  Async that flows through state needs nothing (implicit transitions); async
+  that doesn't (a manual `fetch`) is entangled by returning it from the
+  handler that started it.
+
+- **One implementor-tier function — `transaction(fn)`** (subpath import,
+  e.g. `marko/transaction`): for code that runs outside compiled templates —
+  a persisted-pages interceptor, an external store bridge, advanced userland.
+  Authors never import it; frameworks already import runtime modules.
 
 There is no explicit association between an optimistic write and the work it
 waits for. Transitions entangle by *dependency* (everything downstream of
@@ -79,7 +83,7 @@ exactly that indicator.
 | --------------- | -------------------------------------------------------------- | --------------------------------------------- |
 | Persisted pages | Implementor calls `transaction()` while intercepting the event | Optimistic writes in the submit/click handler |
 | Transitions     | Nothing — implicit: downstream `<await>` value re-evaluates    | Optimistic writes beside the real write       |
-| User-land       | The author calls `transaction(fn)`                             | Both the writes and the async work            |
+| User-land       | The handler returns its promise                                | The writes, then `return fetch(...)...`       |
 
 ## The `<optimistic>` tag
 
@@ -126,8 +130,9 @@ exactly the unit the queue already batches (`schedule()` → `run()`).
 2. **The turn's settlement** is the union of:
    - implicit transitions started by the turn's real writes (discovered
      during the flush, when downstream recomputation re-evaluates an
-     `<await>` value into a new promise), and
-   - explicit `transaction(fn)` calls made during the turn.
+     `<await>` value into a new promise),
+   - thenables returned by the turn's event/change handlers, and
+   - `transaction(fn)` calls made during the turn (implementor tier).
 
    Overlays release when the last of these settles — resolve *or* reject.
    Rejection releases exactly like resolution; the UI falls back to real
@@ -147,14 +152,15 @@ exactly the unit the queue already batches (`schedule()` → `run()`).
      because with implicit transitions the author cannot know statically.
 4. **Late writes** — optimistic writes from a promise continuation belong to
    that later turn, which entangles nothing and releases them at its flush.
-   To write optimism from inside in-flight work, re-enter the transaction:
-   `tx(() => progress = pct)`.
+   In-flight feedback (progress bars) is real state, not optimism: write a
+   plain `<let>` from the continuations and reset it at the end. (Advanced
+   code can re-enter via the implementor API's `tx(...)` callback.)
 
 Because "nothing async happened" is now a legitimate outcome rather than an
 author error, there is no unconditional dev warning. `MARKO_DEBUG` warns
 only when a release in the *same flush* as the write visibly changes the
-rendered value — the signature of a manual `fetch` the author forgot to
-wrap in `transaction()`.
+rendered value — the signature of a handler that started a fetch and forgot
+to `return` it.
 
 ### Holds and the two channels
 
@@ -181,24 +187,100 @@ transition renders/effects, server patches, real-state updates from an
 action. "Optimistic" and "real" swap **atomically in one batch**; there is
 no frame showing stale pre-action data in between.
 
-### `transaction(fn)`
+## Entangling async the graph can't see
+
+Implicit transitions cover async that flows through state. What remains is
+async that doesn't: a manual `fetch` in a click handler, a persisted-pages
+implementor's fetch-and-patch cycle. Marko doesn't do author-facing imported
+functions — the only ambient APIs are template magics like `$global` and
+`$signal` — so this surface deserves scrutiny. Options compared:
+
+| | Shape | Author-facing surface | Verdict |
+| - | ----- | --------------------- | ------- |
+| A | `import { transaction } from "marko"` | An import — no precedent in userland templates | Demote to implementor tier |
+| B | Magic `$transaction(fn)` | Grows the `$` namespace (only `$global`/`$signal` exist; high bar) for a function-shaped API anyway | Reject |
+| C | `<transaction/save>` → `save(fn)` in handlers | Tag declaring a callable; call-site still imperative | Reject |
+| D | `<transaction=op>` — body-less async sink fed by state | Fully declarative; promise routed through a `<let>` | Defer — cheap to add later |
+| E | **Convention: a handler that returns a thenable entangles it** | **None** | **Adopt** |
+
+**E — return the promise** (adopted). Every Marko event dispatches through
+one runtime chokepoint (`handleDelegated` in `dom/event.ts` invokes each
+handler), and handler return values currently have no meaning — so the
+convention costs one gated thenable check and collides with nothing.
+Idiomatic code works by default: an `async` handler returns its promise
+without the author thinking about it, and the extracted-action form is
+exactly "actions are just async event handlers":
+
+```marko
+// inline
+<button onClick() {
+  isLiked = !liked;
+  return toggleLike(!liked);
+}>
+
+// extracted — an async function in a plain module
+<form onSubmit=submitOrder>
+```
+
+The one-line teachable rule: **return your promise and Marko waits for it
+before dropping optimism.** The failure mode (forgot to return) is caught by
+the same-flush visible-release debug warning above, whose message can say
+precisely that. Uniformly, this applies to any Marko-invoked handler —
+DOM events and `*Change` handlers alike.
+
+**C — a tag declaring a callable** was the strongest tag-shaped candidate,
+since callable tag variables have precedent (element refs are getters:
+`<div/el>` … `el()`). But the declaration adds no semantics — calling
+`save(fn)` would do exactly what any entangle call does, tied to the turn,
+not to the declaration — so the tag is ceremony: two steps for one action,
+and its imperativeness is merely wearing a tag costume. It also invites
+`save.pending`, and reactive properties on tag variables have no runtime
+precedent (the pending-flag convention already covers pending).
+
+**D — a declarative sink** has real conceptual appeal: it is an `<await>`
+minus the DOM, discovered by the same value-re-evaluation mechanism as
+implicit transitions, and it matches the cheatsheet's "pass the PROMISE
+through the template" philosophy:
+
+```marko
+<let/saveOp = null>
+<transaction=saveOp>
+
+<button onClick() {
+  isLiked = !liked;
+  saveOp = toggleLike(!liked);
+}>
+```
+
+Against it: the `<let>` exists only as write-only plumbing, and three
+declarations replace a one-line `return`. Since it reuses the transitions
+trigger wholesale, it costs almost nothing to add later if a genuine
+non-handler author case appears; deferring it keeps launch surface minimal.
+
+**B — `$transaction`** would be the precedent-consistent way to ship a
+function without an import, but the `$` namespace has stayed at two members
+for a reason, and E makes the function unnecessary for authors entirely.
+
+**The implementor tier keeps the function** — persisted-pages interceptors
+are framework `.ts` listening at the document level, outside compiled
+templates, where no convention or tag can reach and where importing runtime
+modules is already how integration works:
 
 ```ts
-import { transaction } from "marko";
+import { transaction } from "marko/transaction"; // subpath TBD
 
 interface Transaction {
-  /** Re-enter, so writes after an `await` join this transaction's turn. */
+  /** Re-enter, so late writes join this transaction's turn. */
   <T>(fn: () => T): T;
 }
 
 declare function transaction<T>(run: (tx: Transaction) => T): Promise<Awaited<T>>;
 ```
 
-`transaction(fn)` calls `fn` immediately, entangles itself into the current
-turn (or defines its own, when called outside one), and settles when the
-returned promise settles. It returns that promise so callers can chain
-error handling. Its *only* job is async the graph can't see; async that
-flows through state needs nothing.
+`transaction(fn)` calls `fn` immediately, entangles into the current turn
+(or defines its own when called outside one), and settles when the returned
+promise settles. It is documented as framework/advanced API, not taught to
+app authors.
 
 ## The three integrations, worked
 
@@ -307,34 +389,31 @@ shape transitions finally take.
 ### 3. User-land actions (imperative)
 
 ```marko
-import { transaction } from "marko";
-
 <let/liked = input.liked>
 <optimistic/isLiked = liked>
 
 <button onClick() {
   isLiked = !liked;
-  transaction(async () => {
-    const res = await fetch("/like", { method: "POST" });
-    liked = (await res.json()).liked;   // real update
-  }).catch(showToast);                  // on failure isLiked already reverted
+  return fetch("/like", { method: "POST" })
+    .then((res) => res.json())
+    .then((data) => liked = data.liked)   // real update
+    .catch(showToast);                    // on failure isLiked already reverted
 }>
   ${isLiked ? "Liked" : "Like"}
 </button>
 ```
 
-Writes after an `await` use the transaction's re-entry callback — which also
-gives a tidy progress idiom (the bar naturally disappears on settle):
+In-flight feedback is real state, written from continuations like any other
+async code, and reset when done — no optimism involved:
 
 ```marko
-<optimistic/progress = 0>
+<let/progress = 0>
 
 <button onClick() {
-  transaction(async (tx) => {
-    for await (const pct of upload(file)) {
-      tx(() => progress = pct);
-    }
-  });
+  return (async () => {
+    for await (const pct of upload(file)) progress = pct;
+    progress = 0;
+  })();
 }>Upload</button>
 ```
 
@@ -357,16 +436,19 @@ gives a tidy progress idiom (the bar naturally disappears on settle):
    check runs at the end of the flush, after downstream recomputation has
    discovered any transitions, but within the same microtask pass — ahead
    of paint.
-6. **Nested `transaction()`** calls entangle into the same turn and settle
-   independently; the turn releases on the last.
+6. **Handler returns entangle uniformly**: any Marko-invoked handler (DOM
+   events, `*Change` handlers) returning a thenable entangles it; several
+   handlers on one dispatch may each entangle. Non-thenable returns keep
+   meaning nothing. Nested `transaction()` calls likewise entangle into the
+   same turn and settle independently; the turn releases on the last.
 7. **Destroyed branches**: overlay entries die with their scope; release
    tolerates dead scopes via the existing destroyed-branch (`Gen === 0`)
    checks in the render queue.
 8. **Holds**: overlay renders are exempt from transition holds but respect
    `<try>`/`<await>` branch parking (see "Holds and the two channels").
 9. **SSR**: `<optimistic>` renders exactly as `<const>`; overlays are
-   client-only and add no serialization. `transaction()` is a dev-mode error
-   in the HTML runtime (like other interaction-only APIs). The binding is
+   client-only and add no serialization. Handlers never run server-side, and
+   `transaction()` is a dev-mode error in the HTML runtime. The binding is
    analyzed as assignable, so it and its dependents are never
    static-optimized away.
 10. **Optimistic values should not feed `<await>`** — an overlay write whose
@@ -404,8 +486,8 @@ Grounded in the current runtime; expected to be small and pay-for-what-you-use.
 **Runtime** (`src/dom/transaction.ts`):
 
 - Module state: the current turn (created lazily on the first optimistic
-  write or `transaction()` call in a batch; finalized by the flush), and
-  the currently-executing transaction (set around `fn` and `tx(...)`
+  write or entanglement in a batch; finalized by the flush), and the
+  currently-executing transaction (set around `fn` and `tx(...)`
   re-entries).
 - `_optimistic(id, fn)` returns a signal shaped like `_let`'s: during
   `rendering` it stores the source value into a base slot
@@ -415,39 +497,43 @@ Grounded in the current runtime; expected to be small and pay-for-what-you-use.
   goes through `queueRender` + `schedule` like any `<let>` write. The value
   accessor always holds the *effective* value so closures and downstream
   reads stay untouched.
-- `transaction(fn)`: add a settlement to the current turn → run `fn` with
-  the ambient transaction set → `promise.finally(settle)`.
+- **Handler returns**: `handleDelegated` (`dom/event.ts`) already invokes
+  every handler at one chokepoint; capture the return value and, when the
+  optimistic feature is enabled (`_enable_*`-style self-modifying install,
+  so apps without `<optimistic>` pay nothing — not even the thenable
+  check), entangle thenables into the current turn.
+- `transaction(fn)` (implementor export): add a settlement to the current
+  turn → run `fn` with the ambient transaction set → `promise.finally(settle)`.
 - The transitions mechanism registers each implicit transition it discovers
   during a flush as a settlement on that flush's turn, and reports
   supersession (the `_await_promise` staleness guard) as settlement. The
   end-of-flush release check mirrors how `<try>`'s `AwaitCounter` drains
   parked `PendingRenders`/`PendingEffects` today — same lifecycle, page
   scope instead of branch scope.
-- Cost: ~a few hundred bytes; nothing loads unless `<optimistic>` or
-  `transaction` is used (same philosophy as the `_enable_*` features).
-- Public export: `transaction` from the package root — which requires
-  making `.` a real runtime entry (today it is types-only) with a
-  browser/server conditional split, or a dedicated `marko/transaction`
-  subpath. Open question below.
+- Cost: ~a few hundred bytes; nothing loads unless `<optimistic>` is used.
+- Public export: implementor-tier subpath only (`marko/transaction`,
+  final name TBD) — the package root stays types-only, since authors never
+  import anything.
 
 **Testing**: fixtures under `src/__tests__/fixtures/` using async `steps`
 (`Wait` controls) — optimistic write beside a transition-triggering write,
-release-at-flush (sync downstream and no-entanglement), overlapping turns
-and supersession, source update while pending, rejection, inside
-`<for>`/`<if>`, under a `<try>` placeholder — reading the `render.md`
-mutation logs to prove the single-batch settle guarantee and the hold
-exemption.
+handler-returned promise entanglement, release-at-flush (sync downstream,
+no entanglement, forgot-to-return warning), overlapping turns and
+supersession, source update while pending, rejection, inside `<for>`/`<if>`,
+under a `<try>` placeholder — reading the `render.md` mutation logs to prove
+the single-batch settle guarantee and the hold exemption.
 
 ## Alternatives considered
 
-- **Explicit claiming (earlier draft of this proposal)**: `transaction()`
-  claimed same-turn optimistic writes; unclaimed writes were dropped with a
-  dev warning; transitions were assumed to be explicitly created and to
-  claim like transactions. Superseded by turn entanglement once transitions
-  became implicit: authors can't know whether a write transitions, so
-  "unclaimed" had to become a legitimate outcome, and with both channels
-  implicit the turn *is* the transaction — less API and one rule instead of
-  three.
+- **Explicit claiming (earlier draft of this proposal)**: an author-facing
+  imported `transaction()` claimed same-turn optimistic writes; unclaimed
+  writes were dropped with a dev warning; transitions were assumed to be
+  explicitly created and to claim like transactions. Superseded in two
+  steps: implicit transitions made the turn the transaction (claiming →
+  time-based entanglement), and the handler-return convention removed the
+  author-facing function (see the options table above for the full
+  comparison, including the rejected `$transaction` magic and
+  `<transaction>` tag shapes).
 - **Overlay writes on `<let>` directly** (an `optimistic(x = v)` intrinsic,
   no new tag): fails the headline case — persisted-pages data is
   server-owned/derived, and `<let>` initialized from it diverges. Also adds
@@ -462,9 +548,6 @@ exemption.
   in the runtime model, and the `<optimistic/flag=false>` convention already
   covers every case with zero surface — including transition pending, where
   no object exists to ask.
-- **A `<transaction/t>` template tag**: transactions are created at action
-  time in handlers/frameworks; a declared one invites misuse and would need
-  a callable tag variable with reactive properties — again no precedent.
 - **React `useOptimistic` reducer/replay semantics** (store an update
   function, replay over each new real value): powerful for interleaved
   server pushes but a heavier mental model and a function-valued assignment
@@ -477,17 +560,22 @@ exemption.
 
 Prior art mapping, for orientation: `<optimistic>` ≈ React `useOptimistic`
 (minus reducers), implicit transitions ≈ concurrent transitions without the
-`startTransition` opt-in, the pending-flag convention ≈
-`useFormStatus().pending` — unified so the same two pieces serve
-declarative (persisted pages, transitions) and imperative (manual fetch)
-updates.
+`startTransition` opt-in, handler-returned promises ≈ React 19 actions
+("actions are async functions") with the wrapper dissolved into a
+convention, the pending-flag convention ≈ `useFormStatus().pending` —
+unified so the same two pieces serve declarative (persisted pages,
+transitions) and imperative (manual fetch) updates.
 
 ## Naming
 
-| Proposed        | Alternatives                     | Notes                                                                                                                                                              |
-| --------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `<optimistic>`  | `<draft>`, `<eager>`, `<assume>` | Term of art; self-documenting and greppable. Length is irrelevant — it is declared, not typed often.                                                               |
-| `transaction()` | `action()`, `settle()`           | Now narrowly "entangle async the graph can't see"; `action` risks collision with future server actions. Note the DB connotation caveat: real writes inside are *not* rolled back — only overlays are. |
+| Proposed        | Alternatives                     | Notes                                                                                                                                     |
+| --------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `<optimistic>`  | `<draft>`, `<eager>`, `<assume>` | Term of art; self-documenting and greppable. Length is irrelevant — it is declared, not typed often.                                      |
+| `transaction()` | `settle()`, `entangle()`         | Implementor-tier only, so the name is low-stakes. Note the DB connotation caveat: real writes inside are *not* rolled back — only overlays are. |
+
+The handler-return convention needs no name in code — which is the point —
+but docs need a phrase for it; "settled handlers" or simply "return your
+promise" are candidates.
 
 ## Open questions
 
@@ -510,11 +598,16 @@ updates.
   holds until both settle. Per-write dependency tracing can't apply to
   root overlay writes, and per-turn matches the mental model ("this
   interaction is done"), but confirm against real usage.
-- **Export location**: package-root `marko` export (requires promoting `.`
-  from types-only) vs `marko/transaction` subpath.
-- **Cancellation**: should `tx` expose an `AbortSignal` (wired like
-  `$signal`) so superseded actions (typeahead, repeated submits) can abort
-  their fetches, or is that userland composition?
+- **Handler-return opt-out.** Is there a real case for returning a promise
+  from a handler *without* entangling it? (Presumed no — don't return it —
+  but arrow-shorthand handlers auto-return: `onClick=() => doAsyncThing()`
+  entangles. That is usually desired; confirm.)
+- **Which callbacks participate.** DOM events and `*Change` handlers are in;
+  `<lifecycle>` hooks and `<script>` bodies are presumed out (they are
+  render-adjacent, not user actions). Confirm the boundary.
+- **Cancellation**: should entangled work receive an `AbortSignal` (wired
+  like `$signal`) so superseded actions (typeahead, repeated submits) can
+  abort their fetches, or is that userland composition?
 - **Pre-hydration submissions**: should the persisted-pages protocol replay
   a submission-in-flight as an already-entangled turn after resume, so
   optimistic UI can appear for forms submitted before hydration?
