@@ -74,14 +74,14 @@ export function getSerializeGuard(
   optional: boolean,
 ) {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
-    return reason
-      ? optional
-        ? undefined
-        : withLeadingComment(
-            t.numericLiteral(1),
-            getDebugNames(reason === true ? undefined : reason.state),
-          )
-      : t.numericLiteral(0);
+    if (!reason) return t.numericLiteral(0);
+
+    return optional
+      ? undefined
+      : withLeadingComment(
+          t.numericLiteral(1),
+          getDebugNames(reason === true ? undefined : reason.state),
+        );
   }
 
   return getOrHoist(reason, true);
