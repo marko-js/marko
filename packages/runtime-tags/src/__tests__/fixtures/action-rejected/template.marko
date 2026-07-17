@@ -1,0 +1,13 @@
+import { rejectAfter } from "../../utils/resolve";
+export interface Input {}
+
+<let/serverCount=0/>
+<draft/count=serverCount/>
+<action/save=async () => {
+  count = count + 1;
+  serverCount = await rejectAfter(new Error("save failed"));
+}/>
+
+<button onClick=() => save().catch(() => {})>go</button>
+<p id="draft">${count}</p>
+<p id="pending">${String(save.pending)}</p>

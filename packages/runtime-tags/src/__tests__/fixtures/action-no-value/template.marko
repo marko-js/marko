@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+export interface Input {}
+
+<action/apply/>
+<let/status="idle"/>
+
+<button onClick=() => apply(resolveAfter("done")).then((value) => status = value)>go</button>
+<p id="status">${status}</p>
+<p id="pending">${String(apply.pending)}</p>

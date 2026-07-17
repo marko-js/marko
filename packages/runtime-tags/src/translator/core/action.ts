@@ -31,6 +31,41 @@ import translateVar from "../util/translate-var";
 import { scopeIdentifier } from "../visitors/program";
 
 export default {
+  // Normalize the value to always be a function literal, so every act resumes
+  // through a registered factory: no value defaults to identity (making
+  // `act(promise)` extend the transaction), and any other expression is read
+  // when the act is invoked.
+  transform: [
+    (tag) => {
+      const { node } = tag;
+      const [valueAttr] = node.attributes;
+      if (!valueAttr) {
+        node.attributes = [
+          t.markoAttribute(
+            "value",
+            t.arrowFunctionExpression(
+              [t.identifier("act")],
+              t.identifier("act"),
+            ),
+          ),
+        ];
+      } else if (
+        node.attributes.length === 1 &&
+        t.isMarkoAttribute(valueAttr) &&
+        (valueAttr.default || valueAttr.name === "value") &&
+        !t.isFunction(valueAttr.value)
+      ) {
+        valueAttr.value = t.arrowFunctionExpression(
+          [t.restElement(t.identifier("args"))],
+          t.optionalCallExpression(
+            valueAttr.value,
+            [t.spreadElement(t.identifier("args"))],
+            true,
+          ),
+        );
+      }
+    },
+  ],
   analyze(tag: t.NodePath<t.MarkoTag>) {
     assertNoArgs(tag);
     assertNoParams(tag);
@@ -56,10 +91,9 @@ export default {
     }
 
     if (
-      valueAttr &&
-      (node.attributes.length > 1 ||
-        !t.isMarkoAttribute(valueAttr) ||
-        (!valueAttr.default && valueAttr.name !== "value"))
+      node.attributes.length > 1 ||
+      !t.isMarkoAttribute(valueAttr) ||
+      (!valueAttr.default && valueAttr.name !== "value")
     ) {
       throw tag
         .get("name")
@@ -83,17 +117,13 @@ export default {
         pendingBinding.upstreamAlias = undefined;
         pendingBinding.property = undefined;
       }
-      if (valueAttr) {
-        setBindingDownstream(binding, evaluate(valueAttr.value));
-        addSetupExpr(getOrCreateSection(tag), valueAttr.value);
-        // The `_action` wrapper is reconstructed from the scope on resume, so
-        // the registered function must always be scope-reading.
-        if (t.isFunction(valueAttr.value)) {
-          ((valueAttr.value.extra ??= {}) as t.FunctionExtra).referencesScope =
-            true;
-        }
-      } else {
-        addSetupExpr(getOrCreateSection(tag), undefined);
+      setBindingDownstream(binding, evaluate(valueAttr.value));
+      addSetupExpr(getOrCreateSection(tag), valueAttr.value);
+      // The `_action` wrapper is reconstructed from the scope on resume, so
+      // the registered function must always be scope-reading.
+      if (t.isFunction(valueAttr.value)) {
+        ((valueAttr.value.extra ??= {}) as t.FunctionExtra).referencesScope =
+          true;
       }
     }
   },
@@ -101,9 +131,7 @@ export default {
     exit(tag) {
       const { node } = tag;
       const [valueAttr] = node.attributes;
-      const value = valueAttr
-        ? valueAttr.value
-        : t.arrowFunctionExpression([], t.blockStatement([]));
+      const { value } = valueAttr;
       const varBinding = node.var!.extra?.binding;
 
       if (isOutputDOM()) {
@@ -121,33 +149,23 @@ export default {
             pendingArg = pendingSignal.identifier;
           }
 
-          const wrapWithAction = (fn: t.Expression) =>
+          // Wrap the closure the registered factory returns so the `_action`
+          // runner is rebuilt on resume, not only during fresh-render setup.
+          setRegisteredFnReturnWrapper(value as t.Function, (fn) =>
             callRuntime(
               "_action",
               scopeIdentifier,
               getScopeAccessorLiteral(varBinding, true),
               pendingArg,
               fn,
-            );
-
-          if (valueAttr && t.isFunction(value)) {
-            // Wrap the closure the registered factory returns so the `_action`
-            // runner is rebuilt on resume, not only during fresh-render setup.
-            setRegisteredFnReturnWrapper(value, wrapWithAction);
-            addValue(
-              section,
-              value.extra?.referencedBindings,
-              actionSignal,
-              value,
-            );
-          } else {
-            addValue(
-              section,
-              value.extra?.referencedBindings,
-              actionSignal,
-              wrapWithAction(value),
-            );
-          }
+            ),
+          );
+          addValue(
+            section,
+            value.extra?.referencedBindings,
+            actionSignal,
+            value,
+          );
         }
       } else {
         translateVar(tag, callRuntime("_action", value));

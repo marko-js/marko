@@ -8,6 +8,5 @@ function click(container: Element) {
 // `.pending` is a refcounted reactive boolean: true while the act's promise is
 // outstanding, false once it settles.
 export const config: TestConfig = {
-  equivalent: false,
   steps: [{}, click, wait],
 };

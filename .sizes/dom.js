@@ -1,4 +1,4 @@
-// size: 27329 (min) 10032 (brotli)
+// size: 27293 (min) 10035 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2658,7 +2658,7 @@ function _draft(id, fn) {
     draft = (scope, source) => {
       let control = draftControls.get(scope)?.get(accessor);
       control
-        ? (control.source = source)
+        ? (control.v = source)
         : (scope[accessor] !== source || !(accessor in scope)) &&
           ((scope[accessor] = source), fn?.(scope));
     };
@@ -2673,42 +2673,45 @@ function _draft(id, fn) {
         controls.set(
           accessor,
           (control = {
-            scope,
-            accessor,
-            key,
-            fn,
-            source: scope[accessor],
-            entries: /* @__PURE__ */ new Map(),
+            s: scope,
+            a: accessor,
+            k: key,
+            f: fn,
+            v: scope[accessor],
+            e: /* @__PURE__ */ new Map(),
           }),
         ),
-        control.entries.set(transaction, value),
+        control.e.delete(transaction),
+        control.e.set(transaction, value),
         (transaction.d ||= /* @__PURE__ */ new Set()).add(control),
         writeDraft(control, value));
     }),
     draft
   );
 }
-function writeDraft(control, value) {
-  let { scope, accessor } = control;
-  scope[accessor] !== value &&
-    ((scope[accessor] = value),
-    control.fn && (schedule(), queueRender(scope, control.fn, control.key)));
-}
 function _action(scope, accessor, pendingSignal, fn) {
   let runner = scope[decodeAccessor(accessor)];
   if (!runner) {
     let cell = {
-      scope,
-      signal: pendingSignal,
+      s: scope,
+      g: pendingSignal,
       n: 0,
     };
     ((runner = function (...args) {
       return invokeAction(cell, runner.fn, this, args);
     }),
-      (runner.cell = cell),
       Object.defineProperty(runner, "pending", { get: () => cell.n > 0 }));
   }
   return ((runner.fn = fn), runner);
+}
+function extendTransaction() {
+  let transaction = (currentTransaction ||= ambientTransaction());
+  return (
+    transaction.c++,
+    () => {
+      transaction &&= (settle(transaction), void 0);
+    }
+  );
 }
 function invokeAction(cell, fn, thisArg, args) {
   let transaction = { c: 1 };
@@ -2716,15 +2719,17 @@ function invokeAction(cell, fn, thisArg, args) {
   let previous = currentTransaction;
   currentTransaction = transaction;
   try {
-    let result = fn && fn.apply(thisArg, args);
+    let result = fn.apply(thisArg, args);
     return (
       result &&
         typeof result.then == "function" &&
         (transaction.c++,
-        result.then(
-          () => settle(transaction),
-          () => settle(transaction),
-        )),
+        (result = result.then(
+          (value) => (settle(transaction), value),
+          (error) => {
+            throw (settle(transaction), error);
+          },
+        ))),
       result
     );
   } finally {
@@ -2738,25 +2743,27 @@ function ambientTransaction() {
 function settle(transaction) {
   if (!--transaction.c) {
     if (
-      ((transaction.x = 1),
-      transaction === currentTransaction && (currentTransaction = void 0),
+      (transaction === currentTransaction && (currentTransaction = void 0),
       transaction.d)
     )
       for (let control of transaction.d) {
-        control.entries.delete(transaction);
-        let value = control.source;
-        for (let held of control.entries.values()) value = held;
-        (control.entries.size ||
-          draftControls.get(control.scope)?.delete(control.accessor),
+        control.e.delete(transaction);
+        let value = control.v;
+        for (let held of control.e.values()) value = held;
+        (control.e.size || draftControls.get(control.s)?.delete(control.a),
           writeDraft(control, value));
       }
     if (transaction.p) for (let cell of transaction.p) setPending(cell, -1);
   }
 }
+function writeDraft(control, value) {
+  control.s[control.a] !== value &&
+    ((control.s[control.a] = value),
+    control.f && (schedule(), queueRender(control.s, control.f, control.k)));
+}
 function setPending(cell, delta, transaction) {
   transaction && (transaction.p ||= []).push(cell);
   let was = cell.n;
-  ((cell.n += delta),
-    cell.signal && !was != !cell.n && cell.signal(cell.scope, cell.n > 0));
+  ((cell.n += delta), cell.g && !was != !cell.n && cell.g(cell.s, cell.n > 0));
 }
 //#endregion

@@ -5,9 +5,8 @@ function click(container: Element) {
   container.querySelector("button")!.click();
 }
 
-// The draft shows the +5 guess and `.pending` is true while the act is in
-// flight; once the server confirms (+1) the draft re-derives to the truth and
-// `.pending` resets.
+// A rejected act releases its transaction: the guess rolls back to the
+// confirmed source, `.pending` resets, and the rejection reaches the caller.
 export const config: TestConfig = {
   steps: [{}, click, wait],
 };

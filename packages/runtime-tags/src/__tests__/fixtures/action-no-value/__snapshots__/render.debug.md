@@ -4,14 +4,9 @@
   go
 </button>
 <p
-  id="draft"
+  id="status"
 >
-  0
-</p>
-<p
-  id="server"
->
-  0
+  idle
 </p>
 <p
   id="pending"
@@ -29,14 +24,9 @@ container.querySelector("button").click();
   go
 </button>
 <p
-  id="draft"
+  id="status"
 >
-  5
-</p>
-<p
-  id="server"
->
-  0
+  idle
 </p>
 <p
   id="pending"
@@ -46,7 +36,6 @@ container.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: #draft::text "0" => "5"
 UPDATE: #pending::text "false" => "true"
 ```
 
@@ -56,40 +45,9 @@ UPDATE: #pending::text "false" => "true"
   go
 </button>
 <p
-  id="draft"
+  id="status"
 >
-  5
-</p>
-<p
-  id="server"
->
-  1
-</p>
-<p
-  id="pending"
->
-  true
-</p>
-```
-## Change
-```
-UPDATE: #server::text "0" => "1"
-```
-
-# Update
-```html
-<button>
-  go
-</button>
-<p
-  id="draft"
->
-  1
-</p>
-<p
-  id="server"
->
-  1
+  idle
 </p>
 <p
   id="pending"
@@ -99,6 +57,26 @@ UPDATE: #server::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: #draft::text "5" => "1"
 UPDATE: #pending::text "true" => "false"
+```
+
+# Update
+```html
+<button>
+  go
+</button>
+<p
+  id="status"
+>
+  done
+</p>
+<p
+  id="pending"
+>
+  false
+</p>
+```
+## Change
+```
+UPDATE: #status::text "idle" => "done"
 ```

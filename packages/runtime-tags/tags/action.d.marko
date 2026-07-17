@@ -1,6 +1,8 @@
 /** File for types only, not actual implementation **/
 
-export interface Input<F extends (...args: any[]) => unknown = () => void> {
+export interface Input<
+  F extends (...args: any[]) => unknown = <T>(act?: T) => T,
+> {
   value?: F;
 }
 

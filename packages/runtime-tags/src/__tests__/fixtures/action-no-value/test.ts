@@ -5,9 +5,9 @@ function click(container: Element) {
   container.querySelector("button")!.click();
 }
 
-// The draft shows the +5 guess and `.pending` is true while the act is in
-// flight; once the server confirms (+1) the draft re-derives to the truth and
-// `.pending` resets.
+// A value-less `<action>` defaults to identity, so `apply(promise)` extends the
+// transaction with that promise: `.pending` tracks it and the caller gets a
+// promise resolving to the same value.
 export const config: TestConfig = {
   steps: [{}, click, wait],
 };

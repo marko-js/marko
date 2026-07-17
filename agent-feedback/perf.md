@@ -224,15 +224,15 @@ module is loaded. Each is minor individually; worth gating the resolver loop on 
 
 `packages/runtime-tags/src/dom/transaction.ts:1` | 2026-07-17 | impact:low | effort:med
 
-The transaction runtime (`_draft` + `_action` + helpers) plus the HTML `_action`
-adds ~1214 bytes min / ~427 brotli to the `*` entry in `.sizes.json`; the
-optimistic-updates proposal budgeted ≤1.0 kB min. It is genuinely zero-cost when
-unused (the `counter`/`comments` fixtures are unchanged). Two clean paths could
-close the gap: (1) drop the runner's `.pending` getter and the compiler's
-property forwarding for `pending`, driving the pending `_let` only via the
-explicit `addValue(false)` init plus `_action`'s direct writes — this removes the
-`Object.defineProperty` and the odd DOM/HTML read asymmetry where HTML reads
-`action.pending` as a member while DOM reads a dedicated slot; (2) shorten
-`DraftControl`/`PendingCell` property names the way `Transaction` already uses
-single letters. Neither was pursued to avoid destabilizing resume late in the
-change.
+The transaction runtime (`_draft` + `_action` + `extendTransaction` + helpers)
+plus the HTML `_action` adds ~1178 bytes min / ~430 brotli to the `*` entry in
+`.sizes.json`; the optimistic-updates proposal budgeted ≤1.0 kB min. It is
+genuinely zero-cost when unused (the `counter`/`comments` fixtures are
+unchanged, and `extendTransaction` tree-shakes out of pages that never import
+it). Property-name shortening on `DraftControl`/`PendingCell` and dead-code
+removal already landed; the remaining clean path is to drop the runner's
+`.pending` getter and the compiler's property forwarding for `pending`, driving
+the pending `_let` only via the explicit `addValue(false)` init plus
+`_action`'s direct writes — this removes the `Object.defineProperty` and the
+odd DOM/HTML read asymmetry where HTML reads `action.pending` as a member while
+DOM reads a dedicated slot.

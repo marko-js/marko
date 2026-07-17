@@ -6,38 +6,37 @@ import type { Signal, SignalFn } from "./signals";
 
 // A transaction is the client-only lifetime of a single user act: it opens when
 // an `<action>` is invoked (or lazily when a draft is assigned during an event
-// dispatch), is extended by the invocation's returned promise, and releases
-// when all of its promises settle. Nothing here is ever serialized. Members are
-// single-letter to keep the runtime small: c=outstanding promise count,
-// d=touched drafts, p=pending cells, x=released; only `c` needs an initializer.
+// dispatch), is extended by promises and navigations, and releases when all of
+// them settle. Nothing here is ever serialized. Members are single-letter to
+// keep the runtime small: c=outstanding count, d=touched drafts, p=pending cells.
 interface Transaction {
   c: number;
   d?: Set<DraftControl>;
   p?: PendingCell[];
-  x?: 0 | 1;
 }
 
 // The extra per-instance state a draft only grows once a transaction assigns to
-// it: the confirmed source underneath and the still-held guesses in write order.
+// it: s=scope, a=accessor, k=render key, f=downstream, v=confirmed source, and
+// e=still-held guesses in write order.
 interface DraftControl {
-  scope: Scope;
-  accessor: Accessor;
-  key: number;
-  fn: SignalFn | undefined;
-  source: unknown;
-  entries: Map<Transaction, unknown>;
+  s: Scope;
+  a: Accessor;
+  k: number;
+  f: SignalFn | undefined;
+  v: unknown;
+  e: Map<Transaction, unknown>;
 }
 
+// s=scope, g=pending signal, n=outstanding act count.
 interface PendingCell {
-  scope: Scope;
-  signal: Signal<boolean> | undefined;
+  s: Scope;
+  g: Signal<boolean> | undefined;
   n: number;
 }
 
 interface ActionRunner {
   (this: unknown, ...args: unknown[]): unknown;
-  fn: ((...args: unknown[]) => unknown) | undefined;
-  cell: PendingCell;
+  fn: (...args: unknown[]) => unknown;
   readonly pending: boolean;
 }
 
@@ -47,8 +46,7 @@ const draftControls = new WeakMap<Scope, Map<Accessor, DraftControl>>();
 // The source signal renders exactly like `<const>` (dirty-checked value +
 // downstream), except a held guess intercepts source changes as truth updates
 // underneath it. Draft assignments go through the attached `.d` method instead,
-// so an initial render (which also runs with `rendering` unset) is never
-// mistaken for one.
+// so an initial render is never mistaken for one.
 export interface DraftSignal<T = unknown> extends Signal<T> {
   d(scope: Scope, value: T): void;
 }
@@ -63,7 +61,7 @@ export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
   const draft = ((scope: Scope, source: T) => {
     const control = draftControls.get(scope)?.get(accessor);
     if (control) {
-      control.source = source;
+      control.v = source;
     } else if (scope[accessor] !== source || !(accessor in scope)) {
       scope[accessor] = source;
       fn?.(scope);
@@ -71,6 +69,13 @@ export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
   }) as DraftSignal<T>;
 
   draft.d = (scope, value) => {
+    if (MARKO_DEBUG && typeof value === "function") {
+      console.warn(
+        "Assigning a function to a draft is reserved for a future updater " +
+          "form; wrap it in an object or array if a function really is the " +
+          "value.",
+      );
+    }
     const transaction = (currentTransaction ||= ambientTransaction());
     let controls = draftControls.get(scope);
     if (!controls) draftControls.set(scope, (controls = new Map()));
@@ -79,32 +84,23 @@ export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
       controls.set(
         accessor,
         (control = {
-          scope,
-          accessor,
-          key,
-          fn,
-          source: scope[accessor],
-          entries: new Map(),
+          s: scope,
+          a: accessor,
+          k: key,
+          f: fn,
+          v: scope[accessor],
+          e: new Map(),
         }),
       );
     }
-    control.entries.set(transaction, value);
+    // Delete first so a re-assignment moves the entry to newest in write order.
+    control.e.delete(transaction);
+    control.e.set(transaction, value);
     (transaction.d ||= new Set()).add(control);
     writeDraft(control, value);
   };
 
   return draft;
-}
-
-function writeDraft(control: DraftControl, value: unknown) {
-  const { scope, accessor } = control;
-  if (scope[accessor] !== value) {
-    scope[accessor] = value;
-    if (control.fn) {
-      schedule();
-      queueRender(scope, control.fn, control.key);
-    }
-  }
 }
 
 // A stable callable whose identity survives `.pending` flips: reused from the
@@ -122,15 +118,30 @@ export function _action(
     : decodeAccessor(accessor as number);
   let runner = scope[valueAccessor as Accessor] as ActionRunner | undefined;
   if (!runner) {
-    const cell: PendingCell = { scope, signal: pendingSignal, n: 0 };
+    const cell: PendingCell = { s: scope, g: pendingSignal, n: 0 };
     runner = function (this: unknown, ...args: unknown[]) {
       return invokeAction(cell, runner!.fn, this, args);
     } as ActionRunner;
-    runner.cell = cell;
     Object.defineProperty(runner, "pending", { get: () => cell.n > 0 });
   }
   runner.fn = fn;
   return runner;
+}
+
+// Lets a navigation (or the router driving one) join the transaction of the act
+// that caused it: call while that transaction is current (e.g. during the
+// dispatch that assigned a draft) and invoke the returned release when the
+// navigation settles — or never, when the page itself is being replaced.
+export function extendTransaction() {
+  let transaction: Transaction | undefined = (currentTransaction ||=
+    ambientTransaction());
+  transaction.c++;
+  return () => {
+    if (transaction) {
+      settle(transaction);
+      transaction = undefined;
+    }
+  };
 }
 
 function invokeAction(
@@ -144,25 +155,29 @@ function invokeAction(
   const previous = currentTransaction;
   currentTransaction = transaction;
   try {
-    const result = fn && fn.apply(thisArg, args);
+    let result = fn.apply(thisArg, args);
     if (result && typeof (result as PromiseLike<unknown>).then === "function") {
       transaction.c++;
-      (result as PromiseLike<unknown>).then(
-        () => settle(transaction),
-        () => settle(transaction),
+      // Chain (rather than only observe) so a rejection the caller ignores
+      // still reports as an unhandled rejection.
+      result = (result as PromiseLike<unknown>).then(
+        (value) => (settle(transaction), value),
+        (error) => {
+          settle(transaction);
+          throw error;
+        },
       );
-    }
-    return result;
-  } finally {
-    currentTransaction = previous;
-    settle(transaction);
-    if (MARKO_DEBUG && transaction.x && transaction.d?.size) {
+    } else if (MARKO_DEBUG && transaction.c === 1 && transaction.d) {
       console.warn(
         "An `<action>` assigned a draft but released before it could matter. " +
           "Make the body async, return a promise, or rely on a router that " +
           "extends the transaction.",
       );
     }
+    return result;
+  } finally {
+    currentTransaction = previous;
+    settle(transaction);
   }
 }
 
@@ -176,21 +191,30 @@ function ambientTransaction(): Transaction {
 
 function settle(transaction: Transaction) {
   if (!--transaction.c) {
-    transaction.x = 1;
     if (transaction === currentTransaction) currentTransaction = undefined;
     if (transaction.d) {
       for (const control of transaction.d) {
-        control.entries.delete(transaction);
-        let value = control.source;
-        for (const held of control.entries.values()) value = held;
-        if (!control.entries.size) {
-          draftControls.get(control.scope)?.delete(control.accessor);
+        control.e.delete(transaction);
+        let value = control.v;
+        for (const held of control.e.values()) value = held;
+        if (!control.e.size) {
+          draftControls.get(control.s)?.delete(control.a);
         }
         writeDraft(control, value);
       }
     }
     if (transaction.p) {
       for (const cell of transaction.p) setPending(cell, -1);
+    }
+  }
+}
+
+function writeDraft(control: DraftControl, value: unknown) {
+  if (control.s[control.a] !== value) {
+    control.s[control.a] = value;
+    if (control.f) {
+      schedule();
+      queueRender(control.s, control.f, control.k);
     }
   }
 }
@@ -203,7 +227,7 @@ function setPending(
   if (transaction) (transaction.p ||= []).push(cell);
   const was = cell.n;
   cell.n += delta;
-  if (cell.signal && !was !== !cell.n) {
-    cell.signal(cell.scope, cell.n > 0);
+  if (cell.g && !was !== !cell.n) {
+    cell.g(cell.s, cell.n > 0);
   }
 }

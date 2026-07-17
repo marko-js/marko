@@ -1,0 +1,19 @@
+import { resolveAfter } from "../../utils/resolve";
+export interface Input {}
+
+<let/serverTotal=0/>
+<draft/total=serverTotal/>
+<action/addFast=async () => {
+  total = total + 1;
+  serverTotal = await resolveAfter(serverTotal + 1, 1);
+}/>
+<action/addSlow=async () => {
+  total = total + 10;
+  serverTotal = await resolveAfter(serverTotal + 10, 2);
+}/>
+
+<button id="fast" onClick=addFast>fast</button>
+<button id="slow" onClick=addSlow>slow</button>
+<p id="draft">${total}</p>
+<p id="server">${serverTotal}</p>
+<p id="pending">${String(addFast.pending)}/${String(addSlow.pending)}</p>
