@@ -128,7 +128,7 @@ export function _attr_content(
   nodeAccessor: Accessor,
   scopeId: number,
   content: unknown,
-  serializeReason?: 1 | 0,
+  serializeReason?: number,
 ) {
   const shouldResume = serializeReason !== 0;
   const render = normalizeServerRender(content);
@@ -294,7 +294,7 @@ export function _serialize_guard(condition: SerializeReasonValue, key: number) {
 export function _el_resume(
   scopeId: number,
   accessor: Accessor,
-  shouldResume?: 0 | 1,
+  shouldResume?: number,
 ) {
   if (shouldResume === 0) return "";
 
@@ -303,7 +303,7 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
-export function _sep(shouldResume: 0 | 1) {
+export function _sep(shouldResume: number) {
   return shouldResume === 0 ? "" : "<!>";
 }
 
@@ -345,9 +345,9 @@ export function _for_of(
   by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -376,9 +376,9 @@ export function _for_in(
   by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -410,9 +410,9 @@ export function _for_to(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -445,9 +445,9 @@ export function _for_until(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -486,9 +486,9 @@ function forBranches(
   ) => void,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch: undefined | 0 | 1,
-  serializeMarker: undefined | 0 | 1,
-  serializeStateful: undefined | 0 | 1,
+  serializeBranch: undefined | number,
+  serializeMarker: undefined | number,
+  serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
 ) {
@@ -571,9 +571,9 @@ export function _if(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ) {
@@ -615,8 +615,8 @@ export function _if(
 function writeBranchEnd(
   scopeId: number,
   accessor: Accessor,
-  serializeStateful: undefined | 0 | 1,
-  serializeMarker: undefined | 0 | 1,
+  serializeStateful: undefined | number,
+  serializeMarker: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
   branchIds?: string,
@@ -671,8 +671,8 @@ export function _show_end(
   scopeId: number,
   accessor: Accessor,
   display: unknown,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1 | 0,
 ) {
@@ -763,7 +763,7 @@ export function _await<T>(
   accessor: Accessor,
   promise: Promise<T> | T,
   content: (value: T) => void,
-  serializeMarker?: 0 | 1,
+  serializeMarker?: number,
 ) {
   const resumeMarker = serializeMarker !== 0;
 
