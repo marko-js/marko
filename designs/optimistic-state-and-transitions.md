@@ -38,37 +38,38 @@ mechanism shared by all three integrations rather than three bespoke ones.
 
 One core tag, one convention, one implementor-tier function:
 
-- **`<optimistic>`**: a `<const>` you can assign to, whose source — like an
-  `<await>` value — may be a thenable. An assignment lays an *overlay* on
-  top of the source; a pending source keeps showing its last settled value.
-  The overlay lasts until the async work its **turn** entangled has settled;
-  then it is released and the value falls back to the (possibly updated,
-  possibly just-resolved) source — in the same render batch as everything
-  else that lands at settle.
-
-- **Promises connect through state.** Writing a thenable into the state an
-  `<optimistic>` source reads is an implicit transition — the same trigger
-  as re-evaluating an `<await>` value, discovered the same way. The
-  optimistic write opens the window; the promise flowing into the source
-  closes it. This works from *anywhere* the state is in scope: handlers,
-  `<script>` listeners, third-party callbacks.
+- **`<optimistic>`**: a `<const>` you can assign to. A **sync assignment**
+  lays an *overlay* on top of the source — it lasts until the async work its
+  **turn** entangled has settled, then releases, falling back to the
+  (possibly updated) source in the same render batch as everything else
+  that lands at settle. A **thenable assignment** is an *eventual write*:
+  it is this turn's transition, the displayed value doesn't change while it
+  is in flight, and its resolution writes through to the variable's bound
+  source. No state cell ever *holds* a promise — thenables appear only in
+  write position; every read, of the variable or its source, is always a
+  settled value.
 
   ```marko
-  <let/liked = input.liked>        // boolean | Promise<boolean>
-  <optimistic/isLiked = liked>     // always boolean: last settled + overlay
+  <let/liked = input.liked>        // boolean — always
+  <optimistic/isLiked := liked>    // boolean — always; bound, so eventual
+                                   // writes resolve through to `liked`
 
   <button onClick() {
-    isLiked = !isLiked;
-    liked = fetch("/like", { method: "POST" })
+    isLiked = !isLiked;                                // guess, shows now
+    isLiked = fetch("/like", { method: "POST" })       // the operation
       .then((res) => res.json())
-      .then((data) => data.liked);
+      .then((data) => data.liked);                     // resolution → liked
   }>
   ```
 
+  The write is reachable from *anywhere* the variable is in scope —
+  handlers, `<script>` listeners, third-party callbacks — so connecting a
+  promise needs no chokepoint, no wrapper, and no extra tag.
+
 - **Convention — return the promise.** A handler the runtime itself invokes
   (delegated native events, native controllable changes) that returns a
-  thenable entangles it into the turn — sugar for the common case where the
-  async result isn't worth modeling as state.
+  thenable entangles it into the turn — sugar for fire-and-forget async
+  with no state result.
 
 - **Implementor tier — `transition()`** (subpath import, e.g.
   `marko/transition`): the same entangle operation for code outside compiled
@@ -76,10 +77,9 @@ One core tag, one convention, one implementor-tier function:
   whose async (fetch + patch stream) has no author-visible state to flow
   through. Authors never import it.
 
-An earlier revision had a second core tag, `<transition/fn(args) { body }>`,
-for async the graph can't see. Await-like optimistic sources subsume it: the
-operation goes *into the graph* instead of around it (see "Options
-compared").
+Earlier revisions had a second core tag (`<transition/fn(args) { body }>`)
+and then await-like sources (state cells holding `T | Promise<T>`); both
+are subsumed — see "Options compared".
 
 There is no explicit association between an optimistic write and the work it
 waits for. Transitions entangle by *dependency* (everything downstream of
@@ -104,64 +104,70 @@ One tag covers optimistic *values* and pending *flags*; they revert
 together because they belong to the same turn. This also means transitions
 get a pending indicator for free — there is no transition object to ask,
 but `<optimistic/searching=false>` set alongside the triggering write is
-exactly that indicator. (A settled promise is still a thenable, so
-pending-ness is *not* derivable from the state value by type check — the
-flag convention is the idiom; exposing an optimistic source's pending-ness
-directly is an open question.)
+exactly that indicator.
 
 | Integration     | What entangles the async work                                 | What the author writes                        |
 | --------------- | -------------------------------------------------------------- | ---------------------------------------------- |
 | Persisted pages | Implementor calls `transition()` while intercepting the event | Optimistic writes in the submit/click handler |
 | Transitions     | Nothing — implicit: downstream `<await>` value re-evaluates   | Optimistic writes beside the real write       |
-| User-land       | Implicit: the operation promise is written into state         | The writes, then `state = fetch(...)...`      |
+| User-land       | Implicit: the eventual write *is* the transition              | The guess, then `x = fetch(...)...`           |
 
 ## The `<optimistic>` tag
 
+Two source forms, distinguished by the language's existing bind convention:
+
 ```marko
-<optimistic/varName = sourceExpression>
+<optimistic/view = expr>      // read-only source: any expression
+<optimistic/view := binding>  // bound source: an assignable binding
+                              // (exact shorthand spelling TBD; the concept
+                              // is the existing `:=` two-way marker)
 ```
 
-- **Reads like `<const>`, resolves like `<await>`**: the tag variable tracks
-  `sourceExpression`; when the source evaluates to a thenable the variable
-  keeps its last settled value while the thenable is pending, then takes the
-  resolution (`_await_promise` already branches on `isPromise` and treats
-  non-promises as sync — the same contract in a new position). A newer
-  source thenable supersedes an in-flight one, exactly like re-handing
-  `<await>` a new promise.
-- **Writes like `<let>`**: the tag variable is assignable (following the
-  existing assignable-tag-variable convention that `<let>` itself is defined
-  with — `tags/let.d.marko`'s `return=input.value valueChange=...`).
-- An assignment does **not** touch the source. It lays an overlay that wins
-  over the source until the turn's entangled work settles, then disappears.
-  Optimistic state can never be committed — real state only ever comes from
-  the source. To keep a value, update the real state (with the value, or
-  with a promise of it).
+- **Reads like `<const>`**: the tag variable tracks its source and
+  re-renders dependents when it changes. The source is always a settled,
+  synchronous value — promises never live in readable state.
+- **Sync writes are overlays** (both forms): the assignment does **not**
+  touch the source; it lays an overlay that wins until the turn's entangled
+  work settles, then disappears. Optimistic values can never be committed.
+- **Thenable writes are eventual writes** (bound form only): the displayed
+  value is untouched while the thenable is in flight; the write registers
+  as the turn's transition; on resolution the value writes through to the
+  bound source — the change-handler mechanism `<let>` bindings already have
+  (`_let_change` / `TagVariableChange`). On rejection nothing is written.
+  A newer eventual write to the same variable supersedes an in-flight one —
+  the same staleness rule as re-handing `<await>` a new promise. A thenable
+  written to a read-only-source variable is a compile-time error where the
+  analyzer can see it (the reference graph knows the source isn't
+  assignable) and a dev-mode runtime error otherwise.
+- Assignments evaluate to their right-hand side (the existing `_let` setter
+  already returns the value), so error handling chains naturally:
+  `(isLiked = fetch(...)).catch(showToast)`.
+
+The type story uses the dual-parameter pattern `let.d.marko` already has
+(`Input<T, K = T>` — separate read and change types): the variable *reads*
+as `T` and *accepts* `T | PromiseLike<T>`. Reads are never union-typed;
+the promise exists only in the write expression.
 
 ```marko
 <let/liked = input.liked>
-<optimistic/isLiked = liked>
+<optimistic/isLiked := liked>
 
 // isLiked === liked, until an event handler assigns isLiked.
-// Once the turn's async work settles, isLiked reflects liked again —
-// including resolving it, if the action wrote a promise into liked.
+// A sync assignment shows immediately and expires with the turn;
+// a thenable assignment resolves into liked itself.
 ```
 
-A constant source is the degenerate (and common) case — that's the pending
-flag above: `<optimistic/saving=false>`.
-
-The reading discipline that falls out: the raw state cell holds *the
-operation or the value*; the optimistic variable is the always-settled
-readable surface. Everything renders from the optimistic variable. This is
-the cheatsheet's existing philosophy — "pass the PROMISE through the
-template" — extended from `<await>` (pending shows a placeholder) to
-`<optimistic>` (pending shows the last value, or your overlay).
+A constant read-only source is the degenerate (and common) case — that's
+the pending flag above: `<optimistic/saving=false>`.
 
 Why a distinct tag rather than a mode of `<let>`: the source must stay
 *live*. In the persisted-pages case the real data is server-owned (`input`,
 route data) and is updated by the patch stream while the overlay is showing;
 mirroring it into a `<let>` would recreate the classic derived-state
-divergence problem. `<optimistic>` is derived-with-override-and-resolution,
-which is a different thing from mutable-with-initial-value.
+divergence problem. And eventual writes belong here, not on `<let>`:
+"keep showing the current value until the async lands" is exactly the
+optimistic display contract, and `<let>` stays the small, synchronous
+primitive.
 
 ## Turns and entanglement
 
@@ -169,12 +175,13 @@ A **turn** is a batch: the current synchronous execution (an event dispatch,
 a timer callback, a promise continuation) plus the flush it schedules —
 exactly the unit the queue already batches (`schedule()` → `run()`).
 
-1. **Optimistic writes belong to their turn.** They are provisional until
+1. **Optimistic overlays belong to their turn.** They are provisional until
    the end of the flush.
 2. **The turn's settlement** is the union of:
-   - implicit transitions started by the turn's real writes — discovered
-     during the flush, when downstream recomputation re-evaluates an
-     `<await>` value **or an `<optimistic>` source** into a new thenable,
+   - implicit transitions started by the turn's writes — an `<await>` value
+     re-evaluating to a new thenable (discovered during the flush) or an
+     **eventual write** to an `<optimistic>` variable (discovered at the
+     write),
    - thenables returned by the turn's runtime-invoked handlers, and
    - implementor-tier `transition()` calls made during the turn.
 
@@ -188,21 +195,20 @@ exactly the unit the queue already batches (`schedule()` → `run()`).
    - *Progressive enhancement degradation*: no persisted-pages interceptor
      ran (no JS yet, or a real navigation is proceeding), so the optimistic
      todo evaporates unobserved.
-   - *Synchronous downstream*: the author paired an optimistic write with a
-     real write, but the real write carried a plain value (or a cache hit)
-     rather than a pending operation. The real value lands in the same
-     flush and the released overlay falls back to an identical value. The
-     same handler code is correct whether the update is sync or async.
-4. **Late writes** — optimistic writes from a promise continuation belong to
-   that later turn, which entangles nothing and releases them at its flush.
-   In-flight feedback (progress bars) is real state, not optimism: write a
-   plain `<let>` from the continuations and reset it at the end.
+   - *Synchronous downstream*: the author paired an overlay with a real
+     write that turned out sync (a cache hit instead of a fetch). The real
+     value lands in the same flush and the released overlay falls back to
+     an identical value. The same handler code is correct either way.
+4. **Late writes** — optimistic overlays from a promise continuation belong
+   to that later turn, which entangles nothing and releases them at its
+   flush. In-flight feedback (progress bars) is real state, not optimism:
+   write a plain `<let>` from the continuations and reset it at the end.
 
 Because "nothing async happened" is a legitimate outcome rather than an
 author error, there is no unconditional dev warning. `MARKO_DEBUG` warns
 only when a release in the *same flush* as the write visibly changes the
 rendered value — the signature of an action that started a fetch and let
-the promise escape (neither into state nor returned).
+the promise escape (not written eventually, not returned).
 
 ### Holds and the two channels
 
@@ -220,47 +226,45 @@ part the user *should* observe now:
   `<optimistic>` source depends on transitioned state, its re-derivation is
   held with the rest of the "after" world and lands at settle — which is
   exactly when the overlay releases.
-- **A pending source holds nothing by itself.** While the source thenable is
-  in flight the optimistic variable simply doesn't change (last settled
-  value, or the overlay) — stale-while-revalidate needs no hold machinery;
-  the downstream world moves once, at settle.
+- **An in-flight eventual write holds nothing by itself.** Until it
+  resolves, nothing downstream has changed — stale-while-pending needs no
+  hold machinery; the downstream world moves once, at settle, when the
+  resolution writes through to the source.
 
 ### The settle guarantee
 
 Overlay release is queued through the normal render batch (`queueRender` +
-`schedule`), in the same flush that lands the settling work — the resolved
-source, held transition renders/effects, server patches. "Optimistic" and
-"real" swap **atomically in one batch**; there is no frame showing stale
-pre-action data in between.
+`schedule`), in the same flush that lands the settling work — the eventual
+write's resolution flowing into its source, held transition
+renders/effects, server patches. "Optimistic" and "real" swap **atomically
+in one batch**; there is no frame showing stale pre-action data in between.
 
 ## Connecting async work
 
-### Through state — the primary form
+### Eventual writes — the primary form
 
-Model the operation as data: the state cell holds a value *or a promise of
-it*, and the `<optimistic>` variable is the settled, overlayable view.
-Because the connection is a data dependency, it works from any closure that
-can reach the state — the cases that previously forced a dedicated tag:
+Model the action as: *guess now, truth later* — two assignments to the same
+variable. Because the connection is just an assignment, it works from any
+closure that can reach the variable — the cases that previously forced a
+dedicated tag:
 
 ```marko
-<let/position = input.position>       // LatLng | Promise<LatLng>
-<optimistic/pos = position>
-<transition... no tag needed>
+<let/position = input.position>
+<optimistic/pos := position>
 
 <map-widget latlng=pos onMarkerDrag(latlng) {
-  pos = latlng;                                   // optimistic, renders now
-  position = api.savePosition(latlng);            // the operation, in state
+  pos = latlng;                     // overlay: marker sticks where dropped
+  pos = api.savePosition(latlng);   // eventual write: resolution → position
 }/>
 ```
 
-Dragging again before the save lands writes a newer thenable into
-`position`: the older one is superseded — same staleness guard as `<await>`
-(`thisPromise === scope[promiseAccessor]`) — and the newest resolution wins.
-Stale-while-revalidate needs no overlay at all:
+Dragging again before the save lands supersedes the in-flight eventual
+write — only the newest resolution reaches `position`. Stale-while-pending
+needs no overlay at all:
 
 ```marko
-<let/results = []>                    // Item[] | Promise<Item[]>
-<optimistic/items = results>
+<let/items = []>
+<optimistic/results := items>
 <optimistic/searching = false>
 
 <input valueChange(q) {
@@ -268,12 +272,12 @@ Stale-while-revalidate needs no overlay at all:
   results = fetch(`/search?q=${q}`).then((r) => r.json());
 }>
 
-<for|item| of=items by="id">...</for>
+<for|item| of=results by="id">...</for>
 ```
 
-Each keystroke supersedes the previous request; `items` keeps showing the
-last settled list until the surviving request resolves; `searching` re-lays
-each turn and releases when it settles.
+Each keystroke supersedes the previous request; `results` keeps showing the
+last settled list until the surviving request resolves into `items`;
+`searching` re-lays each turn and releases when it settles.
 
 ### Returned promises — handler sugar
 
@@ -281,12 +285,12 @@ Handlers that the runtime itself invokes dispatch through one chokepoint
 (`handleDelegated` in `dom/event.ts` calls each handler; native controllable
 change handlers similarly), and their return values currently mean nothing.
 Convention: **a runtime-invoked handler that returns a thenable entangles
-it** — for the case where the operation isn't worth modeling as state:
+it** — for fire-and-forget async with no state result to write eventually:
 
 ```marko
 <button onClick() {
-  isLiked = !isLiked;
-  return fetch("/like", { method: "POST" }).then(...);
+  seen = true;                        // optimistic flag
+  return api.markNotificationRead(id);
 }>
 
 <form onSubmit=submitOrder>   // extracted: any async function in a plain module
@@ -294,10 +298,10 @@ it** — for the case where the operation isn't worth modeling as state:
 
 Scope honestly: this covers **only** runtime-invoked handlers. Function
 inputs to custom tags (`onMarkerDrag=...`) are invoked by the child
-component, and imperative listeners never pass through Marko — those use
-the through-state form above. (Wrapping every function input at custom-tag
-boundaries to widen the convention was considered and rejected: per-call
-cost on every function prop to catch the rare async one.)
+component, and imperative listeners never pass through Marko — those
+connect via eventual writes. A fire-and-forget action with *only* a pending
+flag, triggered from a non-runtime callback, has no eventual-write target
+and no return channel — a known gap; see open questions.
 
 ### `transition()` — the implementor form
 
@@ -321,38 +325,34 @@ not taught to app authors.
 | - | ----- | ------- |
 | A | Author-facing `import { transition } from "marko"` | Demoted to implementor tier — no author-import precedent in Marko |
 | B | Magic `$transition(fn)` | Rejected — grows the `$` namespace (`$global`/`$signal` only) for a function-shaped API anyway |
-| C | `<transition/fn(args) { body }>` declared transition | Superseded by F — see below for what it offered |
-| D | `<transition=op>` body-less sink fed by promise-in-state | Subsumed by F — F is D with the optimistic variable itself as the sink |
+| C | `<transition/fn(args) { body }>` declared transition | Superseded — required new grammar and a second tag; viable future sugar |
+| D | `<transition=op>` body-less sink fed by promise-in-state | Subsumed — the optimistic variable itself became the sink |
 | E | Returned-promise convention | Kept for runtime-invoked handlers — zero surface where it applies |
-| F | **Await-like `<optimistic>` sources: the promise is written into state** | **Adopted** — the operation joins the graph instead of bypassing it |
+| F | Await-like sources: state cells hold `T \| Promise<T>` | Superseded — a readable union is a trap (a pending promise is *truthy*; every honest read needs a thenable check) |
+| G | **Eventual writes: thenables assigned to the optimistic variable, resolving through to its bound source** | **Adopted** — the promise exists only in write position; every read everywhere stays settled |
 
 The arc, for the record: v1 had an author-facing imported `transaction()`
 with explicit claiming; implicit transitions collapsed claiming into turn
 entanglement; the returned-promise convention then briefly replaced the
 function outright, until third-party/imperative event sources showed a
-manual form is mandatory; that manual form grew from a declared callable
-into `<transition/fn(args) { body }>` with an implicitly-async body,
-`$signal` abort, and supersession; and finally F subsumed the tag by making
-the *state itself* carry the operation — the same discovery mechanism as
-`<await>`, no new grammar, no second tag, reachable from any closure.
+manual form is mandatory; the manual form grew into a declared
+`<transition/fn(args) { body }>` tag with `$signal` abort and supersession;
+await-like sources (F) then subsumed the tag by putting the operation into
+the graph as state — at the cost of union-typed reads; and G keeps F's
+insight (the promise connects through the reactive graph, discovered like
+an `<await>` update) while confining the thenable to the one position where
+nothing ever reads it: the assignment. An earlier revision rejected
+thenable-assignment semantics because "the resolution has no home"; the
+bound source (`:=`) is that home, and it reuses the change-handler
+write-back machinery that already exists.
 
-What C offered that F gives up, and where each went:
-
-- **Per-call `$signal` abort** → open question, now unified with abort for
-  implicit transitions generally (superseding an in-flight source thenable
-  is the same event as superseding an `<await>` promise; if transitions
-  grow an abort story, both get it).
-- **In-body optimistic writes after `await`** (compiler-routed to the
-  call's turn) → in-flight feedback is real state written from
-  continuations (turns rule 4); with operations-as-state this is natural —
-  progress *is* state of the operation.
-- **Named call sites** (`search(q)`) → an extracted async function returning
-  the promise reads nearly the same: `results = search(q)`.
-- **Tag-variable method shorthand** — the one piece of new grammar this
-  proposal carried — is no longer needed at all.
-
-If real usage later shows the ergonomics of a named, declared action are
-missed, C can return as pure sugar over F without changing the model.
+What C offered that G gives up, and where each went: per-call `$signal`
+abort → open question, unified with abort for implicit transitions
+(superseding an eventual write is the same event as superseding an
+`<await>` promise); compiler-routed in-body optimistic writes → in-flight
+feedback is real state (turns rule 4); named call sites → an extracted
+async function reads nearly the same (`results = search(q)`); the
+tag-variable method-shorthand grammar → deleted entirely.
 
 ## The three integrations, worked
 
@@ -381,10 +381,13 @@ optimistic writes in the submit handler:
 </ul>
 ```
 
-Note the shadowing idiom: naming the optimistic view `todos` means the rest
-of the template renders it with no awareness of the mechanism. Per-item
-pending needs no API either — the author can tell their own optimistic
-data apart (`id: 0` here); the whole-list case is covered by `saving`.
+Both variables use the read-only source form — the truth is server-owned,
+so there is nothing to write eventually; the implementor's transition
+defines the window. Note the shadowing idiom: naming the optimistic view
+`todos` means the rest of the template renders it with no awareness of the
+mechanism. Per-item pending needs no API either — the author can tell
+their own optimistic data apart (`id: 0` here); the whole-list case is
+covered by `saving`.
 
 Timeline with enhancement active:
 
@@ -445,11 +448,11 @@ hand-off is invisible. If `search()` ever resolves synchronously (cache
 hit), the identical handler code degrades to a plain update (entanglement
 rule 3).
 
-An `<optimistic>` source becoming pending is the same trigger from the
-other side — `<await>` shows a placeholder while pending; `<optimistic>`
-shows the last value or your overlay. The two compose in one template: use
-`<await>` where blank-then-fill is right, `<optimistic>` where
-stale-while-revalidate is right.
+An eventual write is the same trigger from the other side — `<await>` shows
+a placeholder while pending; `<optimistic>` keeps the last value or your
+overlay. The two compose in one template: use `<await>` where
+blank-then-fill is right, `<optimistic>` where stale-while-pending is
+right.
 
 What `<optimistic>` requires from the transitions design is deliberately
 minimal: (a) a settle/supersede notification per transition, and (b) the
@@ -458,149 +461,147 @@ shape transitions finally take.
 
 ### 3. User-land actions (imperative)
 
-The full pattern — optimistic guess plus the operation in state:
-
 ```marko
-<let/liked = input.liked>            // boolean | Promise<boolean>
-<optimistic/isLiked = liked>
+<let/liked = input.liked>
+<optimistic/isLiked := liked>
 
 <button onClick() {
   isLiked = !isLiked;
-  liked = fetch("/like", { method: "POST" })
+  (isLiked = fetch("/like", { method: "POST" })
     .then((res) => res.json())
-    .then((data) => data.liked);     // resolution becomes the real value
+    .then((data) => data.liked)
+  ).catch(showToast);
 }>
   ${isLiked ? "Liked" : "Like"}
 </button>
 ```
 
-On resolve, `isLiked` takes the server's answer; on reject, the overlay
-releases and `isLiked` falls back to the last settled value. Error UX is a
-`.catch(...)` on the chain (which also decides what the state resolves to).
-For a one-off where modeling the operation as state isn't worth it, the
-returned-promise form does the same job inside runtime-invoked handlers.
+On resolve, the eventual write lands in `liked` and the overlay releases in
+the same batch — the guess is replaced by the server's answer. On reject,
+nothing is written and `isLiked` falls back to the untouched `liked`. Every
+read of `liked` and `isLiked`, everywhere, is a plain boolean.
 
 ## Detailed semantics
 
 1. **Overlay stack.** Each `<optimistic>` binding keeps an ordered list of
    overlay entries `{ value, turn }`, where a turn resolves to its set of
    entangled settlements. Rendered value = last entry's value, else the
-   settled source. A settlement completing removes itself from its turn; a
-   turn with no remaining settlements releases its entries; if the top
-   entry changed, a render is queued.
-2. **Thenable sources.** A source evaluating to a thenable does not change
-   the rendered value; the binding keeps its last settled value (or current
-   overlay) until the thenable resolves — then the resolution becomes the
-   settled source value, in the settle batch. A newer thenable supersedes an
-   in-flight one (only the current one's resolution lands). The pending
-   source registers as a settlement on the turn whose write caused the
-   re-evaluation — the same implicit-transition discovery as `<await>`.
-   First render with a pending source and no prior settled value renders
-   `undefined` (integration with `<try>` placeholders is an open question).
-3. **Last write wins within a turn** — a later write in the same turn
-   replaces that turn's earlier entry for the same binding.
-4. **Source updates while pending** follow rules 1–2: the overlay keeps
-   winning until the turn releases; the source tracks its own
-   latest-thenable independently. (No React-style reducer replay; see
-   alternatives.)
+   source. A settlement completing removes itself from its turn; a turn
+   with no remaining settlements releases its entries; if the top entry
+   changed, a render is queued.
+2. **Eventual writes.** A thenable assigned to a bound-source variable does
+   not change the rendered value; it registers a settlement on the current
+   turn and, on resolution, writes the value through to the source binding
+   (in the settle batch). A newer eventual write to the same binding
+   supersedes an in-flight one — only the current write's resolution lands
+   (the `<await>` staleness rule). Rejection writes nothing. Thenables
+   assigned to read-only-source variables are a compile-time error where
+   statically visible, else a dev-mode error.
+3. **Last overlay wins within a turn** — a later sync write in the same
+   turn replaces that turn's earlier entry for the same binding. Overlay
+   and eventual write to the same binding in one turn compose (the common
+   "guess + operation" pair).
+4. **Source updates while pending** re-run the source expression and store
+   the result, but the overlay keeps winning until release. (No
+   React-style reducer replay; see alternatives.)
 5. **Writing the current value is still a write** — pending flags rely on
    entries existing independent of value equality.
 6. **Release-at-flush never renders** (entanglement rule 3): the release
    check runs at the end of the flush, after downstream recomputation has
    discovered any transitions, but within the same microtask pass — ahead
    of paint.
-7. **Entanglement boundary**: pending `<await>` values and `<optimistic>`
-   sources entangle the turn that caused them; runtime-invoked handlers
-   entangle via returned thenables; implementor `transition()` entangles
-   explicitly. Child-invoked function inputs and imperative listeners
-   connect through state. `<lifecycle>` hooks and `<script>` bodies never
+7. **Entanglement boundary**: eventual writes and pending `<await>` values
+   entangle the turn that caused them; runtime-invoked handlers entangle
+   via returned thenables; implementor `transition()` entangles explicitly.
+   Child-invoked function inputs and imperative listeners connect via
+   eventual writes. `<lifecycle>` hooks and `<script>` bodies never
    auto-entangle (they are render-adjacent, not user actions).
-8. **Destroyed branches**: overlay entries and in-flight source resolutions
+8. **Destroyed branches**: overlay entries and in-flight eventual writes
    die with their scope (the supersession guard already ignores stale
    resolutions); release tolerates dead scopes via the existing
    destroyed-branch (`Gen === 0`) checks in the render queue.
 9. **Holds**: overlay renders are exempt from transition holds but respect
-   `<try>`/`<await>` branch parking; a pending source holds nothing (see
-   "Holds and the two channels").
-10. **SSR**: `<optimistic>` renders as `<const>`; overlays are client-only
-    and add no serialization. A thenable source during SSR is an open
-    question (await it like `<await>` does, or dev-error); the implementor
-    `transition()` errors in the HTML runtime. Optimistic bindings are
-    analyzed as assignable, so they and their dependents are never
-    static-optimized away.
-11. **Pending is not derivable from the state value.** A settled promise is
-    still a thenable, so `typeof op.then` cannot distinguish in-flight from
-    done. Use the flag convention; whether to expose a source's pending-ness
-    (e.g. a compiler-known accessor) is an open question.
-12. **Optimistic values should not feed `<await>` or another `<optimistic>`
-    source** — an overlay write whose downstream re-evaluates an async
-    value would start a transition whose settle releases the overlay that
-    caused it, re-deriving and re-evaluating again. Derive async from real
-    state; overlay for display. Initially discouraged in docs, ideally a
-    compile-time lint (the reference graph knows both facts statically).
+   `<try>`/`<await>` branch parking; an in-flight eventual write holds
+   nothing (see "Holds and the two channels").
+10. **SSR**: `<optimistic>` renders as `<const>`; overlays and eventual
+    writes are client-only (assignments don't happen during SSR), so there
+    is no serialization impact; the implementor `transition()` errors in
+    the HTML runtime. Optimistic bindings are analyzed as assignable, so
+    they and their dependents are never static-optimized away.
+11. **Pending is not derivable from values.** State never holds promises,
+    so there is nothing to type-check; the runtime knows which bindings
+    have in-flight eventual writes, but exposing that (vs the flag
+    convention) is an open question.
+12. **Optimistic values should not feed `<await>`** — an overlay write whose
+    downstream re-evaluates an async value would start a transition whose
+    settle releases the overlay that caused it, re-deriving and
+    re-evaluating again. Derive async from real state; overlay for display.
+    Initially discouraged in docs, ideally a compile-time lint (the
+    reference graph knows both facts statically).
 
 ## Implementation sketch
 
 Grounded in the current runtime; expected to be small and pay-for-what-you-use.
-No new grammar.
+No new grammar (the bound form reuses the existing `:=` convention).
 
 **Translator** (`src/translator/core/optimistic.ts`, registered in
 `core/index.ts` + `util/is-core-tag.ts`):
 
-- `analyze` merges `<let>`'s var tracking (assignable binding,
-  `trackVarReferences` with a change accessor **not** exposed as an attr)
-  with `<const>`'s value-expression reference tracking, so source updates
-  flow like a derived value and assignments compile like `<let>`
-  assignments (through the binding's signal setter).
-- `translate` emits `_optimistic(id, fn)` via `callRuntime`; HTML output
-  lowers to the `<const>` translation (plus whatever SSR thenable-source
-  behavior is decided).
-- Type stub `tags/optimistic.d.marko` mirroring `let.d.marko` minus the
-  `valueChange` input, with the source typed `T | PromiseLike<T>` and the
-  variable typed `Awaited<T>`:
+- `analyze` merges `<let>`'s var tracking (assignable binding) with
+  `<const>`'s value-expression reference tracking; the bound form
+  additionally records the source binding for write-through and validates
+  it is assignable (compile error otherwise — and thenable writes to
+  read-only-source variables are rejected where the analyzer can see them).
+- `translate` emits `_optimistic(id, fn)` / `_optimistic_bound(id, fn,
+  sourceSetter)` via `callRuntime`; HTML output lowers to the `<const>`
+  translation.
+- Type stub `tags/optimistic.d.marko` using `let.d.marko`'s existing
+  dual-parameter pattern — read type vs write type:
 
   ```marko
   export interface Input<T> {
     value: T;
   }
 
-  return=(input.value as Awaited<T>) valueChange=(newValue: Awaited<T>) => {}
+  return=input.value valueChange=(newValue: T | PromiseLike<T>) => {}
   ```
 
 **Runtime** (`src/dom/optimistic.ts`):
 
 - Module state: the current turn (created lazily on the first optimistic
   write or entanglement in a batch; finalized by the flush).
-- `_optimistic(id, fn)` returns a signal shaped like `_let`'s with an
-  `isPromise` branch shaped like `_await_promise`'s: during `rendering`, a
-  non-thenable source value goes to the base slot (new
+- `_optimistic(id, fn)` returns a signal shaped like `_let`'s: during
+  `rendering` the source value goes to a base slot (new
   `AccessorPrefix.OptimisticBase`, mirrored in `accessor.ts` /
-  `accessor.debug.ts`) and recomputes the effective value; a thenable
-  source is tracked at `AccessorPrefix.Promise + accessor` with the
-  current-promise supersession guard, registers a settlement on the
-  flushing turn, and writes its resolution to the base slot via
-  `queueAsyncRender`. Outside rendering (an assignment), it records an
-  overlay entry against the current turn and goes through `queueRender` +
-  `schedule` like any `<let>` write. The value accessor always holds the
-  *effective* value so closures and downstream reads stay untouched.
+  `accessor.debug.ts`) and the effective value recomputes. Outside
+  rendering, the setter branches on `isPromise` exactly as
+  `_await_promise` does: a sync value records an overlay entry against the
+  current turn and goes through `queueRender` + `schedule`; a thenable is
+  tracked at `AccessorPrefix.Promise + accessor` with the current-promise
+  supersession guard, registers a settlement on the current turn, and on
+  resolution calls the bound source's setter (the `TagVariableChange` /
+  `_let_change` write-back machinery) via `queueAsyncRender`. The setter
+  returns its input, preserving assignment-expression chaining. The value
+  accessor always holds the *effective* value so closures and downstream
+  reads stay untouched.
 - **Handler returns**: `handleDelegated` (`dom/event.ts`) already invokes
   every handler at one chokepoint; capture the return value and, when the
   optimistic feature is enabled (`_enable_*`-style self-modifying install,
   so apps without `<optimistic>` pay nothing — not even the thenable
   check), entangle thenables into the current turn.
-- The transitions mechanism registers each implicit transition it discovers
-  during a flush (await values *and* optimistic sources) as a settlement on
-  that flush's turn, and reports supersession as settlement. The
-  end-of-flush release check mirrors how `<try>`'s `AwaitCounter` drains
-  parked `PendingRenders`/`PendingEffects` today — same lifecycle, page
-  scope instead of branch scope.
+- The transitions mechanism registers each implicit transition (await
+  values and eventual writes) as a settlement on its turn, and reports
+  supersession as settlement. The end-of-flush release check mirrors how
+  `<try>`'s `AwaitCounter` drains parked `PendingRenders`/`PendingEffects`
+  today — same lifecycle, page scope instead of branch scope.
 - Public export: implementor-tier subpath only (`marko/transition`, final
   name TBD) — the package root stays types-only, since authors never import
   anything.
 
 **Testing**: fixtures under `src/__tests__/fixtures/` using async `steps`
-(`Wait` controls) — overlay beside a thenable source write, supersession by
-a newer source thenable, stale-while-revalidate with no overlay,
+(`Wait` controls) — overlay + eventual write pair, eventual-write
+supersession, stale-while-pending with no overlay, write-through into the
+bound source, thenable write to a read-only source (compile error fixture),
 handler-returned promise entanglement, release-at-flush (sync value, no
 entanglement, escaped-promise warning), overlapping turns, source update
 while overlaid, rejection, scope teardown mid-flight, under a `<try>`
@@ -611,27 +612,32 @@ single-batch settle guarantee and the hold exemption.
 
 - **A dedicated manual-transition surface** — the full arc is in "Options
   compared": imported `transaction()` (v1, explicit claiming), the
-  returned-promise convention alone, a declared callable, and finally
-  `<transition/fn(args) { body }>` with implicit-async body, `$signal`
-  abort, supersession, and compiler-routed in-body optimistic writes. All
-  subsumed once `<optimistic>` sources became await-like: the operation
-  joins the reactive graph as state instead of needing a side channel. The
-  declared tag remains viable as future sugar if named actions are missed.
+  returned-promise convention alone, a declared callable, the
+  `<transition/fn(args) { body }>` tag (implicit-async body, `$signal`
+  abort, supersession, compiler-routed in-body writes), and await-like
+  sources. All subsumed by eventual writes; the declared tag remains viable
+  as future sugar if named actions are missed.
+- **Await-like sources / promise-in-state** (the immediately preceding
+  revision): put the operation in the state cell (`boolean |
+  Promise<boolean>`) and let the optimistic source resolve it. Rejected
+  because the union is readable: a pending promise is truthy, every honest
+  read of the raw cell needs a thenable check, and a settled promise is
+  still a thenable so even pending-ness can't be type-checked. Eventual
+  writes keep the same graph connection while confining the promise to
+  write position.
 - **Overlay writes on `<let>` directly** (an `optimistic(x = v)` intrinsic,
   no new tag): fails the headline case — persisted-pages data is
   server-owned/derived, and `<let>` initialized from it diverges. Also adds
   expression-level compiler magic, which is worse than a tag in a
   tag-language.
+- **Eventual writes on `<let>` itself** (skip the optimistic variable):
+  tempting, but it puts an `isPromise` branch and transition bookkeeping in
+  the hottest, smallest state primitive, makes every let a potential
+  transition source, and loses the read/write split (`<optimistic>` is
+  where "keep showing the current value" is the contract).
 - **Make `<const>` assignable with revert semantics**: zero new tags, but
   "assignable const" is hostile to teaching and turns accidental writes
   into delayed-action bugs. A distinct name is the documentation.
-- **Thenable *assignments* as the connection** (write the promise to the
-  optimistic variable itself: `isLiked = fetchPromise`): keeps the operation
-  out of real state, but forks assignment semantics on a type check, gives
-  the resolution value no home (the source remains the only truth), and
-  reads as data flow while acting as lifecycle. Writing the promise into
-  the *source* state keeps one meaning per position: assignments are
-  optimistic values; sources carry truth, sync or async.
 - **Pending as API surface** (`<optimistic/[value, pending]>`, a
   `pending(x)` intrinsic, a reactive property on a transition object):
   destructured tag variables aren't assignable, reactive property objects
@@ -648,25 +654,26 @@ single-batch settle guarantee and the hold exemption.
   outcome this design exists to avoid.
 
 Prior art mapping, for orientation: `<optimistic>` ≈ React `useOptimistic`
-(minus reducers) fused with stale-while-revalidate resource semantics
-(Solid's `createResource` keeps the previous value while refetching),
-implicit transitions ≈ concurrent transitions without the `startTransition`
-opt-in, returned promises ≈ React 19 "actions are async functions" with the
-wrapper dissolved into a convention, the pending-flag convention ≈
-`useFormStatus().pending` — unified so the same pieces serve declarative
-(persisted pages, transitions) and imperative (manual fetch, third-party
-events) updates.
+(minus reducers) with the write-side of a resource fused in (an eventual
+write is roughly Solid's `createResource` refetch keeping the previous
+value, expressed as assignment), implicit transitions ≈ concurrent
+transitions without the `startTransition` opt-in, returned promises ≈
+React 19 "actions are async functions" with the wrapper dissolved into a
+convention, the pending-flag convention ≈ `useFormStatus().pending` —
+unified so the same pieces serve declarative (persisted pages, transitions)
+and imperative (manual fetch, third-party events) updates.
 
 ## Naming
 
 | Proposed       | Alternatives                     | Notes                                                                                                                |
 | -------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `<optimistic>` | `<draft>`, `<eager>`, `<assume>` | Term of art; self-documenting and greppable. Length is irrelevant — it is declared, not typed often. Now also carries the await-like source behavior — if that becomes the dominant usage, a name like `<latest>`/`<settled>` could fit better; revisit after real usage. |
+| `<optimistic>` | `<draft>`, `<eager>`, `<assume>` | Term of art; self-documenting and greppable. Length is irrelevant — it is declared, not typed often.                 |
 | `transition()` | `transaction()`, `startTransition()` | Implementor-tier import; low-stakes.                                                                                 |
 
 The returned-promise convention needs no name in code — which is the point —
 but docs need a phrase; "settled handlers" or simply "return your promise"
-are candidates.
+are candidates. The bound form's exact spelling (`:=` in the tag-variable
+default-value position) needs a parser/language-tools check.
 
 ## Open questions
 
@@ -689,17 +696,19 @@ are candidates.
   holds until both settle. Per-write dependency tracing can't apply to
   root overlay writes, and per-turn matches the mental model ("this
   interaction is done"), but confirm against real usage.
-- **Exposing a source's pending-ness.** The flag convention covers pending
-  today, but with operations-as-state the pending-ness is *knowable* by the
-  runtime (semantics #2) and not derivable by the author (#11). Is a
-  compiler-known accessor (only valid on optimistic bindings) worth the
-  surface, or does the flag idiom suffice?
-- **First-pending display.** A source that is a thenable before any settled
-  value renders `undefined`; should `<optimistic>` inside `<try>` integrate
-  with `@placeholder` the way `<await>` does?
-- **SSR thenable sources.** Await server-side like `<await>` (streaming a
-  settled value), or restrict thenable sources to the client?
-- **Abort.** Superseding an in-flight source thenable is the same event as
+- **The flag-only gap.** A fire-and-forget action with no state result,
+  triggered from a non-runtime callback, has no eventual-write target and
+  no return channel. Options: accept (route such actions through a handler
+  return or model a real result), allow lifecycle-only thenable writes to
+  read-only-source variables (resolution discarded — semantically muddier),
+  or an implementor-tier escape hatch. Needs a real-world case to decide.
+- **Exposing in-flight-ness.** The runtime knows which bindings have
+  pending eventual writes; is a compiler-known accessor worth the surface,
+  or does the flag idiom suffice?
+- **Bound-form spelling.** Confirm `:=` works in the tag-variable
+  default-value position (`<optimistic/isLiked := liked>`) in the parser
+  and language-tools, or pick the equivalent spelling.
+- **Abort.** Superseding an in-flight eventual write is the same event as
   superseding an `<await>` promise — if the transitions design grows an
   abort story (surfacing a signal to the promise producer), both get it.
   Until then, cancellation is userland (`AbortController` in the closure).
@@ -712,7 +721,7 @@ are candidates.
   a submission-in-flight as an already-entangled turn after resume, so
   optimistic UI can appear for forms submitted before hydration?
 - **Lint for optimistic-fed async values** (semantics #12): warn at compile
-  time when an `<await>` value or `<optimistic>` source is reachable from an
-  `<optimistic>` binding in the reference graph.
+  time when an `<await>` value is reachable from an `<optimistic>` binding
+  in the reference graph.
 - **Devtools/debug**: surface active turns, settlements, and overlaid
   bindings in `MARKO_DEBUG` builds for inspectability.
