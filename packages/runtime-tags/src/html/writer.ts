@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
+
 import {
   _el_read_error,
   _hoist_read_error,
@@ -260,10 +261,7 @@ export function getScopeById(scopeId: number | undefined) {
   }
 }
 
-// A serialize reason is `1` (serialize everything), `0`/`undefined` (nothing),
-// a bitmask of reason group indices offset by one bit (so group 0 alone is
-// `2`, never colliding with the `1` sentinel), or an object keyed by group
-// index when any group's guard is dynamic.
+// A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
 export type SerializeReasonValue =
   undefined | number | Partial<Record<string, 0 | 1>>;
 
@@ -472,11 +470,7 @@ export function _for_until(
   );
 }
 
-// Shared driver for the `_for_*` loop variants: writes branch start/end
-// markers, branch scopes (with the loop key when it differs from the
-// positional index), and the branch scope list when markers are disabled.
-// When the branch is not serialized, `iterate` runs the raw loop (still
-// validating keys under MARKO_DEBUG when a `by` is present).
+// Shared branch and scope writer for every `_for_*` loop variant.
 function forBranches(
   by: unknown,
   iterate: (
@@ -591,9 +585,7 @@ export function _if(
 
   if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
     writeScope(scopeId, {
-      // TODO: technically conditional renderer should only be written when either the
-      // condition is stateful, or if there are direct closures.
-      // It may make sense to pass in another arg for this.
+      // TODO: Write the renderer only for stateful conditions or direct closures.
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex || undefined, // we convert 0 to undefined since the runtime defaults branch to 0.
       [AccessorPrefix.BranchScopes + accessor]: resumeMarker
         ? undefined
@@ -647,16 +639,10 @@ function writeBranchEnd(
   }
 }
 
-// These bracket a `<show>` body's statements (rather than taking a content
-// callback, so declarations in the body stay in the parent's scope) and write
-// the marks tracking its node range. The body always renders so it resumes
-// either way; hidden content is wrapped in a `<t hidden>` element, which
-// unlike a `<template>` keeps its children reachable by the resume walker.
+// `<show>` always renders; hidden ranges use `<t>` so the walker reaches them.
 export function _show_start(display: unknown, mark?: unknown) {
   if (display) {
-    // The wrapper is the range's single node, so the start mark is only
-    // written (and its stack entry only popped) when the body renders in
-    // place.
+    // The wrapper itself is the range's single node.
     if (mark) {
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
@@ -713,6 +699,8 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   return scope;
 };
 
+// Module-eval reassignment: must stay immediately after the `let writeScope`
+// declaration above.
 if (MARKO_DEBUG) {
   writeScope = (
     (writeScope) =>
@@ -734,9 +722,7 @@ if (MARKO_DEBUG) {
 
 export { writeScope as _scope };
 
-// Marks the scope as flushing (without writing props itself) so that
-// passive props (eg tag variables) ride along; the empty entry is elided
-// from the wire when nothing else merges in.
+// Lets passive props join an existing scope flush without forcing wire data.
 export function _existing_scope(scopeId: number) {
   return writeScope(scopeId, {});
 }
@@ -1172,9 +1158,7 @@ export class Chunk {
       this.serializeState.readyId &&
       (this.effects || this.scripts || this.serializeState.flushScopes)
     ) {
-      // The chunk's own pending resume data is carried at the head of its
-      // deferred list so it is flushed before any lazy content nested
-      // within it (which may reference its data).
+      // Own resume data precedes nested lazy content that may reference it.
       const deferred = this.fork(this.boundary, null);
       deferred.effects = this.effects;
       deferred.scripts = this.scripts;
@@ -1288,14 +1272,7 @@ export class Chunk {
           concatSequence(resumes, effects && `"${effects}"`),
         );
         if (reservations) {
-          // A ready batch written from a reorder script only executes once
-          // its reordered content arrives, which can be after later
-          // main-stream scripts run — inverting the stream's entry order.
-          // Instead, the main-stream script (always ordered) reserves the
-          // batch's slot with a numeric gate sentinel (a number is never an
-          // effects string, deps marker, or payload, so the browser halts
-          // the stream there), and the reorder script swaps the gate for
-          // the batch when the content arrives.
+          // Main-stream gates reserve ready-batch order until reorders arrive.
           const gate = state.readyGate++;
           reservations.push(state.writeReady(readyId, gate + ""));
           scripts = concatScripts(
@@ -1430,10 +1407,7 @@ export class Chunk {
           cur.flushPlaceholder();
           cur.deferOwnReady();
           const { next } = cur;
-          // These scripts execute when the reordered content arrives, which
-          // may be after later main-stream scripts; ready batches written
-          // here reserve their stream slot in the ordered main-stream
-          // script (below) and only fill it in place.
+          // Reorder-ready batches fill slots reserved by the main stream.
           const readyResumeScripts = cur.flushReadyScripts(readyReservations);
           cur.consumed = true;
           reorderHTML += cur.html;
@@ -1588,9 +1562,7 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
 
     if (flushes.length || pending) {
       if (isBlockingState && !state.hasGlobals) {
-        // Globals must be stringified before any ready data so that ready
-        // data may reference them, never the reverse — ready data is only
-        // deserialized in the browser once its module loads.
+        // Globals serialize before ready data that may reference them.
         flushSerializerGlobals(boundary);
       }
       serializeState.resumes = concatSequence(
@@ -1721,14 +1693,10 @@ export function _subscribe(
   if (subscribers) {
     const { serializer } = $chunk.boundary.state;
     if (!$chunk.serializeState.readyId && !serializer.written(subscribers)) {
-      // The subscriber rides the set's literal when it has not been
-      // serialized yet (both deserialize in the same main payload, before
-      // any effects run).
+      // An unflushed set carries its subscriber in the same payload.
       subscribers.add(scope);
     } else {
-      // Already flushed sets — and subscribers from lazy streams, which
-      // must not be notified before their module loads and hydrates the
-      // scope — are added through a channel gated call instead.
+      // Flushed or lazy sets add subscribers through their gated channel.
       serializer.writeCall(scope, subscribers, "add", $chunk.serializeState);
     }
   }
