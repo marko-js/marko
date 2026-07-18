@@ -41,3 +41,9 @@ therefore relied upon for correctness. A real fix needs `isSupersetSources` to
 use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
+
+## Assignments to bindings nested under a destructure pattern are silently accepted
+
+`packages/runtime-tags/src/translator/util/references.ts:550` | 2026-07-17 | impact:med | effort:med
+
+A directly-defaulted destructured identifier rejects mutation ("readonly and cannot be mutated"), and a destructured property assignment routes through the `${key}Change` two-way binding in `trackAssignment`. But an identifier nested one level deeper (for example `b` in `<const/{ a: { b } = {} } = obj>`, then `b = 2` in a handler) compiles without any diagnostic because the nested binding is created as a free derived binding with no `upstreamAlias`/`property`, so neither the readonly check nor the change-handler path applies. Same behavior on `main` before first-class defaults (the old `<const>` desugar also accepted it), so this is a long-standing diagnostics gap, not a regression; the runtime effect of such an assignment is unverified. Suggested direction: in `trackAssignment`, when a derived binding has neither `upstreamAlias` nor `assignmentSections` support, emit the readonly error used for defaulted identifiers.

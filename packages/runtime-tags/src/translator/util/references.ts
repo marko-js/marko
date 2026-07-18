@@ -959,6 +959,19 @@ export function finalizeReferences() {
   const fnReadsByExpression = getFunctionReadsByExpression();
   const intersectionsBySection = new Map<Section, Intersection[]>();
 
+  // A pruned defaulted binding drops its fallback's read of the source so
+  // the source can prune too (reverse creation order visits inner defaults first).
+  for (const binding of [...bindings].reverse()) {
+    if (binding.defaultSource && pruneBinding(binding)) {
+      const valueExprs = getBindingValueExprs().get(binding);
+      if (valueExprs && valueExprs !== true) {
+        forEach(valueExprs, (expr) => {
+          if (!expr.merged) dropExtra(expr as ReferencedExtra);
+        });
+      }
+    }
+  }
+
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
       const exprBindings = resolveReferencedBindings(
