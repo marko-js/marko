@@ -1,0 +1,14 @@
+comptime import { inert, isInert } from "@marko/runtime-tags/comptime"
+comptime import raw from "./content.json"
+comptime const page = inert(raw);
+comptime const audited = isInert(page) && Object.isFrozen(page.sections);
+
+<h1>${page.title}</h1>
+<-for|section| of=page.sections>
+  <section>
+    <h2>${section.heading}</h2>
+    <p>${section.body}</p>
+  </section>
+</-for>
+<p>audited ${audited} rev ${page.meta.revision}</p>
+<p>meta ${JSON.stringify(page.meta)}</p>

@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-max-iterations/template.marko:5:1
+      3 | })();
+      4 |
+    > 5 | <-for|i| of=forever>
+        | ^ `<-for>` exceeded 100000 iterations; a comptime loop must terminate while compiling (and unrolling this much output is almost never intended).
+      6 |   <p>${i}</p>
+      7 | </-for>
+      8 |

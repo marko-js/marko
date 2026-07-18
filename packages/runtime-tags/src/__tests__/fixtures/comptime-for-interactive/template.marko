@@ -1,0 +1,9 @@
+comptime const rooms = ["kitchen", "porch"];
+
+<-for|room| of=rooms>
+  <let/on = false/>
+  <section>
+    <h2>${room}</h2>
+    <button onClick() { on = !on; }>${on ? "off" : "on"}</button>
+  </section>
+</-for>

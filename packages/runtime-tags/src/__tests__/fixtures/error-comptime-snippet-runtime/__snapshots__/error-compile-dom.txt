@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-snippet-runtime/template.marko:5:1
+      3 | </-define>
+      4 |
+    > 5 | <Chip/>
+        | ^^^^^^^ `<Chip>` is a comptime snippet; invoke it with the `-` prefix (`<-Chip>`), or use runtime `<define>` for a runtime tag.
+      6 |

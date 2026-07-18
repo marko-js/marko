@@ -1,0 +1,24 @@
+comptime import plans from "./plans.json";
+
+<ul>
+  <-for|plan, i| of=plans>
+    <li>${i + 1}. ${plan.name} at $${plan.price}</li>
+  </-for>
+</ul>
+<dl>
+  <-for|abbr, meaning| in={ ssr: "server side rendering", csr: "client side rendering" }>
+    <dt>${abbr}</dt>
+    <dd>${meaning}</dd>
+  </-for>
+</dl>
+<ol>
+  <-for|i| from=1 to=3>
+    <-const/label = `2^${i}`/>
+    <li>${label} = ${2 ** i}</li>
+  </-for>
+</ol>
+<p>
+  <-for|i| until=6 step=2>
+    <span>${i}</span>
+  </-for>
+</p>

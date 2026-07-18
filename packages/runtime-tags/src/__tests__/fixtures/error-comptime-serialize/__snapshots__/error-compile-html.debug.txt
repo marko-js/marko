@@ -1,0 +1,2 @@
+Unable to serialize the function `format` (reading format): this function is not an export of any module loaded at compile time, and its source is not comptime code the compiler owns. Export it from a `comptime import`ed module, or declare it in `comptime` code.
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-serialize/template.marko

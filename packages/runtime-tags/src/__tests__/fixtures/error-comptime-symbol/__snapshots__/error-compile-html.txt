@@ -1,0 +1,2 @@
+Unable to serialize Symbol(secret).
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-symbol/template.marko

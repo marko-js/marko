@@ -1,0 +1,24 @@
+comptime const cols = ["name", "price"];
+comptime const flags = { footer: true, banner: false };
+
+<-if=flags.banner>
+  <aside>sale on now</aside>
+</-if>
+<table>
+  <tbody>
+    <for|row| of=input.rows>
+      <tr>
+        <for|col| of=cols>
+          <td>${row[col]}</td>
+        </for>
+      </tr>
+    </for>
+  </tbody>
+  <-if=flags.footer>
+    <tfoot>
+      <tr>
+        <td colspan=cols.length>end of table</td>
+      </tr>
+    </tfoot>
+  </-if>
+</table>

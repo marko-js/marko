@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-inert/template.marko:2:10
+      1 | comptime import { inert } from "@marko/runtime-tags/comptime"
+    > 2 | comptime const data = inert({
+        |          ^ Error evaluating comptime code: Unable to make the function `(anonymous)` inert (reading page.render): inert data cannot contain functions.
+      3 |   page: {
+      4 |     title: "ok",
+      5 |     render: () => "not data",

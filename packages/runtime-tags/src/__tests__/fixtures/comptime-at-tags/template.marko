@@ -1,0 +1,9 @@
+comptime import sections from "./sections.json";
+
+<my-tabs>
+  <-for|section| of=sections>
+    <@tab title=section.title>
+      <p>${section.body}</p>
+    </@tab>
+  </-for>
+</my-tabs>

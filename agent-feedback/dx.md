@@ -2,6 +2,12 @@
 
 Friction in builds, tests, tooling, or repo workflows. Format and rules: [README.md](README.md).
 
+## `stripTypes` silently unregisters scriptlet import bindings until the transform-exit crawl
+
+`packages/compiler/src/babel-plugin/index.js:516` | 2026-07-09 | impact:med | effort:low
+
+`stripTypes` temporarily hoists `ImportDeclaration`s out of static scriptlets so the TypeScript transform sees them, then puts them back with a raw `scriptlet.body.unshift(importNode)`. The hoist uses `path.remove()`, which unregisters the import's scope bindings (babel's `_removeFromScope`), and the raw re-insert never re-registers them — so from stripTypes until the crawl at transform **exit**, `scope.getBinding()` misses every import that lives inside a static/comptime scriptlet, while `const` bindings in the same scriptlet still resolve (they never went through the remove/re-add dance). Nothing in the tree looks wrong, which makes this a confusing trap for any pass that classifies identifiers during the transform stage (the comptime pass hit it and now re-crawls defensively at `packages/runtime-tags/src/translator/comptime/index.ts:111`). Fix by re-registering the binding when the import is moved back (e.g. `scriptletPath.scope.getProgramParent().registerDeclaration(...)` via a real path op instead of the raw unshift), then the defensive crawl can go.
+
 ## `c8` coverage crashes generating lcov when the wrapped process loads `~ts`
 
 `scripts/test-parallel.js:10` | 2026-07-02 | impact:med | effort:med

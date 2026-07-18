@@ -294,7 +294,7 @@ index 3dff037..0f8f53b 100644
  var _deprecatedAliases = require("./deprecated-aliases.js");
 diff --git a/node_modules/@babel/types/lib/definitions/marko.js b/node_modules/@babel/types/lib/definitions/marko.js
 new file mode 100644
-index 0000000..ad1f6c5
+index 0000000..13d4fc3
 --- /dev/null
 +++ b/node_modules/@babel/types/lib/definitions/marko.js
 @@ -0,0 +1,247 @@
@@ -405,7 +405,7 @@ index 0000000..ad1f6c5
 +      default: false,
 +    },
 +    target: {
-+      validate: assertOneOf("server", "client"),
++      validate: assertOneOf("server", "client", "comptime"),
 +      optional: true,
 +    },
 +  },
@@ -546,7 +546,7 @@ index 0000000..ad1f6c5
 +  },
 +});
 diff --git a/node_modules/@babel/types/lib/index.d.ts b/node_modules/@babel/types/lib/index.d.ts
-index efa49cb..d22ec43 100644
+index efa49cb..fbe371c 100644
 --- a/node_modules/@babel/types/lib/index.d.ts
 +++ b/node_modules/@babel/types/lib/index.d.ts
 @@ -364,6 +364,8 @@ interface SourceLocation {
@@ -677,7 +677,7 @@ index efa49cb..d22ec43 100644
 +  type: "MarkoScriptlet";
 +  body: Array<Statement>;
 +  static: boolean;
-+  target: "server" | "client" | null;
++  target: "server" | "client" | "comptime" | null;
 +}
 +
 +interface MarkoClass extends BaseNode {
@@ -730,7 +730,7 @@ index efa49cb..d22ec43 100644
 +declare function markoComment(value: string): MarkoComment;
 +declare function markoText(value: string): MarkoText;
 +declare function markoPlaceholder(value: Expression, escape?: boolean): MarkoPlaceholder;
-+declare function markoScriptlet(body: Array<Statement>, _static?: boolean, target?: "server" | "client" | null): MarkoScriptlet;
++declare function markoScriptlet(body: Array<Statement>, _static?: boolean, target?: "server" | "client" | "comptime" | null): MarkoScriptlet;
 +declare function markoClass(body: ClassBody): MarkoClass;
 +declare function markoAttribute(name: string, value: Expression, modifier?: string | null, _arguments?: Array<Expression | SpreadElement> | null, _default?: boolean | null, bound?: boolean | null): MarkoAttribute;
 +declare function markoSpreadAttribute(value: Expression): MarkoSpreadAttribute;

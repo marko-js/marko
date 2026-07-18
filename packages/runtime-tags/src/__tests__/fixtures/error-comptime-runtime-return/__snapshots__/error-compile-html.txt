@@ -1,0 +1,7 @@
+./packages/runtime-tags/src/__tests__/fixtures/error-comptime-runtime-return/template.marko: 
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-runtime-return/tags/legacy-shell/index.marko:1:1
+    > 1 | <return=input.mode/>
+        | ^^^^^^^^^^^^^^^^^^^^ A runtime `<return>` inside a comptime-invoked template is not supported yet; use `<-return>` for a compile-time result.
+      2 | <div>${input.mode}</div>
+      3 |
+

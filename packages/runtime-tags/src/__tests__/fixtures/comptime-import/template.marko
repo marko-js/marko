@@ -1,0 +1,10 @@
+comptime import { formatPrice } from "./util/money";
+comptime import shout from "./util/shout";
+comptime import catalog from "./catalog.json";
+comptime const featured = catalog.items.find((item) => item.featured);
+comptime const fmt = formatPrice;
+comptime const exclaim = shout;
+
+<h1>${exclaim(featured.name)}</h1>
+<p>list price ${fmt(featured.cents)}</p>
+<p>your price ${formatPrice(input.cents)}</p>

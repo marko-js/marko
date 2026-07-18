@@ -1,0 +1,9 @@
+comptime import { inert } from "@marko/runtime-tags/comptime"
+comptime const data = inert({
+  page: {
+    title: "ok",
+    render: () => "not data",
+  },
+});
+
+<p>${data.page.title}</p>

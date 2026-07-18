@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-userland/template.marko:1:1
+    > 1 | <-my-macro count=3/>
+        | ^^^^^^^^^^^^^^^^^^^^ Unable to resolve `<-my-macro>`: no `my-macro` tag or comptime snippet is in scope.
+      2 |

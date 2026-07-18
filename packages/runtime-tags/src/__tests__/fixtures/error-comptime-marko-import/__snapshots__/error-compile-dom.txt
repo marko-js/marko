@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-marko-import/template.marko:1:10
+    > 1 | comptime import other from "./other.marko";
+        |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Error evaluating comptime code: Cannot `comptime import` a Marko template ("./other.marko").
+      2 | comptime const name = other.name;
+      3 |
+      4 | <p>${name}</p>

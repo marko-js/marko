@@ -1,0 +1,9 @@
+comptime const tones = { neutral: "slate", warn: "amber" };
+
+<-define/Badge|{ label, tone }| tone="neutral">
+  <span class=`badge badge--${tones[tone]}`>${label}</span>
+</-define>
+
+<h2>Releases</h2>
+<-Badge label="Beta"/>
+<-Badge label="Deprecated" tone="warn"/>

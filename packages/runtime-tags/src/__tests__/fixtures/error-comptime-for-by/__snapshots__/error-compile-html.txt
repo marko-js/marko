@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-for-by/template.marko:1:22
+    > 1 | <-for|item| of=["a"] by="item">
+        |                      ^^^^^^^^^ `<-for>` does not support the `by` attribute; an unrolled loop has nothing to reconcile.
+      2 |   <p>${item}</p>
+      3 | </-for>
+      4 |

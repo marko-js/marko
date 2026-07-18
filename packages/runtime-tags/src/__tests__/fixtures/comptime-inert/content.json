@@ -1,0 +1,18 @@
+{
+  "title": "Field Notes <em>uncut</em>",
+  "sections": [
+    {
+      "heading": "Soil & water",
+      "body": "pH < 6.5 && \"rich\" loam > 'sand'"
+    },
+    {
+      "heading": "Pests",
+      "body": "<script>alert('aphids')</script>"
+    }
+  ],
+  "meta": {
+    "__proto__": { "note": "just data" },
+    "constructor": "also data",
+    "revision": 7
+  }
+}

@@ -27,6 +27,31 @@ await Promise.all([
       dir: "dist/translator",
     },
   }),
+  // Build comptime helpers (build-time library, no debug flavor)
+  (async () => {
+    const bundle = await rolldown({
+      cwd,
+      input: "src/comptime.ts",
+      platform: "node",
+    });
+    try {
+      await Promise.all([
+        bundle.write({
+          file: "dist/comptime.mjs",
+          format: "esm",
+          sourcemap: false,
+        }),
+        bundle.write({
+          file: "dist/comptime.js",
+          format: "cjs",
+          strict: true,
+          sourcemap: false,
+        }),
+      ]);
+    } finally {
+      await bundle.close();
+    }
+  })(),
   // Build runtime
   ...["dom", "html"].flatMap((name) =>
     ["dist/debug", "dist"].map(async (out) => {

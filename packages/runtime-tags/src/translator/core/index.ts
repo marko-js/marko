@@ -1,7 +1,17 @@
+import {
+  ComptimeConstTag,
+  ComptimeDebugTag,
+  ComptimeDefineTag,
+  ComptimeForTag,
+  ComptimeIfTag,
+  ComptimeLogTag,
+  ComptimeReturnTag,
+} from "../comptime/tags";
 import runtimeInfo from "../util/runtime-info";
 import AttrsTag from "./attrs";
 import AwaitTag from "./await";
 import ClientTag from "./client";
+import ComptimeTag from "./comptime";
 import ConstTag from "./const";
 import DebugTag from "./debug";
 import DefineTag from "./define";
@@ -27,9 +37,17 @@ import TryTag from "./try";
 
 export default {
   taglibId: runtimeInfo.taglibId,
+  "<-const>": ComptimeConstTag,
+  "<-debug>": ComptimeDebugTag,
+  "<-define>": ComptimeDefineTag,
+  "<-for>": ComptimeForTag,
+  "<-if>": ComptimeIfTag,
+  "<-log>": ComptimeLogTag,
+  "<-return>": ComptimeReturnTag,
   "<attrs>": AttrsTag,
   "<await>": AwaitTag,
   "<client>": ClientTag,
+  "<comptime>": ComptimeTag,
   "<const>": ConstTag,
   "<debug>": DebugTag,
   "<define>": DefineTag,

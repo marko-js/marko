@@ -157,3 +157,19 @@ CSR is a runtime-only fix: push `() => childScope[AccessorProp.StartNode]` throu
 `packages/runtime-tags/src/html/assets.ts:135` | 2026-07-15 | impact:med | effort:med
 
 `addAsset` deduplicates solely by asset id and silently ignores the triggers on every later registration. The existing `lazy-tag-shared-parent` shape proves separate parent modules can wrap the same child asset independently; if one imports it with `visible` and another with `idle`/an event, whichever parent renders first becomes the only trigger and the other condition can never load the shared module. Detect incompatible registrations before the first flush and combine their triggers, or emit a compile/debug error as the existing TODO suggests; do not let render order choose behavior.
+
+## Concise `--` without following whitespace silently swallows one text character
+
+`htmljs-parser@5.12.1 dist/index.mjs (BEGIN_DELIMITED_HTML_BLOCK)` | 2026-07-09 | impact:low | effort:low
+
+Upstream htmljs-parser (exercised via `packages/compiler/src/babel-plugin/parser.js`):
+in concise mode, a text line whose `--` delimiter is not followed by whitespace
+drops the first content character with no error. Verified against the installed
+parser with a bare `createParser({ onText })`: `"--foo"` emits text `"oo"`,
+`"--foo bar"` emits `"oo bar"`, and `"---foo"` emits `"oo"`, while `"-- foo"`
+correctly emits `"foo"`. The delimiter scanner appears to unconditionally skip
+one character after the run of hyphens instead of requiring whitespace. Either
+the missing-whitespace form should be a parse error or the character should be
+kept; silent one-character data loss is the worst of the options. Fix belongs in
+marko-js/htmljs-parser (`BEGIN_DELIMITED_HTML_BLOCK` state) with regression
+tests for `--foo` / `---foo`.

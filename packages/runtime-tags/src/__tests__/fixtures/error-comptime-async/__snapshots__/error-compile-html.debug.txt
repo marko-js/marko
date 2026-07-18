@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-async/template.marko:3:1
+      1 | comptime const data = Promise.resolve(1);
+      2 |
+    > 3 | <-if=data>
+        | ^ Comptime evaluation is synchronous and cannot wait on a promise. Resolve the value before compiling (in the build script) instead.
+      4 |   <p>never</p>
+      5 | </-if>
+      6 |

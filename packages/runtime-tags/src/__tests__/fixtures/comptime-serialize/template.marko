@@ -1,0 +1,28 @@
+comptime const theme = { name: "midnight", accent: "#7df" };
+comptime const nav = {
+  home: { label: "Home", theme },
+  docs: { label: "Docs", theme },
+};
+comptime const meta = new Map([["generator", "marko"]]);
+comptime const tags = new Set(["compiler", "runtime"]);
+comptime const released = new Date(0);
+comptime const semver = /^v\d+/;
+comptime const big = 10n ** 21n;
+comptime const oddities = [NaN, -0, Infinity, -Infinity];
+comptime const marker = Symbol.for("app.marker");
+comptime const docsUrl = new URL("https://markojs.com/docs");
+comptime const tree = (() => {
+  const root = { name: "root", parent: null };
+  root.parent = root;
+  return root;
+})();
+
+<div data-accent=theme.accent>
+  <a href=docsUrl.pathname>${nav.docs.label}</a>
+  <p>${nav.home.theme === theme && tree.parent === tree ? "shared" : "copied"}</p>
+  <p>${meta.get("generator")} began ${released.getUTCFullYear()}</p>
+  <p>${[...tags].join("+")} / ${String(big)} / ${oddities.join(",")}</p>
+  <p>${semver.test(input.version) ? "release" : "preview"}</p>
+  <p>${marker === Symbol.for("app.marker") ? "same symbol" : "different"}</p>
+  <p>${String(docsUrl)}</p>
+</div>

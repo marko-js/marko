@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-plain-import/template.marko:3:6
+      1 | import { limit } from "./limit";
+      2 |
+    > 3 | <-if=limit>
+        |      ^^^^^ `limit` is imported for runtime and cannot be read from comptime code. Change its import to `comptime import`.
+      4 |   <p>never</p>
+      5 | </-if>
+      6 |

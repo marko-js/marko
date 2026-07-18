@@ -1,0 +1,2 @@
+Unable to serialize an object (reading entries): circular values are only supported within plain objects and arrays.
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-cycle/template.marko
