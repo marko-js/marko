@@ -1,5 +1,12 @@
 # @marko/runtime-tags
 
+## 6.3.15
+
+### Patch Changes
+
+- [#3463](https://github.com/marko-js/marko/pull/3463) [`0e3a86c`](https://github.com/marko-js/marko/commit/0e3a86c392416a821a069e8439cad6b3b68ef91a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reject buffered server renders whose final `consume` aborts the boundary,
+  instead of resolving with HTML from the aborted, reset boundary state.
+
 ## 6.3.14
 
 ### Patch Changes
