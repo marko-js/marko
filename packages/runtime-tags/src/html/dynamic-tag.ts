@@ -57,91 +57,95 @@ export let _dynamic_tag = (
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
     rendered = true;
-    _scope_id();
-    _html(
-      `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
-    );
+    const renderNative = () => {
+      _scope_id();
+      _html(
+        `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
+      );
 
-    if (!voidElementsReg.test(renderer)) {
-      const renderContent =
-        content || normalizeDynamicRenderer<ServerRenderer>(input.content);
-      if (renderer === "textarea") {
-        if (MARKO_DEBUG && renderContent) {
-          throw new Error(
-            "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
+      if (!voidElementsReg.test(renderer)) {
+        const renderContent =
+          content || normalizeDynamicRenderer<ServerRenderer>(input.content);
+        if (renderer === "textarea") {
+          if (MARKO_DEBUG && renderContent) {
+            throw new Error(
+              "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
+            );
+          }
+          _html(
+            _attr_textarea_value(
+              branchId,
+              MARKO_DEBUG ? `#${renderer}/0` : "a",
+              input.value,
+              input.valueChange,
+              1,
+            ),
           );
+        } else if (renderContent) {
+          if (typeof renderContent !== "function") {
+            throw new Error(
+              `Body content is not supported for the \`<${renderer}>\` tag.`,
+            );
+          }
+          if (
+            renderer === "select" &&
+            ("value" in input || "valueChange" in input)
+          ) {
+            _attr_select_value(
+              branchId,
+              MARKO_DEBUG ? `#${renderer}/0` : "a",
+              input.value,
+              input.valueChange,
+              renderContent,
+              1,
+            );
+          } else {
+            _dynamic_tag(
+              branchId,
+              MARKO_DEBUG ? `#${renderer}/0` : "a",
+              renderContent,
+              undefined,
+              0,
+              undefined,
+              serializeReason,
+            );
+          }
         }
-        _html(
-          _attr_textarea_value(
-            branchId,
-            MARKO_DEBUG ? `#${renderer}/0` : "a",
-            input.value,
-            input.valueChange,
-            1,
-          ),
+
+        _html(`</${renderer}>`);
+      } else if (MARKO_DEBUG && content) {
+        throw new Error(
+          `Body content is not supported for the \`<${renderer}>\` tag.`,
         );
-      } else if (renderContent) {
-        if (typeof renderContent !== "function") {
-          throw new Error(
-            `Body content is not supported for the \`<${renderer}>\` tag.`,
-          );
-        }
-        if (
-          renderer === "select" &&
-          ("value" in input || "valueChange" in input)
-        ) {
-          _attr_select_value(
-            branchId,
-            MARKO_DEBUG ? `#${renderer}/0` : "a",
-            input.value,
-            input.valueChange,
-            renderContent,
-            1,
-          );
-        } else {
-          _dynamic_tag(
-            branchId,
-            MARKO_DEBUG ? `#${renderer}/0` : "a",
-            renderContent,
-            undefined,
-            0,
-            undefined,
-            serializeReason,
-          );
-        }
       }
 
-      _html(`</${renderer}>`);
-    } else if (MARKO_DEBUG && content) {
-      throw new Error(
-        `Body content is not supported for the \`<${renderer}>\` tag.`,
-      );
-    }
-
-    const childScope = getScopeById(branchId);
-    const needsScript =
-      childScope &&
-      (childScope[
-        AccessorPrefix.EventAttributes + (MARKO_DEBUG ? `#${renderer}/0` : "a")
-      ] ||
-        childScope[
-          AccessorPrefix.ControlledHandler +
+      const childScope = getScopeById(branchId);
+      const needsScript =
+        childScope &&
+        (childScope[
+          AccessorPrefix.EventAttributes +
             (MARKO_DEBUG ? `#${renderer}/0` : "a")
-        ]);
+        ] ||
+          childScope[
+            AccessorPrefix.ControlledHandler +
+              (MARKO_DEBUG ? `#${renderer}/0` : "a")
+          ]);
 
-    if (needsScript) {
-      _scope(branchId, { [AccessorProp.Renderer]: renderer });
-      _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
-    }
+      if (needsScript) {
+        _scope(branchId, { [AccessorProp.Renderer]: renderer });
+        _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
+      }
 
-    if (shouldResume || needsScript) {
-      _html(
-        state.mark(
-          ResumeSymbol.BranchEndNativeTag,
-          scopeId + " " + accessor + " " + branchId,
-        ),
-      );
-    }
+      if (shouldResume || needsScript) {
+        _html(
+          state.mark(
+            ResumeSymbol.BranchEndNativeTag,
+            scopeId + " " + accessor + " " + branchId,
+          ),
+        );
+      }
+    };
+    renderNative();
 
     // TODO: this needs to set result the element getter
   } else {
