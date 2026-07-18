@@ -51,20 +51,7 @@ type ScopeInternals = PartialScope & {
 };
 
 let $chunk: Chunk;
-const NOOP = () => {};
 
-enum Mark {
-  Placeholder = "!^",
-  PlaceholderEnd = "!",
-  ReorderMarker = "#",
-}
-
-enum RuntimeKey {
-  Walk = ".w",
-  Resume = ".r",
-  Ready = ".b",
-  Scripts = ".j",
-}
 export function getChunk(): Chunk | undefined {
   return $chunk;
 }
@@ -81,6 +68,79 @@ export function getScopeId(scope: unknown): number | undefined {
   return (scope as ScopeInternals)[K_SCOPE_ID];
 }
 
+export function getScopeById(scopeId: number | undefined) {
+  if (scopeId !== undefined) {
+    return $chunk.boundary.state.scopes.get(scopeId);
+  }
+}
+
+export function $global() {
+  return $chunk.boundary.state.$global;
+}
+
+export function _id() {
+  const state = $chunk.boundary.state;
+  const { $global } = state;
+  return (
+    "s" + $global.runtimeId + $global.renderId + (state.tagId++).toString(36)
+  );
+}
+
+export function _scope_id() {
+  return $chunk.boundary.state.scopeId++;
+}
+
+export function _peek_scope_id() {
+  return $chunk.boundary.state.scopeId;
+}
+
+const kPendingContexts = Symbol("Pending Contexts");
+
+export function withContext<T>(
+  key: PropertyKey,
+  value: unknown,
+  cb: () => T,
+): T;
+export function withContext<T, U>(
+  key: PropertyKey,
+  value: unknown,
+  cb: (value: U) => T,
+  cbValue: U,
+): T;
+export function withContext<T, U>(
+  key: PropertyKey,
+  value: unknown,
+  cb: (value?: U) => T,
+  cbValue?: U,
+): T {
+  const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);
+  const prev = ctx[key];
+  ctx[kPendingContexts]++;
+  ctx[key] = value;
+  try {
+    return cb(cbValue);
+  } finally {
+    ctx[kPendingContexts]--;
+    ctx[key] = prev;
+  }
+}
+
+const kBranchId = Symbol("Branch Id");
+
+const kIsAsync = Symbol("Is Async");
+
+export function isInResumedBranch() {
+  return $chunk?.context?.[kBranchId] !== undefined;
+}
+
+export function withBranchId<T>(branchId: number, cb: () => T): T {
+  return withContext(kBranchId, branchId, cb);
+}
+
+function withIsAsync<T, U>(cb: (value: U) => T, value: U): T {
+  return withContext(kIsAsync, true, cb, value);
+}
+
 export function _html(html: string) {
   $chunk.writeHTML(html);
 }
@@ -89,40 +149,61 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
-export function writeWaitReady(
-  readyId: string,
-  renderer: ServerRenderer,
-  input: unknown,
-) {
-  const chunk = $chunk;
-  const { boundary } = chunk;
-  const body = new Chunk(boundary, null, chunk.context, {
-    readyId,
-    parent: chunk.serializeState,
-    resumes: "",
-    writeScopes: {},
-    flushScopes: false,
-  });
-  const bodyEnd = body.render(renderer, input);
-
-  if (body === bodyEnd) {
-    chunk.writeHTML(body.html);
-    body.deferOwnReady();
-    chunk.deferredReady = push(chunk.deferredReady, body);
-  } else {
-    // The remainder of the render continues after the async body in a chunk
-    // that restores the parent serialize state.
-    bodyEnd.next = $chunk = chunk.fork(boundary, chunk.next);
-    chunk.next = body;
-  }
-}
-
 export function _script(scopeId: number, registryId: string) {
   if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
     _resume_branch(scopeId);
   }
   $chunk.boundary.state.needsMainRuntime = true;
   $chunk.writeEffect(scopeId, registryId);
+}
+
+export function _trailers(html: string) {
+  $chunk.boundary.state.trailerHTML += html;
+}
+
+export function _resume<T extends WeakKey>(
+  val: T,
+  id: string,
+  scopeId?: number,
+): T {
+  return serializerRegister(
+    id,
+    val,
+    scopeId === undefined ? undefined : _scope_with_id(scopeId),
+  );
+}
+
+export function _el(scopeId: number, id: string) {
+  return _resume(() => _el_read_error(), id, scopeId);
+}
+
+export function _hoist(scopeId: number, id: string) {
+  const getter = () => _hoist_read_error();
+  getter[Symbol.iterator] = _hoist_read_error;
+  return _resume(getter, id, scopeId);
+}
+
+export function _el_resume(
+  scopeId: number,
+  accessor: Accessor,
+  shouldResume?: number,
+) {
+  if (shouldResume === 0) return "";
+
+  const { state } = $chunk.boundary;
+  state.needsMainRuntime = true;
+  return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
+}
+
+export function _sep(shouldResume: number) {
+  return shouldResume === 0 ? "" : "<!>";
+}
+
+export function _resume_branch(scopeId: number) {
+  const branchId = $chunk.context?.[kBranchId];
+  if (branchId !== undefined && branchId !== scopeId) {
+    writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
+  }
 }
 
 export function _attr_content(
@@ -169,36 +250,6 @@ function normalizeServerRender(value: unknown) {
   }
 }
 
-const kPendingContexts = Symbol("Pending Contexts");
-export function withContext<T>(
-  key: PropertyKey,
-  value: unknown,
-  cb: () => T,
-): T;
-export function withContext<T, U>(
-  key: PropertyKey,
-  value: unknown,
-  cb: (value: U) => T,
-  cbValue: U,
-): T;
-export function withContext<T, U>(
-  key: PropertyKey,
-  value: unknown,
-  cb: (value?: U) => T,
-  cbValue?: U,
-): T {
-  const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);
-  const prev = ctx[key];
-  ctx[kPendingContexts]++;
-  ctx[key] = value;
-  try {
-    return cb(cbValue);
-  } finally {
-    ctx[kPendingContexts]--;
-    ctx[key] = prev;
-  }
-}
-
 export function _var(
   parentScopeId: number,
   scopeOffsetAccessor: Accessor,
@@ -227,114 +278,44 @@ function writeScopePassive(scopeId: number, partialScope: PartialScope) {
   return scope;
 }
 
-export function _resume<T extends WeakKey>(
-  val: T,
-  id: string,
-  scopeId?: number,
-): T {
-  return serializerRegister(
-    id,
-    val,
-    scopeId === undefined ? undefined : _scope_with_id(scopeId),
-  );
-}
-
-export function _id() {
-  const state = $chunk.boundary.state;
-  const { $global } = state;
-  return (
-    "s" + $global.runtimeId + $global.renderId + (state.tagId++).toString(36)
-  );
-}
-
-export function _scope_id() {
-  return $chunk.boundary.state.scopeId++;
-}
-
-export function _peek_scope_id() {
-  return $chunk.boundary.state.scopeId;
-}
-
-export function getScopeById(scopeId: number | undefined) {
-  if (scopeId !== undefined) {
-    return $chunk.boundary.state.scopes.get(scopeId);
+// `<show>` always renders; hidden ranges use `<t>` so the walker reaches them.
+export function _show_start(display: unknown, mark?: unknown) {
+  if (display) {
+    // The wrapper itself is the range's single node.
+    if (mark) {
+      $chunk.writeHTML(
+        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+      );
+    }
+  } else {
+    $chunk.writeHTML("<t hidden>");
   }
 }
 
-// A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
-export type SerializeReasonValue =
-  undefined | number | Partial<Record<string, 0 | 1>>;
-
-export function _set_serialize_reason(reason: SerializeReasonValue) {
-  $chunk.boundary.state.serializeReason = reason;
-}
-
-export function _scope_reason() {
-  const reason = $chunk.boundary.state.serializeReason;
-  $chunk.boundary.state.serializeReason = undefined;
-  return reason;
-}
-
-export function _serialize_if(condition: SerializeReasonValue, key: number) {
-  return condition &&
-    (condition === 1 ||
-      (typeof condition === "number"
-        ? (condition >>> (key + 1)) & 1
-        : condition[key]))
-    ? 1
-    : undefined;
-}
-
-export function _serialize_guard(condition: SerializeReasonValue, key: number) {
-  return _serialize_if(condition, key) || 0;
-}
-
-export function _el_resume(
+export function _show_end(
   scopeId: number,
   accessor: Accessor,
-  shouldResume?: number,
+  display: unknown,
+  serializeMarker?: number,
+  serializeStateful?: number,
+  parentEndTag?: string | 0,
+  singleNode?: 1 | 0,
 ) {
-  if (shouldResume === 0) return "";
+  // Consume a scope id for the range holder the resume marks create.
+  const branchId = _scope_id();
+  const wrap = !display;
 
-  const { state } = $chunk.boundary;
-  state.needsMainRuntime = true;
-  return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
-}
+  if (wrap) $chunk.writeHTML("</t>");
 
-export function _sep(shouldResume: number) {
-  return shouldResume === 0 ? "" : "<!>";
-}
-
-export function _el(scopeId: number, id: string) {
-  return _resume(() => _el_read_error(), id, scopeId);
-}
-
-export function _hoist(scopeId: number, id: string) {
-  const getter = () => _hoist_read_error();
-  getter[Symbol.iterator] = _hoist_read_error;
-  return _resume(getter, id, scopeId);
-}
-
-export function _resume_branch(scopeId: number) {
-  const branchId = $chunk.context?.[kBranchId];
-  if (branchId !== undefined && branchId !== scopeId) {
-    writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
-  }
-}
-
-const kBranchId = Symbol("Branch Id");
-const kIsAsync = Symbol("Is Async");
-
-export function isInResumedBranch() {
-  return $chunk?.context?.[kBranchId] !== undefined;
-}
-
-export function withBranchId<T>(branchId: number, cb: () => T): T {
-  return withContext(kBranchId, branchId, cb);
-}
-
-function withIsAsync<T, U>(cb: (value: U) => T, value: U): T {
-  return withContext(kIsAsync, true, cb, value);
+  writeBranchEnd(
+    scopeId,
+    accessor,
+    serializeStateful,
+    serializeMarker,
+    parentEndTag,
+    wrap || singleNode ? 1 : undefined,
+    " " + branchId,
+  );
 }
 
 export function _for_of(
@@ -639,46 +620,6 @@ function writeBranchEnd(
   }
 }
 
-// `<show>` always renders; hidden ranges use `<t>` so the walker reaches them.
-export function _show_start(display: unknown, mark?: unknown) {
-  if (display) {
-    // The wrapper itself is the range's single node.
-    if (mark) {
-      $chunk.writeHTML(
-        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
-      );
-    }
-  } else {
-    $chunk.writeHTML("<t hidden>");
-  }
-}
-
-export function _show_end(
-  scopeId: number,
-  accessor: Accessor,
-  display: unknown,
-  serializeMarker?: number,
-  serializeStateful?: number,
-  parentEndTag?: string | 0,
-  singleNode?: 1 | 0,
-) {
-  // Consume a scope id for the range holder the resume marks create.
-  const branchId = _scope_id();
-  const wrap = !display;
-
-  if (wrap) $chunk.writeHTML("</t>");
-
-  writeBranchEnd(
-    scopeId,
-    accessor,
-    serializeStateful,
-    serializeMarker,
-    parentEndTag,
-    wrap || singleNode ? 1 : undefined,
-    " " + branchId,
-  );
-}
-
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const { state } = $chunk.boundary;
   const target = $chunk.serializeState;
@@ -740,8 +681,77 @@ function scopeWithId(state: State, scopeId: number) {
   return scope;
 }
 
-export function $global() {
-  return $chunk.boundary.state.$global;
+export function _subscribe(
+  subscribers: Set<ScopeInternals> | undefined,
+  scope: ScopeInternals,
+) {
+  if (subscribers) {
+    const { serializer } = $chunk.boundary.state;
+    if (!$chunk.serializeState.readyId && !serializer.written(subscribers)) {
+      // An unflushed set carries its subscriber in the same payload.
+      subscribers.add(scope);
+    } else {
+      // Flushed or lazy sets add subscribers through their gated channel.
+      serializer.writeCall(scope, subscribers, "add", $chunk.serializeState);
+    }
+  }
+  return scope;
+}
+
+// A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
+export type SerializeReasonValue =
+  undefined | number | Partial<Record<string, 0 | 1>>;
+
+export function _set_serialize_reason(reason: SerializeReasonValue) {
+  $chunk.boundary.state.serializeReason = reason;
+}
+
+export function _scope_reason() {
+  const reason = $chunk.boundary.state.serializeReason;
+  $chunk.boundary.state.serializeReason = undefined;
+  return reason;
+}
+
+export function _serialize_if(condition: SerializeReasonValue, key: number) {
+  return condition &&
+    (condition === 1 ||
+      (typeof condition === "number"
+        ? (condition >>> (key + 1)) & 1
+        : condition[key]))
+    ? 1
+    : undefined;
+}
+
+export function _serialize_guard(condition: SerializeReasonValue, key: number) {
+  return _serialize_if(condition, key) || 0;
+}
+
+export function writeWaitReady(
+  readyId: string,
+  renderer: ServerRenderer,
+  input: unknown,
+) {
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  const body = new Chunk(boundary, null, chunk.context, {
+    readyId,
+    parent: chunk.serializeState,
+    resumes: "",
+    writeScopes: {},
+    flushScopes: false,
+  });
+  const bodyEnd = body.render(renderer, input);
+
+  if (body === bodyEnd) {
+    chunk.writeHTML(body.html);
+    body.deferOwnReady();
+    chunk.deferredReady = push(chunk.deferredReady, body);
+  } else {
+    // The remainder of the render continues after the async body in a chunk
+    // that restores the parent serialize state.
+    bodyEnd.next = $chunk = chunk.fork(boundary, chunk.next);
+    chunk.next = body;
+  }
 }
 
 export function _await<T>(
@@ -943,6 +953,21 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
       boundary.onNext();
     }
   };
+}
+
+const NOOP = () => {};
+
+enum Mark {
+  Placeholder = "!^",
+  PlaceholderEnd = "!",
+  ReorderMarker = "#",
+}
+
+enum RuntimeKey {
+  Walk = ".w",
+  Resume = ".r",
+  Ready = ".b",
+  Scripts = ".j",
 }
 
 export class State implements SerializeState {
@@ -1602,51 +1627,6 @@ function depsMarker(deps: Set<string> | null) {
   return marker;
 }
 
-export function _trailers(html: string) {
-  $chunk.boundary.state.trailerHTML += html;
-}
-
-function concatEffects(a: string, b: string) {
-  return a ? (b ? a + " " + b : a) : b;
-}
-
-function concatSequence(a: string, b: string) {
-  return a ? (b ? a + "," + b : a) : b;
-}
-
-function concatScripts(a: string, b: string) {
-  return a ? (b ? a + ";" + b : a) : b;
-}
-
-type QueueCallback = (ticked: true) => void;
-const tick =
-  globalThis.setImmediate ||
-  globalThis.setTimeout ||
-  globalThis.queueMicrotask ||
-  ((cb: () => void) => Promise.resolve().then(cb));
-let tickQueue: Set<QueueCallback> | undefined;
-
-export function queueTick(cb: QueueCallback) {
-  if (tickQueue) {
-    tickQueue.add(cb);
-  } else {
-    tickQueue = new Set([cb]);
-    tick(flushTickQueue);
-  }
-}
-
-export function offTick(cb: QueueCallback) {
-  tickQueue?.delete(cb);
-}
-
-function flushTickQueue() {
-  const queue = tickQueue!;
-  tickQueue = undefined;
-
-  for (const cb of queue) {
-    cb(true);
-  }
-}
 function getFilteredGlobals($global: Record<string, unknown>) {
   if (!$global) return 0;
 
@@ -1686,19 +1666,46 @@ function getFilteredGlobals($global: Record<string, unknown>) {
   return filtered;
 }
 
-export function _subscribe(
-  subscribers: Set<ScopeInternals> | undefined,
-  scope: ScopeInternals,
-) {
-  if (subscribers) {
-    const { serializer } = $chunk.boundary.state;
-    if (!$chunk.serializeState.readyId && !serializer.written(subscribers)) {
-      // An unflushed set carries its subscriber in the same payload.
-      subscribers.add(scope);
-    } else {
-      // Flushed or lazy sets add subscribers through their gated channel.
-      serializer.writeCall(scope, subscribers, "add", $chunk.serializeState);
-    }
+function concatEffects(a: string, b: string) {
+  return a ? (b ? a + " " + b : a) : b;
+}
+
+function concatSequence(a: string, b: string) {
+  return a ? (b ? a + "," + b : a) : b;
+}
+
+function concatScripts(a: string, b: string) {
+  return a ? (b ? a + ";" + b : a) : b;
+}
+
+type QueueCallback = (ticked: true) => void;
+
+const tick =
+  globalThis.setImmediate ||
+  globalThis.setTimeout ||
+  globalThis.queueMicrotask ||
+  ((cb: () => void) => Promise.resolve().then(cb));
+
+let tickQueue: Set<QueueCallback> | undefined;
+
+export function queueTick(cb: QueueCallback) {
+  if (tickQueue) {
+    tickQueue.add(cb);
+  } else {
+    tickQueue = new Set([cb]);
+    tick(flushTickQueue);
   }
-  return scope;
+}
+
+export function offTick(cb: QueueCallback) {
+  tickQueue?.delete(cb);
+}
+
+function flushTickQueue() {
+  const queue = tickQueue!;
+  tickQueue = undefined;
+
+  for (const cb of queue) {
+    cb(true);
+  }
 }
