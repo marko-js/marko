@@ -219,3 +219,9 @@ event regardless of interop, and `compat.onFlush` permanently patches
 Marko 6 chunk flush with a `writersByGlobal.get` miss once the class-compat
 module is loaded. Each is minor individually; worth gating the resolver loop on a
 "has bridged events" flag and scoping the patches.
+
+## Document resume-payload cost of per-item custom tags and patterns to contain it
+
+`packages/runtime-tags/cheatsheet.md:5` | 2026-07-18 | impact:med | effort:med
+
+A grid rendered as one small custom tag per cell (a 16x16 minesweeper board, parent `<let>` holding a 2D array of `{mine,revealed,flagged,adjacent}` cell objects, one `<mine-cell>` per cell) produces a production SSR page of 69.6kB where the `M._.r` resume payload is 44kB: the 256 serialized cell objects account for ~11kB, and the remaining ~130 bytes per tag instance is scope/binding bookkeeping — per-instance scope entries plus closure-subscriber sets serialized as `af:new Set([_(9),_(11),...])` with one `_(id)` per instance per closed-over parent `<let>` (an 8x8 board measures 18.5kB/11kB at the same ratio). The initial grid is also a pure function of input (every cell identical) yet fully serialized, since `<let>` has no way to declare a recomputable/lazy initial value. Some of this may be inherent to resumability, but neither `cheatsheet.md` nor any user-facing doc mentions resume-payload size as a design consideration or the mitigations (flat primitive state, rendering repeated leaf cells as plain elements in the parent instead of one custom tag each, deriving recomputable state with `<const>`); a short guidance section with this shape of numbers would steer grid/list-heavy apps away from an accidental 44kB-per-page tax, and the per-instance subscriber-set encoding may itself be compressible.
