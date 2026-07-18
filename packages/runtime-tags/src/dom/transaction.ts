@@ -128,6 +128,42 @@ export function _action(
   return runner;
 }
 
+// Compiled `await`s in an `<action>` body become `yield`s driven here, so every
+// resumed segment (including `catch`/`finally`) runs with the act's transaction
+// current — a native awaited continuation resumes in a job nothing can bracket.
+export function _action_async(
+  genFn: (...args: unknown[]) => Generator<unknown, unknown, unknown>,
+) {
+  return function (this: unknown, ...args: unknown[]) {
+    const transaction = currentTransaction;
+    const gen = genFn.apply(this, args);
+    return new Promise((resolve, reject) => {
+      step(0, undefined);
+      function step(throws: 0 | 1, input: unknown) {
+        const previous = currentTransaction;
+        currentTransaction = transaction;
+        let result: IteratorResult<unknown>;
+        try {
+          result = throws ? gen.throw(input) : gen.next(input);
+        } catch (error) {
+          reject(error);
+          return;
+        } finally {
+          currentTransaction = previous;
+        }
+        if (result.done) {
+          resolve(result.value);
+        } else {
+          Promise.resolve(result.value).then(
+            (value) => step(0, value),
+            (error) => step(1, error),
+          );
+        }
+      }
+    });
+  };
+}
+
 // Lets a navigation (or the router driving one) join the transaction of the act
 // that caused it: call while that transaction is current (e.g. during the
 // dispatch that assigned a draft) and invoke the returned release when the

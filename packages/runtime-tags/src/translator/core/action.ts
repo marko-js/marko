@@ -149,6 +149,8 @@ export default {
             pendingArg = pendingSignal.identifier;
           }
 
+          const drivesAwaits = rewriteAwaitsToYields(tag);
+
           // Wrap the closure the registered factory returns so the `_action`
           // runner is rebuilt on resume, not only during fresh-render setup.
           setRegisteredFnReturnWrapper(value as t.Function, (fn) =>
@@ -157,7 +159,7 @@ export default {
               scopeIdentifier,
               getScopeAccessorLiteral(varBinding, true),
               pendingArg,
-              fn,
+              drivesAwaits ? callRuntime("_action_async", fn) : fn,
             ),
           );
           addValue(
@@ -187,3 +189,55 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/action.d.marko",
 } as Tag;
+
+// Rewrites the async body's own `await`s to `yield`s and marks it a generator,
+// so `_action_async` resumes every segment inside the act's transaction (dom
+// output only; the server never invokes acts). Bodies using `this`,
+// `arguments`, or `for await` keep native `await` semantics.
+function rewriteAwaitsToYields(tag: t.NodePath<t.MarkoTag>) {
+  const [valueAttr] = tag.get("attributes");
+  const value = valueAttr.get("value");
+  const fn = value.node;
+  if (!t.isFunction(fn) || !fn.async) return false;
+
+  let ownAwait = false;
+  let bail = false;
+  value.traverse({
+    ThisExpression() {
+      bail = true;
+    },
+    Identifier(identifier) {
+      if (identifier.node.name === "arguments") bail = true;
+    },
+    ForOfStatement(loop) {
+      if (loop.node.await) bail = true;
+    },
+  });
+  value.traverse({
+    Function(nested) {
+      nested.skip();
+    },
+    AwaitExpression() {
+      ownAwait = true;
+    },
+  });
+  if (bail || !ownAwait) return false;
+
+  value.traverse({
+    Function(nested) {
+      nested.skip();
+    },
+    AwaitExpression(awaited) {
+      awaited.replaceWith(t.yieldExpression(awaited.node.argument));
+    },
+  });
+  fn.async = false;
+  fn.generator = true;
+  if (fn.type === "ArrowFunctionExpression") {
+    if (fn.body.type !== "BlockStatement") {
+      fn.body = t.blockStatement([t.returnStatement(fn.body)]);
+    }
+    (fn as { type: string }).type = "FunctionExpression";
+  }
+  return true;
+}

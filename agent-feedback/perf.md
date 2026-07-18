@@ -224,12 +224,14 @@ module is loaded. Each is minor individually; worth gating the resolver loop on 
 
 `packages/runtime-tags/src/dom/transaction.ts:1` | 2026-07-17 | impact:low | effort:med
 
-The transaction runtime (`_draft` + `_action` + `extendTransaction` + helpers)
-plus the HTML `_action` adds ~1178 bytes min / ~430 brotli to the `*` entry in
-`.sizes.json`; the optimistic-updates proposal budgeted ≤1.0 kB min. It is
+The transaction runtime (`_draft` + `_action` + `_action_async` +
+`extendTransaction` + helpers) plus the HTML `_action` adds ~1449 bytes min /
+~550 brotli to the `*` entry in `.sizes.json` (~271 min of that is the
+`_action_async` generator driver for compiled await re-entry); the
+optimistic-updates proposal budgeted ≤1.0 kB min for the core tags. It is
 genuinely zero-cost when unused (the `counter`/`comments` fixtures are
-unchanged, and `extendTransaction` tree-shakes out of pages that never import
-it). Property-name shortening on `DraftControl`/`PendingCell` and dead-code
+unchanged; `extendTransaction` and `_action_async` only load on pages that use
+them). Property-name shortening on `DraftControl`/`PendingCell` and dead-code
 removal already landed; the remaining clean path is to drop the runner's
 `.pending` getter and the compiler's property forwarding for `pending`, driving
 the pending `_let` only via the explicit `addValue(false)` init plus

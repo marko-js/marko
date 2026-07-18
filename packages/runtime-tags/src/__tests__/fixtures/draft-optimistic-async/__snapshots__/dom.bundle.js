@@ -15,9 +15,9 @@ const $serverCount = /*@__PURE__*/ _let(4, ($scope) => {
 });
 const $increment_pending = /*@__PURE__*/ _let(7, ($scope) => _text($scope.d, String($scope.h)));
 function $increment($scope) {
-	return _action($scope, 6, $increment_pending, async () => {
+	return _action($scope, 6, $increment_pending, _action_async(function* () {
 		$count.d($scope, $scope.f + 5);
-		$serverCount($scope, await resolveAfter($scope.e + 1));
-	});
+		$serverCount($scope, yield resolveAfter($scope.e + 1));
+	}));
 }
 _resume("a0", $increment);

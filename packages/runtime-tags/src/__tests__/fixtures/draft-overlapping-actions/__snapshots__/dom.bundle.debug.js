@@ -27,16 +27,16 @@ function $setup($scope) {
 const $addFast_pending = /*@__PURE__*/ _let("addFast_pending/9", ($scope) => _text($scope["#text/4"], String($scope.addFast_pending)));
 const $addSlow_pending = /*@__PURE__*/ _let("addSlow_pending/11", ($scope) => _text($scope["#text/5"], String($scope.addSlow_pending)));
 function $addFast($scope) {
-	return _action($scope, "addFast", $addFast_pending, async () => {
+	return _action($scope, "addFast", $addFast_pending, _action_async(function* () {
 		$total.d($scope, $scope.total + 1);
-		$serverTotal($scope, await resolveAfter($scope.serverTotal + 1, 1));
-	});
+		$serverTotal($scope, yield resolveAfter($scope.serverTotal + 1, 1));
+	}));
 }
 function $addSlow($scope) {
-	return _action($scope, "addSlow", $addSlow_pending, async () => {
+	return _action($scope, "addSlow", $addSlow_pending, _action_async(function* () {
 		$total.d($scope, $scope.total + 10);
-		$serverTotal($scope, await resolveAfter($scope.serverTotal + 10, 2));
-	});
+		$serverTotal($scope, yield resolveAfter($scope.serverTotal + 10, 2));
+	}));
 }
 _resume("__tests__/template.marko_0/addFast", $addFast);
 _resume("__tests__/template.marko_0/addSlow", $addSlow);

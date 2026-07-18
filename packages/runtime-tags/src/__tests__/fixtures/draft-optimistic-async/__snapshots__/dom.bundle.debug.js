@@ -20,10 +20,10 @@ function $setup($scope) {
 }
 const $increment_pending = /*@__PURE__*/ _let("increment_pending/7", ($scope) => _text($scope["#text/3"], String($scope.increment_pending)));
 function $increment($scope) {
-	return _action($scope, "increment", $increment_pending, async () => {
+	return _action($scope, "increment", $increment_pending, _action_async(function* () {
 		$count.d($scope, $scope.count + 5);
-		$serverCount($scope, await resolveAfter($scope.serverCount + 1));
-	});
+		$serverCount($scope, yield resolveAfter($scope.serverCount + 1));
+	}));
 }
 _resume("__tests__/template.marko_0/increment", $increment);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

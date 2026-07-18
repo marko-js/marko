@@ -157,3 +157,23 @@ CSR is a runtime-only fix: push `() => childScope[AccessorProp.StartNode]` throu
 `packages/runtime-tags/src/html/assets.ts:135` | 2026-07-15 | impact:med | effort:med
 
 `addAsset` deduplicates solely by asset id and silently ignores the triggers on every later registration. The existing `lazy-tag-shared-parent` shape proves separate parent modules can wrap the same child asset independently; if one imports it with `visible` and another with `idle`/an event, whichever parent renders first becomes the only trigger and the other condition can never load the shared module. Detect incompatible registrations before the first flush and combine their triggers, or emit a compile/debug error as the existing TODO suggests; do not let render order choose behavior.
+
+## Extend transaction re-entry beyond `<action>` bodies
+
+`packages/runtime-tags/src/translator/core/action.ts:190` | 2026-07-18 | impact:med | effort:med
+
+Only awaits lexically inside an `<action>` value function are compiled to
+`yield`s driven by `_action_async` (`dom/transaction.ts`), so segments after an
+`await` re-enter the act's transaction. Two adjacent shapes silently keep the
+old discard-on-microtask semantics for post-await draft assignments: a plain
+async event handler that assigns a draft (its ambient transaction settles on
+the next microtask), and an async helper function called from an action body
+(its own awaits are native, so its continuations run with no current
+transaction). Verified by design of the rewrite — the traversal skips nested
+functions and never touches non-action handlers. Neither can be detected at
+runtime to warn. Paths: apply the same rewrite to async event handlers whose
+bodies assign draft bindings (compiler knows the assignment targets), and adopt
+`AsyncContext.Variable` for `currentTransaction` when the platform ships it,
+which makes helper functions re-enter for free and lets the generator transform
+be deleted. The `<action>` bail cases (`this`, `arguments`, `for await`) would
+be closed by the same adoption.

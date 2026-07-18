@@ -1,4 +1,4 @@
-// size: 27293 (min) 10035 (brotli)
+// size: 27564 (min) 10155 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2703,6 +2703,34 @@ function _action(scope, accessor, pendingSignal, fn) {
       Object.defineProperty(runner, "pending", { get: () => cell.n > 0 }));
   }
   return ((runner.fn = fn), runner);
+}
+function _action_async(genFn) {
+  return function (...args) {
+    let transaction = currentTransaction,
+      gen = genFn.apply(this, args);
+    return new Promise((resolve, reject) => {
+      step(0, void 0);
+      function step(throws, input) {
+        let previous = currentTransaction;
+        currentTransaction = transaction;
+        let result;
+        try {
+          result = throws ? gen.throw(input) : gen.next(input);
+        } catch (error) {
+          reject(error);
+          return;
+        } finally {
+          currentTransaction = previous;
+        }
+        result.done
+          ? resolve(result.value)
+          : Promise.resolve(result.value).then(
+              (value) => step(0, value),
+              (error) => step(1, error),
+            );
+      }
+    });
+  };
 }
 function extendTransaction() {
   let transaction = (currentTransaction ||= ambientTransaction());

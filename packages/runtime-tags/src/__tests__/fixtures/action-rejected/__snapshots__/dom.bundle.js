@@ -8,9 +8,9 @@ const $serverCount = /*@__PURE__*/ _let(3, ($scope) => $count($scope, $scope.d))
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", () => $scope.f().catch(() => {})));
 const $save_pending = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, String($scope.g)));
 function $save($scope) {
-	return _action($scope, 5, $save_pending, async () => {
+	return _action($scope, 5, $save_pending, _action_async(function* () {
 		$count.d($scope, $scope.e + 1);
-		$serverCount($scope, await rejectAfter(/* @__PURE__ */ new Error("save failed")));
-	});
+		$serverCount($scope, yield rejectAfter(/* @__PURE__ */ new Error("save failed")));
+	}));
 }
 _resume("a0", $save);

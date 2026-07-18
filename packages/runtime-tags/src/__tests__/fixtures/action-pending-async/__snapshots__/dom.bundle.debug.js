@@ -11,9 +11,9 @@ function $setup($scope) {
 	$save2($scope, $save($scope));
 }
 function $save($scope) {
-	return _action($scope, "save", $save_pending, async () => {
-		await resolveAfter(1);
-	});
+	return _action($scope, "save", $save_pending, _action_async(function* () {
+		yield resolveAfter(1);
+	}));
 }
 _resume("__tests__/template.marko_0/save", $save);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

@@ -36,10 +36,10 @@ function $setup($scope) {
 	]);
 }
 function $remove($scope) {
-	return _action($scope, "remove", $for_content__remove_pending, async () => {
+	return _action($scope, "remove", $for_content__remove_pending, _action_async(function* () {
 		$entries.d($scope._, $scope._.entries.filter((e) => e !== $scope.entry));
-		$serverEntries($scope._, await resolveAfter($scope._.serverEntries.filter((e) => e !== $scope.entry)));
-	});
+		$serverEntries($scope._, yield resolveAfter($scope._.serverEntries.filter((e) => e !== $scope.entry)));
+	}));
 }
 _resume("__tests__/template.marko_1/remove", $remove);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

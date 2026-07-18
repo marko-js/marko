@@ -110,4 +110,9 @@ export {
   _var_change,
 } from "./dom/signals";
 export { _template } from "./dom/template";
-export { _action, _draft, extendTransaction } from "./dom/transaction";
+export {
+  _action,
+  _action_async,
+  _draft,
+  extendTransaction,
+} from "./dom/transaction";

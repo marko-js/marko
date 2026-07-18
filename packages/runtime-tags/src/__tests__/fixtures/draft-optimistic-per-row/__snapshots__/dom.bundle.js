@@ -27,9 +27,9 @@ const $serverEntries = /*@__PURE__*/ _let(1, ($scope) => {
 	$for_content__serverEntries($scope);
 });
 function $remove($scope) {
-	return _action($scope, 5, $for_content__remove_pending, async () => {
+	return _action($scope, 5, $for_content__remove_pending, _action_async(function* () {
 		$entries.d($scope._, $scope._.c.filter((e) => e !== $scope.d));
-		$serverEntries($scope._, await resolveAfter($scope._.b.filter((e) => e !== $scope.d)));
-	});
+		$serverEntries($scope._, yield resolveAfter($scope._.b.filter((e) => e !== $scope.d)));
+	}));
 }
 _resume("a0", $remove);

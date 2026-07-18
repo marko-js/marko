@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+export interface Input {}
+
+<let/serverStatus="saved"/>
+<draft/status=serverStatus/>
+<action/save=async () => {
+  status = "saving";
+  await resolveAfter(1, 1);
+  status = "syncing";
+  serverStatus = await resolveAfter("saved again", 2);
+}/>
+
+<button onClick=save disabled=save.pending>save</button>
+<p id="status">${status}</p>

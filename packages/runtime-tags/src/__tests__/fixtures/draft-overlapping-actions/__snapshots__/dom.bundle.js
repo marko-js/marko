@@ -22,16 +22,16 @@ const $serverTotal = /*@__PURE__*/ _let(6, ($scope) => {
 const $addFast_pending = /*@__PURE__*/ _let(9, ($scope) => _text($scope.e, String($scope.j)));
 const $addSlow_pending = /*@__PURE__*/ _let(11, ($scope) => _text($scope.f, String($scope.l)));
 function $addFast($scope) {
-	return _action($scope, 8, $addFast_pending, async () => {
+	return _action($scope, 8, $addFast_pending, _action_async(function* () {
 		$total.d($scope, $scope.h + 1);
-		$serverTotal($scope, await resolveAfter($scope.g + 1, 1));
-	});
+		$serverTotal($scope, yield resolveAfter($scope.g + 1, 1));
+	}));
 }
 function $addSlow($scope) {
-	return _action($scope, 10, $addSlow_pending, async () => {
+	return _action($scope, 10, $addSlow_pending, _action_async(function* () {
 		$total.d($scope, $scope.h + 10);
-		$serverTotal($scope, await resolveAfter($scope.g + 10, 2));
-	});
+		$serverTotal($scope, yield resolveAfter($scope.g + 10, 2));
+	}));
 }
 _resume("a0", $addFast);
 _resume("a1", $addSlow);

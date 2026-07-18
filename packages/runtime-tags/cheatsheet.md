@@ -165,8 +165,10 @@ import PriceChart from "<price-chart>" with { load: "visible#chart" }
 </form>
 ```
 
-- Assign a draft only from an `<action>` body or an event handler, and before the body's first `await` (later assignments fall outside the act's window); never write the source through a draft (there is no commit path). Compose from the draft (`cart = [...cart, x]`) so guesses layer.
+- Assign a draft only from an `<action>` body or an event handler; never write the source through a draft (there is no commit path). Compose from the draft (`cart = [...cart, x]`) so guesses layer.
+- `await`s in an action body compile to transaction re-entry, so assignments after an `await` (including in `catch`/`finally`) still join the act. Exception: bodies using `this`, `arguments`, or `for await` keep native `await`s — assign guesses before the first `await` there.
 - `act.pending` is a readonly reactive boolean (refcounted across overlapping invocations), constant `false` during SSR. A value-less `<action/apply/>` defaults to identity, so `apply(fetchThing())` is a pending-only act tracking that promise.
+- An action called inside another act is its own transaction (own `.pending`, guesses release when it settles); `await inner()` keeps the outer act open across it.
 - Declare an `<action>` inside a `<for>` row for a per-row act.
 
 ## DON'T (these are errors or silently wrong)

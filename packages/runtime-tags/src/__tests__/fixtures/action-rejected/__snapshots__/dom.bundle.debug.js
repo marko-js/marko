@@ -14,10 +14,10 @@ function $setup($scope) {
 }
 const $save_pending = /*@__PURE__*/ _let("save_pending/6", ($scope) => _text($scope["#text/2"], String($scope.save_pending)));
 function $save($scope) {
-	return _action($scope, "save", $save_pending, async () => {
+	return _action($scope, "save", $save_pending, _action_async(function* () {
 		$count.d($scope, $scope.count + 1);
-		$serverCount($scope, await rejectAfter(new Error("save failed")));
-	});
+		$serverCount($scope, yield rejectAfter(new Error("save failed")));
+	}));
 }
 _resume("__tests__/template.marko_0/save", $save);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
