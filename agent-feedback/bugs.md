@@ -144,6 +144,106 @@ bridged head chunk.
 
 The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` (`:535` for `_dynamic_tag`, `:647` for `_dynamic_tag_content`, plus the DOM `_attr_content`). `RendererProp.Id` is the template/section resume id, identical for every _instance_ of one content section — instances differ only by their `RendererProp.Owner` scope. So switching a dynamic tag between two instances of the same content — two `<attrs.content>` from two instances of one provider tag, or the list-detail `<${selected.content}/>` — is a silent no-op: no teardown or re-render, and closures stay subscribed to the old owner's scope. A control with two _distinct_ tag files behaves correctly, pinning the defect to the id-only comparison. Fix: compare `(id, owner)` — content renderer objects are recreated per render so identity alone over-fires, while the owner scope is stable per instance; the resume handshake must serialize a scope-registered renderer as its registered reference so the first post-resume update stays instance-aware.
 
+## An empty-bodied `<html-comment>` resumes as a text node instead of the comment
+
+`packages/runtime-tags/src/dom/resume.ts:402` | 2026-07-14 | impact:med | effort:med
+
+For an `<html-comment>${c}</html-comment>` whose body serializes empty, SSR writes `<!---->` immediately before the resume marker. The node-claim heuristic — `prev && (prev.nodeType < 8 /* COMMENT_NODE */ || (prev as Comment).data) ? prev : insertBefore(new Text())` — exists so an empty `<!>` separator is _not_ claimed (a fresh Text node is created instead), but it cannot distinguish an intentional empty comment: `prev` is a comment (`nodeType === 8`, so `< 8` is false) with empty `data` (falsy), so it builds a Text node as the binding rather than claiming the comment. After hydration, setting `c = "secret"` renders `secret` as visible text where a pure client render produces `<!--secret-->` — an SSR-resume vs CSR divergence. Fix: give the html-comment marker a dedicated resume symbol (e.g. `ResumeSymbol.NodeComment`) that claims the immediately-preceding sibling unconditionally, since the tag always writes its comment right before the marker.
+
+## Fragment-walked non-branch scopes get the fragment root as ClosestBranch, not their inner enclosing branch
+
+`packages/runtime-tags/src/dom/update-fragment.ts:198` | 2026-07-14 | impact:med | effort:med
+
+`applyFragment`/`createFragmentBranch`/`applyBoundaryBody` finish a walk with
+`for (const scope of touched) scope[ClosestBranch] ||= branch`, defaulting
+every walker-stamped non-branch scope to the fragment's ROOT branch. Document
+resume instead links a branch-owning scope to its true enclosing marker
+branch (the deferred-owner pass in `createVisitBranches`, dom/resume.ts) or
+applies a serialized `ClosestBranchId` fill -- but the update applier's
+patch-side `getScope` (dom/update.ts) never resolves `ClosestBranchId`, so a
+scope nested inside an INNER branch of a fragment (eg inside a keyed loop
+item or an `<if>` body within the capture) is left with
+`ClosestBranch = fragmentRoot`, skipping the inner branch. Consumers of the
+`ClosestBranch`/`ParentBranch` chain include destroy propagation and
+`getPossessionSiteKey` (dom/update-fragment.ts), whose loop-path segments
+come from walking that chain -- a hop/boundary/loop site nested under a
+fragment-created loop item could compute a possession path missing its loop
+segment, making the echo mismatch (safe but lossy: fragments ship for
+possessed sites) or collide. The marker-conformance test
+(`__tests__/marker-conformance.test.ts`) pins the divergence explicitly as a
+documented asymmetry; existing possession-in-fragment fixtures pass, so no
+current fixture nests a participating site under an inner fragment branch.
+A fix could adopt resume's deferred-owner linking into `walkFragment` (the
+KEEP IN SYNC comments currently declare it render-only) or resolve
+`ClosestBranchId` fills on patch scopes.
+
+## Sibling `run` repo: `pkg-toggle` round trip permanently moves toggle-only keys into `package.json`
+
+`../run/scripts/pkg-toggle.js:16` | 2026-07-15 | impact:med | effort:low
+
+(Recorded here because the `run` repo has no agent-feedback directory.) The
+toggle swaps each key of `package.toggle.json` with `package.json`
+(`[targetData[key], toggleData[key]] = [toggleData[key], targetData[key]]`).
+For a key that exists only in the toggle file (e.g. `typesVersions` in
+`packages/*/package.toggle.json`), the first toggle writes
+`toggleData[key] = undefined`, which `JSON.stringify` drops from the toggle
+file; the second toggle then never sees the key, so `package.json` keeps the
+publish-only field and the toggle file loses it — the round trip is not an
+identity. Observed after `marko-ecommerce`'s `scripts/setup.mjs` ran
+`node scripts/pkg-toggle` twice around `npm pack`: all eight
+`packages/{run,adapters/*}/package{,.toggle}.json` files were left dirty
+(`package.json` gained `typesVersions`). The `@ci:release` script does the
+same double toggle, so post-release checkouts carry the same drift and a
+subsequent toggle no longer switches those keys at all. Fix: use an explicit
+absent-key marker (or `Object.hasOwn` bookkeeping) so toggle-only keys are
+removed from the target on the way back instead of being dropped from the
+toggle file.
+
+## Runtime-valued dynamic tag renderers: only never-referenced (constructed/interop) renderers fall to the loud fallback
+
+`packages/runtime-tags/src/dom/update-merges.ts` (`_update_dynamic`) | 2026-07-15 | impact:low | effort:med
+
+The compile-time-referenced cases are closed. Eagerly imported candidates a
+dynamic tag name reaches (conditional/logical/assignment/`<const>` chains)
+link each `?persisted` entry from the parent's persisted entry
+(`dynamic-tag.ts` `getDynamicTagImports` +
+`persisted-update-dynamic-imported-child`), merge-less content sections
+register a shared noop (`program/update.ts`), and templates whose default
+escapes a module as a runtime value (attribute, spread, store, return,
+object/array member) now register an escape-site loader: `dynamic-tag.ts`
+`getEscapedTemplateImports` records the escapes at analyze,
+`program/update.ts` emits `_update_loader(templateId, () =>
+import("./child.marko?persisted"))` into the provider's persisted entry, and
+`_update_dynamic` fires the loader once for an unregistered same-renderer
+pair, parks, and drains when the entry registers
+(`persisted-update-dynamic-escaped-renderer`); a rejected loader import
+surfaces through the `patch(fail)` sink
+(`persisted-update-dynamic-escaped-loader-failure`). Escape detection prefers
+over-registration (a false positive costs one idle loader registration, never
+a load). What remains, by design: a renderer never referenced as a
+compile-time template value in any compiled `.marko` module — constructed at
+runtime, interop-wrapped, or aggregated by a plain JS module the translator
+never compiles (e.g. a lookup object in a `.js` registry re-exporting
+templates) — has no escape site to register, so a renderer id with no
+registration and no live match still fails loudly through `patch(fail)`
+(`persisted-update-dynamic-unknown-renderer`) — defined behavior, recorded in
+designs/persisted-pages-architecture.md.
+
+## Document-side lazy load entries float rejections and leave the ready channel silent
+
+`packages/runtime-tags/src/translator/visitors/program/index.ts:222` | 2026-07-16 | impact:low | effort:low
+
+The generated `.load.mjs` entry (both persisted and not) is
+`load().then(() => ready(id))` / `Promise.all([...]).then(() => readyPersisted(id))`
+with no rejection handler, so a chunk that fails to load from the initial
+document (deploy skew) surfaces only as an unhandled promise rejection and the
+module's ready id never resolves. The lazy tag's own render path recovers
+(`_load_setup`/`_load_template` route their load() failures to `renderCatch`),
+and persisted navigations now re-trigger the load through `_load_ready`, whose
+failure reaches the transport sink — but the document-side loader itself stays
+noisy and inert. Consider a `.catch` that at least reports through a defined
+channel (or retries), mirroring `_load_ready`'s handling.
+
 ## Initialize tag variables for dynamic native tags
 
 `packages/runtime-tags/src/html/dynamic-tag.ts:146` | 2026-07-15 | impact:med | effort:high
@@ -157,3 +257,55 @@ CSR is a runtime-only fix: push `() => childScope[AccessorProp.StartNode]` throu
 `packages/runtime-tags/src/html/assets.ts:135` | 2026-07-15 | impact:med | effort:med
 
 `addAsset` deduplicates solely by asset id and silently ignores the triggers on every later registration. The existing `lazy-tag-shared-parent` shape proves separate parent modules can wrap the same child asset independently; if one imports it with `visible` and another with `idle`/an event, whichever parent renders first becomes the only trigger and the other condition can never load the shared module. Detect incompatible registrations before the first flush and combine their triggers, or emit a compile/debug error as the existing TODO suggests; do not let render order choose behavior.
+
+## Boundary-body effects targeting the adopted try branch are dropped
+
+`packages/runtime-tags/src/dom/update-fragment.ts:126` | 2026-07-17 | impact:med | effort:med
+
+`applyBoundaryBody`'s `Adopt` maps the body's patch branch id onto the live
+`<try>` branch in the patch scope space, but never records the pairing, so a
+body frame's effect entry that names that id — a handler on content sitting
+directly in the try body rather than inside a nested branch, e.g.
+`<try><@placeholder/>…<button onClick…/>…<await|v|=p>${v}</await></try>` —
+fails `pairs.get(patchScopes[id])` in `createUpdate` (dom/update.ts) and is
+silently dropped: the button renders but its click does nothing. Verified via
+a temporary persisted fixture; the wire carried `[[2,0,"Mnavigate","<button>…",
+[2,3]],"template.marko_1 2"]` and the effect for scope 2 never attached.
+Pairing alone is not enough: the effect gate also requires
+`live[Gen] >= applyGen`, and the adopted branch keeps its resume-time
+generation. `applyBoundaryBody` (or `Adopt`) should both pair the adopted
+branch and mark it effect-eligible for that apply, since all of its bound
+nodes are new.
+
+## Refresh unaffected checkedValue members' controlled value on the first patch
+
+`packages/runtime-tags/src/dom/update-merges.ts` (`_update_input_checkedValue`) | 2026-07-17 | impact:low | effort:low
+
+The gated checkedValue assert refreshes `ControlledValue:<accessor>` only when
+it asserts. Its first-ever patch falls back to comparing this member's
+`defaultChecked` against the captured list, so a navigation whose changed list
+does not change THIS member's checked state (e.g. `["a","b"]` -> `["a","c"]`
+seen from the member with value `"a"`) skips the assert and leaves that
+member's resumed `ControlledValue` stale until some later capture differs.
+A change handler firing on that member before then computes `updateList`
+against the pre-navigation list ( `["b"]` instead of `["c"]` above). Later
+navigations are safe: the skip still records the applied capture
+(`PatchApplied:`/`S` key), so subsequent comparisons use it. Fix idea: on the
+first patch, also treat a missing record with a present `ControlledValue`
+whose normalized form differs from the capture as changed.
+
+## Ecommerce demo "wrong product id after navigation" is not reproducible in the applier
+
+`packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit` | 2026-07-17 | impact:med | effort:med
+
+The reported demo failure (submit after an item A -> item B same-route
+navigation sees A's id) does not reproduce against the update applier: the
+fixture pairs a bound (`value:Number:=`) quantity `<let>`, a request-derived
+hidden `itemId`, an optimistic mirror, and an `onSubmit` handler recording the
+scope values it read, both at the route root and across a child-tag boundary
+(`tags/order-form.marko`). Under both the pre-Option-C and gated appliers the
+hidden input's value attribute, the handler-read scope value, and the mirror
+all see B after the patch. The defect is therefore most likely in the app or
+in @marko/run's form-submission negotiation (e.g. what request/body the shell
+re-sends or how a POST response patch is applied), which lives outside this
+repo; investigate there with this fixture as the known-good applier baseline.

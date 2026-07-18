@@ -219,3 +219,55 @@ event regardless of interop, and `compat.onFlush` permanently patches
 Marko 6 chunk flush with a `writersByGlobal.get` miss once the class-compat
 module is loaded. Each is minor individually; worth gating the resolver loop on a
 "has bridged events" flag and scoping the patches.
+
+## Possession echo disagreement ships fragments where fills would do
+
+`packages/runtime-tags/src/dom/update-fragment.ts:30` | 2026-07-15 | impact:low | effort:med
+
+In the ecommerce validation, back-navigating over the `/search` keyed results
+list produced patches whose matched items arrived as fragments (now swapped
+in place, previously the fallback) in roughly a fifth of runs, meaning the
+server's `possessed[siteKey]` compare missed keys the page held even with the
+prior navigation fully settled. Correctness is unaffected -- fragments are
+authoritative -- but each miss trades sparse fills for fragment HTML bytes
+and replaces in-branch client state. Instrument `_have`'s emitted site keys
+against the server-side misses on that page shape to find which keys drop;
+suspect path-dependence in nested site keys for branches created by earlier
+patch frames versus the initial document render.
+
+## Per-frame persisted re-dispatch grows with the accumulated patch table
+
+`packages/runtime-tags/src/dom/update.ts:186` | 2026-07-16 | impact:low | effort:high
+
+Each streamed frame re-runs the compiled root merge over every patch scope
+accumulated by earlier frames, so a navigation with F boundary frames does
+O(F² × scopes-per-frame) dispatch work. Measured (multi-`<await>` route,
+`scripts/measure-persisted-scaling.ts` protocol): flat ~0.2-0.3 ms/frame at
+10-25 frames; at 400 awaits late frames cost ~0.7-0.9 ms vs ~0.4-0.5 ms
+early, ≈1.5 µs per accumulated frame's scopes — real but harmless at
+realistic frame counts. A dirty-set (only scopes touched this frame drive
+dispatch) is blocked on provability: compiled dispatch is top-down closures
+with no per-scope entry points, and patch scopes carry owner links only when
+serialization needed them, so skipping an "untouched" subtree can't be shown
+to preserve structural dispatch (fragment stashes, pending boundary bodies,
+post-`run()` branch pairing). Needs compiler-emitted per-section merge
+registrations or guaranteed parent links on every fill (wire-format changes).
+Numbers in designs/persisted-pages-scaling.md, "Frames dimension".
+
+## Keyed persisted reconcile moves the majority run on rotations
+
+`packages/runtime-tags/src/dom/control-flow.ts:1084` | 2026-07-16 | impact:low | effort:med
+
+`_for_keyed`'s placement loop is greedy: the cursor holds at the first
+surviving old branch, so a rotation `[k1667..k4999, k0..k1666]` detaches and
+re-inserts the 3,333-branch majority run while an LIS pass (as in the generic
+`loop()`) would move only the 1,667 minority. Inserts are already batched
+(one `DocumentFragment` per run), so the cost is per-moved-node detaches —
+O(1) each in real browsers, but O(preceding siblings) in jsdom's
+`SymbolTree.index` live-range bookkeeping, which is why the scaling
+benchmark's 5k apply still reads ~2.3 s (~72% inside jsdom sibling walks)
+despite the runtime issuing the minimal one DOM call per moved node. LIS
+would roughly halve moves on rotations at the price of extra bundle bytes on
+a persisted-only path; alternatively the benchmark could time apply in a real
+DOM engine to stop overstating this stage. See
+designs/persisted-pages-scaling.md, "Superlinear pipeline stages".
