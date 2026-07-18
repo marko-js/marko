@@ -1,5 +1,5 @@
-// size: 3904 (min) 1732 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 3908 (min) 1728 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-9KTZHbya.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -70,15 +70,7 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
-  };
+  catchEnabled;
 function _on(element, type, handler) {
   (element["$" + type] === void 0 && delegate(type, handleDelegated),
     (element["$" + type] = handler || null));
@@ -319,6 +311,16 @@ function $signalReset(scope, id) {
 function abort(ctrl) {
   ctrl.abort();
 }
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return (
+    (renderer.mount = mount),
+    (renderer._ = renderer),
+    _resume(id, renderer)
+  );
+};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,

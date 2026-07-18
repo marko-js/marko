@@ -1,8 +1,6 @@
-// size: 26115 (min) 9605 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
-let empty = [],
-  rest = Symbol(),
-  toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
+// size: 26670 (min) 9712 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-9KTZHbya.mjs
+let toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
     let str = "",
       sep = "",
       part;
@@ -194,6 +192,8 @@ let empty = [],
       forUntil(until, from, step, (v) => cb(by(v), [v])),
   ),
   rendering,
+  updating,
+  refreshEffects = /* @__PURE__ */ new WeakSet(),
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -203,134 +203,7 @@ let empty = [],
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  classIdToBranch = /* @__PURE__ */ new Map(),
-  classEventResolver,
-  scopesByRender = /* @__PURE__ */ new WeakMap(),
-  getRenderScopes = ($global) => {
-    let render = self[$global.runtimeId]?.[$global.renderId],
-      scopes = render && scopesByRender.get(render);
-    return (
-      render && !scopes && scopesByRender.set(render, (scopes = {})),
-      scopes
-    );
-  },
-  compat = {
-    patchDynamicTag,
-    queueEffect,
-    init(warp10Noop) {
-      (_resume("$C_s", (scope) => {
-        if (
-          ((getRenderScopes(scope.$)[scope.L] = scope),
-          scope.m5c && classIdToBranch.set(scope.m5c, scope),
-          classEventResolver)
-        )
-          for (let key in scope) {
-            let resolved = classEventResolver(scope[key], scope);
-            resolved !== scope[key] && (scope[key] = resolved);
-          }
-      }),
-        _resume("$C_b", warp10Noop));
-    },
-    setClassEventResolver(fn) {
-      classEventResolver = fn;
-    },
-    getScope($global, scopeId) {
-      return getRenderScopes($global)?.[scopeId];
-    },
-    setRendererId(renderer, id) {
-      renderer.a = id;
-    },
-    isRenderer(renderer) {
-      return renderer.b;
-    },
-    getStartNode(branch) {
-      return branch.S;
-    },
-    getEndNode(branch) {
-      return branch.K;
-    },
-    setScopeNodes(branch, startNode, endNode) {
-      ((branch.S = startNode), (branch.K = endNode));
-    },
-    runComponentEffects() {
-      this.effects && runEffects(this.effects);
-    },
-    runComponentDestroy() {
-      this.scope && destroyBranch(this.scope);
-    },
-    resolveRegistered(value, $global) {
-      return Array.isArray(value) && typeof value[0] == "string"
-        ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
-        : value;
-    },
-    createRenderer(params, clone) {
-      let renderer = _content("", 0, 0, 0, params)();
-      return (
-        (renderer.b = (branch) => {
-          let cloned = clone();
-          ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
-        }),
-        renderer
-      );
-    },
-    render(out, component, renderer, args) {
-      let branch = component.scope,
-        created = 0;
-      if (
-        (!branch &&
-          (branch = classIdToBranch.get(component.id)) &&
-          ((component.scope = branch), classIdToBranch.delete(component.id)),
-        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
-      ) {
-        let input = args[0],
-          normalizedInput = (args[0] = {});
-        for (let key in input)
-          normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-      }
-      if (
-        ((component.effects = prepareEffects(() => {
-          ((branch ||=
-            ((created = 1),
-            (component.scope = createAndSetupBranch(
-              out.global,
-              renderer,
-              renderer.e,
-              document.body,
-            )))),
-            renderer.d?.(branch, renderer._ ? args[0] : args));
-        })),
-        created)
-      )
-        return toInsertNode(branch.S, branch.K);
-    },
-  },
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
-  };
-function attrTag(attrs) {
-  return (
-    (attrs[Symbol.iterator] = attrTagIterator),
-    (attrs[rest] = empty),
-    attrs
-  );
-}
-function attrTags(first, attrs) {
-  return first
-    ? (first[rest] === empty
-        ? (first[rest] = [attrs])
-        : first[rest].push(attrs),
-      first)
-    : attrTag(attrs);
-}
-function* attrTagIterator() {
-  (yield this, yield* this[rest]);
-}
+  catchEnabled;
 function _call(fn, v) {
   return (fn(v), v);
 }
@@ -528,6 +401,18 @@ function _let(id, fn) {
     value
   );
 }
+/** Persisted `_let`: a fresh scope may already contain its server seed. */
+function _let_persisted(id, fn) {
+  let valueAccessor = decodeAccessor(id);
+  return (scope, value) => (
+    rendering
+      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn) &&
+        (schedule(), queueRender(scope, fn, id)),
+    value
+  );
+}
 function _let_change(id, fn) {
   let valueAccessor = decodeAccessor(id),
     valueChangeAccessor = decodeAccessor(id + 1),
@@ -544,7 +429,34 @@ function _let_change(id, fn) {
     value
   );
 }
+/** Persisted `_let_change`, using the seed-preserving let signal. */
+function _let_change_persisted(id, fn) {
+  let valueAccessor = decodeAccessor(id),
+    valueChangeAccessor = decodeAccessor(id + 1),
+    base = _let_persisted(id, fn);
+  return (scope, value, valueChange) => (
+    rendering
+      ? (scope[valueChangeAccessor] = valueChange) &&
+        (scope[valueAccessor] !== value || !(valueAccessor in scope))
+        ? ((scope[valueAccessor] = value), fn?.(scope))
+        : base(scope, value)
+      : scope[valueChangeAccessor]
+        ? scope[valueChangeAccessor](value)
+        : base(scope, value),
+    value
+  );
+}
 function _const(valueAccessor, fn) {
+  return (
+    (valueAccessor = decodeAccessor(valueAccessor)),
+    (scope, value) => {
+      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn?.(scope));
+    }
+  );
+}
+/** Persisted `_const`: equal patch values still run fresh-scope setup. */
+function _const_persisted(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
@@ -851,9 +763,20 @@ function createCloneableHTML(html, ns) {
 function enableBranches() {
   branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
 }
+/** Persisted entries can enable branches after the initial resume walk. */
+function enableBranchesPersisted() {
+  if (!branchesEnabled) {
+    enableBranches();
+    for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  }
+}
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+}
+/** Persisted lazy entries additionally replay updates parked while loading. */
+function readyPersisted(readyId) {
+  ready(readyId);
 }
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
@@ -2291,6 +2214,21 @@ function bySecondArg(_item, index) {
 function byFirstArg(name) {
   return name;
 }
+/** Skips setup effects already carried by freshly created patch scopes. */
+function _script_update(id, fn) {
+  return (_resume(id, fn), _script_shared(fn));
+}
+/** Marks effects that refresh matched scopes from request-derived globals. */
+function _script_refresh(id, fn) {
+  return (refreshEffects.add(fn), _script_update(id, fn));
+}
+/** Registered effect fns the applier re-queues for matched scopes too. */
+/** Register-entry wrapper for effects already registered by the main module. */
+function _script_shared(fn) {
+  return (scope) => {
+    queueEffect(scope, fn);
+  };
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
@@ -2430,6 +2368,137 @@ function $signal(scope, id) {
 }
 function abort(ctrl) {
   ctrl.abort();
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let empty = [],
+  rest = Symbol(),
+  classIdToBranch = /* @__PURE__ */ new Map(),
+  classEventResolver,
+  scopesByRender = /* @__PURE__ */ new WeakMap(),
+  getRenderScopes = ($global) => {
+    let render = self[$global.runtimeId]?.[$global.renderId],
+      scopes = render && scopesByRender.get(render);
+    return (
+      render && !scopes && scopesByRender.set(render, (scopes = {})),
+      scopes
+    );
+  },
+  compat = {
+    patchDynamicTag,
+    queueEffect,
+    init(warp10Noop) {
+      (_resume("$C_s", (scope) => {
+        if (
+          ((getRenderScopes(scope.$)[scope.L] = scope),
+          scope.m5c && classIdToBranch.set(scope.m5c, scope),
+          classEventResolver)
+        )
+          for (let key in scope) {
+            let resolved = classEventResolver(scope[key], scope);
+            resolved !== scope[key] && (scope[key] = resolved);
+          }
+      }),
+        _resume("$C_b", warp10Noop));
+    },
+    setClassEventResolver(fn) {
+      classEventResolver = fn;
+    },
+    getScope($global, scopeId) {
+      return getRenderScopes($global)?.[scopeId];
+    },
+    setRendererId(renderer, id) {
+      renderer.a = id;
+    },
+    isRenderer(renderer) {
+      return renderer.b;
+    },
+    getStartNode(branch) {
+      return branch.S;
+    },
+    getEndNode(branch) {
+      return branch.K;
+    },
+    setScopeNodes(branch, startNode, endNode) {
+      ((branch.S = startNode), (branch.K = endNode));
+    },
+    runComponentEffects() {
+      this.effects && runEffects(this.effects);
+    },
+    runComponentDestroy() {
+      this.scope && destroyBranch(this.scope);
+    },
+    resolveRegistered(value, $global) {
+      return Array.isArray(value) && typeof value[0] == "string"
+        ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
+        : value;
+    },
+    createRenderer(params, clone) {
+      let renderer = _content("", 0, 0, 0, params)();
+      return (
+        (renderer.b = (branch) => {
+          let cloned = clone();
+          ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
+        }),
+        renderer
+      );
+    },
+    render(out, component, renderer, args) {
+      let branch = component.scope,
+        created = 0;
+      if (
+        (!branch &&
+          (branch = classIdToBranch.get(component.id)) &&
+          ((component.scope = branch), classIdToBranch.delete(component.id)),
+        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
+      ) {
+        let input = args[0],
+          normalizedInput = (args[0] = {});
+        for (let key in input)
+          normalizedInput[key === "renderBody" ? "content" : key] = input[key];
+      }
+      if (
+        ((component.effects = prepareEffects(() => {
+          ((branch ||=
+            ((created = 1),
+            (component.scope = createAndSetupBranch(
+              out.global,
+              renderer,
+              renderer.e,
+              document.body,
+            )))),
+            renderer.d?.(branch, renderer._ ? args[0] : args));
+        })),
+        created)
+      )
+        return toInsertNode(branch.S, branch.K);
+    },
+  },
+  _template = (id, template, walks, setup, inputSignal) => {
+    let renderer = _content(id, template, walks, setup, inputSignal)();
+    return (
+      (renderer.mount = mount),
+      (renderer._ = renderer),
+      _resume(id, renderer)
+    );
+  };
+function attrTag(attrs) {
+  return (
+    (attrs[Symbol.iterator] = attrTagIterator),
+    (attrs[rest] = empty),
+    attrs
+  );
+}
+function attrTags(first, attrs) {
+  return first
+    ? (first[rest] === empty
+        ? (first[rest] = [attrs])
+        : first[rest].push(attrs),
+      first)
+    : attrTag(attrs);
+}
+function* attrTagIterator() {
+  (yield this, yield* this[rest]);
 }
 function mount(input = {}, reference, position) {
   let branch,
