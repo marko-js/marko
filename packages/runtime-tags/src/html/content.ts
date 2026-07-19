@@ -17,10 +17,34 @@ export function _unescaped(val: unknown) {
   return val ? val + "" : val === 0 ? "0" : "";
 }
 
-const unsafeXMLReg = /[<&]/g;
-const replaceUnsafeXML = (c: string) => (c === "&" ? "&amp;" : "&lt;");
-const escapeXMLStr = (str: string) =>
-  unsafeXMLReg.test(str) ? str.replace(unsafeXMLReg, replaceUnsafeXML) : str;
+// Locates the first `<`/`&` with SIMD-accelerated `indexOf` (much faster than a
+// regex scan on the common no-escape path) then rewrites in a single pass,
+// slicing past the untouched prefix instead of re-scanning it.
+function escapeXMLStr(str: string) {
+  let start = str.indexOf("&");
+  if (start === -1) {
+    start = str.indexOf("<");
+    if (start === -1) return str;
+  } else {
+    const lt = str.indexOf("<");
+    if (lt !== -1 && lt < start) start = lt;
+  }
+
+  let result = str.slice(0, start);
+  let last = start;
+  for (let i = start; i < str.length; i++) {
+    const code = str.charCodeAt(i);
+    if (code === 38) {
+      result += str.slice(last, i) + "&amp;";
+      last = i + 1;
+    } else if (code === 60) {
+      result += str.slice(last, i) + "&lt;";
+      last = i + 1;
+    }
+  }
+
+  return result + str.slice(last);
+}
 export function _escape(val: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(val);
@@ -34,7 +58,9 @@ export function _escape(val: unknown) {
 // closes the element and the rest of the page is swallowed into it.
 const unsafeScriptReg = /<(\/?script|!--)/gi;
 const escapeScriptStr = (str: string) =>
-  unsafeScriptReg.test(str) ? str.replace(unsafeScriptReg, "\\x3C$1") : str;
+  str.indexOf("<") !== -1 && unsafeScriptReg.test(str)
+    ? str.replace(unsafeScriptReg, "\\x3C$1")
+    : str;
 export function _escape_script(val: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(val);
@@ -44,7 +70,9 @@ export function _escape_script(val: unknown) {
 
 const unsafeStyleReg = /<\/style/gi;
 const escapeStyleStr = (str: string) =>
-  unsafeStyleReg.test(str) ? str.replace(unsafeStyleReg, "\\3C/style") : str;
+  str.indexOf("<") !== -1 && unsafeStyleReg.test(str)
+    ? str.replace(unsafeStyleReg, "\\3C/style")
+    : str;
 
 export function _escape_style(val: unknown) {
   if (MARKO_DEBUG) {
@@ -60,9 +88,21 @@ export function _escape_style_value(val: unknown) {
   return val || val === 0 ? escapeStyleValue(val + "") : "";
 }
 
-const unsafeCommentReg = />/g;
-const escapeCommentStr = (str: string) =>
-  unsafeCommentReg.test(str) ? str.replace(unsafeCommentReg, "&gt;") : str;
+function escapeCommentStr(str: string) {
+  const start = str.indexOf(">");
+  if (start === -1) return str;
+
+  let result = str.slice(0, start);
+  let last = start;
+  for (let i = start; i < str.length; i++) {
+    if (str.charCodeAt(i) === 62) {
+      result += str.slice(last, i) + "&gt;";
+      last = i + 1;
+    }
+  }
+
+  return result + str.slice(last);
+}
 
 export function _escape_comment(val: unknown) {
   if (MARKO_DEBUG) {

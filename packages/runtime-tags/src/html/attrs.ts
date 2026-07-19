@@ -455,47 +455,98 @@ function nonVoidAttr(name: string, value: unknown) {
   return " " + name + attrAssignment(value + "");
 }
 
-// Every character reference starts `&#` or `&` + an ASCII letter — and
-// parsers also decode semicolon-less numeric and legacy named references —
-// so any such `&` must be escaped to round-trip (a bare `&` never decodes).
-const singleQuoteAttrReplacements = /'|&(?=[#a-zA-Z])/g;
-const doubleQuoteAttrReplacements = /"|&(?=[#a-zA-Z])/g;
-const needsQuotedAttr = /["'>\s]|&[#a-zA-Z]|\/$/g;
 export function attrAssignment(value: string) {
-  return value
-    ? needsQuotedAttr.test(value)
-      ? value[needsQuotedAttr.lastIndex - 1] ===
-        ((needsQuotedAttr.lastIndex = 0), '"')
-        ? "='" + escapeSingleQuotedAttrValue(value) + "'"
-        : '="' + escapeDoubleQuotedAttrValue(value) + '"'
-      : "=" + value
-    : "";
+  if (!value) return "";
+  // 0: no quoting needed, 1: double-quote wrap, 2: single-quote wrap (the first
+  // char forcing quotes is a `"`, so wrapping in `'` avoids escaping it).
+  const quoting = attrValueQuoting(value);
+  return quoting
+    ? quoting === 2
+      ? "='" + escapeSingleQuotedAttrValue(value) + "'"
+      : '="' + escapeDoubleQuotedAttrValue(value) + '"'
+    : "=" + value;
+}
+
+// Equivalent to scanning `/["'>\s]|&[#a-zA-Z]|\/$/` for the first quote-forcing
+// char, but a `charCodeAt` scan beats the regex on the common no-quote path.
+function attrValueQuoting(value: string) {
+  const len = value.length;
+  for (let i = 0; i < len; i++) {
+    const code = value.charCodeAt(i);
+    if (code === 34) return 2;
+    if (
+      code === 39 ||
+      code === 62 ||
+      isAsciiOrUnicodeSpace(code) ||
+      (code === 38 && isCharRefStart(value.charCodeAt(i + 1)))
+    ) {
+      return 1;
+    }
+  }
+  return value.charCodeAt(len - 1) === 47 ? 1 : 0;
+}
+
+// The exact set matched by regex `\s`, verified against every code point.
+function isAsciiOrUnicodeSpace(code: number) {
+  return (
+    code === 32 ||
+    (code >= 9 && code <= 13) ||
+    (code >= 0x2000
+      ? code <= 0x200a ||
+        code === 0x2028 ||
+        code === 0x2029 ||
+        code === 0x202f ||
+        code === 0x205f ||
+        code === 0x3000 ||
+        code === 0xfeff
+      : code === 0xa0 || code === 0x1680)
+  );
+}
+
+// Every character reference starts `&#` or `&` + an ASCII letter — and parsers
+// also decode semicolon-less numeric and legacy named references — so any such
+// `&` must be escaped to round-trip (a bare `&` never decodes).
+function isCharRefStart(code: number) {
+  return (
+    code === 35 || (code >= 65 && code <= 90) || (code >= 97 && code <= 122)
+  );
 }
 
 function escapeSingleQuotedAttrValue(value: string) {
-  return singleQuoteAttrReplacements.test(value)
-    ? value.replace(
-        singleQuoteAttrReplacements,
-        replaceUnsafeSingleQuoteAttrChar,
-      )
-    : value;
-}
-
-function replaceUnsafeSingleQuoteAttrChar(match: string) {
-  return match === "'" ? "&#39;" : "&amp;";
+  return escapeQuotedAttrValue(value, "'", 39, "&#39;");
 }
 
 function escapeDoubleQuotedAttrValue(value: string) {
-  return doubleQuoteAttrReplacements.test(value)
-    ? value.replace(
-        doubleQuoteAttrReplacements,
-        replaceUnsafeDoubleQuoteAttrChar,
-      )
-    : value;
+  return escapeQuotedAttrValue(value, '"', 34, "&#34;");
 }
 
-function replaceUnsafeDoubleQuoteAttrChar(match: string) {
-  return match === '"' ? "&#34;" : "&amp;";
+// Locates the first quote/`&` with SIMD-accelerated `indexOf` (much faster than
+// a regex on the common already-safe path) then rewrites in a single pass.
+function escapeQuotedAttrValue(
+  value: string,
+  quoteChar: string,
+  quoteCode: number,
+  quoteEnt: string,
+) {
+  const quote = value.indexOf(quoteChar);
+  const amp = value.indexOf("&");
+  if (quote === -1 && amp === -1) return value;
+  const start = quote === -1 ? amp : amp === -1 || quote < amp ? quote : amp;
+
+  let result = value.slice(0, start);
+  let last = start;
+  for (let i = start; i < value.length; i++) {
+    const code = value.charCodeAt(i);
+    if (code === quoteCode) {
+      result += value.slice(last, i) + quoteEnt;
+      last = i + 1;
+    } else if (code === 38 && isCharRefStart(value.charCodeAt(i + 1))) {
+      result += value.slice(last, i) + "&amp;";
+      last = i + 1;
+    }
+  }
+
+  return result + value.slice(last);
 }
 
 function normalizedValueMatches(a: unknown, b: unknown) {

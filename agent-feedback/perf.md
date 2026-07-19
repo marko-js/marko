@@ -225,3 +225,32 @@ module is loaded. Each is minor individually; worth gating the resolver loop on 
 `packages/runtime-tags/cheatsheet.md:5` | 2026-07-18 | impact:med | effort:med
 
 A grid rendered as one small custom tag per cell (a 16x16 minesweeper board, parent `<let>` holding a 2D array of `{mine,revealed,flagged,adjacent}` cell objects, one `<mine-cell>` per cell) produces a production SSR page of 69.6kB where the `M._.r` resume payload is 44kB: the 256 serialized cell objects account for ~11kB, and the remaining ~130 bytes per tag instance is scope/binding bookkeeping — per-instance scope entries plus closure-subscriber sets serialized as `af:new Set([_(9),_(11),...])` with one `_(id)` per instance per closed-over parent `<let>` (an 8x8 board measures 18.5kB/11kB at the same ratio). The initial grid is also a pure function of input (every cell identical) yet fully serialized, since `<let>` has no way to declare a recomputable/lazy initial value. Some of this may be inherent to resumability, but neither `cheatsheet.md` nor any user-facing doc mentions resume-payload size as a design consideration or the mitigations (flat primitive state, rendering repeated leaf cells as plain elements in the parent instead of one custom tag each, deriving recomputable state with `<const>`); a short guidance section with this shape of numbers would steer grid/list-heavy apps away from an accidental 44kB-per-page tax, and the per-instance subscriber-set encoding may itself be compressible.
+
+## Skip HTML escaping for compile-time-known non-string SSR expressions
+
+`packages/runtime-tags/src/translator/core/` (text/attr codegen) | 2026-07-19 | impact:med | effort:med
+
+Optimized-build SSR emits `_escape(expr)` (and quoted-attr serialization) for
+every dynamic value even when the compiler can prove the value is a number.
+E.g. a `<td>${row.index}</td>` with `row.index` a number compiles to
+`_escape(row.index)`, which does `val + ""` then an `indexOf("&")`/`indexOf("<")`
+scan that can never match. After the escaper rewrite (`html/content.ts`), text
+escaping is still ~18% of a 200-row data-table render and a chunk of that is
+provably-safe numeric values. When the analyzer already knows an expression's
+type is `number`/`bigint` (e.g. `input`/state typings, numeric literals, `%`,
+arithmetic), text codegen could emit `_to_text`/direct coercion and attr codegen
+could skip the quote scan, avoiding both the call and the scan. Needs the
+translator to thread a "known primitive, escape-unnecessary" bit from analysis
+into text/attr translation.
+
+## `_attr_class`/`_attr_style` object stringification is a hot SSR path
+
+`packages/runtime-tags/src/common/helpers.ts` (`toDelimitedString`, `stringifyClassObject`) | 2026-07-19 | impact:low | effort:med
+
+In a 200-row data-table SSR render, `_attr_class` is ~10% of self-time: each
+`class={ selected, odd }` object goes through `toDelimitedString` +
+`stringifyClassObject`, which builds the delimited string with per-key
+concatenation and a trailing-space trim. For the common small-object case this
+allocates more than necessary. Worth microbenchmarking a specialized fast path
+for plain string / small-object class and style values against the current
+`toDelimitedString` generality.
