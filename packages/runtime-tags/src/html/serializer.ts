@@ -814,7 +814,7 @@ function writeObject(
   const scopeId = (val as ScopeInternals)[K_SCOPE_ID];
   if (scopeId !== undefined) {
     trackScope(state, val, scopeId);
-    state.buf.push("_(" + scopeId + ")");
+    state.buf.push(scopeRefString(scopeId));
     return true;
   }
 
@@ -1557,19 +1557,22 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
   let sep = "";
   for (const key in val) {
     if (hasOwnProperty.call(val, key)) {
+      const value = (val as Record<PropertyKey, unknown>)[key];
       const escapedKey = toObjectKey(key);
-      state.buf.push(sep + escapedKey + ":");
-      if (
-        writeProp(
-          state,
-          (val as Record<PropertyKey, unknown>)[key],
-          ref,
-          escapedKey,
-        )
-      ) {
+      // Numbers are the most common scope prop and always serialize to a single
+      // self-contained chunk (no dedup, no back-patch), so their key and value
+      // go out in one push, skipping the generic `writeProp` dispatch and a
+      // second push.
+      if (typeof value === "number") {
+        state.buf.push(sep + escapedKey + ":" + value);
         sep = ",";
       } else {
-        state.buf.pop();
+        state.buf.push(sep + escapedKey + ":");
+        if (writeProp(state, value, ref, escapedKey)) {
+          sep = ",";
+        } else {
+          state.buf.pop();
+        }
       }
     }
   }
@@ -1807,8 +1810,11 @@ export function toAccess(accessor: string) {
       : "." + accessor;
 }
 
-// Escapes script-closing characters, NUL, and unpaired UTF-16 surrogates.
-const unsafeQuoteReg = /["\\<\n\r\u2028\u2029\0\ud800-\udfff]/u;
+// Escapes script-closing characters, NUL, and unpaired UTF-16 surrogates. The
+// detection regex is intentionally not `/u`: matching any surrogate code unit
+// (not only unpaired ones) merely over-selects into the escape scan below,
+// which re-checks pairs and leaves valid ones raw, and the non-`u` test is faster.
+const unsafeQuoteReg = /["\\<\n\r\u2028\u2029\0\ud800-\udfff]/;
 export function quote(str: string, startPos: number): string {
   if (!unsafeQuoteReg.test(str)) return '"' + str + '"';
 
@@ -1863,10 +1869,22 @@ export function quote(str: string, startPos: number): string {
   return '"' + (lastPos === startPos ? str : result + str.slice(lastPos)) + '"';
 }
 
+// Scope references (`_(id)`) are the most repeated non-primitive chunk; their
+// ids are small render-local integers reused across every render, so memoizing
+// the rendered string avoids a number-to-string and two concats per emission.
+const SCOPE_REF_CACHE: string[] = [];
+function scopeRefString(id: number): string {
+  const cached = SCOPE_REF_CACHE[id];
+  if (cached !== undefined) return cached;
+  const str = "_(" + id + ")";
+  if (id >= 0 && id < 0x10000) SCOPE_REF_CACHE[id] = str;
+  return str;
+}
+
 function ensureId(state: State, ref: Reference) {
   if (ref.scopeId !== undefined) {
     trackChannel(state, ref);
-    return "_(" + ref.scopeId + ")";
+    return scopeRefString(ref.scopeId);
   }
 
   if (ref.id) {
