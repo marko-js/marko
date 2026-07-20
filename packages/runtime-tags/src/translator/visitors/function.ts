@@ -118,9 +118,13 @@ function getStaticDeclRefs(
   fnExtra: RegisteredFnExtra,
   path: t.NodePath<t.Node>,
   refs = new Set<t.NodeExtra>(),
+  seen = new Set<t.Node>(),
 ): Set<t.NodeExtra> | true {
   const decl = getDeclarationRoot(path);
-  if (decl) {
+  // A self- or mutually-referential static/export declaration resolves back to
+  // a declaration already being walked; skip it so the recursion terminates.
+  if (decl && !seen.has(decl.node)) {
+    seen.add(decl.node);
     const ids = decl.getOuterBindingIdentifiers();
     if (ids) {
       for (const name in ids) {
@@ -133,7 +137,7 @@ function getStaticDeclRefs(
           const markoRoot = getMarkoRoot(exprRoot);
           if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
           if (isStaticRoot(markoRoot)) {
-            if (getStaticDeclRefs(fnExtra, ref, refs) === true) {
+            if (getStaticDeclRefs(fnExtra, ref, refs, seen) === true) {
               return true;
             }
           } else if (shouldAlwaysRegister(markoRoot)) {
