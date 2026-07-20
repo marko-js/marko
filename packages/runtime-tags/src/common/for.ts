@@ -1,3 +1,4 @@
+import { assertValidList, assertValidRangeBound } from "./errors";
 import type { Falsy } from "./types";
 
 export function forIn(
@@ -13,6 +14,7 @@ export function forOf(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
 ) {
+  if (MARKO_DEBUG) assertValidList(list);
   if (list) {
     let i = 0;
     for (const item of list) {
@@ -27,6 +29,7 @@ export function forTo(
   step: number | Falsy,
   cb: (index: number) => void,
 ) {
+  if (MARKO_DEBUG) assertValidRangeBound("to", to);
   const start = from || 0;
   const delta = step || 1;
   for (let steps = (to - start) / delta, i = 0; i <= steps; i++) {
@@ -40,6 +43,7 @@ export function forUntil(
   step: number | Falsy,
   cb: (index: number) => void,
 ) {
+  if (MARKO_DEBUG) assertValidRangeBound("until", until);
   const start = from || 0;
   const delta = step || 1;
   for (let steps = (until - start) / delta, i = 0; i < steps; i++) {

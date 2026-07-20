@@ -78,6 +78,34 @@ export function assertValidLoopKey(key: unknown, seenKeys?: Set<unknown>) {
   }
 }
 
+export function assertValidList(value: unknown) {
+  if (
+    value &&
+    typeof (value as Iterable<unknown>)[Symbol.iterator] !== "function"
+  ) {
+    throw new Error(
+      `A \`<for>\` tag's \`of\` attribute must be an iterable, such as an array, but received ${describeForValue(value)}.`,
+    );
+  }
+}
+
+export function assertValidRangeBound(name: string, value: unknown) {
+  // `isFinite` coerces like the range arithmetic, so a debug throw matches production.
+  if (!isFinite(value as number)) {
+    throw new Error(
+      `A \`<for>\` tag's \`${name}\` attribute must be a finite number, but received ${describeForValue(value)}.`,
+    );
+  }
+}
+
+function describeForValue(value: unknown) {
+  return typeof value === "number" || typeof value === "bigint"
+    ? `\`${value}\``
+    : value === null
+      ? "null"
+      : `type "${typeof value}"`;
+}
+
 export function assertValidAttrName(name: string) {
   if (htmlAttrNameReg.test(name)) {
     throw new Error(`Invalid attribute name: ${JSON.stringify(name)}`);
