@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-class-component-block/template.marko:1:1
+    > 1 | class {
+        | ^^^^^ class {} component blocks are no longer supported. Use <let> and <const> tags for state.
+      2 |   onCreate() {
+      3 |     this.state = { count: 0 };
+      4 |   }
