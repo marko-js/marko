@@ -467,30 +467,46 @@ export function attrAssignment(value: string) {
     : "=" + value;
 }
 
+const enum Char {
+  Tab = 9, // \t
+  CarriageReturn = 13, // \r
+  Space = 32, // (space)
+  DoubleQuote = 34, // "
+  Hash = 35, // #
+  Amp = 38, // &
+  SingleQuote = 39, // '
+  Slash = 47, // /
+  Gt = 62, // >
+  UpperA = 65, // A
+  UpperZ = 90, // Z
+  LowerA = 97, // a
+  LowerZ = 122, // z
+}
+
 // Equivalent to scanning `/["'>\s]|&[#a-zA-Z]|\/$/` for the first quote-forcing
 // char, but a `charCodeAt` scan beats the regex on the common no-quote path.
 function attrValueQuoting(value: string) {
   const len = value.length;
   for (let i = 0; i < len; i++) {
     const code = value.charCodeAt(i);
-    if (code === 34) return 2;
+    if (code === Char.DoubleQuote) return 2;
     if (
-      code === 39 ||
-      code === 62 ||
+      code === Char.SingleQuote ||
+      code === Char.Gt ||
       isAsciiOrUnicodeSpace(code) ||
-      (code === 38 && isCharRefStart(value.charCodeAt(i + 1)))
+      (code === Char.Amp && isCharRefStart(value.charCodeAt(i + 1)))
     ) {
       return 1;
     }
   }
-  return value.charCodeAt(len - 1) === 47 ? 1 : 0;
+  return value.charCodeAt(len - 1) === Char.Slash ? 1 : 0;
 }
 
 // The exact set matched by regex `\s`, verified against every code point.
 function isAsciiOrUnicodeSpace(code: number) {
   return (
-    code === 32 ||
-    (code >= 9 && code <= 13) ||
+    code === Char.Space ||
+    (code >= Char.Tab && code <= Char.CarriageReturn) ||
     (code >= 0x2000
       ? code <= 0x200a ||
         code === 0x2028 ||
@@ -508,16 +524,18 @@ function isAsciiOrUnicodeSpace(code: number) {
 // `&` must be escaped to round-trip (a bare `&` never decodes).
 function isCharRefStart(code: number) {
   return (
-    code === 35 || (code >= 65 && code <= 90) || (code >= 97 && code <= 122)
+    code === Char.Hash ||
+    (code >= Char.UpperA && code <= Char.UpperZ) ||
+    (code >= Char.LowerA && code <= Char.LowerZ)
   );
 }
 
 function escapeSingleQuotedAttrValue(value: string) {
-  return escapeQuotedAttrValue(value, "'", 39, "&#39;");
+  return escapeQuotedAttrValue(value, "'", Char.SingleQuote, "&#39;");
 }
 
 function escapeDoubleQuotedAttrValue(value: string) {
-  return escapeQuotedAttrValue(value, '"', 34, "&#34;");
+  return escapeQuotedAttrValue(value, '"', Char.DoubleQuote, "&#34;");
 }
 
 // Locates the first quote/`&` with SIMD-accelerated `indexOf` (much faster than
@@ -540,7 +558,7 @@ function escapeQuotedAttrValue(
     if (code === quoteCode) {
       result += value.slice(last, i) + quoteEnt;
       last = i + 1;
-    } else if (code === 38 && isCharRefStart(value.charCodeAt(i + 1))) {
+    } else if (code === Char.Amp && isCharRefStart(value.charCodeAt(i + 1))) {
       result += value.slice(last, i) + "&amp;";
       last = i + 1;
     }

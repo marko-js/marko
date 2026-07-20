@@ -17,6 +17,12 @@ export function _unescaped(val: unknown) {
   return val ? val + "" : val === 0 ? "0" : "";
 }
 
+const enum Char {
+  Amp = 38, // &
+  Lt = 60, // <
+  Gt = 62, // >
+}
+
 // Locates the first `<`/`&` with SIMD-accelerated `indexOf` (much faster than a
 // regex scan on the common no-escape path) then rewrites in a single pass,
 // slicing past the untouched prefix instead of re-scanning it.
@@ -34,10 +40,10 @@ function escapeXMLStr(str: string) {
   let last = start;
   for (let i = start; i < str.length; i++) {
     const code = str.charCodeAt(i);
-    if (code === 38) {
+    if (code === Char.Amp) {
       result += str.slice(last, i) + "&amp;";
       last = i + 1;
-    } else if (code === 60) {
+    } else if (code === Char.Lt) {
       result += str.slice(last, i) + "&lt;";
       last = i + 1;
     }
@@ -95,7 +101,7 @@ function escapeCommentStr(str: string) {
   let result = str.slice(0, start);
   let last = start;
   for (let i = start; i < str.length; i++) {
-    if (str.charCodeAt(i) === 62) {
+    if (str.charCodeAt(i) === Char.Gt) {
       result += str.slice(last, i) + "&gt;";
       last = i + 1;
     }
