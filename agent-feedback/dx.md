@@ -130,3 +130,60 @@ The universal DOM/JSX idiom `event.currentTarget.value` (and `event.target.value
 `packages/runtime-tags/src/dom/walker.ts` › `walker` | 2026-07-19 | impact:low | effort:low
 
 A throwaway node script — the fastest way an agent confirms a compiled component actually works before writing a full test setup — is mined with two import-order traps whose error strings point nowhere near the cause. (1) The DOM runtime evaluates `document.createTreeWalker(document)` at module top level (`dom/walker.ts:12`), so requiring the compiled `dom` output before a DOM global is installed throws `ReferenceError: document is not defined` at a `marko/dist` line. (2) `@marko/compiler`'s `modules.js` decides at first-require whether it is running in a browser via `typeof document === "object"` (`packages/compiler/modules.js:3`); installing jsdom globals (which define `global.document`) BEFORE requiring `@marko/compiler` takes that branch and sets `exports.resolve`/`tryResolve` to `null` (`:8-9`), so the first attempt to load a translator throws `TypeError: _modules.default.resolve is not a function` with no hint that a DOM global caused it (the branch is evaluated once and cached for the module lifetime). The only working order — compile with no DOM globals, THEN install jsdom, THEN require the runtime — is undocumented and easy to get backwards. `@marko/vite` and `@marko/testing-library` sequence this correctly, but an agent hand-rolling a verification script gets no guidance and burns turns guessing against two opaque messages. Lazy-init the walker on first `walk()` (drop the top-level `document` read), and either make the compiler's browser sniff robust to a node process that merely has jsdom installed or throw an error naming the cause; at minimum document a compile-then-shim-then-import recipe so headless self-checks are reliable.
+
+## Mutation-tracker jsdom workaround silently hides real text updates in snapshots
+
+`packages/runtime-tags/src/__tests__/utils/track-mutations.ts` › `formatMutationRecord` | 2026-07-14 | impact:low | effort:low
+
+The characterData filter drops records where the new value starts with the
+old value and the boundary is whitespace, to hide jsdom's duplicate records
+(jsdom#3261) — but it also matches real updates of that shape: a step
+changing text "draft" to "draft edited" produces no `## Change` entry and no
+html block, so the step looks like a no-op in the render snapshot while the
+DOM did update, which costs real debugging time on new fixtures. Fix
+direction: re-check the jsdom issue, or drop a record only when an adjacent
+record re-reports the same target, or always emit the html block even when
+every record was filtered. Verify: a fixture step appending to an existing
+text node currently yields an empty snapshot entry.
+
+## `npm run build:sizes` dirties `.sizes*` on a clean checkout
+
+`.sizes/dom.js` | 2026-07-14 | impact:med | effort:low
+
+With lockfile-installed deps (rolldown 1.1.4, linux) and zero source changes,
+a fresh `node -r ~ts scripts/sizes` run rewrites `.sizes.json` (+8 min /
++2 brotli on `dom.js`) and all `.sizes/**` outputs: the minifier emits
+`for (; i && a[i - 1].x > y;) (i--, f())` where the committed files have
+`for (; i && a[--i].x > y;) f()`, and the shared-chunk hash flips. The
+committed `.sizes*` no longer reproduce from the committed lockfile, so
+every next commit's pre-commit size diff carries unrelated noise. Fix:
+regenerate and commit `.sizes*` once (confirming which toolchain produced
+the committed files), or pin the minifier the sizes script uses. Verify:
+run `npm run build && npm run build:sizes` on a clean checkout and check
+`git status`.
+
+## `npm test <file>` appends to the default spec glob instead of scoping to the file
+
+`.mocharc.json` | 2026-07-15 | impact:low | effort:low
+
+Passing an explicit test file (`npm test -- <path>.test.ts`) does not scope
+the run: mocha adds positional file args to the configured spec glob, so the
+whole suite runs anyway — silently, since the named file is also included.
+Scoping to one file requires bypassing the config
+(`npx mocha --no-config --no-package --timeout 10000 --require ~ts <file>`),
+which is undocumented and easy to get wrong. Either document that
+incantation in CLAUDE.md next to the `--grep` guidance, or add a `test:file`
+script that forwards to mocha without the default spec. Verify:
+`npm test -- packages/runtime-tags/src/__tests__/serializer.test.ts` runs
+every spec file.
+
+## Error-compile fixtures never refresh or clean `sizes.json`
+
+`packages/runtime-tags/src/__tests__/main.test.ts` › `hasCompilerError` sizes gate | 2026-07-20 | impact:low | effort:low
+
+The optimize `after()` sizes assertion is gated on `!hasCompilerError`, so a
+fixture that later becomes `error_compiler: true` keeps its last generated
+`sizes.json` forever — neither asserted nor rewritten by `test:update`. The
+harness could delete (or assert the absence of) `sizes.json` for error
+fixtures. Verify: add `sizes.json` to any `error_compiler` fixture and watch
+`npm run test:update` leave it untouched.

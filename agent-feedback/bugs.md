@@ -249,3 +249,42 @@ The one docs example meant to teach typed tag parameters ships a pattern that fa
 `packages/runtime-tags/src/dom/schedule.ts` › `triggerMacroTask` | 2026-07-19 | impact:med | effort:low
 
 In a DOM environment lacking a usable `MessageChannel`, the reactive scheduler applies the FIRST update and then silently drops every later one. `schedule()` sets `isScheduled = 1` (`dom/schedule.ts:17`), and the flag is reset to `0` in exactly one place — the `channel.port1.onmessage` handler (`:36`) — reachable only if `new MessageChannel()` (`:34`) succeeds. When `MessageChannel` is absent, `:34` throws inside the `requestAnimationFrame` callback `triggerMacroTask`, the handler is never installed, `isScheduled` stays `1` forever, and every subsequent `schedule()` short-circuits at `:7`. The first update still lands because `flushAndWaitFrame` runs `run()` synchronously (`:28`), and `run()`→`runRenders()` (`dom/queue.ts:83-95,131-167`) applies the queued renders without touching the channel — the channel is only the next-frame reset. That asymmetry is the trap for agentic workflows: a one-click smoke test goes green (false confidence) while a two-step interaction test fails with no test-visible error — the throw surfaces only as a jsdom window `error` event — so an agent cannot tell whether its component logic or its harness is at fault. It bites hand-rolled jsdom and jest+jsdom harnesses (which historically ship no `MessageChannel`, the same gap React 18's scheduler hit), the exact throwaway setups agents reach for to self-verify. Reset the flag in a `finally` (or degrade to `setTimeout`/`queueMicrotask` for the macrotask boundary) plus add a `MARKO_DEBUG` assert naming the missing `MessageChannel`, turning a silent misattributed wedge into a deterministic, self-explaining failure fixable from the error string alone.
+
+## An empty-bodied `<html-comment>` resumes as a text node instead of the comment
+
+`packages/runtime-tags/src/dom/resume.ts` › `init` | 2026-07-14 | impact:med | effort:med
+
+For an `<html-comment>${c}</html-comment>` whose body serializes empty, SSR
+writes `<!---->` immediately before the resume marker, and the node-claim
+heuristic in the `ResumeSymbol.Node` visit (`prev.nodeType < 8 || prev.data`)
+refuses the empty comment and binds a fresh Text instead; it exists to skip
+empty `<!>` separators and cannot tell an intentional empty comment apart.
+After hydration, updating the body renders visible text where a pure client
+render produces `<!--...-->`. Fix direction: a dedicated resume symbol for
+html-comment markers that claims the preceding sibling unconditionally.
+Verify: SSR + resume an empty-bodied `<html-comment>`, set its body, and
+compare the DOM with a client-side render.
+
+## Document-side lazy load entries float rejections and leave the ready channel silent
+
+`packages/runtime-tags/src/translator/visitors/program/index.ts` › `translate` (`isLoadEntry` branch) | 2026-07-16 | impact:low | effort:low
+
+The generated `.load.mjs` entry is `load().then(() => ready(id))` with no
+rejection handler, so a chunk that fails to load from the initial document
+(deploy skew) surfaces only as an unhandled promise rejection and the
+module's ready id never resolves. The lazy tag's own render path recovers
+(`_load_setup`/`_load_template` route their `load()` failures to
+`renderCatch`), but the document-side loader stays noisy and inert. Add a
+`.catch` that reports through a defined channel (or retries). Verify: reject
+the dynamic import in a generated load entry and watch for the unhandled
+rejection with the ready id never firing.
+
+## `analyzeExpressionTagName` const-follow has no cycle guard
+
+`packages/runtime-tags/src/translator/util/tag-name-type.ts` › `analyzeExpressionTagName` | 2026-07-20 | impact:low | effort:low
+
+Following a `<const>` tag's value pushes the bound expression with no visited
+set, so mutually-referential `<const/a=b>` / `<const/b=a>` used as a tag name
+loop forever during analysis. Guard the follow with a visited-tag set.
+Verify: compile a template whose dynamic tag name resolves through two
+`<const>` tags that reference each other.

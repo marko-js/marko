@@ -58,3 +58,14 @@ feature" — one registration per unique class file would suffice.
 The interop translator crashes cryptically at module-eval when merged with a Class-API translator that does not export the optional `optionalTaglibs` field. `createInteropTranslator` calls `taglib.resolveOptionalTaglibs(translate5.optionalTaglibs)` with no fallback and no `onError` (`translator/interop/index.ts:31`), whereas the compiler's own caller guards it: `resolveOptionalTaglibs(translator.optionalTaglibs || [], onError)` (`compiler/src/taglib/index.js:40`). `resolveOptionalTaglibs` iterates unguarded — `for (const id of taglibIds)` (`compiler/src/taglib/index.js:97`) — so a missing field throws `TypeError: taglibIds is not iterable` with no source frame indicating which translator/field is at fault. `optionalTaglibs` is genuinely optional (runtime-class exports it, runtime-tags does not), so the interop path assumes a field the merge partner may not provide. Latent for the shipped runtime-class translator (it exports `optionalTaglibs`), but any class-side translator lacking the field crashes. Mirror the compiler's guard: `resolveOptionalTaglibs(translate5.optionalTaglibs || [], onError)`. Not in any existing feedback file.
 
 ---
+
+## Pre-existing comments exceeding the two-line rule
+
+`packages/compiler/src/config.js`, `packages/runtime-tags/src/**` | 2026-07-18 | impact:low | effort:med
+
+A sweep for the two-line comment rule surfaced roughly ninety comment blocks
+longer than two lines (config option JSDoc in `compiler/src/config.js`,
+several `translator/util/references.ts` and `dom/resume.ts` blocks, and
+commented-out `serializer.test.ts` cases). Condensing them is a standalone
+cleanup. Verify: grep for comment runs of three or more consecutive `//`
+lines under the cited paths.
