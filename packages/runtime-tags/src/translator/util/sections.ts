@@ -481,9 +481,8 @@ function compareParamGroups(
 
 function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
   if (isCoreTag(tag)) {
-    // The `<show>` body, like the html-* tags' content, is always rendered
-    // exactly once, so it compiles inline into the parent section rather
-    // than as its own section.
+    // The `<show>` body, like the html-* tags' content, always renders exactly
+    // once, so it compiles inline into the parent section rather than its own.
     switch (tag.node.name.value) {
       case "html-comment":
       case "html-script":

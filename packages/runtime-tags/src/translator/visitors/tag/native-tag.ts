@@ -1482,9 +1482,8 @@ function buildAttrExpression(
     : t.stringLiteral(serialized);
 }
 
-// Hoist a shared `name=` prefix out of a conditional with two literal branches
-// so it folds into the static HTML, e.g. `x ? ' class=on' : ' class=off'` ->
-// ` class=${x ? "on" : "off"}`. Each value keeps its own quoting.
+// Hoist a shared `name=` prefix out of a conditional's two literal branches so it folds
+// into static HTML: `x ? ' class=on' : ' class=off'` -> ` class=${x ? "on" : "off"}`.
 function factorAttrConditional(value: t.Expression): t.Expression {
   if (value.type !== "ConditionalExpression") {
     return value;
@@ -1572,9 +1571,8 @@ function buildStringAttrAnd(
   }
 }
 
-// Resolve a static-base `class` object/array at build time, referencing each
-// toggle once: 1 toggle picks a precomputed literal; a few index a hoisted table
-// packed from the toggles; more concatenate the string for `_attr_class`.
+// Resolve a static-base `class` object/array at build time, referencing each toggle once:
+// 1 picks a precomputed literal; a few index a hoisted table; more concatenate for `_attr_class`.
 const MAX_PRECOMPUTED_CLASS_TOGGLES = 4;
 function buildClassAttrExpression(value: t.Expression) {
   if (value.type !== "ObjectExpression" && value.type !== "ArrayExpression") {
@@ -1777,10 +1775,8 @@ function trackDelimitedAttrObjectProperties(
 }
 
 function isDynamicControllable(controllable: RelatedControllable) {
-  // We can treat an otherwise controllable attr as a normal attribute if:
-  // * It does not have a possible change handler.
-  // * It is not "special" (eg checkedValue)
-  // * It can never be updated (no referenced bindings).
+  // An otherwise controllable attr is a plain attribute when it is not "special",
+  // has no change handler, and can never update (no referenced bindings).
   if (controllable) {
     return (
       controllable.special ||

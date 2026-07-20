@@ -110,9 +110,8 @@ export default {
       if (isOutputHTML()) {
         const { body } = tag.node.body;
         if (nodeBinding && isEmptiableCommentBody(body)) {
-          // A resumable comment must serialize with content, otherwise its
-          // trailing resume marker claims a stray text node over the comment.
-          // Pad an otherwise-empty body with a space.
+          // A resumable comment must serialize with content, else its trailing
+          // resume marker claims a stray text node; pad an empty body with a space.
           if (body.length) {
             write`${t.logicalExpression(
               "||",

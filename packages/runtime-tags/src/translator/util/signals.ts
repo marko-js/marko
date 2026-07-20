@@ -120,9 +120,8 @@ export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
   true | undefined
 >("tryWithPlaceholder");
 
-// A branch section whose scope ids are guaranteed to ride a resume marker
-// carrying the parent scope id whenever its scopes serialize; the client
-// links the owner from the marker so `_` is not serialized.
+// A branch section whose scope ids ride a resume marker carrying the parent scope
+// id when its scopes serialize, so the client links the owner and `_` is not serialized.
 const [getOwnerResumedByMarker, setOwnerResumedByMarker] = createSectionState<
   true | undefined
 >("ownerResumedByMarker");
@@ -1633,9 +1632,8 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
     return (section: Section, value: t.Expression) => {
       let scopeRead: t.Expression;
       if (assignmentTo.pruned) {
-        // The change binding was pruned because an ancestor binding is
-        // already tracked. Read the change handler via property chain
-        // from the nearest non-pruned ancestor.
+        // The change binding was pruned (an ancestor is already tracked), so read
+        // the change handler via property chain from the nearest non-pruned ancestor.
         let cur = assignmentTo;
         const props: string[] = [];
         while (cur.pruned && cur.property !== undefined && cur.upstreamAlias) {

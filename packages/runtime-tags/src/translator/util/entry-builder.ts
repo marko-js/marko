@@ -36,9 +36,8 @@ export default {
     if (state.init) {
       const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
-      // The main entry import below pulls in every template (and therefore each
-      // of their client assets) transitively, so the collected asset imports
-      // are not needed here.
+      // The main entry import below pulls in every template (and their client assets)
+      // transitively, so the collected asset imports are not needed here.
       body.push(
         t.importDeclaration(
           [
@@ -80,9 +79,8 @@ export default {
           : t.expressionStatement(initExpression),
       );
     } else {
-      // A server only page has no runtime to initialize, so its client assets
-      // (which an interactive page receives transitively through the main entry
-      // import) must be linked in directly.
+      // A server only page has no runtime to initialize, so its client assets must be
+      // linked directly (an interactive page receives them transitively via the main entry import).
       for (const asset of state.assets) {
         body.push(t.importDeclaration([], t.stringLiteral(asset)));
       }
@@ -113,9 +111,8 @@ export default {
       state.init = true;
     }
 
-    // Link the template's known client side assets (styles, css imports, etc)
-    // into the page entry so that static routes still ship them. These are
-    // collected onto the metadata during analyze.
+    // Link the template's known client side assets (styles, css imports, etc) into
+    // the page entry so that static routes still ship them; collected during analyze.
     if (assetImports) {
       for (const request of assetImports) {
         state.assets.add(resolveRelativeToEntry(entryFile, file, request));

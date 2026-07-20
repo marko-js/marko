@@ -161,9 +161,8 @@ export function isStaticSerializeReason(
   return !!reason && !isReasonDynamic(reason);
 }
 
-// A reason backed by state sources specifically. State only serializes when
-// it can change client side, which keeps the state's signal (and everything
-// it renders) in the bundle.
+// A reason backed by state sources. State only serializes when it can change
+// client side, keeping its signal (and everything it renders) in the bundle.
 export function isStateSerializeReason(
   reason: undefined | SerializeReason,
 ): reason is Sources {

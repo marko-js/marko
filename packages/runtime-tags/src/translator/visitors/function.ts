@@ -158,9 +158,8 @@ function shouldAlwaysRegister(markoRoot: MarkoExprRootPath) {
   switch (analyzeTagNameType(tag)) {
     case TagNameType.DynamicTag:
     case TagNameType.NativeTag:
-      // Passing a function to a dynamic tag could always be potentially serialized.
-      // Native tag event handlers are skipped in the `canIgnoreRegister`
-      // if it's anything else we need to unconditionally serialize.
+      // A function passed to a dynamic tag may always be serialized; native-tag event
+      // handlers are already skipped in `canIgnoreRegister`, so anything else must serialize.
       return true;
     case TagNameType.AttributeTag:
       if (

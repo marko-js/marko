@@ -85,10 +85,8 @@ export default {
 
       const tagSection = getOrCreateSection(tag);
 
-      // Bindings are created in walk order. The parent element (only child
-      // case) is visited before the body's own bindings, so it is created
-      // here; otherwise a marker binding starts the body's node range and the
-      // reference node is created at analyze exit (visited after the body).
+      // Bindings are created in walk order: the only-child parent, or the body
+      // range's start marker, precedes the body and so is created here.
       if (getOnlyChildParentTagName(tag)) {
         getOptimizedOnlyChildNodeBinding(tag, tagSection);
       } else {
@@ -207,9 +205,8 @@ export default {
           }
         }
 
-        // The runtime calls bracket the body's statements rather than
-        // receiving a callback so declarations in them (e.g. from `<let>`)
-        // stay readable by later statements.
+        // The runtime calls bracket the body's statements (rather than taking a
+        // callback) so declarations in them stay readable by later statements.
         for (const replacement of tag.replaceWithMultiple([
           t.expressionStatement(
             callRuntime("_show_start", t.cloneNode(display, true), startMark),

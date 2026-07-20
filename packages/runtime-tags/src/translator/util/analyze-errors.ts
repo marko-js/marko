@@ -3,12 +3,8 @@ import { diagnosticError } from "@marko/compiler/babel-utils";
 
 import { createProgramState } from "./state";
 
-// Analyze failures are recorded as error diagnostics so one compile reports
-// every mistake in the template (the compiler throws them together at the
-// end of the analyze stage, and editors compiling with `errorRecovery` keep
-// them as recoverable diagnostics instead of a thrown error). Code-frame
-// errors built by the compiler carry their original `label`/`loc`, so
-// nothing is lost converting a caught error into a diagnostic.
+// Recorded as diagnostics rather than thrown so one compile reports every
+// mistake, and `errorRecovery` editors keep them as recoverable diagnostics.
 
 const [getHasAnalyzeErrors, setHasAnalyzeErrors] = createProgramState(
   () => false,

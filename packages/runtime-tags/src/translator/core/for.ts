@@ -125,9 +125,8 @@ export default {
 
     const byAttr = getKnownAttrValues(tag.node).by;
 
-    // Only `<for of>` accepts a string `by` (a property-name key shorthand); the
-    // `in`/`to`/`until` runtimes invoke `by` as a function, so a string would
-    // throw at render. Reject it at compile time with a helpful message.
+    // Only `<for of>` accepts a string `by` (property-name shorthand); `in`/`to`/`until`
+    // invoke `by` as a function, so reject a string at compile time rather than at render.
     if (forType !== "of" && byAttr?.type === "StringLiteral") {
       throw tag.hub.buildError(
         byAttr,
@@ -137,9 +136,8 @@ export default {
       );
     }
 
-    // `by=` is evaluated once, before the loop runs, so the loop parameters
-    // are not in scope there. Keying a loop by its own parameter otherwise
-    // dies at render time with a bare undefined-variable error.
+    // `by=` is evaluated once before the loop runs, so loop parameters are not in
+    // scope; keying by one otherwise dies at render with an undefined-variable error.
     if (
       byAttr?.type === "Identifier" &&
       !tag.scope.getBinding(byAttr.name) &&
@@ -247,11 +245,8 @@ export default {
           isStaticSerializeReason(branchSerializeReason) &&
           isStaticSerializeReason(markerSerializeReason)
         ) {
-          // Every iteration's branch id unconditionally rides a resume
-          // marker with the parent scope id, and the state driven loop
-          // expression keeps the loop signal (which enables branch visits)
-          // in any bundle that can update these scopes, so the owner is
-          // linked at resume instead of serialized.
+          // Each branch id rides a resume marker with the parent scope id, and the
+          // stateful loop keeps the branch-visiting signal, so link owner at resume.
           setSectionOwnerResumedByMarker(bodySection);
         }
 

@@ -15,10 +15,8 @@ const classIdToBranch = new Map<string, BranchScope>();
 // Injected by the class runtime (runtime-dom.js); revives a serialized
 // class-method event reference, which only the class side can resolve.
 let classEventResolver: ((value: unknown, scope: Scope) => unknown) | undefined;
-// Keyed by the render handle — the one object reachable from both sides
-// of the interop boundary (the class side rebuilds its own $global at
-// hydration, so only the runtimeId/renderId values cross it) — and
-// released with the render when an embedded render is destroyed.
+// Keyed by the render handle, the one object reachable from both sides of the
+// interop boundary, and released with the render when an embedded render is destroyed.
 const scopesByRender = new WeakMap<object, Record<string, Scope>>();
 const getRenderScopes = ($global: Record<string, unknown>) => {
   const render = (self as any)[$global.runtimeId as string]?.[

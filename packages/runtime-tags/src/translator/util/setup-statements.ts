@@ -4,16 +4,8 @@ import type { Section } from "./sections";
 import { createSectionState } from "./state";
 
 /**
- * Tracks, during analyze, whether translate will add statements to a
- * section's setup signal (the signal keyed by no referenced bindings).
- * Sites that key statements by an expression's resolved references register
- * the expression with `addSetupExpr`; sites that always target the setup
- * signal call `addSetupStatement`. Expressions that resolve references
- * through `mergeReferences` are covered centrally by `finalizeReferences`.
- *
- * This lets a template's analyze phase prove its setup export is a noop so
- * parent templates can skip importing and calling it. The proof is checked
- * when the template itself is translated (see `visitors/program/dom.ts`).
+ * Tracks during analyze whether translate will add setup-signal statements, so a
+ * template can prove its setup export is a noop and parents can skip calling it.
  */
 
 const [getSetupInfo] = createSectionState("setupStatements", () => ({

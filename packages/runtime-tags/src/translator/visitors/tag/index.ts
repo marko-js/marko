@@ -19,10 +19,8 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze: {
     enter(tag) {
-      // Analyze failures become error diagnostics (instead of aborting on
-      // the first) so a template with several mistakes reports them all
-      // together; the compiler throws them at the end of the stage. A failed
-      // tag's subtree is skipped to limit cascading follow-on errors.
+      // Collect analyze failures as diagnostics instead of aborting on the first,
+      // so all mistakes report together; skip the subtree to limit cascading errors.
       try {
         const tagDef = getTagDef(tag);
         const type = analyzeTagNameType(tag);
@@ -69,21 +67,6 @@ export default {
         reportAnalyzeError(tag, err);
         return;
       }
-
-      // switch (analyzeTagNameType(tag)) {
-      //   case TagNameType.NativeTag:
-      //     // NativeTag.analyze.exit(tag);
-      //     break;
-      //   case TagNameType.CustomTag:
-      //     // CustomTag.analyze.exit(tag);
-      //     break;
-      //   case TagNameType.AttributeTag:
-      //     // AttributeTag.analyze.exit(tag);
-      //     break;
-      //   case TagNameType.DynamicTag:
-      //     // DynamicTag.analyze.exit(tag);
-      //     break;
-      // }
     },
   },
   translate: {

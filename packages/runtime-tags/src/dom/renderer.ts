@@ -88,12 +88,8 @@ export function _content(
   params?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
-  // Walks are required to encode how to "exit" the content
-  // so that we can continue walking across merged child templates.
-  // However at this point we have the full walks string for a branch,
-  // so we trim the trailing `Next`, `Over or `Out` walk codes.
-  // The regexp below replaces trailing values between charcodes `0-49`
-  // 1 is charcode 49 (WalkCode.DynamicTagWithVar)
+  // A branch has the full walks string; trim the trailing exit codes
+  // (Next/Over/Out, charcode >= 50) needed only to cross merged children.
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   setup = setup ? (setup as { _: SetupFn })._ || setup : undefined;
   params ||= undefined;

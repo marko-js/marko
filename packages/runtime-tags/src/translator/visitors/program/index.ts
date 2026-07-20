@@ -93,9 +93,8 @@ export default {
     },
 
     exit(program) {
-      // Analyze failures were reported as diagnostics (the compiler throws
-      // them together right after this stage); failed tags were skipped, so
-      // skip finalization work that assumes an error-free template.
+      // Analyze failures were already reported as diagnostics and their tags
+      // skipped, so skip finalization work that assumes an error-free template.
       if (hasAnalyzeErrors()) return;
       finalizeReferences();
       const programExtra = program.node.extra!;

@@ -444,11 +444,8 @@ export function _if(
   };
 }
 
-// The `<show>` body is inline parent content that always exists, so this
-// signal never renders anything: it only moves the body's node range between
-// the document and a detached fragment. Server rendered hidden content
-// arrives in a `<t hidden>` wrapper that is dissolved the first time the
-// value changes.
+// The `<show>` body always exists, so this signal never renders; it only moves
+// the body's range in/out of a detached fragment (SSR hides it in a `<t hidden>` wrapper).
 export function _show(
   nodeAccessor: EncodedAccessor,
   startNodeAccessor?: EncodedAccessor,
@@ -488,11 +485,8 @@ export function _show(
       startNode === range[AccessorProp.EndNode] &&
       (startNode as Partial<Element>).tagName === "T"
     ) {
-      // First update after resuming hidden: dissolve the `<t>`
-      // wrapper, leaving its children in place. Only a range resumed from
-      // marks (with a scope id) can hold a wrapper; replacing it with a plain
-      // holder makes this happen at most once so a `<t>` in the body is never
-      // mistaken for the wrapper.
+      // First update after resuming hidden: dissolve the `<t>` wrapper, leaving its
+      // children. Replacing it with a plain holder ensures a body `<t>` is never mistaken for it.
       const wrapper = startNode as Element;
       if (!wrapper.firstChild) wrapper.appendChild(new Text());
       range = scope[rangeAccessor] = {} as BranchScope;
@@ -632,9 +626,8 @@ export let _dynamic_tag = function dynamicTag(
   };
 };
 
-// Specialized `_dynamic_tag` for a content passthrough. The caller guarantees a
-// normalized content `Renderer` (or undefined) rendered with no input or
-// parameters.
+// Specialized `_dynamic_tag` for a content passthrough: the caller guarantees a
+// normalized content `Renderer` (or undefined) rendered with no input or parameters.
 export function _dynamic_tag_content(
   nodeAccessor: EncodedAccessor,
 ): Signal<Renderer | undefined> {

@@ -169,9 +169,8 @@ export default {
 
       const setup = getSetup(section);
       if (domExports.setupEmpty && setup && written.has(setup)) {
-        // Parent templates have skipped calling the setup export based on
-        // the analyze phase proving it would be a noop; a non noop setup
-        // here means that proof was wrong and must fail loudly.
+        // Parents skip calling this setup export because analyze proved it a noop;
+        // a non-noop setup here means that proof was wrong, so fail loudly.
         throw program.buildCodeFrameError(
           "Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it. Please open an issue with a reproduction.",
         );

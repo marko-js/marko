@@ -18,16 +18,14 @@ export function bodyToTextLiteral(body: t.MarkoTagBody) {
   return buildTextLiteral(body, toText, false);
 }
 
-// Pre-analyze: same, but interpolations stay raw (the output-specific `_to_text`
-// import can't precede translate) and a lone interpolation stays bare so the
-// placeholder coerces it directly; `injectTextCoercion` finishes the rest.
+// Pre-analyze variant: interpolations stay raw (the output-specific `_to_text` import
+// can't precede translate); a lone interpolation stays bare so the placeholder coerces it.
 export function bodyToRawTextLiteral(body: t.MarkoTagBody) {
   return buildTextLiteral(body, (value) => value, true);
 }
 
-// Translate: wrap each raw interpolation from `bodyToRawTextLiteral` in
-// `_to_text`, in place so analyze bindings survive. Recurse the conditional;
-// stop at each template literal (its expressions are the values themselves).
+// Translate: wrap each raw interpolation from `bodyToRawTextLiteral` in `_to_text`,
+// mutating in place so analyze bindings survive.
 export function injectTextCoercion(expr: t.Expression) {
   switch (expr.type) {
     case "ConditionalExpression":

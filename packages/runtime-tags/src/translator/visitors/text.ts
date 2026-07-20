@@ -17,10 +17,8 @@ export default {
   analyze(text) {
     if (isNonHTMLText(text)) return;
 
-    // Adjacent static text merges into a single DOM text node, so only the node
-    // that starts the run emits its walk step. Defer when a previous sibling is
-    // static text -- otherwise two `MarkoText`s in one run (e.g. `a${"x"}b`)
-    // would each emit a step and over-count the walk.
+    // Adjacent static text merges into one DOM text node, so only the run's first node emits
+    // its walk step; defer when the previous sibling is static text so a run doesn't over-count.
     if (isStaticText(getPrevStaticSibling(text))) {
       (text.node.extra ??= {})[kSharedText] = true;
     }

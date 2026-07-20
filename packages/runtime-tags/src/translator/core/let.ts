@@ -122,9 +122,8 @@ export default {
       // Reserves the TagVariableChange accessor at `id + 1`.
       binding.reserveSize = 1;
       setBindingDownstream(binding, tagExtra);
-      // The serialized change handler is only ever invoked by an assignment
-      // to the tag variable (the render path always receives a fresh handler
-      // before reading it), so it does not resume when nothing assigns.
+      // The serialized change handler is only invoked by an assignment to the
+      // tag variable, so it does not resume when nothing assigns.
       if (binding.assignmentSections) {
         addSerializeReason(
           tagSection,

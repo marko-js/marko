@@ -61,12 +61,8 @@ export enum NodeType {
   DocumentFragment = 11,
 }
 
-// Reserved Character Codes
-// 0-31 [control characters]
-// 34 " [double quote]
-// 39 ' [single quote]
-// 92 \ [backslash]
-// 96 ` [backtick]
+// Reserved character codes: 0-31 [control chars], 34 " [double quote],
+// 39 ' [single quote], 92 \ [backslash], 96 ` [backtick]
 export enum WalkCode {
   Get = 32,
   Inside = 36,

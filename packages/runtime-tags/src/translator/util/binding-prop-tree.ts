@@ -73,11 +73,8 @@ export function getBindingPropTree(binding: Binding) {
   return props;
 }
 
-// Whether a binding's only consumer is a no-input content passthrough
-// (`<${binding}/>`) in the section the value is received in. Only params
-// supplied by a known parent (template `input` or a `<define>` body) reach
-// here, so such content is always a `_content(...)` renderer and can use the
-// leaner `_dynamic_tag_content` signal.
+// A binding whose sole consumer is a no-input `<${binding}/>` passthrough is always a
+// `_content(...)` renderer (only known-parent `input`/`<define>` params reach here) — use the leaner `_dynamic_tag_content` signal.
 function isDirectContentBinding(binding: Binding) {
   if (binding.reads.size !== 1) {
     return false;

@@ -148,12 +148,8 @@ export const IfTag = {
               ),
             )
           ) {
-            // This branch always returns its index (so when rendered its id
-            // rides the resume marker), the marker always renders, and the
-            // state driven condition keeps the conditional signal (which
-            // enables branch visits) in any bundle that can update these
-            // scopes, so the owner is linked at resume instead of
-            // serialized.
+            // The branch id rides the always-rendered resume marker and the
+            // state driven condition keeps the signal, so the owner resumes.
             setSectionOwnerResumedByMarker(bodySection);
           }
           writer.flushInto(tag);
@@ -393,17 +389,13 @@ export const ElseTag = {
   ],
 };
 
-// An `<if>`/`<else-if>`/`<else>` chain whose branches only render text can be
-// collapsed into a single text placeholder, e.g.
-//   <if=show>Hi</><else>Bye</>  ->  ${show ? "Hi" : "Bye"}
-// This avoids the branch scopes and `_if` runtime entirely.
+// Collapse a text-only `<if>`/`<else-if>`/`<else>` chain into a single text
+// placeholder, avoiding the branch scopes and `_if` runtime entirely.
 export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   if (!isCoreTagName(rootTag, "if")) return;
 
-  // Only convert when the conditional renders inside a native element. There it
-  // becomes a normal text node; at the root of a template or component body the
-  // content is instead treated as a dynamic renderer (with different SSR and
-  // DOM output shapes), so the placeholder rewrite would not be equivalent.
+  // Only convert inside a native element (a text node); at a template or component
+  // root the content is a dynamic renderer with different output, so the rewrite differs.
   const tagBody = rootTag.parentPath;
   if (!tagBody.isMarkoTagBody()) return;
   const parentTag = tagBody.parentPath;
@@ -460,9 +452,8 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     (isCoreTagName(cur, "else-if") || isCoreTagName(cur, "else"))
   );
 
-  // Converting bypasses the analyze phase (and its validation), so ensure the
-  // chain is well formed before doing so; invalid chains fall through to the
-  // normal handling where the appropriate error is reported.
+  // Converting bypasses the analyze phase, so validate first; invalid chains
+  // fall through to the normal handling where the error is reported.
   for (const branchTag of branches) {
     assertValidCondition(branchTag);
   }

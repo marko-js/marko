@@ -673,9 +673,8 @@ function analyzeAttrs(
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
         setBindingDownstream(templateExportAttr.binding, attrExtra);
-        // A cross template child that only ever invokes this input makes the
-        // attribute `invokeOnly`. Same program prop trees may still be
-        // mid-analysis with incomplete reads, so they are skipped.
+        // A cross template child that only ever invokes this input makes the attribute
+        // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
           getRootSection(templateExportAttr.binding.section) !==
             getProgram().node.extra.section &&

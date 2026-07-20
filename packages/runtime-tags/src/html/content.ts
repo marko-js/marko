@@ -28,10 +28,8 @@ export function _escape(val: unknown) {
   return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "";
 }
 
-// Neutralizes the sequences that shift the script-data tokenizer state:
-// `</script` (close tag) plus `<!--` and `<script`, whose combination puts
-// the parser in the double-escaped state where a real `</script>` no longer
-// closes the element and the rest of the page is swallowed into it.
+// Escapes `</script`, `<!--`, and `<script`: their combination shifts the parser
+// into the double-escaped state where a real `</script>` no longer closes it.
 const unsafeScriptReg = /<(\/?script|!--)/gi;
 const escapeScriptStr = (str: string) =>
   unsafeScriptReg.test(str) ? str.replace(unsafeScriptReg, "\\x3C$1") : str;

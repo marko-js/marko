@@ -70,10 +70,8 @@ export default {
     if (confident && isVoid(computed)) return;
 
     if (isStaticText(node)) {
-      // Only the node that starts a merged static-text run emits the walk step
-      // for it. Defer when a previous sibling is static text (it owns the step);
-      // deferring on a *following* static sibling instead would drop the step
-      // entirely for a run made up solely of static placeholders.
+      // Only the run's first node emits the walk step; defer to a previous static sibling that owns it.
+      // Deferring to a following sibling instead would drop the step entirely for an all-static run.
       if (isStaticText(getPrevStaticSibling(placeholder))) {
         (node.extra ??= {})[kSharedText] = true;
       }
@@ -137,9 +135,8 @@ export default {
           walks.visit(placeholder, WalkCode.Replace);
         } else {
           if (isHTML) {
-            // A preceding element/comment would be claimed as the text node
-            // when the value serializes empty, so it gets the same
-            // protective separator as sibling text.
+            // A preceding element/comment would be claimed as the text node when
+            // the value serializes empty, so it gets the same protective separator.
             if (
               siblingText === SiblingText.NodeBefore &&
               markerSerializeReason
@@ -194,11 +191,8 @@ export default {
   },
 } satisfies TemplateVisitor<t.MarkoPlaceholder>;
 
-// Produces an expression equivalent to `_escape(value)` but only escapes the
-// parts that need it: static strings are escaped at compile time and dynamic
-// leaves are wrapped individually, recursing through the branches of a
-// conditional and the parts of a template literal so we escape as little as
-// possible.
+// Produces an expression equivalent to `_escape(value)` that escapes as little as
+// possible: static strings at compile time, dynamic leaves wrapped individually.
 function buildEscapedTextExpression(value: t.Expression): t.Expression {
   const { _escape } = getHTMLRuntime();
   switch (value.type) {
@@ -220,9 +214,8 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
         parts.push(_escape(quasi.value.cooked ?? ""));
         const expression = value.expressions[i];
         if (expression) {
-          // Match the coercion a template literal would apply (e.g. `null`
-          // stringifies to `"null"`, not `""`) before escaping, so this stays
-          // equivalent to escaping the whole template literal.
+          // Match the coercion a template literal applies (`null` becomes `"null"`,
+          // not `""`) before escaping, so this equals escaping the whole literal.
           parts.push(
             callRuntime(
               "_escape",
@@ -333,8 +326,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 }
 
 // Returns the owner tag when `parent` is the body of a tag that inlines its
-// content into the surrounding section (currently only `<show>`), meaning the
-// body's edge nodes render adjacent to the tag's siblings.
+// content into the surrounding section (currently only `<show>`).
 function getInlinedBodyTag(parent: t.NodePath) {
   if (parent.isMarkoTagBody()) {
     const tag = parent.parentPath;

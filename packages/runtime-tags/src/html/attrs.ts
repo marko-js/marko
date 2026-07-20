@@ -411,9 +411,8 @@ function writeControlledScope(
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
-  // The controlled `type` is only read back on resume by the spread resume path
-  // (`_attrs_script`). Statically-typed controllables resume through a typed
-  // `_script` that never reads it, so it is only serialized when requested.
+  // Only the spread resume path (`_attrs_script`) reads the controlled `type`
+  // back; typed controllables never do, so it is only serialized when requested.
   serializeType?: 1,
 ) {
   if (MARKO_DEBUG) {
@@ -455,9 +454,8 @@ function nonVoidAttr(name: string, value: unknown) {
   return " " + name + attrAssignment(value + "");
 }
 
-// Every character reference starts `&#` or `&` + an ASCII letter — and
-// parsers also decode semicolon-less numeric and legacy named references —
-// so any such `&` must be escaped to round-trip (a bare `&` never decodes).
+// A `&` only decodes before `#` or an ASCII letter (parsers accept even
+// semicolon-less numeric and legacy named refs), so only those need escaping.
 const singleQuoteAttrReplacements = /'|&(?=[#a-zA-Z])/g;
 const doubleQuoteAttrReplacements = /"|&(?=[#a-zA-Z])/g;
 const needsQuotedAttr = /["'>\s]|&[#a-zA-Z]|\/$/g;

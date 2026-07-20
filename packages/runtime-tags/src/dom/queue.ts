@@ -196,9 +196,8 @@ export function _enable_catch() {
       scope: Scope,
       branch: BranchScope | undefined,
     ) => {
-      // walk up the branches to see if any have an AwaitCounter with count (i) > 0
-      // if not, return false
-      // if so, return true and push the fn to the pending async queue on the try branch
+      // Defer the fn onto the nearest ancestor try branch still awaiting;
+      // a truthy return means it was deferred.
       while (branch) {
         if (branch[AccessorProp.AwaitCounter]?.i) {
           return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);

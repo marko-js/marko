@@ -84,9 +84,8 @@ export function withPageAssets(
         }
       }
 
-      // The client half of the runtimeId contract is baked into the
-      // compiled browser entry, so the compiled value must win for the
-      // halves to agree.
+      // The compiled browser entry bakes in its runtimeId, so the compiled
+      // value must win for the client and server halves to agree.
       g.runtimeId = runtimeId;
     }
     addAsset(g, assetId);

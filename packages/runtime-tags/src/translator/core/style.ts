@@ -87,9 +87,8 @@ export default {
       checkDynamicStylePlacement(tag);
     }
 
-    // Resolve the style up front so the page entry builder can link it in for
-    // server only templates (which never reach translate). The path is cached
-    // on the node for translate to reuse.
+    // Resolve up front so the page entry builder can link it for server-only
+    // templates (which never reach translate); cached on the node for reuse.
     const importPath = getStyleImportPath(file, node, names);
     (node.extra ??= {}).styleImportPath = importPath;
     if (importPath) {
@@ -350,9 +349,8 @@ function buildStyleDecls(node: t.MarkoTag) {
 }
 
 /**
- * Resolves a `<style>` block's text content to its client side import path
- * (eg `./template.marko.css`) by handing the css off to the configured
- * `resolveVirtualDependency` hook.
+ * Resolves a `<style>` block's text to its client-side import path by handing
+ * the css to the configured `resolveVirtualDependency` hook.
  */
 function getStyleImportPath(
   file: t.BabelFile,

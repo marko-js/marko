@@ -3,12 +3,8 @@ import { types as t } from "@marko/compiler";
 import { isNotVoid, isVoid } from "../../common/helpers";
 import evaluate from "./evaluate";
 
-// A run of adjacent static text -- literal `MarkoText` and confident, non-void
-// escaped `${...}` placeholders (comments between them are stripped, so the
-// surrounding text merges) -- is written into the template as a single DOM
-// text node. Exactly one node in the run may contribute a walk step, so each
-// node emits its own step only when it starts a run, i.e. when its previous
-// meaningful sibling is not itself static text.
+// A run of adjacent static text (literal `MarkoText` and confident non-void escaped
+// `${...}`) becomes one DOM text node; only the node starting a run emits a walk step.
 export function isStaticText(node?: t.Node) {
   switch (node?.type) {
     case "MarkoText":

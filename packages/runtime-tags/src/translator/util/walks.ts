@@ -95,13 +95,6 @@ export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
   code: VisitCodes,
 ) {
-  // const { binding } = path.node.extra!;
-  // if (code && (!binding || binding.type !== BindingType.dom)) {
-  //   throw path.buildCodeFrameError(
-  //     "Tried to visit a node that was not marked as needing to visit during analyze.",
-  //   );
-  // }
-
   if (isOutputHTML()) {
     return;
   }

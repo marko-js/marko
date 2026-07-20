@@ -14,9 +14,8 @@ export function assertValidAttrValue(name: string, value: unknown) {
   }
 
   if (typeof value === "function") {
-    // Consumed handlers (events, applied controllable change handlers,
-    // content) never reach the attribute writers, so a function here would
-    // render as its source code.
+    // Consumed handlers (events, change handlers, content) never reach the
+    // attribute writers, so a function here would render as its source code.
     throw new Error(
       `The \`${name}\` attribute cannot be a function.${
         /Change$/.test(name)

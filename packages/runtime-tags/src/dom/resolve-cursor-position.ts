@@ -7,9 +7,8 @@ export function resolveCursorPosition(
   updatedValue: string,
 ) {
   if (
-    // If initial position is null or false then
-    // either this node is not the active element
-    // or does not support selection ranges.
+    // Null or false initial position means this node is not the active
+    // element or does not support selection ranges.
     (initialPosition || initialPosition === 0) &&
     (initialPosition !== initialValue.length ||
       // short regex to match input types that delete backwards

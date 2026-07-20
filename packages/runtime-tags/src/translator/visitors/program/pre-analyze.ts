@@ -46,11 +46,8 @@ function normalizeBody(
   }
 }
 
-// Pulls the unconditional leading/trailing static parts of a template literal
-// placeholder into adjacent text nodes so they can be written statically (and
-// tree-shaken) instead of escaped at runtime, e.g.
-//   ${`Message ${data}`}  ->  Message ${data}
-// Only escape-invariant text is moved, since a text node is written raw.
+// Moves a placeholder's unconditional leading/trailing static text into adjacent
+// text nodes so it writes statically; only escape-invariant text, since text is raw.
 function hoistStaticPlaceholderText(
   placeholder: t.NodePath<t.MarkoPlaceholder>,
 ) {

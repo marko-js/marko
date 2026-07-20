@@ -736,12 +736,8 @@ function createBindingsAndTrackReferences(
               scope,
               section,
               patternBinding,
-              // A rest element mirrors the shifted tail of its source; the tail
-              // is carried by `excludeProperties` + `restOffset`, so it must be
-              // created without a `property` (matching the object-pattern rest
-              // above). Passing the array pattern's own `property` here would
-              // route the rest through the property-alias branch of
-              // `createBinding` and collide with a sibling element binding.
+              // A rest element mirrors the shifted tail via `excludeProperties` +
+              // `restOffset`; passing its own `property` would collide with a sibling binding.
               undefined,
               excludeProperties,
               i,
@@ -823,9 +819,8 @@ export function mergeReferences<T extends t.Node>(
   for (const node of nodes) {
     if (!node) continue;
     const extra = (node.extra ??= {});
-    // The target can appear in its own node list (eg related controllable
-    // attrs); merging it into itself would create a `merged` cycle and
-    // double its reads.
+    // The target can appear in its own node list; merging it into itself would
+    // create a `merged` cycle and double its reads.
     if (extra === targetExtra) continue;
     extra.merged = targetExtra;
     if (isReferencedExtra(extra)) {
@@ -1571,10 +1566,8 @@ export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
 function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   const merged = bindingUtil.union(a, b);
   if (merged && Array.isArray(merged)) {
-    // When merging param sources we filter out
-    // any property aliases that are already a part of the merged set.
-    // Eg if `input` is present, we don't need properties like `input.foo`
-    // even though for params properties are seen as discrete sources.
+    // Filter out property aliases already in the merged set (eg drop `input.foo`
+    // when `input` is present); params otherwise treat properties as discrete sources.
     return filter(merged, (binding) => {
       let alias = binding.upstreamAlias;
       while (alias) {
@@ -1688,11 +1681,8 @@ function addReadToExpression(
   const fnRoot = getFnRoot(root);
   const exprRoot = getExprRoot(fnRoot || root);
   const section = getOrCreateSection(exprRoot);
-  // Reads recorded after the owning expression was merged into another
-  // node's extra (anything tracked at identifier-visit time -- eg `$global`
-  // reads -- after an `<if>`'s analyze merged its test into the tag extra)
-  // must land on the merge target, or the expression's references split
-  // and the merged extra resolves with the read missing.
+  // Reads recorded after the owning expression merged into another node's extra
+  // must land on the merge target, else its references split and the read is lost.
   const exprExtra = getCanonicalExtra(
     (exprRoot.node.extra ??= { section }) as ReferencedExtra,
   );
@@ -2094,10 +2084,8 @@ export function getReadReplacement(
   }
 }
 
-// A binding whose receiving template can never observe its value: every read
-// is in an `invokeOnly` expression and nothing else (an assignment, hoist,
-// getter, or property access) can see it. An attribute providing such an
-// input is itself `invokeOnly` for the parent.
+// A binding the receiving template can never observe: every read is in an
+// `invokeOnly` expression and nothing else (assignment, hoist, getter, access) sees it.
 export function isInvokeOnlyBinding(binding: Binding): boolean {
   if (
     binding.assignmentSections ||
@@ -2269,12 +2257,8 @@ function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
   }
 }
 
-// A lazy read is excluded from its expression's `referencedBindings` and
-// instead reads the binding's scope slot when its containing function is
-// invoked. Sound when the expression is `invokeOnly`, the read is deferred,
-// and the emitted read is a plain own scope slot that can be kept current
-// without a subscriber (so not a change handler read, an alias slot, or a
-// `local` from an ancestor section).
+// A lazy read is excluded from `referencedBindings` and instead reads the
+// binding's own scope slot on invocation; sound only for a subscriber-free own slot.
 function isLazyRead(
   expr: { section: Section; invokeOnly?: true },
   read: Read,

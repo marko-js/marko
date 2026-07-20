@@ -37,10 +37,8 @@ export default {
     const { source } = node;
     const { value } = source;
 
-    // Link known client side asset imports (eg css) into the page entry so that
-    // server only templates still ship them. Only top level imports are linked;
-    // imports within a `client` statement already mark the program interactive
-    // (pulling their template in), and `server` imports never run on the client.
+    // Link client-side asset imports (eg css) into the page entry so server-only
+    // templates still ship them. Only top-level imports need linking.
     if (
       t.isProgram(importDecl.parent) &&
       isClientAssetImport(importDecl.hub.file, value)

@@ -94,10 +94,8 @@ export default {
       }
 
       if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {
-        // The child's setup call lands in this section's setup unless the
-        // child template proved its setup export is a noop (a mid analysis
-        // child, eg a circular reference, has no flag yet and is assumed to
-        // have a setup). Load tags always wire up `_load_setup`.
+        // Add the child's setup call unless it proved its setup export a noop
+        // (mid-analysis children assumed to have one); load tags always wire it up.
         addSetupStatement(getOrCreateSection(tag));
       }
 

@@ -79,9 +79,8 @@ export function stringifyStyleObject(name: string, value: unknown) {
 
 export function escapeStyleValue(str: string) {
   let closers = "";
-  // `;` and `{` are hex escaped (unlike the backslash escapes) so escaped
-  // values never contain them raw: a raw `{` is always the rule opener and a
-  // raw `;` a declaration end, which `_style_rule_item` relies on when updating.
+  // `;` and `{` are hex escaped so escaped values never contain them raw, which
+  // `_style_rule_item` relies on: a raw `{` opens a rule and a raw `;` ends a declaration.
   const result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
     c === "<" ? "\\3C " : c === ";" ? "\\3B " : c === "{" ? "\\7B " : "\\" + c,
   );

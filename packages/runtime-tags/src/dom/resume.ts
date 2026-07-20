@@ -119,11 +119,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           renders[renderId] || renders(renderId));
         const walk = render.w;
         const scopeLookup: Record<string | number, Scope> = {};
-        // Scopes initialize on creation so a scope that serialized no
-        // props (elided from the fill entirely) is indistinguishable from
-        // an empty one when reached through visits/effects/references.
-        // Globals are scope 0, so `_(0)` lets payloads reference values
-        // first serialized within them.
+        // Lazily creates scopes on first access so one that serialized no
+        // props is indistinguishable from empty; scope 0 is the global.
         const getScope = (id: string | number) =>
           scopeLookup[id] ||
           (+id
@@ -152,10 +149,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               scopeId += partial;
             } else {
               if (scopeId) {
-                // Adopts the partial as the scope when it is new (assigning
-                // it onto itself is a no-op); merging into an existing scope
-                // re-initializes it so a closest branch id arriving in this
-                // fill applies.
+                // Adopt the partial as the scope when new, else merge into
+                // the existing one; re-init so a closest branch id applies.
                 initScope(
                   Object.assign(
                     (scopeLookup[scopeId] ||=
@@ -237,10 +232,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 curBranchScopes = push(curBranchScopes, branch);
                 if (accessor) {
                   visitScope[accessor] = curBranchScopes;
-                  // Serialized scope data is applied before visits, so a
-                  // serialized owner (non-lexical content) always wins; the
-                  // marker's scope fills lexical branches whose owner was
-                  // not serialized.
+                  // Scope data is applied before visits, so a serialized
+                  // owner wins; this fills only branches without one.
                   forEach(
                     curBranchScopes,
                     (scope) => (scope[AccessorProp.Owner] ??= visitScope),
@@ -329,10 +322,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               if (!(
                 readyIds &&
                 serialized.every(
-                  // A dep's data is always flushed before a marker that
-                  // names it (bindings only reference already written
-                  // values), so its resumes are guaranteed present once
-                  // its module has loaded.
+                  // A dep's data is flushed before any marker naming it, so
+                  // its resumes are present once its module has loaded.
                   (dep) =>
                     readyIds!.has(dep as string) && !render.b![dep].length,
                 )
@@ -344,11 +335,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               // when the reordered content arrives.
               break;
             } else {
-              // Gates cannot reach here: they only occur in ready streams,
-              // which are processed with `readyIds` set. A payload either
-              // returns its fill array directly, or applies it through the
-              // serialize context and ends in `,0` so its return value can
-              // never be mistaken for a fill.
+              // Gates can't reach here (only in ready streams, readyIds set);
+              // a payload returns its fill or applies it and ends in `,0`.
               const scopes = (serialized as ResumeFn)(serializeContext);
               if (Array.isArray(scopes)) applyScopes(scopes);
             }
@@ -411,9 +399,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             } else if (branchesEnabled) {
               (visitBranches ||= createVisitBranches())();
             } else if (render.b) {
-              // Pending ready data means a lazily loaded module may still
-              // enable branches; its visits ride the same flush as the
-              // ready data, so they are compacted in place to reprocess.
+              // A lazily loaded module may still enable branches, so retain
+              // (compact) these visits to reprocess once the ready data lands.
               visits[retained++] = visit;
             }
           }
