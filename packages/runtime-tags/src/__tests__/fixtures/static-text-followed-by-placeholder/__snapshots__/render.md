@@ -8,7 +8,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 = 1
@@ -23,7 +23,7 @@ UPDATE: ::text@2 "0" => "1"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 = 2

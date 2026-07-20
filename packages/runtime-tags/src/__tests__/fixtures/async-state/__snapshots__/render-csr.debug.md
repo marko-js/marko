@@ -32,7 +32,7 @@ REMOVE: ::text + ::text("LOADING...")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
@@ -63,7 +63,7 @@ REMOVE: ::text + ::text("LOADING...")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update

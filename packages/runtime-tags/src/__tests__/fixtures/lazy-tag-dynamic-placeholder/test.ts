@@ -16,10 +16,10 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function toggleClick(container: Element) {
-  (container.querySelector(".toggle") as HTMLElement).click();
+function toggleClick(document: Document) {
+  (document.querySelector(".toggle") as HTMLElement).click();
 }
 
-function incClick(container: Element) {
-  (container.querySelector(".inc") as HTMLElement).click();
+function incClick(document: Document) {
+  (document.querySelector(".inc") as HTMLElement).click();
 }

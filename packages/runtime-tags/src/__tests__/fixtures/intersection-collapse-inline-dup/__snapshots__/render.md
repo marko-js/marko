@@ -10,7 +10,7 @@
 
 # Update
 ```js
-c.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>
@@ -27,7 +27,7 @@ UPDATE: div::text "8" => "28"
 
 # Update
 ```js
-c.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

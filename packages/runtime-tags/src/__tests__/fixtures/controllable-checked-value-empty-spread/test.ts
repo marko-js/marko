@@ -6,8 +6,8 @@ import type { TestConfig } from "../../main.test";
 // computing `checked` on the server, while CSR did → SSR/CSR mismatch.
 // With `v = ""` the `value=""` checkbox is checked; toggling `v` to "x" unchecks
 // it (the binding no longer matches the empty value).
-function toggle(container: Element) {
-  container.querySelector("button")!.click();
+function toggle(document: Document) {
+  document.querySelector("button")!.click();
 }
 
 export const config: TestConfig = {

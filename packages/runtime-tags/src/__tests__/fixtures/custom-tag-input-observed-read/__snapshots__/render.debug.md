@@ -14,7 +14,7 @@
 
 # Update
 ```js
-c.querySelector(".inc").click();
+document.querySelector(".inc").click();
 ```
 ```html
 <button
@@ -35,7 +35,7 @@ UPDATE: .result::text "0" => "1"
 
 # Update
 ```js
-c.querySelector(".inc").click();
+document.querySelector(".inc").click();
 ```
 ```html
 <button

@@ -14,12 +14,12 @@
 
 # Update
 ```js
-container.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 
 # Update
 ```js
-container.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 ```html
 <button
@@ -47,7 +47,7 @@ LOG "loaded"
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button

@@ -25,7 +25,7 @@
 
 # Update
 ```js
-container.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 ```html
 <ul
@@ -59,7 +59,7 @@ UPDATE: ul[hidden] null => ""
 
 # Update
 ```js
-container.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 ```html
 <ul>
@@ -91,7 +91,7 @@ UPDATE: ul[hidden] "" => null
 
 # Update
 ```js
-container.querySelector("#reverse").click();
+document.querySelector("#reverse").click();
 ```
 ```html
 <ul>

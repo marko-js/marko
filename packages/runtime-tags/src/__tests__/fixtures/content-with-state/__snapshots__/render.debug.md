@@ -15,7 +15,7 @@
 
 # Update
 ```js
-container.querySelector("#increment").click();
+document.querySelector("#increment").click();
 ```
 ```html
 <button>
@@ -37,7 +37,7 @@ UPDATE: span::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#increment").click();
+document.querySelector("#increment").click();
 ```
 ```html
 <button>
@@ -59,7 +59,7 @@ UPDATE: span::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("#increment").click();
+document.querySelector("#increment").click();
 ```
 ```html
 <button>

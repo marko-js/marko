@@ -6,6 +6,6 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function click(container: Element) {
-  container.querySelector<HTMLButtonElement>(".load")!.click();
+function click(document: Document) {
+  document.querySelector<HTMLButtonElement>(".load")!.click();
 }

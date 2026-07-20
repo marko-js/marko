@@ -32,7 +32,7 @@ import {
 } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
-type Step = Input | Wait | Flush | Throws | ((container: Element) => unknown);
+type Step = Input | Wait | Flush | Throws | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
@@ -444,7 +444,7 @@ async function runSteps(
       }
     } else if (typeof update === "function") {
       tracker.beginUpdate();
-      await update(browser.window.document.documentElement);
+      await update(browser.window.document);
       run();
       await browser.runAsyncScripts();
       run();

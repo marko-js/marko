@@ -34,7 +34,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -85,7 +85,7 @@ UPDATE: .by-unknown-missing::text@11 "third" => "first"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -136,7 +136,7 @@ UPDATE: .by-unknown-missing::text@10 "first" => "second"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

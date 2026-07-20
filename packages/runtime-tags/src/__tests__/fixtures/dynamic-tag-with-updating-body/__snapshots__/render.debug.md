@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#count").click();
+document.querySelector("#count").click();
 ```
 ```html
 <div>
@@ -35,7 +35,7 @@ UPDATE: #count::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#changeTag").click();
+document.querySelector("#changeTag").click();
 ```
 ```html
 <span>
@@ -59,7 +59,7 @@ UPDATE: #count::text " " => "0"
 
 # Update
 ```js
-container.querySelector("#count").click();
+document.querySelector("#count").click();
 ```
 ```html
 <span>

@@ -10,7 +10,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div
@@ -30,7 +30,7 @@ UPDATE: .A[class] null => "A"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <span

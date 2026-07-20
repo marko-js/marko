@@ -24,7 +24,7 @@
 
 # Update
 ```js
-c.querySelectorAll("button")[3].click();
+document.querySelectorAll("button")[3].click();
 ```
 ```html
 <button>
@@ -55,7 +55,7 @@ UPDATE: .total::text "0" => "1"
 
 # Update
 ```js
-c.querySelectorAll("button")[3].click();
+document.querySelectorAll("button")[3].click();
 ```
 ```html
 <button>
@@ -86,7 +86,7 @@ UPDATE: .total::text "1" => "2"
 
 # Update
 ```js
-c.querySelectorAll("button")[1].click();
+document.querySelectorAll("button")[1].click();
 ```
 ```html
 <button>

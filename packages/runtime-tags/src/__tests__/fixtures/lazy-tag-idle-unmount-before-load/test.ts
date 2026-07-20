@@ -1,12 +1,12 @@
 import type { TestConfig } from "../../main.test";
 import { flushIdle, wait } from "../../utils/resolve";
 
-function toggle(container: Element) {
-  (container.querySelector("#toggle") as HTMLElement).click();
+function toggle(document: Document) {
+  (document.querySelector("#toggle") as HTMLElement).click();
 }
 
-function incClick(container: Element) {
-  (container.querySelector("#inc") as HTMLElement).click();
+function incClick(document: Document) {
+  (document.querySelector("#inc") as HTMLElement).click();
 }
 
 // Child has an idle trigger. toggle unmounts the child (scope destroyed, idle

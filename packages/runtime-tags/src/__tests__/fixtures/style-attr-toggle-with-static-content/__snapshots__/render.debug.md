@@ -10,7 +10,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />
@@ -27,7 +27,7 @@ UPDATE: div[style] "border:1px solid black" => "border: 1px solid black; display
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />
@@ -44,7 +44,7 @@ UPDATE: div[style] "border: 1px solid black; display: none;" => "border: 1px sol
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />

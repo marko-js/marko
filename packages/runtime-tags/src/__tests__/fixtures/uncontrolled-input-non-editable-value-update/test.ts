@@ -2,16 +2,16 @@ import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
 
-function update(container: Element) {
-  container.querySelectorAll("button")[0].click();
+function update(document: Document) {
+  document.querySelectorAll("button")[0].click();
 }
 
-function assertUpdated(container: Element) {
-  for (const input of container.querySelectorAll<HTMLInputElement>("input")) {
+function assertUpdated(document: Document) {
+  for (const input of document.querySelectorAll<HTMLInputElement>("input")) {
     assert.equal(input.value, "b", `${input.type} value`);
   }
 
-  const form = container.querySelector("form")!;
+  const form = document.querySelector("form")!;
   form.querySelector<HTMLInputElement>("[type=checkbox]")!.checked = true;
   form.querySelector<HTMLInputElement>("[type=radio]")!.checked = true;
   const data = new form.ownerDocument.defaultView!.FormData(form);
@@ -21,12 +21,12 @@ function assertUpdated(container: Element) {
   assert.equal(data.get("radio"), "b");
 }
 
-function remove(container: Element) {
-  container.querySelectorAll("button")[1].click();
+function remove(document: Document) {
+  document.querySelectorAll("button")[1].click();
 }
 
-function assertRemoved(container: Element) {
-  for (const input of container.querySelectorAll<HTMLInputElement>("input")) {
+function assertRemoved(document: Document) {
+  for (const input of document.querySelectorAll<HTMLInputElement>("input")) {
     assert.equal(input.hasAttribute("value"), false, `${input.type} attribute`);
     assert.equal(
       input.value,
@@ -35,7 +35,7 @@ function assertRemoved(container: Element) {
     );
   }
 
-  const form = container.querySelector("form")!;
+  const form = document.querySelector("form")!;
   const data = new form.ownerDocument.defaultView!.FormData(form);
   assert.equal(data.get("checkbox"), "on");
   assert.equal(data.get("dynamic"), "");

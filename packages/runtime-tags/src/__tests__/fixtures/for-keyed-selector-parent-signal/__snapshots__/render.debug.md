@@ -40,7 +40,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -89,7 +89,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelector("button.toggle").click();
+document.querySelector("button.toggle").click();
 ```
 ```html
 <table>
@@ -136,7 +136,7 @@ UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => null
 
 # Update
 ```js
-container.querySelector("button.toggle").click();
+document.querySelector("button.toggle").click();
 ```
 ```html
 <table>
@@ -185,7 +185,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>

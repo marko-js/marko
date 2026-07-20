@@ -20,7 +20,7 @@
 
 # Update
 ```js
-container.querySelector("button.cap").click();
+document.querySelector("button.cap").click();
 ```
 ```html
 <div

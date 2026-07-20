@@ -6,8 +6,8 @@ import type { TestConfig } from "../../main.test";
 // The `value=""` attribute must be present and consistent between SSR and CSR.
 // This is a degenerate case (`value=""` on a checkbox is an anti-pattern); the
 // point of the fixture is SSR/CSR consistency of the collapsed empty handling.
-function toggle(container: Element) {
-  container.querySelector("input")!.click();
+function toggle(document: Document) {
+  document.querySelector("input")!.click();
 }
 
 export const config: TestConfig = {

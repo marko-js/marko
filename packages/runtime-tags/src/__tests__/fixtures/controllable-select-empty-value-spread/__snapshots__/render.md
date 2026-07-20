@@ -25,7 +25,7 @@
 
 # Update
 ```js
-select(container, "a");
+select(document, "a");
 ```
 ```html
 <select>
@@ -58,7 +58,7 @@ UPDATE: output::text "value=" => "value=a"
 
 # Update
 ```js
-select(container, "");
+select(document, "");
 ```
 ```html
 <select>

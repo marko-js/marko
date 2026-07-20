@@ -15,7 +15,7 @@ before  after
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button
@@ -41,7 +41,7 @@ INSERT: ::text@0 + em
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button
@@ -64,12 +64,12 @@ REMOVE: #i + ::text(" after")
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button
@@ -91,7 +91,7 @@ INSERT: #i + :is(::text("before "), ::text(" after"))
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button

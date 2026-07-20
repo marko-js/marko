@@ -40,7 +40,7 @@
 
 # Update
 ```js
-click(c, 2);
+click(document, 2);
 ```
 ```html
 <button>
@@ -106,7 +106,7 @@ UPDATE: button:nth-of-type(12)[data-multiple] null => ""
 
 # Update
 ```js
-click(c, 3);
+click(document, 3);
 ```
 ```html
 <button>
@@ -169,7 +169,7 @@ UPDATE: button:nth-of-type(10)[data-multiple] "" => null
 
 # Update
 ```js
-click(c, 5);
+click(document, 5);
 ```
 ```html
 <button>

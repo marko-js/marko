@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-function click(container: Element) {
-  container.querySelectorAll("button")!.forEach((item) => item.click());
+function click(document: Document) {
+  document.querySelectorAll("button")!.forEach((item) => item.click());
 }
 
 export const config: TestConfig = {

@@ -22,7 +22,7 @@
 
 # Update
 ```js
-container.querySelector("#a").click();
+document.querySelector("#a").click();
 ```
 ```html
 <div
@@ -55,7 +55,7 @@ UPDATE: p:nth-of-type(2)::text@5 "" => "1"
 
 # Update
 ```js
-container.querySelector("#o").click();
+document.querySelector("#o").click();
 ```
 ```html
 <div

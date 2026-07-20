@@ -1,12 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-function click(container: Element) {
-  container.querySelector("button")!.click();
+function click(document: Document) {
+  document.querySelector("button")!.click();
 }
 
 function type(value: string) {
-  return (container: Element) => {
-    const input = container.querySelector("input")!;
+  return (document: Document) => {
+    const input = document.querySelector("input")!;
     const window = input.ownerDocument.defaultView!;
     input.value = value;
     input.dispatchEvent(new window.Event("input", { bubbles: true }));

@@ -10,7 +10,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -30,7 +30,7 @@ INSERT: div:nth-of-type(1) + div
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -53,7 +53,7 @@ INSERT: div:nth-of-type(2) + div
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

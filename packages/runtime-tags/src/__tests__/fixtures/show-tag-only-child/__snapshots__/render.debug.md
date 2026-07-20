@@ -20,7 +20,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>
@@ -47,7 +47,7 @@ INSERT: #b > :is(::text("fallback "), b)
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

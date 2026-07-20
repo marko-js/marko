@@ -6,13 +6,11 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function hoverBody(container: Element) {
-  const { defaultView } = container.ownerDocument;
-  container.ownerDocument.body.dispatchEvent(
-    new defaultView!.MouseEvent("mouseover"),
-  );
+function hoverBody(document: Document) {
+  const { defaultView } = document;
+  document.body.dispatchEvent(new defaultView!.MouseEvent("mouseover"));
 }
 
-function click(container: Element) {
-  container.querySelector<HTMLButtonElement>("#inc")!.click();
+function click(document: Document) {
+  document.querySelector<HTMLButtonElement>("#inc")!.click();
 }

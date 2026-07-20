@@ -15,7 +15,7 @@ which should be the same as
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>
@@ -37,7 +37,7 @@ UPDATE: button::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>
@@ -61,7 +61,7 @@ UPDATE: span:nth-of-type(2)::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

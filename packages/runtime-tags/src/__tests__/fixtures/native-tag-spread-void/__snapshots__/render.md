@@ -12,7 +12,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>
@@ -31,7 +31,7 @@ UPDATE: .b[class] "a" => "b"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

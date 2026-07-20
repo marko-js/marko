@@ -8,7 +8,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 369
@@ -26,7 +26,7 @@ UPDATE: ::text@2 "6" => "9"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 4812
@@ -44,7 +44,7 @@ UPDATE: ::text@2 "9" => "12"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 51015

@@ -18,7 +18,7 @@
 
 # Update
 ```js
-container.querySelector("button.toggle").click();
+document.querySelector("button.toggle").click();
 ```
 ```html
 <div

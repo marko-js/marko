@@ -1,15 +1,15 @@
 import type { TestConfig } from "../../main.test";
 
-function addTwo(container: Element) {
-  container.querySelector<HTMLButtonElement>("#addTwo")!.click();
+function addTwo(document: Document) {
+  document.querySelector<HTMLButtonElement>("#addTwo")!.click();
 }
 
-function triple(container: Element) {
-  container.querySelector<HTMLButtonElement>("#triple")!.click();
+function triple(document: Document) {
+  document.querySelector<HTMLButtonElement>("#triple")!.click();
 }
 
-function cube(container: Element) {
-  container.querySelector<HTMLButtonElement>("#cube")!.click();
+function cube(document: Document) {
+  document.querySelector<HTMLButtonElement>("#cube")!.click();
 }
 
 export const config: TestConfig = {

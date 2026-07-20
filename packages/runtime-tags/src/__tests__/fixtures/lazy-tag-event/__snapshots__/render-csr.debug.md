@@ -2,7 +2,7 @@
 
 # Update
 ```js
-container.ownerDocument.body.click();
+document.body.click();
 ```
 
 # Update

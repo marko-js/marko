@@ -11,7 +11,7 @@ The count is 0
 
 # Update
 ```js
-container.querySelector("button.inc").click();
+document.querySelector("button.inc").click();
 ```
 ```html
 <button
@@ -29,7 +29,7 @@ UPDATE: ::text@13 "0" => "1"
 
 # Update
 ```js
-container.querySelector("button.toggle").click();
+document.querySelector("button.toggle").click();
 ```
 ```html
 <button
@@ -47,12 +47,12 @@ REMOVE: .toggle + ::text("1")
 
 # Update
 ```js
-container.querySelector("button.inc").click();
+document.querySelector("button.inc").click();
 ```
 
 # Update
 ```js
-container.querySelector("button.toggle").click();
+document.querySelector("button.toggle").click();
 ```
 ```html
 <button
@@ -71,7 +71,7 @@ UPDATE: ::text@13 "" => "2"
 
 # Update
 ```js
-container.querySelector("button.inc").click();
+document.querySelector("button.inc").click();
 ```
 ```html
 <button

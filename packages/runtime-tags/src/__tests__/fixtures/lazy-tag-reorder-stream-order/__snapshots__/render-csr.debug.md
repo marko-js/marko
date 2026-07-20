@@ -48,7 +48,7 @@ INSERT: .reordered + .streamed
 
 # Update
 ```js
-container.querySelector(".reordered").click();
+document.querySelector(".reordered").click();
 ```
 ```html
 <button
@@ -69,7 +69,7 @@ UPDATE: .reordered::text@10 "0" => "1"
 
 # Update
 ```js
-container.querySelector(".streamed").click();
+document.querySelector(".streamed").click();
 ```
 ```html
 <button

@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-function click(container: Element) {
-  container
+function click(document: Document) {
+  document
     .querySelector<HTMLScriptElement>(`script[type="importmap"]`)!
     .click();
 }

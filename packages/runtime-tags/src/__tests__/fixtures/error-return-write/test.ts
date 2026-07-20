@@ -5,6 +5,6 @@ export const config: TestConfig = {
   skip_optimize: true,
   steps: [
     {},
-    throws((container) => container.querySelector("button")!.click()),
+    throws((document: Document) => document.querySelector("button")!.click()),
   ],
 };

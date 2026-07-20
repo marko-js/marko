@@ -8,7 +8,7 @@ Got: SYNC
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
@@ -37,7 +37,7 @@ INSERT: ::text("Got: "), ::text("ASYNC")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 Got: SYNC

@@ -4,6 +4,6 @@ export const config: TestConfig = {
   steps: [{}, clear],
 };
 
-function clear(container: Element) {
-  container.querySelector<HTMLButtonElement>("button#clear")!.click();
+function clear(document: Document) {
+  document.querySelector<HTMLButtonElement>("button#clear")!.click();
 }

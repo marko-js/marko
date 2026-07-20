@@ -12,7 +12,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div
@@ -33,7 +33,7 @@ UPDATE: .selected[class] null => "selected"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div
@@ -54,7 +54,7 @@ UPDATE: div[class] "selected" => ""
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div

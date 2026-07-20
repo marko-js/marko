@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-function click(container: Element) {
-  container.querySelector("button")!.click();
+function click(document: Document) {
+  document.querySelector("button")!.click();
 }
 
 // Two independent load tags load concurrently; both should render correctly

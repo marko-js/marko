@@ -13,7 +13,7 @@ WARN "A lazy load trigger could not find an element matching \".load\". The modu
 
 # Update
 ```js
-container.querySelector(".load").click();
+document.querySelector(".load").click();
 ```
 
 # Update

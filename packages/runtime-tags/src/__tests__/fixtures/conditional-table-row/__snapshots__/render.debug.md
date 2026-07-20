@@ -10,7 +10,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <table>
@@ -33,7 +33,7 @@ INSERT: table > tbody > tr
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <table>
@@ -50,7 +50,7 @@ REMOVE: table > tbody > tr
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <table>

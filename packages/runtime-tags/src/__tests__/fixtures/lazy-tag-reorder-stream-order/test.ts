@@ -15,10 +15,10 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function clickReordered(container: Element) {
-  container.querySelector<HTMLButtonElement>(".reordered")!.click();
+function clickReordered(document: Document) {
+  document.querySelector<HTMLButtonElement>(".reordered")!.click();
 }
 
-function clickStreamed(container: Element) {
-  container.querySelector<HTMLButtonElement>(".streamed")!.click();
+function clickStreamed(document: Document) {
+  document.querySelector<HTMLButtonElement>(".streamed")!.click();
 }

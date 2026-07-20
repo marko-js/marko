@@ -14,7 +14,7 @@
 
 # Update
 ```js
-c.querySelector("#a").click();
+document.querySelector("#a").click();
 ```
 ```html
 <button

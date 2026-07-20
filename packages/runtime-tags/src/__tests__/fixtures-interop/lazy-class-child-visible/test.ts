@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { flushVisible, wait } from "../../utils/resolve";
 
-function click(container: Element) {
-  (container.querySelector("#inc") as HTMLButtonElement).click();
+function click(document: Document) {
+  (document.querySelector("#inc") as HTMLButtonElement).click();
 }
 
 export const config: TestConfig = {

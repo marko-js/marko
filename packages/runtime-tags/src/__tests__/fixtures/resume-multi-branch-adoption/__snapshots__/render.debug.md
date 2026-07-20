@@ -20,7 +20,7 @@
 
 # Update
 ```js
-container.querySelector("button#clear").click();
+document.querySelector("button#clear").click();
 ```
 ```html
 <button

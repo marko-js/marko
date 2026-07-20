@@ -22,7 +22,7 @@
 
 # Update
 ```js
-container.querySelector("button.flip").click();
+document.querySelector("button.flip").click();
 ```
 ```html
 <button
@@ -49,7 +49,7 @@ UPDATE: ul > li:nth-of-type(2)[class] "sel" => null
 
 # Update
 ```js
-container.querySelector("button.flip").click();
+document.querySelector("button.flip").click();
 ```
 ```html
 <button

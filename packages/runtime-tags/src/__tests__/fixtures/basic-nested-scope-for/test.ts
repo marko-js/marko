@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
-function click(container: Element, number: number) {
+function click(document: Document, number: number) {
   const buttons: HTMLButtonElement[] = Array.from(
-    container.querySelectorAll("button"),
+    document.querySelectorAll("button"),
   );
   const button = buttons.find((b) => b.textContent === "" + number)!;
   button.click();
@@ -11,8 +11,8 @@ function click(container: Element, number: number) {
 export const config: TestConfig = {
   steps: [
     {},
-    (c: Element) => click(c, 2),
-    (c: Element) => click(c, 3),
-    (c: Element) => click(c, 5),
+    (document: Document) => click(document, 2),
+    (document: Document) => click(document, 3),
+    (document: Document) => click(document, 5),
   ],
 };

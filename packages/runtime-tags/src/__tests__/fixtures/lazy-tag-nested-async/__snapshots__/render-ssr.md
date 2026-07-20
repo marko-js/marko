@@ -89,7 +89,7 @@ INSERT: #after::text("after")
 
 # Update
 ```js
-container.querySelector("#child").click();
+document.querySelector("#child").click();
 ```
 ```html
 <div
@@ -131,7 +131,7 @@ UPDATE: #grand::text@8 "1" => "2"
 
 # Update
 ```js
-container.querySelector("#grand").click();
+document.querySelector("#grand").click();
 ```
 ```html
 <div

@@ -19,17 +19,17 @@
 
 # Update
 ```js
-container.querySelector(".change").click();
+document.querySelector(".change").click();
 ```
 
 # Update
 ```js
-container.querySelector(".up").click();
+document.querySelector(".up").click();
 ```
 
 # Update
 ```js
-container.querySelector(".change").click();
+document.querySelector(".change").click();
 ```
 ```html
 <button
@@ -55,7 +55,7 @@ UPDATE: .change::text "1" => "2"
 
 # Update
 ```js
-container.querySelector(".change").click();
+document.querySelector(".change").click();
 ```
 ```html
 <button
@@ -81,12 +81,12 @@ UPDATE: .change::text "2" => "3"
 
 # Update
 ```js
-container.querySelector(".down").click();
+document.querySelector(".down").click();
 ```
 
 # Update
 ```js
-container.querySelector(".change").click();
+document.querySelector(".change").click();
 ```
 ```html
 <button
@@ -112,7 +112,7 @@ UPDATE: .change::text "3" => "2"
 
 # Update
 ```js
-container.querySelector(".change").click();
+document.querySelector(".change").click();
 ```
 ```html
 <button

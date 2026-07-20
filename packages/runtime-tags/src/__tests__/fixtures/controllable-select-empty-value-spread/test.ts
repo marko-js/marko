@@ -5,15 +5,15 @@ import type { TestConfig } from "../../main.test";
 // truthy check (`data.value`) and silently dropped the empty-string value, so
 // the option rendered unselected on the server while CSR selected it — an
 // SSR/CSR mismatch.
-function select(container: Element, value: string) {
-  const el = container.querySelector("select")!;
+function select(document: Document, value: string) {
+  const el = document.querySelector("select")!;
   const window = el.ownerDocument.defaultView!;
   el.value = value;
   el.dispatchEvent(new window.Event("input", { bubbles: true }));
 }
 
-const selectA = (container: Element) => select(container, "a");
-const selectEmpty = (container: Element) => select(container, "");
+const selectA = (document: Document) => select(document, "a");
+const selectEmpty = (document: Document) => select(document, "");
 
 export const config: TestConfig = {
   steps: [{}, selectA, selectEmpty],

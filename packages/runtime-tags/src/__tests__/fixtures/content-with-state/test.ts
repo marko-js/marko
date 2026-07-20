@@ -4,6 +4,6 @@ export const config: TestConfig = {
   steps: [{}, click, click, click],
 };
 
-function click(container: Element) {
-  container.querySelector<HTMLButtonElement>("#increment")!.click();
+function click(document: Document) {
+  document.querySelector<HTMLButtonElement>("#increment")!.click();
 }

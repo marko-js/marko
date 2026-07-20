@@ -34,7 +34,7 @@ INSERT: #after::text("after")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div

@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button
@@ -45,10 +45,10 @@ UPDATE: #a::text@2 "1" => "2"
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```

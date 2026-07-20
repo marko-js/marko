@@ -16,7 +16,7 @@
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button
@@ -39,7 +39,7 @@ UPDATE: #inc::text@6 "0" => "1"
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button
@@ -56,7 +56,7 @@ REMOVE: div > #inc
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button
@@ -79,7 +79,7 @@ INSERT: div > #inc
 
 # Update
 ```js
-container.querySelector(`#${id}`).click();
+document.querySelector(`#${id}`).click();
 ```
 ```html
 <button

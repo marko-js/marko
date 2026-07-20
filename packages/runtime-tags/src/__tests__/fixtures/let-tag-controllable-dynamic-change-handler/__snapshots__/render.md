@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button
@@ -36,7 +36,7 @@ UPDATE: #inc::text@2 "1" => "3"
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button
@@ -58,12 +58,12 @@ UPDATE: #inc::text@2 "3" => "5"
 
 # Update
 ```js
-container.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button
@@ -84,7 +84,7 @@ UPDATE: #inc::text@2 "5" => "6"
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button

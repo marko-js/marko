@@ -9,7 +9,7 @@
 
 # Update
 ```js
-container.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 ```html
 <button

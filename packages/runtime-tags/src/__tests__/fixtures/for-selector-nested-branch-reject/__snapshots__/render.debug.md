@@ -22,7 +22,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <ul>
@@ -52,7 +52,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <ul>

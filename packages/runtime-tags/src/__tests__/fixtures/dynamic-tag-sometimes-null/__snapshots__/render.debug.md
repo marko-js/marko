@@ -6,7 +6,7 @@ Body Content
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -23,7 +23,7 @@ INSERT: div::text("Body Content")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 Body Content

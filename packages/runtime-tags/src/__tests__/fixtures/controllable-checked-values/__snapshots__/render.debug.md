@@ -21,7 +21,7 @@
 
 # Update
 ```js
-container.querySelectorAll(`input`)[1].click();
+document.querySelectorAll(`input`)[1].click();
 ```
 ```html
 <input
@@ -49,7 +49,7 @@ UPDATE: span::text "a,b" => "a"
 
 # Update
 ```js
-container.querySelectorAll(`input`)[2].click();
+document.querySelectorAll(`input`)[2].click();
 ```
 ```html
 <input
@@ -78,7 +78,7 @@ UPDATE: span::text "a" => "a,c"
 
 # Update
 ```js
-container.querySelectorAll(`input`)[0].click();
+document.querySelectorAll(`input`)[0].click();
 ```
 ```html
 <input

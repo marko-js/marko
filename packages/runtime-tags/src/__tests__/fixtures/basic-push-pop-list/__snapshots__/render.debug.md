@@ -16,7 +16,7 @@
 
 # Update
 ```js
-container.querySelector("#add").click();
+document.querySelector("#add").click();
 ```
 ```html
 <div>
@@ -40,7 +40,7 @@ INSERT: div::text("1")
 
 # Update
 ```js
-container.querySelector("#add").click();
+document.querySelector("#add").click();
 ```
 ```html
 <div>
@@ -64,7 +64,7 @@ INSERT: div::text@0 + ::text("2")
 
 # Update
 ```js
-container.querySelector("#remove").click();
+document.querySelector("#remove").click();
 ```
 ```html
 <div>
@@ -88,7 +88,7 @@ REMOVE: div::text + ::text("2")
 
 # Update
 ```js
-container.querySelector("#add").click();
+document.querySelector("#add").click();
 ```
 ```html
 <div>

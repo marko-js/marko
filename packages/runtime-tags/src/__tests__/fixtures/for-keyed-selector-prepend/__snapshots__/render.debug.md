@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("button.add").click();
+document.querySelector("button.add").click();
 ```
 ```html
 <button
@@ -50,7 +50,7 @@ UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
 
 # Update
 ```js
-container.querySelector("button.add").click();
+document.querySelector("button.add").click();
 ```
 ```html
 <button

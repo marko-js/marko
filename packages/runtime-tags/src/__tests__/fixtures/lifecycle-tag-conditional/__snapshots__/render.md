@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("#increment")?.click();
+document.querySelector("#increment")?.click();
 ```
 ```html
 <div
@@ -46,7 +46,7 @@ INSERT: #ref::text("Update 1")
 
 # Update
 ```js
-container.querySelector("#toggle")?.click();
+document.querySelector("#toggle")?.click();
 ```
 ```html
 <div
@@ -73,12 +73,12 @@ INSERT: #ref::text("Destroy")
 
 # Update
 ```js
-container.querySelector("#increment")?.click();
+document.querySelector("#increment")?.click();
 ```
 
 # Update
 ```js
-container.querySelector("#toggle")?.click();
+document.querySelector("#toggle")?.click();
 ```
 ```html
 <div

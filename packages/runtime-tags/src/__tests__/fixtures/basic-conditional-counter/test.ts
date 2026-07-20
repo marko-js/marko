@@ -1,11 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-const increment = (container: Element) => {
-  container.querySelector<HTMLButtonElement>("button.inc")!.click();
+const increment = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button.inc")!.click();
 };
 
-const toggle = (container: Element) => {
-  container.querySelector<HTMLButtonElement>("button.toggle")!.click();
+const toggle = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button.toggle")!.click();
 };
 
 export const config: TestConfig = {

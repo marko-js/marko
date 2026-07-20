@@ -6,10 +6,10 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function clickSync(container: Element) {
-  container.querySelector<HTMLButtonElement>("#sync")!.click();
+function clickSync(document: Document) {
+  document.querySelector<HTMLButtonElement>("#sync")!.click();
 }
 
-function clickAsync(container: Element) {
-  container.querySelector<HTMLButtonElement>("#async")!.click();
+function clickAsync(document: Document) {
+  document.querySelector<HTMLButtonElement>("#async")!.click();
 }

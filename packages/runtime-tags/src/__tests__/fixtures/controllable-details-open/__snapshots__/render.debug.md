@@ -10,7 +10,7 @@
 
 # Update
 ```js
-const details = container.querySelector("details");
+const details = document.querySelector("details");
 details.open = !details.open;
 ```
 ```html
@@ -33,7 +33,7 @@ UPDATE: span::text "false" => "true"
 
 # Update
 ```js
-const details = container.querySelector("details");
+const details = document.querySelector("details");
 details.open = !details.open;
 ```
 ```html
@@ -54,7 +54,7 @@ UPDATE: span::text "true" => "false"
 
 # Update
 ```js
-const details = container.querySelector("details");
+const details = document.querySelector("details");
 details.open = !details.open;
 ```
 ```html

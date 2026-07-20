@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#a").click();
+document.querySelector("#a").click();
 ```
 ```html
 <button
@@ -35,7 +35,7 @@ UPDATE: #a::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("#b").click();
+document.querySelector("#b").click();
 ```
 ```html
 <button

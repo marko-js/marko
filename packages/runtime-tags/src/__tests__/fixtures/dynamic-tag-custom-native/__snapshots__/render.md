@@ -8,7 +8,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />
@@ -25,7 +25,7 @@ UPDATE: #dynamic[id] null => "dynamic"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />

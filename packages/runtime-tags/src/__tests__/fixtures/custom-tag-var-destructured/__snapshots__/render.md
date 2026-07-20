@@ -20,7 +20,7 @@
 
 # Update
 ```js
-container.querySelector("button.inc").click();
+document.querySelector("button.inc").click();
 ```
 ```html
 <span>
@@ -48,7 +48,7 @@ UPDATE: span::text@6 "1" => "2"
 
 # Update
 ```js
-container.querySelector("button.assign").click();
+document.querySelector("button.assign").click();
 ```
 ```html
 <span>
@@ -76,7 +76,7 @@ UPDATE: span::text@6 "2" => "12"
 
 # Update
 ```js
-container.querySelector("button.inc").click();
+document.querySelector("button.inc").click();
 ```
 ```html
 <span>

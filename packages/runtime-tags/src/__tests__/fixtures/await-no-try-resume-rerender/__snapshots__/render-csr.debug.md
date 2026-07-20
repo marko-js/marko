@@ -28,7 +28,7 @@ UPDATE: #out::text@5 "" => "0"
 
 # Update
 ```js
-c.querySelector("#a").click();
+document.querySelector("#a").click();
 ```
 
 # Update

@@ -17,7 +17,7 @@
 
 # Update
 ```js
-container.querySelector("button#count").click();
+document.querySelector("button#count").click();
 ```
 ```html
 <button
@@ -41,7 +41,7 @@ UPDATE: div::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("button#count").click();
+document.querySelector("button#count").click();
 ```
 ```html
 <button
@@ -65,7 +65,7 @@ UPDATE: div::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("button#multiplier").click();
+document.querySelector("button#multiplier").click();
 ```
 ```html
 <button

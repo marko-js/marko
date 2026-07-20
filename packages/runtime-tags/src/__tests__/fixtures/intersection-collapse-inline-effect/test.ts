@@ -2,6 +2,6 @@ import type { TestConfig } from "../../main.test";
 
 export const config: TestConfig = { steps: [{}, click] };
 
-function click(c: Element) {
-  c.querySelector("button")!.click();
+function click(document: Document) {
+  document.querySelector("button")!.click();
 }

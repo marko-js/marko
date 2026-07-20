@@ -27,7 +27,7 @@ INSERT: .main + .child
 
 # Update
 ```js
-container.querySelector(".child").click();
+document.querySelector(".child").click();
 ```
 ```html
 <button

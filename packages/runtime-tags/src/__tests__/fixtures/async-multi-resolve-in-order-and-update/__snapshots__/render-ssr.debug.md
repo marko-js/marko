@@ -56,7 +56,7 @@ INSERT: p:nth-of-type(5)::text@5 + ::text("10")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

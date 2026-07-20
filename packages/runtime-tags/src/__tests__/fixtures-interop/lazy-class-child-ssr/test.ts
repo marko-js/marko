@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-function click(container: Element) {
-  (container.querySelector("#inc") as HTMLButtonElement).click();
+function click(document: Document) {
+  (document.querySelector("#inc") as HTMLButtonElement).click();
 }
 
 // Child is rendered unconditionally so it appears in the SSR output as a

@@ -20,7 +20,7 @@
 
 # Update
 ```js
-container.querySelector(".inc").click();
+document.querySelector(".inc").click();
 ```
 ```html
 <button
@@ -48,7 +48,7 @@ UPDATE: span:nth-of-type(2)::text "0" => "1"
 
 # Update
 ```js
-container.querySelector(".toggle").click();
+document.querySelector(".toggle").click();
 ```
 ```html
 <button

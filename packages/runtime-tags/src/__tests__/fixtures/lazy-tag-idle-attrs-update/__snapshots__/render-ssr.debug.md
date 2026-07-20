@@ -10,12 +10,12 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
@@ -35,7 +35,7 @@ UPDATE: span::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

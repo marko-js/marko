@@ -13,7 +13,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -36,7 +36,7 @@ UPDATE: button:nth-of-type(1)::text@8 "" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -59,7 +59,7 @@ UPDATE: button:nth-of-type(2)::text@8 "" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -82,7 +82,7 @@ UPDATE: button:nth-of-type(3)::text@8 "" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -105,7 +105,7 @@ UPDATE: button:nth-of-type(1)::text@10 "" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -128,7 +128,7 @@ UPDATE: button:nth-of-type(2)::text@10 "" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -151,7 +151,7 @@ UPDATE: button:nth-of-type(3)::text@10 "" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -174,7 +174,7 @@ UPDATE: button:nth-of-type(1)::text@8 "" => "2"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
@@ -197,7 +197,7 @@ UPDATE: button:nth-of-type(2)::text@8 "" => "2"
 
 # Update
 ```js
-container.querySelectorAll("button")[buttonIndex].click();
+document.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html

@@ -7,7 +7,7 @@
 
 # Update
 ```js
-container.querySelector("div").click();
+document.querySelector("div").click();
 ```
 ```html
 <div>
@@ -21,8 +21,8 @@ UPDATE: div::text@0 "0" => "1"
 
 # Update
 ```js
-const div = container.querySelector("div");
-const win = container.ownerDocument.defaultView;
+const div = document.querySelector("div");
+const win = document.defaultView;
 div.dispatchEvent(new win.MouseEvent("mouseover", {
   bubbles: true
 }));
@@ -30,7 +30,7 @@ div.dispatchEvent(new win.MouseEvent("mouseover", {
 
 # Update
 ```js
-container.querySelector("div").click();
+document.querySelector("div").click();
 ```
 ```html
 <div>
@@ -44,8 +44,8 @@ UPDATE: div::text@0 "1" => "0"
 
 # Update
 ```js
-const div = container.querySelector("div");
-const win = container.ownerDocument.defaultView;
+const div = document.querySelector("div");
+const win = document.defaultView;
 div.dispatchEvent(new win.MouseEvent("mouseover", {
   bubbles: true
 }));

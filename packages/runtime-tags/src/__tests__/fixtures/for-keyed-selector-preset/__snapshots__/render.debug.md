@@ -37,7 +37,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -82,7 +82,7 @@ UPDATE: table > tbody > tr:nth-of-type(2)[class] "danger" => null
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>

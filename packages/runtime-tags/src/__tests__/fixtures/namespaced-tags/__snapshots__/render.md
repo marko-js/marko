@@ -46,7 +46,7 @@
 
 # Update
 ```js
-container.querySelector(".toggle-parent").click();
+document.querySelector(".toggle-parent").click();
 ```
 ```html
 <div>
@@ -104,7 +104,7 @@ UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 
 # Update
 ```js
-container.querySelector(".toggle-parent").click();
+document.querySelector(".toggle-parent").click();
 ```
 ```html
 <div>
@@ -162,7 +162,7 @@ UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 
 # Update
 ```js
-container.querySelector(".toggle-parent").click();
+document.querySelector(".toggle-parent").click();
 ```
 ```html
 <div>
@@ -220,7 +220,7 @@ UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 
 # Update
 ```js
-container.querySelector(".toggle-child").click();
+document.querySelector(".toggle-child").click();
 ```
 ```html
 <div>
@@ -266,7 +266,7 @@ REMOVE: div > math::text + a
 
 # Update
 ```js
-container.querySelector(".toggle-child").click();
+document.querySelector(".toggle-child").click();
 ```
 ```html
 <div>
@@ -328,7 +328,7 @@ UPDATE: div > math > a:nth-of-type(2)[ns] null => "http://www.w3.org/1998/Math/M
 
 # Update
 ```js
-container.querySelector(".toggle-child").click();
+document.querySelector(".toggle-child").click();
 ```
 ```html
 <div>

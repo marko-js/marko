@@ -14,7 +14,7 @@
 
 # Update
 ```js
-c.querySelector("#class-api").click();
+document.querySelector("#class-api").click();
 ```
 ```html
 <button

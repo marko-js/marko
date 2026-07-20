@@ -12,7 +12,7 @@
 
 # Update
 ```js
-container.querySelector("#load").click();
+document.querySelector("#load").click();
 ```
 ## Console
 ```

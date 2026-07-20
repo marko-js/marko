@@ -22,7 +22,7 @@
 
 # Update
 ```js
-c.querySelector(".bump").click();
+document.querySelector(".bump").click();
 ```
 ```html
 <button
@@ -51,7 +51,7 @@ UPDATE: .n::text "0" => "1"
 
 # Update
 ```js
-c.querySelector(".show").click();
+document.querySelector(".show").click();
 ```
 ```html
 <button

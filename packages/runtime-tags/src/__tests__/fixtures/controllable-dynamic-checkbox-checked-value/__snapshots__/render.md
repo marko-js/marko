@@ -23,7 +23,7 @@
 
 # Update
 ```js
-container.querySelector(`input[value=b]`).click();
+document.querySelector(`input[value=b]`).click();
 ```
 ```html
 <input
@@ -54,7 +54,7 @@ UPDATE: span::text "a" => "b"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <input
@@ -80,7 +80,7 @@ REMOVE: input:nth-of-type(1) + input
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <input
@@ -113,7 +113,7 @@ UPDATE: input:nth-of-type(2)[checked] null => ""
 
 # Update
 ```js
-container.querySelector(`input[value=a]`).click();
+document.querySelector(`input[value=a]`).click();
 ```
 ```html
 <input

@@ -5,7 +5,7 @@ export const config: TestConfig = {
 };
 
 function click(selector: string) {
-  return (container: Element) => {
-    container.querySelector<HTMLButtonElement>(selector)!.click();
+  return (document: Document) => {
+    document.querySelector<HTMLButtonElement>(selector)!.click();
   };
 }

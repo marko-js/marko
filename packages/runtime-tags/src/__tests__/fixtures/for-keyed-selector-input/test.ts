@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-const clickFlip = (container: Element) =>
-  (container.querySelector("button.flip") as HTMLButtonElement).click();
+const clickFlip = (document: Document) =>
+  (document.querySelector("button.flip") as HTMLButtonElement).click();
 
 const rows = [
   { id: 1, label: "a" },

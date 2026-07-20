@@ -50,7 +50,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -109,7 +109,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -169,7 +169,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelector(selector).click();
+document.querySelector(selector).click();
 ```
 ```html
 <table>
@@ -229,7 +229,7 @@ INSERT: .danger + tr
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -289,7 +289,7 @@ UPDATE: table > tbody > tr:nth-of-type(2)[class] "danger" => null
 
 # Update
 ```js
-container.querySelector(selector).click();
+document.querySelector(selector).click();
 ```
 ```html
 <table>
@@ -337,7 +337,7 @@ REMOVE: table > tbody > tr
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -387,7 +387,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelector(selector).click();
+document.querySelector(selector).click();
 ```
 ```html
 <table>

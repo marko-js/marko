@@ -18,7 +18,7 @@
 
 # Update
 ```js
-container.querySelector("#class").click();
+document.querySelector("#class").click();
 ```
 ```html
 <section
@@ -43,7 +43,7 @@ UPDATE: #class::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#class").click();
+document.querySelector("#class").click();
 ```
 ```html
 <section

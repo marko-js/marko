@@ -6,6 +6,6 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function click(container: Element) {
-  (container.querySelector("#inc") as HTMLElement).click();
+function click(document: Document) {
+  (document.querySelector("#inc") as HTMLElement).click();
 }

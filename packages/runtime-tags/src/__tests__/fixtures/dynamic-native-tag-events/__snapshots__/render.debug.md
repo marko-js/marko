@@ -9,7 +9,7 @@
 
 # Update
 ```js
-container.querySelector(".A").click();
+document.querySelector(".A").click();
 ```
 ```html
 <div
@@ -28,7 +28,7 @@ UPDATE: .A[class] null => "A"
 
 # Update
 ```js
-container.querySelector(".A").click();
+document.querySelector(".A").click();
 ```
 ```html
 <span

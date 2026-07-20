@@ -14,7 +14,7 @@
 
 # Update
 ```js
-c.querySelector("#n").click();
+document.querySelector("#n").click();
 ```
 ```html
 <button
@@ -39,7 +39,7 @@ UPDATE: div::text@5 "" => "1"
 
 # Update
 ```js
-c.querySelector("#o").click();
+document.querySelector("#o").click();
 ```
 ```html
 <button
@@ -60,5 +60,5 @@ REMOVE: #n + div
 
 # Update
 ```js
-c.querySelector("#n").click();
+document.querySelector("#n").click();
 ```

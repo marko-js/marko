@@ -16,7 +16,7 @@
 
 # Update
 ```js
-container.querySelector("#controlled").click();
+document.querySelector("#controlled").click();
 ```
 ```html
 <button
@@ -41,7 +41,7 @@ UPDATE: #uncontrolled::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#uncontrolled").click();
+document.querySelector("#uncontrolled").click();
 ```
 ```html
 <button
@@ -64,7 +64,7 @@ UPDATE: #uncontrolled[data-internal] "0" => "1"
 
 # Update
 ```js
-container.querySelector("#controlled").click();
+document.querySelector("#controlled").click();
 ```
 ```html
 <button
@@ -89,7 +89,7 @@ UPDATE: #uncontrolled::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("#uncontrolled").click();
+document.querySelector("#uncontrolled").click();
 ```
 ```html
 <button
@@ -112,7 +112,7 @@ UPDATE: #uncontrolled[data-internal] "1" => "2"
 
 # Update
 ```js
-container.querySelector("#controlled").click();
+document.querySelector("#controlled").click();
 ```
 ```html
 <button
@@ -137,7 +137,7 @@ UPDATE: #uncontrolled::text "2" => "3"
 
 # Update
 ```js
-container.querySelector("#uncontrolled").click();
+document.querySelector("#uncontrolled").click();
 ```
 ```html
 <button

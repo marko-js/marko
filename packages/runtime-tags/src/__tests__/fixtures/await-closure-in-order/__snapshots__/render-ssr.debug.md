@@ -7,12 +7,12 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
@@ -37,7 +37,7 @@ INSERT: span:nth-of-type(2)::text("1")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

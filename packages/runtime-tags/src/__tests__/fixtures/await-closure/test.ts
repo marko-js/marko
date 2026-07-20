@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { after, flush } from "../../utils/resolve";
 
-function click(container: Element) {
-  container.querySelector("button")!.click();
+function click(document: Document) {
+  document.querySelector("button")!.click();
 }
 
 export const config: TestConfig = {

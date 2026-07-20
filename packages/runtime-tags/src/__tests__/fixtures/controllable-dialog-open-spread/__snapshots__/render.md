@@ -10,7 +10,7 @@
 
 # Update
 ```js
-const dialog = container.querySelector("dialog");
+const dialog = document.querySelector("dialog");
 dialog.open = !dialog.open;
 ```
 ```html
@@ -29,7 +29,7 @@ UPDATE: span::text "true" => "false"
 
 # Update
 ```js
-const dialog = container.querySelector("dialog");
+const dialog = document.querySelector("dialog");
 dialog.open = !dialog.open;
 ```
 ```html
@@ -50,7 +50,7 @@ UPDATE: span::text "false" => "true"
 
 # Update
 ```js
-const dialog = container.querySelector("dialog");
+const dialog = document.querySelector("dialog");
 dialog.open = !dialog.open;
 ```
 ```html

@@ -18,10 +18,10 @@
 
 # Update
 ```js
-container.querySelectorAll(`input`)[1].click();
+document.querySelectorAll(`input`)[1].click();
 ```
 
 # Update
 ```js
-_strict.default.deepEqual([...container.querySelectorAll(`input`)].map(input => input.checked), [true, false]);
+_strict.default.deepEqual([...document.querySelectorAll(`input`)].map(input => input.checked), [true, false]);
 ```

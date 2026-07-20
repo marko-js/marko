@@ -1,11 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-function clickParent(container: Element) {
-  (container.querySelector(".toggle-parent") as HTMLButtonElement).click();
+function clickParent(document: Document) {
+  (document.querySelector(".toggle-parent") as HTMLButtonElement).click();
 }
 
-function clickChild(container: Element) {
-  (container.querySelector(".toggle-child") as HTMLButtonElement).click();
+function clickChild(document: Document) {
+  (document.querySelector(".toggle-child") as HTMLButtonElement).click();
 }
 
 export const config: TestConfig = {

@@ -10,13 +10,13 @@ export const config: TestConfig = {
   steps: [{}, drop, type("hello")],
 };
 
-function drop(container: Element) {
-  container.querySelector("button")!.click();
+function drop(document: Document) {
+  document.querySelector("button")!.click();
 }
 
 function type(value: string) {
-  return (container: Element) => {
-    const input = container.querySelector("input")!;
+  return (document: Document) => {
+    const input = document.querySelector("input")!;
     const window = input.ownerDocument.defaultView!;
     input.value = value;
     input.dispatchEvent(new window.Event("input", { bubbles: true }));

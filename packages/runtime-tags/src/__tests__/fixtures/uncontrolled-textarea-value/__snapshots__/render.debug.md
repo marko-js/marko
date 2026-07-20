@@ -7,7 +7,7 @@
 
 # Update
 ```js
-const textarea = container.querySelector("textarea");
+const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
@@ -17,7 +17,7 @@ textarea.dispatchEvent(new window.Event("input", {
 
 # Update
 ```js
-const textarea = container.querySelector("textarea");
+const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
@@ -27,7 +27,7 @@ textarea.dispatchEvent(new window.Event("input", {
 
 # Update
 ```js
-const textarea = container.querySelector("textarea");
+const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {

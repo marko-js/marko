@@ -15,7 +15,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />
@@ -40,7 +40,7 @@ INSERT: .attached > li:nth-of-type(2) + li
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />
@@ -68,7 +68,7 @@ INSERT: .attached > li:nth-of-type(3) + li
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />

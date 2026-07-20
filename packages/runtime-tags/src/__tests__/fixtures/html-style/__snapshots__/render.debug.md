@@ -2,15 +2,15 @@
 
 # Update
 ```js
-container.querySelector("style").click();
+document.querySelector("style").click();
 ```
 
 # Update
 ```js
-container.querySelector("style").click();
+document.querySelector("style").click();
 ```
 
 # Update
 ```js
-container.querySelector("style").click();
+document.querySelector("style").click();
 ```

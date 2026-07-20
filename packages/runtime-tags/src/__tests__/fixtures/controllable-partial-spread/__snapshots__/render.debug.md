@@ -17,12 +17,12 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
 ```js
-const input = container.querySelectorAll("input")[2];
+const input = document.querySelectorAll("input")[2];
 const window = input.ownerDocument.defaultView;
 input.value = "typed";
 input.dispatchEvent(new window.Event("input", {

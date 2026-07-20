@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-function increment(container: Element) {
-  container.querySelector<HTMLButtonElement>("#increment")?.click();
+function increment(document: Document) {
+  document.querySelector<HTMLButtonElement>("#increment")?.click();
 }
 
 export const config: TestConfig = {

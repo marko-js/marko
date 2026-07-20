@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("#add").click();
+document.querySelector("#add").click();
 ```
 ```html
 <div>
@@ -48,7 +48,7 @@ INSERT: div > div:nth-of-type(1) + div
 
 # Update
 ```js
-container.querySelector("#remove").click();
+document.querySelector("#remove").click();
 ```
 ```html
 <div>
@@ -74,7 +74,7 @@ REMOVE: div > div + div
 
 # Update
 ```js
-container.querySelector("#remove").click();
+document.querySelector("#remove").click();
 ```
 ```html
 <div>
@@ -97,7 +97,7 @@ REMOVE: div > div
 
 # Update
 ```js
-container.querySelector("#add").click();
+document.querySelector("#add").click();
 ```
 ```html
 <div>

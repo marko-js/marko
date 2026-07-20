@@ -25,7 +25,7 @@ INSERT: #inc + span
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button

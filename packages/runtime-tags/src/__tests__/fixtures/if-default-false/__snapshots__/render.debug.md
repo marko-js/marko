@@ -5,7 +5,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />
@@ -18,7 +18,7 @@ INSERT: button + ::text("hi")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />
@@ -30,7 +30,7 @@ REMOVE: button + ::text("hi")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button />

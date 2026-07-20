@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("#s").click();
+document.querySelector("#s").click();
 ```
 ```html
 <div
@@ -48,7 +48,7 @@ INSERT: #s + p
 
 # Update
 ```js
-container.querySelector("#o").click();
+document.querySelector("#o").click();
 ```
 ```html
 <div

@@ -17,7 +17,7 @@
 
 # Update
 ```js
-container.querySelector(selector).click();
+document.querySelector(selector).click();
 ```
 ```html
 <div>
@@ -42,7 +42,7 @@ UPDATE: div::text@13 "1" => "3"
 
 # Update
 ```js
-container.querySelector(selector).click();
+document.querySelector(selector).click();
 ```
 ```html
 <div>

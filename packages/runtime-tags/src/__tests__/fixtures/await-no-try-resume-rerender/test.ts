@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
-function clickA(c: Element) {
-  c.querySelector<HTMLButtonElement>("#a")!.click();
+function clickA(document: Document) {
+  document.querySelector<HTMLButtonElement>("#a")!.click();
 }
 export const config: TestConfig = {
   equivalent: false,

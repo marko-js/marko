@@ -17,17 +17,17 @@
 
 # Update
 ```js
-c.querySelector(".inc").click();
+document.querySelector(".inc").click();
 ```
 
 # Update
 ```js
-c.querySelector(".inc").click();
+document.querySelector(".inc").click();
 ```
 
 # Update
 ```js
-c.querySelector(".show").click();
+document.querySelector(".show").click();
 ```
 ```html
 <button

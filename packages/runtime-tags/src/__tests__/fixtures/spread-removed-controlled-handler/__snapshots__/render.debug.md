@@ -13,7 +13,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <input
@@ -34,7 +34,7 @@ UPDATE: input[type] null => "text"
 
 # Update
 ```js
-const input = container.querySelector("input");
+const input = document.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {

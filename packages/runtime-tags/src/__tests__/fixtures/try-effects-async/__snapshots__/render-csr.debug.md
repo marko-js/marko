@@ -38,7 +38,7 @@ INSERT: div::text("0")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
@@ -78,7 +78,7 @@ INSERT: div::text("1")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update

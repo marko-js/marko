@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button
@@ -37,7 +37,7 @@ REMOVE: #display + #display
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button

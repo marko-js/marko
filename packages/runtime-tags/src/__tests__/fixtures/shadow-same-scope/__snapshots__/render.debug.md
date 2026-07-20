@@ -24,7 +24,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button")[next(container)].click();
+document.querySelectorAll("button")[next(document)].click();
 ```
 ```html
 <div>
@@ -55,7 +55,7 @@ UPDATE: div:nth-of-type(1) > button::text "0" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[next(container)].click();
+document.querySelectorAll("button")[next(document)].click();
 ```
 ```html
 <div>
@@ -86,7 +86,7 @@ UPDATE: div:nth-of-type(1) > div > button::text "0" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[next(container)].click();
+document.querySelectorAll("button")[next(document)].click();
 ```
 ```html
 <div>
@@ -117,7 +117,7 @@ UPDATE: div:nth-of-type(1) > div > div > button::text "0" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button")[next(container)].click();
+document.querySelectorAll("button")[next(document)].click();
 ```
 ```html
 <div>

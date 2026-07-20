@@ -17,12 +17,12 @@ export const config: TestConfig = {
   steps: [{}, click, mouseover, click, mouseover],
 };
 
-function click(container: Element) {
-  container.querySelector("div")!.click();
+function click(document: Document) {
+  document.querySelector("div")!.click();
 }
 
-function mouseover(container: Element) {
-  const div = container.querySelector("div")!;
-  const win = container.ownerDocument!.defaultView!;
+function mouseover(document: Document) {
+  const div = document.querySelector("div")!;
+  const win = document.defaultView!;
   div.dispatchEvent(new win.MouseEvent("mouseover", { bubbles: true }));
 }

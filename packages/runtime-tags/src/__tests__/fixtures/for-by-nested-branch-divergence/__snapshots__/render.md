@@ -18,7 +18,7 @@
 
 # Update
 ```js
-c.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -44,7 +44,7 @@ INSERT: div > span
 
 # Update
 ```js
-c.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

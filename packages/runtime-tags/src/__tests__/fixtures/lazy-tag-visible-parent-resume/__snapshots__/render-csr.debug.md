@@ -27,7 +27,7 @@ INSERT: .parent + .child
 
 # Update
 ```js
-container.querySelector(".parent").click();
+document.querySelector(".parent").click();
 ```
 ```html
 <button
@@ -48,7 +48,7 @@ UPDATE: .parent::text@7 "1" => "2"
 
 # Update
 ```js
-container.querySelector(".child").click();
+document.querySelector(".child").click();
 ```
 ```html
 <button

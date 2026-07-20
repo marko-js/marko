@@ -9,7 +9,7 @@
 
 # Update
 ```js
-c.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 ```html
 <button
@@ -30,7 +30,7 @@ INSERT: #toggle + #inc
 
 # Update
 ```js
-c.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button
@@ -51,7 +51,7 @@ UPDATE: #inc::text@6 "0" => "1"
 
 # Update
 ```js
-c.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button
@@ -72,7 +72,7 @@ UPDATE: #inc::text@6 "1" => "2"
 
 # Update
 ```js
-c.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 ```html
 <button
@@ -88,7 +88,7 @@ REMOVE: #toggle + #inc
 
 # Update
 ```js
-c.querySelector("#toggle").click();
+document.querySelector("#toggle").click();
 ```
 ```html
 <button

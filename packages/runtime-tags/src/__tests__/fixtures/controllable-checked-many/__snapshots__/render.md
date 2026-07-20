@@ -16,7 +16,7 @@
 
 # Update
 ```js
-container.querySelectorAll("input").item(0).click();
+document.querySelectorAll("input").item(0).click();
 ```
 ```html
 <input
@@ -40,7 +40,7 @@ UPDATE: div::text "false,false,false" => "true,false,false"
 
 # Update
 ```js
-container.querySelectorAll("input").item(1).click();
+document.querySelectorAll("input").item(1).click();
 ```
 ```html
 <input
@@ -65,7 +65,7 @@ UPDATE: div::text "true,false,false" => "true,true,false"
 
 # Update
 ```js
-container.querySelectorAll("input").item(1).click();
+document.querySelectorAll("input").item(1).click();
 ```
 ```html
 <input

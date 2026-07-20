@@ -21,7 +21,7 @@
 
 # Update
 ```js
-container.querySelector("input").click();
+document.querySelector("input").click();
 ```
 ```html
 <input
@@ -49,7 +49,7 @@ UPDATE: span::text "a,b" => "b"
 
 # Update
 ```js
-container.querySelector("input").click();
+document.querySelector("input").click();
 ```
 ```html
 <input
@@ -77,7 +77,7 @@ UPDATE: span::text "b" => "b,a"
 
 # Update
 ```js
-container.querySelector("input").click();
+document.querySelector("input").click();
 ```
 ```html
 <input

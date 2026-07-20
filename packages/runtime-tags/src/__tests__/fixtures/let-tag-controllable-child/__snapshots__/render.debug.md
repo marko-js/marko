@@ -14,7 +14,7 @@ source=1
 
 # Update
 ```js
-container.querySelectorAll("button").forEach(item => item.click());
+document.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
 <button>
@@ -41,7 +41,7 @@ UPDATE: button:nth-of-type(3)::text@2 "1" => "2"
 
 # Update
 ```js
-container.querySelectorAll("button").forEach(item => item.click());
+document.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
 <button>
@@ -68,7 +68,7 @@ UPDATE: button:nth-of-type(3)::text@2 "2" => "3"
 
 # Update
 ```js
-container.querySelectorAll("button").forEach(item => item.click());
+document.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
 <button>

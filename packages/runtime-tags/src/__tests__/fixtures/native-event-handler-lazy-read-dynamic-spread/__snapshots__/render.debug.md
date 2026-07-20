@@ -32,7 +32,7 @@
 
 # Update
 ```js
-c.querySelector(".bump").click();
+document.querySelector(".bump").click();
 ```
 ```html
 <button
@@ -71,7 +71,7 @@ UPDATE: .state::text@5 "0" => "1"
 
 # Update
 ```js
-c.querySelector(".a").click();
+document.querySelector(".a").click();
 ```
 ```html
 <button
@@ -112,7 +112,7 @@ UPDATE: .log::text "" => "a(1)"
 
 # Update
 ```js
-c.querySelector(".b").click();
+document.querySelector(".b").click();
 ```
 ```html
 <button
@@ -153,7 +153,7 @@ UPDATE: .log::text "a(1)" => "a(1)b(1)"
 
 # Update
 ```js
-c.querySelector(".toggle").click();
+document.querySelector(".toggle").click();
 ```
 ```html
 <button
@@ -194,17 +194,17 @@ UPDATE: .state::text "true" => ""
 
 # Update
 ```js
-c.querySelector(".a").click();
+document.querySelector(".a").click();
 ```
 
 # Update
 ```js
-c.querySelector(".b").click();
+document.querySelector(".b").click();
 ```
 
 # Update
 ```js
-c.querySelector(".toggle").click();
+document.querySelector(".toggle").click();
 ```
 ```html
 <button
@@ -245,7 +245,7 @@ UPDATE: .state::text@0 "" => "true"
 
 # Update
 ```js
-c.querySelector(".bump").click();
+document.querySelector(".bump").click();
 ```
 ```html
 <button
@@ -286,7 +286,7 @@ UPDATE: .state::text@5 "1" => "2"
 
 # Update
 ```js
-c.querySelector(".a").click();
+document.querySelector(".a").click();
 ```
 ```html
 <button
@@ -327,7 +327,7 @@ UPDATE: .log::text "a(1)b(1)" => "a(1)b(1)a(2)"
 
 # Update
 ```js
-c.querySelector(".b").click();
+document.querySelector(".b").click();
 ```
 ```html
 <button

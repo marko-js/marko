@@ -32,7 +32,7 @@ UPDATE: div:nth-of-type(2)::text@12 "" => "C Value"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-function toggle(container: Element) {
-  (container.querySelector("#toggle") as HTMLButtonElement).click();
+function toggle(document: Document) {
+  (document.querySelector("#toggle") as HTMLButtonElement).click();
 }
 
 // Child starts visible in SSR so the preserved fragment markers are emitted.

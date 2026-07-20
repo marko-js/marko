@@ -16,7 +16,7 @@
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button
@@ -39,7 +39,7 @@ UPDATE: #tags::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#class").click();
+document.querySelector("#class").click();
 ```
 ```html
 <button
@@ -62,7 +62,7 @@ UPDATE: #class::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button
@@ -85,7 +85,7 @@ UPDATE: #tags::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("#class").click();
+document.querySelector("#class").click();
 ```
 ```html
 <button
@@ -108,7 +108,7 @@ UPDATE: #class::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button

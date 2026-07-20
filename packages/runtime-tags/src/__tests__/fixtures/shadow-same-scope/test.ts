@@ -6,12 +6,12 @@ export const config: TestConfig = {
   steps: [{}, click, click, click, click],
 };
 
-function click(container: Element) {
-  container.querySelectorAll("button")![next(container)].click();
+function click(document: Document) {
+  document.querySelectorAll("button")![next(document)].click();
 }
 
-function next(container: Element) {
-  const doc = container.ownerDocument;
+function next(document: Document) {
+  const doc = document;
   const num = (clickCount.get(doc) ?? -1) + 1;
   clickCount.set(doc, num);
   return num;

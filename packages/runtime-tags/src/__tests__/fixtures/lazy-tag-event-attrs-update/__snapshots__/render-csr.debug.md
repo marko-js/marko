@@ -7,17 +7,17 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
 ```js
-container.ownerDocument.body.dispatchEvent(new container.ownerDocument.defaultView.Event("mouseover", {
+document.body.dispatchEvent(new document.defaultView.Event("mouseover", {
 bubbles: true
   }));
 ```
@@ -38,7 +38,7 @@ INSERT: button + span
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

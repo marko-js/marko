@@ -22,7 +22,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button.toggle")[n].click();
+document.querySelectorAll("button.toggle")[n].click();
 ```
 ```html
 <ul>
@@ -49,7 +49,7 @@ UPDATE: ul > li:nth-of-type(1)[class] "danger" => null
 
 # Update
 ```js
-container.querySelectorAll("button.toggle")[n].click();
+document.querySelectorAll("button.toggle")[n].click();
 ```
 ```html
 <ul>

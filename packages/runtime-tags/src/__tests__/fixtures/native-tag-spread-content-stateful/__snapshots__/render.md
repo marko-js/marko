@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("button.inc").click();
+document.querySelector("button.inc").click();
 ```
 ```html
 <div
@@ -45,7 +45,7 @@ UPDATE: .count::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("button.inc").click();
+document.querySelector("button.inc").click();
 ```
 ```html
 <div

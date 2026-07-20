@@ -33,7 +33,7 @@ INSERT: .s + .b
 
 # Update
 ```js
-container.querySelector(".s").click();
+document.querySelector(".s").click();
 ```
 ```html
 <button
@@ -59,7 +59,7 @@ UPDATE: .s::text@2 "?" => "true"
 
 # Update
 ```js
-container.querySelector(".b").click();
+document.querySelector(".b").click();
 ```
 ```html
 <button

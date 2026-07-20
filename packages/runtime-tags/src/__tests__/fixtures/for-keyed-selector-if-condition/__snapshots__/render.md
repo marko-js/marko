@@ -30,7 +30,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <ul>
@@ -68,7 +68,7 @@ INSERT: ul > li:nth-of-type(3) > strong
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <ul>

@@ -17,7 +17,7 @@
 
 # Update
 ```js
-container.querySelector("button#show").click();
+document.querySelector("button#show").click();
 ```
 ```html
 <button
@@ -52,7 +52,7 @@ UPDATE: div:nth-of-type(3) > span::text " " => "second"
 
 # Update
 ```js
-container.querySelector("button#clear").click();
+document.querySelector("button#clear").click();
 ```
 ```html
 <button

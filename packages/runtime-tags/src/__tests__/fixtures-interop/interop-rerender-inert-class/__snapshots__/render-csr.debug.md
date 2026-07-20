@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button
@@ -35,7 +35,7 @@ UPDATE: #display::text "hi" => "hi!"
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button

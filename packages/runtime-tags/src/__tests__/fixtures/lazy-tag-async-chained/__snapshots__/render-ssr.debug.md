@@ -28,7 +28,7 @@ INSERT: #async::text("2")
 
 # Update
 ```js
-container.querySelector("#sync").click();
+document.querySelector("#sync").click();
 ```
 ```html
 <button
@@ -49,7 +49,7 @@ UPDATE: #sync::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("#async").click();
+document.querySelector("#async").click();
 ```
 ```html
 <button

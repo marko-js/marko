@@ -14,6 +14,6 @@ export const config: TestConfig = {
   steps: [{}, rot, rot],
 };
 
-function rot(c: Element) {
-  c.querySelector("button")!.click();
+function rot(document: Document) {
+  document.querySelector("button")!.click();
 }

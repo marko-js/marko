@@ -13,7 +13,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button").forEach(item => item.click());
+document.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
 <button>
@@ -36,7 +36,7 @@ UPDATE: button:nth-of-type(2)::text "0" => "1"
 
 # Update
 ```js
-container.querySelectorAll("button").forEach(item => item.click());
+document.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
 <button>
@@ -59,7 +59,7 @@ UPDATE: button:nth-of-type(2)::text "1" => "2"
 
 # Update
 ```js
-container.querySelectorAll("button").forEach(item => item.click());
+document.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
 <button>

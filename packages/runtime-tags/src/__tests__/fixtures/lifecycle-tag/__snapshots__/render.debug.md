@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#increment")?.click();
+document.querySelector("#increment")?.click();
 ```
 ```html
 <div
@@ -36,7 +36,7 @@ INSERT: #ref::text("Update 1")
 
 # Update
 ```js
-container.querySelector("#increment")?.click();
+document.querySelector("#increment")?.click();
 ```
 ```html
 <div

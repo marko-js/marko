@@ -7,10 +7,10 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```

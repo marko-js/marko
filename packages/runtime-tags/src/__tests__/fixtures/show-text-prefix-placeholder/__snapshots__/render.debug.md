@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <strong>
@@ -49,7 +49,7 @@ REMOVE: em::text + ::text("8")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <strong>

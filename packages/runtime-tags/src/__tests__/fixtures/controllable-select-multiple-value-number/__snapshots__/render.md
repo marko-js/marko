@@ -24,7 +24,7 @@
 
 # Update
 ```js
-selectIndex(container, 0);
+selectIndex(document, 0);
 ```
 ```html
 <select
@@ -56,12 +56,12 @@ UPDATE: span::text "1" => "0,1"
 
 # Update
 ```js
-selectIndex(container, 1);
+selectIndex(document, 1);
 ```
 
 # Update
 ```js
-selectIndex(container, 2);
+selectIndex(document, 2);
 ```
 ```html
 <select
@@ -94,7 +94,7 @@ UPDATE: span::text "0,1" => "0,1,2"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <select

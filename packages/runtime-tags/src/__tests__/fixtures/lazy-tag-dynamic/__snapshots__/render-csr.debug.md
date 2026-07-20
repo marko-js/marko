@@ -35,7 +35,7 @@ INSERT: .inc + div
 
 # Update
 ```js
-container.querySelector(".inc").click();
+document.querySelector(".inc").click();
 ```
 ```html
 <button
@@ -59,7 +59,7 @@ UPDATE: div::text@3 "1" => "2"
 
 # Update
 ```js
-container.querySelector(".toggle").click();
+document.querySelector(".toggle").click();
 ```
 ```html
 <button
@@ -80,7 +80,7 @@ REMOVE: .inc + div
 
 # Update
 ```js
-container.querySelector(".toggle").click();
+document.querySelector(".toggle").click();
 ```
 ```html
 <button
@@ -106,7 +106,7 @@ UPDATE: div::text@3 "" => "2"
 
 # Update
 ```js
-container.querySelector(".inc").click();
+document.querySelector(".inc").click();
 ```
 ```html
 <button

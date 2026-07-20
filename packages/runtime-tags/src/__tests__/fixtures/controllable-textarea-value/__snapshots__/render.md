@@ -10,7 +10,7 @@
 
 # Update
 ```js
-const textarea = container.querySelector("textarea");
+const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
@@ -34,7 +34,7 @@ UPDATE: span::text "hello" => "w"
 
 # Update
 ```js
-const textarea = container.querySelector("textarea");
+const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
@@ -58,7 +58,7 @@ UPDATE: span::text "w" => "wor"
 
 # Update
 ```js
-const textarea = container.querySelector("textarea");
+const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {

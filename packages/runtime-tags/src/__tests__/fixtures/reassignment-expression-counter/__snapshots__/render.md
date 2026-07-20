@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("#addTwo").click();
+document.querySelector("#addTwo").click();
 ```
 ```html
 <button
@@ -47,7 +47,7 @@ UPDATE: #cube::text "0" => "2"
 
 # Update
 ```js
-container.querySelector("#triple").click();
+document.querySelector("#triple").click();
 ```
 ```html
 <button
@@ -75,7 +75,7 @@ UPDATE: #cube::text "2" => "6"
 
 # Update
 ```js
-container.querySelector("#cube").click();
+document.querySelector("#cube").click();
 ```
 ```html
 <button

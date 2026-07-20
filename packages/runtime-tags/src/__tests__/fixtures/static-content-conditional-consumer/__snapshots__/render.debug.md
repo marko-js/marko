@@ -9,7 +9,7 @@
 
 # Update
 ```js
-container.querySelector("button#toggle").click();
+document.querySelector("button#toggle").click();
 ```
 ```html
 <button
@@ -28,7 +28,7 @@ INSERT: #toggle + div
 
 # Update
 ```js
-container.querySelector("button#toggle").click();
+document.querySelector("button#toggle").click();
 ```
 ```html
 <button

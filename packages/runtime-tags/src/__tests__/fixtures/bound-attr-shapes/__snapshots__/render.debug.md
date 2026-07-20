@@ -13,7 +13,7 @@
 
 # Update
 ```js
-const input = container.querySelectorAll("input")[index];
+const input = document.querySelectorAll("input")[index];
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {
@@ -39,7 +39,7 @@ UPDATE: div::text@0 "a1" => "a2"
 
 # Update
 ```js
-const input = container.querySelectorAll("input")[index];
+const input = document.querySelectorAll("input")[index];
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {

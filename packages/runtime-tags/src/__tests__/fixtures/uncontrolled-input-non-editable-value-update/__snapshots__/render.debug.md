@@ -52,7 +52,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button")[0].click();
+document.querySelectorAll("button")[0].click();
 ```
 ```html
 <form>
@@ -118,9 +118,9 @@ UPDATE: form > input:nth-of-type(8)[value] "a" => "b"
 
 # Update
 ```js
-for (const input of container.querySelectorAll("input")) {
+for (const input of document.querySelectorAll("input")) {
 _strict.default.equal(input.value, "b", `${input.type} value`);
-  const form = container.querySelector("form");
+  const form = document.querySelector("form");
   form.querySelector("[type=checkbox]").checked = true;
   form.querySelector("[type=radio]").checked = true;
   const data = new form.ownerDocument.defaultView.FormData(form);
@@ -133,7 +133,7 @@ _strict.default.equal(input.value, "b", `${input.type} value`);
 
 # Update
 ```js
-container.querySelectorAll("button")[1].click();
+document.querySelectorAll("button")[1].click();
 ```
 ```html
 <form>
@@ -193,10 +193,10 @@ UPDATE: form > input:nth-of-type(8)[value] "b" => null
 
 # Update
 ```js
-for (const input of container.querySelectorAll("input")) {
+for (const input of document.querySelectorAll("input")) {
 _strict.default.equal(input.hasAttribute("value"), false, `${input.type} attribute`);
 _strict.default.equal(input.value, input.type === "checkbox" || input.type === "radio" ? "on" : "", `${input.type} value`);
-  const form = container.querySelector("form");
+  const form = document.querySelector("form");
   const data = new form.ownerDocument.defaultView.FormData(form);
   _strict.default.equal(data.get("checkbox"), "on");
   _strict.default.equal(data.get("dynamic"), "");

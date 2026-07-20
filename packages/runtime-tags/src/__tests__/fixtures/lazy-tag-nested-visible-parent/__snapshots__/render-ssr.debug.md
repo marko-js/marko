@@ -14,12 +14,12 @@
 
 # Update
 ```js
-container.querySelector(".grand")?.click();
+document.querySelector(".grand")?.click();
 ```
 
 # Update
 ```js
-container.querySelector(".grand")?.click();
+document.querySelector(".grand")?.click();
 ```
 ```html
 <button
@@ -40,7 +40,7 @@ UPDATE: .grand::text@6 "shared" => "shared?"
 
 # Update
 ```js
-container.querySelector(".child")?.click();
+document.querySelector(".child")?.click();
 ```
 ```html
 <button

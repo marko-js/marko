@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-const click = (id: string) => (container: Element) =>
-  container.querySelector<HTMLButtonElement>(`#${id}`)!.click();
+const click = (id: string) => (document: Document) =>
+  document.querySelector<HTMLButtonElement>(`#${id}`)!.click();
 
 export const config: TestConfig = {
   steps: [

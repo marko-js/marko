@@ -13,7 +13,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -34,7 +34,7 @@ UPDATE: div:nth-of-type(2)::text "a" => "c"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -54,7 +54,7 @@ UPDATE: div:nth-of-type(1)::text "b" => "c"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div />
@@ -71,5 +71,5 @@ UPDATE: div:nth-of-type(2)::text "c" => ""
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```

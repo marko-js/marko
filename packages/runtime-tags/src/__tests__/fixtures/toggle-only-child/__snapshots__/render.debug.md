@@ -12,7 +12,7 @@
 
 # Update
 ```js
-const input = container.querySelector("input");
+const input = document.querySelector("input");
 input.value = value;
 input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
   bubbles: true
@@ -31,7 +31,7 @@ REMOVE: div > span
 
 # Update
 ```js
-const input = container.querySelector("input");
+const input = document.querySelector("input");
 input.value = value;
 input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
   bubbles: true
@@ -56,7 +56,7 @@ UPDATE: div > span::text " " => "World"
 
 # Update
 ```js
-const input = container.querySelector("input");
+const input = document.querySelector("input");
 input.value = value;
 input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
   bubbles: true

@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector(".child").click();
+document.querySelector(".child").click();
 ```
 ```html
 <button
@@ -35,7 +35,7 @@ UPDATE: .child::text@6 "shared" => "shared!"
 
 # Update
 ```js
-container.querySelector(".grand").click();
+document.querySelector(".grand").click();
 ```
 ```html
 <button

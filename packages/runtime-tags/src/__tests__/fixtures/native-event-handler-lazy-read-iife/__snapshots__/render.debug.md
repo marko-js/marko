@@ -22,7 +22,7 @@
 
 # Update
 ```js
-c.querySelector(".bump").click();
+document.querySelector(".bump").click();
 ```
 ```html
 <button
@@ -51,7 +51,7 @@ UPDATE: .n::text "0" => "1"
 
 # Update
 ```js
-c.querySelector(".snap").click();
+document.querySelector(".snap").click();
 ```
 ```html
 <button
@@ -82,7 +82,7 @@ UPDATE: .log::text "" => "[1:1]"
 
 # Update
 ```js
-c.querySelector(".bump").click();
+document.querySelector(".bump").click();
 ```
 ```html
 <button
@@ -113,7 +113,7 @@ UPDATE: .n::text "1" => "2"
 
 # Update
 ```js
-c.querySelector(".snap").click();
+document.querySelector(".snap").click();
 ```
 ```html
 <button

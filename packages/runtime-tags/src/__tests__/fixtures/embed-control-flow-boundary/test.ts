@@ -1,11 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-function toggle(container: Element) {
-  container.querySelector<HTMLButtonElement>("button#toggle")!.click();
+function toggle(document: Document) {
+  document.querySelector<HTMLButtonElement>("button#toggle")!.click();
 }
 
-function cleanup(container: Element) {
-  container.querySelector<HTMLButtonElement>("button#cleanup")!.click();
+function cleanup(document: Document) {
+  document.querySelector<HTMLButtonElement>("button#cleanup")!.click();
 }
 
 export const config: TestConfig = {

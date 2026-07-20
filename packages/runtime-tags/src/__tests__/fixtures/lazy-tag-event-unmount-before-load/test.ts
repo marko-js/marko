@@ -6,14 +6,14 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function toggle(container: Element) {
-  container.querySelector<HTMLElement>("#toggle")!.click();
+function toggle(document: Document) {
+  document.querySelector<HTMLElement>("#toggle")!.click();
 }
 
-function clickLoad(container: Element) {
-  container.querySelector<HTMLElement>("#load")!.click();
+function clickLoad(document: Document) {
+  document.querySelector<HTMLElement>("#load")!.click();
 }
 
-function incClick(container: Element) {
-  container.querySelector<HTMLElement>("#inc")!.click();
+function incClick(document: Document) {
+  document.querySelector<HTMLElement>("#inc")!.click();
 }

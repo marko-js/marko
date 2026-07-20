@@ -22,7 +22,7 @@
 
 # Update
 ```js
-const select = container.querySelector("select");
+const select = document.querySelector("select");
 select.value = select.options[2].value;
 select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
   bubbles: true

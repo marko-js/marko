@@ -16,7 +16,7 @@
 
 # Update
 ```js
-container.querySelector("#increment")?.click();
+document.querySelector("#increment")?.click();
 ```
 ```html
 <div>
@@ -40,7 +40,7 @@ UPDATE: div::text@8 "" => "0"
 
 # Update
 ```js
-container.querySelector("#increment")?.click();
+document.querySelector("#increment")?.click();
 ```
 ```html
 <div>

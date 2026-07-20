@@ -12,7 +12,7 @@
 
 # Update
 ```js
-container.querySelector("input").click();
+document.querySelector("input").click();
 ```
 ```html
 <input
@@ -31,5 +31,5 @@ UPDATE: output::text "null" => "undefined"
 
 # Update
 ```js
-container.querySelector("input").click();
+document.querySelector("input").click();
 ```

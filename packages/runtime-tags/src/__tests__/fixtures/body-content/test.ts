@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-const click = (container: Element) => {
-  container.querySelector("button")!.click();
+const click = (document: Document) => {
+  document.querySelector("button")!.click();
 };
 
 export const config: TestConfig = {

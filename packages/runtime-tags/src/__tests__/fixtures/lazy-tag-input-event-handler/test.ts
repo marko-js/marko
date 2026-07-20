@@ -18,6 +18,6 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function clickChild(container: Element) {
-  container.querySelector<HTMLButtonElement>(".child")!.click();
+function clickChild(document: Document) {
+  document.querySelector<HTMLButtonElement>(".child")!.click();
 }

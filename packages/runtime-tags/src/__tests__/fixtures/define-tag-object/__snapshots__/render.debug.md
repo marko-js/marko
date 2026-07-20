@@ -10,7 +10,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -28,7 +28,7 @@ UPDATE: div::text "{\"foo\":1,\"bar\":2}" => "{\"foo\":1,\"bar\":3}"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -46,7 +46,7 @@ UPDATE: div::text "{\"foo\":1,\"bar\":3}" => "{\"foo\":1,\"bar\":4}"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

@@ -57,7 +57,7 @@ UPDATE: p:nth-of-type(2)::text@8 " " => "4"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

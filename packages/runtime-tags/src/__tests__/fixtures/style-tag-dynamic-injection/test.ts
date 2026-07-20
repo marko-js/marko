@@ -23,8 +23,8 @@ export const config: TestConfig = {
 // Asserts the current declarations of the dynamic style shell rule, with the
 // selector prefix and generated custom property name normalized away.
 function shellRule(expected: string) {
-  return (container: Element) => {
-    const text = container.querySelector("style")!.textContent!;
+  return (document: Document) => {
+    const text = document.querySelector("style")!.textContent!;
     assert.equal(
       text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
       expected,

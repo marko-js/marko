@@ -1,15 +1,15 @@
 import type { TestConfig } from "../../main.test";
 
-function clickUp(container: Element) {
-  container.querySelector<HTMLButtonElement>(".up")!.click();
+function clickUp(document: Document) {
+  document.querySelector<HTMLButtonElement>(".up")!.click();
 }
 
-function clickDown(container: Element) {
-  container.querySelector<HTMLButtonElement>(".down")!.click();
+function clickDown(document: Document) {
+  document.querySelector<HTMLButtonElement>(".down")!.click();
 }
 
-function clickChange(container: Element) {
-  container.querySelector<HTMLButtonElement>(".change")!.click();
+function clickChange(document: Document) {
+  document.querySelector<HTMLButtonElement>(".change")!.click();
 }
 
 export const config: TestConfig = {

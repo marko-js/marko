@@ -19,7 +19,7 @@
 
 # Update
 ```js
-c.querySelector("#s").click();
+document.querySelector("#s").click();
 ```
 ```html
 <div
@@ -48,7 +48,7 @@ INSERT: #ref::text("dyn destroyed")
 
 # Update
 ```js
-c.querySelector("#o").click();
+document.querySelector("#o").click();
 ```
 ```html
 <div

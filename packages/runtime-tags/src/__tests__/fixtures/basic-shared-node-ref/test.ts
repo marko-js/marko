@@ -1,11 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-function toggle(container: Element) {
-  (container.querySelector("#toggle") as HTMLButtonElement).click();
+function toggle(document: Document) {
+  (document.querySelector("#toggle") as HTMLButtonElement).click();
 }
 
-function reverse(container: Element) {
-  (container.querySelector("#reverse") as HTMLButtonElement).click();
+function reverse(document: Document) {
+  (document.querySelector("#reverse") as HTMLButtonElement).click();
 }
 
 export const config: TestConfig = {

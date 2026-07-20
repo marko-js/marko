@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("button.once").click();
+document.querySelector("button.once").click();
 ```
 ```html
 <button
@@ -35,12 +35,12 @@ UPDATE: .once::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("button.once").click();
+document.querySelector("button.once").click();
 ```
 
 # Update
 ```js
-container.querySelector("button.twice").click();
+document.querySelector("button.twice").click();
 ```
 ```html
 <button
@@ -61,7 +61,7 @@ UPDATE: .twice::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("button.twice").click();
+document.querySelector("button.twice").click();
 ```
 ```html
 <button
@@ -82,5 +82,5 @@ UPDATE: .twice::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("button.twice").click();
+document.querySelector("button.twice").click();
 ```

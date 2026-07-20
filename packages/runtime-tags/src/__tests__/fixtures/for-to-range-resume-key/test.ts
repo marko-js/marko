@@ -12,6 +12,6 @@ export const config: TestConfig = {
   steps: [{}, click],
 };
 
-function click(container: Element) {
-  container.querySelector("button")!.click();
+function click(document: Document) {
+  document.querySelector("button")!.click();
 }

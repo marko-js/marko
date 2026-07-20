@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#class-api").click();
+document.querySelector("#class-api").click();
 ```
 ```html
 <div
@@ -35,7 +35,7 @@ UPDATE: #class-api::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#class-api").click();
+document.querySelector("#class-api").click();
 ```
 ```html
 <div

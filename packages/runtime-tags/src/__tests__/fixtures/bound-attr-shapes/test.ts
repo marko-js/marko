@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
 function type(index: number, value: string) {
-  return (container: Element) => {
-    const input = container.querySelectorAll("input")[index]!;
+  return (document: Document) => {
+    const input = document.querySelectorAll("input")[index]!;
     const window = input.ownerDocument.defaultView!;
     input.value = value;
     input.dispatchEvent(new window.Event("input", { bubbles: true }));

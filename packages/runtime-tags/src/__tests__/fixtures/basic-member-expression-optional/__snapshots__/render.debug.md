@@ -9,7 +9,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -30,7 +30,7 @@ UPDATE: div:nth-of-type(2)::text "" => "Dylan"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -51,7 +51,7 @@ UPDATE: div:nth-of-type(2)::text "Dylan" => "Michael"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -72,7 +72,7 @@ UPDATE: div:nth-of-type(2)::text "Michael" => "Ryan"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -93,7 +93,7 @@ UPDATE: div:nth-of-type(2)::text "Ryan" => "Luke"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div />

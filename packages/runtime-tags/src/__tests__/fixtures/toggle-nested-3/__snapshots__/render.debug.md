@@ -18,7 +18,7 @@
 
 # Update
 ```js
-container.querySelector("#count").click();
+document.querySelector("#count").click();
 ```
 ```html
 <div>
@@ -43,7 +43,7 @@ UPDATE: #count::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#count").click();
+document.querySelector("#count").click();
 ```
 ```html
 <div>
@@ -68,7 +68,7 @@ UPDATE: #count::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("#inner").click();
+document.querySelector("#inner").click();
 ```
 ```html
 <div>
@@ -88,7 +88,7 @@ REMOVE: #inner + #count
 
 # Update
 ```js
-container.querySelector("#inner").click();
+document.querySelector("#inner").click();
 ```
 ```html
 <div>
@@ -114,7 +114,7 @@ UPDATE: #count::text " " => "2"
 
 # Update
 ```js
-container.querySelector("#count").click();
+document.querySelector("#count").click();
 ```
 ```html
 <div>
@@ -139,7 +139,7 @@ UPDATE: #count::text "2" => "3"
 
 # Update
 ```js
-container.querySelector("#outer").click();
+document.querySelector("#outer").click();
 ```
 ```html
 <div>
@@ -157,7 +157,7 @@ REMOVE: #outer + #count
 
 # Update
 ```js
-container.querySelector("#outer").click();
+document.querySelector("#outer").click();
 ```
 ```html
 <div>
@@ -184,7 +184,7 @@ UPDATE: #count::text " " => "3"
 
 # Update
 ```js
-container.querySelector("#count").click();
+document.querySelector("#count").click();
 ```
 ```html
 <div>

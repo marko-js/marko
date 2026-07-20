@@ -34,7 +34,7 @@ REMOVE: ::text + div
 
 # Update
 ```js
-const div = container.querySelector("div");
+const div = document.querySelector("div");
 if (!div) return;
 const window = div.ownerDocument.defaultView;
 div.dispatchEvent(new window.Event("change", {

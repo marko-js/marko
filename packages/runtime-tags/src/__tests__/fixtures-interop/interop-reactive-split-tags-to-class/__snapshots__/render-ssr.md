@@ -14,7 +14,7 @@
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button
@@ -35,7 +35,7 @@ UPDATE: #class-api::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button

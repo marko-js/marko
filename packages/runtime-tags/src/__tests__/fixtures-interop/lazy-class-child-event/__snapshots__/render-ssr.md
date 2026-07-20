@@ -14,15 +14,15 @@
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 
 # Update
 ```js
 const {
 defaultView
-  } = container.ownerDocument;
-  container.ownerDocument.body.dispatchEvent(new defaultView.MouseEvent("mouseover"));
+  } = document;
+  document.body.dispatchEvent(new defaultView.MouseEvent("mouseover"));
 ```
 ```html
 <button
@@ -47,7 +47,7 @@ LOG "loaded"
 
 # Update
 ```js
-container.querySelector("#inc").click();
+document.querySelector("#inc").click();
 ```
 ```html
 <button

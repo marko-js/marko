@@ -35,7 +35,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -79,7 +79,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>
@@ -124,7 +124,7 @@ UPDATE: .danger[class] null => "danger"
 
 # Update
 ```js
-container.querySelectorAll("button.select")[n].click();
+document.querySelectorAll("button.select")[n].click();
 ```
 ```html
 <table>

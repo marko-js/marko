@@ -57,7 +57,7 @@ UPDATE: div::text@15 "" => "0"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -76,7 +76,7 @@ UPDATE: div::text@23 "0" => "1"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -95,7 +95,7 @@ UPDATE: div::text@23 "1" => "2"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

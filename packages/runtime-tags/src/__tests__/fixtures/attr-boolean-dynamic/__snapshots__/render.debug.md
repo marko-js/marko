@@ -10,7 +10,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <input />
@@ -26,7 +26,7 @@ UPDATE: button::text "enable" => "disable"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <input
@@ -44,7 +44,7 @@ UPDATE: button::text "disable" => "enable"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <input />

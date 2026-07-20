@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
 
-function change(container: Element) {
-  const div = container.querySelector("div");
+function change(document: Document) {
+  const div = document.querySelector("div");
   if (!div) return;
   const window = div.ownerDocument.defaultView!;
   div.dispatchEvent(new window.Event("change", { bubbles: true }));

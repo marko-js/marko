@@ -9,7 +9,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button
@@ -26,7 +26,7 @@ UPDATE: .a.b.c.d.e.f::text "0" => "1"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button
@@ -43,7 +43,7 @@ UPDATE: .a.b.c::text "1" => "2"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button

@@ -26,7 +26,7 @@ INSERT: div:nth-of-type(1) + ::text("Rejected B")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

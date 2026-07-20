@@ -4,10 +4,10 @@ export const config: TestConfig = {
   steps: [{}, show, clear],
 };
 
-function show(container: Element) {
-  container.querySelector<HTMLButtonElement>("button#show")!.click();
+function show(document: Document) {
+  document.querySelector<HTMLButtonElement>("button#show")!.click();
 }
 
-function clear(container: Element) {
-  container.querySelector<HTMLButtonElement>("button#clear")!.click();
+function clear(document: Document) {
+  document.querySelector<HTMLButtonElement>("button#clear")!.click();
 }

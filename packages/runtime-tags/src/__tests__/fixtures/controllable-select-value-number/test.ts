@@ -1,23 +1,23 @@
 import type { TestConfig } from "../../main.test";
 
-function select0(container: Element) {
-  selectIndex(container, 0);
+function select0(document: Document) {
+  selectIndex(document, 0);
 }
 
-function select1(container: Element) {
-  selectIndex(container, 1);
+function select1(document: Document) {
+  selectIndex(document, 1);
 }
 
-function select2(container: Element) {
-  selectIndex(container, 2);
+function select2(document: Document) {
+  selectIndex(document, 2);
 }
 
-function reset(container: Element) {
-  container.querySelector<HTMLButtonElement>("button")!.click();
+function reset(document: Document) {
+  document.querySelector<HTMLButtonElement>("button")!.click();
 }
 
-function selectIndex(container: Element, index: number) {
-  const select = container.querySelector<HTMLSelectElement>(`select`)!;
+function selectIndex(document: Document, index: number) {
+  const select = document.querySelector<HTMLSelectElement>(`select`)!;
   select.value = select.options[index].value;
   select.dispatchEvent(
     new select.ownerDocument.defaultView!.Event("input", { bubbles: true }),

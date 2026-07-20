@@ -6,10 +6,10 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function clickA(container: Element) {
-  container.querySelector<HTMLButtonElement>("#a")!.click();
+function clickA(document: Document) {
+  document.querySelector<HTMLButtonElement>("#a")!.click();
 }
 
-function clickB(container: Element) {
-  container.querySelector<HTMLButtonElement>("#b")!.click();
+function clickB(document: Document) {
+  document.querySelector<HTMLButtonElement>("#b")!.click();
 }

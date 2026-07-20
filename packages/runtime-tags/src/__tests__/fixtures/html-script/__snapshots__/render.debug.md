@@ -18,7 +18,7 @@
 
 # Update
 ```js
-container.querySelector(`script[type="importmap"]`).click();
+document.querySelector(`script[type="importmap"]`).click();
 ```
 ```html
 <script
@@ -45,7 +45,7 @@ UPDATE: div::text "0" => "1"
 
 # Update
 ```js
-container.querySelector(`script[type="importmap"]`).click();
+document.querySelector(`script[type="importmap"]`).click();
 ```
 ```html
 <script
@@ -72,7 +72,7 @@ UPDATE: div::text "1" => "2"
 
 # Update
 ```js
-container.querySelector(`script[type="importmap"]`).click();
+document.querySelector(`script[type="importmap"]`).click();
 ```
 ```html
 <script

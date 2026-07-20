@@ -24,10 +24,10 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function clickS(container: Element) {
-  container.querySelector<HTMLButtonElement>(".s")!.click();
+function clickS(document: Document) {
+  document.querySelector<HTMLButtonElement>(".s")!.click();
 }
 
-function clickB(container: Element) {
-  container.querySelector<HTMLButtonElement>(".b")!.click();
+function clickB(document: Document) {
+  document.querySelector<HTMLButtonElement>(".b")!.click();
 }

@@ -7,7 +7,7 @@
 
 # Update
 ```js
-container.querySelector("button")?.click();
+document.querySelector("button")?.click();
 ```
 ```html
 <button>
@@ -21,7 +21,7 @@ UPDATE: body[data-toggle] null => ""
 
 # Update
 ```js
-container.querySelector("button")?.click();
+document.querySelector("button")?.click();
 ```
 ```html
 <button>

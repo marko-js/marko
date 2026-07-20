@@ -8,7 +8,7 @@ Got: v0
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 Got: v1
@@ -23,7 +23,7 @@ UPDATE: ::text@5 "v0" => "v1"
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 Got: v2

@@ -6,6 +6,6 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function clickBody(container: Element) {
-  container.ownerDocument.body.click();
+function clickBody(document: Document) {
+  document.body.click();
 }

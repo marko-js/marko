@@ -14,7 +14,7 @@
 
 # Update
 ```js
-c.querySelector("#tags").click();
+document.querySelector("#tags").click();
 ```
 ```html
 <button
@@ -35,7 +35,7 @@ UPDATE: #tags::text "0" => "1"
 
 # Update
 ```js
-c.querySelector("#class").click();
+document.querySelector("#class").click();
 ```
 ```html
 <button
@@ -51,7 +51,7 @@ REMOVE: #class + #tags
 
 # Update
 ```js
-c.querySelector("#class").click();
+document.querySelector("#class").click();
 ```
 ```html
 <button

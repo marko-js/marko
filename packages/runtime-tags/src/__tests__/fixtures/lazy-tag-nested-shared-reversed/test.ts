@@ -11,10 +11,10 @@ export const config: TestConfig = {
   load_order: ["grand-child.marko.load.mjs", "child.marko.load.mjs"],
 };
 
-function clickChild(container: Element) {
-  container.querySelector<HTMLButtonElement>(".child")!.click();
+function clickChild(document: Document) {
+  document.querySelector<HTMLButtonElement>(".child")!.click();
 }
 
-function clickGrand(container: Element) {
-  container.querySelector<HTMLButtonElement>(".grand")!.click();
+function clickGrand(document: Document) {
+  document.querySelector<HTMLButtonElement>(".grand")!.click();
 }

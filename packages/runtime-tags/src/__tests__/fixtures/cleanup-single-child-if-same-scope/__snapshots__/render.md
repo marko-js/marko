@@ -14,7 +14,7 @@ mounted
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>
@@ -35,7 +35,7 @@ INSERT: pre::text("\nmounted\ndestroyed")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>
@@ -60,7 +60,7 @@ INSERT: pre::text("\nmounted\ndestroyed\nmounted")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <button>

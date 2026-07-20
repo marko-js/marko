@@ -18,7 +18,7 @@
 
 # Update
 ```js
-container.querySelectorAll("button")[1].click();
+document.querySelectorAll("button")[1].click();
 ```
 ```html
 <button>
@@ -43,7 +43,7 @@ UPDATE: .message::text "hello" => "hello!"
 
 # Update
 ```js
-container.querySelectorAll("button")[1].click();
+document.querySelectorAll("button")[1].click();
 ```
 ```html
 <button>
@@ -68,7 +68,7 @@ UPDATE: .message::text "hello!" => "hello!!"
 
 # Update
 ```js
-container.querySelectorAll("button")[0].click();
+document.querySelectorAll("button")[0].click();
 ```
 ```html
 <button>

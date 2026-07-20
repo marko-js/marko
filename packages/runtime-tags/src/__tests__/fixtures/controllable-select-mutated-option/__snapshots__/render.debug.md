@@ -42,7 +42,7 @@
 
 # Update
 ```js
-container.querySelector(".remove").click();
+document.querySelector(".remove").click();
 ```
 ```html
 <form>
@@ -87,7 +87,7 @@ UPDATE: div::text "1" => "2"
 
 # Update
 ```js
-container.querySelector(".remove").click();
+document.querySelector(".remove").click();
 ```
 ```html
 <form>
@@ -127,7 +127,7 @@ UPDATE: div::text "2" => "3"
 
 # Update
 ```js
-container.querySelector(".remove").click();
+document.querySelector(".remove").click();
 ```
 ```html
 <form>
@@ -158,7 +158,7 @@ UPDATE: div::text "3" => ""
 
 # Update
 ```js
-container.querySelector(".add").click();
+document.querySelector(".add").click();
 ```
 ```html
 <form>
@@ -198,7 +198,7 @@ UPDATE: div::text "" => "3"
 
 # Update
 ```js
-container.querySelector(".add").click();
+document.querySelector(".add").click();
 ```
 ```html
 <form>
@@ -242,7 +242,7 @@ INSERT: form > select > option
 
 # Update
 ```js
-container.querySelector(".add").click();
+document.querySelector(".add").click();
 ```
 ```html
 <form>

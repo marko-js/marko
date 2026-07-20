@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
 function toggle(id: string) {
-  return (container: Element) => {
-    (container.querySelector(`#c-${id} > button`) as HTMLButtonElement).click();
+  return (document: Document) => {
+    (document.querySelector(`#c-${id} > button`) as HTMLButtonElement).click();
   };
 }
 

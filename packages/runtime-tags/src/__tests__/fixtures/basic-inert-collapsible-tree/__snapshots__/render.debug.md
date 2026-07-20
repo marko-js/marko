@@ -38,7 +38,7 @@
 
 # Update
 ```js
-container.querySelector(`#c-${id} > button`).click();
+document.querySelector(`#c-${id} > button`).click();
 ```
 ```html
 <ul>
@@ -85,7 +85,7 @@ UPDATE: #c-0 > button::text "[-]" => "[+]"
 
 # Update
 ```js
-container.querySelector(`#c-${id} > button`).click();
+document.querySelector(`#c-${id} > button`).click();
 ```
 ```html
 <ul>
@@ -131,7 +131,7 @@ UPDATE: #c-0 > button::text "[+]" => "[-]"
 
 # Update
 ```js
-container.querySelector(`#c-${id} > button`).click();
+document.querySelector(`#c-${id} > button`).click();
 ```
 ```html
 <ul>
@@ -178,7 +178,7 @@ UPDATE: #c-0-0 > button::text "[-]" => "[+]"
 
 # Update
 ```js
-container.querySelector(`#c-${id} > button`).click();
+document.querySelector(`#c-${id} > button`).click();
 ```
 ```html
 <ul>

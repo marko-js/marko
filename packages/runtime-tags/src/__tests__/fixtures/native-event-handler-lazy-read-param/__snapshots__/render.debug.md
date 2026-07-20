@@ -13,7 +13,7 @@
 
 # Update
 ```js
-c.querySelectorAll("button")[1].click();
+document.querySelectorAll("button")[1].click();
 ```
 ```html
 <button>

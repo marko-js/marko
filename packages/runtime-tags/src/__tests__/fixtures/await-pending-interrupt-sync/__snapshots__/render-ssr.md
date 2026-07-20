@@ -17,7 +17,7 @@ INSERT: button::text("toggle")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 Got: SYNC

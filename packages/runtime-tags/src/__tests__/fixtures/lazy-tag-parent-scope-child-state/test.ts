@@ -1,12 +1,12 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-function clickParent(container: Element) {
-  container.querySelector<HTMLButtonElement>(".parent")!.click();
+function clickParent(document: Document) {
+  document.querySelector<HTMLButtonElement>(".parent")!.click();
 }
 
-function clickChild(container: Element) {
-  container.querySelector<HTMLButtonElement>(".child")!.click();
+function clickChild(document: Document) {
+  document.querySelector<HTMLButtonElement>(".child")!.click();
 }
 
 // Parent passes its scope to a direct load child that has its own state.

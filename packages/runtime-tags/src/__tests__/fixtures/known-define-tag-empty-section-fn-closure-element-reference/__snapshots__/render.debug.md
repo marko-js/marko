@@ -6,7 +6,7 @@
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -21,7 +21,7 @@ INSERT: div::text("[onClick(hello)]")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>
@@ -37,7 +37,7 @@ INSERT: div::text("[onClick(hello)][onClick(hello)]")
 
 # Update
 ```js
-container.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <div>

@@ -15,7 +15,7 @@
 
 # Update
 ```js
-c.querySelector("button").click();
+document.querySelector("button").click();
 ```
 ```html
 <ul>

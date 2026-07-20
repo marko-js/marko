@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-function selectC(container: Element) {
-  const select = container.querySelector(`select`)!;
+function selectC(document: Document) {
+  const select = document.querySelector(`select`)!;
   const window = select.ownerDocument.defaultView!;
   select.value = "c";
   select.dispatchEvent(new window.Event("input", { bubbles: true }));

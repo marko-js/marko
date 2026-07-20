@@ -8,6 +8,6 @@ export const config: TestConfig = {
   equivalent: false,
 };
 
-function toggle(container: Element) {
-  container.querySelector<HTMLButtonElement>("#toggle")!.click();
+function toggle(document: Document) {
+  document.querySelector<HTMLButtonElement>("#toggle")!.click();
 }

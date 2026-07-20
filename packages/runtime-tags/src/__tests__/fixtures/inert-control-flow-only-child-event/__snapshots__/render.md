@@ -19,7 +19,7 @@
 
 # Update
 ```js
-container.querySelector("#target").click();
+document.querySelector("#target").click();
 ```
 ```html
 <div
@@ -46,7 +46,7 @@ UPDATE: #target > span:nth-of-type(2)[data-selected] null => ""
 
 # Update
 ```js
-container.querySelector("#target").click();
+document.querySelector("#target").click();
 ```
 ```html
 <div

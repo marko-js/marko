@@ -23,7 +23,7 @@
 
 # Update
 ```js
-el.querySelector("#c").click();
+document.querySelector("#c").click();
 ```
 ```html
 <button
@@ -57,7 +57,7 @@ UPDATE: li:nth-of-type(4)::text@5 "" => "3"
 
 # Update
 ```js
-el.querySelector("#o").click();
+document.querySelector("#o").click();
 ```
 ```html
 <button
@@ -81,5 +81,5 @@ REMOVE: #c + li
 
 # Update
 ```js
-el.querySelector("#c").click();
+document.querySelector("#c").click();
 ```

@@ -12,7 +12,7 @@
 
 # Update
 ```js
-container.querySelector("#increment")?.click();
+document.querySelector("#increment")?.click();
 ```
 ```html
 <div
