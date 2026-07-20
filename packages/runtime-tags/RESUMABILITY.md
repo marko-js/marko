@@ -46,16 +46,15 @@ and Brotli size. Inspect optimized `dom.bundle.js`, chunk placement, and
 
 ## Compiler model
 
-Term definitions live in [CONTEXT.md](./CONTEXT.md); this table routes each
-concept to its primary code.
+Terms live in [CONTEXT.md](./CONTEXT.md); start here:
 
-| Concept         | Primary code                                 |
-| --------------- | -------------------------------------------- |
-| Section         | `translator/util/sections.ts`                |
-| Binding/Sources | `translator/util/references.ts`              |
-| Signal          | compiler/runtime `signals.ts`                |
-| Scope/Accessor  | `dom/scope.ts`, `common/accessor[.debug].ts` |
-| Renderer/branch | `dom/renderer.ts`, `dom/control-flow.ts`     |
+| Area                 | Primary code                                                 |
+| -------------------- | ------------------------------------------------------------ |
+| Compiler graph       | `translator/util/sections.ts`, `references.ts`, `signals.ts` |
+| Serialization policy | `translator/util/serialize-reasons.ts`, `serialize-guard.ts` |
+| DOM scopes/ranges    | `dom/scope.ts`, `dom/renderer.ts`, `dom/control-flow.ts`     |
+| Streaming/resume     | `html/writer.ts`, `html/serializer.ts`, `dom/resume.ts`      |
+| Lazy entries         | `translator/util/entry-builder.ts`, `html/writer.ts`         |
 
 `finalizeReferences()` is the center of analysis. It resolves each expression to
 canonical bindings, separates constant/live/hoisted/lazy reads, prunes unused
@@ -154,10 +153,10 @@ order, DOM arrival, and effect order must remain aligned.
 
 ## Modes and verification
 
-- Outputs: `html` writes SSR/state; `dom` writes client code; `hydrate` is a DOM
-  page entry.
-- Entries: ordinary export, `page` bootstrap, `load` ready notification, and
-  test-only `csr` fresh render.
+- Outputs: `html` writes SSR/state; `dom` writes client code.
+- Entry modes: unset for a normal module, `page` for a bootstrap, and `load` for
+  a lazy notification. Deprecated `output: "hydrate"` aliases a DOM page entry;
+  tests also build a `csr` fresh-render entry.
 - Lifecycle phases: fresh render clones/walks/setups; resume adopts/fills/effects;
   updates dirty-check/queue.
 - Debug uses readable accessors/assertions; optimize remaps production modules

@@ -120,10 +120,8 @@ export function insertBranchBefore(
 }
 
 export function tempDetachBranch(branch: BranchScope) {
-  // This is moves the branch contents to a document fragment (which will be
-  // inserted again when we're ready to show the branch).
-  // There is also a hack that sets `namespaceURI` on the detached fragment so
-  // that any new branches created with this parent node get the correct namespace.
+  // Park the range in a DocumentFragment; the namespaceURI shim preserves the
+  // namespace for branches created while it is detached.
   const fragment = new DocumentFragment() as any;
   fragment.namespaceURI = (
     branch[AccessorProp.StartNode].parentNode as Element

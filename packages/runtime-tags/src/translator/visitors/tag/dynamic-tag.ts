@@ -288,7 +288,7 @@ export default {
         const classFile = classTagTemplate ? loadFileForTag(tag)! : undefined;
         const classHydration = classFile?.metadata.marko.classHydration;
 
-        // Optimized page hydration does not need inert Class API children that
+        // An optimized DOM page entry does not need inert Class API children that
         // have no Tags-side update path; SSR already produced their DOM.
         if (
           !isOutputHTML() &&

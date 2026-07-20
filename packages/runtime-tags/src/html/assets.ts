@@ -91,9 +91,8 @@ export function withPageAssets(
     }
     addAsset(g, assetId);
     if (g.__flush__) {
-      // Not the actual page entry (nested within another page render):
-      // hydration waits for this page's own entry script, like an
-      // embedded render.
+      // Not the actual page entry (nested within another page render): resume
+      // data waits for this page's own entry script, as for an embedded render.
       _html(flush(g, ""));
       return writeWaitReady(assetId, template, input);
     }

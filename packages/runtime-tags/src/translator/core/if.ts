@@ -402,8 +402,8 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
 
   // Only convert when the conditional renders inside a native element. There it
   // becomes a normal text node; at the root of a template or component body the
-  // content is instead treated as a dynamic renderer (with different SSR/CSR
-  // hydration), so the placeholder rewrite would not be equivalent.
+  // content is instead treated as a dynamic renderer (with different SSR and
+  // DOM output shapes), so the placeholder rewrite would not be equivalent.
   const tagBody = rootTag.parentPath;
   if (!tagBody.isMarkoTagBody()) return;
   const parentTag = tagBody.parentPath;

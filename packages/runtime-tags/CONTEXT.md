@@ -1,102 +1,168 @@
 # Runtime Tags (Marko 6)
 
-The Marko 6 runtime and its translator: compiles `.marko` templates into a dependency graph that is lowered to streaming HTML on the server and fine-grained, tree-shakable DOM code on the client, with resume instead of hydration.
+Marko 6 compiles `.marko` templates into one dependency graph, then lowers it
+to streaming HTML and resume state or fine-grained DOM code.
 
-Definitions only; for how the concepts fit together end to end (and where each lives in code) see [RESUMABILITY.md](./RESUMABILITY.md).
+This is the canonical implementation glossary. _Avoid_ lists name misleading
+synonyms, not exact APIs, platform types, or legacy options. See
+[RESUMABILITY.md](./RESUMABILITY.md) for the architecture and code map.
 
-## Language
+## Compiler model
 
 **Section**:
-A compile-time render unit: a contiguous piece of template that renders independently. Scopes are its runtime instances.
-_Avoid_: fragment, block
-
-**Scope**:
-A runtime instance of a section: a plain state object whose slots are keyed by accessors. Not a JS lexical scope.
-_Avoid_: component state, context
-
-**Renderer**:
-The blueprint for producing a section's DOM: template, walk string, and setup work. Branches are its live instances.
-
-**Branch**:
-A live DOM range instance created from a renderer by control flow (`<if>`, `<for>`, dynamic tags), owning its nodes and scope.
-_Avoid_: instance, fragment
-
-**Owner**:
-The scope a nested scope belongs to: the parent instance a section's runtime state hangs off, reachable through the owner accessor and reconstructed during resume. Ownership follows section nesting, not JS prototypes or DOM parentage.
-_Avoid_: parent scope
-
-**Closure**:
-A binding read in a section other than the one that declares it, giving the declaring section's signal a way to notify live child scopes. Not a JS function closure — the term names the captured binding relationship, not a function.
-_Avoid_: captured variable
-
-**Content**:
-The renderable children passed to a tag. The canonical Tags API name; the Class API calls the same concept `renderBody`, and the syntax level says "body".
-_Avoid_: renderBody, body (except for AST node fields)
-
-**Controllable**:
-A native form element whose value/checked/open state Marko keeps in sync with bound state (`dom/controllable.ts`). Unrelated to the ecosystem's "controlled component" pattern beyond surface similarity; prefer "controllable" over "controlled" in new code.
-_Avoid_: controlled component
-
-**Fill**:
-A serialized batch of scope data applied during resume: scope ids with their partial property sets, merged into (or adopted as) the live scopes.
-_Avoid_: partial (as a standalone noun), payload chunk
-
-**Chunk**:
-A node in the streaming HTML writer's tree of in-progress output, processed and flushed incrementally. Not a webpack chunk or a Node stream buffer.
-
-**Boundary**:
-The streaming coordinator for a render: tracks pending async work, decides when buffered chunks flush, and carries the abort signal. Not an error boundary.
+A compile-time analysis and codegen unit formed from a template program or
+non-inlined tag body. Sections own bindings and signals; scopes are their live
+executions.
+_Avoid_: fragment, block, component
 
 **Binding**:
-The owned location of a scope variable: the declaration/storage a section owns for a reactive value or property, with edges for aliases, closures, assignments, hoists, and sources. Distinct from Babel's lexical `Binding`, which also appears throughout translator code.
-_Avoid_: dep, variable
+The compiler record for a template value or property, including its reads,
+assignments, aliases, closures, hoists, consumers, and sources. Only retained
+runtime values occupy accessor-addressed scope slots. Distinct from Babel's
+lexical `Binding`.
+_Avoid_: dependency, runtime container
 
 **Referenced bindings**:
-The sorted, deduped set of bindings an expression or function reads — the usage side of a binding. Signals group work by this key, and serialize reasons are expressed through it.
-_Avoid_: refs, references, dependencies
+The canonical zero/one/many collection of bindings that schedule an expression
+or function. Constants, DOM getters, and safe lazy reads are tracked separately.
+_Avoid_: refs, dependencies
 
 **Sources**:
-The set of state and/or input/body-parameter root bindings that can make a value relevant. Computed transitively per binding during analysis.
-_Avoid_: roots, dependencies
+The transitive roots that can make a binding browser-relevant, split into
+non-parameter `state` and input/body-parameter `param` roots. `state` does not
+mean only `<let>` values.
+_Avoid_: dependencies, referenced bindings
+
+**Closure**:
+A binding read by another section, allowing its signal to notify live child
+scopes. This names a binding relationship, not a JavaScript function closure.
+_Avoid_: captured variable, hoist
 
 **Hoist**:
-A binding edge marking a value read outside the section that declares it (e.g. a tag variable read by an ancestor), requiring the value to be lifted across section boundaries. Overlaps with but is not JS declaration hoisting.
-
-**Signal**:
-A compiled unit of work — keyed by `undefined` for setup programs, or by its referenced bindings (one binding or a canonical intersection) for update programs — existing as a compile-time structure and its lowered runtime form (`_const`/`_let`/`_or`). Not a reactive value container; the value-holding concept is a binding, stored in a scope slot at runtime.
-_Avoid_: reactive value, observable
-
-**Effect**:
-Client-side work originating from `<script>` content and event handlers/registered functions, queued per scope (`_script`) and run after all pending renders — during resume, updates, and fresh renders alike.
-_Avoid_: side effect (in the general JS sense), lifecycle hook
+A tag-variable read before its declaring tag within the enclosing body, or from
+outside that body. It lowers through a getter and may cross sections; it is not
+JavaScript declaration hoisting.
+_Avoid_: closure
 
 **Intersection**:
-A canonical set of two or more bindings whose combined work becomes relevant together; signals may be keyed by an intersection, lowered with `_or` when one remains.
+A canonical set of bindings whose shared work waits for every member in the
+current render generation. Remaining intersections lower through `_or`.
+_Avoid_: dependency array
 
-**Accessor**:
-A key into a scope's slots. Readable strings in debug; short characters in optimize (`accessor.ts` / `accessor.debug.ts` in lockstep).
-_Avoid_: key, slot name
+**Signal**:
+The translator's bucket of client work for a section, keyed by setup, one
+binding, or an intersection. Its lowered runtime function receives a scope and
+optional value; helpers such as `_const`, `_let`, and `_or` add storage, dirty
+checking, or coordination.
+_Avoid_: observable, reactive value
+
+**Effect**:
+Client work queued after pending renders, including `<script>`, `<lifecycle>`,
+handler attachment, and controllable setup. Resumable effects register and
+queue per scope through `_script`.
+_Avoid_: lifecycle hook, arbitrary JavaScript side effect
 
 **Serialize reason**:
-Why a scope property, marker, section, or registered value must exist in the browser: `true` (unconditional) or a `Sources` set guarding it per call site; absence means omit.
-_Avoid_: serialization flag
+Why a section, scope property, marker, or registration must reach the browser.
+`true` and state-backed `Sources` are unconditional; parameter-only sources
+produce per-call guards; absence means omit.
+_Avoid_: serialization flag, serialized value
 
-**Resume**:
-Attaching compiled client code to server-rendered DOM: filling scopes from the SSR payload, adopting existing nodes, rebuilding branches, then running effects — no initial client rerender.
-_Avoid_: hydrate, hydration
+## DOM runtime
+
+**Scope**:
+A section's runtime record: a plain object of value slots and reserved runtime
+state keyed by accessors. Not a lexical scope, component instance, or `$global`.
+_Avoid_: component state, context
+
+**Accessor**:
+A scope property's key; the property itself is a _scope slot_. Debug builds use
+readable strings and optimized builds use compact encodings from the lockstep
+`accessor.ts` / `accessor.debug.ts` pair.
+_Avoid_: slot, value
+
+**Owner**:
+The scope reached through the owner accessor for values captured from enclosing
+or invoking content. Ownership is separate from DOM nesting and `parentBranch`.
+_Avoid_: parent scope, DOM parent
+
+**Content**:
+Renderable children passed to a tag. The Tags API calls this _content_; syntax
+and ASTs say _body_, while the Class API says `renderBody`.
+_Avoid_: children, renderBody, body outside syntax or AST discussion
+
+**Client renderer (`Renderer`)**:
+A descriptor for creating a branch, carrying clone/setup/parameter work and
+optional owner or closure data. Its static shape starts as a template and walk
+string.
+_Avoid_: branch, component instance, server renderer
+
+**Server renderer (`ServerRenderer`)**:
+A generated function that writes a section or template to the HTML stream. It
+does not create a client branch.
+_Avoid_: client renderer, branch
+
+**Branch**:
+A specialized scope for one live application of a client renderer to a DOM
+range. It owns the range and joins a branch tree for ordering and cleanup.
+_Avoid_: fragment, component instance, renderer
+
+**Controllable**:
+A native element whose value, checked, or open state Marko synchronizes with
+bound state (`dom/controllable.ts`).
+_Avoid_: controlled component
 
 **Walk string**:
-A compact string program that locates DOM nodes when cloning a fresh client branch from its renderer's template.
+A compact program that locates nodes and ranges while cloning a fresh branch.
+
+## Streaming and resume
+
+**Chunk**:
+A node in the HTML writer's tree of buffered output, not a bundle chunk or Node
+stream buffer.
+
+**Boundary**:
+The render coordinator that tracks async work, flushes chunks, and carries the
+abort signal. Not an error boundary.
+
+**Resume**:
+Filling scopes, adopting server-rendered nodes, rebuilding branches, and running
+effects without an initial client rerender.
+_Avoid_: hydrate, hydration
+
+**Resume payload**:
+Server-emitted JavaScript data and fill operations for required scope slots,
+shared values, and registrations. It is neither JSON nor every server value.
+_Avoid_: component state, JSON payload
+
+**Fill**:
+A resume-payload batch of scope ids and partial properties, merged into or
+adopted as live scopes.
+_Avoid_: partial, payload chunk
 
 **Resume comment**:
-An SSR-emitted HTML comment that attaches existing server-rendered nodes and ranges to scopes during resume, reconstructing owners, branches, keys, and await state.
+An SSR HTML comment associating existing nodes or ranges with scopes and
+encoding owners, branches, keys, or await state.
 _Avoid_: hydration marker
 
-**Ready stream**:
-A named channel (`readyId`) that holds lazy state out of the main SSR stream until its registered client module has loaded and earlier data is drained.
-
 **Registration**:
-Binding an executable value to a stable id via `_resume` so SSR can name it by id instead of serializing source. A registration is a bundle retention root only if SSR emits its id.
+Associating executable code with a stable `_resume` id so SSR need not serialize
+its source. It retains client code only when SSR emits the id.
+_Avoid_: serialization
+
+**Ready stream**:
+A `readyId`-keyed serialization channel that withholds lazy resume data until
+its module registers and earlier data drains.
+_Avoid_: async HTML stream
+
+## Compilation modes
 
 **Output mode**:
-Which code the translator emits: `html` (SSR/state) or `dom` (client). The third mode name, `hydrate`, is a DOM page entry whose name predates the resume terminology.
+`html` emits streaming SSR and resume state; `dom` emits client code.
+_Avoid_: entry mode
+
+**Entry mode**:
+Unset emits a normal module, `page` a top-level bootstrap, and `load` a lazy
+ready notification. Deprecated `output: "hydrate"` aliases a DOM page entry;
+Marko 6 still resumes.
+_Avoid_: output mode, hydration

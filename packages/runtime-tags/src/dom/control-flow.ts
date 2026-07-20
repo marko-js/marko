@@ -332,7 +332,8 @@ function dismissPlaceholder(tryBranch: BranchScope) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
+    // The temporarily detached try branch has a DocumentFragment parent
+    // containing its complete DOM range.
     placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
       tryBranch[AccessorProp.StartNode].parentNode!,
       placeholderBranch[AccessorProp.StartNode],

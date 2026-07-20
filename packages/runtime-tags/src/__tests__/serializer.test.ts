@@ -792,7 +792,7 @@ describe("serializer", () => {
       // The first-seen view starts at offset 0 but doesn't span the whole
       // buffer; it must still serialize the full buffer so the sibling view at
       // offset 4 resolves against a correctly-sized buffer instead of a
-      // truncated one (which would throw a RangeError on hydration).
+      // truncated one (which would throw a RangeError during resume).
       const buffer = new ArrayBuffer(8);
       const head = new Uint8Array(buffer, 0, 4);
       const tail = new Uint8Array(buffer, 4, 4);
