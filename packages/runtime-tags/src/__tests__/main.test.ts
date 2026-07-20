@@ -343,6 +343,33 @@ function testFixtures(interop?: true) {
           skipHTML || it("html", () => snapCompile("html"));
           skipDOM || it("dom", () => snapCompile("dom"));
 
+          // Compile diagnostics live in `meta.diagnostics`, not the bundle output;
+          // collect them from the html build (no extra compile). Analyze-time, so debug only.
+          !optimize &&
+            !hasCompilerError &&
+            it("diagnostics", async () => {
+              const { diagnostics } = await ssrRunner();
+              await snap(
+                () => {
+                  const lines = diagnostics
+                    .flatMap(({ id, items }) =>
+                      items.map(
+                        (d) =>
+                          `- \`${path
+                            .relative(fixtureDir, id)
+                            .replace(/\\/g, "/")}\` ${d.type}: ${d.label}`,
+                      ),
+                    )
+                    .sort();
+                  return lines.length
+                    ? `# Diagnostics\n\n${lines.join("\n")}\n`
+                    : "";
+                },
+                fixtureDir,
+                "diagnostics.md",
+              );
+            });
+
           optimize &&
             !hasCompilerError &&
             after(() => {

@@ -23,6 +23,11 @@ const virtualRe = /(?:^|\/)v:/;
 // Test-only helpers (utils/resolve) are excluded from the measured bundle.
 const testUtilRe = /[\\/]__tests__[\\/]utils[\\/]/;
 
+interface Diagnostic {
+  type: string;
+  label: string;
+}
+
 export async function createServerRunner<T extends Record<string, string>>(
   cwd: string,
   entries: T,
@@ -34,6 +39,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
+  diagnostics: { id: string; items: Diagnostic[] }[];
 }> {
   const optimize = !!config.optimize;
   const out = path.join(cwd, "dist", optimize ? "optimize" : "debug");
@@ -55,6 +61,12 @@ export async function createServerRunner<T extends Record<string, string>>(
         domEntry.add(id, file + (kind === "load" ? loadExt : pageExt));
       },
     },
+  };
+
+  // Collected from the existing html-build compiles (no extra compile).
+  const diagnosticsByFile = new Map<string, Diagnostic[]>();
+  const collectDiagnostics = (id: string, diagnostics: Diagnostic[]) => {
+    if (diagnostics.length) diagnosticsByFile.set(id, diagnostics);
   };
 
   const domBuilt = build({
@@ -145,7 +157,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
       virtual.plugin,
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
-      markoPlugin({ ...compileOpts, output: "html" }),
+      markoPlugin({ ...compileOpts, output: "html" }, collectDiagnostics),
       {
         name: "html-entry",
         resolveId: {
@@ -156,13 +168,13 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
           filter: { id: entryRe },
           handler(id) {
             const file = id.replace(entryRe, markoExt);
-            const { code } = compiler.compileFileSync(file, {
+            const { code, meta } = compiler.compileFileSync(file, {
               ...compileOpts,
               output: "html",
               entry: "page",
               sourceMaps: false,
             });
-
+            collectDiagnostics(file, (meta.diagnostics ?? []) as Diagnostic[]);
             return code;
           },
         },
@@ -246,6 +258,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     clientRunner,
     domBundle: () => buildSnapshot(domResult, cwd, optimize),
     htmlBundle: () => buildSnapshot(htmlResult, cwd),
+    diagnostics: [...diagnosticsByFile].map(([id, items]) => ({ id, items })),
   };
 }
 
@@ -394,13 +407,17 @@ function remapDistPlugin(): Plugin {
   };
 }
 
-function markoPlugin(config: compiler.Config): Plugin {
+function markoPlugin(
+  config: compiler.Config,
+  onDiagnostics?: (id: string, diagnostics: Diagnostic[]) => void,
+): Plugin {
   return {
     name: "marko",
     load: {
       filter: { id: markoRe },
       handler(id) {
-        const { code, map } = compiler.compileFileSync(id, config);
+        const { code, map, meta } = compiler.compileFileSync(id, config);
+        onDiagnostics?.(id, (meta.diagnostics ?? []) as Diagnostic[]);
         return { code, map };
       },
     },
