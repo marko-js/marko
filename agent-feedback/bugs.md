@@ -254,13 +254,3 @@ module's ready id never resolves. The lazy tag's own render path recovers
 `.catch` that reports through a defined channel (or retries). Verify: reject
 the dynamic import in a generated load entry and watch for the unhandled
 rejection with the ready id never firing.
-
-## `analyzeExpressionTagName` const-follow has no cycle guard
-
-`packages/runtime-tags/src/translator/util/tag-name-type.ts` › `analyzeExpressionTagName` | 2026-07-20 | impact:low | effort:low
-
-Following a `<const>` tag's value pushes the bound expression with no visited
-set, so mutually-referential `<const/a=b>` / `<const/b=a>` used as a tag name
-loop forever during analysis. Guard the follow with a visited-tag set.
-Verify: compile a template whose dynamic tag name resolves through two
-`<const>` tags that reference each other.

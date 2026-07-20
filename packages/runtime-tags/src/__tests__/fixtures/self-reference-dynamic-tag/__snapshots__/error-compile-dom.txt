@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/self-reference-dynamic-tag/template.marko:1:10
+    > 1 | <const/x=x/>
+        |          ^ Tag variable circular references are not supported.
+      2 | <${x}>hi</>
+      3 |

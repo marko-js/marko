@@ -89,6 +89,7 @@ function analyzeExpressionTagName(
   extra: MarkoTagExtra,
 ) {
   const pending = [name] as t.NodePath<t.Expression>[];
+  const seen = new Set<t.Node>();
   let path: (typeof pending)[0] | undefined;
   let type: TagNameType | undefined;
   let nullable = false;
@@ -96,6 +97,11 @@ function analyzeExpressionTagName(
   let tagNameLoad: LoadImportConfig | undefined;
 
   while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
+    // Following a `<const>` value can cycle (`<const/a=b><const/b=a>`); skip
+    // nodes already visited so the traversal terminates instead of looping.
+    if (seen.has(path.node)) continue;
+    seen.add(path.node);
+
     if (path.isConditionalExpression()) {
       pending.push(path.get("consequent"));
 

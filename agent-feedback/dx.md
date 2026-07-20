@@ -181,3 +181,14 @@ fixture that later becomes `error_compiler: true` keeps its last generated
 harness could delete (or assert the absence of) `sizes.json` for error
 fixtures. Verify: add `sizes.json` to any `error_compiler` fixture and watch
 `npm run test:update` leave it untouched.
+
+## Emit the circular-reference error for mutually-referential `<const>` tags, not just self-references
+
+`packages/runtime-tags/src/translator/util/references.ts` › `trackReferencesForBinding` | 2026-07-20 | impact:low | effort:med
+
+`trackReferencesForBinding` throws `Tag variable circular references are not
+supported.` only when a tag variable references itself inside its own tag
+(`<const/x=x/>`). A mutual cycle (`<const/a=b/><const/b=a/>`) passes the check
+and compiles to code that fails at runtime; detecting it through the binding
+graph would surface the same clear compile error. Verify: compile
+`<const/a=b/><const/b=a/>` used as a value and observe no diagnostic.
