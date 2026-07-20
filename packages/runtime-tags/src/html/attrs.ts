@@ -514,5 +514,5 @@ function normalizedValueMatches(a: unknown, b: unknown) {
 }
 
 function normalizeStrAttrValue(value: unknown) {
-  return (value && value !== true) || value === 0 ? value + "" : "";
+  return isNotVoid(value) && value !== true ? value + "" : "";
 }

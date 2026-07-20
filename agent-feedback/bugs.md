@@ -58,12 +58,6 @@ but it is one flush-ordering change away from a silent hydration freeze. A
 queue (or firing the pending callback before re-assigning) would make the
 inline runtime robust; weigh against inline-runtime byte cost.
 
-## SSR controlled-form value normalization diverges from DOM for `0n`/`NaN`/`false`, causing a hydration mismatch
-
-`packages/runtime-tags/src/html/attrs.ts` › `normalizeStrAttrValue` | 2026-07-14 | impact:low | effort:low
-
-`normalizeStrAttrValue` computes `(value && value !== true) || value === 0 ? value + "" : ""`, so `0n` (falsy, `0n === 0` is false), `NaN`, and `false` all normalize to `""`. The DOM counterpart used for the identical selection/checked computation, `normalizeStrProp` (`dom/controllable.ts`) → `normalizeAttrValue` (`dom/dom.ts`), returns `value + ""`, giving `"0"`/`"NaN"`/`"false"`. This normalizer feeds `normalizedValueMatches`, which decides `selected` for controlled `<select>`/`<option>` and `checked` for `<input type=checkbox|radio>`, so SSR and CSR can select different options/checkboxes for the same value. Example: a controlled `<select value=0n>` with `<option value=0>` and `<option value="">` — SSR marks the empty option selected, CSR marks the `value=0` option selected, a genuine hydration mismatch. Unlike ordinary text rendering, where the SSR and DOM helpers both deliberately render `0n` as empty, these controlled-value paths use different formulas and disagree. Latent (no fixture feeds these as controlled values today). Fix: make `normalizeStrAttrValue` agree with the DOM normalizer for non-void, non-`true` values.
-
 ## Multiple-select change observer compares controlled value to DOM selection index-by-index
 
 `packages/runtime-tags/src/dom/controllable.ts` › `_attr_select_value_script` | 2026-07-14 | impact:low | effort:low

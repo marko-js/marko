@@ -1,0 +1,21 @@
+# Render
+```html
+<select>
+  <option
+    value=""
+  >
+    empty
+  </option>
+  <option
+    selected=""
+    value="0"
+  >
+    zero
+  </option>
+  <option
+    value="1"
+  >
+    one
+  </option>
+</select>
+```

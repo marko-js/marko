@@ -1,0 +1,16 @@
+<select>
+  <option value>empty</option>
+  <option value=NaN selected>nan</option>
+  <option value=0>zero</option>
+</select><!--M_*1 #select/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#select/0": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-select-value-nan/template.marko_0/valueChange"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/controllable-select-value-nan/template.marko_0 1"
+  ];
+  M._.w()
+</script>
