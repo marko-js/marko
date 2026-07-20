@@ -164,12 +164,6 @@ Invoke-only propagation skips same-program `<define>` props because reads are in
 
 `writeHTMLResumeStatements()` emits `_resume_branch(scopeId)` for some inert sections without a serialize reason (`html-style-injection` has no DOM bundle or scope payload). Omit or guard it with the finalized section reason while preserving empty referenced owners and ready-channel descendants.
 
-## Compute dynamic-style name offset with an incremental counter instead of a full-program traversal
-
-`packages/runtime-tags/src/translator/core/style.ts` › `dynamicStyleNameOffset` | 2026-07-14 | impact:low | effort:low
-
-`dynamicStyleNameOffset` runs `t.traverseFast(getProgram().node, ...)` over the entire program AST for every dynamic `<style>` tag, summing `node.extra.dynamicStyle.names.length` for tags whose `node.start` precedes the current one. Because analyze is a depth-first traversal in ascending source position and the current tag's `dynamicStyle` extra is set only afterward, the offset is simply the running total of all previously-analyzed dynamic styles' name counts — maintainable with an O(1) program-scoped counter, exactly the `programStyleCounts` WeakMap idiom already used ~20 lines below in `getStyleImportPath`. As written it is O(K·N) (K dynamic-style tags × N program nodes), walking the whole tree K times. Impact is low because K is tiny in realistic templates. A replacement must keep disjoint, deterministic per-tag ranges; the current code keys on `node.start`, so an incremental counter relies on the normal source-order visit invariant.
-
 ## Interop bridges a Class parent's `on-x` handler as a fresh closure each render
 
 `packages/runtime-class/src/runtime/helpers/dynamic-tag.js` › `addTagsEvents` | 2026-07-13 | impact:low | effort:low

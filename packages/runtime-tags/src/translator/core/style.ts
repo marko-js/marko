@@ -67,6 +67,8 @@ const programStyleCounts = new WeakMap<
   t.Program,
   Partial<Record<string, number>>
 >();
+// Running index for dynamic `<style>` interpolation names, program-scoped.
+const programDynamicStyleNameCounts = new WeakMap<t.Program, number>();
 
 export default {
   analyze(tag) {
@@ -131,14 +133,12 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
 
 function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
   let names: string[] | undefined;
-  let index = 0;
   for (const child of tag.node.body.body) {
     if (t.isMarkoPlaceholder(child)) {
-      if (!names) {
-        names = [];
-        index = dynamicStyleNameOffset(tag);
-      }
-      names.push(dynamicStyleName(tag, index++));
+      const program = getProgram().node;
+      const index = programDynamicStyleNameCounts.get(program) ?? 0;
+      programDynamicStyleNameCounts.set(program, index + 1);
+      (names ??= []).push(dynamicStyleName(tag, index));
     } else if (!t.isMarkoText(child)) {
       throw tag.hub.buildError(
         child,
@@ -148,20 +148,6 @@ function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
     }
   }
   return names;
-}
-
-function dynamicStyleNameOffset(tag: t.NodePath<t.MarkoTag>) {
-  const { start } = tag.node;
-  let offset = 0;
-  if (start != null) {
-    t.traverseFast(getProgram().node, (node) => {
-      const dynamicStyle = node.extra?.dynamicStyle;
-      if (dynamicStyle && node.start != null && node.start < start) {
-        offset += dynamicStyle.names.length;
-      }
-    });
-  }
-  return offset;
 }
 
 const styleNameUnsafeReg = /[^a-zA-Z0-9_]/g;
