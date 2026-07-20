@@ -1,6 +1,8 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
-	_html("<button type=button>Whoops</button>");
+	const $scope0_id = _scope_id();
+	_html(`<div class=override><button type=submit>Whoops</button>${_el_resume($scope0_id, "a")}</div>`);
+	_script($scope0_id, "a0");
+	writeScope($scope0_id, {});
 }, 1);

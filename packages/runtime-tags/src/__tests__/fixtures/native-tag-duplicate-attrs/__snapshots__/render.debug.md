@@ -1,8 +1,12 @@
 # Render
 ```html
-<button
-  type="button"
+<div
+  class="override"
 >
-  Whoops
-</button>
+  <button
+    type="submit"
+  >
+    Whoops
+  </button>
+</div>
 ```

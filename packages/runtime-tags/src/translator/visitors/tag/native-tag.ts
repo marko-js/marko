@@ -132,6 +132,10 @@ export default {
 
         if (t.isMarkoAttribute(attr)) {
           if (seen[attr.name]) {
+            diagnosticWarn(tag, {
+              label: `The \`${attr.name}\` attribute is set more than once on \`<${tagName}>\`; only the last value is used.`,
+              loc: attr.loc ?? undefined,
+            });
             // drop references for duplicated attributes.
             dropNodes(attr.value);
             continue;
