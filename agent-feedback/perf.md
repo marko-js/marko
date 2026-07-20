@@ -98,12 +98,6 @@ Every scope written as a value emits `_(id)` after `trackScope` (`serializer.ts:
 
 Profiling a 464 KB data-heavy payload (product records: nested objects, arrays, long strings) — after the prototype-dispatch and char-code key-escaping fast paths already landed — shows the remaining cost is dominated by intrinsic per-value bookkeeping: ~12% GC, driven by a `new Reference` (`serializer.ts:307`) allocated in `writeReferenceOr` (`serializer.ts:608`) / `writeString` (`serializer.ts:723`) for every object, array, and >12-char string, plus ~12% in output `StringAdd` and ~8% across the `refs`/`REGISTRY`/`strs` Map probes. Most of those References back a value that is written once and never referenced again, so they are immediate garbage. A lazy scheme — record only the buffer position on first write, upgrade to a full Reference only on a second occurrence — would remove the bulk of the allocation, but is blocked by cross-flush dedup: a value first written in one flush and reused in a later one resolves through `assignId`'s parent/accessor walk (`serializer.ts:1868`), which needs pos+parent+accessor+flush retained from the first write (essentially the whole Reference). Splitting within-flush dedup (the common case, which only needs `pos` via `assignId`'s early return) from the cross-flush path would let the first write store a cheap position marker and allocate a Reference only when one is actually reused. Output-preserving, but a deep change to the reference model, not a spot fix.
 
-## Hoist the thrice-shipped "consumed render result" error string
-
-`packages/runtime-tags/src/html/template.ts` › `ServerRendered.#promise` | 2026-07-13 | impact:low | effort:low
-
-The 41-char literal `"Cannot read from a consumed render result"` is written verbatim three times — lines 274, 302 and 335 — and none is behind a `MARKO_DEBUG` guard, so all three ship. The minifier does not hoist repeated string literals into a shared binding. Hoist to a module-scope `const` and reference it in the three `new Error(...)` sites to drop ~80 bytes from the SSR runtime.
-
 ## Remove the second-stage dynamic import from load entries
 
 `packages/runtime-tags/src/translator/visitors/program/index.ts` › `translate.enter` | 2026-07-13 | impact:high | effort:low

@@ -16,6 +16,8 @@ import {
   writeWaitReady,
 } from "./writer";
 
+const CONSUMED_RESULT_MESSAGE = "Cannot read from a consumed render result";
+
 export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   [RendererProp.Id]?: string;
   [RendererProp.Embed]?: boolean;
@@ -271,7 +273,7 @@ class ServerRendered implements RenderedTemplate {
       this.#head = null;
 
       if (!head) {
-        return reject(new Error("Cannot read from a consumed render result"));
+        return reject(new Error(CONSUMED_RESULT_MESSAGE));
       }
 
       const { boundary } = head;
@@ -302,7 +304,7 @@ class ServerRendered implements RenderedTemplate {
     this.#head = null;
 
     if (!head) {
-      onAbort(new Error("Cannot read from a consumed render result"));
+      onAbort(new Error(CONSUMED_RESULT_MESSAGE));
       return;
     }
 
@@ -337,7 +339,7 @@ class ServerRendered implements RenderedTemplate {
   toString() {
     const head = this.#head;
     this.#head = null;
-    if (!head) throw new Error("Cannot read from a consumed render result");
+    if (!head) throw new Error(CONSUMED_RESULT_MESSAGE);
     const { boundary } = head;
     switch (boundary.flush()) {
       case FlushStatus.aborted:
