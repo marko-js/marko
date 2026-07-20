@@ -168,6 +168,8 @@ export function normalizeDynamicRenderer<Renderer>(
             `A dynamic tag must be a string tag name (like \`"div"\`) or a Marko template/component, but received a ${typeof value}.`,
           );
         }
+        // Any other truthy non-renderer (a bare object/function or a non-renderer
+        // `.default`) renders body-only by design, e.g. `<${navigator}>x</>`; don't throw.
       }
     }
     if (RendererProp.Id in normalized) {
