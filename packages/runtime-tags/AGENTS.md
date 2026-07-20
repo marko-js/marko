@@ -15,9 +15,11 @@ Entries: `src/dom.ts`, `src/html.ts`, `src/translator/index.ts`. Type stubs for 
 
 ## Architecture
 
-Read the [resume architecture guide](RESUMABILITY.md) before changing reference
-analysis, signals, serialization, resume, lazy loading, or generated DOM output.
-It defines the shared vocabulary and traces the compiler/runtime model end to end.
+[CONTEXT.md](CONTEXT.md) is the canonical glossary — use its terms (and respect
+its _Avoid_ lists) in code, comments, and discussion. Read the
+[resume architecture guide](RESUMABILITY.md) before changing reference analysis,
+signals, serialization, resume, lazy loading, or generated DOM output; it traces
+the compiler/runtime model end to end and routes each concept to its code.
 
 ## Translator
 

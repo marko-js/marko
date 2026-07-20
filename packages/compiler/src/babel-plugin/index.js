@@ -119,6 +119,7 @@ export default (api, markoOpts) => {
         file.___taglibLookup = taglibLookup;
         file.___getMarkoFile = getMarkoFile;
 
+        // hydrate output emits only the entry bootstrap, so taglib translators are skipped.
         if (markoOpts.output !== "hydrate") {
           for (const id in taglibLookup.taglibsById) {
             addPlugin(

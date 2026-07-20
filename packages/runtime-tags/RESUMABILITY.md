@@ -46,14 +46,16 @@ and Brotli size. Inspect optimized `dom.bundle.js`, chunk placement, and
 
 ## Compiler model
 
-| Concept         | Meaning                                                                             | Primary code                             |
-| --------------- | ----------------------------------------------------------------------------------- | ---------------------------------------- |
-| Section         | Compile-time render unit; runtime scopes are its instances                          | `translator/util/sections.ts`            |
-| Binding         | Reactive value/property with alias, closure, assignment, hoist, and source edges    | `translator/util/references.ts`          |
-| Sources         | State and/or input/body-parameter roots that can make a value relevant              | `references.ts`                          |
-| Signal          | Setup or update program keyed by one binding or a canonical binding intersection    | compiler/runtime `signals.ts`            |
-| Scope           | Plain runtime state object keyed by accessors; production accessors are short chars | `dom/scope.ts`                           |
-| Renderer/branch | Blueprint and live DOM range instance                                               | `dom/renderer.ts`, `dom/control-flow.ts` |
+Term definitions live in [CONTEXT.md](./CONTEXT.md); this table routes each
+concept to its primary code.
+
+| Concept         | Primary code                                 |
+| --------------- | -------------------------------------------- |
+| Section         | `translator/util/sections.ts`                |
+| Binding/Sources | `translator/util/references.ts`              |
+| Signal          | compiler/runtime `signals.ts`                |
+| Scope/Accessor  | `dom/scope.ts`, `common/accessor[.debug].ts` |
+| Renderer/branch | `dom/renderer.ts`, `dom/control-flow.ts`     |
 
 `finalizeReferences()` is the center of analysis. It resolves each expression to
 canonical bindings, separates constant/live/hoisted/lazy reads, prunes unused
