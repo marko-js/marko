@@ -1,0 +1,17 @@
+import { getReport } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  // A bare `<await>` under a constructed hop: the branch link ships in a
+  // resolution-order frame and the body constructs from its wire shell.
+  <await|data|=getReport($global.range)>
+    <p.report>${data}</p>
+  </await>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

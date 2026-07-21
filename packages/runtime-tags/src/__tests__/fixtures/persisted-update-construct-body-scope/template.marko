@@ -1,0 +1,24 @@
+import { getData } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>home</p>
+</define>
+<define/Reports>
+  <try>
+    <@placeholder>
+      <p.loading>loading…</p>
+    </@placeholder>
+    <await|data|=getData($global.range)>
+      <let/ready=false/>
+      // `mounter` is dom-less (no elements, no consumed tag variable): the
+      // markup walk cannot reach its scope, so the entry's ids must stamp it.
+      <mounter onReady() { ready = true }/>
+      <p.status>${ready ? "ready" : "waiting"} of ${data.total}</p>
+    </await>
+  </try>
+</define>
+
+<layout content=$global.view === "reports" ? Reports : Home/>

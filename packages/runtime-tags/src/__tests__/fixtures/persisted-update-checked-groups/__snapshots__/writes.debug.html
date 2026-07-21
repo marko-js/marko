@@ -1,0 +1,31 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<fieldset class=plan><input value=basic checked type=radio name=plan
+    class=plan-basic><!--M_*1 #input/2--><input value=pro type=radio name=plan
+    class=plan-pro><!--M_*1 #input/3--><input value=max type=radio name=plan
+    class=plan-max><!--M_*1 #input/4--></fieldset>
+<fieldset class=ship><input value=ground checked type=radio name=ship
+    class=ship-ground><!--M_*1 #input/5--><input value=air type=radio name=ship
+    class=ship-air><!--M_*1 #input/6--></fieldset>
+<fieldset class=extras><input value=warranty checked type=checkbox
+    class=extra-warranty><!--M_*1 #input/7--><input value=setup type=checkbox
+    class=extra-setup><!--M_*1 #input/8--></fieldset><input type=checkbox
+  class=gift><!--M_*1 #input/9--><input value=SAVE10 checked type=checkbox
+  name=promo class=promo><!--M_*1 #input/10--><output
+  class=note>none<!--M_*1 #text/11--></output>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#input/5": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-checked-groups/template.marko_0/checkedValueChange"
+        ),
+      "ControlledHandler:#input/6": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-checked-groups/template.marko_0/checkedValueChange2"
+        ),
+      note: "none",
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-checked-groups/template.marko_0 1"
+  ];
+  M._.w()
+</script>

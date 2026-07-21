@@ -5,6 +5,7 @@ import {
   getTagDef,
   getTaglibLookup,
   getTagTemplate,
+  getTemplateId,
   importDefault,
   importNamed,
   loadFileForTag,
@@ -19,11 +20,18 @@ import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import {
+  getKnownTagChildScopeBinding,
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+} from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -32,16 +40,22 @@ import {
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
-import { getOrCreateSection } from "../../util/sections";
+import { getOrCreateSection, getSection } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
-import { addStatement, getSignal } from "../../util/signals";
+import {
+  addStatement,
+  buildResumeRegisterKey,
+  getSignal,
+} from "../../util/signals";
 import { createProgramState } from "../../util/state";
+import { addUpdateMerge } from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import type { LoadImportConfig } from "../import-declaration";
 import { scopeIdentifier } from "../program";
 import { getTemplateContentName } from "../program/html";
+import { withChildTemplateId } from "../program/renderers";
 
 const kLoadTagBinding = Symbol("load tag binding");
 // Caches the trigger and attr signal declarations for a load import so they
@@ -98,6 +112,10 @@ export default {
         // (mid-analysis children assumed to have one); load tags always wire it up.
         addSetupStatement(getOrCreateSection(tag));
       }
+
+      // Statically inlined children ride the parent's composed shell; a
+      // load tag's child constructs separately from its own root shell (see
+      // `_update_load`), so the parent section stays constructible.
 
       knownTagAnalyze(
         tag,
@@ -167,6 +185,26 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
   if (isLoad) {
     const childFileName = childFile.opts.filename;
+    recordChildUpdateMerge(
+      tag,
+      relativePath,
+      tagName,
+      childExports.update,
+      isPersisted()
+        ? getTemplateId(
+            getMarkoOpts(),
+            childFileName,
+            buildResumeRegisterKey(childSection, "update"),
+          )
+        : undefined,
+      isPersistedEntryBuild()
+        ? buildLoadReadyConfig(file, childFile, childExports, loadConfig)
+        : undefined,
+      isPersisted()
+        ? getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true)
+        : undefined,
+      isPersisted() ? childFile.metadata.marko.id : undefined,
+    );
     const { triggers, signals } = getLoadIdentifiers();
     let triggerIdent = triggers.get(loadConfig);
     if (!triggerIdent) {
@@ -271,6 +309,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     walks.injectWalks(tag, tagName);
     walks.enterShallow(tag);
   } else if (programSection === childSection) {
+    recordChildUpdateMerge(tag, relativePath, tagName, childExports.update);
     knownTagTranslateDOM(
       tag,
       childExports.params,
@@ -292,16 +331,28 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           },
     );
 
-    write`${t.identifier(childExports.template)}`;
-    walks.injectWalks(tag, tagName, t.identifier(childExports.walks));
+    write`${withChildTemplateId(
+      t.identifier(childExports.template),
+      file.metadata.marko.id,
+    )}`;
+    walks.injectWalks(
+      tag,
+      tagName,
+      withChildTemplateId(
+        t.identifier(childExports.walks),
+        file.metadata.marko.id,
+      ),
+    );
   } else {
+    recordChildUpdateMerge(tag, relativePath, tagName, childExports.update);
+    const importPath = getChildImportPath(file, relativePath);
     knownTagTranslateDOM(
       tag,
       childExports.params,
       (binding, preferredName, directContent) =>
         importOrSelfReferenceName(
           tag.hub.file,
-          relativePath,
+          importPath,
           (directContent && binding.directContentExport) || binding.export!,
           preferredName,
         ),
@@ -316,7 +367,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 t.callExpression(
                   importOrSelfReferenceName(
                     file,
-                    relativePath,
+                    importPath,
                     childExports.setup,
                     tagName,
                   ),
@@ -327,15 +378,36 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           },
     );
 
-    write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
+    write`${withChildTemplateId(
+      importNamed(
+        file,
+        importPath,
+        childExports.template,
+        `${tagName}_template`,
+      ),
+      childFile.metadata.marko.id,
+    )}`;
     walks.injectWalks(
       tag,
       tagName,
-      importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+      withChildTemplateId(
+        importNamed(file, importPath, childExports.walks, `${tagName}_walks`),
+        childFile.metadata.marko.id,
+      ),
     );
   }
 
   tag.remove();
+}
+
+// Keep child render graphs out of eager page chunks; circular references
+// stay local to avoid importing the entry from itself.
+export function getChildImportPath(file: t.BabelFile, relativePath: string) {
+  return isPersistedEntryBuild() &&
+    relativePath.endsWith(".marko") &&
+    !isCircularRequest(file, relativePath)
+    ? `${relativePath}?persisted`
+    : relativePath;
 }
 
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
@@ -486,9 +558,12 @@ function buildLoadSetupVirtualModule(
   childExports: { template: string; walks: string; setup: string },
 ) {
   const parts = `${childExports.template}, ${childExports.walks}, ${childExports.setup}`;
+  const updateImport = isPersisted()
+    ? `\nimport "./${path.basename(childFileName)}?persisted"`
+    : "";
   return getMarkoOpts().resolveVirtualDependency!(file.opts.filename, {
     virtualPath: `${resolveRelativePath(file, childFileName)}.setup.js`,
-    code: `import { ${parts} } from "./${path.basename(childFileName)}"\nexport const _ = [${parts}]`,
+    code: `import { ${parts} } from "./${path.basename(childFileName)}"${updateImport}\nexport const _ = [${parts}]`,
   })!;
 }
 
@@ -511,6 +586,58 @@ function loadTriggersToExpression(loadConfig: LoadImportConfig | undefined) {
   return triggers.length === 1
     ? triggers[0]
     : callRuntime("_load_race_trigger", ...triggers);
+}
+
+function recordChildUpdateMerge(
+  tag: t.NodePath<t.MarkoTag>,
+  relativePath: string,
+  tagName: string,
+  updateName: string,
+  loadId?: string,
+  loadReady?: { id: string; loadExpr: t.Expression },
+  loadMarker?: t.StringLiteral | t.NumericLiteral,
+  loadTemplateId?: string,
+) {
+  const childScopeBinding = getKnownTagChildScopeBinding(tag);
+  if (childScopeBinding) {
+    addUpdateMerge(getSection(tag), {
+      kind: "child",
+      accessor: getScopeAccessorLiteral(childScopeBinding),
+      relativePath,
+      tagName,
+      updateName,
+      load: loadId,
+      loadReady,
+      loadMarker,
+      loadTemplateId,
+    });
+  }
+}
+
+function buildLoadReadyConfig(
+  file: t.BabelFile,
+  childFile: t.BabelFile,
+  childExports: { template: string; walks: string; setup: string },
+  loadConfig: LoadImportConfig | undefined,
+) {
+  const childFileName = childFile.opts.filename as string;
+  const readyId = getReadyId(childFile);
+  if (!readyId) return undefined;
+  const loadExpr = t.arrowFunctionExpression(
+    [],
+    t.callExpression(t.import(), [
+      t.stringLiteral(
+        buildLoadSetupVirtualModule(file, childFileName, childExports),
+      ),
+    ]),
+  );
+  const triggerExpr = loadTriggersToExpression(loadConfig);
+  return {
+    id: readyId,
+    loadExpr: triggerExpr
+      ? t.callExpression(triggerExpr, [loadExpr])
+      : loadExpr,
+  };
 }
 
 function toDOMTriggerExpression(trigger: LoadTrigger) {

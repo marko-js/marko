@@ -1,3 +1,5 @@
+import type { PersistedRender } from "../../common/types";
+
 declare global {
   var __RESOLVE_STATE__: {
     generation: number;
@@ -73,6 +75,60 @@ export const flushMedia = Object.assign(() => {}, {
 export type Throws = ReturnType<typeof throws>;
 export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
+}
+
+/** A server patch in SSR tests and a plain input update in CSR tests. */
+export type Navigate = {
+  navigateInput: Record<string, unknown>;
+  /** Runs between streamed SSR frames. */
+  betweenFrames?: (container: Element, frameIndex: number) => unknown;
+  /** Applies only the first N SSR frames. */
+  abortAfterFrame?: number;
+  /** Rewrites SSR frames before application. */
+  mutateFrames?: (frames: string[]) => string[];
+  /** Requires the SSR apply to throw. */
+  expectError?: boolean;
+};
+export type NavigateOptions = Omit<Navigate, "navigateInput">;
+export function navigate(
+  input: Record<string, unknown>,
+  optsOrBetweenFrames?: NavigateOptions | Navigate["betweenFrames"],
+  abortAfterFrame?: number,
+): Navigate {
+  return typeof optsOrBetweenFrames === "object"
+    ? { navigateInput: input, ...optsOrBetweenFrames }
+    : {
+        navigateInput: input,
+        betweenFrames: optsOrBetweenFrames,
+        abortAfterFrame,
+      };
+}
+
+export function isNavigate(value: any): value is Navigate {
+  return (
+    typeof value === "object" && value !== null && "navigateInput" in value
+  );
+}
+
+/** Builds `render()`'s persisted request facts from the fixture's `$global`
+ * flags, as @marko/run does from its negotiation headers; undefined when off. */
+export function persistedRenderFrom(
+  $global: Record<string, unknown> | undefined,
+): PersistedRender | undefined {
+  return $global?.persisted ? {} : undefined;
+}
+
+/** Patch facts for a `navigate()` step; `$global.persistedCrossRoute` marks it
+ * cross-route (a hop whose target diverges from the live page). */
+export function persistedPatchFrom(
+  $global: Record<string, unknown> | undefined,
+): PersistedRender {
+  return {
+    patch: {
+      fromRoute: $global?.persistedCrossRoute ? "previous" : "current",
+      targetRoute: "current",
+    },
+  };
 }
 
 export function isWait(value: any): value is Wait {

@@ -1,11 +1,11 @@
-// size: 3904 (min) 1732 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 3972 (min) 1752 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-J9r5zAD5.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
-  parsers = {},
   nextScopeId = 1e6,
+  constructingBranch,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0),
       scope.D?.forEach(destroyNestedScopes),
@@ -37,18 +37,16 @@ let decodeAccessor = (num) =>
           value === 49 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value === 38) return currentWalkIndex;
-      else if (value === 47 || value === 48)
+      else if (value === 47 || value === 48) {
+        let childKey = decodeAccessor(currentScopeIndex++);
         ((currentWalkIndex = walkInternal(
           currentWalkIndex,
           walkCodes,
-          (scope[decodeAccessor(currentScopeIndex++)] = createScope(
-            scope.$,
-            scope.F,
-          )),
+          (scope[childKey] = createScope(scope.$, scope.F, constructingBranch)),
         )),
           value === 48 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-      else if (value < 92)
+      } else if (value < 92)
         for (value = 20 * currentMultiplier + value - 67; value--;)
           walker.nextNode();
       else if (value < 107)
@@ -60,8 +58,9 @@ let decodeAccessor = (num) =>
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
-  cloneCache = {},
   registeredValues = {},
+  parsers = {},
+  cloneCache = {},
   rendering,
   runId = 2,
   pendingEffects = [],
@@ -70,15 +69,7 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
-  };
+  catchEnabled;
 function _on(element, type, handler) {
   (element["$" + type] === void 0 && delegate(type, handleDelegated),
     (element["$" + type] = handler || null));
@@ -89,17 +80,14 @@ function handleDelegated(ev) {
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
-function parseHTML(html, ns) {
-  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
-  return ((parser.innerHTML = html), parser.content || parser);
-}
-function createScope($global, closestBranch) {
-  return {
+function createScope($global, closestBranch, into) {
+  let scope = {
     L: nextScopeId++,
     H: runId,
     F: closestBranch,
     $: $global,
   };
+  return (into && (scope = Object.assign(into, scope)), scope);
 }
 function skipScope() {
   return nextScopeId++;
@@ -149,8 +137,42 @@ function _script(id, fn) {
 function walk(startNode, walkCodes, branch) {
   ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function createBranch($global, renderer, parentScope, parentNode) {
-  let branch = createScope($global);
+function _resume(id, obj) {
+  return (registeredValues[id] = obj);
+}
+function parseHTML(html, ns) {
+  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
+  return ((parser.innerHTML = html), parser.content || parser);
+}
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
+}
+function _text(node, value) {
+  let normalizedValue = _to_text(value);
+  node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function removeChildNodes(startNode, endNode) {
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop;) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
+  }
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+}
+function toInsertNode(startNode, endNode) {
+  if (startNode === endNode) return startNode;
+  let parent = new DocumentFragment(),
+    stop = endNode.nextSibling;
+  for (; startNode !== stop;) {
+    let next = startNode.nextSibling;
+    (parent.appendChild(startNode), (startNode = next));
+  }
+  return parent;
+}
+function createBranch($global, renderer, parentScope, parentNode, into) {
+  let branch = createScope($global, void 0, into);
   return (
     (branch._ = renderer.e || parentScope),
     setParentBranch(branch, parentScope?.F),
@@ -203,36 +225,6 @@ function createCloneableHTML(html, ns) {
             (branch.K = clone.lastChild));
         }
   );
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
-}
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
-}
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
-  node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (startNode.remove(), (startNode = next));
-  }
-}
-function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-}
-function toInsertNode(startNode, endNode) {
-  if (startNode === endNode) return startNode;
-  let parent = new DocumentFragment(),
-    stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (parent.appendChild(startNode), (startNode = next));
-  }
-  return parent;
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
@@ -319,6 +311,16 @@ function $signalReset(scope, id) {
 function abort(ctrl) {
   ctrl.abort();
 }
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return (
+    (renderer.mount = mount),
+    (renderer._ = renderer),
+    _resume(id, renderer)
+  );
+};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,

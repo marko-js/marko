@@ -1,8 +1,6 @@
-// size: 26115 (min) 9605 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
-let empty = [],
-  rest = Symbol(),
-  toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
+// size: 26816 (min) 9772 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-J9r5zAD5.mjs
+let toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
     let str = "",
       sep = "",
       part;
@@ -23,9 +21,9 @@ let empty = [],
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   R = /[^\p{L}\p{N}]/gu,
-  parsers = {},
   nextScopeId = 1e6,
   collectingScopes,
+  constructingBranch,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0),
       scope.D?.forEach(destroyNestedScopes),
@@ -59,18 +57,16 @@ let empty = [],
           value === 49 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value === 38) return currentWalkIndex;
-      else if (value === 47 || value === 48)
+      else if (value === 47 || value === 48) {
+        let childKey = decodeAccessor(currentScopeIndex++);
         ((currentWalkIndex = walkInternal(
           currentWalkIndex,
           walkCodes,
-          (scope[decodeAccessor(currentScopeIndex++)] = createScope(
-            scope.$,
-            scope.F,
-          )),
+          (scope[childKey] = createScope(scope.$, scope.F, constructingBranch)),
         )),
           value === 48 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-      else if (value < 92)
+      } else if (value < 92)
         for (value = 20 * currentMultiplier + value - 67; value--;)
           walker.nextNode();
       else if (value < 107)
@@ -82,7 +78,6 @@ let empty = [],
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
-  cloneCache = {},
   registeredValues = {},
   curRenders,
   branchesEnabled,
@@ -90,110 +85,11 @@ let empty = [],
   readyIds,
   isResuming,
   inputType = "",
-  _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
-    nodeAccessor = decodeAccessor(nodeAccessor);
-    let childScopeAccessor = "A" + nodeAccessor,
-      rendererAccessor = "D" + nodeAccessor;
-    return (
-      enableBranches(),
-      (scope, newRenderer, getInput) => {
-        let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
-        if (
-          scope[rendererAccessor] !==
-            (scope[rendererAccessor] =
-              normalizedRenderer?.a || normalizedRenderer) ||
-          (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
-        )
-          if (
-            (setConditionalRenderer(
-              scope,
-              nodeAccessor,
-              normalizedRenderer || (getContent ? getContent(scope) : void 0),
-              createBranchWithTagNameOrRenderer,
-            ),
-            getTagVar &&
-              (scope[childScopeAccessor].T = (value) =>
-                getTagVar()(scope, value)),
-            typeof normalizedRenderer == "string")
-          ) {
-            if (getContent) {
-              let content = getContent(scope);
-              (setConditionalRenderer(
-                scope[childScopeAccessor],
-                "a",
-                content,
-                createAndSetupBranch,
-              ),
-                content.f &&
-                  subscribeToScopeSet(
-                    content.e,
-                    content.f,
-                    scope[childScopeAccessor].Aa,
-                  ));
-            }
-          } else
-            normalizedRenderer?.f &&
-              subscribeToScopeSet(
-                normalizedRenderer.e,
-                normalizedRenderer.f,
-                scope[childScopeAccessor],
-              );
-        if (normalizedRenderer) {
-          let childScope = scope[childScopeAccessor],
-            args = getInput?.();
-          if (typeof normalizedRenderer == "string")
-            ((getContent ? _attrs : _attrs_content)(
-              childScope,
-              "a",
-              (inputIsArgs ? args[0] : args) || {},
-            ),
-              (childScope.Ia || childScope.Ea) &&
-                queueEffect(childScope, dynamicTagScript));
-          else {
-            for (let accessor in normalizedRenderer.g)
-              normalizedRenderer.g[accessor](
-                childScope,
-                normalizedRenderer.h[accessor],
-              );
-            if (normalizedRenderer.d)
-              if (inputIsArgs)
-                normalizedRenderer.d(
-                  childScope,
-                  normalizedRenderer._ ? args[0] : args,
-                );
-              else {
-                let inputWithContent = getContent
-                  ? {
-                      ...args,
-                      content: getContent(scope),
-                    }
-                  : args || {};
-                normalizedRenderer.d(
-                  childScope,
-                  normalizedRenderer._ ? inputWithContent : [inputWithContent],
-                );
-              }
-          }
-        }
-      }
-    );
-  },
-  _for_of = /* @__PURE__ */ loop(([all, by = bySecondArg], cb) => {
-    typeof by == "string"
-      ? forOf(all, (item, i) => cb(item[by], [item, i]))
-      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
-  }),
-  _for_in = /* @__PURE__ */ loop(([obj, by = byFirstArg], cb) =>
-    forIn(obj, (key, value) => cb(by(key, value), [key, value])),
-  ),
-  _for_to = /* @__PURE__ */ loop(([to, from, step, by = byFirstArg], cb) =>
-    forTo(to, from, step, (v) => cb(by(v), [v])),
-  ),
-  _for_until = /* @__PURE__ */ loop(
-    ([until, from, step, by = byFirstArg], cb) =>
-      forUntil(until, from, step, (v) => cb(by(v), [v])),
-  ),
+  parsers = {},
+  cloneCache = {},
   rendering,
+  updating,
+  refreshEffects = /* @__PURE__ */ new WeakSet(),
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -203,134 +99,7 @@ let empty = [],
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  classIdToBranch = /* @__PURE__ */ new Map(),
-  classEventResolver,
-  scopesByRender = /* @__PURE__ */ new WeakMap(),
-  getRenderScopes = ($global) => {
-    let render = self[$global.runtimeId]?.[$global.renderId],
-      scopes = render && scopesByRender.get(render);
-    return (
-      render && !scopes && scopesByRender.set(render, (scopes = {})),
-      scopes
-    );
-  },
-  compat = {
-    patchDynamicTag,
-    queueEffect,
-    init(warp10Noop) {
-      (_resume("$C_s", (scope) => {
-        if (
-          ((getRenderScopes(scope.$)[scope.L] = scope),
-          scope.m5c && classIdToBranch.set(scope.m5c, scope),
-          classEventResolver)
-        )
-          for (let key in scope) {
-            let resolved = classEventResolver(scope[key], scope);
-            resolved !== scope[key] && (scope[key] = resolved);
-          }
-      }),
-        _resume("$C_b", warp10Noop));
-    },
-    setClassEventResolver(fn) {
-      classEventResolver = fn;
-    },
-    getScope($global, scopeId) {
-      return getRenderScopes($global)?.[scopeId];
-    },
-    setRendererId(renderer, id) {
-      renderer.a = id;
-    },
-    isRenderer(renderer) {
-      return renderer.b;
-    },
-    getStartNode(branch) {
-      return branch.S;
-    },
-    getEndNode(branch) {
-      return branch.K;
-    },
-    setScopeNodes(branch, startNode, endNode) {
-      ((branch.S = startNode), (branch.K = endNode));
-    },
-    runComponentEffects() {
-      this.effects && runEffects(this.effects);
-    },
-    runComponentDestroy() {
-      this.scope && destroyBranch(this.scope);
-    },
-    resolveRegistered(value, $global) {
-      return Array.isArray(value) && typeof value[0] == "string"
-        ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
-        : value;
-    },
-    createRenderer(params, clone) {
-      let renderer = _content("", 0, 0, 0, params)();
-      return (
-        (renderer.b = (branch) => {
-          let cloned = clone();
-          ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
-        }),
-        renderer
-      );
-    },
-    render(out, component, renderer, args) {
-      let branch = component.scope,
-        created = 0;
-      if (
-        (!branch &&
-          (branch = classIdToBranch.get(component.id)) &&
-          ((component.scope = branch), classIdToBranch.delete(component.id)),
-        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
-      ) {
-        let input = args[0],
-          normalizedInput = (args[0] = {});
-        for (let key in input)
-          normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-      }
-      if (
-        ((component.effects = prepareEffects(() => {
-          ((branch ||=
-            ((created = 1),
-            (component.scope = createAndSetupBranch(
-              out.global,
-              renderer,
-              renderer.e,
-              document.body,
-            )))),
-            renderer.d?.(branch, renderer._ ? args[0] : args));
-        })),
-        created)
-      )
-        return toInsertNode(branch.S, branch.K);
-    },
-  },
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
-  };
-function attrTag(attrs) {
-  return (
-    (attrs[Symbol.iterator] = attrTagIterator),
-    (attrs[rest] = empty),
-    attrs
-  );
-}
-function attrTags(first, attrs) {
-  return first
-    ? (first[rest] === empty
-        ? (first[rest] = [attrs])
-        : first[rest].push(attrs),
-      first)
-    : attrTag(attrs);
-}
-function* attrTagIterator() {
-  (yield this, yield* this[rest]);
-}
+  catchEnabled;
 function _call(fn, v) {
   return (fn(v), v);
 }
@@ -400,21 +169,6 @@ function forUntil(until, from, step, cb) {
   for (let steps = (until - start) / delta, i = 0; i < steps; i++)
     cb(start + i * delta);
 }
-function toArray(opt) {
-  return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
-}
-function forEach(opt, cb) {
-  if (opt)
-    if (Array.isArray(opt)) for (let item of opt) cb(item);
-    else cb(opt);
-}
-function push(opt, item) {
-  return opt
-    ? Array.isArray(opt)
-      ? (opt.push(item), opt)
-      : [opt, item]
-    : item;
-}
 function _on(element, type, handler) {
   (element["$" + type] === void 0 && delegate(type, handleDelegated),
     (element["$" + type] = handler || null));
@@ -447,18 +201,33 @@ function resolveCursorPosition(
   }
   return -1;
 }
-function parseHTML(html, ns) {
-  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
-  return ((parser.innerHTML = html), parser.content || parser);
+function toArray(opt) {
+  return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
-function createScope($global, closestBranch) {
+function forEach(opt, cb) {
+  if (opt)
+    if (Array.isArray(opt)) for (let item of opt) cb(item);
+    else cb(opt);
+}
+function push(opt, item) {
+  return opt
+    ? Array.isArray(opt)
+      ? (opt.push(item), opt)
+      : [opt, item]
+    : item;
+}
+function createScope($global, closestBranch, into) {
   let scope = {
     L: nextScopeId++,
     H: runId,
     F: closestBranch,
     $: $global,
   };
-  return (collectingScopes?.push(scope), scope);
+  return (
+    into && (scope = Object.assign(into, scope)),
+    collectingScopes?.push(scope),
+    scope
+  );
 }
 function syncGen(scope) {
   scope.H = runId;
@@ -503,6 +272,33 @@ function tempDetachBranch(branch) {
   ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
     insertChildNodes(fragment, null, branch.S, branch.K));
 }
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch,
+) {
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope["A" + nodeAccessor],
+    parentNode =
+      referenceNode.nodeType > 1
+        ? (prevBranch?.S || referenceNode).parentNode
+        : referenceNode,
+    newBranch = (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch &&
+        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove());
+}
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -518,6 +314,18 @@ function triggerMacroTask() {
     channel.port2.postMessage(0));
 }
 function _let(id, fn) {
+  let valueAccessor = decodeAccessor(id);
+  return (scope, value) => (
+    rendering
+      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn) &&
+        (schedule(), queueRender(scope, fn, id)),
+    value
+  );
+}
+/** Persisted `_let`: a fresh scope may already contain its server seed. */
+function _let_persisted(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
@@ -544,7 +352,34 @@ function _let_change(id, fn) {
     value
   );
 }
+/** Persisted `_let_change`, using the seed-preserving let signal. */
+function _let_change_persisted(id, fn) {
+  let valueAccessor = decodeAccessor(id),
+    valueChangeAccessor = decodeAccessor(id + 1),
+    base = _let_persisted(id, fn);
+  return (scope, value, valueChange) => (
+    rendering
+      ? (scope[valueChangeAccessor] = valueChange) &&
+        (scope[valueAccessor] !== value || !(valueAccessor in scope))
+        ? ((scope[valueAccessor] = value), fn?.(scope))
+        : base(scope, value)
+      : scope[valueChangeAccessor]
+        ? scope[valueChangeAccessor](value)
+        : base(scope, value),
+    value
+  );
+}
 function _const(valueAccessor, fn) {
+  return (
+    (valueAccessor = decodeAccessor(valueAccessor)),
+    (scope, value) => {
+      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn?.(scope));
+    }
+  );
+}
+/** Persisted `_const`: equal patch values still run fresh-scope setup. */
+function _const_persisted(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
@@ -758,102 +593,23 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function createBranch($global, renderer, parentScope, parentNode) {
-  let branch = createScope($global);
-  return (
-    (branch._ = renderer.e || parentScope),
-    setParentBranch(branch, parentScope?.F),
-    renderer.b?.(branch, parentNode.namespaceURI),
-    branch
-  );
-}
-function setParentBranch(branch, parentBranch) {
-  (parentBranch &&
-    ((branch.N = parentBranch),
-    (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
-    (branch.F = branch));
-}
-function createAndSetupBranch($global, renderer, parentScope, parentNode) {
-  return setupBranch(
-    renderer,
-    createBranch($global, renderer, parentScope, parentNode),
-  );
-}
-function setupBranch(renderer, branch) {
-  return (renderer.c && queueRender(branch, renderer.c, -1), branch);
-}
-function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
-  ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
-    (setup = setup ? setup._ || setup : void 0),
-    (params ||= void 0));
-  let clone = template
-    ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
-          template,
-          ns,
-        ))(branch, walks);
-      }
-    : (branch) => {
-        walk((branch.S = branch.K = new Text()), walks, branch);
-      };
-  return (owner) => ({
-    a: id,
-    b: clone,
-    e: owner,
-    c: setup,
-    d: params,
-    f: dynamicScopesAccessor,
-  });
-}
-function _content_resume(
-  id,
-  template,
-  walks,
-  setup,
-  params,
-  dynamicScopesAccessor,
-) {
-  return _resume(
-    id,
-    _content(id, template, walks, setup, params, dynamicScopesAccessor),
-  );
-}
-function _content_closures(renderer, closureFns) {
-  let closureSignals = {};
-  for (let key in closureFns)
-    closureSignals[key] = _const(+key, closureFns[key]);
-  return (owner, closureValues) => {
-    let instance = renderer(owner);
-    return (
-      (instance.g = closureSignals),
-      (instance.h = closureValues),
-      instance
-    );
-  };
-}
-function createCloneableHTML(html, ns) {
-  let { firstChild, lastChild } = parseHTML(html, ns),
-    parent = document.createElementNS(ns, "t");
-  return (
-    insertChildNodes(parent, null, firstChild, lastChild),
-    firstChild === lastChild && firstChild.nodeType < 8
-      ? (branch, walks) => {
-          walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch);
-        }
-      : (branch, walks) => {
-          let clone = parent.cloneNode(!0);
-          (walk(clone.firstChild, walks, branch),
-            (branch.S = clone.firstChild),
-            (branch.K = clone.lastChild));
-        }
-  );
-}
 function enableBranches() {
   branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+}
+/** Persisted entries can enable branches after the initial resume walk. */
+function enableBranchesPersisted() {
+  if (!branchesEnabled) {
+    enableBranches();
+    for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  }
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+}
+/** Persisted lazy entries additionally replay updates parked while loading. */
+function readyPersisted(readyId) {
+  ready(readyId);
 }
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
@@ -1019,9 +775,19 @@ function init(runtimeId = "M") {
                 let serialized = resumes[i];
                 if (typeof serialized == "string")
                   for (lastTokenIndex = 0, visitText = serialized; nextToken();)
-                    /\D/.test(lastToken)
-                      ? (lastEffect = registeredValues[lastToken])
-                      : effects.push(lastEffect, getScope(lastToken));
+                    if (/\D/.test(lastToken)) {
+                      if (
+                        ((lastEffect = registeredValues[lastToken]),
+                        !lastEffect)
+                      ) {
+                        (render.pe ||= []).push(
+                          visitText.slice(
+                            lastTokenIndex - lastToken.length - 1,
+                          ),
+                        );
+                        break;
+                      }
+                    } else effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) {
                   if (!(
                     readyIds &&
@@ -1051,6 +817,10 @@ function init(runtimeId = "M") {
           return (
             (serializeContext._ = registeredValues),
             (render.m = (effects) => {
+              if (render.pe) {
+                let parked = render.pe;
+                ((render.pe = void 0), processResumes(parked, effects));
+              }
               if ((processResumes(render.r, effects), readyIds && render.b))
                 for (let progress = 1; progress;) {
                   progress = 0;
@@ -1450,6 +1220,10 @@ function updateList(arr, val, push) {
       : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
   );
 }
+function parseHTML(html, ns) {
+  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
+  return ((parser.innerHTML = html), parser.content || parser);
+}
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
 }
@@ -1731,6 +1505,375 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
+function createBranch($global, renderer, parentScope, parentNode, into) {
+  let branch = createScope($global, void 0, into);
+  return (
+    (branch._ = renderer.e || parentScope),
+    setParentBranch(branch, parentScope?.F),
+    renderer.b?.(branch, parentNode.namespaceURI),
+    branch
+  );
+}
+function setParentBranch(branch, parentBranch) {
+  (parentBranch &&
+    ((branch.N = parentBranch),
+    (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
+    (branch.F = branch));
+}
+function createAndSetupBranch($global, renderer, parentScope, parentNode) {
+  return setupBranch(
+    renderer,
+    createBranch($global, renderer, parentScope, parentNode),
+  );
+}
+function setupBranch(renderer, branch) {
+  return (renderer.c && queueRender(branch, renderer.c, -1), branch);
+}
+function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
+  ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
+    (setup = setup ? setup._ || setup : void 0),
+    (params ||= void 0));
+  let clone = template
+    ? (branch, ns) => {
+        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
+          template,
+          ns,
+        ))(branch, walks);
+      }
+    : (branch) => {
+        walk((branch.S = branch.K = new Text()), walks, branch);
+      };
+  return (owner) => ({
+    a: id,
+    b: clone,
+    e: owner,
+    c: setup,
+    d: params,
+    f: dynamicScopesAccessor,
+  });
+}
+function _content_resume(
+  id,
+  template,
+  walks,
+  setup,
+  params,
+  dynamicScopesAccessor,
+) {
+  return _resume(
+    id,
+    _content(id, template, walks, setup, params, dynamicScopesAccessor),
+  );
+}
+function _content_closures(renderer, closureFns) {
+  let closureSignals = {};
+  for (let key in closureFns)
+    closureSignals[key] = _const(+key, closureFns[key]);
+  return (owner, closureValues) => {
+    let instance = renderer(owner);
+    return (
+      (instance.g = closureSignals),
+      (instance.h = closureValues),
+      instance
+    );
+  };
+}
+function createCloneableHTML(html, ns) {
+  let { firstChild, lastChild } = parseHTML(html, ns),
+    parent = document.createElementNS(ns, "t");
+  return (
+    insertChildNodes(parent, null, firstChild, lastChild),
+    firstChild === lastChild && firstChild.nodeType < 8
+      ? (branch, walks) => {
+          walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch);
+        }
+      : (branch, walks) => {
+          let clone = parent.cloneNode(!0);
+          (walk(clone.firstChild, walks, branch),
+            (branch.S = clone.firstChild),
+            (branch.K = clone.lastChild));
+        }
+  );
+}
+/** Skips setup effects already carried by freshly created patch scopes. */
+function _script_update(id, fn) {
+  return (_resume(id, fn), _script_shared(fn));
+}
+/** Marks effects that refresh matched scopes from request-derived globals. */
+function _script_refresh(id, fn) {
+  return (refreshEffects.add(fn), _script_update(id, fn));
+}
+/** Registered effect fns the applier re-queues for matched scopes too. */
+/** Register-entry wrapper for effects already registered by the main module. */
+function _script_shared(fn) {
+  return (scope) => {
+    queueEffect(scope, fn);
+  };
+}
+function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
+  let render;
+  if (signalKey >= 0 && (render = scope[signalKey])) {
+    if (((render.d = value), render.e === runId || (catchEnabled && render.f)))
+      return;
+    render.e = runId;
+  } else
+    ((render = {
+      a: scopeKey * 1e6 + signalKey,
+      b: scope,
+      c: signal,
+      d: value,
+      e: runId,
+    }),
+      signalKey >= 0 && (scope[signalKey] = render));
+  queuePendingRender(render);
+}
+function queuePendingRender(render) {
+  let i = pendingRenders.push(render) - 1;
+  for (; i;) {
+    let parentIndex = (i - 1) >> 1,
+      parent = pendingRenders[parentIndex];
+    if (render.a - parent.a >= 0) break;
+    ((pendingRenders[i] = parent), (i = parentIndex));
+  }
+  pendingRenders[i] = render;
+}
+function queueEffect(scope, fn) {
+  pendingEffects.push(fn, scope);
+}
+function run() {
+  let effects = pendingEffects;
+  try {
+    ((rendering = 1), runRenders());
+  } finally {
+    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
+  }
+  runEffects(effects);
+}
+function queueAsyncRender(scope, signal, value) {
+  (queueRender(scope, signal, -1, value), queueMicrotask(run));
+}
+function prepareEffects(fn) {
+  let prevRenders = pendingRenders,
+    prevEffects = pendingEffects,
+    preparedEffects = (pendingEffects = []);
+  pendingRenders = [];
+  try {
+    ((rendering = 1), fn(), runRenders());
+  } finally {
+    (runId++,
+      (rendering = 0),
+      (pendingRenders = prevRenders),
+      (pendingEffects = prevEffects));
+  }
+  return preparedEffects;
+}
+function runRenders() {
+  for (; pendingRenders.length;) {
+    let render = pendingRenders[0],
+      item = pendingRenders.pop();
+    if (render !== item) {
+      let i = 0,
+        mid = pendingRenders.length >> 1,
+        key = (pendingRenders[0] = item).a;
+      for (; i < mid;) {
+        let bestChild = (i << 1) + 1,
+          right = bestChild + 1;
+        if (
+          (right < pendingRenders.length &&
+            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
+            (bestChild = right),
+          pendingRenders[bestChild].a - key >= 0)
+        )
+          break;
+        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
+      }
+      pendingRenders[i] = item;
+    }
+    runRender(render);
+  }
+}
+function skipDestroyedRenders() {
+  runRender = ((runRender) => (render) => {
+    render.b.F?.H !== 0 && runRender(render);
+  })(runRender);
+}
+function _enable_catch() {
+  if (!catchEnabled) {
+    ((catchEnabled = 1), enableBranches());
+    let handlePendingTry = (fn, scope, branch) => {
+      for (; branch;) {
+        if (branch.O?.i) return (branch.J ||= []).push(fn, scope);
+        branch = branch.N;
+      }
+    };
+    ((runEffects = (
+      (runEffects) =>
+      (effects, checkPending = placeholderShown.has(effects)) => {
+        if (checkPending || caughtError.has(effects)) {
+          let i = 0,
+            fn,
+            scope,
+            branch;
+          for (; i < effects.length;)
+            ((fn = effects[i++]),
+              (scope = effects[i++]),
+              (branch = scope.F)?.H !== 0 &&
+                !(checkPending && handlePendingTry(fn, scope, branch)) &&
+                fn(scope));
+        } else runEffects(effects);
+      }
+    )(runEffects)),
+      (runRender = ((runRender) => (render) => {
+        try {
+          let branch = render.b.F;
+          for (; branch;) {
+            if (branch.W) return ((render.f = 1), branch.W.push(render));
+            branch = branch.N;
+          }
+          ((render.f = 0), runRender(render));
+        } catch (error) {
+          renderCatch(render.b, error);
+        }
+      })(runRender)));
+  }
+}
+function renderCatch(scope, error) {
+  let tryWithCatch = findBranchWithKey(scope, "E");
+  if (tryWithCatch) {
+    let owner = tryWithCatch._,
+      placeholderBranch = tryWithCatch.P;
+    (placeholderBranch &&
+      (tryWithCatch.O && (tryWithCatch.O.i = 0),
+      (owner["A" + tryWithCatch.C] = placeholderBranch),
+      destroyBranch(tryWithCatch)),
+      caughtError.add(pendingEffects),
+      setConditionalRenderer(
+        owner,
+        tryWithCatch.C,
+        tryWithCatch.E,
+        createAndSetupBranch,
+      ),
+      tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
+  } else throw error;
+}
+function $signalReset(scope, id) {
+  let ctrl = scope.A?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
+}
+function $signal(scope, id) {
+  return (
+    scope.F && (scope.F.B ||= /* @__PURE__ */ new Set()).add(scope),
+    ((scope.A ||= {})[id] ||= new AbortController()).signal
+  );
+}
+function abort(ctrl) {
+  ctrl.abort();
+}
+//#endregion
+//#region packages/runtime-tags/dist/_branches-T4V7jxsi.mjs
+let _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
+    nodeAccessor = decodeAccessor(nodeAccessor);
+    let childScopeAccessor = "A" + nodeAccessor,
+      rendererAccessor = "D" + nodeAccessor;
+    return (
+      enableBranches(),
+      (scope, newRenderer, getInput) => {
+        let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
+        if (
+          scope[rendererAccessor] !==
+            (scope[rendererAccessor] =
+              normalizedRenderer?.a || normalizedRenderer) ||
+          (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
+        )
+          if (
+            (setConditionalRenderer(
+              scope,
+              nodeAccessor,
+              normalizedRenderer || (getContent ? getContent(scope) : void 0),
+              createBranchWithTagNameOrRenderer,
+            ),
+            getTagVar &&
+              (scope[childScopeAccessor].T = (value) =>
+                getTagVar()(scope, value)),
+            typeof normalizedRenderer == "string")
+          ) {
+            if (getContent) {
+              let content = getContent(scope);
+              (setConditionalRenderer(
+                scope[childScopeAccessor],
+                "a",
+                content,
+                createAndSetupBranch,
+              ),
+                content.f &&
+                  subscribeToScopeSet(
+                    content.e,
+                    content.f,
+                    scope[childScopeAccessor].Aa,
+                  ));
+            }
+          } else
+            normalizedRenderer?.f &&
+              subscribeToScopeSet(
+                normalizedRenderer.e,
+                normalizedRenderer.f,
+                scope[childScopeAccessor],
+              );
+        if (normalizedRenderer) {
+          let childScope = scope[childScopeAccessor],
+            args = getInput?.();
+          if (typeof normalizedRenderer == "string")
+            ((getContent ? _attrs : _attrs_content)(
+              childScope,
+              "a",
+              (inputIsArgs ? args[0] : args) || {},
+            ),
+              (childScope.Ia || childScope.Ea) &&
+                queueEffect(childScope, dynamicTagScript));
+          else {
+            for (let accessor in normalizedRenderer.g)
+              normalizedRenderer.g[accessor](
+                childScope,
+                normalizedRenderer.h[accessor],
+              );
+            if (normalizedRenderer.d)
+              if (inputIsArgs)
+                normalizedRenderer.d(
+                  childScope,
+                  normalizedRenderer._ ? args[0] : args,
+                );
+              else {
+                let inputWithContent = getContent
+                  ? {
+                      ...args,
+                      content: getContent(scope),
+                    }
+                  : args || {};
+                normalizedRenderer.d(
+                  childScope,
+                  normalizedRenderer._ ? inputWithContent : [inputWithContent],
+                );
+              }
+          }
+        }
+      }
+    );
+  },
+  _for_of = /* @__PURE__ */ loop(([all, by = bySecondArg], cb) => {
+    typeof by == "string"
+      ? forOf(all, (item, i) => cb(item[by], [item, i]))
+      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
+  }),
+  _for_in = /* @__PURE__ */ loop(([obj, by = byFirstArg], cb) =>
+    forIn(obj, (key, value) => cb(by(key, value), [key, value])),
+  ),
+  _for_to = /* @__PURE__ */ loop(([to, from, step, by = byFirstArg], cb) =>
+    forTo(to, from, step, (v) => cb(by(v), [v])),
+  ),
+  _for_until = /* @__PURE__ */ loop(
+    ([until, from, step, by = byFirstArg], cb) =>
+      forUntil(until, from, step, (v) => cb(by(v), [v])),
+  );
 function _await_promise(nodeAccessor, params) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let promiseAccessor = "L" + nodeAccessor,
@@ -1977,25 +2120,6 @@ function _try(nodeAccessor, template, walks, setup) {
       (branch.Q = normalizeDynamicRenderer(input.placeholder)));
   };
 }
-function renderCatch(scope, error) {
-  let tryWithCatch = findBranchWithKey(scope, "E");
-  if (tryWithCatch) {
-    let owner = tryWithCatch._,
-      placeholderBranch = tryWithCatch.P;
-    (placeholderBranch &&
-      (tryWithCatch.O && (tryWithCatch.O.i = 0),
-      (owner["A" + tryWithCatch.C] = placeholderBranch),
-      destroyBranch(tryWithCatch)),
-      caughtError.add(pendingEffects),
-      setConditionalRenderer(
-        owner,
-        tryWithCatch.C,
-        tryWithCatch.E,
-        createAndSetupBranch,
-      ),
-      tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
-  } else throw error;
-}
 function _if(nodeAccessor, ...branchesArgs) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "D" + nodeAccessor,
@@ -2097,33 +2221,6 @@ function _resume_dynamic_tag() {
 }
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
-}
-function setConditionalRenderer(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch,
-) {
-  let referenceNode = scope[nodeAccessor],
-    prevBranch = scope["A" + nodeAccessor],
-    parentNode =
-      referenceNode.nodeType > 1
-        ? (prevBranch?.S || referenceNode).parentNode
-        : referenceNode,
-    newBranch = (scope["A" + nodeAccessor] =
-      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
-  referenceNode === parentNode
-    ? (prevBranch &&
-        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
-      newBranch && insertBranchBefore(newBranch, parentNode, null))
-    : prevBranch
-      ? (newBranch
-          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
-          : parentNode.insertBefore(referenceNode, prevBranch.S),
-        removeAndDestroyBranch(prevBranch))
-      : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode),
-        referenceNode.remove());
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {
@@ -2291,145 +2388,136 @@ function bySecondArg(_item, index) {
 function byFirstArg(name) {
   return name;
 }
-function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let render;
-  if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || (catchEnabled && render.f)))
-      return;
-    render.e = runId;
-  } else
-    ((render = {
-      a: scopeKey * 1e6 + signalKey,
-      b: scope,
-      c: signal,
-      d: value,
-      e: runId,
-    }),
-      signalKey >= 0 && (scope[signalKey] = render));
-  queuePendingRender(render);
-}
-function queuePendingRender(render) {
-  let i = pendingRenders.push(render) - 1;
-  for (; i;) {
-    let parentIndex = (i - 1) >> 1,
-      parent = pendingRenders[parentIndex];
-    if (render.a - parent.a >= 0) break;
-    ((pendingRenders[i] = parent), (i = parentIndex));
-  }
-  pendingRenders[i] = render;
-}
-function queueEffect(scope, fn) {
-  pendingEffects.push(fn, scope);
-}
-function run() {
-  let effects = pendingEffects;
-  try {
-    ((rendering = 1), runRenders());
-  } finally {
-    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
-  }
-  runEffects(effects);
-}
-function queueAsyncRender(scope, signal, value) {
-  (queueRender(scope, signal, -1, value), queueMicrotask(run));
-}
-function prepareEffects(fn) {
-  let prevRenders = pendingRenders,
-    prevEffects = pendingEffects,
-    preparedEffects = (pendingEffects = []);
-  pendingRenders = [];
-  try {
-    ((rendering = 1), fn(), runRenders());
-  } finally {
-    (runId++,
-      (rendering = 0),
-      (pendingRenders = prevRenders),
-      (pendingEffects = prevEffects));
-  }
-  return preparedEffects;
-}
-function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
-    if (render !== item) {
-      let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
-      for (; i < mid;) {
-        let bestChild = (i << 1) + 1,
-          right = bestChild + 1;
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let empty = [],
+  rest = Symbol(),
+  classIdToBranch = /* @__PURE__ */ new Map(),
+  classEventResolver,
+  scopesByRender = /* @__PURE__ */ new WeakMap(),
+  getRenderScopes = ($global) => {
+    let render = self[$global.runtimeId]?.[$global.renderId],
+      scopes = render && scopesByRender.get(render);
+    return (
+      render && !scopes && scopesByRender.set(render, (scopes = {})),
+      scopes
+    );
+  },
+  compat = {
+    patchDynamicTag,
+    queueEffect,
+    init(warp10Noop) {
+      (_resume("$C_s", (scope) => {
         if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
-            (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
+          ((getRenderScopes(scope.$)[scope.L] = scope),
+          scope.m5c && classIdToBranch.set(scope.m5c, scope),
+          classEventResolver)
         )
-          break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
-      }
-      pendingRenders[i] = item;
-    }
-    runRender(render);
-  }
-}
-function skipDestroyedRenders() {
-  runRender = ((runRender) => (render) => {
-    render.b.F?.H !== 0 && runRender(render);
-  })(runRender);
-}
-function _enable_catch() {
-  if (!catchEnabled) {
-    ((catchEnabled = 1), enableBranches());
-    let handlePendingTry = (fn, scope, branch) => {
-      for (; branch;) {
-        if (branch.O?.i) return (branch.J ||= []).push(fn, scope);
-        branch = branch.N;
-      }
-    };
-    ((runEffects = (
-      (runEffects) =>
-      (effects, checkPending = placeholderShown.has(effects)) => {
-        if (checkPending || caughtError.has(effects)) {
-          let i = 0,
-            fn,
-            scope,
-            branch;
-          for (; i < effects.length;)
-            ((fn = effects[i++]),
-              (scope = effects[i++]),
-              (branch = scope.F)?.H !== 0 &&
-                !(checkPending && handlePendingTry(fn, scope, branch)) &&
-                fn(scope));
-        } else runEffects(effects);
-      }
-    )(runEffects)),
-      (runRender = ((runRender) => (render) => {
-        try {
-          let branch = render.b.F;
-          for (; branch;) {
-            if (branch.W) return ((render.f = 1), branch.W.push(render));
-            branch = branch.N;
+          for (let key in scope) {
+            let resolved = classEventResolver(scope[key], scope);
+            resolved !== scope[key] && (scope[key] = resolved);
           }
-          ((render.f = 0), runRender(render));
-        } catch (error) {
-          renderCatch(render.b, error);
-        }
-      })(runRender)));
-  }
-}
-function $signalReset(scope, id) {
-  let ctrl = scope.A?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
-}
-function $signal(scope, id) {
+      }),
+        _resume("$C_b", warp10Noop));
+    },
+    setClassEventResolver(fn) {
+      classEventResolver = fn;
+    },
+    getScope($global, scopeId) {
+      return getRenderScopes($global)?.[scopeId];
+    },
+    setRendererId(renderer, id) {
+      renderer.a = id;
+    },
+    isRenderer(renderer) {
+      return renderer.b;
+    },
+    getStartNode(branch) {
+      return branch.S;
+    },
+    getEndNode(branch) {
+      return branch.K;
+    },
+    setScopeNodes(branch, startNode, endNode) {
+      ((branch.S = startNode), (branch.K = endNode));
+    },
+    runComponentEffects() {
+      this.effects && runEffects(this.effects);
+    },
+    runComponentDestroy() {
+      this.scope && destroyBranch(this.scope);
+    },
+    resolveRegistered(value, $global) {
+      return Array.isArray(value) && typeof value[0] == "string"
+        ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
+        : value;
+    },
+    createRenderer(params, clone) {
+      let renderer = _content("", 0, 0, 0, params)();
+      return (
+        (renderer.b = (branch) => {
+          let cloned = clone();
+          ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
+        }),
+        renderer
+      );
+    },
+    render(out, component, renderer, args) {
+      let branch = component.scope,
+        created = 0;
+      if (
+        (!branch &&
+          (branch = classIdToBranch.get(component.id)) &&
+          ((component.scope = branch), classIdToBranch.delete(component.id)),
+        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
+      ) {
+        let input = args[0],
+          normalizedInput = (args[0] = {});
+        for (let key in input)
+          normalizedInput[key === "renderBody" ? "content" : key] = input[key];
+      }
+      if (
+        ((component.effects = prepareEffects(() => {
+          ((branch ||=
+            ((created = 1),
+            (component.scope = createAndSetupBranch(
+              out.global,
+              renderer,
+              renderer.e,
+              document.body,
+            )))),
+            renderer.d?.(branch, renderer._ ? args[0] : args));
+        })),
+        created)
+      )
+        return toInsertNode(branch.S, branch.K);
+    },
+  },
+  _template = (id, template, walks, setup, inputSignal) => {
+    let renderer = _content(id, template, walks, setup, inputSignal)();
+    return (
+      (renderer.mount = mount),
+      (renderer._ = renderer),
+      _resume(id, renderer)
+    );
+  };
+function attrTag(attrs) {
   return (
-    scope.F && (scope.F.B ||= /* @__PURE__ */ new Set()).add(scope),
-    ((scope.A ||= {})[id] ||= new AbortController()).signal
+    (attrs[Symbol.iterator] = attrTagIterator),
+    (attrs[rest] = empty),
+    attrs
   );
 }
-function abort(ctrl) {
-  ctrl.abort();
+function attrTags(first, attrs) {
+  return first
+    ? (first[rest] === empty
+        ? (first[rest] = [attrs])
+        : first[rest].push(attrs),
+      first)
+    : attrTag(attrs);
+}
+function* attrTagIterator() {
+  (yield this, yield* this[rest]);
 }
 function mount(input = {}, reference, position) {
   let branch,

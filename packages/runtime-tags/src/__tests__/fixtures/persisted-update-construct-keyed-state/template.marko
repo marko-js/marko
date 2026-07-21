@@ -1,0 +1,14 @@
+import { getItems } from "./data";
+
+<ul>
+  <for|item| of=getItems?.($global.filter) by(item) { return item.id }>
+    <let/watched=false>
+    <li>
+      <span>${item.name}</span>
+      <button
+        data-id=item.id
+        onClick() { watched = !watched }
+      >${watched ? "watching" : "watch"}</button>
+    </li>
+  </for>
+</ul>

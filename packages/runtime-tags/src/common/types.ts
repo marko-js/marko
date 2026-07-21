@@ -106,6 +106,22 @@ export interface $Global {
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }
+
+/** @internal Per-render options kept separate from user `$global`. */
+export interface RenderOptions {
+  persisted?: PersistedRender;
+}
+
+/** @internal Persisted request facts normalized by the router. */
+export interface PersistedRender {
+  patch?: PersistedPatch;
+}
+
+/** @internal An enhanced navigation within one persisted build. */
+export type PersistedPatch = {
+  fromRoute: string;
+  targetRoute: string;
+};
 export interface Input {
   [x: PropertyKey]: unknown;
 }
@@ -119,7 +135,7 @@ export interface Template {
     reference: Node,
     position?: InsertPosition,
   ): MountedTemplate;
-  render(input?: Input): RenderedTemplate;
+  render(input?: Input, options?: RenderOptions): RenderedTemplate;
 }
 
 export interface MountedTemplate {

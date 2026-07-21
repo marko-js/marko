@@ -1,4 +1,11 @@
-import { AccessorProp, type BranchScope, type Scope } from "../common/types";
+import {
+  type Accessor,
+  AccessorPrefix,
+  AccessorProp,
+  type BranchScope,
+  NodeType,
+  type Scope,
+} from "../common/types";
 import { $signalReset } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
 import { runId } from "./queue";
@@ -9,16 +16,27 @@ let collectingScopes: Scope[] | undefined;
 export function createScope(
   $global: Scope[AccessorProp.Global],
   closestBranch?: BranchScope,
+  into?: Scope | 0 | false,
 ): Scope {
-  const scope = {
+  let scope = {
     [AccessorProp.Id]: nextScopeId++,
     [AccessorProp.Gen]: runId,
     [AccessorProp.ClosestBranch]: closestBranch,
     [AccessorProp.Global]: $global,
   } as Scope;
 
+  // A constructed branch binds into its patch scope, so fills, serialized
+  // closures, and effects share one live identity (as resume binds scopes).
+  if (into) scope = Object.assign(into, scope);
   collectingScopes?.push(scope);
   return scope;
+}
+
+/** While set, walked child scopes adopt the patch scope already linked at
+ * their accessor (see `BeginChild` in `dom/walker.ts`). */
+export let constructingBranch: 1 | undefined;
+export function setConstructingBranch(on: 1 | undefined) {
+  constructingBranch = on;
 }
 
 export function syncGen(scope: Scope) {
@@ -132,4 +150,55 @@ export function tempDetachBranch(branch: BranchScope) {
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
+}
+
+export function setConditionalRenderer<T>(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  newRenderer: T,
+  createBranch: (
+    $global: Scope[AccessorProp.Global],
+    renderer: NonNullable<T>,
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
+) {
+  const referenceNode = scope[nodeAccessor] as Comment | Element;
+  const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
+    BranchScope | undefined;
+  const parentNode =
+    referenceNode.nodeType > NodeType.Element
+      ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
+      : (referenceNode as ParentNode);
+  const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
+    newRenderer &&
+    createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
+  if (referenceNode === parentNode) {
+    if (prevBranch) {
+      destroyBranch(prevBranch);
+      referenceNode.textContent = "";
+    }
+
+    if (newBranch) {
+      insertBranchBefore(newBranch, parentNode, null);
+    }
+  } else if (prevBranch) {
+    if (newBranch) {
+      insertBranchBefore(
+        newBranch,
+        parentNode,
+        prevBranch[AccessorProp.StartNode],
+      );
+    } else {
+      parentNode.insertBefore(
+        referenceNode,
+        prevBranch[AccessorProp.StartNode],
+      );
+    }
+
+    removeAndDestroyBranch(prevBranch);
+  } else if (newBranch) {
+    insertBranchBefore(newBranch, parentNode, referenceNode);
+    referenceNode.remove();
+  }
 }

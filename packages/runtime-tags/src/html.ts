@@ -47,6 +47,7 @@ export {
   forTo,
   forUntil,
 } from "./html/for";
+export { _renderer_shells } from "./html/renderer-shells";
 export { _template } from "./html/template";
 export {
   _attr_content,
@@ -59,10 +60,13 @@ export {
   _for_to,
   _for_until,
   _hoist,
+  _hole_value,
   _html,
   _id,
   _if,
+  _patch_reason,
   _peek_scope_id,
+  _persisted_reason,
   _resume,
   _resume_branch,
   _scope,
@@ -76,6 +80,7 @@ export {
   _set_serialize_reason,
   _show_end,
   _show_start,
+  _state_reason,
   _subscribe,
   _trailers,
   _try,

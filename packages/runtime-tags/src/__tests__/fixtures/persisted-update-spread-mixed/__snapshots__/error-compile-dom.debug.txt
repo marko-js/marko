@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-update-spread-mixed/template.marko:3:2
+      1 | <let/localTitle="client title"/>
+      2 | <button onClick() { localTitle = "updated" }>update</button>
+    > 3 | <input ...{ title: input.title + localTitle }/>
+        |  ^^^^^ Persisted pages cannot use a spread that mixes client state with request-derived values. The compiler cannot safely split the spread into sparse updates; use explicit attributes or a sparse spread protocol.
+      4 |

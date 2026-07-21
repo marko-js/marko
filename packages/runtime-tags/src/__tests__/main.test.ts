@@ -18,8 +18,12 @@ import {
   type Flush,
   type FlushType,
   isFlush,
+  isNavigate,
   isThrows,
   isWait,
+  type Navigate,
+  persistedPatchFrom,
+  persistedRenderFrom,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -32,8 +36,10 @@ import {
 } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
-type Step = Input | Wait | Flush | Throws | ((document: Document) => unknown);
+type Step =
+  Input | Wait | Flush | Throws | Navigate | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
+
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
   embedded?: true;
@@ -58,6 +64,11 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** User-code sentinels that must tree-shake out of the optimized DOM bundle. */
+  dom_bundle_excludes?: string[];
+  /** Compiles the fixture with the `persisted` compiler option; pair with
+   * `$global.persisted` (and `persistedCrossRoute` for divergent navigations). */
+  persisted?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -162,6 +173,7 @@ function testFixtures(interop?: true) {
           const getModeOpts = once((): compiler.Config => ({
             translator,
             runtimeId: config.runtime_id,
+            persisted: config.persisted,
             writeVersionComment: false,
             babelConfig: {
               babelrc: false,
@@ -244,6 +256,14 @@ function testFixtures(interop?: true) {
             await snapMode(async () => {
               const runner = await ssrRunner();
               const { snapshot, sizes } = await runner[`${output}Bundle`]();
+              if (optimize && output === "dom") {
+                for (const excluded of config.dom_bundle_excludes || []) {
+                  assert.ok(
+                    !snapshot.includes(excluded),
+                    `optimized DOM bundle must exclude ${JSON.stringify(excluded)}`,
+                  );
+                }
+              }
               if (optimize && sizes) stats.dom = sizes;
               return stripFixtureDir(snapshot);
             }, `${output}.bundle.js`);
@@ -266,6 +286,12 @@ function testFixtures(interop?: true) {
                 instance.update(input);
                 tracker.logUpdate(input);
               },
+              // csr navigation is simply new input to the root -- the
+              // semantics the ssr patch is meant to reproduce.
+              onNavigate(nav) {
+                instance.update(nav.navigateInput as Input);
+                tracker.logUpdate(nav.navigateInput as Input);
+              },
             });
 
             tracker.cleanup();
@@ -281,7 +307,12 @@ function testFixtures(interop?: true) {
             const capture = captureConsole();
 
             try {
-              const { template } = await runner.runServer();
+              const server = await runner.runServer();
+              const { template } = server;
+              // Marko 5 treats the second argument as a stream, so omit it normally.
+              const persisted = persistedRenderFrom(
+                input.$global as Record<string, unknown> | undefined,
+              );
               for await (const data of template.render(
                 config.embedded
                   ? {
@@ -292,6 +323,7 @@ function testFixtures(interop?: true) {
                       },
                     }
                   : input,
+                persisted && { persisted },
               )) {
                 chunks.push(data);
                 logs.push(capture.records());
@@ -324,8 +356,95 @@ function testFixtures(interop?: true) {
             const { run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
+            const navRunner = runner.navRunner;
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onNavigate: navRunner
+                ? async (nav) => {
+                    const navigateInput = nav.navigateInput as Input;
+                    const navEntry = await navRunner(browser.ctx);
+                    navEntry.__ready("__navigate");
+
+                    // Render the patch statelessly from the new input.
+                    const server = await runner.runServer();
+                    const { template } = server;
+                    let html = "";
+                    const navigateGlobal = {
+                      ...(navigateInput.$global as object),
+                      renderId: "navigate",
+                    };
+                    const persistedRender = persistedPatchFrom(navigateGlobal);
+                    for await (const chunk of template.render(
+                      { ...navigateInput, $global: navigateGlobal },
+                      { persisted: persistedRender },
+                    )) {
+                      html += chunk;
+                    }
+                    // Apply newline-delimited frames in resolution order.
+                    let frames = html.split("\n").filter(Boolean);
+                    // Fixture transforms run before any frame applies.
+                    if (nav.mutateFrames) frames = nav.mutateFrames(frames);
+                    if (!frames.length) {
+                      throw new Error(
+                        "navigate(): patch render carried no resume fills",
+                      );
+                    }
+                    if (process.env.MARKO_WIRE_MEASURE) {
+                      process.stdout.write(
+                        `MARKO_WIRE_MEASURE:${Buffer.from(
+                          JSON.stringify({
+                            fixture: entry,
+                            interop: !!interop,
+                            optimize,
+                            fromRoute: persistedRender?.patch?.fromRoute,
+                            targetRoute: persistedRender?.patch?.targetRoute,
+                            frames,
+                          }),
+                        ).toString("base64")}\n`,
+                      );
+                    }
+
+                    // Post-apply failures reach run through this sink (run
+                    // replaces the document); the harness pins them instead.
+                    const applyFrame = navEntry.patch((error) =>
+                      browser.window.console.error(
+                        `navigate() document fallback: ${error}`,
+                      ),
+                    );
+                    // Truncation models a superseded navigation between frames.
+                    const frameCount = Math.min(
+                      nav.abortAfterFrame ?? frames.length,
+                      frames.length,
+                    );
+                    for (let i = 0; i < frameCount; i++) {
+                      const result = applyFrame(frames[i]!);
+                      if (!result) {
+                        throw new Error(
+                          `navigate(): frame ${i + 1} carried no resume fills`,
+                        );
+                      }
+                      await browser.runAsyncScripts();
+                      run();
+                      if (i < frameCount - 1) {
+                        tracker.logUpdate(
+                          `update frame ${i + 1} of ${frames.length}`,
+                        );
+                        tracker.beginUpdate();
+                        if (nav.betweenFrames) {
+                          await nav.betweenFrames(
+                            browser.window.document.documentElement,
+                            i,
+                          );
+                          run();
+                          tracker.logUpdate(
+                            `between frame ${i + 1} and ${i + 2}`,
+                          );
+                          tracker.beginUpdate();
+                        }
+                      }
+                    }
+                  }
+                : undefined,
             });
 
             while (hasFlush) {
@@ -448,10 +567,35 @@ async function runSteps(
   opts: {
     onInput?: (input: Input) => void;
     onFlush?: () => Promise<void>;
+    onNavigate?: (nav: Navigate) => void | Promise<void>;
   },
 ) {
   for (const update of steps) {
-    if (isWait(update)) {
+    if (isNavigate(update)) {
+      if (opts.onNavigate) {
+        tracker.beginUpdate();
+        if (update.expectError) {
+          // A failed apply must throw so Run can replace the partial document.
+          let error: unknown;
+          try {
+            await opts.onNavigate(update);
+          } catch (err) {
+            error = err;
+          }
+          if (!error) {
+            throw new Error("navigate(): expected the apply to fail");
+          }
+          tracker.logUpdate(
+            `\`${JSON.stringify(update.navigateInput)}\` failed: ${
+              (error as Error).message
+            }`,
+          );
+        } else {
+          await opts.onNavigate(update);
+          tracker.logUpdate(update.navigateInput as Input);
+        }
+      }
+    } else if (isWait(update)) {
       await update();
       await browser.runAsyncScripts();
       run();

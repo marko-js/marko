@@ -12,6 +12,13 @@ export enum AccessorPrefix {
   Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
+  // Patch-only namespaces below are inlined like the rest of the enum, so
+  // ordinary client bundles never carry them.
+  PatchAttr = "PatchAttr:",
+  PatchHole = "PatchHole:",
+  PatchHtml = "PatchHtml:",
+  PatchApplied = "PatchApplied:",
+  BoundaryAnchor = "BoundaryAnchor:",
 }
 
 export enum AccessorProp {

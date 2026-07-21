@@ -1,11 +1,11 @@
-// size: 6443 (min) 2822 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 6513 (min) 2859 (brotli)
+//#region packages/runtime-tags/dist/_abort-signal-J9r5zAD5.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
-  parsers = {},
   nextScopeId = 1e6,
+  constructingBranch,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0),
       scope.D?.forEach(destroyNestedScopes),
@@ -37,18 +37,16 @@ let decodeAccessor = (num) =>
           value === 49 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value === 38) return currentWalkIndex;
-      else if (value === 47 || value === 48)
+      else if (value === 47 || value === 48) {
+        let childKey = decodeAccessor(currentScopeIndex++);
         ((currentWalkIndex = walkInternal(
           currentWalkIndex,
           walkCodes,
-          (scope[decodeAccessor(currentScopeIndex++)] = createScope(
-            scope.$,
-            scope.F,
-          )),
+          (scope[childKey] = createScope(scope.$, scope.F, constructingBranch)),
         )),
           value === 48 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-      else if (value < 92)
+      } else if (value < 92)
         for (value = 20 * currentMultiplier + value - 67; value--;)
           walker.nextNode();
       else if (value < 107)
@@ -60,14 +58,10 @@ let decodeAccessor = (num) =>
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
-  cloneCache = {},
   registeredValues = {},
   branchesEnabled,
-  _for_of = /* @__PURE__ */ loop(([all, by = bySecondArg], cb) => {
-    typeof by == "string"
-      ? forOf(all, (item, i) => cb(item[by], [item, i]))
-      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
-  }),
+  parsers = {},
+  cloneCache = {},
   rendering,
   runId = 2,
   pendingEffects = [],
@@ -76,15 +70,7 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
-  };
+  catchEnabled;
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -93,9 +79,6 @@ function forOf(list, cb) {
     let i = 0;
     for (let item of list) cb(item, i++);
   }
-}
-function toArray(opt) {
-  return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
 function _on(element, type, handler) {
   (element["$" + type] === void 0 && delegate(type, handleDelegated),
@@ -107,17 +90,17 @@ function handleDelegated(ev) {
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
-function parseHTML(html, ns) {
-  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
-  return ((parser.innerHTML = html), parser.content || parser);
+function toArray(opt) {
+  return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
-function createScope($global, closestBranch) {
-  return {
+function createScope($global, closestBranch, into) {
+  let scope = {
     L: nextScopeId++,
     H: runId,
     F: closestBranch,
     $: $global,
   };
+  return (into && (scope = Object.assign(into, scope)), scope);
 }
 function skipScope() {
   return nextScopeId++;
@@ -133,6 +116,33 @@ function removeAndDestroyBranch(branch) {
 }
 function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
+}
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch,
+) {
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope["A" + nodeAccessor],
+    parentNode =
+      referenceNode.nodeType > 1
+        ? (prevBranch?.S || referenceNode).parentNode
+        : referenceNode,
+    newBranch = (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch &&
+        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove());
 }
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
@@ -212,8 +222,57 @@ function _script(id, fn) {
 function walk(startNode, walkCodes, branch) {
   ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function createBranch($global, renderer, parentScope, parentNode) {
-  let branch = createScope($global);
+function enableBranches() {
+  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+}
+function _resume(id, obj) {
+  return (registeredValues[id] = obj);
+}
+function parseHTML(html, ns) {
+  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
+  return ((parser.innerHTML = html), parser.content || parser);
+}
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
+}
+function _attr(element, name, value) {
+  setAttribute(element, name, normalizeAttrValue(value));
+}
+function setAttribute(element, name, value) {
+  element.getAttribute(name) != value &&
+    (value === void 0
+      ? element.removeAttribute(name)
+      : element.setAttribute(name, value));
+}
+function _text(node, value) {
+  let normalizedValue = _to_text(value);
+  node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
+function removeChildNodes(startNode, endNode) {
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop;) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
+  }
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+}
+function toInsertNode(startNode, endNode) {
+  if (startNode === endNode) return startNode;
+  let parent = new DocumentFragment(),
+    stop = endNode.nextSibling;
+  for (; startNode !== stop;) {
+    let next = startNode.nextSibling;
+    (parent.appendChild(startNode), (startNode = next));
+  }
+  return parent;
+}
+function createBranch($global, renderer, parentScope, parentNode, into) {
+  let branch = createScope($global, void 0, into);
   return (
     (branch._ = renderer.e || parentScope),
     setParentBranch(branch, parentScope?.F),
@@ -276,51 +335,103 @@ function createCloneableHTML(html, ns) {
         }
   );
 }
-function enableBranches() {
-  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
+  let render;
+  if (signalKey >= 0 && (render = scope[signalKey])) {
+    if (((render.d = value), render.e === runId || catchEnabled)) return;
+    render.e = runId;
+  } else
+    ((render = {
+      a: scopeKey * 1e6 + signalKey,
+      b: scope,
+      c: signal,
+      d: value,
+      e: runId,
+    }),
+      signalKey >= 0 && (scope[signalKey] = render));
+  queuePendingRender(render);
 }
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
+function queuePendingRender(render) {
+  let i = pendingRenders.push(render) - 1;
+  for (; i;) {
+    let parentIndex = (i - 1) >> 1,
+      parent = pendingRenders[parentIndex];
+    if (render.a - parent.a >= 0) break;
+    ((pendingRenders[i] = parent), (i = parentIndex));
+  }
+  pendingRenders[i] = render;
 }
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
+function queueEffect(scope, fn) {
+  pendingEffects.push(fn, scope);
 }
-function _attr(element, name, value) {
-  setAttribute(element, name, normalizeAttrValue(value));
+function run() {
+  let effects = pendingEffects;
+  try {
+    ((rendering = 1), runRenders());
+  } finally {
+    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
+  }
+  runEffects(effects);
 }
-function setAttribute(element, name, value) {
-  element.getAttribute(name) != value &&
-    (value === void 0
-      ? element.removeAttribute(name)
-      : element.setAttribute(name, value));
+function prepareEffects(fn) {
+  let prevRenders = pendingRenders,
+    prevEffects = pendingEffects,
+    preparedEffects = (pendingEffects = []);
+  pendingRenders = [];
+  try {
+    ((rendering = 1), fn(), runRenders());
+  } finally {
+    (runId++,
+      (rendering = 0),
+      (pendingRenders = prevRenders),
+      (pendingEffects = prevEffects));
+  }
+  return preparedEffects;
 }
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
-  node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
-}
-function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (startNode.remove(), (startNode = next));
+function runRenders() {
+  for (; pendingRenders.length;) {
+    let render = pendingRenders[0],
+      item = pendingRenders.pop();
+    if (render !== item) {
+      let i = 0,
+        mid = pendingRenders.length >> 1,
+        key = (pendingRenders[0] = item).a;
+      for (; i < mid;) {
+        let bestChild = (i << 1) + 1,
+          right = bestChild + 1;
+        if (
+          (right < pendingRenders.length &&
+            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
+            (bestChild = right),
+          pendingRenders[bestChild].a - key >= 0)
+        )
+          break;
+        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
+      }
+      pendingRenders[i] = item;
+    }
+    runRender(render);
   }
 }
-function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+function skipDestroyedRenders() {
+  runRender = ((runRender) => (render) => {
+    render.b.F?.H !== 0 && runRender(render);
+  })(runRender);
 }
-function toInsertNode(startNode, endNode) {
-  if (startNode === endNode) return startNode;
-  let parent = new DocumentFragment(),
-    stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (parent.appendChild(startNode), (startNode = next));
-  }
-  return parent;
+function $signalReset(scope, id) {
+  let ctrl = scope.A?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
 }
+function abort(ctrl) {
+  ctrl.abort();
+}
+//#endregion
+//#region packages/runtime-tags/dist/_branches-T4V7jxsi.mjs
+let _for_of = /* @__PURE__ */ loop(([all, by = bySecondArg], cb) => {
+  typeof by == "string"
+    ? forOf(all, (item, i) => cb(item[by], [item, i]))
+    : forOf(all, (item, i) => cb(by(item, i), [item, i]));
+});
 function _if(nodeAccessor, ...branchesArgs) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "D" + nodeAccessor,
@@ -343,33 +454,6 @@ function _if(nodeAccessor, ...branchesArgs) {
         );
     }
   );
-}
-function setConditionalRenderer(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch,
-) {
-  let referenceNode = scope[nodeAccessor],
-    prevBranch = scope["A" + nodeAccessor],
-    parentNode =
-      referenceNode.nodeType > 1
-        ? (prevBranch?.S || referenceNode).parentNode
-        : referenceNode,
-    newBranch = (scope["A" + nodeAccessor] =
-      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
-  referenceNode === parentNode
-    ? (prevBranch &&
-        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
-      newBranch && insertBranchBefore(newBranch, parentNode, null))
-    : prevBranch
-      ? (newBranch
-          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
-          : parentNode.insertBefore(referenceNode, prevBranch.S),
-        removeAndDestroyBranch(prevBranch))
-      : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode),
-        referenceNode.remove());
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {
@@ -505,96 +589,16 @@ function loop(forEach) {
 function bySecondArg(_item, index) {
   return index;
 }
-function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let render;
-  if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || catchEnabled)) return;
-    render.e = runId;
-  } else
-    ((render = {
-      a: scopeKey * 1e6 + signalKey,
-      b: scope,
-      c: signal,
-      d: value,
-      e: runId,
-    }),
-      signalKey >= 0 && (scope[signalKey] = render));
-  queuePendingRender(render);
-}
-function queuePendingRender(render) {
-  let i = pendingRenders.push(render) - 1;
-  for (; i;) {
-    let parentIndex = (i - 1) >> 1,
-      parent = pendingRenders[parentIndex];
-    if (render.a - parent.a >= 0) break;
-    ((pendingRenders[i] = parent), (i = parentIndex));
-  }
-  pendingRenders[i] = render;
-}
-function queueEffect(scope, fn) {
-  pendingEffects.push(fn, scope);
-}
-function run() {
-  let effects = pendingEffects;
-  try {
-    ((rendering = 1), runRenders());
-  } finally {
-    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
-  }
-  runEffects(effects);
-}
-function prepareEffects(fn) {
-  let prevRenders = pendingRenders,
-    prevEffects = pendingEffects,
-    preparedEffects = (pendingEffects = []);
-  pendingRenders = [];
-  try {
-    ((rendering = 1), fn(), runRenders());
-  } finally {
-    (runId++,
-      (rendering = 0),
-      (pendingRenders = prevRenders),
-      (pendingEffects = prevEffects));
-  }
-  return preparedEffects;
-}
-function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
-    if (render !== item) {
-      let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
-      for (; i < mid;) {
-        let bestChild = (i << 1) + 1,
-          right = bestChild + 1;
-        if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
-            (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
-        )
-          break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
-      }
-      pendingRenders[i] = item;
-    }
-    runRender(render);
-  }
-}
-function skipDestroyedRenders() {
-  runRender = ((runRender) => (render) => {
-    render.b.F?.H !== 0 && runRender(render);
-  })(runRender);
-}
-function $signalReset(scope, id) {
-  let ctrl = scope.A?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
-}
-function abort(ctrl) {
-  ctrl.abort();
-}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return (
+    (renderer.mount = mount),
+    (renderer._ = renderer),
+    _resume(id, renderer)
+  );
+};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,

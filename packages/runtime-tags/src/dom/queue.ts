@@ -1,11 +1,19 @@
 import {
+  AccessorPrefix,
   AccessorProp,
+  type AwaitCounter,
   type BranchScope,
   PendingRenderProp,
+  RendererProp,
   type Scope,
 } from "../common/types";
-import { renderCatch } from "./control-flow";
-import { enableBranches } from "./resume";
+import { createAndSetupBranch } from "./renderer";
+import { _resume, enableBranches } from "./resume";
+import {
+  destroyBranch,
+  findBranchWithKey,
+  setConditionalRenderer,
+} from "./scope";
 import type { Signal, SignalFn } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -19,6 +27,40 @@ export type PendingRender = {
 };
 
 export let rendering: undefined | 0 | 1;
+/** Patch-apply flag shared without retaining the applier in main bundles. */
+export let updating: undefined | 0 | 1;
+export { updating as _updating };
+/** The apply's generation floor: scopes created during the apply carry
+ * `Gen >= updatingGen` (see `applyGen` in dom/update). */
+export let updatingGen = 0;
+export function setUpdating(value: 0 | 1, gen?: number) {
+  updating = value;
+  if (gen !== undefined) updatingGen = gen;
+}
+
+/** Skips setup effects already carried by freshly created patch scopes. */
+export function _script_update(id: string, fn: (scope: Scope) => void) {
+  _resume(id, fn);
+  return _script_shared(fn);
+}
+
+/** Marks effects that refresh matched scopes from request-derived globals. */
+export function _script_refresh(id: string, fn: (scope: Scope) => void) {
+  refreshEffects.add(fn);
+  return _script_update(id, fn);
+}
+
+/** Registered effect fns the applier re-queues for matched scopes too. */
+export const refreshEffects = new WeakSet<(scope: Scope) => void>();
+
+/** Register-entry wrapper for effects already registered by the main module. */
+export function _script_shared(fn: (scope: Scope) => void) {
+  return (scope: Scope) => {
+    if (!updating || (scope[AccessorProp.Gen] as number) < updatingGen) {
+      queueEffect(scope, fn);
+    }
+  };
+}
 export let runId = 2; // resumed scopes get `1`
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
@@ -247,5 +289,38 @@ export function _enable_catch() {
         renderCatch(render[PendingRenderProp.Scope], error);
       }
     })(runRender);
+  }
+}
+
+export function renderCatch(scope: Scope, error: unknown) {
+  const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
+  if (!tryWithCatch) {
+    throw error;
+  } else {
+    const owner = tryWithCatch[AccessorProp.Owner]!;
+    const placeholderBranch = tryWithCatch[
+      AccessorProp.PlaceholderBranch
+    ] as BranchScope;
+    if (placeholderBranch) {
+      if (tryWithCatch[AccessorProp.AwaitCounter])
+        (tryWithCatch[AccessorProp.AwaitCounter] as AwaitCounter).i = 0;
+      owner[
+        AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
+      ] = placeholderBranch;
+      destroyBranch(tryWithCatch);
+    }
+    caughtError.add(pendingEffects);
+    setConditionalRenderer(
+      owner,
+      tryWithCatch[AccessorProp.BranchAccessor],
+      tryWithCatch[AccessorProp.CatchContent],
+      createAndSetupBranch,
+    );
+    tryWithCatch[AccessorProp.CatchContent]?.[RendererProp.Params]?.(
+      owner[
+        AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
+      ],
+      [error],
+    );
   }
 }

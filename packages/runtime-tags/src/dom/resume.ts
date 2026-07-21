@@ -39,6 +39,9 @@ export interface RenderData {
   m?(effects: unknown[]): unknown[];
   // Blocking resumes keyed by ready id.
   b?: Record<string, ResumeData>;
+  // Effect entries parked until their registry id registers (persisted
+  // entries register on lazy load).
+  pe?: ResumeData;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -51,10 +54,15 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
+  // Navigation epoch (persisted updates only); post-bootstrap document
+  // flush scripts no-op once set -- see `bumpNavEpoch`.
+  n?: number;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredValues: Record<string, unknown> = {};
+// Also read by `dom/update`'s patch-aware serialize context (fills access
+// registered values as `_._[id]`).
+export const registeredValues: Record<string, unknown> = {};
 let curRenders: Renders;
 let branchesEnabled: undefined | 1;
 let embedRenders:
@@ -71,11 +79,38 @@ export function enableBranches() {
   }
 }
 
+/** Persisted entries can enable branches after the initial resume walk. */
+export function enableBranchesPersisted() {
+  if (!branchesEnabled) {
+    enableBranches();
+    for (const renderId in curRenders) {
+      runResumeEffects(curRenders[renderId]);
+    }
+  }
+}
+
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+}
+
+/** Persisted lazy entries additionally replay updates parked while loading. */
+export function readyPersisted(readyId: string) {
+  ready(readyId);
+  flushReadyUpdates();
+}
+
+/** Flushes parked lazy-child patches (see dom/update.ts `_update_load`). */
+export let flushReadyUpdates: () => void = () => {};
+export function enableReadyUpdates(hook: () => void) {
+  flushReadyUpdates = hook;
+}
+
+/** Whether a lazy module's registrations are ready. */
+export function isReady(readyId: string) {
+  return !!readyIds?.has(readyId);
 }
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
@@ -314,6 +349,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               while (nextToken()) {
                 if (/\D/.test(lastToken)) {
                   lastEffect = registeredValues[lastToken];
+                  if (!lastEffect) {
+                    // Registered later (persisted-entry ids land when the
+                    // lazy entry loads); park the rest for a later pass.
+                    (render.pe ||= []).push(
+                      visitText.slice(lastTokenIndex - lastToken.length - 1),
+                    );
+                    break;
+                  }
                 } else {
                   effects.push(lastEffect, getScope(lastToken));
                 }
@@ -365,6 +408,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         }
 
         render.m = (effects: unknown[]) => {
+          if (render.pe) {
+            const parked = render.pe;
+            render.pe = undefined;
+            processResumes(parked, effects);
+          }
           processResumes(render.r, effects);
 
           if (readyIds && render.b) {
@@ -451,6 +499,37 @@ function runResumeEffects(render: RenderData) {
     runEffects(render.m!([]), 1);
   } finally {
     isResuming = 0;
+  }
+}
+
+// The leading "_" cannot collide: generated register ids never start with one
+// (the compiler's `encodeTemplateId` reserves it) and debug ids are paths.
+const UPDATE_ROOT_KEY = MARKO_DEBUG ? "__update_root" : "_";
+
+// Resolves a resumed render's root through its effect channel.
+export function getUpdateRoot() {
+  let root: Scope | undefined;
+  registeredValues[UPDATE_ROOT_KEY] = (scope: Scope) => (root = scope);
+  for (const id in curRenders) {
+    const render = curRenders[id];
+    (render.r ||= []).push(UPDATE_ROOT_KEY + " 1");
+    runResumeEffects(render);
+    if (root) break;
+  }
+  delete registeredValues[UPDATE_ROOT_KEY];
+  return root;
+}
+
+/** Invalidates the navigated render's pending document stream. */
+export function bumpNavEpoch(global: Scope[AccessorProp.Global]) {
+  const render = curRenders[global.renderId as string];
+  render.n = (render.n || 0) + 1;
+  // Stale flushes are inert, so their splices can never fill pending reorder
+  // gates; drop the gates so parked live batches still drain.
+  for (const readyId in render.b) {
+    render.b[readyId] = render.b[readyId].filter(
+      (resume) => typeof resume !== "number",
+    );
   }
 }
 

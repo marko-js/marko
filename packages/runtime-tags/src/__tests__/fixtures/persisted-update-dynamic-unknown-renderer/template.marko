@@ -1,0 +1,6 @@
+import Ticker from "./tags/ticker.marko"
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<h1>${input.title}</h1>
+<${input.view === "ticker" ? Ticker : "div"} entries=input.entries/>

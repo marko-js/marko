@@ -5,7 +5,8 @@ const config = {
   // The default output mode for compiled templates
   output: "html",
 
-  // Specifies whether this is a page or load entry point.
+  // Which derived artifact to compile for this template: a page/load
+  // entry facade or a persisted update entry.
   entry: undefined,
 
   /**
@@ -34,6 +35,10 @@ const config = {
    * // Compiled using marko@x.x.x - DO NOT EDIT
    */
   writeVersionComment: true,
+
+  /** Build-constant flag enabling persisted (single-page server-first update)
+   * output; a render with `$global.persisted` set then emits patch frames. */
+  persisted: false,
 
   /**
    * Whether unrecognized tags should be ignored or not. This flag will

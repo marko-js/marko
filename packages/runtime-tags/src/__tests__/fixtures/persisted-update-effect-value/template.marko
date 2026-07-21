@@ -1,0 +1,10 @@
+// A request-derived value whose only client-side consumer is an effect: the
+// merge routes through the registered signal and re-queues the effect.
+<const/label=input.label>
+<div.target/>
+<script>
+  const el = document.querySelector<HTMLDivElement>("div.target")!;
+  el.dataset.label = label;
+  el.textContent = `effect saw ${label}`;
+</script>
+<p.static>page body</p>

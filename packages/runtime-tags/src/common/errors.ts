@@ -2,6 +2,12 @@ import { getWrongAttrSuggestion, htmlAttrNameReg } from "./helpers";
 
 const lowercaseEventHandlerReg = /^on[a-z]/;
 
+// Callers pass `MARKO_DEBUG && "..."` so production builds drop the string
+// and throw a minimal token the transport treats as any other failure.
+export function diverge(message: string | false): never {
+  throw message ? new Error(message) : 1;
+}
+
 export function assertValidAttrValue(name: string, value: unknown) {
   if (
     value &&

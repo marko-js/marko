@@ -26,6 +26,10 @@ describe("runtime-tags/translator-api", () => {
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
         "@marko/runtime-tags/debug/dom",
       ]);
+      assert.deepEqual(
+        translator.getRuntimeEntryFiles("dom-persisted", false),
+        ["@marko/runtime-tags/debug/dom-persisted"],
+      );
     });
 
     it("returns the optimized runtime entries when optimized", () => {
@@ -34,6 +38,9 @@ describe("runtime-tags/translator-api", () => {
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
         "@marko/runtime-tags/dom",
+      ]);
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom-persisted", true), [
+        "@marko/runtime-tags/dom-persisted",
       ]);
     });
 
@@ -149,7 +156,59 @@ describe("runtime-tags/translator-api", () => {
     });
   });
 
+  describe("compile cache", () => {
+    // `persisted` shapes analysis (serialize reasons, registry ids, update
+    // merges), so one cache must not share entries across the flag.
+    const src = "<if=input.show><div/></if>";
+    const filename = path.join(__dirname, "persisted-cache.marko");
+    const compileWith = (
+      cache: Map<unknown, unknown>,
+      persisted: boolean,
+      entry?: "page",
+    ) =>
+      compiler.compileSync(src, filename, {
+        ...baseConfig,
+        cache,
+        output: "html",
+        persisted,
+        ...(entry
+          ? {
+              entry,
+              linkAssets: { runtime: "asset-runtime", onAsset() {} },
+            }
+          : null),
+      }).code;
+
+    it("does not reuse non-persisted analysis for a persisted compile", () => {
+      const cache = new Map();
+      compileWith(cache, false);
+      assert.match(compileWith(cache, true), /_renderer_shells|update_if/);
+    });
+
+    it("keeps non-persisted output identical after a persisted compile", () => {
+      const cache = new Map();
+      const cold = compileWith(new Map(), false);
+      compileWith(cache, true);
+      assert.equal(compileWith(cache, false), cold);
+    });
+  });
+
   describe("option validation", () => {
+    it("embeds renderer shells in persisted html modules", () => {
+      const { code } = compiler.compileSync(
+        "<if=input.show><div/></if>",
+        path.join(__dirname, "persisted-page.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+          persisted: true,
+        },
+      );
+      assert.match(code, /_renderer_shells/);
+      assert.match(code, /update_if/);
+    });
+
     it("compiles load imports eagerly when linkAssets is not configured", () => {
       for (const output of ["html", "dom"] as const) {
         const { code } = compiler.compileFileSync(
@@ -188,6 +247,67 @@ describe("runtime-tags/translator-api", () => {
             entry: "page",
           } as compiler.Config),
         /The "entry" option requires the `linkAssets` compiler option to be configured\./,
+      );
+    });
+
+    it("requires the persisted option for the persisted entry", () => {
+      assert.throws(
+        () =>
+          compiler.compileFileSync(fixture("basic-counter/template.marko"), {
+            ...baseConfig,
+            cache: new Map(),
+            output: "dom",
+            entry: "persisted",
+          } as compiler.Config),
+        /The "persisted" entry kind requires the `persisted` compiler option to be enabled\./,
+      );
+    });
+
+    it("emits a data-only shell map for the renderers entry", () => {
+      const { code } = compiler.compileSync(
+        "<h1>${input.title}</h1><if=input.show><button>go</button></if>",
+        path.join(__dirname, "persisted-renderers.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "dom",
+          entry: "renderers",
+          persisted: true,
+        } as compiler.Config,
+      );
+      // Pure data: per-section [template, walks] keyed by update register id,
+      // with no imports, registrations, or user expressions.
+      assert.match(code, /export default \{/);
+      assert.match(code, /"[^"]*update[^"]*": \["<h1> <\/h1>/);
+      assert.match(code, /\["<button>go<\/button>", "b"\]/);
+      assert.doesNotMatch(code, /import |_resume|input\./);
+    });
+
+    it("embeds shells in persisted html output", () => {
+      const { code } = compiler.compileSync(
+        "<h1>${input.title}</h1>",
+        path.join(__dirname, "persisted-shells.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+          persisted: true,
+        } as compiler.Config,
+      );
+      assert.match(code, /_renderer_shells\(\{/);
+      assert.match(code, /\["<h1> <\/h1>"/);
+    });
+
+    it("requires the persisted option for the renderers entry", () => {
+      assert.throws(
+        () =>
+          compiler.compileFileSync(fixture("basic-counter/template.marko"), {
+            ...baseConfig,
+            cache: new Map(),
+            output: "dom",
+            entry: "renderers",
+          } as compiler.Config),
+        /The "renderers" entry kind requires the `persisted` compiler option to be enabled\./,
       );
     });
 

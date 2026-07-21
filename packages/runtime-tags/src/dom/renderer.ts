@@ -32,8 +32,9 @@ export function createBranch(
   renderer: Renderer | string,
   parentScope: Scope | undefined,
   parentNode: ParentNode,
+  into?: Scope,
 ) {
-  const branch = createScope($global) as BranchScope;
+  const branch = createScope($global, undefined, into) as BranchScope;
   branch[AccessorProp.Owner] =
     (renderer as Renderer)[RendererProp.Owner] || parentScope;
   setParentBranch(branch, parentScope?.[AccessorProp.ClosestBranch]);

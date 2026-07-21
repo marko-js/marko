@@ -1,0 +1,22 @@
+import { getTitle } from "./data";
+
+<let/count=0/>
+<button onClick() { count++ }>count ${count}</button>
+<define/Panel>
+  <p>${input.title}</p>
+</define>
+
+<div>
+  <if=input.kind === "native">
+    <const/title=getTitle(input.id)>
+    <h2>${title}</h2>
+  </if>
+  <else-if=input.kind === "dynamic">
+    <const/title=getTitle(input.id)>
+    <${input.tag}>${title}</>
+  </else-if>
+  <else>
+    <const/title=getTitle(input.id)>
+    <Panel title=title/>
+  </else>
+</div>

@@ -1,0 +1,83 @@
+// data.js
+function getResults(search) {
+	if (typeof window !== "undefined") throw new Error("getResults is server-only");
+	const items = [
+		"alpha",
+		"beta",
+		"gamma",
+		"delta"
+	].filter((name) => name.includes(search.q ?? "")).map((name, i) => ({
+		id: i + 1,
+		name
+	}));
+	return {
+		total: items.length,
+		totalPages: 3,
+		items
+	};
+}
+
+// template.marko
+var template_default = _template("a", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	const $search_q__closures = /* @__PURE__ */ new Set();
+	const $search_page__closures = /* @__PURE__ */ new Set();
+	const [search] = $global().search;
+	const results = getResults(search);
+	let count = 0;
+	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_if(() => results.total ? 0 : 1, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), void 0, void 0, "a1", [() => {
+		const $scope1_id = _scope_id();
+		_html("<ul class=items>");
+		_for_of(results.items, (item) => {
+			const $scope5_id = _scope_id();
+			_html(`<li>${_escape(_hole_value($scope5_id, "Qa", item.name, _persisted_reason()))}${_el_resume($scope5_id, "a", _persisted_reason())}</li>`);
+			_persisted_reason() && writeScope($scope5_id, {});
+		}, function(item) {
+			return item.id;
+		}, $scope1_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a3");
+		_html("<nav class=pagination>");
+		_for_to(results.totalPages, 1, 1, (page) => {
+			const $scope2_id = _scope_id();
+			_if(() => page === search.page ? 0 : 1, $scope2_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0", [() => {
+				const $scope6_id = _scope_id();
+				_html(`<span class=current>${_escape(_hole_value($scope6_id, "Qa", page, _persisted_reason()))}${_el_resume($scope6_id, "a")}</span>`);
+				_persisted_reason() && writeScope($scope6_id, { _: _scope_with_id($scope2_id) });
+			}, () => {
+				const $scope3_id = _scope_id();
+				_html(`<a${_attr("href", _hole_value($scope3_id, "Nhref:a", `/search?page=${page}&q=${search.q}`, _persisted_reason()))}>${_escape(_hole_value($scope3_id, "Qb", page, _persisted_reason()))}${_el_resume($scope3_id, "b")}</a>${_el_resume($scope3_id, "a", _persisted_reason())}`);
+				_persisted_reason() && _subscribe($search_q__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }));
+			}], ["a5", "a4"]);
+			_persisted_reason() && _subscribe($search_page__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
+		}, 0, $scope1_id, "b", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</nav>", 0, "a6");
+		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+	}, () => {
+		const $scope4_id = _scope_id();
+		_html("<p class=empty>No results</p>");
+		_persisted_reason() && writeScope($scope4_id, {});
+	}], ["a8", "a7"]);
+	_script($scope0_id, "a9");
+	writeScope($scope0_id, {
+		l: _state_reason() && count,
+		n: _persisted_reason() && $search_q__closures,
+		m: _persisted_reason() && $search_page__closures
+	});
+	_resume_branch($scope0_id);
+}, 1);
+_renderer_shells({
+	"a5": ["<span class=current> </span>", "D l"],
+	"a10": ["<span class=current> </span>", "D l"],
+	"a3": ["<li> </li>", "D l"],
+	"a11": ["<li> </li>", "D l"],
+	"a7": ["<p class=empty>No results</p>", "b"],
+	"a12": ["<p class=empty>No results</p>", "b"],
+	"a4": ["<a> </a>", " D l"],
+	"a13": ["<a> </a>", " D l"],
+	"a6": ["<!><!><!>", "b%c"],
+	"a14": ["<!><!><!>", "b%c"],
+	"a8": ["<ul class=items></ul><nav class=pagination></nav>", " b b"],
+	"a15": ["<ul class=items></ul><nav class=pagination></nav>", " b b"],
+	"a2": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
+	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
+});

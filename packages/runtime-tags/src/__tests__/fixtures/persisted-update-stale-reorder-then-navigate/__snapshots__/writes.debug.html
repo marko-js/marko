@@ -1,0 +1,44 @@
+<h1>First<!--M_*1 #text/1--> clicked <!>0<!--M_*1 #text/2--></h1>
+<!--M_*1 #h1/0-->
+<main><!--M_[--><!--M_!^2-->fetching…<!--M_!2--><!--M_]1 #text/3 2--></main>
+<t hidden M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "BoundaryAnchor:#text/3": "",
+      n: 0,
+      "ClosureScopes:input_value": new Set([_(2)]),
+      "ClosureScopes:input_tick": new Set([_(2)])
+    }, {
+      _: _(1),
+      "#BranchAccessor": "#text/3",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-stale-reorder-then-navigate/template.marko_3_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-stale-reorder-then-navigate/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>
+  <!--M_[--><button>pre-nav-data<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_]2 #text/0 4-->
+</t>
+<script>
+  if (!M._.n) {
+    M._.r.push(_ => [1, {
+      "BoundaryAnchor:#text/3": 0
+    }, 2, {
+      _: _(2)
+    }]);
+    M._.j.b = _ => {
+      _.push(
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-stale-reorder-then-navigate/template.marko_2 4"
+        )
+    };
+    M._.w()
+  }
+</script>

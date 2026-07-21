@@ -36,16 +36,18 @@ export default {
     if (state.init) {
       const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
+      // Persisted branch handling is enabled here rather than as a top-level
+      // side effect in each template module, so unused templates tree-shake.
+      const enableHelper: DOMRuntimeHelpers | false =
+        !!entryFile.markoOpts.persisted && "_enable_branches_persisted";
+      const helpers = enableHelper ? [initHelper, enableHelper] : [initHelper];
       // The main entry import below pulls in every template (and their client assets)
       // transitively, so the collected asset imports are not needed here.
       body.push(
         t.importDeclaration(
-          [
-            t.importSpecifier(
-              t.identifier(initHelper),
-              t.identifier(initHelper),
-            ),
-          ],
+          helpers.map((helper) =>
+            t.importSpecifier(t.identifier(helper), t.identifier(helper)),
+          ),
           t.stringLiteral(
             `${runtimeInfo.name}/${
               entryFile.markoOpts.optimize ? "" : "debug/"
@@ -57,6 +59,13 @@ export default {
           t.stringLiteral(`./${path.basename(entryFile.opts.filename)}`),
         ),
       );
+      if (enableHelper) {
+        body.push(
+          t.expressionStatement(
+            t.callExpression(t.identifier(enableHelper), []),
+          ),
+        );
+      }
       const { runtimeId } = entryFile.markoOpts;
       const readyId =
         !isPage && getTemplateId(entryFile.markoOpts, entryFile.opts.filename);

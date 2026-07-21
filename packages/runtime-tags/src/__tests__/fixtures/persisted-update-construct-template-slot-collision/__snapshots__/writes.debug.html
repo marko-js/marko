@@ -1,0 +1,18 @@
+<button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<p>parent <!>same<!--M_*2 #text/0--></p><!--M_|1 #text/2 2--><!--M_|3 #text/0-->
+<aside><!--M_[-->dynamic<!--M_]4 #aside/0 5--></aside><!--M_'1 #text/4 4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#text/4": "aside",
+      count: 0,
+      "#childScope/3": _(3)
+    }, {
+      "#LoopKey": "same"
+    }, 1, {
+      "ConditionalRenderer:#aside/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-construct-template-slot-collision/template.marko_2_content"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-construct-template-slot-collision/template.marko_0 1"
+  ];
+  M._.w()
+</script>

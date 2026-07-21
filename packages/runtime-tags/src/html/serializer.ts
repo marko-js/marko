@@ -1,3 +1,4 @@
+import { RendererProp } from "../common/types";
 import type { Boundary } from "./writer";
 
 export const K_SCOPE_ID = Symbol("Scope ID");
@@ -403,13 +404,8 @@ export function getRegistered(val: WeakKey) {
   }
 }
 
-// A payload with only scope data returns the fill array directly
-// (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
-// assigns/mutations, which may reference bindings created inside the fill
-// and so must evaluate after it) the fill is applied through the serialize
-// context instead and the payload ends in `,0` so an arbitrary value from
-// its last expression can never be misread as a fill — the browser only
-// applies a payload's return value when it is an array.
+// Trailing expressions apply the fill through the context and end in 0 so
+// their result cannot be mistaken for a fill.
 function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
   let nextSlotId = -1;
@@ -424,10 +420,12 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
+      // Multiple identities may flush the same slot, so `applyScopes` accepts
+      // signed deltas.
       buf[openIndex] =
         nextSlotId === -1
           ? "[" + scopeId + ",{"
-          : (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
+          : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
       buf.push("}");
@@ -634,8 +632,16 @@ function writeReferenceOr(
   }
 
   const registered = REGISTRY.get(val);
-  if (registered)
+  if (registered) {
+    if (
+      state.boundary?.state.patch &&
+      typeof val === "function" &&
+      (val as { [RendererProp.Id]?: string })[RendererProp.Id] === registered.id
+    ) {
+      return false;
+    }
     return writeRegistered(state, val, parent, accessor, registered);
+  }
 
   state.refs.set(
     val,
@@ -1683,6 +1689,13 @@ function throwUnserializable(
 
     if (access) {
       message += ` (reading ${access})`;
+    }
+
+    if (state.boundary.state.patch) {
+      // Unserializable patch values stay sparse so the client keeps its live
+      // value.
+      console.warn(message + " (skipped in patch render)");
+      return;
     }
 
     const err = new TypeError(message, { cause });

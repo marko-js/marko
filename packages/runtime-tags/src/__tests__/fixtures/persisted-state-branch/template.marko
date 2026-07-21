@@ -1,0 +1,15 @@
+<let/show=true/>
+<let/count=0/>
+<let/list=["a", "b"]/>
+<h1>${input.title}</h1>
+<button.toggle onClick() { show = !show }>toggle</button>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<if=show>
+  <p.detail>detail ${count}</p>
+</if>
+<ul.items>
+  <for|item| of=list by(item) { return item }>
+    <li>${item}:${count}</li>
+  </for>
+</ul>
+<button.add onClick() { list = [...list, `c${count}`] }>add</button>

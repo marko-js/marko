@@ -1,0 +1,14 @@
+<let/expanded=false/>
+<h1>${input.product.name}</h1>
+<a href=`/products/${input.product.slug}/specs`>specs</a>
+<button onClick() { expanded = !expanded }>${expanded ? "Hide" : "Show"}</button>
+<section class=(expanded && input.product.featured && "spotlight")>
+  <if=input.product.sale>
+    <em>Save ${input.product.sale.percent}%</em>
+  </if>
+</section>
+<ul>
+  <for|item| of=input.related by(item) { return item.id }>
+    <li><price amount=item.price/> ${item.name}</li>
+  </for>
+</ul>

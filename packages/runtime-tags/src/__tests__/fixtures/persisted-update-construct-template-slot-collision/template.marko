@@ -1,0 +1,7 @@
+<let/count=0>
+<button onClick() { count++ }>${count}</button>
+<for|item| of=$global.parentItems by="id">
+  <p>parent ${item.id}</p>
+</for>
+<child/>
+<${$global.nativeTag}>dynamic</>

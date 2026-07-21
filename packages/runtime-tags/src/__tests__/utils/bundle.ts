@@ -9,13 +9,25 @@ import zlib from "zlib";
 import { importWithContext } from "./import-with-context";
 
 type RunDOM = typeof import("@marko/runtime-tags/dom").run;
+type DOMRuntime = typeof import("@marko/runtime-tags/dom");
+export interface NavEntryModule {
+  patch: (
+    fail?: (error: unknown) => void,
+  ) => (source: string) => boolean | string;
+  __ready: DOMRuntime["ready"];
+  __register: DOMRuntime["_resume"];
+}
 
 const markoExt = ".marko";
 const markoRe = /\.marko$/;
 const pageExt = ".page.mjs";
 const loadExt = ".load.mjs";
 const csrExt = ".csr.mjs";
-const entryRe = /\.marko\.(load|page|csr)?\.mjs$/;
+const navExt = ".nav.mjs";
+const persistedExt = ".persisted.mjs";
+const entryRe = /\.marko\.(load|page|csr|nav|persisted)?\.mjs$/;
+const snapshotExcludeEntryRe = /\.marko\.(load|page|csr|nav)?\.mjs$/;
+const persistedImportRe = /\.marko\?persisted$/;
 const assetRuntimeId = "\0asset-runtime";
 const assetRuntimeIdRe = /\0asset-runtime$/;
 const virtualFilePrefix = "v:";
@@ -37,6 +49,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
   clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
+  navRunner?: (ctx: any) => Promise<NavEntryModule>;
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
   diagnostics: { id: string; items: Diagnostic[] }[];
@@ -51,6 +64,10 @@ export async function createServerRunner<T extends Record<string, string>>(
   const csrEntryId = optimize
     ? undefined
     : path.join(cwd, path.basename(entries[entryNames[0]])) + csrExt;
+  // Persisted fixtures bundle a navigation-driver entry for ssr nav steps.
+  const navEntryId = config.persisted
+    ? path.join(cwd, path.basename(entries[entryNames[0]])) + navExt
+    : undefined;
   const compileOpts: compiler.Config = {
     ...config,
     cache: new Map(),
@@ -71,23 +88,56 @@ export async function createServerRunner<T extends Record<string, string>>(
 
   const domBuilt = build({
     cwd,
-    ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
+    ...(csrEntryId || navEntryId
+      ? {
+          input: {
+            ...(csrEntryId ? { csr: csrEntryId } : {}),
+            ...(navEntryId ? { nav: navEntryId } : {}),
+          },
+        }
+      : {}),
     platform: "browser",
     treeshake: optimize,
     experimental: { nativeMagicString: true },
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
     plugins: [
+      {
+        // Hold direct dom-build entries until the html build's compiles finish
+        // so optimized register-id allocation order stays deterministic.
+        name: "html-compiles-first",
+        resolveId: {
+          filter: { id: /./ },
+          async handler(_id, importer) {
+            if (importer === undefined) await domEntry.done;
+            return null;
+          },
+        },
+      },
       virtual.plugin,
       domEntry.plugin,
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
       {
+        name: "persisted-imports",
+        resolveId: {
+          filter: { id: persistedImportRe },
+          handler(id, importer) {
+            return this.resolve(
+              id.replace(persistedImportRe, markoExt + persistedExt),
+              importer,
+            );
+          },
+        },
+      },
+      {
         name: "dom-entry",
         resolveId: {
           filter: { id: entryRe },
-          handler: (id) => path.resolve(cwd, id),
+          // Resolve nested entries from the importing template's directory.
+          handler: (id, importer) =>
+            path.resolve(importer ? path.dirname(importer) : cwd, id),
         },
         load: {
           filter: { id: entryRe },
@@ -102,6 +152,23 @@ import { ___componentLookup } from "marko/src/node_modules/@internal/components-
 export function run() { _run(); Object.values(___componentLookup).forEach((c) => c.update()); };`
                   : `export { run } from "@marko/runtime-tags/dom";`
               }`;
+            }
+
+            if (kind === "persisted") {
+              const { code } = compiler.compileFileSync(file, {
+                ...compileOpts,
+                output: "dom",
+                entry: "persisted",
+                sourceMaps: false,
+              });
+              return code;
+            }
+
+            // Test-only navigation driver: exposes the generated `?persisted`
+            // entry's patch factory plus resume hooks for scripted nav steps.
+            if (kind === "nav") {
+              return `export { patch } from "./${path.basename(file)}?persisted";
+export { ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`;
             }
 
             const isPage = kind === "page";
@@ -240,6 +307,18 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     csrEntryId &&
     domResult.output.find((c) => c.type === "chunk" && c.name === "csr")
       ?.fileName;
+  const navFileName =
+    navEntryId &&
+    domResult.output.find((c) => c.type === "chunk" && c.name === "nav")
+      ?.fileName;
+  const navRunner = navFileName
+    ? (ctx: any) =>
+        importWithContext<NavEntryModule>(
+          path.join(domOut, navFileName),
+          { browser: true },
+          ctx,
+        )
+    : undefined;
   const clientRunner = csrFileName
     ? (ctx: any): Promise<{ template: Template; run: RunDOM }> =>
         importWithContext(
@@ -256,6 +335,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
         Record<keyof T, Template>
       >,
     clientRunner,
+    navRunner,
     domBundle: () => buildSnapshot(domResult, cwd, optimize),
     htmlBundle: () => buildSnapshot(htmlResult, cwd),
     diagnostics: [...diagnosticsByFile].map(([id, items]) => ({ id, items })),
@@ -285,7 +365,7 @@ async function buildSnapshot(
     const files: Record<string, number> = {};
     let fixtureCode = "";
     for (const id in modules) {
-      if (!id.startsWith(cwd) || entryRe.test(id)) continue;
+      if (!id.startsWith(cwd) || snapshotExcludeEntryRe.test(id)) continue;
       const { code, renderedLength } = modules[id];
       if (!renderedLength) continue;
       const relId = path.relative(cwd, id);
@@ -426,6 +506,8 @@ function markoPlugin(
 
 function entryPlugin(): {
   end(): void;
+  /** Resolves once the HTML build completes its shared register map. */
+  done: Promise<void>;
   get(id: string): string | undefined;
   add(name: string, id: string): void;
   plugin: Plugin;
@@ -437,6 +519,7 @@ function entryPlugin(): {
 
   return {
     end: end.resolve,
+    done: end.promise,
     get: (id) => (id ? seen.get(id) : undefined),
     add(name, id) {
       if (seen.has(id)) return;
