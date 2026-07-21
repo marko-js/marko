@@ -442,16 +442,17 @@ function analyzeParams(
   if (tag.node.arguments) {
     for (const arg of tag.node.arguments) {
       const argExport = propTree.props[i];
-      if (!argExport) {
+      if (argExport) {
+        const argValueExtra = (arg.extra ??= {});
+        known[i] = { value: argValueExtra };
+        rootAttrExprs.add(argValueExtra);
+        addSetupExpr(section, arg);
+      } else {
         // drop references for duplicated attributes and unused attributes.
         dropNodes(arg);
-        continue;
       }
 
-      const argValueExtra = (arg.extra ??= {});
-      known[i++] = { value: argValueExtra };
-      rootAttrExprs.add(argValueExtra);
-      addSetupExpr(section, arg);
+      i++;
     }
   }
 
