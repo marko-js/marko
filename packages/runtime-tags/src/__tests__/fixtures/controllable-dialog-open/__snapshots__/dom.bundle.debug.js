@@ -1,9 +1,10 @@
 // template.marko
 const $template = "<dialog></dialog><span> </span>";
 const $walks = " bD l";
+const $open__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], String($scope.open)));
 const $open = /*@__PURE__*/ _let("open/2", ($scope) => {
+	$open__render($scope);
 	_attr_details_or_dialog_open($scope, "#dialog/0", $scope.open, $openChange($scope));
-	_text($scope["#text/1"], String($scope.open));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_details_or_dialog_open_script($scope, "#dialog/0"));
 function $setup($scope) {

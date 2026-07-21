@@ -2,7 +2,8 @@
 const $template = "<div></div>";
 const $walks = " b";
 const $setup = () => {};
-const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
+const $for_content__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope["#LoopKey"]));
+const $for_content__setup = ($scope) => $for_content__setup__render($scope);
 const $for = /*@__PURE__*/ _for_to("#div/0", "<!>, ", "%c", $for_content__setup);
 const $input_from__OR__input_to__OR__input_step = /*@__PURE__*/ _or(6, ($scope) => $for($scope, [
 	$scope.input_to,

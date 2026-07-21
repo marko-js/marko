@@ -2,7 +2,7 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $local = /*@__PURE__*/ _let_change("local/6", ($scope) => _text($scope["#text/0"], $scope.local == null ? "none" : $scope.local));
+const $local = /*@__PURE__*/ _let_change("local/6", /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope.local == null ? "none" : $scope.local)));
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(5, ($scope) => $local($scope, $scope.input_value, $scope.input_valueChange));
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__input_valueChange);
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);

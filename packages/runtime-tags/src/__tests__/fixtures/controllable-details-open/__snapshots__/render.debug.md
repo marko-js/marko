@@ -27,8 +27,8 @@ details.open = !details.open;
 ```
 UPDATE: details[open] null => ""
 UPDATE: details[open] "" => ""
-UPDATE: details[open] null => ""
 UPDATE: span::text "false" => "true"
+UPDATE: details[open] null => ""
 ```
 
 # Update
@@ -48,8 +48,8 @@ details.open = !details.open;
 ```
 UPDATE: details[open] "" => null
 UPDATE: details[open] null => null
-UPDATE: details[open] "" => null
 UPDATE: span::text "true" => "false"
+UPDATE: details[open] "" => null
 ```
 
 # Update
@@ -71,6 +71,6 @@ details.open = !details.open;
 ```
 UPDATE: details[open] null => ""
 UPDATE: details[open] "" => ""
-UPDATE: details[open] null => ""
 UPDATE: span::text "false" => "true"
+UPDATE: details[open] null => ""
 ```

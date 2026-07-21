@@ -1,21 +1,24 @@
 // template.marko
 const $template = "<div><!>:<!></div>";
 const $walks = " D%c%l";
+const $attrs4__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "#div/0", $scope.attrs));
 const $attrs4__script = _script("__tests__/template.marko_0_attrs", ($scope) => _attrs_script($scope, "#div/0"));
 const $attrs4 = /*@__PURE__*/ _const("attrs", ($scope) => {
-	_attrs($scope, "#div/0", $scope.attrs);
+	$attrs4__render($scope);
 	$attrs4__script($scope);
 });
 const $phase__OR__log = /*@__PURE__*/ _or(5, ($scope) => $attrs4($scope, $scope.phase === 0 ? {
 	onClick: $attrs($scope),
 	onMouseOver: $attrs2($scope)
 } : { onClick: $attrs3($scope) }));
+const $phase__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.phase));
 const $phase = /*@__PURE__*/ _let("phase/3", ($scope) => {
-	_text($scope["#text/1"], $scope.phase);
+	$phase__render($scope);
 	$phase__OR__log($scope);
 });
+const $log__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.log));
 const $log = /*@__PURE__*/ _let("log/4", ($scope) => {
-	_text($scope["#text/2"], $scope.log);
+	$log__render($scope);
 	$phase__OR__log($scope);
 });
 function $setup($scope) {

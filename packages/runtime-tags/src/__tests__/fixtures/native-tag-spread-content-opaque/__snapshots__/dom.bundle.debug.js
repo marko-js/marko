@@ -26,9 +26,10 @@ function $setup$1($scope) {
 	$show($scope, false);
 	$setup__script($scope);
 }
+const $input__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#div/0", $scope.input));
 const $input__script = _script("__tests__/tags/my-box.marko_0_input", ($scope) => _attrs_script($scope, "#div/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs_content($scope, "#div/0", $scope.input);
+	$input__render($scope);
 	$if_content__input($scope);
 	$input__script($scope);
 });

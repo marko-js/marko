@@ -206,6 +206,14 @@ export default {
               ),
             ]),
           );
+          if (valueExpr.extra?.referencedBindings) {
+            // Only an await whose promise expression can re-evaluate client
+            // side can start a transition; static awaits leave `_render`
+            // applying immediately.
+            signal.prependStatements!.push(
+              t.expressionStatement(callRuntime("_enable_transition")),
+            );
+          }
           return callRuntime(
             "_await_promise",
             getScopeAccessorLiteral(nodeRef, true),

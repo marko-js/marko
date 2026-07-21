@@ -3,8 +3,8 @@ const $template$2 = "<input>";
 const $walks$2 = " b";
 const $setup$2 = () => {};
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => _attr_input_value_default($scope, "#input/0", $scope.input_value));
-const $input_class = ($scope, input_class) => _attr_class($scope["#input/0"], input_class);
-const $input_a = ($scope, input_a) => _attr($scope["#input/0"], "data-a", input_a);
+const $input_class = /*@__PURE__*/ _render(($scope, input_class) => _attr_class($scope["#input/0"], input_class));
+const $input_a = /*@__PURE__*/ _render(($scope, input_a) => _attr($scope["#input/0"], "data-a", input_a));
 const $input$1 = ($scope, input) => {
 	$input_class($scope, input.class);
 	$input_value($scope, input.value);

@@ -6,8 +6,9 @@ const $x__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
 	_attr_input_value($scope, "#input/3", $scope.x, $scope.$valueChange);
 	_attr_input_value($scope, "#input/4", $scope.x, $scope.$valueChange);
 });
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.x));
 const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+	$x__render($scope);
 	$x__OR__$valueChange($scope);
 });
 const $valueChange3 = /*@__PURE__*/ _const("$valueChange", $x__OR__$valueChange);

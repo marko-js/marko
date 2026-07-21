@@ -9,12 +9,12 @@ const $pattern2 = ($scope, $pattern) => {
 	$b($scope, $pattern.b);
 	$c($scope, $pattern.c);
 };
-const $rest = ($scope, rest) => _text($scope["#text/3"], JSON.stringify(rest));
-const $rest2 = ($scope, rest2) => _text($scope["#text/4"], JSON.stringify(rest2));
-const $rest3 = ($scope, rest3) => _text($scope["#text/5"], JSON.stringify(rest3));
-const $a = ($scope, a) => _text($scope["#text/0"], a);
-const $b = ($scope, b) => _text($scope["#text/1"], b);
-const $c = ($scope, c) => _text($scope["#text/2"], c);
+const $rest = /*@__PURE__*/ _render(($scope, rest) => _text($scope["#text/3"], JSON.stringify(rest)));
+const $rest2 = /*@__PURE__*/ _render(($scope, rest2) => _text($scope["#text/4"], JSON.stringify(rest2)));
+const $rest3 = /*@__PURE__*/ _render(($scope, rest3) => _text($scope["#text/5"], JSON.stringify(rest3)));
+const $a = /*@__PURE__*/ _render(($scope, a) => _text($scope["#text/0"], a));
+const $b = /*@__PURE__*/ _render(($scope, b) => _text($scope["#text/1"], b));
+const $c = /*@__PURE__*/ _render(($scope, c) => _text($scope["#text/2"], c));
 function $setup($scope) {
 	$pattern2($scope, {
 		a: 1,

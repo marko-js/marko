@@ -20,8 +20,9 @@ const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__a($scope, $temp.a);
 };
 const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__tag_param_($scope, $params2?.[0]);
+const $n__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.n));
 const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
+	$n__render($scope);
 	$Wrap_content__tag_param_($scope["#childScope/2"], { a: "z" + $scope.n });
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

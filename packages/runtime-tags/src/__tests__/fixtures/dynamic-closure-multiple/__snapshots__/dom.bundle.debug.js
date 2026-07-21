@@ -2,12 +2,12 @@
 const $template = "<button></button><!><!>";
 const $walks = " b%c";
 _enable_catch();
-const $if_content__a = /*@__PURE__*/ _closure_get("a", ($scope) => _text($scope["#text/0"], $scope._._.a), ($scope) => $scope._._);
+const $if_content__a = /*@__PURE__*/ _closure_get("a", /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._._.a)), ($scope) => $scope._._);
 const $if_content__setup = ($scope) => {
 	$if_content__a($scope);
 	$if_content__b($scope);
 };
-const $if_content__b = /*@__PURE__*/ _closure_get("b", ($scope) => _text($scope["#text/1"], $scope._._.b), ($scope) => $scope._._);
+const $if_content__b = /*@__PURE__*/ _closure_get("b", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope._._.b)), ($scope) => $scope._._);
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<div> </div><div> </div>", "D lD l", $if_content__setup);
 const $try_content__setup = ($scope) => $try_content__if($scope, true ? 0 : 1);
 const $a__closure = /*@__PURE__*/ _closure($if_content__a);

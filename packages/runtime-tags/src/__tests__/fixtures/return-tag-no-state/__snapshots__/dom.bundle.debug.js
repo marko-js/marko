@@ -10,7 +10,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div>parent <!></div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&Db%l`)("b");
-const $value = _var_resume("__tests__/template.marko_0_value/var", ($scope, value) => _text($scope["#text/2"], value));
+const $value = _var_resume("__tests__/template.marko_0_value/var", /*@__PURE__*/ _render(($scope, value) => _text($scope["#text/2"], value)));
 function $setup($scope) {
 	_var($scope, "#childScope/0", $value);
 	$setup$1($scope["#childScope/0"]);

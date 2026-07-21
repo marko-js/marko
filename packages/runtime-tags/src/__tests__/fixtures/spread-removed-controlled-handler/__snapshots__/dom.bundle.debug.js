@@ -1,13 +1,15 @@
 // template.marko
 const $template = "<input><span>value=[<!>]</span><button>drop</button>";
 const $walks = " bDb%l b";
+const $attrs2__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "#input/0", $scope.attrs));
 const $attrs2__script = _script("__tests__/template.marko_0_attrs", ($scope) => _attrs_script($scope, "#input/0"));
 const $attrs2 = /*@__PURE__*/ _let("attrs/4", ($scope) => {
-	_attrs($scope, "#input/0", $scope.attrs);
+	$attrs2__render($scope);
 	$attrs2__script($scope);
 });
+const $value__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.value));
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
-	_text($scope["#text/1"], $scope.value);
+	$value__render($scope);
 	$attrs2($scope, {
 		value: $scope.value,
 		valueChange: $attrs($scope)

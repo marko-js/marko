@@ -31,13 +31,15 @@ var let_global_default = /*@__PURE__*/ _template("__tests__/tags/let-global.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div><div> </div><button> </button>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D lD l D l`)("");
-const $a__OR__b = /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/5"], `${$scope.a},${$scope.b}`), 1, "#scopeOffset/1");
+const $a__OR__b = /*@__PURE__*/ _or(8, /*@__PURE__*/ _render(($scope) => _text($scope["#text/5"], `${$scope.a},${$scope.b}`)), 1, "#scopeOffset/1");
+const $b__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], $scope.b));
 const $b = /*@__PURE__*/ _let("b/7", ($scope) => {
-	_text($scope["#text/3"], $scope.b);
+	$b__render($scope);
 	$a__OR__b($scope);
 });
+const $a__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.a));
 const $a = _var_resume("__tests__/template.marko_0_a/var", /*@__PURE__*/ _const("a", ($scope) => {
-	_text($scope["#text/2"], $scope.a);
+	$a__render($scope);
 	$b($scope, $scope.a + 1);
 	$a__OR__b($scope);
 }));

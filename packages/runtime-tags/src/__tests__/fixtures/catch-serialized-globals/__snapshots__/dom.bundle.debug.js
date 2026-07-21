@@ -2,9 +2,9 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _enable_catch();
-const $await_content__data = ($scope, data) => _text($scope["#text/0"], data);
+const $await_content__data = /*@__PURE__*/ _render(($scope, data) => _text($scope["#text/0"], data));
 const $await_content__$params = ($scope, $params3) => $await_content__data($scope, $params3[0]);
-const $catch_content__error_message__OR__message__OR__clicked = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/1"], $scope.clicked ? $scope.message : $scope.error_message), 2);
+const $catch_content__error_message__OR__message__OR__clicked = /*@__PURE__*/ _or(7, /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.clicked ? $scope.message : $scope.error_message)), 2);
 const $catch_content__message = /*@__PURE__*/ _const("message", $catch_content__error_message__OR__message__OR__clicked);
 const $catch_content__clicked = /*@__PURE__*/ _let("clicked/6", $catch_content__error_message__OR__message__OR__clicked);
 const $catch_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {

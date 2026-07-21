@@ -6,11 +6,12 @@ const $count = /*@__PURE__*/ _let("count/1", ($scope) => _text_content($scope["#
     content: ${_to_text($scope.count)}
   }
 `));
+const $setup__render = /*@__PURE__*/ _render(($scope) => _attr_nonce($scope, "#style/0"));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#style/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
 function $setup($scope) {
-	_attr_nonce($scope, "#style/0");
+	$setup__render($scope);
 	$count($scope, 0);
 	$setup__script($scope);
 }

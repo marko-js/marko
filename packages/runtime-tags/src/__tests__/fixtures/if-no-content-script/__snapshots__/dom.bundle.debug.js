@@ -4,8 +4,9 @@ const $walks = " b D l%c";
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _el_read($scope._["#div/0"]).textContent = "Hit");
 const $if_content__setup = $if_content__setup__script;
 const $if = /*@__PURE__*/ _if("#text/3", 0, 0, $if_content__setup);
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.count));
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
-	_text($scope["#text/2"], $scope.count);
+	$count__render($scope);
 	$if($scope, !$scope.count ? 0 : 1);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

@@ -1,8 +1,9 @@
 // tags/child.marko
 const $template = "<!><!><!>";
+const $for_content__item__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "a", $scope.f));
 const $for_content__item__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 const $for_content__item = /*@__PURE__*/ _const(5, ($scope) => {
-	_attrs($scope, "a", $scope.f);
+	$for_content__item__render($scope);
 	$for_content__item__script($scope);
 });
 const $for_content__desc = /* @__PURE__ */ _dynamic_tag(1);

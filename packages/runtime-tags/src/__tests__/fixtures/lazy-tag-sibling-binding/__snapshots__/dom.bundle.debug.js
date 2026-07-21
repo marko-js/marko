@@ -5,7 +5,7 @@ const $isInner = /*@__PURE__*/ _const("isInner");
 const $input_isInner = $isInner;
 const $inner = /*@__PURE__*/ _let("inner/7");
 const $input_inner = $inner;
-const $verified = /*@__PURE__*/ _let("verified/8", ($scope) => _text($scope["#text/1"], $scope.verified));
+const $verified = /*@__PURE__*/ _let("verified/8", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.verified)));
 const $setup__script = _script("__tests__/child-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$verified($scope, String($scope.isInner($scope.inner)));
 }));
@@ -26,7 +26,7 @@ const $isShared = /*@__PURE__*/ _const("isShared");
 const $input_isShared = $isShared;
 const $holder = /*@__PURE__*/ _let("holder/7");
 const $input_holder = $holder;
-const $verified = /*@__PURE__*/ _let("verified/8", ($scope) => _text($scope["#text/1"], $scope.verified));
+const $verified = /*@__PURE__*/ _let("verified/8", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.verified)));
 const $setup__script = _script("__tests__/child-s.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$verified($scope, String($scope.isShared($scope.holder)));
 }));
@@ -56,7 +56,7 @@ const $shared = /*@__PURE__*/ _let("shared/6", ($scope) => {
 	$shared_inner($scope, $scope.shared?.inner);
 });
 const $shared_inner = /*@__PURE__*/ _const("shared_inner", ($scope) => $load_ChildB_tag_input_inner($scope["#childScope/5"], $scope.shared_inner));
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/8", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + Object.keys($scope.shared).length);
 }));

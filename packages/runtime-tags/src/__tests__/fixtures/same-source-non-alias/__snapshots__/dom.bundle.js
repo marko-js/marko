@@ -7,8 +7,9 @@ const $count = /*@__PURE__*/ _let(3, ($scope) => $pattern2($scope, createWrapper
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
+const $a__render = /*@__PURE__*/ _render(($scope, a) => _text($scope.b, a));
 const $a = ($scope, a) => {
-	_text($scope.b, a);
+	$a__render($scope, a);
 	$b($scope, a);
 };
-const $b = ($scope, a) => _text($scope.c, a);
+const $b = /*@__PURE__*/ _render(($scope, a) => _text($scope.c, a));

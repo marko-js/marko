@@ -19,7 +19,7 @@ var sections_default = /*@__PURE__*/ _template("__tests__/tags/sections.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $section_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $section_content__count = /*@__PURE__*/ _closure_get("count", /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._.count)));
 const $section_content__setup = $section_content__count;
 const $section_content = _content_resume("__tests__/template.marko_1_content", " ", " b", $section_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($section_content__count);

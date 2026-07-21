@@ -1,10 +1,11 @@
 // template.marko
 const $template = "<div><!> selected <!></div><button id=update>update</button><button id=reselect>reselect</button>";
 const $walks = "D%c%l b b";
-const $selected = ($scope, selected) => _text($scope["#text/1"], selected);
+const $selected = /*@__PURE__*/ _render(($scope, selected) => _text($scope["#text/1"], selected));
 const $index__OR__filtered = /*@__PURE__*/ _or(10, ($scope) => $selected($scope, $scope.filtered[$scope.index]));
+const $filtered__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope.filtered.join(" ")));
 const $filtered = /*@__PURE__*/ _const("filtered", ($scope) => {
-	_text($scope["#text/0"], $scope.filtered.join(" "));
+	$filtered__render($scope);
 	$index__OR__filtered($scope);
 });
 const $items__OR__min__OR__max = /*@__PURE__*/ _or(7, ($scope) => $filtered($scope, $scope.items.filter((item) => item >= $scope.min && item <= $scope.max)), 2);

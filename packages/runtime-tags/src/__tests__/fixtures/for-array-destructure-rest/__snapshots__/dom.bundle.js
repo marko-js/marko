@@ -1,9 +1,10 @@
 // template.marko
-const $for_content__setup = ($scope) => _text($scope.a, $scope.M);
-const $for_content__first = ($scope, first) => _text($scope.b, first);
-const $for_content__$temp_ = ($scope, $temp_1) => _text($scope.c, $temp_1);
-const $for_content__$temp_2 = ($scope, $temp_2) => _text($scope.d, $temp_2);
-const $for_content__rest_length = ($scope, rest_length) => _text($scope.e, rest_length);
+const $for_content__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.M));
+const $for_content__setup = ($scope) => $for_content__setup__render($scope);
+const $for_content__first = /*@__PURE__*/ _render(($scope, first) => _text($scope.b, first));
+const $for_content__$temp_ = /*@__PURE__*/ _render(($scope, $temp_1) => _text($scope.c, $temp_1));
+const $for_content__$temp_2 = /*@__PURE__*/ _render(($scope, $temp_2) => _text($scope.d, $temp_2));
+const $for_content__rest_length = /*@__PURE__*/ _render(($scope, rest_length) => _text($scope.e, rest_length));
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = ($scope, $temp) => {
 	(([, ...rest]) => $for_content__rest($scope, rest))($temp);

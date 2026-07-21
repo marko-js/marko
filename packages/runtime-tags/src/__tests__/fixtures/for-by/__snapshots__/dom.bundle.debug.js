@@ -10,15 +10,15 @@ function getFunctionBy() {
 function getMissingBy() {
 	return undefined;
 }
-const $for_content5__text = ($scope, text) => _text($scope["#text/0"], text);
+const $for_content5__text = /*@__PURE__*/ _render(($scope, text) => _text($scope["#text/0"], text));
 const $for_content5__$params = ($scope, $params6) => $for_content5__text($scope, ($params6?.[0]).text);
-const $for_content4__text = ($scope, text) => _text($scope["#text/0"], text);
+const $for_content4__text = /*@__PURE__*/ _render(($scope, text) => _text($scope["#text/0"], text));
 const $for_content4__$params = ($scope, $params5) => $for_content4__text($scope, ($params5?.[0]).text);
-const $for_content3__text = ($scope, text) => _text($scope["#text/0"], text);
+const $for_content3__text = /*@__PURE__*/ _render(($scope, text) => _text($scope["#text/0"], text));
 const $for_content3__$params = ($scope, $params4) => $for_content3__text($scope, ($params4?.[0]).text);
-const $for_content2__text = ($scope, text) => _text($scope["#text/0"], text);
+const $for_content2__text = /*@__PURE__*/ _render(($scope, text) => _text($scope["#text/0"], text));
 const $for_content2__$params = ($scope, $params3) => $for_content2__text($scope, ($params3?.[0]).text);
-const $for_content__text = ($scope, text) => _text($scope["#text/0"], text);
+const $for_content__text = /*@__PURE__*/ _render(($scope, text) => _text($scope["#text/0"], text));
 const $for_content__$params = ($scope, $params2) => $for_content__text($scope, ($params2?.[0]).text);
 const $for = /*@__PURE__*/ _for_of("#div/0", " ", " b", 0, $for_content__$params);
 const $for2 = /*@__PURE__*/ _for_of("#div/1", " ", " b", 0, $for_content2__$params);

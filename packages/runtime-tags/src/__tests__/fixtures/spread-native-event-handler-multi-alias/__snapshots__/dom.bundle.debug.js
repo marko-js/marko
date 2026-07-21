@@ -8,9 +8,10 @@ const $MyButton_content__input_onClick__script = _script("__tests__/template.mar
 	$scope.input_onClick();
 }));
 const $MyButton_content__input_onClick = /*@__PURE__*/ _const("input_onClick", $MyButton_content__input_onClick__script);
+const $MyButton_content__input__render = /*@__PURE__*/ _render(($scope) => _attrs_partial_content($scope, "#button/0", $scope.input, { "on-click": 1 }));
 const $MyButton_content__input__script = _script("__tests__/template.marko_1_input", ($scope) => _attrs_script($scope, "#button/0"));
 const $MyButton_content__input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs_partial_content($scope, "#button/0", $scope.input, { "on-click": 1 });
+	$MyButton_content__input__render($scope);
 	$MyButton_content__input_onClick($scope, $scope.input.onClick);
 	$MyButton_content__input__script($scope);
 });

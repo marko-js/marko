@@ -1,6 +1,6 @@
 // template.marko
-const $MyTag_content__a = ($scope, a) => _text($scope.a, a);
-const $MyTag_content__b = ($scope, b) => _text($scope.b, b);
+const $MyTag_content__a = /*@__PURE__*/ _render(($scope, a) => _text($scope.a, a));
+const $MyTag_content__b = /*@__PURE__*/ _render(($scope, b) => _text($scope.b, b));
 const $MyTag_content__tag_params = ($scope, $params2) => {
 	$MyTag_content__a($scope, $params2[0]);
 	$MyTag_content__b($scope, $params2[1]);
@@ -15,8 +15,9 @@ const $x__OR__args = ($scope) => {
 		row: attrTag({ r: $scope.h })
 	}]);
 };
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope.e, $scope.h));
 const $x = /*@__PURE__*/ _let(7, ($scope) => {
-	_text($scope.e, $scope.h);
+	$x__render($scope);
 	$args($scope, [$scope.h, 2]);
 	$x__OR__args($scope);
 });

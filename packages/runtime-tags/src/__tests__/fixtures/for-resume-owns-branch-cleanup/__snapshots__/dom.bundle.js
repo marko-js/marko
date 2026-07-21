@@ -1,10 +1,11 @@
 // tags/child.marko
 const $template = "<!><!><!>";
+const $for_content__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.M));
 const $for_content__setup__script = _script("b0", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	document.getElementById("ref").textContent = "item destroyed";
 } }));
 const $for_content__setup = ($scope) => {
-	_text($scope.a, $scope.M);
+	$for_content__setup__render($scope);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to(0, "<p>item <!></p>", "Db%l", $for_content__setup);

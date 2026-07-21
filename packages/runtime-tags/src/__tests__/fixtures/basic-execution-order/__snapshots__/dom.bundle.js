@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__message_text = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.d));
+const $if_content__message_text = /*@__PURE__*/ _if_closure(1, 0, /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope._.d)));
 const $if_content__setup = $if_content__message_text;
 const $message = /*@__PURE__*/ _let(2, ($scope) => $message_text($scope, $scope.c?.text));
 const $message_text = /*@__PURE__*/ _const(3, $if_content__message_text);

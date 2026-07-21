@@ -2,7 +2,7 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $input = ($scope, input) => _text($scope["#text/0"], JSON.stringify(input));
+const $input = /*@__PURE__*/ _render(($scope, input) => _text($scope["#text/0"], JSON.stringify(input)));
 var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, "D l", $setup$1, $input);
 
 // template.marko
@@ -10,8 +10,9 @@ const $template = "<button>Count: <!></button><!><!><!><!><!>";
 const $walks = " Db%l%b%b%b%c";
 const tags = [custom_tag_default];
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, 0, 1);
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.x));
 const $x = /*@__PURE__*/ _let("x/6", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+	$x__render($scope);
 	$dynamicTag($scope, tags[0], () => [$scope.x, "foo"]);
 });
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3", 0, 0, 1);

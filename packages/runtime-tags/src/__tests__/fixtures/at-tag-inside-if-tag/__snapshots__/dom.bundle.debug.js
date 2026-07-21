@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $content = $dynamicTag;
-const $x$1 = ($scope, x) => _text($scope["#text/1"], x);
+const $x$1 = /*@__PURE__*/ _render(($scope, x) => _text($scope["#text/1"], x));
 const $input$1 = ($scope, input) => $thing2($scope, input.thing);
 const $thing2 = ($scope, $thing) => {
 	$x$1($scope, $thing.x);

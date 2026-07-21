@@ -11,9 +11,10 @@ var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo.marko", $templat
 // tags/my-box.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l");
+const $input__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#div/0", $scope.input));
 const $input__script = _script("__tests__/tags/my-box.marko_0_input", ($scope) => _attrs_script($scope, "#div/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs_content($scope, "#div/0", $scope.input);
+	$input__render($scope);
 	$input_content($scope, $scope.input.content);
 	$input__script($scope);
 });

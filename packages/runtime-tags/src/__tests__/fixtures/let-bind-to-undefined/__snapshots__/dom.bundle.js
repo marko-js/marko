@@ -1,5 +1,5 @@
 // tags/child.marko
-const $local = /*@__PURE__*/ _let_change(6, ($scope) => _text($scope.a, $scope.g == null ? "none" : $scope.g));
+const $local = /*@__PURE__*/ _let_change(6, /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.g == null ? "none" : $scope.g)));
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(5, ($scope) => $local($scope, $scope.d, $scope.e));
 const $input_value = /*@__PURE__*/ _const(3, $input_value__OR__input_valueChange);
 

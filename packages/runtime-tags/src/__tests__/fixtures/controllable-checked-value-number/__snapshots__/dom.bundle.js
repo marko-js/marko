@@ -1,9 +1,10 @@
 // template.marko
+const $checked__render = /*@__PURE__*/ _render(($scope) => _text($scope.d, $scope.e));
 const $checked = /*@__PURE__*/ _let(4, ($scope) => {
+	$checked__render($scope);
 	_attr_input_checkedValue($scope, "a", $scope.e + "", $checkedValueChange($scope), 0);
 	_attr_input_checkedValue($scope, "b", $scope.e, $checkedValueChange2($scope), "1");
 	_attr_input_checkedValue($scope, "c", $scope.e, $checkedValueChange3($scope), 2);
-	_text($scope.d, $scope.e);
 });
 const $setup__script = _script("a3", ($scope) => {
 	_attr_input_checkedValue_script($scope, "a");

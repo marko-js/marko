@@ -13,9 +13,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " b"), { zzz($scope) {
-	_text($scope["#text/0"], $scope.zzz);
-} });
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " b"), { zzz: /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope.zzz)) });
 function $setup($scope) {
 	let $item;
 	forOf([

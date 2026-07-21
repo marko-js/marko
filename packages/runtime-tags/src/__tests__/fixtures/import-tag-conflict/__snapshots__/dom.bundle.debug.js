@@ -7,8 +7,11 @@ const asset = "b";
 // template.marko
 const $template = "<!> <!>";
 const $walks = "%c%b";
-function $setup($scope) {
+const $setup__render = /*@__PURE__*/ _render(($scope) => {
 	_text($scope["#text/0"], "a");
 	_text($scope["#text/1"], "b");
+});
+function $setup($scope) {
+	$setup__render($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

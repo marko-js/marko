@@ -1,12 +1,13 @@
 // tags/my-box.marko
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
+const $input__OR__extra__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#div/0", {
+	...$scope.input,
+	...$scope.extra
+}));
 const $input__OR__extra__script = _script("__tests__/tags/my-box.marko_0_input_extra", ($scope) => _attrs_script($scope, "#div/0"));
 const $input__OR__extra = /*@__PURE__*/ _or(4, ($scope) => {
-	_attrs_content($scope, "#div/0", {
-		...$scope.input,
-		...$scope.extra
-	});
+	$input__OR__extra__render($scope);
 	$input__OR__extra__script($scope);
 });
 const $extra = /*@__PURE__*/ _const("extra", $input__OR__extra);

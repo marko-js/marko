@@ -1,9 +1,10 @@
 // template.marko
 let sideEffect = 3;
-const $MyThing_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.b));
+const $MyThing_content__count = /*@__PURE__*/ _closure_get(4, /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope._.b)));
+const $MyThing_content__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, sideEffect++));
 const $MyThing_content__setup = ($scope) => {
+	$MyThing_content__setup__render($scope);
 	$MyThing_content__count($scope);
-	_text($scope.b, sideEffect++);
 };
 const $MyThing_content = _content_resume("a0", "<!> <!>", "%c%b", $MyThing_content__setup);
 const $count__OR__MyThing = /*@__PURE__*/ _or(3, ($scope) => _attr_content($scope, "a", ($scope.b, $scope.c)));

@@ -1,13 +1,12 @@
 // template.marko
 const $template = "<button>increment</button><div>-- <!> -- <!> -- <!> -- <!></div>";
 const $walks = " bDb%c%c%c%l";
-const $doubled = /*@__PURE__*/ _const("doubled", ($scope) => _text($scope["#text/2"], $scope.doubled));
-const $tripled = /*@__PURE__*/ _const("tripled", ($scope) => _text($scope["#text/3"], $scope.tripled));
-const $doubled__OR__tripled = ($scope) => {
-	_text($scope["#text/4"], $scope.doubled + $scope.tripled);
-};
+const $doubled = /*@__PURE__*/ _const("doubled", /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.doubled)));
+const $tripled = /*@__PURE__*/ _const("tripled", /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], $scope.tripled)));
+const $doubled__OR__tripled = /*@__PURE__*/ _render(($scope) => _text($scope["#text/4"], $scope.doubled + $scope.tripled));
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count));
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	$count__render($scope);
 	$doubled($scope, $scope.count * 2);
 	$tripled($scope, $scope.count * 3);
 	$doubled__OR__tripled($scope);

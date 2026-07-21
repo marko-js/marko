@@ -1,7 +1,7 @@
 // tags/custom-tag.marko
 const $template = "<div> </div>";
 const $walks = "D l";
-const $input = ($scope, input) => _text($scope.a, input);
+const $input = /*@__PURE__*/ _render(($scope, input) => _text($scope.a, input));
 function $setup($scope) {
 	_return($scope, "hello from other");
 }
@@ -10,8 +10,9 @@ var custom_tag_default = /*@__PURE__*/ _template("b", $template, "D l", $setup, 
 // template.marko
 const tags = [custom_tag_default];
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, 0, 0, 1);
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.d));
 const $x = /*@__PURE__*/ _let(3, ($scope) => {
-	_text($scope.b, $scope.d);
+	$x__render($scope);
 	$dynamicTag($scope, tags[0], () => [$scope.d]);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {

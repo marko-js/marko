@@ -1,9 +1,5 @@
 // template.marko
-const $v__OR__rest__script = _script("a2", ($scope) => {
-	_attrs_script($scope, "b");
-	_attrs_script($scope, "c");
-});
-const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
+const $v__OR__rest__render = /*@__PURE__*/ _render(($scope) => {
 	_attrs($scope, "b", {
 		checkedValue: $scope.e,
 		...$scope.f
@@ -12,6 +8,13 @@ const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
 		...$scope.f,
 		checkedValue: $scope.e
 	});
+});
+const $v__OR__rest__script = _script("a2", ($scope) => {
+	_attrs_script($scope, "b");
+	_attrs_script($scope, "c");
+});
+const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
+	$v__OR__rest__render($scope);
 	$v__OR__rest__script($scope);
 });
 const $v = /*@__PURE__*/ _let(4, ($scope) => {

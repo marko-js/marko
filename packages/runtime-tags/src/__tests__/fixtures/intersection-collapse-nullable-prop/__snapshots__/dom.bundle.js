@@ -1,8 +1,6 @@
 // template.marko
 const $obj = ($scope, obj) => $obj_label($scope, obj?.label);
-const $obj_label__OR__n = ($scope) => {
-	_text($scope.b, ($scope.e ?? "none") + ($scope.c ? 1 : 2));
-};
+const $obj_label__OR__n = /*@__PURE__*/ _render(($scope) => _text($scope.b, ($scope.e ?? "none") + ($scope.c ? 1 : 2)));
 const $show = /*@__PURE__*/ _let(2, ($scope) => {
 	$obj($scope, $scope.c && { label: "hi" });
 	$obj_label__OR__n($scope);

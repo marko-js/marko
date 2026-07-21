@@ -10,6 +10,6 @@ function $setup($scope) {
 	$reveal($scope, false);
 	$setup__script($scope);
 }
-const $input_note = ($scope, input_note) => _text($scope["#text/2"], input_note);
+const $input_note = /*@__PURE__*/ _render(($scope, input_note) => _text($scope["#text/2"], input_note));
 const $input = ($scope, input) => $input_note($scope, input.note);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

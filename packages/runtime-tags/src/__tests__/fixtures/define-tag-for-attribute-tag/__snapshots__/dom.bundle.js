@@ -1,5 +1,5 @@
 // tags/child.marko
-const $input_thing_selected = /*@__PURE__*/ _const(5, ($scope) => _attr_class_item($scope.a, "selected", $scope.f));
+const $input_thing_selected = /*@__PURE__*/ _const(5, /*@__PURE__*/ _render(($scope) => _attr_class_item($scope.a, "selected", $scope.f)));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $input_thing_content = $dynamicTag;
 const $input_thing = ($scope, input_thing) => {

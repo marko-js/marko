@@ -33,7 +33,7 @@ var outer_default = /*@__PURE__*/ _template("__tests__/tags/outer.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button id=increment>click</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($walks$1);
-const $outer_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $outer_content__count = /*@__PURE__*/ _closure_get("count", /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._.count)));
 const $outer_content__setup = $outer_content__count;
 const $outer_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span> </span>", "D l", $outer_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($outer_content__count);

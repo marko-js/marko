@@ -6,8 +6,9 @@ const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => 
 	_attr_input_checkedValue($scope, "#input/1", $scope.checkedValue, $scope.$checkedValueChange, "b");
 	_attr_input_checkedValue($scope, "#input/2", $scope.checkedValue, $scope.$checkedValueChange, "c");
 });
+const $checkedValue__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], $scope.checkedValue));
 const $checkedValue = /*@__PURE__*/ _let("checkedValue/4", ($scope) => {
-	_text($scope["#text/3"], $scope.checkedValue);
+	$checkedValue__render($scope);
 	$checkedValue__OR__$checkedValueChange($scope);
 });
 const $checkedValueChange3 = /*@__PURE__*/ _const("$checkedValueChange", $checkedValue__OR__$checkedValueChange);

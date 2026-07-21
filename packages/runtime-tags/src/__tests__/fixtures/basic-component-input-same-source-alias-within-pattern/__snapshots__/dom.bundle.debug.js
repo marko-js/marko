@@ -4,11 +4,12 @@ const $walks$1 = " D%c%l";
 const $setup$1 = () => {};
 const $onClick__script = _script("__tests__/tags/my-button.marko_0_onClick", ($scope) => _on($scope["#button/0"], "click", $scope.onClick));
 const $onClick$1 = /*@__PURE__*/ _const("onClick", $onClick__script);
+const $text__render = /*@__PURE__*/ _render(($scope, text) => _text($scope["#text/1"], text));
 const $text = ($scope, text) => {
-	_text($scope["#text/1"], text);
+	$text__render($scope, text);
 	$input_value_text($scope, text);
 };
-const $input_value_text = ($scope, text) => _text($scope["#text/2"], text);
+const $input_value_text = /*@__PURE__*/ _render(($scope, text) => _text($scope["#text/2"], text));
 const $input = ($scope, input) => {
 	$onClick$1($scope, input.onClick);
 	$value2($scope, input.value);

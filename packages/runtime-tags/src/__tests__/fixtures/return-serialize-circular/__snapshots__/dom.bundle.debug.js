@@ -21,9 +21,10 @@ var setter_default = /*@__PURE__*/ _template("__tests__/tags/setter.marko", "", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("");
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.count));
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
+	$count__render($scope);
 	$input_value($scope["#childScope/0"], $scope.count);
-	_text($scope["#text/2"], $scope.count);
 });
 function $setup($scope) {
 	_var($scope, "#childScope/0", $setCount);

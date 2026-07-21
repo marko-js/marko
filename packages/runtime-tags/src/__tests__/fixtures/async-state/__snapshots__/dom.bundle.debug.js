@@ -2,10 +2,11 @@
 const $template = "<button>inc</button><!><!>";
 const $walks = " b%c";
 _enable_catch();
-const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
+const $await_content__value = /*@__PURE__*/ _render(($scope, value) => _text($scope["#text/0"], value));
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "LOADING...", "b");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " b");
+_enable_transition();
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.clickCount)));
 const $try_content__setup = ($scope) => {

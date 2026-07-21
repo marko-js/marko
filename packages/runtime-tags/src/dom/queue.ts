@@ -85,6 +85,7 @@ export function run() {
   try {
     rendering = 1;
     runRenders();
+    flushEnd();
   } finally {
     runId++;
     rendering = 0;
@@ -104,20 +105,24 @@ export function queueAsyncRender<T, U extends Scope = Scope>(
 }
 
 export function prepareEffects(fn: () => void): unknown[] {
-  const prevRenders = pendingRenders;
-  const prevEffects = pendingEffects;
+  const saved: [
+    typeof pendingRenders,
+    typeof pendingEffects,
+    typeof renderEffects,
+  ] = [pendingRenders, pendingEffects, renderEffects];
   const preparedEffects = (pendingEffects = []);
   pendingRenders = [];
+  renderEffects = [];
 
   try {
     rendering = 1;
     fn();
     runRenders();
+    flushEnd();
   } finally {
     runId++;
     rendering = 0;
-    pendingRenders = prevRenders;
-    pendingEffects = prevEffects;
+    [pendingRenders, pendingEffects, renderEffects] = saved;
   }
   return preparedEffects;
 }
@@ -248,5 +253,79 @@ export function _enable_catch() {
         renderCatch(render[PendingRenderProp.Scope], error);
       }
     })(runRender);
+  }
+}
+
+// === Compiled render effects ===
+//
+// Observable DOM mutations are not applied inline during renders: compiled
+// signals emit their DOM-write statements as hoisted "render effect"
+// functions queued via `_render`, and structural helpers queue their DOM
+// phase the same way. A render effect re-reads scope state when it runs, so
+// running it once at the end of the flush yields the latest output.
+//
+// Until `_enable_transition()` runs (emitted by the compiler only when an
+// `<await>` promise expression has referenced bindings, i.e. can re-fire
+// client side), `_render` applies immediately — templates without
+// client-updating awaits skip the queue entirely.
+
+type RenderEffectFn = (scope: Scope, value?: unknown) => void;
+
+let transitionsEnabled: undefined | 1;
+// A no-op until `_enable_transition` installs the drain, so flushes pay
+// nothing while render effects apply inline (and the machinery below
+// tree-shakes away when no template enables it).
+let flushEnd = () => {};
+let renderEffects: unknown[] = []; // stride 3: fn, scope, value
+
+// Wraps a compiled render effect as a signal-shaped fn; created once per
+// effect at module init. Applies immediately until `_enable_transition()`
+// swaps in the queueing implementation, so templates without
+// client-updating awaits pay only the extra call.
+export function _render(fn: RenderEffectFn): RenderEffectFn {
+  return (scope, value) => queueRenderEffect(fn, scope, value);
+}
+
+// Also used directly by the structural helpers (their per-node apply fns
+// are already stable identities).
+export let queueRenderEffect = (
+  fn: RenderEffectFn,
+  scope: Scope,
+  value?: unknown,
+) => {
+  fn(scope, value);
+};
+
+export function _enable_transition() {
+  if (!transitionsEnabled) {
+    transitionsEnabled = 1;
+    flushEnd = flushRenderEffects;
+    queueRenderEffect = (fn, scope, value?) => {
+      renderEffects.push(fn, scope, value);
+    };
+  }
+}
+
+function flushRenderEffects() {
+  // Applying render effects can queue more (a spread's dynamic content
+  // swap); drain until quiet.
+  while (renderEffects.length) {
+    const next = renderEffects;
+    renderEffects = [];
+    runRenderEffectList(next);
+  }
+}
+
+function runRenderEffectList(fx: unknown[]) {
+  for (let i = 0; i < fx.length; i += 3) {
+    const fn = fx[i] as RenderEffectFn;
+    const scope = fx[i + 1] as Scope;
+    if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] !== 0) {
+      try {
+        fn(scope, fx[i + 2]);
+      } catch (error) {
+        renderCatch(scope, error);
+      }
+    }
   }
 }

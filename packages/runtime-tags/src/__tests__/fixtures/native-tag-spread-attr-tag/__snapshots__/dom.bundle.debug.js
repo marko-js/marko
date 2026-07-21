@@ -2,14 +2,16 @@
 const $template$1 = "<section></section><footer></footer>";
 const $walks$1 = " b b";
 const $setup$1 = () => {};
+const $input_head__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#section/0", $scope.input_head));
 const $input_head__script = _script("__tests__/tags/my-box.marko_0_input_head", ($scope) => _attrs_script($scope, "#section/0"));
 const $input_head = /*@__PURE__*/ _const("input_head", ($scope) => {
-	_attrs_content($scope, "#section/0", $scope.input_head);
+	$input_head__render($scope);
 	$input_head__script($scope);
 });
+const $input_foot__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#footer/1", $scope.input_foot));
 const $input_foot__script = _script("__tests__/tags/my-box.marko_0_input_foot", ($scope) => _attrs_script($scope, "#footer/1"));
 const $input_foot = /*@__PURE__*/ _const("input_foot", ($scope) => {
-	_attrs_content($scope, "#footer/1", $scope.input_foot);
+	$input_foot__render($scope);
 	$input_foot__script($scope);
 });
 const $input = ($scope, input) => {
@@ -21,7 +23,7 @@ var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $head_content__n = /*@__PURE__*/ _let("n/2", ($scope) => _text($scope["#text/1"], $scope.n));
+const $head_content__n = /*@__PURE__*/ _let("n/2", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.n)));
 const $head_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$head_content__n($scope, $scope.n + 1);
 }));

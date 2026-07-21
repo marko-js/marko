@@ -1,11 +1,13 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $for_content2__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content2__val = ($scope, val) => _text($scope["#text/1"], val);
+const $for_content2__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope["#LoopKey"]));
+const $for_content2__setup = ($scope) => $for_content2__setup__render($scope);
+const $for_content2__val = /*@__PURE__*/ _render(($scope, val) => _text($scope["#text/1"], val));
 const $for_content2__$params = ($scope, $params3) => $for_content2__val($scope, $params3[0]);
-const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content__val = ($scope, val) => _text($scope["#text/1"], val);
+const $for_content__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope["#LoopKey"]));
+const $for_content__setup = ($scope) => $for_content__setup__render($scope);
+const $for_content__val = /*@__PURE__*/ _render(($scope, val) => _text($scope["#text/1"], val));
 const $for_content__$params = ($scope, $params2) => $for_content__val($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>: <!></div>", "D%c%l", $for_content__setup, $for_content__$params);
 const $arrA = ($scope, arrA) => $for($scope, [arrA]);

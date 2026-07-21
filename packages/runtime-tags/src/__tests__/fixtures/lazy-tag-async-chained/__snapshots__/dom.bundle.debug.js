@@ -1,9 +1,9 @@
 // child.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/6", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count)));
 const $input_value = $count;
-const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
+const $input_id = /*@__PURE__*/ _render(($scope, input_id) => _attr($scope["#button/0"], "id", input_id));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -33,6 +33,7 @@ function $setup($scope) {
 	$await_content($scope);
 }
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!><!>", "b%/&c", $await_content__setup);
+_enable_transition();
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 const $input_value = ($scope, input_value) => {
 	$load_Child_tag_input_value($scope["#childScope/1"], input_value);

@@ -1,9 +1,10 @@
 // child.marko
 let $load_GrandChild_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:grand-child.marko.input_value.mjs"));
 const $await_content__count = /*@__PURE__*/ _closure_get(7, ($scope) => $load_GrandChild_tag_input_value($scope.c, $scope._.g));
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.g));
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
 const $count = /*@__PURE__*/ _let(6, ($scope) => {
-	_text($scope.b, $scope.g);
+	$count__render($scope);
 	$count__closure($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
@@ -11,9 +12,10 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 }));
 
 // grand-child.marko
-const $n = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $n = /*@__PURE__*/ _let(7, /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.h)));
+const $input_value__render = /*@__PURE__*/ _render(($scope, input_value) => _text($scope.c, input_value));
 const $input_value = ($scope, input_value) => {
-	_text($scope.c, input_value);
+	$input_value__render($scope, input_value);
 	$n($scope, input_value);
 };
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {

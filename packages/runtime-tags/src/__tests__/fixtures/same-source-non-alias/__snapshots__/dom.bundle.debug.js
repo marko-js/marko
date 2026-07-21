@@ -13,9 +13,10 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
+const $a__render = /*@__PURE__*/ _render(($scope, a) => _text($scope["#text/1"], a));
 const $a = ($scope, a) => {
-	_text($scope["#text/1"], a);
+	$a__render($scope, a);
 	$b($scope, a);
 };
-const $b = ($scope, a) => _text($scope["#text/2"], a);
+const $b = /*@__PURE__*/ _render(($scope, a) => _text($scope["#text/2"], a));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

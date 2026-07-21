@@ -53,6 +53,7 @@ INSERT: #inside::text("0")
 ```
 REMOVE: ::text("loading...")
 INSERT: #outside + #inside
+UPDATE: #inside::text "0" => "1"
 ```
 ## Console
 ```

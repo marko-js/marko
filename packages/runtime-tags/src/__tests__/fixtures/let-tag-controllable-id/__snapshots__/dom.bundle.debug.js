@@ -1,10 +1,11 @@
 // template.marko
 const $template = "<button><!>|<!></button>";
 const $walks = " D%c%l";
-const $y = /*@__PURE__*/ _let_change("y/6", ($scope) => _text($scope["#text/2"], $scope.y));
+const $y = /*@__PURE__*/ _let_change("y/6", /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.y)));
 const $x__OR__handler = /*@__PURE__*/ _or(5, ($scope) => $y($scope, $scope.x, $scope.handler));
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.x));
 const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+	$x__render($scope);
 	$x__OR__handler($scope);
 });
 const $handler2 = /*@__PURE__*/ _let("handler/4", $x__OR__handler);

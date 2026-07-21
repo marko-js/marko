@@ -2,10 +2,11 @@
 const $template = "<button></button>";
 const $walks = " b";
 let sideEffect = 3;
-const $MyThing_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $MyThing_content__count = /*@__PURE__*/ _closure_get("count", /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._.count)));
+const $MyThing_content__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], sideEffect++));
 const $MyThing_content__setup = ($scope) => {
+	$MyThing_content__setup__render($scope);
 	$MyThing_content__count($scope);
-	_text($scope["#text/1"], sideEffect++);
 };
 const $MyThing_content = _content_resume("__tests__/template.marko_1_content", "<!> <!>", "%c%b", $MyThing_content__setup);
 const $count__OR__MyThing = /*@__PURE__*/ _or(3, ($scope) => _attr_content($scope, "#button/0", ($scope.count, $scope.MyThing)));

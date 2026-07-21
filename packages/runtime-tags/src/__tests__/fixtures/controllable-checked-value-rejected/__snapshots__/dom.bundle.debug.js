@@ -1,10 +1,11 @@
 // template.marko
 const $template = "<input type=radio name=pick><input type=radio name=pick><span> </span>";
 const $walks = " b bD l";
+const $picked__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.picked));
 const $picked = /*@__PURE__*/ _let("picked/3", ($scope) => {
+	$picked__render($scope);
 	_attr_input_checkedValue($scope, "#input/0", $scope.picked, $checkedValueChange, "a");
 	_attr_input_checkedValue($scope, "#input/1", $scope.picked, $checkedValueChange2, "b");
-	_text($scope["#text/2"], $scope.picked);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_input_checkedValue_script($scope, "#input/0");

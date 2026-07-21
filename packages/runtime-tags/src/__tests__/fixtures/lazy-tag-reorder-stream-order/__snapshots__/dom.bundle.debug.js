@@ -3,16 +3,19 @@ const $template = "<button><!>:<!></button>";
 const $walks = " D%c%l";
 const $shared = /*@__PURE__*/ _let("shared/7");
 const $input_shared = $shared;
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/8", /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.count)));
 function $setup($scope) {
 	$count($scope, 0);
 }
+const $input_label__render = /*@__PURE__*/ _render(($scope) => {
+	_attr_class($scope["#button/0"], $scope.input_label);
+	_text($scope["#text/1"], $scope.input_label);
+});
 const $input_label__script = _script("__tests__/child.marko_0_input_label", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + $scope.shared[$scope.input_label]);
 }));
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
-	_attr_class($scope["#button/0"], $scope.input_label);
-	_text($scope["#text/1"], $scope.input_label);
+	$input_label__render($scope);
 	$input_label__script($scope);
 });
 const $input = ($scope, input) => {

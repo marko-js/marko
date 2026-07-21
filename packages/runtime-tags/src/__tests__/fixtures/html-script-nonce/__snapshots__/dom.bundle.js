@@ -1,5 +1,6 @@
 // template.marko
-const $if_content__setup = ($scope) => _attr_nonce($scope, "a");
+const $if_content__setup__render = /*@__PURE__*/ _render(($scope) => _attr_nonce($scope, "a"));
+const $if_content__setup = ($scope) => $if_content__setup__render($scope);
 const $spreadAttrs__script = _script("a1", ($scope) => _attrs_script($scope, "b"));
 const $if = /*@__PURE__*/ _if(2, "<script type=magic>\n    D\n  <\/script>", " b", $if_content__setup);
 const $mounted = /*@__PURE__*/ _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));

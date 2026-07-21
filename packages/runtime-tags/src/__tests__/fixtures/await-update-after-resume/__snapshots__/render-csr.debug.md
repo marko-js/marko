@@ -38,6 +38,7 @@ INSERT: #outside + ::text("loading...")
 ```
 INSERT: #outside + #inside
 REMOVE: #inside + ::text("loading...")
+UPDATE: #inside::text " " => "0"
 ```
 ## Console
 ```
@@ -95,6 +96,7 @@ REMOVE: ::text + #inside
 ```
 INSERT: #outside + #inside
 REMOVE: #inside + ::text("loading...")
+UPDATE: #inside::text "0" => "1"
 ```
 ## Console
 ```

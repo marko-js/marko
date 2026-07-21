@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "%b%c";
 const $setup$1 = () => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $name = ($scope, name) => _text($scope["#text/0"], name);
+const $name = /*@__PURE__*/ _render(($scope, name) => _text($scope["#text/0"], name));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $content = $dynamicTag;
 const $input = ($scope, input) => {

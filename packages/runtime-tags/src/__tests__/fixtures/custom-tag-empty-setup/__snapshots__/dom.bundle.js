@@ -1,5 +1,5 @@
 // tags/cell/index.marko
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = /*@__PURE__*/ _render(($scope, input_value) => _text($scope.a, input_value));
 
 // tags/row/index.marko
 const $input_quantity = ($scope, input_quantity) => $input_value($scope.b, input_quantity);

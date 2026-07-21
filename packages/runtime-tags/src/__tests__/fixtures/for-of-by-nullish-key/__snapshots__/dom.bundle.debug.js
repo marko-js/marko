@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<ul></ul><button>refresh</button>";
 const $walks = " b b";
-const $for_content__item_text = ($scope, item_text) => _text($scope["#text/0"], item_text);
+const $for_content__item_text = /*@__PURE__*/ _render(($scope, item_text) => _text($scope["#text/0"], item_text));
 const $for_content__$params = ($scope, $params2) => $for_content__item_text($scope, $params2[0]?.text);
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D l", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $for($scope, [$scope.items, "id"]));

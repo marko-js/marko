@@ -2,9 +2,10 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = () => {};
+const $for_content__item__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "#span/0", $scope.item));
 const $for_content__item__script = _script("__tests__/tags/child.marko_1_item", ($scope) => _attrs_script($scope, "#span/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
-	_attrs($scope, "#span/0", $scope.item);
+	$for_content__item__render($scope);
 	$for_content__item__script($scope);
 });
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");

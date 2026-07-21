@@ -83,6 +83,7 @@ REMOVE: ::text + #inside
 ```
 INSERT: #outside + #inside
 REMOVE: #inside + ::text("loading...")
+UPDATE: #inside::text "0" => "1"
 ```
 ## Console
 ```

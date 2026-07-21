@@ -60,6 +60,7 @@ Async: 1
 ```
 INSERT: div + :is(::text("Async: "), ::text("1"))
 REMOVE: ::text@7 + ::text("LOADING...")
+UPDATE: ::text@7 "0" => "1"
 REMOVE: div::text("0")
 INSERT: div::text("1")
 ```
@@ -98,7 +99,10 @@ Error: ERROR!
 ```
 ## Change
 ```
+INSERT: div + :is(::text("Async: "), ::text("1"))
+REMOVE: ::text("LOADING...")
 INSERT: div + ::text("Error: ERROR!")
-REMOVE: ::text + ::text("LOADING...")
+REMOVE: ::text + ::text("Async: ")
+REMOVE: ::text + ::text("1")
 UPDATE: ::text " " => "Error: ERROR!"
 ```

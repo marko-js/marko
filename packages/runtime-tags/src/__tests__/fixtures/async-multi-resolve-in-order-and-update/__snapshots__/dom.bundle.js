@@ -1,26 +1,34 @@
 // template.marko
 const multiply = (multiplier, n) => resolveAfter(multiplier * n);
-const $await_content5__result = ($scope, result) => _text($scope.a, result);
+const $await_content5__result = /*@__PURE__*/ _render(($scope, result) => _text($scope.a, result));
 const $await_content5__$params = ($scope, $params6) => $await_content5__result($scope, $params6[0]);
-const $await_content4__result = ($scope, result) => _text($scope.a, result);
+const $await_content4__result = /*@__PURE__*/ _render(($scope, result) => _text($scope.a, result));
 const $await_content4__$params = ($scope, $params5) => $await_content4__result($scope, $params5[0]);
-const $await_content3__result = ($scope, result) => _text($scope.a, result);
+const $await_content3__result = /*@__PURE__*/ _render(($scope, result) => _text($scope.a, result));
 const $await_content3__$params = ($scope, $params4) => $await_content3__result($scope, $params4[0]);
-const $await_content2__result = ($scope, result) => _text($scope.a, result);
+const $await_content2__result = /*@__PURE__*/ _render(($scope, result) => _text($scope.a, result));
 const $await_content2__$params = ($scope, $params3) => $await_content2__result($scope, $params3[0]);
-const $await_content__result = ($scope, result) => _text($scope.a, result);
+const $await_content__result = /*@__PURE__*/ _render(($scope, result) => _text($scope.a, result));
 const $await_content__$params = ($scope, $params2) => $await_content__result($scope, $params2[0]);
+_enable_transition();
 const $await_promise = /*@__PURE__*/ _await_promise(2, $await_content__$params);
+_enable_transition();
 const $await_promise2 = /*@__PURE__*/ _await_promise(4, $await_content2__$params);
+_enable_transition();
 const $await_promise3 = /*@__PURE__*/ _await_promise(6, $await_content3__$params);
+_enable_transition();
 const $await_promise4 = /*@__PURE__*/ _await_promise(8, $await_content4__$params);
+_enable_transition();
 const $await_promise5 = /*@__PURE__*/ _await_promise(10, $await_content5__$params);
-const $n = /*@__PURE__*/ _let(11, ($scope) => {
+const $n__render = /*@__PURE__*/ _render(($scope) => {
 	_text($scope.b, $scope.l);
 	_text($scope.d, $scope.l);
 	_text($scope.f, $scope.l);
 	_text($scope.h, $scope.l);
 	_text($scope.j, $scope.l);
+});
+const $n = /*@__PURE__*/ _let(11, ($scope) => {
+	$n__render($scope);
 	$await_promise($scope, multiply(1, $scope.l));
 	$await_promise2($scope, multiply(2, $scope.l));
 	$await_promise3($scope, multiply(3, $scope.l));
