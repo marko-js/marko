@@ -4,6 +4,13 @@ import normalizeStringExpression from "../util/normalize-string-expression";
 
 export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
   if (tag.node.body.body.length) {
+    // HTML ignores a single newline right after the `<textarea>` start tag, so
+    // strip it before a formatting-only newline is treated as body content.
+    const [firstChild] = tag.node.body.body;
+    if (firstChild.type === "MarkoText") {
+      firstChild.value = firstChild.value.replace(/^\r?\n/, "");
+    }
+
     // convert textarea body into a static value attribute.
     const parts: (string | t.Expression)[] = [];
     for (const child of tag.node.body.body) {
