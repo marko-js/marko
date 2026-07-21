@@ -1,0 +1,15 @@
+<let/gradId="grad" />
+<let/show=true />
+<svg>
+  <linearGradient id=gradId>
+    <stop offset="0%" stop-color="gold" />
+  </linearGradient>
+  <clipPath>
+    <if=show>
+      <rect width=10 height=10 />
+    </if>
+  </clipPath>
+</svg>
+<button onClick() { gradId = "grad2"; show = !show; }>
+  toggle
+</button>

@@ -45,7 +45,7 @@ export function getOptimizedOnlyChildNodeBinding(
     const parentTag = getParentTag(tag)!.node;
     const parentTagName = (parentTag.name as t.StringLiteral)?.value;
     return ((parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
-      "#" + parentTagName,
+      "#" + parentTagName.toLowerCase(),
       BindingType.dom,
       section,
     ));
