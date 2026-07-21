@@ -110,13 +110,12 @@ function testFixtures(interop?: true) {
       const resolve = (file: string) => path.join(fixtureDir, file);
       const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
       const templateFile = resolve("template.marko");
-      const config: TestConfig = (() => {
-        try {
-          return require(resolve("test.ts")).config ?? {};
-        } catch {
-          return {};
-        }
-      })();
+      const testFile = resolve("test.ts");
+      // A present-but-broken `test.ts` must fail loudly; only an absent file is
+      // optional (mirrors the `templateFile` guard below).
+      const config: TestConfig = fs.existsSync(testFile)
+        ? (require(testFile).config ?? {})
+        : {};
       const hasCompilerError = !!config.error_compiler;
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;

@@ -88,7 +88,7 @@ export async function snap(
       const actualFile =
         snapdir +
         path.sep +
-        (uniqueName ?? file.slice(0, -ext.length)).slice(0, -ext.length) +
+        (uniqueName ?? file.slice(0, -ext.length)) +
         ".actual" +
         ext;
       fs.mkdirSync(path.dirname(actualFile), { recursive: true });
