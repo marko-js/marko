@@ -59,10 +59,7 @@ import {
 } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
-import {
-  toFirstExpressionOrBlock,
-  toParenthesizedExpressionIfNeeded,
-} from "./to-first-expression-or-block";
+import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
 import {
   toMemberExpression,
   toObjectProperty,
@@ -829,7 +826,7 @@ export function replaceNullishAndEmptyFunctionsWith0(
       }
 
       if (body.length === 1 && t.isExpressionStatement(body[0])) {
-        arg.body = toParenthesizedExpressionIfNeeded(body[0].expression);
+        arg.body = body[0].expression;
       }
     }
 
