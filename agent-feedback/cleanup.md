@@ -82,12 +82,6 @@ A file-by-file terminology audit flagged several local naming inconsistencies th
 
 `getSectionInstancesAccessor` always returns a non-empty string — both arms are string concatenations (`section.sectionAccessor.prefix + getScopeAccessor(...)` or `getAccessorPrefix().ClosureScopes + section.id`) and `getScopeAccessor` returns a string in every branch (references.ts:1939-1944). So in `getSectionInstancesAccessorLiteral` (1946-1953) the `typeof accessor === "number"` test can never be true (the `numericLiteral` arm is dead) and the `: undefined` fallback is unreachable; the function always returns a `t.stringLiteral`. The `... | undefined` return type this implies is misleading and forces callers to paper over it (`getSectionInstancesAccessorLiteral(currentSection)!` in signals.ts:1076). Collapse the body to `return t.stringLiteral(getSectionInstancesAccessor(section))` and drop the now-needless non-null assertions. Re-verify: the collapse plus `npm run test:parallel` leaves snapshots unchanged.
 
-## Remove the dead `Signal.hasDynamicSubscribers` field
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `Signal` | 2026-07-20 | impact:low | effort:low
-
-The `hasDynamicSubscribers: boolean` field is declared on the `Signal` interface (signals.ts:89) and initialized to `false` for every signal created in `getSignal` (signals.ts:282), but is never read or reassigned anywhere in the package — a whole-package grep returns exactly those two hits. It is pure dead state allocated on every Signal object. (The similarly named `sectionDynamicSubscribers` in visitors/program/html.ts is an unrelated local `Set<Section>`.) Drop the interface member and its initializer. Re-verify: `grep -rn hasDynamicSubscribers packages/runtime-tags` returns only the declaration and the `false` initializer; deleting both lines compiles and leaves the suite green.
-
 ## Remove or implement the unhandled `WalkCode.Inside` so a type-permitted visit code cannot hang the walker
 
 `packages/runtime-tags/src/dom/walker.ts` › `walkInternal` | 2026-07-20 | impact:low | effort:low

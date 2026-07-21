@@ -86,7 +86,6 @@ export interface Signal {
   renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
-  hasDynamicSubscribers: boolean;
   hasSideEffect: boolean;
   forcePersist: boolean;
   inline: { value: t.Expression } | undefined;
@@ -278,7 +277,6 @@ export function getSignal(
             referencedBindings.closureSections ||
             referencedBindings.hoists)
         ),
-        hasDynamicSubscribers: false,
         forcePersist: false,
         inline: undefined,
         extraArgs: undefined,
