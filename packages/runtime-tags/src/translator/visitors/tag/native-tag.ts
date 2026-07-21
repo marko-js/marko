@@ -450,7 +450,7 @@ export default {
               staticControllable ? undefined : t.numericLiteral(1),
             );
           } else if (value) {
-            writeAtStartOfBody = callRuntime("_escape", value);
+            writeAtStartOfBody = callRuntime("_textarea_value", value);
           }
         }
 

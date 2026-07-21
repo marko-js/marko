@@ -26,6 +26,7 @@ export {
   _attrs_partial,
   _attrs_partial_content,
   _style_html,
+  _textarea_value,
 } from "./html/attrs";
 export { compat } from "./html/compat";
 export {

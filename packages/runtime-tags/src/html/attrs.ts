@@ -120,7 +120,13 @@ export function _attr_textarea_value(
     );
   }
 
-  return _escape(value);
+  return _textarea_value(value);
+}
+
+// A textarea renders its value as text content, but coerces it like the `value=`
+// attribute (and like `<input>`/the client) so SSR and CSR agree on non-strings.
+export function _textarea_value(value: unknown) {
+  return _escape(normalizeStrAttrValue(value));
 }
 
 export function _attr_input_value(
