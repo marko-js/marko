@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.3
+
+### Patch Changes
+
+- [#3501](https://github.com/marko-js/marko/pull/3501) [`bc7a375`](https://github.com/marko-js/marko/commit/bc7a375ec7644aaaa6a243d14e332a452c42a6fe) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Propagate package identity through `taglib-imports` so tags from a nested imported taglib resolve by their package name instead of a realpath (eg pnpm's virtual store) that may not be importable.
+
 ## 5.41.2
 
 ### Patch Changes
