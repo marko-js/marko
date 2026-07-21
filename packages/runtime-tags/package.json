@@ -47,6 +47,10 @@
     "fastest-levenshtein": "^1.0.16",
     "magic-string": "^0.30.21"
   },
+  "devDependencies": {
+    "@marko/runtime-tags": "workspace:*",
+    "marko": "workspace:*"
+  },
   "engines": {
     "node": ">=22"
   },

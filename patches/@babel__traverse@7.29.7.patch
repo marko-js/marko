@@ -1,7 +1,7 @@
-diff --git a/node_modules/@babel/traverse/lib/scope/index.js b/node_modules/@babel/traverse/lib/scope/index.js
+diff --git a/lib/scope/index.js b/lib/scope/index.js
 index a607471..50580ac 100644
---- a/node_modules/@babel/traverse/lib/scope/index.js
-+++ b/node_modules/@babel/traverse/lib/scope/index.js
+--- a/lib/scope/index.js
++++ b/lib/scope/index.js
 @@ -299,7 +299,37 @@ const collectorVisitor = {
    },
    TSTypeAnnotation(path) {

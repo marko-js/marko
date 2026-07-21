@@ -1,7 +1,7 @@
-diff --git a/node_modules/mocha-autotest/dist/index.js b/node_modules/mocha-autotest/dist/index.js
+diff --git a/dist/index.js b/dist/index.js
 index 57f53f1..5e1c7f4 100644
---- a/node_modules/mocha-autotest/dist/index.js
-+++ b/node_modules/mocha-autotest/dist/index.js
+--- a/dist/index.js
++++ b/dist/index.js
 @@ -26,6 +26,15 @@ function autotest(fixturesName, run) {
  
    const fixturesDirectory = _path.default.join(suiteDirectory, fixturesName);

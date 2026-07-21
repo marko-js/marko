@@ -1,0 +1,10 @@
+packages:
+  - packages/*
+linkWorkspacePackages: true
+patchedDependencies:
+  "@babel/generator@7.29.7": patches/@babel__generator@7.29.7.patch
+  "@babel/helper-compilation-targets@7.29.7": patches/@babel__helper-compilation-targets@7.29.7.patch
+  "@babel/traverse@7.29.7": patches/@babel__traverse@7.29.7.patch
+  "@babel/types@7.29.7": patches/@babel__types@7.29.7.patch
+  mocha@11.7.6: patches/mocha@11.7.6.patch
+  mocha-autotest@1.1.3: patches/mocha-autotest@1.1.3.patch

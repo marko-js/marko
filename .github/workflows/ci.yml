@@ -16,17 +16,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
       - name: Use node
         uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Build
-        run: npm run @ci:build
+        run: pnpm run @ci:build
       - name: Lint Code
-        run: npm run @ci:lint
+        run: pnpm run @ci:lint
   test:
     runs-on: ubuntu-latest
     name: "test: node@${{ matrix.node }}"
@@ -37,25 +39,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
       - name: Use node@${{ matrix.node }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
-          cache: npm
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       # Coverage collection + the c8 report add ~45% to the job (the report
       # alone is ~1 min of single-threaded remapping), so only the newest node
       # version pays for it — coverage is version-independent for this suite.
       - name: Run tests
         if: ${{ matrix.node != 26 }}
-        run: npm run @ci:test:fast
+        run: pnpm run @ci:test:fast
       - name: Run tests with coverage
         if: ${{ matrix.node == 26 }}
-        run: npm run @ci:test
+        run: pnpm run @ci:test
       - name: Report code coverage
         if: ${{ matrix.node == 26 }}
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
   release:
@@ -69,19 +73,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
       - name: Setup node
         uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Release
         id: changesets
         uses: changesets/action@v1
         with:
-          version: npm run @ci:version
-          publish: npm run @ci:release
+          version: pnpm run @ci:version
+          publish: pnpm run @ci:release
           commit: "[ci] release"
           title: "[ci] release"
         env:

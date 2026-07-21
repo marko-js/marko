@@ -1,7 +1,7 @@
-diff --git a/node_modules/mocha/lib/nodejs/esm-utils.js b/node_modules/mocha/lib/nodejs/esm-utils.js
+diff --git a/lib/nodejs/esm-utils.js b/lib/nodejs/esm-utils.js
 index d1bbb95..ec68e36 100644
---- a/node_modules/mocha/lib/nodejs/esm-utils.js
-+++ b/node_modules/mocha/lib/nodejs/esm-utils.js
+--- a/lib/nodejs/esm-utils.js
++++ b/lib/nodejs/esm-utils.js
 @@ -99,6 +99,7 @@ const requireModule = async (file, esmDecorator) => {
    } catch (requireErr) {
      debug("requireModule caught err: %O", requireErr.message);

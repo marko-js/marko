@@ -86,6 +86,9 @@
     "self-closing-tags": "^1.0.1",
     "warp10": "^2.1.0"
   },
+  "devDependencies": {
+    "marko": "workspace:*"
+  },
   "engines": {
     "node": "18 || 20 || >=22"
   },

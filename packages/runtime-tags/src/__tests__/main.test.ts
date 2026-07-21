@@ -64,7 +64,7 @@ export type TestConfig = {
 // worker a subset of round-robin "slots" via the env below: a fixture runs here
 // when `index % slotTotal` is one of this worker's slots. Round-robin keeps the
 // expensive fixtures spread evenly across workers. With no env set (a plain
-// `npm test`, or a scoped `--grep`) `slots` is null and every fixture runs.
+// `pnpm test`, or a scoped `--grep`) `slots` is null and every fixture runs.
 const slotTotal = Number(process.env.MARKO_TEST_SLOT_TOTAL) || 1;
 const slots = process.env.MARKO_TEST_SLOTS
   ? new Set(process.env.MARKO_TEST_SLOTS.split(",").map(Number))
@@ -385,7 +385,7 @@ function testFixtures(interop?: true) {
                 assert.strictEqual(
                   actual,
                   expected,
-                  `sizes.json out of date for "${entry}" — run \`npm run test:update\``,
+                  `sizes.json out of date for "${entry}" — run \`pnpm run test:update\``,
                 );
               }
             });

@@ -1,8 +1,8 @@
-diff --git a/node_modules/@babel/generator/lib/generators/marko.js b/node_modules/@babel/generator/lib/generators/marko.js
+diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
 index 0000000..16c2e02
 --- /dev/null
-+++ b/node_modules/@babel/generator/lib/generators/marko.js
++++ b/lib/generators/marko.js
 @@ -0,0 +1,389 @@
 +"use strict";
 +
@@ -393,10 +393,10 @@ index 0000000..16c2e02
 +
 +  return result;
 +}
-diff --git a/node_modules/@babel/generator/lib/nodes.js b/node_modules/@babel/generator/lib/nodes.js
+diff --git a/lib/nodes.js b/lib/nodes.js
 index 8754a38..4321759 100644
---- a/node_modules/@babel/generator/lib/nodes.js
-+++ b/node_modules/@babel/generator/lib/nodes.js
+--- a/lib/nodes.js
++++ b/lib/nodes.js
 @@ -16,4 +16,9 @@ for (const key of Object.keys(deprecatedGeneratorFunctions)) {
    generatorInfosMap.set(key, [deprecatedGeneratorFunctions[key], index++, undefined]);
  }

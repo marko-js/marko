@@ -6,7 +6,7 @@
 // one mocha process per core: every slotted worker loads all sliced files but
 // only runs its own slice of their fixtures.
 //
-// A plain `npm test` is untouched — it stays serial, which is what a scoped
+// A plain `pnpm test` is untouched — it stays serial, which is what a scoped
 // `--grep` dev run wants. This is the "run everything, fast" path used by CI.
 //
 // Plain CommonJS on purpose: this orchestrator is what `c8` wraps for coverage,
@@ -22,7 +22,7 @@ const path = require("node:path");
 const glob = require("tiny-glob");
 
 const ROOT = path.resolve(__dirname, "..");
-const MOCHA = path.join(ROOT, "node_modules/.bin/mocha");
+const MOCHA = require.resolve("mocha/bin/mocha.js");
 const CONFIG = path.join(ROOT, ".mocharc.parallel.json");
 const SPEC_GLOB = "packages/*/@(src|test)/**/*.test.@(js|ts)";
 

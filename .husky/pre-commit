@@ -1,1 +1,1 @@
-npm exec -- lint-staged && npm run build && npm run build:sizes && git add .sizes.json && git add .sizes
+pnpm exec lint-staged && pnpm run build && pnpm run build:sizes && git add .sizes.json && git add .sizes

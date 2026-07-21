@@ -1,7 +1,7 @@
-diff --git a/node_modules/@babel/helper-compilation-targets/lib/index.js b/node_modules/@babel/helper-compilation-targets/lib/index.js
+diff --git a/lib/index.js b/lib/index.js
 index 567565a..9d8d7d9 100644
---- a/node_modules/@babel/helper-compilation-targets/lib/index.js
-+++ b/node_modules/@babel/helper-compilation-targets/lib/index.js
+--- a/lib/index.js
++++ b/lib/index.js
 @@ -41,7 +41,7 @@ Object.defineProperty(exports, "unreleasedLabels", {
      return _targets.unreleasedLabels;
    }

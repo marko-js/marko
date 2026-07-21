@@ -18,6 +18,6 @@ A translator module exports: `translate` (required visitor), `taglibs` (required
 ## Notes
 
 - `output: "source"` / `"migrate"` re-print `.marko` source (tooling/codemods) — no translator codegen.
-- Bumping any `@babel/*` version requires regenerating the corresponding patch in root `patches/` (patch-package); the custom AST types and generated `dist/types.d.ts` (`npm run build-babel-types -w @marko/compiler`) depend on them.
+- Bumping any `@babel/*` version requires regenerating the corresponding patch in root `patches/` (pnpm patchedDependencies); the custom AST types and generated `dist/types.d.ts` (`pnpm --filter @marko/compiler run build-babel-types`) depend on them.
 - Adding a core tag in a translator shows up in taglib-lookup expectations here and in `packages/runtime-class/test/taglib-lookup/`.
 - `util/agent-fix-guide.js` — when a terminal coding agent is detected (env markers) and the loaded translator declares a `cheatsheet`, thrown compile errors get a one-line pointer to it (relative to `cwd`) appended at the `compile[Sync]` boundary. No-op for humans, for runtimes without a cheat sheet, and for inline translator objects (so error snapshots, which compile with an inline translator object, are unaffected).

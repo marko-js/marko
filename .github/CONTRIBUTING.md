@@ -39,22 +39,22 @@ Prior to merging your PR, you will need to sign the [Open JS Foundation CLA](htt
 Before submitting your PR, make sure that all new and previous tests pass and that [coverage](https://codecov.io/gh/marko-js/marko) has not decreased:
 
 ```
-npm run @ci:test
+pnpm run @ci:test
 
 # to view the coverage report
-npm run report
+pnpm run report
 ```
 
 While developing you can run a single test group and use [grep](https://mochajs.org/#-g---grep-pattern) to filter the tests:
 
 ```
-npm test -- --grep=lifecycle
+pnpm test -- --grep=lifecycle
 ```
 
-To run the whole suite quickly (without coverage), `npm run test:parallel` fans the tests across your CPU cores:
+To run the whole suite quickly (without coverage), `pnpm run test:parallel` fans the tests across your CPU cores:
 
 ```
-npm run test:parallel
+pnpm run test:parallel
 ```
 
 ### Adding tests
@@ -98,7 +98,7 @@ Expected failures won't cause [Travis CI](https://travis-ci.org/marko-js/marko) 
 If you need to dig a bit deeper into a failing test, use the `--inspect-brk` flag, open Chrome DevTools, and click on the green nodejs icon (<img height="16" src="https://user-images.githubusercontent.com/1958812/37050480-d53e4276-2128-11e8-8c7a-f5d842956c98.png"/>) to start debugging. Learn more about [debugging node](https://www.youtube.com/watch?v=Xb_0awoShR8&t=103s) from this video.
 
 ```
-npm test -- --grep=test-name --inspect-brk
+pnpm test -- --grep=test-name --inspect-brk
 ```
 
 In addition to [setting breakpoints](https://developers.google.com/web/tools/chrome-devtools/javascript/breakpoints), you can also add [`debugger;`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) statements in both your JavaScript files and Marko templates:
@@ -115,7 +115,7 @@ A number of the test suites make use snapshot comparisons. For example, the `ren
 To update a snapshot, you can copy the contents from the `actual` file to the `expected` file in the fixture directory. You can also use the `UPDATE_EXPECTATIONS` env variable to cause the test runner to update the `expected` file for all currently failing tests in a suite:
 
 ```
-UPDATE_EXPECTATIONS=1 npm test
+UPDATE_EXPECTATIONS=1 pnpm test
 ```
 
 ## Tackling an existing issue
