@@ -16,7 +16,6 @@ import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains } from "../util/traverse";
-import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
 
 const htmlScriptTagAlternateMsg =
   " For a native html [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.";
@@ -111,10 +110,10 @@ export default {
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
         let inlineBody: t.Statement | t.Statement[] | null = null;
-        let referencesScope = false;
         if (isFunction) {
           if (value.async || value.generator) {
-            referencesScope = traverseContains(value, isScopeIdentifier);
+            // An `await`/`yield` body must stay in the IIFE fallback below,
+            // never inlined into the synchronous effect arrow.
           } else if (t.isBlockStatement(value.body)) {
             // A top-level `return` must stay local (IIFE fallback below), so only
             // inline the body's statements when there is none.
@@ -137,10 +136,7 @@ export default {
           "effect",
           section,
           referencedBindings,
-          inlineBody ||
-            t.expressionStatement(
-              t.callExpression(value, referencesScope ? [scopeIdentifier] : []),
-            ),
+          inlineBody || t.expressionStatement(t.callExpression(value, [])),
         );
       } else {
         addHTMLEffectCall(section, referencedBindings);
