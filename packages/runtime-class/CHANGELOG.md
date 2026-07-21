@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.25
+
+### Patch Changes
+
+- [#3503](https://github.com/marko-js/marko/pull/3503) [`9e79d45`](https://github.com/marko-js/marko/commit/9e79d45a398560dac1bf949fe8189cf8af53dbc2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix Tags-API → Class-API interop attribute/event bridge: multi-word custom events written with a camelCase handler (`onValueChanged`) now map to the kebab event name the Class API emits (`value-changed`) instead of a collapsed `valuechanged`, so the listener fires; and a non-function attribute matching `on[-A-Z]` (e.g. `onLabel="…"`) is now passed through to the child's `input` instead of being silently dropped.
+
 ## 5.39.24
 
 ### Patch Changes
