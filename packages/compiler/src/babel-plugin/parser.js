@@ -363,6 +363,8 @@ export function parseMarko(file) {
       }
     },
 
+    // A bare `|` union in a tag-var type is intentionally unsupported (write
+    // `(A | B)`): htmljs-parser reserves `|` as the body-params delimiter.
     onTagVar({ value }) {
       currentTag.node.var = parseVar(
         file,
