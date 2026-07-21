@@ -191,12 +191,10 @@ exports.p = function (domCompat) {
 
       for (const key in rawInput) {
         const value = rawInput[key];
-        if (/^on[-A-Z]/.test(key)) {
-          if (typeof value === "function") {
-            (customEvents || (customEvents = {}))[
-              key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase()
-            ] = [value];
-          }
+        if (/^on[-A-Z]/.test(key) && typeof value === "function") {
+          (customEvents || (customEvents = {}))[toCustomEventName(key)] = [
+            value,
+          ];
         } else {
           normalizedInput[key === "content" ? "renderBody" : key] = value;
         }
@@ -261,3 +259,11 @@ exports.p = function (domCompat) {
     Component: defineComponent({}, RenderBodyComponent),
   }));
 };
+
+function toCustomEventName(key) {
+  return key[2] === "-"
+    ? key.slice(3)
+    : key
+        .slice(2)
+        .replace(/[A-Z]/g, (m, i) => (i ? "-" : "") + m.toLowerCase());
+}

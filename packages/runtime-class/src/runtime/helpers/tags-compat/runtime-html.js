@@ -187,15 +187,13 @@ exports.p = function (htmlCompat) {
 
         for (const key in originalInput) {
           const value = originalInput[key];
-          if (/^on[-A-Z]/.test(key)) {
-            if (typeof value === "function") {
-              (customEvents || (customEvents = [])).push([
-                key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase(),
-                value,
-              ]);
-              forceBoundary = true;
-              value.toJSON = htmlCompat.toJSON(state);
-            }
+          if (/^on[-A-Z]/.test(key) && typeof value === "function") {
+            (customEvents || (customEvents = [])).push([
+              toCustomEventName(key),
+              value,
+            ]);
+            forceBoundary = true;
+            value.toJSON = htmlCompat.toJSON(state);
           } else {
             input[key === "content" ? "renderBody" : key] = value;
           }
@@ -242,6 +240,14 @@ exports.p = function (htmlCompat) {
     return htmlCompat.register(id, renderer);
   };
 };
+
+function toCustomEventName(key) {
+  return key[2] === "-"
+    ? key.slice(3)
+    : key
+        .slice(2)
+        .replace(/[A-Z]/g, (m, i) => (i ? "-" : "") + m.toLowerCase());
+}
 
 function hasBridgedClassEvent(input) {
   if (input && typeof input === "object" && !Array.isArray(input)) {

@@ -1,0 +1,8 @@
+class {
+  handleClick() {
+    this.emit("value-changed", "changed");
+  }
+}
+<button id="class-api" onClick("handleClick")>
+  ${input.onLabel}
+</button>
