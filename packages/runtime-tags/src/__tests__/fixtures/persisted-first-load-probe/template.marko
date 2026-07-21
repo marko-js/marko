@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/qty=1/>
+<h1>${input.title}</h1>
+<input type="number" value:=qty>
+<button onClick() { qty++ }>add ${qty}</button>
+<section>
+  <try>
+    <@placeholder>loading…</@placeholder>
+    <await|recs|=resolveAfter(input.recs, 1)>
+      <div>
+        <for|rec| of=recs by(rec){return rec.id}>
+          <span>${rec.name}</span>
+        </for>
+      </div>
+    </await>
+  </try>
+</section>

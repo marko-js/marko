@@ -1,0 +1,44 @@
+<h1>First<!--M_*1 #text/0--></h1><input value=1
+  type=number><!--M_*1 #input/1--><button>add <!>
+    1<!--M_*1 #text/3--></button><!--M_*1 #button/2-->
+<section><!--M_[--><!--M_!^2-->loading…<!--M_!2--><!--M_]1 #text/4 2-->
+</section>
+<t hidden M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#input/1": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-first-load-probe/template.marko_0/valueChange"
+        ),
+      "BoundaryAnchor:#text/4": "",
+      qty: 1,
+      "ClosureScopes:input_recs": new Set([_(2)])
+    }, {
+      _: _(1),
+      "#BranchAccessor": "#text/4",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-first-load-probe/template.marko_2_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-first-load-probe/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->
+  <div><span>one<!--M_*5 #text/0--></span><!--M_}4 #div/0 5--></div>
+  <!--M_]2 #text/0 4-->
+</t>
+<script>
+  if (!M._.n) {
+    M._.r.push(_ => [1, {
+      "BoundaryAnchor:#text/4": 0
+    }, 3, {
+      "#LoopKey": 1
+    }]);
+    M._.w()
+  }
+</script>

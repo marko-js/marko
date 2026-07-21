@@ -138,6 +138,57 @@ bridged head chunk.
 
 The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` (`:535` for `_dynamic_tag`, `:647` for `_dynamic_tag_content`, plus the DOM `_attr_content`). `RendererProp.Id` is the template/section resume id, identical for every _instance_ of one content section — instances differ only by their `RendererProp.Owner` scope. So switching a dynamic tag between two instances of the same content — two `<attrs.content>` from two instances of one provider tag, or the list-detail `<${selected.content}/>` — is a silent no-op: no teardown or re-render, and closures stay subscribed to the old owner's scope. A control with two _distinct_ tag files behaves correctly, pinning the defect to the id-only comparison. Fix: compare `(id, owner)` — content renderer objects are recreated per render so identity alone over-fires, while the owner scope is stable per instance; the resume handshake must serialize a scope-registered renderer as its registered reference so the first post-resume update stays instance-aware.
 
+## An empty-bodied `<html-comment>` resumes as a text node instead of the comment
+
+`packages/runtime-tags/src/dom/resume.ts:402` | 2026-07-14 | impact:med | effort:med
+
+For an `<html-comment>${c}</html-comment>` whose body serializes empty, SSR writes `<!---->` immediately before the resume marker. The node-claim heuristic — `prev && (prev.nodeType < 8 /* COMMENT_NODE */ || (prev as Comment).data) ? prev : insertBefore(new Text())` — exists so an empty `<!>` separator is _not_ claimed (a fresh Text node is created instead), but it cannot distinguish an intentional empty comment: `prev` is a comment (`nodeType === 8`, so `< 8` is false) with empty `data` (falsy), so it builds a Text node as the binding rather than claiming the comment. After hydration, setting `c = "secret"` renders `secret` as visible text where a pure client render produces `<!--secret-->` — an SSR-resume vs CSR divergence. Fix: give the html-comment marker a dedicated resume symbol (e.g. `ResumeSymbol.NodeComment`) that claims the immediately-preceding sibling unconditionally, since the tag always writes its comment right before the marker.
+
+## Runtime-valued dynamic tag renderers: only never-referenced (constructed/interop) renderers fall to the loud fallback
+
+`packages/runtime-tags/src/dom/update-merges.ts` (`_update_dynamic`) | 2026-07-15 | impact:low | effort:med
+
+The compile-time-referenced cases are closed. Eagerly imported candidates a
+dynamic tag name reaches (conditional/logical/assignment/`<const>` chains)
+link each `?persisted` entry from the parent's persisted entry
+(`dynamic-tag.ts` `getDynamicTagImports` +
+`persisted-update-dynamic-imported-child`), merge-less content sections
+register a shared noop (`program/update.ts`), and templates whose default
+escapes a module as a runtime value (attribute, spread, store, return,
+object/array member) now register an escape-site loader: `dynamic-tag.ts`
+`getEscapedTemplateImports` records the escapes at analyze,
+`program/update.ts` emits `_update_loader(templateId, () =>
+import("./child.marko?persisted"))` into the provider's persisted entry, and
+`_update_dynamic` fires the loader once for an unregistered same-renderer
+pair, parks, and drains when the entry registers
+(`persisted-update-dynamic-escaped-renderer`); a rejected loader import
+surfaces through the `patch(fail)` sink
+(`persisted-update-dynamic-escaped-loader-failure`). Escape detection prefers
+over-registration (a false positive costs one idle loader registration, never
+a load). What remains, by design: a renderer never referenced as a
+compile-time template value in any compiled `.marko` module — constructed at
+runtime, interop-wrapped, or aggregated by a plain JS module the translator
+never compiles (e.g. a lookup object in a `.js` registry re-exporting
+templates) — has no escape site to register, so a renderer id with no
+registration and no live match still fails loudly through `patch(fail)`
+(`persisted-update-dynamic-unknown-renderer`) — defined behavior, recorded in
+designs/persisted-pages-architecture.md.
+
+## Document-side lazy load entries float rejections and leave the ready channel silent
+
+`packages/runtime-tags/src/translator/visitors/program/index.ts:222` | 2026-07-16 | impact:low | effort:low
+
+The generated `.load.mjs` entry (both persisted and not) is
+`load().then(() => ready(id))` / `Promise.all([...]).then(() => readyPersisted(id))`
+with no rejection handler, so a chunk that fails to load from the initial
+document (deploy skew) surfaces only as an unhandled promise rejection and the
+module's ready id never resolves. The lazy tag's own render path recovers
+(`_load_setup`/`_load_template` route their load() failures to `renderCatch`),
+and persisted navigations now re-trigger the load through `_load_ready`, whose
+failure reaches the transport sink — but the document-side loader itself stays
+noisy and inert. Consider a `.catch` that at least reports through a defined
+channel (or retries), mirroring `_load_ready`'s handling.
+
 ## Initialize tag variables for dynamic native tags
 
 `packages/runtime-tags/src/html/dynamic-tag.ts` › `_dynamic_tag` | 2026-07-15 | impact:med | effort:high
@@ -226,41 +277,45 @@ The one docs example meant to teach typed tag parameters ships a pattern that fa
 
 In a DOM environment lacking a usable `MessageChannel`, the reactive scheduler applies the FIRST update and then silently drops every later one. `schedule()` sets `isScheduled = 1` (`dom/schedule.ts:17`), and the flag is reset to `0` in exactly one place — the `channel.port1.onmessage` handler (`:36`) — reachable only if `new MessageChannel()` (`:34`) succeeds. When `MessageChannel` is absent, `:34` throws inside the `requestAnimationFrame` callback `triggerMacroTask`, the handler is never installed, `isScheduled` stays `1` forever, and every subsequent `schedule()` short-circuits at `:7`. The first update still lands because `flushAndWaitFrame` runs `run()` synchronously (`:28`), and `run()`→`runRenders()` (`dom/queue.ts:83-95,131-167`) applies the queued renders without touching the channel — the channel is only the next-frame reset. That asymmetry is the trap for agentic workflows: a one-click smoke test goes green (false confidence) while a two-step interaction test fails with no test-visible error — the throw surfaces only as a jsdom window `error` event — so an agent cannot tell whether its component logic or its harness is at fault. It bites hand-rolled jsdom and jest+jsdom harnesses (which historically ship no `MessageChannel`, the same gap React 18's scheduler hit), the exact throwaway setups agents reach for to self-verify. Reset the flag in a `finally` (or degrade to `setTimeout`/`queueMicrotask` for the macrotask boundary) plus add a `MARKO_DEBUG` assert naming the missing `MessageChannel`, turning a silent misattributed wedge into a deterministic, self-explaining failure fixable from the error string alone.
 
-## An empty-bodied `<html-comment>` resumes as a text node instead of the comment
+## Refresh unaffected checkedValue members' controlled value on the first patch
 
-`packages/runtime-tags/src/dom/resume.ts` › `init` | 2026-07-14 | impact:med | effort:med
+`packages/runtime-tags/src/dom/update-merges.ts` (`_update_input_checkedValue`) | 2026-07-17 | impact:low | effort:low
 
-For an `<html-comment>${c}</html-comment>` whose body serializes empty, SSR
-writes `<!---->` immediately before the resume marker, and the node-claim
-heuristic in the `ResumeSymbol.Node` visit (`prev.nodeType < 8 || prev.data`)
-refuses the empty comment and binds a fresh Text instead; it exists to skip
-empty `<!>` separators and cannot tell an intentional empty comment apart.
-After hydration, updating the body renders visible text where a pure client
-render produces `<!--...-->`. Fix direction: a dedicated resume symbol for
-html-comment markers that claims the preceding sibling unconditionally.
-Verify: SSR + resume an empty-bodied `<html-comment>`, set its body, and
-compare the DOM with a client-side render.
+The gated checkedValue assert refreshes `ControlledValue:<accessor>` only when
+it asserts. Its first-ever patch falls back to comparing this member's
+`defaultChecked` against the captured list, so a navigation whose changed list
+does not change THIS member's checked state (e.g. `["a","b"]` -> `["a","c"]`
+seen from the member with value `"a"`) skips the assert and leaves that
+member's resumed `ControlledValue` stale until some later capture differs.
+A change handler firing on that member before then computes `updateList`
+against the pre-navigation list ( `["b"]` instead of `["c"]` above). Later
+navigations are safe: the skip still records the applied capture
+(`PatchApplied:`/`S` key), so subsequent comparisons use it. Fix idea: on the
+first patch, also treat a missing record with a present `ControlledValue`
+whose normalized form differs from the capture as changed.
 
-## Document-side lazy load entries float rejections and leave the ready channel silent
+## Ecommerce demo "wrong product id after navigation" is not reproducible in the applier
 
-`packages/runtime-tags/src/translator/visitors/program/index.ts` › `translate` (`isLoadEntry` branch) | 2026-07-16 | impact:low | effort:low
+`packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit` | 2026-07-17 | impact:med | effort:med
 
-The generated `.load.mjs` entry is `load().then(() => ready(id))` with no
-rejection handler, so a chunk that fails to load from the initial document
-(deploy skew) surfaces only as an unhandled promise rejection and the
-module's ready id never resolves. The lazy tag's own render path recovers
-(`_load_setup`/`_load_template` route their `load()` failures to
-`renderCatch`), but the document-side loader stays noisy and inert. Add a
-`.catch` that reports through a defined channel (or retries). Verify: reject
-the dynamic import in a generated load entry and watch for the unhandled
-rejection with the ready id never firing.
+The reported demo failure (submit after an item A -> item B same-route
+navigation sees A's id) does not reproduce against the update applier: the
+fixture pairs a bound (`value:Number:=`) quantity `<let>`, a request-derived
+hidden `itemId`, an optimistic mirror, and an `onSubmit` handler recording the
+scope values it read, both at the route root and across a child-tag boundary
+(`tags/order-form.marko`). Under both the pre-Option-C and gated appliers the
+hidden input's value attribute, the handler-read scope value, and the mirror
+all see B after the patch. The defect is therefore most likely in the app or
+in @marko/run's form-submission negotiation (e.g. what request/body the shell
+re-sends or how a POST response patch is applied), which lives outside this
+repo; investigate there with this fixture as the known-good applier baseline.
 
 ## `analyzeExpressionTagName` const-follow has no cycle guard
 
-`packages/runtime-tags/src/translator/util/tag-name-type.ts` › `analyzeExpressionTagName` | 2026-07-20 | impact:low | effort:low
+`packages/runtime-tags/src/translator/util/tag-name-type.ts:176` | 2026-07-20 | impact:low | effort:low
 
-Following a `<const>` tag's value pushes the bound expression with no visited
-set, so mutually-referential `<const/a=b>` / `<const/b=a>` used as a tag name
-loop forever during analysis. Guard the follow with a visited-tag set.
-Verify: compile a template whose dynamic tag name resolves through two
-`<const>` tags that reference each other.
+Following a `<const>` tag's value pushes the bound expression without tracking
+visited tags, so mutually-referential `<const/a=b>` / `<const/b=a>` tag names
+loop forever during analysis. The persisted candidate walk
+(`dynamic-tag.ts` `getDynamicTagImports`) guards the same follow with a
+`followed` set; the shared analyzer should do the same.
