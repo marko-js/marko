@@ -1,0 +1,31 @@
+<button id=inc>inc</button><!--M_*1 #button/0--><button
+  id=hide>hide</button><!--M_*1 #button/1-->
+<div>count: <!>0<!--M_*1 #text/2--></div>
+<!--M_[--><!--M_[--><!--M_!^3-->LOADING...<!--M_!3--><!--M_]2 #text/0 3--><!--M_]1 #text/3 2-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "ClosureScopes:count": new Set([_(3)])
+    }, 1, {
+      _: _(2),
+      "#ClosestBranchId": 2,
+      "#BranchAccessor": "#text/0",
+      "#PlaceholderContent": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/transition-destroy/template.marko_3_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/transition-destroy/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->resolved: <!>0<!--M_*5 #text/0--><!--M_]3 #text/0 5-->
+</t>
+<script>
+  M._.w()
+</script>

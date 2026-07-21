@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count = 0/>
+<let/show = true/>
+<button#inc onClick() { count++ }>inc</button>
+<button#hide onClick() { show = false }>hide</button>
+<div>count: ${count}</div>
+<if=show>
+  <try>
+    <await|value|=resolveAfter(count)>
+      resolved: ${value}
+    </await>
+    <@placeholder>
+      LOADING...
+    </@placeholder>
+  </try>
+</if>

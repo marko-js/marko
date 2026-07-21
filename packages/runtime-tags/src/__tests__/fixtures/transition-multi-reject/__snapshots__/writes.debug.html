@@ -1,0 +1,48 @@
+<button id=inc>inc</button><!--M_*1 #button/0-->
+<div>count: <!>0<!--M_*1 #text/1--></div>
+<!--M_[--><!--M_!^b--><!--M_!^2-->LOADING
+A...<!--M_!2--><!--M_!b--><!--M_]1 #text/2 2--><!--M_[--><!--M_!^3-->LOADING
+B...<!--M_!3--><!--M_]1 #text/3 3-->
+<t hidden M_=2><!--M_#c--></t>
+<t hidden M_=3><!--M_#d--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "ClosureScopes:count": new Set([_(2), _(3)])
+    }, {
+      _: _(1),
+      "#BranchAccessor": "#text/2",
+      "#CatchContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/transition-multi-reject/template.marko_4_content"
+        ),
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/transition-multi-reject/template.marko_3_content"
+        )
+    }, {
+      _: _(1),
+      "ClosureSignalIndex:count": 1,
+      "#BranchAccessor": "#text/3",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/transition-multi-reject/template.marko_6_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/transition-multi-reject/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->a: <!>0<!--M_*6 #text/0--><!--M_]2 #text/0 6--></t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d><!--M_[-->b: <!>0<!--M_*7 #text/0--><!--M_]3 #text/0 7--></t>
+<script>
+  M._.w()
+</script>

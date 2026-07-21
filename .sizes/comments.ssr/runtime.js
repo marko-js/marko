@@ -1,25 +1,34 @@
-// size: 2724 (min) 1333 (brotli)
+// size: 2769 (min) 1371 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
-  isScheduled,
-  channel,
   registeredValues = {},
   curRenders,
   readyIds,
+  isScheduled,
+  channel,
   rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
+  queueEffect = (scope, fn) => {
+    pendingEffects.push(fn, scope);
+  },
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
+  inEager,
   queueRenderEffect = (fn, scope, value) => {
     fn(scope, value);
+  },
+  writeSignal = (scope, accessor, value, fn, id) => {
+    (scope[accessor] !== value || !(accessor in scope)) &&
+      ((scope[accessor] = value), fn) &&
+      (schedule(), queueRender(scope, fn, id));
   };
 function isNotVoid(value) {
   return value != null && value !== !1;
@@ -34,28 +43,12 @@ function handleDelegated(ev) {
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
-function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
-}
-function flushAndWaitFrame() {
-  (requestAnimationFrame(triggerMacroTask), run());
-}
-function triggerMacroTask() {
-  (channel ||
-    ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
-      ((isScheduled = 0), run());
-    })),
-    channel.port2.postMessage(0));
-}
 function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
       ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
-      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn) &&
-        (schedule(), queueRender(scope, fn, id)),
+      : writeSignal(scope, valueAccessor, value, fn, id),
     value
   );
 }
@@ -213,11 +206,25 @@ function _text(node, value) {
 function normalizeAttrValue(value) {
   if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
+function schedule() {
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+}
+function flushAndWaitFrame() {
+  (requestAnimationFrame(triggerMacroTask), run());
+}
+function triggerMacroTask() {
+  (channel ||
+    ((channel = new MessageChannel()),
+    (channel.port1.onmessage = () => {
+      ((isScheduled = 0), run());
+    })),
+    channel.port2.postMessage(0));
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
     if (((render.d = value), render.e === runId || catchEnabled)) return;
-    render.e = runId;
+    ((render.e = runId), (render.g = inEager));
   } else
     ((render = {
       a: scopeKey * 1e6 + signalKey,
@@ -225,6 +232,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       c: signal,
       d: value,
       e: runId,
+      g: inEager,
     }),
       signalKey >= 0 && (scope[signalKey] = render));
   queuePendingRender(render);
@@ -238,9 +246,6 @@ function queuePendingRender(render) {
     ((pendingRenders[i] = parent), (i = parentIndex));
   }
   pendingRenders[i] = render;
-}
-function queueEffect(scope, fn) {
-  pendingEffects.push(fn, scope);
 }
 function run() {
   let effects = pendingEffects;

@@ -28,20 +28,6 @@ INSERT: #outside + ::text("loading...")
 >
   1
 </div>
-loading...
-```
-## Change
-```
-UPDATE: #outside::text "0" => "1"
-```
-
-# Update
-```html
-<div
-  id="outside"
->
-  1
-</div>
 <div
   id="inside"
 >
@@ -50,9 +36,9 @@ UPDATE: #outside::text "0" => "1"
 ```
 ## Change
 ```
+UPDATE: #outside::text "0" => "1"
 INSERT: #outside + #inside
 REMOVE: #inside + ::text("loading...")
-UPDATE: #inside::text " " => "1"
 ```
 ## Console
 ```

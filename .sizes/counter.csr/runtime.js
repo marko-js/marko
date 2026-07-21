@@ -1,4 +1,4 @@
-// size: 3976 (min) 1766 (brotli)
+// size: 4084 (min) 1796 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -11,8 +11,6 @@ let decodeAccessor = (num) =>
       scope.D?.forEach(destroyNestedScopes),
       scope.B?.forEach(resetControllers));
   },
-  isScheduled,
-  channel,
   _var_change = (scope, value) => scope.U?.(value),
   walker = /* @__PURE__ */ document.createTreeWalker(document),
   walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
@@ -62,18 +60,33 @@ let decodeAccessor = (num) =>
   },
   cloneCache = {},
   registeredValues = {},
+  isScheduled,
+  channel,
   rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
+  queueEffect = (scope, fn) => {
+    pendingEffects.push(fn, scope);
+  },
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
+  inEager,
   renderEffects = [],
+  eagerRenderEffects = [],
+  eagerEffects = [],
+  pendingWrites = [],
+  flushTransition = 0,
   queueRenderEffect = (fn, scope, value) => {
     fn(scope, value);
+  },
+  writeSignal = (scope, accessor, value, fn, id) => {
+    (scope[accessor] !== value || !(accessor in scope)) &&
+      ((scope[accessor] = value), fn) &&
+      (schedule(), queueRender(scope, fn, id));
   },
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
@@ -117,28 +130,12 @@ function resetControllers(scope) {
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
-function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
-}
-function flushAndWaitFrame() {
-  (requestAnimationFrame(triggerMacroTask), run());
-}
-function triggerMacroTask() {
-  (channel ||
-    ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
-      ((isScheduled = 0), run());
-    })),
-    channel.port2.postMessage(0));
-}
 function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
       ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
-      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn) &&
-        (schedule(), queueRender(scope, fn, id)),
+      : writeSignal(scope, valueAccessor, value, fn, id),
     value
   );
 }
@@ -238,11 +235,25 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
+function schedule() {
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+}
+function flushAndWaitFrame() {
+  (requestAnimationFrame(triggerMacroTask), run());
+}
+function triggerMacroTask() {
+  (channel ||
+    ((channel = new MessageChannel()),
+    (channel.port1.onmessage = () => {
+      ((isScheduled = 0), run());
+    })),
+    channel.port2.postMessage(0));
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
     if (((render.d = value), render.e === runId || catchEnabled)) return;
-    render.e = runId;
+    ((render.e = runId), (render.g = inEager));
   } else
     ((render = {
       a: scopeKey * 1e6 + signalKey,
@@ -250,6 +261,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       c: signal,
       d: value,
       e: runId,
+      g: inEager,
     }),
       signalKey >= 0 && (scope[signalKey] = render));
   queuePendingRender(render);
@@ -264,9 +276,6 @@ function queuePendingRender(render) {
   }
   pendingRenders[i] = render;
 }
-function queueEffect(scope, fn) {
-  pendingEffects.push(fn, scope);
-}
 function run() {
   let effects = pendingEffects;
   try {
@@ -277,15 +286,36 @@ function run() {
   runEffects(effects);
 }
 function prepareEffects(fn) {
-  let saved = [pendingRenders, pendingEffects, renderEffects],
+  let saved = [
+      pendingRenders,
+      pendingEffects,
+      renderEffects,
+      eagerRenderEffects,
+      eagerEffects,
+      pendingWrites,
+      flushTransition,
+    ],
     preparedEffects = (pendingEffects = []);
-  ((pendingRenders = []), (renderEffects = []));
+  ((pendingRenders = []),
+    (renderEffects = []),
+    (eagerRenderEffects = []),
+    (eagerEffects = []),
+    (pendingWrites = []),
+    (flushTransition = 0));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
     (runId++,
       (rendering = 0),
-      ([pendingRenders, pendingEffects, renderEffects] = saved));
+      ([
+        pendingRenders,
+        pendingEffects,
+        renderEffects,
+        eagerRenderEffects,
+        eagerEffects,
+        pendingWrites,
+        flushTransition,
+      ] = saved));
   }
   return preparedEffects;
 }

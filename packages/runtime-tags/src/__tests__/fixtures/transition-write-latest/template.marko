@@ -1,0 +1,10 @@
+import { getData } from "./get-data";
+<let/id=1/>
+<button#inc onClick() { id++ }>${id}</button>
+<button#back onClick() { id = 2 }>back</button>
+<try>
+  <@placeholder>LOADING...</@placeholder>
+  <await|data|=getData(id)>
+    <pre>${JSON.stringify(data)}</pre>
+  </await>
+</try>

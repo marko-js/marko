@@ -38,7 +38,6 @@ INSERT: #outside + ::text("loading...")
 ```
 INSERT: #outside + #inside
 REMOVE: #inside + ::text("loading...")
-UPDATE: #inside::text " " => "0"
 ```
 ## Console
 ```
@@ -56,46 +55,12 @@ LOG "setup effect ran"
 <div
   id="inside"
 >
-  0
+  1
 </div>
 ```
 ## Change
 ```
 UPDATE: #outside::text "0" => "1"
-```
-
-# Update
-```html
-<div
-  id="outside"
->
-  1
-</div>
-loading...
-```
-## Change
-```
-INSERT: #outside + ::text("loading...")
-REMOVE: ::text + #inside
-```
-
-# Update
-```html
-<div
-  id="outside"
->
-  1
-</div>
-<div
-  id="inside"
->
-  1
-</div>
-```
-## Change
-```
-INSERT: #outside + #inside
-REMOVE: #inside + ::text("loading...")
 UPDATE: #inside::text "0" => "1"
 ```
 ## Console

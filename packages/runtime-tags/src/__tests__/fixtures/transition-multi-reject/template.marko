@@ -1,0 +1,13 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+<let/count=0/>
+<button#inc onClick() { count++ }>inc</button>
+<div>count: ${count}</div>
+<try>
+  <@placeholder>LOADING A...</@placeholder>
+  <@catch|err|>error: ${err.message}</@catch>
+  <await|a|=count ? rejectAfter(new Error("BOOM")) : resolveAfter(count)>a: ${a}</await>
+</try>
+<try>
+  <@placeholder>LOADING B...</@placeholder>
+  <await|b|=resolveAfter(count * 10, 2)>b: ${b}</await>
+</try>

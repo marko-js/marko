@@ -23,7 +23,6 @@
 ## Change
 ```
 INSERT: #a + #out
-UPDATE: #out::text@5 "" => "0"
 ```
 
 # Update

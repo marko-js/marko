@@ -187,3 +187,27 @@ fixture that later becomes `error_compiler: true` keeps its last generated
 harness could delete (or assert the absence of) `sizes.json` for error
 fixtures. Verify: add `sizes.json` to any `error_compiler` fixture and watch
 `npm run test:update` leave it untouched.
+
+## A stray node-side `document` global fails every SSR fixture with "No entries added"
+
+`packages/runtime-tags/src/__tests__/utils/bundle.ts:442` | 2026-07-18 | impact:med | effort:low
+
+Any test file that installs `globalThis.document` at module load time (spec files all load before tests run) makes thousands of fixture suites fail, each with the opaque rolldown error "No entries added" from the server-runner entries plugin — nothing points at the leaked global. Cost: a full failed suite run to discover the correlation. Suggested: have `createServerRunner` (or a root test hook) assert `typeof document === "undefined"` on the node side and fail with a message naming the leaked global, so the cause is stated instead of inferred.
+
+## `skip_ssr: true` in a fixture config hangs the harness instead of skipping
+
+`packages/runtime-tags/src/__tests__/main.test.ts` | 2026-07-20 | impact:low | effort:low
+
+Setting `skip_ssr: true` in a fixture's `test.ts` config made that fixture's
+tests hang with no output (mocha sat until an explicit `--timeout` flag
+failed them) rather than skipping the ssr variants. Discovered while
+bisecting an unrelated livelock; removing the flag restored normal runs.
+Worth confirming what config key (if any) actually skips ssr variants and
+making unknown/misbehaving keys fail loudly. Verify: add `skip_ssr: true`
+to any passing fixture and run its scoped suite.
+
+## Scoped test runs via `npm test -- --grep "<multi word>"` silently run nothing
+
+`package.json:1` | 2026-07-18 | impact:low | effort:low
+
+`npm test -- --grep "runtime-tags/translator let "` reaches mocha as `--grep runtime-tags/translator let`, so `let` becomes a positional spec that replaces the config's spec glob and 0 tests run — the documented workflow in CLAUDE.md quietly does nothing for greps containing spaces. `npx mocha --no-bail --grep "..."` works but skips the `test` script env. Suggested: document the single-word-grep constraint (or a `--spec`+`--grep` recipe) in CLAUDE.md, or make the test script warn when 0 tests matched.

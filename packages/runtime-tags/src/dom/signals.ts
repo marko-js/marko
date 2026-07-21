@@ -12,9 +12,15 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { queueEffect, queueRender, rendering, runId } from "./queue";
+import {
+  queueEffect,
+  queueRender,
+  recordWrite,
+  rendering,
+  runId,
+  writeSignal,
+} from "./queue";
 import { _resume } from "./resume";
-import { schedule } from "./schedule";
 
 export type SignalFn = (scope: Scope) => void;
 export type Signal<T = unknown, U extends Scope = Scope> = (
@@ -40,12 +46,8 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
         scope[valueAccessor] = value;
         fn?.(scope);
       }
-    } else if (
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-      ((scope[valueAccessor] = value), fn)
-    ) {
-      schedule();
-      queueRender(scope, fn, id as number);
+    } else {
+      writeSignal(scope, valueAccessor as string, value, fn, id as number);
     }
     return value;
   };
@@ -90,6 +92,7 @@ export function _const<T>(
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return ((scope: Scope, value: T | undefined) => {
     if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
+      recordWrite(scope, valueAccessor as string, scope[valueAccessor]);
       scope[valueAccessor] = value;
       fn?.(scope);
     }

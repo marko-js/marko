@@ -1,0 +1,38 @@
+<button id=inc>inc</button><!--M_*1 a-->
+<div>count: <!>0<!--M_*1 b--></div><!--M_[--><!--M_!^2-->LOADING
+A...<!--M_!2--><!--M_]1 c 2--><!--M_[--><!--M_!^3-->LOADING
+B...<!--M_!3--><!--M_]1 d 3-->
+<t hidden M_=2><!--M_#b--></t>
+<t hidden M_=3><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    e: 0,
+    f: new Set([_(2), _(3)])
+  }, {
+    _: _(1),
+    C: "c",
+    Q: _(1, "a0")
+  }, {
+    _: _(1),
+    Cf: 1,
+    C: "d",
+    Q: _(1, "a2")
+  }], "a4 1"];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->a: <!>0<!--M_*6 a--><!--M_]2 a 6--></t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->b: <!>0<!--M_*7 a--><!--M_]3 a 7--></t>
+<script>
+  M._.w()
+</script>

@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/id=1/>
+<script>
+  await resolveAfter(0, 1);
+  id = 2;
+  await resolveAfter(0, 3);
+  id = 3;
+</script>
+<div#outside>${id}</div>
+<try>
+  <@placeholder>LOADING...</@placeholder>
+  <h2>Id: ${id}</h2>
+  <await|data|=resolveAfter({ id }, 4)>
+    <pre>${JSON.stringify(data)}</pre>
+  </await>
+</try>

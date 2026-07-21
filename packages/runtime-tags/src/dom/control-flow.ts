@@ -18,20 +18,28 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
+import { $signal } from "./abort-signal";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   _enable_catch,
   caughtError,
+  entangleTransition,
   pendingEffects,
   type PendingRender,
   placeholderShown,
   prepareEffects,
   queueAsyncRender,
+  queueEagerRenderEffect,
   queueEffect,
   queuePendingRender,
   queueRender,
   queueRenderEffect,
+  rendering,
+  replayEffects,
   runEffects,
+  runId,
+  settleTransition,
+  type Transition,
 } from "./queue";
 import {
   _content,
@@ -42,6 +50,7 @@ import {
   type SetupFn,
 } from "./renderer";
 import { _resume, enableBranches } from "./resume";
+import { schedule } from "./schedule";
 import {
   collectScopes,
   destroyBranch,
@@ -53,6 +62,106 @@ import {
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
 
+let awaitTransition:
+  | 0
+  | ((
+      scope: Scope,
+      promise: Promise<unknown>,
+      nodeAccessor: Accessor,
+      promiseAccessor: string,
+      branchAccessor: string,
+      transitionAccessor: string,
+      params?: Signal<unknown>,
+    ) => void) = 0;
+let entangleAwaitUpdate:
+  | 0
+  | ((
+      scope: Scope,
+      transitionAccessor: string,
+      promiseAccessor: string,
+    ) => Transition) = 0;
+
+// Installed by `_enable_transition`: an update while an `<await>` already
+// shows committed content holds the current UI as-is (no placeholder, no
+// detach), keeping this flush's render effects in the transition's hold set
+// until the promise settles. An update while the await's first load is
+// still pending entangles the same way (via `entangleAwaitUpdate`), with
+// the placeholder machinery's resolve running as the transition's commit.
+export function enableAwaitTransition() {
+  const entangle = (entangleAwaitUpdate = (
+    scope,
+    transitionAccessor,
+    promiseAccessor,
+  ) => {
+    const transition = entangleTransition(
+      scope[transitionAccessor] as Transition | 0,
+    );
+    if (scope[transitionAccessor] === undefined) {
+      // If this await's region is destroyed mid-transition (e.g. an
+      // unrelated update removes the subtree) its participation settles —
+      // the transition commits once every remaining await settles — and
+      // its in-flight promise is forgotten so a late settlement is ignored.
+      $signal(scope, -1).addEventListener("abort", () => {
+        const t = scope[transitionAccessor] as Transition | 0;
+        if (t) {
+          scope[transitionAccessor] = 0;
+          scope[promiseAccessor] = 0;
+          settleTransition(t);
+          if (!rendering) schedule();
+        }
+      });
+    }
+    return (scope[transitionAccessor] = transition);
+  });
+  awaitTransition = (
+    scope,
+    promise,
+    nodeAccessor,
+    promiseAccessor,
+    branchAccessor,
+    transitionAccessor,
+    params,
+  ) => {
+    const transition = entangle(scope, transitionAccessor, promiseAccessor);
+    // Both settlements share the supersede check (a stale promise that
+    // resolves late is ignored) and settle in their own flush.
+    const settle = (apply: (result: any) => void) => (result: unknown) => {
+      if (thisPromise === scope[promiseAccessor]) {
+        scope[promiseAccessor] = 0;
+        queueAsyncRender(scope, () => {
+          scope[transitionAccessor] = 0;
+          apply(result);
+        });
+      }
+    };
+    const thisPromise = (scope[promiseAccessor] = promise.then(
+      settle((data) =>
+        settleTransition(transition, () =>
+          resolveAwait(
+            scope,
+            branchAccessor,
+            nodeAccessor,
+            scope[nodeAccessor] as ChildNode,
+            params,
+            data,
+          ),
+        ),
+      ),
+      settle((error) =>
+        // The catch defers with the rest of the settlement callbacks: the
+        // commit applies the held output first (the UI reflects the state
+        // that produced the failing promise), then the catch renders —
+        // unless an earlier catch already destroyed this boundary.
+        settleTransition(transition, () => {
+          if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] !== 0) {
+            renderCatch(scope, error);
+          }
+        }),
+      ),
+    ));
+  };
+}
+
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
   params?: Signal<unknown>,
@@ -60,6 +169,7 @@ export function _await_promise(
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const transitionAccessor = AccessorPrefix.Transition + nodeAccessor;
   _enable_catch();
   return (scope: Scope, promise: Promise<unknown>) => {
     if (!isPromise(promise)) {
@@ -89,7 +199,48 @@ export function _await_promise(
       AccessorProp.PlaceholderContent,
     );
     const tryBranch = tryPlaceholder || awaitBranch;
-    let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
+    let awaitCounter = tryBranch?.[AccessorProp.AwaitCounter];
+
+    // An update while the await already shows committed content becomes an
+    // async transition (the handler is installed by `_enable_transition`,
+    // so apps without client-updating awaits never bundle the machinery).
+    // First renders (no committed content) fall through to the placeholder
+    // machinery below and never entangle — including a resumed branch whose
+    // reveal is still pending (a live counter): its settlement must release
+    // that counter, which only the machinery below does.
+    if (
+      awaitTransition &&
+      rendering &&
+      awaitBranch &&
+      !awaitBranch[AccessorProp.DetachedAwait] &&
+      !awaitCounter?.i
+    ) {
+      return awaitTransition(
+        scope,
+        promise,
+        nodeAccessor as Accessor,
+        promiseAccessor,
+        branchAccessor,
+        transitionAccessor,
+        params,
+      );
+    }
+
+    // A superseding update while the first load is still pending holds like
+    // any other transition: this flush's output waits for the newest
+    // promise, while the placeholder stays up and the eventual reveal below
+    // runs as the transition's resolve. This covers a client promise still
+    // in flight, and a resumed boundary the server is still streaming into
+    // (an adopted pending counter on a boundary from an earlier flush — the
+    // boundary's own mount flush never entangles).
+    if (
+      entangleAwaitUpdate &&
+      rendering &&
+      (isPromise(scope[promiseAccessor]) ||
+        (awaitCounter?.i && tryBranch[AccessorProp.Gen] !== runId))
+    ) {
+      entangleAwaitUpdate(scope, transitionAccessor, promiseAccessor);
+    }
 
     placeholderShown.add(pendingEffects);
 
@@ -102,27 +253,33 @@ export function _await_promise(
       }
     } else {
       if (!awaitCounter?.i) {
+        // The DOM re-attachment is a structural render effect on the eager
+        // channel: it applies at flush end with the rest of the output, but
+        // is never held by a pending transition.
+        const reattachAwait = (scope: Scope) => {
+          if (tryBranch === scope[branchAccessor]) {
+            const anchor = scope[nodeAccessor] as ChildNode;
+            if (anchor.parentNode) {
+              const detachedParent = (scope[branchAccessor] as BranchScope)[
+                AccessorProp.StartNode
+              ].parentNode!;
+              if (detachedParent === anchor.parentNode) {
+                // Branch never detached (re-await raced its resolution);
+                // replacing the anchor with its own parent would cycle.
+                anchor.remove();
+              } else {
+                anchor.replaceWith(detachedParent);
+              }
+            }
+          } else {
+            dismissPlaceholder(tryBranch);
+          }
+        };
         awaitCounter = tryBranch[AccessorProp.AwaitCounter] = {
           i: 0,
           c() {
             if (--awaitCounter!.i) return 1;
-            if (tryBranch === scope[branchAccessor]) {
-              const anchor = scope[nodeAccessor] as ChildNode;
-              if (anchor.parentNode) {
-                const detachedParent = (scope[branchAccessor] as BranchScope)[
-                  AccessorProp.StartNode
-                ].parentNode!;
-                if (detachedParent === anchor.parentNode) {
-                  // Branch never detached (re-await raced its resolution);
-                  // replacing the anchor with its own parent would cycle.
-                  anchor.remove();
-                } else {
-                  anchor.replaceWith(detachedParent);
-                }
-              }
-            } else {
-              dismissPlaceholder(tryBranch);
-            }
+            queueEagerRenderEffect(reattachAwait, scope);
             queueEffect(tryBranch, runPendingEffects);
           },
         };
@@ -167,41 +324,35 @@ export function _await_promise(
           scope[promiseAccessor] = 0;
 
           queueAsyncRender(scope, () => {
-            awaitBranch = resolveAwait(
-              scope,
-              branchAccessor,
-              nodeAccessor,
-              referenceNode,
-              params,
-              data,
-            );
+            const t = scope[transitionAccessor] as Transition | 0;
+            const apply = () => {
+              awaitBranch = resolveAwait(
+                scope,
+                branchAccessor,
+                nodeAccessor,
+                referenceNode,
+                params,
+                data,
+              );
 
-            const pendingRenders = awaitBranch[AccessorProp.PendingRenders] as
-              PendingRender[] | undefined;
-            awaitBranch[AccessorProp.PendingRenders] = 0;
-            pendingRenders?.forEach(queuePendingRender);
+              const pendingRenders = awaitBranch[
+                AccessorProp.PendingRenders
+              ] as PendingRender[] | undefined;
+              awaitBranch[AccessorProp.PendingRenders] = 0;
+              pendingRenders?.forEach(queuePendingRender);
 
-            placeholderShown.add(pendingEffects); // TODO: check if still needed
+              placeholderShown.add(pendingEffects); // TODO: check if still needed
 
-            awaitCounter!.c();
-            if (awaitCounter!.m) {
-              const fnScopes = new Map<unknown, Set<Scope>>();
-              const effects = awaitCounter!.m([]);
-              for (let i = 0; i < pendingEffects.length;) {
-                const fn = pendingEffects[i++] as any;
-                let scopes = fnScopes.get(fn);
-                if (!scopes) {
-                  fnScopes.set(fn, (scopes = new Set()));
-                }
-                scopes.add(pendingEffects[i++] as Scope);
+              awaitCounter!.c();
+              if (awaitCounter!.m) {
+                replayEffects(awaitCounter!.m([]));
               }
-              for (let i = 0; i < effects.length;) {
-                const fn = effects[i++] as any;
-                const scope = effects[i++] as Scope;
-                if (!fnScopes.get(fn)?.has(scope)) {
-                  queueEffect(scope, fn);
-                }
-              }
+            };
+            if (t) {
+              scope[transitionAccessor] = 0;
+              settleTransition(t, apply);
+            } else {
+              apply();
             }
           });
         }
@@ -209,7 +360,21 @@ export function _await_promise(
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
           awaitCounter!.i = scope[promiseAccessor] = 0;
-          queueAsyncRender(scope, renderCatch, error);
+          queueAsyncRender(scope, () => {
+            const t = scope[transitionAccessor] as Transition | 0;
+            if (t) {
+              scope[transitionAccessor] = 0;
+              settleTransition(t, () => {
+                if (
+                  scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] !== 0
+                ) {
+                  renderCatch(scope, error);
+                }
+              });
+            } else {
+              renderCatch(scope, error);
+            }
+          });
         }
       },
     ));
@@ -231,12 +396,17 @@ function resolveAwait(
     setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
     awaitBranch[AccessorProp.DetachedAwait] = 0;
 
-    insertBranchBefore(
-      awaitBranch,
-      (scope[nodeAccessor] as ChildNode).parentNode!,
-      scope[nodeAccessor] as ChildNode,
-    );
-    referenceNode.remove();
+    // The insertion is a structural render effect on the eager channel:
+    // applied at flush end with the rest of the output, before any counter
+    // release queued after it, and never held by a pending transition.
+    queueEagerRenderEffect((scope) => {
+      insertBranchBefore(
+        awaitBranch,
+        (scope[nodeAccessor] as ChildNode).parentNode!,
+        scope[nodeAccessor] as ChildNode,
+      );
+      referenceNode.remove();
+    }, scope);
   }
   params?.(awaitBranch, [value]);
   return awaitBranch;
@@ -284,7 +454,7 @@ export function addAwaitCounter(
       i: 0,
       c() {
         if (--awaitCounter!.i) return 1;
-        dismissPlaceholder(tryBranch);
+        queueEagerRenderEffect(dismissPlaceholder, tryBranch);
         queueEffect(tryBranch, runPendingEffects);
       },
     };

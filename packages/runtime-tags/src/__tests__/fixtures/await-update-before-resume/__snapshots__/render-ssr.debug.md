@@ -13,21 +13,7 @@ loading...
 <div
   id="outside"
 >
-  1
-</div>
-loading...
-```
-## Change
-```
-UPDATE: #outside::text "0" => "1"
-```
-
-# Update
-```html
-<div
-  id="outside"
->
-  1
+  0
 </div>
 loading...
 ```
@@ -53,6 +39,7 @@ INSERT: #inside::text("0")
 ```
 REMOVE: ::text("loading...")
 INSERT: #outside + #inside
+UPDATE: #outside::text "0" => "1"
 UPDATE: #inside::text "0" => "1"
 ```
 ## Console

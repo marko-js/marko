@@ -33,7 +33,9 @@ const getRenderScopes = ($global: Record<string, unknown>) => {
 
 export const compat = {
   patchDynamicTag,
-  queueEffect,
+  // Forwarded through a wrapper: `queueEffect` is swapped while an eager
+  // render runs, and a captured reference would miss the swap.
+  queueEffect: ((scope, fn) => queueEffect(scope, fn)) as typeof queueEffect,
   init(warp10Noop: any) {
     _resume(SET_SCOPE_REGISTER_ID, (scope: Scope & { m5c?: string }) => {
       getRenderScopes(scope[AccessorProp.Global]!)![scope[AccessorProp.Id]] =

@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/id=1/>
+<try>
+  <@placeholder>LOADING...</@placeholder>
+  <h2>Id: ${id}</h2>
+  <await|data|=resolveAfter({ id })>
+    <pre>${JSON.stringify(data)}</pre>
+  </await>
+</try>
+<button#inc onClick() { id++ }>${id}</button>

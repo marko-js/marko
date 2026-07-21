@@ -20,7 +20,6 @@ INSERT: ::text("LOADING A1")
 ```
 INSERT: .a
 REMOVE: .a + ::text("LOADING A1")
-UPDATE: .a[class] null => "a"
 ```
 
 # Update
@@ -38,7 +37,6 @@ UPDATE: .a[class] null => "a"
 ## Change
 ```
 INSERT: div > div
-UPDATE: div > div[class] null => "a"
 ```
 
 # Update
@@ -81,7 +79,6 @@ INSERT: div > div::text("LOADING B1")
 ```
 INSERT: div > div > .b
 REMOVE: .b + ::text("LOADING B1")
-UPDATE: .b[class] null => "b"
 ```
 
 # Update
@@ -109,5 +106,4 @@ UPDATE: .b[class] null => "b"
 ## Change
 ```
 INSERT: div > div > div > div
-UPDATE: div > div > div > div[class] null => "b"
 ```

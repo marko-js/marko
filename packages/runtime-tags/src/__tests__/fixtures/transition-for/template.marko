@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count = 1/>
+<button onClick() { count++ }>inc</button>
+<ul>
+  <for|i| of=[...Array(count).keys()]>
+    <li>${i}</li>
+  </for>
+</ul>
+<try>
+  <await|value|=resolveAfter(count)>
+    resolved: ${value}
+  </await>
+  <@placeholder>
+    LOADING...
+  </@placeholder>
+</try>

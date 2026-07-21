@@ -288,3 +288,9 @@ set, so mutually-referential `<const/a=b>` / `<const/b=a>` used as a tag name
 loop forever during analysis. Guard the follow with a visited-tag set.
 Verify: compile a template whose dynamic tag name resolves through two
 `<const>` tags that reference each other.
+
+## Client promise settling before its boundary's chunk resumes crashes resolveAwait
+
+`packages/runtime-tags/src/dom/control-flow.ts:391` | 2026-07-20 | impact:med | effort:med
+
+When a client-side update supersedes an `<await>` whose server chunk has not yet streamed/resumed, and the superseding promise settles before the chunk arrives, `resolveAwait` dereferences `scope[branchAccessor]` (undefined — the branch only exists once the chunk resumes) and throws `Cannot read properties of undefined (reading '#DetachedAwait')`. The `scope[promiseAccessor] = resolve` stash used by the synchronous first-render path is not honored by resumed chunk arrival, so there is no place to park the resolution. Predates async transitions (the placeholder resolve handler has always called `resolveAwait` unconditionally); surfaced by transition-multi-await's ssr variant before its steps were adjusted to let resume complete (`flush` inserted before the click). A fix likely needs the resume path to invoke a stashed pending resolution when it creates the branch, mirroring `_await_content`'s `resolveSync` handling.

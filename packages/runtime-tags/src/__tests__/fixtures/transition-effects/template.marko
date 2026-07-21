@@ -1,0 +1,15 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/id=1/>
+<const/payloadId=id*100/>
+<let/count=0/>
+<try>
+  <@placeholder>LOADING...</@placeholder>
+  <await|data|=resolveAfter({ id: payloadId })>
+    <h2>Id: ${id} --> ${payloadId}</h2>
+    <pre>${JSON.stringify(data)}</pre>
+    <button#inc onClick() { id++ }>${id}</button>
+    <button#count onClick() { count++ }>${count}</button>
+    <script>console.log("A", JSON.stringify({ id, count }))</script>
+    <script>console.log("B", JSON.stringify({ id, payloadId, data }))</script>
+  </await>
+</try>

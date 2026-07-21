@@ -1,4 +1,4 @@
-// size: 27098 (min) 9889 (brotli)
+// size: 30850 (min) 11152 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -31,8 +31,6 @@ let empty = [],
       scope.D?.forEach(destroyNestedScopes),
       scope.B?.forEach(resetControllers));
   },
-  isScheduled,
-  channel,
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -90,6 +88,10 @@ let empty = [],
   readyIds,
   isResuming,
   inputType = "",
+  isScheduled,
+  channel,
+  awaitTransition = 0,
+  entangleAwaitUpdate = 0,
   _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
@@ -199,17 +201,58 @@ let empty = [],
   placeholderShown = /* @__PURE__ */ new WeakSet(),
   pendingEffects = [],
   pendingRenders = [],
+  queueEffect = (scope, fn) => {
+    pendingEffects.push(fn, scope);
+  },
+  doQueueEffect = queueEffect,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
   transitionsEnabled,
+  inEager,
+  flushStart = () => {},
   flushEnd = () => {},
   renderEffects = [],
+  eagerRenderEffects = [],
+  eagerEffects = [],
+  pendingWrites = [],
+  flushTransition = 0,
+  eagerQueueEffect = (scope, fn) => {
+    eagerEffects.push(fn, scope);
+  },
+  heldMap = (scope) => scope.I,
+  ensureHeldMap = (scope) => (scope.I ||= /* @__PURE__ */ new Map()),
+  heldEntry = (scope, fn) => heldMap(scope)?.get(fn),
+  enterEager = () => {
+    ((inEager = 1),
+      (recordWrite = noRecordWrite),
+      (queueEffect = eagerQueueEffect));
+  },
+  exitEager = () => {
+    ((inEager = 0),
+      (recordWrite = doRecordWrite),
+      (queueEffect = doQueueEffect));
+  },
+  parkedEffects = [],
+  activeMarks = [],
+  displayedMarks = 0,
+  loggedRenders = [],
   queueRenderEffect = (fn, scope, value) => {
     fn(scope, value);
   },
+  queueEagerRenderEffect = (fn, scope) => {
+    fn(scope);
+  },
+  writeSignal = (scope, accessor, value, fn, id) => {
+    (scope[accessor] !== value || !(accessor in scope)) &&
+      ((scope[accessor] = value), fn) &&
+      (schedule(), queueRender(scope, fn, id));
+  },
+  noRecordWrite = () => {},
+  recordWrite = noRecordWrite,
+  doRecordWrite = noRecordWrite,
   classIdToBranch = /* @__PURE__ */ new Map(),
   classEventResolver,
   scopesByRender = /* @__PURE__ */ new WeakMap(),
@@ -223,7 +266,7 @@ let empty = [],
   },
   compat = {
     patchDynamicTag,
-    queueEffect,
+    queueEffect: (scope, fn) => queueEffect(scope, fn),
     init(warp10Noop) {
       (_resume("$C_s", (scope) => {
         if (
@@ -509,28 +552,12 @@ function tempDetachBranch(branch) {
   ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
     insertChildNodes(fragment, null, branch.S, branch.K));
 }
-function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
-}
-function flushAndWaitFrame() {
-  (requestAnimationFrame(triggerMacroTask), run());
-}
-function triggerMacroTask() {
-  (channel ||
-    ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
-      ((isScheduled = 0), run());
-    })),
-    channel.port2.postMessage(0));
-}
 function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
       ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
-      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn) &&
-        (schedule(), queueRender(scope, fn, id)),
+      : writeSignal(scope, valueAccessor, value, fn, id),
     value
   );
 }
@@ -555,7 +582,9 @@ function _const(valueAccessor, fn) {
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
       (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn?.(scope));
+        (recordWrite(scope, valueAccessor, scope[valueAccessor]),
+        (scope[valueAccessor] = value),
+        fn?.(scope));
     }
   );
 }
@@ -1737,10 +1766,83 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
+function schedule() {
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+}
+function flushAndWaitFrame() {
+  (requestAnimationFrame(triggerMacroTask), run());
+}
+function triggerMacroTask() {
+  (channel ||
+    ((channel = new MessageChannel()),
+    (channel.port1.onmessage = () => {
+      ((isScheduled = 0), run());
+    })),
+    channel.port2.postMessage(0));
+}
+function enableAwaitTransition() {
+  let entangle = (entangleAwaitUpdate = (
+    scope,
+    transitionAccessor,
+    promiseAccessor,
+  ) => {
+    let transition = entangleTransition(scope[transitionAccessor]);
+    return (
+      scope[transitionAccessor] === void 0 &&
+        $signal(scope, -1).addEventListener("abort", () => {
+          let t = scope[transitionAccessor];
+          t &&
+            ((scope[transitionAccessor] = 0),
+            (scope[promiseAccessor] = 0),
+            settleTransition(t),
+            rendering || schedule());
+        }),
+      (scope[transitionAccessor] = transition)
+    );
+  });
+  awaitTransition = (
+    scope,
+    promise,
+    nodeAccessor,
+    promiseAccessor,
+    branchAccessor,
+    transitionAccessor,
+    params,
+  ) => {
+    let transition = entangle(scope, transitionAccessor, promiseAccessor),
+      settle = (apply) => (result) => {
+        thisPromise === scope[promiseAccessor] &&
+          ((scope[promiseAccessor] = 0),
+          queueAsyncRender(scope, () => {
+            ((scope[transitionAccessor] = 0), apply(result));
+          }));
+      },
+      thisPromise = (scope[promiseAccessor] = promise.then(
+        settle((data) =>
+          settleTransition(transition, () =>
+            resolveAwait(
+              scope,
+              branchAccessor,
+              nodeAccessor,
+              scope[nodeAccessor],
+              params,
+              data,
+            ),
+          ),
+        ),
+        settle((error) =>
+          settleTransition(transition, () => {
+            scope.F?.H !== 0 && renderCatch(scope, error);
+          }),
+        ),
+      ));
+  };
+}
 function _await_promise(nodeAccessor, params) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let promiseAccessor = "L" + nodeAccessor,
-    branchAccessor = "A" + nodeAccessor;
+    branchAccessor = "A" + nodeAccessor,
+    transitionAccessor = "N" + nodeAccessor;
   return (
     _enable_catch(),
     (scope, promise) => {
@@ -1765,97 +1867,123 @@ function _await_promise(nodeAccessor, params) {
       let awaitBranch = scope[branchAccessor],
         tryPlaceholder = findBranchWithKey(scope, "Q"),
         tryBranch = tryPlaceholder || awaitBranch,
-        awaitCounter = tryBranch.O;
-      (placeholderShown.add(pendingEffects),
-        tryPlaceholder
-          ? scope[promiseAccessor] ||
-            (awaitBranch && (awaitBranch.W ||= []),
-            (awaitCounter = addAwaitCounter(scope, tryPlaceholder)))
-          : (awaitCounter?.i ||
-              (awaitCounter = tryBranch.O =
-                {
-                  i: 0,
-                  c() {
-                    if (--awaitCounter.i) return 1;
-                    if (tryBranch === scope[branchAccessor]) {
-                      let anchor = scope[nodeAccessor];
-                      if (anchor.parentNode) {
-                        let detachedParent = scope[branchAccessor].S.parentNode;
-                        detachedParent === anchor.parentNode
-                          ? anchor.remove()
-                          : anchor.replaceWith(detachedParent);
-                      }
-                    } else dismissPlaceholder(tryBranch);
-                    queueEffect(tryBranch, runPendingEffects);
-                  },
-                }),
-            scope[promiseAccessor] ||
-              (awaitBranch && (awaitBranch.W ||= []),
-              awaitCounter.i++ ||
-                requestAnimationFrame(
-                  () =>
-                    awaitCounter.i &&
-                    runEffects(
-                      prepareEffects(() =>
-                        queueRender(
-                          scope,
-                          () => {
-                            awaitBranch.V ||
-                              (awaitBranch.S.parentNode.insertBefore(
-                                scope[nodeAccessor],
-                                awaitBranch.S,
-                              ),
-                              tempDetachBranch(tryBranch));
-                          },
-                          -1,
-                        ),
-                      ),
+        awaitCounter = tryBranch?.O;
+      if (
+        awaitTransition &&
+        rendering &&
+        awaitBranch &&
+        !awaitBranch.V &&
+        !awaitCounter?.i
+      )
+        return awaitTransition(
+          scope,
+          promise,
+          nodeAccessor,
+          promiseAccessor,
+          branchAccessor,
+          transitionAccessor,
+          params,
+        );
+      if (
+        (entangleAwaitUpdate &&
+          rendering &&
+          (isPromise(scope[promiseAccessor]) ||
+            (awaitCounter?.i && tryBranch.H !== runId)) &&
+          entangleAwaitUpdate(scope, transitionAccessor, promiseAccessor),
+        placeholderShown.add(pendingEffects),
+        tryPlaceholder)
+      )
+        scope[promiseAccessor] ||
+          (awaitBranch && (awaitBranch.W ||= []),
+          (awaitCounter = addAwaitCounter(scope, tryPlaceholder)));
+      else {
+        if (!awaitCounter?.i) {
+          let reattachAwait = (scope) => {
+            if (tryBranch === scope[branchAccessor]) {
+              let anchor = scope[nodeAccessor];
+              if (anchor.parentNode) {
+                let detachedParent = scope[branchAccessor].S.parentNode;
+                detachedParent === anchor.parentNode
+                  ? anchor.remove()
+                  : anchor.replaceWith(detachedParent);
+              }
+            } else dismissPlaceholder(tryBranch);
+          };
+          awaitCounter = tryBranch.O = {
+            i: 0,
+            c() {
+              if (--awaitCounter.i) return 1;
+              (queueEagerRenderEffect(reattachAwait, scope),
+                queueEffect(tryBranch, runPendingEffects));
+            },
+          };
+        }
+        scope[promiseAccessor] ||
+          (awaitBranch && (awaitBranch.W ||= []),
+          awaitCounter.i++ ||
+            requestAnimationFrame(
+              () =>
+                awaitCounter.i &&
+                runEffects(
+                  prepareEffects(() =>
+                    queueRender(
+                      scope,
+                      () => {
+                        awaitBranch.V ||
+                          (awaitBranch.S.parentNode.insertBefore(
+                            scope[nodeAccessor],
+                            awaitBranch.S,
+                          ),
+                          tempDetachBranch(tryBranch));
+                      },
+                      -1,
                     ),
-                ))));
+                  ),
+                ),
+            ));
+      }
       let thisPromise = (scope[promiseAccessor] = promise.then(
         (data) => {
           if (thisPromise === scope[promiseAccessor]) {
             let referenceNode = scope[nodeAccessor];
             ((scope[promiseAccessor] = 0),
               queueAsyncRender(scope, () => {
-                awaitBranch = resolveAwait(
-                  scope,
-                  branchAccessor,
-                  nodeAccessor,
-                  referenceNode,
-                  params,
-                  data,
-                );
-                let pendingRenders = awaitBranch.W;
-                if (
-                  ((awaitBranch.W = 0),
-                  pendingRenders?.forEach(queuePendingRender),
-                  placeholderShown.add(pendingEffects),
-                  awaitCounter.c(),
-                  awaitCounter.m)
-                ) {
-                  let fnScopes = /* @__PURE__ */ new Map(),
-                    effects = awaitCounter.m([]);
-                  for (let i = 0; i < pendingEffects.length;) {
-                    let fn = pendingEffects[i++],
-                      scopes = fnScopes.get(fn);
-                    (scopes ||
-                      fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
-                      scopes.add(pendingEffects[i++]));
-                  }
-                  for (let i = 0; i < effects.length;) {
-                    let fn = effects[i++],
-                      scope = effects[i++];
-                    fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
-                  }
-                }
+                let t = scope[transitionAccessor],
+                  apply = () => {
+                    awaitBranch = resolveAwait(
+                      scope,
+                      branchAccessor,
+                      nodeAccessor,
+                      referenceNode,
+                      params,
+                      data,
+                    );
+                    let pendingRenders = awaitBranch.W;
+                    ((awaitBranch.W = 0),
+                      pendingRenders?.forEach(queuePendingRender),
+                      placeholderShown.add(pendingEffects),
+                      awaitCounter.c(),
+                      awaitCounter.m && replayEffects(awaitCounter.m([])));
+                  };
+                t
+                  ? ((scope[transitionAccessor] = 0),
+                    settleTransition(t, apply))
+                  : apply();
               }));
           }
         },
         (error) => {
           thisPromise === scope[promiseAccessor] &&
             ((awaitCounter.i = scope[promiseAccessor] = 0),
-            queueAsyncRender(scope, renderCatch, error));
+            queueAsyncRender(scope, () => {
+              let t = scope[transitionAccessor];
+              t
+                ? ((scope[transitionAccessor] = 0),
+                  settleTransition(t, () => {
+                    scope.F?.H !== 0 && renderCatch(scope, error);
+                  }))
+                : renderCatch(scope, error);
+            }));
         },
       ));
     }
@@ -1875,12 +2003,14 @@ function resolveAwait(
       ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
       setupBranch(awaitBranch.V, awaitBranch),
       (awaitBranch.V = 0),
-      insertBranchBefore(
-        awaitBranch,
-        scope[nodeAccessor].parentNode,
-        scope[nodeAccessor],
-      ),
-      referenceNode.remove()),
+      queueEagerRenderEffect((scope) => {
+        (insertBranchBefore(
+          awaitBranch,
+          scope[nodeAccessor].parentNode,
+          scope[nodeAccessor],
+        ),
+          referenceNode.remove());
+      }, scope)),
     params?.(awaitBranch, [value]),
     awaitBranch
   );
@@ -1916,7 +2046,7 @@ function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
           i: 0,
           c() {
             if (--awaitCounter.i) return 1;
-            (dismissPlaceholder(tryBranch),
+            (queueEagerRenderEffect(dismissPlaceholder, tryBranch),
               queueEffect(tryBranch, runPendingEffects));
           },
         }),
@@ -2352,9 +2482,13 @@ function byFirstArg(name) {
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || (catchEnabled && render.f)))
+    if (
+      ((render.d = value), render.e === runId || (catchEnabled && render.f))
+    ) {
+      inEager && (render.g = 1);
       return;
-    render.e = runId;
+    }
+    ((render.e = runId), (render.g = inEager));
   } else
     ((render = {
       a: scopeKey * 1e6 + signalKey,
@@ -2362,6 +2496,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       c: signal,
       d: value,
       e: runId,
+      g: inEager,
     }),
       signalKey >= 0 && (scope[signalKey] = render));
   queuePendingRender(render);
@@ -2376,13 +2511,22 @@ function queuePendingRender(render) {
   }
   pendingRenders[i] = render;
 }
-function queueEffect(scope, fn) {
-  pendingEffects.push(fn, scope);
+function replayEffects(parked) {
+  let end = pendingEffects.length;
+  outer: for (let i = 0; i < parked.length; i += 2) {
+    for (let j = 0; j < end; j += 2)
+      if (
+        pendingEffects[j] === parked[i] &&
+        pendingEffects[j + 1] === parked[i + 1]
+      )
+        continue outer;
+    queueEffect(parked[i + 1], parked[i]);
+  }
 }
 function run() {
   let effects = pendingEffects;
   try {
-    ((rendering = 1), runRenders(), flushEnd());
+    ((rendering = 1), flushStart(), runRenders(), flushEnd());
   } finally {
     (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
@@ -2392,15 +2536,36 @@ function queueAsyncRender(scope, signal, value) {
   (queueRender(scope, signal, -1, value), queueMicrotask(run));
 }
 function prepareEffects(fn) {
-  let saved = [pendingRenders, pendingEffects, renderEffects],
+  let saved = [
+      pendingRenders,
+      pendingEffects,
+      renderEffects,
+      eagerRenderEffects,
+      eagerEffects,
+      pendingWrites,
+      flushTransition,
+    ],
     preparedEffects = (pendingEffects = []);
-  ((pendingRenders = []), (renderEffects = []));
+  ((pendingRenders = []),
+    (renderEffects = []),
+    (eagerRenderEffects = []),
+    (eagerEffects = []),
+    (pendingWrites = []),
+    (flushTransition = 0));
   try {
-    ((rendering = 1), fn(), runRenders(), flushEnd());
+    ((rendering = 1), flushStart(), fn(), runRenders(), flushEnd());
   } finally {
     (runId++,
       (rendering = 0),
-      ([pendingRenders, pendingEffects, renderEffects] = saved));
+      ([
+        pendingRenders,
+        pendingEffects,
+        renderEffects,
+        eagerRenderEffects,
+        eagerEffects,
+        pendingWrites,
+        flushTransition,
+      ] = saved));
   }
   return preparedEffects;
 }
@@ -2480,28 +2645,245 @@ function _render(fn) {
 function _enable_transition() {
   transitionsEnabled ||
     ((transitionsEnabled = 1),
+    (flushStart = showLatestValues),
     (flushEnd = flushRenderEffects),
+    enableAwaitTransition(),
+    (writeSignal = (scope, accessor, value, fn, id) => {
+      let prev = scope[accessor];
+      (displayedMarks && findMark(scope, accessor)
+        ? scope["Q" + accessor]
+        : prev) !== value || !(accessor in scope)
+        ? ((scope[accessor] = value),
+          fn &&
+            (schedule(),
+            recordWrite(scope, accessor, prev),
+            queueRender(scope, fn, id)))
+        : prev !== value && ((scope[accessor] = value), schedule());
+    }),
+    (recordWrite = doRecordWrite =
+      (scope, accessor, prev) => {
+        (pendingWrites.push(scope, accessor, prev),
+          displayedMarks &&
+            findMark(scope, accessor) &&
+            (scope["Q" + accessor] = scope[accessor]));
+      }),
     (queueRenderEffect = (fn, scope, value) => {
-      renderEffects.push(fn, scope, value);
-    }));
+      let entry = heldEntry(scope, fn);
+      (entry && ((entry.value = value), !inEager)) ||
+        (inEager ? eagerRenderEffects : renderEffects).push(fn, scope, value);
+    }),
+    (queueEagerRenderEffect = (fn, scope) => {
+      eagerRenderEffects.push(fn, scope, 0);
+    }),
+    (runRender = ((runRender) => (render) => {
+      if (render.g) {
+        enterEager();
+        try {
+          runRender(render);
+        } finally {
+          exitEager();
+        }
+      } else runRender(render);
+    })(runRender)));
 }
 function flushRenderEffects() {
-  for (; renderEffects.length;) {
-    let next = renderEffects;
-    ((renderEffects = []), runRenderEffectList(next));
+  let fx = renderEffects,
+    writes = pendingWrites,
+    t = flushTransition;
+  if (((renderEffects = []), (pendingWrites = []), (flushTransition = 0), t)) {
+    for (let i = 0; i < writes.length; i += 3)
+      markValue(writes[i], writes[i + 1], writes[i + 2], t);
+    for (let i = 0; i < fx.length; i += 3) {
+      let fn = fx[i],
+        scope = fx[i + 1],
+        held = ensureHeldMap(scope),
+        entry = held.get(fn);
+      entry
+        ? (entry.value = fx[i + 2])
+        : (held.set(fn, {
+            transition: t,
+            value: fx[i + 2],
+          }),
+          t.heldRenderEffects.push(scope, fn));
+    }
+    for (let i = 0; i < pendingEffects.length; i += 2) {
+      let fn = pendingEffects[i],
+        scope = pendingEffects[i + 1],
+        held = ensureHeldMap(scope);
+      held.has(fn) ||
+        (held.set(fn, {
+          transition: t,
+          value: 0,
+        }),
+        t.heldEffects.push(fn, scope));
+    }
+    pendingEffects.length = 0;
+  } else if (pendingEffects.length && wroteMarkedValues(writes)) {
+    let live = 0;
+    for (let i = 0; i < pendingEffects.length; i += 2)
+      heldEntry(pendingEffects[i + 1], pendingEffects[i]) ||
+        ((pendingEffects[live++] = pendingEffects[i]),
+        (pendingEffects[live++] = pendingEffects[i + 1]));
+    pendingEffects.length = live;
+  }
+  for (
+    showDisplayedValues(), t || runRenderEffectList(fx);
+    renderEffects.length || eagerRenderEffects.length;
+  ) {
+    if (renderEffects.length) {
+      let next = renderEffects;
+      ((renderEffects = []), runRenderEffectList(next));
+    }
+    if (eagerRenderEffects.length) {
+      enterEager();
+      let next = eagerRenderEffects;
+      ((eagerRenderEffects = []), runRenderEffectList(next), exitEager());
+    }
+  }
+  if (parkedEffects.length) {
+    let replay = [];
+    for (let i = 0; i < parkedEffects.length; i += 2) {
+      let fn = parkedEffects[i],
+        scope = parkedEffects[i + 1];
+      heldEntry(scope, fn) &&
+        (heldMap(scope).delete(fn), replay.push(fn, scope));
+    }
+    ((parkedEffects.length = 0), replayEffects(replay));
+  }
+  if (eagerEffects.length) {
+    for (let item of eagerEffects) pendingEffects.push(item);
+    eagerEffects.length = 0;
+  }
+}
+function showDisplayedValues() {
+  if (!displayedMarks) {
+    let live = 0;
+    for (let mark of activeMarks)
+      if (!mark.released) {
+        activeMarks[live++] = mark;
+        let { scope, accessor } = mark;
+        ((scope["Q" + accessor] = scope[accessor]),
+          (scope[accessor] = mark.prev));
+      }
+    displayedMarks = activeMarks.length = live;
+  }
+}
+function showLatestValues() {
+  if (displayedMarks) {
+    displayedMarks = 0;
+    for (let mark of activeMarks)
+      mark.released ||
+        (mark.scope[mark.accessor] = mark.scope["Q" + mark.accessor]);
   }
 }
 function runRenderEffectList(fx) {
   for (let i = 0; i < fx.length; i += 3) {
     let fn = fx[i],
       scope = fx[i + 1];
-    if (scope.F?.H !== 0)
+    if (scope.F?.H !== 0) {
+      if (displayedMarks && !heldEntry(scope, fn))
+        logRender: {
+          for (let j = 0; j < loggedRenders.length; j += 3)
+            if (loggedRenders[j] === fn && loggedRenders[j + 1] === scope) {
+              loggedRenders[j + 2] = fx[i + 2];
+              break logRender;
+            }
+          loggedRenders.push(fn, scope, fx[i + 2]);
+        }
       try {
         fn(scope, fx[i + 2]);
       } catch (error) {
         renderCatch(scope, error);
       }
+    }
   }
+}
+function findMark(scope, accessor) {
+  for (let mark of activeMarks)
+    if (!mark.released && mark.scope === scope && mark.accessor === accessor)
+      return mark;
+}
+function wroteMarkedValues(writes) {
+  if (activeMarks.length) {
+    for (let i = 0; i < writes.length; i += 3)
+      if (findMark(writes[i], writes[i + 1])) return 1;
+  }
+}
+function markValue(scope, accessor, prev, t) {
+  let mark = findMark(scope, accessor);
+  mark
+    ? (mark.transition = t)
+    : activeMarks.push({
+        scope,
+        accessor,
+        transition: t,
+        prev,
+        released: 0,
+      });
+}
+function resolveTransition(t) {
+  for (; t.mergedInto;) t = t.mergedInto;
+  return t;
+}
+function mergeTransitions(a, b) {
+  ((b.mergedInto = a), (a.pendingAwaits += b.pendingAwaits));
+  for (let item of b.heldRenderEffects) a.heldRenderEffects.push(item);
+  for (let item of b.heldEffects) a.heldEffects.push(item);
+  return (a.resolves.push(...b.resolves), a);
+}
+function entangleTransition(existing) {
+  let t = existing ? resolveTransition(existing) : 0,
+    flushT = flushTransition ? resolveTransition(flushTransition) : 0;
+  return (
+    flushT && t && flushT !== t
+      ? (t = mergeTransitions(t, flushT))
+      : (t ||= flushT || {
+          pendingAwaits: 0,
+          mergedInto: 0,
+          committed: 0,
+          heldRenderEffects: [],
+          heldEffects: [],
+          resolves: [],
+        }),
+    (flushTransition = t),
+    existing || t.pendingAwaits++,
+    t
+  );
+}
+function settleTransition(t, apply) {
+  ((t = resolveTransition(t)),
+    t.committed
+      ? apply?.()
+      : (apply && t.resolves.push(apply),
+        t.pendingAwaits > 1 ? t.pendingAwaits-- : commitTransition(t)));
+}
+function commitTransition(t) {
+  ((t.committed = 1), (t.pendingAwaits = 0));
+  let held = t.heldRenderEffects,
+    resolves = t.resolves,
+    heldEffects = t.heldEffects;
+  ((t.heldRenderEffects = []), (t.resolves = []), (t.heldEffects = []));
+  for (let mark of activeMarks)
+    if (!mark.released && resolveTransition(mark.transition) === t) {
+      mark.released = 1;
+      let { scope, accessor } = mark,
+        slot = "Q" + accessor;
+      displayedMarks
+        ? ((scope[accessor] = scope[slot]), displayedMarks--)
+        : (scope[slot] = scope[accessor]);
+    }
+  for (let i = 0; i < held.length; i += 2) {
+    let scope = held[i],
+      fn = held[i + 1],
+      entry = heldEntry(scope, fn);
+    entry &&
+      resolveTransition(entry.transition) === t &&
+      (heldMap(scope).delete(fn), renderEffects.push(fn, scope, entry.value));
+  }
+  for (let fn of resolves) fn();
+  for (let item of loggedRenders) renderEffects.push(item);
+  loggedRenders.length = 0;
+  for (let item of heldEffects) parkedEffects.push(item);
 }
 function $signalReset(scope, id) {
   let ctrl = scope.A?.[id];
