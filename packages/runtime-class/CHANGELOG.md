@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.24
+
+### Patch Changes
+
+- [#3498](https://github.com/marko-js/marko/pull/3498) [`5764dd4`](https://github.com/marko-js/marko/commit/5764dd4426ff22606e462d43426ba3ca51c5a7ab) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Correct the stepped-`<for>` TypeScript documentation example to use `step=2` (the increment) instead of `by=2` (the hydration key), which failed type-checking and silently iterated by one.
+
+- Updated dependencies [[`764da5b`](https://github.com/marko-js/marko/commit/764da5b2a702108375539f22970b33ccbb034533), [`af23841`](https://github.com/marko-js/marko/commit/af23841965f63ec262e11444eaf1af2e6d3a1e12), [`447e00d`](https://github.com/marko-js/marko/commit/447e00dc37a98d75dbcb21c13ebe66c2e4aabe89), [`40b5154`](https://github.com/marko-js/marko/commit/40b5154ec0de9101c177af03a9bf539306be9e7c), [`2270237`](https://github.com/marko-js/marko/commit/227023748d1081d17d213856baee1ead89c69224), [`c7e7879`](https://github.com/marko-js/marko/commit/c7e7879aa064c850ab790c22a873b787e9b96b05), [`9694272`](https://github.com/marko-js/marko/commit/969427237b04e5269faefc72e4536a7498e86a33), [`6b1b898`](https://github.com/marko-js/marko/commit/6b1b8985b55da9362fc31a5137345b9467aecdd7), [`8f0143d`](https://github.com/marko-js/marko/commit/8f0143d69a25581bbcc3f2737ce5eb864c932463), [`b5b4cc5`](https://github.com/marko-js/marko/commit/b5b4cc5d2845bbfe848a747fb6a54af0d8c98020), [`099a1ff`](https://github.com/marko-js/marko/commit/099a1ff2c78317927fdd5bb51b231e3c896416ab)]:
+  - @marko/runtime-tags@6.3.16
+
 ## 5.39.23
 
 ### Patch Changes
