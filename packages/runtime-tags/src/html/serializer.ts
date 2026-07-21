@@ -949,6 +949,8 @@ const unsafeRegExpSourceReg = /\\[\s\S]|</g;
 const replaceUnsafeRegExpSourceChar = (match: string) =>
   match === "<" || match === "\\<" ? "\\x3C" : match;
 function writeRegExp(state: State, val: RegExp) {
+  // source/flags are read off the instance intentionally: an own-property shadow
+  // only arises from a deliberate server-side defineProperty, not worth guarding.
   const { source } = val;
   state.buf.push(
     "/" +
