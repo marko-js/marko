@@ -21,7 +21,8 @@
     "report": "open ./coverage/lcov-report/index.html",
     "test": "mocha",
     "test:parallel": "node scripts/test-parallel.js",
-    "test:update": "UPDATE_EXPECTATIONS=1 mocha"
+    "test:update": "UPDATE_EXPECTATIONS=1 mocha",
+    "test:update:parallel": "cross-env UPDATE_EXPECTATIONS=1 node scripts/test-parallel.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",

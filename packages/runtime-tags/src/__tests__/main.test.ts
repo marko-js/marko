@@ -154,6 +154,12 @@ function testFixtures(interop?: true) {
             }
             browsers.length = 0;
             getModeOpts.reset();
+            // The runner can survive in mocha's suite graph, so the fixture's
+            // server module is dropped explicitly.
+            ssrRunner.peek()?.then(
+              (runner) => runner.disposeServer(),
+              () => {},
+            );
             ssrRunner.reset();
             csr.reset();
             ssr.reset();
@@ -507,6 +513,7 @@ function stripDefaultScript(html: string) {
 function once<T>(fn: () => T) {
   let cached: T | undefined;
   return Object.assign(() => (cached ??= fn()), {
+    peek: () => cached,
     reset() {
       cached = undefined;
     },

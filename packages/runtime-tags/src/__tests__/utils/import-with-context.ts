@@ -1,7 +1,41 @@
 import { readFileSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 import vm from "node:vm";
 
 import { type ResolveOptions, resolveSync } from "resolve-sync";
+
+/** Imports an ESM file into the *current* realm through a vm module, so its
+ * namespace is collectable once the caller drops it — Node's ESM loader cache
+ * (`ModuleLoader.loadCache`) retains ordinary dynamic imports for the life of
+ * the process. Imports it contains delegate to the host loader (shared
+ * externals stay cached). */
+export async function importEvictable<T>(entry: string): Promise<T> {
+  const url = pathToFileURL(entry).href;
+  const mod = new vm.SourceTextModule(readFileSync(entry, "utf8"), {
+    identifier: url,
+    initializeImportMeta(meta) {
+      meta.url = url;
+    },
+    importModuleDynamically: linkHosted,
+  });
+  await mod.link(linkHosted);
+  await mod.evaluate();
+  return mod.namespace as T;
+}
+
+async function linkHosted(id: string, parent: vm.Module | vm.Script) {
+  const target = await import(
+    /^[./]/.test(id) ? new URL(id, (parent as vm.Module).identifier).href : id
+  );
+  const keys = Object.keys(target);
+  return new vm.SyntheticModule(
+    keys,
+    function (this: vm.SyntheticModule) {
+      for (const key of keys) this.setExport(key, target[key]);
+    },
+    { identifier: id },
+  );
+}
 
 interface State {
   cache: Map<string, Promise<vm.Module>>;

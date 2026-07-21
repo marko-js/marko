@@ -6,7 +6,7 @@ import { build, type Plugin, type RolldownOutput } from "rolldown";
 import { minifySync } from "rolldown/utils";
 import zlib from "zlib";
 
-import { importWithContext } from "./import-with-context";
+import { importEvictable, importWithContext } from "./import-with-context";
 
 type RunDOM = typeof import("@marko/runtime-tags/dom").run;
 
@@ -36,6 +36,7 @@ export async function createServerRunner<T extends Record<string, string>>(
 ): Promise<{
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
+  disposeServer(): void;
   clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
@@ -45,12 +46,79 @@ export async function createServerRunner<T extends Record<string, string>>(
   const out = path.join(cwd, "dist", optimize ? "optimize" : "debug");
   const htmlOut = path.join(out, "html");
   const domOut = path.join(out, "dom");
-  const virtual = virtualPlugin(cwd);
-  const domEntry = entryPlugin();
   const entryNames = Object.keys(entries);
   const csrEntryId = optimize
     ? undefined
     : path.join(cwd, path.basename(entries[entryNames[0]])) + csrExt;
+  const builds = createBuilds(
+    cwd,
+    entries,
+    entryNames,
+    csrEntryId,
+    optimize,
+    interop,
+    config,
+    htmlOut,
+    domOut,
+  );
+  const domResult = await builds.domBuilt;
+  const htmlResult = await builds.htmlBuilt;
+  builds.clearRefs();
+
+  const csrFileName =
+    csrEntryId &&
+    domResult.output.find((c) => c.type === "chunk" && c.name === "csr")
+      ?.fileName;
+  const clientRunner = csrFileName
+    ? (ctx: any): Promise<{ template: Template; run: RunDOM }> =>
+        importWithContext(
+          path.join(domOut, csrFileName),
+          { browser: true },
+          ctx,
+        )
+    : undefined;
+
+  let server: Promise<Record<keyof T, Template>> | undefined;
+  return {
+    assets: domOut,
+    // Memoized so server module state lives across a fixture's renders, as on
+    // a real server; disposed by the fixture teardown because mocha's suite
+    // graph can retain this runner for the whole run.
+    runServer: () =>
+      (server ||= importEvictable<Record<keyof T, Template>>(
+        path.join(htmlOut, "main.mjs"),
+      )),
+    disposeServer: () => {
+      server = undefined;
+    },
+    clientRunner,
+    domBundle: () => buildSnapshot(domResult, cwd, optimize),
+    htmlBundle: () => buildSnapshot(htmlResult, cwd),
+    diagnostics: [...builds.diagnosticsByFile].map(([id, items]) => ({
+      id,
+      items,
+    })),
+  };
+}
+
+// Rolldown's native binding keeps global handles to every function handed to
+// `build()` beyond close(), and each function object pins its defining
+// scope's context. Everything that flows into `build()` is therefore created
+// in this activation — never the runner scope holding the awaited outputs —
+// and `clearRefs` empties the heavy captures once the builds settle.
+function createBuilds(
+  cwd: string,
+  entries: Record<string, string>,
+  entryNames: string[],
+  csrEntryId: string | undefined,
+  optimize: boolean,
+  interop: boolean | undefined,
+  config: compiler.Config,
+  htmlOut: string,
+  domOut: string,
+) {
+  const virtual = virtualPlugin(cwd);
+  const domEntry = entryPlugin();
   const compileOpts: compiler.Config = {
     ...config,
     cache: new Map(),
@@ -69,6 +137,7 @@ export async function createServerRunner<T extends Record<string, string>>(
     if (diagnostics.length) diagnosticsByFile.set(id, diagnostics);
   };
 
+  const domBuiltBox: { promise?: Promise<RolldownOutput> } = {};
   const domBuilt = build({
     cwd,
     ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
@@ -135,6 +204,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
       manualChunks: (id) => (testUtilRe.test(id) ? "test-utils" : undefined),
     },
   });
+  domBuiltBox.promise = domBuilt;
   const htmlBuilt = build({
     cwd,
     input: {
@@ -194,7 +264,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
 }`,
         },
         async renderChunk(_code, _chunk, _options, meta) {
-          const { output } = await domBuilt;
+          const { output } = await domBuiltBox.promise!;
           const manifest: {
             [entry: string]: {
               block?: string;
@@ -233,32 +303,14 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     },
   });
 
-  const domResult = await domBuilt;
-  const htmlResult = await htmlBuilt;
-
-  const csrFileName =
-    csrEntryId &&
-    domResult.output.find((c) => c.type === "chunk" && c.name === "csr")
-      ?.fileName;
-  const clientRunner = csrFileName
-    ? (ctx: any): Promise<{ template: Template; run: RunDOM }> =>
-        importWithContext(
-          path.join(domOut, csrFileName),
-          { browser: true },
-          ctx,
-        )
-    : undefined;
-
   return {
-    assets: domOut,
-    runServer: () =>
-      import(path.join(htmlOut, "main.mjs")) as Promise<
-        Record<keyof T, Template>
-      >,
-    clientRunner,
-    domBundle: () => buildSnapshot(domResult, cwd, optimize),
-    htmlBundle: () => buildSnapshot(htmlResult, cwd),
-    diagnostics: [...diagnosticsByFile].map(([id, items]) => ({ id, items })),
+    domBuilt,
+    htmlBuilt,
+    diagnosticsByFile,
+    clearRefs() {
+      domBuiltBox.promise = undefined;
+      (compileOpts.cache as Map<unknown, unknown>).clear();
+    },
   };
 }
 

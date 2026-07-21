@@ -1,9 +1,13 @@
 {
   "bail": true,
   "timeout": 10000,
-  "no-warnings": true,
-  "enable-source-maps": true,
-  "experimental-vm-modules": true,
+  "node-option": [
+    "no-warnings",
+    "enable-source-maps",
+    "experimental-vm-modules",
+    "max-old-space-size=8192",
+    "max-semi-space-size=128"
+  ],
   "require": ["~ts"],
   "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"]
 }
