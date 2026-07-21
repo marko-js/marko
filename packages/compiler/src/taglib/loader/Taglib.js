@@ -18,11 +18,33 @@ function handleImport(taglib, importedTaglib) {
 
   taglib.imports.push(importedTaglib);
 
+  // Tags from a taglib imported within the importing package inherit its identity,
+  // so they resolve by package name instead of a realpath (eg pnpm) that may not import.
+  if (
+    taglib.packageName &&
+    !importedTaglib.packageName &&
+    isWithin(taglib.packageRoot, importedTaglib.dirname)
+  ) {
+    importedTaglib.setPackageName(taglib.packageName, taglib.packageRoot);
+  }
+
   if (importedTaglib.imports) {
     importedTaglib.imports.forEach(function (nestedImportedTaglib) {
       handleImport(taglib, nestedImportedTaglib);
     });
   }
+}
+
+function isWithin(dir, filename) {
+  var rel = path.relative(dir, filename);
+  // `path.relative` walks out of the dir with `..`, or returns an absolute path
+  // when it cannot relate the two at all, eg across windows drives.
+  return (
+    !!rel &&
+    rel !== ".." &&
+    !rel.startsWith(`..${path.sep}`) &&
+    !path.isAbsolute(rel)
+  );
 }
 
 class Taglib {
@@ -32,6 +54,7 @@ class Taglib {
     this.isFromPackageJson = isFromPackageJson === true;
     this.dirname = path.dirname(this.filePath);
     this.packageName = packageName;
+    this.packageRoot = packageName ? this.dirname : undefined;
     this.scriptLang = undefined;
     this.tags = {};
     this.migrators = [];
@@ -76,8 +99,9 @@ class Taglib {
     this.setTagPackage(tag);
   }
 
-  setPackageName(packageName) {
+  setPackageName(packageName, packageRoot) {
     this.packageName = packageName;
+    this.packageRoot = packageRoot || this.dirname;
     for (var name in this.tags) {
       if (hasOwnProperty.call(this.tags, name)) {
         this.setTagPackage(this.tags[name]);
@@ -88,7 +112,7 @@ class Taglib {
   setTagPackage(tag) {
     if (this.packageName) {
       tag.packageName = this.packageName;
-      tag.packageRoot = this.dirname;
+      tag.packageRoot = this.packageRoot;
     }
   }
 
