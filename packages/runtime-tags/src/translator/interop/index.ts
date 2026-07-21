@@ -26,6 +26,8 @@ export function createInteropTranslator(translate5: any) {
       ...translate6.tagDiscoveryDirs,
       ...translate5.tagDiscoveryDirs,
     ],
+    // translate5 is the runtime-class translator, which always provides
+    // optionalTaglibs; a missing field should surface loudly, not be masked.
     taglibs: mergeTaglibs(
       taglib
         .resolveOptionalTaglibs(translate5.optionalTaglibs)
