@@ -1,0 +1,9 @@
+<let/x=1 />
+<define/MyTag|a, ...rest|>
+  <div>${a}|${JSON.stringify(rest)}</div>
+</define>
+
+<MyTag(x, "two", "three") />
+<button onClick() { x++; }>
+  ${x}
+</button>

@@ -424,6 +424,7 @@ function analyzeParams(
 
   if (
     !propTree.props ||
+    propTree.rest ||
     tag.node.arguments?.some((node) => t.isSpreadElement(node))
   ) {
     const extra = (inputExpr.value = mergeReferences(
@@ -808,6 +809,7 @@ function writeParamsToSignals(
 ) {
   if (
     !propTree.props ||
+    propTree.rest ||
     tag.node.arguments?.some((node) => t.isSpreadElement(node))
   ) {
     const referencedBindings = tag.node.extra?.referencedBindings;
