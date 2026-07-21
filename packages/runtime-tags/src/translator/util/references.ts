@@ -1934,12 +1934,7 @@ export function getSectionInstancesAccessor(section: Section) {
 }
 
 export function getSectionInstancesAccessorLiteral(section: Section) {
-  const accessor = getSectionInstancesAccessor(section);
-  return accessor
-    ? typeof accessor === "number"
-      ? t.numericLiteral(accessor)
-      : t.stringLiteral(accessor)
-    : undefined;
+  return t.stringLiteral(getSectionInstancesAccessor(section));
 }
 
 export function getReadReplacement(

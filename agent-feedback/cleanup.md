@@ -76,12 +76,6 @@ lines under the cited paths.
 
 A file-by-file terminology audit flagged several local naming inconsistencies that are too narrow for CONTEXT.md but worth normalizing when touching these files: `html/serializer.ts` uses `assigns`/`assigned`/`addAssignment` for one mechanism and names its generation counter `flush` (reads as an output flush; it is compared, not flushed — see `parent.flush === state.flush`); `translator/core/if.ts` destructures the same branches array as `branchBodySection` in one place and `branchBody` in another; `dom/controllable.ts` mixes `Controllable` (file, `syncControllableFormInput`) with `Controlled*` accessor/type prefixes for the same concept — CONTEXT.md now canonicalizes "controllable"; `translator/core/await.ts` pairs the near-homophones `startBinding` (a Binding) and `startMark` (a serialize-guard expression). Each is a rename-in-place with no behavior change; snapshots regenerate where identifiers leak into debug output. Re-verify by grepping the cited symbols.
 
-## Remove the unreachable numeric/undefined branches in `getSectionInstancesAccessorLiteral`
-
-`packages/runtime-tags/src/translator/util/references.ts` › `getSectionInstancesAccessorLiteral` | 2026-07-20 | impact:low | effort:low
-
-`getSectionInstancesAccessor` always returns a non-empty string — both arms are string concatenations (`section.sectionAccessor.prefix + getScopeAccessor(...)` or `getAccessorPrefix().ClosureScopes + section.id`) and `getScopeAccessor` returns a string in every branch (references.ts:1939-1944). So in `getSectionInstancesAccessorLiteral` (1946-1953) the `typeof accessor === "number"` test can never be true (the `numericLiteral` arm is dead) and the `: undefined` fallback is unreachable; the function always returns a `t.stringLiteral`. The `... | undefined` return type this implies is misleading and forces callers to paper over it (`getSectionInstancesAccessorLiteral(currentSection)!` in signals.ts:1076). Collapse the body to `return t.stringLiteral(getSectionInstancesAccessor(section))` and drop the now-needless non-null assertions. Re-verify: the collapse plus `npm run test:parallel` leaves snapshots unchanged.
-
 ## Remove or implement the unhandled `WalkCode.Inside` so a type-permitted visit code cannot hang the walker
 
 `packages/runtime-tags/src/dom/walker.ts` › `walkInternal` | 2026-07-20 | impact:low | effort:low

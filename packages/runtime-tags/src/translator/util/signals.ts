@@ -1070,7 +1070,7 @@ function writeGetters(section: Section) {
         while (currentSection && currentSection !== hoistSection) {
           const parentSection: Section | undefined = currentSection.parent;
           if (parentSection) {
-            accessors.push(getSectionInstancesAccessorLiteral(currentSection)!);
+            accessors.push(getSectionInstancesAccessorLiteral(currentSection));
           }
           currentSection = parentSection;
         }
