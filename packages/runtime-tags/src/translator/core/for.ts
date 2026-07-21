@@ -94,7 +94,7 @@ export default {
         break;
       default:
         throw tag.buildCodeFrameError(
-          "The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) requires an `of=`, `in=`, or `to=` attribute.",
+          "The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) requires an `of=`, `in=`, `to=`, or `until=` attribute.",
         );
     }
 

@@ -187,12 +187,6 @@ and compiles to code that fails at runtime; detecting it through the binding
 graph would surface the same clear compile error. Verify: compile
 `<const/a=b/><const/b=a/>` used as a value and observe no diagnostic.
 
-## Include `until` in the `<for>` missing-range-attribute error message
-
-`packages/runtime-tags/src/translator/core/for.ts` › `analyze` | 2026-07-20 | impact:low | effort:low
-
-When a `<for>` has no range attribute, `analyze` throws "The `<for>` tag requires an `of=`, `in=`, or `to=` attribute." (for.ts:96-98), but `until` is a first-class `<for>` type: it has its own `case "until"` two lines above the throw (92-93), is a member of the `ForType` union (63), maps to the `forUntil`/`_for_until` runtime (570/583), and has its own `attributes.until` description. A developer reaching for `<for until=n>` (or mistyping another range attribute) is told only about of/in/to, hiding a valid option the same file fully supports. Add `until` to the message: "requires an `of=`, `in=`, `to=`, or `until=` attribute." Re-verify: read the `default:` branch of the `switch (forType)` in `analyze` and confirm `until` is a handled case immediately above the throw yet absent from the thrown string.
-
 ## Give array-destructure two-way binding a cause-specific error instead of the generic "Unable to bind to value."
 
 `packages/runtime-tags/src/translator/visitors/program/pre-analyze.ts` › `getChangeHandler` | 2026-07-20 | impact:low | effort:low
