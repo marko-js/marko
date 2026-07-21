@@ -31,7 +31,6 @@ export enum Step {
 
 const walkCodeToName = {
   [WalkCode.Get]: "get",
-  [WalkCode.Inside]: "inside",
   [WalkCode.Replace]: "replace",
   [WalkCode.EndChild]: "endChild",
   [WalkCode.BeginChild]: "beginChild",
@@ -47,11 +46,7 @@ const walkCodeToName = {
   [WalkCode.MultiplierEnd]: "multiplierEnd",
 };
 
-type VisitCodes =
-  | WalkCode.Get
-  | WalkCode.Inside
-  | WalkCode.Replace
-  | WalkCode.DynamicTagWithVar;
+type VisitCodes = WalkCode.Get | WalkCode.Replace | WalkCode.DynamicTagWithVar;
 
 export function enter(path: t.NodePath<any>) {
   const steps = getSteps(getSection(path));

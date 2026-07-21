@@ -65,7 +65,6 @@ export enum NodeType {
 // 39 ' [single quote], 92 \ [backslash], 96 ` [backtick]
 export enum WalkCode {
   Get = 32,
-  Inside = 36,
   Replace = 37,
   EndChild = 38,
 
