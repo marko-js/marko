@@ -1139,6 +1139,15 @@ describe("serializer", () => {
     it("escapes <", () => assertStringify(/a<b/, `/a\\x3Cb/`));
     it("escapes < in </script>", () =>
       assertStringify(new RegExp("x</script>y"), `/x\\x3C\\/script>y/`));
+    it("escapes a raw NUL in the source", () =>
+      assertStringify(
+        new RegExp("a" + String.fromCharCode(0) + "b"),
+        `/a\\x00b/`,
+      ));
+    it("escapes a lone surrogate in the source", () =>
+      assertStringify(new RegExp("a\ud800b"), `/a\\ud800b/`));
+    it("leaves a paired surrogate intact", () =>
+      assertStringify(new RegExp("a\u{1f600}b", "u"), `/a\u{1f600}b/u`));
   });
 
   describe("function", () => {

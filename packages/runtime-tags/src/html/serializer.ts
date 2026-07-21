@@ -945,16 +945,26 @@ function writeDate(state: State, val: Date) {
   return true;
 }
 
-const unsafeRegExpSourceReg = /\\[\s\S]|</g;
-const replaceUnsafeRegExpSourceChar = (match: string) =>
-  match === "<" || match === "\\<" ? "\\x3C" : match;
+const unsafeRegExpSourceReg = /\\[\s\S]|[<\0\ud800-\udfff]/gu;
+const unsafeRegExpSourceDetect = /[<\0\ud800-\udfff]/u;
+const replaceUnsafeRegExpSourceChar = (match: string) => {
+  // `match` is a raw unsafe char, or a backslash escape whose escapee is last
+  // (a paired-surrogate escapee is length 3 and left untouched).
+  const ch = match.length === 3 ? "" : match[match.length - 1];
+  if (ch === "<") return "\\x3C";
+  if (ch === "\0") return "\\x00";
+  const code = ch.charCodeAt(0);
+  return code >= 0xd800 && code <= 0xdfff
+    ? "\\u" + code.toString(16).padStart(4, "0")
+    : match;
+};
 function writeRegExp(state: State, val: RegExp) {
   // source/flags are read off the instance intentionally: an own-property shadow
   // only arises from a deliberate server-side defineProperty, not worth guarding.
   const { source } = val;
   state.buf.push(
     "/" +
-      (source.includes("<")
+      (unsafeRegExpSourceDetect.test(source)
         ? source.replace(unsafeRegExpSourceReg, replaceUnsafeRegExpSourceChar)
         : source) +
       "/" +
