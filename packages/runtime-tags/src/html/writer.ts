@@ -893,10 +893,18 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   const { state } = boundary;
   const catchBoundary = new Boundary(state, undefined, boundary);
   const body = chunk.fork(catchBoundary, null);
+  // Scope ids are assigned monotonically, so any written at or above this mark
+  // belongs to the body (sync render is contiguous).
+  const bodyScopeIdStart = state.scopeId;
   const bodyEnd = body.render(content);
 
   if (catchBoundary.signal.aborted) {
-    // Sync error
+    // Sync error: `@catch` replaces the body's DOM, so drop the scopes it wrote
+    // before failing — otherwise they ship as dead resume fills.
+    const { writeScopes } = chunk.serializeState;
+    for (const scopeId in writeScopes) {
+      if (+scopeId >= bodyScopeIdStart) delete writeScopes[scopeId];
+    }
     catchContent(catchBoundary.signal.reason);
     return;
   }

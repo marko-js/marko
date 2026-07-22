@@ -1,0 +1,10 @@
+static function boom() {
+  throw new Error("BOOM");
+}
+<let/count=0/>
+<button onClick() { count++ }>outer ${count}</button>
+<try>
+  <child/>
+  ${boom()}
+  <@catch|e|>caught ${e.message}</@catch>
+</try>
