@@ -3,6 +3,9 @@ name: CI
 on:
   pull_request:
     types: [opened, synchronize]
+    paths-ignore:
+      - "**/*.md"
+      - "LICENSE"
   push:
     branches: [main, v3, v4]
 
@@ -25,10 +28,14 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Build
-        run: pnpm run @ci:build
-      - name: Lint Code
-        run: pnpm run @ci:lint
+      - name: Build & Lint
+        run: |
+          set +e
+          pnpm run @ci:build & build=$!
+          pnpm run @ci:lint & lint=$!
+          wait $build; build_status=$?
+          wait $lint; lint_status=$?
+          exit $(( build_status | lint_status ))
   test:
     runs-on: ubuntu-latest
     name: "test: node@${{ matrix.node }}"

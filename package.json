@@ -8,7 +8,7 @@
     "@ci:release-alias": "node -r ~ts scripts/publish-alias.ts",
     "@ci:test": "cross-env NODE_OPTIONS=\"--max-old-space-size=8192 --max-semi-space-size=128\" MARKO_DEBUG=1 c8 pnpm run test:parallel",
     "@ci:test:fast": "cross-env NODE_OPTIONS=\"--max-old-space-size=8192 --max-semi-space-size=128\" MARKO_DEBUG=1 pnpm run test:parallel",
-    "@ci:version": "pnpm run build && pnpm run format && changeset version && pnpm install --lockfile-only",
+    "@ci:version": "pnpm run build && changeset version && prettier --write --log-level=warn \"**/package.json\" && pnpm install --lockfile-only",
     "audit": "pnpm audit --prod",
     "build": "pnpm -r --if-present run build && pnpm run build:types",
     "build:sizes": "node -r ~ts scripts/sizes",
