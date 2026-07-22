@@ -145,7 +145,7 @@ export function _attr_input_checkedValue_script(
     if (checkedValueChange) {
       const controlledValueKey = AccessorPrefix.ControlledValue + nodeAccessor;
       const oldValue = scope[controlledValueKey];
-      const newValue = Array.isArray(oldValue)
+      let newValue = Array.isArray(oldValue)
         ? updateList(oldValue, el.value, el.checked)
         : el.checked
           ? el.value
@@ -156,6 +156,11 @@ export function _attr_input_checkedValue_script(
           `[type=radio][name=${CSS.escape(el.name)}]`,
         )) {
           if (radio.form === el.form) {
+            // `newValue` is only undefined here when the firing radio is being
+            // unchecked (a form reset); adopt the group's reset-restored default
+            // instead of dropping the value.
+            if (newValue === undefined && radio.defaultChecked)
+              newValue = radio.value;
             // A member whose controlled slot was never written (a non-default
             // member on a pristine resume) reverts to its SSR default.
             radio.checked = Array.isArray(oldValue)
