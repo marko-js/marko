@@ -1,0 +1,17 @@
+import Rejecting from "./tags/rejecting.marko" with { load: "idle" };
+import Resolving from "./tags/resolving.marko" with { load: "idle" };
+
+<let/count=0/>
+<button class="count" onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p class="home">${$global.label}</p>
+</define>
+<define/Reject>
+  <Rejecting label=$global.label/>
+</define>
+<define/Resolve>
+  <Resolving label=$global.label/>
+</define>
+
+<${$global.view === "reject" ? Reject : $global.view === "resolve" ? Resolve : Home}/>

@@ -17,12 +17,15 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import {
   compareSources,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
+  onFinalizeReferences,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import {
@@ -42,13 +45,16 @@ import {
 } from "../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
+  isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
   type SerializeReasons,
 } from "../util/serialize-reasons";
 import {
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
@@ -57,6 +63,13 @@ import {
 } from "../util/signals";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
+import {
+  addUpdateMerge,
+  getUpdateAnchorRegisterId,
+  isReasonlessExpression,
+  isUpdateRequestDerivedAnchor,
+  isUpdateStructuralMerge,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -88,6 +101,23 @@ export const IfTag = {
         binding: nodeBinding,
         prefix: getAccessorPrefix().BranchScopes,
       };
+      onFinalizeReferences(() => {
+        const branchConditions = getBranchConditions(branches);
+        if (isUpdateRequestDerivedAnchor(ifTagExtra, branchConditions)) {
+          getUpdateAnchorRegisterId(
+            ifTagSection,
+            "if",
+            getScopeAccessor(nodeBinding),
+          );
+          if (
+            branchConditions.some((condition) =>
+              isReasonlessExpression(condition, ifTagExtra),
+            )
+          ) {
+            addSerializeReason(ifTagSection, true, nodeBinding);
+          }
+        }
+      });
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
@@ -135,9 +165,13 @@ export const IfTag = {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
           if (
-            isStateSerializeReason(
-              getSerializeReason(ifTagSection, kStatefulReason),
-            ) &&
+            (isPersisted()
+              ? isStateOnlySerializeReason(
+                  getSerializeReason(ifTagSection, kStatefulReason),
+                )
+              : isStateSerializeReason(
+                  getSerializeReason(ifTagSection, kStatefulReason),
+                )) &&
             isStaticSerializeReason(
               getSerializeReason(bodySection, kBranchSerializeReason),
             ) &&
@@ -160,6 +194,7 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
+          const ifTagExtra = ifTag.node.extra!;
           const nodeBinding = getOptimizedOnlyChildNodeBinding(
             ifTag,
             ifTagSection,
@@ -170,8 +205,24 @@ export const IfTag = {
             nodeBinding,
           );
           const nextTag = tag.getNextSibling();
-          let branchSerializeReasons: SerializeReasons | undefined;
+          const branchConditions = getBranchConditions(branches);
+          const reasonlessSelection =
+            isPersisted() &&
+            branchConditions.some((condition) =>
+              isReasonlessExpression(condition, ifTagExtra),
+            );
+          const splitSelection = isUpdateRequestDerivedAnchor(
+            ifTagExtra,
+            branchConditions,
+          );
+          let branchSerializeReasons: SerializeReasons | undefined =
+            reasonlessSelection ? true : undefined;
           let statement: t.Statement | undefined;
+          let selectorExpr: t.Expression = t.identifier("undefined");
+          const branchRenderers: t.Expression[] = [];
+          // Construct ids key each branch section's wire shell so the
+          // writer can offer the chosen branch for client construction.
+          const branchConstructIds: t.Expression[] = [];
           let singleChild = true;
 
           for (const [, branchBody] of branches) {
@@ -198,7 +249,12 @@ export const IfTag = {
                 if (branchSerializeReasons !== true) {
                   if (
                     branchSerializeReason === true ||
-                    branchSerializeReason.state
+                    (branchSerializeReason.state &&
+                      !(
+                        isPersisted() &&
+                        (branchSerializeReason.param ||
+                          branchSerializeReason.global)
+                      ))
                   ) {
                     branchSerializeReasons = true;
                   } else if (branchSerializeReasons) {
@@ -211,23 +267,36 @@ export const IfTag = {
                     branchSerializeReasons = [branchSerializeReason];
                   }
                 }
-                bodyStatements.push(
-                  t.returnStatement(t.numericLiteral(i)) as any,
-                );
+                if (!splitSelection) {
+                  bodyStatements.push(
+                    t.returnStatement(t.numericLiteral(i)) as any,
+                  );
+                }
               }
             }
 
             const [testAttr] = branchTag.node.attributes;
-            const curStatement = toFirstStatementOrBlock(bodyStatements);
 
-            if (testAttr) {
-              statement = t.ifStatement(
-                testAttr.value,
-                curStatement,
-                statement,
+            if (splitSelection) {
+              branchRenderers[i] = t.arrowFunctionExpression(
+                [],
+                t.blockStatement(bodyStatements as t.Statement[]),
               );
+              branchConstructIds[i] = branchBody
+                ? t.stringLiteral(getResumeRegisterId(branchBody, "update"))
+                : t.numericLiteral(0);
+              selectorExpr = testAttr
+                ? t.conditionalExpression(
+                    testAttr.value,
+                    t.numericLiteral(i),
+                    selectorExpr,
+                  )
+                : t.numericLiteral(i);
             } else {
-              statement = curStatement;
+              const curStatement = toFirstStatementOrBlock(bodyStatements);
+              statement = testAttr
+                ? t.ifStatement(testAttr.value, curStatement, statement)
+                : curStatement;
             }
 
             branchTag.remove();
@@ -250,10 +319,9 @@ export const IfTag = {
               markerSerializeReason,
               !statefulSerializeArg,
             );
-            const cbNode = t.arrowFunctionExpression(
-              [],
-              t.blockStatement([statement!]),
-            );
+            const cbNode = splitSelection
+              ? t.arrowFunctionExpression([], selectorExpr)
+              : t.arrowFunctionExpression([], t.blockStatement([statement!]));
 
             statement = t.expressionStatement(
               callRuntime(
@@ -261,11 +329,21 @@ export const IfTag = {
                 cbNode,
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
-                getSerializeGuardForAny(
-                  ifTagSection,
-                  branchSerializeReasons,
-                  !markerSerializeArg,
-                ),
+                reasonlessSelection
+                  ? t.binaryExpression(
+                      "|",
+                      getSerializeGuardForAny(
+                        ifTagSection,
+                        branchSerializeReasons,
+                        !markerSerializeArg,
+                      )!,
+                      callRuntime("_persisted_reason"),
+                    )
+                  : getSerializeGuardForAny(
+                      ifTagSection,
+                      branchSerializeReasons,
+                      !markerSerializeArg,
+                    ),
                 markerSerializeArg,
                 statefulSerializeArg,
                 skipParentEnd
@@ -274,6 +352,19 @@ export const IfTag = {
                     ? t.numericLiteral(0)
                     : undefined,
                 singleChild ? t.numericLiteral(1) : undefined,
+                splitSelection
+                  ? t.stringLiteral(
+                      getUpdateAnchorRegisterId(
+                        ifTagSection,
+                        "if",
+                        getScopeAccessor(nodeBinding),
+                      ),
+                    )
+                  : undefined,
+                splitSelection ? t.arrayExpression(branchRenderers) : undefined,
+                splitSelection
+                  ? t.arrayExpression(branchConstructIds)
+                  : undefined,
               ),
             );
           }
@@ -307,6 +398,7 @@ export const IfTag = {
           const ifTagSection = getSection(ifTag);
           const ifTagExtra = branches[0][0].node.extra!;
           const nodeRef = getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection);
+          const branchConditions = getBranchConditions(branches);
 
           let expr: t.Expression = t.numericLiteral(branches.length);
 
@@ -332,6 +424,22 @@ export const IfTag = {
           }
 
           const signal = getSignal(ifTagSection, nodeRef, "if");
+          if (
+            isUpdateStructuralMerge(
+              ifTagExtra,
+              branches.map(([, branchBodySection]) => branchBodySection),
+              branchConditions,
+            )
+          ) {
+            addUpdateMerge(ifTagSection, {
+              kind: "if",
+              accessor: getScopeAccessorLiteral(nodeRef),
+              branchBodySections: branches.map(
+                ([, branchBodySection]) => branchBodySection,
+              ),
+            });
+            signal.updateGuard = true;
+          }
           signal.build = () => {
             const rendererArgs: (t.Expression | undefined)[] = [];
             for (const [_, branchBodySection] of branches) {
@@ -615,6 +723,15 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
   }
 
   return branches;
+}
+
+function getBranchConditions(
+  branches: [t.NodePath<t.MarkoTag>, Section | undefined][],
+) {
+  return branches.flatMap(([branchTag]) => {
+    const value = branchTag.node.attributes[0]?.value;
+    return value ? [value] : [];
+  });
 }
 
 function isLastBranch(tag: t.NodePath<t.MarkoTag>) {

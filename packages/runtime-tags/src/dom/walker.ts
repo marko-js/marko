@@ -7,7 +7,7 @@ import {
   WalkCode,
   WalkRangeSize,
 } from "../common/types";
-import { createScope, skipScope } from "./scope";
+import { createConstructedScope, createScope, skipScope } from "./scope";
 
 export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 
@@ -77,17 +77,23 @@ const walkInternal = function walkInternal(
       value === WalkCode.BeginChild ||
       value === WalkCode.BeginChildWithVar
     ) {
+      const childKey = MARKO_DEBUG
+        ? getDebugKey(currentScopeIndex++, "#childScope")
+        : decodeAccessor(currentScopeIndex++);
       currentWalkIndex = walkInternal(
         currentWalkIndex,
         walkCodes,
-        (scope[
-          MARKO_DEBUG
-            ? getDebugKey(currentScopeIndex++, "#childScope")
-            : decodeAccessor(currentScopeIndex++)
-        ] = createScope(
-          scope[AccessorProp.Global],
-          scope[AccessorProp.ClosestBranch],
-        )),
+        (scope[childKey] =
+          createConstructedScope && scope[childKey]
+            ? createConstructedScope(
+                scope[AccessorProp.Global],
+                scope[AccessorProp.ClosestBranch],
+                scope[childKey] as Scope,
+              )
+            : createScope(
+                scope[AccessorProp.Global],
+                scope[AccessorProp.ClosestBranch],
+              )),
       )!;
       if (value === WalkCode.BeginChildWithVar) {
         scope[

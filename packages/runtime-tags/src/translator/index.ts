@@ -51,13 +51,15 @@ export const taglibs = [
   ],
 ];
 
+// "dom-persisted" names the lazy update-applier facade: bundlers pre-seed it
+// beside "dom" so both share one module graph (one resume registry/scheduler).
 export function getRuntimeEntryFiles(
-  output: Config["output"],
+  output: Config["output"] | "dom-persisted",
   optimize: boolean,
 ) {
-  return [
-    `${runtimeInfo.name}${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}`,
-  ];
+  const entry =
+    output === "html" || output === "dom-persisted" ? output : "dom";
+  return [`${runtimeInfo.name}${optimize ? "" : "/debug"}/${entry}`];
 }
 
 export { createInteropTranslator } from "./interop";

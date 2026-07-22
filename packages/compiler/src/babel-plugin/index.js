@@ -164,8 +164,11 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
   const id = getTemplateId(markoOpts, filename);
+  // Like `optimize`, `persisted` shapes the cached analysis — but optimized
+  // compiles already get distinct template ids, so only this flag needs a key.
+  const cacheKey = markoOpts.persisted ? `${id}?persisted` : id;
   const contentHash = canCache && new Hash().update(code).digest();
-  let cached = canCache && compileCache.get(id);
+  let cached = canCache && compileCache.get(cacheKey);
 
   if (cached) {
     if (cached.contentHash !== contentHash) {
@@ -315,7 +318,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       }
     }
 
-    compileCache.set(id, {
+    compileCache.set(cacheKey, {
       time: Date.now(),
       file,
       contentHash,
@@ -349,7 +352,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
           throwAggregateError(errors);
         }
       } catch (e) {
-        compileCache.delete(id);
+        compileCache.delete(cacheKey);
         throw e;
       }
     }

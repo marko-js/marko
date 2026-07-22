@@ -1,0 +1,79 @@
+// data.js
+const getLabel = typeof window === "undefined" ? (topic) => `${topic}` : undefined;
+function getReport(topic) {
+	if (typeof window !== "undefined") {
+		throw new Error("getReport is server-only");
+	}
+	return resolveAfter(`report for ${topic}`, 1);
+}
+
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	const PanelA = { content: _content_resume("__tests__/template.marko_1_content", () => {
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason();
+		_html(`<span class=a>A: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "PatchHole:#text/0", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</span>`);
+		_persisted_reason() && writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
+	}, $scope0_id) };
+	const PanelB = { content: _content_resume("__tests__/template.marko_3_content", () => {
+		const $scope3_id = _scope_id();
+		const $scope3_reason = _scope_reason();
+		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "PatchHole:#text/0", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope3_id, "#text/0", _persisted_reason())}</section>`);
+		_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "9:2");
+	}, $scope0_id) };
+	const PanelAsync = { content: _content_resume("__tests__/template.marko_4_content", () => {
+		const $scope4_id = _scope_id();
+		_scope_reason();
+		_try($scope4_id, "#text/0", _content_resume("__tests__/template.marko_5_content", () => {
+			const $scope5_id = _scope_id();
+			_scope_reason();
+			_await($scope5_id, "#text/0", getReport($global().topic), (data) => {
+				const $scope7_id = _scope_id();
+				_html(`<p class=report>${_escape(_hole_value($scope7_id, "PatchHole:#text/0", data, _persisted_reason()))}${_el_resume($scope7_id, "#text/0", _persisted_reason())}</p>`);
+				_persisted_reason() && writeScope($scope7_id, {}, "__tests__/template.marko", "19:6");
+			}, _persisted_reason(), "__tests__/template.marko_7_update");
+		}, $scope4_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_6_content", () => {
+			_scope_reason();
+			const $scope6_id = _scope_id();
+			_html("<p class=loading>loading…</p>");
+		}, $scope4_id) }) }, "__tests__/template.marko_4/update_boundary_#text/0", "__tests__/template.marko_5_update");
+	}, $scope0_id) };
+	_html("<ul>");
+	_for_of($global().items, (item) => {
+		const $scope2_id = _scope_id();
+		_dynamic_tag($scope2_id, "#text/0", item.view === "b" ? PanelB : item.view === "c" ? PanelAsync : PanelA, {}, 0, 0, _persisted_reason() | _persisted_reason(), "__tests__/template.marko_2/update_dynamic_#text/0");
+		_persisted_reason() && writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "26:4");
+	}, function(item) {
+		return item.id;
+	}, $scope0_id, "#ul/2", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 0, "__tests__/template.marko_2_update");
+	_script($scope0_id, "__tests__/template.marko_0");
+	writeScope($scope0_id, { count: _state_reason() && count }, "__tests__/template.marko", 0, {
+		count: "3:6",
+		PanelA: "6:9",
+		PanelB: "9:9",
+		PanelAsync: "12:9"
+	});
+	_resume_branch($scope0_id);
+}, 1);
+_renderer_shells({
+	"__tests__/template.marko_7_update": ["<p class=report> </p>", "D l"],
+	"__tests__/template.marko_7_content": ["<p class=report> </p>", "D l"],
+	"__tests__/template.marko_6_update": ["<p class=loading>loading…</p>", "b"],
+	"__tests__/template.marko_6_content": ["<p class=loading>loading…</p>", "b"],
+	"__tests__/template.marko_5_update": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_5_content": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_4_update": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_4_content": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_3_update": ["<section class=b>B: <!></section>", "Db%l"],
+	"__tests__/template.marko_3_content": ["<section class=b>B: <!></section>", "Db%l"],
+	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_1_update": ["<span class=a>A: <!></span>", "Db%l"],
+	"__tests__/template.marko_1_content": ["<span class=a>A: <!></span>", "Db%l"],
+	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"],
+	"__tests__/template.marko": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"]
+});

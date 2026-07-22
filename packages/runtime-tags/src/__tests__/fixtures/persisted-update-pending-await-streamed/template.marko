@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+// The click handler gives the root scope a resumable effect for the harness's
+// live-root pairing, and is the client state whose survival this fixture pins.
+<let/clicks=0/>
+<button.clicks onClick() { clicks++ }>clicked ${clicks}</button>
+<section>
+  <try>
+    <@placeholder>loading…</@placeholder>
+    <await|note|=resolveAfter(input.note, input.tick)>
+      <p>${note}</p>
+    </await>
+  </try>
+</section>

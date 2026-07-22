@@ -1,0 +1,35 @@
+<section>
+  <h2>parent-alpha-marker<!--M_*2 a--></h2><button
+    data-key=parent-alpha-marker:shared-item>watch<!--M_*3 b--></button><!--M_*3 a--><button
+    data-key=parent-alpha-marker:alpha-item>watch<!--M_*4 b--></button><!--M_*4 a--><!--M_|2 b 4 3-->
+</section>
+<section>
+  <h2>parent-beta-marker<!--M_*5 a--></h2><button
+    data-key=parent-beta-marker:shared-item>watch<!--M_*6 b--></button><!--M_*6 a--><button
+    data-key=parent-beta-marker:beta-item>watch<!--M_*7 b--></button><!--M_*7 a--><!--M_|5 b 7 6-->
+</section><!--M_|1 a 5 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    M: "parent-alpha-marker"
+  }, {
+    g: !1,
+    _: _(2),
+    M: "shared-item"
+  }, {
+    g: !1,
+    _: _(2),
+    M: "alpha-item"
+  }, {
+    M: "parent-beta-marker"
+  }, {
+    g: !1,
+    _: _(5),
+    M: "shared-item"
+  }, {
+    g: !1,
+    _: _(5),
+    M: "beta-item"
+  }], "a1 3 4 6 7"];
+  M._.w()
+</script>

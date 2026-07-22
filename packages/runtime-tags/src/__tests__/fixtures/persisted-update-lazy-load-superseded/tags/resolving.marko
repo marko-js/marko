@@ -1,0 +1,6 @@
+import { resolveAfter } from "../../../utils/resolve";
+static if (typeof window !== "undefined") {
+  await resolveAfter(0);
+}
+
+<button class="lazy">resolving ${input.label}</button>

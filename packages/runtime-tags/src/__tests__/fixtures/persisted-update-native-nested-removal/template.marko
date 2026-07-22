@@ -1,0 +1,14 @@
+<let/count=0/>
+
+<define/Child>
+  <button.child onClick() {}>child</button>
+</define>
+
+<button.count onClick() { count++ }>count ${count}</button>
+<${input.outer} class="outer">
+  <${input.child === "component"
+    ? Child
+    : input.child === "native"
+      ? "span"
+      : undefined}/>
+</>

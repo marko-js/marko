@@ -1,0 +1,28 @@
+<p>0<!--M_*1 a--></p>
+<section>
+  <h3>a<!--M_*2 a--></h3><button>a<!--M_*3 b-->:<!>
+      same<!--M_*3 c--></button><!--M_*3 a--><!--M_|2 b 3-->
+</section>
+<section>
+  <h3>b<!--M_*4 a--></h3><button>b<!--M_*5 b-->:<!>
+      same<!--M_*5 c--></button><!--M_*5 a--><!--M_|4 b 5-->
+</section><!--M_|1 b 4 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    c: 0
+  }, {
+    _: _(1),
+    M: "a"
+  }, {
+    _: _(2),
+    M: "same"
+  }, {
+    _: _(1),
+    M: "b"
+  }, {
+    _: _(4),
+    M: "same"
+  }], "a1 3 5"];
+  M._.w()
+</script>

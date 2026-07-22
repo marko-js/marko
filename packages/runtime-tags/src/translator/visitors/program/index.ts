@@ -19,6 +19,9 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+  isRenderersEntryBuild,
 } from "../../util/marko-config";
 import {
   BindingType,
@@ -29,10 +32,14 @@ import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { getResumeRegisterId } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
+import { getEscapedTemplateImports } from "../tag/dynamic-tag";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
+import programRenderers from "./renderers";
+import programUpdate from "./update";
 
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
@@ -45,6 +52,7 @@ declare module "@marko/compiler/dist/types" {
       template: string;
       walks: string;
       setup: string;
+      update: string;
       setupEmpty?: true;
       params: BindingPropTree | undefined;
     };
@@ -80,6 +88,7 @@ export default {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
+        update: generateUid("update"),
         params: undefined,
       };
 
@@ -97,6 +106,10 @@ export default {
       // skipped, so skip finalization work that assumes an error-free template.
       if (hasAnalyzeErrors()) return;
       finalizeReferences();
+      if (isPersisted()) {
+        program.node.extra!.escapedTemplateImports =
+          getEscapedTemplateImports(program);
+      }
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
@@ -109,6 +122,7 @@ export default {
         // importing and calling it (checked when this template translates).
         programExtra.domExports!.setupEmpty = true;
       }
+      if (isPersisted()) getResumeRegisterId(section, "update");
     },
   },
   translate: {
@@ -124,9 +138,19 @@ export default {
           (output === "dom" && entry === "page") || output === "hydrate";
         const isServerEntry = output === "html" && entry === "page";
 
-        if (entry && !markoOpts.linkAssets) {
+        // Persisted entries have no assets to link; only facades bake wiring in.
+        if ((entry === "page" || entry === "load") && !markoOpts.linkAssets) {
           throw program.buildCodeFrameError(
             'The "entry" option requires the `linkAssets` compiler option to be configured.',
+          );
+        }
+
+        if (
+          (entry === "persisted" || entry === "renderers") &&
+          !markoOpts.persisted
+        ) {
+          throw program.buildCodeFrameError(
+            `The "${entry}" entry kind requires the \`persisted\` compiler option to be enabled.`,
           );
         }
 
@@ -141,19 +165,39 @@ export default {
         if (isLoadEntry) {
           const entryFile = program.hub.file;
           const { filename } = entryFile.opts;
+          const relativePath = resolveRelativePath(entryFile, filename);
+          // Persisted lazy children load their merge module before declaring ready.
+          const loadExpr = isPersisted()
+            ? t.callExpression(
+                t.memberExpression(
+                  t.identifier("Promise"),
+                  t.identifier("all"),
+                ),
+                [
+                  t.arrayExpression([
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath),
+                    ]),
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath + "?persisted"),
+                    ]),
+                  ]),
+                ],
+              )
+            : t.callExpression(t.import(), [t.stringLiteral(relativePath)]);
           program.node.body = [
             t.importDeclaration(
-              [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
+              [
+                t.importSpecifier(
+                  t.identifier("ready"),
+                  t.identifier(isPersisted() ? "readyPersisted" : "ready"),
+                ),
+              ],
               t.stringLiteral(getRuntimePath("dom")),
             ),
             t.expressionStatement(
               t.callExpression(
-                t.memberExpression(
-                  t.callExpression(t.import(), [
-                    t.stringLiteral(resolveRelativePath(entryFile, filename)),
-                  ]),
-                  t.identifier("then"),
-                ),
+                t.memberExpression(loadExpr, t.identifier("then")),
                 [
                   t.arrowFunctionExpression(
                     [],
@@ -247,6 +291,13 @@ export default {
     exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
+      } else if (isRenderersEntryBuild()) {
+        // Data-only: section metas exist without the DOM program assembly.
+        programRenderers.translate.exit(program);
+        return;
+      } else if (isPersistedEntryBuild()) {
+        programDOM.translate.exit(program);
+        programUpdate.translate.exit(program);
       } else {
         programDOM.translate.exit(program);
       }

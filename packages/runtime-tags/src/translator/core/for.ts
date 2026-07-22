@@ -16,6 +16,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
@@ -43,11 +44,13 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
 } from "../util/serialize-reasons";
 import {
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
@@ -55,6 +58,12 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { getMemberExpressionPropString } from "../util/to-property-name";
+import {
+  addUpdateMerge,
+  getUpdateMerges,
+  isUpdateRequestDerivedAnchor,
+  isUpdateStructuralMerge,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -241,7 +250,9 @@ export default {
           kStatefulReason,
         );
         if (
-          isStateSerializeReason(statefulSerializeReason) &&
+          (isPersisted()
+            ? isStateOnlySerializeReason(statefulSerializeReason)
+            : isStateSerializeReason(statefulSerializeReason)) &&
           isStaticSerializeReason(branchSerializeReason) &&
           isStaticSerializeReason(markerSerializeReason)
         ) {
@@ -257,14 +268,23 @@ export default {
           | t.Expression
           | undefined
         )[];
-        const forTagHTMLRuntime = branchSerializeReason
-          ? forTypeToHTMLResumeRuntime(forType)
-          : forTypeToRuntime(forType);
+        // A loop with no resume-time branch reason whose body still
+        // serializes (persisted holes/seeds) needs the resume-capable
+        // runtime: the writer serializes its branch linkage on every
+        // persisted render so update dispatch can pair each item.
+        const persistedBranches =
+          !branchSerializeReason &&
+          isPersisted() &&
+          bodySection.serializeReasons.size > 0;
+        const forTagHTMLRuntime =
+          branchSerializeReason || persistedBranches
+            ? forTypeToHTMLResumeRuntime(forType)
+            : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
         );
 
-        if (branchSerializeReason) {
+        if (branchSerializeReason || persistedBranches) {
           const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
           const statefulSerializeArg = getSerializeGuard(
             tagSection,
@@ -290,17 +310,32 @@ export default {
             statefulSerializeArg,
           );
 
+          // The construct id keys the body section's wire shell so fresh
+          // items (keyed, or stable under a constructed parent) build
+          // client-side from values-free template/walks.
+          const forAnchorId =
+            isPersisted() && bodySection
+              ? getResumeRegisterId(bodySection, "update")
+              : undefined;
           if (skipParentEnd) {
             getParentTag(tag)!.node.extra![kSkipEndTag] = true;
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
+          } else if (forAnchorId !== undefined) {
+            forTagArgs.push(t.numericLiteral(0));
           }
 
           if (singleChild) {
-            if (!skipParentEnd) {
+            if (!skipParentEnd && forAnchorId === undefined) {
               forTagArgs.push(t.numericLiteral(0));
             }
 
             forTagArgs.push(t.numericLiteral(1));
+          } else if (forAnchorId !== undefined) {
+            forTagArgs.push(t.numericLiteral(0));
+          }
+
+          if (forAnchorId !== undefined) {
+            forTagArgs.push(t.stringLiteral(forAnchorId));
           }
         }
 
@@ -361,18 +396,41 @@ export default {
         });
 
         const forType = getForType(node)!;
+        const forAttrs = getKnownAttrValues(node);
         const signal = getSignal(tagSection, nodeRef, "for");
+        const isRequestDerived = isUpdateRequestDerivedAnchor(tagExtra);
+        if (
+          isUpdateStructuralMerge(tagExtra, [bodySection]) ||
+          // A loop with no structural reason still dispatches when its body
+          // carries update merges (patch-only branch tracking pairs items).
+          (isPersisted() && getUpdateMerges(bodySection).length > 0)
+        ) {
+          addUpdateMerge(tagSection, {
+            kind: "for",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            encodedAccessor: getScopeAccessorLiteral(nodeRef, true),
+            bodySection,
+            anchorId: isRequestDerived
+              ? getResumeRegisterId(bodySection, "update")
+              : undefined,
+          });
+          signal.updateGuard = true;
+        }
         signal.build = () => {
-          return callRuntime(
-            forTypeToDOMRuntime(forType),
-            getScopeAccessorLiteral(nodeRef, true),
-            ...replaceNullishAndEmptyFunctionsWith0(
-              getBranchRendererArgs(bodySection),
-            ),
+          const rendererArgs = replaceNullishAndEmptyFunctionsWith0(
+            getBranchRendererArgs(bodySection),
           );
+          if (!(isRequestDerived && isPersistedEntryBuild())) {
+            return callRuntime(
+              forTypeToDOMRuntime(forType),
+              getScopeAccessorLiteral(nodeRef, true),
+              ...rendererArgs,
+            );
+          }
+
+          return t.numericLiteral(0);
         };
 
-        const forAttrs = getKnownAttrValues(node);
         const loopArgs = getBaseArgsInForTag(forType, forAttrs);
         if (forAttrs.by) {
           loopArgs.push(forAttrs.by);

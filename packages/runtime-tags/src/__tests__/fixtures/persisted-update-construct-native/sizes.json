@@ -1,0 +1,20 @@
+{
+  "dom": {
+    "nav.js": {
+      "min": 5871,
+      "brotli": 2407
+    },
+    "template.marko.page.mjs": {
+      "min": 243,
+      "brotli": 175
+    },
+    "abort-signal.mjs": {
+      "min": 8622,
+      "brotli": 3680
+    }
+  },
+  "html": {
+    "min": 541,
+    "brotli": 333
+  }
+}

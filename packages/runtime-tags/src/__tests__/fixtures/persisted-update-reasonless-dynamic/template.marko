@@ -1,0 +1,12 @@
+import { pickTemplate } from "./data";
+
+<let/count=0/>
+<button onClick() { count++ }>count ${count}</button>
+<define/Primary>
+  <p.primary>primary</p>
+</define>
+<define/Fallback>
+  <p.fallback>fallback</p>
+</define>
+
+<${pickTemplate(Primary, Fallback)}/>

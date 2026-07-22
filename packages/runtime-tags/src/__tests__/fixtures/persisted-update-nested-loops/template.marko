@@ -1,0 +1,23 @@
+import { getNav, REGIONS } from "./data";
+
+<const/path=$global.params.path>
+<const/region=$global.params.region>
+<let/count=0>
+<button.bump onClick() { count++ }>${count}</button>
+<nav>
+  <for|section| of=getNav()>
+    <div>
+      <h4>${section.title}</h4>
+      <for|page| of=section.pages by="slug">
+        <a class=["link", { active: path === page.slug }]>${page.title}</a>
+      </for>
+    </div>
+  </for>
+</nav>
+<if=REGIONS.length>
+  <p>
+    <for|r| of=REGIONS>
+      <b class=(region === r && "on")>${r}</b>
+    </for>
+  </p>
+</if>

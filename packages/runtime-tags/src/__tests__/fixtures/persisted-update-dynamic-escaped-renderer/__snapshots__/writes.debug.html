@@ -1,0 +1,25 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<section class=stage>
+  <h2 class=headline>2<!--M_*2 #text/0--> on stage</h2><!--M_[-->
+  <ol class=lineup>
+    <li>ada<!--M_*4 #text/0--></li>
+    <li>grace<!--M_*5 #text/0--></li><!--M_}3 #ol/0 5 4-->
+  </ol><!--M_]2 #text/1 3-->
+</section>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "#childScope/2": _(2)
+    }, {
+      "ConditionalRenderer:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-escaped-renderer/tags/lineup.marko"
+    }, 1, {
+      "#LoopKey": "ada"
+    }, {
+      "#LoopKey": "grace"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-escaped-renderer/template.marko_0 1"
+  ];
+  M._.w()
+</script>

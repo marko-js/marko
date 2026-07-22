@@ -1,0 +1,6 @@
+import { rejectAfter } from "../../../utils/resolve";
+static if (typeof window !== "undefined") {
+  await rejectAfter(new Error("stale lazy rejection"));
+}
+
+<button class="lazy">rejecting ${input.label}</button>

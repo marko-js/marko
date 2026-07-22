@@ -16,6 +16,7 @@ import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
+import { getResumeOnlyExpr } from "../util/serialize-guard";
 import { addSerializeReason } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement, setSectionSerializedValue } from "../util/signals";
@@ -92,10 +93,12 @@ export default {
           setSectionSerializedValue(
             section,
             getAccessorProp().TagVariableChange,
-            t.logicalExpression(
-              "||",
-              attrs.valueChange,
-              t.unaryExpression("void", t.numericLiteral(0)),
+            getResumeOnlyExpr(
+              t.logicalExpression(
+                "||",
+                attrs.valueChange,
+                t.unaryExpression("void", t.numericLiteral(0)),
+              ),
             ),
           );
         }

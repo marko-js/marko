@@ -1,0 +1,9 @@
+import { getItems } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<ul.items>
+  <for|item| of=getItems?.($global.range) by(item) { return item.id }>
+    <li>${item.name}</li>
+  </for>
+</ul>

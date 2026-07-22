@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+// The h1 handler gives the root a resumable effect for live-root pairing; the
+// await-body button pins that later-delivered content joins the live graph.
+<let/n=0/>
+<h1 onClick() { n++ }>${input.heading} clicked ${n}</h1>
+<main>
+  <try>
+    <@placeholder>fetching…</@placeholder>
+    <await|value|=resolveAfter(input.value, input.tick)>
+      <button onClick() { n++ }>${value}</button>
+    </await>
+  </try>
+</main>

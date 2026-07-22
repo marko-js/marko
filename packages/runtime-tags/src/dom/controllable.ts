@@ -202,6 +202,7 @@ export function _attr_input_value_dynamic_default(
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   // Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
+  // (`_update_input_value_dynamic` repeats this regex to keep it out of page bundles.)
   if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
     _attr(el, "value", value);
   } else {
@@ -257,7 +258,7 @@ export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
     }
   });
 }
-function setInputValue(el: HTMLInputElement, value: string) {
+export function setInputValue(el: HTMLInputElement, value: string) {
   if (el.value !== value) {
     const updatedPosition = resolveCursorPosition(
       inputType,
@@ -549,7 +550,7 @@ function hasFormElementChanged(el: Element) {
         hasCheckboxChanged(el as HTMLInputElement);
 }
 
-function normalizeStrProp(value: unknown) {
+export function normalizeStrProp(value: unknown) {
   return normalizeAttrValue(value) || "";
 }
 

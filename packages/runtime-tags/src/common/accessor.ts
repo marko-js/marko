@@ -12,6 +12,13 @@ export enum AccessorPrefix {
   Lifecycle = "K",
   Promise = "L",
   TagVariableChange = "M",
+  // Patch-only namespaces below are inlined like the rest of the enum, so
+  // ordinary client bundles never carry them.
+  PatchAttr = "N",
+  PatchHole = "Q",
+  PatchHtml = "R",
+  PatchApplied = "S",
+  BoundaryAnchor = "T",
 }
 
 export enum AccessorProp {

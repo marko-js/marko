@@ -10,7 +10,7 @@ import {
 } from "./binding-prop-tree";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
-import { isOptimize } from "./marko-config";
+import { isOptimize, isPersisted } from "./marko-config";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -113,6 +113,10 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
+export function getKnownTagChildScopeBinding(tag: t.NodePath<t.MarkoTag>) {
+  return tag.node.extra?.[kChildScopeBinding];
+}
+
 export function knownTagAnalyze(
   tag: t.NodePath<t.MarkoTag>,
   contentSection: Section,
@@ -172,6 +176,13 @@ export function knownTagAnalyze(
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
+  if (isPersisted()) {
+    addSerializeReason(
+      section,
+      { state: undefined, param: undefined, global: true },
+      childScopeBinding,
+    );
+  }
 }
 
 export function knownTagTranslateHTML(

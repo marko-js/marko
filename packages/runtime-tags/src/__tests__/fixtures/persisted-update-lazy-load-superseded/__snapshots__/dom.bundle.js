@@ -1,0 +1,92 @@
+// template.marko.persisted.mjs
+const $count = _var_resume("a9", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
+	$count($scope, $scope.d + 1);
+}));
+_load_ready("_c", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:resolving.marko.setup.mjs")));
+_load_ready("_b", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:rejecting.marko.setup.mjs")));
+const $Home_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
+const $count_seed = _update_signal("a9");
+const $Resolve_content__update = ($patch, $live) => {
+	if ("b" in $patch) _update_load($patch["b"], $live["b"], "c0", $live, 0, "c");
+};
+const $Reject_content__update = ($patch, $live) => {
+	if ("b" in $patch) _update_load($patch["b"], $live["b"], "b0", $live, 0, "b");
+};
+const $update2 = ($patch, $live) => {
+	_update_pair($patch, $live);
+	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
+	if ("Dc" in $patch || "Ac" in $patch) _update_dynamic($patch, $live, "Dc", "Ac");
+};
+_update_content("a4", $Resolve_content__update);
+_update_content("a3", $Reject_content__update);
+_update_content("a2", $Home_content_holes);
+const $merge = _resume("a1", $update2);
+_update_content("a", $merge);
+function $patch2($fail) {
+	return patch($merge, $fail);
+}
+
+// template.marko
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
+const $setup__script = _script_update("a5", ($scope) => _on($scope.a, "click", function() {
+	$count($scope, $scope.d + 1);
+}));
+
+// tags/rejecting.marko.persisted.mjs
+const $template = "<button class=lazy>rejecting <!></button>";
+const $walks = "Db%l";
+const $setup = () => {};
+const $input_label = ($scope, input_label) => _text($scope.a, input_label);
+const $input = ($scope, input) => $input_label($scope, input.label);
+var rejecting_marko_persisted_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
+const $merge = _resume("b0", /* @__PURE__ */ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") }));
+_update_content("b", $merge);
+function $patch2($fail) {
+	return patch($merge, $fail);
+}
+
+// tags/rejecting.marko
+const $template = "<button class=lazy>rejecting <!></button>";
+const $walks = "Db%l";
+const $setup = () => {};
+if (typeof window !== "undefined") await rejectAfter(/* @__PURE__ */ new Error("stale lazy rejection"));
+const $input_label = ($scope, input_label) => _text($scope.a, input_label);
+const $input = ($scope, input) => $input_label($scope, input.label);
+var rejecting_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
+
+// tags/resolving.marko.persisted.mjs
+const $template = "<button class=lazy>resolving <!></button>";
+const $walks = "Db%l";
+const $setup = () => {};
+const $input_label = ($scope, input_label) => _text($scope.a, input_label);
+const $input = ($scope, input) => $input_label($scope, input.label);
+var resolving_marko_persisted_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $input);
+const $merge = _resume("c0", /* @__PURE__ */ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") }));
+_update_content("c", $merge);
+function $patch2($fail) {
+	return patch($merge, $fail);
+}
+
+// tags/resolving.marko
+const $template = "<button class=lazy>resolving <!></button>";
+const $walks = "Db%l";
+const $setup = () => {};
+if (typeof window !== "undefined") await resolveAfter(0);
+const $input_label = ($scope, input_label) => _text($scope.a, input_label);
+const $input = ($scope, input) => $input_label($scope, input.label);
+var resolving_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $input);
+
+// tags/v:rejecting.marko.setup.js
+const _ = [
+	$template,
+	$walks,
+	$setup
+];
+
+// tags/v:resolving.marko.setup.js
+const _ = [
+	$template,
+	$walks,
+	$setup
+];

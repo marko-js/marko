@@ -1,0 +1,29 @@
+import { getLabel, getReport } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/PanelA>
+  <span.a>A: ${getLabel?.($global.topic)}</span>
+</define>
+<define/PanelB>
+  <section.b>B: ${getLabel?.($global.topic)}</section>
+</define>
+<define/PanelAsync>
+  // Simultaneously diverging hops each construct their own branch; a
+  // later capture with an unresolved boundary must abort into the fallback.
+  <try>
+    <@placeholder>
+      <p.loading>loading…</p>
+    </@placeholder>
+    <await|data|=getReport($global.topic)>
+      <p.report>${data}</p>
+    </await>
+  </try>
+</define>
+
+<ul>
+  <for|item| of=$global.items by(item) { return item.id }>
+    <${item.view === "b" ? PanelB : item.view === "c" ? PanelAsync : PanelA}/>
+  </for>
+</ul>

@@ -1,0 +1,12 @@
+static let renders = 0;
+static renders++;
+static function trackRender() {
+  renders++;
+}
+
+<let/count=0/>
+<button.count onClick() { renders++; count++ }>clicked ${count} of ${renders}</button>
+<script>
+  renders = count;
+</script>
+<span.allowed onClick() { trackRender() }>via static function is fine</span>

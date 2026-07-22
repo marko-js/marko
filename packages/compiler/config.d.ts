@@ -1,11 +1,15 @@
-type EntryKind = "page" | "load";
+type EntryKind = "page" | "load" | "persisted" | "renderers";
+type LinkedEntryKind = "page" | "load";
 declare const Config: {
   /** `"hydrate"` is deprecated; Marko 6 resumes rather than hydrates. Prefer `output: "dom", entry: "page"` for new page entries, noting that unlike `"hydrate"` it also enables taglib translators. */
   output?: "html" | "dom" | "migrate" | "source" | "hydrate";
+  /** Derived artifact to compile: the "page"/"load" entry facades,
+   * "persisted" (the `x.marko?persisted` update graph), or "renderers" (the
+   * server-side construction-triple map); all share one analysis. */
   entry?: EntryKind;
   linkAssets?: {
     runtime: string;
-    onAsset(kind: EntryKind, file: string, id: string): void;
+    onAsset(kind: LinkedEntryKind, file: string, id: string): void;
   };
   errorRecovery?: boolean;
   applyFixes?: Map<number, unknown>;
@@ -32,6 +36,9 @@ declare const Config: {
   hydrateInit?: boolean;
   optimize?: boolean;
   optimizeKnownTemplates?: string[];
+  /** Build-constant flag enabling persisted (single-page server-first update)
+   * output; a render with `$global.persisted` set then emits patch frames. */
+  persisted?: boolean;
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated */

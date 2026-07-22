@@ -1,0 +1,40 @@
+{
+  "dom": {
+    "nav.js": {
+      "min": 802,
+      "brotli": 421
+    },
+    "template.marko.page.mjs": {
+      "min": 182,
+      "brotli": 159
+    },
+    "rejecting2.marko.persisted.mjs": {
+      "min": 425,
+      "brotli": 247
+    },
+    "rejecting2.mjs": {
+      "min": 351,
+      "brotli": 212
+    },
+    "resolving2.marko.persisted.mjs": {
+      "min": 425,
+      "brotli": 247
+    },
+    "resolving2.mjs": {
+      "min": 318,
+      "brotli": 197
+    },
+    "v:rejecting.marko.setup.mjs": {
+      "min": 123,
+      "brotli": 96
+    },
+    "v:resolving.marko.setup.mjs": {
+      "min": 123,
+      "brotli": 93
+    }
+  },
+  "html": {
+    "min": 446,
+    "brotli": 291
+  }
+}

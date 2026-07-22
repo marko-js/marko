@@ -1,11 +1,19 @@
 import {
+  AccessorPrefix,
   AccessorProp,
+  type AwaitCounter,
   type BranchScope,
   PendingRenderProp,
+  RendererProp,
   type Scope,
 } from "../common/types";
-import { renderCatch } from "./control-flow";
+import { createAndSetupBranch } from "./renderer";
 import { enableBranches } from "./resume";
+import {
+  destroyBranch,
+  findBranchWithKey,
+  setConditionalRenderer,
+} from "./scope";
 import type { Signal, SignalFn } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -247,5 +255,42 @@ export function _enable_catch() {
         renderCatch(render[PendingRenderProp.Scope], error);
       }
     })(runRender);
+  }
+}
+
+// Hosted here (not dom/control-flow) so page-entry chunks that reach the
+// render queue never pull the branch-construction chunk eagerly.
+// Catching destroys the content branch (and its subscriptions) for good: a new
+// promise can't recover the boundary, only re-rendering the `<try>` itself.
+export function renderCatch(scope: Scope, error: unknown) {
+  const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
+  if (!tryWithCatch) {
+    throw error;
+  } else {
+    const owner = tryWithCatch[AccessorProp.Owner]!;
+    const placeholderBranch = tryWithCatch[
+      AccessorProp.PlaceholderBranch
+    ] as BranchScope;
+    if (placeholderBranch) {
+      if (tryWithCatch[AccessorProp.AwaitCounter])
+        (tryWithCatch[AccessorProp.AwaitCounter] as AwaitCounter).i = 0;
+      owner[
+        AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
+      ] = placeholderBranch;
+      destroyBranch(tryWithCatch);
+    }
+    caughtError.add(pendingEffects);
+    setConditionalRenderer(
+      owner,
+      tryWithCatch[AccessorProp.BranchAccessor],
+      tryWithCatch[AccessorProp.CatchContent],
+      createAndSetupBranch,
+    );
+    tryWithCatch[AccessorProp.CatchContent]?.[RendererProp.Params]?.(
+      owner[
+        AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
+      ],
+      [error],
+    );
   }
 }

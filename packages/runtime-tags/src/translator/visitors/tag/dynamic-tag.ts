@@ -5,6 +5,7 @@ import {
   getTagTemplate,
   importDefault,
   importNamed,
+  loadFileForImport,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
@@ -24,7 +25,7 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
   type Binding,
@@ -34,6 +35,7 @@ import {
   getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
+  onFinalizeReferences,
   trackParamsReferences,
   trackVarReferences,
 } from "../../util/references";
@@ -70,36 +72,27 @@ import {
   signalHasStatements,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { createProgramState } from "../../util/state";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import { toMemberExpression } from "../../util/to-property-name";
 import {
+  assertPersistedSpreadSupported,
   getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
+import {
+  addUpdateMerge,
+  getUpdateAnchorRegisterId,
+  isUpdateDynamicTagAnchor,
+} from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { getTagRelativePath } from "./custom-tag";
+import { getChildImportPath, getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 const importedDynamicTagResume = new WeakSet<t.Program>();
-
-// Class-API interop registrations are idempotent and keyed by the shared
-// renderer, so one per program suffices no matter how many tags reference it.
-const [getCompatRegistrations] = createProgramState<Set<string>>(
-  () => new Set(),
-);
-function pushCompatRegistration(key: string, statement: t.Statement) {
-  const keys = getCompatRegistrations();
-  if (!keys.has(key)) {
-    keys.add(key);
-    getProgram().node.body.push(statement);
-  }
-}
-
 enum ClassHydration {
   Self = "self",
   Descendant = "descendant",
@@ -117,6 +110,10 @@ declare module "@marko/compiler/dist/types" {
     [kDOMBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
     defineBodySection?: Section;
+    dynamicTagImports?: string[];
+  }
+  export interface ProgramExtra {
+    escapedTemplateImports?: string[];
   }
 }
 
@@ -171,6 +168,18 @@ export default {
           kChildOffsetScopeBinding
         ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
       }
+      if (isPersisted() && tagExtra.featureType !== "class") {
+        tagExtra.dynamicTagImports = getDynamicTagImports(tag);
+      }
+      onFinalizeReferences(() => {
+        if (isUpdateDynamicTagAnchor(tagSection, nodeBinding, node.name)) {
+          getUpdateAnchorRegisterId(
+            tagSection,
+            "dynamic",
+            getScopeAccessor(nodeBinding),
+          );
+        }
+      });
 
       startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
@@ -340,8 +349,7 @@ export default {
           if (
             isOutputHTML() ? serializeReason || classHydration : serializeReason
           ) {
-            pushCompatRegistration(
-              classFile!.metadata.marko.id,
+            getProgram().node.body.push(
               isOutputHTML()
                 ? t.markoScriptlet(
                     [
@@ -374,19 +382,17 @@ export default {
             );
           }
         } else {
-          const rendererName = (tagExpression as t.Identifier).name;
-          pushCompatRegistration(
-            rendererName,
+          getProgram().node.body.push(
             t.markoScriptlet(
               [
                 t.expressionStatement(
                   t.assignmentExpression(
                     "??=",
                     t.memberExpression(
-                      t.identifier(rendererName),
+                      t.identifier((tagExpression as t.Identifier).name),
                       t.identifier("_"),
                     ),
-                    t.identifier(rendererName),
+                    t.identifier((tagExpression as t.Identifier).name),
                   ),
                 ),
               ],
@@ -397,7 +403,7 @@ export default {
       } else if (t.isStringLiteral(tagExpression)) {
         tagExpression = importDefault(
           tag.hub.file,
-          getTagRelativePath(tag),
+          getChildImportPath(tag.hub.file, getTagRelativePath(tag)),
           tagExpression.value,
         );
       }
@@ -409,6 +415,11 @@ export default {
         undefined,
         isClassAPI ? "renderBody" : "content",
       );
+      for (const arg of node.arguments || []) {
+        if (t.isSpreadElement(arg)) {
+          assertPersistedSpreadSupported(tag, arg.argument);
+        }
+      }
       const args: (t.Expression | t.SpreadElement)[] = [];
       const contentProp = getTranslatedBodyContentProperty(properties);
       let hasTagArgs = false;
@@ -432,11 +443,32 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const serializeArg = getSerializeGuard(
+        let serializeArg = getSerializeGuard(
           tagSection,
           serializeReason,
-          true,
+          !isPersisted(),
         );
+        if (isPersisted()) {
+          serializeArg = t.binaryExpression(
+            "|",
+            serializeArg!,
+            callRuntime("_persisted_reason"),
+          );
+        }
+        // This build-stable id addresses the hop in the opaque server token.
+        const anchorId = isUpdateDynamicTagAnchor(
+          tagSection,
+          nodeBinding,
+          node.name,
+        )
+          ? t.stringLiteral(
+              getUpdateAnchorRegisterId(
+                tagSection,
+                "dynamic",
+                getScopeAccessor(nodeBinding),
+              ),
+            )
+          : undefined;
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -449,6 +481,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              anchorId,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -459,6 +492,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              anchorId,
             );
 
         if (node.var) {
@@ -510,9 +544,23 @@ export default {
           replacement.skip();
         }
       } else {
-        const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
-        const signal = getSignal(section, nodeBinding, "dynamicTag");
+        const signal = getSignal(tagSection, nodeBinding, "dynamicTag");
+        if (isUpdateDynamicTagAnchor(tagSection, nodeBinding, node.name)) {
+          const accessor = getScopeAccessorLiteral(nodeBinding);
+          addUpdateMerge(tagSection, {
+            kind: "dynamic",
+            accessor,
+          });
+          // Runtime dispatch is by renderer id, so each known candidate
+          // template's `?persisted` merge registration must load with this entry.
+          for (const request of tagExtra.dynamicTagImports || []) {
+            const importPath = getChildImportPath(tag.hub.file, request);
+            if (importPath !== request) {
+              importDefault(tag.hub.file, importPath);
+            }
+          }
+        }
         let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
           const varBinding = tag.node.var.extra!.binding!;
@@ -596,12 +644,159 @@ export default {
         if (!isClassAPI) {
           enableDynamicTagResume(tag);
         }
-        addValue(section, tagExtra.referencedBindings, signal, tagExpression);
+        addValue(
+          tagSection,
+          tagExtra.referencedBindings,
+          signal,
+          tagExpression,
+        );
         tag.remove();
       }
     },
   },
 } satisfies TemplateVisitor<t.MarkoTag>;
+
+// Collects the tag name expression's known template candidates (excluding load
+// imports and class renderers); anything unresolvable is a runtime renderer.
+function getDynamicTagImports(tag: t.NodePath<t.MarkoTag>) {
+  const { file } = tag.hub;
+  const pending = [tag.get("name")] as t.NodePath<t.Expression>[];
+  const followed = new Set<t.NodePath>();
+  let imports: string[] | undefined;
+  let path: (typeof pending)[0] | undefined;
+
+  while ((path = pending.pop())) {
+    if (path.isConditionalExpression()) {
+      pending.push(path.get("consequent"));
+      if (path.node.alternate) {
+        pending.push(path.get("alternate"));
+      }
+    } else if (path.isLogicalExpression()) {
+      if (path.node.operator !== "&&") {
+        pending.push(path.get("left"));
+      }
+      pending.push(path.get("right"));
+    } else if (path.isAssignmentExpression()) {
+      pending.push(path.get("right"));
+    } else if (path.isIdentifier()) {
+      const binding = path.scope.getBinding(path.node.name);
+      if (!binding) continue;
+
+      if (binding.kind === "module") {
+        if (!t.isImportDefaultSpecifier(binding.path.node)) continue;
+        const request = getTemplateImportRequest(
+          binding.path.parent as t.ImportDeclaration,
+        );
+        if (
+          request &&
+          !imports?.includes(request) &&
+          isTagsTemplate(file, request)
+        ) {
+          (imports ||= []).push(request);
+        }
+        continue;
+      }
+
+      const bindingTag = binding.path as t.NodePath<t.MarkoTag>;
+      if (
+        bindingTag.isMarkoTag() &&
+        (binding.kind as typeof binding.kind & "local") === "local" &&
+        (bindingTag.get("name").node as t.StringLiteral).value === "const" &&
+        !followed.has(bindingTag)
+      ) {
+        followed.add(bindingTag);
+        pending.push(
+          (bindingTag.get("attributes")[0] as t.NodePath<t.MarkoAttribute>).get(
+            "value",
+          ),
+        );
+      }
+    }
+  }
+
+  return imports;
+}
+
+// Collects imported templates escaping as runtime values (reachable by dynamic
+// tags unseen above); each gets a deferred `?persisted` loader registered.
+export function getEscapedTemplateImports(program: t.NodePath<t.Program>) {
+  const { file } = program.hub;
+  let imports: string[] | undefined;
+  for (const statement of program.get("body")) {
+    if (!statement.isImportDeclaration()) continue;
+    const decl = statement.node;
+    const request = getTemplateImportRequest(decl);
+    if (!request) continue;
+    const specifier = decl.specifiers.find(t.isImportDefaultSpecifier);
+    const binding = specifier && program.scope.getBinding(specifier.local.name);
+    if (!binding?.referencePaths.some((ref) => isEscapedTemplateRef(ref))) {
+      continue;
+    }
+    if (isTagsTemplate(file, request)) {
+      (imports ||= []).push(request);
+    }
+  }
+  return imports;
+}
+
+// A `load=` import pairs its `?persisted` entry through its ready channel, so
+// only plain `.marko` default imports resolve to candidate requests.
+function getTemplateImportRequest(decl: t.ImportDeclaration) {
+  if (decl.extra?.loadImport) return;
+  const request = decl.extra?.tagImport || decl.source.value;
+  if (request.endsWith(".marko")) return request;
+}
+
+// Class renderers dispatch through the interop layer, never a compiled merge.
+function isTagsTemplate(file: t.BabelFile, request: string) {
+  const childFile = loadFileForImport(file, request);
+  return !!childFile && childFile.ast.program.extra.featureType !== "class";
+}
+
+// A reference is consumed only when every step up to a tag name is a chain the
+// candidate analysis follows; anything less certain counts as an escape.
+function isEscapedTemplateRef(
+  ref: t.NodePath,
+  followedVars = new Set<t.Node>(),
+): boolean {
+  let path = ref;
+  for (;;) {
+    const parent = path.parentPath;
+    if (!parent) return true;
+    if (parent.isMarkoTag()) {
+      return path.node !== parent.node.name;
+    }
+    if (
+      (parent.isConditionalExpression() && path.key !== "test") ||
+      (parent.isLogicalExpression() &&
+        (path.key === "right" || parent.node.operator !== "&&")) ||
+      (parent.isAssignmentExpression() && path.key === "right")
+    ) {
+      path = parent;
+      continue;
+    }
+    if (parent.isMarkoAttribute() && path.key === "value") {
+      const tag = parent.parentPath as t.NodePath<t.MarkoTag>;
+      const tagVar = tag.node.var;
+      if (
+        (tag.node.name as t.StringLiteral).value === "const" &&
+        parent.node === tag.node.attributes[0] &&
+        t.isIdentifier(tagVar) &&
+        !followedVars.has(tag.node)
+      ) {
+        followedVars.add(tag.node);
+        const varBinding = parent.scope.getBinding(tagVar.name);
+        return (
+          !varBinding ||
+          varBinding.referencePaths.some((varRef) =>
+            isEscapedTemplateRef(varRef, followedVars),
+          )
+        );
+      }
+    }
+    return true;
+  }
+}
 
 function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
   const program = getProgram().node;

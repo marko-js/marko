@@ -79,6 +79,7 @@ export interface Section {
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */
   abortSignalExprs: number;
+  hasGlobalReads: boolean;
   readsOwner: boolean;
   isBranch: boolean;
   content: null | {
@@ -154,6 +155,7 @@ export function startSection(
       downstreamBinding: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
+      hasGlobalReads: false,
       readsOwner: false,
       isBranch: false,
     };

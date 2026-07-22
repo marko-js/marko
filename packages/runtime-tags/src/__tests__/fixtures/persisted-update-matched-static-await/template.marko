@@ -1,0 +1,28 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<h1>${input.title}</h1>
+<button onClick() { count++ }>clicked ${count}</button>
+<if=input.missing>
+  <p>gone</p>
+</if>
+<else>
+  <section>
+    <try>
+      <@placeholder>loading deals…</@placeholder>
+      <await=resolveAfter(0, 1)>
+        <p><strong>deals never change</strong></p>
+      </await>
+    </try>
+  </section>
+  <footer>
+    <try>
+      <@placeholder>loading reviews…</@placeholder>
+      <await=resolveAfter(0, 2)>
+        <for|i| from=1 to=3>
+          <em>review ${i} of ${input.title}</em>
+        </for>
+      </await>
+    </try>
+  </footer>
+</else>

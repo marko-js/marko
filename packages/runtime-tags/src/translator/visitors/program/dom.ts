@@ -3,6 +3,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
+import { isPersisted, isPersistedEntryBuild } from "../../util/marko-config";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -20,6 +21,8 @@ import {
 } from "../../util/sections";
 import {
   addStatement,
+  buildUpdatingGuard,
+  finalizeRenderStatements,
   getResumeRegisterId,
   getSetup,
   getSignal,
@@ -31,6 +34,13 @@ import {
   writeSignals,
 } from "../../util/signals";
 import { toPropertyName } from "../../util/to-property-name";
+import {
+  cloneUpdateGlobalsStatements,
+  getUpdateGlobalsRegisterId,
+  getUpdateGlobalsStatements,
+  isUpdateDeliveredClosure,
+  registerUpdateValueSignals,
+} from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 
@@ -55,7 +65,14 @@ export default {
                     [scopeIdentifier],
                   ),
                 );
-                addStatement("render", childSection, undefined, invocation);
+                addStatement(
+                  "render",
+                  childSection,
+                  undefined,
+                  isPersisted() && isUpdateDeliveredClosure(closure)
+                    ? buildUpdatingGuard(invocation)
+                    : invocation,
+                );
               }
             }
           });
@@ -63,6 +80,13 @@ export default {
       });
     },
     exit(program) {
+      // Deferred entries register update signals; eager modules leave them
+      // unregistered so an unused client render graph can tree-shake.
+      if (isPersistedEntryBuild()) {
+        forEachSectionReverse(registerUpdateValueSignals);
+        // Snapshot before any writeSignals call rewrites the originals.
+        forEachSectionReverse(cloneUpdateGlobalsStatements);
+      }
       forEachSectionReverse(writer.getSectionMeta);
 
       const section = getSectionForBody(program)!;
@@ -106,7 +130,10 @@ export default {
               ]);
             } else {
               let renderer = callRuntime(
-                getSectionRegisterReasons(childSection)
+                // Persisted entries never register content construction:
+                // divergent content arrives as a resumable HTML replacement.
+                !isPersistedEntryBuild() &&
+                  getSectionRegisterReasons(childSection)
                   ? "_content_resume"
                   : "_content",
                 t.stringLiteral(getResumeRegisterId(childSection, "content")),
@@ -167,6 +194,27 @@ export default {
       const written = writeSignals(section);
       writeRegisteredFns();
 
+      if (isPersistedEntryBuild()) {
+        forEachSectionReverse((globalsSection) => {
+          const statements = getUpdateGlobalsStatements(globalsSection);
+          if (statements.length) {
+            finalizeRenderStatements(statements);
+            program.node.body.push(
+              t.expressionStatement(
+                callRuntime(
+                  "_resume",
+                  t.stringLiteral(getUpdateGlobalsRegisterId(globalsSection)),
+                  t.arrowFunctionExpression(
+                    [scopeIdentifier],
+                    t.arrowFunctionExpression([], t.blockStatement(statements)),
+                  ),
+                ),
+              ),
+            );
+          }
+        });
+      }
+
       const setup = getSetup(section);
       if (domExports.setupEmpty && setup && written.has(setup)) {
         // Parents skip calling this setup export because analyze proved it a noop;
@@ -175,7 +223,6 @@ export default {
           "Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it. Please open an issue with a reproduction.",
         );
       }
-
       if (!setup) {
         program.node.body.unshift(
           t.exportNamedDeclaration(

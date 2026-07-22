@@ -1,9 +1,16 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { $Global, Template } from "../common/types";
+import { type $Global, RendererProp, type Template } from "../common/types";
 import { _escape_script } from "./content";
 import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
-import { _html, $global, writeScript, writeWaitReady } from "./writer";
+import {
+  _html,
+  $global,
+  emitShellFrame,
+  getChunk,
+  writeScript,
+  writeWaitReady,
+} from "./writer";
 
 const kAssets = Symbol();
 const kBlockIndex = Symbol();
@@ -65,6 +72,13 @@ export function withLoadAssets(
     const g = $global();
     addAsset(g, assetId, triggers);
     _html(flush(g, ""));
+    // A constructed parent builds the lazy child's DOM from its root shell
+    // before the module loads (behavior arrives with the ready batch).
+    const chunk = getChunk()!;
+    const { state } = chunk.boundary;
+    if (state.patch && renderer[RendererProp.Id]) {
+      emitShellFrame(state, renderer[RendererProp.Id]!);
+    }
     return writeWaitReady(assetId, renderer, input);
   }, renderer);
 }

@@ -270,6 +270,21 @@ export function _attrs(
   let result = "";
   let skip = /[\s/>"'=]/;
   let events: Record<string, unknown> | undefined;
+  // Patch renders discard markup, so runtime attrs ride the scope as typed
+  // captures instead (constructed and matched branches apply them).
+  const chunk = getChunk();
+  const captures = chunk?.boundary.state.patch
+    ? ({} as Record<string, unknown>)
+    : undefined;
+  let captured: 1 | undefined;
+  const capture = (name: string, value: unknown) => {
+    captured = 1;
+    captures![AccessorPrefix.PatchAttr + name + ":" + nodeAccessor] = isVoid(
+      value,
+    )
+      ? null
+      : value;
+  };
   // A lone `null`/`undefined`/`false` spread reaches here unwrapped; skip the
   // controllable switch (the attr loop below is a no-op on a nullish value).
   switch (data && tagName) {
@@ -341,24 +356,19 @@ export function _attrs(
     switch (name) {
       case "class":
         result += _attr_class(value);
+        if (captures) capture(name, value);
         break;
       case "style":
         result += _attr_style(value);
+        if (captures) capture(name, value);
         break;
       default:
         if (
           name &&
-          !(
-            isVoid(value) ||
-            skip.test(name) ||
-            (name === "content" && tagName !== "meta")
-          )
+          !(skip.test(name) || (name === "content" && tagName !== "meta"))
         ) {
-          if (MARKO_DEBUG) {
-            assertValidAttrName(name);
-          }
-
           if (isEventHandler(name)) {
+            if (isVoid(value)) break;
             if (!events) {
               events = {};
               _scope(scopeId, {
@@ -367,13 +377,21 @@ export function _attrs(
             }
 
             events[getEventHandlerName(name)] = value;
-          } else {
+          } else if (!isVoid(value)) {
+            if (MARKO_DEBUG) {
+              assertValidAttrName(name);
+            }
             result += nonVoidAttr(name, value);
+            if (captures) capture(name, value);
+          } else if (captures) {
+            // A void attr is an explicit removal for matched branches.
+            capture(name, value);
           }
         }
         break;
     }
   }
+  if (captured) _scope(scopeId, captures!);
   return result;
 }
 
@@ -429,6 +447,10 @@ function writeControlledScope(
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("valueChange", valueChange);
   }
+
+  // Patch renders skip controlled wiring; typed captures re-assert it.
+  const chunk = getChunk()!;
+  if (chunk.boundary.state.patch) return;
 
   _scope(
     scopeId,
