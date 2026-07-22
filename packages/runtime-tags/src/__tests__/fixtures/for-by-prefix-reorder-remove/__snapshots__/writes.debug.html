@@ -1,0 +1,43 @@
+<ul>
+  <li>1<!--M_*2 #text/0--></li>
+  <li>2<!--M_*3 #text/0--></li>
+  <li>3<!--M_*4 #text/0--></li>
+  <li>4<!--M_*5 #text/0--></li>
+  <li>5<!--M_*6 #text/0--></li><!--M_}1 #ul/0 6 5 4 3 2-->
+</ul><button class=reorder>stable prefix, drop tail,
+  swap</button><!--M_*1 #button/1--><button class=front>reorder from front and
+  shrink</button><!--M_*1 #button/2--><button
+  class=append>append</button><!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      rows: [_.a = {
+        id: 1
+      }, _.b = {
+        id: 2
+      }, _.d = {
+        id: 3
+      }, _.c = {
+        id: 4
+      }, {
+        id: 5
+      }],
+      rows_0: _.a,
+      rows_1: _.b,
+      rows_3: _.c,
+      rows_2: _.d
+    }, {
+      "#LoopKey": 1
+    }, {
+      "#LoopKey": 2
+    }, {
+      "#LoopKey": 3
+    }, {
+      "#LoopKey": 4
+    }, {
+      "#LoopKey": 5
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-by-prefix-reorder-remove/template.marko_0 1 packages/runtime-tags/src/__tests__/fixtures/for-by-prefix-reorder-remove/template.marko_0_rows_0_rows_1 1 packages/runtime-tags/src/__tests__/fixtures/for-by-prefix-reorder-remove/template.marko_0_rows_0_rows_1_rows_3_rows_2 1"
+  ];
+  M._.w()
+</script>

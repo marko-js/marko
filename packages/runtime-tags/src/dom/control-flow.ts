@@ -796,6 +796,7 @@ function loop<T extends unknown[] = unknown[]>(
       ) as Element;
       let oldScopesByKey: Map<unknown, BranchScope> | undefined;
       let hasPotentialMoves: boolean | undefined;
+      let start = 0;
 
       if (MARKO_DEBUG) {
         // eslint-disable-next-line no-var
@@ -807,18 +808,23 @@ function loop<T extends unknown[] = unknown[]>(
           assertValidLoopKey(key, seenKeys);
         }
 
+        const i = newScopes.length;
+        const oldScope = oldScopes[i];
         let branch =
           oldLen &&
-          (oldScopesByKey ||= oldScopes.reduce(
-            (map, scope, i) =>
-              map.set(
-                scope[AccessorProp.LoopKey] ?? i,
-                ((scope[AccessorProp.LoopIndex] = i), scope),
-              ),
-            new Map<unknown, BranchScope>(),
-          )).get(key);
+          (oldScopesByKey || key !== (oldScope?.[AccessorProp.LoopKey] ?? i)
+            ? (oldScopesByKey ||= oldScopes.reduce(
+                (map, scope, j) =>
+                  j < i
+                    ? map
+                    : ((scope[AccessorProp.LoopIndex] = j),
+                      map.set(scope[AccessorProp.LoopKey] ?? j, scope)),
+                new Map<unknown, BranchScope>(),
+              )).get(key)
+            : oldScope && (start++, oldScope));
         if (branch) {
-          hasPotentialMoves = oldScopesByKey!.delete(key);
+          hasPotentialMoves = true;
+          oldScopesByKey?.delete(key);
         } else {
           branch = createAndSetupBranch(
             scope[AccessorProp.Global],
@@ -837,7 +843,6 @@ function loop<T extends unknown[] = unknown[]>(
       let afterReference: null | Node = null;
       let oldEnd = oldLen - 1;
       let newEnd = newLen - 1;
-      let start = 0;
 
       if (hasSiblings) {
         if (oldLen) {
@@ -869,17 +874,12 @@ function loop<T extends unknown[] = unknown[]>(
         return;
       }
 
-      for (const branch of oldScopesByKey!.values()) {
-        removeAndDestroyBranch(branch);
-      }
-
-      // Skip common prefix
-      while (
-        start < oldLen &&
-        start < newLen &&
-        oldScopes[start] === newScopes[start]
-      ) {
-        start++;
+      if (oldScopesByKey) {
+        oldScopesByKey.forEach(removeAndDestroyBranch);
+      } else {
+        for (let i = newLen; i < oldLen; i++) {
+          removeAndDestroyBranch(oldScopes[i]);
+        }
       }
 
       // Skip common suffix
@@ -897,17 +897,10 @@ function loop<T extends unknown[] = unknown[]>(
         afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
       }
 
-      if (start > oldEnd) {
-        if (start <= newEnd) {
-          for (let i = start; i <= newEnd; i++) {
-            insertBranchBefore(newScopes[i], parentNode, afterReference);
-          }
+      if (start > oldEnd || start > newEnd) {
+        for (let i = start; i <= newEnd; i++) {
+          insertBranchBefore(newScopes[i], parentNode, afterReference);
         }
-
-        // Fast path: only new remaining
-        return;
-      } else if (start > newEnd) {
-        // Fast path: only old remaining (removes already handled above)
         return;
       }
 

@@ -1,0 +1,11 @@
+<let/rows=[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]/>
+
+<ul>
+  <for|row| of=rows by="id">
+    <li>${row.id}</li>
+  </for>
+</ul>
+
+<button.reorder onClick() { rows = [rows[0], rows[1], rows[3], rows[2]] }>stable prefix, drop tail, swap</button>
+<button.front onClick() { rows = [rows[1], rows[0]] }>reorder from front and shrink</button>
+<button.append onClick() { rows = [...rows, { id: 9 }] }>append</button>

@@ -1,0 +1,40 @@
+<ul>
+  <li>1<!--M_*2 a--></li>
+  <li>2<!--M_*3 a--></li>
+  <li>3<!--M_*4 a--></li>
+  <li>4<!--M_*5 a--></li>
+  <li>5<!--M_*6 a--></li><!--M_}1 a 6 5 4 3 2-->
+</ul><button class=reorder>stable prefix, drop tail,
+  swap</button><!--M_*1 b--><button class=front>reorder from front and
+  shrink</button><!--M_*1 c--><button class=append>append</button><!--M_*1 d-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    e: [_.a = {
+      id: 1
+    }, _.b = {
+      id: 2
+    }, _.d = {
+      id: 3
+    }, _.c = {
+      id: 4
+    }, {
+      id: 5
+    }],
+    f: _.a,
+    g: _.b,
+    h: _.c,
+    i: _.d
+  }, {
+    M: 1
+  }, {
+    M: 2
+  }, {
+    M: 3
+  }, {
+    M: 4
+  }, {
+    M: 5
+  }], "a0 1 a1 1 a2 1"];
+  M._.w()
+</script>
