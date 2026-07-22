@@ -1242,7 +1242,8 @@ function writeAggregateError(
   ref: Reference,
 ) {
   state.buf.push("new AggregateError(");
-  if (!writeProp(state, val.errors, ref, "errors")) {
+  const inlined = writeProp(state, val.errors, ref, "errors");
+  if (!inlined) {
     // Circular errors are applied through their deferred assignment instead.
     state.buf.push("[]");
   }
@@ -1250,6 +1251,15 @@ function writeAggregateError(
     state.buf.push("," + quote(val.message + "", 0) + ")");
   } else {
     state.buf.push(")");
+  }
+  if (inlined) {
+    // `new AggregateError(arr)` copies arr into a fresh writable `errors` slot,
+    // so relink a shared/fill-deferred array through it to keep identity and fills.
+    const errorsRef = state.refs.get(val.errors as object);
+    if (errorsRef?.id) {
+      state.assigned.add(errorsRef);
+      addAssignment(errorsRef, accessId(state, ref) + toAccess("errors"));
+    }
   }
   return true;
 }

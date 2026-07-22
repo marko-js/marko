@@ -1115,12 +1115,28 @@ describe("serializer", () => {
           `new AggregateError([_.a=new Error("test"),_.a],"test")`,
         );
       });
-      it("errors array referenced", () => {
+      it("errors array referenced keeps identity on resume", () => {
         const agg = new AggregateError([new Error("test")], "test");
-        assertStringify(
+        const [result] = assertSerializer().assertStringify(
           { errors: agg.errors, agg },
-          `{errors:_.a=[new Error("test")],agg:new AggregateError(_.a,"test")}`,
-        );
+          `{errors:_.a=[new Error("test")],agg:_.b=new AggregateError(_.a,"test")},_.b.errors=_.a`,
+        ) as [{ errors: unknown; agg: AggregateError }];
+        // The constructor copies its first arg; without the relink `agg.errors`
+        // would be a distinct array from the shared `errors`.
+        assert.equal(result.agg.errors, result.errors);
+      });
+      it("errors array with a deferred member keeps that member on resume", () => {
+        const agg = new AggregateError([], "failed");
+        const state = { agg };
+        agg.errors = [state];
+        const [result] = assertSerializer().assertStringify(
+          state,
+          `_.a={agg:_.c=new AggregateError(_.b=[],"failed")},_.b[0]=_.a,_.c.errors=_.b`,
+        ) as [{ agg: AggregateError }];
+        // The ancestor member fills the array after construction; without the
+        // relink it lands on the pre-copy array and `agg.errors` stays empty.
+        assert.equal(result.agg.errors.length, 1);
+        assert.equal(result.agg.errors[0], result);
       });
       it("circular errors applied as a deferred assignment", () => {
         const agg = new AggregateError([], "test");
