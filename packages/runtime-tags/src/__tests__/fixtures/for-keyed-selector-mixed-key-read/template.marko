@@ -1,0 +1,13 @@
+<let/selected=1/>
+<let/rows=[{ id: 1, label: "a" }, { id: 2, label: "b" }]/>
+<ul>
+  <for|row| of=rows by="id">
+    <li class=(selected === row.id && "danger")>
+      <span>${selected === row.id && row.label}</span>
+      <button.select onClick() { selected = row.id }>x</button>
+    </li>
+  </for>
+</ul>
+<button.relabel onClick() {
+  rows = rows.map((r) => (r.id === 1 ? { id: 1, label: r.label + "!" } : r));
+}>relabel</button>

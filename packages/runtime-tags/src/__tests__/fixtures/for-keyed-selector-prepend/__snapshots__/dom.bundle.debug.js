@@ -1,15 +1,14 @@
 // template.marko
 const $template = "<button class=add>add</button><ul></ul>";
 const $walks = " b b";
-const $for_content__selected__OR__row_id = /*@__PURE__*/ _or(5, ($scope) => _attr_class($scope["#li/0"], $scope._.selected === $scope.row_id && "danger"));
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", "row_id", $for_content__selected__OR__row_id);
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", "row_id", ($scope) => _attr_class($scope["#li/0"], $scope._.selected === $scope.row_id && "danger"));
 const $for_content__setup = $for_content__selected;
-const $for_content__row_id = /*@__PURE__*/ _const("row_id", $for_content__selected__OR__row_id);
 const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);
 };
+const $for_content__row_id = /*@__PURE__*/ _const("row_id");
 const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", " D l", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => $for($scope, [$scope.rows, "id"]));
 const $selected = /*@__PURE__*/ _let("selected/3", $for_content__selected);

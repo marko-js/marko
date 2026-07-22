@@ -100,6 +100,6 @@ document.querySelectorAll("button.select")[n].click();
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(1) > strong
 REMOVE: ul > li:nth-of-type(3) > strong
+INSERT: ul > li:nth-of-type(1) > strong
 ```

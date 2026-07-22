@@ -4,8 +4,12 @@ import { forEach } from "./optional";
 import {
   type Binding,
   BindingType,
+  bindingUtil,
+  dropReferencedBindings,
   getCanonicalBinding,
   getExpressionReads,
+  type ReferencedBindings,
+  type ReferencedExtra,
 } from "./references";
 import { isDirectClosure, type Section } from "./sections";
 
@@ -61,6 +65,7 @@ function onlyComparesKey(
   keyBinding: Binding,
 ): boolean {
   let found = false;
+  const keyReads = new Map<ReferencedExtra, ReferencedBindings>();
   for (
     let chain: Binding | undefined = closure;
     chain;
@@ -73,20 +78,47 @@ function onlyComparesKey(
         const resolved = read.extra.read;
         const at = resolved && resolvesTo(resolved, canonical);
         if (!at) return;
-        if (
-          at === 2 ||
-          resolved.getter ||
-          !readsKey(read.comparedTo?.extra?.read, keyBinding)
-        ) {
+        const keyRead = read.comparedTo?.extra?.read;
+        if (at === 2 || resolved.getter || !readsKey(keyRead, keyBinding)) {
           other = true;
         } else {
           found = true;
+          // Only drop a key read resolving directly to the key binding; one
+          // reaching it through the item (item read bare) keeps that referenced.
+          if (
+            keyRead &&
+            !keyRead.props &&
+            getCanonicalBinding(keyRead.binding) ===
+              getCanonicalBinding(keyBinding)
+          ) {
+            keyReads.set(
+              expr,
+              bindingUtil.add(keyReads.get(expr), keyRead.binding),
+            );
+          }
         }
       });
       if (other) return false;
     }
   }
+  if (found) {
+    for (const [expr, dropped] of keyReads) {
+      dropKeyReferences(expr, dropped);
+    }
+  }
   return found;
+}
+
+// The key is stable per keyed branch, so drop it from the comparison's
+// referenced bindings — its intersection collapses to a lone closure signal.
+function dropKeyReferences(expr: ReferencedExtra, dropped: ReferencedBindings) {
+  if (dropReferencedBindings(expr, dropped)) {
+    // The dropped key is still read but now schedules nothing, so pin it to
+    // keep the `_const` that stores its value.
+    forEach(dropped, (binding) => {
+      binding.forcePersist = true;
+    });
+  }
 }
 
 function resolvesTo(

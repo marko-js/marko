@@ -1368,6 +1368,23 @@ export function finalizeReferences() {
   fnReadsByExpression.clear();
 }
 
+// Narrow an expression's already-resolved referenced bindings, but only when a
+// lone binding survives — a smaller intersection would orphan its intersectionMeta.
+export function dropReferencedBindings(
+  expr: ReferencedExtra,
+  drop: ReferencedBindings,
+): boolean {
+  let kept: ReferencedBindings;
+  forEach(expr.referencedBindings, (binding) => {
+    if (!bindingUtil.has(drop, binding)) {
+      kept = bindingUtil.add(kept, binding);
+    }
+  });
+  if (Array.isArray(kept)) return false;
+  expr.referencedBindings = kept;
+  return true;
+}
+
 function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
   let scopeOffset: Binding | undefined;
 

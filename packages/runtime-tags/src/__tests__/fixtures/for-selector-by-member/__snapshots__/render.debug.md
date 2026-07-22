@@ -163,6 +163,6 @@ document.querySelectorAll("button.select")[n].click();
 ```
 ## Change
 ```
-UPDATE: .danger[class] null => "danger"
 UPDATE: table > tbody > tr:nth-of-type(3)[class] "danger" => null
+UPDATE: .danger[class] null => "danger"
 ```
