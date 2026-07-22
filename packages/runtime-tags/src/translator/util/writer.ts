@@ -143,6 +143,7 @@ export function markNode(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   nodeBinding: Binding,
   reason: undefined | false | SerializeReason,
+  deferred?: boolean,
 ) {
   if (nodeBinding.type !== BindingType.dom) {
     throw path.buildCodeFrameError(
@@ -153,7 +154,9 @@ export function markNode(
   if (isOutputHTML()) {
     if (reason) {
       const section = getSection(path);
-      writeTo(path)`${callRuntime(
+      // Deferred markers ride the stream trailer alongside a deferred end tag
+      // (html/body), keeping the marker adjacent to the element it resumes.
+      writeTo(path, deferred)`${callRuntime(
         "_el_resume",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),

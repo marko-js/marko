@@ -617,7 +617,9 @@ export default {
           getSerializeReason(tagSection, nodeBinding);
         const write = writer.writeTo(
           tag,
-          !markerSerializeReason && (tagName === "html" || tagName === "body"),
+          // `</html>` defers even when marked (its `#html/0` marker resolves to
+          // the root); `</body>` can't — its marker resolves positionally.
+          tagName === "html" || (!markerSerializeReason && tagName === "body"),
         );
 
         if (tagExtra[kTagContentAttr]) {
@@ -666,7 +668,12 @@ export default {
         }
 
         if (markerSerializeReason) {
-          writer.markNode(tag, nodeBinding, markerSerializeReason);
+          writer.markNode(
+            tag,
+            nodeBinding,
+            markerSerializeReason,
+            tagName === "html",
+          );
         }
 
         tag.remove();
