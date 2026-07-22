@@ -330,6 +330,8 @@ export default {
         // We use the dynamic tag when a custom tag from the class runtime is used
 
         if (classTagTemplate) {
+          // The `"preserve"` mode below is matched by beginComponent
+          // (`___forceBoundary === "preserve"`) to emit a split component.
           const preserveBoundary =
             !tagsSerializeReason &&
             (classHydration === ClassHydration.Descendant ||

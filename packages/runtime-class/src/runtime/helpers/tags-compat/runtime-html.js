@@ -8,7 +8,6 @@ const {
 const createRenderer = require("../../components/renderer");
 const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
-const PRESERVE_BOUNDARY = "preserve";
 
 exports.p = function (htmlCompat) {
   const writersByGlobal = new WeakMap();
