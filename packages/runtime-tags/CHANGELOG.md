@@ -1,5 +1,44 @@
 # @marko/runtime-tags
 
+## 6.3.17
+
+### Patch Changes
+
+- [#3527](https://github.com/marko-js/marko/pull/3527) [`be7dea6`](https://github.com/marko-js/marko/commit/be7dea6f50c365208bfaf690b6b0bbad25d94f04) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Give a cause-specific error when two-way binding (`value:=x`) to a value from array destructuring, explaining that it has no change handler and suggesting object destructuring or an explicit `Change` attribute, instead of the generic "Unable to bind to value."
+
+- [#3523](https://github.com/marko-js/marko/pull/3523) [`d0e32de`](https://github.com/marko-js/marko/commit/d0e32de106c80d522c24a23901e2347777761d91) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Emit the bare value for a text-only tag or html-comment whose body is a lone dynamic interpolation (`<title>${x}</title>`), letting the text sink coerce it instead of generating a redundant `${_to_text(x)}` template wrapper.
+
+- [#3531](https://github.com/marko-js/marko/pull/3531) [`74490b6`](https://github.com/marko-js/marko/commit/74490b65e4d7f675e228820f0e04aa6144561ba2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a controlled `<select>` with a void (`undefined`/`null`) value selecting a different `<option>` on the server than the client: SSR now normalizes a void value to `""` and marks a `value=""` option `selected`, matching DOM instead of letting the browser auto-pick the first option.
+
+- [#3407](https://github.com/marko-js/marko/pull/3407) [`bba9259`](https://github.com/marko-js/marko/commit/bba92599e0709433f35237f0205a66990ea83119) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a client render where a rejected `<await>` or a failed lazy load under an ancestor `<try @placeholder>` left the placeholder shown forever. The failure path now completes the placeholder's await counter (unless it is a placeholder-less or resumed reorder counter), so the placeholder is dismissed and the caught content renders.
+
+- [#3522](https://github.com/marko-js/marko/pull/3522) [`a236904`](https://github.com/marko-js/marko/commit/a236904c58cdea1b7d09c4d0c0f94e87ffef2c91) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Emit a single Class-API interop registration per renderer, instead of one for each tag occurrence, trimming the redundant scriptlets when the same class component is used multiple times in a template.
+
+- [#3524](https://github.com/marko-js/marko/pull/3524) [`e6d462a`](https://github.com/marko-js/marko/commit/e6d462aae4169b1058b94e6451df9d67d777af90) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop emitting a dead scope binding, walk slot, and resume marker for a `content` attribute on a native tag that also has body content — codegen already drops the attribute (body wins), so analyze now ignores it too.
+
+- [#3517](https://github.com/marko-js/marko/pull/3517) [`5025913`](https://github.com/marko-js/marko/commit/5025913c0f6e4f21e28002bbab0ea42c085a7fa5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a hydration mismatch for a dynamic tag with positional args and a fallback body. When the tag resolves to `null` (or a string), `<${tag}(1, 2)>Fallback</>` rendered nothing on the server but the fallback body on the client; the server now renders the fallback too.
+
+- [#3519](https://github.com/marko-js/marko/pull/3519) [`b19d9dc`](https://github.com/marko-js/marko/commit/b19d9dc9180a53d361df48a7b1565d37d5cf47ad) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Preserve tag-name case when escaping `</style` inside `<style>` raw text, so an author-written `</STYLE>` in a `content:`/`url(...)`/custom-property value is no longer lowercased.
+
+- [#3525](https://github.com/marko-js/marko/pull/3525) [`3446c8e`](https://github.com/marko-js/marko/commit/3446c8e0ff9ad6ebd30ab89db00b679afef87a58) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Flatten a text-only conditional written with the `<else if=cond>` space syntax into a single placeholder ternary, matching the `<else-if=cond>` spelling — both now skip the `_if` runtime, branch scopes, and serialize guards.
+
+- [#3526](https://github.com/marko-js/marko/pull/3526) [`2190723`](https://github.com/marko-js/marko/commit/21907239786cea54c958dd2431779d19358e1adb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop shipping a dead `_closure_get` pending-resume id in DOM output when a closure's subscriber section is not under a `<try>` `@placeholder` (only a sibling closure is) — the id had no matching HTML-side registration to look it up.
+
+- [#3518](https://github.com/marko-js/marko/pull/3518) [`58bb403`](https://github.com/marko-js/marko/commit/58bb4035f59fb66c7eb6f4ac590d73062d04618c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep `</html>` in document order when the tag carries a resume marker (e.g. `<html lang=input.lang>` on a stateful page), instead of emitting it before the resume scripts.
+
+- [#3521](https://github.com/marko-js/marko/pull/3521) [`36cf307`](https://github.com/marko-js/marko/commit/36cf307f05e81042fe06420fad772c1abe6f52a8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Speed up in-place keyed list updates. The `<for>` reconciler rebuilt an O(n) key→scope lookup map on every update even when nothing had moved. It now reuses the branch at each position directly and only builds the map — from the remaining unmatched scopes — once a key first lands out of order.
+
+- [#3535](https://github.com/marko-js/marko/pull/3535) [`04e289c`](https://github.com/marko-js/marko/commit/04e289c5087b08f21a1621871ceda085ab9316b5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Restore a two-way-bound radio group (`checkedValue:=`) to its default member on a native form reset, instead of clobbering the bound value to `undefined`. On reset the fired handler now adopts the group's reset-restored default rather than the firing (unchecked) radio's value.
+
+- [#3510](https://github.com/marko-js/marko/pull/3510) [`c56de42`](https://github.com/marko-js/marko/commit/c56de4291605cff9297f2f799ada96de8a8cec34) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Escape NUL and lone surrogates in a serialized `RegExp` source. `RegExp.source` leaves a raw NUL or lone surrogate in the pattern unescaped, and the resume payload embeds the `/.../` literal directly into a `<script>`, where a NUL is folded to U+FFFD and a lone surrogate is unencodable in UTF-8 — silently corrupting the resumed regex (an SSR/CSR mismatch). Such characters are now emitted as `\x00` / `\uXXXX` escapes; paired surrogates and normal escapes are unaffected.
+
+- [#3529](https://github.com/marko-js/marko/pull/3529) [`f54e09a`](https://github.com/marko-js/marko/commit/f54e09a25848495b1c36d59647182e23bf843949) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Shrink the `<for>` reconciler by dropping a redundant map. A keyed list update already builds a key→scope lookup; it now stashes each scope's old index on that same pass, so the longest-increasing-subsequence step that plans moves no longer allocates and fills a second scope→position `Map`. Same behavior, one fewer allocation per reordering update, and a slightly smaller runtime.
+
+- [#3513](https://github.com/marko-js/marko/pull/3513) [`118c4b6`](https://github.com/marko-js/marko/commit/118c4b652a63cd876eb1fdcf620f0d73ab68720a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix an SSR/CSR mismatch for a `<textarea>` with a non-string initial `value`. SSR rendered the value as text content (`_escape`), while the client set `defaultValue` via the `value=` attribute normalization, so `true`/`NaN`/`0n` rendered differently after a client render/navigation than on the server (e.g. `<textarea value=computeTotal()>` yielding `NaN`). SSR now coerces a textarea's value the same way — matching the client and `<input>` — so both agree. String values are unaffected, and the client runtime is unchanged.
+
+- Updated dependencies [[`0187289`](https://github.com/marko-js/marko/commit/0187289c719f8ba6590a9f092c576c865a46e5da)]:
+  - @marko/compiler@5.41.4
+
 ## 6.3.16
 
 ### Patch Changes

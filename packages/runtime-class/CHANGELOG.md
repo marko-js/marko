@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.26
+
+### Patch Changes
+
+- [#3516](https://github.com/marko-js/marko/pull/3516) [`342d9f4`](https://github.com/marko-js/marko/commit/342d9f42599a7cdb7315550353604e6fadf8d645) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Guard the tags-compat `ComponentDef.___deserialize` override against a not-yet-resumed scope. A streaming or out-of-order resume of a Class-API child inside a Tags-API parent could make `getScope` return `undefined`, throwing a `TypeError`; it now optional-chains like every other consumer.
+
+- Updated dependencies [[`be7dea6`](https://github.com/marko-js/marko/commit/be7dea6f50c365208bfaf690b6b0bbad25d94f04), [`d0e32de`](https://github.com/marko-js/marko/commit/d0e32de106c80d522c24a23901e2347777761d91), [`74490b6`](https://github.com/marko-js/marko/commit/74490b65e4d7f675e228820f0e04aa6144561ba2), [`0187289`](https://github.com/marko-js/marko/commit/0187289c719f8ba6590a9f092c576c865a46e5da), [`bba9259`](https://github.com/marko-js/marko/commit/bba92599e0709433f35237f0205a66990ea83119), [`a236904`](https://github.com/marko-js/marko/commit/a236904c58cdea1b7d09c4d0c0f94e87ffef2c91), [`e6d462a`](https://github.com/marko-js/marko/commit/e6d462aae4169b1058b94e6451df9d67d777af90), [`5025913`](https://github.com/marko-js/marko/commit/5025913c0f6e4f21e28002bbab0ea42c085a7fa5), [`b19d9dc`](https://github.com/marko-js/marko/commit/b19d9dc9180a53d361df48a7b1565d37d5cf47ad), [`3446c8e`](https://github.com/marko-js/marko/commit/3446c8e0ff9ad6ebd30ab89db00b679afef87a58), [`2190723`](https://github.com/marko-js/marko/commit/21907239786cea54c958dd2431779d19358e1adb), [`58bb403`](https://github.com/marko-js/marko/commit/58bb4035f59fb66c7eb6f4ac590d73062d04618c), [`36cf307`](https://github.com/marko-js/marko/commit/36cf307f05e81042fe06420fad772c1abe6f52a8), [`04e289c`](https://github.com/marko-js/marko/commit/04e289c5087b08f21a1621871ceda085ab9316b5), [`c56de42`](https://github.com/marko-js/marko/commit/c56de4291605cff9297f2f799ada96de8a8cec34), [`f54e09a`](https://github.com/marko-js/marko/commit/f54e09a25848495b1c36d59647182e23bf843949), [`118c4b6`](https://github.com/marko-js/marko/commit/118c4b652a63cd876eb1fdcf620f0d73ab68720a)]:
+  - @marko/runtime-tags@6.3.17
+  - @marko/compiler@5.41.4
+
 ## 5.39.25
 
 ### Patch Changes

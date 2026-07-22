@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.4
+
+### Patch Changes
+
+- [#3514](https://github.com/marko-js/marko/pull/3514) [`0187289`](https://github.com/marko-js/marko/commit/0187289c719f8ba6590a9f092c576c865a46e5da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Declare `magic-string` as a dependency — it is imported by the published `index.d.ts` but was previously only available via hoisting.
+
 ## 5.41.3
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@marko/runtime-tags",
-  "version": "6.3.16",
+  "version": "6.3.17",
   "description": "Optimized runtime for Marko templates.",
   "keywords": [
     "api",
@@ -42,7 +42,7 @@
     "build": "node -r ~ts ./scripts/bundle.mts"
   },
   "dependencies": {
-    "@marko/compiler": "^5.41.2",
+    "@marko/compiler": "^5.41.4",
     "csstype": "^3.2.3",
     "fastest-levenshtein": "^1.0.16",
     "magic-string": "^0.30.21"
