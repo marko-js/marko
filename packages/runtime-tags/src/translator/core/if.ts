@@ -420,8 +420,14 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
 
     const [attr] = node.attributes;
     if (isCoreTagName(tag, "else")) {
-      // An `<else if=...>` is conditional, so leave it to the normal handling.
-      if (node.attributes.length) return;
+      // A lone `if=` is `<else if=cond>`, equivalent to `<else-if=cond>`; any
+      // other attribute shape falls back to the normal `<if>` handling.
+      if (
+        node.attributes.length > 1 ||
+        (attr && (!t.isMarkoAttribute(attr) || attr.name !== "if"))
+      ) {
+        return;
+      }
     } else if (
       node.attributes.length !== 1 ||
       !t.isMarkoAttribute(attr) ||
@@ -466,9 +472,12 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     // A template literal means static text concatenated with a raw
     // interpolation, which translate must still coerce.
     rawText ||= t.isTemplateLiteral(text);
-    expr = isCoreTagName(branchTag, "else")
-      ? text
-      : t.conditionalExpression(branchTag.node.attributes[0].value, text, expr);
+    // `<if=>`, `<else-if=>`, and `<else if=>` all expose the condition at
+    // `attributes[0]`; a plain `<else>` has none and stays unconditional.
+    const [conditionAttr] = branchTag.node.attributes;
+    expr = conditionAttr
+      ? t.conditionalExpression(conditionAttr.value, text, expr)
+      : text;
   }
 
   for (let i = branches.length; i-- > 1;) {
