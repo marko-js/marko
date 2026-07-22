@@ -80,9 +80,13 @@ export function _attr_select_value(
   }
 
   if (content) {
+    // Normalize a void controlled value to "" so it is distinguishable from an
+    // uncontrolled select (no context) and matches DOM's `normalizeStrProp`,
+    // which selects a `value=""` option for `undefined`/`null` alike.
+    const selectedValue = value ?? "";
     if (MARKO_DEBUG && valueChange) {
       const matched = { value: false };
-      withContext(kSelectedValue, value, () =>
+      withContext(kSelectedValue, selectedValue, () =>
         withContext(kSelectedValueMatched, matched, content),
       );
       if (
@@ -97,7 +101,7 @@ export function _attr_select_value(
         );
       }
     } else {
-      withContext(kSelectedValue, value, content);
+      withContext(kSelectedValue, selectedValue, content);
     }
   }
 }
