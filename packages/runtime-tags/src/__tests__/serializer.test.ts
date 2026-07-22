@@ -1594,6 +1594,22 @@ describe("serializer", () => {
       );
     });
 
+    it("headers deduped when serialized before the request", () => {
+      const req = new Request("https://ebay.com/", {
+        headers: { "content-type": "text/plain" },
+        method: "POST",
+      });
+      // Headers already serialized standalone: the request reuses that ref
+      // instead of re-emitting the entries inline and clobbering it.
+      const [result] = assertSerializer().assertStringify(
+        { a: req.headers, b: req, c: req.headers },
+        `{a:_.a=new Headers({"content-type":"text/plain"}),b:new Request("https://ebay.com/",{headers:_.a,method:"POST"}),c:_.a}`,
+      ) as [{ a: Headers; b: Request; c: Headers }];
+      assert.equal(result.a, result.c);
+      assert.equal(result.a.get("content-type"), "text/plain");
+      assert.equal(result.b.headers.get("content-type"), "text/plain");
+    });
+
     it("cache", () =>
       assertStringify(
         new Request("https://ebay.com/", { cache: "no-store" }),

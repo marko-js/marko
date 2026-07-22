@@ -163,12 +163,6 @@ module's ready id never resolves. The lazy tag's own render path recovers
 the dynamic import in a generated load entry and watch for the unhandled
 rejection with the ready id never firing.
 
-## Dedup a Request/Response's headers against an already-serialized Headers instead of re-emitting inline and clobbering its ref
-
-`packages/runtime-tags/src/html/serializer.ts` › `writeRequest` | 2026-07-20 | impact:low | effort:med
-
-`writeRequest` (and `writeResponse`) always serialize `val.headers` inline via `stringEntriesToHeadersInit` and then unconditionally `state.refs.set(val.headers, new Reference(ref, "headers", …))` (serializer.ts:1318-1319, 1380-1381). When the same Headers object was already serialized standalone (it already has a Reference), this both fails to dedup (the headers data is emitted twice) and overwrites the prior ref, so referential identity is lost. `{a: req.headers, b: req}` serializes `a` as its own `new Headers({…})` and then re-emits the headers inline inside the Request, so on resume `a !== b.headers` even though originally `a === req.headers`; the reverse order `{b: req, a: req.headers}` works and is the only order the existing `headers` test covers. Guard the `state.refs.set` (set only when absent) and emit `headers:<deduped ref>` when `state.refs.has(val.headers)`. Re-verify: `assertStringify({a: req.headers, b: req}, …)` with `const req = new Request("https://x/", {headers:{a:"1"}, method:"POST"})` emits a standalone `new Headers({a:"1"})` plus a second inline `{a:"1"}`, and the deserialized `a !== b.headers`.
-
 ## Route a failed lazy input-signal chunk to the `@catch` boundary instead of swallowing it and hanging the branch
 
 `packages/runtime-tags/src/dom/load.ts` › `insertLoaded` | 2026-07-20 | impact:low | effort:low

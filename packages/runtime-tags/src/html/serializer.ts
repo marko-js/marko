@@ -1340,11 +1340,22 @@ function writeRequest(state: State, val: Request, ref: Reference) {
     sep = ",";
   }
 
-  const headers = stringEntriesToHeadersInit(val.headers as any);
-  state.refs.set(val.headers, new Reference(ref, "headers", state.flush, null));
-  if (headers) {
-    options += sep + "headers:" + headers;
+  const seenHeaders = state.refs.get(val.headers);
+  if (seenHeaders) {
+    // Dedup against the already-serialized Headers instead of re-emitting the
+    // entries inline (which also clobbered its reference).
+    options += sep + "headers:" + ensureId(state, seenHeaders);
     sep = ",";
+  } else {
+    state.refs.set(
+      val.headers,
+      new Reference(ref, "headers", state.flush, null),
+    );
+    const headers = stringEntriesToHeadersInit(val.headers as any);
+    if (headers) {
+      options += sep + "headers:" + headers;
+      sep = ",";
+    }
   }
 
   if (val.integrity) {
@@ -1402,10 +1413,20 @@ function writeResponse(state: State, val: Response, ref: Reference) {
     sep = ",";
   }
 
-  const headers = stringEntriesToHeadersInit(val.headers as any);
-  state.refs.set(val.headers, new Reference(ref, "headers", state.flush, null));
-  if (headers) {
-    options += sep + "headers:" + headers;
+  const seenHeaders = state.refs.get(val.headers);
+  if (seenHeaders) {
+    // Dedup against the already-serialized Headers instead of re-emitting the
+    // entries inline (which also clobbered its reference).
+    options += sep + "headers:" + ensureId(state, seenHeaders);
+  } else {
+    state.refs.set(
+      val.headers,
+      new Reference(ref, "headers", state.flush, null),
+    );
+    const headers = stringEntriesToHeadersInit(val.headers as any);
+    if (headers) {
+      options += sep + "headers:" + headers;
+    }
   }
 
   if (!val.body || val.bodyUsed) {
