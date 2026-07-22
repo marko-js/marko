@@ -77,20 +77,6 @@ handler. Server-side the WeakMap persists across requests, so this is a
 cross-request hazard. Fix: key the cache per-render/per-`State` rather than
 module-globally.
 
-## class→tags bridged render builds its head `Chunk` with null context
-
-`packages/runtime-tags/src/html/compat.ts` › `compat.render` | 2026-07-13 | impact:med | effort:med
-
-`compat.render` builds the bridged tags child's head `Chunk` with `context: null`
-(the flagged TODO). With null context, inside the bridged subtree
-`isInResumedBranch()` is false and `$chunk.context?.[kBranchId]`/`[kIsAsync]` are
-undefined, so `_script` never calls `_resume_branch` and
-`AccessorProp.ClosestBranchId` is never written. A Class component embedded under
-an async/lazy Tags region (`tags(async) → class → tags(effect)`) then resumes its
-effect with no closest-branch association, attaching it to the wrong branch or
-none → hydration mismatch. Fix: thread the enclosing chunk's context into the
-bridged head chunk.
-
 ## `_dynamic_tag` compares only the renderer id, conflating instances of the same content
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `_dynamic_tag` | 2026-07-14 | impact:high | effort:med

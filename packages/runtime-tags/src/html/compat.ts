@@ -113,7 +113,9 @@ export const compat = {
     let head = new Chunk(
       boundary,
       null,
-      null /* TODO: this should grab the context from the previous chunk */,
+      // Inherit the enclosing chunk's context so a Class under an async/lazy
+      // Tags region keeps its branch association (`_resume_branch`/ClosestBranchId).
+      getChunk()?.context ?? null,
       state,
     );
     let normalizedInput = input;
