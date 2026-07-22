@@ -29,6 +29,8 @@ function flushAndWaitFrame() {
   }
 }
 
+// Assumes a host MessageChannel (every browser has one); isScheduled only
+// resets in its handler, so hosts lacking it must polyfill (see create-browser).
 function triggerMacroTask() {
   if (!channel) {
     channel = new MessageChannel();
