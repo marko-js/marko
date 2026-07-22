@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.3.18
+
+### Patch Changes
+
+- [#3542](https://github.com/marko-js/marko/pull/3542) [`7799e44`](https://github.com/marko-js/marko/commit/7799e44a0f349a257a6fcf8e75b0830272e9fe99) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serializing an `AggregateError` whose `errors` array is shared with another reference or contains a deferred/circular member. The `AggregateError` constructor copies its first argument into a fresh `errors` slot, so those arrays previously lost their identity or silently dropped members on resume; the array is now relinked through the writable `errors` property.
+
+- [#3543](https://github.com/marko-js/marko/pull/3543) [`1a822ef`](https://github.com/marko-js/marko/commit/1a822ef8104a13d896b4f92d70fd34adb6ffd502) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When a `Request`/`Response` is serialized after its `headers` object was already serialized standalone, reuse that reference instead of re-emitting the header entries inline and overwriting it. This dedups the emitted data and keeps other references to those headers consistent on resume.
+
+- [#3541](https://github.com/marko-js/marko/pull/3541) [`ee8b8d0`](https://github.com/marko-js/marko/commit/ee8b8d0e5ee1d51301683ae1f0887b67ed5fcee1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Escape object-`style` attribute values on SSR so a value containing `;`/`{` can't inject extra declarations or rules, and so an invalid value is dropped the same way `el.style.setProperty` drops it on the client — fixing an SSR/CSR divergence and a server-only CSS-injection surface for `<div style={ prop: value }/>`.
+
+- [#3540](https://github.com/marko-js/marko/pull/3540) [`b706533`](https://github.com/marko-js/marko/commit/b7065333ef8f32888bdb48af77b3b5e3bbd4b615) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compile `<for by>` selector comparisons without an intersection. When a keyed list body compares the loop key to an owner value (e.g. `class=(selected === row.id && "danger")`), the key is stable per branch, so the comparison now depends only on the owner value and compiles to a plain for-selector closure instead of an `_or` intersection — smaller output, no per-row intersection coordination, and the comparison no longer re-runs when unrelated row data changes.
+
+- [#3537](https://github.com/marko-js/marko/pull/3537) [`77c3071`](https://github.com/marko-js/marko/commit/77c307198230459da5714b3613d1a864fbc9e51a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Give the lazy-asset trigger loader a block body so it always returns `undefined`. Previously, when two or more `|`-separated triggers both fell back to loading (their selectors absent), the second fallback returned the truthy HTML string and the `visible`/`on-*` guards ran `observe(...)`/`addEventListener(...)` on it, throwing a `TypeError`.
+
 ## 6.3.17
 
 ### Patch Changes
