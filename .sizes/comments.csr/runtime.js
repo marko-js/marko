@@ -1,4 +1,4 @@
-// size: 6443 (min) 2822 (brotli)
+// size: 6402 (min) 2802 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -396,7 +396,7 @@ function loop(forEach) {
           let branch =
             oldLen &&
             (oldScopesByKey ||= oldScopes.reduce(
-              (map, scope, i) => map.set(scope.M ?? i, scope),
+              (map, scope, i) => map.set(scope.M ?? i, ((scope.I = i), scope)),
               /* @__PURE__ */ new Map(),
             )).get(key);
           (branch
@@ -463,7 +463,6 @@ function loop(forEach) {
           return;
         } else if (start > newEnd) return;
         let diffLen = newEnd - start + 1,
-          oldPos = /* @__PURE__ */ new Map(),
           sources = Array(diffLen),
           pred = Array(diffLen),
           tails = [],
@@ -471,9 +470,7 @@ function loop(forEach) {
           lo,
           hi,
           mid;
-        for (let i = start; i <= oldEnd; i++) oldPos.set(oldScopes[i], i);
-        for (let i = diffLen; i--;)
-          sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
+        for (let i = diffLen; i--;) sources[i] = newScopes[start + i].I ?? -1;
         for (let i = 0; i < diffLen; i++)
           if (~sources[i])
             if (tail < 0 || sources[tails[tail]] < sources[i])

@@ -803,7 +803,11 @@ function loop<T extends unknown[] = unknown[]>(
         let branch =
           oldLen &&
           (oldScopesByKey ||= oldScopes.reduce(
-            (map, scope, i) => map.set(scope[AccessorProp.LoopKey] ?? i, scope),
+            (map, scope, i) =>
+              map.set(
+                scope[AccessorProp.LoopKey] ?? i,
+                ((scope[AccessorProp.LoopIndex] = i), scope),
+              ),
             new Map<unknown, BranchScope>(),
           )).get(key);
         if (branch) {
@@ -902,7 +906,6 @@ function loop<T extends unknown[] = unknown[]>(
 
       // Handle mixed new/moves
       const diffLen = newEnd - start + 1;
-      const oldPos = new Map<BranchScope, number>();
       const sources = new Array<number>(diffLen);
       const pred = new Array<number>(diffLen);
       const tails: number[] = [];
@@ -911,12 +914,8 @@ function loop<T extends unknown[] = unknown[]>(
       let hi: number;
       let mid: number;
 
-      for (let i = start; i <= oldEnd; i++) {
-        oldPos.set(oldScopes[i], i);
-      }
-
       for (let i = diffLen; i--;) {
-        sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
+        sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
       }
 
       for (let i = 0; i < diffLen; i++) {
