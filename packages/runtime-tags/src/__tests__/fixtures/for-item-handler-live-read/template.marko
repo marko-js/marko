@@ -1,0 +1,13 @@
+<let/items=[{ id: 1, label: "a" }, { id: 2, label: "b" }]/>
+<let/log=""/>
+<ul>
+  <for|item| of=items by="id">
+    <li>
+      <button.show onClick() { log = item.label }>${item.label}</button>
+    </li>
+  </for>
+</ul>
+<button.relabel onClick() {
+  items = items.map((it) => (it.id === 1 ? { id: 1, label: it.label + "!" } : it));
+}>relabel</button>
+<p>${log}</p>

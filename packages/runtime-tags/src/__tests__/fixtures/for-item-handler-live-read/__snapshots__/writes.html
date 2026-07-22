@@ -1,0 +1,25 @@
+<ul>
+  <li><button class=show>a<!--M_*2 b--></button><!--M_*2 a--></li>
+  <li><button class=show>b<!--M_*3 b--></button><!--M_*3 a--></li>
+  <!--M_}1 a 3 2-->
+</ul><button class=relabel>relabel</button><!--M_*1 b-->
+<p><!--M_*1 c--></p>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    d: [{
+      id: 1,
+      label: "a"
+    }, {
+      id: 2,
+      label: "b"
+    }]
+  }, {
+    e: "a",
+    M: 1
+  }, {
+    e: "b",
+    M: 2
+  }], "a0 2 3 a1 1"];
+  M._.w()
+</script>

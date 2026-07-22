@@ -4,14 +4,14 @@ const $for_content__selected = /*@__PURE__*/ _for_selector(0, 2, 5, ($scope) => 
 	_attr_class($scope.a, $scope._.c === $scope.f && "danger");
 	$for_content__selected__OR__row_id__OR__row_label($scope);
 });
-const $for_content__setup = $for_content__selected;
-const $for_content__row_id__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
+const $for_content__setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	$selected($scope._, $scope.f);
 }));
-const $for_content__row_id = /*@__PURE__*/ _const(5, ($scope) => {
-	$for_content__selected__OR__row_id__OR__row_label($scope);
-	$for_content__row_id__script($scope);
-});
+const $for_content__setup = ($scope) => {
+	$for_content__selected._($scope);
+	$for_content__setup__script($scope);
+};
+const $for_content__row_id = /*@__PURE__*/ _const(5, $for_content__selected__OR__row_id__OR__row_label);
 const $for_content__row_label = /*@__PURE__*/ _const(7, $for_content__selected__OR__row_id__OR__row_label);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);

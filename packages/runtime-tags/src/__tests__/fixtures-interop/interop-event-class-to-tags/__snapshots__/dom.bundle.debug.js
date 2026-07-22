@@ -3,15 +3,16 @@ var import_vdom = require_vdom();
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
-function $setup($scope) {
-	$count($scope, 0);
-}
-const $input_onPing__script = _script("__tests__/components/tags-pinger.marko_0_input_onPing", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script = _script("__tests__/components/tags-pinger.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 	$scope.input_onPing($scope.count);
 }));
-const $input_onPing = /*@__PURE__*/ _const("input_onPing", $input_onPing__script);
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
 const $input = ($scope, input) => $input_onPing($scope, input.onPing);
+const $input_onPing = /*@__PURE__*/ _const("input_onPing");
 var tags_pinger_default = /*@__PURE__*/ _template("__tests__/components/tags-pinger.marko", $template, $walks, $setup, $input);
 
 // template.marko

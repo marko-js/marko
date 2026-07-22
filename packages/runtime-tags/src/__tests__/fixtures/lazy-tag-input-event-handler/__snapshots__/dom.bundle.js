@@ -12,6 +12,6 @@ _resume("b0", $report);
 
 // child.marko
 const $verified = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
-const $input__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$verified($scope, String($scope.d.report($scope.f)));
 }));

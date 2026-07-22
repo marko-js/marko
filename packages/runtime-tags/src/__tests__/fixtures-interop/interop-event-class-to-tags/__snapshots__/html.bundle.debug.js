@@ -6,7 +6,7 @@ var tags_pinger_default = _template("__tests__/components/tags-pinger.marko", (i
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button id=tags>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/components/tags-pinger.marko_0_input_onPing");
+	_script($scope0_id, "__tests__/components/tags-pinger.marko_0");
 	writeScope($scope0_id, {
 		input_onPing: input.onPing,
 		count

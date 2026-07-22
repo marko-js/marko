@@ -2281,11 +2281,20 @@ function isLazyRead(
     expr.invokeOnly &&
     read.deferred &&
     !isChangeHandlerRead &&
-    !binding.upstreamAlias &&
+    // A root owns its slot; a section param materializes its own slot each run
+    // (kept by forcePersist). Other aliases forward to their upstream with no
+    // own serialized slot, so a live read would miss the value on resume.
+    (!binding.upstreamAlias || isParamBinding(binding)) &&
     binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant &&
     (binding.type !== BindingType.local || binding.section === expr.section)
   );
+}
+
+function isParamBinding(binding: Binding) {
+  let root = binding;
+  while (root.upstreamAlias) root = root.upstreamAlias;
+  return root === root.section.params;
 }
 
 function resolveReferencedBindings(

@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (editing) {
 				const $scope2_id = _scope_id();
 				_html(`<button>Confirm <!>${_escape(count + 1)}${_el_resume($scope2_id, "#text/1")}</button>${_el_resume($scope2_id, "#button/0")}`);
-				_script($scope2_id, "__tests__/template.marko_2_count");
+				_script($scope2_id, "__tests__/template.marko_2");
 				writeScope($scope2_id, {}, "__tests__/template.marko", "4:4");
 				return 0;
 			} else {

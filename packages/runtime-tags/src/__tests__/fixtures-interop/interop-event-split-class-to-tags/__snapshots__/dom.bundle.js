@@ -3,15 +3,16 @@ var import_const_element = /* @__PURE__ */ __toESM(require_const_element());
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
 const $count = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f));
-function $setup($scope) {
-	$count($scope, 0);
-}
-const $input_onPing__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.f + 1);
 	$scope.e($scope.f);
 }));
-const $input_onPing = /*@__PURE__*/ _const(4, $input_onPing__script);
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
 const $input = ($scope, input) => $input_onPing($scope, input.onPing);
+const $input_onPing = /*@__PURE__*/ _const(4);
 var tags_pinger_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 
 // components/class-host/component-browser.js

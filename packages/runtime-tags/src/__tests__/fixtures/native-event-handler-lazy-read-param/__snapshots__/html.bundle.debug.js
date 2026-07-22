@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	forOf(["a", "b"], (label) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>pick</button>${_el_resume($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_label");
+		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id)

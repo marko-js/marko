@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__i__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $for_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$seen($scope._, `${$scope._.f}(${$scope.d}:${$scope._.e})`);
 }));
 const $total = /*@__PURE__*/ _let(4, ($scope) => _text($scope.c, $scope.e));
