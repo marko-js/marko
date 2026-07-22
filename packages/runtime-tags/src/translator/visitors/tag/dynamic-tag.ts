@@ -390,6 +390,7 @@ export default {
         isClassAPI ? "renderBody" : "content",
       );
       const args: (t.Expression | t.SpreadElement)[] = [];
+      const contentProp = getTranslatedBodyContentProperty(properties);
       let hasTagArgs = false;
 
       if (node.arguments) {
@@ -400,7 +401,6 @@ export default {
           args.push(propsToExpression(properties));
         }
       } else {
-        const contentProp = getTranslatedBodyContentProperty(properties);
         if (contentProp) {
           properties.splice(properties.indexOf(contentProp), 1);
           args.push(propsToExpression(properties), contentProp.value);
@@ -424,7 +424,9 @@ export default {
               getScopeAccessorLiteral(nodeBinding),
               tagExpression,
               t.arrayExpression(args),
-              t.numericLiteral(0),
+              // Fallback body for a null/string renderer; the DOM side already
+              // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
+              contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
             )

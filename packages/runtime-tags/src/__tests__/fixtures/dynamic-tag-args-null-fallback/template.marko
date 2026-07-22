@@ -1,0 +1,4 @@
+import Tag from "./tags/custom-tag.marko";
+<let/x=null/>
+<${x}(1, 2)>Fallback Body</>
+<button onClick() { x = x ? null : Tag }/>
