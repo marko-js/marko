@@ -47,7 +47,7 @@ const $await_content__setup = ($scope) => $await_content__try($scope, { placehol
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div level=1><!></div>", " D%l", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__promiseA = /*@__PURE__*/ _closure_get("promiseA", ($scope) => $try_content__await_promise($scope, $scope._.promiseA), 0, "__tests__/template.marko_1_promiseA/pending");
+const $try_content__promiseA = /*@__PURE__*/ _closure_get("promiseA", ($scope) => $try_content__await_promise($scope, $scope._.promiseA));
 const $try_content__setup = ($scope) => {
 	$try_content__promiseA($scope);
 	$await_content($scope);

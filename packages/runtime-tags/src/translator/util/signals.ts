@@ -14,7 +14,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { find, forEach, type Opt, push, some } from "./optional";
+import { find, forEach, type Opt, push } from "./optional";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -346,7 +346,10 @@ export function getSignal(
                 [scopeIdentifier],
                 getScopeExpression(section, closure.section),
               ),
-          some(closure.closureSections, underTryPlaceholder)
+          // Match the HTML registration, which is gated on this subscriber
+          // section (writeHTMLResumeStatements); keying on any sibling closure
+          // section would ship a pending id that nothing looks up.
+          underTryPlaceholder(section)
             ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
             : undefined,
         );
