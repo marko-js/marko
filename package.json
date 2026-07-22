@@ -6,7 +6,7 @@
     "@ci:lint": "eslint --format unix . && prettier . --check --with-node-modules --log-level=warn",
     "@ci:release": "pnpm run build && node scripts/pkg-override && changeset publish && pnpm run @ci:release-alias && node scripts/pkg-override && pnpm install --frozen-lockfile",
     "@ci:release-alias": "node -r ~ts scripts/publish-alias.ts",
-    "@ci:test": "cross-env NODE_OPTIONS=\"--max-old-space-size=8192 --max-semi-space-size=128\" MARKO_DEBUG=1 c8 pnpm run test:parallel",
+    "@ci:test": "node scripts/test-coverage.js",
     "@ci:test:fast": "cross-env NODE_OPTIONS=\"--max-old-space-size=8192 --max-semi-space-size=128\" MARKO_DEBUG=1 pnpm run test:parallel",
     "@ci:version": "changeset version && prettier --write --log-level=warn \"**/package.json\" && pnpm install --lockfile-only",
     "audit": "pnpm audit --prod",
