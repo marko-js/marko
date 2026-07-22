@@ -316,8 +316,10 @@ function testFixtures(interop?: true) {
               await browser.runAsyncScripts();
               run();
             };
-            let hasFlush = flushNext();
+            // Attach the tracker's error listener before the first flush so
+            // errors thrown by inline resume scripts in it aren't swallowed.
             const tracker = createMutationTracker(browser);
+            let hasFlush = flushNext();
 
             for (const group of logs) {
               for (const { type, args } of group) {
