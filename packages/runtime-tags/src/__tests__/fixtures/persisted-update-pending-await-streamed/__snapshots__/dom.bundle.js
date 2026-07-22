@@ -1,11 +1,11 @@
 // template.marko.persisted.mjs
 _enable_catch();
-const $clicks = _var_resume("a9", /*@__PURE__*/ _let_persisted(7, ($scope) => _text($scope.b, $scope.h)));
+const $clicks = _var_resume("a8", /*@__PURE__*/ _let_persisted(7, ($scope) => _text($scope.b, $scope.h)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$clicks($scope, $scope.h + 1);
 }));
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $clicks_seed = _update_signal("a9");
+const $clicks_seed = _update_signal("a8");
 const $try_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content_holes, "a2");
 };

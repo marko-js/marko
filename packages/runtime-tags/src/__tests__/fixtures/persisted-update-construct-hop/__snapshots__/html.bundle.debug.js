@@ -95,18 +95,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_set_serialize_reason(_persisted_reason());
 		widget_default({ label: session.plan });
 		_html("<ul class=metrics>");
-		_for_of(getMetrics?.($global().range), (metric) => {
-			const $scope3_id = _scope_id();
-			_html(`<li${_attr_class(_hole_value($scope3_id, "PatchAttr:class:#li/0", metric.name === $global().focus && "focus", _persisted_reason()))}>${_escape(_hole_value($scope3_id, "PatchHole:#text/1", metric.name, _persisted_reason()))}${_el_resume($scope3_id, "#text/1", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "PatchHole:#text/2", metric.value, _persisted_reason()))}${_el_resume($scope3_id, "#text/2", _persisted_reason())}</li>${_el_resume($scope3_id, "#li/0", _persisted_reason())}`);
-			_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "16:6");
-		}, function(metric) {
-			return metric.name;
-		}, $scope2_id, "#ul/6", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "__tests__/template.marko_3_update");
+		_region(() => {
+			forOf(getMetrics?.($global().range), (metric) => {
+				const $scope3_id = _scope_id();
+				_html(`<li${metric.name === $global().focus ? " class=focus" : ""}>${_escape(metric.name)}${_el_resume($scope3_id, "#text/1", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(metric.value)}${_el_resume($scope3_id, "#text/2", _persisted_reason())}</li>${_el_resume($scope3_id, "#li/0", _persisted_reason())}`);
+				_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "16:6");
+			});
+		}, $scope2_id, "#ul/6");
+		_html(`</ul>${_el_resume($scope2_id, "#ul/6", _persisted_reason())}`);
 		_if(() => $global().admin ? 0 : undefined, $scope2_id, "#text/7", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "__tests__/template.marko_2/update_if_#text/7", [() => {
 			const $scope4_id = _scope_id();
 			_html("<p class=admin>admin tools enabled</p>");
 			_persisted_reason() && writeScope($scope4_id, {}, "__tests__/template.marko", "20:4");
-		}], ["__tests__/template.marko_4_update"]);
+		}], [0]);
 		_script($scope2_id, "__tests__/template.marko_2");
 		writeScope($scope2_id, {
 			tally: _state_reason() && tally,
@@ -125,10 +126,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_4_update": ["<p class=admin>admin tools enabled</p>", "b"],
-	"__tests__/template.marko_4_content": ["<p class=admin>admin tools enabled</p>", "b"],
-	"__tests__/template.marko_3_update": ["<li><!>: <!></li>", " D%c%l"],
-	"__tests__/template.marko_3_content": ["<li><!>: <!></li>", " D%c%l"],
 	"__tests__/template.marko_2_update": [[
 		"<h2 class=greeting> </h2>",
 		["__tests__/tags/store.marko"],
@@ -155,8 +152,6 @@ _renderer_shells({
 		["__tests__/tags/widget.marko"],
 		"& b%c"
 	]],
-	"__tests__/template.marko_1_update": ["<p class=home>welcome home</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=home>welcome home</p>", "b"],
 	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],

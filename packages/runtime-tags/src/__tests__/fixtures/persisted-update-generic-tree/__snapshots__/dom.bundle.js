@@ -1,20 +1,10 @@
 // tags/badge.marko.persisted.mjs
-const $merge$4 = _resume("b0", /* @__PURE__ */ _update_scopes({
-	"Nclass:a": /*@__PURE__*/ _update_attr("a", _attr_class),
-	"Qb": /*@__PURE__*/ _update_text("b")
-}));
+const $update2$4 = () => {};
+const $merge$4 = _resume("b0", $update2$4);
 _update_content("b", $merge$4);
 
 // tags/card.marko.persisted.mjs
-const $_holes$1 = /*@__PURE__*/ _update_scopes({
-	"Qb": /*@__PURE__*/ _update_text("b"),
-	"Nclass:c": /*@__PURE__*/ _update_attr("c", _attr_class),
-	"Qd": /*@__PURE__*/ _update_text("d")
-});
-const $update2$3 = ($patch, $live) => {
-	$_holes$1($patch, $live);
-	if ("a" in $patch) $merge$4($patch["a"], $live["a"]);
-};
+const $update2$3 = () => {};
 const $merge$3 = _resume("c0", $update2$3);
 _update_content("c", $merge$3);
 
@@ -49,7 +39,7 @@ const $count_seed = _update_signal("a2");
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("l" in $patch) _update_seed($live, $count_seed, $patch["l"]);
-	if ("c" in $patch) $merge$3($patch["c"], $live["c"]);
+	if ("Dc" in $patch) _update_region("c")($patch, $live);
 	if ("d" in $patch) $merge$1($patch["d"], $live["d"]);
 };
 const $merge = _resume("a0", $update2);

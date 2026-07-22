@@ -19,6 +19,7 @@ import {
   _scope_id,
   _script,
   _set_serialize_reason,
+  captureRegionShell,
   emitShellFrame,
   getScopeById,
   getState,
@@ -57,10 +58,20 @@ export let _dynamic_tag = (
 
   const targetRendererId =
     (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
+  let regionRendererId: string | undefined;
   // A diverged hop constructs client-side from the target's wire shell; the
   // client falls back to a document navigation when no shell arrived. Native
   // targets always render plainly (typed captures rebuild or update the
   // element).
+  // A nucleus-free target has no registered shell; its rendered markup ships
+  // as a per-response region shell under a `;`-prefixed id instead.
+  const regionTarget =
+    state.patch &&
+    !state.regionDepth &&
+    updateStructural &&
+    typeof renderer !== "string" &&
+    typeof targetRendererId === "string" &&
+    !hasServerRenderer(targetRendererId);
   if (
     state.patch &&
     anchorId !== undefined &&
@@ -187,7 +198,10 @@ export let _dynamic_tag = (
           // bottom out at `_persisted_reason()`, keeping the patch-structural bit.
           _set_serialize_reason(
             updateStructural
-              ? undefined
+              ? regionTarget
+                ? // Region content is inert markup; nothing inside resumes.
+                  0
+                : undefined
               : shouldResume && inputOrArgs !== undefined
                 ? 1
                 : 0,
@@ -212,7 +226,12 @@ export let _dynamic_tag = (
       // A replay-constructed hop branch (renderer mismatch client-side)
       // seeds like other patch-list branches (see `_state_reason`).
       if (updateStructural) state.freshBranchDepth++;
-      result = withBranchId(branchId, render);
+      if (regionTarget) {
+        regionRendererId = captureRegionShell(state, branchId, render);
+        result = undefined;
+      } else {
+        result = withBranchId(branchId, render);
+      }
       if (updateStructural) state.freshBranchDepth--;
     }
     rendered = _peek_scope_id() !== branchId;
@@ -231,6 +250,7 @@ export let _dynamic_tag = (
     if (shouldResume) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]:
+          regionRendererId ||
           (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
           renderer,
         // Patch branches link explicitly; native renderers retain their tag so

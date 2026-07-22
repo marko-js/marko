@@ -89,7 +89,6 @@ INSERT: .shell > :is(.b, .b2)
 REMOVE: .shell > p
 REMOVE: .shell > span
 REMOVE: .shell > em
-UPDATE: .b::text@9 "" => "sales report"
 ```
 
 # Update
@@ -160,8 +159,6 @@ UPDATE: .count::text@8 "1" => "2"
 INSERT: span + :is(.a, .a2, .a3)
 REMOVE: .shell > section
 REMOVE: .shell > span
-UPDATE: .a::text@9 "" => "growth report"
-UPDATE: .a3::text " " => "always in stock"
 ```
 
 # Update

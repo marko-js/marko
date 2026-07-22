@@ -1,10 +1,8 @@
 // tags/child.marko.persisted.mjs
 const $input_class = ($scope, input_class) => _attr_class($scope.a, input_class);
 const $input_data_request = ($scope, input_data_request) => _attr($scope.a, "data-request", input_data_request);
-const $merge$1 = _resume("b0", /* @__PURE__ */ _update_scopes({
-	"Nclass:a": /*@__PURE__*/ _update_attr("a", _attr_class),
-	"Ndata-request:a": /*@__PURE__*/ _update_named_attr("a", "data-request")
-}));
+const $update2$1 = () => {};
+const $merge$1 = _resume("b0", $update2$1);
 _update_content("b", $merge$1);
 
 // template.marko.persisted.mjs
@@ -43,7 +41,7 @@ const $update2 = ($patch, $live) => {
 	if ("i" in $patch) _update_seed($live, $attrs_seed, $patch["i"]);
 	if ("k" in $patch) _update_seed($live, $count_seed, $patch["k"]);
 	if ("h" in $patch) $input_title_update($live, $patch["h"]);
-	if ("e" in $patch) $merge$1($patch["e"], $live["e"]);
+	if ("De" in $patch) _update_region("e")($patch, $live);
 };
 const $merge = _resume("a0", $update2);
 _update_content("a", $merge);

@@ -5,12 +5,8 @@ if (typeof window !== "undefined") {
 var rejecting_default = _template("__tests__/tags/rejecting.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<button class=lazy>rejecting ${_sep($sg__input_label)}${_escape(_hole_value($scope0_id, "PatchHole:#text/0", input.label, _persisted_reason()))}${_el_resume($scope0_id, "#text/0", $sg__input_label)}</button>`);
+	_html(`<button class=lazy>rejecting ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "#text/0", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {}, "__tests__/tags/rejecting.marko", 0);
-});
-_renderer_shells({
-	"__tests__/tags/rejecting.marko_0_update": ["<button class=lazy>rejecting <!></button>", "Db%l"],
-	"__tests__/tags/rejecting.marko": ["<button class=lazy>rejecting <!></button>", "Db%l"]
 });
 
 // tags/resolving.marko
@@ -20,12 +16,8 @@ if (typeof window !== "undefined") {
 var resolving_default = _template("__tests__/tags/resolving.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<button class=lazy>resolving ${_sep($sg__input_label)}${_escape(_hole_value($scope0_id, "PatchHole:#text/0", input.label, _persisted_reason()))}${_el_resume($scope0_id, "#text/0", $sg__input_label)}</button>`);
+	_html(`<button class=lazy>resolving ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "#text/0", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {}, "__tests__/tags/resolving.marko", 0);
-});
-_renderer_shells({
-	"__tests__/tags/resolving.marko_0_update": ["<button class=lazy>resolving <!></button>", "Db%l"],
-	"__tests__/tags/resolving.marko": ["<button class=lazy>resolving <!></button>", "Db%l"]
 });
 
 // template.marko
@@ -39,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Home = { content: _content("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p class=home>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", $global().label, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</p>`);
+		_html(`<p class=home>${_escape($global().label)}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</p>`);
 		_persisted_reason() && writeScope($scope1_id, {}, "__tests__/template.marko", "7:2");
 	}) };
 	const Reject = { content: _content("__tests__/template.marko_2_content", () => {
@@ -64,12 +56,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_3_update": ["<!><!><!><!>", "b%/&c"],
-	"__tests__/template.marko_3_content": ["<!><!><!><!>", "b%/&c"],
-	"__tests__/template.marko_2_update": ["<!><!><!><!>", "b%/&c"],
-	"__tests__/template.marko_2_content": ["<!><!><!><!>", "b%/&c"],
-	"__tests__/template.marko_1_update": ["<p class=home> </p>", "D l"],
-	"__tests__/template.marko_1_content": ["<p class=home> </p>", "D l"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

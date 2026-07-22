@@ -71,7 +71,6 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 INSERT: ul > .b
 REMOVE: ul > span
-UPDATE: .b::text@3 "" => "x"
 REMOVE: .b + .b
 INSERT: .b + .loading
 ```
@@ -98,6 +97,8 @@ INSERT: .b + .loading
 ```
 ## Change
 ```
+INSERT: .b + .b
+REMOVE: .b + .b
 INSERT: .b + .report
 REMOVE: .report + p
 ```

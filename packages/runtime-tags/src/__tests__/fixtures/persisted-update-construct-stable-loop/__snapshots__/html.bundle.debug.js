@@ -38,14 +38,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_4_update": ["<strong>B</strong>", "b"],
-	"__tests__/template.marko_4_content": ["<strong>B</strong>", "b"],
 	"__tests__/template.marko_3_update": ["<li><!>: <!></li>", "D%c%l"],
 	"__tests__/template.marko_3_content": ["<li><!>: <!></li>", "D%c%l"],
 	"__tests__/template.marko_2_update": ["<ul></ul>", " b"],
 	"__tests__/template.marko_2_content": ["<ul></ul>", " b"],
-	"__tests__/template.marko_1_update": ["<strong>A</strong>", "b"],
-	"__tests__/template.marko_1_content": ["<strong>A</strong>", "b"],
 	"__tests__/template.marko_0_update": ["<button> </button><!><!>", " D l%c"],
 	"__tests__/template.marko": ["<button> </button><!><!>", " D l%c"]
 });

@@ -2,21 +2,23 @@
 var ticker_default = _template("__tests__/tags/ticker.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_entries = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html("<ol class=ticker>");
-	_for_of(input.entries, (entry) => {
-		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", entry, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_entries)}</li>`);
-		$sg__input_entries && writeScope($scope1_id, {}, "__tests__/tags/ticker.marko", "2:4");
-	}, function(entry) {
-		return entry;
-	}, $scope0_id, "#ol/0", $sg__input_entries, $sg__input_entries, $sg__input_entries, "</ol>", 1, "__tests__/tags/ticker.marko_1_update");
-	$sg__input_entries && writeScope($scope0_id, {}, "__tests__/tags/ticker.marko", 0);
+	let marks = 0;
+	_html(`<button class=mark>mark <!>${_escape(marks)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<ol class=ticker>`);
+	_region(() => {
+		forOf(input.entries, (entry) => {
+			const $scope1_id = _scope_id();
+			_html(`<li>${_escape(entry)}${_el_resume($scope1_id, "#text/0", $sg__input_entries)}</li>`);
+			$sg__input_entries && writeScope($scope1_id, {}, "__tests__/tags/ticker.marko", "6:4");
+		});
+	}, $scope0_id, "#ol/2");
+	_html(`</ol>${_el_resume($scope0_id, "#ol/2", $sg__input_entries)}`);
+	_script($scope0_id, "__tests__/tags/ticker.marko_0");
+	writeScope($scope0_id, { marks: _state_reason() && marks }, "__tests__/tags/ticker.marko", 0, { marks: "3:6" });
+	_resume_branch($scope0_id);
 });
 _renderer_shells({
-	"__tests__/tags/ticker.marko_1_update": ["<li> </li>", "D l"],
-	"__tests__/tags/ticker.marko_1_content": ["<li> </li>", "D l"],
-	"__tests__/tags/ticker.marko_0_update": ["<ol class=ticker></ol>", " b"],
-	"__tests__/tags/ticker.marko": ["<ol class=ticker></ol>", " b"]
+	"__tests__/tags/ticker.marko_0_update": ["<button class=mark>mark <!></button><ol class=ticker></ol>", " Db%l b"],
+	"__tests__/tags/ticker.marko": ["<button class=mark>mark <!></button><ol class=ticker></ol>", " Db%l b"]
 });
 
 // template.marko

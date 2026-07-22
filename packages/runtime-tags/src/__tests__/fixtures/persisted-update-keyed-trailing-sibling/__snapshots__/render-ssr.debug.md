@@ -60,8 +60,7 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: ul > li
-INSERT: ul > li:nth-of-type(1) + li
+INSERT: ul > :is(li, li)
 ```
 
 # Update `{"$global":{"persisted":true,"items":[{"id":"one","label":"b"},{"id":"two","label":"b"}]}}`
@@ -87,8 +86,9 @@ INSERT: ul > li:nth-of-type(1) + li
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@4 "a" => "b"
-UPDATE: ul > li:nth-of-type(2)::text@4 "a" => "b"
+INSERT: ul > :is(li, li)
+REMOVE: ul > li:nth-of-type(2) + li
+REMOVE: ul > li:nth-of-type(2) + li
 ```
 
 # Update `{"$global":{"persisted":true,"items":[{"id":"two","label":"c"},{"id":"one","label":"c"}]}}`
@@ -114,10 +114,9 @@ UPDATE: ul > li:nth-of-type(2)::text@4 "a" => "b"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@4 "b" => "c"
-UPDATE: ul > li:nth-of-type(2)::text@4 "b" => "c"
+INSERT: ul > :is(li, li)
 REMOVE: ul > li:nth-of-type(2) + li
-INSERT: ul > li
+REMOVE: ul > li:nth-of-type(2) + li
 ```
 
 # Update `{"$global":{"persisted":true,"items":[{"id":"two","label":"d"}]}}`
@@ -140,6 +139,7 @@ INSERT: ul > li
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@4 "c" => "d"
+INSERT: ul > li
+REMOVE: ul > li:nth-of-type(1) + li
 REMOVE: ul > li:nth-of-type(1) + li
 ```

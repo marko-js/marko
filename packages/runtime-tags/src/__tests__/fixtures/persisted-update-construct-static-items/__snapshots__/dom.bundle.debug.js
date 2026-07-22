@@ -50,15 +50,10 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $for_update = _update_for_keyed("#div/0", ($p, $l) => $for_content_holes($p, $l), "__tests__/template.marko_6_update");
 const $clicks_seed = _update_signal("__tests__/template.marko_0_clicks/var");
 const $await_content__update = ($patch, $live) => {
 	if ("ratings" in $patch) $live["ratings"] = $patch["ratings"];
-	if ("BranchScopes:#div/0" in $patch) $for_update($live, [$patch["BranchScopes:#div/0"], "#LoopKey"]);
+	if ("ConditionalRenderer:#div/0" in $patch) _update_region("#div/0")($patch, $live);
 };
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_5_update");

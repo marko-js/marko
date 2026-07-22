@@ -155,8 +155,10 @@ UPDATE: .spotlight[class] null => "spotlight"
 UPDATE: h1::text "Trailhead 40L Pack" => "Summit 65L Pack"
 UPDATE: a[href] "/products/trailhead-40/specs" => "/products/summit-65/specs"
 REMOVE: section > em
-REMOVE: ul > li
-INSERT: ul > li:nth-of-type(1) + li
+INSERT: ul > :is(li, li, li)
+REMOVE: ul > li:nth-of-type(3) + li
+REMOVE: ul > li:nth-of-type(3) + li
+REMOVE: ul > li:nth-of-type(3) + li
 UPDATE: section[class] "spotlight" => null
 ```
 
@@ -225,10 +227,11 @@ UPDATE: button::text "Hide" => "Show"
 <button>
   Show
 </button>
-<em>
-  Save 20%
-</em>
-<section />
+<section>
+  <em>
+    Save 20%
+  </em>
+</section>
 <ul>
   <li>
     <span
@@ -263,8 +266,9 @@ UPDATE: button::text "Hide" => "Show"
 ```
 UPDATE: h1::text "Summit 65L Pack" => "Trailhead 40L Pack"
 UPDATE: a[href] "/products/summit-65/specs" => "/products/trailhead-40/specs"
-INSERT: button + em
-UPDATE: em::text@5 "" => "20"
-REMOVE: ul > li:nth-of-type(2) + li
-INSERT: ul > li
+INSERT: section > em
+INSERT: ul > :is(li, li, li)
+REMOVE: ul > li:nth-of-type(3) + li
+REMOVE: ul > li:nth-of-type(3) + li
+REMOVE: ul > li:nth-of-type(3) + li
 ```

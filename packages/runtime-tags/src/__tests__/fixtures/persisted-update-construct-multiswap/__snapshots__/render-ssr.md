@@ -71,10 +71,8 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 INSERT: ul > .b
 REMOVE: ul > .a
-UPDATE: .b::text@3 "" => "x"
 INSERT: ul > .a
 REMOVE: .b + .b
-UPDATE: .a::text@3 "" => "x"
 ```
 
 # Update
@@ -129,8 +127,6 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 INSERT: .b + .a
 REMOVE: ul > .b
-UPDATE: .a::text@3 "" => "x"
 INSERT: .a + .b
 REMOVE: .a + .a
-UPDATE: .b::text@3 "" => "x"
 ```

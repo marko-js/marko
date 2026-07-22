@@ -294,16 +294,7 @@ REMOVE: section > h2
 REMOVE: section > div
 REMOVE: section > button
 REMOVE: section > ul
-INSERT: .tags > b
-INSERT: .tags > b:nth-of-type(1) + .on
-INSERT: .on + b
-UPDATE: .tags > b:nth-of-type(1)[data-tag] null => "all"
-UPDATE: .tags > b:nth-of-type(1)::text " " => "ALL"
-UPDATE: .on[class] null => "on"
-UPDATE: .on[data-tag] null => "dev"
-UPDATE: .on::text " " => "DEV"
-UPDATE: .tags > b:nth-of-type(3)[data-tag] null => "news"
-UPDATE: .tags > b:nth-of-type(3)::text " " => "NEWS"
+INSERT: .tags > :is(b, .on, b)
 ```
 
 # Update

@@ -363,11 +363,17 @@ export function _update_dynamic(
     // diverges. Values, seeds, and nested structure apply through the
     // target's merge, whose registration proves the renderer id is known
     // (every dispatchable section registers one, if only a noop).
+    const regionTarget = (rendererId as string)[0] === ";";
     if (
-      (constructed || rendererId !== live[rendererAccessor]) &&
+      (constructed || regionTarget || rendererId !== live[rendererAccessor]) &&
       shells[rendererId as string]
     ) {
-      if (!(rendererId + UPDATE_MERGE_SUFFIX in registeredValues)) {
+      // Region shells carry complete rendered markup: nothing inside binds,
+      // so no registered target merge is required (or consulted).
+      if (
+        !regionTarget &&
+        !(rendererId + UPDATE_MERGE_SUFFIX in registeredValues)
+      ) {
         if ((rendererId as string) in updateLoaders) {
           // The target's persisted module carries its effects and merge;
           // load it and re-dispatch once registration flushes.
@@ -392,9 +398,11 @@ export function _update_dynamic(
       if (liveBranch) removeAndDestroyBranch(liveBranch as BranchScope);
       live[branchAccessor] = branch;
       live[rendererAccessor] = rendererId;
-      const targetMerge = getRegisteredWithScope(
-        rendererId + UPDATE_MERGE_SUFFIX,
-      ) as UpdateMerge | undefined;
+      const targetMerge = regionTarget
+        ? undefined
+        : (getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
+            | UpdateMerge
+            | undefined);
       if (targetMerge) targetMerge(patchBranch, branch);
       return;
     }
@@ -459,7 +467,8 @@ export function _update_dynamic(
       return;
     }
     const merge = getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
-      UpdateMerge | undefined;
+      | UpdateMerge
+      | undefined;
     if (merge) {
       merge(patchBranch, liveBranch);
     } else if ((rendererId as string) in updateLoaders) {
@@ -892,6 +901,89 @@ export function _update_for(
 /** Registers a section's wire [template, walks] for client construction. */
 export function registerShell(id: string, template: string, walks: string) {
   shells[id] = [template, walks];
+  // Per-response region shells reuse ids across navigations; drop any
+  // memoized renderer so fresh content wins.
+  delete shellRenderers[id];
+}
+
+/**
+ * Swaps a membrane region: the patch scope names a per-response shell
+ * holding the region's complete fresh markup; the live branch (tracked by
+ * the document's branch markers, or a prior swap) is replaced wholesale.
+ * Regions are nucleus-free by construction, so nothing inside binds.
+ */
+export function _update_region(accessor: Accessor) {
+  const branchAccessor = AccessorPrefix.BranchScopes + accessor;
+  const rendererAccessor = AccessorPrefix.ConditionalRenderer + accessor;
+  return (patch: Scope, live: Scope) => {
+    const regionId = patch[rendererAccessor] as string | number | undefined;
+    if (typeof regionId !== "string" || !shells[regionId]) {
+      // An explicit no-branch outcome removes the live region in place;
+      // absence of the fill means the anchor was untouched.
+      if (regionId === -1 || regionId === 0) {
+        const liveBranch = live[branchAccessor] as BranchScope | undefined;
+        if (liveBranch && liveBranch[AccessorProp.StartNode]?.parentNode) {
+          removeAndDestroyBranch(liveBranch);
+        }
+        live[branchAccessor] = undefined;
+      }
+      return;
+    }
+    const patchBranch = (patch[branchAccessor] as Scope) || patch;
+    const liveBranch = live[branchAccessor] as BranchScope | undefined;
+    // Later frames of the same response re-dispatch the merge; the applied
+    // region stamps the registered shell tuple on the branch it constructed.
+    // Reference identity distinguishes responses (ids restart per response,
+    // but every response re-registers a fresh tuple), and the stamp never
+    // sits on the live scope itself — under adoption that is the patch
+    // scope, and the check would read its own serialized fill.
+    if (liveBranch && liveBranch[rendererAccessor] === shells[regionId]) {
+      return;
+    }
+    let anchorNode = liveBranch && liveBranch[AccessorProp.StartNode];
+    let container: ParentNode | undefined;
+    if (!anchorNode || !anchorNode.parentNode) {
+      // No tracked prior region (or a boundary swap stranded it): fall back
+      // to the walk/marker-bound node. An element there is the only-child
+      // container itself (the loop's node binding optimizes to its parent)
+      // and the region fills it; other nodes anchor as a preceding sibling.
+      // A dispatch whose DOM is not live yet is a no-op: the frame that
+      // owns the live DOM applies the region.
+      const bound = live[accessor] as ChildNode | undefined;
+      if (!bound) return;
+      if ((bound as Node).nodeType === 1) {
+        container = bound as unknown as ParentNode;
+        anchorNode = undefined;
+      } else if (bound.parentNode) {
+        anchorNode = bound;
+      } else {
+        return;
+      }
+    }
+    const parentNode = container || anchorNode!.parentNode!;
+    const branch = constructBranch(
+      live[AccessorProp.Global],
+      getShellRenderer(regionId),
+      live,
+      parentNode,
+      patchBranch,
+    ) as BranchScope;
+    const destroyPrior =
+      liveBranch &&
+      liveBranch !== (branch as Scope) &&
+      liveBranch[AccessorProp.StartNode]?.parentNode
+        ? liveBranch
+        : undefined;
+    if (!destroyPrior && container) {
+      // First fill of a freshly constructed container: nothing tracked to
+      // destroy, but the shell may have left placeholder children.
+      (container as unknown as Element).textContent = "";
+    }
+    insertBranchBefore(branch, parentNode, anchorNode ?? null);
+    if (destroyPrior) removeAndDestroyBranch(destroyPrior);
+    branch[rendererAccessor] = shells[regionId];
+    live[branchAccessor] = branch;
+  };
 }
 
 /** Constructs a branch that adopts its patch scope through the walk. */

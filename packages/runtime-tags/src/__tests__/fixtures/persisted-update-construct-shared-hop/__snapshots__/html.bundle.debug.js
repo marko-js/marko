@@ -75,8 +75,6 @@ _renderer_shells({
 		["__tests__/tags/layout.marko"],
 		"&"
 	]],
-	"__tests__/template.marko_1_update": ["<p class=home>welcome home</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=home>welcome home</p>", "b"],
 	"__tests__/template.marko_0_update": [[["__tests__/tags/frame.marko"]], [
 		"/",
 		["__tests__/tags/frame.marko"],

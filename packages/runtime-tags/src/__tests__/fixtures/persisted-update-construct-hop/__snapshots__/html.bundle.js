@@ -82,7 +82,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("<p class=home>welcome home</p>");
 	}) };
-	const Dashboard = { content: _content("a6", () => {
+	const Dashboard = { content: _content("a4", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		const session = getSession?.($global().user);
@@ -95,19 +95,20 @@ var template_default = _template("a", (input) => {
 		_set_serialize_reason(_persisted_reason());
 		widget_default({ label: session.plan });
 		_html("<ul class=metrics>");
-		_for_of(getMetrics?.($global().range), (metric) => {
-			const $scope3_id = _scope_id();
-			_html(`<li${_attr_class(_hole_value($scope3_id, "Nclass:a", metric.name === $global().focus && "focus", _persisted_reason()))}>${_escape(_hole_value($scope3_id, "Qb", metric.name, _persisted_reason()))}${_el_resume($scope3_id, "b", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "Qc", metric.value, _persisted_reason()))}${_el_resume($scope3_id, "c", _persisted_reason())}</li>${_el_resume($scope3_id, "a", _persisted_reason())}`);
-			_persisted_reason() && writeScope($scope3_id, {});
-		}, function(metric) {
-			return metric.name;
-		}, $scope2_id, "g", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a4");
+		_region(() => {
+			forOf(getMetrics?.($global().range), (metric) => {
+				const $scope3_id = _scope_id();
+				_html(`<li${metric.name === $global().focus ? " class=focus" : ""}>${_escape(metric.name)}${_el_resume($scope3_id, "b", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(metric.value)}${_el_resume($scope3_id, "c", _persisted_reason())}</li>${_el_resume($scope3_id, "a", _persisted_reason())}`);
+				_persisted_reason() && writeScope($scope3_id, {});
+			});
+		}, $scope2_id, "g");
+		_html(`</ul>${_el_resume($scope2_id, "g", _persisted_reason())}`);
 		_if(() => $global().admin ? 0 : void 0, $scope2_id, "h", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0", [() => {
 			const $scope4_id = _scope_id();
 			_html("<p class=admin>admin tools enabled</p>");
 			_persisted_reason() && writeScope($scope4_id, {});
-		}], ["a5"]);
-		_script($scope2_id, "a7");
+		}], [0]);
+		_script($scope2_id, "a5");
 		writeScope($scope2_id, {
 			l: _state_reason() && tally,
 			b: _existing_scope($childScope),
@@ -117,7 +118,7 @@ var template_default = _template("a", (input) => {
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "dashboard" ? Dashboard : Home });
-	_script($scope0_id, "a8");
+	_script($scope0_id, "a6");
 	writeScope($scope0_id, {
 		d: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope3)
@@ -125,11 +126,7 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a5": ["<p class=admin>admin tools enabled</p>", "b"],
-	"a9": ["<p class=admin>admin tools enabled</p>", "b"],
-	"a4": ["<li><!>: <!></li>", " D%c%l"],
-	"a10": ["<li><!>: <!></li>", " D%c%l"],
-	"a11": [[
+	"a7": [[
 		"<h2 class=greeting> </h2>",
 		["c"],
 		"<button class=bump>tally <!></button>",
@@ -142,7 +139,7 @@ _renderer_shells({
 		["d"],
 		"& b%c"
 	]],
-	"a6": [[
+	"a4": [[
 		"<h2 class=greeting> </h2>",
 		["c"],
 		"<button class=bump>tally <!></button>",
@@ -155,8 +152,6 @@ _renderer_shells({
 		["d"],
 		"& b%c"
 	]],
-	"a12": ["<p class=home>welcome home</p>", "b"],
-	"a2": ["<p class=home>welcome home</p>", "b"],
 	"a1": [["<button class=count>clicked <!></button>", ["b"]], [
 		" Db%l/",
 		["b"],

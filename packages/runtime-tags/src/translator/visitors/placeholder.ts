@@ -8,6 +8,7 @@ import { getAccessorPrefix } from "../util/get-accessor-char";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { isMembraneLive } from "../util/membranes";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
@@ -99,10 +100,14 @@ export default {
       addSerializeExpr(section, valueExtra, nodeBinding);
       if (isPersisted()) {
         onFinalizeReferences(() => {
-          // A hole with no serialize sources still captures for constructed
-          // branches (markup ordinarily carries it), so its marker must
-          // serialize for resume to bind the node the capture fills.
-          if (!getSerializeReason(section, nodeBinding)) {
+          // A nucleus hole with no serialize sources still captures for
+          // constructed branches (markup ordinarily carries it), so its
+          // marker must serialize for resume to bind the node the capture
+          // fills. Scaffold holes ride region markup and need neither.
+          if (
+            isMembraneLive(section) &&
+            !getSerializeReason(section, nodeBinding)
+          ) {
             (node.extra ??= {})[kReasonlessHole] = true;
             addSerializeReason(section, true, nodeBinding);
           }
@@ -179,6 +184,7 @@ export default {
           const holeValue =
             nodeBinding &&
             isPersisted() &&
+            isMembraneLive(section) &&
             (isReasonDynamic(markerSerializeReason) ||
               extra[kReasonlessHole]) &&
             !isUpdateCoveredByClientSignals(valueExtra)

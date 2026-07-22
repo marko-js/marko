@@ -2,12 +2,8 @@
 var badge_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span${_attr_class(_hole_value($scope0_id, "Nclass:a", ["badge", input.tone], _persisted_reason()))}${_attr("title", _hole_value($scope0_id, "Ntitle:a", `tone: ${input.tone}`, _persisted_reason()))}>${_escape(_hole_value($scope0_id, "Qb", input.label, _persisted_reason()))}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
+	_html(`<span${_attr_class(["badge", input.tone])}${_attr("title", `tone: ${input.tone}`)}>${_escape(input.label)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"b0": ["<span> </span>", " D l"],
-	"b": ["<span> </span>", " D l"]
 });
 
 // tags/panel.marko
@@ -49,10 +45,12 @@ var template_default = _template("a", (input) => {
 		1: _serialize_guard($scope0_reason, 3),
 		2: _serialize_guard($scope0_reason, 2)
 	});
-	badge_default({
-		label: input.label,
-		tone: input.tone
-	});
+	_region(() => {
+		badge_default({
+			label: input.label,
+			tone: input.tone
+		});
+	}, $scope0_id, "c");
 	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded,

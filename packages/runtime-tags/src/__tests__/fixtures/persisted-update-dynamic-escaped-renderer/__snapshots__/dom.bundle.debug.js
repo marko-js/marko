@@ -63,7 +63,7 @@ const $walks = " b";
 const $setup = () => {};
 const $for_content__name = ($scope, name) => _text($scope["#text/0"], name);
 const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
-const $for = 0;
+const $for = /*@__PURE__*/ _for_of("#ol/0", "<li> </li>", "D l", 0, $for_content__$params);
 const $input_performers = ($scope, input_performers) => {
 	if (!updating) $for($scope, [input_performers, function(name) {
 		return name;
@@ -71,11 +71,7 @@ const $input_performers = ($scope, input_performers) => {
 };
 const $input = ($scope, input) => $input_performers($scope, input.performers);
 var lineup_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/lineup.marko", $template, " b", $setup, $input);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $for_update = _update_for_keyed("#ol/0", ($p, $l) => $for_content_holes($p, $l), "__tests__/tags/lineup.marko_1_update");
-const $update2 = ($patch, $live) => {
-	if ("BranchScopes:#ol/0" in $patch) $for_update($live, [$patch["BranchScopes:#ol/0"], "#LoopKey"]);
-};
+const $update2 = () => {};
 const $merge = _resume("__tests__/tags/lineup.marko_0_update", $update2);
 _update_content("__tests__/tags/lineup.marko", $merge);
 function $patch2($fail) {

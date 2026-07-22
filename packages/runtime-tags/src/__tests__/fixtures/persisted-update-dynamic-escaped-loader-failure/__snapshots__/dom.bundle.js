@@ -34,9 +34,16 @@ const $setup__script = _script_update("a1", ($scope) => _on($scope.a, "click", f
 }));
 
 // tags/roster.marko.persisted.mjs
-const $template = "<ul class=crew></ul>";
-const $walks = " b";
-const $setup = () => {};
+const $template = "<button class=pin>pin <!></button><ul class=crew></ul>";
+const $walks = " Db%l b";
+const $pinned = _var_resume("c2", /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g)));
+const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
+	$pinned($scope, $scope.g + 1);
+}));
+function $setup($scope) {
+	$pinned($scope, 0);
+	$setup__script($scope);
+}
 const $for = 0;
 const $input_crew = ($scope, input_crew) => {
 	if (!updating) $for($scope, [input_crew, function(name) {
@@ -44,14 +51,21 @@ const $input_crew = ($scope, input_crew) => {
 	}]);
 };
 const $input = ($scope, input) => $input_crew($scope, input.crew);
-var roster_marko_persisted_default = /*@__PURE__*/ _template("c", $template, " b", $setup, $input);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $for_update = _update_for_keyed(0, ($p, $l) => $for_content_holes($p, $l), "c1");
+var roster_marko_persisted_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $input);
+const $pinned_seed = _update_signal("c2");
 const $update2 = ($patch, $live) => {
-	if ("Aa" in $patch) $for_update($live, [$patch["Aa"], "M"]);
+	_update_pair($patch, $live);
+	if ("g" in $patch) _update_seed($live, $pinned_seed, $patch["g"]);
+	if ("Dc" in $patch) _update_region("c")($patch, $live);
 };
 const $merge = _resume("c0", $update2);
 _update_content("c", $merge);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
+
+// tags/roster.marko
+const $pinned = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g));
+const $setup__script = _script_update("c1", ($scope) => _on($scope.a, "click", function() {
+	$pinned($scope, $scope.g + 1);
+}));

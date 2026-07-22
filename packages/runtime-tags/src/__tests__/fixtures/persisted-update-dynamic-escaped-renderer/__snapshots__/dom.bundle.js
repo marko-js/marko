@@ -37,7 +37,9 @@ const $setup__script = _script_update("a1", ($scope) => _on($scope.a, "click", f
 const $template = "<ol class=lineup></ol>";
 const $walks = " b";
 const $setup = () => {};
-const $for = 0;
+const $for_content__name = ($scope, name) => _text($scope.a, name);
+const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
+const $for = /*@__PURE__*/ _for_of(0, "<li> </li>", "D l", 0, $for_content__$params);
 const $input_performers = ($scope, input_performers) => {
 	if (!updating) $for($scope, [input_performers, function(name) {
 		return name;
@@ -45,11 +47,7 @@ const $input_performers = ($scope, input_performers) => {
 };
 const $input = ($scope, input) => $input_performers($scope, input.performers);
 var lineup_marko_persisted_default = /*@__PURE__*/ _template("b", $template, " b", $setup, $input);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $for_update = _update_for_keyed(0, ($p, $l) => $for_content_holes($p, $l), "b1");
-const $update2 = ($patch, $live) => {
-	if ("Aa" in $patch) $for_update($live, [$patch["Aa"], "M"]);
-};
+const $update2 = () => {};
 const $merge = _resume("b0", $update2);
 _update_content("b", $merge);
 function $patch2($fail) {

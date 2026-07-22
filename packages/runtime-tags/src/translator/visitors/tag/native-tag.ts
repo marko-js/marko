@@ -35,6 +35,12 @@ import {
   isPersisted,
   isPersistedEntryBuild,
 } from "../../util/marko-config";
+import {
+  isEditableTag,
+  isMembraneLive,
+  markStateCapable,
+  MembraneCause,
+} from "../../util/membranes";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
@@ -239,6 +245,21 @@ export default {
         hasEventHandlers = true;
       }
 
+      if (isPersisted()) {
+        let causes = 0;
+        if (node.var) causes |= MembraneCause.ref;
+        if (spreadReferenceNodes) causes |= MembraneCause.spread;
+        else if (hasEventHandlers) causes |= MembraneCause.effect;
+        if (
+          relatedControllable ||
+          seen.contenteditable ||
+          isEditableTag(tagName)
+        ) {
+          causes |= MembraneCause.control;
+        }
+        if (causes) markStateCapable(getOrCreateSection(tag), causes);
+      }
+
       if (
         node.var ||
         hasDynamicAttributes ||
@@ -379,6 +400,7 @@ export default {
         if (isPersisted()) {
           onFinalizeReferences(() => {
             if (
+              isMembraneLive(tagSection) &&
               attributes.some(
                 (attr) =>
                   t.isMarkoAttribute(attr) &&
@@ -1671,7 +1693,7 @@ function buildAttrHoleValue(
   value: t.Expression,
   gateExtra: t.NodeExtra | undefined = value.extra,
 ) {
-  if (!nodeBinding || !isPersisted()) return;
+  if (!nodeBinding || !isPersisted() || !isMembraneLive(tagSection)) return;
   const sources = gateExtra && getSerializeSourcesForExpr(gateExtra);
   // Skip values already updated by the client's signal chain.
   if (
@@ -1724,7 +1746,7 @@ function buildTextContentHoleValue(
   tagSection: Section,
   body: t.MarkoTagBody,
 ) {
-  if (!nodeBinding || !isPersisted()) return;
+  if (!nodeBinding || !isPersisted() || !isMembraneLive(tagSection)) return;
   const value = bodyToTextLiteral(body);
   if (t.isStringLiteral(value)) return;
   const sources = value.extra && getSerializeSourcesForExpr(value.extra);

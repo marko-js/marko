@@ -101,8 +101,7 @@ INSERT: section > :is(.greeting, .bump, .widget, .metrics)
 REMOVE: section > p
 UPDATE: .greeting::text " " => "hello ada"
 UPDATE: .widget::text@0 "" => "pro"
-INSERT: .metrics > .focus
-INSERT: .focus + li
+INSERT: .metrics > :is(.focus, li)
 ```
 
 # Update
@@ -270,11 +269,9 @@ UPDATE: .toggle::text "expand" => "collapse"
 ```
 UPDATE: .greeting::text "hello ada" => "hello grace"
 UPDATE: .widget::text@0 "pro" => "free"
-UPDATE: .metrics > li:nth-of-type(1)[class] "focus" => null
-UPDATE: .metrics > li:nth-of-type(1)::text@7 "10" => "70"
-UPDATE: .focus[class] null => "focus"
-UPDATE: .focus::text@8 "3" => "21"
-INSERT: .focus + li
+INSERT: .metrics > :is(li, .focus, li)
+REMOVE: .metrics > li:nth-of-type(3) + .focus
+REMOVE: .metrics > li:nth-of-type(3) + li
 INSERT: .metrics + .admin
 ```
 

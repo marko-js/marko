@@ -24,13 +24,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const WidgetX = { content: _content("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<span class=x>Widget X: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "PatchHole:#text/0", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</span>`);
+		_html(`<span class=x>Widget X: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</span>`);
 		_persisted_reason() && writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
 	}) };
 	const WidgetY = { content: _content("__tests__/template.marko_3_content", () => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_html(`<section class=y>Widget Y: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "PatchHole:#text/0", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope3_id, "#text/0", _persisted_reason())}</section>`);
+		_html(`<section class=y>Widget Y: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope3_id, "#text/0", _persisted_reason())}</section>`);
 		_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "9:2");
 	}) };
 	const Widget = { content: _content("__tests__/template.marko_2_content", () => {
@@ -71,12 +71,8 @@ _renderer_shells({
 	"__tests__/template.marko_5_content": ["<h2 class=dash>Dashboard</h2><!><!><!><!>", "b/b%c&b"],
 	"__tests__/template.marko_4_update": ["<p class=home>welcome home</p><!><!><!><!>", "b/b%c&b"],
 	"__tests__/template.marko_4_content": ["<p class=home>welcome home</p><!><!><!><!>", "b/b%c&b"],
-	"__tests__/template.marko_3_update": ["<section class=y>Widget Y: <!></section>", "Db%l"],
-	"__tests__/template.marko_3_content": ["<section class=y>Widget Y: <!></section>", "Db%l"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_1_update": ["<span class=x>Widget X: <!></span>", "Db%l"],
-	"__tests__/template.marko_1_content": ["<span class=x>Widget X: <!></span>", "Db%l"],
 	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],

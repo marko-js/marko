@@ -13,24 +13,12 @@ const $merge$1 = _resume("b1", $update2$1);
 _update_content("b", $merge$1);
 
 // template.marko.persisted.mjs
-const $count = _var_resume("a8", /*@__PURE__*/ _let_persisted(10, ($scope) => _text($scope.c, $scope.k)));
+const $count = _var_resume("a4", /*@__PURE__*/ _let_persisted(10, ($scope) => _text($scope.c, $scope.k)));
 const $setup__script = _script_shared(($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"Qa": /*@__PURE__*/ _update_text("a"),
-	"Qb": /*@__PURE__*/ _update_text("b")
-});
-const $for_update = _update_for_keyed(0, ($p, $l) => $for_content_holes($p, $l), "a2");
-const $Overview_content_holes = /*@__PURE__*/ _update_scopes({
-	"Qa": /*@__PURE__*/ _update_text("a"),
-	"Qb": /*@__PURE__*/ _update_text("b")
-});
-const $count_seed = _update_signal("a8");
+const $count_seed = _update_signal("a4");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $Specs_content__update = ($patch, $live) => {
-	if ("Aa" in $patch) $for_update($live, [$patch["Aa"], "M"]);
-};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("k" in $patch) _update_seed($live, $count_seed, $patch["k"]);
@@ -42,8 +30,9 @@ const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("d" in $patch) $merge$1($patch["d"], $live["d"]);
 };
-_update_content("a3", $Specs_content__update);
-_update_content("a1", $Overview_content_holes);
+const $noop_update = () => {};
+_update_content("a2", $noop_update);
+_update_content("a1", $noop_update);
 const $merge = _resume("a0", $update2);
 _update_content("a", $merge);
 function $patch2($fail) {
@@ -72,7 +61,7 @@ const $Specs_content__input_specs = /*@__PURE__*/ _closure_get(16, ($scope) => {
 const $Specs_content__setup = ($scope) => {
 	if (!updating) $Specs_content__input_specs($scope);
 };
-const $Specs_content = _content_resume("a3", "<ul></ul>", " b", $Specs_content__setup);
+const $Specs_content = _content_resume("a2", "<ul></ul>", " b", $Specs_content__setup);
 const $Overview_content__input_title = /*@__PURE__*/ _closure_get(14, ($scope) => {
 	if (!updating) _text($scope.a, $scope._.g);
 });
@@ -85,6 +74,6 @@ const $Overview_content__input_summary = /*@__PURE__*/ _closure_get(15, ($scope)
 });
 const $Overview_content = _content_resume("a1", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
 const $count = /*@__PURE__*/ _let_persisted(10, ($scope) => _text($scope.c, $scope.k));
-const $setup__script = _script_update("a4", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script_update("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));

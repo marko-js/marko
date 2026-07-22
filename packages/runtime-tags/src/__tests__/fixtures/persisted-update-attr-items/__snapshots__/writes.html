@@ -1,23 +1,20 @@
-<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_*1 a-->
-<div class=chips><span class=chip>alpha<!--M_*3 b--></span><!--M_*3 a--><span
-    class="chip chip--active">beta<!--M_*4 b--></span><!--M_*4 a--><span
-    class=chip>gamma<!--M_*5 b--></span><!--M_*5 a--></div><!--M_*2 a-->
+<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_*1 a--><!--M_[-->
+<div class=chips><span class=chip>alpha</span><!--M_*4 a--><span
+    class="chip chip--active">beta</span><!--M_*5 a--><span
+    class=chip>gamma</span><!--M_*6 a--></div><!--M_]1 c 2-->
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
     d: 0,
     c: _(2)
+  }, 1, {
+    Aa: [_(4), _(5), _(6)]
   }, {
-    Aa: [_(3), _(4), _(5)]
+    _: _(3)
   }, {
-    _: _(2),
-    M: "alpha"
+    _: _(3)
   }, {
-    _: _(2),
-    M: "beta"
-  }, {
-    _: _(2),
-    M: "gamma"
+    _: _(3)
   }], "a1 1"];
   M._.w()
 </script>

@@ -26,10 +26,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_2_update": ["<p class=fallback>fallback</p>", "b"],
-	"__tests__/template.marko_2_content": ["<p class=fallback>fallback</p>", "b"],
-	"__tests__/template.marko_1_update": ["<p class=primary>primary</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=primary>primary</p>", "b"],
 	"__tests__/template.marko_0_update": ["<button>count <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button>count <!></button><!><!>", " Db%l%c"]
 });

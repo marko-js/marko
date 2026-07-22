@@ -683,18 +683,24 @@ export function _if(
   const updateStructural = state.patch && (serializeBranch as number) & 2;
   let branchIndex: number | undefined;
 
+  let regionId: string | undefined;
   if (branches) {
-    // Select before rendering: a participating branch ships its wire shell;
-    // without one the navigation completes as a document load instead.
+    // Select before rendering: a participating live branch ships its wire
+    // shell; a nucleus-free branch (no construct id) ships its rendered
+    // markup as a per-response region shell instead.
     branchIndex = cb() as number | undefined;
     if (updateStructural && branchIndex !== undefined) {
       const constructId = branchIds?.[branchIndex] || 0;
-      if (!constructId || !emitShellFrame(state, constructId as string)) {
-        throw new Error(
-          MARKO_DEBUG
-            ? `a request-derived conditional branch ("${constructId || anchorId}") has no wire shell, so the navigation cannot be delivered as a patch`
-            : "no shell",
-        );
+      if (constructId) {
+        if (!emitShellFrame(state, constructId as string)) {
+          throw new Error(
+            MARKO_DEBUG
+              ? `a request-derived conditional branch ("${constructId || anchorId}") has no wire shell, so the navigation cannot be delivered as a patch`
+              : "no shell",
+          );
+        }
+      } else {
+        regionId = ";" + branchId;
       }
     }
   }
@@ -704,7 +710,9 @@ export function _if(
     const render =
       branchIndex === undefined ? undefined : branches[branchIndex];
     if (render) {
-      if (resumeBranch) {
+      if (regionId) {
+        emitRegionShell(state, branchId, captureRegionHTML(branchId, render));
+      } else if (resumeBranch) {
         withBranchId(branchId, render);
       } else {
         render();
@@ -712,7 +720,8 @@ export function _if(
     }
   } else {
     branchIndex = (resumeBranch ? withBranchId(branchId, cb) : cb()) as
-      number | undefined;
+      | number
+      | undefined;
   }
   if (updateStructural) state.freshBranchDepth--;
 
@@ -722,7 +731,8 @@ export function _if(
   // scope because no HTML end marker is present.
   if (updateStructural) {
     writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
+      [AccessorPrefix.ConditionalRenderer + accessor]:
+        regionId ?? branchIndex ?? -1,
       [AccessorPrefix.BranchScopes + accessor]:
         branchIndex === undefined ? undefined : writeScope(branchId, {}),
     });
@@ -895,6 +905,9 @@ export function _scope_reason() {
 // `$global` is render-wide, so its guard reads persisted mode directly.
 export function _persisted_reason() {
   const { state } = $chunk.boundary;
+  // Region captures are inert markup: nothing inside serializes, even when
+  // nested hops re-arm the render-wide reason.
+  if (state.regionDepth) return 0;
   return state.patch ? 3 : state.persisted ? 2 : 0;
 }
 
@@ -954,6 +967,98 @@ export function _hole_value<T>(
 
 // Ships a section's values-free [template, walks] once per patch so fresh
 // branches construct client-side; a missing shell reports non-constructible.
+/**
+ * A membrane region: nucleus-free structure hanging off live scopes.
+ * Documents mark it exactly like a serialized single-branch conditional so
+ * resume tracks its range; patches capture the rendered markup as a
+ * per-response shell (an ordinary `[0, id, template, walks]` frame with the
+ * full markup as its template and no walks) that the region merge swaps in
+ * wholesale client-side.
+ */
+export function _region(
+  content: () => void,
+  scopeId: number,
+  accessor: Accessor,
+) {
+  const { state } = $chunk.boundary;
+  // Inside an enclosing capture the wrapper is inert: the outer region's
+  // markup subsumes this one.
+  if (state.patch && state.regionDepth) {
+    content();
+    return;
+  }
+  // The region branch is synthetic: it owns no rendered scope, so it
+  // allocates its own id rather than adopting the interior's first scope.
+  const branchId = _scope_id();
+  if (state.patch) {
+    const regionId = emitRegionShell(
+      state,
+      branchId,
+      captureRegionHTML(branchId, content),
+    );
+    writeScope(scopeId, {
+      [AccessorPrefix.ConditionalRenderer + accessor]: regionId,
+      [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
+    });
+  } else {
+    $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
+    withBranchId(branchId, content);
+    writeBranchEnd(scopeId, accessor, 1, 1, 0, undefined, " " + branchId);
+  }
+}
+
+/** Captures a render as a per-response region shell (used by dynamic-tag
+ * hops whose target has no registered wire shell). */
+export function captureRegionShell(
+  state: State,
+  branchId: number,
+  content: () => void,
+) {
+  return emitRegionShell(state, branchId, captureRegionHTML(branchId, content));
+}
+
+/** Renders content with real markup writes and returns the captured HTML,
+ * leaving the (frame-only) patch output untouched. */
+function captureRegionHTML(branchId: number, content: () => void) {
+  const chunk = $chunk;
+  const { state } = chunk.boundary;
+  const prevWriteHTML = chunk.writeHTML;
+  const prevSerializeReason = state.serializeReason;
+  const start = chunk.html.length;
+  chunk.writeHTML = Chunk.prototype.writeHTML;
+  // Regions are inert markup: nothing inside resumes, so markers and scope
+  // serialization are suppressed for the whole capture (including nested
+  // hops that re-arm the render-wide reason; see `_persisted_reason`).
+  state.serializeReason = 0;
+  state.regionDepth = (state.regionDepth || 0) + 1;
+  let html: string;
+  try {
+    withBranchId(branchId, content);
+  } finally {
+    html = chunk.html.slice(start);
+    chunk.html = chunk.html.slice(0, start);
+    chunk.writeHTML = prevWriteHTML;
+    state.serializeReason = prevSerializeReason;
+    state.regionDepth!--;
+  }
+  return html;
+}
+
+/** Ships captured region markup as a per-response shell frame; `;`-prefixed
+ * ids cannot collide with build-stable compile-time shell ids. */
+function emitRegionShell(state: State, branchId: number, html: string) {
+  // Region ids are `;`-prefixed (build-stable shell ids never are) and are
+  // only meaningful within their own response: scope ids restart per
+  // response, so any dedupe-by-id layer (client shell memo, a pruning
+  // store) must treat them as never held.
+  const regionId = ";" + branchId;
+  state.resumes = concatSequence(
+    state.resumes,
+    "[0," + quote(regionId, 0) + "," + JSON.stringify(html) + ',""]',
+  );
+  return regionId;
+}
+
 export function emitShellFrame(state: State, id: string) {
   const shell = resolveServerRenderer(id);
   if (!shell) return false;
@@ -1361,6 +1466,7 @@ export class State implements SerializeState {
   public patch?: PersistedPatch;
   /** Shell ids already shipped in this patch. */
   public sentShells: Set<string> | null = null;
+  public regionDepth?: number;
   /** Depth of patch branches whose scopes are freshly constructed. */
   public freshBranchDepth = 0;
   constructor(

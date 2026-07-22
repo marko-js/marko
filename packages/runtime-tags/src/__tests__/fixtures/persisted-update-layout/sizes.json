@@ -2,8 +2,8 @@
   "dom": {
     "nav.js": {
       "total": {
-        "min": 6081,
-        "brotli": 2491
+        "min": 6127,
+        "brotli": 2526
       },
       "files": {
         "tags/layout/layout.marko.persisted.mjs": 643,

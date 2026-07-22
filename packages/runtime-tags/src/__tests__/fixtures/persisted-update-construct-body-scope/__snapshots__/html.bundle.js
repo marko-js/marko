@@ -89,14 +89,10 @@ _renderer_shells({
 		["c"],
 		"&D%c%l"
 	]],
-	"a11": ["<p class=loading>loading…</p>", "b"],
-	"a5": ["<p class=loading>loading…</p>", "b"],
 	"a7": ["<!><!><!>", "b%c"],
 	"a6": ["<!><!><!>", "b%c"],
-	"a12": ["<!><!><!>", "b%c"],
+	"a11": ["<!><!><!>", "b%c"],
 	"a8": ["<!><!><!>", "b%c"],
-	"a13": ["<p class=home>home</p>", "b"],
-	"a3": ["<p class=home>home</p>", "b"],
 	"a2": [["<button class=count>clicked <!></button>", ["b"]], [
 		" Db%l/",
 		["b"],

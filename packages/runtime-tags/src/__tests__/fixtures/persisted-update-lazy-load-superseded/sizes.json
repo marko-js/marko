@@ -1,36 +1,28 @@
 {
   "dom": {
     "nav.js": {
-      "min": 802,
-      "brotli": 421
+      "min": 470,
+      "brotli": 300
     },
     "template.marko.page.mjs": {
       "min": 182,
       "brotli": 159
     },
-    "rejecting2.marko.persisted.mjs": {
-      "min": 425,
-      "brotli": 247
+    "rejecting.marko.persisted.mjs": {
+      "min": 458,
+      "brotli": 248
     },
-    "rejecting2.mjs": {
-      "min": 351,
-      "brotli": 212
+    "rejecting.mjs": {
+      "min": 391,
+      "brotli": 223
     },
-    "resolving2.marko.persisted.mjs": {
-      "min": 425,
-      "brotli": 247
+    "resolving.marko.persisted.mjs": {
+      "min": 458,
+      "brotli": 251
     },
-    "resolving2.mjs": {
-      "min": 318,
-      "brotli": 197
-    },
-    "v:rejecting.marko.setup.mjs": {
-      "min": 123,
-      "brotli": 96
-    },
-    "v:resolving.marko.setup.mjs": {
-      "min": 123,
-      "brotli": 93
+    "resolving.mjs": {
+      "min": 358,
+      "brotli": 206
     }
   },
   "html": {

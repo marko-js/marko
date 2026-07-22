@@ -5,30 +5,20 @@ var roster_default = _template("__tests__/tags/roster.marko", (input) => {
 	_html("<ul class=roster>");
 	_for_of(input.members, (name) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", name, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_members)}</li>`);
+		_html(`<li>${_escape(name)}${_el_resume($scope1_id, "#text/0", $sg__input_members)}</li>`);
 		$sg__input_members && writeScope($scope1_id, {}, "__tests__/tags/roster.marko", "2:4");
 	}, function(name) {
 		return name;
-	}, $scope0_id, "#ul/0", $sg__input_members, $sg__input_members, $sg__input_members, "</ul>", 1, "__tests__/tags/roster.marko_1_update");
+	}, $scope0_id, "#ul/0", $sg__input_members, $sg__input_members, $sg__input_members, "</ul>", 1);
 	$sg__input_members && writeScope($scope0_id, {}, "__tests__/tags/roster.marko", 0);
-});
-_renderer_shells({
-	"__tests__/tags/roster.marko_1_update": ["<li> </li>", "D l"],
-	"__tests__/tags/roster.marko_1_content": ["<li> </li>", "D l"],
-	"__tests__/tags/roster.marko_0_update": ["<ul class=roster></ul>", " b"],
-	"__tests__/tags/roster.marko": ["<ul class=roster></ul>", " b"]
 });
 
 // tags/digest.marko
 var digest_default = _template("__tests__/tags/digest.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_members = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<p class=digest>${_escape(_hole_value($scope0_id, "PatchHole:#text/0", input.members.length, _persisted_reason()))}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))} on call: ${_sep($sg__input_members)}${_escape(_hole_value($scope0_id, "PatchHole:#text/1", input.members.join(", "), _persisted_reason()))}${_el_resume($scope0_id, "#text/1", $sg__input_members)}</p>`);
+	_html(`<p class=digest>${_escape(input.members.length)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))} on call: ${_sep($sg__input_members)}${_escape(input.members.join(", "))}${_el_resume($scope0_id, "#text/1", $sg__input_members)}</p>`);
 	$sg__input_members && writeScope($scope0_id, {}, "__tests__/tags/digest.marko", 0);
-});
-_renderer_shells({
-	"__tests__/tags/digest.marko_0_update": ["<p class=digest><!> on call: <!></p>", "D%c%l"],
-	"__tests__/tags/digest.marko": ["<p class=digest><!> on call: <!></p>", "D%c%l"]
 });
 
 // template.marko

@@ -1,17 +1,14 @@
-<p>root</p><button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
-<article><span>existing<!--M_*3 #text/0-->:<!>a<!--M_*3 #text/1-->:<!>
-        only<!--M_*3 #text/2--></span></article>
-<!--M_*2 #article/0--><!--M_|1 #text/2 2-->
+<p>root</p><button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[-->
+<article><span>existing<!--M_*4 #text/0-->:<!>a<!--M_*4 #text/1-->:only</span>
+</article><!--M_]1 #text/2 2-->
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
       count: 0
+    }, 1, {
+      "BranchScopes:#article/0": _(4)
     }, {
-      "BranchScopes:#article/0": _(3),
-      "#LoopKey": "existing"
-    }, {
-      _: _(2),
-      "#LoopKey": "only"
+      _: _(3)
     }],
     "packages/runtime-tags/src/__tests__/fixtures/persisted-update-construct-single-item/template.marko_0 1"
   ];

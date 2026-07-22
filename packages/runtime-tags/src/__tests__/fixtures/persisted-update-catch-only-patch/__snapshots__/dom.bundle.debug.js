@@ -25,7 +25,6 @@ function $setup($scope) {
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $catch_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content_holes, "__tests__/template.marko_3_update");
@@ -35,7 +34,8 @@ const $update2 = ($patch, $live) => {
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("BranchScopes:#text/2" in $patch) _update_branch($patch, $live, "#text/2", $try_content__update, "__tests__/template.marko_1_update");
 };
-_update_content("__tests__/template.marko_2_content", $catch_content_holes);
+const $noop_update = () => {};
+_update_content("__tests__/template.marko_2_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
 function $patch2($fail) {

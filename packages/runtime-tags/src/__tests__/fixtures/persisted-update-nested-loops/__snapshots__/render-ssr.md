@@ -168,12 +168,9 @@ UPDATE: .bump::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: nav > div:nth-of-type(1) > a:nth-of-type(1)[class] "link active" => "link"
-REMOVE: nav > div:nth-of-type(1) > a:nth-of-type(2) + a
-INSERT: nav > div:nth-of-type(1) > a:nth-of-type(1) + a
-UPDATE: .link.active[class] "link" => "link active"
-REMOVE: nav > div:nth-of-type(2) > a:nth-of-type(2) + a
-INSERT: .link.active + a
+INSERT: nav > :is(div, div)
+REMOVE: nav > div:nth-of-type(2) + div
+REMOVE: nav > div:nth-of-type(2) + div
 ```
 
 # Update
@@ -277,12 +274,12 @@ UPDATE: .bump::text "1" => "2"
   </div>
 </nav>
 <p>
-  <b>
-    na
-  </b>
   <b
     class="on"
   >
+    na
+  </b>
+  <b>
     eu
   </b>
   <b>
@@ -292,6 +289,7 @@ UPDATE: .bump::text "1" => "2"
 ```
 ## Change
 ```
-UPDATE: p > b:nth-of-type(1)[class] "on" => null
-UPDATE: .on[class] null => "on"
+INSERT: nav > :is(div, div)
+REMOVE: nav > div:nth-of-type(2) + div
+REMOVE: nav > div:nth-of-type(2) + div
 ```

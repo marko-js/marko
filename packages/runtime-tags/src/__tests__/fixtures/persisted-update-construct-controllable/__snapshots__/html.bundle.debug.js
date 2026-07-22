@@ -28,8 +28,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_2_update": ["<input class=field><output class=echo> </output>", " bD l"],
 	"__tests__/template.marko_2_content": ["<input class=field><output class=echo> </output>", " bD l"],
-	"__tests__/template.marko_1_update": ["<p class=home>welcome home</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=home>welcome home</p>", "b"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

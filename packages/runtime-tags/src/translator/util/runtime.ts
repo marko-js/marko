@@ -17,7 +17,8 @@ import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 
 export type DOMRuntimeHelpers =
-  keyof typeof import("../../dom") | keyof typeof import("../../dom-persisted");
+  | keyof typeof import("../../dom")
+  | keyof typeof import("../../dom-persisted");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 
 // Marked `@__PURE__` (see callRuntime) so a bundler may drop a call whose
@@ -92,6 +93,7 @@ const updateDOMFunctions = new Set<string>([
   "_update_html",
   "_update_named_attr",
   "_update_pair",
+  "_update_region",
   "_update_scopes",
   "_update_seed",
   "_update_select_value",

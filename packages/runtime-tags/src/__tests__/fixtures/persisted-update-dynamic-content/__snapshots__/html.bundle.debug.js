@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Overview = { content: _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>Overview of ${_sep($sg__input_title)}${_escape(_hole_value($scope1_id, "PatchHole:#text/0", input.title, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_title)}: ${_sep($sg__input_summary)}${_escape(_hole_value($scope1_id, "PatchHole:#text/1", input.summary, _persisted_reason()))}${_el_resume($scope1_id, "#text/1", $sg__input_summary)}</p>`);
+		_html(`<p>Overview of ${_sep($sg__input_title)}${_escape(input.title)}${_el_resume($scope1_id, "#text/0", $sg__input_title)}: ${_sep($sg__input_summary)}${_escape(input.summary)}${_el_resume($scope1_id, "#text/1", $sg__input_summary)}</p>`);
 		_serialize_guard($scope0_reason, 1) && _subscribe($sg__input_summary && $input_summary__closures, _subscribe($sg__input_title && $input_title__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2")));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
@@ -37,11 +37,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<ul>");
 		_for_of(input.specs, (spec) => {
 			const $scope3_id = _scope_id();
-			_html(`<li>${_escape(_hole_value($scope3_id, "PatchHole:#text/0", spec.name, _persisted_reason()))}${_el_resume($scope3_id, "#text/0", $sg__input_specs)} is ${_sep($sg__input_specs)}${_escape(_hole_value($scope3_id, "PatchHole:#text/1", spec.value, _persisted_reason()))}${_el_resume($scope3_id, "#text/1", $sg__input_specs)}</li>`);
+			_html(`<li>${_escape(spec.name)}${_el_resume($scope3_id, "#text/0", $sg__input_specs)} is ${_sep($sg__input_specs)}${_escape(spec.value)}${_el_resume($scope3_id, "#text/1", $sg__input_specs)}</li>`);
 			$sg__input_specs && writeScope($scope3_id, {}, "__tests__/template.marko", "10:6");
 		}, function(spec) {
 			return spec.name;
-		}, $scope2_id, "#ul/0", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1, "__tests__/template.marko_3_update");
+		}, $scope2_id, "#ul/0", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1);
 		_serialize_guard($scope0_reason, 0) && _subscribe($sg__input_specs && $input_specs__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2"));
 		_resume_branch($scope2_id);
 	}, $scope0_id) };
@@ -71,12 +71,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_3_update": ["<li><!> is <!></li>", "D%c%l"],
-	"__tests__/template.marko_3_content": ["<li><!> is <!></li>", "D%c%l"],
-	"__tests__/template.marko_2_update": ["<ul></ul>", " b"],
-	"__tests__/template.marko_2_content": ["<ul></ul>", " b"],
-	"__tests__/template.marko_1_update": ["<p>Overview of <!>: <!></p>", "Db%c%l"],
-	"__tests__/template.marko_1_content": ["<p>Overview of <!>: <!></p>", "Db%c%l"],
 	"__tests__/template.marko_0_update": [["<h1> </h1><button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
 		"D l Db%l/",
 		["__tests__/tags/layout.marko"],

@@ -26,6 +26,12 @@ import {
   knownTagTranslateHTML,
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
+import {
+  isMembraneLive,
+  markStateCapable,
+  markUnknownChildren,
+  MembraneCause,
+} from "../../util/membranes";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
   type Binding,
@@ -125,6 +131,11 @@ export default {
       // Dynamic tags (and locally invoked define bodies) initialize their
       // renderer with statements that can land in setup.
       addSetupStatement(getOrCreateSection(tag));
+      if (isPersisted()) {
+        // Runtime-selected renderers may render state-capable content this
+        // compile cannot see; the section's subtree must stay nameable.
+        markUnknownChildren(getOrCreateSection(tag));
+      }
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
         knownTagAnalyze(
@@ -160,6 +171,16 @@ export default {
         )
       ) {
         getProgram().node.extra.isInteractive = true;
+        if (isPersisted()) {
+          let causes = hasVar ? MembraneCause.ref : 0;
+          for (const attr of tag.node.attributes) {
+            if (t.isMarkoSpreadAttribute(attr)) causes |= MembraneCause.spread;
+            else if (isEventOrChangeHandler(attr.name)) {
+              causes |= MembraneCause.effect;
+            }
+          }
+          markStateCapable(tagSection, causes);
+        }
       }
 
       if (hasVar) {
@@ -443,12 +464,13 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
+        const persistedAnchor = isPersisted() && isMembraneLive(tagSection);
         let serializeArg = getSerializeGuard(
           tagSection,
           serializeReason,
-          !isPersisted(),
+          !persistedAnchor,
         );
-        if (isPersisted()) {
+        if (persistedAnchor) {
           serializeArg = t.binaryExpression(
             "|",
             serializeArg!,

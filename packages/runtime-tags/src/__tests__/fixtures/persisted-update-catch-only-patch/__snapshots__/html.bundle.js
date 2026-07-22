@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a2", (err) => {
 		const $sg__err_message = _serialize_guard(_scope_reason(), 0);
 		const $scope2_id = _scope_id();
-		_html(`<p class=failed>failed: ${_sep($sg__err_message)}${_escape(_hole_value($scope2_id, "Qa", err.message, _persisted_reason()))}${_el_resume($scope2_id, "a", $sg__err_message)}</p>`);
+		_html(`<p class=failed>failed: ${_sep($sg__err_message)}${_escape(err.message)}${_el_resume($scope2_id, "a", $sg__err_message)}</p>`);
 		$sg__err_message && writeScope($scope2_id, {});
 	}, $scope0_id) }) }, 0, "a4");
 	_html("</section>");
@@ -32,8 +32,6 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a1": ["<p class=feed> </p>", "D l"],
 	"a6": ["<p class=feed> </p>", "D l"],
-	"a7": ["<p class=failed>failed: <!></p>", "Db%l"],
-	"a2": ["<p class=failed>failed: <!></p>", "Db%l"],
 	"a4": ["<!><!><!>", "b%c"],
 	"a3": ["<!><!><!>", "b%c"],
 	"a0": ["<button class=count>clicked <!></button><section><!></section>", " Db%lD%l"],

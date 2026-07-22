@@ -14,11 +14,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const categories = getCategories();
 	let count = 0;
 	_html(`<button class=bump>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_for_of(categories, (cat) => {
-		const $scope2_id = _scope_id();
-		_html(`<span${_attr_class(_hole_value($scope2_id, "PatchAttr:class:#span/0", cat === $global().params.pick && "active", _persisted_reason()))}>${_escape(_hole_value($scope2_id, "PatchHole:#text/1", cat, _persisted_reason()))}${_el_resume($scope2_id, "#text/1", _persisted_reason())}</span>${_el_resume($scope2_id, "#span/0", _persisted_reason())}`);
-		_persisted_reason() && writeScope($scope2_id, {}, "__tests__/template.marko", "5:2");
-	}, 0, $scope0_id, "#text/2", _persisted_reason(), _persisted_reason(), 0, 0, 1, "__tests__/template.marko_2_update");
+	_region(() => {
+		forOf(categories, (cat) => {
+			const $scope2_id = _scope_id();
+			_html(`<span${cat === $global().params.pick ? " class=active" : ""}>${_escape(cat)}${_el_resume($scope2_id, "#text/1", _persisted_reason())}</span>${_el_resume($scope2_id, "#span/0", _persisted_reason())}`);
+			_persisted_reason() && writeScope($scope2_id, {}, "__tests__/template.marko", "5:2");
+		});
+	}, $scope0_id, "#text/2");
 	_if(() => {
 		if (categories.length) {
 			const $scope1_id = _scope_id();
@@ -32,8 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_2_update": ["<span> </span>", " D l"],
-	"__tests__/template.marko_2_content": ["<span> </span>", " D l"],
 	"__tests__/template.marko_1_update": ["<em>pick:<!></em>", " Db%l"],
 	"__tests__/template.marko_1_content": ["<em>pick:<!></em>", " Db%l"],
 	"__tests__/template.marko_0_update": ["<button class=bump> </button><!><!><!>", " D l%b%c"],

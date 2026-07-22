@@ -108,8 +108,10 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: ul:nth-of-type(1) > li:nth-of-type(2) + li
-INSERT: ul:nth-of-type(2) > li:nth-of-type(2) + li
+INSERT: ul
+REMOVE: .count + ul
+INSERT: ul
+REMOVE: ul:nth-of-type(1) + ul
 ```
 
 # Update
@@ -185,13 +187,11 @@ UPDATE: .count::text@8 "1" => "2"
 ## Change
 ```
 UPDATE: h1::text "On Call" => "Off Duty"
-INSERT: div
+INSERT: ul + div
 REMOVE: .count + ul
 UPDATE: div[members] null => "ada,grace,alan"
-INSERT: .digest
+INSERT: ul + .digest
 REMOVE: div + ul
-UPDATE: .digest::text@0 "" => "3"
-UPDATE: .digest::text@11 "" => "ada, grace, alan"
 ```
 
 # Update
@@ -223,8 +223,8 @@ _strict.default.equal(document.querySelector("p.digest").textContent, "3 on call
 ## Change
 ```
 UPDATE: div[members] "ada,grace,alan" => "grace,alan"
-UPDATE: .digest::text@0 "3" => "2"
-UPDATE: .digest::text@11 "ada, grace, alan" => "grace, alan"
+INSERT: .digest + .digest
+REMOVE: div + .digest
 ```
 
 # Update
@@ -268,12 +268,8 @@ _strict.default.equal(document.querySelector("p.digest").textContent, "2 on call
 UPDATE: h1::text "Off Duty" => "On Call"
 INSERT: div + ul
 REMOVE: .count + div
-INSERT: ul:nth-of-type(1) > li
-INSERT: ul:nth-of-type(1) > li:nth-of-type(1) + li
 INSERT: p + ul
 REMOVE: ul:nth-of-type(1) + p
-INSERT: ul:nth-of-type(2) > li
-INSERT: ul:nth-of-type(2) > li:nth-of-type(1) + li
 ```
 
 # Update

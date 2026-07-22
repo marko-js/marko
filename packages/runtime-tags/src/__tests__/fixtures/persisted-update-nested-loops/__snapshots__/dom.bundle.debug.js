@@ -31,7 +31,7 @@ const $for_content2__$params = ($scope, $params3) => {
 	$for_content2__page_title($scope, $params3[0]?.title);
 };
 const $for_content__section_title = ($scope, section_title) => _text($scope["#text/0"], section_title);
-const $for_content__for = 0;
+const $for_content__for = /*@__PURE__*/ _for_of("#text/1", "<a class=link> </a>", " D l", $for_content2__setup, $for_content2__$params);
 const $for_content__section_pages = ($scope, section_pages) => {
 	if (!updating) $for_content__for($scope, [section_pages, "slug"]);
 };
@@ -44,7 +44,7 @@ const $path = /*@__PURE__*/ _const_persisted("path", $path__closure);
 const $region__closure = /*@__PURE__*/ _closure($for_content3__region);
 const $region = /*@__PURE__*/ _const_persisted("region", $region__closure);
 const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
-const $for = /*@__PURE__*/ _for_of("#nav/2", "<div><h4> </h4><!></div>", "E l%l", 0, $for_content__$params);
+const $for = 0;
 const $if = /*@__PURE__*/ _if("#text/3", "<p></p>", " b", $if_content__setup);
 const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
@@ -54,34 +54,21 @@ function $setup($scope) {
 	if (!updating) $region($scope, $scope.$global.params.region);
 	$count($scope, 0);
 	if (!updating) $for($scope, [getNav()]);
-	if (!updating) $if($scope, REGIONS.length ? 0 : 1);
+	$if($scope, REGIONS.length ? 0 : 1);
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $for_content3_holes = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#b/0": /*@__PURE__*/ _update_attr("#b/0", _attr_class),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $for_content2_holes = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#a/0": /*@__PURE__*/ _update_attr("#a/0", _attr_class),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $for_update = _update_for_keyed("#text/1", ($p, $l) => $for_content2_holes($p, $l), "__tests__/template.marko_2_update");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $if_content__update = ($patch, $live) => {
-	if ("BranchScopes:#p/0" in $patch) _update_for($patch["BranchScopes:#p/0"], $live["BranchScopes:#p/0"], $for_content3_holes, $live, "BranchScopes:#p/0", "__tests__/template.marko_4_update");
+const $for_content3__update = ($patch, $live) => {
+	if ("r" in $patch) $live["r"] = $patch["r"];
 };
-const $for_content__update = ($patch, $live) => {
-	$for_content_holes($patch, $live);
-	if ("BranchScopes:#text/1" in $patch) $for_update($live, [$patch["BranchScopes:#text/1"], "#LoopKey"]);
+const $for_content2__update = ($patch, $live) => {
+	if ("page_slug" in $patch) $live["page_slug"] = $patch["page_slug"];
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
-	if ("path" in $patch) $live["path"] = $patch["path"];
-	if ("BranchScopes:#nav/2" in $patch) _update_for($patch["BranchScopes:#nav/2"], $live["BranchScopes:#nav/2"], $for_content__update, $live, "BranchScopes:#nav/2", "__tests__/template.marko_1_update");
-	if ("ConditionalRenderer:#text/3" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3", [$if_content__update], ["__tests__/template.marko_3_update"]);
+	if ("ConditionalRenderer:#nav/2" in $patch) _update_region("#nav/2")($patch, $live);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
@@ -173,7 +160,7 @@ function $setup($scope) {
 	if (!updating) $region($scope, $scope.$global.params.region);
 	$count($scope, 0);
 	if (!updating) $for($scope, [getNav()]);
-	if (!updating) $if($scope, REGIONS.length ? 0 : 1);
+	$if($scope, REGIONS.length ? 0 : 1);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

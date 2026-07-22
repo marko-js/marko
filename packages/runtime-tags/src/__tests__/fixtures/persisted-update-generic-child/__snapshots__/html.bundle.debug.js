@@ -2,12 +2,8 @@
 var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span${_attr_class(_hole_value($scope0_id, "PatchAttr:class:#span/0", ["badge", input.tone], _persisted_reason()))}${_attr("title", _hole_value($scope0_id, "PatchAttr:title:#span/0", `tone: ${input.tone}`, _persisted_reason()))}>${_escape(_hole_value($scope0_id, "PatchHole:#text/1", input.label, _persisted_reason()))}${_el_resume($scope0_id, "#text/1", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "#span/0", _serialize_guard($scope0_reason, 1))}`);
+	_html(`<span${_attr_class(["badge", input.tone])}${_attr("title", `tone: ${input.tone}`)}>${_escape(input.label)}${_el_resume($scope0_id, "#text/1", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "#span/0", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
-});
-_renderer_shells({
-	"__tests__/tags/badge.marko_0_update": ["<span> </span>", " D l"],
-	"__tests__/tags/badge.marko": ["<span> </span>", " D l"]
 });
 
 // tags/panel.marko
@@ -49,10 +45,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		1: _serialize_guard($scope0_reason, 3),
 		2: _serialize_guard($scope0_reason, 2)
 	});
-	badge_default({
-		label: input.label,
-		tone: input.tone
-	});
+	_region(() => {
+		badge_default({
+			label: input.label,
+			tone: input.tone
+		});
+	}, $scope0_id, "#childScope/2");
 	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded,

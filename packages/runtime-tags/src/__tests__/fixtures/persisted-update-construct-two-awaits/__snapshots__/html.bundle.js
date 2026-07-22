@@ -51,14 +51,10 @@ _renderer_shells({
 	"a11": ["<p class=summary> </p>", "D l"],
 	"a4": ["<p class=report> </p>", "D l"],
 	"a12": ["<p class=report> </p>", "D l"],
-	"a13": ["<p class=loading>loading…</p>", "b"],
-	"a6": ["<p class=loading>loading…</p>", "b"],
 	"a8": ["<!><!><!><!>", "b%b%c"],
 	"a7": ["<!><!><!><!>", "b%b%c"],
-	"a14": ["<!><!><!>", "b%c"],
+	"a13": ["<!><!><!>", "b%c"],
 	"a9": ["<!><!><!>", "b%c"],
-	"a15": ["<p class=home>welcome home</p>", "b"],
-	"a3": ["<p class=home>welcome home</p>", "b"],
 	"a2": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

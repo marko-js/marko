@@ -77,11 +77,9 @@ UPDATE: button::text@8 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: select > option:nth-of-type(1)[value] "relevance" => "best-match"
-UPDATE: select > option:nth-of-type(1)::text "Relevance" => "Best match"
+INSERT: select > :is(option, option, option)
 REMOVE: select > option:nth-of-type(3) + option
-INSERT: select > option:nth-of-type(1) + option
-INSERT: select > option:nth-of-type(2) + option
+REMOVE: select > option:nth-of-type(3) + option
 ```
 
 # Update

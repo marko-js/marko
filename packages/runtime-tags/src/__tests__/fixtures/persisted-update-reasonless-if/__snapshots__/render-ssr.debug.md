@@ -29,8 +29,8 @@ process.env.MARKO_REASONLESS_IF_COUNT = "1";
 ```
 ## Change
 ```
-INSERT: p + .fallback
-REMOVE: button + p
+INSERT: button + .fallback
+REMOVE: .fallback + p
 ```
 
 # Update

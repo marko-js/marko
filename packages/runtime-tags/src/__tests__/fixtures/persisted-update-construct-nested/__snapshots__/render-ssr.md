@@ -77,7 +77,6 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 INSERT: .shell > .b
 REMOVE: .page-heading + p
-UPDATE: .b::text@9 "" => "sales report"
 ```
 
 # Update
@@ -136,5 +135,4 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 INSERT: section + .a
 REMOVE: .page-heading + section
-UPDATE: .a::text@9 "" => "growth report"
 ```

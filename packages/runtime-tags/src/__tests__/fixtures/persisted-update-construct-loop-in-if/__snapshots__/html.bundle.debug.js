@@ -45,28 +45,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<ol class=lane>");
 		_for_of(getTasks?.($global().day), (task) => {
 			const $scope3_id = _scope_id();
-			_html(`<li><em>TASK_ROW_MARKUP</em><!>${_escape(_hole_value($scope3_id, "PatchHole:#text/0", serverTaskSentinel?.(), _persisted_reason()))}${_el_resume($scope3_id, "#text/0")}<span class=name>${_escape(_hole_value($scope3_id, "PatchHole:#text/1", task.name, _persisted_reason()))}${_el_resume($scope3_id, "#text/1", _persisted_reason())}</span>: <span class=eta>${_escape(_hole_value($scope3_id, "PatchHole:#text/2", task.eta, _persisted_reason()))}${_el_resume($scope3_id, "#text/2", _persisted_reason())}</span></li>`);
+			_html(`<li><em>TASK_ROW_MARKUP</em>${_escape(serverTaskSentinel?.())}<span class=name>${_escape(task.name)}${_el_resume($scope3_id, "#text/1", _persisted_reason())}</span>: <span class=eta>${_escape(task.eta)}${_el_resume($scope3_id, "#text/2", _persisted_reason())}</span></li>`);
 			_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "8:6");
 		}, function(task) {
 			return task.id;
-		}, $scope1_id, "#ol/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ol>", 1, "__tests__/template.marko_3_update");
+		}, $scope1_id, "#ol/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ol>", 1);
 		_persisted_reason() && writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
 	}, () => {
 		const $scope2_id = _scope_id();
 		_html("<p class=closed>lane closed</p>");
 		_persisted_reason() && writeScope($scope2_id, {}, "__tests__/template.marko", "17:2");
-	}], ["__tests__/template.marko_1_update", "__tests__/template.marko_2_update"]);
+	}], [0, 0]);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count: _state_reason() && count }, "__tests__/template.marko", 0, { count: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_3_update": ["<li><em>TASK_ROW_MARKUP</em> <span class=name> </span>: <span class=eta> </span></li>", "Db bD lbD m"],
-	"__tests__/template.marko_3_content": ["<li><em>TASK_ROW_MARKUP</em> <span class=name> </span>: <span class=eta> </span></li>", "Db bD lbD m"],
-	"__tests__/template.marko_2_update": ["<p class=closed>lane closed</p>", "b"],
-	"__tests__/template.marko_2_content": ["<p class=closed>lane closed</p>", "b"],
-	"__tests__/template.marko_1_update": ["<ol class=lane></ol>", " b"],
-	"__tests__/template.marko_1_content": ["<ol class=lane></ol>", " b"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

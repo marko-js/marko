@@ -10,13 +10,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const PanelA = { content: _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<span class=a>A: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "PatchHole:#text/0", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</span>`);
+		_html(`<span class=a>A: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</span>`);
 		_persisted_reason() && writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
 	}, $scope0_id) };
 	const PanelB = { content: _content_resume("__tests__/template.marko_3_content", () => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "PatchHole:#text/0", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope3_id, "#text/0", _persisted_reason())}</section>`);
+		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope3_id, "#text/0", _persisted_reason())}</section>`);
 		_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "9:2");
 	}, $scope0_id) };
 	_html("<ul>");
@@ -36,12 +36,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_3_update": ["<section class=b>B: <!></section>", "Db%l"],
-	"__tests__/template.marko_3_content": ["<section class=b>B: <!></section>", "Db%l"],
 	"__tests__/template.marko_2_update": ["<li><!></li>", "D%l"],
 	"__tests__/template.marko_2_content": ["<li><!></li>", "D%l"],
-	"__tests__/template.marko_1_update": ["<span class=a>A: <!></span>", "Db%l"],
-	"__tests__/template.marko_1_content": ["<span class=a>A: <!></span>", "Db%l"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"]
 });

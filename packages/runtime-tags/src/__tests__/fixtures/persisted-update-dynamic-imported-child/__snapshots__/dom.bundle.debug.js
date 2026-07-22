@@ -4,7 +4,7 @@ const $walks$2 = " b";
 const $setup$2 = () => {};
 const $for_content__name = ($scope, name) => _text($scope["#text/0"], name);
 const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
-const $for = 0;
+const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D l", 0, $for_content__$params);
 const $input_members$2 = ($scope, input_members) => {
 	if (!updating) $for($scope, [input_members, function(name) {
 		return name;
@@ -12,12 +12,8 @@ const $input_members$2 = ($scope, input_members) => {
 };
 const $input$2 = ($scope, input) => $input_members$2($scope, input.members);
 var roster_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/roster.marko", $template$2, " b", $setup$2, $input$2);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $for_update = _update_for_keyed("#ul/0", ($p, $l) => $for_content_holes($p, $l), "__tests__/tags/roster.marko_1_update");
-const $update2$1 = ($patch, $live) => {
-	if ("BranchScopes:#ul/0" in $patch) $for_update($live, [$patch["BranchScopes:#ul/0"], "#LoopKey"]);
-};
-const $merge$2 = _resume("__tests__/tags/roster.marko_0_update", $update2$1);
+const $update2$2 = () => {};
+const $merge$2 = _resume("__tests__/tags/roster.marko_0_update", $update2$2);
 _update_content("__tests__/tags/roster.marko", $merge$2);
 function $patch2$2($fail) {
 	return patch($merge$2, $fail);
@@ -34,11 +30,8 @@ const $input_members$1 = ($scope, input_members) => {
 };
 const $input$1 = ($scope, input) => $input_members$1($scope, input.members);
 var digest_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/digest.marko", $template$1, $walks$1, $setup$1, $input$1);
-const $_holes$1 = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $merge$1 = _resume("__tests__/tags/digest.marko_0_update", $_holes$1);
+const $update2$1 = () => {};
+const $merge$1 = _resume("__tests__/tags/digest.marko_0_update", $update2$1);
 _update_content("__tests__/tags/digest.marko", $merge$1);
 function $patch2$1($fail) {
 	return patch($merge$1, $fail);

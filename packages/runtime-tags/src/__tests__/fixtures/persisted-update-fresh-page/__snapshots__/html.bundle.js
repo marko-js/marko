@@ -108,7 +108,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const Cart = { content: _content("a6", () => {
+	const Cart = { content: _content("a4", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const $childScope = _peek_scope_id();
@@ -120,12 +120,15 @@ var template_default = _template("a", (input) => {
 			id
 		}));
 		_html("<nav class=tags>");
-		_for_of(getTags?.(), (tag) => {
-			const $scope3_id = _scope_id();
-			const label = tag.toUpperCase();
-			_html(`<b${_attr_class(_hole_value($scope3_id, "Nclass:a", tag === $global().tag && "on", _persisted_reason()))}${_attr("data-tag", _hole_value($scope3_id, "Ndata-tag:a", tag, _persisted_reason()))}>${_escape(_hole_value($scope3_id, "Qb", label, _persisted_reason()))}${_el_resume($scope3_id, "b", _persisted_reason())}</b>${_el_resume($scope3_id, "a", _persisted_reason())}`);
-			_persisted_reason() && writeScope($scope3_id, {});
-		}, 0, $scope1_id, "c", _persisted_reason(), _persisted_reason(), 0, "</nav>", 1, "a4");
+		_region(() => {
+			forOf(getTags?.(), (tag) => {
+				const $scope3_id = _scope_id();
+				const label = tag.toUpperCase();
+				_html(`<b${tag === $global().tag ? " class=on" : ""}${_attr("data-tag", tag)}>${_escape(label)}${_el_resume($scope3_id, "b", _persisted_reason())}</b>${_el_resume($scope3_id, "a", _persisted_reason())}`);
+				_persisted_reason() && writeScope($scope3_id, {});
+			});
+		}, $scope1_id, "c");
+		_html(`</nav>${_el_resume($scope1_id, "c", _persisted_reason())}`);
 		_if(() => {
 			if (!entries.length) {
 				const $scope4_id = _scope_id();
@@ -135,14 +138,14 @@ var template_default = _template("a", (input) => {
 			} else {
 				const $scope2_id = _scope_id();
 				_html("<ul class=cart>");
-				_for_of(entries, (entry) => {
-					const $scope5_id = _scope_id();
-					_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "a")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "b")}</li>`);
-					writeScope($scope5_id, {});
-				}, function(entry) {
-					return entry.id;
-				}, $scope2_id, "a", 1, 1, 1, "</ul>", 1, "a5");
-				_html(`<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "b")}</p>`);
+				_region(() => {
+					forOf(entries, (entry) => {
+						const $scope5_id = _scope_id();
+						_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "a")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "b")}</li>`);
+						writeScope($scope5_id, {});
+					});
+				}, $scope2_id, "a");
+				_html(`</ul>${_el_resume($scope2_id, "a")}<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "b")}</p>`);
 				writeScope($scope2_id, {});
 				return 1;
 			}
@@ -154,7 +157,7 @@ var template_default = _template("a", (input) => {
 		});
 		_resume_branch($scope1_id);
 	}) };
-	const Item = { content: _content("a14", () => {
+	const Item = { content: _content("a11", () => {
 		const $scope6_id = _scope_id();
 		const $Item_content__product_id__closures = /* @__PURE__ */ new Set();
 		_scope_reason();
@@ -169,39 +172,40 @@ var template_default = _template("a", (input) => {
 			const $childScope2 = _peek_scope_id();
 			_set_serialize_reason(_persisted_reason());
 			actions_default({ id: product.id });
-			_try($scope7_id, "e", _content_resume("a10", () => {
+			_try($scope7_id, "e", _content_resume("a7", () => {
 				const $scope8_id = _scope_id();
 				_scope_reason();
 				_await($scope8_id, "a", getRecommendations(product.id), (recs) => {
 					const $scope11_id = _scope_id();
 					_html("<ul class=recs>");
-					_for_of(recs, (rec) => {
-						const $scope12_id = _scope_id();
-						_html(`<li>${_escape(_hole_value($scope12_id, "Qa", rec.title, _persisted_reason()))}${_el_resume($scope12_id, "a", _persisted_reason())}</li>`);
-						_persisted_reason() && writeScope($scope12_id, {});
-					}, function(rec) {
-						return rec.id;
-					}, $scope11_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "a7");
+					_region(() => {
+						forOf(recs, (rec) => {
+							const $scope12_id = _scope_id();
+							_html(`<li>${_escape(rec.title)}${_el_resume($scope12_id, "a", _persisted_reason())}</li>`);
+							_persisted_reason() && writeScope($scope12_id, {});
+						});
+					}, $scope11_id, "a");
+					_html(`</ul>${_el_resume($scope11_id, "a", _persisted_reason())}`);
 					_persisted_reason() && writeScope($scope11_id, {});
-				}, _persisted_reason(), "a8");
+				}, _persisted_reason(), "a5");
 				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }));
 				_resume_branch($scope8_id);
-			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a9", () => {
+			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a6", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading recommendations…");
-			}, $scope7_id) }) }, "a1", "a11");
+			}, $scope7_id) }) }, "a1", "a8");
 			_persisted_reason() && writeScope($scope7_id, {
 				_: _scope_with_id($scope6_id),
 				d: _existing_scope($childScope2)
 			});
-		}], ["a13", "a12"]);
+		}], ["a10", "a9"]);
 		_persisted_reason() && writeScope($scope6_id, { j: $Item_content__product_id__closures });
 	}) };
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "item" ? Item : Cart });
-	_script($scope0_id, "a15");
+	_script($scope0_id, "a12");
 	writeScope($scope0_id, {
 		d: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope3)
@@ -209,50 +213,42 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a7": ["<li> </li>", "D l"],
-	"a16": ["<li> </li>", "D l"],
-	"a8": ["<ul class=recs></ul>", " b"],
-	"a17": ["<ul class=recs></ul>", " b"],
-	"a18": ["loading recommendations…", "b"],
-	"a9": ["loading recommendations…", "b"],
-	"a13": ["<h2>not found</h2>", "b"],
-	"a19": ["<h2>not found</h2>", "b"],
+	"a5": ["<ul class=recs></ul>", " b"],
+	"a13": ["<ul class=recs></ul>", " b"],
+	"a10": ["<h2>not found</h2>", "b"],
+	"a14": ["<h2>not found</h2>", "b"],
+	"a8": ["<!><!><!>", "b%c"],
+	"a7": ["<!><!><!>", "b%c"],
+	"a9": [[
+		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
+		["b"],
+		"<!><!>"
+	], [
+		" bD lDb%l/",
+		["b"],
+		"&%c"
+	]],
+	"a15": [[
+		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
+		["b"],
+		"<!><!>"
+	], [
+		" bD lDb%l/",
+		["b"],
+		"&%c"
+	]],
+	"a16": ["<!><!><!>", "b%c"],
 	"a11": ["<!><!><!>", "b%c"],
-	"a10": ["<!><!><!>", "b%c"],
-	"a12": [[
-		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
-		["b"],
-		"<!><!>"
-	], [
-		" bD lDb%l/",
-		["b"],
-		"&%c"
-	]],
-	"a20": [[
-		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
-		["b"],
-		"<!><!>"
-	], [
-		" bD lDb%l/",
-		["b"],
-		"&%c"
-	]],
-	"a21": ["<!><!><!>", "b%c"],
-	"a14": ["<!><!><!>", "b%c"],
-	"a5": ["<li><!> $<!></li>", "D%c%l"],
-	"a22": ["<li><!> $<!></li>", "D%c%l"],
-	"a23": ["<p class=cart>cart is empty</p>", "b"],
-	"a24": ["<p class=cart>cart is empty</p>", "b"],
-	"a4": ["<b> </b>", " D l"],
-	"a25": ["<b> </b>", " D l"],
-	"a26": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
-	"a27": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
-	"a28": [[["d"], "<nav class=tags></nav><!><!>"], [
+	"a17": ["<p class=cart>cart is empty</p>", "b"],
+	"a18": ["<p class=cart>cart is empty</p>", "b"],
+	"a19": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
+	"a20": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
+	"a21": [[["d"], "<nav class=tags></nav><!><!>"], [
 		"0",
 		["d"],
 		"& b%c"
 	]],
-	"a6": [[["d"], "<nav class=tags></nav><!><!>"], [
+	"a4": [[["d"], "<nav class=tags></nav><!><!>"], [
 		"0",
 		["d"],
 		"& b%c"

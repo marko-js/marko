@@ -62,7 +62,6 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 INSERT: blockquote + .widget
 REMOVE: .shell > blockquote
-UPDATE: .widget::text@8 "" => "sales notes"
 ```
 
 # Update

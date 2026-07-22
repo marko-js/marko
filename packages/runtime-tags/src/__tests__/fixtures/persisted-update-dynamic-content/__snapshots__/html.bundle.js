@@ -27,28 +27,28 @@ var template_default = _template("a", (input) => {
 	const Overview = { content: _content_resume("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p>Overview of ${_sep($sg__input_title)}${_escape(_hole_value($scope1_id, "Qa", input.title, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_title)}: ${_sep($sg__input_summary)}${_escape(_hole_value($scope1_id, "Qb", input.summary, _persisted_reason()))}${_el_resume($scope1_id, "b", $sg__input_summary)}</p>`);
+		_html(`<p>Overview of ${_sep($sg__input_title)}${_escape(input.title)}${_el_resume($scope1_id, "a", $sg__input_title)}: ${_sep($sg__input_summary)}${_escape(input.summary)}${_el_resume($scope1_id, "b", $sg__input_summary)}</p>`);
 		_serialize_guard($scope0_reason, 1) && _subscribe($sg__input_summary && $input_summary__closures, _subscribe($sg__input_title && $input_title__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
-	const Specs = { content: _content_resume("a3", () => {
+	const Specs = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("<ul>");
 		_for_of(input.specs, (spec) => {
 			const $scope3_id = _scope_id();
-			_html(`<li>${_escape(_hole_value($scope3_id, "Qa", spec.name, _persisted_reason()))}${_el_resume($scope3_id, "a", $sg__input_specs)} is ${_sep($sg__input_specs)}${_escape(_hole_value($scope3_id, "Qb", spec.value, _persisted_reason()))}${_el_resume($scope3_id, "b", $sg__input_specs)}</li>`);
+			_html(`<li>${_escape(spec.name)}${_el_resume($scope3_id, "a", $sg__input_specs)} is ${_sep($sg__input_specs)}${_escape(spec.value)}${_el_resume($scope3_id, "b", $sg__input_specs)}</li>`);
 			$sg__input_specs && writeScope($scope3_id, {});
 		}, function(spec) {
 			return spec.name;
-		}, $scope2_id, "a", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1, "a2");
+		}, $scope2_id, "a", $sg__input_specs, $sg__input_specs, $sg__input_specs, "</ul>", 1);
 		_serialize_guard($scope0_reason, 0) && _subscribe($sg__input_specs && $input_specs__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope2_id);
 	}, $scope0_id) };
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason($sg__input_view);
 	layout_default({ content: input.view === "specs" ? Specs : Overview });
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		g: ($si__input_view || _patch_reason()) && input.title,
 		h: ($si__input_view || _patch_reason()) && input.summary,
@@ -64,12 +64,6 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a2": ["<li><!> is <!></li>", "D%c%l"],
-	"a5": ["<li><!> is <!></li>", "D%c%l"],
-	"a6": ["<ul></ul>", " b"],
-	"a3": ["<ul></ul>", " b"],
-	"a7": ["<p>Overview of <!>: <!></p>", "Db%c%l"],
-	"a1": ["<p>Overview of <!>: <!></p>", "Db%c%l"],
 	"a0": [["<h1> </h1><button class=count>clicked <!></button>", ["b"]], [
 		"D l Db%l/",
 		["b"],

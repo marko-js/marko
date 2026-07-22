@@ -14,11 +14,13 @@ var template_default = _template("a", (input) => {
 	const categories = getCategories();
 	let count = 0;
 	_html(`<button class=bump>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	_for_of(categories, (cat) => {
-		const $scope2_id = _scope_id();
-		_html(`<span${_attr_class(_hole_value($scope2_id, "Nclass:a", cat === $global().params.pick && "active", _persisted_reason()))}>${_escape(_hole_value($scope2_id, "Qb", cat, _persisted_reason()))}${_el_resume($scope2_id, "b", _persisted_reason())}</span>${_el_resume($scope2_id, "a", _persisted_reason())}`);
-		_persisted_reason() && writeScope($scope2_id, {});
-	}, 0, $scope0_id, "c", _persisted_reason(), _persisted_reason(), 0, 0, 1, "a1");
+	_region(() => {
+		forOf(categories, (cat) => {
+			const $scope2_id = _scope_id();
+			_html(`<span${cat === $global().params.pick ? " class=active" : ""}>${_escape(cat)}${_el_resume($scope2_id, "b", _persisted_reason())}</span>${_el_resume($scope2_id, "a", _persisted_reason())}`);
+			_persisted_reason() && writeScope($scope2_id, {});
+		});
+	}, $scope0_id, "c");
 	_if(() => {
 		if (categories.length) {
 			const $scope1_id = _scope_id();
@@ -27,15 +29,13 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "d", 1 | _persisted_reason(), _persisted_reason(), 0, 0, 1);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, { g: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a1": ["<span> </span>", " D l"],
-	"a3": ["<span> </span>", " D l"],
-	"a4": ["<em>pick:<!></em>", " Db%l"],
-	"a5": ["<em>pick:<!></em>", " Db%l"],
+	"a2": ["<em>pick:<!></em>", " Db%l"],
+	"a3": ["<em>pick:<!></em>", " Db%l"],
 	"a0": ["<button class=bump> </button><!><!><!>", " D l%b%c"],
 	"a": ["<button class=bump> </button><!><!><!>", " D l%b%c"]
 });

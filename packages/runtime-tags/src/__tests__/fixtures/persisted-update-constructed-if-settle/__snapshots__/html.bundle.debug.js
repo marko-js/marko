@@ -13,16 +13,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_if(() => input.title.length ? 0 : 1, $scope1_id, "#text/0", $sg__input_title, $sg__input_title, _serialize_guard($scope0_reason, 4), void 0, void 0, "__tests__/template.marko_1/update_if_#text/0", [() => {
 			const $scope2_id = _scope_id();
-			_html(` 5> <h2>long ${_sep($sg__input_title)}${_escape(_hole_value($scope2_id, "PatchHole:#text/0", input.title, _persisted_reason()))}${_el_resume($scope2_id, "#text/0", $sg__input_title)}</h2>`);
+			_html(` 5> <h2>long ${_sep($sg__input_title)}${_escape(input.title)}${_el_resume($scope2_id, "#text/0", $sg__input_title)}</h2>`);
 			$sg__input_title__OR__input_missing && _subscribe($sg__input_title && $input_title__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4"));
 		}, () => {
 			const $scope3_id = _scope_id();
-			_html(`<h2>short ${_sep($sg__input_title)}${_escape(_hole_value($scope3_id, "PatchHole:#text/0", input.title, _persisted_reason()))}${_el_resume($scope3_id, "#text/0", $sg__input_title)}</h2>`);
+			_html(`<h2>short ${_sep($sg__input_title)}${_escape(input.title)}${_el_resume($scope3_id, "#text/0", $sg__input_title)}</h2>`);
 			$sg__input_title__OR__input_missing && _subscribe($sg__input_title && $input_title__closures, writeScope($scope3_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:input_title": $sg__input_title && 1
 			}, "__tests__/template.marko", "13:4"));
-		}], ["__tests__/template.marko_2_update", "__tests__/template.marko_3_update"]);
+		}], [0, 0]);
 		_html("<section>");
 		_try($scope1_id, "#text/1", _content_resume("__tests__/template.marko_4_content", () => {
 			const $scope4_id = _scope_id();
@@ -60,18 +60,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_7_update": ["loading extras…", "b"],
-	"__tests__/template.marko_7_content": ["loading extras…", "b"],
 	"__tests__/template.marko_6_update": ["<p>gone</p>", "b"],
 	"__tests__/template.marko_6_content": ["<p>gone</p>", "b"],
 	"__tests__/template.marko_5_update": ["<p>extras for <!></p>", "Db%l"],
 	"__tests__/template.marko_5_content": ["<p>extras for <!></p>", "Db%l"],
 	"__tests__/template.marko_4_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_4_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_3_update": ["<h2>short <!></h2>", "Db%l"],
-	"__tests__/template.marko_3_content": ["<h2>short <!></h2>", "Db%l"],
-	"__tests__/template.marko_2_update": [" 5> <h2>long <!></h2>", "bDb%l"],
-	"__tests__/template.marko_2_content": [" 5> <h2>long <!></h2>", "bDb%l"],
 	"__tests__/template.marko_1_update": ["<!><!><section><!></section>", "b%bD%l"],
 	"__tests__/template.marko_1_content": ["<!><!><section><!></section>", "b%bD%l"],
 	"__tests__/template.marko_0_update": ["<h1> </h1><button>clicked <!></button><!><!>", "D l Db%l%c"],

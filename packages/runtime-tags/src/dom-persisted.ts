@@ -22,6 +22,7 @@ export {
   _update_loader,
   _update_named_attr,
   _update_pair,
+  _update_region,
   _update_scopes,
   _update_seed,
   _update_select_value,

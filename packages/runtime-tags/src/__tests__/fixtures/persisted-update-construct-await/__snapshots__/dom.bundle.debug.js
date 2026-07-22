@@ -117,12 +117,6 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#li/0": /*@__PURE__*/ _update_attr("#li/0", _attr_class),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1"),
-	"PatchHole:#text/2": /*@__PURE__*/ _update_text("#text/2")
-});
-const $for_update = _update_for_keyed("#ul/1", ($p, $l) => $for_content_holes($p, $l), "__tests__/template.marko_6_update");
 const $Reports_content_holes = /*@__PURE__*/ _update_scopes({
 	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
 	"PatchHole:#text/2": /*@__PURE__*/ _update_text("#text/2")
@@ -130,7 +124,7 @@ const $Reports_content_holes = /*@__PURE__*/ _update_scopes({
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $await_content__update = ($patch, $live) => {
 	if ("#childScope/0" in $patch) $merge$2($patch["#childScope/0"], $live["#childScope/0"]);
-	if ("BranchScopes:#ul/1" in $patch) $for_update($live, [$patch["BranchScopes:#ul/1"], "#LoopKey"]);
+	if ("ConditionalRenderer:#ul/1" in $patch) _update_region("#ul/1")($patch, $live);
 };
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_4_update");

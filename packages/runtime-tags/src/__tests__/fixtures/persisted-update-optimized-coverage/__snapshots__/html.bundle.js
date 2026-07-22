@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	const Panel = { content: _content("a3", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p>${_escape(_hole_value($scope1_id, "Qa", input.title, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_title)}</p>`);
+		_html(`<p>${_escape(input.title)}${_el_resume($scope1_id, "a", $sg__input_title)}</p>`);
 		$sg__input_title && _subscribe($input_title__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}) };
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			_dynamic_tag($scope3_id, "a", input.tag, {}, _content_resume("a4", () => {
 				const $scope5_id = _scope_id();
 				_scope_reason();
-				_html(`${_escape(_hole_value($scope5_id, "Qa", title, _persisted_reason()))}${_el_resume($scope5_id, "a", $sg__input_id)}`);
+				_html(`${_escape(title)}${_el_resume($scope5_id, "a", $sg__input_id)}`);
 				_subscribe($sg__input_id && $elseif_content__title__closures, writeScope($scope5_id, { _: _scope_with_id($scope3_id) }));
 				_resume_branch($scope5_id);
 			}, $scope3_id), 0, _serialize_guard($scope0_reason, 6) | _persisted_reason(), "a0");
@@ -66,16 +66,12 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a9": [" ", " b"],
-	"a4": [" ", " b"],
 	"a5": ["<!><p> </p><!>", "b/D l&b"],
-	"a10": ["<!><p> </p><!>", "b/D l&b"],
+	"a9": ["<!><p> </p><!>", "b/D l&b"],
 	"a6": ["<!><!><!>", "b%c"],
-	"a11": ["<!><!><!>", "b%c"],
+	"a10": ["<!><!><!>", "b%c"],
 	"a7": ["<h2> </h2>", "D l"],
-	"a12": ["<h2> </h2>", "D l"],
-	"a13": ["<p> </p>", "D l"],
-	"a3": ["<p> </p>", "D l"],
+	"a11": ["<h2> </h2>", "D l"],
 	"a2": ["<button>count <!></button><div></div>", " Db%l b"],
 	"a": ["<button>count <!></button><div></div>", " Db%l b"]
 });

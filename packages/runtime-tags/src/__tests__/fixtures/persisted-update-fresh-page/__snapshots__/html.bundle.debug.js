@@ -131,12 +131,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			id
 		}));
 		_html("<nav class=tags>");
-		_for_of(getTags?.(), (tag) => {
-			const $scope3_id = _scope_id();
-			const label = tag.toUpperCase();
-			_html(`<b${_attr_class(_hole_value($scope3_id, "PatchAttr:class:#b/0", tag === $global().tag && "on", _persisted_reason()))}${_attr("data-tag", _hole_value($scope3_id, "PatchAttr:data-tag:#b/0", tag, _persisted_reason()))}>${_escape(_hole_value($scope3_id, "PatchHole:#text/1", label, _persisted_reason()))}${_el_resume($scope3_id, "#text/1", _persisted_reason())}</b>${_el_resume($scope3_id, "#b/0", _persisted_reason())}`);
-			_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "13:6");
-		}, 0, $scope1_id, "#nav/2", _persisted_reason(), _persisted_reason(), 0, "</nav>", 1, "__tests__/template.marko_3_update");
+		_region(() => {
+			forOf(getTags?.(), (tag) => {
+				const $scope3_id = _scope_id();
+				const label = tag.toUpperCase();
+				_html(`<b${tag === $global().tag ? " class=on" : ""}${_attr("data-tag", tag)}>${_escape(label)}${_el_resume($scope3_id, "#text/1", _persisted_reason())}</b>${_el_resume($scope3_id, "#b/0", _persisted_reason())}`);
+				_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "13:6");
+			});
+		}, $scope1_id, "#nav/2");
+		_html(`</nav>${_el_resume($scope1_id, "#nav/2", _persisted_reason())}`);
 		_if(() => {
 			if (!entries.length) {
 				const $scope4_id = _scope_id();
@@ -146,14 +149,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			} else {
 				const $scope2_id = _scope_id();
 				_html("<ul class=cart>");
-				_for_of(entries, (entry) => {
-					const $scope5_id = _scope_id();
-					_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "#text/0")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "#text/1")}</li>`);
-					writeScope($scope5_id, {}, "__tests__/template.marko", "25:8");
-				}, function(entry) {
-					return entry.id;
-				}, $scope2_id, "#ul/0", 1, 1, 1, "</ul>", 1, "__tests__/template.marko_5_update");
-				_html(`<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "#text/1")}</p>`);
+				_region(() => {
+					forOf(entries, (entry) => {
+						const $scope5_id = _scope_id();
+						_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "#text/0")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "#text/1")}</li>`);
+						writeScope($scope5_id, {}, "__tests__/template.marko", "25:8");
+					});
+				}, $scope2_id, "#ul/0");
+				_html(`</ul>${_el_resume($scope2_id, "#ul/0")}<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "#text/1")}</p>`);
 				writeScope($scope2_id, {}, "__tests__/template.marko", "23:4");
 				return 1;
 			}
@@ -189,13 +192,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_await($scope8_id, "#text/0", getRecommendations(product.id), (recs) => {
 					const $scope11_id = _scope_id();
 					_html("<ul class=recs>");
-					_for_of(recs, (rec) => {
-						const $scope12_id = _scope_id();
-						_html(`<li>${_escape(_hole_value($scope12_id, "PatchHole:#text/0", rec.title, _persisted_reason()))}${_el_resume($scope12_id, "#text/0", _persisted_reason())}</li>`);
-						_persisted_reason() && writeScope($scope12_id, {}, "__tests__/template.marko", "46:12");
-					}, function(rec) {
-						return rec.id;
-					}, $scope11_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "__tests__/template.marko_12_update");
+					_region(() => {
+						forOf(recs, (rec) => {
+							const $scope12_id = _scope_id();
+							_html(`<li>${_escape(rec.title)}${_el_resume($scope12_id, "#text/0", _persisted_reason())}</li>`);
+							_persisted_reason() && writeScope($scope12_id, {}, "__tests__/template.marko", "46:12");
+						});
+					}, $scope11_id, "#ul/0");
+					_html(`</ul>${_el_resume($scope11_id, "#ul/0", _persisted_reason())}`);
 					_persisted_reason() && writeScope($scope11_id, {}, "__tests__/template.marko", "44:8");
 				}, _persisted_reason(), "__tests__/template.marko_11_update");
 				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }, "__tests__/template.marko", "42:6"));
@@ -228,12 +232,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_12_update": ["<li> </li>", "D l"],
-	"__tests__/template.marko_12_content": ["<li> </li>", "D l"],
 	"__tests__/template.marko_11_update": ["<ul class=recs></ul>", " b"],
 	"__tests__/template.marko_11_content": ["<ul class=recs></ul>", " b"],
-	"__tests__/template.marko_10_update": ["loading recommendations…", "b"],
-	"__tests__/template.marko_10_content": ["loading recommendations…", "b"],
 	"__tests__/template.marko_9_update": ["<h2>not found</h2>", "b"],
 	"__tests__/template.marko_9_content": ["<h2>not found</h2>", "b"],
 	"__tests__/template.marko_8_update": ["<!><!><!>", "b%c"],
@@ -258,12 +258,8 @@ _renderer_shells({
 	]],
 	"__tests__/template.marko_6_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_6_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_5_update": ["<li><!> $<!></li>", "D%c%l"],
-	"__tests__/template.marko_5_content": ["<li><!> $<!></li>", "D%c%l"],
 	"__tests__/template.marko_4_update": ["<p class=cart>cart is empty</p>", "b"],
 	"__tests__/template.marko_4_content": ["<p class=cart>cart is empty</p>", "b"],
-	"__tests__/template.marko_3_update": ["<b> </b>", " D l"],
-	"__tests__/template.marko_3_content": ["<b> </b>", " D l"],
 	"__tests__/template.marko_2_update": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
 	"__tests__/template.marko_2_content": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
 	"__tests__/template.marko_1_update": [[["__tests__/tags/shared-list.marko"], "<nav class=tags></nav><!><!>"], [

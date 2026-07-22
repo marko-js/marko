@@ -132,18 +132,9 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: .items > li:nth-of-type(1)::text "alpha" => "beta"
-UPDATE: .items > li:nth-of-type(2)::text "beta" => "delta"
-REMOVE: .items > li:nth-of-type(2) + li
-REMOVE: .items > li:nth-of-type(2) + li
-UPDATE: .pagination > a:nth-of-type(1)[href] "/search?page=1&q=a" => "/search?page=1&q=e"
-INSERT: .current + a
-REMOVE: .pagination > a:nth-of-type(1) + .current
-UPDATE: .pagination > a:nth-of-type(2)[href] null => "/search?page=2&q=e"
-UPDATE: .pagination > a:nth-of-type(2)::text " " => "2"
-INSERT: .pagination > a:nth-of-type(2) + .current
-REMOVE: .pagination > a:nth-of-type(2) + a
-UPDATE: .current::text " " => "3"
+INSERT: .count + :is(.items, .pagination)
+REMOVE: .pagination + .items
+REMOVE: .pagination + .pagination
 ```
 
 # Update

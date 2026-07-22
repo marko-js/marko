@@ -64,6 +64,7 @@ UPDATE: .count::text@8 "0" => "1"
   class="sort"
 >
   <option
+    selected=""
     value="best-match"
   >
     Best match
@@ -74,7 +75,7 @@ UPDATE: .count::text@8 "0" => "1"
     Price
   </option>
   <option
-    selected=""
+    default-selected=""
     value="rating-down"
   >
     Rating
@@ -83,13 +84,9 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: .sort > option:nth-of-type(1)[value] "relevance" => "best-match"
-UPDATE: .sort > option:nth-of-type(1)::text "Relevance" => "Best match"
+INSERT: .sort > :is(option, option, option)
 REMOVE: .sort > option:nth-of-type(3) + option
-INSERT: .sort > option:nth-of-type(1) + option
-INSERT: .sort > option:nth-of-type(2) + option
-UPDATE: .sort > option:nth-of-type(1)[selected] "" => null
-UPDATE: .sort > option:nth-of-type(3)[selected] null => ""
+REMOVE: .sort > option:nth-of-type(3) + option
 ```
 
 # Update
@@ -103,6 +100,41 @@ select.dispatchEvent(new window.Event("input", {
 ```
 
 # Update `{"sort":"rating-down","options":[{"key":"rel","id":"best-match","label":"Best match"},{"key":"price","id":"price-up","label":"Price"},{"key":"rating","id":"rating-down","label":"Rating"}],"$global":{"persisted":true}}`
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<select
+  class="sort"
+>
+  <option
+    selected=""
+    value="best-match"
+  >
+    Best match
+  </option>
+  <option
+    value="price-up"
+  >
+    Price
+  </option>
+  <option
+    default-selected=""
+    value="rating-down"
+  >
+    Rating
+  </option>
+</select>
+```
+## Change
+```
+INSERT: .sort > :is(option, option, option)
+REMOVE: .sort > option:nth-of-type(3) + option
+REMOVE: .sort > option:nth-of-type(3) + option
+REMOVE: .sort > option:nth-of-type(3) + option
+```
 
 # Update
 ```js
@@ -118,12 +150,12 @@ document.querySelector("button.count").click();
   class="sort"
 >
   <option
+    selected=""
     value="best-match"
   >
     Best match
   </option>
   <option
-    selected=""
     value="price-up"
   >
     Price

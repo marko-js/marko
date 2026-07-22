@@ -34,7 +34,8 @@
 ```
 ## Change
 ```
-INSERT: article:nth-of-type(1) + article
+INSERT: button + :is(article, article)
+REMOVE: article:nth-of-type(2) + article
 ```
 
 # Update `{"$global":{"persisted":true,"items":[{"id":"existing","view":"a"},{"id":"one","view":"b"}]}}`
@@ -58,5 +59,7 @@ INSERT: article:nth-of-type(1) + article
 ```
 ## Change
 ```
-UPDATE: article:nth-of-type(2) > span::text@4 "a" => "b"
+INSERT: button + :is(article, article)
+REMOVE: article:nth-of-type(2) + article
+REMOVE: article:nth-of-type(2) + article
 ```

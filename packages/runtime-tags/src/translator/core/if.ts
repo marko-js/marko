@@ -18,6 +18,7 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
+import { isMembraneLive } from "../util/membranes";
 import { addSorted } from "../util/optional";
 import {
   compareSources,
@@ -165,7 +166,7 @@ export const IfTag = {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
           if (
-            (isPersisted()
+            (isPersisted() && isMembraneLive(ifTagSection)
               ? isStateOnlySerializeReason(
                   getSerializeReason(ifTagSection, kStatefulReason),
                 )
@@ -208,6 +209,7 @@ export const IfTag = {
           const branchConditions = getBranchConditions(branches);
           const reasonlessSelection =
             isPersisted() &&
+            isMembraneLive(ifTagSection) &&
             branchConditions.some((condition) =>
               isReasonlessExpression(condition, ifTagExtra),
             );
@@ -252,6 +254,7 @@ export const IfTag = {
                     (branchSerializeReason.state &&
                       !(
                         isPersisted() &&
+                        isMembraneLive(ifTagSection) &&
                         (branchSerializeReason.param ||
                           branchSerializeReason.global)
                       ))
@@ -282,9 +285,10 @@ export const IfTag = {
                 [],
                 t.blockStatement(bodyStatements as t.Statement[]),
               );
-              branchConstructIds[i] = branchBody
-                ? t.stringLiteral(getResumeRegisterId(branchBody, "update"))
-                : t.numericLiteral(0);
+              branchConstructIds[i] =
+                branchBody && isMembraneLive(branchBody)
+                  ? t.stringLiteral(getResumeRegisterId(branchBody, "update"))
+                  : t.numericLiteral(0);
               selectorExpr = testAttr
                 ? t.conditionalExpression(
                     testAttr.value,
@@ -431,13 +435,25 @@ export const IfTag = {
               branchConditions,
             )
           ) {
-            addUpdateMerge(ifTagSection, {
-              kind: "if",
-              accessor: getScopeAccessorLiteral(nodeRef),
-              branchBodySections: branches.map(
-                ([, branchBodySection]) => branchBodySection,
-              ),
-            });
+            addUpdateMerge(
+              ifTagSection,
+              branches.every(
+                ([, branchBodySection]) =>
+                  !branchBodySection || isMembraneLive(branchBodySection),
+              )
+                ? {
+                    kind: "if",
+                    accessor: getScopeAccessorLiteral(nodeRef),
+                    branchBodySections: branches.map(
+                      ([, branchBodySection]) => branchBodySection,
+                    ),
+                  }
+                : // Nucleus-free bodies swap wholesale from a response shell.
+                  {
+                    kind: "region",
+                    accessor: getScopeAccessorLiteral(nodeRef),
+                  },
+            );
             signal.updateGuard = true;
           }
           signal.build = () => {

@@ -25,13 +25,13 @@ var template_default = _template("a", (input) => {
 	const PanelA = { content: _content("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p class=a>Panel A: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</p><span class=a2>alpha detail</span><em class=a3>${_escape(_hole_value($scope1_id, "Qb", getMotto?.(), _persisted_reason()))}${_el_resume($scope1_id, "b")}</em>`);
+		_html(`<p class=a>Panel A: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope1_id, "a", _persisted_reason())}</p><span class=a2>alpha detail</span><em class=a3>${_escape(getMotto?.())}</em>`);
 		_persisted_reason() && writeScope($scope1_id, {});
 	}) };
 	const PanelB = { content: _content("a2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<section class=b>Panel B: ${_sep(_persisted_reason())}${_escape(_hole_value($scope2_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope2_id, "a", _persisted_reason())}</section><span class=b2>beta detail</span>`);
+		_html(`<section class=b>Panel B: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope2_id, "a", _persisted_reason())}</section><span class=b2>beta detail</span>`);
 		_persisted_reason() && writeScope($scope2_id, {});
 	}) };
 	const $childScope = _peek_scope_id();
@@ -45,10 +45,6 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a4": ["<section class=b>Panel B: <!></section><span class=b2>beta detail</span>", "Db%lb"],
-	"a2": ["<section class=b>Panel B: <!></section><span class=b2>beta detail</span>", "Db%lb"],
-	"a5": ["<p class=a>Panel A: <!></p><span class=a2>alpha detail</span><em class=a3> </em>", "Db%lbD l"],
-	"a1": ["<p class=a>Panel A: <!></p><span class=a2>alpha detail</span><em class=a3> </em>", "Db%lbD l"],
 	"a0": [["<button class=count>clicked <!></button>", ["b"]], [
 		" Db%l/",
 		["b"],

@@ -2,12 +2,8 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_class__OR__input_data_request = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(_hole_value($scope0_id, "PatchAttr:class:#div/0", input.class, _persisted_reason()))}${_attr("data-request", _hole_value($scope0_id, "PatchAttr:data-request:#div/0", input["data-request"], _persisted_reason()))}></div>${_el_resume($scope0_id, "#div/0", $sg__input_class__OR__input_data_request)}`);
+	_html(`<div${_attr_class(input.class)}${_attr("data-request", input["data-request"])}></div>${_el_resume($scope0_id, "#div/0", $sg__input_class__OR__input_data_request)}`);
 	$sg__input_class__OR__input_data_request && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
-});
-_renderer_shells({
-	"__tests__/tags/child.marko_0_update": ["<div></div>", " b"],
-	"__tests__/tags/child.marko": ["<div></div>", " b"]
 });
 
 // template.marko
@@ -28,10 +24,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "#div/3", $scope0_id, "div")}>dynamic</div>${_el_resume($scope0_id, "#div/3")}`);
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason($sg__input_title);
-	child_default({
-		"data-request": input.title,
-		...attrs
-	});
+	_region(() => {
+		child_default({
+			"data-request": input.title,
+			...attrs
+		});
+	}, $scope0_id, "#childScope/4");
 	_script($scope0_id, "__tests__/template.marko_0_input_title_attrs");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

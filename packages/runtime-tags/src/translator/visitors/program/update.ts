@@ -466,6 +466,21 @@ function buildMerge(
   },
 ): t.Statement[] {
   switch (merge.kind) {
+    case "region": {
+      const rendererKey =
+        getAccessorPrefix().ConditionalRenderer + merge.accessor.value;
+      return [
+        ifPresent(
+          rendererKey,
+          t.expressionStatement(
+            t.callExpression(
+              callRuntime("_update_region", t.cloneNode(merge.accessor)),
+              [t.cloneNode(patchIdentifier), t.cloneNode(liveIdentifier)],
+            ),
+          ),
+        ),
+      ];
+    }
     case "if": {
       const rendererKey =
         getAccessorPrefix().ConditionalRenderer + merge.accessor.value;

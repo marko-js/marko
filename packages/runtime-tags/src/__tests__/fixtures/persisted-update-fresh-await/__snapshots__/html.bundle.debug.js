@@ -30,13 +30,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope2_id, "#text/0", getReviews(input.productId), (reviews) => {
 				const $scope5_id = _scope_id();
 				_html("<ul>");
-				_for_of(reviews, (review) => {
-					const $scope6_id = _scope_id();
-					_html(`<li>${_escape(_hole_value($scope6_id, "PatchHole:#text/0", review.text, _persisted_reason()))}${_el_resume($scope6_id, "#text/0", $sg__input_productId)} rated ${_sep($sg__input_productId)}${_escape(_hole_value($scope6_id, "PatchHole:#text/1", review.stars, _persisted_reason()))}${_el_resume($scope6_id, "#text/1", $sg__input_productId)}</li>`);
-					$sg__input_productId && writeScope($scope6_id, {}, "__tests__/template.marko", "11:10");
-				}, function(review) {
-					return review.id;
-				}, $scope5_id, "#ul/0", $sg__input_productId, $sg__input_productId, $sg__input_productId, "</ul>", 1, "__tests__/template.marko_6_update");
+				_region(() => {
+					forOf(reviews, (review) => {
+						const $scope6_id = _scope_id();
+						_html(`<li>${_escape(review.text)}${_el_resume($scope6_id, "#text/0", $sg__input_productId)} rated ${_sep($sg__input_productId)}${_escape(review.stars)}${_el_resume($scope6_id, "#text/1", $sg__input_productId)}</li>`);
+						$sg__input_productId && writeScope($scope6_id, {}, "__tests__/template.marko", "11:10");
+					});
+				}, $scope5_id, "#ul/0");
+				_html(`</ul>${_el_resume($scope5_id, "#ul/0", $sg__input_productId)}`);
 				$sg__input_productId && writeScope($scope5_id, {}, "__tests__/template.marko", "9:6");
 			}, $sg__input_productId, "__tests__/template.marko_5_update");
 			$sg__input_productId && _subscribe($input_productId__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"));
@@ -64,12 +65,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_6_update": ["<li><!> rated <!></li>", "D%c%l"],
-	"__tests__/template.marko_6_content": ["<li><!> rated <!></li>", "D%c%l"],
 	"__tests__/template.marko_5_update": ["<ul></ul>", " b"],
 	"__tests__/template.marko_5_content": ["<ul></ul>", " b"],
-	"__tests__/template.marko_4_update": ["loading reviews…", "b"],
-	"__tests__/template.marko_4_content": ["loading reviews…", "b"],
 	"__tests__/template.marko_3_update": ["<p>pick a product</p>", "b"],
 	"__tests__/template.marko_3_content": ["<p>pick a product</p>", "b"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],

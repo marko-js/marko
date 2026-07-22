@@ -159,8 +159,11 @@ describe("runtime-tags/translator-api", () => {
 
   describe("compile cache", () => {
     // `persisted` shapes analysis (serialize reasons, registry ids, update
-    // merges), so one cache must not share entries across the flag.
-    const src = "<if=input.show><div/></if>";
+    // merges), so one cache must not share entries across the flag. The
+    // counter keeps the template membrane-live: nucleus-free templates
+    // compile identically with or without `persisted`.
+    const src =
+      "<let/n=0/><button onClick() { n++ }>${n}</button><if=input.show><div/></if>";
     const filename = path.join(__dirname, "persisted-cache.marko");
     const compileWith = (
       cache: Map<unknown, unknown>,
@@ -197,7 +200,7 @@ describe("runtime-tags/translator-api", () => {
   describe("option validation", () => {
     it("embeds renderer shells in persisted html modules", () => {
       const { code } = compiler.compileSync(
-        "<if=input.show><div/></if>",
+        "<let/n=0/><button onClick() { n++ }>${n}</button><if=input.show><div/></if>",
         path.join(__dirname, "persisted-page.marko"),
         {
           ...baseConfig,
@@ -208,6 +211,22 @@ describe("runtime-tags/translator-api", () => {
       );
       assert.match(code, /_renderer_shells/);
       assert.match(code, /update_if/);
+    });
+
+    it("embeds no shells for nucleus-free templates", () => {
+      // A template with no client state compiles without persisted
+      // machinery: its structure ships as region markup when it changes.
+      const { code } = compiler.compileSync(
+        "<if=input.show><div/></if>",
+        path.join(__dirname, "persisted-scaffold.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+          persisted: true,
+        },
+      );
+      assert.doesNotMatch(code, /_renderer_shells|update_if/);
     });
 
     it("compiles load imports eagerly when linkAssets is not configured", () => {
@@ -266,7 +285,7 @@ describe("runtime-tags/translator-api", () => {
 
     it("emits a data-only shell map for the renderers entry", () => {
       const { code } = compiler.compileSync(
-        "<h1>${input.title}</h1><if=input.show><button>go</button></if>",
+        "<let/n=0/><h1 onClick() { n++ }>${input.title}</h1><if=input.show><button onClick() { n++ }>go</button></if>",
         path.join(__dirname, "persisted-renderers.marko"),
         {
           ...baseConfig,
@@ -280,13 +299,13 @@ describe("runtime-tags/translator-api", () => {
       // with no imports, registrations, or user expressions.
       assert.match(code, /export default \{/);
       assert.match(code, /"[^"]*update[^"]*": \["<h1> <\/h1>/);
-      assert.match(code, /\["<button>go<\/button>", "b"\]/);
+      assert.match(code, /\["<button>go<\/button>", " b"\]/);
       assert.doesNotMatch(code, /import |_resume|input\./);
     });
 
     it("embeds shells in persisted html output", () => {
       const { code } = compiler.compileSync(
-        "<h1>${input.title}</h1>",
+        "<let/n=0/><h1 onClick() { n++ }>${input.title}</h1>",
         path.join(__dirname, "persisted-shells.marko"),
         {
           ...baseConfig,

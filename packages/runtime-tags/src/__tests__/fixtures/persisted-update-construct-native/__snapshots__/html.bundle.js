@@ -10,14 +10,14 @@ var template_default = _template("a", (input) => {
 	const Widget = { content: _content("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p class=widget>widget: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qa", getNote?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</p>`);
+		_html(`<p class=widget>widget: ${_sep(_persisted_reason())}${_escape(getNote?.($global().topic))}${_el_resume($scope1_id, "a", _persisted_reason())}</p>`);
 		_persisted_reason() && writeScope($scope1_id, {});
 	}) };
 	_html("<section class=shell>");
 	_dynamic_tag($scope0_id, "c", $global().view === "plain" ? "blockquote" : Widget, { class: "hop" }, _content_resume("a3", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`plain: ${_sep(_persisted_reason())}${_escape(_hole_value($scope2_id, "Qa", getNote?.($global().topic), _persisted_reason()))}${_el_resume($scope2_id, "a", _persisted_reason())}`);
+		_html(`plain: ${_sep(_persisted_reason())}${_escape(getNote?.($global().topic))}${_el_resume($scope2_id, "a", _persisted_reason())}`);
 		_persisted_reason() && writeScope($scope2_id, {});
 	}, $scope0_id), 0, _persisted_reason() | _persisted_reason(), "a0");
 	_html("</section>");
@@ -26,10 +26,6 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a5": ["plain: <!>", "b%b"],
-	"a3": ["plain: <!>", "b%b"],
-	"a6": ["<p class=widget>widget: <!></p>", "Db%l"],
-	"a2": ["<p class=widget>widget: <!></p>", "Db%l"],
 	"a1": ["<button class=count>clicked <!></button><section class=shell><!></section>", " Db%lD%l"],
 	"a": ["<button class=count>clicked <!></button><section class=shell><!></section>", " Db%lD%l"]
 });

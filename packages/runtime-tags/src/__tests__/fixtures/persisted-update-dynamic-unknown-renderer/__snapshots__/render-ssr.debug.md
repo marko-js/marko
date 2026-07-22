@@ -8,6 +8,11 @@
 <h1>
   Zones
 </h1>
+<button
+  class="mark"
+>
+  mark 0
+</button>
 <ol
   class="ticker"
 >
@@ -33,6 +38,11 @@ document.querySelector("button.count").click();
 <h1>
   Zones
 </h1>
+<button
+  class="mark"
+>
+  mark 0
+</button>
 <ol
   class="ticker"
 >
@@ -59,6 +69,11 @@ UPDATE: .count::text@8 "0" => "1"
 <h1>
   More Zones
 </h1>
+<button
+  class="mark"
+>
+  mark 0
+</button>
 <ol
   class="ticker"
 >
@@ -97,6 +112,11 @@ document.querySelector("button.count").click();
 <h1>
   More Zones
 </h1>
+<button
+  class="mark"
+>
+  mark 0
+</button>
 <ol
   class="ticker"
 >

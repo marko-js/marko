@@ -3,12 +3,14 @@ import { types as t } from "@marko/compiler";
 
 import evaluate from "./evaluate";
 import { isPersisted, isPersistedEntryBuild } from "./marko-config";
+import { isMembraneLive } from "./membranes";
 import { forEach } from "./optional";
 import {
   type Binding,
   BindingType,
   isReferencedExtra,
   kBranchSerializeReason,
+  type ReferencedExtra,
 } from "./references";
 import type { Section } from "./sections";
 import {
@@ -86,6 +88,11 @@ export type UpdateMerge =
       accessor: t.StringLiteral | t.NumericLiteral;
     }
   | {
+      /** Nucleus-free structure swapped wholesale from a response shell. */
+      kind: "region";
+      accessor: t.StringLiteral | t.NumericLiteral;
+    }
+  | {
       /** Single-branch boundary (`<await>`/`<try>` body) dispatch. */
       kind: "branch";
       accessor: t.StringLiteral | t.NumericLiteral;
@@ -100,7 +107,7 @@ export const [getUpdateMerges] = createSectionState<UpdateMerge[]>(
 );
 
 export function addUpdateMerge(section: Section, merge: UpdateMerge) {
-  if (isPersistedEntryBuild()) {
+  if (isPersistedEntryBuild() && isMembraneLive(section)) {
     getUpdateMerges(section).push(merge);
   }
 }
@@ -115,7 +122,7 @@ export function addUpdateGlobalsStatement(
   extra: t.NodeExtra | undefined,
   statement: t.Statement,
 ) {
-  if (extra && isPersistedEntryBuild()) {
+  if (extra && isPersistedEntryBuild() && isMembraneLive(section)) {
     const sources = getSerializeSourcesForExpr(extra);
     if (sources && sources.state && sources.global) {
       getUpdateGlobalsStatements(section).push(statement);
@@ -161,6 +168,7 @@ export function isUpdateDynamicTagAnchor(
 ) {
   return (
     isPersisted() &&
+    isMembraneLive(section) &&
     (isReasonDynamic(getSerializeReason(section, binding)) ||
       isReasonlessExpression(expression))
   );
@@ -172,6 +180,7 @@ export function isUpdateRequestDerivedAnchor(
 ) {
   return (
     isPersisted() &&
+    isMembraneLive((extra as ReferencedExtra).section) &&
     (isReasonDynamic(getSerializeSourcesForExpr(extra)) ||
       expressions?.some((expression) =>
         isReasonlessExpression(expression, extra),
@@ -215,7 +224,9 @@ export function isUpdateStructuralMerge(
   branchBodySections: (Section | undefined)[],
   expressions?: t.Expression[],
 ) {
-  if (!isPersisted()) return false;
+  if (!isPersisted() || !isMembraneLive((extra as ReferencedExtra).section)) {
+    return false;
+  }
   const sources = getSerializeSourcesForExpr(extra);
   return (
     !isStateSerializeReason(sources) &&

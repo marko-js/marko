@@ -11,13 +11,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", resolveAfter(input.related, 1), (related) => {
 			const $scope3_id = _scope_id();
 			_html("<ul>");
-			_for_of(related, (item) => {
-				const $scope4_id = _scope_id();
-				_html(`<li>${_escape(_hole_value($scope4_id, "PatchHole:#text/0", item.name, _persisted_reason()))}${_el_resume($scope4_id, "#text/0", $sg__input_related)} costs ${_sep($sg__input_related)}${_escape(_hole_value($scope4_id, "PatchHole:#text/1", item.price, _persisted_reason()))}${_el_resume($scope4_id, "#text/1", $sg__input_related)}</li>`);
-				$sg__input_related && writeScope($scope4_id, {}, "__tests__/template.marko", "11:10");
-			}, function(item) {
-				return item.id;
-			}, $scope3_id, "#ul/0", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1, "__tests__/template.marko_4_update");
+			_region(() => {
+				forOf(related, (item) => {
+					const $scope4_id = _scope_id();
+					_html(`<li>${_escape(item.name)}${_el_resume($scope4_id, "#text/0", $sg__input_related)} costs ${_sep($sg__input_related)}${_escape(item.price)}${_el_resume($scope4_id, "#text/1", $sg__input_related)}</li>`);
+					$sg__input_related && writeScope($scope4_id, {}, "__tests__/template.marko", "11:10");
+				});
+			}, $scope3_id, "#ul/0");
+			_html(`</ul>${_el_resume($scope3_id, "#ul/0", $sg__input_related)}`);
 			$sg__input_related && writeScope($scope3_id, {}, "__tests__/template.marko", "9:6");
 		}, $sg__input_related, "__tests__/template.marko_3_update");
 		$sg__input_related && _subscribe($input_related__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"));
@@ -44,12 +45,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_5_update": ["<em> </em>", "D l"],
 	"__tests__/template.marko_5_content": ["<em> </em>", "D l"],
-	"__tests__/template.marko_4_update": ["<li><!> costs <!></li>", "D%c%l"],
-	"__tests__/template.marko_4_content": ["<li><!> costs <!></li>", "D%c%l"],
 	"__tests__/template.marko_3_update": ["<ul></ul>", " b"],
 	"__tests__/template.marko_3_content": ["<ul></ul>", " b"],
-	"__tests__/template.marko_2_update": ["loading related…", "b"],
-	"__tests__/template.marko_2_content": ["loading related…", "b"],
 	"__tests__/template.marko_1_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_1_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_0_update": ["<h1> </h1><button>clicked <!></button><section><!></section><footer><!></footer>", "D l Db%lD%lD%l"],

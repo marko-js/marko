@@ -22,7 +22,7 @@ const $for_content__search_page = /*@__PURE__*/ _closure_get("search_page", ($sc
 const $for_content__setup = ($scope) => {
 	if (!updating) $for_content__search_page($scope);
 };
-const $if_content__for = 0;
+const $if_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D l", 0, $for_content2__$params);
 const $if_content__results_items = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
 	if (!updating) {
 		$if_content__for($scope, [$scope._.results_items, function(item) {
@@ -34,7 +34,7 @@ const $if_content__setup = ($scope) => {
 	if (!updating) $if_content__results_items._($scope);
 	if (!updating) $if_content__results_totalPages._($scope);
 };
-const $if_content__for2 = 0;
+const $if_content__for2 = /*@__PURE__*/ _for_to("#nav/1", "<!><!><!>", "b%c", $for_content__setup);
 const $if_content__results_totalPages = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
 	if (!updating) {
 		$if_content__for2($scope, [
@@ -75,22 +75,7 @@ const $results_total = ($scope, results_total) => {
 const $results_items = /*@__PURE__*/ _const_persisted("results_items", $if_content__results_items);
 const $results_totalPages = /*@__PURE__*/ _const_persisted("results_totalPages", $if_content__results_totalPages);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $if_content2_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $for_content2_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $else_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:href:#a/0": /*@__PURE__*/ _update_named_attr("#a/0", "href"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $for_update = _update_for_keyed("#ul/0", ($p, $l) => $for_content2_holes($p, $l), "__tests__/template.marko_5_update");
-const $for_update2 = _update_for_keyed("#nav/1", ($p2, $l2) => $for_content__update($p2, $l2), "__tests__/template.marko_2_update");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $for_content__update = ($patch, $live) => {
-	if ("ConditionalRenderer:#text/0" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [$if_content2_holes, $else_content_holes], ["__tests__/template.marko_6_update", "__tests__/template.marko_3_update"]);
-};
-const $if_content__update = ($patch, $live) => {
-	if ("BranchScopes:#ul/0" in $patch) $for_update($live, [$patch["BranchScopes:#ul/0"], "#LoopKey"]);
-	if ("BranchScopes:#nav/1" in $patch) $for_update2($live, [$patch["BranchScopes:#nav/1"], "#LoopKey"]);
-};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -98,7 +83,7 @@ const $update2 = ($patch, $live) => {
 	if ("search_q" in $patch) $live["search_q"] = $patch["search_q"];
 	if ("results_items" in $patch) $live["results_items"] = $patch["results_items"];
 	if ("results_totalPages" in $patch) $live["results_totalPages"] = $patch["results_totalPages"];
-	if ("ConditionalRenderer:#text/2" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", [$if_content__update, 0], ["__tests__/template.marko_1_update", "__tests__/template.marko_4_update"]);
+	if ("ConditionalRenderer:#text/2" in $patch) _update_region("#text/2")($patch, $live);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);

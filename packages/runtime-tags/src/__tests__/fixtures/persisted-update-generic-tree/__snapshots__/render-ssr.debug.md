@@ -165,11 +165,8 @@ UPDATE: .counter::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: .card > h2::text "Shipping" => "Returns"
-UPDATE: .meta.flagged[class] "meta" => "meta flagged"
-UPDATE: .meta.flagged::text "Ships in 2 days." => "Free for 30 days."
-UPDATE: .badge.warn[class] "badge info" => "badge warn"
-UPDATE: .badge.warn::text "Shipping" => "Returns"
+INSERT: .bump + .card
+REMOVE: .card + .card
 UPDATE: .widget > em::text "alerts" => "digest"
 ```
 
@@ -257,10 +254,7 @@ UPDATE: .counter::text "1" => "2"
 ```
 ## Change
 ```
-UPDATE: .card > h2::text "Returns" => "Shipping"
-UPDATE: .meta[class] "meta flagged" => "meta"
-UPDATE: .meta::text "Free for 30 days." => "Ships in 2 days."
-UPDATE: .badge.info[class] "badge warn" => "badge info"
-UPDATE: .badge.info::text "Returns" => "Shipping"
+INSERT: .bump + .card
+REMOVE: .card + .card
 UPDATE: .widget > em::text "digest" => "alerts"
 ```

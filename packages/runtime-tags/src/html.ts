@@ -68,6 +68,7 @@ export {
   _patch_reason,
   _peek_scope_id,
   _persisted_reason,
+  _region,
   _resume,
   _resume_branch,
   _scope,

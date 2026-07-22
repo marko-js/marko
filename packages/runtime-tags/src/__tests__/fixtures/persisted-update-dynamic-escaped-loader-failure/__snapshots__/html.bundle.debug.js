@@ -2,21 +2,23 @@
 var roster_default = _template("__tests__/tags/roster.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_crew = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html("<ul class=crew>");
-	_for_of(input.crew, (name) => {
-		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", name, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_crew)}</li>`);
-		$sg__input_crew && writeScope($scope1_id, {}, "__tests__/tags/roster.marko", "2:4");
-	}, function(name) {
-		return name;
-	}, $scope0_id, "#ul/0", $sg__input_crew, $sg__input_crew, $sg__input_crew, "</ul>", 1, "__tests__/tags/roster.marko_1_update");
-	$sg__input_crew && writeScope($scope0_id, {}, "__tests__/tags/roster.marko", 0);
+	let pinned = 0;
+	_html(`<button class=pin>pin <!>${_escape(pinned)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<ul class=crew>`);
+	_region(() => {
+		forOf(input.crew, (name) => {
+			const $scope1_id = _scope_id();
+			_html(`<li>${_escape(name)}${_el_resume($scope1_id, "#text/0", $sg__input_crew)}</li>`);
+			$sg__input_crew && writeScope($scope1_id, {}, "__tests__/tags/roster.marko", "6:4");
+		});
+	}, $scope0_id, "#ul/2");
+	_html(`</ul>${_el_resume($scope0_id, "#ul/2", $sg__input_crew)}`);
+	_script($scope0_id, "__tests__/tags/roster.marko_0");
+	writeScope($scope0_id, { pinned: _state_reason() && pinned }, "__tests__/tags/roster.marko", 0, { pinned: "3:6" });
+	_resume_branch($scope0_id);
 });
 _renderer_shells({
-	"__tests__/tags/roster.marko_1_update": ["<li> </li>", "D l"],
-	"__tests__/tags/roster.marko_1_content": ["<li> </li>", "D l"],
-	"__tests__/tags/roster.marko_0_update": ["<ul class=crew></ul>", " b"],
-	"__tests__/tags/roster.marko": ["<ul class=crew></ul>", " b"]
+	"__tests__/tags/roster.marko_0_update": ["<button class=pin>pin <!></button><ul class=crew></ul>", " Db%l b"],
+	"__tests__/tags/roster.marko": ["<button class=pin>pin <!></button><ul class=crew></ul>", " Db%l b"]
 });
 
 // tags/board.marko

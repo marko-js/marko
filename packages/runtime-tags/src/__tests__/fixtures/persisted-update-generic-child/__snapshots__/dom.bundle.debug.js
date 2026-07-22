@@ -12,12 +12,8 @@ const $input$3 = ($scope, input) => {
 	$input_label$1($scope, input.label);
 };
 var badge_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$3, $walks$3, $setup$3, $input$3);
-const $_holes$2 = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#span/0": /*@__PURE__*/ _update_attr("#span/0", _attr_class),
-	"PatchAttr:title:#span/0": /*@__PURE__*/ _update_named_attr("#span/0", "title"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $merge$3 = _resume("__tests__/tags/badge.marko_0_update", $_holes$2);
+const $update2$2 = () => {};
+const $merge$3 = _resume("__tests__/tags/badge.marko_0_update", $update2$2);
 _update_content("__tests__/tags/badge.marko", $merge$3);
 function $patch2$3($fail) {
 	return patch($merge$3, $fail);
@@ -108,7 +104,7 @@ const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
-	if ("#childScope/2" in $patch) $merge$3($patch["#childScope/2"], $live["#childScope/2"]);
+	if ("ConditionalRenderer:#childScope/2" in $patch) _update_region("#childScope/2")($patch, $live);
 	if ("#childScope/3" in $patch) $merge$2($patch["#childScope/3"], $live["#childScope/3"]);
 	if ("#childScope/4" in $patch) $merge$1($patch["#childScope/4"], $live["#childScope/4"]);
 };

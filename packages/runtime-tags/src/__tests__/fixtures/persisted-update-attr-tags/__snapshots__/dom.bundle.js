@@ -19,13 +19,11 @@ const $merge$1 = _resume("c3", $update2$1);
 _update_content("c", $merge$1);
 
 // template.marko.persisted.mjs
-const $count = _var_resume("a10", /*@__PURE__*/ _let_persisted(7, ($scope) => _text($scope.b, $scope.h)));
+const $count = _var_resume("a8", /*@__PURE__*/ _let_persisted(7, ($scope) => _text($scope.b, $scope.h)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.h + 1);
 }));
-const $part_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $header_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $count_seed = _update_signal("a10");
+const $count_seed = _update_signal("a8");
 const $body_content__update = ($patch, $live) => {
 	if ("a" in $patch) $merge$2($patch["a"], $live["a"]);
 };
@@ -36,9 +34,9 @@ const $update2 = ($patch, $live) => {
 };
 const $noop_update = () => {};
 _update_content("a4", $noop_update);
-_update_content("a1", $part_content_holes);
+_update_content("a1", $noop_update);
 _update_content("a3", $body_content__update);
-_update_content("a2", $header_content_holes);
+_update_content("a2", $noop_update);
 const $merge = _resume("a0", $update2);
 _update_content("a", $merge);
 function $patch2($fail) {

@@ -16,16 +16,12 @@ var template_default = _template("a", (input) => {
 	}, () => {
 		_scope_id();
 		_html("<p class=fallback>fallback</p>");
-	}], ["a3", "a2"]);
-	_script($scope0_id, "a4");
+	}], [0, 0]);
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, { d: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a2": ["<p class=fallback>fallback</p>", "b"],
-	"a5": ["<p class=fallback>fallback</p>", "b"],
-	"a3": ["<p class=primary>primary</p>", "b"],
-	"a6": ["<p class=primary>primary</p>", "b"],
 	"a1": ["<button>count <!></button><!><!>", " Db%l%c"],
 	"a": ["<button>count <!></button><!><!>", " Db%l%c"]
 });

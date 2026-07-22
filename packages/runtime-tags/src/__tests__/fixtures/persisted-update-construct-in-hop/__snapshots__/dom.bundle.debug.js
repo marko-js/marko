@@ -63,8 +63,6 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $WidgetY_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $WidgetX_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $Widget_content__update = ($patch, $live) => {
 	if ("ConditionalRenderer:#text/0" in $patch || "BranchScopes:#text/0" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
@@ -77,9 +75,9 @@ const $update2 = ($patch, $live) => {
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_5_content", $noop_update);
 _update_content("__tests__/template.marko_4_content", $noop_update);
-_update_content("__tests__/template.marko_3_content", $WidgetY_content_holes);
+_update_content("__tests__/template.marko_3_content", $noop_update);
 _update_content("__tests__/template.marko_2_content", $Widget_content__update);
-_update_content("__tests__/template.marko_1_content", $WidgetX_content_holes);
+_update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
 function $patch2($fail) {

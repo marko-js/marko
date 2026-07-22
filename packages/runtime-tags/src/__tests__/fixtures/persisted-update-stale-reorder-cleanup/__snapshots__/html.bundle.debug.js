@@ -39,8 +39,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_3_update": ["<b> </b>", "D l"],
 	"__tests__/template.marko_3_content": ["<b> </b>", "D l"],
-	"__tests__/template.marko_2_update": ["fetching…", "b"],
-	"__tests__/template.marko_2_content": ["fetching…", "b"],
 	"__tests__/template.marko_1_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_1_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_0_update": ["<h1> </h1><main><!></main>", " D lD%l"],

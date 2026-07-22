@@ -1,0 +1,32 @@
+import { getRows } from "./data";
+import { resolveAfter } from "../../utils/resolve";
+import Sticky from "./tags/sticky.marko";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Alpha>
+  <section.a><p>alpha</p></section>
+</define>
+<define/Beta>
+  <section.b>
+    <ul>
+      <for|row| of=getRows?.($global.kind)>
+        <li>${row}</li>
+      </for>
+    </ul>
+    <Sticky/>
+    <try>
+      <@placeholder>loading…</@placeholder>
+      <await=resolveAfter(undefined, 1)>
+        <div.reviews>
+          <for|i| from=1 to=3>
+            <div.review>review ${i}</div>
+          </for>
+        </div>
+      </await>
+    </try>
+  </section>
+</define>
+
+<${$global.view === "b" ? Beta : Alpha}/>

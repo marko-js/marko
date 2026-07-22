@@ -36,7 +36,6 @@ function $setup($scope) {
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $catch_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $try_content2__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content_holes, "__tests__/template.marko_7_update");
@@ -54,7 +53,7 @@ const $update2 = ($patch, $live) => {
 };
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_6_content", $noop_update);
-_update_content("__tests__/template.marko_4_content", $catch_content_holes);
+_update_content("__tests__/template.marko_4_content", $noop_update);
 _update_content("__tests__/template.marko_2_content", $Reports_content__update);
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);

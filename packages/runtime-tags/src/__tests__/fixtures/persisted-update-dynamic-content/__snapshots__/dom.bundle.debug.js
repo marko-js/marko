@@ -35,7 +35,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__spec_name($scope, $params2[0]?.name);
 	$for_content__spec_value($scope, $params2[0]?.value);
 };
-const $Specs_content__for = 0;
+const $Specs_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!> is <!></li>", "D%c%l", 0, $for_content__$params);
 const $Specs_content__input_specs = /*@__PURE__*/ _closure_get("input_specs", ($scope) => {
 	if (!updating) {
 		$Specs_content__for($scope, [$scope._.input_specs, function(spec) {
@@ -93,20 +93,8 @@ const $input_summary = /*@__PURE__*/ _const_persisted("input_summary", $input_su
 const $input_specs__closure = /*@__PURE__*/ _closure($Specs_content__input_specs);
 const $input_specs = /*@__PURE__*/ _const_persisted("input_specs", $input_specs__closure);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $for_update = _update_for_keyed("#ul/0", ($p, $l) => $for_content_holes($p, $l), "__tests__/template.marko_3_update");
-const $Overview_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $Specs_content__update = ($patch, $live) => {
-	if ("BranchScopes:#ul/0" in $patch) $for_update($live, [$patch["BranchScopes:#ul/0"], "#LoopKey"]);
-};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -118,8 +106,9 @@ const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("#childScope/3" in $patch) $merge$1($patch["#childScope/3"], $live["#childScope/3"]);
 };
-_update_content("__tests__/template.marko_2_content", $Specs_content__update);
-_update_content("__tests__/template.marko_1_content", $Overview_content_holes);
+const $noop_update = () => {};
+_update_content("__tests__/template.marko_2_content", $noop_update);
+_update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
 function $patch2($fail) {

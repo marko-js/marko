@@ -10,6 +10,7 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isPersisted } from "../util/marko-config";
+import { markStateCapable, MembraneCause } from "../util/membranes";
 import {
   type Binding,
   BindingType,
@@ -113,6 +114,12 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    if (isPersisted()) {
+      // Streamed continuation frames need the fine-grained machinery; region
+      // capture across async flush boundaries is not supported.
+      markStateCapable(bodySection, MembraneCause.forced);
+      markStateCapable(section, MembraneCause.forced);
+    }
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);

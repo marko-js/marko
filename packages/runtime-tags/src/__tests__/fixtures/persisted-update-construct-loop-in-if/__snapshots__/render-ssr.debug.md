@@ -164,11 +164,8 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: .lane > li:nth-of-type(2) > span:nth-of-type(2)::text "2m" => "3m"
-UPDATE: .lane > li:nth-of-type(3) > span:nth-of-type(2)::text "5m" => "6m"
-INSERT: .lane > li
-REMOVE: .lane > li:nth-of-type(3) + li
-INSERT: .lane > li:nth-of-type(1) + li
+INSERT: .count + .lane
+REMOVE: .lane + .lane
 ```
 
 # Update
@@ -290,7 +287,6 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 ## Change
 ```
-UPDATE: .lane > li:nth-of-type(1) > span:nth-of-type(2)::text "3m" => "4m"
-UPDATE: .lane > li:nth-of-type(2) > span:nth-of-type(2)::text "6m" => "7m"
-REMOVE: .lane > li
+INSERT: .count + .lane
+REMOVE: .lane + .lane
 ```

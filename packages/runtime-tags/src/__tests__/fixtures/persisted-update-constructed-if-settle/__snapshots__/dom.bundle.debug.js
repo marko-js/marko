@@ -21,7 +21,7 @@ const $else_content2__input_title = /*@__PURE__*/ _closure_get("input_title", ($
 	if (!updating) {
 		_text($scope["#text/0"], $scope._._.input_title);
 	}
-}, ($scope) => $scope._._, "__tests__/template.marko_3_input_title/pending");
+}, ($scope) => $scope._._);
 const $else_content2__setup = ($scope) => {
 	if (!updating) $else_content2__input_title($scope);
 };
@@ -29,7 +29,7 @@ const $if_content__input_title = /*@__PURE__*/ _closure_get("input_title", ($sco
 	if (!updating) {
 		_text($scope["#text/0"], $scope._._.input_title);
 	}
-}, ($scope) => $scope._._, "__tests__/template.marko_2_input_title/pending");
+}, ($scope) => $scope._._);
 const $if_content__setup = ($scope) => {
 	if (!updating) $if_content__input_title($scope);
 };
@@ -69,15 +69,13 @@ const $input = ($scope, input) => {
 const $input_title_length = /*@__PURE__*/ _const_persisted("input_title_length", $else_content__input_title_length);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $else_content2_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $if_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content_holes, "__tests__/template.marko_5_update");
 };
 const $else_content__update = ($patch, $live) => {
-	if ("ConditionalRenderer:#text/0" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [$if_content_holes, $else_content2_holes], ["__tests__/template.marko_2_update", "__tests__/template.marko_3_update"]);
+	if ("ConditionalRenderer:#text/0" in $patch) _update_region("#text/0")($patch, $live);
 	if ("BranchScopes:#text/1" in $patch) _update_branch($patch, $live, "#text/1", $try_content__update, "__tests__/template.marko_4_update", "__tests__/template.marko_7_content");
 };
 const $update2 = ($patch, $live) => {
@@ -119,7 +117,7 @@ const $else_content2__input_title = /*@__PURE__*/ _closure_get("input_title", ($
 	if (!updating) {
 		_text($scope["#text/0"], $scope._._.input_title);
 	}
-}, ($scope) => $scope._._, "__tests__/template.marko_3_input_title/pending");
+}, ($scope) => $scope._._);
 const $else_content2__setup = ($scope) => {
 	if (!updating) $else_content2__input_title($scope);
 };
@@ -127,7 +125,7 @@ const $if_content__input_title = /*@__PURE__*/ _closure_get("input_title", ($sco
 	if (!updating) {
 		_text($scope["#text/0"], $scope._._.input_title);
 	}
-}, ($scope) => $scope._._, "__tests__/template.marko_2_input_title/pending");
+}, ($scope) => $scope._._);
 const $if_content__setup = ($scope) => {
 	if (!updating) $if_content__input_title($scope);
 };

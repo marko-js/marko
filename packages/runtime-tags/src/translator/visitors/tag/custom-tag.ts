@@ -33,6 +33,11 @@ import {
   isPersisted,
   isPersistedEntryBuild,
 } from "../../util/marko-config";
+import {
+  addChildTree,
+  isChildTreeLive,
+  isMembraneLive,
+} from "../../util/membranes";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -96,6 +101,10 @@ export default {
       const childExtra = childProgram.extra;
       const childSection = childExtra.section!;
 
+      if (isPersisted()) {
+        addChildTree(getOrCreateSection(tag), childProgram);
+      }
+
       if (childExtra.page) {
         programExtra.page ??= true;
       }
@@ -158,11 +167,19 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     tagIdentifier = node.name;
   }
 
+  const childScopeBinding = getKnownTagChildScopeBinding(tag);
   knownTagTranslateHTML(
     tag,
     tagIdentifier,
     childExtra.section!,
     childExtra.domExports?.params,
+    isPersisted() &&
+      !node.var &&
+      childScopeBinding &&
+      isMembraneLive(getSection(tag)) &&
+      !isChildTreeLive(childProgram)
+      ? getScopeAccessorLiteral(childScopeBinding)
+      : undefined,
   );
 }
 
@@ -601,17 +618,28 @@ function recordChildUpdateMerge(
 ) {
   const childScopeBinding = getKnownTagChildScopeBinding(tag);
   if (childScopeBinding) {
-    addUpdateMerge(getSection(tag), {
-      kind: "child",
-      accessor: getScopeAccessorLiteral(childScopeBinding),
-      relativePath,
-      tagName,
-      updateName,
-      load: loadId,
-      loadReady,
-      loadMarker,
-      loadTemplateId,
-    });
+    const childProgram = loadFileForTag(tag)?.ast.program;
+    addUpdateMerge(
+      getSection(tag),
+      // A nucleus-free child (no tag variable, not lazily loaded) delivers
+      // as region markup; delegation would dispatch an empty update graph.
+      !tag.node.var && !loadId && childProgram && !isChildTreeLive(childProgram)
+        ? {
+            kind: "region",
+            accessor: getScopeAccessorLiteral(childScopeBinding),
+          }
+        : {
+            kind: "child",
+            accessor: getScopeAccessorLiteral(childScopeBinding),
+            relativePath,
+            tagName,
+            updateName,
+            load: loadId,
+            loadReady,
+            loadMarker,
+            loadTemplateId,
+          },
+    );
   }
 }
 

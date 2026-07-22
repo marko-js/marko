@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { getMarkoOpts } from "../../util/marko-config";
+import { isMembraneLive } from "../../util/membranes";
 import { forEachSectionReverse } from "../../util/sections";
 import { getResumeRegisterId } from "../../util/signals";
 import { getSectionMeta } from "../../util/writer";
@@ -50,6 +51,9 @@ export default {
         }
       });
       forEachSectionReverse((section) => {
+        // Nucleus-free sections deliver as captured region markup, never as
+        // values-free shells; registration marks a section shell-capable.
+        if (!isMembraneLive(section)) return;
         const meta = getSectionMeta(section);
         const template = asShellSource(meta.writes as t.Expression);
         const walks = asShellSource(meta.walks as t.Expression);

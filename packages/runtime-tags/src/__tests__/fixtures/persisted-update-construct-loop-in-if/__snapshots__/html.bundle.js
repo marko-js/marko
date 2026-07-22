@@ -45,28 +45,22 @@ var template_default = _template("a", (input) => {
 		_html("<ol class=lane>");
 		_for_of(getTasks?.($global().day), (task) => {
 			const $scope3_id = _scope_id();
-			_html(`<li><em>TASK_ROW_MARKUP</em><!>${_escape(_hole_value($scope3_id, "Qa", serverTaskSentinel?.(), _persisted_reason()))}${_el_resume($scope3_id, "a")}<span class=name>${_escape(_hole_value($scope3_id, "Qb", task.name, _persisted_reason()))}${_el_resume($scope3_id, "b", _persisted_reason())}</span>: <span class=eta>${_escape(_hole_value($scope3_id, "Qc", task.eta, _persisted_reason()))}${_el_resume($scope3_id, "c", _persisted_reason())}</span></li>`);
+			_html(`<li><em>TASK_ROW_MARKUP</em>${_escape(serverTaskSentinel?.())}<span class=name>${_escape(task.name)}${_el_resume($scope3_id, "b", _persisted_reason())}</span>: <span class=eta>${_escape(task.eta)}${_el_resume($scope3_id, "c", _persisted_reason())}</span></li>`);
 			_persisted_reason() && writeScope($scope3_id, {});
 		}, function(task) {
 			return task.id;
-		}, $scope1_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ol>", 1, "a2");
+		}, $scope1_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ol>", 1);
 		_persisted_reason() && writeScope($scope1_id, {});
 	}, () => {
 		const $scope2_id = _scope_id();
 		_html("<p class=closed>lane closed</p>");
 		_persisted_reason() && writeScope($scope2_id, {});
-	}], ["a4", "a3"]);
-	_script($scope0_id, "a5");
+	}], [0, 0]);
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, { d: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a2": ["<li><em>TASK_ROW_MARKUP</em> <span class=name> </span>: <span class=eta> </span></li>", "Db bD lbD m"],
-	"a6": ["<li><em>TASK_ROW_MARKUP</em> <span class=name> </span>: <span class=eta> </span></li>", "Db bD lbD m"],
-	"a3": ["<p class=closed>lane closed</p>", "b"],
-	"a7": ["<p class=closed>lane closed</p>", "b"],
-	"a4": ["<ol class=lane></ol>", " b"],
-	"a8": ["<ol class=lane></ol>", " b"],
 	"a1": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

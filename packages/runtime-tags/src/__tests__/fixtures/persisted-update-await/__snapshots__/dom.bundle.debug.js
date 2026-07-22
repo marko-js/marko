@@ -55,15 +55,10 @@ const $input_related__closure = /*@__PURE__*/ _closure($try_content__input_relat
 const $input_related = /*@__PURE__*/ _const_persisted("input_related", $input_related__closure);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 const $await_content2_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $for_update = _update_for_keyed("#ul/0", ($p, $l) => $for_content_holes($p, $l), "__tests__/template.marko_4_update");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $await_content__update = ($patch, $live) => {
-	if ("BranchScopes:#ul/0" in $patch) $for_update($live, [$patch["BranchScopes:#ul/0"], "#LoopKey"]);
+	if ("ConditionalRenderer:#ul/0" in $patch) _update_region("#ul/0")($patch, $live);
 };
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_3_update");

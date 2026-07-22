@@ -24,10 +24,6 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a5": ["<p class=fallback>fallback</p>", "b"],
-	"a3": ["<p class=fallback>fallback</p>", "b"],
-	"a6": ["<p class=primary>primary</p>", "b"],
-	"a2": ["<p class=primary>primary</p>", "b"],
 	"a1": ["<button>count <!></button><!><!>", " Db%l%c"],
 	"a": ["<button>count <!></button><!><!>", " Db%l%c"]
 });

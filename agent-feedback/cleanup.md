@@ -92,3 +92,26 @@ A file-by-file terminology audit flagged several local naming inconsistencies th
 `packages/runtime-tags/src/translator/util/references.ts` › `trackParamsReferences` | 2026-07-22 | impact:med | effort:high
 
 Every section's "params binding" is created by `trackParamsReferences`, but each caller passes a different `BindingType`: `<for>`/`<await>` use `derived` (`core/for.ts`, `core/await.ts`), `<define>`/attribute-tags/dynamic-tag/known-tag use `param`, program input uses `input`, and an attribute-tag `<for>` uses `local`. So "is this a param?" cannot be answered from `binding.type` and the codebase instead keys off identity — `root === root.section.params` (see `isParamBinding`, `getDebugName`, and the assignment guard `binding.upstreamAlias === binding.section.params`). The heterogeneity is currently load-bearing, not accidental: `BindingType` selects the `resolveBindingSources` path, and `<for>`/`<await>` deliberately use `derived` so `resolveDerivedSources` makes the item param's `Sources` transparently reflect its loop/await source (`<for of=stateVal>` → `state` source; `<for of=input.list>` → `param` source), which drives serialize-reason scheduling (`isStateSerializeReason` vs `isReasonDynamic` in `serialize-reasons.ts`) and `scopeOffset` propagation (`getMaxOwnSourceOffset`). A naive `derived→param` flip severs the `setBindingDownstream` link (it goes dead before `resolveDerivedSources` runs), mis-scheduling serialization and losing scope offsets. The cleanup: give params a correct, uniform type (or a dedicated param marker on the binding) so `isParamBinding` reduces to a `binding.type` check, while moving the source-transparency of `<for>`/`<await>` params off the overloaded `derived` type onto an explicit source-resolution input. Verify current state: `rg -n "trackParamsReferences\(" packages/runtime-tags/src/translator` shows the four distinct `BindingType` args; `isParamBinding` in `references.ts` still uses the identity walk because no type distinguishes them.
+
+## Membranes v1 deliberate gaps (state-anchored membranes commit)
+
+Recorded from the membranes implementation; each is scoped out of v1 on
+purpose (see `persisted-pages-scratch/designs/state-anchored-membranes.md` "Known gaps"):
+
+- Nucleus-in-scaffold splicing (regions containing live nuclei) — the v2
+  frontier; v1 keeps any nucleus-bearing path fully live instead.
+- Async-in-region streaming (await/try bodies are forced live).
+- Lazy (`load`) and tag-var custom-tag children always delegate, even when
+  nucleus-free; a nucleus-free lazy child ships a useless module.
+- CSR-created region anchors lack live-branch tracking coverage.
+- `<define>` bodies invoked through the known-tag direct path never
+  region-wrap (hop path only).
+- Region interiors still evaluate (and discard) serialize-guard
+  expressions; compile-time pruning inside regions would shrink server
+  code further.
+
+**Why:** each requires machinery (splice identity, capture-across-flush,
+loader-region hybrid) whose cost the round-5 experiment gates should price
+before it is built.
+**How to apply:** treat as the membrane-tax experiment backlog; none block
+the fixture matrix.

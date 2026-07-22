@@ -13,6 +13,11 @@
   >
     2 aboard
   </h2>
+  <button
+    class="pin"
+  >
+    pin 0
+  </button>
   <ul
     class="crew"
   >
@@ -44,6 +49,11 @@ document.querySelector("button.count").click();
   >
     2 aboard
   </h2>
+  <button
+    class="pin"
+  >
+    pin 0
+  </button>
   <ul
     class="crew"
   >
@@ -86,6 +96,11 @@ if (_nodeFs.default.existsSync(chunk)) {
   >
     3 aboard
   </h2>
+  <button
+    class="pin"
+  >
+    pin 0
+  </button>
   <ul
     class="crew"
   >
@@ -131,6 +146,11 @@ document.querySelector("button.count").click();
   >
     3 aboard
   </h2>
+  <button
+    class="pin"
+  >
+    pin 0
+  </button>
   <ul
     class="crew"
   >

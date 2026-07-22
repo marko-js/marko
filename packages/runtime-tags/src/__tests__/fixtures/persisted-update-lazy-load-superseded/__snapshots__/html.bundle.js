@@ -3,12 +3,8 @@ if (typeof window !== "undefined") await rejectAfter(/* @__PURE__ */ new Error("
 var rejecting_default = _template("b", (input) => {
 	const $sg__input_label = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
-	_html(`<button class=lazy>rejecting ${_sep($sg__input_label)}${_escape(_hole_value($scope0_id, "Qa", input.label, _persisted_reason()))}${_el_resume($scope0_id, "a", $sg__input_label)}</button>`);
+	_html(`<button class=lazy>rejecting ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "a", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"b0": ["<button class=lazy>rejecting <!></button>", "Db%l"],
-	"b": ["<button class=lazy>rejecting <!></button>", "Db%l"]
 });
 
 // tags/resolving.marko
@@ -16,12 +12,8 @@ if (typeof window !== "undefined") await resolveAfter(0);
 var resolving_default = _template("c", (input) => {
 	const $sg__input_label = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
-	_html(`<button class=lazy>resolving ${_sep($sg__input_label)}${_escape(_hole_value($scope0_id, "Qa", input.label, _persisted_reason()))}${_el_resume($scope0_id, "a", $sg__input_label)}</button>`);
+	_html(`<button class=lazy>resolving ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "a", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"c0": ["<button class=lazy>resolving <!></button>", "Db%l"],
-	"c": ["<button class=lazy>resolving <!></button>", "Db%l"]
 });
 
 // template.marko
@@ -35,7 +27,7 @@ var template_default = _template("a", (input) => {
 	const Home = { content: _content("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p class=home>${_escape(_hole_value($scope1_id, "Qa", $global().label, _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</p>`);
+		_html(`<p class=home>${_escape($global().label)}${_el_resume($scope1_id, "a", _persisted_reason())}</p>`);
 		_persisted_reason() && writeScope($scope1_id, {});
 	}) };
 	const Reject = { content: _content("a3", () => {
@@ -60,12 +52,6 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a6": ["<!><!><!><!>", "b%/&c"],
-	"a4": ["<!><!><!><!>", "b%/&c"],
-	"a7": ["<!><!><!><!>", "b%/&c"],
-	"a3": ["<!><!><!><!>", "b%/&c"],
-	"a8": ["<p class=home> </p>", "D l"],
-	"a2": ["<p class=home> </p>", "D l"],
 	"a1": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

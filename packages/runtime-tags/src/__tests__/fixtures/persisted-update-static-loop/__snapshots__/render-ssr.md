@@ -77,8 +77,10 @@ UPDATE: .bump::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: span:nth-of-type(1)[class] "active" => null
-UPDATE: .active[class] null => "active"
+INSERT: .bump + :is(span, span, .active)
+REMOVE: .active + .active
+REMOVE: .active + span
+REMOVE: .active + span
 UPDATE: .hot::text@5 "home" => "toys"
 UPDATE: .hot[class] null => "hot"
 ```
@@ -139,5 +141,9 @@ UPDATE: .bump::text "1" => "2"
 ```
 ## Change
 ```
+INSERT: .bump + :is(span, span, .active)
+REMOVE: .active + span
+REMOVE: .active + span
+REMOVE: .active + .active
 UPDATE: em[class] "hot" => null
 ```

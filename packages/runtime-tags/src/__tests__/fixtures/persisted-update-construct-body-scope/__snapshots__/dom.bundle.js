@@ -20,14 +20,14 @@ _update_content("b", $merge$1);
 
 // template.marko.persisted.mjs
 _enable_catch();
-const $await_content__ready = _var_resume("a14", /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting")));
-const $count = _var_resume("a15", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $await_content__ready = _var_resume("a12", /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting")));
+const $count = _var_resume("a13", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-const $ready_seed = _update_signal("a14");
+const $ready_seed = _update_signal("a12");
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "Qc": /*@__PURE__*/ _update_text("c") });
-const $count_seed = _update_signal("a15");
+const $count_seed = _update_signal("a13");
 const $await_content__update = ($patch, $live) => {
 	if ("g" in $patch) _update_seed($live, $ready_seed, $patch["g"]);
 	$await_content_holes($patch, $live);

@@ -1,12 +1,11 @@
 // template.marko.persisted.mjs
 _enable_catch();
-const $count = _var_resume("a18", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $count = _var_resume("a15", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $catch_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $count_seed = _update_signal("a18");
+const $count_seed = _update_signal("a15");
 const $try_content2__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content_holes, "a4");
 };
@@ -23,7 +22,7 @@ const $update2 = ($patch, $live) => {
 };
 const $noop_update = () => {};
 _update_content("a5", $noop_update);
-_update_content("a8", $catch_content_holes);
+_update_content("a8", $noop_update);
 _update_content("a11", $Reports_content__update);
 _update_content("a3", $noop_update);
 const $merge = _resume("a2", $update2);

@@ -1,12 +1,12 @@
 {
   "dom": {
     "nav.js": {
-      "min": 5806,
-      "brotli": 2376
+      "min": 5851,
+      "brotli": 2403
     },
     "template.mjs": {
-      "min": 8645,
-      "brotli": 3716
+      "min": 8753,
+      "brotli": 3763
     }
   },
   "html": {

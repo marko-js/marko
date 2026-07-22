@@ -1,9 +1,6 @@
 // tags/badge.marko.persisted.mjs
-const $merge$3 = _resume("b0", /* @__PURE__ */ _update_scopes({
-	"Nclass:a": /*@__PURE__*/ _update_attr("a", _attr_class),
-	"Ntitle:a": /*@__PURE__*/ _update_named_attr("a", "title"),
-	"Qb": /*@__PURE__*/ _update_text("b")
-}));
+const $update2$2 = () => {};
+const $merge$3 = _resume("b0", $update2$2);
 _update_content("b", $merge$3);
 
 // tags/panel.marko.persisted.mjs
@@ -38,7 +35,7 @@ const $count_seed = _update_signal("a2");
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("o" in $patch) _update_seed($live, $count_seed, $patch["o"]);
-	if ("c" in $patch) $merge$3($patch["c"], $live["c"]);
+	if ("Dc" in $patch) _update_region("c")($patch, $live);
 	if ("d" in $patch) $merge$2($patch["d"], $live["d"]);
 	if ("e" in $patch) $merge$1($patch["e"], $live["e"]);
 };

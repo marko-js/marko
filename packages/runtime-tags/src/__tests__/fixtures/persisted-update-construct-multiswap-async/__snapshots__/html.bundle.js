@@ -14,13 +14,13 @@ var template_default = _template("a", (input) => {
 	const PanelA = { content: _content_resume("a3", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<span class=a>A: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</span>`);
+		_html(`<span class=a>A: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope1_id, "a", _persisted_reason())}</span>`);
 		_persisted_reason() && writeScope($scope1_id, {});
 	}, $scope0_id) };
 	const PanelB = { content: _content_resume("a4", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
-		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope3_id, "a", _persisted_reason())}</section>`);
+		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope3_id, "a", _persisted_reason())}</section>`);
 		_persisted_reason() && writeScope($scope3_id, {});
 	}, $scope0_id) };
 	const PanelAsync = { content: _content_resume("a9", () => {
@@ -55,18 +55,12 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a5": ["<p class=report> </p>", "D l"],
 	"a12": ["<p class=report> </p>", "D l"],
-	"a13": ["<p class=loading>loading…</p>", "b"],
-	"a6": ["<p class=loading>loading…</p>", "b"],
 	"a8": ["<!><!><!>", "b%c"],
 	"a7": ["<!><!><!>", "b%c"],
-	"a14": ["<!><!><!>", "b%c"],
+	"a13": ["<!><!><!>", "b%c"],
 	"a9": ["<!><!><!>", "b%c"],
-	"a15": ["<section class=b>B: <!></section>", "Db%l"],
-	"a4": ["<section class=b>B: <!></section>", "Db%l"],
 	"a10": ["<!><!><!>", "b%c"],
-	"a16": ["<!><!><!>", "b%c"],
-	"a17": ["<span class=a>A: <!></span>", "Db%l"],
-	"a3": ["<span class=a>A: <!></span>", "Db%l"],
+	"a14": ["<!><!><!>", "b%c"],
 	"a2": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"],
 	"a": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"]
 });

@@ -36,8 +36,8 @@ UPDATE: button::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: p + p
-REMOVE: button + p
+INSERT: button + p
+REMOVE: p + p
 ```
 
 # Update
@@ -68,10 +68,8 @@ UPDATE: button::text@8 "1" => "2"
 ```
 ## Change
 ```
-INSERT: p + p
-REMOVE: button + p
-UPDATE: p::text@0 "" => "server patch 5"
-UPDATE: p::text@17 "" => "server have 5"
+INSERT: button + p
+REMOVE: p + p
 ```
 
 # Update

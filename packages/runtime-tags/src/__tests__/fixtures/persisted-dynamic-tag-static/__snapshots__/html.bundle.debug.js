@@ -16,8 +16,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_1_update": ["badge", "b"],
-	"__tests__/template.marko_1_content": ["badge", "b"],
 	"__tests__/template.marko_0_update": ["<button>count <!></button><!><p> </p>", " Db%l%bD l"],
 	"__tests__/template.marko": ["<button>count <!></button><!><p> </p>", " Db%l%bD l"]
 });

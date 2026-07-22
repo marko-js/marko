@@ -2,15 +2,15 @@
   "dom": {
     "nav.js": {
       "total": {
-        "min": 6264,
-        "brotli": 2498
+        "min": 6622,
+        "brotli": 2651
       },
       "files": {
-        "tags/badge.marko.persisted.mjs": 253,
-        "tags/card.marko.persisted.mjs": 445,
+        "tags/badge.marko.persisted.mjs": 159,
+        "tags/card.marko.persisted.mjs": 158,
         "tags/counter.marko.persisted.mjs": 528,
         "tags/widget.marko.persisted.mjs": 343,
-        "template.marko.persisted.mjs": 699
+        "template.marko.persisted.mjs": 701
       }
     },
     "template.marko.page.mjs": {
@@ -25,7 +25,7 @@
     }
   },
   "html": {
-    "min": 715,
-    "brotli": 393
+    "min": 742,
+    "brotli": 406
   }
 }

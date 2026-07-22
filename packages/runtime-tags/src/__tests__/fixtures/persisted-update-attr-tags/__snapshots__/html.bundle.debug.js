@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			inner_default({ part: attrTag({ content: _content("__tests__/template.marko_3_content", () => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<p>${_escape(_hole_value($scope3_id, "PatchHole:#text/0", getTitle(input.id), _persisted_reason()))}${_el_resume($scope3_id, "#text/0", $sg__input_id)}</p>`);
+				_html(`<p>${_escape(getTitle(input.id))}${_el_resume($scope3_id, "#text/0", $sg__input_id)}</p>`);
 				$sg__input_id && _subscribe($input_id__closures, writeScope($scope3_id, {
 					_: _scope_with_id($scope2_id),
 					"ClosureSignalIndex:input_id": 1
@@ -98,7 +98,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		header: attrTag({ content: _content("__tests__/template.marko_1_content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<h2>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", getTitle(input.id), _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_id)}</h2>`);
+			_html(`<h2>${_escape(getTitle(input.id))}${_el_resume($scope1_id, "#text/0", $sg__input_id)}</h2>`);
 			$sg__input_id && _subscribe($input_id__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"));
 			_resume_branch($scope1_id);
 		}) })
@@ -114,8 +114,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_4_update": [" ", " b"],
 	"__tests__/template.marko_4_content": [" ", " b"],
-	"__tests__/template.marko_3_update": ["<p> </p>", "D l"],
-	"__tests__/template.marko_3_content": ["<p> </p>", "D l"],
 	"__tests__/template.marko_2_update": [[["__tests__/tags/inner.marko"]], [
 		"/",
 		["__tests__/tags/inner.marko"],
@@ -126,8 +124,6 @@ _renderer_shells({
 		["__tests__/tags/inner.marko"],
 		"&"
 	]],
-	"__tests__/template.marko_1_update": ["<h2> </h2>", "D l"],
-	"__tests__/template.marko_1_content": ["<h2> </h2>", "D l"],
 	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/panel.marko"]], [
 		" Db%l/",
 		["__tests__/tags/panel.marko"],

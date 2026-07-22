@@ -5,18 +5,12 @@ var lineup_default = _template("__tests__/tags/lineup.marko", (input) => {
 	_html("<ol class=lineup>");
 	_for_of(input.performers, (name) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", name, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", $sg__input_performers)}</li>`);
+		_html(`<li>${_escape(name)}${_el_resume($scope1_id, "#text/0", $sg__input_performers)}</li>`);
 		$sg__input_performers && writeScope($scope1_id, {}, "__tests__/tags/lineup.marko", "2:4");
 	}, function(name) {
 		return name;
-	}, $scope0_id, "#ol/0", $sg__input_performers, $sg__input_performers, $sg__input_performers, "</ol>", 1, "__tests__/tags/lineup.marko_1_update");
+	}, $scope0_id, "#ol/0", $sg__input_performers, $sg__input_performers, $sg__input_performers, "</ol>", 1);
 	$sg__input_performers && writeScope($scope0_id, {}, "__tests__/tags/lineup.marko", 0);
-});
-_renderer_shells({
-	"__tests__/tags/lineup.marko_1_update": ["<li> </li>", "D l"],
-	"__tests__/tags/lineup.marko_1_content": ["<li> </li>", "D l"],
-	"__tests__/tags/lineup.marko_0_update": ["<ol class=lineup></ol>", " b"],
-	"__tests__/tags/lineup.marko": ["<ol class=lineup></ol>", " b"]
 });
 
 // tags/stage.marko

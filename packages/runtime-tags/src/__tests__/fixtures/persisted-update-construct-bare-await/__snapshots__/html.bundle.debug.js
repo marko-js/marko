@@ -36,8 +36,6 @@ _renderer_shells({
 	"__tests__/template.marko_3_content": ["<p class=report> </p>", "D l"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_1_update": ["<p class=home>welcome home</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=home>welcome home</p>", "b"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

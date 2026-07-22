@@ -13,17 +13,17 @@ const $merge$1 = _resume("b1", $update2$1);
 _update_content("b", $merge$1);
 
 // template.marko.persisted.mjs
-const $Dashboard_content__tally = _var_resume("a9", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $Dashboard_content__tally = _var_resume("a8", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
 const $Dashboard_content__setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$Dashboard_content__tally($scope, $scope.d + 1);
 }));
-const $frame_content__count = _var_resume("a10", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $frame_content__count = _var_resume("a9", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
 const $frame_content__setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$frame_content__count($scope, $scope.d + 1);
 }));
-const $tally_seed = _update_signal("a9");
+const $tally_seed = _update_signal("a8");
 const $Dashboard_content_holes = /*@__PURE__*/ _update_scopes({ "Qc": /*@__PURE__*/ _update_text("c") });
-const $count_seed = _update_signal("a10");
+const $count_seed = _update_signal("a9");
 const $Dashboard_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $tally_seed, $patch["d"]);

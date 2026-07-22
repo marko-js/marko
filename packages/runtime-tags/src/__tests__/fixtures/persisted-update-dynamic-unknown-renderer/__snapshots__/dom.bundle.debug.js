@@ -1,9 +1,16 @@
 // tags/ticker.marko.persisted.mjs
-const $template$1 = "<ol class=ticker></ol>";
-const $walks$1 = " b";
-const $setup$1 = () => {};
+const $template$1 = "<button class=mark>mark <!></button><ol class=ticker></ol>";
+const $walks$1 = " Db%l b";
 const $for_content__entry = ($scope, entry) => _text($scope["#text/0"], entry);
 const $for_content__$params = ($scope, $params2) => $for_content__entry($scope, $params2[0]);
+const $marks = _var_resume("__tests__/tags/ticker.marko_0_marks/var", /*@__PURE__*/ _let_persisted("marks/6", ($scope) => _text($scope["#text/1"], $scope.marks)));
+const $setup__script$1 = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
+	$marks($scope, $scope.marks + 1);
+}));
+function $setup$1($scope) {
+	$marks($scope, 0);
+	$setup__script$1($scope);
+}
 const $for = 0;
 const $input_entries$1 = ($scope, input_entries) => {
 	if (!updating) $for($scope, [input_entries, function(entry) {
@@ -11,11 +18,12 @@ const $input_entries$1 = ($scope, input_entries) => {
 	}]);
 };
 const $input$1 = ($scope, input) => $input_entries$1($scope, input.entries);
-var ticker_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/ticker.marko", $template$1, " b", $setup$1, $input$1);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $for_update = _update_for_keyed("#ol/0", ($p, $l) => $for_content_holes($p, $l), "__tests__/tags/ticker.marko_1_update");
+var ticker_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/ticker.marko", $template$1, $walks$1, $setup$1, $input$1);
+const $marks_seed = _update_signal("__tests__/tags/ticker.marko_0_marks/var");
 const $update2$1 = ($patch, $live) => {
-	if ("BranchScopes:#ol/0" in $patch) $for_update($live, [$patch["BranchScopes:#ol/0"], "#LoopKey"]);
+	_update_pair($patch, $live);
+	if ("marks" in $patch) _update_seed($live, $marks_seed, $patch["marks"]);
+	if ("ConditionalRenderer:#ol/2" in $patch) _update_region("#ol/2")($patch, $live);
 };
 const $merge$1 = _resume("__tests__/tags/ticker.marko_0_update", $update2$1);
 _update_content("__tests__/tags/ticker.marko", $merge$1);
@@ -85,16 +93,23 @@ const $input = ($scope, input) => {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // tags/ticker.marko
-const $template = "<ol class=ticker></ol>";
-const $walks = " b";
-const $setup = () => {};
+const $template = "<button class=mark>mark <!></button><ol class=ticker></ol>";
+const $walks = " Db%l b";
 const $for_content__entry = ($scope, entry) => _text($scope["#text/0"], entry);
 const $for_content__$params = ($scope, $params2) => $for_content__entry($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of("#ol/0", "<li> </li>", "D l", 0, $for_content__$params);
+const $marks = /*@__PURE__*/ _let_persisted("marks/6", ($scope) => _text($scope["#text/1"], $scope.marks));
+const $setup__script = _script_update("__tests__/tags/ticker.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$marks($scope, $scope.marks + 1);
+}));
+function $setup($scope) {
+	$marks($scope, 0);
+	$setup__script($scope);
+}
+const $for = /*@__PURE__*/ _for_of("#ol/2", "<li> </li>", "D l", 0, $for_content__$params);
 const $input_entries = ($scope, input_entries) => {
 	if (!updating) $for($scope, [input_entries, function(entry) {
 		return entry;
 	}]);
 };
 const $input = ($scope, input) => $input_entries($scope, input.entries);
-var ticker_default = /*@__PURE__*/ _template("__tests__/tags/ticker.marko", $template, " b", $setup, $input);
+var ticker_default = /*@__PURE__*/ _template("__tests__/tags/ticker.marko", $template, $walks, $setup, $input);

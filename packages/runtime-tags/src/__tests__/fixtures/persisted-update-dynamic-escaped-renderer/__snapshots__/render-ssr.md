@@ -94,7 +94,8 @@ UPDATE: .count::text@8 "0" => "1"
 ## Change
 ```
 UPDATE: .headline::text@0 "2" => "3"
-INSERT: .lineup > li:nth-of-type(2) + li
+INSERT: .stage > .lineup
+REMOVE: .headline + .lineup
 ```
 
 # Update
@@ -168,8 +169,8 @@ UPDATE: .count::text@8 "1" => "2"
 ## Change
 ```
 UPDATE: .headline::text@0 "3" => "1"
-REMOVE: .lineup > li
-REMOVE: .lineup > li + li
+INSERT: .lineup + .lineup
+REMOVE: .headline + .lineup
 ```
 
 # Update

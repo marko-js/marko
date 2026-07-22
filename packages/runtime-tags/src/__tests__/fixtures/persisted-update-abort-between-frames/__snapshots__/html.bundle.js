@@ -40,14 +40,10 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a4": ["<p class=report> </p>", "D l"],
 	"a10": ["<p class=report> </p>", "D l"],
-	"a11": ["<p class=loading>loading…</p>", "b"],
-	"a5": ["<p class=loading>loading…</p>", "b"],
 	"a7": ["<!><!><!>", "b%c"],
 	"a6": ["<!><!><!>", "b%c"],
-	"a12": ["<!><!><!>", "b%c"],
+	"a11": ["<!><!><!>", "b%c"],
 	"a8": ["<!><!><!>", "b%c"],
-	"a13": ["<p class=home>welcome home</p>", "b"],
-	"a3": ["<p class=home>welcome home</p>", "b"],
 	"a2": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

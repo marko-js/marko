@@ -144,6 +144,5 @@ INSERT: p + h2
 REMOVE: .count + p
 UPDATE: h2::text@8 "" => "3"
 INSERT: h2 + ul
-INSERT: ul > li
-INSERT: ul > li:nth-of-type(1) + li
+INSERT: ul > :is(li, li)
 ```

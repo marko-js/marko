@@ -2,12 +2,8 @@
 var child_default = _template("b", (input) => {
 	const $sg__input_class__OR__input_data_request = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(_hole_value($scope0_id, "Nclass:a", input.class, _persisted_reason()))}${_attr("data-request", _hole_value($scope0_id, "Ndata-request:a", input["data-request"], _persisted_reason()))}></div>${_el_resume($scope0_id, "a", $sg__input_class__OR__input_data_request)}`);
+	_html(`<div${_attr_class(input.class)}${_attr("data-request", input["data-request"])}></div>${_el_resume($scope0_id, "a", $sg__input_class__OR__input_data_request)}`);
 	$sg__input_class__OR__input_data_request && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"b0": ["<div></div>", " b"],
-	"b": ["<div></div>", " b"]
 });
 
 // template.marko
@@ -28,10 +24,12 @@ var template_default = _template("a", (input) => {
 	}, "d", $scope0_id, "div")}>dynamic</div>${_el_resume($scope0_id, "d")}`);
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason($sg__input_title);
-	child_default({
-		"data-request": input.title,
-		...attrs
-	});
+	_region(() => {
+		child_default({
+			"data-request": input.title,
+			...attrs
+		});
+	}, $scope0_id, "e");
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {

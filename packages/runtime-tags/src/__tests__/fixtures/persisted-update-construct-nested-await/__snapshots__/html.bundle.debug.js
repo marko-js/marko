@@ -61,20 +61,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_8_update": ["<p class=detail> </p>", "D l"],
 	"__tests__/template.marko_8_content": ["<p class=detail> </p>", "D l"],
-	"__tests__/template.marko_7_update": ["<p class=sub>detail…</p>", "b"],
-	"__tests__/template.marko_7_content": ["<p class=sub>detail…</p>", "b"],
 	"__tests__/template.marko_6_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_6_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_5_update": ["<p class=summary> </p><!><!>", "D l%c"],
 	"__tests__/template.marko_5_content": ["<p class=summary> </p><!><!>", "D l%c"],
-	"__tests__/template.marko_4_update": ["<p class=loading>summary…</p>", "b"],
-	"__tests__/template.marko_4_content": ["<p class=loading>summary…</p>", "b"],
 	"__tests__/template.marko_3_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_3_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_1_update": ["<p class=home>welcome home</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=home>welcome home</p>", "b"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

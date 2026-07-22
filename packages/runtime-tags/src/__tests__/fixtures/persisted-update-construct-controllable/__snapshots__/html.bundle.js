@@ -28,8 +28,6 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a7": ["<input class=field><output class=echo> </output>", " bD l"],
 	"a4": ["<input class=field><output class=echo> </output>", " bD l"],
-	"a8": ["<p class=home>welcome home</p>", "b"],
-	"a3": ["<p class=home>welcome home</p>", "b"],
 	"a2": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

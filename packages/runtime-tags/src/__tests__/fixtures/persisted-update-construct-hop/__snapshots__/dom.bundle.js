@@ -43,32 +43,26 @@ const $Dashboard_content__setup__script = _script_shared(($scope) => _on($scope.
 	_var_change($scope.b, $scope.l + 1);
 }));
 const $Dashboard_content__tally = _var_resume("a3", /*@__PURE__*/ _const_persisted(11, ($scope) => _text($scope.e, $scope.l)));
-const $count = _var_resume("a13", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $count = _var_resume("a8", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"Nclass:a": /*@__PURE__*/ _update_attr("a", _attr_class),
-	"Qb": /*@__PURE__*/ _update_text("b"),
-	"Qc": /*@__PURE__*/ _update_text("c")
-});
 const $Dashboard_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $for_update = _update_for_keyed(6, ($p, $l) => $for_content_holes($p, $l), "a4");
-const $count_seed = _update_signal("a13");
+const $count_seed = _update_signal("a8");
 const $Dashboard_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	$Dashboard_content_holes($patch, $live);
 	if ("b" in $patch) $merge$3($patch["b"], $live["b"]);
 	if ("f" in $patch) $merge$2($patch["f"], $live["f"]);
-	if ("Ag" in $patch) $for_update($live, [$patch["Ag"], "M"]);
-	if ("Dh" in $patch) _update_if($patch, $live, "Dh", "Ah", 0, ["a5"]);
+	if ("Dg" in $patch) _update_region("g")($patch, $live);
+	if ("Dh" in $patch) _update_region("h")($patch, $live);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
 	if ("c" in $patch) $merge$1($patch["c"], $live["c"]);
 };
-_update_content("a6", $Dashboard_content__update);
+_update_content("a4", $Dashboard_content__update);
 const $noop_update = () => {};
 _update_content("a2", $noop_update);
 const $merge = _resume("a1", $update2);
@@ -100,11 +94,11 @@ const $setup__script$1 = _script_update("b2", ($scope) => _on($scope.a, "click",
 }));
 
 // template.marko
-const $Dashboard_content__setup__script = _script_update("a7", ($scope) => _on($scope.d, "click", function() {
+const $Dashboard_content__setup__script = _script_update("a5", ($scope) => _on($scope.d, "click", function() {
 	_var_change($scope.b, $scope.l + 1);
 }));
 const $Dashboard_content__tally = _var_resume("a3", /*@__PURE__*/ _const_persisted(11, ($scope) => _text($scope.e, $scope.l)));
 const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
-const $setup__script = _script_update("a8", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script_update("a6", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));

@@ -9,11 +9,8 @@ const $input$1 = ($scope, input) => {
 	$input_data_request($scope, input["data-request"]);
 };
 var child_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1, $input$1);
-const $_holes = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#div/0": /*@__PURE__*/ _update_attr("#div/0", _attr_class),
-	"PatchAttr:data-request:#div/0": /*@__PURE__*/ _update_named_attr("#div/0", "data-request")
-});
-const $merge$1 = _resume("__tests__/tags/child.marko_0_update", $_holes);
+const $update2$1 = () => {};
+const $merge$1 = _resume("__tests__/tags/child.marko_0_update", $update2$1);
 _update_content("__tests__/tags/child.marko", $merge$1);
 function $patch2$1($fail) {
 	return patch($merge$1, $fail);
@@ -67,7 +64,7 @@ const $update2 = ($patch, $live) => {
 	if ("attrs" in $patch) _update_seed($live, $attrs_seed, $patch["attrs"]);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("input_title" in $patch) $input_title_update($live, $patch["input_title"]);
-	if ("#childScope/4" in $patch) $merge$1($patch["#childScope/4"], $live["#childScope/4"]);
+	if ("ConditionalRenderer:#childScope/4" in $patch) _update_region("#childScope/4")($patch, $live);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);

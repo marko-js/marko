@@ -135,9 +135,8 @@ UPDATE: .toggle::text "off" => "on"
 ```
 ## Change
 ```
-UPDATE: .badge.warn[class] "badge info" => "badge warn"
-UPDATE: .badge.warn[title] "tone: info" => "tone: warn"
-UPDATE: .badge.warn::text "New" => "Sale"
+INSERT: button:nth-of-type(1) + .badge.warn
+REMOVE: .badge.warn + span
 UPDATE: details[open] "" => null
 UPDATE: details > summary::text "Shipping" => "Returns"
 UPDATE: details > p::text "Ships in 2 days." => "Free for 30 days."
@@ -212,9 +211,8 @@ UPDATE: .toggle::text "on" => "off"
 ```
 ## Change
 ```
-UPDATE: .badge.info[class] "badge warn" => "badge info"
-UPDATE: .badge.info[title] "tone: warn" => "tone: info"
-UPDATE: .badge.info::text "Sale" => "New"
+INSERT: button:nth-of-type(1) + .badge.info
+REMOVE: .badge.info + span
 UPDATE: details[open] null => ""
 UPDATE: details > summary::text "Returns" => "Shipping"
 UPDATE: details > p::text "Free for 30 days." => "Ships in 2 days."

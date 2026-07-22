@@ -11,6 +11,7 @@ import {
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
 import { isOptimize, isPersisted } from "./marko-config";
+import { isMembraneLive } from "./membranes";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -176,7 +177,7 @@ export function knownTagAnalyze(
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
-  if (isPersisted()) {
+  if (isPersisted() && isMembraneLive(section)) {
     addSerializeReason(
       section,
       { state: undefined, param: undefined, global: true },
@@ -190,6 +191,7 @@ export function knownTagTranslateHTML(
   tagIdentifier: t.Expression,
   contentSection: Section,
   propTree: BindingPropTree | undefined,
+  regionAccessor?: t.StringLiteral | t.NumericLiteral,
 ) {
   const tagBody = tag.get("body");
   const { node } = tag;
@@ -332,6 +334,23 @@ export function knownTagTranslateHTML(
 
   if (tagVar) {
     translateVar(tag, callExpression(tagIdentifier, ...getArgs()), "let");
+  } else if (regionAccessor) {
+    // A nucleus-free child ships as region markup: documents mark its range,
+    // patches capture its render as a per-response shell the region merge
+    // swaps wholesale.
+    statements.push(
+      t.expressionStatement(
+        callRuntime(
+          "_region",
+          t.arrowFunctionExpression(
+            [],
+            t.blockStatement([callStatement(tagIdentifier, ...getArgs())]),
+          ),
+          getScopeIdIdentifier(section),
+          regionAccessor,
+        ),
+      ),
+    );
   } else {
     statements.push(callStatement(tagIdentifier, ...getArgs()));
   }

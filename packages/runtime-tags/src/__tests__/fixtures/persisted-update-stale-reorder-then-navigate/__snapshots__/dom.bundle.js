@@ -3,12 +3,12 @@ _enable_catch();
 const $await_content__setup = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$n($scope._._, $scope._._.j + 1);
 }));
-const $n = _var_resume("a10", /*@__PURE__*/ _let_persisted(9, ($scope) => _text($scope.c, $scope.j)));
+const $n = _var_resume("a9", /*@__PURE__*/ _let_persisted(9, ($scope) => _text($scope.c, $scope.j)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$n($scope, $scope.j + 1);
 }));
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "Qb": /*@__PURE__*/ _update_text("b") });
-const $n_seed = _update_signal("a10");
+const $n_seed = _update_signal("a9");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qb": /*@__PURE__*/ _update_text("b") });
 const $await_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);

@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id), { catch: attrTag({ content: _content_resume("a8", (err) => {
 			const $sg__err_message = _serialize_guard(_scope_reason(), 0);
 			const $scope4_id = _scope_id();
-			_html(`<p class=failed>failed: ${_sep($sg__err_message)}${_escape(_hole_value($scope4_id, "Qa", err.message, _persisted_reason()))}${_el_resume($scope4_id, "a", $sg__err_message)}</p>`);
+			_html(`<p class=failed>failed: ${_sep($sg__err_message)}${_escape(err.message)}${_el_resume($scope4_id, "a", $sg__err_message)}</p>`);
 			$sg__err_message && writeScope($scope4_id, {});
 		}, $scope2_id) }) }, 0, "a10");
 	}) };
@@ -49,18 +49,12 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a4": ["<p class=report> </p>", "D l"],
 	"a13": ["<p class=report> </p>", "D l"],
-	"a14": ["<p class=loading>loading…</p>", "b"],
-	"a5": ["<p class=loading>loading…</p>", "b"],
 	"a7": ["<!><!><!>", "b%c"],
 	"a6": ["<!><!><!>", "b%c"],
-	"a15": ["<p class=failed>failed: <!></p>", "Db%l"],
-	"a8": ["<p class=failed>failed: <!></p>", "Db%l"],
 	"a10": ["<!><!><!>", "b%c"],
 	"a9": ["<!><!><!>", "b%c"],
-	"a16": ["<!><!><!>", "b%c"],
+	"a14": ["<!><!><!>", "b%c"],
 	"a11": ["<!><!><!>", "b%c"],
-	"a17": ["<p class=home>welcome home</p>", "b"],
-	"a3": ["<p class=home>welcome home</p>", "b"],
 	"a2": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

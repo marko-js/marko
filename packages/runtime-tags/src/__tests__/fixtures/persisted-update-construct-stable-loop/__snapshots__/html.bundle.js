@@ -34,14 +34,10 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a7": ["<strong>B</strong>", "b"],
-	"a3": ["<strong>B</strong>", "b"],
 	"a4": ["<li><!>: <!></li>", "D%c%l"],
-	"a8": ["<li><!>: <!></li>", "D%c%l"],
+	"a7": ["<li><!>: <!></li>", "D%c%l"],
 	"a5": ["<ul></ul>", " b"],
-	"a9": ["<ul></ul>", " b"],
-	"a10": ["<strong>A</strong>", "b"],
-	"a2": ["<strong>A</strong>", "b"],
+	"a8": ["<ul></ul>", " b"],
 	"a1": ["<button> </button><!><!>", " D l%c"],
 	"a": ["<button> </button><!><!>", " D l%c"]
 });

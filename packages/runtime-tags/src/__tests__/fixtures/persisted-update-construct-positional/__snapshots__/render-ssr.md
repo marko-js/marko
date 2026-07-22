@@ -88,9 +88,10 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
+INSERT: ul > li:nth-of-type(1) > span
+REMOVE: ul > li:nth-of-type(1) > span
 INSERT: ul > li:nth-of-type(2) > span
 REMOVE: ul > li:nth-of-type(2) > .b
-UPDATE: ul > li:nth-of-type(2) > span::text@3 "" => "x"
 INSERT: ul > li:nth-of-type(2) + li
 ```
 
@@ -152,9 +153,8 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 ## Change
 ```
-INSERT: ul > li > .b
+INSERT: span + .b
 REMOVE: ul > li > span
-UPDATE: .b::text@3 "" => "x"
 REMOVE: ul > li + li
 REMOVE: ul > li + li
 ```

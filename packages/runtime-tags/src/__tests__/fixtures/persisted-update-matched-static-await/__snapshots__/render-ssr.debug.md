@@ -70,15 +70,9 @@ INSERT: section > p
 ```
 ## Change
 ```
-INSERT: footer > em:nth-of-type(1)::text("review ")
-INSERT: footer > em:nth-of-type(1)::text@0 + ::text("1")
-INSERT: footer > em:nth-of-type(1)::text@7 + ::text(" of ")
-INSERT: footer > em:nth-of-type(2)::text("review ")
-INSERT: footer > em:nth-of-type(2)::text@0 + ::text("2")
-INSERT: footer > em:nth-of-type(2)::text@7 + ::text(" of ")
-INSERT: footer > em:nth-of-type(3)::text("review ")
-INSERT: footer > em:nth-of-type(3)::text@0 + ::text("3")
-INSERT: footer > em:nth-of-type(3)::text@7 + ::text(" of ")
+INSERT: footer > em:nth-of-type(1)::text("review 1 of ")
+INSERT: footer > em:nth-of-type(2)::text("review 2 of ")
+INSERT: footer > em:nth-of-type(3)::text("review 3 of ")
 REMOVE: footer::text("loading reviews…")
 INSERT: footer > :is(em, em, em)
 UPDATE: footer > em:nth-of-type(1)::text "First" => ""
@@ -184,9 +178,10 @@ UPDATE: h1::text "First" => "Second"
 ```
 ## Change
 ```
-UPDATE: footer > em:nth-of-type(1)::text@12 "" => "Second"
-UPDATE: footer > em:nth-of-type(2)::text@12 "" => "Second"
-UPDATE: footer > em:nth-of-type(3)::text@12 "" => "Second"
+INSERT: footer > :is(em, em, em)
+REMOVE: footer > em:nth-of-type(3) + em
+REMOVE: footer > em:nth-of-type(3) + em
+REMOVE: footer > em:nth-of-type(3) + em
 ```
 
 # Update
@@ -254,7 +249,8 @@ UPDATE: button::text@8 "1" => "2"
 ## Change
 ```
 UPDATE: h1::text "Second" => "First"
-UPDATE: footer > em:nth-of-type(1)::text@12 "Second" => "First"
-UPDATE: footer > em:nth-of-type(2)::text@12 "Second" => "First"
-UPDATE: footer > em:nth-of-type(3)::text@12 "Second" => "First"
+INSERT: footer > :is(em, em, em)
+REMOVE: footer > em:nth-of-type(3) + em
+REMOVE: footer > em:nth-of-type(3) + em
+REMOVE: footer > em:nth-of-type(3) + em
 ```

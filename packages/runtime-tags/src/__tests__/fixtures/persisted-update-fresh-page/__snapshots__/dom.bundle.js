@@ -75,7 +75,7 @@ const $for_content2__$params = ($scope, $params3) => {
 const $else_content__for = /*@__PURE__*/ _for_of(0, "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
 const $else_content__entries = /*@__PURE__*/ _if_closure(3, 1, ($scope) => {
 	_text($scope.b, $scope._.h.reduce((sum, e) => sum + e.product.price, 0));
-	$else_content__for($scope, [$scope._.h, function(entry) {
+	if (!updating) $else_content__for($scope, [$scope._.h, function(entry) {
 		return entry.id;
 	}]);
 });
@@ -88,54 +88,47 @@ const $Cart_content__list__OR__products = /*@__PURE__*/ _or(6, ($scope) => $Cart
 	product: $scope.f.find((p) => p.id === id),
 	id
 }))), 1, 1);
-const $Cart_content__products = _var_resume("a29", /*@__PURE__*/ _let_persisted(5, $Cart_content__list__OR__products));
+const $Cart_content__products = _var_resume("a22", /*@__PURE__*/ _let_persisted(5, $Cart_content__list__OR__products));
 const $Cart_content__list = _var_resume("a3", /*@__PURE__*/ _const_persisted(4, ($scope) => {
 	$Cart_content__products($scope, getProducts?.($scope.e) || []);
 	$Cart_content__list__OR__products($scope);
 }));
 const $Cart_content__if = /*@__PURE__*/ _if(3, "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
-const $count = _var_resume("a30", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $count = _var_resume("a23", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-const $for_content3_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $for_update = _update_for_keyed(0, ($p, $l) => $for_content3_holes($p, $l), "a7");
 const $else_content2_holes = /*@__PURE__*/ _update_scopes({
 	"Nsrc:a": /*@__PURE__*/ _update_named_attr("a", "src"),
 	"Nalt:a": /*@__PURE__*/ _update_named_attr("a", "alt"),
 	"Qb": /*@__PURE__*/ _update_text("b"),
 	"Qc": /*@__PURE__*/ _update_text("c")
 });
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"Nclass:a": /*@__PURE__*/ _update_attr("a", _attr_class),
-	"Ndata-tag:a": /*@__PURE__*/ _update_named_attr("a", "data-tag"),
-	"Qb": /*@__PURE__*/ _update_text("b")
-});
-const $products_seed = _update_signal("a29");
-const $count_seed = _update_signal("a30");
+const $products_seed = _update_signal("a22");
+const $count_seed = _update_signal("a23");
 const $await_content__update = ($patch, $live) => {
-	if ("Aa" in $patch) $for_update($live, [$patch["Aa"], "M"]);
+	if ("Da" in $patch) _update_region("a")($patch, $live);
 };
 const $try_content__update = ($patch, $live) => {
-	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content__update, "a8");
+	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content__update, "a5");
 };
 const $else_content2__update = ($patch, $live) => {
 	$else_content2_holes($patch, $live);
 	if ("d" in $patch) $merge$2($patch["d"], $live["d"]);
-	if ("Ae" in $patch) _update_branch($patch, $live, "e", $try_content__update, "a11", "a9");
+	if ("Ae" in $patch) _update_branch($patch, $live, "e", $try_content__update, "a8", "a6");
 };
 const $Item_content__update = ($patch, $live) => {
 	if ("c" in $patch) $live["c"] = $patch["c"];
 	if ("d" in $patch) $live["d"] = $patch["d"];
 	if ("e" in $patch) $live["e"] = $patch["e"];
 	if ("f" in $patch) $live["f"] = $patch["f"];
-	if ("Da" in $patch) _update_if($patch, $live, "Da", "Aa", [0, $else_content2__update], ["a13", "a12"]);
+	if ("Da" in $patch) _update_if($patch, $live, "Da", "Aa", [0, $else_content2__update], ["a10", "a9"]);
 };
 const $Cart_content__update = ($patch, $live) => {
 	if ("f" in $patch) _update_seed($live, $products_seed, $patch["f"]);
 	if ("a" in $patch) $merge$3($patch["a"], $live["a"]);
-	if ("Ac" in $patch) _update_for($patch["Ac"], $live["Ac"], $for_content_holes, $live, "Ac", "a4");
+	if ("Dc" in $patch) _update_region("c")($patch, $live);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -143,9 +136,9 @@ const $update2 = ($patch, $live) => {
 	if ("c" in $patch) $merge$1($patch["c"], $live["c"]);
 };
 const $noop_update = () => {};
-_update_content("a9", $noop_update);
-_update_content("a14", $Item_content__update);
-_update_content("a6", $Cart_content__update);
+_update_content("a6", $noop_update);
+_update_content("a11", $Item_content__update);
+_update_content("a4", $Cart_content__update);
 const $merge = _resume("a2", $update2);
 _update_content("a", $merge);
 function $patch2($fail) {
@@ -169,7 +162,7 @@ const $setup__script$1 = _script_update("c2", ($scope) => _on($scope.a, "click",
 
 // template.marko
 _enable_catch();
-const $placeholder_content = _content_resume("a9", "loading recommendations…", "b");
+const $placeholder_content = _content_resume("a6", "loading recommendations…", "b");
 const $for_content2__entry_product_title = ($scope, entry_product_title) => _text($scope.a, entry_product_title);
 const $for_content2__entry_product_price = ($scope, entry_product_price) => _text($scope.b, entry_product_price);
 const $for_content2__$params = ($scope, $params3) => {
@@ -179,7 +172,7 @@ const $for_content2__$params = ($scope, $params3) => {
 const $else_content__for = /*@__PURE__*/ _for_of(0, "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
 const $else_content__entries = /*@__PURE__*/ _if_closure(3, 1, ($scope) => {
 	_text($scope.b, $scope._.h.reduce((sum, e) => sum + e.product.price, 0));
-	$else_content__for($scope, [$scope._.h, function(entry) {
+	if (!updating) $else_content__for($scope, [$scope._.h, function(entry) {
 		return entry.id;
 	}]);
 });
@@ -200,7 +193,7 @@ const $Cart_content__list = _var_resume("a3", /*@__PURE__*/ _const_persisted(4, 
 const $Cart_content__if = /*@__PURE__*/ _if(3, "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
 const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
-const $setup__script = _script_update("a15", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script_update("a12", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
 

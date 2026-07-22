@@ -8,14 +8,12 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html("<p class=warn>heads up</p>");
 		$sg__input_warn && writeScope($scope1_id, {}, "__tests__/tags/panel.marko", "3:2");
-	}], ["__tests__/tags/panel.marko_1_update"]);
+	}], [0]);
 	_script($scope0_id, "__tests__/tags/panel.marko_0");
 	writeScope($scope0_id, { hits: _state_reason() && hits }, "__tests__/tags/panel.marko", 0, { hits: "1:6" });
 	_resume_branch($scope0_id);
 });
 _renderer_shells({
-	"__tests__/tags/panel.marko_1_update": ["<p class=warn>heads up</p>", "b"],
-	"__tests__/tags/panel.marko_1_content": ["<p class=warn>heads up</p>", "b"],
 	"__tests__/tags/panel.marko_0_update": ["<button class=panel><!> hit <!></button><!><!>", " D%c%l%c"],
 	"__tests__/tags/panel.marko": ["<button class=panel><!> hit <!></button><!><!>", " D%c%l%c"]
 });

@@ -91,14 +91,10 @@ _renderer_shells({
 		["__tests__/tags/mounter.marko"],
 		"&D%c%l"
 	]],
-	"__tests__/template.marko_4_update": ["<p class=loading>loading…</p>", "b"],
-	"__tests__/template.marko_4_content": ["<p class=loading>loading…</p>", "b"],
 	"__tests__/template.marko_3_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_3_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_1_update": ["<p class=home>home</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=home>home</p>", "b"],
 	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],

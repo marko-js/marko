@@ -64,8 +64,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_2_update": ["<h2 class=title> </h2><!><!><!>", "D l%/&c"],
 	"__tests__/template.marko_2_content": ["<h2 class=title> </h2><!><!><!>", "D l%/&c"],
-	"__tests__/template.marko_1_update": ["<p class=home>welcome home</p>", "b"],
-	"__tests__/template.marko_1_content": ["<p class=home>welcome home</p>", "b"],
 	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],

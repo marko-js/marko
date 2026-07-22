@@ -117,8 +117,6 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
-const $part_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $header_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $body_content__update = ($patch, $live) => {
 	if ("#childScope/0" in $patch) $merge$2($patch["#childScope/0"], $live["#childScope/0"]);
@@ -130,9 +128,9 @@ const $update2 = ($patch, $live) => {
 };
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_4_content", $noop_update);
-_update_content("__tests__/template.marko_3_content", $part_content_holes);
+_update_content("__tests__/template.marko_3_content", $noop_update);
 _update_content("__tests__/template.marko_2_content", $body_content__update);
-_update_content("__tests__/template.marko_1_content", $header_content_holes);
+_update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
 function $patch2($fail) {

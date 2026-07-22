@@ -1,10 +1,10 @@
 // template.marko.persisted.mjs
-const $count = _var_resume("a11", /*@__PURE__*/ _let_persisted(5, ($scope) => _text($scope.b, $scope.f)));
+const $count = _var_resume("a9", /*@__PURE__*/ _let_persisted(5, ($scope) => _text($scope.b, $scope.f)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.f + 1);
 }));
 const $for_content2_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $count_seed = _update_signal("a11");
+const $count_seed = _update_signal("a9");
 const $for_update = _update_for_keyed(2, ($p, $l) => $for_content__update($p, $l), "a5");
 const $for_content2__update = ($patch, $live) => {
 	$for_content2_holes($patch, $live);

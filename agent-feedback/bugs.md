@@ -185,3 +185,22 @@ repo; investigate there with this fixture as the known-good applier baseline.
 `packages/runtime-tags/src/html/serializer.ts` › `writeMap` | 2026-07-21 | impact:high | effort:high
 
 In `packages/runtime-tags/src/html/serializer.ts`, `writeMap` (l.989) and `writeSet` (l.1068) eagerly patch a member into the constructor IIFE (`a[i]=m` / `i[i]=s`, before `forEach`/`reduce`) ONLY when the member is `=== val`, the container itself (l.1003-1010/1037-1044/1079-1082). A member that is `===` an _ancestor_ higher in the write tree is not caught, so it takes writeReferenceOr's circular path (l.624-629): it becomes a hole in the backing array and its fill is queued on `state.assigned`, which `writeAssigned` (l.470-483) emits as `_.a[i]=<id>` extras AFTER the payload body. Because `new Set(items)` / `new Map(entries)` / the `reduce` copy members at construction time, that post-hoc backing-array patch never reaches the built collection, so the member is silently lost (Set: `size` short by one) or corrupted (Map: entry present but its ancestor key or value resolves to `undefined`) with no throw and no MARKO_DEBUG warning. This affects natural resume shapes where a serialized Set/Map holds an object that is itself an ancestor on the walk — undirected graph adjacency (the A↔B back-edge is dropped), `set.add(ownerObject)` back-references, or ancestor Map keys/values — while the wrapper case (`{nested: container}`) already works because the fresh member is added by reference and only its property is patched later. NOTE (verified 2026-07-21): the tempting "force the eager-IIFE form" fix does NOT work — the container-self `=== val` patch only works because it targets the in-scope IIFE var (`m`/`s`), whereas an ancestor's fill must reference the ancestor's id (`_.a`), which is assigned only when the enclosing `_.a={…}` literal finishes, i.e. AFTER the nested Map/Set IIFE has already evaluated, so it reads `undefined` (a `((s,i)=>(i[0]=_.a,…))(new Set,[0])` inside `_.a={…set:…}` deserializes with the member still `undefined`). The correct fix gives the collection its own id and defers the ancestor member's INSERTION as a post-construction method call — `_.setId.add(_.ancestorId)` / `_.mapId.set(<k>,<v>)` emitted after all ids are assigned — a new deferred-method-call path in `writeAssigned` (adjacent to the existing channel-mutation `_.x.f(arg)` emit at l.515-538) that serializes the non-ancestor key/value side via `writeProp`; this is closer to effort:high than med. Re-verify with the serializer harness: round-trip `parent` where `const parent={name:'p'}; const s=new Set(); s.add(parent); parent.set=s;` and assert `rt.set.size===1 && rt.set.has(rt)` — today it yields payload `...set:new Set(_.a=[])}}),_.a[0]=_.b,0)` with `size===0`; the undirected-graph and ancestor Map key/value variants fail the same way.
+
+## Eager stateful child in constructed content misses its initial seed (pre-membranes)
+
+A custom tag with `<let>` state rendered eagerly inside a patch-constructed
+branch (hop target, constructed page content) renders its seed-dependent
+text empty until the first client write: `persisted-update-region-in-construct`'s
+sticky button shows "s" instead of "s0", and the ecommerce first-add-on-a-
+patched-in-page flow leaves the header cart count at 0 (`validate:csp`'s
+one failing check). Verified identical on the pre-membranes implementation
+(HEAD~2 worktree), so this is a long-standing gap in constructed-content
+seeding, not a membranes regression — lazy children avoid it via their
+keyed ready batches.
+**Why:** constructed branches seed from patch fills; an eager child's `let`
+seed appears to fall between the shell walk's scope adoption and the seed
+signal dispatch.
+**How to apply:** reproduce with the region-in-construct fixture's sticky
+tag (assert "s0" before any click); fix in the construct/adopt seed path,
+then drop the survival-only carve-out in that fixture and re-enable
+`validate:csp`'s first-add check as the oracle.

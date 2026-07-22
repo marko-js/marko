@@ -5,30 +5,20 @@ var roster_default = _template("c", (input) => {
 	_html("<ul class=roster>");
 	_for_of(input.members, (name) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(_hole_value($scope1_id, "Qa", name, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_members)}</li>`);
+		_html(`<li>${_escape(name)}${_el_resume($scope1_id, "a", $sg__input_members)}</li>`);
 		$sg__input_members && writeScope($scope1_id, {});
 	}, function(name) {
 		return name;
-	}, $scope0_id, "a", $sg__input_members, $sg__input_members, $sg__input_members, "</ul>", 1, "c1");
+	}, $scope0_id, "a", $sg__input_members, $sg__input_members, $sg__input_members, "</ul>", 1);
 	$sg__input_members && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"c1": ["<li> </li>", "D l"],
-	"c2": ["<li> </li>", "D l"],
-	"c0": ["<ul class=roster></ul>", " b"],
-	"c": ["<ul class=roster></ul>", " b"]
 });
 
 // tags/digest.marko
 var digest_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_members = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<p class=digest>${_escape(_hole_value($scope0_id, "Qa", input.members.length, _persisted_reason()))}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))} on call: ${_sep($sg__input_members)}${_escape(_hole_value($scope0_id, "Qb", input.members.join(", "), _persisted_reason()))}${_el_resume($scope0_id, "b", $sg__input_members)}</p>`);
+	_html(`<p class=digest>${_escape(input.members.length)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))} on call: ${_sep($sg__input_members)}${_escape(input.members.join(", "))}${_el_resume($scope0_id, "b", $sg__input_members)}</p>`);
 	$sg__input_members && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"b0": ["<p class=digest><!> on call: <!></p>", "D%c%l"],
-	"b": ["<p class=digest><!> on call: <!></p>", "D%c%l"]
 });
 
 // template.marko

@@ -15,6 +15,12 @@ import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
 import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
 import {
+  isMembraneLive,
+  isRegionRoot,
+  markStateCapable,
+  MembraneCause,
+} from "./membranes";
+import {
   addSorted,
   concat,
   filter,
@@ -1140,12 +1146,42 @@ export function finalizeReferences() {
   });
 
   if (isPersisted()) {
+    // Branch alternatives of one anchor must share liveness: a mixed anchor
+    // (one live body, one region body) would need per-branch delivery modes,
+    // so the region bodies are promoted instead.
+    const alternativesByAnchor = new Map<Binding, Section[]>();
+    forEachSection((section) => {
+      if (section.isBranch && section.sectionAccessor) {
+        const group = alternativesByAnchor.get(section.sectionAccessor.binding);
+        if (group) group.push(section);
+        else
+          alternativesByAnchor.set(section.sectionAccessor.binding, [section]);
+      }
+    });
+    let promoted = true;
+    while (promoted) {
+      promoted = false;
+      for (const group of alternativesByAnchor.values()) {
+        if (
+          group.length > 1 &&
+          group.some((section) => isMembraneLive(section)) &&
+          group.some((section) => !isMembraneLive(section))
+        ) {
+          for (const section of group) {
+            markStateCapable(section, MembraneCause.forced);
+          }
+          promoted = true;
+        }
+      }
+    }
+
     forEachSectionReverse((section) => {
       if (
         section.parent &&
         section.isBranch &&
         section.sectionAccessor &&
-        section.upstreamExpression
+        section.upstreamExpression &&
+        (isMembraneLive(section) || isRegionRoot(section))
       ) {
         if (section.hasGlobalReads) {
           addSerializeReason(section, globalSources, kBranchSerializeReason);

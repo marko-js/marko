@@ -16,8 +16,6 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a3": ["badge", "b"],
-	"a1": ["badge", "b"],
 	"a0": ["<button>count <!></button><!><p> </p>", " Db%l%bD l"],
 	"a": ["<button>count <!></button><!><p> </p>", " Db%l%bD l"]
 });

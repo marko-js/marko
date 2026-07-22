@@ -43,12 +43,10 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a2": ["<p class=note> </p>", "D l"],
 	"a7": ["<p class=note> </p>", "D l"],
-	"a8": ["loading…", "b"],
-	"a3": ["loading…", "b"],
 	"a5": ["<!><!><!>", "b%c"],
 	"a4": ["<!><!><!>", "b%c"],
+	"a8": ["<section><!></section>", "D%l"],
 	"a9": ["<section><!></section>", "D%l"],
-	"a10": ["<section><!></section>", "D%l"],
 	"a1": ["<button class=toggle> </button><!><!>", " D l%c"],
 	"a": ["<button class=toggle> </button><!><!>", " D l%c"]
 });

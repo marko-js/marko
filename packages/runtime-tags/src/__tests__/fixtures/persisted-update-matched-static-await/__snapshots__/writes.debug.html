@@ -50,10 +50,10 @@
 
 <!-- FLUSH -->
 
-<t hidden M_=c><!--M_[--><em>review <!>1<!--M_*9 #text/0--> of <!>
-        First<!--M_*9 #text/1--></em><em>review <!>2<!--M_*10 #text/0--> of <!>
-        First<!--M_*10 #text/1--></em><em>review <!>3<!--M_*11 #text/0--> of <!>
-        First<!--M_*11 #text/1--></em><!--M_|8 #text/0 11 10 9--><!--M_]4 #text/0 8-->
+<t hidden M_=c><!--M_[--><!--M_[--><em>review 1 of <!>
+      First<!--M_*10 #text/1--></em><em>review 2 of <!>
+      First<!--M_*11 #text/1--></em><em>review 3 of <!>
+      First<!--M_*12 #text/1--></em><!--M_]8 #text/0 9--><!--M_]4 #text/0 8-->
 </t>
 <script>
   if (!M._.n) {
@@ -61,19 +61,19 @@
       "BoundaryAnchor:#text/1": 0
     }, 5, {
       _: _(4)
+    }, 1, {
+      "#ClosestBranchId": 9,
+      _: _(8)
     }, {
-      _: _(8),
-      "#LoopKey": 1
+      "#ClosestBranchId": 9,
+      _: _(8)
     }, {
-      _: _(8),
-      "#LoopKey": 2
-    }, {
-      _: _(8),
-      "#LoopKey": 3
+      "#ClosestBranchId": 9,
+      _: _(8)
     }]);
     M._.j.c = _ => {
       _.push(
-        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-matched-static-await/template.marko_4_input_title/pending 9 10 11"
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-matched-static-await/template.marko_4_input_title/pending 10 11 12"
         )
     };
     M._.w()

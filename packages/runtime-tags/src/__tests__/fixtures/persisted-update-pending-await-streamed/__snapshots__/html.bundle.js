@@ -35,8 +35,6 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a2": ["<p> </p>", "D l"],
 	"a7": ["<p> </p>", "D l"],
-	"a8": ["loading…", "b"],
-	"a3": ["loading…", "b"],
 	"a5": ["<!><!><!>", "b%c"],
 	"a4": ["<!><!><!>", "b%c"],
 	"a1": ["<button class=clicks>clicked <!></button><section><!></section>", " Db%lD%l"],

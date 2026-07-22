@@ -95,7 +95,8 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 INSERT: ul > section
 REMOVE: ul::text@0 + span
-UPDATE: ul > section:nth-of-type(1)::text@3 "" => "x"
+INSERT: ul > section
+REMOVE: ul::text@25 + section
 ```
 
 # Update
@@ -173,9 +174,10 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 ## Change
 ```
-INSERT: ul > span
+INSERT: .b + span
 REMOVE: ul::text@0 + .b
-UPDATE: ul > span:nth-of-type(1)::text@3 "" => "x"
+INSERT: .b + .b
+REMOVE: ul::text@50 + .b
 REMOVE: .b + em
 REMOVE: .b + ::text("server-only loop sentinel")
 REMOVE: .b + span
@@ -260,10 +262,8 @@ UPDATE: .count::text@8 "2" => "3"
 ```
 INSERT: .b + .a
 REMOVE: ul::text@0 + .b
-UPDATE: .a::text@3 "" => "x"
 INSERT: .a + .b
 REMOVE: ul::text@25 + .a
-UPDATE: .b::text@3 "" => "x"
 REMOVE: .b + em
 REMOVE: .b + ::text("server-only loop sentinel")
 REMOVE: .b + .a

@@ -22,14 +22,14 @@ const $try_content__input_tick = /*@__PURE__*/ _closure_get(9, ($scope) => {
 const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%c", $try_content__setup);
 const $if_content__setup = ($scope) => $if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 const $if = /*@__PURE__*/ _if(2, "<section><!></section>", "D%l", $if_content__setup);
-const $show = _var_resume("a11", /*@__PURE__*/ _let_persisted(7, ($scope) => {
+const $show = _var_resume("a10", /*@__PURE__*/ _let_persisted(7, ($scope) => {
 	_text($scope.b, $scope.h ? "hide" : "show");
 	$if($scope, $scope.h ? 0 : 1);
 }));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.h);
 }));
-const $show_seed = _update_signal("a11");
+const $show_seed = _update_signal("a10");
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("h" in $patch) _update_seed($live, $show_seed, $patch["h"]);

@@ -1,17 +1,11 @@
 // tags/roster.marko.persisted.mjs
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
-const $for_update = _update_for_keyed(0, ($p, $l) => $for_content_holes($p, $l), "c1");
-const $update2$1 = ($patch, $live) => {
-	if ("Aa" in $patch) $for_update($live, [$patch["Aa"], "M"]);
-};
-const $merge$2 = _resume("c0", $update2$1);
+const $update2$2 = () => {};
+const $merge$2 = _resume("c0", $update2$2);
 _update_content("c", $merge$2);
 
 // tags/digest.marko.persisted.mjs
-const $merge$1 = _resume("b0", /* @__PURE__ */ _update_scopes({
-	"Qa": /*@__PURE__*/ _update_text("a"),
-	"Qb": /*@__PURE__*/ _update_text("b")
-}));
+const $update2$1 = () => {};
+const $merge$1 = _resume("b0", $update2$1);
 _update_content("b", $merge$1);
 
 // template.marko.persisted.mjs

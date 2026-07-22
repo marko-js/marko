@@ -29,13 +29,16 @@ dynamicNode = document.querySelector("aside");
 >
   child same
 </p>
-<aside>
-  dynamic
-</aside>
+dynamic
+<aside />
 ```
 ## Change
 ```
+INSERT: button + p
+REMOVE: p:nth-of-type(1) + p
 INSERT: p:nth-of-type(1) + p
+INSERT: p:nth-of-type(2) + ::text("dynamic")
+REMOVE: aside::text("dynamic")
 ```
 
 # Update

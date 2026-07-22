@@ -41,8 +41,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_3_update": ["<p class=eta> </p>", "D l"],
 	"__tests__/template.marko_3_content": ["<p class=eta> </p>", "D l"],
-	"__tests__/template.marko_2_update": ["loading…", "b"],
-	"__tests__/template.marko_2_content": ["loading…", "b"],
 	"__tests__/template.marko_1_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_1_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><input class=sku><select class=ship><option value=ground>ground</option><option value=air>air</option><option value=sea>sea</option></select><!><!>", " Db%l b b%c"],

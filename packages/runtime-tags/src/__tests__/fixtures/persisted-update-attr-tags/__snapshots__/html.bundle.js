@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 		inner_default({ part: attrTag({ content: _content("a1", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>${_escape(_hole_value($scope3_id, "Qa", getTitle(input.id), _persisted_reason()))}${_el_resume($scope3_id, "a", $sg__input_id)}</p>`);
+			_html(`<p>${_escape(getTitle(input.id))}${_el_resume($scope3_id, "a", $sg__input_id)}</p>`);
 			$sg__input_id && _subscribe($input_id__closures, writeScope($scope3_id, {
 				_: _scope_with_id($scope2_id),
 				Ck: 1
@@ -96,7 +96,7 @@ var template_default = _template("a", (input) => {
 		header: attrTag({ content: _content("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<h2>${_escape(_hole_value($scope1_id, "Qa", getTitle(input.id), _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_id)}</h2>`);
+			_html(`<h2>${_escape(getTitle(input.id))}${_el_resume($scope1_id, "a", $sg__input_id)}</h2>`);
 			$sg__input_id && _subscribe($input_id__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);
 		}) })
@@ -112,9 +112,7 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a6": [" ", " b"],
 	"a4": [" ", " b"],
-	"a7": ["<p> </p>", "D l"],
-	"a1": ["<p> </p>", "D l"],
-	"a8": [[["b"]], [
+	"a7": [[["b"]], [
 		"/",
 		["b"],
 		"&"
@@ -124,8 +122,6 @@ _renderer_shells({
 		["b"],
 		"&"
 	]],
-	"a9": ["<h2> </h2>", "D l"],
-	"a2": ["<h2> </h2>", "D l"],
 	"a0": [["<button class=count>clicked <!></button>", ["c"]], [
 		" Db%l/",
 		["c"],

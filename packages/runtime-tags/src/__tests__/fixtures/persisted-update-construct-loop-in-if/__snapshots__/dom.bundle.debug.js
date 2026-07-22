@@ -8,7 +8,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__task_name($scope, $params2[0]?.name);
 	$for_content__task_eta($scope, $params2[0]?.eta);
 };
-const $if_content__for = 0;
+const $if_content__for = /*@__PURE__*/ _for_of("#ol/0", "<li><em>TASK_ROW_MARKUP</em> <span class=name> </span>: <span class=eta> </span></li>", "Db bD lbD m", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => {
 	if (!updating) $if_content__for($scope, [getTasks?.($scope.$global.day), function(task) {
 		return task.id;
@@ -25,20 +25,11 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1"),
-	"PatchHole:#text/2": /*@__PURE__*/ _update_text("#text/2")
-});
-const $for_update = _update_for_keyed("#ol/0", ($p, $l) => $for_content_holes($p, $l), "__tests__/template.marko_3_update");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $if_content__update = ($patch, $live) => {
-	if ("BranchScopes:#ol/0" in $patch) $for_update($live, [$patch["BranchScopes:#ol/0"], "#LoopKey"]);
-};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
-	if ("ConditionalRenderer:#text/2" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", [$if_content__update, 0], ["__tests__/template.marko_1_update", "__tests__/template.marko_2_update"]);
+	if ("ConditionalRenderer:#text/2" in $patch) _update_region("#text/2")($patch, $live);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);

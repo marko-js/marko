@@ -9,11 +9,8 @@ const $input$3 = ($scope, input) => {
 	$input_label$1($scope, input.label);
 };
 var badge_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$4, $walks$4, $setup$4, $input$3);
-const $_holes$2 = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#span/0": /*@__PURE__*/ _update_attr("#span/0", _attr_class),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $merge$4 = _resume("__tests__/tags/badge.marko_0_update", $_holes$2);
+const $update2$4 = () => {};
+const $merge$4 = _resume("__tests__/tags/badge.marko_0_update", $update2$4);
 _update_content("__tests__/tags/badge.marko", $merge$4);
 function $patch2$4($fail) {
 	return patch($merge$4, $fail);
@@ -37,15 +34,7 @@ const $input$2 = ($scope, input) => {
 	$input_meta$1($scope, input.meta);
 };
 var card_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$3, $walks$3, $setup$3, $input$2);
-const $_holes$1 = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1"),
-	"PatchAttr:class:#p/2": /*@__PURE__*/ _update_attr("#p/2", _attr_class),
-	"PatchHole:#text/3": /*@__PURE__*/ _update_text("#text/3")
-});
-const $update2$3 = ($patch, $live) => {
-	$_holes$1($patch, $live);
-	if ("#childScope/0" in $patch) $merge$4($patch["#childScope/0"], $live["#childScope/0"]);
-};
+const $update2$3 = () => {};
 const $merge$3 = _resume("__tests__/tags/card.marko_0_update", $update2$3);
 _update_content("__tests__/tags/card.marko", $merge$3);
 function $patch2$3($fail) {
@@ -124,7 +113,7 @@ const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
-	if ("#childScope/2" in $patch) $merge$3($patch["#childScope/2"], $live["#childScope/2"]);
+	if ("ConditionalRenderer:#childScope/2" in $patch) _update_region("#childScope/2")($patch, $live);
 	if ("#childScope/3" in $patch) $merge$1($patch["#childScope/3"], $live["#childScope/3"]);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);

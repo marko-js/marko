@@ -40,16 +40,10 @@ UPDATE: .count::text@8 "0" => "1"
 >
   clicked 1
 </button>
-<button
-  class="lazy"
->
-  rejecting 
-</button>
 ```
 ## Change
 ```
 REMOVE: .count + p
-INSERT: .count + .lazy
 ```
 
 # Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"home","label":"after reject"}}`
@@ -68,8 +62,6 @@ INSERT: .count + .lazy
 ## Change
 ```
 INSERT: .home
-REMOVE: .count + button
-UPDATE: .home::text " " => "after reject"
 ```
 
 # Update
@@ -100,16 +92,10 @@ UPDATE: .count::text@8 "1" => "2"
 >
   clicked 2
 </button>
-<button
-  class="lazy"
->
-  resolving 
-</button>
 ```
 ## Change
 ```
 REMOVE: .count + p
-INSERT: .count + .lazy
 ```
 
 # Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"home","label":"after resolve"}}`
@@ -128,8 +114,6 @@ INSERT: .count + .lazy
 ## Change
 ```
 INSERT: .home
-REMOVE: .count + button
-UPDATE: .home::text " " => "after resolve"
 ```
 
 # Update

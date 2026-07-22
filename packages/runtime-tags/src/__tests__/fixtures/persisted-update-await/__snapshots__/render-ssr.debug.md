@@ -163,8 +163,9 @@ UPDATE: h1::text "Trailhead 40L Pack" => "Summit 65L Pack"
 ```
 ## Change
 ```
-REMOVE: section > ul > li
-INSERT: section > ul > li:nth-of-type(1) + li
+INSERT: section > ul > :is(li, li)
+REMOVE: section > ul > li:nth-of-type(2) + li
+REMOVE: section > ul > li:nth-of-type(2) + li
 ```
 
 # Update `{"title":"Summit 65L Pack","related":[{"id":12,"name":"Hip Belt","price":39},{"id":21,"name":"Ice Axe Loop","price":11.5}],"note":"Backordered","$global":{"persisted":true}}`
@@ -255,7 +256,8 @@ UPDATE: button::text@8 "1" => "2"
 ## Change
 ```
 UPDATE: h1::text "Summit 65L Pack" => "Trailhead 40L Pack"
+INSERT: section > ul > :is(li, li)
 REMOVE: section > ul > li:nth-of-type(2) + li
-INSERT: section > ul > li
+REMOVE: section > ul > li:nth-of-type(2) + li
 UPDATE: footer > em::text "Backordered" => "Ships tomorrow"
 ```

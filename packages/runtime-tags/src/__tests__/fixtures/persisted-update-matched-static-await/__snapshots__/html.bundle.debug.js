@@ -30,12 +30,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			_await($scope2_id, "#text/0", resolveAfter(0, 2), () => {
 				const $scope3_id = _scope_id();
-				_for_to(3, 1, 1, (i) => {
-					const $scope4_id = _scope_id();
-					$sg__input_title__OR__input_missing && _script($scope4_id, "__tests__/template.marko_4_input_title/pending");
-					_html(`<em>review <!>${_escape(_hole_value($scope4_id, "PatchHole:#text/0", i, _persisted_reason()))}${_el_resume($scope4_id, "#text/0")} of ${_sep($sg__input_title)}${_escape(_hole_value($scope4_id, "PatchHole:#text/1", input.title, _persisted_reason()))}${_el_resume($scope4_id, "#text/1", $sg__input_title)}</em>`);
-					$sg__input_title__OR__input_missing && writeScope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "22:10");
-				}, 0, $scope3_id, "#text/0", $sg__input_title, $sg__input_title, 0, 0, 1, "__tests__/template.marko_4_update");
+				_region(() => {
+					forTo(3, 1, 1, (i) => {
+						const $scope4_id = _scope_id();
+						$sg__input_title__OR__input_missing && _script($scope4_id, "__tests__/template.marko_4_input_title/pending");
+						_html(`<em>review ${_escape(i)} of ${_sep($sg__input_title)}${_escape(input.title)}${_el_resume($scope4_id, "#text/1", $sg__input_title)}</em>`);
+						$sg__input_title__OR__input_missing && writeScope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "22:10");
+					});
+				}, $scope3_id, "#text/0");
 				$sg__input_title__OR__input_missing && writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "21:8");
 			}, $sg__input_title__OR__input_missing, "__tests__/template.marko_3_update");
 			$sg__input_title__OR__input_missing && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "19:6");
@@ -59,18 +61,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_9_update": ["loading reviews…", "b"],
-	"__tests__/template.marko_9_content": ["loading reviews…", "b"],
 	"__tests__/template.marko_8_update": ["<p><strong>deals never change</strong></p>", "b"],
 	"__tests__/template.marko_8_content": ["<p><strong>deals never change</strong></p>", "b"],
-	"__tests__/template.marko_7_update": ["loading deals…", "b"],
-	"__tests__/template.marko_7_content": ["loading deals…", "b"],
 	"__tests__/template.marko_6_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_6_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_5_update": ["<p>gone</p>", "b"],
 	"__tests__/template.marko_5_content": ["<p>gone</p>", "b"],
-	"__tests__/template.marko_4_update": ["<em>review <!> of <!></em>", "Db%c%l"],
-	"__tests__/template.marko_4_content": ["<em>review <!> of <!></em>", "Db%c%l"],
 	"__tests__/template.marko_3_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_3_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],

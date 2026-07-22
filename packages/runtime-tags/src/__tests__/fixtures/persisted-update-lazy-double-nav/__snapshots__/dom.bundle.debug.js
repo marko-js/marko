@@ -65,7 +65,7 @@ const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("hits" in $patch) _update_seed($live, $hits_seed, $patch["hits"]);
 	$_holes($patch, $live);
-	if ("ConditionalRenderer:#text/3" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3", 0, ["__tests__/tags/panel.marko_1_update"]);
+	if ("ConditionalRenderer:#text/3" in $patch) _update_region("#text/3")($patch, $live);
 };
 const $merge = _resume("__tests__/tags/panel.marko_0_update", $update2);
 _update_content("__tests__/tags/panel.marko", $merge);

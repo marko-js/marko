@@ -18,16 +18,11 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $for_update = _update_for_keyed("#text/2", ($p, $l) => $for_content_holes($p, $l), "__tests__/template.marko_1_update");
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
-	if ("BranchScopes:#text/2" in $patch) $for_update($live, [$patch["BranchScopes:#text/2"], "#LoopKey"]);
+	if ("ConditionalRenderer:#text/2" in $patch) _update_region("#text/2")($patch, $live);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);

@@ -43,6 +43,8 @@
 ```
 INSERT: ul > li:nth-of-type(1) > strong
 REMOVE: ul > li:nth-of-type(1)::text@3 + strong
+INSERT: ul > li:nth-of-type(2) > strong
+REMOVE: ul > li:nth-of-type(2)::text@3 + strong
 ```
 
 # Update `{"$global":{"persisted":true,"groups":[{"id":"group","views":{"one":"b","two":"b"}}]}}`
@@ -67,6 +69,8 @@ REMOVE: ul > li:nth-of-type(1)::text@3 + strong
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(2) > strong
+INSERT: strong + strong
+REMOVE: ul > li:nth-of-type(1)::text@3 + strong
+INSERT: strong + strong
 REMOVE: ul > li:nth-of-type(2)::text@3 + strong
 ```

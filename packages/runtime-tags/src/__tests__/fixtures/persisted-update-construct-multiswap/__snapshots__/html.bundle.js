@@ -10,13 +10,13 @@ var template_default = _template("a", (input) => {
 	const PanelA = { content: _content_resume("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<span class=a>A: ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</span>`);
+		_html(`<span class=a>A: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope1_id, "a", _persisted_reason())}</span>`);
 		_persisted_reason() && writeScope($scope1_id, {});
 	}, $scope0_id) };
 	const PanelB = { content: _content_resume("a3", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
-		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "Qa", getLabel?.($global().topic), _persisted_reason()))}${_el_resume($scope3_id, "a", _persisted_reason())}</section>`);
+		_html(`<section class=b>B: ${_sep(_persisted_reason())}${_escape(getLabel?.($global().topic))}${_el_resume($scope3_id, "a", _persisted_reason())}</section>`);
 		_persisted_reason() && writeScope($scope3_id, {});
 	}, $scope0_id) };
 	_html("<ul>");
@@ -32,12 +32,8 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a6": ["<section class=b>B: <!></section>", "Db%l"],
-	"a3": ["<section class=b>B: <!></section>", "Db%l"],
 	"a4": ["<!><!><!>", "b%c"],
-	"a7": ["<!><!><!>", "b%c"],
-	"a8": ["<span class=a>A: <!></span>", "Db%l"],
-	"a2": ["<span class=a>A: <!></span>", "Db%l"],
+	"a6": ["<!><!><!>", "b%c"],
 	"a1": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"],
 	"a": ["<button class=count>clicked <!></button><ul></ul>", " Db%l b"]
 });

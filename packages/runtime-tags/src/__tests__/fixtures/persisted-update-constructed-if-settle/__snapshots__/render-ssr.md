@@ -53,7 +53,6 @@ UPDATE: h1::text "First" => "Second"
 INSERT: section
 REMOVE: button + p
 INSERT: button + :is(::text(" 5> "), h2)
-UPDATE: h2::text@5 "" => "Second"
 INSERT: section::text("loading extras…")
 ```
 
@@ -128,6 +127,8 @@ UPDATE: button::text@8 "1" => "2"
 ## Change
 ```
 UPDATE: h1::text "Second" => "Deluxe"
-UPDATE: h2::text@5 "Second" => "Deluxe"
+INSERT: button + :is(::text(" 5> "), h2)
+REMOVE: h2 + ::text(" 5> ")
+REMOVE: h2 + h2
 UPDATE: section > p::text@11 "Second" => "Deluxe"
 ```

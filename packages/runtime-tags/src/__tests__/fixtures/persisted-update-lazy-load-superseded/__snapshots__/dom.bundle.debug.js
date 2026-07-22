@@ -36,24 +36,16 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-_load_ready("ready:__tests__/tags/resolving.marko", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:resolving.marko.setup.mjs")));
-_load_ready("ready:__tests__/tags/rejecting.marko", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:rejecting.marko.setup.mjs")));
-const $Home_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
-const $Resolve_content__update = ($patch, $live) => {
-	if ("#childScope/1" in $patch) _update_load($patch["#childScope/1"], $live["#childScope/1"], "__tests__/tags/resolving.marko_0_update", $live, "#text/0", "__tests__/tags/resolving.marko");
-};
-const $Reject_content__update = ($patch, $live) => {
-	if ("#childScope/1" in $patch) _update_load($patch["#childScope/1"], $live["#childScope/1"], "__tests__/tags/rejecting.marko_0_update", $live, "#text/0", "__tests__/tags/rejecting.marko");
-};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("ConditionalRenderer:#text/2" in $patch || "BranchScopes:#text/2" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
-_update_content("__tests__/template.marko_3_content", $Resolve_content__update);
-_update_content("__tests__/template.marko_2_content", $Reject_content__update);
-_update_content("__tests__/template.marko_1_content", $Home_content_holes);
+const $noop_update = () => {};
+_update_content("__tests__/template.marko_3_content", $noop_update);
+_update_content("__tests__/template.marko_2_content", $noop_update);
+_update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
 function $patch2($fail) {
@@ -67,8 +59,8 @@ const $setup = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var rejecting_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/rejecting.marko", $template, $walks, $setup, $input);
-const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $merge = _resume("__tests__/tags/rejecting.marko_0_update", $_holes);
+const $update2 = () => {};
+const $merge = _resume("__tests__/tags/rejecting.marko_0_update", $update2);
 _update_content("__tests__/tags/rejecting.marko", $merge);
 function $patch2($fail) {
 	return patch($merge, $fail);
@@ -92,8 +84,8 @@ const $setup = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var resolving_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/resolving.marko", $template, $walks, $setup, $input);
-const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $merge = _resume("__tests__/tags/resolving.marko_0_update", $_holes);
+const $update2 = () => {};
+const $merge = _resume("__tests__/tags/resolving.marko_0_update", $update2);
 _update_content("__tests__/tags/resolving.marko", $merge);
 function $patch2($fail) {
 	return patch($merge, $fail);

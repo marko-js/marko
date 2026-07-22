@@ -75,8 +75,6 @@ _renderer_shells({
 		["c"],
 		"&"
 	]],
-	"a8": ["<p class=home>welcome home</p>", "b"],
-	"a1": ["<p class=home>welcome home</p>", "b"],
 	"a0": [[["b"]], [
 		"/",
 		["b"],

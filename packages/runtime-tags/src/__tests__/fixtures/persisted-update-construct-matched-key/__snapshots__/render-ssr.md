@@ -66,7 +66,9 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: .items > li:nth-of-type(2) + li
+INSERT: .items > :is(li, li, li)
+REMOVE: .items > li:nth-of-type(3) + li
+REMOVE: .items > li:nth-of-type(3) + li
 ```
 
 # Update
@@ -118,6 +120,9 @@ UPDATE: .count::text@8 "1" => "2"
 ```
 ## Change
 ```
+INSERT: .items > :is(li, li)
+REMOVE: .items > li:nth-of-type(2) + li
+REMOVE: .items > li:nth-of-type(2) + li
 REMOVE: .items > li:nth-of-type(2) + li
 ```
 

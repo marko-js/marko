@@ -5,18 +5,12 @@ var lineup_default = _template("b", (input) => {
 	_html("<ol class=lineup>");
 	_for_of(input.performers, (name) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(_hole_value($scope1_id, "Qa", name, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_performers)}</li>`);
+		_html(`<li>${_escape(name)}${_el_resume($scope1_id, "a", $sg__input_performers)}</li>`);
 		$sg__input_performers && writeScope($scope1_id, {});
 	}, function(name) {
 		return name;
-	}, $scope0_id, "a", $sg__input_performers, $sg__input_performers, $sg__input_performers, "</ol>", 1, "b1");
+	}, $scope0_id, "a", $sg__input_performers, $sg__input_performers, $sg__input_performers, "</ol>", 1);
 	$sg__input_performers && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"b1": ["<li> </li>", "D l"],
-	"b2": ["<li> </li>", "D l"],
-	"b0": ["<ol class=lineup></ol>", " b"],
-	"b": ["<ol class=lineup></ol>", " b"]
 });
 
 // tags/stage.marko

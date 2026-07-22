@@ -27,7 +27,7 @@ const $setup__script = _script_update("a1", ($scope) => _on($scope.b, "click", f
 // tags/panel.marko.persisted.mjs
 const $template = "<button class=panel><!> hit <!></button><!><!>";
 const $walks = " D%c%l%c";
-const $hits = _var_resume("b5", /*@__PURE__*/ _let_persisted(8, ($scope) => _text($scope.c, $scope.i)));
+const $hits = _var_resume("b3", /*@__PURE__*/ _let_persisted(8, ($scope) => _text($scope.c, $scope.i)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$hits($scope, $scope.i + 1);
 }));
@@ -45,13 +45,13 @@ const $input = ($scope, input) => {
 	$input_warn($scope, input.warn);
 };
 var panel_marko_persisted_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
-const $hits_seed = _update_signal("b5");
+const $hits_seed = _update_signal("b3");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qb": /*@__PURE__*/ _update_text("b") });
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("i" in $patch) _update_seed($live, $hits_seed, $patch["i"]);
 	$_holes($patch, $live);
-	if ("Dd" in $patch) _update_if($patch, $live, "Dd", "Ad", 0, ["b2"]);
+	if ("Dd" in $patch) _update_region("d")($patch, $live);
 };
 const $merge = _resume("b1", $update2);
 _update_content("b", $merge);
@@ -63,7 +63,7 @@ function $patch2($fail) {
 const $template = "<button class=panel><!> hit <!></button><!><!>";
 const $walks = " D%c%l%c";
 const $hits = /*@__PURE__*/ _let_persisted(8, ($scope) => _text($scope.c, $scope.i));
-const $setup__script = _script_update("b3", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script_update("b2", ($scope) => _on($scope.a, "click", function() {
 	$hits($scope, $scope.i + 1);
 }));
 function $setup($scope) {

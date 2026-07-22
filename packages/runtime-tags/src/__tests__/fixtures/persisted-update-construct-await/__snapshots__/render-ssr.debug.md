@@ -289,10 +289,8 @@ UPDATE: .toggle::text "expand" => "collapse"
 UPDATE: .greeting::text "hello ada" => "hello grace"
 UPDATE: .footer::text@8 "today" => "tomorrow"
 UPDATE: .widget::text@0 "pro" => "free"
-UPDATE: .reports > li:nth-of-type(1)[class] "focus" => null
-UPDATE: .reports > li:nth-of-type(1)::text@7 "10" => "70"
-INSERT: .reports > li:nth-of-type(1) + .focus
-INSERT: .focus + li
+INSERT: .reports > :is(li, .focus, li)
+REMOVE: .reports > li:nth-of-type(3) + .focus
 ```
 
 # Update

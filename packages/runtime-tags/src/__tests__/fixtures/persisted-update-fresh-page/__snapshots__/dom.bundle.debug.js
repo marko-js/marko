@@ -194,7 +194,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__tag($scope, $p
 const $else_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
 const $else_content__entries = /*@__PURE__*/ _if_closure("#text/3", 1, ($scope) => {
 	_text($scope["#text/1"], $scope._.entries.reduce((sum, e) => sum + e.product.price, 0));
-	$else_content__for($scope, [$scope._.entries, function(entry) {
+	if (!updating) $else_content__for($scope, [$scope._.entries, function(entry) {
 		return entry.id;
 	}]);
 });
@@ -212,7 +212,7 @@ const $Cart_content__list = _var_resume("__tests__/template.marko_1_list/var", /
 	$Cart_content__products($scope, getProducts?.($scope.list) || []);
 	$Cart_content__list__OR__products($scope);
 }));
-const $Cart_content__for = /*@__PURE__*/ _for_of("#nav/2", "<b> </b>", " D l", 0, $for_content__$params);
+const $Cart_content__for = 0;
 const $Cart_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $Cart_content__list);
 	/* @__PURE__ */ $setup$3($scope["#childScope/0"]);
@@ -237,23 +237,16 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $for_content3_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
-const $for_update = _update_for_keyed("#ul/0", ($p, $l) => $for_content3_holes($p, $l), "__tests__/template.marko_12_update");
 const $else_content2_holes = /*@__PURE__*/ _update_scopes({
 	"PatchAttr:src:#img/0": /*@__PURE__*/ _update_named_attr("#img/0", "src"),
 	"PatchAttr:alt:#img/0": /*@__PURE__*/ _update_named_attr("#img/0", "alt"),
 	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1"),
 	"PatchHole:#text/2": /*@__PURE__*/ _update_text("#text/2")
 });
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#b/0": /*@__PURE__*/ _update_attr("#b/0", _attr_class),
-	"PatchAttr:data-tag:#b/0": /*@__PURE__*/ _update_named_attr("#b/0", "data-tag"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
 const $products_seed = _update_signal("__tests__/template.marko_1_products/var");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $await_content__update = ($patch, $live) => {
-	if ("BranchScopes:#ul/0" in $patch) $for_update($live, [$patch["BranchScopes:#ul/0"], "#LoopKey"]);
+	if ("ConditionalRenderer:#ul/0" in $patch) _update_region("#ul/0")($patch, $live);
 };
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_11_update");
@@ -270,10 +263,13 @@ const $Item_content__update = ($patch, $live) => {
 	if ("product_id" in $patch) $live["product_id"] = $patch["product_id"];
 	if ("ConditionalRenderer:#text/0" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, $else_content2__update], ["__tests__/template.marko_9_update", "__tests__/template.marko_7_update"]);
 };
+const $else_content__update = ($patch, $live) => {
+	if ("ConditionalRenderer:#ul/0" in $patch) _update_region("#ul/0")($patch, $live);
+};
 const $Cart_content__update = ($patch, $live) => {
 	if ("products" in $patch) _update_seed($live, $products_seed, $patch["products"]);
 	if ("#childScope/0" in $patch) $merge$3($patch["#childScope/0"], $live["#childScope/0"]);
-	if ("BranchScopes:#nav/2" in $patch) _update_for($patch["BranchScopes:#nav/2"], $live["BranchScopes:#nav/2"], $for_content_holes, $live, "BranchScopes:#nav/2", "__tests__/template.marko_3_update");
+	if ("ConditionalRenderer:#nav/2" in $patch) _update_region("#nav/2")($patch, $live);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -487,7 +483,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__tag($scope, $p
 const $else_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
 const $else_content__entries = /*@__PURE__*/ _if_closure("#text/3", 1, ($scope) => {
 	_text($scope["#text/1"], $scope._.entries.reduce((sum, e) => sum + e.product.price, 0));
-	$else_content__for($scope, [$scope._.entries, function(entry) {
+	if (!updating) $else_content__for($scope, [$scope._.entries, function(entry) {
 		return entry.id;
 	}]);
 });

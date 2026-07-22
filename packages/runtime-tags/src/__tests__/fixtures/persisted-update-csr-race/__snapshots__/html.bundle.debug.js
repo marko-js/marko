@@ -33,8 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_3_update": ["loading…", "b"],
-	"__tests__/template.marko_3_content": ["loading…", "b"],
 	"__tests__/template.marko_2_update": ["<p>clicked <!> times -- <!></p>", "Db%c%l"],
 	"__tests__/template.marko_2_content": ["<p>clicked <!> times -- <!></p>", "Db%c%l"],
 	"__tests__/template.marko_1_update": ["<!><!><!>", "b%c"],

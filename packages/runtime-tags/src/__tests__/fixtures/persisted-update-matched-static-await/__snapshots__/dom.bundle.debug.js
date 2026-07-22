@@ -61,17 +61,13 @@ const $input = ($scope, input) => {
 	$input_missing($scope, input.missing);
 };
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $try_content2__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", 0, "__tests__/template.marko_8_update");
 };
 const $await_content__update = ($patch, $live) => {
-	if ("BranchScopes:#text/0" in $patch) _update_for($patch["BranchScopes:#text/0"], $live["BranchScopes:#text/0"], $for_content_holes, $live, "BranchScopes:#text/0", "__tests__/template.marko_4_update");
+	if ("ConditionalRenderer:#text/0" in $patch) _update_region("#text/0")($patch, $live);
 };
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_3_update");

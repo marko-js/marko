@@ -2,12 +2,8 @@
 var badge_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span${_attr_class(_hole_value($scope0_id, "Nclass:a", ["badge", input.tone], _persisted_reason()))}>${_escape(_hole_value($scope0_id, "Qb", input.label, _persisted_reason()))}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
+	_html(`<span${_attr_class(["badge", input.tone])}>${_escape(input.label)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {});
-});
-_renderer_shells({
-	"b0": ["<span> </span>", " D l"],
-	"b": ["<span> </span>", " D l"]
 });
 
 // tags/card.marko
@@ -25,28 +21,8 @@ var card_default = _template("c", (input) => {
 		label: input.heading,
 		tone: input.tone
 	});
-	_html(`<h2>${_escape(_hole_value($scope0_id, "Qb", input.heading, _persisted_reason()))}${_el_resume($scope0_id, "b", $sg__input_heading)}</h2><p${_attr_class(_hole_value($scope0_id, "Nclass:c", ["meta", input.flagged && "flagged"], _persisted_reason()))}>${_escape(_hole_value($scope0_id, "Qd", input.meta, _persisted_reason()))}${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 5))}</p>${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 4))}</section>`);
-	_serialize_guard($scope0_reason, 1) | _persisted_reason() && writeScope($scope0_id, { a: $sg__input_heading__OR__input_tone | _persisted_reason() && _existing_scope($childScope) });
-});
-_renderer_shells({
-	"c0": [[
-		"<section class=card>",
-		["b"],
-		"<h2> </h2><p> </p></section>"
-	], [
-		"D/",
-		["b"],
-		"&D l D m"
-	]],
-	"c": [[
-		"<section class=card>",
-		["b"],
-		"<h2> </h2><p> </p></section>"
-	], [
-		"D/",
-		["b"],
-		"&D l D m"
-	]]
+	_html(`<h2>${_escape(input.heading)}${_el_resume($scope0_id, "b", $sg__input_heading)}</h2><p${_attr_class(["meta", input.flagged && "flagged"])}>${_escape(input.meta)}${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 5))}</p>${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 4))}</section>`);
+	_serialize_guard($scope0_reason, 1) && writeScope($scope0_id, { a: $sg__input_heading__OR__input_tone && _existing_scope($childScope) });
 });
 
 // tags/counter.marko
@@ -110,12 +86,14 @@ var template_default = _template("a", (input) => {
 		4: _serialize_guard($scope0_reason, 5),
 		5: _serialize_guard($scope0_reason, 4)
 	});
-	card_default({
-		heading: input.heading,
-		tone: input.tone,
-		meta: input.meta,
-		flagged: input.flagged
-	});
+	_region(() => {
+		card_default({
+			heading: input.heading,
+			tone: input.tone,
+			meta: input.meta,
+			flagged: input.flagged
+		});
+	}, $scope0_id, "c");
 	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason($sg__input_widget);
 	widget_default({ label: input.widget });

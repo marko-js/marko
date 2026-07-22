@@ -18,6 +18,10 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
 import {
+  isMembraneLive,
+  sectionTreeHasNucleusInProgram,
+} from "../util/membranes";
+import {
   type Binding,
   BindingType,
   dropNodes,
@@ -250,7 +254,7 @@ export default {
           kStatefulReason,
         );
         if (
-          (isPersisted()
+          (isPersisted() && isMembraneLive(tagSection)
             ? isStateOnlySerializeReason(statefulSerializeReason)
             : isStateSerializeReason(statefulSerializeReason)) &&
           isStaticSerializeReason(branchSerializeReason) &&
@@ -275,16 +279,28 @@ export default {
         const persistedBranches =
           !branchSerializeReason &&
           isPersisted() &&
+          sectionTreeHasNucleusInProgram(bodySection) &&
           bodySection.serializeReasons.size > 0;
-        const forTagHTMLRuntime =
-          branchSerializeReason || persistedBranches
-            ? forTypeToHTMLResumeRuntime(forType)
-            : forTypeToRuntime(forType);
+        // A nucleus-free loop in a live section ships as one region: the
+        // plain flavor renders inside a `_region` wrapper that marks
+        // (documents) or captures (patches) the whole loop's range. Even a
+        // constant loop must wrap — inlined dynamic calls would defeat the
+        // enclosing section's values-free shell extraction, making live
+        // ancestors silently unconstructible.
+        const regionLoop =
+          isPersisted() &&
+          isMembraneLive(tagSection) &&
+          !isMembraneLive(bodySection);
+        const serializedLoop =
+          (!!branchSerializeReason && !regionLoop) || persistedBranches;
+        const forTagHTMLRuntime = serializedLoop
+          ? forTypeToHTMLResumeRuntime(forType)
+          : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
         );
 
-        if (branchSerializeReason || persistedBranches) {
+        if (serializedLoop) {
           const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
           const statefulSerializeArg = getSerializeGuard(
             tagSection,
@@ -314,7 +330,7 @@ export default {
           // items (keyed, or stable under a constructed parent) build
           // client-side from values-free template/walks.
           const forAnchorId =
-            isPersisted() && bodySection
+            isPersisted() && bodySection && isMembraneLive(bodySection)
               ? getResumeRegisterId(bodySection, "update")
               : undefined;
           if (skipParentEnd) {
@@ -340,7 +356,23 @@ export default {
         }
 
         statements.push(
-          t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
+          t.expressionStatement(
+            regionLoop
+              ? callRuntime(
+                  "_region",
+                  t.arrowFunctionExpression(
+                    [],
+                    t.blockStatement([
+                      t.expressionStatement(
+                        callRuntime(forTagHTMLRuntime, ...forTagArgs),
+                      ),
+                    ]),
+                  ),
+                  getScopeIdIdentifier(tagSection),
+                  getScopeAccessorLiteral(nodeBinding),
+                )
+              : callRuntime(forTagHTMLRuntime, ...forTagArgs),
+          ),
         );
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
@@ -398,22 +430,38 @@ export default {
         const forType = getForType(node)!;
         const forAttrs = getKnownAttrValues(node);
         const signal = getSignal(tagSection, nodeRef, "for");
-        const isRequestDerived = isUpdateRequestDerivedAnchor(tagExtra);
+        const loopSourceExprs = getBaseArgsInForTag(forType, forAttrs).filter(
+          Boolean,
+        ) as t.Expression[];
+        const isRequestDerived = isUpdateRequestDerivedAnchor(
+          tagExtra,
+          loopSourceExprs,
+        );
         if (
-          isUpdateStructuralMerge(tagExtra, [bodySection]) ||
+          (isPersisted() && !isMembraneLive(bodySection)) ||
+          isUpdateStructuralMerge(tagExtra, [bodySection], loopSourceExprs) ||
           // A loop with no structural reason still dispatches when its body
           // carries update merges (patch-only branch tracking pairs items).
           (isPersisted() && getUpdateMerges(bodySection).length > 0)
         ) {
-          addUpdateMerge(tagSection, {
-            kind: "for",
-            accessor: getScopeAccessorLiteral(nodeRef),
-            encodedAccessor: getScopeAccessorLiteral(nodeRef, true),
-            bodySection,
-            anchorId: isRequestDerived
-              ? getResumeRegisterId(bodySection, "update")
-              : undefined,
-          });
+          addUpdateMerge(
+            tagSection,
+            isMembraneLive(bodySection)
+              ? {
+                  kind: "for",
+                  accessor: getScopeAccessorLiteral(nodeRef),
+                  encodedAccessor: getScopeAccessorLiteral(nodeRef, true),
+                  bodySection,
+                  anchorId: isRequestDerived
+                    ? getResumeRegisterId(bodySection, "update")
+                    : undefined,
+                }
+              : // Nucleus-free rows swap wholesale from a response shell.
+                {
+                  kind: "region",
+                  accessor: getScopeAccessorLiteral(nodeRef),
+                },
+          );
           signal.updateGuard = true;
         }
         signal.build = () => {

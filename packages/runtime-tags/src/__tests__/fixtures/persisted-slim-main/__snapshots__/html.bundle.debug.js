@@ -35,31 +35,35 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<ul class=items>");
 		_for_of(results.items, (item) => {
 			const $scope5_id = _scope_id();
-			_html(`<li>${_escape(_hole_value($scope5_id, "PatchHole:#text/0", item.name, _persisted_reason()))}${_el_resume($scope5_id, "#text/0", _persisted_reason())}</li>`);
+			_html(`<li>${_escape(item.name)}${_el_resume($scope5_id, "#text/0", _persisted_reason())}</li>`);
 			_persisted_reason() && writeScope($scope5_id, {}, "__tests__/template.marko", "9:6");
 		}, function(item) {
 			return item.id;
-		}, $scope1_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1, "__tests__/template.marko_5_update");
+		}, $scope1_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
 		_html("<nav class=pagination>");
 		_for_to(results.totalPages, 1, 1, (page) => {
 			const $scope2_id = _scope_id();
-			_if(() => page === search.page ? 0 : 1, $scope2_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "__tests__/template.marko_2/update_if_#text/0", [() => {
-				const $scope6_id = _scope_id();
-				_html(`<span class=current>${_escape(_hole_value($scope6_id, "PatchHole:#text/0", page, _persisted_reason()))}${_el_resume($scope6_id, "#text/0")}</span>`);
-				_persisted_reason() && writeScope($scope6_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "15:8");
-			}, () => {
-				const $scope3_id = _scope_id();
-				_html(`<a${_attr("href", _hole_value($scope3_id, "PatchAttr:href:#a/0", `/search?page=${page}&q=${search.q}`, _persisted_reason()))}>${_escape(_hole_value($scope3_id, "PatchHole:#text/1", page, _persisted_reason()))}${_el_resume($scope3_id, "#text/1")}</a>${_el_resume($scope3_id, "#a/0", _persisted_reason())}`);
-				_persisted_reason() && _subscribe($search_q__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "18:8"));
-			}], ["__tests__/template.marko_6_update", "__tests__/template.marko_3_update"]);
+			_if(() => {
+				if (page === search.page) {
+					const $scope6_id = _scope_id();
+					_html(`<span class=current>${_escape(page)}</span>`);
+					_persisted_reason() && writeScope($scope6_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "15:8");
+					return 0;
+				} else {
+					const $scope3_id = _scope_id();
+					_html(`<a${_attr("href", `/search?page=${page}&q=${search.q}`)}>${_escape(page)}</a>${_el_resume($scope3_id, "#a/0", _persisted_reason())}`);
+					_persisted_reason() && _subscribe($search_q__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "18:8"));
+					return 1;
+				}
+			}, $scope2_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1);
 			_persisted_reason() && _subscribe($search_page__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "14:6", { "#LoopKey": "14:10" }));
-		}, 0, $scope1_id, "#nav/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</nav>", 0, "__tests__/template.marko_2_update");
+		}, 0, $scope1_id, "#nav/1", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</nav>");
 		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");
 	}, () => {
 		const $scope4_id = _scope_id();
 		_html("<p class=empty>No results</p>");
 		_persisted_reason() && writeScope($scope4_id, {}, "__tests__/template.marko", "24:2");
-	}], ["__tests__/template.marko_1_update", "__tests__/template.marko_4_update"]);
+	}], [0, 0]);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count: _state_reason() && count,
@@ -75,18 +79,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_6_update": ["<span class=current> </span>", "D l"],
-	"__tests__/template.marko_6_content": ["<span class=current> </span>", "D l"],
-	"__tests__/template.marko_5_update": ["<li> </li>", "D l"],
-	"__tests__/template.marko_5_content": ["<li> </li>", "D l"],
-	"__tests__/template.marko_4_update": ["<p class=empty>No results</p>", "b"],
-	"__tests__/template.marko_4_content": ["<p class=empty>No results</p>", "b"],
-	"__tests__/template.marko_3_update": ["<a> </a>", " D l"],
-	"__tests__/template.marko_3_content": ["<a> </a>", " D l"],
-	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_1_update": ["<ul class=items></ul><nav class=pagination></nav>", " b b"],
-	"__tests__/template.marko_1_content": ["<ul class=items></ul><nav class=pagination></nav>", " b b"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_3_content", (err) => {
 			const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(`<p class=failed>failed: ${_sep($sg__err_message)}${_escape(_hole_value($scope3_id, "PatchHole:#text/0", err.message, _persisted_reason()))}${_el_resume($scope3_id, "#text/0", $sg__err_message)}</p>`);
+			_html(`<p class=failed>failed: ${_sep($sg__err_message)}${_escape(err.message)}${_el_resume($scope3_id, "#text/0", $sg__err_message)}</p>`);
 			$sg__err_message && writeScope($scope3_id, {}, "__tests__/template.marko", "10:6");
 		}, $scope0_id) })
 	}, "__tests__/template.marko_0/update_boundary_#text/2", "__tests__/template.marko_1_update");
@@ -41,10 +41,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_4_update": ["<p class=feed> </p>", "D l"],
 	"__tests__/template.marko_4_content": ["<p class=feed> </p>", "D l"],
-	"__tests__/template.marko_3_update": ["<p class=failed>failed: <!></p>", "Db%l"],
-	"__tests__/template.marko_3_content": ["<p class=failed>failed: <!></p>", "Db%l"],
-	"__tests__/template.marko_2_update": ["<p class=loading>loading…</p>", "b"],
-	"__tests__/template.marko_2_content": ["<p class=loading>loading…</p>", "b"],
 	"__tests__/template.marko_1_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_1_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><section><!></section>", " Db%lD%l"],

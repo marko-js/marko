@@ -36,10 +36,6 @@ _resume("__tests__/template.marko_1/update_globals", ($scope) => () => {
 	_attr_class($scope["#em/0"], $scope._.count && $scope.$global.params.tag && "hot");
 });
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:class:#span/0": /*@__PURE__*/ _update_attr("#span/0", _attr_class),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
 const $if_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1") });
 const $globals_update = _update_signal("__tests__/template.marko_1/update_globals");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
@@ -50,7 +46,7 @@ const $if_content__update = ($patch, $live) => {
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
-	if ("BranchScopes:#text/2" in $patch) _update_for($patch["BranchScopes:#text/2"], $live["BranchScopes:#text/2"], $for_content_holes, $live, "BranchScopes:#text/2", "__tests__/template.marko_2_update");
+	if ("ConditionalRenderer:#text/2" in $patch) _update_region("#text/2")($patch, $live);
 	if ("ConditionalRenderer:#text/3" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3", [$if_content__update], ["__tests__/template.marko_1_update"]);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);

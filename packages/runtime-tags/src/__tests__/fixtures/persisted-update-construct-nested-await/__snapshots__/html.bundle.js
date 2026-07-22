@@ -57,20 +57,14 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a5": ["<p class=detail> </p>", "D l"],
 	"a15": ["<p class=detail> </p>", "D l"],
-	"a16": ["<p class=sub>detail…</p>", "b"],
-	"a6": ["<p class=sub>detail…</p>", "b"],
 	"a8": ["<!><!><!>", "b%c"],
 	"a7": ["<!><!><!>", "b%c"],
 	"a9": ["<p class=summary> </p><!><!>", "D l%c"],
-	"a17": ["<p class=summary> </p><!><!>", "D l%c"],
-	"a18": ["<p class=loading>summary…</p>", "b"],
-	"a10": ["<p class=loading>summary…</p>", "b"],
+	"a16": ["<p class=summary> </p><!><!>", "D l%c"],
 	"a12": ["<!><!><!>", "b%c"],
 	"a11": ["<!><!><!>", "b%c"],
-	"a19": ["<!><!><!>", "b%c"],
+	"a17": ["<!><!><!>", "b%c"],
 	"a13": ["<!><!><!>", "b%c"],
-	"a20": ["<p class=home>welcome home</p>", "b"],
-	"a4": ["<p class=home>welcome home</p>", "b"],
 	"a3": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });

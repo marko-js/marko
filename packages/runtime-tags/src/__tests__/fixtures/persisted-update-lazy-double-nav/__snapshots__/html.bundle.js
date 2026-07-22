@@ -8,14 +8,12 @@ var panel_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html("<p class=warn>heads up</p>");
 		$sg__input_warn && writeScope($scope1_id, {});
-	}], ["b2"]);
-	_script($scope0_id, "b3");
+	}], [0]);
+	_script($scope0_id, "b2");
 	writeScope($scope0_id, { i: _state_reason() && hits });
 	_resume_branch($scope0_id);
 });
 _renderer_shells({
-	"b2": ["<p class=warn>heads up</p>", "b"],
-	"b4": ["<p class=warn>heads up</p>", "b"],
 	"b1": ["<button class=panel><!> hit <!></button><!><!>", " D%c%l%c"],
 	"b": ["<button class=panel><!> hit <!></button><!><!>", " D%c%l%c"]
 });

@@ -2,8 +2,8 @@
   "dom": {
     "nav.js": {
       "total": {
-        "min": 608,
-        "brotli": 345
+        "min": 607,
+        "brotli": 341
       },
       "files": {
         "tags/board.marko.persisted.mjs": 462,
@@ -11,16 +11,20 @@
       }
     },
     "template.marko.page.mjs": {
-      "min": 182,
-      "brotli": 141
+      "min": 176,
+      "brotli": 137
     },
     "roster.marko.persisted.mjs": {
-      "min": 1105,
-      "brotli": 582
+      "min": 1265,
+      "brotli": 643
+    },
+    "roster.mjs": {
+      "min": 8881,
+      "brotli": 3800
     }
   },
   "html": {
-    "min": 602,
-    "brotli": 368
+    "min": 671,
+    "brotli": 377
   }
 }

@@ -90,8 +90,8 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: .chips > span:nth-of-type(2)[class] "chip chip--active" => "chip"
-UPDATE: .chip.chip--active[class] "chip" => "chip chip--active"
+INSERT: .count + .chips
+REMOVE: .chips + .chips
 ```
 
 # Update

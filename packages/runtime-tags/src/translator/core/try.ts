@@ -11,6 +11,7 @@ import {
 import { WalkCode } from "../../common/types";
 import { getTagName } from "../util/get-tag-name";
 import { isPersisted } from "../util/marko-config";
+import { markStateCapable, MembraneCause } from "../util/membranes";
 import {
   analyzeAttributeTags,
   getAttrTagPaths,
@@ -100,6 +101,11 @@ export default {
     }
 
     const bodySection = startSection(tag.get("body"));
+    if (isPersisted() && bodySection) {
+      // Boundary placeholder/settle swaps use the live branch machinery.
+      markStateCapable(bodySection, MembraneCause.forced);
+      markStateCapable(getOrCreateSection(tag), MembraneCause.forced);
+    }
 
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;

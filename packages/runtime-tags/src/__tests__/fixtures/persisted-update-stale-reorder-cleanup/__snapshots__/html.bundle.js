@@ -35,8 +35,6 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a2": ["<b> </b>", "D l"],
 	"a7": ["<b> </b>", "D l"],
-	"a8": ["fetching…", "b"],
-	"a3": ["fetching…", "b"],
 	"a5": ["<!><!><!>", "b%c"],
 	"a4": ["<!><!><!>", "b%c"],
 	"a1": ["<h1> </h1><main><!></main>", " D lD%l"],

@@ -25,29 +25,31 @@ var template_default = _template("a", (input) => {
 			_html("loading deals…");
 		}, $scope1_id) }) }, "a1", "a7");
 		_html("</section><footer>");
-		_try($scope1_id, "b", _content_resume("a12", () => {
+		_try($scope1_id, "b", _content_resume("a11", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_await($scope2_id, "a", resolveAfter(0, 2), () => {
 				const $scope3_id = _scope_id();
-				_for_to(3, 1, 1, (i) => {
-					const $scope4_id = _scope_id();
-					$sg__input_title__OR__input_missing && _script($scope4_id, "a8");
-					_html(`<em>review <!>${_escape(_hole_value($scope4_id, "Qa", i, _persisted_reason()))}${_el_resume($scope4_id, "a")} of ${_sep($sg__input_title)}${_escape(_hole_value($scope4_id, "Qb", input.title, _persisted_reason()))}${_el_resume($scope4_id, "b", $sg__input_title)}</em>`);
-					$sg__input_title__OR__input_missing && writeScope($scope4_id, { _: _scope_with_id($scope3_id) });
-				}, 0, $scope3_id, "a", $sg__input_title, $sg__input_title, 0, 0, 1, "a9");
+				_region(() => {
+					forTo(3, 1, 1, (i) => {
+						const $scope4_id = _scope_id();
+						$sg__input_title__OR__input_missing && _script($scope4_id, "a8");
+						_html(`<em>review ${_escape(i)} of ${_sep($sg__input_title)}${_escape(input.title)}${_el_resume($scope4_id, "b", $sg__input_title)}</em>`);
+						$sg__input_title__OR__input_missing && writeScope($scope4_id, { _: _scope_with_id($scope3_id) });
+					});
+				}, $scope3_id, "a");
 				$sg__input_title__OR__input_missing && writeScope($scope3_id, { _: _scope_with_id($scope2_id) });
-			}, $sg__input_title__OR__input_missing, "a10");
+			}, $sg__input_title__OR__input_missing, "a9");
 			$sg__input_title__OR__input_missing && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
-		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a11", () => {
+		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a10", () => {
 			_scope_reason();
 			_scope_id();
 			_html("loading reviews…");
-		}, $scope1_id) }) }, "a2", "a13");
+		}, $scope1_id) }) }, "a2", "a12");
 		_html("</footer>");
 		$sg__input_title__OR__input_missing && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}], ["a15", "a14"]);
-	_script($scope0_id, "a16");
+	}], ["a14", "a13"]);
+	_script($scope0_id, "a15");
 	writeScope($scope0_id, {
 		g: (_serialize_if($scope0_reason, 2) || _patch_reason()) && input.title,
 		i: _state_reason() && count,
@@ -56,24 +58,18 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a17": ["loading reviews…", "b"],
-	"a11": ["loading reviews…", "b"],
 	"a4": ["<p><strong>deals never change</strong></p>", "b"],
-	"a18": ["<p><strong>deals never change</strong></p>", "b"],
-	"a19": ["loading deals…", "b"],
-	"a5": ["loading deals…", "b"],
+	"a16": ["<p><strong>deals never change</strong></p>", "b"],
 	"a7": ["<!><!><!>", "b%c"],
 	"a6": ["<!><!><!>", "b%c"],
-	"a15": ["<p>gone</p>", "b"],
-	"a20": ["<p>gone</p>", "b"],
-	"a9": ["<em>review <!> of <!></em>", "Db%c%l"],
-	"a21": ["<em>review <!> of <!></em>", "Db%c%l"],
-	"a10": ["<!><!><!>", "b%c"],
-	"a22": ["<!><!><!>", "b%c"],
-	"a13": ["<!><!><!>", "b%c"],
+	"a14": ["<p>gone</p>", "b"],
+	"a17": ["<p>gone</p>", "b"],
+	"a9": ["<!><!><!>", "b%c"],
+	"a18": ["<!><!><!>", "b%c"],
 	"a12": ["<!><!><!>", "b%c"],
-	"a14": ["<section><!></section><footer><!></footer>", "D%lD%l"],
-	"a23": ["<section><!></section><footer><!></footer>", "D%lD%l"],
+	"a11": ["<!><!><!>", "b%c"],
+	"a13": ["<section><!></section><footer><!></footer>", "D%lD%l"],
+	"a19": ["<section><!></section><footer><!></footer>", "D%lD%l"],
 	"a3": ["<h1> </h1><button>clicked <!></button><!><!>", "D l Db%l%c"],
 	"a": ["<h1> </h1><button>clicked <!></button><!><!>", "D l Db%l%c"]
 });

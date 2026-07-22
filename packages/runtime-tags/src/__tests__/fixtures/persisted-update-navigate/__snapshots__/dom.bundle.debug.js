@@ -8,11 +8,8 @@ const $input_amount = ($scope, input_amount) => {
 };
 const $input$1 = ($scope, input) => $input_amount($scope, input.amount);
 var price_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/price.marko", $template$1, $walks$1, $setup$1, $input$1);
-const $_holes$1 = /*@__PURE__*/ _update_scopes({
-	"PatchAttr:title:#span/0": /*@__PURE__*/ _update_named_attr("#span/0", "title"),
-	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1")
-});
-const $merge$1 = _resume("__tests__/tags/price.marko_0_update", $_holes$1);
+const $update2$1 = () => {};
+const $merge$1 = _resume("__tests__/tags/price.marko_0_update", $update2$1);
 _update_content("__tests__/tags/price.marko", $merge$1);
 function $patch2$1($fail) {
 	return patch($merge$1, $fail);
@@ -73,27 +70,20 @@ const $input_product = ($scope, input_product) => {
 };
 const $input_product_sale_percent = /*@__PURE__*/ _const_persisted("input_product_sale_percent", $if_content__input_product_sale_percent);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
-const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1") });
-const $if_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $expanded_seed = _update_signal("__tests__/template.marko_0_expanded/var");
 const $input_product_featured_update = _update_signal("__tests__/template.marko_0_input_product_featured/var");
 const $_holes = /*@__PURE__*/ _update_scopes({
 	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
 	"PatchAttr:href:#a/1": /*@__PURE__*/ _update_named_attr("#a/1", "href")
 });
-const $for_update = _update_for_keyed("#ul/5", ($p, $l) => $for_content__update($p, $l), "__tests__/template.marko_2_update");
-const $for_content__update = ($patch, $live) => {
-	$for_content_holes($patch, $live);
-	if ("#childScope/0" in $patch) $merge$1($patch["#childScope/0"], $live["#childScope/0"]);
-};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("expanded" in $patch) _update_seed($live, $expanded_seed, $patch["expanded"]);
 	if ("input_product_featured" in $patch) $input_product_featured_update($live, $patch["input_product_featured"]);
 	if ("input_product_sale_percent" in $patch) $live["input_product_sale_percent"] = $patch["input_product_sale_percent"];
 	$_holes($patch, $live);
-	if ("ConditionalRenderer:#section/4" in $patch) _update_if($patch, $live, "ConditionalRenderer:#section/4", "BranchScopes:#section/4", [$if_content_holes], ["__tests__/template.marko_1_update"]);
-	if ("BranchScopes:#ul/5" in $patch) $for_update($live, [$patch["BranchScopes:#ul/5"], "#LoopKey"]);
+	if ("ConditionalRenderer:#section/4" in $patch) _update_region("#section/4")($patch, $live);
+	if ("ConditionalRenderer:#ul/5" in $patch) _update_region("#ul/5")($patch, $live);
 };
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);

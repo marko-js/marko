@@ -84,7 +84,8 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: header > h2::text "server title 1" => "server title 2"
+INSERT: header > h2
+REMOVE: header > h2
 REMOVE: main > section
 REMOVE: ul > li + li
 ```

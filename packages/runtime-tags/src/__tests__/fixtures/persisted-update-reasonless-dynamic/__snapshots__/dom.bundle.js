@@ -1,9 +1,9 @@
 // template.marko.persisted.mjs
-const $count = _var_resume("a7", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $count = _var_resume("a5", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-const $count_seed = _update_signal("a7");
+const $count_seed = _update_signal("a5");
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);

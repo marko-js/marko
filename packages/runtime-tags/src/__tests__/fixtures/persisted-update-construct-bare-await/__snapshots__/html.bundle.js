@@ -34,8 +34,6 @@ _renderer_shells({
 	"a6": ["<p class=report> </p>", "D l"],
 	"a7": ["<!><!><!>", "b%c"],
 	"a4": ["<!><!><!>", "b%c"],
-	"a8": ["<p class=home>welcome home</p>", "b"],
-	"a2": ["<p class=home>welcome home</p>", "b"],
 	"a1": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
 });
