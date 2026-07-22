@@ -896,7 +896,8 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   const bodyEnd = body.render(content);
 
   if (catchBoundary.signal.aborted) {
-    // Sync error
+    // Sync error. The body's already-written scopes stay in the resume payload
+    // as dead fills; a `@catch` firing is rare enough not to warrant dropping them.
     catchContent(catchBoundary.signal.reason);
     return;
   }
