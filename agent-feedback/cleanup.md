@@ -34,17 +34,6 @@ is unaffected (later renders reuse `___marko5Component.___rootNode`), so this is
 dead optimization + a confusing stale-node invariant; verify destroy/move
 semantics before changing to `scope`.
 
-## Interop emits a duplicate registration scriptlet per class-tag occurrence
-
-`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts` › `translate.exit` | 2026-07-13 | impact:low | effort:low
-
-Each Class-API custom-tag occurrence pushes its own registration statement to
-`program.body` with no dedup by class-file id: three `<class-display/>` uses emit
-three identical `_resume("…",_classDisplay)` (DOM) / `_s("…",_classDisplay)`
-(HTML) statements (the `??=` non-template branch at lines 360-377 duplicates the
-same way). Idempotent, so not incorrect, but N× redundant given "bundle size is a
-feature" — one registration per unique class file would suffice.
-
 ## Represent metadata-only HTML effects without invalid AST sentinels
 
 `packages/runtime-tags/src/translator/util/signals.ts` › `toReturnedFunction` | 2026-07-15 | impact:low | effort:low

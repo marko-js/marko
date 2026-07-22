@@ -70,6 +70,7 @@ import {
   signalHasStatements,
   writeHTMLResumeStatements,
 } from "../../util/signals";
+import { createProgramState } from "../../util/state";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import { toMemberExpression } from "../../util/to-property-name";
 import {
@@ -85,6 +86,20 @@ import { getTagRelativePath } from "./custom-tag";
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 const importedDynamicTagResume = new WeakSet<t.Program>();
+
+// Class-API interop registrations are idempotent and keyed by the shared
+// renderer, so one per program suffices no matter how many tags reference it.
+const [getCompatRegistrations] = createProgramState<Set<string>>(
+  () => new Set(),
+);
+function pushCompatRegistration(key: string, statement: t.Statement) {
+  const keys = getCompatRegistrations();
+  if (!keys.has(key)) {
+    keys.add(key);
+    getProgram().node.body.push(statement);
+  }
+}
+
 enum ClassHydration {
   Self = "self",
   Descendant = "descendant",
@@ -323,7 +338,8 @@ export default {
           if (
             isOutputHTML() ? serializeReason || classHydration : serializeReason
           ) {
-            getProgram().node.body.push(
+            pushCompatRegistration(
+              classFile!.metadata.marko.id,
               isOutputHTML()
                 ? t.markoScriptlet(
                     [
@@ -356,17 +372,19 @@ export default {
             );
           }
         } else {
-          getProgram().node.body.push(
+          const rendererName = (tagExpression as t.Identifier).name;
+          pushCompatRegistration(
+            rendererName,
             t.markoScriptlet(
               [
                 t.expressionStatement(
                   t.assignmentExpression(
                     "??=",
                     t.memberExpression(
-                      t.identifier((tagExpression as t.Identifier).name),
+                      t.identifier(rendererName),
                       t.identifier("_"),
                     ),
-                    t.identifier((tagExpression as t.Identifier).name),
+                    t.identifier(rendererName),
                   ),
                 ),
               ],
