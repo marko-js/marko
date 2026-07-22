@@ -13,9 +13,10 @@ declare module "@marko/compiler/dist/types" {
 }
 
 // Translate: a text-only body as a JS string, each interpolation coerced with
-// `_to_text`. Used by text-only native tags and html comments.
+// `_to_text`. Used by text-only native tags and html comments. A lone
+// interpolation stays bare — its `_text`/`_text_content` sink coerces it.
 export function bodyToTextLiteral(body: t.MarkoTagBody) {
-  return buildTextLiteral(body, toText, false);
+  return buildTextLiteral(body, toText, true);
 }
 
 // Pre-analyze variant: interpolations stay raw (the output-specific `_to_text` import
@@ -53,6 +54,7 @@ function buildTextLiteral(
   const templateExpressions: t.Expression[] = [];
   let currentQuasi = "";
   let placeholderExtra: t.MarkoPlaceholder["extra"];
+  let singleValue: t.Expression | undefined;
   for (const child of body.body) {
     if (t.isMarkoText(child)) {
       currentQuasi += child.value;
@@ -60,6 +62,7 @@ function buildTextLiteral(
       placeholderExtra ||= child.value.extra;
       templateQuasis.push(templateElement(currentQuasi, false));
       templateExpressions.push(coerce(child.value));
+      singleValue = child.value;
       currentQuasi = "";
     }
   }
@@ -68,9 +71,14 @@ function buildTextLiteral(
       bareSingle &&
       templateExpressions.length === 1 &&
       !currentQuasi &&
-      !templateQuasis[0].value.cooked
+      !templateQuasis[0].value.cooked &&
+      !t.isStringLiteral(singleValue)
     ) {
-      return templateExpressions[0];
+      // A lone dynamic interpolation stays bare (keeping its `referencedBindings`
+      // extra) so the text sink coerces it, skipping the `_to_text` wrapper. A
+      // string literal is excluded: it would flip consumers to their raw
+      // static-text branch, which some sinks emit unescaped.
+      return singleValue!;
     }
     templateQuasis.push(templateElement(currentQuasi, true));
     const literal = t.templateLiteral(templateQuasis, templateExpressions);
