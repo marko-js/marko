@@ -86,7 +86,7 @@ fixtures/<name>/
   template.marko    # entry (required); custom tags under tags/
   test.ts           # optional: export const config: TestConfig = { ... }
   sizes.json        # generated compiled-size tracking
-  __snapshots__/    # generated; optimize = base name, debug variant = *.debug.*
+  __snapshots__/    # generated + auto-pruned by test:update; never edit or delete by hand
     dom.bundle[.debug].js       # compiled CSR output
     html.bundle[.debug].js      # compiled SSR output
     render[.debug].md           # per-step rendered HTML + granular mutation log

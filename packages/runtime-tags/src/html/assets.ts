@@ -138,8 +138,16 @@ function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
     g[kAssets] = [{ id, triggers }];
     g[kBlockIndex] = g[kDeferIndex] = 0;
   } else if (!assets.find((a) => a.id === id)) {
-    // TODO: error if multiple triggers for same asset.
     assets.push({ id, triggers });
+  } else if (MARKO_DEBUG) {
+    // Invariant: an asset streams one trigger script, so it must be requested
+    // with a single consistent `load` trigger; only the first one applies.
+    const existing = assets.find((a) => a.id === id)!;
+    if (JSON.stringify(existing.triggers) !== JSON.stringify(triggers)) {
+      console.error(
+        `The lazy asset "${id}" is imported with different \`load\` triggers; an asset must use one consistent trigger.`,
+      );
+    }
   }
 }
 
