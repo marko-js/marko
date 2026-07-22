@@ -87,21 +87,6 @@ translator to surface interactivity on `metadata.marko`, `getClassHydrationMode`
 to return DESCENDANT for interactive tags children, and the boundary to actually
 resume.
 
-## Compat `___deserialize` override dereferences a possibly-undefined scope
-
-`packages/runtime-class/src/runtime/helpers/tags-compat/runtime-dom.js` › `ComponentDef.___deserialize` | 2026-07-13 | impact:low | effort:low
-
-The compat `ComponentDef.___deserialize` override does
-`o[2] = domCompat.getScope(global, o[2]).m5i` with no null guard, but
-`compat.getScope` returns `getRenderScopes($global)?.[scopeId]`, which is
-legitimately `undefined` when the tags scope carrying `m5i` has not been resumed
-yet. Every other consumer uses optional chaining; the sibling comment at line 38
-even notes "a split parent may not be hydrated yet when the child resumes."
-Under the normal init6-before-init5 ordering the tags scope is registered first,
-so this is not hit today, but any streaming/out-of-order resume of a
-class-in-tags child before its `writeSetScopeForComponent` scope would throw
-`TypeError`. Defensive fix: `getScope(global, o[2])?.m5i`.
-
 ## `COMPAT_REGISTRY` caches `[id, scopeId]` for the module lifetime
 
 `packages/runtime-tags/src/html/compat.ts` › `compat.toJSON` | 2026-07-13 | impact:med | effort:med

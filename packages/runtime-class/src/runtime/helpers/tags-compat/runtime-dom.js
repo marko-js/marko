@@ -70,7 +70,9 @@ exports.p = function (domCompat) {
   const defDeserialize = ComponentDef.___deserialize;
   ComponentDef.___deserialize = function (o, types, global, registry) {
     if (typeof o[2] === "number") {
-      o[2] = domCompat.getScope(global, o[2]).m5i;
+      // `getScope` can return undefined for a not-yet-resumed scope (streaming /
+      // out-of-order resume of a class-in-tags child); match every other consumer.
+      o[2] = domCompat.getScope(global, o[2])?.m5i;
     }
     return defDeserialize(o, types, global, registry);
   };
