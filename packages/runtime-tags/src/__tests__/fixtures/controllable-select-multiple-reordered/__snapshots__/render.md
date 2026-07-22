@@ -1,0 +1,73 @@
+# Render
+```html
+<select
+  multiple=""
+>
+  <option
+    selected=""
+    value="a"
+  >
+    a
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    b
+  </option>
+  <option
+    value="c"
+  >
+    c
+  </option>
+</select>
+<span>
+  sel:b,a
+</span>
+<button>
+  Add
+</button>
+```
+
+# Update
+```js
+document.querySelector("button").click();
+```
+```html
+<select
+  multiple=""
+>
+  <option
+    selected=""
+    value="a"
+  >
+    a
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    b
+  </option>
+  <option
+    value="c"
+  >
+    c
+  </option>
+  <option
+    value="d"
+  >
+    d
+  </option>
+</select>
+<span>
+  sel:b,a
+</span>
+<button>
+  Add
+</button>
+```
+## Change
+```
+INSERT: select > option:nth-of-type(3) + option
+```

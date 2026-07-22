@@ -1,0 +1,9 @@
+<let/options=["a","b","c"]/>
+<let/selected=["b","a"]/>
+<select multiple value=selected valueChange(v) { selected = v }>
+  <for|opt| of=options by=v=>v>
+    <option value=opt>${opt}</>
+  </>
+</select>
+<span>sel:${selected.join(",")}</span>
+<button onClick() { options = [...options, "d"] }>Add</button>

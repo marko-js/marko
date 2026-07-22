@@ -1,4 +1,4 @@
-// size: 26265 (min) 9689 (brotli)
+// size: 26275 (min) 9730 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1374,7 +1374,7 @@ function _attr_select_value_script(scope, nodeAccessor) {
       let value = scope["G" + nodeAccessor];
       (Array.isArray(value)
         ? value.length !== el.selectedOptions.length ||
-          value.some((value, i) => value != el.selectedOptions[i].value)
+          value.some((_, i) => !value.includes(el.selectedOptions[i].value))
         : el.value !== value) && onChange();
     }).observe(el, {
       childList: !0,

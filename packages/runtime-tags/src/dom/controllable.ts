@@ -383,7 +383,9 @@ export function _attr_select_value_script(
     if (
       Array.isArray(value)
         ? value.length !== el.selectedOptions.length ||
-          value.some((value, i) => value != el.selectedOptions[i].value)
+          // Order-independent: the controlled order may differ from document
+          // order, which must not count as a change (values are normalized strings).
+          value.some((_, i) => !value.includes(el.selectedOptions[i].value))
         : el.value !== value
     ) {
       onChange();

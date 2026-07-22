@@ -1,0 +1,25 @@
+<select multiple>
+  <option value=a selected>a<!--M_*2 #text/1--></option><!--M_*2 #option/0-->
+  <option value=b selected>b<!--M_*3 #text/1--></option><!--M_*3 #option/0-->
+  <option value=c>c<!--M_*4 #text/1--></option>
+  <!--M_*4 #option/0--><!--M_}1 #select/0 4 3 2-->
+</select><span>sel:<!>
+    b,a<!--M_*1 #text/1--></span><button>Add</button><!--M_*1 #button/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#select/0": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-select-multiple-reordered/template.marko_0/valueChange"
+        ),
+      options: ["a", "b", "c"]
+    }, {
+      "#LoopKey": "a"
+    }, {
+      "#LoopKey": "b"
+    }, {
+      "#LoopKey": "c"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/controllable-select-multiple-reordered/template.marko_0 1"
+  ];
+  M._.w()
+</script>

@@ -2,8 +2,8 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 9024,
-        "brotli": 3397
+        "min": 9034,
+        "brotli": 3400
       },
       "files": {
         "tags/my-textarea.marko": 238,
