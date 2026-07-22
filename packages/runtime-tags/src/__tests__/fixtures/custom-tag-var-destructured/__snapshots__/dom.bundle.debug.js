@@ -1,13 +1,14 @@
 // tags/child.marko
 const $template$1 = "<span>child:<!></span>";
 const $walks$1 = "Db%l";
+const $count__render$1 = /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope.count));
 const $count$1 = /*@__PURE__*/ _let("count/1", ($scope) => {
+	$count__render$1($scope);
 	_return($scope, {
 		count: $scope.count,
 		inc: $_return($scope),
 		countChange: $_return2($scope)
 	});
-	_text($scope["#text/0"], $scope.count);
 });
 function $setup$1($scope) {
 	$count$1($scope, 1);
@@ -39,8 +40,9 @@ const $count__OR__$countChange__script = _script("__tests__/template.marko_0_cou
 	$scope.$countChange($scope.count + 10);
 }));
 const $count__OR__$countChange = /*@__PURE__*/ _or(9, $count__OR__$countChange__script, 1, "#scopeOffset/1");
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/4"], $scope.count));
 const $count = /*@__PURE__*/ _const("count", ($scope) => {
-	_text($scope["#text/4"], $scope.count);
+	$count__render($scope);
 	$count__OR__$countChange($scope);
 });
 const $countChange2 = /*@__PURE__*/ _const("$countChange", $count__OR__$countChange);
@@ -48,7 +50,7 @@ const $inc__script = _script("__tests__/template.marko_0_inc", ($scope) => _on($
 	$scope.inc();
 }));
 const $inc = /*@__PURE__*/ _const("inc", $inc__script);
-const $missing3 = ($scope, missing) => _text($scope["#text/5"], missing);
+const $missing3 = /*@__PURE__*/ _render(($scope, missing) => _text($scope["#text/5"], missing));
 const $missing2 = ($scope, $missing) => $missing3($scope, void 0 !== $missing ? $missing : "fallback");
 function $setup($scope) {
 	_var($scope, "#childScope/0", $pattern2);

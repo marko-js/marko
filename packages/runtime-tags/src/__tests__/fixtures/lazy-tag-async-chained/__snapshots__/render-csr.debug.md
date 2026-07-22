@@ -11,6 +11,8 @@
 ## Change
 ```
 INSERT: #sync
+UPDATE: #sync[id] null => "sync"
+UPDATE: #sync::text " " => "1"
 ```
 
 # Update
@@ -29,6 +31,8 @@ INSERT: #sync
 ## Change
 ```
 INSERT: #sync + #async
+UPDATE: #async::text " " => "2"
+UPDATE: #async[id] null => "async"
 ```
 
 # Update

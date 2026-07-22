@@ -6,10 +6,10 @@ const $list = /*@__PURE__*/ _let(5, ($scope) => {
 	$list_2($scope, $scope.f[2]);
 });
 const $rest = /*@__PURE__*/ _const(7, ($scope) => $rest_length($scope, $scope.h.length));
-const $rest_length = /*@__PURE__*/ _const(10, ($scope) => _text($scope.d, $scope.k));
-const $first = /*@__PURE__*/ _const(6, ($scope) => _text($scope.a, $scope.g));
-const $list_ = /*@__PURE__*/ _const(8, ($scope) => _text($scope.b, $scope.i));
-const $list_2 = /*@__PURE__*/ _const(9, ($scope) => _text($scope.c, $scope.j));
+const $rest_length = /*@__PURE__*/ _const(10, /*@__PURE__*/ _render(($scope) => _text($scope.d, $scope.k)));
+const $first = /*@__PURE__*/ _const(6, /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.g)));
+const $list_ = /*@__PURE__*/ _const(8, /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.i)));
+const $list_2 = /*@__PURE__*/ _const(9, /*@__PURE__*/ _render(($scope) => _text($scope.c, $scope.j)));
 const $setup__script = _script("a0", ($scope) => _on($scope.e, "click", function() {
 	$list($scope, [4, 5]);
 }));

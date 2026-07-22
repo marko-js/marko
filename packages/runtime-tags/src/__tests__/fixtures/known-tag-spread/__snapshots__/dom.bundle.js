@@ -1,7 +1,7 @@
 // tags/child-a/index.marko
-const $input_a = ($scope, input_a) => _text($scope.a, input_a);
-const $input_b = ($scope, input_b) => _text($scope.b, input_b);
-const $input_c = ($scope, input_c) => _text($scope.c, input_c);
+const $input_a = /*@__PURE__*/ _render(($scope, input_a) => _text($scope.a, input_a));
+const $input_b = /*@__PURE__*/ _render(($scope, input_b) => _text($scope.b, input_b));
+const $input_c = /*@__PURE__*/ _render(($scope, input_c) => _text($scope.c, input_c));
 
 // template.marko
 const $extras__OR__n = /*@__PURE__*/ _or(10, ($scope) => {
@@ -13,8 +13,9 @@ const $extras__OR__n = /*@__PURE__*/ _or(10, ($scope) => {
 	$input_b($scope.c, $childa_input_spread.b);
 	$input_c($scope.c, $childa_input_spread.c);
 });
+const $n__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.j));
 const $n = /*@__PURE__*/ _let(9, ($scope) => {
-	_text($scope.b, $scope.j);
+	$n__render($scope);
 	$input_a($scope.d, $scope.j);
 	$extras__OR__n($scope);
 });

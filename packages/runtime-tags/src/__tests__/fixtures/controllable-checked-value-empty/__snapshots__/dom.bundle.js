@@ -1,7 +1,8 @@
 // template.marko
+const $selected__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.c === void 0 ? "undefined" : $scope.c === null ? "null" : "value=" + $scope.c));
 const $selected = /*@__PURE__*/ _let(2, ($scope) => {
+	$selected__render($scope);
 	_attr_input_checkedValue($scope, "a", $scope.c, $checkedValueChange($scope), "");
-	_text($scope.b, $scope.c === void 0 ? "undefined" : $scope.c === null ? "null" : "value=" + $scope.c);
 });
 const $setup__script = _script("a1", ($scope) => _attr_input_checkedValue_script($scope, "a"));
 function $checkedValueChange($scope) {

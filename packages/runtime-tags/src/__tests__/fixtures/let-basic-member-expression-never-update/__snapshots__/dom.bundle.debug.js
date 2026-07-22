@@ -10,5 +10,5 @@ function $setup($scope) {
 	$index($scope, -1);
 	$setup__script($scope);
 }
-const $user_id = /*@__PURE__*/ _const("user_id", ($scope) => _text($scope["#text/0"], $scope.user_id));
+const $user_id = /*@__PURE__*/ _const("user_id", /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope.user_id)));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

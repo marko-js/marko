@@ -1,10 +1,11 @@
 // tags/child/index.marko
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.b));
 const $count$1 = /*@__PURE__*/ _let(1, ($scope) => {
+	$count__render($scope);
 	_return($scope, {
 		count: $scope.b,
 		inc: $_return($scope)
 	});
-	_text($scope.a, $scope.b);
 });
 function $_return($scope) {
 	return function() {
@@ -18,7 +19,7 @@ const $pattern2 = _var_resume("a0", ($scope, $pattern) => {
 	$count($scope, $pattern.count);
 	$inc($scope, $pattern.inc);
 });
-const $count = ($scope, count) => _text($scope.d, count);
+const $count = /*@__PURE__*/ _render(($scope, count) => _text($scope.d, count));
 const $inc = /*@__PURE__*/ _const(6, _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$scope.g();
 })));

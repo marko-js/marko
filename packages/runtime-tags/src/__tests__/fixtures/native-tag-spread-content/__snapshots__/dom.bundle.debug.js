@@ -2,13 +2,24 @@
 const $template$1 = "<div></div><button></button><span>Overridden</span><output></output><strong></strong><p></p><em></em>";
 const $walks$1 = " b b b b b b b";
 const $CustomContent_content = _content_resume("__tests__/tags/my-div.marko_1_content", "Custom content", "b");
+const $input__OR__CustomContent_content__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#p/5", {
+	content: $scope.CustomContent_content,
+	...$scope.input
+}));
 const $input__OR__CustomContent_content__script = _script("__tests__/tags/my-div.marko_0_input_CustomContent_content", ($scope) => _attrs_script($scope, "#p/5"));
 const $input__OR__CustomContent_content = /*@__PURE__*/ _or(11, ($scope) => {
-	_attrs_content($scope, "#p/5", {
-		content: $scope.CustomContent_content,
+	$input__OR__CustomContent_content__render($scope);
+	$input__OR__CustomContent_content__script($scope);
+});
+const $input__render = /*@__PURE__*/ _render(($scope) => {
+	_attrs_content($scope, "#div/0", $scope.input);
+	_attrs_content($scope, "#button/1", {
+		foo: 1,
 		...$scope.input
 	});
-	$input__OR__CustomContent_content__script($scope);
+	_attrs($scope, "#span/2", $scope.input);
+	_attrs($scope, "#output/3", $scope.input);
+	_attrs($scope, "#strong/4", $scope.input);
 });
 const $input__script = _script("__tests__/tags/my-div.marko_0_input", ($scope) => {
 	_attrs_script($scope, "#div/0");
@@ -18,14 +29,7 @@ const $input__script = _script("__tests__/tags/my-div.marko_0_input", ($scope) =
 	_attrs_script($scope, "#strong/4");
 });
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs_content($scope, "#div/0", $scope.input);
-	_attrs_content($scope, "#button/1", {
-		foo: 1,
-		...$scope.input
-	});
-	_attrs($scope, "#span/2", $scope.input);
-	_attrs($scope, "#output/3", $scope.input);
-	_attrs($scope, "#strong/4", $scope.input);
+	$input__render($scope);
 	$input__OR__CustomContent_content($scope);
 	$input__script($scope);
 });

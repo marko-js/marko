@@ -6,7 +6,7 @@ const $Wrap_content2__setup = ($scope) => {
 	$Message_content__input_after($scope.a, "world");
 };
 const $Wrap_content2 = _content_resume("a3", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Message_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Message_content__walks), $Wrap_content2__setup);
-const $Message_content__input_before__OR__input_after = /*@__PURE__*/ _or(5, ($scope) => _text($scope.a, $scope.d + $scope.e));
+const $Message_content__input_before__OR__input_after = /*@__PURE__*/ _or(5, /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.d + $scope.e)));
 const $Message_content__input_before = /*@__PURE__*/ _const(3, $Message_content__input_before__OR__input_after);
 const $Message_content__input_after = /*@__PURE__*/ _const(4, $Message_content__input_before__OR__input_after);
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);

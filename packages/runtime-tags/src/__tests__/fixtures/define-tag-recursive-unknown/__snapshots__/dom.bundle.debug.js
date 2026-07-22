@@ -2,7 +2,7 @@
 const $Foo_content__walks = "b%c", $Foo_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Foo_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks);
-const $else_content__input_message = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], JSON.stringify($scope._.input_message)));
+const $else_content__input_message = /*@__PURE__*/ _if_closure("#text/0", 1, /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], JSON.stringify($scope._.input_message))));
 const $else_content__setup = $else_content__input_message;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__Foo__OR__input_bar = /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, 0 || $scope._._.Foo, () => ({ message: $scope._.input_bar })));

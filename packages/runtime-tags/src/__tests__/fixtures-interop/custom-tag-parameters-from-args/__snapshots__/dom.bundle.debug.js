@@ -4,12 +4,14 @@ const $template = "<button class=inc><!>,<!></button><!><!>";
 const $walks = " D%c%l%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/3", 0, 0, 1);
 const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_content, () => [$scope.x, $scope.y]), 2);
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.x));
 const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+	$x__render($scope);
 	$input_content__OR__x__OR__y($scope);
 });
+const $y__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.y));
 const $y = /*@__PURE__*/ _let("y/8", ($scope) => {
-	_text($scope["#text/2"], $scope.y);
+	$y__render($scope);
 	$input_content__OR__x__OR__y($scope);
 });
 const $setup__script = _script("__tests__/components/custom-tag.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

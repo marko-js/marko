@@ -1,9 +1,10 @@
 // template.marko
 const $template = "<div> </div><button> </button>";
 const $walks = "D l D l";
-const $myObj = ($scope, myObj) => _text($scope["#text/0"], JSON.stringify(myObj));
+const $myObj = /*@__PURE__*/ _render(($scope, myObj) => _text($scope["#text/0"], JSON.stringify(myObj)));
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.x));
 const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
-	_text($scope["#text/2"], $scope.x);
+	$x__render($scope);
 	$myObj($scope, {
 		foo: 1,
 		bar: $scope.x + 1

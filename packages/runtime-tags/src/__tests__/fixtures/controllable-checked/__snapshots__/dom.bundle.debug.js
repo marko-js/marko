@@ -1,9 +1,10 @@
 // template.marko
 const $template = "<input type=checkbox><span> </span>";
 const $walks = " bD l";
+const $checked__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], String($scope.checked)));
 const $checked = /*@__PURE__*/ _let("checked/2", ($scope) => {
+	$checked__render($scope);
 	_attr_input_checked($scope, "#input/0", $scope.checked, $checkedChange($scope));
-	_text($scope["#text/1"], String($scope.checked));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_checked_script($scope, "#input/0"));
 function $setup($scope) {

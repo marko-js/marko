@@ -1,10 +1,9 @@
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a2", " ", " b"), { 4($scope) {
-	_text($scope.a, $scope.e);
-} });
+const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a2", " ", " b"), { 4: /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.e)) });
+const $for_content__item__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "a", $scope.c));
 const $for_content__item__script = _script("a0", ($scope) => _attrs_script($scope, "a"));
 const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
-	_attrs_content($scope, "a", $scope.c);
+	$for_content__item__render($scope);
 	$for_content__item__script($scope);
 });
 const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);

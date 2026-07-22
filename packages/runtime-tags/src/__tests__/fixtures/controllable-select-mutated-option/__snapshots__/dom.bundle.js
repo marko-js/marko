@@ -1,17 +1,18 @@
 // template.marko
-const $for_content__opt = ($scope, opt) => {
+const $for_content__opt = /*@__PURE__*/ _render(($scope, opt) => {
 	_attr($scope.a, "value", opt);
 	_text($scope.b, opt);
-};
+});
 const $for_content__$params = ($scope, $params2) => $for_content__opt($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of(0, "<option> </option>", " D l", 0, $for_content__$params);
 const $options = /*@__PURE__*/ _let(4, ($scope) => {
 	$options_($scope, $scope.e?.[0]);
 	$for($scope, [$scope.e, (v) => v]);
 });
+const $value__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.g));
 const $value = /*@__PURE__*/ _let(6, ($scope) => {
+	$value__render($scope);
 	_attr_select_value($scope, "a", $scope.g, $valueChange($scope));
-	_text($scope.b, $scope.g);
 });
 const $options_ = /*@__PURE__*/ _const(5, ($scope) => $value($scope, $scope.f));
 const $setup__script = _script("a1", ($scope) => {

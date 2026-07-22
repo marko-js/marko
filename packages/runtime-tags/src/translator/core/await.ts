@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoVar,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -44,6 +45,7 @@ import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
 const kDOMBinding = Symbol("await tag dom binding");
+const enabledTransition = new WeakSet<t.Program>();
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -206,6 +208,19 @@ export default {
               ),
             ]),
           );
+          const program = getProgram().node;
+          if (
+            valueExpr.extra?.referencedBindings &&
+            !enabledTransition.has(program)
+          ) {
+            // Only an await whose promise expression can re-evaluate client
+            // side can start a transition; static awaits leave `_render`
+            // applying immediately. Once per template is enough.
+            enabledTransition.add(program);
+            signal.prependStatements!.push(
+              t.expressionStatement(callRuntime("_enable_transition")),
+            );
+          }
           return callRuntime(
             "_await_promise",
             getScopeAccessorLiteral(nodeRef, true),

@@ -257,7 +257,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     write`<style>`;
 
     addStatement(
-      "render",
+      "renderEffect",
       section,
       undefined,
       t.expressionStatement(
@@ -274,7 +274,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     dynamicStyleValues(node).forEach((value, i) => {
       const valueRef = value.extra?.referencedBindings;
       addStatement(
-        "render",
+        "renderEffect",
         section,
         valueRef,
         t.expressionStatement(

@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<div></div><button>rot</button>";
 const $walks = " b b";
-const $else_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], $scope._.item_id));
+const $else_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 1, /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._.item_id)));
 const $else_content__setup = $else_content__item_id;
-const $if_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.item_id));
+const $if_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._.item_id)));
 const $if_content__setup = $if_content__item_id;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span>A<!></span>", "Db%l", $if_content__setup, "<b>B<!></b>", "Db%l", $else_content__setup);
 const $for_content__item_on = ($scope, item_on) => $for_content__if($scope, item_on ? 0 : 1);

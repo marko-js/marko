@@ -36,9 +36,9 @@ container.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: textarea::text("a-y-b")
-INSERT: textarea::text("a-y!-b")
 UPDATE: #id-y![id] "id-y" => "id-y!"
 UPDATE: #id-y![data-x] "y" => "y!"
 UPDATE: #id-y!::text@2 "y" => "y!"
+REMOVE: textarea::text("a-y-b")
+INSERT: textarea::text("a-y!-b")
 ```

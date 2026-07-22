@@ -53,8 +53,9 @@ const $template = "<button id=tags> </button><!><!><!>";
 const $walks = " D l%b%c";
 _resume("__tests__/components/class-counter.marko", _marko_template);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3");
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count));
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	$count__render($scope);
 	$dynamicTag2($scope, _marko_template, () => ({ count: $scope.count }));
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");

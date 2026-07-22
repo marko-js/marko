@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<div><!></div>";
 const $walks = "D%l";
-const $else_content__clickCount = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], $scope._.clickCount));
+const $else_content__clickCount = /*@__PURE__*/ _if_closure("#text/0", 1, /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._.clickCount)));
 const $else_content__setup = $else_content__clickCount;
-const $if_content__clickCount = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.clickCount));
+const $if_content__clickCount = /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope._.clickCount)));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clickCount($scope._, $scope._.clickCount + 1);
 }));

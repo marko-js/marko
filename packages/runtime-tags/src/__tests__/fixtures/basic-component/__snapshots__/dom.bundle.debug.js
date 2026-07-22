@@ -1,7 +1,7 @@
 // tags/counter.marko
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
-const $clickCount = /*@__PURE__*/ _let("clickCount/2", ($scope) => _text($scope["#text/1"], $scope.clickCount));
+const $clickCount = /*@__PURE__*/ _let("clickCount/2", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.clickCount)));
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clickCount($scope, $scope.clickCount + 1);
 }));

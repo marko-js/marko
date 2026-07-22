@@ -1,4 +1,4 @@
-// size: 2463 (min) 1239 (brotli)
+// size: 2519 (min) 1265 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -17,7 +17,10 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled;
+  catchEnabled,
+  queueRenderEffect = (fn, scope, value) => {
+    fn(scope, value);
+  };
 function _on(element, type, handler) {
   (element["$" + type] === void 0 && delegate(type, handleDelegated),
     (element["$" + type] = handler || null));
@@ -52,6 +55,9 @@ function _let(id, fn) {
         (schedule(), queueRender(scope, fn, id)),
     value
   );
+}
+function _render(fn) {
+  return (scope, value) => queueRenderEffect(fn, scope, value);
 }
 function _script(id, fn) {
   return (
@@ -257,5 +263,8 @@ function runRenders() {
     }
     runRender(render);
   }
+}
+function abort(ctrl) {
+  ctrl.abort();
 }
 //#endregion

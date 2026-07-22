@@ -8,4 +8,4 @@ const $children = /*@__PURE__*/ _let(1, ($scope) => {
 	$for($scope, [$scope.b]);
 	$children__script($scope);
 });
-const $children_length = /*@__PURE__*/ _const(2, ($scope) => _attr($scope.a, "data-children", $scope.c));
+const $children_length = /*@__PURE__*/ _const(2, /*@__PURE__*/ _render(($scope) => _attr($scope.a, "data-children", $scope.c)));

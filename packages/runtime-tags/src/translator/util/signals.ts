@@ -84,6 +84,10 @@ export interface Signal {
   intersection: Opt<Signal>;
   render: t.Statement[];
   renderReferencedBindings: ReferencedBindings;
+  // Observable DOM-write statements, hoisted into a `__render` fn queued via
+  // `_render` so transitions can hold them; they re-read scope state (or
+  // receive the signal value) when applied.
+  renderEffect: t.Statement[];
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
   hasDynamicSubscribers: boolean;
@@ -266,6 +270,7 @@ export function getSignal(
         intersection: undefined,
         render: [],
         renderReferencedBindings: undefined,
+        renderEffect: [],
         effect: [],
         effectReferencedBindings: undefined,
         build: undefined,
@@ -422,6 +427,7 @@ export function signalHasStatements(signal: Signal): boolean {
     signal.extraArgs ||
     signal.forcePersist ||
     signal.render.length ||
+    signal.renderEffect.length ||
     signal.effect.length ||
     signal.values.length ||
     signal.intersection
@@ -499,7 +505,51 @@ function pushMemberForwards(
   }
 }
 
+// Bookkeeping for compiled render effects, kept off the Signal shape: the
+// queued `X__render(scope)` call (created while the signal fn body is built,
+// patched with its value argument once bindings are replaced) and whether
+// the hoisted factory was emitted (getSignalFn can run more than once for a
+// signal consumed both inline and via writeSignal).
+const renderEffectCalls = new WeakMap<Signal, t.CallExpression>();
+const emittedRenderEffects = new WeakSet<Signal>();
+
 export function getSignalFn(signal: Signal): t.Expression {
+  const fn = buildSignalFn(signal);
+  // Emitted here (not in writeSignal) because some consumers inline the
+  // signal fn without writing the signal itself; runs after `buildSignalFn`
+  // so `hasSideEffect` is final when bindings are replaced.
+  const call = renderEffectCalls.get(signal);
+  if (call && !emittedRenderEffects.has(signal)) {
+    emittedRenderEffects.add(signal);
+    traverseReplace(signal, "renderEffect", replaceRenderNode, signal);
+    const value = getRenderEffectValue(signal);
+    if (value) call.arguments.push(value);
+    const factory = callRuntime(
+      "_render",
+      t.arrowFunctionExpression(
+        value ? [scopeIdentifier, value] : [scopeIdentifier],
+        toFirstExpressionOrBlock(signal.renderEffect),
+      ),
+    );
+    // A signal that collapsed to the wrapper itself IS the render effect;
+    // return the factory directly so the signal identifier names it instead
+    // of aliasing a separate `X__render` const.
+    if (fn === call.callee) {
+      return factory;
+    }
+    getProgram().node.body.push(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          t.identifier(`${signal.identifier.name}__render`),
+          factory,
+        ),
+      ]),
+    );
+  }
+  return fn;
+}
+
+function buildSignalFn(signal: Signal): t.Expression {
   const section = signal.section;
   const binding = signal.referencedBindings;
   const isIntersection = Array.isArray(binding);
@@ -681,6 +731,18 @@ export function getSignalFn(signal: Signal): t.Expression {
     }
   }
 
+  if (signal.renderEffect.length && !renderEffectCalls.has(signal)) {
+    // `X__render` is a `_render(...)`-wrapped signal fn; the value argument
+    // (for param-driven render effects) is appended once binding replacement
+    // has run.
+    const call = t.callExpression(
+      t.identifier(`${signal.identifier.name}__render`),
+      [scopeIdentifier],
+    );
+    renderEffectCalls.set(signal, call);
+    signal.render.unshift(t.expressionStatement(call));
+  }
+
   if (signal.effect.length) {
     const effectIdentifier = t.identifier(`${signal.identifier.name}__script`);
     signal.render.push(
@@ -699,6 +761,11 @@ export function getSignalFn(signal: Signal): t.Expression {
       const render = signal.render[0];
       if (render.type === "ExpressionStatement") {
         const { expression } = render;
+        if (expression === renderEffectCalls.get(signal)) {
+          // The `_render(...)` wrapper is signal-shaped and forwards
+          // (scope, value) to the effect; the signal can be the wrapper.
+          return expression.callee as t.Expression;
+        }
         if (
           expression.type === "CallExpression" &&
           expression.callee.type === "Identifier" &&
@@ -762,6 +829,68 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
   }
 
   return emptyExtraArgs;
+}
+
+// The signal's value parameter is only forwarded through `_render` when the
+// (binding-replaced) render effect statements actually reference it;
+// scope-stored values re-read lazily instead.
+function getRenderEffectValue(signal: Signal): t.Identifier | undefined {
+  const binding = signal.referencedBindings;
+  if (
+    binding &&
+    !Array.isArray(binding) &&
+    binding.section === signal.section
+  ) {
+    const valueId = getSignalValueIdentifier(signal);
+    if (
+      signal.renderEffect.some((stmt) => usesIdentifier(stmt, valueId.name))
+    ) {
+      return valueId;
+    }
+  }
+}
+
+// Expression-position identifier references only (member property names and
+// non-computed object keys don't count).
+function usesIdentifier(node: unknown, name: string): boolean {
+  if (!node || typeof node !== "object") return false;
+  if (Array.isArray(node)) {
+    return node.some((item) => usesIdentifier(item, name));
+  }
+  const n = node as t.Node & Record<string, unknown>;
+  switch (n.type) {
+    case "Identifier":
+      return n.name === name;
+    case "MemberExpression":
+    case "OptionalMemberExpression":
+      return (
+        usesIdentifier(n.object, name) ||
+        ((n.computed as boolean) && usesIdentifier(n.property, name))
+      );
+    case "ObjectProperty":
+      return (
+        ((n.computed as boolean) && usesIdentifier(n.key, name)) ||
+        usesIdentifier(n.value, name)
+      );
+    default: {
+      for (const key in n) {
+        if (
+          key === "type" ||
+          key === "extra" ||
+          key === "loc" ||
+          key === "start" ||
+          key === "end" ||
+          key === "leadingComments" ||
+          key === "trailingComments" ||
+          key === "innerComments"
+        ) {
+          continue;
+        }
+        if (usesIdentifier(n[key], name)) return true;
+      }
+      return false;
+    }
+  }
 }
 
 export function getSignalValueIdentifier(signal: Signal) {
@@ -845,7 +974,7 @@ export function replaceNullishAndEmptyFunctionsWith0(
   return args as t.Expression[];
 }
 export function addStatement(
-  type: "render" | "effect",
+  type: "render" | "effect" | "renderEffect",
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],

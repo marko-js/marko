@@ -2,7 +2,7 @@
 const $template$2 = "<div>Child 1 has <!></div>";
 const $walks$2 = "Db%l";
 const $setup$2 = () => {};
-const $value$1 = ($scope, value) => _text($scope["#text/0"], value);
+const $value$1 = /*@__PURE__*/ _render(($scope, value) => _text($scope["#text/0"], value));
 const $input$1 = ($scope, input) => $value$1($scope, input.value);
 var child1_default = /*@__PURE__*/ _template("__tests__/tags/child1.marko", $template$2, $walks$2, $setup$2, $input$1);
 
@@ -10,7 +10,7 @@ var child1_default = /*@__PURE__*/ _template("__tests__/tags/child1.marko", $tem
 const $template$1 = "<div>Child 2 has <!></div>";
 const $walks$1 = "Db%l";
 const $setup$1 = () => {};
-const $value = ($scope, value) => _text($scope["#text/0"], value);
+const $value = /*@__PURE__*/ _render(($scope, value) => _text($scope["#text/0"], value));
 const $input = ($scope, input) => $value($scope, input.value);
 var child2_default = /*@__PURE__*/ _template("__tests__/tags/child2.marko", $template$1, $walks$1, $setup$1, $input);
 

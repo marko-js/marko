@@ -21,10 +21,13 @@ var custom_input_default = /*@__PURE__*/ _template("__tests__/tags/custom-input.
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<span><!> <!></span>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D%c%l`)(" b");
-const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
-	$input_value($scope["#childScope/0"], $scope.value);
+const $value__render = /*@__PURE__*/ _render(($scope) => {
 	_text($scope["#text/1"], $scope.value);
 	_text($scope["#text/2"], typeof $scope.value);
+});
+const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
+	$value__render($scope);
+	$input_value($scope["#childScope/0"], $scope.value);
 });
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

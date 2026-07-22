@@ -3,7 +3,7 @@ const $template = "<button id=toggle>toggle</button><!><button id=inc>count <!><
 const $walks = " b%b Db%l%c";
 const $show = /*@__PURE__*/ _show("#text/4", "#text/1");
 const $visible = /*@__PURE__*/ _let("visible/5", ($scope) => $show($scope, $scope.visible));
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/6", /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], $scope.count)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$visible($scope, !$scope.visible);

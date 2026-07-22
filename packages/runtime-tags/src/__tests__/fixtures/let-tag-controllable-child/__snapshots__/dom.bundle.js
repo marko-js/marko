@@ -1,14 +1,17 @@
 // tags/child.marko
-const $state = /*@__PURE__*/ _let_change(14, ($scope) => _text($scope.c, $scope.o));
-const $thirdState = /*@__PURE__*/ _let_change(18, ($scope) => _text($scope.i, $scope.s));
+const $state = /*@__PURE__*/ _let_change(14, /*@__PURE__*/ _render(($scope) => _text($scope.c, $scope.o)));
+const $thirdState = /*@__PURE__*/ _let_change(18, /*@__PURE__*/ _render(($scope) => _text($scope.i, $scope.s)));
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(13, ($scope) => {
 	$state($scope, $scope.l, $scope.m);
 	$thirdState($scope, $scope.l, $scope.m);
 });
-const $input_value = /*@__PURE__*/ _const(11, ($scope) => {
+const $input_value__render = /*@__PURE__*/ _render(($scope) => {
 	_text($scope.b, $scope.l);
 	_text($scope.e, $scope.l);
 	_text($scope.h, $scope.l);
+});
+const $input_value = /*@__PURE__*/ _const(11, ($scope) => {
+	$input_value__render($scope);
 	$input_value__OR__input_valueChange($scope);
 });
 const $input_valueChange = /*@__PURE__*/ _const(12, $input_value__OR__input_valueChange);
@@ -23,7 +26,7 @@ const $setup__script = _script("b0", ($scope) => {
 		$thirdState($scope, $scope.s + 1);
 	});
 });
-const $otherState = /*@__PURE__*/ _let_change(16, ($scope) => _text($scope.f, $scope.q));
+const $otherState = /*@__PURE__*/ _let_change(16, /*@__PURE__*/ _render(($scope) => _text($scope.f, $scope.q)));
 const $input = ($scope, input) => {
 	$input_value($scope, input.value);
 	$input_valueChange($scope, input.valueChange);
@@ -31,12 +34,13 @@ const $input = ($scope, input) => {
 };
 
 // template.marko
+const $source__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.c));
 const $source = /*@__PURE__*/ _let(2, ($scope) => {
+	$source__render($scope);
 	$input($scope.a, {
 		value: $scope.c,
 		valueChange: $valueChange($scope)
 	});
-	_text($scope.b, $scope.c);
 });
 function $valueChange($scope) {
 	return (_new_source) => {

@@ -42,8 +42,8 @@ container.querySelector("button.inc").click();
 ```
 ## Change
 ```
-UPDATE: div::text@0 "1" => "2"
 UPDATE: span::text@6 "1" => "2"
+UPDATE: div::text@0 "1" => "2"
 ```
 
 # Update
@@ -70,8 +70,8 @@ container.querySelector("button.assign").click();
 ```
 ## Change
 ```
-UPDATE: div::text@0 "2" => "12"
 UPDATE: span::text@6 "2" => "12"
+UPDATE: div::text@0 "2" => "12"
 ```
 
 # Update
@@ -98,6 +98,6 @@ container.querySelector("button.inc").click();
 ```
 ## Change
 ```
-UPDATE: div::text@0 "12" => "13"
 UPDATE: span::text@6 "12" => "13"
+UPDATE: div::text@0 "12" => "13"
 ```

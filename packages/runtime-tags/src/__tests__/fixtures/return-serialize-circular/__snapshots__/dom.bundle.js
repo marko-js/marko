@@ -9,9 +9,10 @@ function $setter($scope) {
 _resume("b0", $setter);
 
 // template.marko
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope.c, $scope.d));
 const $count = /*@__PURE__*/ _let(3, ($scope) => {
+	$count__render($scope);
 	$input_value($scope.a, $scope.d);
-	_text($scope.c, $scope.d);
 });
 const $setCount = _var_resume("a1", /*@__PURE__*/ _const(4, _script("a2", ($scope) => $scope.e())));
 function $valueChange($scope) {

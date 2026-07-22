@@ -9,4 +9,4 @@ const $setup__script = _script("b2", ($scope) => _on($scope.b, "click", function
 }));
 
 // child.marko
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = /*@__PURE__*/ _render(($scope, input_value) => _text($scope.a, input_value));

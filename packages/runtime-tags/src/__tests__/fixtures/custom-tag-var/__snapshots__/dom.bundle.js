@@ -1,6 +1,7 @@
 // tags/child.marko
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.c));
 const $x = /*@__PURE__*/ _let(2, ($scope) => {
-	_text($scope.b, $scope.c);
+	$x__render($scope);
 	_return($scope, $scope.c);
 });
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
@@ -8,4 +9,4 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $data = _var_resume("a0", ($scope, data) => _text($scope.c, data));
+const $data = _var_resume("a0", /*@__PURE__*/ _render(($scope, data) => _text($scope.c, data)));

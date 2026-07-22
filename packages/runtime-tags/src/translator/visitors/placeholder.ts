@@ -163,7 +163,7 @@ export default {
           }
         } else {
           addStatement(
-            "render",
+            "renderEffect",
             section,
             valueExtra.referencedBindings,
             t.expressionStatement(

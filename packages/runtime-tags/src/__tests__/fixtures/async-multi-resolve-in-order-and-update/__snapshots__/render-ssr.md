@@ -145,4 +145,9 @@ INSERT: p:nth-of-type(5)::text@5 + ::text("15")
 INSERT: p:nth-of-type(4)::text@5 + ::text("12")
 INSERT: p:nth-of-type(3)::text@5 + ::text("9")
 INSERT: p:nth-of-type(2)::text@5 + ::text("6")
+UPDATE: p:nth-of-type(1)::text@8 "2" => "3"
+UPDATE: p:nth-of-type(5)::text@8 "10" => "15"
+UPDATE: p:nth-of-type(4)::text@8 "8" => "12"
+UPDATE: p:nth-of-type(3)::text@8 "6" => "9"
+UPDATE: p:nth-of-type(2)::text@8 "4" => "6"
 ```

@@ -2,7 +2,7 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $name = ($scope, name) => _text($scope["#text/0"], name);
+const $name = /*@__PURE__*/ _render(($scope, name) => _text($scope["#text/0"], name));
 const $input = ($scope, input) => $name($scope, input.name);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", $setup$1, $input);
 

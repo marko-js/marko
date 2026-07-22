@@ -1,9 +1,10 @@
 // template.marko
 const $template = "<select multiple><option value=0></option><option value=1></option><option value=2></option></select><span> </span><button>Reset</button>";
 const $walks = " bD l b";
+const $selected__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.selected));
 const $selected = /*@__PURE__*/ _let("selected/3", ($scope) => {
+	$selected__render($scope);
 	_attr_select_value($scope, "#select/0", $scope.selected, $valueChange($scope));
-	_text($scope["#text/1"], $scope.selected);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_select_value_script($scope, "#select/0");

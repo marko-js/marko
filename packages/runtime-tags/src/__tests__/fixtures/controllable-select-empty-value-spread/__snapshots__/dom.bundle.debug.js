@@ -1,13 +1,15 @@
 // template.marko
 const $template = "<select><option>-- choose --</option><option value=a>A</option><option value=b>B</option></select><output> </output>";
 const $walks = " D lD l";
+const $value__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.value === undefined ? "undefined" : "value=" + $scope.value));
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
+	$value__render($scope);
 	_attr_select_value($scope, "#select/0", $scope.value, $valueChange($scope));
-	_text($scope["#text/2"], $scope.value === undefined ? "undefined" : "value=" + $scope.value);
 });
+const $placeholder__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "#option/1", $scope.placeholder));
 const $placeholder__script = _script("__tests__/template.marko_0_placeholder", ($scope) => _attrs_script($scope, "#option/1"));
 const $placeholder = /*@__PURE__*/ _const("placeholder", ($scope) => {
-	_attrs($scope, "#option/1", $scope.placeholder);
+	$placeholder__render($scope);
 	$placeholder__script($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_select_value_script($scope, "#select/0"));

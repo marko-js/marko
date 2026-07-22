@@ -25,9 +25,10 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, ($scope) => _text($scope.e, $scope._.b * $scope.g));
+const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, /*@__PURE__*/ _render(($scope) => _text($scope.e, $scope._.b * $scope.g)));
+const $classlayout_content__multiplier__render = /*@__PURE__*/ _render(($scope) => _text($scope.c, $scope._.b));
 const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get(2, ($scope) => {
-	_text($scope.c, $scope._.b);
+	$classlayout_content__multiplier__render($scope);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 });
 const $classlayout_content__setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
@@ -37,9 +38,10 @@ const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__multiplier($scope);
 	$classlayout_content__setup__script($scope);
 };
-const $classlayout_content__message = ($scope, message) => _text($scope.a, message);
+const $classlayout_content__message = /*@__PURE__*/ _render(($scope, message) => _text($scope.a, message));
+const $classlayout_content__baseCount__render = /*@__PURE__*/ _render(($scope) => _text($scope.d, $scope.g));
 const $classlayout_content__baseCount = /*@__PURE__*/ _const(6, ($scope) => {
-	_text($scope.d, $scope.g);
+	$classlayout_content__baseCount__render($scope);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 });
 const $classlayout_content__$params = ($scope, $params2) => {

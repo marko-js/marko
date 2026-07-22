@@ -1,5 +1,5 @@
 // template.marko
-const $sum = ($scope, sum) => _text($scope.b, sum());
+const $sum = /*@__PURE__*/ _render(($scope, sum) => _text($scope.b, sum()));
 const $items = /*@__PURE__*/ _let(2, ($scope) => $sum($scope, function sum(i = 0) {
 	return i >= $scope.c?.length ? 0 : $scope.c[i] + sum(i + 1);
 }));

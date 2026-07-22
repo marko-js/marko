@@ -23,7 +23,7 @@ const $setup__script = _script("b2", ($scope) => _on($scope.a, "click", function
 
 // child.marko
 const $template = "<span> </span>";
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = /*@__PURE__*/ _render(($scope, input_value) => _text($scope.a, input_value));
 const $setup__script = _script("a0", ($scope) => console.log("loaded"));
 const $setup = $setup__script;
 

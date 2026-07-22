@@ -2,8 +2,9 @@
 const $template$1 = "<button class=inc> </button>";
 const $walks$1 = " D l";
 const $input_extra__OR__x = /*@__PURE__*/ _or(6, ($scope) => _return($scope, $scope.x + $scope.input_extra));
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.x));
 const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+	$x__render($scope);
 	$input_extra__OR__x($scope);
 });
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -20,7 +21,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)($walks$1);
-const $message = ($scope, message) => _text($scope["#text/2"], message);
+const $message = /*@__PURE__*/ _render(($scope, message) => _text($scope["#text/2"], message));
 const $name__OR__data = /*@__PURE__*/ _or(5, ($scope) => $message($scope, `${$scope.name} ${$scope.data}`), 1, "#scopeOffset/1");
 const $name = /*@__PURE__*/ _let("name/3", $name__OR__data);
 function $setup($scope) {

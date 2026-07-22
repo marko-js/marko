@@ -27,8 +27,9 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 _resume("b", _marko_template);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.c));
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
-	_text($scope.b, $scope.c);
+	$count__render($scope);
 	$dynamicTag($scope, _marko_template, () => ({
 		value: $scope.c,
 		onIncrement: $onIncrement($scope)

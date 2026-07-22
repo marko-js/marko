@@ -3,8 +3,9 @@ const $template = "<button> </button>";
 const $walks = " D l";
 const $increment2__script = _script("__tests__/template.marko_0_increment", ($scope) => _on($scope["#button/0"], "click", $scope.increment));
 const $increment2 = /*@__PURE__*/ _const("increment", $increment2__script);
+const $clickCount__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.clickCount));
 const $clickCount = /*@__PURE__*/ _let("clickCount/2", ($scope) => {
-	_text($scope["#text/1"], $scope.clickCount);
+	$clickCount__render($scope);
 	$increment2($scope, $increment($scope));
 });
 function $setup($scope) {

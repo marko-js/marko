@@ -1,10 +1,10 @@
 // template.marko
 const $template = "<input><button> </button>";
 const $walks = " b D l";
-const $disabled = /*@__PURE__*/ _let("disabled/3", ($scope) => {
+const $disabled = /*@__PURE__*/ _let("disabled/3", /*@__PURE__*/ _render(($scope) => {
 	_attr($scope["#input/0"], "disabled", $scope.disabled);
 	_text($scope["#text/2"], $scope.disabled ? "enable" : "disable");
-});
+}));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$disabled($scope, !$scope.disabled);
 }));

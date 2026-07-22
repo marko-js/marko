@@ -2,12 +2,13 @@
 const $template$2 = "<p></p>";
 const $walks$2 = " b";
 const $setup$2 = () => {};
+const $input_class__OR__rest__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#p/0", {
+	class: $scope.input_class,
+	...$scope.rest
+}));
 const $input_class__OR__rest__script = _script("__tests__/tags/child.marko_0_input_class_rest", ($scope) => _attrs_script($scope, "#p/0"));
 const $input_class__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
-	_attrs_content($scope, "#p/0", {
-		class: $scope.input_class,
-		...$scope.rest
-	});
+	$input_class__OR__rest__render($scope);
 	$input_class__OR__rest__script($scope);
 });
 const $input_class = /*@__PURE__*/ _const("input_class", $input_class__OR__rest);

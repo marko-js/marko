@@ -1,12 +1,13 @@
 // tags/FancyButton.marko
+const $attrs__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "a", $scope.f));
 const $attrs__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 const $attrs = /*@__PURE__*/ _const(5, ($scope) => {
-	_attrs($scope, "a", $scope.f);
+	$attrs__render($scope);
 	$attrs__script($scope);
 });
 
 // template.marko
-const $FancyButton_content__clickCount = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b));
+const $FancyButton_content__clickCount = /*@__PURE__*/ _closure_get(2, /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope._.b)));
 const $clickCount__closure = /*@__PURE__*/ _closure($FancyButton_content__clickCount);
 const $clickCount = /*@__PURE__*/ _let(1, ($scope) => {
 	$attrs($scope.a, { onClick: $onClick($scope) });

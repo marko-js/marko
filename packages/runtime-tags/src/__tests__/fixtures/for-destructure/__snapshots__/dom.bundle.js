@@ -1,6 +1,6 @@
 // template.marko
-const $for_content__name = ($scope, name) => _text($scope.a, name);
-const $for_content__description = ($scope, description) => _text($scope.b, description);
+const $for_content__name = /*@__PURE__*/ _render(($scope, name) => _text($scope.a, name));
+const $for_content__description = /*@__PURE__*/ _render(($scope, description) => _text($scope.b, description));
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__name($scope, ($params2?.[0]).name);
 	$for_content__description($scope, ($params2?.[0]).description);

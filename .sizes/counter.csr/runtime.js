@@ -1,4 +1,4 @@
-// size: 3904 (min) 1732 (brotli)
+// size: 3976 (min) 1765 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -71,6 +71,10 @@ let decodeAccessor = (num) =>
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
+  pendingRenderEffects = [],
+  queueRenderEffect = (fn, scope, value) => {
+    fn(scope, value);
+  },
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return (
@@ -137,6 +141,9 @@ function _let(id, fn) {
         (schedule(), queueRender(scope, fn, id)),
     value
   );
+}
+function _render(fn) {
+  return (scope, value) => queueRenderEffect(fn, scope, value);
 }
 function _script(id, fn) {
   return (
@@ -273,17 +280,15 @@ function run() {
   runEffects(effects);
 }
 function prepareEffects(fn) {
-  let prevRenders = pendingRenders,
-    prevEffects = pendingEffects,
+  let prev = [pendingRenders, pendingEffects, pendingRenderEffects],
     preparedEffects = (pendingEffects = []);
-  pendingRenders = [];
+  ((pendingRenders = []), (pendingRenderEffects = []));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
     (runId++,
       (rendering = 0),
-      (pendingRenders = prevRenders),
-      (pendingEffects = prevEffects));
+      ([pendingRenders, pendingEffects, pendingRenderEffects] = prev));
   }
   return preparedEffects;
 }

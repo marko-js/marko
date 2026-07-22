@@ -4,11 +4,12 @@ const $walks = " D l";
 function identity(fn) {
 	return fn;
 }
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count));
 const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/0"], "click", identity(() => {
 	$count($scope, $scope.count + 1);
 })));
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	$count__render($scope);
 	$count__script($scope);
 });
 function $setup($scope) {

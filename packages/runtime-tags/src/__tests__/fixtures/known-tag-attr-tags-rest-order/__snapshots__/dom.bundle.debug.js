@@ -2,8 +2,8 @@
 const $template$1 = "<div><!>:<!></div>";
 const $walks$1 = "D%c%l";
 const $setup$1 = () => {};
-const $first = ($scope, first) => _text($scope["#text/0"], first);
-const $rest = ($scope, rest) => _text($scope["#text/1"], Object.keys(rest).join(","));
+const $first = /*@__PURE__*/ _render(($scope, first) => _text($scope["#text/0"], first));
+const $rest = /*@__PURE__*/ _render(($scope, rest) => _text($scope["#text/1"], Object.keys(rest).join(",")));
 const $input = ($scope, input) => {
 	(({ first, ...rest }) => $rest($scope, rest))(input);
 	$first($scope, input.first);
@@ -13,8 +13,9 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $n__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.n));
 const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
+	$n__render($scope);
 	$first($scope["#childScope/2"], $scope.n);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

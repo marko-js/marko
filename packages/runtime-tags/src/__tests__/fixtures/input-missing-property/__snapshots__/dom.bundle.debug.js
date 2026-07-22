@@ -2,7 +2,7 @@
 const $Child_content__walks = "b%c", $Child_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)($Child_content__walks);
-const $if_content2__input_name = /*@__PURE__*/ _closure_get("input_name", ($scope) => _text($scope["#text/0"], $scope._._.input_name || "Fallback"), ($scope) => $scope._._);
+const $if_content2__input_name = /*@__PURE__*/ _closure_get("input_name", /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._._.input_name || "Fallback")), ($scope) => $scope._._);
 const $if_content2__setup = $if_content2__input_name;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D l", $if_content2__setup);
 const $if_content__setup = ($scope) => $if_content__if($scope, true ? 0 : 1);
@@ -15,8 +15,9 @@ const $Child_content__input = ($scope, input) => {
 	$Child_content__input_count($scope, input.count);
 	$Child_content__tag_input_name($scope, input.name);
 };
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count));
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	$count__render($scope);
 	$Child_content__input_count($scope["#childScope/2"], $scope.count);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

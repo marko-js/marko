@@ -1,7 +1,8 @@
 // template.marko
+const $if_content__item__render = /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope._.c));
 const $if_content__item__script = _script("a0", ($scope) => $signal($scope, 0).onabort = () => $scope._._.b.append(`destroyed ${$scope._.c}`));
 const $if_content__item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
-	_text($scope.a, $scope._.c);
+	$if_content__item__render($scope);
 	$signalReset($scope, 0);
 	$if_content__item__script($scope);
 });

@@ -10,8 +10,9 @@ const $input_name__OR__input_write = /*@__PURE__*/ _or(5, ($scope) => {
 	$signalReset($scope, 0);
 	$input_name__OR__input_write__script($scope);
 });
+const $name__render = /*@__PURE__*/ _render(($scope) => _text($scope.a, $scope.d));
 const $name = /*@__PURE__*/ _const(3, ($scope) => {
-	_text($scope.a, $scope.d);
+	$name__render($scope);
 	$input_name__OR__input_write($scope);
 });
 const $write$1 = /*@__PURE__*/ _const(4, $input_name__OR__input_write);

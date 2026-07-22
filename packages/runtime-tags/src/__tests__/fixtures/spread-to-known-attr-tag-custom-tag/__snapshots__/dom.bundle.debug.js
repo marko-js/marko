@@ -2,13 +2,14 @@
 const $template$2 = "<select></select>";
 const $walks$2 = " b";
 const $setup$2 = () => {};
+const $for_content__option__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#option/0", $scope.option));
 const $for_content__option__script = _script("__tests__/tags/child.marko_1_option", ($scope) => _attrs_script($scope, "#option/0"));
 const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
-	_attrs_content($scope, "#option/0", $scope.option);
+	$for_content__option__render($scope);
 	$for_content__option__script($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
-const $input_class = ($scope, input_class) => _attr_class($scope["#select/0"], input_class);
+const $input_class = /*@__PURE__*/ _render(($scope, input_class) => _attr_class($scope["#select/0"], input_class));
 const $for = /*@__PURE__*/ _for_of("#select/0", "<option></option>", " b", 0, $for_content__$params);
 const $input_option = ($scope, input_option) => $for($scope, [input_option]);
 const $input$1 = ($scope, input) => {

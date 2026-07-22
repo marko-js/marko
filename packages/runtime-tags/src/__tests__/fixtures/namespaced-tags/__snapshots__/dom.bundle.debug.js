@@ -3,7 +3,7 @@ const $template = "<div><svg><!><!></svg><math><!><!></math><!><button class=tog
 const $walks = " E%b%lD%b%l%b b l";
 const $Child_content2 = _content_resume("__tests__/template.marko_3_content", "Hi", "b");
 const $Child_content = _content_resume("__tests__/template.marko_2_content", "Hi", "b");
-const $Parent_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => _html($scope, $scope._.input_value, "#text/0"));
+const $Parent_content__input_value = /*@__PURE__*/ _closure_get("input_value", /*@__PURE__*/ _render(($scope) => _html($scope, $scope._.input_value, "#text/0")));
 const $Parent_content__setup = $Parent_content__input_value;
 const $Parent_content = _content_resume("__tests__/template.marko_1_content", " ", " b", $Parent_content__setup);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/5", $Parent_content);
@@ -41,10 +41,13 @@ function $setup($scope) {
 	$Child($scope, "a");
 	$setup__script($scope);
 }
-const $input_value__closure = /*@__PURE__*/ _closure($Parent_content__input_value);
-const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
+const $input_value__render = /*@__PURE__*/ _render(($scope) => {
 	_html($scope, $scope.input_value, "#text/1");
 	_html($scope, $scope.input_value, "#text/3");
+});
+const $input_value__closure = /*@__PURE__*/ _closure($Parent_content__input_value);
+const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
+	$input_value__render($scope);
 	$input_value__closure($scope);
 });
 const $input = ($scope, input) => $input_value($scope, input.value);

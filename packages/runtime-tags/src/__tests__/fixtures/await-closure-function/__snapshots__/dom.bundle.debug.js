@@ -3,9 +3,10 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 _enable_catch();
 const $placeholder_content = _content_resume("__tests__/template.marko_3_content", "loading...", "b");
+const $await_content__value__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope._._.value));
 const $await_content__value__script = _script("__tests__/template.marko_2_value", ($scope) => !$scope._._.value && $value($scope._._, $scope._._.value + 1) - 1);
 const $await_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => {
-	_text($scope["#text/0"], $scope._._.value);
+	$await_content__value__render($scope);
 	$await_content__value__script($scope);
 }, ($scope) => $scope._._, "__tests__/template.marko_2_value/pending");
 const $await_content__setup = $await_content__value;

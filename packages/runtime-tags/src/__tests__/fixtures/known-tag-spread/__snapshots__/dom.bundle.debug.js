@@ -2,9 +2,9 @@
 const $template$2 = "<div><!> <!> <!></div>";
 const $walks$2 = "D%c%c%l";
 const $setup$2 = () => {};
-const $input_a$1 = ($scope, input_a) => _text($scope["#text/0"], input_a);
-const $input_b$1 = ($scope, input_b) => _text($scope["#text/1"], input_b);
-const $input_c = ($scope, input_c) => _text($scope["#text/2"], input_c);
+const $input_a$1 = /*@__PURE__*/ _render(($scope, input_a) => _text($scope["#text/0"], input_a));
+const $input_b$1 = /*@__PURE__*/ _render(($scope, input_b) => _text($scope["#text/1"], input_b));
+const $input_c = /*@__PURE__*/ _render(($scope, input_c) => _text($scope["#text/2"], input_c));
 const $input$2 = ($scope, input) => {
 	$input_a$1($scope, input.a);
 	$input_b$1($scope, input.b);
@@ -16,8 +16,8 @@ var child_a_default = /*@__PURE__*/ _template("__tests__/tags/child-a/index.mark
 const $template$1 = "<div><!> <!></div>";
 const $walks$1 = "D%c%l";
 const $setup$1 = () => {};
-const $input_a = ($scope, input_a) => _text($scope["#text/0"], input_a);
-const $input_b = ($scope, input_b) => _text($scope["#text/1"], input_b);
+const $input_a = /*@__PURE__*/ _render(($scope, input_a) => _text($scope["#text/0"], input_a));
+const $input_b = /*@__PURE__*/ _render(($scope, input_b) => _text($scope["#text/1"], input_b));
 const $input$1 = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
@@ -43,8 +43,9 @@ const $extras = /*@__PURE__*/ _const("extras", ($scope) => {
 });
 const $extras_b = ($scope, extras_b) => $input_b$1($scope["#childScope/3"], extras_b);
 const $extras_c = ($scope, extras_c) => $input_c($scope["#childScope/3"], extras_c);
+const $n__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.n));
 const $n = /*@__PURE__*/ _let("n/9", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
+	$n__render($scope);
 	$input_a$1($scope["#childScope/3"], $scope.n);
 	$extras__OR__n($scope);
 });

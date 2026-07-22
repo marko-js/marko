@@ -2,11 +2,12 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
+const $for_content__setup__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/0"], $scope["#LoopKey"]));
 const $for_content__setup__script = _script("__tests__/tags/child.marko_1", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	document.getElementById("ref").textContent = "item destroyed";
 } }));
 const $for_content__setup = ($scope) => {
-	_text($scope["#text/0"], $scope["#LoopKey"]);
+	$for_content__setup__render($scope);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to("#text/0", "<p>item <!></p>", "Db%l", $for_content__setup);

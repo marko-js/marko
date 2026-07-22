@@ -2,13 +2,14 @@
 const $template$1 = "<input><span> </span>";
 const $walks$1 = " bD l";
 const $setup$1 = () => {};
+const $input__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "#input/0", $scope.input));
 const $input__script = _script("__tests__/tags/my-input.marko_0_input", ($scope) => _attrs_script($scope, "#input/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs($scope, "#input/0", $scope.input);
+	$input__render($scope);
 	$input_value($scope, $scope.input.value);
 	$input__script($scope);
 });
-const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
+const $input_value = /*@__PURE__*/ _render(($scope, input_value) => _text($scope["#text/1"], input_value));
 var my_input_default = /*@__PURE__*/ _template("__tests__/tags/my-input.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko

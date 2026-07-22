@@ -1,13 +1,14 @@
 // template.marko
 _enable_catch();
-const $catch_content__err = ($scope, err) => _text($scope.a, err);
+const $catch_content__err = /*@__PURE__*/ _render(($scope, err) => _text($scope.a, err));
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _content_resume("a0", " ", " b", 0, $catch_content__$params);
+const $try_content__clickCount__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, (() => {
+	if ($scope._.c > 1) throw new Error("ERROR!");
+})()));
 const $try_content__clickCount__script = _script("a2", ($scope) => $scope._.a.textContent = $scope._.c);
 const $try_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => {
-	_text($scope.b, (() => {
-		if ($scope._.c > 1) throw new Error("ERROR!");
-	})());
+	$try_content__clickCount__render($scope);
 	$try_content__clickCount__script($scope);
 });
 const $try_content__setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {

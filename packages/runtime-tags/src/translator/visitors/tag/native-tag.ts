@@ -699,7 +699,7 @@ export default {
 
         if (injectNonce) {
           addStatement(
-            "render",
+            "renderEffect",
             tagSection,
             undefined,
             t.expressionStatement(
@@ -828,7 +828,7 @@ export default {
 
                 if (stmt) {
                   addStatement(
-                    "render",
+                    "renderEffect",
                     tagSection,
                     valueReferences,
                     stmt,
@@ -858,7 +858,7 @@ export default {
                 );
               } else {
                 addStatement(
-                  "render",
+                  "renderEffect",
                   tagSection,
                   valueReferences,
                   t.expressionStatement(
@@ -887,7 +887,7 @@ export default {
           );
           if (skipExpression) {
             addStatement(
-              "render",
+              "renderEffect",
               tagSection,
               tagExtra.referencedBindings,
               t.expressionStatement(
@@ -904,7 +904,7 @@ export default {
             );
           } else {
             addStatement(
-              "render",
+              "renderEffect",
               tagSection,
               tagExtra.referencedBindings,
               t.expressionStatement(

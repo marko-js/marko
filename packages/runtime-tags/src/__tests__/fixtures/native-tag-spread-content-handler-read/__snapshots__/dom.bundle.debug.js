@@ -1,13 +1,14 @@
 // tags/my-box.marko
 const $template$1 = "<div></div><button type=button class=cap>check</button><div class=out> </div>";
 const $walks$1 = " b bD l";
-const $captured = /*@__PURE__*/ _let("captured/6", ($scope) => _text($scope["#text/2"], $scope.captured));
+const $captured = /*@__PURE__*/ _let("captured/6", /*@__PURE__*/ _render(($scope) => _text($scope["#text/2"], $scope.captured)));
 function $setup$1($scope) {
 	$captured($scope, "(unchecked)");
 }
+const $input__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#div/0", $scope.input));
 const $input__script = _script("__tests__/tags/my-box.marko_0_input", ($scope) => _attrs_script($scope, "#div/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs_content($scope, "#div/0", $scope.input);
+	$input__render($scope);
 	$input_content($scope, $scope.input.content);
 	$input__script($scope);
 });

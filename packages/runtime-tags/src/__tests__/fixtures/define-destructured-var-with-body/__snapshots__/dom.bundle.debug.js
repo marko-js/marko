@@ -2,7 +2,7 @@
 const $template = "<span> </span>";
 const $walks = "D l";
 const $pattern2 = ($scope, $pattern) => $value($scope, $pattern.value);
-const $value = ($scope, value) => _text($scope["#text/0"], value);
+const $value = /*@__PURE__*/ _render(($scope, value) => _text($scope["#text/0"], value));
 function $setup($scope) {
 	$pattern2($scope, { value: 2 });
 }

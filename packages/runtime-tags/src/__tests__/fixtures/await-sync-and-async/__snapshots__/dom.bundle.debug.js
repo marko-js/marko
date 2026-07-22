@@ -1,11 +1,12 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $await_content2__b = ($scope, b) => _text($scope["#text/0"], b);
+const $await_content2__b = /*@__PURE__*/ _render(($scope, b) => _text($scope["#text/0"], b));
 const $await_content2__$params = ($scope, $params3) => $await_content2__b($scope, $params3[0]);
-const $await_content__a = ($scope, a) => _text($scope["#text/0"], a);
+const $await_content__a = /*@__PURE__*/ _render(($scope, a) => _text($scope["#text/0"], a));
 const $await_content__$params = ($scope, $params2) => $await_content__a($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "Sync: <!>", "b%b");
+_enable_transition();
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "Async: <!>", "b%b");
 const $await_promise2 = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);

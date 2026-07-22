@@ -1,7 +1,8 @@
 // template.marko
+const $value__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.c));
 const $value = /*@__PURE__*/ _let(2, ($scope) => {
+	$value__render($scope);
 	_attr_select_value($scope, "a", $scope.c, $valueChange($scope));
-	_text($scope.b, $scope.c);
 });
 const $setup__script = _script("a1", ($scope) => _attr_select_value_script($scope, "a"));
 function $valueChange($scope) {

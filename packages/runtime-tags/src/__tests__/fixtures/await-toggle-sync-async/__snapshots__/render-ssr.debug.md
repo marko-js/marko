@@ -33,6 +33,7 @@ Got: ASYNC
 ## Change
 ```
 INSERT: ::text("Got: "), ::text("ASYNC")
+UPDATE: ::text@5 "SYNC" => "ASYNC"
 ```
 
 # Update

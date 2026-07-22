@@ -1,9 +1,9 @@
 // tags/leaf.marko
-const $input_data_val = ($scope, input_data_val) => _text($scope.a, input_data_val);
+const $input_data_val = /*@__PURE__*/ _render(($scope, input_data_val) => _text($scope.a, input_data_val));
 const $input_data = ($scope, input_data) => $input_data_val($scope, input_data?.val);
 
 // tags/mid.marko
-const $keep = ($scope, keep) => _text($scope.b, keep);
+const $keep = /*@__PURE__*/ _render(($scope, keep) => _text($scope.b, keep));
 const $rest = ($scope, rest) => $input_data($scope.c, rest);
 const $group2 = ($scope, $group) => {
 	(({ keep, ...rest }) => $rest($scope, rest))($group);
@@ -11,8 +11,9 @@ const $group2 = ($scope, $group) => {
 };
 
 // template.marko
+const $n__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.d));
 const $n = /*@__PURE__*/ _let(3, ($scope) => {
-	_text($scope.b, $scope.d);
+	$n__render($scope);
 	$group2($scope.c, {
 		keep: "k",
 		val: $scope.d

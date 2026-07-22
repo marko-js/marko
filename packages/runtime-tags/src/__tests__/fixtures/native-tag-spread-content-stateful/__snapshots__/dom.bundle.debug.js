@@ -2,9 +2,10 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
+const $input__render = /*@__PURE__*/ _render(($scope) => _attrs_content($scope, "#div/0", $scope.input));
 const $input__script = _script("__tests__/tags/my-box.marko_0_input", ($scope) => _attrs_script($scope, "#div/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs_content($scope, "#div/0", $scope.input);
+	$input__render($scope);
 	$input__script($scope);
 });
 var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $template$1, " b", $setup$1, $input);
@@ -12,7 +13,7 @@ var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $mybox_content__count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $mybox_content__count = /*@__PURE__*/ _let("count/2", /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count)));
 const $mybox_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$mybox_content__count($scope, $scope.count + 1);
 }));

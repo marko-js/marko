@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=up>up</button><button class=down>down</button><button class=change> </button>";
 const $walks = " b b D l";
-const $x = /*@__PURE__*/ _let("x/4", ($scope) => _text($scope["#text/3"], $scope.x));
+const $x = /*@__PURE__*/ _let("x/4", /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], $scope.x)));
 const $direction = /*@__PURE__*/ _let("direction/5");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {

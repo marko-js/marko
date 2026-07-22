@@ -13,13 +13,15 @@ const $Once_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Once_conten
 const $Once_content__value = /*@__PURE__*/ _const("value", $Once_content__value__OR__call);
 const $Once_content__$params = ($scope, $params2) => $Once_content__$temp($scope, $params2?.[0]);
 const $Once_content__$temp = ($scope, $temp) => $Once_content__value($scope, $temp.value);
+const $clickOnceCount__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], $scope.clickOnceCount));
 const $clickOnceCount = /*@__PURE__*/ _let("clickOnceCount/8", ($scope) => {
+	$clickOnceCount__render($scope);
 	$Once_content__value($scope["#childScope/0"], $onClickOnce($scope));
-	_text($scope["#text/3"], $scope.clickOnceCount);
 });
+const $clickTwiceCount__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/7"], $scope.clickTwiceCount));
 const $clickTwiceCount = /*@__PURE__*/ _let("clickTwiceCount/10", ($scope) => {
+	$clickTwiceCount__render($scope);
 	$Twice_content__value($scope["#childScope/4"], $onClickTwice($scope));
-	_text($scope["#text/7"], $scope.clickTwiceCount);
 });
 function $setup($scope) {
 	_var($scope, "#childScope/0", $onClickOnce2);

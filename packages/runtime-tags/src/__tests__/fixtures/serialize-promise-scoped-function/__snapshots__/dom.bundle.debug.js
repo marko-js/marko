@@ -6,8 +6,9 @@ const $promise__script = _script("__tests__/template.marko_0_promise", ($scope) 
 })());
 const $promise = /*@__PURE__*/ _const("promise", $promise__script);
 const $getCount2 = ($scope, getCount) => $promise($scope, Promise.resolve(getCount));
+const $count__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/1"], $scope.count));
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	$count__render($scope);
 	$getCount2($scope, $getCount($scope));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

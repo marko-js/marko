@@ -1,9 +1,9 @@
 // tags/counter.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $clickCount = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, ((() => {
+const $clickCount = /*@__PURE__*/ _let(5, /*@__PURE__*/ _render(($scope) => _text($scope.b, ((() => {
 	if ($scope.f > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
-})(), $scope.f)));
+})(), $scope.f))));
 function $setup($scope) {
 	$clickCount($scope, 0);
 }

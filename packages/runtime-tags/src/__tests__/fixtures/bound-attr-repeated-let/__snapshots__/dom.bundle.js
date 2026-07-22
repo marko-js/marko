@@ -4,8 +4,9 @@ const $x__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
 	_attr_input_value($scope, "d", $scope.f, $scope.g);
 	_attr_input_value($scope, "e", $scope.f, $scope.g);
 });
+const $x__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, $scope.f));
 const $x = /*@__PURE__*/ _let(5, ($scope) => {
-	_text($scope.b, $scope.f);
+	$x__render($scope);
 	$x__OR__$valueChange($scope);
 });
 const $setup__script = _script("a1", ($scope) => {

@@ -10,9 +10,9 @@ const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function
 }));
 
 // child-a.marko
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = /*@__PURE__*/ _render(($scope, input_value) => _text($scope.a, input_value));
 const $setup__script = _script("a0", ($scope) => console.log("loaded a"));
 
 // child-b.marko
-const $input_value = ($scope, input_value) => _text($scope.a, input_value * 2);
+const $input_value = /*@__PURE__*/ _render(($scope, input_value) => _text($scope.a, input_value * 2));
 const $setup__script = _script("b0", ($scope) => console.log("loaded b"));

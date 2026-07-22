@@ -16,9 +16,9 @@ function $setup($scope) {
 	$on($scope, true);
 	$setup__script($scope);
 }
-const $viaAnd_label = ($scope, viaAnd_label) => _text($scope["#text/0"], viaAnd_label ?? "none");
-const $viaTernary_label = ($scope, viaTernary_label) => _text($scope["#text/1"], viaTernary_label ?? "none");
+const $viaAnd_label = /*@__PURE__*/ _render(($scope, viaAnd_label) => _text($scope["#text/0"], viaAnd_label ?? "none"));
+const $viaTernary_label = /*@__PURE__*/ _render(($scope, viaTernary_label) => _text($scope["#text/1"], viaTernary_label ?? "none"));
 const $viaAndAssign = ($scope, viaAndAssign) => $viaAndAssign_label($scope, viaAndAssign?.label);
 const $box_inner = ($scope, box_inner) => $viaAndAssign($scope, box_inner &&= { label: "andassign" });
-const $viaAndAssign_label = ($scope, viaAndAssign_label) => _text($scope["#text/2"], viaAndAssign_label ?? "none");
+const $viaAndAssign_label = /*@__PURE__*/ _render(($scope, viaAndAssign_label) => _text($scope["#text/2"], viaAndAssign_label ?? "none"));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

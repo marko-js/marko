@@ -1,17 +1,19 @@
 // template.marko
+const $obj__render = /*@__PURE__*/ _render(($scope) => _text($scope.a, JSON.stringify($scope.g)));
 const $obj = /*@__PURE__*/ _let(6, ($scope) => {
-	_text($scope.a, JSON.stringify($scope.g));
+	$obj__render($scope);
 	(({ a, ...partialObj }) => $partialObj($scope, partialObj))($scope.g);
 	$a($scope, $scope.g.a);
 	$obj_b($scope, $scope.g.b);
 });
+const $partialObj__render = /*@__PURE__*/ _render(($scope) => _text($scope.b, JSON.stringify($scope.i)));
 const $partialObj = /*@__PURE__*/ _const(8, ($scope) => {
-	_text($scope.b, JSON.stringify($scope.i));
+	$partialObj__render($scope);
 	$partialObj_a($scope, $scope.i.a);
 });
-const $partialObj_a = /*@__PURE__*/ _const(10, ($scope) => _text($scope.e, $scope.k === void 0 ? "removed a" : "didn't remove a"));
-const $a = /*@__PURE__*/ _const(7, ($scope) => _text($scope.c, $scope.h));
-const $obj_b = /*@__PURE__*/ _const(9, ($scope) => _text($scope.d, $scope.j));
+const $partialObj_a = /*@__PURE__*/ _const(10, /*@__PURE__*/ _render(($scope) => _text($scope.e, $scope.k === void 0 ? "removed a" : "didn't remove a")));
+const $a = /*@__PURE__*/ _const(7, /*@__PURE__*/ _render(($scope) => _text($scope.c, $scope.h)));
+const $obj_b = /*@__PURE__*/ _const(9, /*@__PURE__*/ _render(($scope) => _text($scope.d, $scope.j)));
 const $setup__script = _script("a0", ($scope) => _on($scope.f, "click", function() {
 	$obj($scope, {
 		a: 4,

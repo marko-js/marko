@@ -13,7 +13,8 @@ var baz_default = /*@__PURE__*/ _template("__tests__/tags/baz.marko", $template$
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<!>`)($template$1, $template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%b`)("b", "b", "b");
+const $setup__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], "b"));
 function $setup($scope) {
-	_text($scope["#text/3"], "b");
+	$setup__render($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

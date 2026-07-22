@@ -2,12 +2,13 @@
 const $template$1 = "<input>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
+const $input__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "#input/0", {
+	type: "radio",
+	...$scope.input
+}));
 const $input__script = _script("__tests__/tags/radio.marko_0_input", ($scope) => _attrs_script($scope, "#input/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs($scope, "#input/0", {
-		type: "radio",
-		...$scope.input
-	});
+	$input__render($scope);
 	$input__script($scope);
 });
 var radio_default = /*@__PURE__*/ _template("__tests__/tags/radio.marko", $template$1, " b", $setup$1, $input);
@@ -32,8 +33,9 @@ const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => 
 		value: "c"
 	});
 });
+const $checkedValue__render = /*@__PURE__*/ _render(($scope) => _text($scope["#text/3"], $scope.checkedValue));
 const $checkedValue = /*@__PURE__*/ _let("checkedValue/4", ($scope) => {
-	_text($scope["#text/3"], $scope.checkedValue);
+	$checkedValue__render($scope);
 	$checkedValue__OR__$checkedValueChange($scope);
 });
 const $checkedValueChange3 = /*@__PURE__*/ _const("$checkedValueChange", $checkedValue__OR__$checkedValueChange);

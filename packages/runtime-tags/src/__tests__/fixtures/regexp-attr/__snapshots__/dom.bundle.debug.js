@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<input><button>strict</button>";
 const $walks = " b b";
-const $pattern = ($scope, pattern) => _attr($scope["#input/0"], "pattern", pattern);
+const $pattern = /*@__PURE__*/ _render(($scope, pattern) => _attr($scope["#input/0"], "pattern", pattern));
 const $source = /*@__PURE__*/ _let("source/2", ($scope) => $pattern($scope, new RegExp($scope.source)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$source($scope, "^b+$");

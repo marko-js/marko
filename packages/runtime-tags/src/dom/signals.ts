@@ -12,7 +12,13 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { queueEffect, queueRender, rendering, runId } from "./queue";
+import {
+  queueEffect,
+  queueRender,
+  queueRenderEffect,
+  rendering,
+  runId,
+} from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
@@ -94,6 +100,14 @@ export function _const<T>(
       fn?.(scope);
     }
   }) as Signal<T>;
+}
+
+// Wraps a compiled render effect as a signal-shaped fn; created once per
+// effect at module init. Applies immediately until `_enable_transition()`
+// swaps in the queueing implementation, so templates without
+// client-updating awaits pay only the extra call.
+export function _render(fn: Signal): Signal {
+  return (scope, value) => queueRenderEffect(fn, scope, value);
 }
 
 export function _or(

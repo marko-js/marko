@@ -11,9 +11,10 @@ const $for_content__button = /*@__PURE__*/ _const("button", ($scope) => {
 	$if_content__button($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__button($scope, $params2[0]);
+const $htmlInput__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "#div/0", $scope.htmlInput));
 const $htmlInput__script = _script("__tests__/tags/child.marko_0_htmlInput", ($scope) => _attrs_script($scope, "#div/0"));
 const $htmlInput = /*@__PURE__*/ _const("htmlInput", ($scope) => {
-	_attrs($scope, "#div/0", $scope.htmlInput);
+	$htmlInput__render($scope);
 	$htmlInput__script($scope);
 });
 const $for = /*@__PURE__*/ _for_of("#div/0", "<!><!><!>", "b%c", 0, $for_content__$params);

@@ -1,13 +1,14 @@
 // template.marko
+const $input_rest__OR__checked__render = /*@__PURE__*/ _render(($scope) => _attrs($scope, "a", {
+	type: "radio",
+	checked: $scope.e,
+	checkedChange: $checkedChange($scope),
+	value: "x",
+	...$scope.d
+}));
 const $input_rest__OR__checked__script = _script("a1", ($scope) => _attrs_script($scope, "a"));
 const $input_rest__OR__checked = /*@__PURE__*/ _or(5, ($scope) => {
-	_attrs($scope, "a", {
-		type: "radio",
-		checked: $scope.e,
-		checkedChange: $checkedChange($scope),
-		value: "x",
-		...$scope.d
-	});
+	$input_rest__OR__checked__render($scope);
 	$input_rest__OR__checked__script($scope);
 });
 const $checked = /*@__PURE__*/ _let(4, $input_rest__OR__checked);
