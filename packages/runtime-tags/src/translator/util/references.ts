@@ -2536,6 +2536,10 @@ export function getAllSerializeReasonsForBinding(
   binding: Binding,
   properties?: Opt<string> | true,
 ): undefined | SerializeReason {
+  // The upstream-alias term is merged only for `properties !== true`, but it can
+  // only promote a binding that has no other reason — i.e. one never read in an
+  // expression, so never queried with `true`. A binding seen in both flavors
+  // therefore can't differ by flavor, so a single binding key is safe.
   let reason = serializeReasonCache.get(binding);
 
   if (reason === undefined) {

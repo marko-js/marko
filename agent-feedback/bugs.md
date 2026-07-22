@@ -169,12 +169,6 @@ module's ready id never resolves. The lazy tag's own render path recovers
 the dynamic import in a generated load entry and watch for the unhandled
 rejection with the ready id never firing.
 
-## Key `serializeReasonCache` on the `properties` flavor; it currently returns cross-flavor reasons
-
-`packages/runtime-tags/src/translator/util/references.ts` › `getAllSerializeReasonsForBinding` | 2026-07-20 | impact:med | effort:med
-
-`serializeReasonCache` is keyed only on the `Binding` (references.ts:2560/2600), but the value cached there depends on the `properties` argument: the upstream-alias contribution is merged only when `properties !== true` (2568) and same-section aliases are recursed with that same `properties` (2591). Two distinct flavors reach the same binding within one compilation — `getAllSerializeReasonsForExtra` always queries with `true` (2543) while `getSectionRegisterReasons` queries with `downstreamBinding.properties` (sections.ts:332-334), which is always a non-`true` `"content"`-suffixed list (set-tag-sections-downstream.ts) — and a cache hit skips the whole compute block, so whichever flavor runs first poisons the other. For a binding with an `upstreamAlias` (or properties-dependent aliases), a `true`-first order drops the upstream-alias reason from a later properties query (potential under-serialization / resume gap), while a non-`true`-first order over-includes it in a later `true` query (bytes that are not needed). Fix by adding the flavor to the cache key (e.g. `[binding, properties === true]`) or by memoizing only the properties-independent portion (base reason + reads) and recomputing the upstream-alias/alias terms per call. Re-verify: add the flavor bit to the key and run `npm run test:parallel`; any serialize/resume snapshot diff proves the memo was returning a value computed for a different `properties`.
-
 ## Dedup a Request/Response's headers against an already-serialized Headers instead of re-emitting inline and clobbering its ref
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeRequest` | 2026-07-20 | impact:low | effort:med
