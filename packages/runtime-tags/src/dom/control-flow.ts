@@ -207,7 +207,15 @@ export function _await_promise(
       },
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
-          awaitCounter!.i = scope[promiseAccessor] = 0;
+          scope[promiseAccessor] = 0;
+          // Complete the counter so an ancestor `@placeholder` dismisses (its
+          // `c()` only unwinds the placeholder). A bare await branch's `c()`
+          // does stream surgery that must not run on reject, so force-zero it.
+          if (tryPlaceholder) {
+            awaitCounter!.c();
+          } else {
+            awaitCounter!.i = 0;
+          }
           queueAsyncRender(scope, renderCatch, error);
         }
       },

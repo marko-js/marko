@@ -1,4 +1,4 @@
-// size: 26068 (min) 9592 (brotli)
+// size: 26078 (min) 9580 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1848,7 +1848,8 @@ function _await_promise(nodeAccessor, params) {
         },
         (error) => {
           thisPromise === scope[promiseAccessor] &&
-            ((awaitCounter.i = scope[promiseAccessor] = 0),
+            ((scope[promiseAccessor] = 0),
+            tryPlaceholder ? awaitCounter.c() : (awaitCounter.i = 0),
             queueAsyncRender(scope, renderCatch, error));
         },
       ));

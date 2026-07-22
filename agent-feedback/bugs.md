@@ -23,26 +23,6 @@ use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
 
-## CSR: rejected `<await>` under an ancestor `@placeholder` never dismisses the placeholder
-
-`packages/runtime-tags/src/dom/control-flow.ts` › `renderCatch` | 2026-07-10 | impact:med | effort:med
-
-In a pure client render of `<try @placeholder><await>…<try @catch><await=rejecting>…`,
-when the inner await rejects, `_await_promise`'s reject handler zeroes the
-ancestor placeholder's counter (`awaitCounter.i = 0`) without running the
-counter's completion, and `renderCatch` only unwinds a `PlaceholderBranch` on
-the try that owns the `@catch`. When the placeholder lives on an _ancestor_
-try (the nearest-placeholder lookup in `_await_promise` attaches the counter
-there), the detached content is never re-inserted and the page shows the
-placeholder forever; the catch content renders only into the detached tree.
-Observed in the `catch-reject-nested-in-await` fixture's `render-csr` snapshot
-(final state stays `loading outer...`; SSR of the same template shows
-`caught: ERROR!` plus the sibling `<div>`). A fix needs the reject path to
-complete (not zero) the pending counter so `dismissPlaceholder`/pending
-effects run, while keeping the forced-zero semantics for resumed reorder
-records — those `c()` implementations do stream-node surgery that must not run
-on rejection.
-
 ## Inline reorder runtime holds only one pending `onNextSibling` callback
 
 `packages/runtime-tags/src/html/inlined-runtimes.debug.ts` › `REORDER_RUNTIME_CODE` | 2026-07-10 | impact:low | effort:med
