@@ -78,6 +78,7 @@
     "complain": "^1.6.1",
     "csstype": "^3.2.3",
     "events-light": "^1.0.5",
+    "he": "^1.2.0",
     "listener-tracker": "^2.0.0",
     "magic-string": "^0.30.21",
     "minimatch": "^10.2.5",

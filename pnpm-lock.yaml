@@ -266,6 +266,9 @@ importers:
       events-light:
         specifier: ^1.0.5
         version: 1.0.5
+      he:
+        specifier: ^1.2.0
+        version: 1.2.0
       listener-tracker:
         specifier: ^2.0.0
         version: 2.0.0
