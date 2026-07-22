@@ -220,7 +220,12 @@ function getChangeHandler(
         : undefined;
 
       if (!changeAttrExpr) {
-        throw tag.hub.buildError(attr.value, "Unable to bind to value.");
+        throw tag.hub.buildError(
+          attr.value,
+          bindingIdentifierPath?.parentPath?.isArrayPattern()
+            ? `Cannot two-way bind to \`${attr.value.name}\` because it comes from array destructuring, which has no change handler. Use object destructuring or pass an explicit \`${changeAttrName}\` attribute.`
+            : "Unable to bind to value.",
+        );
       }
 
       if (modifier && t.isIdentifier(changeAttrExpr)) {

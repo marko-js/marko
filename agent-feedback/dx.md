@@ -187,12 +187,6 @@ and compiles to code that fails at runtime; detecting it through the binding
 graph would surface the same clear compile error. Verify: compile
 `<const/a=b/><const/b=a/>` used as a value and observe no diagnostic.
 
-## Give array-destructure two-way binding a cause-specific error instead of the generic "Unable to bind to value."
-
-`packages/runtime-tags/src/translator/visitors/program/pre-analyze.ts` › `getChangeHandler` | 2026-07-20 | impact:low | effort:low
-
-`value:=x` where `x` comes from object destructuring works, because `getChangeHandler` (`pre-analyze.ts:203-243`) auto-generates a sibling `xChange` key via `getChangeHandlerFromObjectPattern`, but the same shorthand on an array-destructured value throws the opaque `Unable to bind to value.` (pre-analyze.ts:226): the array-pattern element's `parentPath` is neither `binding.path` nor an `ObjectProperty`, so `changeAttrExpr` stays undefined. The message names neither the cause nor a fix, and the identical string is reused at pre-analyze.ts:260 for an unrelated failure mode (an existing change handler whose binding has no Marko root to host the injected `const`), so it cannot disambiguate. This is a real footgun given the asymmetry: an author who binds `value:=a` off `{ a }` reasonably expects `value:=x` off `[ x ]` to work too. Branch the message on the array-pattern case (an array element has no positional change key) to suggest object destructuring or an explicit `valueChange` handler, mirroring the already-specific "Bound attribute refinement shorthand must be a valid JavaScript identifier." diagnostic at pre-analyze.ts:197; note the `error-bound-attr-array-pattern` snapshot pins the current text and must be regenerated. Re-verify: `npm run compile -- -o dom` on `<const/[ x ] = input.pair/>` + `<input value:=x/>` throws `Unable to bind to value.`, while `<const/{ a } = input/>` + `<input value:=a/>` compiles cleanly (emitting `$aChange2` from `input.aChange`).
-
 ## Forward the translator cheatsheet through `createInteropTranslator` so the agent fix-guide fires for interop (Marko 5 and mixed 5/6) compiles
 
 `packages/runtime-tags/src/translator/interop/index.ts` › `createInteropTranslator` | 2026-07-20 | impact:med | effort:low

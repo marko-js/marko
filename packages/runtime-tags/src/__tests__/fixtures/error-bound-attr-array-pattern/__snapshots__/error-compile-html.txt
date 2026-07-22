@@ -2,5 +2,5 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-bound-attr-array-pattern/template.marko:2:15
       1 | <const/[ a ] = [1]/>
     > 2 | <input value:=a/>
-        |               ^ Unable to bind to value.
+        |               ^ Cannot two-way bind to `a` because it comes from array destructuring, which has no change handler. Use object destructuring or pass an explicit `valueChange` attribute.
       3 |
