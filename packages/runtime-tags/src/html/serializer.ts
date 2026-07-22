@@ -1175,6 +1175,9 @@ function writeArrayBuffer(state: State, val: ArrayBuffer) {
 }
 
 function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
+  // `constructor.name` is read off the instance (not the matched prototype):
+  // only a deliberately corrupted typed array differs, never parsed data.
+
   // Partial views serialize their full shared buffer for later sibling views.
   if (
     val.byteOffset ||
