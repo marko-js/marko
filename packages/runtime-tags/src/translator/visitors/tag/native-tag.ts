@@ -128,6 +128,19 @@ export default {
 
       for (let i = attributes.length; i--;) {
         const attr = attributes[i];
+
+        // Codegen drops a `content` attribute when the tag has body content
+        // (body wins), so skip it here too — otherwise its value creates a dead
+        // scope binding, walk slot, and resume marker for an ignored value.
+        if (
+          t.isMarkoAttribute(attr) &&
+          attr.name === "content" &&
+          tag.node.body.body.length
+        ) {
+          dropNodes(attr.value);
+          continue;
+        }
+
         const valueExtra = (attr.value.extra ??= {});
 
         if (t.isMarkoAttribute(attr)) {
