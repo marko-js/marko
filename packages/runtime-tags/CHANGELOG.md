@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.19
+
+### Patch Changes
+
+- [#3544](https://github.com/marko-js/marko/pull/3544) [`1994562`](https://github.com/marko-js/marko/commit/1994562ad85c6054514a74a17a0447e34612e2c1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compare a controlled multiple-`<select>`'s value to the DOM selection order-independently. Previously a set-equal but reordered value array spuriously fired `valueChange` (reordering the model to document order) whenever options were added or removed.
+
 ## 6.3.18
 
 ### Patch Changes
