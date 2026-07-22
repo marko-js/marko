@@ -1,7 +1,9 @@
-// size: 26164 (min) 9620 (brotli)
+// size: 26265 (min) 9689 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
+  unsafeStyleAttrReg = /[\\;]/g,
+  replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
   toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
     let str = "",
       sep = "",
@@ -338,7 +340,14 @@ function stringifyClassObject(name, value) {
   return value ? name : "";
 }
 function stringifyStyleObject(name, value) {
-  return value || value === 0 ? name + ":" + value : "";
+  return value || value === 0
+    ? escapeStyleAttr(name) + ":" + escapeStyleAttr(value + "")
+    : "";
+}
+function escapeStyleAttr(str) {
+  return unsafeStyleAttrReg.test(str)
+    ? str.replace(unsafeStyleAttrReg, replaceUnsafeStyleAttr)
+    : str;
 }
 function escapeStyleValue(str) {
   let closers = "",

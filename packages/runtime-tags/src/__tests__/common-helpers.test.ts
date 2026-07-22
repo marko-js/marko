@@ -92,6 +92,29 @@ describe("runtime-tags/common/helpers", () => {
         );
       }
     });
+
+    it("escapes `;`/`\\` in object names and values to block declaration injection", () => {
+      // A raw `;` in a value would inject another declaration on SSR; escaped, the
+      // browser drops the (now invalid) value like CSR's `setProperty` does.
+      assert.equal(
+        styleValue({ color: "red;background:url(//evil)" }),
+        "color:red\\3B background:url(//evil)",
+      );
+      // `\` is escaped so an attacker can't forge their own `\3B` escape.
+      assert.equal(
+        styleValue({ color: "red\\3B background:blue" }),
+        "color:red\\\\3B background:blue",
+      );
+      // The name is escaped too.
+      assert.equal(
+        styleValue({ "color;background": "red" }),
+        "color\\3B background:red",
+      );
+      // Non-structural chars (`{`/`}`/`<`) are left as-is (invalid → dropped by
+      // the browser); values without `;`/`\` are untouched.
+      assert.equal(styleValue({ color: "a}b{c<d" }), "color:a}b{c<d");
+      assert.equal(styleValue({ width: "10px" }), "width:10px");
+    });
   });
 
   describe("camelCase style key warning", () => {

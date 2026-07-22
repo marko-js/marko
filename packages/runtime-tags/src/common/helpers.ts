@@ -72,9 +72,19 @@ export function stringifyStyleObject(name: string, value: unknown) {
         .replace(/^ms-/, "-ms-")}\`.`,
     );
   }
-  // Numeric 0 renders (e.g. `width:0`); bigint `0n` deliberately is not
-  // special-cased (not worth the size on this hot helper).
-  return value || value === 0 ? name + ":" + value : "";
+  // Escape `;`/`\` in name and value so neither can inject another declaration
+  // (SSR); other chars aren't structural in a style attribute. `width:0` renders.
+  return value || value === 0
+    ? escapeStyleAttr(name) + ":" + escapeStyleAttr(value + "")
+    : "";
+}
+
+const unsafeStyleAttrReg = /[\\;]/g;
+const replaceUnsafeStyleAttr = (c: string) => (c === ";" ? "\\3B " : "\\\\");
+function escapeStyleAttr(str: string) {
+  return unsafeStyleAttrReg.test(str)
+    ? str.replace(unsafeStyleAttrReg, replaceUnsafeStyleAttr)
+    : str;
 }
 
 export function escapeStyleValue(str: string) {
