@@ -92,10 +92,10 @@ describe("runtime-tags/html/content", () => {
       );
     });
 
-    it("should escape </STYLE case-insensitively", () => {
+    it("should escape </STYLE case-insensitively, preserving case", () => {
       assert.equal(
         helpers._escape_style("foo </STYLE> bar"),
-        "foo \\3C/style> bar",
+        "foo \\3C/STYLE> bar",
       );
     });
 

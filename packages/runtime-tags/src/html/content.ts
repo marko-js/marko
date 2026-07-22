@@ -40,9 +40,9 @@ export function _escape_script(val: unknown) {
   return val ? escapeScriptStr(val + "") : val === 0 ? "0" : "";
 }
 
-const unsafeStyleReg = /<\/style/gi;
+const unsafeStyleReg = /<(\/style)/gi;
 const escapeStyleStr = (str: string) =>
-  unsafeStyleReg.test(str) ? str.replace(unsafeStyleReg, "\\3C/style") : str;
+  unsafeStyleReg.test(str) ? str.replace(unsafeStyleReg, "\\3C$1") : str;
 
 export function _escape_style(val: unknown) {
   if (MARKO_DEBUG) {
