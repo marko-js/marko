@@ -385,6 +385,8 @@ export function _id({ [AccessorProp.Global]: $global }: Scope) {
 
 export function _script(id: string, fn: (scope: Scope) => void) {
   _resume(id, fn);
+  // Queued in signal-graph (forward) order; hydration replays in reverse, so
+  // mount-effect order is unspecified across the two paths (see translator).
   return (scope: Scope) => {
     queueEffect(scope, fn);
   };
