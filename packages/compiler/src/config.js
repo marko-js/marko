@@ -1,5 +1,6 @@
-import { pkg } from "@marko/compiler/modules";
 import fs from "fs";
+
+import { pkg } from "@marko/compiler/modules";
 
 const config = {
   // The default output mode for compiled templates

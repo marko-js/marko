@@ -115,6 +115,7 @@ function canIgnoreRegister(
 }
 
 function getStaticDeclRefs(
+  // oxlint-disable-next-line only-used-in-recursion
   fnExtra: RegisteredFnExtra,
   path: t.NodePath<t.Node>,
   refs = new Set<t.NodeExtra>(),

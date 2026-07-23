@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "ignorePatterns": [
+    ".sizes",
+    "**/__snapshots__",
+    "**/*expected*",
+    "**/snapshots",
+    "**/test/**/input.js"
+  ],
+  "rules": {
+    "no-control-regex": "off",
+    "no-unused-expressions": "off",
+    "no-unused-vars": "off",
+    "typescript/no-duplicate-enum-values": "off",
+    "unicorn/no-new-array": "off",
+    "unicorn/no-thenable": "off",
+    "unicorn/prefer-string-starts-ends-with": "off"
+  }
+}

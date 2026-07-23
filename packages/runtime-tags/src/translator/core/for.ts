@@ -254,7 +254,8 @@ export default {
         writeHTMLResumeStatements(tagBody);
 
         const forTagArgs = getBaseArgsInForTag(forType, forAttrs) as (
-          t.Expression | undefined
+          | t.Expression
+          | undefined
         )[];
         const forTagHTMLRuntime = branchSerializeReason
           ? forTypeToHTMLResumeRuntime(forType)

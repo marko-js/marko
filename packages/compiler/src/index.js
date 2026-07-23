@@ -1,3 +1,5 @@
+import path from "path";
+
 import { DiagnosticType } from "@marko/compiler/babel-utils";
 import {
   loadPartialConfig,
@@ -8,7 +10,6 @@ import {
   types,
 } from "@marko/compiler/internal/babel";
 import markoModules from "@marko/compiler/modules";
-import path from "path";
 
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";

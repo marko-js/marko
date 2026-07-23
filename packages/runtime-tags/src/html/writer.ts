@@ -700,7 +700,9 @@ export function _subscribe(
 
 // A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
 export type SerializeReasonValue =
-  undefined | number | Partial<Record<string, 0 | 1>>;
+  | undefined
+  | number
+  | Partial<Record<string, 0 | 1>>;
 
 export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
@@ -840,7 +842,8 @@ export function _try(
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
     : undefined;
   const placeholderContent = normalizeDynamicRenderer(input.placeholder) as
-    ServerRenderer | undefined;
+    | ServerRenderer
+    | undefined;
 
   if (catchContent !== undefined) {
     tryCatch(
@@ -1629,7 +1632,9 @@ function getFilteredGlobals($global: Record<string, unknown>) {
   if (!$global) return 0;
 
   const serializedGlobals = $global.serializedGlobals as
-    string[] | Record<string, boolean> | undefined;
+    | string[]
+    | Record<string, boolean>
+    | undefined;
 
   if (!serializedGlobals) return 0;
 

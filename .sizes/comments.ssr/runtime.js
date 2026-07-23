@@ -1,7 +1,6 @@
 // size: 2668 (min) 1309 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
-let decodeAccessor = (num) =>
-    (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
+let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   isScheduled,
@@ -71,23 +70,17 @@ function init(runtimeId = "M") {
     initRuntime = (renders) => {
       defineRuntime({
         value: (curRenders = (renderId) => {
-          let render = (curRenders[renderId] =
-              renders[renderId] || renders(renderId)),
+          let render = (curRenders[renderId] = renders[renderId] || renders(renderId)),
             walk = render.w,
             scopeLookup = {},
             getScope = (id) =>
-              scopeLookup[id] ||
-              (+id ? initScope((scopeLookup[id] = { L: +id })) : initGlobal()),
+              scopeLookup[id] || (+id ? initScope((scopeLookup[id] = { L: +id })) : initGlobal()),
             initGlobal = () =>
               (scopeLookup[0] ||= {
                 runtimeId,
                 renderId,
               }),
-            initScope = (scope) => (
-              (scope.H = 1),
-              (scope.$ = initGlobal()),
-              scope
-            ),
+            initScope = (scope) => ((scope.H = 1), (scope.$ = initGlobal()), scope),
             applyScopes = (partials) => {
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
@@ -97,8 +90,7 @@ function init(runtimeId = "M") {
                   : (scopeId
                       ? initScope(
                           Object.assign(
-                            (scopeLookup[scopeId] ||=
-                              ((partial.L = scopeId), partial)),
+                            (scopeLookup[scopeId] ||= ((partial.L = scopeId), partial)),
                             partial,
                           ),
                         )
@@ -116,8 +108,7 @@ function init(runtimeId = "M") {
               (lastToken = visitText.slice(
                 lastTokenIndex,
                 (lastTokenIndex =
-                  visitText.indexOf(" ", lastTokenIndex) + 1 ||
-                  visitText.length + 1) - 1,
+                  visitText.indexOf(" ", lastTokenIndex) + 1 || visitText.length + 1) - 1,
               )),
             processResumes = (resumes = [], effects) => {
               let i = 0;
@@ -199,9 +190,7 @@ function _attr(element, name, value) {
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
-    (value === void 0
-      ? element.removeAttribute(name)
-      : element.setAttribute(name, value));
+    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
 function _text(node, value) {
   let normalizedValue = _to_text(value);

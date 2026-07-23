@@ -1,6 +1,7 @@
+import path from "path";
+
 import type { types as t } from "@marko/compiler";
 import { resolveRelativePath } from "@marko/compiler/babel-utils";
-import path from "path";
 
 export function resolveRelativeToEntry(
   entryFile: t.BabelFile,

@@ -21,8 +21,8 @@ pnpm run test:update -- --grep "..."                      # regenerate snapshots
 pnpm run compile -- -o dom -d foo.marko                   # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
 pnpm run build                                            # all packages -> dist/ + .d.ts
 pnpm run build:sizes                                      # bundle-size table; diffs vs .sizes.json
-pnpm run lint                                             # eslint + prettier check
-pnpm run format                                           # eslint --fix + prettier --write
+pnpm run lint                                             # oxlint + oxfmt check
+pnpm run format                                           # oxlint --fix + oxfmt write
 pnpm run change                                           # add a changeset (required for user-facing changes)
 ```
 
@@ -31,7 +31,7 @@ pnpm run change                                           # add a changeset (req
 ## Repo invariants
 
 - **Babel is patched.** `patches/` (applied by pnpm patchedDependencies on install) adds Marko AST node types to `@babel/types`/`traverse`/`generator`. Import Babel only via `@marko/compiler/internal/babel` and helpers via `@marko/compiler/babel-utils`, never `@babel/*` directly. Bumping a `@babel/*` version requires regenerating its patch.
-- **Bundle size is a feature.** The pre-commit hook runs lint-staged, a full build, and `build:sizes`, staging `.sizes.json`/`.sizes/` — that diff is the size impact of the change. Commits are slow by design.
+- **Bundle size is a feature.** The pre-commit hook runs lint-staged, a full build, and `build:sizes`, staging `.sizes.json`/`.sizes/` — that diff is the size impact of the change. Commits are slow by design. Lint rules whose fix rewrites runtime code into larger output stay off in `.oxlintrc.json` (`unicorn/prefer-string-starts-ends-with`, `unicorn/no-new-array`); enabling one means checking `build:sizes` first.
 - **Snapshots and sizes are generated.** Never hand-edit _or delete_ `__snapshots__/**`, fixture `sizes.json`, or `.sizes*`; regenerate with `pnpm run test:update` (which also prunes stale snapshots) and the commit hook.
 - **CI** (`.github/workflows/ci.yml`): build + lint on Node 26; tests on Node 22/24/26 (`MARKO_DEBUG=1`, c8 coverage). Releases go out via changesets on push to `main`.
 

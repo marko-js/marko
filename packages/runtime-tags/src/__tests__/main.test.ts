@@ -1,8 +1,9 @@
-import * as compiler from "@marko/compiler";
 import assert from "assert";
 import fs from "fs";
-import { html_beautify } from "js-beautify";
 import path from "path";
+
+import * as compiler from "@marko/compiler";
+import { html_beautify } from "js-beautify";
 
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
@@ -172,26 +173,28 @@ function testFixtures(interop?: true) {
             csr.reset();
             ssr.reset();
           });
-          const getModeOpts = once((): compiler.Config => ({
-            translator,
-            runtimeId: config.runtime_id,
-            writeVersionComment: false,
-            babelConfig: {
-              babelrc: false,
-              configFile: false,
-              browserslistConfigFile: false,
-            },
-            optimize,
-            optimizeKnownTemplates: optimize
-              ? (
-                  fs.readdirSync(fixtureDir, {
-                    recursive: true,
-                  }) as string[]
-                )
-                  .filter((f) => f.endsWith(".marko"))
-                  .map((f) => path.join(fixtureDir, f))
-              : undefined,
-          }));
+          const getModeOpts = once(
+            (): compiler.Config => ({
+              translator,
+              runtimeId: config.runtime_id,
+              writeVersionComment: false,
+              babelConfig: {
+                babelrc: false,
+                configFile: false,
+                browserslistConfigFile: false,
+              },
+              optimize,
+              optimizeKnownTemplates: optimize
+                ? (
+                    fs.readdirSync(fixtureDir, {
+                      recursive: true,
+                    }) as string[]
+                  )
+                    .filter((f) => f.endsWith(".marko"))
+                    .map((f) => path.join(fixtureDir, f))
+                : undefined,
+            }),
+          );
 
           const ssrRunner = once(() =>
             createServerRunner(

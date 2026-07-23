@@ -26,8 +26,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ***********************************************************************************************/
 
-import { MARKO_TYPES } from "@babel/types";
 import fs from "fs";
+
+import { MARKO_TYPES } from "@babel/types";
 
 const HUB_INTERFACE = "export interface HubInterface {";
 const HUB_CLASS =

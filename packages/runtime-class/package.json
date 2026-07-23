@@ -4,25 +4,20 @@
   "private": true,
   "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [
-    "front-end",
-    "templating",
-    "template",
     "async",
-    "streaming",
     "components",
+    "dom",
+    "front-end",
+    "morphdom",
+    "streaming",
+    "template",
+    "templating",
     "ui",
     "vdom",
-    "dom",
-    "morphdom",
     "virtual",
     "virtual-dom"
   ],
   "homepage": "https://markojs.com/",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/marko-js/marko.git",
-    "directory": "packages/runtime-class"
-  },
   "license": "MIT",
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
@@ -33,14 +28,11 @@
     "Dylan Piercey <pierceydylan@gmail.com>",
     "Martin Aberer"
   ],
-  "main": "index.js",
-  "browser": {
-    "./compiler.js": "./compiler-browser.marko",
-    "./components.js": "./components-browser.marko",
-    "./legacy-components.js": "./legacy-components-browser.marko",
-    "./index.js": "./index-browser.marko"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marko-js/marko.git",
+    "directory": "packages/runtime-class"
   },
-  "types": "index.d.ts",
   "bin": {
     "markoc": "bin/markoc"
   },
@@ -66,6 +58,14 @@
     "translator/package.json",
     "translator/index.d.ts"
   ],
+  "main": "index.js",
+  "browser": {
+    "./compiler.js": "./compiler-browser.marko",
+    "./components.js": "./components-browser.marko",
+    "./legacy-components.js": "./legacy-components-browser.marko",
+    "./index.js": "./index-browser.marko"
+  },
+  "types": "index.d.ts",
   "scripts": {
     "build": "babel ./src --out-dir ./dist --extensions .js --copy-files --config-file ../../babel.config.js --env-name=production"
   },

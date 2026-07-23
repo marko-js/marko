@@ -1,5 +1,6 @@
-import type { types as t } from "@marko/compiler";
 import path from "path";
+
+import type { types as t } from "@marko/compiler";
 
 import type { TestConfig } from "../main.test";
 

@@ -1,15 +1,12 @@
 // size: 6430 (min) 2823 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
-let decodeAccessor = (num) =>
-    (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
+let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
   nextScopeId = 1e6,
   destroyNestedScopes = function destroyNestedScopes(scope) {
-    ((scope.H = 0),
-      scope.D?.forEach(destroyNestedScopes),
-      scope.B?.forEach(resetControllers));
+    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(resetControllers));
   },
   isScheduled,
   channel,
@@ -31,32 +28,23 @@ let decodeAccessor = (num) =>
         scope[decodeAccessor(currentScopeIndex++)] = node;
       } else if (value === 37 || value === 49)
         (walker.currentNode.replaceWith(
-          (walker.currentNode = scope[decodeAccessor(currentScopeIndex++)] =
-            new Text()),
+          (walker.currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
         ),
-          value === 49 &&
-            (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+          value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value === 38) return currentWalkIndex;
       else if (value === 47 || value === 48)
         ((currentWalkIndex = walkInternal(
           currentWalkIndex,
           walkCodes,
-          (scope[decodeAccessor(currentScopeIndex++)] = createScope(
-            scope.$,
-            scope.F,
-          )),
+          (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
         )),
-          value === 48 &&
-            (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+          value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 20 * currentMultiplier + value - 67; value--;)
-          walker.nextNode();
+        for (value = 20 * currentMultiplier + value - 67; value--;) walker.nextNode();
       else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--;)
-          walker.nextSibling();
+        for (value = 10 * currentMultiplier + value - 97; value--;) walker.nextSibling();
       else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--;)
-          walker.parentNode();
+        for (value = 10 * currentMultiplier + value - 107; value--;) walker.parentNode();
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
@@ -79,11 +67,7 @@ let decodeAccessor = (num) =>
   catchEnabled,
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
-    return (
-      (renderer.mount = mount),
-      (renderer._ = renderer),
-      _resume(id, renderer)
-    );
+    return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
   };
 function isNotVoid(value) {
   return value != null && value !== !1;
@@ -177,8 +161,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
         queueRender(
           ownerScope,
           () => {
-            for (let scope of scopes)
-              scope.H > 0 && scope.H < runId && fn(scope);
+            for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
           },
           -1,
           0,
@@ -223,15 +206,11 @@ function createBranch($global, renderer, parentScope, parentNode) {
 }
 function setParentBranch(branch, parentBranch) {
   (parentBranch &&
-    ((branch.N = parentBranch),
-    (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
+    ((branch.N = parentBranch), (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
     (branch.F = branch));
 }
 function createAndSetupBranch($global, renderer, parentScope, parentNode) {
-  return setupBranch(
-    renderer,
-    createBranch($global, renderer, parentScope, parentNode),
-  );
+  return setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
 }
 function setupBranch(renderer, branch) {
   return (renderer.c && queueRender(branch, renderer.c, -1), branch);
@@ -242,10 +221,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     (params ||= void 0));
   let clone = template
     ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
-          template,
-          ns,
-        ))(branch, walks);
+        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(template, ns))(branch, walks);
       }
     : (branch) => {
         walk((branch.S = branch.K = new Text()), walks, branch);
@@ -290,9 +266,7 @@ function _attr(element, name, value) {
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
-    (value === void 0
-      ? element.removeAttribute(name)
-      : element.setAttribute(name, value));
+    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
 function _text(node, value) {
   let normalizedValue = _to_text(value);
@@ -327,14 +301,11 @@ function _if(nodeAccessor, ...branchesArgs) {
     branches = [],
     i = 0;
   for (; i < branchesArgs.length;)
-    branches.push(
-      _content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])(),
-    );
+    branches.push(_content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])());
   return (
     enableBranches(),
     (scope, newBranch) => {
-      newBranch !==
-        (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
+      newBranch !== (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
         setConditionalRenderer(
           scope,
           nodeAccessor,
@@ -344,23 +315,15 @@ function _if(nodeAccessor, ...branchesArgs) {
     }
   );
 }
-function setConditionalRenderer(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch,
-) {
+function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
   let referenceNode = scope[nodeAccessor],
     prevBranch = scope["A" + nodeAccessor],
     parentNode =
-      referenceNode.nodeType > 1
-        ? (prevBranch?.S || referenceNode).parentNode
-        : referenceNode,
+      referenceNode.nodeType > 1 ? (prevBranch?.S || referenceNode).parentNode : referenceNode,
     newBranch = (scope["A" + nodeAccessor] =
       newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
   referenceNode === parentNode
-    ? (prevBranch &&
-        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+    ? (prevBranch && (destroyBranch(prevBranch), (referenceNode.textContent = "")),
       newBranch && insertBranchBefore(newBranch, parentNode, null))
     : prevBranch
       ? (newBranch
@@ -368,8 +331,7 @@ function setConditionalRenderer(
           : parentNode.insertBefore(referenceNode, prevBranch.S),
         removeAndDestroyBranch(prevBranch))
       : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode),
-        referenceNode.remove());
+        (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {
@@ -401,20 +363,13 @@ function loop(forEach) {
               (oldScopesByKey || key !== (oldScope?.M ?? i)
                 ? (oldScopesByKey ||= oldScopes.reduce(
                     (map, scope, j) =>
-                      j < i
-                        ? map
-                        : ((scope.I = j), map.set(scope.M ?? j, scope)),
+                      j < i ? map : ((scope.I = j), map.set(scope.M ?? j, scope)),
                     /* @__PURE__ */ new Map(),
                   )).get(key)
                 : oldScope && (start++, oldScope));
           (branch
             ? ((hasPotentialMoves = !0), oldScopesByKey?.delete(key))
-            : (branch = createAndSetupBranch(
-                scope.$,
-                renderer,
-                scope,
-                parentNode,
-              )),
+            : (branch = createAndSetupBranch(scope.$, renderer, scope, parentNode)),
             (branch.M = key),
             newScopes.push(branch),
             params?.(branch, args));
@@ -428,32 +383,19 @@ function loop(forEach) {
           (hasSiblings &&
             (oldLen
               ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
-                newLen ||
-                  parentNode.insertBefore(referenceNode, afterReference))
-              : newLen &&
-                ((afterReference = referenceNode.nextSibling),
-                referenceNode.remove())),
+                newLen || parentNode.insertBefore(referenceNode, afterReference))
+              : newLen && ((afterReference = referenceNode.nextSibling), referenceNode.remove())),
           !hasPotentialMoves)
         ) {
           oldLen &&
-            (oldScopes.forEach(
-              hasSiblings ? removeAndDestroyBranch : destroyBranch,
-            ),
+            (oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
             hasSiblings || (parentNode.textContent = ""));
-          for (let newScope of newScopes)
-            insertBranchBefore(newScope, parentNode, afterReference);
+          for (let newScope of newScopes) insertBranchBefore(newScope, parentNode, afterReference);
           return;
         }
         if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
-        else
-          for (let i = newLen; i < oldLen; i++)
-            removeAndDestroyBranch(oldScopes[i]);
-        for (
-          ;
-          oldEnd >= start &&
-          newEnd >= start &&
-          oldScopes[oldEnd] === newScopes[newEnd];
-        )
+        else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
+        for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
           (oldEnd--, newEnd--);
         if (
           (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
@@ -479,22 +421,15 @@ function loop(forEach) {
             else {
               for (lo = 0, hi = tail; lo < hi;)
                 ((mid = ((lo + hi) / 2) | 0),
-                  sources[tails[mid]] < sources[i]
-                    ? (lo = mid + 1)
-                    : (hi = mid));
+                  sources[tails[mid]] < sources[i] ? (lo = mid + 1) : (hi = mid));
               sources[i] < sources[tails[lo]] &&
                 (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
             }
-        for (hi = tails[tail], lo = tail + 1; lo-- > 0;)
-          ((tails[lo] = hi), (hi = pred[hi]));
+        for (hi = tails[tail], lo = tail + 1; lo-- > 0;) ((tails[lo] = hi), (hi = pred[hi]));
         for (let i = diffLen; i--;)
           (~tail && i === tails[tail]
             ? tail--
-            : insertBranchBefore(
-                newScopes[start + i],
-                parentNode,
-                afterReference,
-              ),
+            : insertBranchBefore(newScopes[start + i], parentNode, afterReference),
             (afterReference = newScopes[start + i].S));
       }
     );
@@ -549,10 +484,7 @@ function prepareEffects(fn) {
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
-    (runId++,
-      (rendering = 0),
-      (pendingRenders = prevRenders),
-      (pendingEffects = prevEffects));
+    (runId++, (rendering = 0), (pendingRenders = prevRenders), (pendingEffects = prevEffects));
   }
   return preparedEffects;
 }
@@ -619,8 +551,7 @@ function mount(input = {}, reference, position) {
       nextSibling = reference.firstChild;
       break;
     case "afterend":
-      ((parentNode = reference.parentNode),
-        (nextSibling = reference.nextSibling));
+      ((parentNode = reference.parentNode), (nextSibling = reference.nextSibling));
       break;
   }
   let curValue,

@@ -1,10 +1,11 @@
-import * as compiler from "@marko/compiler";
-import type { Template } from "@marko/runtime-tags/common/types";
 import { readFileSync } from "fs";
 import path from "path";
+import zlib from "zlib";
+
+import * as compiler from "@marko/compiler";
+import type { Template } from "@marko/runtime-tags/common/types";
 import { build, type Plugin, type RolldownOutput } from "rolldown";
 import { minifySync } from "rolldown/utils";
-import zlib from "zlib";
 
 import { importEvictable, importWithContext } from "./import-with-context";
 

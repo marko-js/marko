@@ -1,9 +1,10 @@
+import path from "path";
+
 import {
   pluginTransformTypeScript,
   traverse,
   types as t,
 } from "@marko/compiler/internal/babel";
-import path from "path";
 
 import { diagnosticError, DiagnosticType } from "../babel-utils/diagnostics";
 import { getFileInternal, setFileInternal } from "../babel-utils/get-file";

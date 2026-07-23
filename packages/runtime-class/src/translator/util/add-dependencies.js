@@ -1,3 +1,5 @@
+import path from "path";
+
 import { types as t } from "@marko/compiler";
 import {
   loadFileForImport,
@@ -6,7 +8,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import markoModules from "@marko/compiler/modules";
 import MagicString from "magic-string";
-import path from "path";
 const kEntryState = Symbol();
 const lassoDepPrefix = "package: ";
 
