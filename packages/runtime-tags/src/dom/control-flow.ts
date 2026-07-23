@@ -381,6 +381,8 @@ export function _try(
   };
 }
 
+// Catching destroys the content branch (and its subscriptions) for good: a new
+// promise can't recover the boundary, only re-rendering the `<try>` itself.
 export function renderCatch(scope: Scope, error: unknown) {
   const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
   if (!tryWithCatch) {
