@@ -1,3 +1,4 @@
+import * as Char from "./constants/char";
 import type { Boundary } from "./writer";
 
 export const K_SCOPE_ID = Symbol("Scope ID");
@@ -2002,16 +2003,7 @@ function isCircular(
   return false;
 }
 
-const enum Char {
-  Dollar = 36, // $
-  Digit0 = 48, // 0
-  Digit9 = 57, // 9
-  UpperA = 65, // A
-  UpperZ = 90, // Z
-  Underscore = 95, // _
-  LowerA = 97, // a
-  LowerZ = 122, // z
-}
+type Char = Char.Value;
 
 export function toObjectKey(name: string) {
   if (name === "") {

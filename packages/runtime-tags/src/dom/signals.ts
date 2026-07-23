@@ -22,7 +22,7 @@ export type Signal<T = unknown, U extends Scope = Scope> = (
   value: T,
 ) => void;
 type KeyedScopes = Map<unknown, BranchScope> & {
-  [x: `${KeyedScopesProp.PreviousKey}${string}`]: unknown;
+  [x: `${typeof KeyedScopesProp.PreviousKey}${string}`]: unknown;
 };
 
 export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
@@ -169,7 +169,7 @@ export function _for_selector(
   }
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
-  const prevKeyProp: `${KeyedScopesProp.PreviousKey}${string}` = `${KeyedScopesProp.PreviousKey}${ownerValueAccessor as string}`;
+  const prevKeyProp: `${typeof KeyedScopesProp.PreviousKey}${string}` = `${KeyedScopesProp.PreviousKey}${ownerValueAccessor as string}`;
   const ownerSignal = (ownerScope: Scope) => {
     const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
     if (ownerScope[AccessorProp.Gen] < runId && scopes.length) {
@@ -376,7 +376,7 @@ export const _var_change = MARKO_DEBUG
   : (scope: Scope, value: unknown) =>
       scope[AccessorProp.TagVariableChange]?.(value);
 
-const tagIdsByGlobal = new WeakMap<Scope[AccessorProp.Global], number>();
+const tagIdsByGlobal = new WeakMap<Scope[typeof AccessorProp.Global], number>();
 export function _id({ [AccessorProp.Global]: $global }: Scope) {
   const id = tagIdsByGlobal.get($global) || 0;
   tagIdsByGlobal.set($global, id + 1);

@@ -34,6 +34,7 @@ import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
+import * as SiblingText from "./constants/sibling-text";
 import { scopeIdentifier } from "./program";
 
 const kNodeBinding = Symbol("placeholder node binding");
@@ -41,14 +42,7 @@ const kSiblingText = Symbol("placeholder has sibling text");
 const kSharedText = Symbol(
   "placeholder will merge its visitor with a another node",
 );
-enum SiblingText {
-  None,
-  Before,
-  After,
-  // A non-text node (element/comment) directly precedes: no text to merge
-  // with, but resume must not claim that node when the text renders empty.
-  NodeBefore,
-}
+type SiblingText = SiblingText.Value;
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
     [kNodeBinding]?: Binding;

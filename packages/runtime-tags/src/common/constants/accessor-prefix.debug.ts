@@ -1,0 +1,16 @@
+export const BranchScopes = "BranchScopes:";
+export const ClosureScopes = "ClosureScopes:";
+export const ClosureSignalIndex = "ClosureSignalIndex:";
+export const ConditionalRenderer = "ConditionalRenderer:";
+export const ControlledHandler = "ControlledHandler:";
+export const ControlledType = "ControlledType:";
+export const ControlledValue = "ControlledValue:";
+export const DynamicHTMLLastChild = "DynamicHTMLLastChild:";
+export const EventAttributes = "EventAttributes:";
+export const KeyedScopes = "KeyedScopes:";
+export const Lifecycle = "Lifecycle:";
+export const Promise = "Promise:";
+export const TagVariableChange = "TagVariableChange:";
+
+type Self = typeof import("./accessor-prefix.debug");
+export type Value = Self[keyof Self];

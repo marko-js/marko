@@ -99,7 +99,7 @@ export const compat = {
     return value;
   },
   createRenderer(
-    params: NonNullable<Renderer[RendererProp.Params]>,
+    params: NonNullable<Renderer[typeof RendererProp.Params]>,
     clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
     const renderer = _content("", 0, 0, 0, params)();

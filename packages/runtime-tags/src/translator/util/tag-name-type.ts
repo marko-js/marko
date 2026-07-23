@@ -7,6 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { LoadImportConfig } from "../visitors/import-declaration";
+import * as TagNameType from "./constants/tag-name-type";
 import { isCoreTag } from "./is-core-tag";
 
 declare module "@marko/compiler/dist/types" {
@@ -23,12 +24,8 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export enum TagNameType {
-  NativeTag,
-  CustomTag,
-  DynamicTag,
-  AttributeTag,
-}
+type TagNameType = TagNameType.Value;
+export { TagNameType };
 
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
 

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-this-alias */
-
 import {
   _el_read_error,
   _hoist_read_error,
@@ -7,6 +5,7 @@ import {
 } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { isPromise, normalizeDynamicRenderer } from "../common/helpers";
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { concat, forEach, type Opt, push } from "../common/opt";
 import {
   type $Global,
@@ -18,6 +17,9 @@ import {
 } from "../common/types";
 import { RendererProp } from "../common/types";
 import { attrAssignment } from "./attrs";
+import * as FlushStatus from "./constants/flush-status";
+import * as Mark from "./constants/mark";
+import * as RuntimeKey from "./constants/runtime-key";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -961,18 +963,9 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
 
 const NOOP = () => {};
 
-enum Mark {
-  Placeholder = "!^",
-  PlaceholderEnd = "!",
-  ReorderMarker = "#",
-}
+type Mark = Mark.Value;
 
-enum RuntimeKey {
-  Walk = ".w",
-  Resume = ".r",
-  Ready = ".b",
-  Scripts = ".j",
-}
+type RuntimeKey = RuntimeKey.Value;
 
 export class State implements SerializeState {
   public tagId = 1;
@@ -1067,11 +1060,8 @@ export class State implements SerializeState {
   }
 }
 
-export enum FlushStatus {
-  complete,
-  continue,
-  aborted,
-}
+type FlushStatus = FlushStatus.Value;
+export { FlushStatus };
 
 export class Boundary extends AbortController {
   public onNext = NOOP;

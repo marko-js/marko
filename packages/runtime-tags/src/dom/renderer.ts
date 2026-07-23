@@ -28,7 +28,7 @@ export type Renderer = {
 export type SetupFn = (scope: Scope) => void;
 
 export function createBranch(
-  $global: Scope[AccessorProp.Global],
+  $global: Scope[typeof AccessorProp.Global],
   renderer: Renderer | string,
   parentScope: Scope | undefined,
   parentNode: ParentNode,
@@ -62,7 +62,7 @@ export function setParentBranch(
 }
 
 export function createAndSetupBranch(
-  $global: Scope[AccessorProp.Global],
+  $global: Scope[typeof AccessorProp.Global],
   renderer: Renderer,
   parentScope: Scope | undefined,
   parentNode: ParentNode,
@@ -93,7 +93,7 @@ export function _content(
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   setup = setup ? (setup as { _: SetupFn })._ || setup : undefined;
   params ||= undefined;
-  const clone: Renderer[RendererProp.Clone] = template
+  const clone: Renderer[typeof RendererProp.Clone] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
           template,
@@ -139,7 +139,9 @@ export function _content_closures(
   renderer: ReturnType<typeof _content>,
   closureFns: Record<Accessor, SignalFn>,
 ) {
-  const closureSignals: NonNullable<Renderer[RendererProp.LocalClosures]> = {};
+  const closureSignals: NonNullable<
+    Renderer[typeof RendererProp.LocalClosures]
+  > = {};
   for (const key in closureFns) {
     closureSignals[key] = _const(MARKO_DEBUG ? key : +key, closureFns[key]);
   }

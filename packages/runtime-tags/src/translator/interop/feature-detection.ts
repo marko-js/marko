@@ -7,11 +7,9 @@ import {
 
 import runtimeInfo from "../util/runtime-info";
 import { buildAggregateError } from "./build-aggregate-error";
+import * as FeatureType from "./constants/feature-type";
 
-const enum FeatureType {
-  Class = "class",
-  Tags = "tags",
-}
+type FeatureType = FeatureType.Value;
 
 type Feature = {
   name: string;

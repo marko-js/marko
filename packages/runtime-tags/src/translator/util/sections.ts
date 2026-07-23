@@ -7,6 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
+import * as ContentType from "./constants/content-type";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import {
@@ -42,13 +43,8 @@ export type ParamSerializeReasonGroups = [
   ...ParamSerializeReasonGroup[],
 ];
 
-export enum ContentType {
-  Comment,
-  Dynamic,
-  Placeholder,
-  Tag,
-  Text,
-}
+type ContentType = ContentType.Value;
+export { ContentType };
 
 export interface Section {
   id: number;
