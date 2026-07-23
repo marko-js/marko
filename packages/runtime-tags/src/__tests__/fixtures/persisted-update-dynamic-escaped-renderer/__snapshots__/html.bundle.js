@@ -12,6 +12,7 @@ var lineup_default = _template("b", (input) => {
 	}, $scope0_id, "a", $sg__input_performers, $sg__input_performers, $sg__input_performers, "</ol>", 1);
 	$sg__input_performers && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<ol class=lineup></ol>", " b"] });
 
 // tags/stage.marko
 var stage_default = _template("c", (input) => {

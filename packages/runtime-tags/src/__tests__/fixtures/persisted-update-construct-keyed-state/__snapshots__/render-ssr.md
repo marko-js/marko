@@ -1283,7 +1283,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="11"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1293,7 +1293,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="12"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1303,7 +1303,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="13"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1313,7 +1313,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="14"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1323,7 +1323,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="15"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1333,7 +1333,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="16"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1343,7 +1343,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="17"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1353,7 +1353,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="18"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1363,7 +1363,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="19"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1373,7 +1373,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="20"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1383,7 +1383,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="21"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1393,7 +1393,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="22"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1403,7 +1403,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="23"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1413,7 +1413,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="24"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1423,7 +1423,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="25"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1433,7 +1433,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="26"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1443,7 +1443,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="27"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1453,7 +1453,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="28"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1463,7 +1463,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="29"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1473,7 +1473,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="30"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1483,7 +1483,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="31"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1493,7 +1493,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="32"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1503,7 +1503,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="33"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1513,7 +1513,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="34"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1523,7 +1523,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="35"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1533,7 +1533,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="36"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1543,7 +1543,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="37"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1553,7 +1553,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="38"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1563,7 +1563,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="39"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1573,7 +1573,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="40"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1583,7 +1583,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="41"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1593,7 +1593,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="42"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1603,7 +1603,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="43"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1613,7 +1613,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="44"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1623,7 +1623,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="45"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1633,7 +1633,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="46"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1643,7 +1643,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="47"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1653,7 +1653,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="48"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1663,7 +1663,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="49"
     >
-       
+      watch
     </button>
   </li>
   <li>
@@ -1673,7 +1673,7 @@ _assert.default.equal(item(document).textContent, "watching");
     <button
       data-id="50"
     >
-       
+      watch
     </button>
   </li>
 </ul>
@@ -1720,6 +1720,46 @@ INSERT: ul > li:nth-of-type(46) + li
 INSERT: ul > li:nth-of-type(47) + li
 INSERT: ul > li:nth-of-type(48) + li
 INSERT: ul > li:nth-of-type(49) + li
+UPDATE: ul > li:nth-of-type(11) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(12) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(13) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(14) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(15) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(16) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(17) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(18) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(19) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(20) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(21) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(22) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(23) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(24) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(25) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(26) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(27) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(28) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(29) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(30) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(31) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(32) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(33) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(34) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(35) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(36) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(37) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(38) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(39) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(40) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(41) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(42) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(43) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(44) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(45) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(46) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(47) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(48) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(49) > button::text " " => "watch"
+UPDATE: ul > li:nth-of-type(50) > button::text " " => "watch"
 ```
 
 # Update

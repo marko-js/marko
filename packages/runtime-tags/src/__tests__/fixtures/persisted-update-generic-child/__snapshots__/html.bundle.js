@@ -5,6 +5,7 @@ var badge_default = _template("b", (input) => {
 	_html(`<span${_attr_class(["badge", input.tone])}${_attr("title", `tone: ${input.tone}`)}>${_escape(input.label)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<span> </span>", " D l"] });
 
 // tags/panel.marko
 var panel_default = _template("c", (input) => {
@@ -78,12 +79,12 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a0": [[
 		"<button>clicked <!></button>",
-		["b"],
+		["b0"],
 		["c"],
 		["d"]
 	], [
 		" Db%l/",
-		["b"],
+		["b0"],
 		"&/",
 		["c"],
 		"&/",
@@ -92,12 +93,12 @@ _renderer_shells({
 	]],
 	"a": [[
 		"<button>clicked <!></button>",
-		["b"],
+		["b0"],
 		["c"],
 		["d"]
 	], [
 		" Db%l/",
-		["b"],
+		["b0"],
 		"&/",
 		["c"],
 		"&/",

@@ -164,21 +164,22 @@ navigations are safe: the skip still records the applied capture
 first patch, also treat a missing record with a present `ControlledValue`
 whose normalized form differs from the capture as changed.
 
-## Ecommerce demo "wrong product id after navigation" is not reproducible in the applier
+## Ecommerce demo "wrong product id after navigation": root-caused as constructed-content const elision (fixed)
 
-`packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit` | 2026-07-17 | impact:med | effort:med
+`packages/runtime-tags/src/__tests__/fixtures/persisted-update-construct-eager-form` | 2026-07-23 | impact:med | effort:low
 
-The reported demo failure (submit after an item A -> item B same-route
-navigation sees A's id) does not reproduce against the update applier: the
-fixture pairs a bound (`value:Number:=`) quantity `<let>`, a request-derived
-hidden `itemId`, an optimistic mirror, and an `onSubmit` handler recording the
-scope values it read, both at the route root and across a child-tag boundary
-(`tags/order-form.marko`). Under both the pre-Option-C and gated appliers the
-hidden input's value attribute, the handler-read scope value, and the mirror
-all see B after the patch. The defect is therefore most likely in the app or
-in @marko/run's form-submission negotiation (e.g. what request/body the shell
-re-sends or how a POST response patch is applied), which lives outside this
-repo; investigate there with this fixture as the known-good applier baseline.
+Resolved chain: the demo's bad submit came from the cross-route SWAP case,
+not the matched same-route case the earlier applier fixture modeled. When an
+effect (the form's `onSubmit`) closes over a `<const>` that feeds an input
+`value=`, the attr render routes through the registered `_const_persisted`
+signal instead of a `PatchAttr:` hole; on a patch-constructed subtree the
+adopted scope already holds the equal serialized value, so the old guard
+elided the initial render and the input submitted "" (which then poisoned
+the cart server-side). Fixed by broadening `_const_persisted`'s fresh-scope
+condition to apply-time dispatch (`updating && Gen >= updatingGen`), pinned
+by the `persisted-update-construct-eager-form` fixture (the exact
+product-actions shape) and `validate:csp`'s form-seed check in the ecommerce
+app. Remove this entry once that commit lands.
 
 ## writeMap/writeSet silently drop or corrupt any Map/Set member that directly references an ancestor object, because the member's fill is deferred to post-construction extras that never reach the already-built collection
 
@@ -186,21 +187,65 @@ repo; investigate there with this fixture as the known-good applier baseline.
 
 In `packages/runtime-tags/src/html/serializer.ts`, `writeMap` (l.989) and `writeSet` (l.1068) eagerly patch a member into the constructor IIFE (`a[i]=m` / `i[i]=s`, before `forEach`/`reduce`) ONLY when the member is `=== val`, the container itself (l.1003-1010/1037-1044/1079-1082). A member that is `===` an _ancestor_ higher in the write tree is not caught, so it takes writeReferenceOr's circular path (l.624-629): it becomes a hole in the backing array and its fill is queued on `state.assigned`, which `writeAssigned` (l.470-483) emits as `_.a[i]=<id>` extras AFTER the payload body. Because `new Set(items)` / `new Map(entries)` / the `reduce` copy members at construction time, that post-hoc backing-array patch never reaches the built collection, so the member is silently lost (Set: `size` short by one) or corrupted (Map: entry present but its ancestor key or value resolves to `undefined`) with no throw and no MARKO_DEBUG warning. This affects natural resume shapes where a serialized Set/Map holds an object that is itself an ancestor on the walk — undirected graph adjacency (the A↔B back-edge is dropped), `set.add(ownerObject)` back-references, or ancestor Map keys/values — while the wrapper case (`{nested: container}`) already works because the fresh member is added by reference and only its property is patched later. NOTE (verified 2026-07-21): the tempting "force the eager-IIFE form" fix does NOT work — the container-self `=== val` patch only works because it targets the in-scope IIFE var (`m`/`s`), whereas an ancestor's fill must reference the ancestor's id (`_.a`), which is assigned only when the enclosing `_.a={…}` literal finishes, i.e. AFTER the nested Map/Set IIFE has already evaluated, so it reads `undefined` (a `((s,i)=>(i[0]=_.a,…))(new Set,[0])` inside `_.a={…set:…}` deserializes with the member still `undefined`). The correct fix gives the collection its own id and defers the ancestor member's INSERTION as a post-construction method call — `_.setId.add(_.ancestorId)` / `_.mapId.set(<k>,<v>)` emitted after all ids are assigned — a new deferred-method-call path in `writeAssigned` (adjacent to the existing channel-mutation `_.x.f(arg)` emit at l.515-538) that serializes the non-ancestor key/value side via `writeProp`; this is closer to effort:high than med. Re-verify with the serializer harness: round-trip `parent` where `const parent={name:'p'}; const s=new Set(); s.add(parent); parent.set=s;` and assert `rt.set.size===1 && rt.set.has(rt)` — today it yields payload `...set:new Set(_.a=[])}}),_.a[0]=_.b,0)` with `size===0`; the undirected-graph and ancestor Map key/value variants fail the same way.
 
-## Eager stateful child in constructed content misses its initial seed (pre-membranes)
+## Constructed content only initial-renders leaf channels: `_or` joins and setup-wired var chains never fire
 
-A custom tag with `<let>` state rendered eagerly inside a patch-constructed
-branch (hop target, constructed page content) renders its seed-dependent
-text empty until the first client write: `persisted-update-region-in-construct`'s
-sticky button shows "s" instead of "s0", and the ecommerce first-add-on-a-
-patched-in-page flow leaves the header cart count at 0 (`validate:csp`'s
-one failing check). Verified identical on the pre-membranes implementation
-(HEAD~2 worktree), so this is a long-standing gap in constructed-content
-seeding, not a membranes regression — lazy children avoid it via their
-keyed ready batches.
-**Why:** constructed branches seed from patch fills; an eager child's `let`
-seed appears to fall between the shell walk's scope adoption and the seed
-signal dispatch.
-**How to apply:** reproduce with the region-in-construct fixture's sticky
-tag (assert "s0" before any click); fix in the construct/adopt seed path,
-then drop the survival-only carve-out in that fixture and re-enable
-`validate:csp`'s first-add check as the oracle.
+`packages/runtime-tags/src/dom/signals.ts` › `_or` | 2026-07-23 | impact:high | effort:high
+
+A patch-constructed subtree runs no setup (`getShellRenderer` constructs
+with setup `0`), so its signal graph is driven solely by the update fn's
+patch dispatches. Leaf channels now render (let/const signals force their
+fresh-scope render; `_update_scopes` holes and effect entries were already
+per-channel exact), but graph-shaped delivery has no channel at all: an
+`_or` join primes its pending count on the one side a seed dispatches and
+stalls forever, and a child template's `<return>` -> parent tag-var linkage
+(`_var(scope, childKey, signal)`) exists only in setup, so it is never
+wired. Verified in `persisted-update-fresh-page`: the cross-route hop back
+to the cart view constructs the subtree with `nav.tags` filled but neither
+branch of the seed-conditioned `<if=!entries.length>` rendered (the `_or`
+joining `list`/`products` was observed priming once and never running), and
+no later update heals it. This is the structural remainder of the
+constructed-content seeding family: each channel has grown its own
+freshness carve-out, and the missing ones cannot be patched the same way —
+see the round-2 report's construct-setup unification writeup before adding
+another. Re-verify via that fixture's final Update block in
+`render-ssr.md` (cart table missing).
+
+## Custom-tag regions cannot anchor inside a patch-constructed branch, leaving values-free holes unfilled
+
+`packages/runtime-tags/src/dom/update-merges.ts` › `_update_region` | 2026-07-23 | impact:high | effort:high
+
+A live branch constructed from its wire shell inlines a nucleus-free child's
+values-free markup (composed by the child's root update id) and the response
+ships the child's real markup as a `;`-prefixed region shell, but the
+dispatched region merge silently bails: the serialized `BranchScopes:` fill
+is a skeleton scope with no `#StartNode`, and `live[accessor]` holds the
+child _scope_ the walker bound at `BeginChild` (`dom/walker.ts`), not a node,
+so the anchor fallback returns. The parent's closure fills cannot compensate
+— shell renderers construct with no setup (`getShellRenderer` passes `0`)
+and the closures are `if (!updating)`-gated — so request-derived holes in
+the child render as the shell's placeholder spaces. Verified with the
+skipped fixture `persisted-membrane-constructed-holes.skip` (`h3` shows
+`" "` instead of `"T2"`); a diagnostic anchor hack confirmed the region
+shell content arrives correct and constructs (it inserted `T2N2` at the
+wrong spot). Fix needs a design decision on the anchor: stamp a range on
+`BeginChild` child scopes, compose region children as a bound anchor node
+instead of inlined markup, or give known-tag regions a dedicated anchor
+node binding — each touches the walk/wire format. Re-verify by renaming the
+fixture without `.skip` and running its ssr step.
+
+## Persisted mutation POSTs that fail (4xx/5xx) leave the optimistic write unaudited
+
+`packages/runtime-tags/src/dom/update-merges.ts` › `patch` | 2026-07-23 | impact:med | effort:med
+
+The ecommerce hardening closed the trigger (malformed cart adds now 400
+before render; a cart entry whose product no longer resolves renders as a
+dropped row instead of crashing), but the general edge remains unverified:
+when a persisted mutation POST yields a non-patch response (a 4xx like the
+new validation reject, or a genuine 500 mid patch render), what happens to
+the optimistic client write that preceded it (the header-badge bump) is not
+covered by any fixture or validate suite — the earlier field report was an
+empty diff applied as a 200 patch, i.e. the optimistic guess silently stood.
+Audit the router's non-2xx mutation path and add a validate check that a
+failed mutation either reverts or surfaces the failure. Re-verify by POSTing
+`_action=add` with an empty `productId` from a live page and watching the
+header count.

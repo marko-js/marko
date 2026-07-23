@@ -12,7 +12,7 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { updating } from "./persisted-queue";
+import { updating, updatingGen } from "./persisted-queue";
 import { queueEffect, queueRender, rendering, runId } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
@@ -71,7 +71,12 @@ export function _let_persisted<T>(id: EncodedAccessor, fn?: SignalFn) {
         fn?.(scope);
       }
     } else if (
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] !== value ||
+        !(valueAccessor in scope) ||
+        // A scope constructed during this apply adopted its serialized seed
+        // as a raw property, but its values-free DOM has never rendered:
+        // value equality must not suppress the initial render.
+        (updating && (scope[AccessorProp.Gen] as number) >= updatingGen)) &&
       ((scope[valueAccessor] = value), fn)
     ) {
       schedule();
@@ -163,10 +168,12 @@ export function _const_persisted<T>(
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return ((scope: Scope, value: T | undefined) => {
+    // Scopes constructed during an apply adopt their serialized values but
+    // have never rendered; value equality must not suppress that render.
     if (
       scope[valueAccessor] !== value ||
       !(valueAccessor in scope) ||
-      (updating && rendering && scope[AccessorProp.Gen] === runId)
+      (updating && (scope[AccessorProp.Gen] as number) >= updatingGen)
     ) {
       scope[valueAccessor] = value;
       fn?.(scope);

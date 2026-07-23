@@ -393,3 +393,37 @@ opaque values unchanged; the tier-B renderer-id echo above would cover the
 shells, and a value-hash echo could cover the holes. Measure with
 `measure:wire` and the ecommerce `validate:sizes` gate before narrowing any
 of them.
+
+## Reason-gated resume writes leak into region captures because serialize guards hoist before the capture zeroes the reason
+
+`packages/runtime-tags/src/html/writer.ts` › `captureRegionHTML` | 2026-07-23 | impact:low | effort:med
+
+`captureRegionHTML` suppresses scope serialization for the whole capture by
+setting `state.serializeReason = 0`, but generated code evaluates its
+`_serialize_guard` consts at section entry — often outside the capture — so
+guard-gated calls still execute inside regions. Verified: the `<try>`
+placeholder "pending" effects (`_script(scopeId, ".../pending")` emitted by
+`writeSignals`' `underTryPlaceholder` path) run per scaffold loop row inside
+a `_region` capture in `persisted-update-matched-static-await`, writing patch
+effect entries for region-interior scopes that the applier drops. Benign for
+correctness (dropped on apply, `writeScope` already no-ops via its
+`regionDepth` check) but wasted patch bytes; either re-evaluate guards inside
+captures or skip `writeEffect` when `state.regionDepth` is set. Re-verify by
+logging `state.regionDepth` in `_script` while running that fixture's ssr
+step.
+
+## Membrane classifier could keep the region win for $global-synced client state
+
+`packages/runtime-tags/src/translator/util/membranes.ts` › `getMembraneCauses` | 2026-07-23 | impact:low | effort:high
+
+The `param` cause conservatively classifies a loop body live whenever its
+params derive from client state, including the shared-store pattern where the
+state round-trips through the request (`<let>` seeded from a serialized
+`$global`, written back on change): the server render is reproducible there,
+so region delivery was actually safe and cheaper. Motivating case:
+`persisted-update-fresh-page`'s cart loop (`entries` ← `products` `<let>` ←
+`shared-list` value backed by `$global.data`) lost its `_region` when the
+cause landed. A "state that round-trips through the request" notion — e.g. a
+let whose seed and writes both flow through a serialized `$global` key —
+could restore the region for that pattern. Re-verify by compiling that
+fixture and looking for `_region` around the cart `forOf`.

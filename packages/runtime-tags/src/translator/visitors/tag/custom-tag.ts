@@ -364,6 +364,17 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   } else {
     recordChildUpdateMerge(tag, relativePath, tagName, childExports.update);
     const importPath = getChildImportPath(file, relativePath);
+    // A nucleus-free child never registers its template id (that absence is
+    // the dynamic-tag liveness signal); compose shells by the root update id
+    // its renderers entry does register.
+    const childShellId =
+      !isPersisted() || isChildTreeLive(childFile.ast.program)
+        ? childFile.metadata.marko.id
+        : getTemplateId(
+            getMarkoOpts(),
+            childFile.opts.filename as string,
+            buildResumeRegisterKey(childSection, "update"),
+          );
     knownTagTranslateDOM(
       tag,
       childExports.params,
@@ -403,14 +414,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         childExports.template,
         `${tagName}_template`,
       ),
-      childFile.metadata.marko.id,
+      childShellId,
     )}`;
     walks.injectWalks(
       tag,
       tagName,
       withChildTemplateId(
         importNamed(file, importPath, childExports.walks, `${tagName}_walks`),
-        childFile.metadata.marko.id,
+        childShellId,
       ),
     );
   }

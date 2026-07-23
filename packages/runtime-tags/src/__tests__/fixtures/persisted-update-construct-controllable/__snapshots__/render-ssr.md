@@ -42,17 +42,20 @@ UPDATE: .count::text@8 "0" => "1"
 </button>
 <input
   class="field"
+  value="draft"
 />
 <output
   class="echo"
 >
-   
+  draft
 </output>
 ```
 ## Change
 ```
 INSERT: .field, .echo
 REMOVE: .count + p
+UPDATE: .field[value] null => "draft"
+UPDATE: .echo::text " " => "draft"
 ```
 
 # Update
@@ -64,6 +67,27 @@ input.dispatchEvent(new window.Event("input", {
   bubbles: true
 }));
 ```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<input
+  class="field"
+  default-value="draft"
+  value="revised"
+/>
+<output
+  class="echo"
+>
+  revised
+</output>
+```
+## Change
+```
+UPDATE: .echo::text "draft" => "revised"
+```
 
 # Update
 ```js
@@ -73,4 +97,25 @@ input.value = value;
 input.dispatchEvent(new window.Event("input", {
   bubbles: true
 }));
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<input
+  class="field"
+  default-value="draft"
+  value="final"
+/>
+<output
+  class="echo"
+>
+  final
+</output>
+```
+## Change
+```
+UPDATE: .echo::text "revised" => "final"
 ```

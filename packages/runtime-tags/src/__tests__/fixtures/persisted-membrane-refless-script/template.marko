@@ -1,0 +1,10 @@
+<let/nav=0/>
+<button.nav onClick() { nav++ }>nav ${nav}</button>
+<if=input.show>
+  <div.arrived>
+    <script>
+      window.scriptRuns = (window.scriptRuns || 0) + 1;
+    </script>
+    arrived
+  </div>
+</if>

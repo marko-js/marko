@@ -240,7 +240,7 @@ REMOVE: section > div
     <button
       class="gadget__tap"
     >
-      taps 
+      taps 0
     </button>
   </div>
 </section>
@@ -252,6 +252,7 @@ REMOVE: section > p
 UPDATE: .title::text " " => "Widget Two"
 INSERT: .title + .gadget
 UPDATE: .gadget__label::text " " => "beta"
+UPDATE: .gadget__tap::text@5 "" => "0"
 ```
 
 # Update
@@ -295,7 +296,7 @@ document.querySelector(".gadget__tap").click();
 ```
 ## Change
 ```
-UPDATE: .gadget__tap::text@5 "" => "1"
+UPDATE: .gadget__tap::text@5 "0" => "1"
 ```
 
 # Update

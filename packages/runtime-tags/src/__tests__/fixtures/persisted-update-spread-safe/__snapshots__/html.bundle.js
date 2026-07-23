@@ -5,6 +5,7 @@ var child_default = _template("b", (input) => {
 	_html(`<div${_attr_class(input.class)}${_attr("data-request", input["data-request"])}></div>${_el_resume($scope0_id, "a", $sg__input_class__OR__input_data_request)}`);
 	$sg__input_class__OR__input_data_request && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<div></div>", " b"] });
 
 // template.marko
 var template_default = _template("a", (input) => {
@@ -41,14 +42,14 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a0": [["<button>clicked <!></button><input><div>dynamic</div>", ["b"]], [
+	"a0": [["<button>clicked <!></button><input><div>dynamic</div>", ["b0"]], [
 		" Db%l b b/",
-		["b"],
+		["b0"],
 		"&"
 	]],
-	"a": [["<button>clicked <!></button><input><div>dynamic</div>", ["b"]], [
+	"a": [["<button>clicked <!></button><input><div>dynamic</div>", ["b0"]], [
 		" Db%l b b/",
-		["b"],
+		["b0"],
 		"&"
 	]]
 });

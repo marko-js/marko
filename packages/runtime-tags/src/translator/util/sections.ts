@@ -82,6 +82,9 @@ export interface Section {
   hasGlobalReads: boolean;
   readsOwner: boolean;
   isBranch: boolean;
+  /** A `<for>` body: its instance count follows the loop expression even
+   * when no params exist (the membrane `param` cause keys on this). */
+  isLoopBody: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -158,6 +161,7 @@ export function startSection(
       hasGlobalReads: false,
       readsOwner: false,
       isBranch: false,
+      isLoopBody: false,
     };
     sections.push(section);
   }

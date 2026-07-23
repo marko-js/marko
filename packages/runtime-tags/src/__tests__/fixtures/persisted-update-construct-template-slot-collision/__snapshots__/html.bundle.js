@@ -9,6 +9,7 @@ var child_default = _template("b", (input) => {
 	}, "id", $scope0_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1);
 	_persisted_reason() && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<!><!><!>", "b%c"] });
 
 // template.marko
 var template_default = _template("a", (input) => {
@@ -42,20 +43,20 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a1": [[
 		"<button> </button><!>",
-		["b"],
+		["b0"],
 		"<!><!>"
 	], [
 		" D l%b/",
-		["b"],
+		["b0"],
 		"&%c"
 	]],
 	"a": [[
 		"<button> </button><!>",
-		["b"],
+		["b0"],
 		"<!><!>"
 	], [
 		" D l%b/",
-		["b"],
+		["b0"],
 		"&%c"
 	]]
 });

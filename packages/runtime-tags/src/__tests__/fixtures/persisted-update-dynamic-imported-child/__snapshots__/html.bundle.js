@@ -12,6 +12,7 @@ var roster_default = _template("c", (input) => {
 	}, $scope0_id, "a", $sg__input_members, $sg__input_members, $sg__input_members, "</ul>", 1);
 	$sg__input_members && writeScope($scope0_id, {});
 });
+_renderer_shells({ "c0": ["<ul class=roster></ul>", " b"] });
 
 // tags/digest.marko
 var digest_default = _template("b", (input) => {
@@ -20,6 +21,7 @@ var digest_default = _template("b", (input) => {
 	_html(`<p class=digest>${_escape(input.members.length)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))} on call: ${_sep($sg__input_members)}${_escape(input.members.join(", "))}${_el_resume($scope0_id, "b", $sg__input_members)}</p>`);
 	$sg__input_members && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<p class=digest><!> on call: <!></p>", "D%c%l"] });
 
 // template.marko
 var template_default = _template("a", (input) => {

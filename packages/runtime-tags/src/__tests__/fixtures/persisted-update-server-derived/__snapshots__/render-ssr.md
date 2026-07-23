@@ -41,7 +41,7 @@ UPDATE: .count::text@8 "0" => "1"
     Part 7
   </h2>
   <p>
-    costs 
+    costs 70
   </p>
   <button
     class="copy"
@@ -54,6 +54,7 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 INSERT: p + section
 REMOVE: .count + p
+UPDATE: section > p::text@6 "" => "70"
 UPDATE: section > h2::text " " => "Part 7"
 ```
 
@@ -72,7 +73,7 @@ document.querySelector("button.copy").click();
     Part 7
   </h2>
   <p>
-    costs 
+    costs 70
   </p>
   <button
     class="copy"

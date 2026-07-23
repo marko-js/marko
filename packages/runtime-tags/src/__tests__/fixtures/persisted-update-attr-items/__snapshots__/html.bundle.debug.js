@@ -26,6 +26,7 @@ var chip_list_default = _template("__tests__/tags/chip-list.marko", (input) => {
 	}, $scope0_id, "#div/0", _persisted_reason(), 0, 0, 0, 1);
 	_html("</div>");
 });
+_renderer_shells({ "__tests__/tags/chip-list.marko_0_update": ["<div class=chips></div>", " b"] });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -45,14 +46,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/chip-list.marko"]], [
+	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/chip-list.marko_0_update"]], [
 		" Db%l/",
-		["__tests__/tags/chip-list.marko"],
+		["__tests__/tags/chip-list.marko_0_update"],
 		"&"
 	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/chip-list.marko"]], [
+	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/chip-list.marko_0_update"]], [
 		" Db%l/",
-		["__tests__/tags/chip-list.marko"],
+		["__tests__/tags/chip-list.marko_0_update"],
 		"&"
 	]]
 });

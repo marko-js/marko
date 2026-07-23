@@ -41,9 +41,11 @@ import {
   type InputBinding,
   isInvokeOnlyBinding,
   mergeReferences,
+  onFinalizeReferences,
   type ParamBinding,
   type ReferencedExtra,
   setBindingDownstream,
+  type Sources,
   trackParamsReferences,
   trackVarReferences,
 } from "./references";
@@ -177,12 +179,21 @@ export function knownTagAnalyze(
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
-  if (isPersisted() && isMembraneLive(section)) {
-    addSerializeReason(
-      section,
-      { state: undefined, param: undefined, global: true },
-      childScopeBinding,
-    );
+  if (isPersisted()) {
+    // Deferred: liveness only classifies once references are finalized. The
+    // callback postdates `finalizeSerializeReason`, so mirror its
+    // prop-to-scope merge by adding the reason at both levels.
+    onFinalizeReferences(() => {
+      if (isMembraneLive(section)) {
+        const reason: Sources = {
+          state: undefined,
+          param: undefined,
+          global: true,
+        };
+        addSerializeReason(section, reason, childScopeBinding);
+        addSerializeReason(section, reason);
+      }
+    });
   }
 }
 

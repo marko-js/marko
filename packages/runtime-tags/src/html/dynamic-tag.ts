@@ -65,6 +65,17 @@ export let _dynamic_tag = (
   // element).
   // A nucleus-free target has no registered shell; its rendered markup ships
   // as a per-response region shell under a `;`-prefixed id instead.
+  // Cross-module invariant: the renderers entry registers a shell for every
+  // live tree, keyed for the root under the template id
+  // (`translator/visitors/program/renderers.ts` — nucleus-free roots register
+  // only their composition-facing update id), and the target's server module
+  // runs that `_renderer_shells` call on load
+  // (`translator/visitors/program/html.ts`), so "template id unregistered"
+  // means the target's tree is nucleus-free. A live target that lost its
+  // registration (a dropped side effect, failed shell extraction) is not
+  // assertable at runtime: region capture suppresses the serialization that
+  // would betray it, and the effect writes that do escape (hoisted serialize
+  // guards) also occur for legitimately inert content.
   const regionTarget =
     state.patch &&
     !state.regionDepth &&

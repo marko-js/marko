@@ -149,14 +149,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			} else {
 				const $scope2_id = _scope_id();
 				_html("<ul class=cart>");
-				_region(() => {
-					forOf(entries, (entry) => {
-						const $scope5_id = _scope_id();
-						_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "#text/0")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "#text/1")}</li>`);
-						writeScope($scope5_id, {}, "__tests__/template.marko", "25:8");
-					});
-				}, $scope2_id, "#ul/0");
-				_html(`</ul>${_el_resume($scope2_id, "#ul/0")}<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "#text/1")}</p>`);
+				_for_of(entries, (entry) => {
+					const $scope5_id = _scope_id();
+					_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "#text/0")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "#text/1")}</li>`);
+					writeScope($scope5_id, {}, "__tests__/template.marko", "25:8");
+				}, function(entry) {
+					return entry.id;
+				}, $scope2_id, "#ul/0", 1, 1, 1, "</ul>", 1, "__tests__/template.marko_5_update");
+				_html(`<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "#text/1")}</p>`);
 				writeScope($scope2_id, {}, "__tests__/template.marko", "23:4");
 				return 1;
 			}
@@ -258,6 +258,8 @@ _renderer_shells({
 	]],
 	"__tests__/template.marko_6_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_6_content": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_5_update": ["<li><!> $<!></li>", "D%c%l"],
+	"__tests__/template.marko_5_content": ["<li><!> $<!></li>", "D%c%l"],
 	"__tests__/template.marko_4_update": ["<p class=cart>cart is empty</p>", "b"],
 	"__tests__/template.marko_4_content": ["<p class=cart>cart is empty</p>", "b"],
 	"__tests__/template.marko_2_update": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],

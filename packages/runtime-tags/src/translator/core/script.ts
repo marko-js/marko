@@ -10,6 +10,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM, isPersisted } from "../util/marko-config";
+import { markStateCapable, MembraneCause } from "../util/membranes";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
@@ -83,8 +84,14 @@ export default {
           throw tag.hub.buildError(attr, "Invalid duplicate value attribute.");
         }
         seenValueAttr = true;
+        const section = getOrCreateSection(tag);
         (attr.value.extra ??= {}).isEffect = true;
-        addSetupExpr(getOrCreateSection(tag), attr.value);
+        addSetupExpr(section, attr.value);
+        if (isPersisted()) {
+          // A script referencing no bindings produces no effect reads, so
+          // the classifier cannot see it; every `<script>` is an effect.
+          markStateCapable(section, MembraneCause.effect);
+        }
         getProgram().node.extra.isInteractive = true;
       } else {
         throw tag.hub.buildError(

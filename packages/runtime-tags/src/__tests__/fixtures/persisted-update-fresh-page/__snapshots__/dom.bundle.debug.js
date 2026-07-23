@@ -194,7 +194,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__tag($scope, $p
 const $else_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
 const $else_content__entries = /*@__PURE__*/ _if_closure("#text/3", 1, ($scope) => {
 	_text($scope["#text/1"], $scope._.entries.reduce((sum, e) => sum + e.product.price, 0));
-	if (!updating) $else_content__for($scope, [$scope._.entries, function(entry) {
+	$else_content__for($scope, [$scope._.entries, function(entry) {
 		return entry.id;
 	}]);
 });
@@ -262,9 +262,6 @@ const $Item_content__update = ($patch, $live) => {
 	if ("product_price" in $patch) $live["product_price"] = $patch["product_price"];
 	if ("product_id" in $patch) $live["product_id"] = $patch["product_id"];
 	if ("ConditionalRenderer:#text/0" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, $else_content2__update], ["__tests__/template.marko_9_update", "__tests__/template.marko_7_update"]);
-};
-const $else_content__update = ($patch, $live) => {
-	if ("ConditionalRenderer:#ul/0" in $patch) _update_region("#ul/0")($patch, $live);
 };
 const $Cart_content__update = ($patch, $live) => {
 	if ("products" in $patch) _update_seed($live, $products_seed, $patch["products"]);
@@ -483,7 +480,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__tag($scope, $p
 const $else_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
 const $else_content__entries = /*@__PURE__*/ _if_closure("#text/3", 1, ($scope) => {
 	_text($scope["#text/1"], $scope._.entries.reduce((sum, e) => sum + e.product.price, 0));
-	if (!updating) $else_content__for($scope, [$scope._.entries, function(entry) {
+	$else_content__for($scope, [$scope._.entries, function(entry) {
 		return entry.id;
 	}]);
 });

@@ -53,7 +53,11 @@ export default {
       forEachSectionReverse((section) => {
         // Nucleus-free sections deliver as captured region markup, never as
         // values-free shells; registration marks a section shell-capable.
-        if (!isMembraneLive(section)) return;
+        // The root of an all-scaffold template still registers under its
+        // update id (never the template id — that absence is the dynamic-tag
+        // liveness signal) so live parents composing it by reference resolve.
+        const live = isMembraneLive(section);
+        if (!live && section !== rootSection) return;
         const meta = getSectionMeta(section);
         const template = asShellSource(meta.writes as t.Expression);
         const walks = asShellSource(meta.walks as t.Expression);
@@ -77,11 +81,13 @@ export default {
         shells[getResumeRegisterId(section, "update")] = shell;
         // Renderer ids resolve the same shell at dynamic hops: content ids
         // for same-template targets, the template id for escaped targets.
-        shells[
-          section === rootSection
-            ? program.hub.file.metadata.marko.id
-            : getResumeRegisterId(section, "content")
-        ] = shell;
+        if (live) {
+          shells[
+            section === rootSection
+              ? program.hub.file.metadata.marko.id
+              : getResumeRegisterId(section, "content")
+          ] = shell;
+        }
       });
       // The internal nested compile reads the map through this side channel
       // (see the html program exit) instead of parsing the emitted module.

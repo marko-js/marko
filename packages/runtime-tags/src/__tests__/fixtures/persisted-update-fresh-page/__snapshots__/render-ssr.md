@@ -124,7 +124,7 @@ UPDATE: .count::text@8 "0" => "1"
   <button
     class="add"
   >
-    added  of  ( in cart)
+    added 0 of 2 ( in cart)
   </button>
   loading recommendations…
 </section>
@@ -138,7 +138,9 @@ UPDATE: .thumb[src] null => "/images/2.svg"
 UPDATE: .thumb[alt] null => "Product 2"
 UPDATE: .title::text " " => "Product 2"
 UPDATE: .price::text@1 "" => "200.50"
+UPDATE: .add::text@11 "" => "2"
 INSERT: .add + ::text("loading recommendations…")
+UPDATE: .add::text@6 "" => "0"
 ```
 
 # Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"item","productId":2,"data":{"cart":[]},"serializedGlobals":{"data":true}}}`
@@ -174,7 +176,7 @@ INSERT: .add + ::text("loading recommendations…")
   <button
     class="add"
   >
-    added  of  ( in cart)
+    added 0 of 2 ( in cart)
   </button>
   <ul
     class="recs"
@@ -230,7 +232,7 @@ document.querySelector("button.add").click();
   <button
     class="add"
   >
-    added 1 of  ( in cart)
+    added 1 of 2 ( in cart)
   </button>
   <ul
     class="recs"
@@ -246,7 +248,7 @@ document.querySelector("button.add").click();
 ```
 ## Change
 ```
-UPDATE: .add::text@6 "" => "1"
+UPDATE: .add::text@6 "0" => "1"
 ```
 
 # Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"cart","tag":"dev","data":{"cart":[2]},"serializedGlobals":{"data":true}}}`

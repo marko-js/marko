@@ -199,6 +199,7 @@ export default {
 
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;
+    bodySection.isLoopBody = true;
   },
   translate: translateByTarget({
     html: {

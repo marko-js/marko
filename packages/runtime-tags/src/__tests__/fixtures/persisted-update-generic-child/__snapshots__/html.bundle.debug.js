@@ -5,6 +5,7 @@ var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 	_html(`<span${_attr_class(["badge", input.tone])}${_attr("title", `tone: ${input.tone}`)}>${_escape(input.label)}${_el_resume($scope0_id, "#text/1", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "#span/0", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
 });
+_renderer_shells({ "__tests__/tags/badge.marko_0_update": ["<span> </span>", " D l"] });
 
 // tags/panel.marko
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
@@ -78,12 +79,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_0_update": [[
 		"<button>clicked <!></button>",
-		["__tests__/tags/badge.marko"],
+		["__tests__/tags/badge.marko_0_update"],
 		["__tests__/tags/panel.marko"],
 		["__tests__/tags/toggle.marko"]
 	], [
 		" Db%l/",
-		["__tests__/tags/badge.marko"],
+		["__tests__/tags/badge.marko_0_update"],
 		"&/",
 		["__tests__/tags/panel.marko"],
 		"&/",
@@ -92,12 +93,12 @@ _renderer_shells({
 	]],
 	"__tests__/template.marko": [[
 		"<button>clicked <!></button>",
-		["__tests__/tags/badge.marko"],
+		["__tests__/tags/badge.marko_0_update"],
 		["__tests__/tags/panel.marko"],
 		["__tests__/tags/toggle.marko"]
 	], [
 		" Db%l/",
-		["__tests__/tags/badge.marko"],
+		["__tests__/tags/badge.marko_0_update"],
 		"&/",
 		["__tests__/tags/panel.marko"],
 		"&/",

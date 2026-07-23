@@ -37,7 +37,7 @@ UPDATE: button::text@8 "0" => "1"
 <p
   class="pair"
 >
-   
+  n-m
 </p>
 <button
   class="bump"
@@ -56,6 +56,7 @@ INSERT: .pair, .bump, .combo
 REMOVE: button:nth-of-type(1) + p
 UPDATE: .combo::text@0 "" => "Q"
 UPDATE: .combo::text@2 "" => "n"
+UPDATE: .pair::text " " => "n-m"
 ```
 
 # Update
@@ -84,7 +85,7 @@ document.querySelector("button.bump").click();
 ```
 ## Change
 ```
-UPDATE: .pair::text " " => "n-m!"
+UPDATE: .pair::text "n-m" => "n-m!"
 ```
 
 # Update

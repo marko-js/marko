@@ -24,6 +24,7 @@ var chip_list_default = _template("b", (input) => {
 	}, $scope0_id, "a", _persisted_reason(), 0, 0, 0, 1);
 	_html("</div>");
 });
+_renderer_shells({ "b0": ["<div class=chips></div>", " b"] });
 
 // template.marko
 var template_default = _template("a", (input) => {
@@ -43,14 +44,14 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a0": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a0": [["<button class=count>clicked <!></button>", ["b0"]], [
 		" Db%l/",
-		["b"],
+		["b0"],
 		"&"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a": [["<button class=count>clicked <!></button>", ["b0"]], [
 		" Db%l/",
-		["b"],
+		["b0"],
 		"&"
 	]]
 });

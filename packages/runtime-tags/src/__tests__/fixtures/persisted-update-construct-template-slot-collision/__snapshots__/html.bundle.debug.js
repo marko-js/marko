@@ -9,6 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "id", $scope0_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1);
 	_persisted_reason() && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
+_renderer_shells({ "__tests__/tags/child.marko_0_update": ["<!><!><!>", "b%c"] });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -42,20 +43,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_0_update": [[
 		"<button> </button><!>",
-		["__tests__/tags/child.marko"],
+		["__tests__/tags/child.marko_0_update"],
 		"<!><!>"
 	], [
 		" D l%b/",
-		["__tests__/tags/child.marko"],
+		["__tests__/tags/child.marko_0_update"],
 		"&%c"
 	]],
 	"__tests__/template.marko": [[
 		"<button> </button><!>",
-		["__tests__/tags/child.marko"],
+		["__tests__/tags/child.marko_0_update"],
 		"<!><!>"
 	], [
 		" D l%b/",
-		["__tests__/tags/child.marko"],
+		["__tests__/tags/child.marko_0_update"],
 		"&%c"
 	]]
 });

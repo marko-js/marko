@@ -79,7 +79,7 @@ UPDATE: .count::text@8 "0" => "1"
   <button
     class="widget"
   >
-    pro clicked 
+    pro clicked 0
   </button>
   <ul
     class="metrics"
@@ -102,6 +102,7 @@ REMOVE: section > p
 UPDATE: .greeting::text " " => "hello ada"
 UPDATE: .widget::text@0 "" => "pro"
 INSERT: .metrics > :is(.focus, li)
+UPDATE: .widget::text@12 "" => "0"
 ```
 
 # Update
@@ -153,7 +154,7 @@ document.querySelector("button.widget").click();
 ```
 ## Change
 ```
-UPDATE: .widget::text@12 "" => "1"
+UPDATE: .widget::text@12 "0" => "1"
 ```
 
 # Update

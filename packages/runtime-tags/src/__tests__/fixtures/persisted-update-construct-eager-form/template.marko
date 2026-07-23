@@ -1,0 +1,17 @@
+import { getServerProduct } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Item>
+  <const/product=getServerProduct?.(input.productId)/>
+  <section.item>
+    <h2.title>${product.title}</h2>
+    <add-form productId=product.id/>
+  </section>
+</define>
+
+<${$global.view === "item" ? Item : Home}/>

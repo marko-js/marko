@@ -3,6 +3,9 @@
 // Nucleus-ness is strictly local to a section; containment questions are the
 // separate tree queries below. All state lives in WeakMaps keyed on Section
 // objects so child-template sections (via loadFileForTag) resolve uniformly.
+// Memoized classification is only meaningful after `finalizeReferences` has
+// populated bindings, reads, closures, and sources; analyze must record
+// causes via `markStateCapable`, never query.
 import type { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
@@ -10,6 +13,10 @@ import { isPersisted } from "./marko-config";
 import { find, forEach } from "./optional";
 import { type Binding, BindingType } from "./references";
 import type { Section } from "./sections";
+import {
+  getSerializeSourcesForExpr,
+  isStateSerializeReason,
+} from "./serialize-reasons";
 
 export enum MembraneCause {
   /** Owns a `$let` (or store-like) client state cell. */
@@ -27,13 +34,18 @@ export enum MembraneCause {
   /** Reads client-owned state through a closure; a server re-render could
    * not reproduce its output. */
   closure = 1 << 6,
+  /** Receives client-owned state through its params or instance count (a
+   * `<for>` body over a `<let>` list, with or without params); a server
+   * re-render could not reproduce its instances. */
+  param = 1 << 7,
   /** Promoted by an anchor whose sibling branch is a nucleus (mixed `<if>`)
    * or by another conservative expansion. */
-  forced = 1 << 7,
+  forced = 1 << 8,
 }
 
 const stateCapable = new WeakMap<Section, number>();
 const nucleusMemo = new WeakMap<Section, number>();
+const finalized = new WeakSet<Section>();
 let treeMemo = new WeakMap<Section, boolean>();
 const treeInProgress = new WeakSet<Section>();
 const childTrees = new WeakMap<
@@ -52,6 +64,9 @@ const editableTags = new Set([
   "dialog",
   "audio",
   "video",
+  "iframe",
+  "object",
+  "embed",
 ]);
 
 export function isEditableTag(tagName: string) {
@@ -88,6 +103,15 @@ export function markUnknownChildren(section: Section) {
   unknownChildren.add(section);
 }
 
+/** `finalizeReferences` marks the program's sections classifiable once the
+ * reference data classification reads from is populated. */
+export function finalizeMembranes() {
+  const { sections } = getProgram().node.extra;
+  if (sections) {
+    for (const section of sections) finalized.add(section);
+  }
+}
+
 /**
  * Whether this section's own content must survive a navigation live: it owns
  * client state, effects, editable/focusable surface, or output derived from
@@ -102,6 +126,11 @@ export function isNucleusSection(section: Section): boolean {
 export function getMembraneCauses(section: Section): number {
   let causes = nucleusMemo.get(section);
   if (causes === undefined) {
+    if (MARKO_DEBUG && !finalized.has(section)) {
+      throw new Error(
+        "Membrane classification requested before finalizeReferences; analyze must record causes via markStateCapable, never query.",
+      );
+    }
     causes = stateCapable.get(section) || 0;
     if (section.hasAbortSignal) causes |= MembraneCause.abort;
     if (find(section.bindings, ownsClientState)) causes |= MembraneCause.let;
@@ -111,6 +140,15 @@ export function getMembraneCauses(section: Section): number {
       find(section.referencedLocalClosures, readsClientState)
     ) {
       causes |= MembraneCause.closure;
+    }
+    if (
+      (section.params || section.isLoopBody) &&
+      section.upstreamExpression &&
+      isStateSerializeReason(
+        getSerializeSourcesForExpr(section.upstreamExpression),
+      )
+    ) {
+      causes |= MembraneCause.param;
     }
     nucleusMemo.set(section, causes);
   }

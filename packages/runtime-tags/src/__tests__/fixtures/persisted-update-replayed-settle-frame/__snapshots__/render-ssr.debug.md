@@ -38,7 +38,7 @@ INSERT: section::text("loading…")
   <button
     class="taps"
   >
-    second tapped 
+    second tapped 0
   </button>
 </section>
 ```
@@ -46,6 +46,7 @@ INSERT: section::text("loading…")
 ```
 INSERT: section > .taps
 REMOVE: .taps + ::text("loading…")
+UPDATE: .taps::text@14 "" => "0"
 ```
 
 # Update `{"note":"second","tick":7,"$global":{"persisted":true}}`
@@ -64,7 +65,7 @@ document.querySelector("button.clicks").click();
   <button
     class="taps"
   >
-    second tapped 
+    second tapped 0
   </button>
 </section>
 ```
@@ -84,7 +85,7 @@ UPDATE: .clicks::text@8 "0" => "1"
   <button
     class="taps"
   >
-    second tapped 
+    second tapped 0
   </button>
 </section>
 ```

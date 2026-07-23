@@ -213,9 +213,11 @@ describe("runtime-tags/translator-api", () => {
       assert.match(code, /update_if/);
     });
 
-    it("embeds no shells for nucleus-free templates", () => {
-      // A template with no client state compiles without persisted
-      // machinery: its structure ships as region markup when it changes.
+    it("registers only the composition shell for nucleus-free templates", () => {
+      // A template with no client state compiles without persisted update
+      // machinery: it registers only its root update-id shell (so live
+      // parents composing it by reference resolve), never its template id —
+      // that absence is the dynamic-tag liveness signal.
       const { code } = compiler.compileSync(
         "<if=input.show><div/></if>",
         path.join(__dirname, "persisted-scaffold.marko"),
@@ -226,7 +228,9 @@ describe("runtime-tags/translator-api", () => {
           persisted: true,
         },
       );
-      assert.doesNotMatch(code, /_renderer_shells|update_if/);
+      assert.doesNotMatch(code, /update_if/);
+      assert.match(code, /_renderer_shells\(\{[^}]*\.marko_0_update"/);
+      assert.doesNotMatch(code, /\.marko": \[/);
     });
 
     it("compiles load imports eagerly when linkAssets is not configured", () => {

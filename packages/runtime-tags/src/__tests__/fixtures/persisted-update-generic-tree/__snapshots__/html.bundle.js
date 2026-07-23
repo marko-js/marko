@@ -5,6 +5,7 @@ var badge_default = _template("b", (input) => {
 	_html(`<span${_attr_class(["badge", input.tone])}>${_escape(input.label)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<span> </span>", " D l"] });
 
 // tags/card.marko
 var card_default = _template("c", (input) => {
@@ -24,6 +25,15 @@ var card_default = _template("c", (input) => {
 	_html(`<h2>${_escape(input.heading)}${_el_resume($scope0_id, "b", $sg__input_heading)}</h2><p${_attr_class(["meta", input.flagged && "flagged"])}>${_escape(input.meta)}${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 5))}</p>${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 4))}</section>`);
 	_serialize_guard($scope0_reason, 1) && writeScope($scope0_id, { a: $sg__input_heading__OR__input_tone && _existing_scope($childScope) });
 });
+_renderer_shells({ "c0": [[
+	"<section class=card>",
+	["b0"],
+	"<h2> </h2><p> </p></section>"
+], [
+	"D/",
+	["b0"],
+	"&D l D m"
+]] });
 
 // tags/counter.marko
 var counter_default = _template("d", (input) => {
@@ -108,22 +118,22 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a0": [[
 		"<button class=bump>clicked <!></button>",
-		["c"],
+		["c0"],
 		["e"]
 	], [
 		" Db%l/",
-		["c"],
+		["c0"],
 		"&/",
 		["e"],
 		"&"
 	]],
 	"a": [[
 		"<button class=bump>clicked <!></button>",
-		["c"],
+		["c0"],
 		["e"]
 	], [
 		" Db%l/",
-		["c"],
+		["c0"],
 		"&/",
 		["e"],
 		"&"

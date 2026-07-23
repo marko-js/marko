@@ -5,6 +5,7 @@ var price_default = _template("__tests__/tags/price.marko", (input) => {
 	_html(`<span class=price${_attr("title", `$${input.amount.toFixed(2)}`)}>$${_sep($sg__input_amount)}${_escape(input.amount.toFixed(2))}${_el_resume($scope0_id, "#text/1", $sg__input_amount)}</span>${_el_resume($scope0_id, "#span/0", $sg__input_amount)}`);
 	$sg__input_amount && writeScope($scope0_id, {}, "__tests__/tags/price.marko", 0);
 });
+_renderer_shells({ "__tests__/tags/price.marko_0_update": ["<span class=price>$<!></span>", " Db%l"] });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {

@@ -5,11 +5,8 @@ import { navigate, wait } from "../../utils/resolve";
 
 // A nucleus-free (region) loop as the only child of its container, inside a
 // shell-constructed hop branch, beside a stateful child: the region must
-// fill the fresh container and the sibling child's state must survive later
-// region swaps. (The sibling's *initial* let seed inside a constructed hop
-// is a known gap shared with the pre-membranes implementation — see
-// agent-feedback/bugs.md — so this fixture asserts survival from the first
-// client write onward.)
+// fill the fresh container, the sibling child's `<let>` must seed at
+// construction, and its state must survive later region swaps.
 export const config: TestConfig = {
   persisted: true,
   skip_csr: true,
@@ -22,7 +19,7 @@ export const config: TestConfig = {
         document.querySelector("section.b ul")?.textContent,
         "spec onespec two",
       );
-      assert.ok(document.querySelector("button.sticky"));
+      assert.equal(document.querySelector("button.sticky")?.textContent, "s0");
     },
     wait,
     // A constant (client-renderable) loop inside the constructed branch's
