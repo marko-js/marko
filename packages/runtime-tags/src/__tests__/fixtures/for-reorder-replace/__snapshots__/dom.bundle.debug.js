@@ -2,8 +2,8 @@
 const $template = "<div></div>";
 const $walks = " b";
 const $setup = () => {};
-const $for_content__child_id = ($scope, child_id) => _attr($scope["#span/0"], "id", child_id);
-const $for_content__child_text = ($scope, child_text) => _text($scope["#text/1"], child_text);
+const $for_content__child_id = ($scope, child_id) => _attr($scope, "#span/0", "id", child_id);
+const $for_content__child_text = ($scope, child_text) => _text($scope, "#text/1", child_text);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__child_id($scope, $params2[0]?.id);
 	$for_content__child_text($scope, $params2[0]?.text);

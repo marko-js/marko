@@ -3,7 +3,7 @@ const $template = "<button id=clear>clear</button><div></div><!><!>";
 const $walks = " b b%c";
 const $if_content__item__script = _script("__tests__/template.marko_2_item", ($scope) => $signal($scope, 0).onabort = () => _el_read($scope._._["#div/1"]).append(`destroyed ${$scope._.item}`));
 const $if_content__item = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => {
-	_text($scope["#text/0"], $scope._.item);
+	_text($scope, "#text/0", $scope._.item);
 	$signalReset($scope, 0);
 	$if_content__item__script($scope);
 });

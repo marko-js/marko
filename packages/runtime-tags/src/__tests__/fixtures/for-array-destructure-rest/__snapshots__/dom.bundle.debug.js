@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<ul></ul><button>update</button>";
 const $walks = " b b";
-const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content__first = ($scope, first) => _text($scope["#text/1"], first);
-const $for_content__$temp_ = ($scope, $temp_1) => _text($scope["#text/2"], $temp_1);
-const $for_content__$temp_2 = ($scope, $temp_2) => _text($scope["#text/3"], $temp_2);
-const $for_content__rest_length = ($scope, rest_length) => _text($scope["#text/4"], rest_length);
+const $for_content__setup = ($scope) => _text($scope, "#text/0", $scope["#LoopKey"]);
+const $for_content__first = ($scope, first) => _text($scope, "#text/1", first);
+const $for_content__$temp_ = ($scope, $temp_1) => _text($scope, "#text/2", $temp_1);
+const $for_content__$temp_2 = ($scope, $temp_2) => _text($scope, "#text/3", $temp_2);
+const $for_content__rest_length = ($scope, rest_length) => _text($scope, "#text/4", rest_length);
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = ($scope, $temp) => {
 	(([, ...rest]) => $for_content__rest($scope, rest))($temp);

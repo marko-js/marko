@@ -4,7 +4,7 @@ const $for_content__setup__script = _script("b0", ($scope) => _lifecycle($scope,
 	document.getElementById("ref").textContent = "item destroyed";
 } }));
 const $for_content__setup = ($scope) => {
-	_text($scope.a, $scope.M);
+	_text($scope, "a", $scope.M);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to(0, "<p>item <!></p>", "Db%l", $for_content__setup);

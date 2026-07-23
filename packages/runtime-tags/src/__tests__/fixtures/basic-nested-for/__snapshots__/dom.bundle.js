@@ -1,6 +1,6 @@
 // tags/child.marko
 const $template = "<div> </div>";
-const $name = ($scope, name) => _text($scope.a, name);
+const $name = ($scope, name) => _text($scope, "a", name);
 
 // template.marko
 const $for_content2__outer__OR__inner = /*@__PURE__*/ _or(3, ($scope) => $name($scope.a, `${$scope._.c}.${$scope.c}`));

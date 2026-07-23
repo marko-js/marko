@@ -39,6 +39,7 @@ import {
 } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
+import { queueWrite } from "./queue";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { _id, subscribeToScopeSet } from "./signals";
 
@@ -51,11 +52,29 @@ export function _to_text(value: unknown) {
   return value || value === 0 ? value + "" : "";
 }
 
-export function _attr(element: Element, name: string, value: unknown) {
+// === Observable sinks ===
+//
+// The `export let` write helpers below are the update-path observable
+// sinks. Every sink takes the scope and the target's accessor first and
+// resolves its node internally, so the queue can key held writes on
+// (scope, accessor) and re-resolve the target when a write finally
+// applies. They apply directly until `_enable_queued_writes` (called by
+// `_enable_transition`) swaps them for queue-through wrappers; a rollup
+// lineage bundler drops the swap assignment (and with it the applier) for
+// any sink the app never imports. Runtime-internal callers use the raw
+// `apply*` declarations so an applied sink never re-queues its own parts.
+
+export let _attr = applyAttr;
+export function applyAttr(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  name: string,
+  value: unknown,
+) {
   if (MARKO_DEBUG) {
     assertValidAttrValue(name, value);
   }
-  setAttribute(element, name, normalizeAttrValue(value));
+  setAttribute(scope[nodeAccessor] as Element, name, normalizeAttrValue(value));
 }
 
 function setAttribute(
@@ -73,75 +92,88 @@ function setAttribute(
   }
 }
 
-export function _attr_class(element: Element, value: unknown) {
+export let _attr_class = applyAttrClass;
+function applyAttrClass(scope: Scope, nodeAccessor: Accessor, value: unknown) {
   setAttribute(
-    element,
+    scope[nodeAccessor] as Element,
     "class",
     toDelimitedString(value, " ", stringifyClassObject) || undefined,
   );
 }
 
-export function _attr_class_items(
-  element: Element,
+export let _attr_class_items = applyAttrClassItems;
+function applyAttrClassItems(
+  scope: Scope,
+  nodeAccessor: Accessor,
   items: Record<string, unknown>,
 ) {
   for (const key in items) {
-    _attr_class_item(element, key, items[key]);
+    applyAttrClassItem(scope, nodeAccessor, key, items[key]);
   }
 }
 
-export function _attr_class_item(
-  element: Element,
+export let _attr_class_item = applyAttrClassItem;
+function applyAttrClassItem(
+  scope: Scope,
+  nodeAccessor: Accessor,
   name: string,
   value: unknown,
 ) {
-  element.classList.toggle(name, !!value);
+  (scope[nodeAccessor] as Element).classList.toggle(name, !!value);
 }
 
-export function _attr_style(element: Element, value: unknown) {
+export let _attr_style = applyAttrStyle;
+function applyAttrStyle(scope: Scope, nodeAccessor: Accessor, value: unknown) {
   setAttribute(
-    element,
+    scope[nodeAccessor] as Element,
     "style",
     toDelimitedString(value, ";", stringifyStyleObject) || undefined,
   );
 }
 
-export function _attr_style_items(
-  element: HTMLElement,
+export let _attr_style_items = applyAttrStyleItems;
+function applyAttrStyleItems(
+  scope: Scope,
+  nodeAccessor: Accessor,
   items: Record<string, unknown>,
 ) {
   for (const key in items) {
-    _attr_style_item(element, key, items[key]);
+    applyAttrStyleItem(scope, nodeAccessor, key, items[key]);
   }
 }
 
-export function _attr_style_item(
-  element: HTMLElement,
+export let _attr_style_item = applyAttrStyleItem;
+function applyAttrStyleItem(
+  scope: Scope,
+  nodeAccessor: Accessor,
   name: string,
   value: unknown,
 ) {
-  element.style.setProperty(name, _to_text(value));
+  (scope[nodeAccessor] as HTMLElement).style.setProperty(name, _to_text(value));
 }
 
 export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
   const element = scope[nodeAccessor] as HTMLStyleElement;
   const id = _id(scope);
-  _attr_nonce(scope, nodeAccessor);
+  applyAttrNonce(scope, nodeAccessor);
   element.className = id;
-  _text_content(element, "." + id + "~*{}");
+  applyTextContent(scope, nodeAccessor, "." + id + "~*{}");
 }
 
-export function _style_rule_item(
-  element: HTMLStyleElement,
+export let _style_rule_item = applyStyleRuleItem;
+function applyStyleRuleItem(
+  scope: Scope,
+  nodeAccessor: Accessor,
   name: string,
   value: unknown,
 ) {
-  const text = element.textContent!;
+  const text = (scope[nodeAccessor] as HTMLStyleElement).textContent!;
   const decl = name + ":" + escapeStyleValue(_to_text(value)) + ";";
   let start = text.indexOf("{" + name + ":");
   if (!~start) start = text.indexOf(";" + name + ":");
-  _text_content(
-    element,
+  applyTextContent(
+    scope,
+    nodeAccessor,
     ~start
       ? // `escapeStyleValue` never emits a raw `;`, so the next one ends the declaration.
         text.slice(0, ++start) + decl + text.slice(text.indexOf(";", start) + 1)
@@ -149,11 +181,14 @@ export function _style_rule_item(
   );
 }
 
-export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
-  _attr(scope[nodeAccessor], "nonce", scope[AccessorProp.Global].cspNonce);
+export let _attr_nonce = applyAttrNonce;
+function applyAttrNonce(scope: Scope, nodeAccessor: Accessor) {
+  applyAttr(scope, nodeAccessor, "nonce", scope[AccessorProp.Global].cspNonce);
 }
 
-export function _text(node: Text | Comment, value: unknown) {
+export let _text = applyText;
+function applyText(scope: Scope, nodeAccessor: Accessor, value: unknown) {
+  const node = scope[nodeAccessor] as Text | Comment;
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.data !== normalizedValue) {
@@ -161,7 +196,13 @@ export function _text(node: Text | Comment, value: unknown) {
   }
 }
 
-export function _text_content(node: ParentNode, value: unknown) {
+export let _text_content = applyTextContent;
+function applyTextContent(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  value: unknown,
+) {
+  const node = scope[nodeAccessor] as ParentNode;
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.textContent !== normalizedValue) {
@@ -169,7 +210,8 @@ export function _text_content(node: ParentNode, value: unknown) {
   }
 }
 
-export function _attrs(
+export let _attrs = applyAttrs;
+function applyAttrs(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
@@ -192,13 +234,14 @@ export function _attrs(
   attrsInternal(scope, nodeAccessor, nextAttrs);
 }
 
-export function _attrs_content(
+export let _attrs_content = applyAttrsContent;
+function applyAttrsContent(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  _attrs(scope, nodeAccessor, nextAttrs);
-  _attr_content(scope, nodeAccessor, nextAttrs?.content);
+  applyAttrs(scope, nodeAccessor, nextAttrs);
+  applyAttrContent(scope, nodeAccessor, nextAttrs?.content);
 }
 
 function hasAttrAlias(
@@ -213,7 +256,8 @@ function hasAttrAlias(
   );
 }
 
-export function _attrs_partial(
+export let _attrs_partial = applyAttrsPartial;
+function applyAttrsPartial(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
@@ -241,14 +285,15 @@ export function _attrs_partial(
   attrsInternal(scope, nodeAccessor, partial);
 }
 
-export function _attrs_partial_content(
+export let _attrs_partial_content = applyAttrsPartialContent;
+function applyAttrsPartialContent(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
 ) {
-  _attrs_partial(scope, nodeAccessor, nextAttrs, skip);
-  _attr_content(scope, nodeAccessor, nextAttrs?.content);
+  applyAttrsPartial(scope, nodeAccessor, nextAttrs, skip);
+  applyAttrContent(scope, nodeAccessor, nextAttrs?.content);
 }
 
 function attrsInternal(
@@ -339,10 +384,10 @@ function attrsInternal(
     const value = nextAttrs[name];
     switch (name) {
       case "class":
-        _attr_class(el, value);
+        applyAttrClass(scope, nodeAccessor, value);
         break;
       case "style":
-        _attr_style(el, value);
+        applyAttrStyle(scope, nodeAccessor, value);
         break;
       default: {
         if (MARKO_DEBUG) {
@@ -356,7 +401,7 @@ function attrsInternal(
           skip?.test(name) ||
           (name === "content" && el.tagName !== "META")
         )) {
-          _attr(el, name, value);
+          applyAttr(scope, nodeAccessor, name, value);
         }
         break;
       }
@@ -364,7 +409,8 @@ function attrsInternal(
   }
 }
 
-export function _attr_content(
+export let _attr_content = applyAttrContent;
+function applyAttrContent(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -423,7 +469,8 @@ export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
   }
 }
 
-export function _html(scope: Scope, value: unknown, accessor: Accessor) {
+export let _html = applyHtml;
+function applyHtml(scope: Scope, accessor: Accessor, value: unknown) {
   const firstChild = scope[accessor] as ChildNode;
   const parentNode = firstChild.parentNode!;
   const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
@@ -442,6 +489,35 @@ export function _html(scope: Scope, value: unknown, accessor: Accessor) {
       newContent.lastChild!),
   );
   removeChildNodes(firstChild, lastChild);
+}
+
+// Swaps every observable sink for a queue-through wrapper. Only
+// `_enable_transition` calls this, so none of it is retained in apps
+// without transitions.
+export function _enable_queued_writes() {
+  const queued = <T extends (a?: any, b?: any, c?: any, d?: any) => void>(
+    named: 0 | 1,
+    fn: T,
+  ) =>
+    ((a?: unknown, b?: unknown, c?: unknown, d?: unknown) =>
+      queueWrite(named, fn, a as Scope, b, c, d)) as T;
+  _text = queued(0, applyText);
+  _text_content = queued(0, applyTextContent);
+  _attr = queued(1, applyAttr);
+  _attr_class = queued(0, applyAttrClass);
+  _attr_class_items = queued(0, applyAttrClassItems);
+  _attr_class_item = queued(1, applyAttrClassItem);
+  _attr_style = queued(0, applyAttrStyle);
+  _attr_style_items = queued(0, applyAttrStyleItems);
+  _attr_style_item = queued(1, applyAttrStyleItem);
+  _style_rule_item = queued(1, applyStyleRuleItem);
+  _attr_nonce = queued(0, applyAttrNonce);
+  _attrs = queued(0, applyAttrs);
+  _attrs_content = queued(0, applyAttrsContent);
+  _attrs_partial = queued(0, applyAttrsPartial);
+  _attrs_partial_content = queued(0, applyAttrsPartialContent);
+  _attr_content = queued(0, applyAttrContent);
+  _html = queued(0, applyHtml);
 }
 
 function normalizeClientRender(value: any) {

@@ -5,8 +5,8 @@
       "brotli": 622
     },
     "child.mjs": {
-      "min": 221,
-      "brotli": 152
+      "min": 225,
+      "brotli": 151
     }
   },
   "html": {

@@ -798,7 +798,6 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
-                const nodeExpr = createScopeReadExpression(nodeBinding!);
                 const meta: DelimitedAttrMeta = {
                   staticItems: undefined,
                   dynamicItems: undefined,
@@ -809,7 +808,12 @@ export default {
 
                 if (meta.dynamicItems) {
                   stmt = t.expressionStatement(
-                    callRuntime(helper, nodeExpr, value),
+                    callRuntime(
+                      helper,
+                      scopeIdentifier,
+                      getScopeAccessorLiteral(nodeBinding!),
+                      value,
+                    ),
                   );
                 } else {
                   if (meta.staticItems) {
@@ -825,7 +829,8 @@ export default {
                       stmt = t.expressionStatement(
                         callRuntime(
                           `_attr_${name}_item`,
-                          nodeExpr,
+                          scopeIdentifier,
+                          getScopeAccessorLiteral(nodeBinding!),
                           t.stringLiteral(key),
                           value,
                         ),
@@ -842,7 +847,8 @@ export default {
                       stmt = t.expressionStatement(
                         callRuntime(
                           `_attr_${name}_items`,
-                          nodeExpr,
+                          scopeIdentifier,
+                          getScopeAccessorLiteral(nodeBinding!),
                           t.objectExpression(props),
                         ),
                       );
@@ -888,7 +894,8 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "_attr",
-                      createScopeReadExpression(nodeBinding!),
+                      scopeIdentifier,
+                      getScopeAccessorLiteral(nodeBinding!),
                       t.stringLiteral(name),
                       value,
                     ),
@@ -995,7 +1002,8 @@ export default {
                 t.expressionStatement(
                   callRuntime(
                     "_text_content",
-                    createScopeReadExpression(nodeBinding!),
+                    scopeIdentifier,
+                    getScopeAccessorLiteral(nodeBinding!),
                     textLiteral,
                   ),
                 ),

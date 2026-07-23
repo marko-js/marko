@@ -12,8 +12,8 @@ _resume("b0", $valueChange$1);
 // template.marko
 const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	$input_value($scope.a, $scope.d);
-	_text($scope.b, $scope.d);
-	_text($scope.c, typeof $scope.d);
+	_text($scope, "b", $scope.d);
+	_text($scope, "c", typeof $scope.d);
 });
 function $valueChange($scope) {
 	return (_new_value) => {

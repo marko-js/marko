@@ -1,5 +1,5 @@
 // template.marko
-const $else_content__count = /*@__PURE__*/ _if_closure(0, 1, ($scope) => _text($scope.b, $scope._.c));
+const $else_content__count = /*@__PURE__*/ _if_closure(0, 1, ($scope) => _text($scope, "b", $scope._.c));
 const $else_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$for_content__editing($scope._, true);
 }));
@@ -16,7 +16,7 @@ const $if_content__count__script = _script("a0", ($scope) => _on($scope.a, "clic
 	$for_content__editing($scope._, false);
 }));
 const $if_content__count = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
-	_text($scope.b, $scope._.c + 1);
+	_text($scope, "b", $scope._.c + 1);
 	$if_content__count__script($scope);
 });
 const $for_content__if = /*@__PURE__*/ _if(0, "<button>Confirm <!></button>", " Db%l", $if_content__count, "<button>Increment <!></button>", " Db%l", $else_content__setup);

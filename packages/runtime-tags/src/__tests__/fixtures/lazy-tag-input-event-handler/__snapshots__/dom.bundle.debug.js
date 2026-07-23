@@ -3,7 +3,7 @@ const $template = "<button class=child>child:<!></button>";
 const $walks = " Db%l";
 const $data = /*@__PURE__*/ _let("data/5");
 const $input_data = $data;
-const $verified = /*@__PURE__*/ _let("verified/6", ($scope) => _text($scope["#text/1"], $scope.verified));
+const $verified = /*@__PURE__*/ _let("verified/6", ($scope) => _text($scope, "#text/1", $scope.verified));
 function $setup($scope) {
 	$verified($scope, "?");
 }
@@ -25,7 +25,7 @@ const $shared = /*@__PURE__*/ _let("shared/4", ($scope) => $load_Child_tag_input
 	data: $scope.shared,
 	report: $report($scope)
 }));
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope, "#text/1", $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + Object.keys($scope.shared).length);
 }));

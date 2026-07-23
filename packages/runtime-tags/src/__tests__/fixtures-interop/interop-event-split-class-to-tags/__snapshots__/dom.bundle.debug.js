@@ -9,7 +9,7 @@ var v_template_marko_hydrate_5_default = () => (0, import_components.init)();
 // components/tags-pinger.marko
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope, "#text/1", $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

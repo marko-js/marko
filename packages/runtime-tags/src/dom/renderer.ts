@@ -8,7 +8,7 @@ import {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
-import { queueRender } from "./queue";
+import { onCreateBranch, queueRender } from "./queue";
 import { _resume } from "./resume";
 import { createScope } from "./scope";
 import { _const, type Signal, type SignalFn } from "./signals";
@@ -46,6 +46,7 @@ export function createBranch(
     branch,
     (parentNode as Element).namespaceURI!,
   );
+  onCreateBranch(branch);
 
   return branch;
 }

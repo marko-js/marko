@@ -1,4 +1,4 @@
-// size: 3904 (min) 1732 (brotli)
+// size: 3917 (min) 1740 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -62,6 +62,7 @@ let decodeAccessor = (num) =>
   },
   cloneCache = {},
   registeredValues = {},
+  _text = applyText,
   rendering,
   runId = 2,
   pendingEffects = [],
@@ -70,7 +71,6 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return (
@@ -210,8 +210,9 @@ function _resume(id, obj) {
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
 }
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
+function applyText(scope, nodeAccessor, value) {
+  let node = scope[nodeAccessor],
+    normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function removeChildNodes(startNode, endNode) {
@@ -237,7 +238,7 @@ function toInsertNode(startNode, endNode) {
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || catchEnabled)) return;
+    if (((render.d = value), render.e === runId)) return;
     render.e = runId;
   } else
     ((render = {

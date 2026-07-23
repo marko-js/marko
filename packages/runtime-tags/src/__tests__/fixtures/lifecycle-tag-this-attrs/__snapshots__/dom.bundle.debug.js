@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div> </div>";
 const $walks = "D l";
-const $x = /*@__PURE__*/ _let("x/1", ($scope) => _text($scope["#text/0"], $scope.x));
+const $x = /*@__PURE__*/ _let("x/1", ($scope) => _text($scope, "#text/0", $scope.x));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _lifecycle($scope, {
 	x: 1,
 	setX: function(value) {

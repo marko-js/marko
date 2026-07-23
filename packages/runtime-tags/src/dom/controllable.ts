@@ -7,7 +7,7 @@ import {
   ControlledType,
   type Scope,
 } from "../common/types";
-import { _attr, normalizeAttrValue } from "./dom";
+import { applyAttr, normalizeAttrValue } from "./dom";
 import { delegate } from "./event";
 import { pendingEffects, run, runId } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
@@ -83,7 +83,7 @@ export function _attr_input_checkedValue_default(
     ? checkedValue.map(normalizeStrProp)
     : normalizeStrProp(checkedValue);
 
-  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
+  applyAttr(scope, nodeAccessor, "value", value);
   _attr_input_checked_default(
     scope,
     nodeAccessor,
@@ -118,7 +118,7 @@ export function _attr_input_checkedValue(
     el.checked = multiple
       ? normalizedCheckedValue.includes(normalizeStrProp(value))
       : normalizeStrProp(value) === normalizedCheckedValue;
-    _attr(el, "value", value);
+    applyAttr(scope, nodeAccessor, "value", value);
   } else {
     _attr_input_checkedValue_default(scope, nodeAccessor, checkedValue, value);
   }
@@ -203,7 +203,7 @@ export function _attr_input_value_dynamic_default(
   const el = scope[nodeAccessor] as HTMLInputElement;
   // Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
   if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
-    _attr(el, "value", value);
+    applyAttr(scope, nodeAccessor, "value", value);
   } else {
     _attr_input_value_default(scope, nodeAccessor, value);
   }
@@ -237,7 +237,7 @@ export function _attr_input_value_attribute_default(
   nodeAccessor: Accessor,
   value: unknown,
 ) {
-  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
+  applyAttr(scope, nodeAccessor, "value", value);
 }
 export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
   const el = scope[nodeAccessor] as HTMLInputElement;

@@ -15,11 +15,11 @@ const $Once_content__$params = ($scope, $params2) => $Once_content__$temp($scope
 const $Once_content__$temp = ($scope, $temp) => $Once_content__value($scope, $temp.value);
 const $clickOnceCount = /*@__PURE__*/ _let("clickOnceCount/8", ($scope) => {
 	$Once_content__value($scope["#childScope/0"], $onClickOnce($scope));
-	_text($scope["#text/3"], $scope.clickOnceCount);
+	_text($scope, "#text/3", $scope.clickOnceCount);
 });
 const $clickTwiceCount = /*@__PURE__*/ _let("clickTwiceCount/10", ($scope) => {
 	$Twice_content__value($scope["#childScope/4"], $onClickTwice($scope));
-	_text($scope["#text/7"], $scope.clickTwiceCount);
+	_text($scope, "#text/7", $scope.clickTwiceCount);
 });
 function $setup($scope) {
 	_var($scope, "#childScope/0", $onClickOnce2);

@@ -9,7 +9,7 @@ import {
   type TemplateInput,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
-import { prepareEffects, runEffects } from "./queue";
+import { onInsertBranch, prepareEffects, runEffects } from "./queue";
 import { _content, createBranch, type Renderer } from "./renderer";
 import { _resume } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
@@ -125,6 +125,7 @@ function mount(
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
+  onInsertBranch(branch);
   runEffects(effects);
 
   return {

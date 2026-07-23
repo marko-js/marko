@@ -8,7 +8,7 @@ const $for_content__row_id__script = _script("__tests__/template.marko_1_row_id"
 	$selected($scope._, $scope.row_id);
 }));
 const $for_content__row_id = /*@__PURE__*/ _const("row_id", $for_content__row_id__script);
-const $for_content__row_label = ($scope, row_label) => _text($scope["#text/2"], row_label);
+const $for_content__row_label = ($scope, row_label) => _text($scope, "#text/2", row_label);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);

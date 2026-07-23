@@ -18,7 +18,7 @@ _resume("b1", $_return2);
 _resume("b0", $_return);
 
 // template.marko
-const $for_content__item = ($scope, item) => _text($scope.a, item);
+const $for_content__item = ($scope, item) => _text($scope, "a", item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $store = _var_resume("a0", ($scope, store) => {
 	$list($scope, store.list);

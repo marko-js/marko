@@ -10,7 +10,7 @@ const $foo__OR__$fooChange__script = _script("__tests__/template.marko_0_foo_$fo
 }));
 const $foo__OR__$fooChange = $foo__OR__$fooChange__script;
 const $bar = /*@__PURE__*/ _let("bar/3", ($scope) => {
-	_text($scope["#text/2"], $scope.bar);
+	_text($scope, "#text/2", $scope.bar);
 	$pattern2($scope, {
 		foo: $scope.bar,
 		fooChange: $foo($scope)
@@ -20,7 +20,7 @@ const $bar = /*@__PURE__*/ _let("bar/3", ($scope) => {
 function $setup($scope) {
 	$bar($scope, 0);
 }
-const $foo2 = /*@__PURE__*/ _const("foo", ($scope) => _text($scope["#text/1"], $scope.foo));
+const $foo2 = /*@__PURE__*/ _const("foo", ($scope) => _text($scope, "#text/1", $scope.foo));
 const $fooChange2 = /*@__PURE__*/ _const("$fooChange");
 function $foo($scope) {
 	return function(v) {

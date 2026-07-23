@@ -1,6 +1,6 @@
 // tags/child.marko
 const $doubled__OR__tripled = ($scope) => {
-	_text($scope.a, $scope.d * 2 + $scope.d * 3);
+	_text($scope, "a", $scope.d * 2 + $scope.d * 3);
 };
 const $input_n = /*@__PURE__*/ _const(3, $doubled__OR__tripled);
 

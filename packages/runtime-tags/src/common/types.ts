@@ -1,4 +1,4 @@
-import type { PendingRender } from "../dom/queue";
+import type { HoldStore } from "../dom/queue";
 import type { Renderer as ClientRenderer, Renderer } from "../dom/renderer";
 import type { AccessorProp } from "./accessor.debug";
 export type Falsy = undefined | null | false | 0 | "";
@@ -12,7 +12,7 @@ export interface BranchScope extends Scope {
   [AccessorProp.AwaitCounter]: AwaitCounter | undefined;
   [AccessorProp.PendingEffects]: unknown[] | undefined;
   [AccessorProp.PlaceholderBranch]: BranchScope | undefined | 0;
-  [AccessorProp.PendingRenders]: PendingRender[] | 0 | undefined;
+  [AccessorProp.WriteState]: HoldStore | 0 | 1 | undefined;
   [AccessorProp.DetachedAwait]: Renderer | 0 | undefined;
   [AccessorProp.PendingScopes]: Scope[] | void;
 }

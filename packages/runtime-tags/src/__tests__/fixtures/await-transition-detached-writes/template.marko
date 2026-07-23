@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/n=0>
+<button onClick() { n++ }>inc</button>
+<b>outside ${n}</b>
+<div>
+  <await|result|=resolveAfter(`R${n}`)>
+    <span>#${n}</span>
+    <p>${result}</p>
+  </await>
+</div>

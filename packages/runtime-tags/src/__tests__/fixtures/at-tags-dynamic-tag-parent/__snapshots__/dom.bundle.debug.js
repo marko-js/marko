@@ -5,12 +5,12 @@ const $setup$1 = () => {};
 const $input_header_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
 const $input_footer_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/4");
-const $input_header_class = ($scope, input_header_class) => _attr_class($scope["#header/0"], input_header_class);
+const $input_header_class = ($scope, input_header_class) => _attr_class($scope, "#header/0", input_header_class);
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_header_content = $dynamicTag$1;
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag2;
-const $input_footer_class = ($scope, input_footer_class) => _attr_class($scope["#footer/3"], input_footer_class);
+const $input_footer_class = ($scope, input_footer_class) => _attr_class($scope, "#footer/3", input_footer_class);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/4");
 const $input_footer_content = $dynamicTag3;
 const $input = ($scope, input) => {

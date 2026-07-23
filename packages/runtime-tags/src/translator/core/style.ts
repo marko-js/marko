@@ -28,7 +28,6 @@ import {
   mergeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
-import { createScopeReadExpression } from "../util/scope-read";
 import {
   getNodeContentType,
   getOrCreateSection,
@@ -236,7 +235,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     const { names, binding } = dynamic;
     const section = getSection(tag);
     const write = writer.writeTo(tag);
-    const readEl = () => createScopeReadExpression(binding);
 
     walks.visit(tag, WalkCode.Get);
     write`<style>`;
@@ -265,7 +263,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         t.expressionStatement(
           callRuntime(
             "_style_rule_item",
-            readEl(),
+            scopeIdentifier,
+            getScopeAccessorLiteral(binding),
             t.stringLiteral(names[i]),
             value,
           ),

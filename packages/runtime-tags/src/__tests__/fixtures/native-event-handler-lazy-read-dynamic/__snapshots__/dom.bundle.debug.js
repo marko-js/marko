@@ -5,11 +5,11 @@ const $enabled__script = _script("__tests__/template.marko_0_enabled", ($scope) 
 	$log($scope, `${$scope.log}(${$scope.other})`);
 })));
 const $enabled = /*@__PURE__*/ _let("enabled/6", ($scope) => {
-	_text($scope["#text/3"], $scope.enabled);
+	_text($scope, "#text/3", $scope.enabled);
 	$enabled__script($scope);
 });
-const $other = /*@__PURE__*/ _let("other/7", ($scope) => _text($scope["#text/4"], $scope.other));
-const $log = /*@__PURE__*/ _let("log/8", ($scope) => _text($scope["#text/5"], $scope.log));
+const $other = /*@__PURE__*/ _let("other/7", ($scope) => _text($scope, "#text/4", $scope.other));
+const $log = /*@__PURE__*/ _let("log/8", ($scope) => _text($scope, "#text/5", $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$enabled($scope, !$scope.enabled);

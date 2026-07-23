@@ -11,7 +11,7 @@ var press_button_default = /*@__PURE__*/ _template("__tests__/tags/press-button/
 const $template = /*@__PURE__*/ ((_w0) => `<button class=inc>inc</button>${_w0}<div class=log> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&D l`)(" b");
 const $count = /*@__PURE__*/ _let("count/3");
-const $log = /*@__PURE__*/ _let("log/4", ($scope) => _text($scope["#text/2"], $scope.log));
+const $log = /*@__PURE__*/ _let("log/4", ($scope) => _text($scope, "#text/2", $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

@@ -2,7 +2,7 @@
 const $template$2 = "<span class=cell> </span>";
 const $walks$2 = "D l";
 const $setup$2 = () => {};
-const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
+const $input_value = ($scope, input_value) => _text($scope, "#text/0", input_value);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
 var cell_default = /*@__PURE__*/ _template("__tests__/tags/cell/index.marko", $template$2, "D l", $setup$2, $input$1);
 

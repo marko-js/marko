@@ -20,7 +20,7 @@ const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $sc
 	valueChange: $valueChange($scope)
 })));
 const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
-	_text($scope["#text/1"], $scope.value);
+	_text($scope, "#text/1", $scope.value);
 	$value__OR__tag($scope);
 });
 const $tag = /*@__PURE__*/ _const("tag", $value__OR__tag);

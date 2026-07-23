@@ -5,12 +5,12 @@
       "brotli": 262
     },
     "child-a.mjs": {
-      "min": 124,
-      "brotli": 102
+      "min": 126,
+      "brotli": 104
     },
     "child-b.mjs": {
-      "min": 126,
-      "brotli": 103
+      "min": 128,
+      "brotli": 104
     }
   },
   "html": {

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc</button><div></div><div></div>";
 const $walks = " b b b";
-const $d__OR__more__OR__obj__OR__k = /*@__PURE__*/ _or(9, ($scope) => _attr_class($scope["#div/1"], [
+const $d__OR__more__OR__obj__OR__k = /*@__PURE__*/ _or(9, ($scope) => _attr_class($scope, "#div/1", [
 	"a",
 	["b", $scope.d],
 	...$scope.more,
@@ -12,7 +12,7 @@ const $d__OR__more__OR__obj__OR__k = /*@__PURE__*/ _or(9, ($scope) => _attr_clas
 		"q": $scope.d
 	}
 ]), 3);
-const $d__OR__moreStyles = /*@__PURE__*/ _or(6, ($scope) => _attr_style($scope["#div/2"], [
+const $d__OR__moreStyles = /*@__PURE__*/ _or(6, ($scope) => _attr_style($scope, "#div/2", [
 	"color:red",
 	["margin:0", $scope.d && "padding:0"],
 	...$scope.moreStyles

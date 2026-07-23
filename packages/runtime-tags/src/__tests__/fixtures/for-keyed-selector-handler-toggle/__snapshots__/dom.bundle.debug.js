@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<ul></ul>";
 const $walks = " b";
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/0", "selected", "row_id", ($scope) => _attr_class($scope["#li/0"], $scope._.selected === $scope.row_id && "danger"));
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/0", "selected", "row_id", ($scope) => _attr_class($scope, "#li/0", $scope._.selected === $scope.row_id && "danger"));
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$selected($scope._, $scope._.selected === $scope.row_id ? undefined : $scope.row_id);
 }));
@@ -9,7 +9,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__row_label = ($scope, row_label) => _text($scope["#text/2"], row_label);
+const $for_content__row_label = ($scope, row_label) => _text($scope, "#text/2", row_label);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);

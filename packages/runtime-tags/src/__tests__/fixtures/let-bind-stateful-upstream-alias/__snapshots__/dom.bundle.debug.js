@@ -26,7 +26,7 @@ var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", ""
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Clear</button><ul></ul>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b b`)("");
-const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
+const $for_content__item = ($scope, item) => _text($scope, "#text/0", item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $store = _var_resume("__tests__/template.marko_0_store/var", ($scope, store) => {
 	$store_list($scope, store?.list);

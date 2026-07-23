@@ -2,9 +2,9 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _enable_catch();
-const $await_content2__value = ($scope, value) => _text($scope["#text/0"], value);
+const $await_content2__value = ($scope, value) => _text($scope, "#text/0", value);
 const $await_content2__$params = ($scope, $params3) => $await_content2__value($scope, $params3[0]);
-const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
+const $await_content__value = ($scope, value) => _text($scope, "#text/0", value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " b");
 const $placeholder_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

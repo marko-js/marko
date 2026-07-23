@@ -18,7 +18,7 @@ const $state_n = /*@__PURE__*/ _const(5, ($scope) => {
 	$state_tag__OR__n($scope);
 });
 const $n = ($scope) => {
-	_text($scope.c, $scope.f);
+	_text($scope, "c", $scope.f);
 };
 const $state_tag = /*@__PURE__*/ _const(6, $state_tag__OR__n);
-const $log = /*@__PURE__*/ _let(7, ($scope) => _text($scope.d, $scope.h));
+const $log = /*@__PURE__*/ _let(7, ($scope) => _text($scope, "d", $scope.h));

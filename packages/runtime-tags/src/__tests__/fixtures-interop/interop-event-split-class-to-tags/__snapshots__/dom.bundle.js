@@ -2,7 +2,7 @@
 var import_const_element = /* @__PURE__ */ __toESM(require_const_element());
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
-const $count = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f));
+const $count = /*@__PURE__*/ _let(5, ($scope) => _text($scope, "b", $scope.f));
 function $setup($scope) {
 	$count($scope, 0);
 }

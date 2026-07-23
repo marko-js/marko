@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__item = ($scope, item) => _text($scope.a, item);
+const $for_content__item = ($scope, item) => _text($scope, "a", item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $ul_getter = _el("a0", 1);
 const $for = /*@__PURE__*/ _for_of(1, "<li> </li>", "D l", 0, $for_content__$params);

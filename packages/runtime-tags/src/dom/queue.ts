@@ -1,10 +1,12 @@
 import {
   AccessorProp,
   type BranchScope,
+  type Falsy,
   PendingRenderProp,
   type Scope,
 } from "../common/types";
-import { renderCatch } from "./control-flow";
+import { _enable_queued_flow, renderCatch } from "./control-flow";
+import { _enable_queued_writes } from "./dom";
 import { enableBranches } from "./resume";
 import type { Signal, SignalFn } from "./signals";
 
@@ -15,7 +17,6 @@ export type PendingRender = {
   [PendingRenderProp.Signal]: Signal<any, any>;
   [PendingRenderProp.Value]: unknown;
   [PendingRenderProp.Gen]: number;
-  [PendingRenderProp.Pending]?: 0 | 1;
 };
 
 export let rendering: undefined | 0 | 1;
@@ -40,10 +41,7 @@ export function queueRender<T, U extends Scope = Scope>(
   // accessors are strings and pending counters use complemented keys.
   if (signalKey >= 0 && (render = scope[signalKey])) {
     render[PendingRenderProp.Value] = value;
-    if (
-      render[PendingRenderProp.Gen] === runId ||
-      (catchEnabled && render[PendingRenderProp.Pending])
-    ) {
+    if (render[PendingRenderProp.Gen] === runId) {
       return;
     }
     render[PendingRenderProp.Gen] = runId;
@@ -232,20 +230,220 @@ export function _enable_catch() {
     )(runEffects);
     runRender = ((runRender) => (render: PendingRender) => {
       try {
-        let branch =
-          render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
-        while (branch) {
-          if (branch[AccessorProp.PendingRenders]) {
-            render[PendingRenderProp.Pending] = 1;
-            return branch[AccessorProp.PendingRenders].push(render);
-          }
-          branch = branch![AccessorProp.ParentBranch];
-        }
-        render[PendingRenderProp.Pending] = 0;
         runRender(render);
       } catch (error) {
         renderCatch(render[PendingRenderProp.Scope], error);
       }
     })(runRender);
   }
+}
+
+// === Observable write queue & branch write states ===
+//
+// Signals mutate the DOM through the observable sink helpers (`_text`,
+// `_attr`, the branch swap/reconcile commits, ...), each registered here
+// through `_sink`. Sinks apply directly until `_enable_transition()` runs
+// (emitted by the compiler only when an `<await>` promise expression has
+// referenced bindings, i.e. can re-fire client side); it swaps every
+// registered sink for a wrapper that routes through `queueWrite`, which
+// dispatches on the write state of the target scope's branch:
+//
+// - `undefined` (attached, and anything predating the enable) and the
+//   unobservable states `0` (created, not yet inserted) / `1` (detached):
+//   the write applies immediately — renders run before paint, so direct
+//   application is never user-visible mid-flush.
+// - a `HoldStore` (held by a pending transition): the write is captured,
+//   keyed on (scope, sink, accessor[, name]) with latest-args-wins
+//   overwrite, so a hold spanning any number of flushes applies at most
+//   one mutation per target when it settles.
+//
+// State transitions ride the branch primitives: creation stamps `0`,
+// insertion adopts the parent branch's state, a transition freeze flips
+// its region's attached branches to the hold store, and detaching drains
+// the store into the now-unobservable DOM (so a held write can never
+// clobber a later direct one) before stamping `1`.
+
+export type HoldStore = {
+  /** keyed entries, stride 6: fn, named, scope, accessor, c, d */
+  e: unknown[];
+  /** scope -> sink fn -> accessor -> entry index (or name -> entry index) */
+  k: Map<Scope, Map<SinkFn, Map<unknown, number | Map<unknown, number>>>>;
+};
+
+type WriteState = HoldStore | 0 | 1 | undefined;
+
+type SinkFn = (a?: any, b?: any, c?: any, d?: any) => void;
+
+export function queueWrite(
+  named: 0 | 1,
+  fn: SinkFn,
+  scope: Scope,
+  b?: unknown,
+  c?: unknown,
+  d?: unknown,
+) {
+  const state = heldState(scope);
+  if (state) {
+    const { e, k } = state;
+    let byFn = k.get(scope);
+    if (!byFn) k.set(scope, (byFn = new Map()));
+    let byAccessor = byFn.get(fn);
+    if (!byAccessor) byFn.set(fn, (byAccessor = new Map()));
+    let index = byAccessor.get(b);
+    if (named) {
+      let byName = index as Map<unknown, number> | undefined;
+      if (!byName) byAccessor.set(b, (byName = new Map()));
+      if ((index = byName.get(c)) === undefined) {
+        byName.set(c, e.length);
+      }
+    } else if (index === undefined) {
+      byAccessor.set(b, e.length);
+    }
+    if (index === undefined) {
+      e.push(fn, named, scope, b, c, d);
+    } else {
+      // Last write wins: overwrite the captured args in place.
+      e[(index as number) + 4] = c;
+      e[(index as number) + 5] = d;
+    }
+  } else {
+    fn(scope, b, c, d);
+  }
+}
+
+// The store freezing writes to this scope's region, if any.
+export function heldState(scope: Scope) {
+  const state = scope[AccessorProp.ClosestBranch]?.[AccessorProp.WriteState];
+  if (typeof state === "object") return state;
+}
+
+// === Branch write-state transitions ===
+//
+// No-op hooks until `_enable_transition` installs them, so branch
+// primitives pay one dead call per branch event (never per write) while
+// transitions are unused, and the machinery tree-shakes away when no
+// template enables it.
+
+export let onCreateBranch = (_branch: BranchScope) => {};
+export let onInsertBranch = (_branch: BranchScope) => {};
+export let onDetachBranch = (_branch: BranchScope) => {};
+export let onAttachBranch = (_branch: BranchScope) => {};
+export let holdRegion = (_branch: BranchScope | Falsy) => {};
+
+// Feeds a settled transition's surviving held writes back through the
+// gate after flipping the region to its parent context: released under an
+// attached or detached parent they apply immediately, and under a
+// still-held ancestor they cascade into its store. Entries whose
+// producing scope's branch was destroyed while held are dropped.
+export function releaseHold(branch: BranchScope | undefined) {
+  const store = branch && branch[AccessorProp.WriteState];
+  if (typeof store === "object") {
+    setRegionState(
+      branch as BranchScope,
+      (branch as BranchScope)[AccessorProp.ParentBranch]?.[
+        AccessorProp.WriteState
+      ],
+      store,
+    );
+    feedHold(store);
+  }
+}
+
+function feedHold(store: HoldStore) {
+  const { e } = store;
+  for (let i = 0; i < e.length; i += 6) {
+    if (
+      (e[i + 2] as Scope)[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] !== 0
+    ) {
+      queueWrite(
+        e[i + 1] as 0 | 1,
+        e[i] as SinkFn,
+        e[i + 2] as Scope,
+        e[i + 3],
+        e[i + 4],
+        e[i + 5],
+      );
+    }
+  }
+}
+
+// Flips every branch in the region whose state is `from` (a released
+// store) or detached to `to`, leaving created branches and independently
+// held sub-regions to their own transitions.
+function setRegionState(
+  branch: BranchScope,
+  to: WriteState,
+  from: HoldStore | undefined,
+) {
+  const state = branch[AccessorProp.WriteState];
+  if (state === 1 || (state === from && state !== to)) {
+    branch[AccessorProp.WriteState] = to;
+    branch[AccessorProp.BranchScopes]?.forEach((child) =>
+      setRegionState(child, to, from),
+    );
+  }
+}
+
+let transitionsEnabled: undefined | 1;
+export function _enable_transition() {
+  if (!transitionsEnabled) {
+    transitionsEnabled = 1;
+    _enable_catch();
+    _enable_queued_writes();
+    _enable_queued_flow();
+    onCreateBranch = (branch) => {
+      branch[AccessorProp.WriteState] = 0;
+    };
+    onInsertBranch = (branch) => {
+      if (branch[AccessorProp.WriteState] === 0) {
+        attachCreated(
+          branch,
+          branch[AccessorProp.ParentBranch]?.[AccessorProp.WriteState],
+        );
+      }
+    };
+    onDetachBranch = (branch) => {
+      let stores: Set<HoldStore> | undefined;
+      (function detach(branch: BranchScope) {
+        const state = branch[AccessorProp.WriteState];
+        if (state === undefined || typeof state === "object") {
+          if (typeof state === "object") (stores ||= new Set()).add(state);
+          branch[AccessorProp.WriteState] = 1;
+          branch[AccessorProp.BranchScopes]?.forEach(detach);
+        }
+      })(branch);
+      // Draining after the flip lands the held writes on the detached
+      // nodes immediately, so they can never clobber later direct writes.
+      if (stores) {
+        for (const store of stores) feedHold(store);
+      }
+    };
+    onAttachBranch = (branch) => {
+      setRegionState(
+        branch,
+        branch[AccessorProp.ParentBranch]?.[AccessorProp.WriteState],
+        undefined,
+      );
+    };
+    holdRegion = (branch) => {
+      if (branch && branch[AccessorProp.WriteState] === undefined) {
+        const store: HoldStore = { e: [], k: new Map() };
+        (function hold(branch: BranchScope) {
+          if (branch[AccessorProp.WriteState] === undefined) {
+            branch[AccessorProp.WriteState] = store;
+            branch[AccessorProp.BranchScopes]?.forEach(hold);
+          }
+        })(branch);
+      }
+    };
+  }
+}
+
+function attachCreated(branch: BranchScope, to: WriteState) {
+  branch[AccessorProp.WriteState] = to;
+  branch[AccessorProp.BranchScopes]?.forEach((child) => {
+    if (child[AccessorProp.WriteState] === 0) {
+      attachCreated(child, to);
+    }
+  });
 }

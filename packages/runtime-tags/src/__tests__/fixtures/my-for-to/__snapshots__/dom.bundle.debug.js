@@ -23,7 +23,7 @@ var my_for_default = /*@__PURE__*/ _template("__tests__/tags/my-for.marko", $tem
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $myfor_content__i = ($scope, i) => _text($scope["#text/0"], i);
+const $myfor_content__i = ($scope, i) => _text($scope, "#text/0", i);
 const $myfor_content__$params = ($scope, $params2) => $myfor_content__i($scope, $params2[0]);
 const $myfor_content = _content_resume("__tests__/template.marko_1_content", " ", " b", 0, $myfor_content__$params);
 function $setup($scope) {

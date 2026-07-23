@@ -12,8 +12,8 @@
       }
     },
     "child.mjs": {
-      "min": 122,
-      "brotli": 100
+      "min": 124,
+      "brotli": 101
     }
   },
   "html": {

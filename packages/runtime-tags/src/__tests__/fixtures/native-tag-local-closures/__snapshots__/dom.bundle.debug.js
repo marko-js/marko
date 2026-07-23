@@ -3,7 +3,7 @@ const $Child_content__walks = "b%c", $Child_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Add</button>`)($Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Child_content__walks);
 const $item_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_3_content", " ", " b"), { i($scope) {
-	_text($scope["#text/0"], $scope.i);
+	_text($scope, "#text/0", $scope.i);
 } });
 const $for_content__item__script = _script("__tests__/template.marko_2_item", ($scope) => _attrs_script($scope, "#div/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {

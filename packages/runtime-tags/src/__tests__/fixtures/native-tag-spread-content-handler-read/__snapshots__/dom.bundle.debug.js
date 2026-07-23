@@ -1,7 +1,7 @@
 // tags/my-box.marko
 const $template$1 = "<div></div><button type=button class=cap>check</button><div class=out> </div>";
 const $walks$1 = " b bD l";
-const $captured = /*@__PURE__*/ _let("captured/6", ($scope) => _text($scope["#text/2"], $scope.captured));
+const $captured = /*@__PURE__*/ _let("captured/6", ($scope) => _text($scope, "#text/2", $scope.captured));
 function $setup$1($scope) {
 	$captured($scope, "(unchecked)");
 }

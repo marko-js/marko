@@ -5,7 +5,7 @@ const $attrs2 = /*@__PURE__*/ _let(4, ($scope) => {
 	$attrs2__script($scope);
 });
 const $value = /*@__PURE__*/ _let(3, ($scope) => {
-	_text($scope.b, $scope.d);
+	_text($scope, "b", $scope.d);
 	$attrs2($scope, {
 		value: $scope.d,
 		valueChange: $attrs($scope)

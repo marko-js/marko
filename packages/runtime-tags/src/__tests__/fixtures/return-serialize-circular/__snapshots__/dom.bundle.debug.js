@@ -23,7 +23,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("");
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	$input_value($scope["#childScope/0"], $scope.count);
-	_text($scope["#text/2"], $scope.count);
+	_text($scope, "#text/2", $scope.count);
 });
 function $setup($scope) {
 	_var($scope, "#childScope/0", $setCount);

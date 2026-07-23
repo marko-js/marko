@@ -7,7 +7,7 @@ const $obj = /*@__PURE__*/ _let("obj/4", ($scope) => {
 	$load_GrandChild_tag_input_obj($scope["#childScope/3"], $scope.obj);
 	$obj_name($scope, $scope.obj?.name);
 });
-const $obj_name = /*@__PURE__*/ _const("obj_name", ($scope) => _text($scope["#text/1"], $scope.obj_name));
+const $obj_name = /*@__PURE__*/ _const("obj_name", ($scope) => _text($scope, "#text/1", $scope.obj_name));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$obj($scope, {
 		...$scope.obj,
@@ -25,7 +25,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<button class=grand>grand:<!></button>";
 const $walks = " Db%l";
 const $copy = /*@__PURE__*/ _let("copy/5", ($scope) => $copy_name($scope, $scope.copy?.name));
-const $copy_name = /*@__PURE__*/ _const("copy_name", ($scope) => _text($scope["#text/1"], $scope.copy_name));
+const $copy_name = /*@__PURE__*/ _const("copy_name", ($scope) => _text($scope, "#text/1", $scope.copy_name));
 const $input_obj = $copy;
 const $setup__script = _script("__tests__/grand-child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$copy($scope, {

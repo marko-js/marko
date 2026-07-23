@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<ul></ul><button class=relabel>relabel</button>";
 const $walks = " b b";
-const $for_content__selected__OR__row_id__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/1"], $scope._.selected === $scope.row_id && $scope.row_label), 2);
+const $for_content__selected__OR__row_id__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _text($scope, "#text/1", $scope._.selected === $scope.row_id && $scope.row_label), 2);
 const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/0", "selected", "row_id", ($scope) => {
-	_attr_class($scope["#li/0"], $scope._.selected === $scope.row_id && "danger");
+	_attr_class($scope, "#li/0", $scope._.selected === $scope.row_id && "danger");
 	$for_content__selected__OR__row_id__OR__row_label($scope);
 });
 const $for_content__setup = $for_content__selected;

@@ -27,8 +27,8 @@ var cart_state_default = /*@__PURE__*/ _template("__tests__/tags/cart-state.mark
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<header><div><!><a href=/something>Something</a> Test <!></div></header>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&E%d%m`)("");
 const $for_content__collection = ($scope, collection) => {
-	_attr($scope["#a/0"], "href", `/something/${collection}`);
-	_text($scope["#text/1"], collection);
+	_attr($scope, "#a/0", "href", `/something/${collection}`);
+	_text($scope, "#text/1", collection);
 };
 const $for_content__$params = ($scope, $params3) => $for_content__collection($scope, $params3[0]);
 const $await_content__for = /*@__PURE__*/ _for_of("#text/0", "<a> </a>", " D l", 0, $for_content__$params);

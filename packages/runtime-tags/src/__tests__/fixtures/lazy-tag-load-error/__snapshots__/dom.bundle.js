@@ -6,7 +6,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_value($scope.b, 1);
 };
-const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
+const $catch_content__err_message = ($scope, err_message) => _text($scope, "a", err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("b1", "<div id=error> </div>", "D l", 0, $catch_content__$params);
 const $placeholder_content = _content_resume("b0", "<div id=loading>loading</div>", "b");
@@ -21,7 +21,7 @@ const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function
 const $template = "<span id=child> </span>";
 const $setup = () => {};
 throw new Error("load failed");
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = ($scope, input_value) => _text($scope, "a", input_value);
 
 // v:child.marko.setup.js
 const _ = [

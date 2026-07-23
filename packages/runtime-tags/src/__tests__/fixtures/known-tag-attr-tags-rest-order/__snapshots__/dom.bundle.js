@@ -1,9 +1,9 @@
 // tags/child/index.marko
-const $first = ($scope, first) => _text($scope.a, first);
+const $first = ($scope, first) => _text($scope, "a", first);
 
 // template.marko
 const $n = /*@__PURE__*/ _let(3, ($scope) => {
-	_text($scope.b, $scope.d);
+	_text($scope, "b", $scope.d);
 	$first($scope.c, $scope.d);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {

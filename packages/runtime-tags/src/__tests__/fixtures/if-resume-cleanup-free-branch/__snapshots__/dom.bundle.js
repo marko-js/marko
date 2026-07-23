@@ -1,6 +1,6 @@
 // tags/leaf.marko
 const $template = "<!><!><!>";
-const $if_content__input_n = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.d));
+const $if_content__input_n = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope, "a", $scope._.d));
 const $if$1 = /*@__PURE__*/ _if(0, "<div>n is <!></div>", "Db%l", $if_content__input_n);
 const $n$1 = /*@__PURE__*/ _const(3, ($scope) => {
 	$if$1($scope, $scope.d ? 0 : 1);

@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = () => {};
-const $if_content2__bar__OR__foo = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.bar($scope._.foo)));
+const $if_content2__bar__OR__foo = /*@__PURE__*/ _or(1, ($scope) => _text($scope, "#text/0", $scope._._.bar($scope._.foo)));
 const $if_content2__bar = /*@__PURE__*/ _closure_get("bar", $if_content2__bar__OR__foo, ($scope) => $scope._._);
 const $if_content2__setup = ($scope) => {
 	$if_content2__bar($scope);

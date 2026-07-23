@@ -12,9 +12,9 @@ const $input_name__OR__input_write = /*@__PURE__*/ _or(7, ($scope) => {
 	$input_name__OR__input_write__script($scope);
 });
 const $name = /*@__PURE__*/ _const(5, ($scope) => {
-	_text($scope.a, $scope.f);
-	_text($scope.b, $scope.f);
-	_text($scope.c, $scope.f);
+	_text($scope, "a", $scope.f);
+	_text($scope, "b", $scope.f);
+	_text($scope, "c", $scope.f);
 	$input_name__OR__input_write($scope);
 });
 const $write$1 = /*@__PURE__*/ _const(6, $input_name__OR__input_write);

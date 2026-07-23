@@ -13,12 +13,12 @@ import {
   type Binding,
   BindingType,
   createBinding,
+  getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
-import { createScopeReadExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import {
   addSerializeExpr,
@@ -27,6 +27,7 @@ import {
 import { addStatement } from "../util/signals";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
+import { scopeIdentifier } from "../visitors/program";
 
 const kNodeBinding = Symbol("comment tag binding");
 
@@ -145,7 +146,8 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "_text",
-                createScopeReadExpression(nodeBinding!),
+                scopeIdentifier,
+                getScopeAccessorLiteral(nodeBinding!),
                 textLiteral,
               ),
             ),

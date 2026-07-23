@@ -5,7 +5,7 @@ const $input = /*@__PURE__*/ _const(3, ($scope) => {
 	$input_value($scope, $scope.d.value);
 	$input__script($scope);
 });
-const $input_value = ($scope, input_value) => _text($scope.b, input_value);
+const $input_value = ($scope, input_value) => _text($scope, "b", input_value);
 
 // template.marko
 const $value = /*@__PURE__*/ _let(1, ($scope) => $input($scope.a, {

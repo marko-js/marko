@@ -9,13 +9,13 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__id = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $input_path$1($scope["#childScope/0"], $scope._.id));
 const $for_content__id = /*@__PURE__*/ _const("id", ($scope) => {
-	_attr($scope["#li/0"], "id", $scope.id);
+	_attr($scope, "#li/0", "id", $scope.id);
 	$if_content__id($scope);
 });
 const $for_content__input_path = /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope["#LoopKey"]}`));
 const $for_content__open = /*@__PURE__*/ _let("open/12", ($scope) => {
-	_attr($scope["#li/0"], "hidden", !$scope.open);
-	_text($scope["#text/3"], $scope.open ? "[-]" : "[+]");
+	_attr($scope, "#li/0", "hidden", !$scope.open);
+	_text($scope, "#text/3", $scope.open ? "[-]" : "[+]");
 });
 const $for_content__setup__script = _script("__tests__/tags/comments.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$for_content__open($scope, !$scope.open);
@@ -25,7 +25,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__open($scope, true);
 	$for_content__setup__script($scope);
 };
-const $for_content__comment_text = ($scope, comment_text) => _text($scope["#text/1"], comment_text);
+const $for_content__comment_text = ($scope, comment_text) => _text($scope, "#text/1", comment_text);
 const $for_content__if = /*@__PURE__*/ _if("#text/4", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
 const $for_content__comment_comments = /*@__PURE__*/ _const("comment_comments", ($scope) => {
 	$for_content__if($scope, $scope.comment_comments ? 0 : 1);

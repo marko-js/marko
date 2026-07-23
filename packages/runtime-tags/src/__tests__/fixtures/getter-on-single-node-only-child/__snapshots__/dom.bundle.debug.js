@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button></button><ul></ul>";
 const $walks = " b b";
-const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
+const $for_content__item = ($scope, item) => _text($scope, "#text/0", item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $ul_getter = _el("__tests__/template.marko_0_#ul", "#ul/1");
 const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", "D l", 0, $for_content__$params);

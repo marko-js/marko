@@ -2,14 +2,14 @@
 const $template = "<div> </div>";
 const $walks = "D l";
 const $setup = () => {};
-const $input = ($scope, input) => _text($scope.a, JSON.stringify(input));
+const $input = ($scope, input) => _text($scope, "a", JSON.stringify(input));
 var custom_tag_default = /*@__PURE__*/ _template("b", $template, "D l", $setup, $input);
 
 // template.marko
 const tags = [custom_tag_default];
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, 0, 0, 1);
 const $x = /*@__PURE__*/ _let(6, ($scope) => {
-	_text($scope.b, $scope.g);
+	_text($scope, "b", $scope.g);
 	$dynamicTag($scope, tags[0], () => [$scope.g, "foo"]);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {

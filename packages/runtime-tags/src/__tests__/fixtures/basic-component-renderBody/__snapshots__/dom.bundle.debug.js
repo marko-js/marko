@@ -16,7 +16,7 @@ var my_button_default = /*@__PURE__*/ _template("__tests__/tags/my-button.marko"
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $mybutton_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope["#text/0"], $scope._.clickCount));
+const $mybutton_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope, "#text/0", $scope._.clickCount));
 const $mybutton_content__setup = $mybutton_content__clickCount;
 const $mybutton_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " b", $mybutton_content__setup);
 const $clickCount__closure = /*@__PURE__*/ _closure($mybutton_content__clickCount);

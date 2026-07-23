@@ -12,6 +12,7 @@ export enum AccessorPrefix {
   Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
+  TransitionSlot = "TransitionSlot:",
 }
 
 export enum AccessorProp {
@@ -34,7 +35,6 @@ export enum AccessorProp {
   LoopIndex = "#LoopIndex",
   ParentBranch = "#ParentBranch",
   PendingEffects = "#PendingEffects",
-  PendingRenders = "#PendingRenders",
   PendingScopes = "#PendingScopes",
   PlaceholderBranch = "#PlaceholderBranch",
   PlaceholderContent = "#PlaceholderContent",
@@ -42,6 +42,7 @@ export enum AccessorProp {
   StartNode = "#StartNode",
   TagVariable = "#TagVariable",
   TagVariableChange = "#TagVariableChange",
+  WriteState = "#WriteState",
 }
 
 export enum RendererProp {
@@ -62,7 +63,6 @@ export enum PendingRenderProp {
   Signal = "signal",
   Value = "value",
   Gen = "gen",
-  Pending = "pending",
 }
 
 export enum ClosureSignalProp {

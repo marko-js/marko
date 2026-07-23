@@ -1,6 +1,6 @@
 // tags/list.marko
 const $template = "<!><!><!>";
-const $for_content__setup = ($scope) => _text($scope.a, $scope.M);
+const $for_content__setup = ($scope) => _text($scope, "a", $scope.M);
 const $for = /*@__PURE__*/ _for_to(0, "<li>item <!></li>", "Db%l", $for_content__setup);
 const $count$1 = ($scope, count) => $for($scope, [
 	count,

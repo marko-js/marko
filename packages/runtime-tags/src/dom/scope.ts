@@ -1,7 +1,7 @@
 import { AccessorProp, type BranchScope, type Scope } from "../common/types";
 import { $signalReset } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
-import { runId } from "./queue";
+import { onDetachBranch, onInsertBranch, runId } from "./queue";
 
 let nextScopeId = 1e6; // Intentionally high to avoid conflict with server rendered ids.
 let collectingScopes: Scope[] | undefined;
@@ -117,6 +117,7 @@ export function insertBranchBefore(
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
+  onInsertBranch(branch);
 }
 
 export function tempDetachBranch(branch: BranchScope) {
@@ -132,4 +133,5 @@ export function tempDetachBranch(branch: BranchScope) {
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
+  onDetachBranch(branch);
 }

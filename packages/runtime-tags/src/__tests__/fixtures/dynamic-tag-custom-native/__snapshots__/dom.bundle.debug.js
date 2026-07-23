@@ -2,7 +2,7 @@
 const $template$1 = "<div>Id is <!></div>";
 const $walks$1 = "Db%l";
 const $setup$1 = () => {};
-const $id = ($scope, id) => _text($scope["#text/0"], id);
+const $id = ($scope, id) => _text($scope, "#text/0", id);
 const $input = ($scope, input) => $id($scope, input.id);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input);
 

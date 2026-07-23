@@ -10,7 +10,7 @@ const $input_a__OR__input_b = /*@__PURE__*/ _or(7, ($scope) => {
 });
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b);
-const $input_x__OR__input_y = /*@__PURE__*/ _or(10, ($scope) => _text($scope["#text/2"], $scope.input_x ? "A" : $scope.input_y ? "B" : "C"));
+const $input_x__OR__input_y = /*@__PURE__*/ _or(10, ($scope) => _text($scope, "#text/2", $scope.input_x ? "A" : $scope.input_y ? "B" : "C"));
 const $input_x = /*@__PURE__*/ _const("input_x", $input_x__OR__input_y);
 const $input_y = /*@__PURE__*/ _const("input_y", $input_x__OR__input_y);
 const $input = ($scope, input) => {

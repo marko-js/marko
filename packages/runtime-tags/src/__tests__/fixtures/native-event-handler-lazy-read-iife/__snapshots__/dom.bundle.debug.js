@@ -9,11 +9,11 @@ const $n__OR__log__script = _script("__tests__/template.marko_0_n_log", ($scope)
 })()));
 const $n__OR__log = /*@__PURE__*/ _or(6, $n__OR__log__script);
 const $n = /*@__PURE__*/ _let("n/4", ($scope) => {
-	_text($scope["#text/2"], $scope.n);
+	_text($scope, "#text/2", $scope.n);
 	$n__OR__log($scope);
 });
 const $log = /*@__PURE__*/ _let("log/5", ($scope) => {
-	_text($scope["#text/3"], $scope.log);
+	_text($scope, "#text/3", $scope.log);
 	$n__OR__log($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

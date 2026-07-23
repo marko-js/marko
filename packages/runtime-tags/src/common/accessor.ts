@@ -12,6 +12,7 @@ export enum AccessorPrefix {
   Lifecycle = "K",
   Promise = "L",
   TagVariableChange = "M",
+  TransitionSlot = "P",
 }
 
 export enum AccessorProp {
@@ -34,7 +35,6 @@ export enum AccessorProp {
   LoopIndex = "I",
   ParentBranch = "N",
   PendingEffects = "J",
-  PendingRenders = "W",
   PendingScopes = "Y",
   PlaceholderBranch = "P",
   PlaceholderContent = "Q",
@@ -42,6 +42,7 @@ export enum AccessorProp {
   StartNode = "S",
   TagVariable = "T",
   TagVariableChange = "U",
+  WriteState = "W",
 }
 
 export enum RendererProp {
@@ -62,7 +63,6 @@ export enum PendingRenderProp {
   Signal = "c",
   Value = "d",
   Gen = "e",
-  Pending = "f",
 }
 
 export enum ClosureSignalProp {

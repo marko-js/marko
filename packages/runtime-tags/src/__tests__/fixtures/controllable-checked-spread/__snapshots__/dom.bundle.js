@@ -14,7 +14,7 @@ const $checked = /*@__PURE__*/ _let(2, ($scope) => {
 		checked: $scope.c,
 		checkedChange: $checkedChange($scope)
 	});
-	_text($scope.b, String($scope.c));
+	_text($scope, "b", String($scope.c));
 });
 function $checkedChange($scope) {
 	return (_new_checked) => {

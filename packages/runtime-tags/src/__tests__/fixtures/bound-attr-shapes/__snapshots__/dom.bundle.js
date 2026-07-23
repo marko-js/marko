@@ -12,11 +12,11 @@ const $a__OR__b = /*@__PURE__*/ _or(6, ($scope) => $state3($scope, {
 	bChange: $state2($scope)
 }));
 const $a = /*@__PURE__*/ _let(4, ($scope) => {
-	_text($scope.a, $scope.e);
+	_text($scope, "a", $scope.e);
 	$a__OR__b($scope);
 });
 const $b = /*@__PURE__*/ _let(5, ($scope) => {
-	_text($scope.b, $scope.f);
+	_text($scope, "b", $scope.f);
 	$a__OR__b($scope);
 });
 const $setup__script = _script("a2", ($scope) => {

@@ -20,8 +20,8 @@ const $setup__script = _script("b0", ($scope) => {
 const $template = "<div><!>: <!></div>";
 const $walks = "D%c%l";
 const $setup = () => {};
-const $input_label = ($scope, input_label) => _text($scope.a, input_label);
-const $input_value = ($scope, input_value) => _text($scope.b, input_value);
+const $input_label = ($scope, input_label) => _text($scope, "a", input_label);
+const $input_value = ($scope, input_value) => _text($scope, "b", input_value);
 const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_value($scope, input.value);

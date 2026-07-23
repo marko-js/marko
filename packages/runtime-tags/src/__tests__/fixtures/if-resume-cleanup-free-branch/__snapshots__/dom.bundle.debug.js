@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
-const $if_content__input_n = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.n));
+const $if_content__input_n = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope, "#text/0", $scope._.n));
 const $if_content__setup$1 = $if_content__input_n;
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<div>n is <!></div>", "Db%l", $if_content__setup$1);
 const $n$1 = /*@__PURE__*/ _const("n", ($scope) => {

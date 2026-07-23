@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__item_a__OR__item_b = /*@__PURE__*/ _or(5, ($scope) => _text($scope.a, $scope.d + $scope.e));
+const $for_content__item_a__OR__item_b = /*@__PURE__*/ _or(5, ($scope) => _text($scope, "a", $scope.d + $scope.e));
 const $for_content__item_a = /*@__PURE__*/ _const(3, $for_content__item_a__OR__item_b);
 const $for_content__item_b = /*@__PURE__*/ _const(4, $for_content__item_a__OR__item_b);
 const $for_content__$params = ($scope, $params2) => {

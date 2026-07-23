@@ -1,4 +1,4 @@
-// size: 2668 (min) 1309 (brotli)
+// size: 2690 (min) 1324 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -9,6 +9,8 @@ let decodeAccessor = (num) =>
   registeredValues = {},
   curRenders,
   readyIds,
+  _attr = applyAttr,
+  _text = applyText,
   rendering,
   runId = 2,
   pendingEffects = [],
@@ -16,8 +18,7 @@ let decodeAccessor = (num) =>
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
-  runRender = (render) => render.c(render.b, render.d),
-  catchEnabled;
+  runRender = (render) => render.c(render.b, render.d);
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -30,6 +31,9 @@ function handleDelegated(ev) {
   for (; target;)
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
+}
+function resetControllers(scope) {
+  for (let id in scope.A) $signalReset(scope, id);
 }
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
@@ -194,8 +198,8 @@ function _resume(id, obj) {
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
 }
-function _attr(element, name, value) {
-  setAttribute(element, name, normalizeAttrValue(value));
+function applyAttr(scope, nodeAccessor, name, value) {
+  setAttribute(scope[nodeAccessor], name, normalizeAttrValue(value));
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
@@ -203,8 +207,9 @@ function setAttribute(element, name, value) {
       ? element.removeAttribute(name)
       : element.setAttribute(name, value));
 }
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
+function applyText(scope, nodeAccessor, value) {
+  let node = scope[nodeAccessor],
+    normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function normalizeAttrValue(value) {
@@ -213,7 +218,7 @@ function normalizeAttrValue(value) {
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || catchEnabled)) return;
+    if (((render.d = value), render.e === runId)) return;
     render.e = runId;
   } else
     ((render = {
@@ -272,5 +277,12 @@ function runRenders() {
     }
     runRender(render);
   }
+}
+function $signalReset(scope, id) {
+  let ctrl = scope.A?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
+}
+function abort(ctrl) {
+  ctrl.abort();
 }
 //#endregion

@@ -2,7 +2,7 @@
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope, "#text/1", $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }
