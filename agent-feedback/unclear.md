@@ -47,3 +47,159 @@ The `Template.mount(input, node, position?)` parameter table (template.md:76-80)
 `packages/runtime-tags/src/translator/util/signals.ts` › `signals` | 2026-07-20 | impact:med | effort:high
 
 "Signal" in this codebase is a compiled setup/update program keyed by a binding or intersection — not a reactive value container, which is what most contributors will assume from other frameworks; alternatives if renamed: "effect program", "update unit", "work unit". Any rename is a broad churn (runtime helper names, `callRuntime` sites, snapshots), so it should ride a major refactor; until then the disclaimer in `packages/runtime-tags/CONTEXT.md` (Signal entry) is the mitigation. Re-verify by reading that entry.
+
+## Key (or document) the `getOnlyChildParentTagName` memo on `branchSize` — the argument is ignored on every call after the first
+
+`packages/runtime-tags/src/translator/util/is-only-child-in-parent.ts` › `getOnlyChildParentTagName` | 2026-07-23 | impact:low | effort:low
+
+`getOnlyChildParentTagName(tag, branchSize = 1)` memoizes its answer in
+`tag.node.extra[kOnlyChildInParent]` and returns the cached value before
+`branchSize` is ever consulted, so the parameter only has an effect on the very
+first call for a given tag node — and `node.extra` survives the
+analyze→translate node cloning, so "first call" spans phases. The whole
+`<if>`/`<else-if>`/`<else>` chain optimization depends on this: `core/if.ts`
+`IfTag.analyze` is the only caller that passes the real branch count
+(`getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection, branches.length)`),
+while `core/if.ts:117`/`:167`/`:296` and `core/for.ts`/`core/show.ts` all call
+with the default `1` during translate and silently ride that cached answer. Any
+future caller that touches an `<if>` tag before `IfTag.analyze` (a new
+pre-analyze pass, a transform-phase visitor, a reordered core-tag registration)
+would poison the memo with `branchSize === 1`, and every multi-branch chain
+would quietly stop reusing its parent element as the marker node — an extra
+`<!>` in the template string, an extra walk char, and an extra `#text` DOM
+binding per chain, with no test naming the invariant. Either include
+`branchSize` in the memo key (or assert it matches the cached computation) or
+state the ordering contract in a comment on the function. Distinct from the
+existing perf.md entry "Extend marker-elision optimizations to
+await/try/html-comment", which is about adding the optimization elsewhere, not
+about this memo's key. Re-verify: compile
+`<div><if=input.x><p>a</p></if><else-if=input.y><i>c</i></else-if><else><b>b</b></else></div>`
+with `-o dom -d` and confirm the marker is `_if("#div/0", …)` with `$template
+=== "<div></div>"`; forcing `branchSize` to 1 turns it into `_if("#text/0", …)`
+with `$template === "<div><!></div>"`, which is what the sibling case
+`<div>z<if=input.x><p>a</p></if></div>` already produces.
+
+## Explain the `doc` parameter's double duty in the debug walker runtime
+
+`packages/runtime-tags/src/html/inlined-runtimes.debug.ts` › `WALKER_RUNTIME_CODE` | 2026-07-23 | impact:low | effort:low
+
+The whole point of the `.debug` half of the inlined-runtimes pair is that a
+human can read what the minified string does, but the walker's central trick is
+undocumented and reads as a bug. The default parameter `doc = document` is used
+for `doc.createTreeWalker(doc, 129)` and stored as the runtime's `d` field, and
+then the body immediately reassigns it: `doc = (self[runtimeId][renderId] = { …,
+d: doc, … })`. From that point `doc` is the runtime object, which is why `w()`
+calls `doc.x(...)` — a late-bound call so the reorder runtime's replacement of
+`runtime.x` (see `REORDER_RUNTIME_CODE`, which assigns `runtime.x`) is picked
+up, without re-indexing `self[runtimeId][renderId]` per node. A reader tracing
+`doc.x` naturally expects `document.x`. The reorder half already carries the
+precedent fix (`// repurpose "op" for callbacks ...carefully`); add the same
+one-line intent comment here, or — since only exported member names must match
+the minified file — give the debug version a separate `runtime` default
+parameter so `doc` keeps meaning the document. Re-verify: read
+`WALKER_RUNTIME_CODE` in inlined-runtimes.debug.ts and confirm `d: doc` is
+evaluated before the `doc = (...)` assignment, so `d` holds the document while
+every later `doc.` reference is the runtime object.
+
+## Correct the `util/assert.ts` citation in AGENTS.md — `assertNoArgs`/`assertNoParams` live in `@marko/compiler/babel-utils`
+
+`packages/runtime-tags/AGENTS.md` › `Translator` | 2026-07-23 | impact:low | effort:low
+
+The Translator section says "Validate early with `assertNoArgs` /
+`assertNoParams` / `assertNoSpreadAttrs` (`util/assert.ts`)", but
+`packages/runtime-tags/src/translator/util/assert.ts` exports only
+`assertNoSpreadAttrs`, `assertNoTagVarMutation`, and `assertNoBodyContent`.
+`assertNoArgs`/`assertNoParams` are defined in
+`packages/compiler/src/babel-utils/assert.js` and are imported by core tags from
+`@marko/compiler/babel-utils` (see `core/if.ts`, `core/debug.ts`,
+`core/return.ts`), alongside siblings the doc never names (`assertNoVar`,
+`assertNoAttributeTags`, `assertAllowedAttributes`, `diagnosticDeprecate`). So
+the one pointer an agent has for tag validation names two symbols that are not
+in the cited file and omits the two local helpers that are. Reword to "local
+helpers `assertNoSpreadAttrs`/`assertNoTagVarMutation`/`assertNoBodyContent`
+(`util/assert.ts`), plus
+`assertNoArgs`/`assertNoParams`/`assertNoVar`/`assertAllowedAttributes` from
+`@marko/compiler/babel-utils`". Re-verify: `grep -n '^export'
+packages/runtime-tags/src/translator/util/assert.ts` lists three names, none of
+them `assertNoArgs`/`assertNoParams`.
+
+## Document the fixture `diagnostics.md` snapshot and the missing `TestConfig` options in the Testing section
+
+`packages/runtime-tags/AGENTS.md` › `Testing › Fixture anatomy` | 2026-07-23 | impact:med | effort:low
+
+The fixture-anatomy block lists four snapshot kinds (`dom.bundle`,
+`html.bundle`, `render`, `writes`) and a `TestConfig` summary, and both are out
+of date with `main.test.ts`. Missing entirely is the `diagnostics` test, which
+snapshots the html build's `meta.diagnostics` into
+`__snapshots__/diagnostics.md` (debug mode only, 19 fixtures have one today) and
+asserts it like any other snapshot — so a change that adds or removes a
+recoverable/deprecation diagnostic fails a test the docs never mention, and the
+AGENTS.md instruction to "read the generated snapshots as part of your change"
+never points at it. Also undocumented: the error snapshots
+`error-compile-{html,dom}[.debug].txt` and `{ssr,csr}.error[.debug].txt`, and
+the config options `error_dom`/`error_html` (used by 41 fixtures), `embedded`,
+`load_order`, `reject_load`, and `fix_guide`; the stated "~800 fixtures" is now
+906 directories. Add `diagnostics.md` and the error-snapshot filenames to the
+anatomy block and extend the `TestConfig` list. Re-verify: `find
+packages/runtime-tags/src/__tests__/fixtures -path '*__snapshots__*' -type f |
+sed 's#.*/##' | sort | uniq -c` shows `diagnostics.md`, `error-compile-*.txt`
+and `*.error*.txt` alongside the four documented kinds, and `TestConfig` in
+`main.test.ts` lists the extra keys.
+
+## Say "following siblings" — dynamic `<style>` values silently miss any target that is not a sibling of the tag
+
+`packages/runtime-tags/src/translator/core/style.ts` › `checkDynamicStylePlacement` | 2026-07-23 | impact:med | effort:low
+
+A dynamic `<style>` renders as `<style class=ID>.ID~*{--M_x:value}</style>`
+(`html/attrs.ts` › `_style_html`, mirrored by `dom/dom.ts` › `_style_shell`), so
+the custom properties reach only the _subsequent siblings_ of the `<style>`
+element and their descendants. Both the compile-time warning in
+`checkDynamicStylePlacement` ("only apply to elements rendered after it, so the
+content before this tag will not receive them") and the website reference
+(`website/docs/reference/core-tag.md`, "### Dynamic Values" NOTE: "Dynamic
+values only apply to elements rendered after the `<style>` tag") describe this
+as document order, which is wrong for anything outside the `<style>`'s own
+parent: the tag's parent element, and any element rendered later but in a
+shallower or different subtree, get nothing — with no diagnostic, because
+`checkDynamicStylePlacement` only scans `tag.getAllPrevSiblings()`. Authors hit
+this when scoping styles to a component root (`<div
+class=panel><style>.panel{--accent:${input.accent}}</style>…`) or when the
+`<style>` sits inside a header/wrapper while the styled element follows outside
+it. Direction: reword the warning label and the docs NOTE to "subsequent
+siblings of the `<style>` tag and their descendants", and consider extending
+`checkDynamicStylePlacement` to also warn when a dynamic `<style>` has no
+renderable following siblings at all (today the most-broken shape is the
+quietest). Re-verify: compile
+`<header><style>.badge{color:${input.c}}</style></header><span
+class="badge">New</span>` with `errorRecovery: true` — `meta.diagnostics` is
+empty and the emitted `_style_html(...)` sits inside `<header>`, so `.ID~*` can
+never match the `<span>`; moving the `<style>` after the `<span>` instead
+produces the existing "content before this tag" warning.
+
+## Document `Scope[AccessorProp.Gen]`'s four states; one numeric slot means destroyed, resumed, this-run, and earlier-run
+
+`packages/runtime-tags/src/common/types.ts` › `Scope` | 2026-07-23 | impact:med | effort:low
+
+`Scope[AccessorProp.Gen]` (debug name `#Gen`, declared bare as
+`[AccessorProp.Gen]: number` in `common/types.ts:23`) is read four different
+ways across the DOM runtime with no comment on the declaration, no `accessor.ts`
+note, and no CONTEXT.md glossary entry: `0` means destroyed (`dom/scope.ts` ›
+`destroyNestedScopes` sets it; `dom/queue.ts` › `skipDestroyedRenders` and
+`_enable_catch` test `?.[Gen] !== 0`), `1` means resumed from SSR
+(`dom/resume.ts:135` in `initScope`, viable only because `queue.ts` starts
+`runId` at 2), `=== runId` means "created/rendered during the current run" and
+is the branch that decides whether `_let` assigns in place or schedules a render
+(`dom/signals.ts:39-49`), whether `_or` counts intersection arrivals or queues
+(`dom/signals.ts:103-121`), and whether `controllable.ts` reads the live DOM
+value or the bound one (nine sites, e.g. `:27`, `:193`, `:281`, `:442`), and `>
+0 && < runId` means "live scope from an earlier run" (`dom/signals.ts` ›
+`_for_closure` and `runLiveBranch`). RESUMABILITY.md mentions only "`runId` as
+the generation boundary (resumed scopes start at 1; normal client work at 2)"
+and never says `Gen` doubles as the destroyed flag, so a reader tracing why a
+`<let>` write does not re-render has to reconstruct the state machine from nine
+call sites. Add a **Generation** entry to CONTEXT.md's "DOM runtime" section and
+a two-line comment on the `Scope[AccessorProp.Gen]` member enumerating the four
+states (0 destroyed / 1 resumed / `runId` created this run / in-between live
+from a previous run). Re-verify: `rg -n "AccessorProp.Gen"
+packages/runtime-tags/src --glob '!**/__tests__/**'` lists the sites and shows
+no explanatory comment on any of them.

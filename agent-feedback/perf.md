@@ -267,3 +267,437 @@ A binding read across a section boundary builds a `_closure_get`/dynamic `_closu
 `packages/runtime-tags/src/common/types.ts` › `WalkRangeSize (member Next)` | 2026-07-20 | impact:low | effort:low
 
 `WalkCode` reserves char codes 67..91 for `next` walks (`Next=67`, `NextEnd=91`, a 25-code span the `// 67 through 91` comment even documents), and `dom/walker.ts:100` already bounds the decode branch at `value < WalkCode.NextEnd + 1` (≤91), but `WalkRangeSize.Next` is 20, so `toCharString` (`translator/util/walks.ts:184`) only ever emits remainder codes 67..86 and codes 87..91 are dead — unlike Over/Out/Multiplier, each fully packed at size 10 (97..106, 107..116, 117..126). As a result a consecutive `next` run of 20-24 nodes emits a redundant Multiplier char (2 chars where 1 suffices), and runs of 200-249 emit 3 where 2 would do; walk strings ship in every compiled DOM template and bundle size is a tracked feature here. Setting `WalkRangeSize.Next = 25` uses the whole range: encoder and decoder both read the enum so the change is coordinated, the widest emitted `next` char becomes 91 (remainder 24), still below the reserved backslash 92, and the decoder's `WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next` reconstruction stays exact. Re-verify: mirror `toCharString` and the walker's `next` branch in node with `rangeSize=25` and confirm n=20..24 each encode to one char with max charCode 91 and decode back to 20..24 (I saw 0 roundtrip mismatches and 0 reserved-code emissions over n=0..600), then flip the enum and run `npm run test:update` plus the size hook to confirm affected DOM fixtures shrink rather than break.
+
+## Narrow `isNullableExpr` for `||`/`??` (and `||=`/`??=`) to the right operand so `x ?? default` stops emitting optional chaining
+
+`packages/runtime-tags/src/translator/util/evaluate.ts` › `isNullableExpr` | 2026-07-23 | impact:med | effort:low
+
+`isNullableExpr` returns `isNullableExpr(right) || isNullableExpr(left)` for
+`LogicalExpression` `||`/`??` and for `AssignmentExpression` `||=`/`??=`, but in
+all four the left operand can only be the result when it is truthy (`||`) or
+non-nullish (`??`) — so the result's nullability depends solely on the right
+operand. The over-approximation flows through `core/const.ts` (`if
+(!valueExtra.nullable) binding.nullable = false`) into
+`getDeclaredBindingExpression` and `util/signals.ts`'s `toMemberExpression(...,
+alias.nullable)`, so the extremely common default idiom `<const/opts =
+input.opts ?? { … }/>` compiles (optimize `-o dom`) to `$opts($scope, opts) => {
+$opts_title($scope, opts?.title); $opts_n($scope, opts?.n); }` — one needless
+`?.` and one needless runtime nullish check per property read, on a value that
+is provably never nullish. Only `&&`/`&&=` need the current `left || right`
+form. Bundle size is a tracked feature here, and this is a two-line change in
+one switch. Re-verify: compile `<const/a = input.o ?? { y: 1 }/><const/b =
+input.o || { y: 2 }/><const/c = input.o && { y: 3 }/><const/d = { y: 4
+}/><div>${a.y} ${b.y} ${c.y} ${d.y}</div>` with `-o dom -d`; today it emits
+`a?.y`, `b?.y`, `c?.y`, `d.y` — after the fix only `c?.y` should keep the `?.`.
+
+## Cache the resolved lazy-module signal in `_load_signal` so the first post-load input update isn't deferred a tick
+
+`packages/runtime-tags/src/dom/load.ts` › `_load_signal` | 2026-07-23 | impact:low | effort:low
+
+`_load_signal` keeps a closure `signal` for the resolved module's signal, but
+assigns it in exactly one place — inside the `pending.then((mod) =>
+queueAsyncRender(scope, (signal = mod._), value))` fallback (load.ts:180). The
+normal first-render path never goes through it: input values are collected into
+`scope[AccessorProp.Load]` and later applied by `insertLoaded` via
+`values.forEach((e) => e[LoadSignalValue.Signal]!._(branch,
+e[LoadSignalValue.Value]))` (load.ts:131-133), which writes the resolved signal
+onto the per-entry record and never back into the closure. So for every lazy
+tag, the first input update after its content is inserted still takes the async
+fallback — an extra promise tick plus a whole extra `queueAsyncRender` →
+`queueMicrotask(run)` queue drain outside the current render batch — and only
+the second update onward is applied synchronously. Fix: assign the closure once
+when `pending` is created (e.g. `pending.then((mod) => (signal ||= mod._), () =>
+0)` alongside `pending ||= load()`), leaving the `Load`-map branch's precedence
+unchanged. Re-verify: call `_load_signal(() => Promise.resolve({_: sig}))`
+against a scope with `[AccessorProp.Load]` set to a Map, replay `insertLoaded`'s
+flush (`Load = 0`, then `entry[LoadSignalValue.Signal]._(scope, value)`), then
+call the signal again — the value is missing immediately after the call and only
+appears after a microtask drain, while the call after that lands synchronously.
+
+## Dedupe/hoist serialize guards on the multi-param-section path in `getOrHoist`
+
+`packages/runtime-tags/src/translator/util/serialize-guard.ts` › `getOrHoist` | 2026-07-23 | impact:low | effort:med
+
+`getOrHoist` (serialize-guard.ts:130) only performs guard dedup/hoisting on the
+`onlySection` branch: it looks the reason up in
+`TypeState.seenReasons`/`hoistedReasons`, and on the second occurrence pushes a
+`const $sg__x = _serialize_guard(...)` / `$si__x = _serialize_if(...)`
+declarator onto `getSectionReasonState(onlySection).declarators` and
+back-patches the first (pending) use. When `getOnlySection(reason.param)`
+returns `undefined` — a dynamic reason whose params live in two or more sections
+— the fallback loop (`for (const [paramsSection, params] of
+groupParamsBySection(reason.param))`) calls `buildGuardExpr` directly and never
+consults or updates that tracking, so both the composite OR and each per-section
+disjunct are re-emitted in full even when an identical single-section guard has
+already been hoisted to a variable that is lexically in scope. Concretely, the
+committed fixture `known-tag-args-spread` emits `(_serialize_if($scope0_reason,
+0) || _serialize_if($scope1_reason, 0)) && _subscribe(...)` on line 12 of
+`__snapshots__/html.bundle.js` while line 3 of the same function already
+declares `$si__input = _serialize_if($scope0_reason, 0)`; a two-level `<define>`
+nesting reproduces `_serialize_if($scope0_reason, 0)` three times and
+`_serialize_if($scope1_reason, 1)` twice inline alongside their hoisted
+`$si__input`/`$si__a`, plus the same two-disjunct composite twice. The fix is to
+route each disjunct through the same per-section tracking, looking up a
+synthesized `{ state: undefined, param: params }` in
+`getSectionReasonState(paramsSection)[isGuard ? "guard" : "if"]`
+(`compareSources` reduces to `compareReferences(param, param)` here because
+`getOrHoist` is only reached when `isReasonDynamic`, i.e. `state` is undefined),
+and optionally hoisting the composite too. Re-verify with `grep -Fn
+'_serialize_if($scope0_reason, 0)'
+packages/runtime-tags/src/__tests__/fixtures/known-tag-args-spread/__snapshots__/html.bundle.js`
+— it must stop reporting both the hoisted declarator and a separate inline copy.
+
+## Stop `serializePropByModifier` from permanently retaining a per-compile Symbol for every param reason group
+
+`packages/runtime-tags/src/translator/util/serialize-reasons.ts` › `getPropKey` | 2026-07-23 | impact:low | effort:low
+
+`serializePropByModifier` (serialize-reasons.ts:33) is a module-level plain
+object, and `getPropKey` grows it with `serializePropByModifier[prefix] ||= new
+WeakMap()` (serialize-reasons.ts:315). Almost all `prefix`/`prop` keys are
+bounded (`AccessorPrefix`/`AccessorProp` strings and the module-constant
+`kStatefulReason`/`kBranchSerializeReason` symbols), but
+`ensureParamReasonGroup` in `util/sections.ts` mints a fresh `id:
+Symbol(getDebugNames(reason))` per param reason group per section per compile
+(sections.ts:446), and `util/known-tag.ts` passes that symbol as the `prefix` at
+three call sites (`getSerializeReason(section, childScopeBinding, group.id)` at
+:244 and :259, `addSerializeReason(..., group.id)` at :405). Because a plain
+object holds its symbol keys and values strongly and nothing ever prunes it,
+each group leaves a permanently retained `(Symbol, WeakMap)` pair; sections and
+groups are recreated on every compile, so a watch/dev-server process accumulates
+entries for the lifetime of the process rather than per build. Measured cost is
+~247 bytes per group symbol, so a single full pass is small (114 distinct group
+symbols over 245 fixture templates, ~28 KB) but growth is unbounded across
+recompiles. Minimal fix: split the registry so symbol prefixes go through a
+`WeakMap<symbol, WeakMap<Section | Binding, SerializeKey>>` (symbols as WeakMap
+keys work on the supported Node versions) and keep the plain object only for the
+bounded string accessors; alternatively hang the per-group key map off the
+`ParamSerializeReasonGroup` object itself. Re-verify: in a `node -r ~ts` script,
+call `getSerializeReason(fakeSection, fakeBinding, Symbol())` 200k times with
+`--expose-gc` and compare `process.memoryUsage().heapUsed` against the same loop
+reusing one symbol.
+
+## Stop registering tags→class compat scopes in `classIdToBranch`, which is never pruned
+
+`packages/runtime-tags/src/dom/compat.ts` › `classIdToBranch` | 2026-07-23 | impact:low | effort:low
+
+`classIdToBranch` is filled by the `SET_SCOPE_REGISTER_ID` resume handler in
+`compat.init` for every resumed scope carrying `m5c`, but its only `delete` is
+in `compat.render`, which runs exclusively for the class→tags direction (the
+`TagsCompat` renderer in
+`packages/runtime-class/src/runtime/helpers/tags-compat/runtime-dom.js`). Scopes
+registered by the tags→class direction — written by
+`compat.writeSetScopeForComponent` in `html/compat.ts` and consumed on the
+client only through `scope.m5c` inside `renderAndMorph`, never through this map
+— are therefore inserted once and retained for the lifetime of the page, keeping
+the branch scope alive (and, after its first re-render, the attached
+`___marko5Component` and its `___rootNode` DOM fragment) even after the
+enclosing tags branch is destroyed. The two directions are distinguishable at
+registration time: the tags→class payload also carries `m5i` (`_scope(branchId,
+{ m5c, m5i })`) while the class→tags payload does not (`_scope(scopeId, { m5c:
+component.id })` in `html/compat.ts`'s `render`), so gating the
+`classIdToBranch.set` on `scope.m5i === undefined`, or deleting the entry when
+the branch is destroyed, removes the dead retention. This is distinct from the
+existing perf.md entry anchored at `dom/compat.ts › compat.init`, which concerns
+the `classEventResolver` for-in loop and the process-wide prototype patches.
+Re-verify: `rg -n "classIdToBranch" packages/runtime-tags/src/dom/compat.ts`
+shows exactly one `set` (in `init`) and one `delete` (in `render`), and
+`fixtures-interop/interop-basic-tags-to-class/__snapshots__/writes.debug.html`
+serialises `{ m5c: "_0", m5i: { count: 0 } }` — an id that no `compat.render`
+call ever looks up.
+
+## Coalesce the serializer flush per async completion instead of once per streamed chunk
+
+`packages/runtime-tags/src/html/writer.ts` › `Boundary.flush` | 2026-07-23 | impact:med | effort:med
+
+`Boundary.flush()` runs `flushSerializer` unconditionally (writer.ts:1102), and
+`ServerRendered.#read`'s `onNext` in `html/template.ts` calls it on every
+`boundary.endAsync()` — i.e. once per settled `<await>` promise — even when the
+HTML write is deferred to the next `queueTick`. Each call appends its own
+`_=>[…]` closure to `state.resumes`, so N async completions landing in one
+streamed chunk emit N payload functions instead of one, and the run-length
+scope-id encoding in `writeScopesRoot` cannot span them. Serialization cannot
+simply be skipped, because `writePromise`/`writeReadableStream` call
+`boundary.startAsync()`, so serializing can raise `count` and a render must not
+be reported complete before it runs; a safe shape is `flush(write?)` that
+serializes only when `write` is true or `this.count === 0` (while `count > 0`
+the returned status is `FlushStatus.continue` regardless), with `#read` passing
+its existing `write` flag through. Re-verify: render N sibling `<await>`s that
+each serialize a `<let>` and count `_=>[` occurrences inside the emitted `M._.r`
+array — it should be 1, not N.
+
+## Range-encode the consecutive branch ids packed into a single-node loop's BranchEnd marker
+
+`packages/runtime-tags/src/html/writer.ts` › `forBranches` | 2026-07-23 | impact:med | effort:med
+
+For a `singleNode` `<for>`, `forBranches` accumulates every branch scope id into
+one string (`flushBranchIds = " " + branchId + flushBranchIds`, writer.ts:509)
+that `writeBranchEnd` emits as a single
+`BranchEndSingleNode`/`BranchEndSingleNodeOnlyChildInParent` comment. Those ids
+are a constant-stride descending run whenever the loop body allocates a fixed
+number of scopes per item — the normal case for leaf rows — so the comment grows
+~4.5 bytes per row carrying no information. A run token (`start~end` or
+`start~end:stride`) with an explicit-id fallback would collapse it to a
+constant. The decoder is `packages/runtime-tags/src/dom/resume.ts`
+`createVisitBranches` (`while ((branchId = +lastToken))`, :208) reading
+space-separated tokens from `nextToken` (:297), and expansion must preserve
+iteration order because the single-node path walks `previousSibling` per branch
+and `endedBranches.reverse()` (:279) depends on it. Only the single-node marker
+variants (`|`, `}`) are affected; the `]`/`)` variants already spread one id per
+`BranchStart` comment. Re-verify: SSR `<let/n=2000/><button
+onClick(){n++}>add</button><ul><for|i| to=n><li>row</li></for></ul>` and compare
+the length of the single `<!--M_}…-->` comment against total page bytes before
+and after.
+
+## Stop materializing empty branch scopes — they cost ~1/3 of SSR time on a stateless list and emit zero payload bytes
+
+`packages/runtime-tags/src/html/writer.ts` › `writeScope` | 2026-07-23 | impact:high | effort:med
+
+Every loop branch reaches `writeScope` twice with an empty partial: once from
+the compiled section epilogue (`_scope($scopeN_id, {})`, emitted by
+`translator/util/signals.ts` `writeHTMLResumeStatements` whenever
+`sectionSerializeReason` is truthy even with zero serialized props) and once
+from `forBranches`, whose return value is unused when `resumeMarker` is set.
+Each call allocates a `{}`, inserts a canonical scope into `state.scopes` (never
+deleted for the life of the render), writes a `writeScopes` entry and sets
+`flushScopes`; `flushSerializer` (writer.ts:1584) then allocates an
+`Object.getOwnPropertyNames(props)` array per entry only to discard it. The
+naive "skip empty writes" fix is unsafe: an empty `writeScopes` entry is exactly
+what lets `writeScopePassive` props ride along — see the `_existing_scope`
+comment ("Lets passive props join an existing scope flush without forcing wire
+data") and the `passiveScopes` merge at the top of `flushSerializer` — so the
+opt-in must move to a separate flushable-id set with props materialized lazily.
+A cheap first step is dropping the redundant `forBranches` call in the
+`resumeMarker && (!resumeKeys || sameAsIndex)` case, but note it currently also
+supplies `state.needsMainRuntime = true`, which `state.mark` does not set.
+Re-verify: wrap `Object.getOwnPropertyNames` and
+`Serializer.prototype.stringifyScopes` around an SSR render of a large stateless
+`<for>` and compare the count of empty-props probes against the number of
+flushes actually serialized.
+
+## Mark class/style item writes pure so a single-consumer derived binding is not forced into a `_const` wrapper and scope slot
+
+`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `translate.dom.enter` | 2026-07-23 | impact:med | effort:low
+
+The DOM `class`/`style` branch ends with `addStatement("render", tagSection,
+valueReferences, stmt, undefined, !!meta.dynamicItems)` (native-tag.ts:853-861),
+so the `isPure` argument is `true` only for the whole-value `_attr_class(node,
+value)` path and `false` for the split `_attr_class_item` / `_attr_class_items`
+/ `_attr_style_item(s)` path. A falsy `isPure` sets `signal.hasSideEffect`
+(`util/signals.ts:875-877`), which forces `signal.build` to wrap the value
+signal in `_const(accessor, fn)` instead of returning the plain function
+(`signals.ts:380-396`). Every other idempotent DOM write in the translator
+passes `true` — `_attr` (:897), `_attr_content` (:970), `_attr_nonce` (:737),
+`_text_content` (:1003), `_text`/`_html` in `visitors/placeholder.ts` — and the
+item helpers are just as idempotent (`element.classList.toggle(name, !!value)`
+and `element.style.setProperty(name, _to_text(value))`, dom/dom.ts:93-124). The
+cost lands on any derived binding whose only consumer is a class/style toggle,
+which is the idiomatic `class={ active: someConst }`: `<let/x=1/><const/y=x %
+2/><div class={ active: y }>` compiles (optimize, `-o dom`) to `const $y =
+_const(3, $scope => _attr_class_item($scope.a, "active", $scope.d))` — a
+`_const` import, a runtime dirty check and a scope slot — where the same const
+behind `data-active=y` compiles to `const $y = ($scope, y) => _attr($scope.a,
+"data-active", y)`. Intersection signals already set `hasSideEffect` at creation
+(`signals.ts:270-276`), so passing `true` unconditionally only affects the
+single-derived-binding case. Confirm the flag is not load-bearing (it was
+introduced with the `isPure` parameter in commit b2eb4e9925 "fix: optimize pure
+signals as plain functions"), then flip it and audit snapshots. Re-verify:
+compile the two templates above with `pnpm run compile -o dom` and diff the
+emitted `$y`.
+
+## Replace the quadratic `visits.indexOf` marker test in the single-node branch resume walk with a Set
+
+`packages/runtime-tags/src/dom/resume.ts` › `init (createVisitBranches)` | 2026-07-23 | impact:med | effort:low
+
+Inside `init`'s `createVisitBranches`, the single-node branch-end walk tests
+whether a preceding sibling is one of this render's resume markers with
+`~visits.indexOf(startVisit = startVisit.previousSibling)` (resume.ts:218-223).
+`visits` is `render.v`, the array of _every_ marker comment in the render, so
+each test is a linear scan, and the loop's terminating test (the first
+non-marker sibling) always scans the whole array. This runs once per resumed
+branch, and every `<for>`/`<if>` body that the marker-elision optimization
+reduced to a single node emits one `|`/`}` marker per branch — see
+`src/__tests__/fixtures/for-by/__snapshots__/writes.html`, `<!--M_}1 a 4 3
+2-->`, one branch id per row — so resuming an N-row list costs ~1.5N² identity
+comparisons while N stays proportional to the marker count. Build the marker set
+once per `render.m` invocation (`new Set(render.v)`) and use `.has`: `visits` is
+never mutated during the loop when `branchesEnabled` (the `visits[retained++] =
+visit` compaction only runs in the `else if (render.b)` arm, which is the
+`!branchesEnabled` path), so the set stays valid, and it costs ~10 minified
+bytes in a runtime that already ships this code (`.sizes/dom.js:853`). Re-verify
+by counting comparisons: simulate the walk over a `text, marker, text, marker,
+…, end-marker` sibling chain of N rows — `indexOf` performs 1,501,500
+comparisons / 0.63 ms at N=1000, 13,504,500 / 9.9 ms at N=3000 and 150,015,000 /
+42.6 ms at N=10000, versus 2N comparisons / 1.57 ms at N=10000 with a Set.
+
+## Stop serializing `AccessorProp.Renderer` for dynamic native tags in production
+
+`packages/runtime-tags/src/html/dynamic-tag.ts` › `_dynamic_tag` | 2026-07-23 | impact:low | effort:low
+
+When a dynamic native tag needs a resume script, HTML `_dynamic_tag`
+unconditionally writes `_scope(branchId, { [AccessorProp.Renderer]: renderer })`
+alongside `_script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID)`. That value has
+exactly one consumer in the whole package — the MARKO_DEBUG arm of
+`dom/control-flow.ts` › `dynamicTagScript`, which builds `` `#${branch[AccessorProp.Renderer]}/0` ``; the production arm uses the constant
+`"a"` and never reads it, and the client-side writer (`dom/renderer.ts` ›
+`createBranch`) only sets the slot under `if (MARKO_DEBUG)`. So every optimized
+page pays `R:"<tagname>"` of resume payload per dynamic-native-tag instance for
+a field nothing reads. Wrapping that `_scope` call in `if (MARKO_DEBUG)` is safe
+because `needsScript` is only true when `_attrs` already wrote
+`EventAttributes`/`ControlledHandler` into the same branch scope, so the scope
+is emitted regardless. Re-verify: `cat
+packages/runtime-tags/src/__tests__/fixtures/dynamic-native-tag-events/__snapshots__/writes.html`
+— the optimized resume payload contains `R: "span"` — and `rg -n
+"AccessorProp.Renderer" packages/runtime-tags/src` shows the only read is the
+MARKO_DEBUG ternary in `dynamicTagScript`.
+
+## Elide the empty `$setup` export from the `_template` call so branches skip a no-op queued render
+
+`packages/runtime-tags/src/translator/visitors/program/dom.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low
+
+When a template's program section has no setup signal, `program/dom.ts` emits
+`export const $setup = () => {};` (:179-190) and still passes that identifier as
+the 4th argument of `_template` (:212-223). `_content` therefore stores a truthy
+`RendererProp.Setup` (`packages/runtime-tags/src/dom/renderer.ts:117`), so
+`setupBranch` (renderer.ts:76-81) does `queueRender(branch, emptyFn, -1)` for
+every branch built from that template — i.e. once per `<${dynamicTag}/>`
+instance via `createBranchWithTagNameOrRenderer` (`dom/control-flow.ts:996`) —
+and `mount` invokes it directly (`dom/template.ts:118`). The helper for exactly
+this already exists (`replaceNullishAndEmptyFunctionsWith0` in
+`util/signals.ts:806`, applied to child-section `_content` args but not to the
+program `_template` args), and `program/index.ts:78` carries the matching TODO
+"make any exports undefined if they are noops/empty". A related miss feeds it:
+`visitors/tag/dynamic-tag.ts:130` unconditionally calls `addSetupStatement`, so
+any template containing a dynamic tag loses `domExports.setupEmpty` and every
+parent emits `import { $setup as _child } from './child.marko'` plus
+`_child($scope.a)` even though translate produced an empty function. Re-verify:
+compile `<section class="wrap"><${input.content}/></section>` with `-o dom` and
+observe `export const $setup = () => {};` passed to `_template`, then compile a
+parent `<wrap><p>hi</p></wrap>` and observe `import { $setup as _wrap ... }` +
+`_wrap($scope.a);` in its `$setup`; a rolldown `minify:true` build keeps the
+empty arrow alive because it is a live `_template` argument. 19 committed
+`dom.bundle.js` snapshots contain a `$setup = () => {}`.
+
+## Trim trailing walk exit codes at compile time for content and branch renderers
+
+`packages/runtime-tags/src/translator/util/walks.ts` › `getWalkString` | 2026-07-23 | impact:low | effort:low
+
+`_content` unconditionally strips trailing exit codes from every walk string it
+receives (`packages/runtime-tags/src/dom/renderer.ts:93`,
+`walks.replace(/[^\0-1]+$/, "")`), and every non-program walk string reaches the
+DOM runtime only through `_content` — `_if`, `_for_*` (`loop`),
+`_await_content`, `_try`, `_dynamic_tag_content` all funnel their `walks`
+argument into it (`dom/control-flow.ts:430`, `:261`, `:361`, `:787`). Those
+trailing codes exist only so a _program_ `$walks` export can also be inlined
+into a parent's walk by `injectWalks` (`util/walks.ts:67`, used from
+`custom-tag.ts:297/332`). Trim only for sections whose `SectionMeta` walks are
+never passed to `injectWalks` — **not** for all non-program sections:
+`dynamic-tag.ts:282` inlines a non-program section's walk into a parent walk
+(snapshots show `$MyTag_content__walks = "D l"` consumed as `` `b/${_w0}&b` ``),
+and the walker's position is not restored after `EndChild`, so those trailing
+exits are load-bearing whenever parent codes follow the `&` (`` `/${_w0}&D l` ``).
+Trimming blindly in `getWalkString` mis-positions the walker for merged
+define-tag bodies. Measured over
+the 522 committed `dom.bundle.js` snapshots (AST scan of the walk-argument
+position of
+`_content`/`_content_resume`/`_if`/`_for_*`/`_await_content`/`_try`): 188
+string-literal walk args, 447 characters total, of which 188 (42%) are trailing
+exit codes discarded at runtime, and 78 args reduce to the empty string entirely
+so the argument could be dropped or emitted as `0` (e.g. `_if(0,
+"<tr><td>Hi</td></tr>", "b")` and `_content("nfzlx94", "<p>hi</p>", "b")`).
+Bundle size is a tracked feature here and the transform is behaviour-preserving
+by construction since the runtime already performs it. Re-verify: `node -e
+'console.log(JSON.stringify("D l".replace(/[^\0-1]+$/,"")),
+JSON.stringify("b".replace(/[^\0-1]+$/,"")))'` prints `"D " ""`, and `grep -o
+'_if([^;]*'
+packages/runtime-tags/src/__tests__/fixtures/*/__snapshots__/dom.bundle.js`
+shows those exact literals being shipped.
+
+## Encode an all-same param-reason group set as a bitmask instead of a per-render object literal
+
+`packages/runtime-tags/src/translator/util/known-tag.ts` › `knownTagTranslateHTML` | 2026-07-23 | impact:low | effort:low
+
+`knownTagTranslateHTML` picks the `_set_serialize_reason` payload shape at
+known-tag.ts:239-300: `1` when nothing is dynamic or skipped, a bitmask when
+every present guard is the literal `1`, otherwise an object literal `{0: g0, 1:
+g1, ...}` (:297). The object branch is taken whenever any guard is a runtime
+expression, even when every group shares the _same_ expression — and the literal
+is allocated on every render of the call site, so inside a `<for>` that is one
+object per item. Because `_serialize_if`/`_serialize_guard`
+(`packages/runtime-tags/src/html/writer.ts:717-729`) treat `condition === 1` as
+"all groups" and a number as a bit-per-group mask, a shared 1|0 guard can be
+passed bare as `guard` when no group was skipped (`hasSkippedReasons === false`,
+the same gate the existing `t.numericLiteral(1)` branch uses), or as `<bitmask> *
+guard` otherwise — both allocation-free and shorter. "Contiguous from 0" is not
+the right gate: trailing skipped groups leave the present ones contiguous, yet a
+bare `1` guard would make `_serialize_if` report the skipped ones as
+serializable, so those need the bitmask form too.
+Soundness gate: only apply when the shared expression is known to be normalized
+to 1|0 (a `_serialize_guard(...)` call, an `||` chain of them, or a numeric
+literal), because `buildGuardExpr` (`util/serialize-guard.ts:179-199`) can also
+hand back a raw `$scopeN_reason` whose value may itself be a mask or object for
+a different group indexing. In the committed corpus 17 of 127
+`_set_serialize_reason` calls use the object form and 8 of those have identical
+values in every slot (4 contiguous, 4 with gaps). This is unrelated to the
+existing perf entry on the same symbol about client registration anchors.
+Re-verify:
+`packages/runtime-tags/src/__tests__/fixtures/at-tag-inside-if-tag/__snapshots__/html.bundle.js`
+emits `_set_serialize_reason({0: $sg__input_x, 1: $sg__input_x, 2:
+$sg__input_x})`; compiling a `<for|c| of=input.cards><card title=c.title
+body=c.body footer=c.footer/></for>` page with `-o html` puts the equivalent
+4-key literal inside the `_for_of` callback, i.e. one allocation per row.
+
+## Memoize runtime-helper import resolution; every `callRuntime` re-scans the runtime import's specifier list
+
+`packages/runtime-tags/src/translator/util/runtime.ts` › `importRuntime` | 2026-07-23 | impact:med | effort:low
+
+`callRuntime(name, ...)` calls `importRuntime(name)` → `importNamed(getFile(),
+getRuntimePath(output), name)` for every single emitted helper reference, and
+`importNamed` (`packages/compiler/src/babel-utils/imports.js`) does
+`importDeclaration.get("specifiers")` — which re-`setContext`/`setScope`s a
+NodePath per specifier — followed by a linear `.find` over them; only after that
+miss does it create a new specifier. The results are overwhelmingly repeats:
+compiling the same 20-section page template for dom+html issues 691
+`importNamed` calls for just 33 distinct `(request, name)` pairs (95% repeats),
+and compiling the whole fixture corpus issues 21,885 calls with ~113k specifier
+comparisons. A `--cpu-prof` of 150 dom+html compiles of that page attributes
+5.80% of total inclusive time to `importNamed` (`callRuntime` 6.83%,
+`importRuntime` 5.93%), and the profile's top self-time entries are exactly the
+Babel NodePath machinery `path.get` drives (`isScopable` 4.22%, `setContext`
+3.25%, `getOrCreateCachedPaths` 3.01%, `setScope` 2.75%). Fix: keep a
+per-program `name → local identifier name` map (via `createProgramState`, so it
+is per-output and cannot leak the dom path into an html compile) and return
+`t.identifier(cached)` on a hit; the general version is a second-level `name →
+local` map inside `getImports` in the compiler, which also fixes
+`importDefault`/`importStar`. Re-verify by wrapping `importNamed` with such a
+memo before running the fixture corpus: output is byte-identical for all 2456
+compiles, and 400 dom+html compiles of
+`src/__tests__/fixtures/for-tag/template.marko` drop from 930ms to 876ms (min of
+7 alternating runs).
+
+## Stop re-deriving each intersection's anchor binding inside the id-assignment loop in `finalizeReferences`
+
+`packages/runtime-tags/src/translator/util/references.ts` › `finalizeReferences` | 2026-07-23 | impact:low | effort:low
+
+In the final `forEachSection` pass of `finalizeReferences`
+(~references.ts:1278-1355) the id-assignment loop tests
+`intersections[intersectionIndex].filter(isOwnedBinding).at(-1) === binding`,
+allocating a filtered copy of the intersection on every iteration of the
+per-binding loop. That value is exactly what the `anchors` map built ~30 lines
+earlier already holds (`anchors` scans each intersection from the end for the
+first owned binding, i.e. the last owned element), so the whole condition
+reduces to `anchors.get(intersection) === binding` once `anchors` is hoisted out
+of the `if (intersections.length)` block that currently scopes it. As written
+the pass is O(ownBindings × intersectionLength) with one array allocation per
+owned binding: a synthetic section with ~802 own bindings and a single
+~800-member intersection (800 `<let>`s all read in one expression, compiled
+output shows one `_or(802, ...)`) does ~640k element visits and ~800 array
+allocations that a Map lookup replaces. Two smaller items in the same pass:
+`filter(bindings, isOwnedBinding)` is built twice (lines 1320 and 1350) and
+could be computed once, and the name-collision check at line 1016
+(`find(section.bindings, ({name}) => name === binding.name)`) is an O(bindings²)
+linear scan with a fresh closure per binding that a per-section `Set<string>` of
+names would make O(1). Re-verify by replacing the condition with
+`anchors.get(intersection) === binding` and running `pnpm run test:update`
+scoped to a fixture with intersections (e.g. `--grep "runtime-tags/translator
+for-tag "`): snapshots must be unchanged, since the two expressions are equal by
+construction on the sorted intersection arrays.

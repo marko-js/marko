@@ -198,3 +198,371 @@ graph would surface the same clear compile error. Verify: compile
 `packages/runtime-tags/src/html/serializer.ts` › `writeUnknownObject` | 2026-07-23 | impact:low | effort:low
 
 `DOMException`, `AbortSignal`, and `Event` still fall through the constructor dispatch to `throwUnserializable`, each a one-case addition. They reach templates through request handling yet cannot cross to the browser, so a resumed value holding one is dropped. Each has a constructor form that round-trips its observable state (`new DOMException(message, name)`, `AbortSignal.abort(reason)` for an already-aborted signal, `new Event(type, { bubbles, cancelable, composed })`), but a live `AbortSignal` that has not yet aborted has no faithful representation — resume would need it wired to a fresh controller, so decide that semantics before adding it. Lower value than the rest of the dispatch table and only worth adding if a real template needs them. Re-verify: pass each through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
+
+
+## Make `Cannot assign to hoisted tag variable.` say what the rule is and link the tag-variable docs
+
+`packages/runtime-tags/src/translator/util/references.ts` › `trackReferencesForBinding` | 2026-07-23 | impact:med | effort:low
+
+Writing a `<let>` from a handler that appears _above_ the `<let>` fails with the
+bare message `Cannot assign to hoisted tag variable.` (references.ts:524).
+"Hoisted" is compiler jargon (CONTEXT.md's _Hoist_ entry), the restriction is
+not stated anywhere in the language reference — website
+`docs/reference/language.md:664` only says tag variables are hoisted and
+readable anywhere — and the message names neither the variable nor the fix,
+which is simply to move the declaration above the assignment. `references.ts` is
+a cluster of nine user-facing compile errors (`:291`, `:306`, `:309`, `:495`,
+`:519`, `:524`, `:555`, `:584`, `:679`) and none of them follow the convention
+AGENTS.md documents and `core/if.ts` demonstrates — backticked names plus a
+markojs.com docs link; every `core/*.ts` tag file does. `Duplicate declaration
+"x"` (`:519`/`:306`) even uses `JSON.stringify` quotes where the house style is
+backticks. Direction: reword to name the variable and the positional rule (e.g.
+"`count` is assigned before its declaring tag; move `<let/count=…>` above this
+assignment.") and link
+`https://markojs.com/docs/reference/language#tag-variables`, and add the
+assignment-position rule to the Tag Variables docs section. This is distinct
+from the existing dx.md entry on `trackReferencesForBinding`, which asks for
+_detecting_ mutual `<const>` cycles rather than improving message text.
+Re-verify: compile `<button onClick() { x = 2
+}>b</button>\n<let/x=1/>\n<div>${x}</div>` and observe the jargon-only message;
+swapping the two lines compiles cleanly, confirming the rule is purely
+positional.
+
+## Exercise `MountedTemplate.destroy()` and `.value` in the CSR fixture harness
+
+`packages/runtime-tags/src/__tests__/main.test.ts` › `csr` | 2026-07-23 | impact:med | effort:low
+
+The CSR half of the fixture harness mounts a template and then only ever calls
+`instance.update(input)` (main.test.ts:282); `instance.destroy()` and the
+`value` getter/setter returned by `dom/template.ts` › `mount` are never called
+anywhere under `src/__tests__`. So the entire client-side teardown path of the
+public mount API — `removeAndDestroyBranch`, `<lifecycle> onDestroy`, `$signal`
+abort, nested-branch destruction — has no fixture coverage at all, which is why
+the stranded-cleanup-effects defect above survives (`cleanup-*` fixtures only
+cover destroys driven from inside a render by `<if>`/`<for>`). Add a `Destroy`
+step control alongside the existing `Wait`/`Flush`/`Throws` controls in
+`TestConfig.steps` (and a matching `SetValue` for the tag-variable channel),
+have `runSteps` call `instance.destroy()`, and let the mutation tracker snapshot
+the resulting removal plus any console/`onDestroy` output; a couple of fixtures
+over `<lifecycle>`, `$signal`, and a nested `<for>` would lock the contract in.
+Re-verify: `rg -n "instance\.|\.destroy\(\)" packages/runtime-tags/src/__tests__
+--glob '!fixtures/**'` returns only the single `instance.update(input)` line.
+
+## Add a unit test for the `Opt`/`Sorted` list algebra in `translator/util/optional.ts`
+
+`packages/runtime-tags/src/translator/util/optional.ts` › `Sorted` | 2026-07-23 | impact:med | effort:low
+
+`util/optional.ts` is the hand-rolled sorted-list algebra that `AGENTS.md`
+describes as underpinning reference tracking, yet it has no direct test — the
+only coverage is indirect, through ~800 end-to-end fixture snapshots, which is
+exactly why `Sorted.isSuperset`'s off-by-one survived long enough to become
+load-bearing (see the existing bugs.md entry). The module is pure and
+dependency-free, and the repo already auto-discovers unit tests via
+`.mocharc.json`'s `packages/*/@(src|test)/**/*.test.@(js|ts)` spec with
+`common-helpers.test.ts` and `resolve-cursor-position.test.ts` as the precedent,
+so a new `src/__tests__/optional.test.ts` needs no config change. A short
+differential test comparing `Sorted.union/add/find/has/groupBy/isSuperset`,
+`addSorted`, `findSorted`, `findIndexSorted`, `filter`, `concat`, `push`,
+`fromIter`/`toIter` and `mapToString` against naive array reference
+implementations over randomized sorted inputs pins the contract, documents the
+`Opt` single-vs-array duality, and would let someone actually attempt the
+`isSuperset` fix with a safety net instead of a full snapshot audit. Re-verify
+the gap: `ls packages/runtime-tags/src/__tests__/*.test.ts` shows no
+optional/Sorted test, and `grep -rn "util/optional"
+packages/runtime-tags/src/__tests__` returns nothing.
+
+## Prune only snapshots whose tests actually ran; `test:update` deletes snapshots for skipped/bailed tests
+
+`packages/runtime-tags/src/__tests__/utils/snap.ts` › `cleanupSnapshots` | 2026-07-23 | impact:med | effort:low
+
+The `after(cleanupSnapshots)` hook in `snap.ts` treats "not written during this
+run" as "stale": for every `__snapshots__` dir that received at least one write
+it `fs.rmSync`s every entry missing from `writtenFiles`. That is only correct
+when the whole fixture ran. Because mocha suite titles include the mode
+(`describe(entry)` → `describe(mode)` in `main.test.ts`), a natural narrowing
+like `pnpm run test:update -- --grep "runtime-tags/translator title-counter
+debug "` writes only the debug snapshots and then deletes `dom.bundle.js`,
+`html.bundle.js`, `render.md` and `writes.html` for that fixture; the same
+happens on a bailed update run, since `.mocharc.json` sets `bail: true` and
+mocha still runs root `after` hooks after aborting (verified), so a fixture
+whose `ssr` step throws mid-`test:update` loses the snapshots of every test that
+never got to run. This directly undercuts the repo invariant that
+`__snapshots__/**` is never deleted by hand, and the deletions are only visible
+in `git status`. Direction: record which fixture/mode combinations completed (or
+which snapshot basenames the run was responsible for) and prune only within
+those, instead of every entry of any touched dir. Re-verify: `pnpm run
+test:update -- --grep "runtime-tags/translator title-counter debug "` then `git
+status packages/runtime-tags/src/__tests__/fixtures/title-counter` — the
+optimize-mode snapshots show up as deletions.
+
+## Surface `<style>`/`<title>`/`<link>` mutations in the render log; today a dynamic `<style>` update snapshots as an empty step
+
+`packages/runtime-tags/src/__tests__/utils/get-node-info.ts` › `isIgnoredTag` | 2026-07-23 | impact:med | effort:med
+
+`isIgnoredTag` returns true for `T`, `LINK`, `TITLE`, `STYLE` and
+non-typed/module `SCRIPT`, and `formatMutationRecord` drops any record whose
+target (or characterData parent) is an ignored node, so no `<style>`, `<title>`
+or `<link>` change is ever representable in a `render*.md` snapshot — grepping
+all committed render snapshots finds zero `<style`/`<title` occurrences. The
+cost is concrete for the `<style>` core tag: `_style_rule_item`
+(`src/dom/dom.ts`) does non-trivial string surgery on the style element's
+`textContent` to splice a CSS custom property, yet the `style-tag-dynamic`
+fixture — whose entire purpose is a dynamic `${input.color}` in a `<style>` —
+snapshots its update step as the bare line `# Update \`{"color":"blue"}\``with
+no html block and no`## Change`, byte-identical to what a no-op client update
+would produce (only `style-tag-dynamic-injection`covers this path, and only via`assert`calls inside step functions, which the snapshot does not record). Since
+AGENTS.md tells reviewers to audit the mutation log for unexpected updates, this
+is a blind spot in the primary review artifact. Direction: narrow the ignore
+rule to Marko-emitted asset/resume nodes (the`T`placeholder, resume`<script>`s, injected `<link>`s) rather than the element type, or always emit
+style/title text changes as an `UPDATE:`line. Re-verify: read`fixtures/style-tag-dynamic/**snapshots**/render-csr.debug.md`and confirm the
+second step has no`## Change`even though`writes.debug.html` shows the custom
+property carrying the value.
+
+## Error on an empty `<for>` body instead of silently compiling the loop away
+
+`packages/runtime-tags/src/translator/core/for.ts` › `analyze` | 2026-07-23 | impact:low | effort:low
+
+When `startSection(tagBody)` returns undefined because the body is empty,
+`analyze` calls `dropNodes(getAllTagReferenceNodes(tag.node))` and returns
+(for.ts:154-159), so `<for|item| of=input.list/>` compiles to nothing at all —
+the `of=` expression is not even evaluated — with no diagnostic in any mode.
+Every other body-requiring core tag raises a code-frame error for the same
+mistake: `core/if.ts` › `assertHasBody`, `core/show.ts` › `assertHasBody`,
+`core/try.ts` › `analyze` (:74-80), and `core/await.ts` › `analyze` (:97) all
+throw "The [`<x>` tag](…) requires [body content](…)". A `<for>` body is the
+tag's only output, so an empty one is always an authoring mistake (a stray `/>`
+or an emptied body), and today it costs a debugging cycle where `<if>` gives an
+immediate caret. Add the same `assertHasBody` check to `<for>` before the
+`dropNodes` fast path, and add an `error-for-empty-body` fixture — the
+`error-for-*` family currently has ten cases and none of them is an empty body.
+Re-verify: compile `<div><for|x| of=input.list/></div>` and observe it succeeds
+with output `_html("<div></div>")`, versus `<div><if=input.list/></div>` which
+fails with the "requires body content" code frame.
+
+## Fix the dead markojs.com links core tags hand to users: `/docs/syntax/` and synthesized `core-tag#<tagName>` anchors
+
+`packages/runtime-tags/src/translator/core/import.ts` › `autocomplete` | 2026-07-23 | impact:low | effort:low
+
+`<import>`'s completion entry sets `descriptionMoreURL:
+"https://markojs.com/docs/syntax/#importing-external-files"` (import.ts:20-22),
+and `core/static.ts:28`, `core/server.ts:28`, `core/client.ts:28` use the same
+`/docs/syntax/` base — a page that no longer exists (the website repo has no
+`docs/syntax*` markdown, its docs routes are generated from `docs/**/*.md` by
+`src/util/markodown.ts`, and `src/routes/docs/+handler.ts` only redirects bare
+`/docs` to getting-started), so the "[More Info]" link the language server
+renders in tag-name completion documentation
+(`packages/language-server/src/service/marko/util/get-tag-name-completion.ts`)
+404s. The live targets are `docs/reference/language.md` headings `### import`,
+`### static`, `### server and client` → `#import`, `#static`,
+`#server-and-client`. The same class of breakage exists in the shared assert
+helpers reached from `core/if.ts`:
+`packages/runtime-tags/src/translator/util/assert.ts` › `assertNoSpreadAttrs`
+(:8) and `assertNoBodyContent` (:38) build the anchor as `core-tag#${tagName}`,
+which is only correct when a tag's docs heading is its bare name — `<if=x
+...attrs>` errors with `core-tag#if` and `<else-if=y ...attrs>` with
+`core-tag#else-if` when the real heading id is `if--else`, and
+`<effect>`/`<attrs>` have no core-tag section at all. Replace the four
+`/docs/syntax/` URLs and give the assert helpers an explicit anchor argument (or
+a tag-name→anchor map) rather than interpolating the tag name; this is distinct
+from the existing unclear.md llms.txt entry, which is about the website's own
+index, not links emitted from runtime-tags. Re-verify: `grep -rn "docs/syntax"
+packages/runtime-tags/src` lists the four call sites while the website has no
+matching page, and compiling `<if=input.x ...input.attrs>a</if>` prints ``The
+[`<if>`](https://markojs.com/docs/reference/core-tag#if) tag does not support
+`...spread` attributes.``
+
+## Give `<show>` a `types` stub so its input is type-checked like every other core tag
+
+`packages/runtime-tags/src/translator/core/show.ts` › `default export (the `Tag` definition)` | 2026-07-23 | impact:low | effort:low
+
+Every core tag that renders through the normal tag path declares `types:
+runtimeInfo.name + "/tags/<name>.d.marko"` — 14 of them (await, const, debug,
+define, effect, html-comment, html-script, html-style, id, let, lifecycle, log,
+script, try) with matching files in `packages/runtime-tags/tags/`. `<show>`, a
+documented first-class control-flow tag (`website/docs/reference/core-tag.md` ›
+`## <show>`), declares none and has no `tags/show.d.marko`. The other
+`types`-less entries in `core/index.ts` are all handled elsewhere:
+`if`/`for`/`return` are special-cased in `@marko/language-tools`' script
+extractor, `class`/`import`/`export`/`style`/`server`/`client`/`static` are
+parsed as statements in its `parser.ts`, and `attrs` is a migrate-only
+deprecation. `<show>` is the only renderable core tag with neither. In the
+extractor's `#writeTag`, the taglib def exists but `resolveTagFile(def) =
+def.types || def.template || def.renderer` is `undefined`, so `importPath` is
+undefined, the `if (!def || importPath)` block is skipped, and the tag falls
+through to `varShared("missingTag")` typed `DefaultRenderer = (): () =>
+<Input>(input: Input) => …` — a free generic with no contract. Consequently
+`<show=cond when=x>` and a `<show>` missing its value attribute both type-check
+clean and only fail later with `assertValidShow`'s "only supports the `value=`
+attribute" / "requires a `value=` attribute" compile errors, and there is no
+hover/type information for `value`. Add `tags/show.d.marko` (`export interface
+Input { value: unknown; content: Marko.Body }`, mirroring `tags/await.d.marko`)
+and point `core/show.ts` at it. Re-verify: `rg -n "types:"
+packages/runtime-tags/src/translator/core/*.ts` lists 14 files and not
+`show.ts`, and `ls packages/runtime-tags/tags` contains no `show.d.marko`.
+
+## Raise the unresolvable-tag-name error during analyze; at translate its `<let>`/`<const>` hint is silently lost and only the first bad tag is reported
+
+`packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts` › `tagNotFoundError` | 2026-07-23 | impact:med | effort:med
+
+`analyzeTagNameType` reclassifies a string tag name whose file cannot be
+resolved as `TagNameType.DynamicTag` (util/tag-name-type.ts, the `else if
+(!childFile)` branch), so `CustomTag.analyze.enter`'s `tagNotFoundError` never
+fires for a plain unknown tag; the error instead comes out of
+`getTagRelativePath` (custom-tag.ts:342) during `DynamicTag.translate.exit` —
+verified by wrapping `getTagRelativePath` and printing `file.___compileStage`,
+which prints `translate`. Two consequences. (1) `tagNotFoundError`'s best hint
+is order-dependent: `tag.scope.hasBinding(tagName)` (`:383`) reads a scope that
+translate has already been rewriting, so `<let/thing="hi"/>` followed by
+`<thing/>` loses the "Local variables must be in a dynamic tag unless they are
+PascalCase" message and instead prints the bogus ``Did you mean `<img>`?``
+(levenshtein distance 3 < 4); moving `<thing/>` above the `<let>` restores the
+correct hint, and `<const/panel=input.content/>` + `<panel/>` degrades to ``Did
+you mean `<label>`?``. Module bindings (`import thing from ...`) and
+`<for|widget|>` params survive translate and still get the right hint, so the
+failure is specific to same-scope tag variables — the most common way a user
+writes this mistake. (2) The whole `reportAnalyzeError`/`analyzeFailed`
+machinery in `visitors/tag/index.ts` exists so every bad tag reports at once,
+and a translate-stage throw bypasses it: a template with two unknown tags
+reports only the first, while two `<let/x=x/>` circular-reference errors report
+together. Fix direction: detect the unresolvable string-literal tag name in
+`DynamicTag.analyze.enter` (export `tagNotFoundError` from custom-tag.ts) so the
+diagnostic is produced while the scope is intact and batched with the rest.
+Re-verify: compile `<let/thing="hi"/>` + `<thing/>` and the same two lines
+swapped and compare the two error messages; compile a file with two unknown tags
+and count the reported errors.
+
+## Stop a `--grep`-scoped test run from rewriting `sizes.json` and pruning `__snapshots__`
+
+`packages/runtime-tags/src/__tests__/main.test.ts` › the optimize `after()` sizes hook | 2026-07-23 | impact:med | effort:low
+
+Both generated-file gates in the fixture harness assume the whole fixture ran,
+so a narrower `--grep` reports a false failure and then destroys committed
+output. (1) `pnpm test -- --grep "runtime-tags/translator attr-class optimize
+html"` fails in `"after all" hook for "ssr"` with `AssertionError: sizes.json
+out of date for "attr-class" — run pnpm run test:update` (`main.test.ts:408`);
+nothing is stale — `stats.dom` is only filled by the `dom` test and `stats.html`
+only by the `ssr` test, both excluded by the grep, so `actual` is `{}`. (2)
+Following that message with the same grep is destructive: the hook then does
+`fs.writeFileSync(sizesFile, "{}\n")` (`main.test.ts:402-403`), and `snap`'s
+root `after` hook `cleanupSnapshots` (`utils/snap.ts:103-113`) deletes every
+entry of each visited `__snapshots__` directory that this run did not rewrite —
+so a run scoped to one mode erases the other mode's `dom.bundle.js` /
+`render.md` / `writes.html` — that prune half is the same defect as "Prune only
+snapshots whose tests actually ran", which owns the `snap.ts` anchor; fix them
+together rather than twice. Both are files AGENTS.md marks as generated and
+never to be hand-edited or deleted. Fix direction: make both gates inert when
+the run is scoped (mocha exposes `--grep`/`--fgrep` on its options;
+alternatively track that every `it` of the mode actually executed), and reword
+the sizes assertion to say the numbers are incomplete because the run was scoped
+rather than pointing at `test:update`. Re-verify: run the grep above and observe
+the false "out of date" failure; for the prune, with `UPDATE_EXPECTATIONS=1`
+call `snap` once against a scratch dir whose `__snapshots__` holds
+`dom.bundle.debug.js`, `dom.bundle.js` and `render.md`, rewriting only
+`dom.bundle.debug.js`, and list the directory after mocha's root hooks — only
+`dom.bundle.debug.js` remains.
+
+## Warn when a `<script>` effect returns a cleanup function — the return value is discarded
+
+`packages/runtime-tags/src/translator/core/script.ts` › `default export › translate.exit` | 2026-07-23 | impact:med | effort:low
+
+The React `useEffect` habit compiles clean and silently leaks: `<script>` with
+`const id = setInterval(() => n++, 1000); return () => clearInterval(id);`
+becomes the effect statement `(() => { const id = setInterval(...); return () =>
+clearInterval(id); })()` (`core/script.ts:139`, the IIFE fallback taken because
+a top-level `return` blocks inlining), so the returned cleanup is dropped and
+the interval runs for the life of the page with no error, no warning and no
+`MARKO_DEBUG` complaint. Marko's actual cleanup channel is `$signal.onabort = ()
+=> clearInterval(id)` (documented in `packages/runtime-tags/cheatsheet.md`,
+"Client-side effects" section) or `<lifecycle onDestroy>`, and nothing in the
+compile output points there. Detection is already paid for: `translate.exit`
+calls `traverseContains(value.body, isReturnStatement)` at `core/script.ts:120`
+(predicate at `:179-193`, which already skips nested function bodies). Narrow
+that to a `return` whose argument is an arrow or function expression — a bare
+early-exit `return;` is legitimate and must stay silent — and emit
+`diagnosticWarn` naming `$signal.onabort`/`<lifecycle onDestroy>`. Re-verify:
+compile `<let/n=0/><script>const id = setInterval(() => n++, 1000); return () =>
+clearInterval(id);</script>` with `pnpm run compile -- -o dom -d file.marko` and
+observe the returned arrow sitting inside the emitted IIFE with an empty
+`meta.diagnostics`.
+
+## Diagnose a dropped `<style>` block when `resolveVirtualDependency` is not configured
+
+`packages/runtime-tags/src/translator/core/style.ts` › `getStyleImportPath` | 2026-07-23 | impact:low | effort:low
+
+`getStyleImportPath` returns `undefined` as soon as
+`file.markoOpts.resolveVirtualDependency` is unset (`core/style.ts:347-350`), so
+`node.extra.styleImportPath` stays falsy, `emitStyleImport` returns early
+(`:301-302`), and `translateHTML`/`translateDOM` just `tag.remove()` — the
+entire `<style>` block disappears from both targets with no error, warning or
+`meta.diagnostics` entry. This bites the repo's own documented iteration loop:
+`pnpm run compile` (`scripts/inspect-compiled-output.ts`) never sets the hook,
+so `<style>.a{color:red}</style><div class=a>hi</div>` compiles to output
+containing only the `<div>` and a contributor inspecting `<style>` codegen
+cannot tell whether the CSS was dropped by design or by their change; the same
+silent loss hits any hand-rolled `@marko/compiler` integration. The compiler
+already validates this exact option elsewhere
+(`packages/compiler/src/babel-plugin/index.js:47-50` throws "the
+`resolveVirtualDependency` option must be supplied when output is `hydrate`"),
+so a `diagnosticWarn` when a non-empty `<style>` body is discarded is consistent
+with existing behavior; independently, `scripts/inspect-compiled-output.ts`
+should pass a stub `resolveVirtualDependency` so inspected output shows the
+emitted style import. Re-verify: `pnpm run compile -- -o html -d file.marko` on
+that template and observe the emitted `_html("<div class=a>hi</div>")` with no
+style import and no diagnostic.
+
+## Report a tag-variable diagnostic instead of Babel's "invalid left-hand side in function parameter list"
+
+`packages/compiler/src/babel-utils/parse.js` › `parseVar` | 2026-07-23 | impact:low | effort:low
+
+A hyphenated tag variable — a common habit for anyone naming things like HTML —
+produces a diagnostic that leaks `parseVar`'s internal encoding and never
+mentions tag variables: `<div/my-el>hi</div>` and `<input/card-input>` both
+compile-fail with `Binding invalid left-hand side in function parameter list.`,
+caret on the variable. The cause is `parseVar`
+(`packages/compiler/src/babel-utils/parse.js:55-69`), which parses the
+tag-variable source as `(${str})=>{}` to reuse Babel's binding-pattern grammar
+and relays Babel's raw parameter-list message when that parse fails; the author
+wrote no function and no parameter list. This falls below the repo's own
+documented diagnostic standard (`packages/runtime-tags/AGENTS.md` › Translator:
+errors use backticked names plus a markojs.com docs link, `core/if.ts` as
+canonical style) — for contrast, `<let x=0>` produces a fully tailored message
+with a `<let>` docs link. It is also why `packages/runtime-tags/cheatsheet.md`'s
+DON'T table needs the row `<div/my-el>` / `<input/card-input>` → "valid JS
+identifier: `<div/myEl>`": the compiler cannot say it itself. Detect the
+parameter-list-family parse errors in `parseVar` and rethrow as e.g. "`my-el`
+is not a valid [tag
+variable](https://markojs.com/docs/reference/language#tag-variables); use a
+JavaScript identifier or destructuring pattern". Distinct from the existing
+dx.md entries on `parser.js` › `onError`/`onText`, which concern htmljs-parser
+tokenizer messages in concise mode, not Babel messages from the tag-variable
+wrapper. Re-verify: compile `<div/my-el>hi</div>` and observe `Binding invalid
+left-hand side in function parameter list.`
+
+## Fix `pnpm run compile` — the documented translator-inspection command fails two different ways
+
+`scripts/inspect-compiled-output.ts` › `TRANSLATORS` | 2026-07-23 | impact:high | effort:low
+
+Root `AGENTS.md`/`CLAUDE.md` call `pnpm run compile -- -o dom -d foo.marko` "the
+fastest way to inspect what the translator generates", but neither the
+documented form nor the corrected form works in this repo. (1) pnpm forwards the
+literal `--` to the script, and `scripts/inspect-compiled-output.ts` uses Node
+`parseArgs({allowPositionals:true})`, which treats everything after a bare `--`
+as positionals — so `-o` becomes a file path and it dies with `ENOENT ... open
+'<repo>/-o'`. (2) Dropping the `--` gets further but then fails with `[BABEL]
+...: Cannot find module '@marko/runtime-tags/translator'`, because
+`packages/compiler/modules.js` resolves the translator id from
+`lasso-package-root(process.cwd())` = the repo root, and pnpm's non-hoisted
+layout only links `@marko/runtime-tags` into
+`packages/runtime-tags/node_modules` (root `node_modules/@marko/` contains just
+`compiler`, and root `package.json` has no dependency on `@marko/runtime-tags`
+or `marko`); the `class` shorthand `marko/translator` is unresolvable for the
+same reason. The fix is local to the script: resolve both `TRANSLATORS`
+shorthands to absolute paths (`path.join(__dirname,
+"../packages/runtime-tags/src/translator/index.ts")` and the runtime-class
+equivalent) rather than bare package specifiers, and either document the no-`--`
+invocation or make the script tolerate a leading `--`. Re-verify from the repo
+root: `pnpm run compile -- -o dom -d /tmp/x.marko` → ENOENT on `-o`; `pnpm run
+compile -o dom -d /tmp/x.marko` → "Cannot find module
+'@marko/runtime-tags/translator'"; `pnpm run compile -o dom -d -t <abs path to
+packages/runtime-tags/src/translator/index.ts> /tmp/x.marko` → succeeds and
+writes `/tmp/x.marko.js`.
