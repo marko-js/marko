@@ -189,7 +189,7 @@ export function normalizeDynamicRenderer<Renderer>(
 
 /*
   This opaque function decodes scope accessors that are encoded as integers in
-  the range 0 <= n < 34657. Encoded numbers are decoded to a base-36 string
+  the range 0 <= n <= 34657. Encoded numbers are decoded to a base-36 string
   where the first character is guaranteed to be a lowercase letter and
   subsequent characters are lowercase letters or numeric digits.
 
@@ -200,8 +200,8 @@ export function normalizeDynamicRenderer<Renderer>(
       Range                       Offset                  Decoded
       ---------------------------------------------------------------
       [0, 26)                     10                      a ... z
-      [ , 26*36 - 26)             10*36 - 26              a0 ... zz
-      [ , 26*36*36 - 26*36 - 26)  10*36*36 - 26*36 - 26   a00 ... zzz
+      [ , 26 + 26*36)             10*36 - 26              a0 ... zz
+      [ , 26 + 26*36 + 26*36*36)  10*36*36 - 26*36 - 26   a00 ... zzz
 */
 export const decodeAccessor = (num: number): string =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
