@@ -83,6 +83,7 @@ export interface Signal {
   renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
+  hasHTMLEffect: boolean;
   hasSideEffect: boolean;
   forcePersist: boolean;
   inline: { value: t.Expression } | undefined;
@@ -263,6 +264,7 @@ export function getSignal(
         renderReferencedBindings: undefined,
         effect: [],
         effectReferencedBindings: undefined,
+        hasHTMLEffect: false,
         build: undefined,
         export: !!exportName,
         hasSideEffect: !!(
@@ -420,6 +422,7 @@ export function signalHasStatements(signal: Signal): boolean {
     signal.forcePersist ||
     signal.render.length ||
     signal.effect.length ||
+    signal.hasHTMLEffect ||
     signal.values.length ||
     signal.intersection
   ) {
@@ -1161,8 +1164,8 @@ export function addHTMLEffectCall(
   section: Section,
   referencedBindings?: ReferencedBindings,
 ) {
-  // TODO: this should not add an undefined statement.
-  addStatement("effect", section, referencedBindings, undefined as any, false);
+  const signal = getSignal(section, referencedBindings);
+  signal.hasHTMLEffect = signal.hasSideEffect = true;
 }
 
 export function writeHTMLResumeStatements(
@@ -1262,7 +1265,7 @@ export function writeHTMLResumeStatements(
   // Mount-effect order is unspecified: hydration replays these in reverse
   // signal order, CSR runs the signal graph forward — the two paths differ.
   for (let i = allSignals.length; i--;) {
-    if (allSignals[i].effect.length) {
+    if (allSignals[i].hasHTMLEffect) {
       const signalRefs = allSignals[i].referencedBindings;
       body.push(
         t.expressionStatement(

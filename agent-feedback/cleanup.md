@@ -17,12 +17,6 @@ is unaffected (later renders reuse `___marko5Component.___rootNode`), so this is
 dead optimization + a confusing stale-node invariant; verify destroy/move
 semantics before changing to `scope`.
 
-## Represent metadata-only HTML effects without invalid AST sentinels
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `toReturnedFunction` | 2026-07-15 | impact:low | effort:low
-
-`addHTMLEffectCall` deliberately passes `undefined as any` to `addStatement`, which pushes it into a `t.Statement[]`; `traverseReplace` and Babel generation happen to skip the falsy array member. The call exists to mark effect dependencies/side effects rather than to add executable syntax, but it violates the signal and Babel AST types and makes every downstream consumer tolerate an invalid node. Add an explicit metadata-only effect operation (or let `addStatement` accept an omitted statement without pushing it) and remove the cast/TODO.
-
 ---
 
 ## Pre-existing comments exceeding the two-line rule
