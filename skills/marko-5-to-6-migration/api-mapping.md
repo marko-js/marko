@@ -105,6 +105,8 @@ Serialization in 6 is **need-based, not blanket**: the compiler computes what mu
 | template `component` variable                                             | none — every use maps to a specific pattern below        |
 | template `out` variable                                                   | none; `out.global` → `$global`                           |
 
+A Marko 5 getter (`get isFull() { return a + b >= max }`) recomputes on every read, so a handler that assigns `a` then reads `this.isFull` sees the new result. A `<const>` does not: within one handler it still holds its pre-assignment value until the update flushes, while the raw `<let>` reads back the value you just assigned. So after `moves = next`, `moves >= max` is current but a derived `<const/isFull=(moves >= max)>` is not — read the `<let>`s you just assigned (or recompute from them) inside the handler, never the derived `<const>`.
+
 ### Lifecycle
 
 | Marko 5                                                                  | Marko 6                                                                                                                    |

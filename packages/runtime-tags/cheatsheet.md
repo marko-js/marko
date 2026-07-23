@@ -6,7 +6,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
 
 1. Text interpolation: `${expr}` inside tag bodies. A bare line like `Welcome aboard` at the root of the template parses as a TAG named `Welcome` (concise mode) and fails to compile. Wrap it in an element (`<p>Welcome aboard</p>`) or prefix the line with `-- ` to mark it as text (`-- Welcome ${name}` works at the top level). Attributes take raw JS after `=` with NO braces/quotes needed: `<div title=user.name data-n=1 + 1>` (parenthesize if the value contains `>`).
 2. State: `<let/name=initial>` (slash then var name!). Update by plain assignment in an event handler: `count++`, `text = "hi"`. No setState, no hooks.
-3. Derived values: `<const/total=items.length * price>` — auto-recomputes. Never use an effect to derive state.
+3. Derived values: `<const/total=items.length * price>` — auto-recomputes. Never use an effect to derive state. Updates batch: mid-handler a reassigned `<let>` reads current but its derived `<const>` reads stale — recompute from the `<let>`.
 4. NEVER mutate state in place. `items.push(x)` will NOT update the UI. Always reassign:
    - add: `items = items.concat(x)`
    - remove: `items = items.toSpliced(i, 1)`
