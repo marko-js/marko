@@ -21,8 +21,8 @@ pnpm run test:update -- --grep "..."                      # regenerate snapshots
 pnpm run compile -- -o dom -d foo.marko                   # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
 pnpm run build                                            # all packages -> dist/ + .d.ts
 pnpm run build:sizes                                      # bundle-size table; diffs vs .sizes.json
-pnpm run lint                                             # eslint + prettier check
-pnpm run format                                           # eslint --fix + prettier --write
+pnpm run lint                                             # oxlint + oxfmt check
+pnpm run format                                           # oxlint --fix + oxfmt write
 pnpm run change                                           # add a changeset (required for user-facing changes)
 ```
 

@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "builtin": true,
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "ignorePatterns": [
+    ".cache",
+    ".sizes",
+    ".vscode",
+    "**/__snapshots__",
+    "**/*.marko.js",
+    "**/*actual*",
+    "**/*dist/",
+    "**/*expected*",
+    "**/snapshots",
+    "**/test/**/input.js",
+    "coverage",
+    "node_modules",
+    "!packages/runtime-class/src/node_modules"
+  ],
+  "rules": {
+    "no-control-regex": "off",
+    "no-unused-expressions": "off",
+    "no-unused-vars": "off",
+    "typescript/no-duplicate-enum-values": "off",
+    "unicorn/no-new-array": "off",
+    "unicorn/no-thenable": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/test/**", "**/__tests__/**", "**/fixtures*/**"],
+      "rules": {
+        "unicorn/no-empty-file": "off"
+      }
+    }
+  ]
+}

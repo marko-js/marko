@@ -29,7 +29,10 @@ export interface EventTrigger {
   options?: never;
 }
 export type LoadTrigger =
-  VisibleTrigger | IdleTrigger | MediaTrigger | EventTrigger;
+  | VisibleTrigger
+  | IdleTrigger
+  | MediaTrigger
+  | EventTrigger;
 type Trigger = LoadTrigger;
 interface Asset {
   id: string;

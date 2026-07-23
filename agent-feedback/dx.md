@@ -192,18 +192,3 @@ graph would surface the same clear compile error. Verify: compile
 `packages/runtime-tags/src/translator/interop/index.ts` › `createInteropTranslator` | 2026-07-20 | impact:med | effort:low
 
 `createInteropTranslator` (`interop/index.ts:16-41`) builds the translator every Marko 5 and mixed 5/6 project loads, forwarding `version`, `preferAPI`, `transform`, `analyze`, `translate`, `tagDiscoveryDirs`, `taglibs`, and `getRuntimeEntryFiles` but omitting `cheatsheet`; `runtime-class/src/translator.js` destructures exactly those 8 keys, so `marko/translator` exposes no `cheatsheet` (verified: loading it via the compiler's `markoModules.require` yields `cheatsheet === undefined`). The compiler's agent fix-guide (`agent-fix-guide.js:40-46`) appends `Fix guide: READ <cheatsheet> before writing a fix.` only when `tryLoadTranslator(translator)?.cheatsheet` is a string, so coding-agent sessions on interop projects never receive it — including on Marko 6 tags-API files compiled through the interop, where the runtime-tags cheatsheet (`runtime-tags/src/translator/index.ts:23`) is exactly the migration aid intended. Forward a `cheatsheet` from `createInteropTranslator` and add it to the runtime-class re-export; the value must be an absolute path, because `try-load-translator.js:16-19` resolves it via `path.resolve(path.dirname(translatorModule), value)` and the runtime-class translator sits at `src/translator.js`, so `translate6`'s raw `'../../cheatsheet.md'` would resolve to a non-existent file (`packages/runtime-class` has no `cheatsheet.md`). Re-verify with `CLAUDECODE=1`: `appendAgentFixGuide(new Error('x'), 'marko/translator')` leaves the message untouched (no `Fix guide:` suffix), whereas the same call with `'@marko/runtime-tags/translator'` appends `READ packages/runtime-tags/cheatsheet.md`.
-
-## Drop the `~tseslint` shim once typescript-eslint supports TypeScript 7
-
-`scripts/tseslint/index.js` › `module.exports` | 2026-07-22 | impact:low | effort:low
-
-The repo builds with TypeScript 7, but every published typescript-eslint —
-including `latest` (8.65.0) and `canary` (8.65.1-alpha.6) — declares
-`peerDependencies.typescript: ">=4.8.4 <6.1.0"`, and TypeScript 7's npm package
-no longer exports the compiler API (`"." -> "./lib/version.cjs"`), so
-`typescript-estree` crashes on load with `Cannot read properties of undefined
-(reading 'Cjs')`. `scripts/tseslint` exists only to give typescript-eslint its
-own TypeScript 6 copy, since pnpm resolves a root importer's peers from the root
-manifest and `overrides` cannot redirect them. When typescript-eslint ships TS 7
-support, delete `scripts/tseslint`, move `typescript-eslint` back into root
-devDependencies, and restore the direct import in `eslint.config.mjs`.

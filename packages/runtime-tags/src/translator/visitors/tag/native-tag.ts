@@ -1162,10 +1162,9 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
         }
       }
       spreadProps.push(t.spreadElement(value));
-    } else if (!(
-      seen[attr.name] ||
-      (attr.name === "content" && tag.body.body.length)
-    )) {
+    } else if (
+      !(seen[attr.name] || (attr.name === "content" && tag.body.body.length))
+    ) {
       seen[attr.name] = attr;
 
       if (injectNonce && attr.name === "nonce") {

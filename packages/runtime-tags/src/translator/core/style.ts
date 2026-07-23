@@ -1,3 +1,5 @@
+import path from "path";
+
 import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
@@ -12,7 +14,6 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 import MagicString, { type SourceMap } from "magic-string";
-import path from "path";
 
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";

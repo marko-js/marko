@@ -1,5 +1,6 @@
-import markoModules from "@marko/compiler/modules";
 import path from "path";
+
+import markoModules from "@marko/compiler/modules";
 
 import tryLoadTranslator from "../util/try-load-translator";
 import taglibConfig from "./config";

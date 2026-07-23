@@ -1,5 +1,6 @@
-import type { types as t } from "@marko/compiler";
 import path from "path";
+
+import type { types as t } from "@marko/compiler";
 
 export default function getStyleFile(file: t.BabelFile) {
   const { filename } = file.opts;

@@ -1,6 +1,7 @@
+import { basename, dirname, join, relative, resolve } from "path";
+
 import { types as t } from "@marko/compiler";
 import markoModules from "@marko/compiler/modules";
-import { basename, dirname, join, relative, resolve } from "path";
 
 import { Hash } from "../util/quick-hash";
 import { diagnosticWarn } from "./diagnostics";

@@ -1,10 +1,8 @@
 // size: 646 (min) 365 (brotli)
 //#region packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/tags/comments.marko
 const $template$1 = "<ul></ul>";
-const $if_content__comment_comments = /*@__PURE__*/ _if_closure(
-  4,
-  0,
-  ($scope) => $input_comments$1($scope.a, $scope._.i),
+const $if_content__comment_comments = /*@__PURE__*/ _if_closure(4, 0, ($scope) =>
+  $input_comments$1($scope.a, $scope._.i),
 );
 const $if_content__setup = ($scope) => {
   $if_content__comment_comments._($scope);
@@ -34,8 +32,7 @@ const $for_content__setup = ($scope) => {
   $for_content__open($scope, true);
   $for_content__setup__script($scope);
 };
-const $for_content__comment_text = ($scope, comment_text) =>
-  _text($scope.b, comment_text);
+const $for_content__comment_text = ($scope, comment_text) => _text($scope.b, comment_text);
 const $for_content__if = /*@__PURE__*/ _if(
   4,
   $template$1,
@@ -57,16 +54,14 @@ const $for = /*@__PURE__*/ _for_of(
   $for_content__setup,
   $for_content__$params,
 );
-const $input_comments$1 = ($scope, input_comments) =>
-  $for($scope, [input_comments]);
+const $input_comments$1 = ($scope, input_comments) => $for($scope, [input_comments]);
 const $input_path$1 = /*@__PURE__*/ _const(4, $for_content__input_path);
 //#endregion
 //#region packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
 const $setup = () => {};
-const $input_comments = ($scope, input_comments) =>
-  $input_comments$1($scope.a, input_comments);
+const $input_comments = ($scope, input_comments) => $input_comments$1($scope.a, input_comments);
 const $input_path = ($scope, input_path) => $input_path$1($scope.a, input_path);
 const $input = ($scope, input) => {
   $input_comments($scope, input.comments);

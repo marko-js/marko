@@ -194,7 +194,9 @@ class ServerRendered implements RenderedTemplate {
       },
       (err) => {
         const socket = ("socket" in stream && stream.socket) as
-          Record<PropertyKey, unknown> | undefined | false;
+          | Record<PropertyKey, unknown>
+          | undefined
+          | false;
         if (socket && typeof socket.destroySoon === "function") {
           socket.destroySoon();
         }
@@ -249,16 +251,22 @@ class ServerRendered implements RenderedTemplate {
 
   then<TResult1 = string, TResult2 = never>(
     onfulfilled?:
-      ((value: string) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+      | ((value: string) => TResult1 | PromiseLike<TResult1>)
+      | undefined
+      | null,
     onrejected?:
-      ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
+      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+      | undefined
+      | null,
   ): Promise<TResult1 | TResult2> {
     return this.#promise().then(onfulfilled, onrejected);
   }
 
   catch<TResult = never>(
     onrejected?:
-      ((reason: unknown) => TResult | PromiseLike<TResult>) | undefined | null,
+      | ((reason: unknown) => TResult | PromiseLike<TResult>)
+      | undefined
+      | null,
   ): Promise<string | TResult> {
     return this.#promise().catch(onrejected);
   }

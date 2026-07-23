@@ -18,7 +18,7 @@ export function assertValidAttrValue(name: string, value: unknown) {
     // attribute writers, so a function here would render as its source code.
     throw new Error(
       `The \`${name}\` attribute cannot be a function.${
-        /Change$/.test(name)
+        name.endsWith("Change")
           ? " A change handler is only used when its matching controllable attribute combination applies."
           : ""
       }`,

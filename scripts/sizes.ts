@@ -1,13 +1,14 @@
-import * as compiler from "@marko/compiler";
 import fs from "fs";
-import kleur from "kleur";
 import path from "path";
-import { format } from "prettier";
+import zlib from "zlib";
+
+import * as compiler from "@marko/compiler";
+import kleur from "kleur";
+import { format } from "oxfmt";
 import { build, type OutputAsset, type OutputChunk } from "rolldown";
 import { minifySync } from "rolldown/utils";
 import { table } from "table";
 import glob from "tiny-glob";
-import zlib from "zlib";
 
 const compiledOutputDir = path.join(process.cwd(), ".sizes");
 
@@ -151,7 +152,7 @@ async function getResults(examples: Record<string, string>) {
   for (const [name, code] of Object.entries(runtimeFiles)) {
     fs.writeFileSync(
       path.join(compiledOutputDir, name),
-      await format(code, { parser: "babel" }),
+      (await format(name, code)).code,
     );
   }
 
@@ -170,7 +171,7 @@ async function getResults(examples: Record<string, string>) {
         fs.mkdirSync(exampleOutputFolder, { recursive: true });
         fs.writeFileSync(
           path.join(exampleOutputFolder, name),
-          await format(code, { parser: "babel" }),
+          (await format(name, code)).code,
         );
       }
 

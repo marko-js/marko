@@ -1,4 +1,5 @@
 import * as assert from "assert/strict";
+
 import { JSDOM } from "jsdom";
 
 import * as helpers from "../html/attrs";

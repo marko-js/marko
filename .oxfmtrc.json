@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "sortImports": true,
+  "sortPackageJson": {},
+  "ignorePatterns": [
+    "__snapshots__",
+    ".cache",
+    ".nvm",
+    ".sizes",
+    ".sizes.json",
+    ".vscode",
+    "*actual*",
+    "*expected*",
+    "~*",
+    "CHANGELOG.md",
+    "coverage",
+    "dist",
+    "**/fixtures/*/*",
+    "!**/fixtures/*/*.ts",
+    "input.*",
+    "node_modules",
+    "pnpm-lock.yaml",
+    "snapshots",
+    "!packages/runtime-class/src/node_modules"
+  ]
+}

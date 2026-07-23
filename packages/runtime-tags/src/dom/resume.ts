@@ -319,15 +319,17 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 }
               }
             } else if (Array.isArray(serialized)) {
-              if (!(
-                readyIds &&
-                serialized.every(
-                  // A dep's data is flushed before any marker naming it, so
-                  // its resumes are present once its module has loaded.
-                  (dep) =>
-                    readyIds!.has(dep as string) && !render.b![dep].length,
+              if (
+                !(
+                  readyIds &&
+                  serialized.every(
+                    // A dep's data is flushed before any marker naming it, so
+                    // its resumes are present once its module has loaded.
+                    (dep) =>
+                      readyIds!.has(dep as string) && !render.b![dep].length,
+                  )
                 )
-              )) {
+              ) {
                 break;
               }
             } else if (readyIds && typeof serialized === "number") {

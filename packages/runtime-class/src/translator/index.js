@@ -1,3 +1,5 @@
+import { resolve } from "path";
+
 import { types as t } from "@marko/compiler";
 import {
   findParentTag,
@@ -16,7 +18,6 @@ import {
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
 import { version } from "marko/package.json";
-import { resolve } from "path";
 
 import MarkoCDATA from "./cdata";
 import MarkoClass from "./class";
@@ -702,7 +703,7 @@ export function getRuntimeEntryFiles(output, optimize) {
 }
 
 function isRenderContent({ node }) {
-  return /^Marko/.test(node.type) && !node.static;
+  return node.type.startsWith("Marko") && !node.static;
 }
 
 function resolveRelativeTagEntry(file, tagDef) {

@@ -1,7 +1,8 @@
-import { decode } from "@jridgewell/sourcemap-codec";
-import * as compiler from "@marko/compiler";
 import * as assert from "assert/strict";
 import path from "path";
+
+import { decode } from "@jridgewell/sourcemap-codec";
+import * as compiler from "@marko/compiler";
 
 import * as translator from "../translator";
 

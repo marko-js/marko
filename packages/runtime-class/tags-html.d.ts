@@ -823,7 +823,13 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method
          */
         method?:
-          AttrMissing | "POST" | "post" | "GET" | "get" | "dialog" | "DIALOG";
+          | AttrMissing
+          | "POST"
+          | "post"
+          | "GET"
+          | "get"
+          | "dialog"
+          | "DIALOG";
         /**
          * The name attribute represents the form's name within the forms collection.
          * @see https://html.spec.whatwg.org/multipage/forms.html#attr-form-name
@@ -2473,7 +2479,11 @@ declare global {
        * @see https://html.spec.whatwg.org/multipage/interaction.html#attr-autocapitalize
        */
       autocapitalize?:
-        AttrOnOff | "characters" | "none" | "sentences" | "words";
+        | AttrOnOff
+        | "characters"
+        | "none"
+        | "sentences"
+        | "words";
 
       /**
        * Indicates whether the element should automatically get focus when the page loads.
@@ -3583,7 +3593,13 @@ declare global {
        * @see https://www.w3.org/TR/wai-aria-1.1/#aria-dropeffect
        * */
       "aria-dropeffect"?:
-        AttrMissing | "copy" | "execute" | "link" | "move" | "none" | "popup";
+        | AttrMissing
+        | "copy"
+        | "execute"
+        | "link"
+        | "move"
+        | "none"
+        | "popup";
       /**
        * Identifies the element that provides an error message for the object.
        * @see https://www.w3.org/TR/wai-aria-1.1/#aria-errormessage
@@ -3613,7 +3629,12 @@ declare global {
        * @see https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup
        */
       "aria-haspopup"?:
-        AttrBooleanString | "dialog" | "grid" | "listbox" | "menu" | "tree";
+        | AttrBooleanString
+        | "dialog"
+        | "grid"
+        | "listbox"
+        | "menu"
+        | "tree";
       /**
        * Indicates whether the element is exposed to an accessibility API.
        * @see https://www.w3.org/TR/wai-aria-1.1/#aria-hidden
@@ -3872,13 +3893,22 @@ declare global {
 
 type AttrMissing = undefined | null | false;
 type AttrClass =
-  AttrMissing | string | AttrClass[] | Record<string, AttrMissing | boolean>;
+  | AttrMissing
+  | string
+  | AttrClass[]
+  | Record<string, AttrMissing | boolean>;
 type AttrStyle = AttrMissing | string | Marko.CSS.Properties | AttrStyle[];
 type AttrCrossOrigin = AttrBoolean | "anonymous" | "use-credentials";
 type AttrEventHandler<Event, Target> =
-  AttrMissing | ((event: Event, target: Target) => unknown);
+  | AttrMissing
+  | ((event: Event, target: Target) => unknown);
 type AttrTarget =
-  AttrMissing | "_blank" | "_parent" | "_self" | "_top" | (string & {});
+  | AttrMissing
+  | "_blank"
+  | "_parent"
+  | "_self"
+  | "_top"
+  | (string & {});
 type AttrReferrerPolicy =
   | AttrMissing
   | "no-referrer-when-downgrade"
@@ -3908,7 +3938,13 @@ type AttrHref =
  * so any URL is accepted while suggesting common prefixes in autocomplete.
  */
 type AttrSrc =
-  AttrMissing | "/" | "./" | "https://" | "data:" | "blob:" | (string & {});
+  | AttrMissing
+  | "/"
+  | "./"
+  | "https://"
+  | "data:"
+  | "blob:"
+  | (string & {});
 /**
  * MIME type for type, codetype, and enctype attributes. Use (string & {}) so
  * any MIME type is accepted while suggesting common values in autocomplete.

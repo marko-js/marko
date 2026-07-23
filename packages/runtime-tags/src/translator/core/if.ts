@@ -175,10 +175,12 @@ export const IfTag = {
           let singleChild = true;
 
           for (const [, branchBody] of branches) {
-            if (!(
-              branchBody?.content?.singleChild &&
-              branchBody.content.startType !== ContentType.Text
-            )) {
+            if (
+              !(
+                branchBody?.content?.singleChild &&
+                branchBody.content.startType !== ContentType.Text
+              )
+            ) {
               singleChild = false;
               break;
             }

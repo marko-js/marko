@@ -1,3 +1,5 @@
+import nodePath from "path";
+
 import { types as t } from "@marko/compiler";
 import {
   assertNoVar,
@@ -10,7 +12,6 @@ import {
   isTransparentTag,
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
-import nodePath from "path";
 
 import { getKeyManager } from "../util/key-manager";
 import { optimizeStaticVDOM } from "../util/optimize-vdom-create";

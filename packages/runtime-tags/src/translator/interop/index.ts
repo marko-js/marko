@@ -1,10 +1,11 @@
+import path from "path";
+
 import { type Config, taglib, types as t } from "@marko/compiler";
 import {
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 import { generator } from "@marko/compiler/internal/babel";
-import path from "path";
 
 import * as translate6 from "..";
 import { resolveRelativeToEntry } from "../util/resolve-relative-to-entry";

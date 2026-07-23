@@ -126,6 +126,7 @@ function isDirectory(path) {
  * @param {String} taglib the taglib that is being loaded
  */
 module.exports = function scanTagsDir(
+  // oxlint-disable-next-line only-used-in-recursion -- part of the loader signature
   tagsConfigPath,
   tagsConfigDirname,
   dir,

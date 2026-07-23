@@ -349,7 +349,8 @@ export function _attr_select_value_script(
     ] as undefined | ((value: unknown) => unknown);
     if (valueChange) {
       const oldValue = scope[AccessorPrefix.ControlledValue + nodeAccessor] as
-        string | string[];
+        | string
+        | string[];
       const multiple = Array.isArray(oldValue);
       const newValue = getSelectValue(el, multiple);
       setSelectValue(el, oldValue, multiple);

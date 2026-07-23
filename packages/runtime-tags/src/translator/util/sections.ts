@@ -72,7 +72,9 @@ export interface Section {
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   downstreamBinding:
-    { binding: Binding; properties: Opt<string> } | false | undefined;
+    | { binding: Binding; properties: Opt<string> }
+    | false
+    | undefined;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */

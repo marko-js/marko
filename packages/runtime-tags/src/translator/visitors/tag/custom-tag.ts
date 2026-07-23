@@ -1,3 +1,5 @@
+import path from "path";
+
 import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrSingleArg,
@@ -11,7 +13,6 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 import { closest, distance } from "fastest-levenshtein";
-import path from "path";
 
 import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";

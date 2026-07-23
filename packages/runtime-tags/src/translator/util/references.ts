@@ -796,7 +796,8 @@ function trackReference(
     }
 
     root = root.parentPath as
-      t.NodePath<t.MemberExpression> | t.NodePath<t.OptionalMemberExpression>;
+      | t.NodePath<t.MemberExpression>
+      | t.NodePath<t.OptionalMemberExpression>;
 
     reference = getOrCreatePropertyAlias(reference, prop);
   }
@@ -2032,7 +2033,9 @@ export function getReadReplacement(
       let curNode = node;
       let curBinding: Binding | undefined = readBinding;
       let replaceMember:
-        t.MemberExpression | t.OptionalMemberExpression | undefined;
+        | t.MemberExpression
+        | t.OptionalMemberExpression
+        | undefined;
       if (isOutputDOM()) {
         if (
           signal?.referencedBindings === readBinding &&
@@ -2056,7 +2059,9 @@ export function getReadReplacement(
         if (memberProp !== prop) break;
         replaceMember = curNode;
         curNode = curNode.object as
-          t.Identifier | t.MemberExpression | t.OptionalMemberExpression;
+          | t.Identifier
+          | t.MemberExpression
+          | t.OptionalMemberExpression;
       }
 
       for (const prop of props) {

@@ -1,5 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/lintstagedrc.schema.json",
-  "*.{ts,js}": ["eslint --fix", "prettier --write --with-node-modules"],
-  "*.{json,md,css}": ["prettier --write --with-node-modules"]
+  "*.{ts,js}": ["oxlint --fix", "oxfmt --with-node-modules"],
+  "*.{json,md,css}": ["oxfmt --with-node-modules"]
 }

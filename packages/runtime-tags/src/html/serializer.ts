@@ -1827,13 +1827,15 @@ export function toObjectKey(name: string) {
     // Leading identifier char: stays bare while the rest are word/digit.
     for (let i = 1; i < len; i++) {
       const c = name.charCodeAt(i);
-      if (!(
-        (c >= Char.LowerA && c <= Char.LowerZ) ||
-        (c >= Char.UpperA && c <= Char.UpperZ) ||
-        (c >= Char.Digit0 && c <= Char.Digit9) ||
-        c === Char.Underscore ||
-        c === Char.Dollar
-      )) {
+      if (
+        !(
+          (c >= Char.LowerA && c <= Char.LowerZ) ||
+          (c >= Char.UpperA && c <= Char.UpperZ) ||
+          (c >= Char.Digit0 && c <= Char.Digit9) ||
+          c === Char.Underscore ||
+          c === Char.Dollar
+        )
+      ) {
         return quote(name, i);
       }
     }

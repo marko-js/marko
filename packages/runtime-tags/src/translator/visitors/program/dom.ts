@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
+import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { forEach } from "../../util/optional";
 import {
@@ -32,7 +33,6 @@ import {
 import { toPropertyName } from "../../util/to-property-name";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
-import { scopeIdentifier } from ".";
 
 export default {
   translate: {

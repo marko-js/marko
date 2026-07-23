@@ -1,7 +1,8 @@
-import { compileFileSync, type Config } from "@marko/compiler";
 import fs from "fs";
 import path from "path";
 import { parseArgs } from "util";
+
+import { compileFileSync, type Config } from "@marko/compiler";
 
 // Shorthands for the two in-repo translators; any other -t value (e.g. a full
 // module id) is passed through to the compiler unchanged.

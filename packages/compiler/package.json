@@ -12,13 +12,28 @@
   ],
   "homepage": "https://github.com/marko-js/marko/blob/main/packages/runtime-class/docs/compiler.md",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "license": "MIT",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marko-js/marko.git",
     "directory": "packages/compiler"
   },
-  "license": "MIT",
-  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "files": [
+    "dist",
+    "internal",
+    "config.js",
+    "config.d.ts",
+    "modules.js",
+    "index.d.ts",
+    "babel-types.d.ts",
+    "babel-utils.js",
+    "babel-utils.d.ts",
+    "register.js",
+    "register.d.ts"
+  ],
+  "main": "src/index.js",
+  "types": "index.d.ts",
   "exports": {
     ".": {
       "types": "./index.d.ts",
@@ -47,21 +62,9 @@
     "./package.json": "./package.json",
     "./*": "./*"
   },
-  "main": "src/index.js",
-  "types": "index.d.ts",
-  "files": [
-    "dist",
-    "internal",
-    "config.js",
-    "config.d.ts",
-    "modules.js",
-    "index.d.ts",
-    "babel-types.d.ts",
-    "babel-utils.js",
-    "babel-utils.d.ts",
-    "register.js",
-    "register.d.ts"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production && node scripts/bundle-babel.mts",
     "build-babel-types": "node -r ~ts scripts/types"
@@ -87,9 +90,6 @@
   },
   "engines": {
     "node": "18 || 20 || >=22"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "exports:override": {
     ".": {

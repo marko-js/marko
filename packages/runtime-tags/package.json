@@ -10,23 +10,12 @@
   ],
   "homepage": "https://github.com/marko-js/marko",
   "bugs": "https://github.com/marko-js/marko/issues",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marko-js/marko.git",
     "directory": "packages/runtime-tags"
   },
-  "license": "MIT",
-  "exports": {
-    ".": {
-      "types": "./index.d.ts"
-    },
-    "./cheatsheet.md": "./cheatsheet.md",
-    "./translator": "./src/translator/index.ts",
-    "./tags/*": "./tags/*",
-    "./debug/*": "./src/*.ts",
-    "./*": "./src/*.ts"
-  },
-  "types": "index.d.ts",
   "files": [
     "dist",
     "tags",
@@ -38,6 +27,17 @@
     "!**/*.tsbuildinfo",
     "cheatsheet.md"
   ],
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    },
+    "./cheatsheet.md": "./cheatsheet.md",
+    "./translator": "./src/translator/index.ts",
+    "./tags/*": "./tags/*",
+    "./debug/*": "./src/*.ts",
+    "./*": "./src/*.ts"
+  },
   "scripts": {
     "build": "node -r ~ts ./scripts/bundle.mts"
   },

@@ -1,3 +1,5 @@
+import path from "path";
+
 import { types as t } from "@marko/compiler";
 import {
   loadFileForImport,
@@ -6,7 +8,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import markoModules from "@marko/compiler/modules";
 import MagicString from "magic-string";
-import path from "path";
 const kEntryState = Symbol();
 const lassoDepPrefix = "package: ";
 
@@ -169,7 +170,7 @@ export const entryBuilder = {
       for (const tag of fileMeta.tags) {
         if (tag.endsWith(".marko")) {
           visitChild(tag);
-        } else if (/^@lasso\/marko-taglib\//.test(tag)) {
+        } else if (tag.startsWith("@lasso/marko-taglib/")) {
           state.hasComponents = true;
         } else {
           const importedTemplates = tryGetTemplateImports(file, tag);
