@@ -127,9 +127,6 @@ importers:
       jsdom:
         specifier: ^29.1.1
         version: 29.1.1
-      jsdom-context-require:
-        specifier: ^5.2.8
-        version: 5.2.8(jsdom@29.1.1)
       kleur:
         specifier: ^4.1.5
         version: 4.1.5
@@ -152,8 +149,8 @@ importers:
         specifier: ^30.4.1
         version: 30.4.1
       resolve-sync:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.2.2
+        version: 1.2.2
       rolldown:
         specifier: ^1.1.4
         version: 1.1.4
@@ -1707,9 +1704,6 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
-  builtins@5.1.0:
-    resolution: {integrity: sha512-SW9lzGTLvWTP1AY8xeAMZimqDrIaSdLQUcVr9DMef51niJ022Ri87SwRRKYm4A6iHfkPaiVUu/Duw2Wc4J7kKg==}
-
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
@@ -1823,9 +1817,6 @@ packages:
   content-type@2.0.0:
     resolution: {integrity: sha512-j/O/d7GcZCyNl7/hwZAb606rzqkyvaDctLmckbxLzHvFBzTJHuGEdodATcP3yIRoDrLHkIATJuvzbFlp/ki2cQ==}
     engines: {node: '>=18'}
-
-  context-require@1.4.3:
-    resolution: {integrity: sha512-Gi+MxkaEEDkgGsPbJ8N/wmYuI/jcJyw8lPDGhGXNbMvwcQe7+CXAh2EA8867d+Zv2vFrH4j8dbr79CrePkGJXA==}
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -2337,11 +2328,6 @@ packages:
     resolution: {integrity: sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==}
     hasBin: true
 
-  jsdom-context-require@5.2.8:
-    resolution: {integrity: sha512-IfniRd5NLtiC3P4XcN4/pr13uy1vJnHpnI+Ze0Sv4KoF+lMTR/oTf7AhwvarIJag27GiR/Qi38z3h0c/AcKanw==}
-    peerDependencies:
-      jsdom: '*'
-
   jsdom@29.1.1:
     resolution: {integrity: sha512-ECi4Fi2f7BdJtUKTflYRTiaMxIB0O6zfR1fX0GXpUrf6flp8QIYn1UT20YQqdSOfk2dfkCwS8LAFoJDEppNK5Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
@@ -2787,8 +2773,8 @@ packages:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
 
-  resolve-sync@1.2.0:
-    resolution: {integrity: sha512-b/JIpYbdW7FbFQA5IVEjnL3H0VW8imJk3sdAmIAdjeU4caOsnildwjguWWPgTwFid8yFvjdLhgCkFCeyxBV5CQ==}
+  resolve-sync@1.2.2:
+    resolution: {integrity: sha512-qq4M0+Gxgiohxw0MUYprQiNWzYKMqCvVgpZO0Imwd1TttPIWT9NxUco8UUtIiRpiJpHPWRhhYIaiuo7EYBcv5Q==}
 
   resolve.exports@2.0.3:
     resolution: {integrity: sha512-OcXjMsGdhL4XnbShKpAcSqPMzQoYkYyhbEaeSko47MjRP9NfEQMhZkXL1DoFlt9LWQn4YttrdnV6X2OiyzBi+A==}
@@ -4663,10 +4649,6 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
-  builtins@5.1.0:
-    dependencies:
-      semver: 7.8.5
-
   bytes@3.1.2: {}
 
   c8@11.0.0:
@@ -4792,10 +4774,6 @@ snapshots:
   content-type@1.0.5: {}
 
   content-type@2.0.0: {}
-
-  context-require@1.4.3:
-    dependencies:
-      builtins: 5.1.0
 
   convert-source-map@2.0.0: {}
 
@@ -5302,12 +5280,6 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom-context-require@5.2.8(jsdom@29.1.1):
-    dependencies:
-      context-require: 1.4.3
-      jsdom: 29.1.1
-      resolve.exports: 2.0.3
-
   jsdom@29.1.1:
     dependencies:
       '@asamuzakjp/css-color': 5.1.11
@@ -5755,7 +5727,7 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-sync@1.2.0:
+  resolve-sync@1.2.2:
     dependencies:
       resolve.exports: 2.0.3
 
