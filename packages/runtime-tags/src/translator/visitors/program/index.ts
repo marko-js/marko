@@ -146,6 +146,8 @@ export default {
               [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
               t.stringLiteral(getRuntimePath("dom")),
             ),
+            // A rejected chunk blocks this ready id, but already surfaces as a
+            // network error, so handling it is not worth the runtime bytes.
             t.expressionStatement(
               t.callExpression(
                 t.memberExpression(
