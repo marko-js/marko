@@ -246,7 +246,7 @@ importers:
         specifier: ^5.41.4
         version: link:../compiler
       '@marko/runtime-tags':
-        specifier: ^6.3.17
+        specifier: ^6.3.20
         version: link:../runtime-tags
       app-module-path:
         specifier: ^2.2.0

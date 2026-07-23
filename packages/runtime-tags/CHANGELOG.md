@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.3.20
+
+### Patch Changes
+
+- [#3553](https://github.com/marko-js/marko/pull/3553) [`71a399b`](https://github.com/marko-js/marko/commit/71a399bf47b21b372af288601b34c61003a80c20) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Thread the enclosing chunk's context into the bridged head chunk when a Marko 5 Class component renders under a Tags-API region. Previously the head chunk was built with a null context, so a Class embedded under an async/lazy Tags region lost its closest-branch association and its descendants could resume against the wrong branch (hydration mismatch).
+
+- [#3548](https://github.com/marko-js/marko/pull/3548) [`fbbb735`](https://github.com/marko-js/marko/commit/fbbb7352634f2c17e169b87eda0fa6ef8fc34070) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Register an event handler that only reads section params (a `<for>` item, an `<await>` value, a tag body param) once when its branch is created, instead of re-attaching it every time the param value changes. The handler reads the current param from its own scope slot when invoked, so re-registration was redundant work on each keyed-list or param update.
+
+- [#3549](https://github.com/marko-js/marko/pull/3549) [`08e5ef8`](https://github.com/marko-js/marko/commit/08e5ef8a6efc5a7963bbcce03bc163022ce00a2c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - In development, warn when the same lazy asset is imported with different `load` triggers by multiple parents. The asset streams a single trigger script, so only the first-rendered parent's trigger takes effect; the warning surfaces this instead of it silently choosing behavior by render order.
+
 ## 6.3.19
 
 ### Patch Changes

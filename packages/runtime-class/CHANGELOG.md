@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.27
+
+### Patch Changes
+
+- [#3551](https://github.com/marko-js/marko/pull/3551) [`b399790`](https://github.com/marko-js/marko/commit/b3997907cb4080c65c69118567f7bb56474fbe5b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Declare `he` as a dependency of `marko`. Its translator imports `he` directly but relied on the package being hoisted from a transitive dependency, which could fail to resolve under stricter installs.
+
+- Updated dependencies [[`71a399b`](https://github.com/marko-js/marko/commit/71a399bf47b21b372af288601b34c61003a80c20), [`fbbb735`](https://github.com/marko-js/marko/commit/fbbb7352634f2c17e169b87eda0fa6ef8fc34070), [`08e5ef8`](https://github.com/marko-js/marko/commit/08e5ef8a6efc5a7963bbcce03bc163022ce00a2c)]:
+  - @marko/runtime-tags@6.3.20
+
 ## 5.39.26
 
 ### Patch Changes
