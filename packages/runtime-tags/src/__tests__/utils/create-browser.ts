@@ -70,7 +70,8 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
       entry.targets.add(target);
       // Real observers always deliver an initial entry batch reflecting the
       // current intersection state (not intersecting until flushVisible).
-      setTimeout(() => {
+      // `window.setTimeout` so `window.close()` cancels it during teardown.
+      window.setTimeout(() => {
         if (entry.targets.has(target)) {
           entry.callback(
             [{ isIntersecting: false, target } as IntersectionObserverEntry],
@@ -94,12 +95,14 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
       };
     }
   };
+  // `window.setTimeout` so a pending flush is cancelled by `window.close()`
+  // in teardown instead of firing into an already-closed window.
   window.requestAnimationFrame = (fn) => {
-    if (queues.raf.add(fn)) setTimeout(queues.raf.flush);
+    if (queues.raf.add(fn)) window.setTimeout(queues.raf.flush);
     return 0;
   };
   window.requestIdleCallback = (fn) => {
-    if (queues.idle.add(fn)) setTimeout(queues.idle.flush);
+    if (queues.idle.add(fn)) window.setTimeout(queues.idle.flush);
     return 0;
   };
   window.matchMedia = (query) => {
