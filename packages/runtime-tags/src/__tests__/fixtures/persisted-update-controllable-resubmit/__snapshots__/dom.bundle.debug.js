@@ -32,21 +32,28 @@ var order_form_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags
 const $qty_seed = _update_signal("__tests__/tags/order-form.marko_0_qty/var");
 const $lastSubmit_seed = _update_signal("__tests__/tags/order-form.marko_0_lastSubmit/var");
 const $itemId_update = _update_signal("__tests__/tags/order-form.marko_0_itemId/var");
+const $construct$1 = ($scope) => {
+	_attr_input_value($scope, "#input/1", $scope.qty, $scope["ControlledHandler:#input/1"]);
+	_attr($scope["#input/2"], "value", $scope.itemId);
+	_text($scope["#text/3"], $scope.qty);
+	_text($scope["#text/4"], $scope.lastSubmit);
+};
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("qty" in $patch) _update_seed($live, $qty_seed, $patch["qty"]);
 	if ("lastSubmit" in $patch) _update_seed($live, $lastSubmit_seed, $patch["lastSubmit"]);
 	if ("itemId" in $patch) $itemId_update($live, $patch["itemId"]);
 };
+_construct("__tests__/tags/order-form.marko_0_update", $construct$1);
 const $merge$1 = _resume("__tests__/tags/order-form.marko_0_update", $update2$1);
-_update_content("__tests__/tags/order-form.marko", $merge$1);
+_update_content("__tests__/tags/order-form.marko", $merge$1, $construct$1);
 function $patch2$1($fail) {
 	return patch($merge$1, $fail);
 }
 
 // template.marko.persisted.mjs
-const $template = /*@__PURE__*/ ((_w0) => `<h1 class=name> </h1>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<h1 class=name> </h1>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&%b`)($walks$1);
 const $input_name = ($scope, input_name) => _text($scope["#text/0"], input_name);
 function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
@@ -58,12 +65,16 @@ const $input = ($scope, input) => {
 };
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
+const $construct = ($scope) => {
+	_construct_child($scope, "#childScope/1", "__tests__/tags/order-form.marko_0_update");
+};
 const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("#childScope/1" in $patch) $merge$1($patch["#childScope/1"], $live["#childScope/1"]);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -102,8 +113,8 @@ _resume("__tests__/tags/order-form.marko_0/valueChange", $valueChange);
 var order_form_default = /*@__PURE__*/ _template("__tests__/tags/order-form.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<h1 class=name> </h1>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<h1 class=name> </h1>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&%b`)($walks$1);
 const $input_name = ($scope, input_name) => _text($scope["#text/0"], input_name);
 function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);

@@ -1,3 +1,5 @@
+import assert from "node:assert/strict";
+
 import type { TestConfig } from "../../main.test";
 import { flushIdle, navigate, wait } from "../../utils/resolve";
 
@@ -24,9 +26,15 @@ export const config: TestConfig = {
         label: "alpha",
       },
     }),
-    // The idle load replays resume data against the promoted adopted scopes.
+    // The idle load replays resume data against the promoted adopted scopes;
+    // the gadget's own `<let>` seed must render at that point, pre-tap.
     flushIdle,
     wait,
+    (document: Document) =>
+      assert.equal(
+        document.querySelector(".gadget__tap")!.textContent,
+        "taps 0",
+      ),
     tapGadget,
     // Back to home (constructed swap away)...
     navigate({

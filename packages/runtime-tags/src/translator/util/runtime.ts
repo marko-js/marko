@@ -65,6 +65,7 @@ const pureDOMFunctions = new Set<string>([
   "_load_media_trigger",
   "_load_race_trigger",
   "_update_attr",
+  "_update_construct",
   "_update_controllable",
   "_update_html",
   "_update_named_attr",
@@ -74,6 +75,8 @@ const pureDOMFunctions = new Set<string>([
 
 const updateDOMFunctions = new Set<string>([
   "patch",
+  "_construct",
+  "_construct_child",
   "_load_ready",
   "_update_branch",
   "_update_content",
@@ -89,6 +92,7 @@ const updateDOMFunctions = new Set<string>([
   "_update_load",
   "_update_loader",
   "_update_attr",
+  "_update_construct",
   "_update_controllable",
   "_update_html",
   "_update_named_attr",

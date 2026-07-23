@@ -6,7 +6,8 @@ _script_shared(($scope) => _on($scope.b, "click", function() {
 const $watched_seed = _update_signal("a4");
 const $for_content_holes = /*@__PURE__*/ _update_scopes({
 	"Qa": /*@__PURE__*/ _update_text("a"),
-	"Ndata-id:b": /*@__PURE__*/ _update_named_attr("b", "data-id")
+	"Ndata-id:b": /*@__PURE__*/ _update_named_attr("b", "data-id"),
+	"Qc": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("c"))
 });
 const $for_update = _update_for_keyed(0, ($p, $l) => $for_content__update($p, $l), "a2");
 const $for_content__update = ($patch, $live) => {

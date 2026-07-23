@@ -33,16 +33,20 @@ const $Detail_content__update = ($patch, $live) => {
 	$Detail_content_holes($patch, $live);
 	if ("#childScope/2" in $patch) _update_load($patch["#childScope/2"], $live["#childScope/2"], "__tests__/tags/gadget.marko_0_update", $live, "#text/1", "__tests__/tags/gadget.marko");
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("ConditionalRenderer:#text/2" in $patch || "BranchScopes:#text/2" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
+_construct("__tests__/template.marko_0_update", $construct);
 _update_content("__tests__/template.marko_2_content", $Detail_content__update);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -70,13 +74,17 @@ const $input = ($scope, input) => $input_label($scope, input.label);
 var gadget_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/gadget.marko", $template, $walks, $setup, $input);
 const $taps_seed = _update_signal("__tests__/tags/gadget.marko_0_taps/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
+const $construct = ($scope) => {
+	_text($scope["#text/2"], $scope.taps);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("taps" in $patch) _update_seed($live, $taps_seed, $patch["taps"]);
 	$_holes($patch, $live);
 };
+_construct("__tests__/tags/gadget.marko_0_update", $construct);
 const $merge = _resume("__tests__/tags/gadget.marko_0_update", $update2);
-_update_content("__tests__/tags/gadget.marko", $merge);
+_update_content("__tests__/tags/gadget.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

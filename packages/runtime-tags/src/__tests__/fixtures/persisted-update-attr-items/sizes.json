@@ -2,17 +2,17 @@
   "dom": {
     "nav.js": {
       "total": {
-        "min": 6226,
-        "brotli": 2539
+        "min": 6537,
+        "brotli": 2671
       },
       "files": {
         "tags/chip-list.marko.persisted.mjs": 163,
-        "template.marko.persisted.mjs": 645
+        "template.marko.persisted.mjs": 751
       }
     },
     "template.marko.page.mjs": {
       "min": 182,
-      "brotli": 139
+      "brotli": 138
     }
   },
   "html": {

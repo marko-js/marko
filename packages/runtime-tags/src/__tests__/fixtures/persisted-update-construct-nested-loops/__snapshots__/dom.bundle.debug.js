@@ -42,21 +42,33 @@ const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /
 const $for_update = _update_for_keyed("#text/1", ($p, $l) => $for_content2__update($p, $l), "__tests__/template.marko_2_update");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $for_update2 = _update_for_keyed("#text/1", ($p2, $l2) => $for_content__update($p2, $l2), "__tests__/template.marko_1_update");
+const $for_content2__construct = ($scope) => {
+	_text($scope["#text/1"], $scope._.group_id);
+};
 const $for_content2__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	$for_content2_holes($patch, $live);
+};
+const $for_content__construct = ($scope) => {
+	_text($scope["#text/0"], $scope.group_id);
 };
 const $for_content__update = ($patch, $live) => {
 	if ("group_id" in $patch) $live["group_id"] = $patch["group_id"];
 	$for_content_holes($patch, $live);
 	if ("BranchScopes:#text/1" in $patch) $for_update($live, [$patch["BranchScopes:#text/1"], "#LoopKey"]);
 };
+const $construct = ($scope) => {
+	_text($scope["#text/0"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("BranchScopes:#text/1" in $patch) $for_update2($live, [$patch["BranchScopes:#text/1"], "#LoopKey"]);
 };
+_construct("__tests__/template.marko_2_update", $for_content2__construct);
+_construct("__tests__/template.marko_1_update", $for_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

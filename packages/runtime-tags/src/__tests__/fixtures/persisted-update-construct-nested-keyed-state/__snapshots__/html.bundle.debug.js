@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_of(group.items, (item) => {
 			const $scope2_id = _scope_id();
 			let watched = false;
-			_html(`<button${_attr("data-key", _hole_value($scope2_id, "PatchAttr:data-key:#button/0", group.id + ":" + item.id, _persisted_reason()))}>${watched ? "watching" : "watch"}${_el_resume($scope2_id, "#text/1")}</button>${_el_resume($scope2_id, "#button/0")}`);
+			_html(`<button${_attr("data-key", _hole_value($scope2_id, "PatchAttr:data-key:#button/0", group.id + ":" + item.id, _persisted_reason()))}>${_escape(_hole_value($scope2_id, "PatchHole:#text/1", watched ? "watching" : "watch", _state_reason()))}${_el_resume($scope2_id, "#text/1")}</button>${_el_resume($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			writeScope($scope2_id, {
 				watched: _state_reason() && watched,

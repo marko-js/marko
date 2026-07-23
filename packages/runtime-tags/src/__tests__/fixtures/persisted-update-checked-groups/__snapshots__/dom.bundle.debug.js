@@ -1,5 +1,5 @@
 // template.marko.persisted.mjs
-const $template = "<button class=count>clicked <!></button><fieldset class=plan><input type=radio name=plan class=plan-basic><input type=radio name=plan class=plan-pro><input type=radio name=plan class=plan-max></fieldset><fieldset class=ship><input type=radio name=ship class=ship-ground><input type=radio name=ship class=ship-air></fieldset><fieldset class=extras><input type=checkbox class=extra-warranty><input type=checkbox class=extra-setup></fieldset><input type=checkbox class=gift><input type=checkbox name=promo class=promo><output class=note> </output>";
+const $template = "<button class=count>clicked <!></button><fieldset class=plan><input value=basic type=radio name=plan class=plan-basic><input value=pro type=radio name=plan class=plan-pro><input value=max type=radio name=plan class=plan-max></fieldset><fieldset class=ship><input value=ground type=radio name=ship class=ship-ground><input value=air type=radio name=ship class=ship-air></fieldset><fieldset class=extras><input value=warranty type=checkbox class=extra-warranty><input value=setup type=checkbox class=extra-setup></fieldset><input type=checkbox class=gift><input type=checkbox name=promo class=promo><output class=note> </output>";
 const $walks = " Db%lD b b lD b lD b l b bD l";
 const $note = _var_resume("__tests__/template.marko_0_note/var", /*@__PURE__*/ _let_persisted("note/21", ($scope) => _text($scope["#text/11"], $scope.note)));
 const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/22", ($scope) => _text($scope["#text/1"], $scope.count)));
@@ -65,6 +65,11 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 	"PatchAttr:value:#input/10": /*@__PURE__*/ _update_named_attr("#input/10", "value"),
 	"PatchAttr:checkedValue:#input/10": /*@__PURE__*/ _update_controllable("#input/10", _update_input_checkedValue)
 });
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	_attr_input_checkedValue_default($scope, "#input/10", $scope.input_promo, $scope.input_promoCode);
+	_text($scope["#text/11"], $scope.note);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("note" in $patch) _update_seed($live, $note_seed, $patch["note"]);
@@ -73,14 +78,15 @@ const $update2 = ($patch, $live) => {
 	if ("input_promo" in $patch) $live["input_promo"] = $patch["input_promo"];
 	$_holes($patch, $live);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
 
 // template.marko
-const $template = "<button class=count>clicked <!></button><fieldset class=plan><input type=radio name=plan class=plan-basic><input type=radio name=plan class=plan-pro><input type=radio name=plan class=plan-max></fieldset><fieldset class=ship><input type=radio name=ship class=ship-ground><input type=radio name=ship class=ship-air></fieldset><fieldset class=extras><input type=checkbox class=extra-warranty><input type=checkbox class=extra-setup></fieldset><input type=checkbox class=gift><input type=checkbox name=promo class=promo><output class=note> </output>";
+const $template = "<button class=count>clicked <!></button><fieldset class=plan><input value=basic type=radio name=plan class=plan-basic><input value=pro type=radio name=plan class=plan-pro><input value=max type=radio name=plan class=plan-max></fieldset><fieldset class=ship><input value=ground type=radio name=ship class=ship-ground><input value=air type=radio name=ship class=ship-air></fieldset><fieldset class=extras><input value=warranty type=checkbox class=extra-warranty><input value=setup type=checkbox class=extra-setup></fieldset><input type=checkbox class=gift><input type=checkbox name=promo class=promo><output class=note> </output>";
 const $walks = " Db%lD b b lD b lD b l b bD l";
 const $note = /*@__PURE__*/ _let_persisted("note/21", ($scope) => _text($scope["#text/11"], $scope.note));
 const $count = /*@__PURE__*/ _let_persisted("count/22", ($scope) => _text($scope["#text/1"], $scope.count));

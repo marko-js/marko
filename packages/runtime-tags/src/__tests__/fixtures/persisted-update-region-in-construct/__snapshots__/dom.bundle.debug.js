@@ -11,12 +11,16 @@ function $setup$1($scope) {
 }
 var sticky_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/sticky.marko", $template$1, $walks$1, $setup$1);
 const $n_seed = _update_signal("__tests__/tags/sticky.marko_0_n/var");
+const $construct$1 = ($scope) => {
+	_text($scope["#text/1"], $scope.n);
+};
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("n" in $patch) _update_seed($live, $n_seed, $patch["n"]);
 };
+_construct("__tests__/tags/sticky.marko_0_update", $construct$1);
 const $merge$1 = _resume("__tests__/tags/sticky.marko_0_update", $update2$1);
-_update_content("__tests__/tags/sticky.marko", $merge$1);
+_update_content("__tests__/tags/sticky.marko", $merge$1, $construct$1);
 function $patch2$1($fail) {
 	return patch($merge$1, $fail);
 }
@@ -44,13 +48,13 @@ const $try_content__setup = ($scope) => {
 const $for_content__row = ($scope, row) => _text($scope["#text/0"], row);
 const $for_content__$params = ($scope, $params2) => $for_content__row($scope, $params2[0]);
 const $Beta_content__for = 0;
-const $Beta_content__try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%c", $try_content__setup);
+const $Beta_content__try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%c", $try_content__setup);
 const $Beta_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/1"]);
 	if (!updating) $Beta_content__for($scope, [getRows?.($scope.$global.kind)]);
 	$Beta_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
-const $Beta_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `<section class=b><ul></ul>${_w0}<!></section>`)($template$1), /*@__PURE__*/ ((_w0) => `D b/${_w0}&%l`)($walks$1), $Beta_content__setup);
+const $Beta_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `<section class=b><ul></ul>${_w0}<!><!></section>`)($template$1), /*@__PURE__*/ ((_w0) => `D b/${_w0}&%b%l`)($walks$1), $Beta_content__setup);
 const $Alpha_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<section class=a><p>alpha</p></section>", "b");
 const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count)));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
@@ -74,22 +78,30 @@ const $await_content__update = ($patch, $live) => {
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_6_update");
 };
+const $Beta_content__construct = ($scope) => {
+	_construct_child($scope, "#childScope/1", "__tests__/tags/sticky.marko_0_update");
+};
 const $Beta_content__update = ($patch, $live) => {
 	if ("ConditionalRenderer:#ul/0" in $patch) _update_region("#ul/0")($patch, $live);
 	if ("#childScope/1" in $patch) $merge$1($patch["#childScope/1"], $live["#childScope/1"]);
-	if ("BranchScopes:#text/2" in $patch) _update_branch($patch, $live, "#text/2", $try_content__update, "__tests__/template.marko_4_update", "__tests__/template.marko_5_content");
+	if ("BranchScopes:#text/3" in $patch) _update_branch($patch, $live, "#text/3", $try_content__update, "__tests__/template.marko_4_update", "__tests__/template.marko_5_content");
+};
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("ConditionalRenderer:#text/2" in $patch || "BranchScopes:#text/2" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
+_construct("__tests__/template.marko_2_update", $Beta_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_5_content", $noop_update);
-_update_content("__tests__/template.marko_2_content", $Beta_content__update);
+_update_content("__tests__/template.marko_2_content", $Beta_content__update, $Beta_content__construct);
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -133,13 +145,13 @@ const $try_content__setup = ($scope) => {
 const $for_content__row = ($scope, row) => _text($scope["#text/0"], row);
 const $for_content__$params = ($scope, $params2) => $for_content__row($scope, $params2[0]);
 const $Beta_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D l", 0, $for_content__$params);
-const $Beta_content__try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%c", $try_content__setup);
+const $Beta_content__try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%c", $try_content__setup);
 const $Beta_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/1"]);
 	if (!updating) $Beta_content__for($scope, [getRows?.($scope.$global.kind)]);
 	$Beta_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
-const $Beta_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `<section class=b><ul></ul>${_w0}<!></section>`)($template$1), /*@__PURE__*/ ((_w0) => `D b/${_w0}&%l`)($walks$1), $Beta_content__setup);
+const $Beta_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `<section class=b><ul></ul>${_w0}<!><!></section>`)($template$1), /*@__PURE__*/ ((_w0) => `D b/${_w0}&%b%l`)($walks$1), $Beta_content__setup);
 const $Alpha_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<section class=a><p>alpha</p></section>", "b");
 const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");

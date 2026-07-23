@@ -13,6 +13,7 @@ import {
   beginApply,
   drainBatchFills,
   endApply,
+  drainConstructClears,
   installReadyUpdates,
   type ParkedReadyBatch,
   parkedReadyBatches,
@@ -190,6 +191,7 @@ export function createUpdate(
       // setups); flush synchronously so each frame settles as one batch.
       run();
     } finally {
+      drainConstructClears();
       setUpdating(0);
       endApply();
     }

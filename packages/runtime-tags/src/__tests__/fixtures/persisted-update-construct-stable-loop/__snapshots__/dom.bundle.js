@@ -13,6 +13,9 @@ const $for_content2__update = ($patch, $live) => {
 const $for_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_for($patch["Aa"], $live["Aa"], $for_content2__update, $live, "Aa", "a4");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.f);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("f" in $patch) _update_seed($live, $count_seed, $patch["f"]);
@@ -20,11 +23,12 @@ const $update2 = ($patch, $live) => {
 	if ("e" in $patch) $live["e"] = $patch["e"];
 	if ("Ac" in $patch) $for_update($live, [$patch["Ac"], "M"]);
 };
+_construct("a1", $construct);
 const $noop_update = () => {};
 _update_content("a3", $noop_update);
 _update_content("a2", $noop_update);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

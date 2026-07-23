@@ -20,18 +20,22 @@ const $try_content__update = ($patch, $live) => {
 const $Reports_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $try_content__update, "a12", "a10");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.d);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
 	if ("Dc" in $patch || "Ac" in $patch) _update_dynamic($patch, $live, "Dc", "Ac");
 };
+_construct("a3", $construct);
 const $noop_update = () => {};
 _update_content("a6", $noop_update);
 _update_content("a10", $noop_update);
 _update_content("a13", $Reports_content__update);
 _update_content("a4", $noop_update);
 const $merge = _resume("a3", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

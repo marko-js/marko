@@ -19,6 +19,10 @@ import {
 } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { bodyToTextLiteral } from "../../util/body-to-text-literal";
+import {
+  addConstructFragment,
+  getConstructReadExpr,
+} from "../../util/construct-pass";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -48,6 +52,7 @@ import {
   BindingType,
   createBinding,
   dropNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
   onFinalizeReferences,
@@ -68,6 +73,7 @@ import {
   getSerializeReason,
   getSerializeSourcesForExpr,
   isReasonDynamic,
+  isStateSerializeReason,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
@@ -84,7 +90,7 @@ import {
 import {
   addUpdateGlobalsStatement,
   addUpdateMerge,
-  isReasonlessExpression,
+  isReasonlessCaptureExpression,
   isUpdateCoveredByClientSignals,
 } from "../../util/update-merges";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
@@ -405,7 +411,7 @@ export default {
                 (attr) =>
                   t.isMarkoAttribute(attr) &&
                   !isEventOrChangeHandler(attr.name) &&
-                  isReasonlessExpression(attr.value),
+                  isReasonlessCaptureExpression(attr.value),
               )
             ) {
               addSerializeReason(tagSection, true, nodeBinding);
@@ -872,6 +878,11 @@ export default {
                   valueAttr.value,
                   staticControllable.attrs[0].value.extra,
                 );
+              } else if (valueAttr && isPersisted()) {
+                // A static paired value rides the template so a constructed
+                // radio (values-free shell, no setup) can match its captured
+                // checkedValue against a real `el.value`.
+                write`${getHTMLRuntime()._attr("value", evaluate(valueAttr.value).computed)}`;
               }
             }
             recordControllableUpdateMerge(
@@ -880,11 +891,10 @@ export default {
               staticControllable,
             );
           }
-          const values = (
-            hasChangeHandler
-              ? staticControllable.attrs
-              : staticControllable.attrs.toSpliced(1, 1)
-          ).map((attr) => attr?.value);
+          const controllableAttrs = hasChangeHandler
+            ? staticControllable.attrs
+            : staticControllable.attrs.toSpliced(1, 1);
+          const values = controllableAttrs.map((attr) => attr?.value);
           if (
             hasChangeHandler &&
             defaultHelper !== `${staticControllable.helper}_default`
@@ -905,6 +915,44 @@ export default {
               ),
             ),
           );
+
+          const constructValues = controllableAttrs.map((attr, i) =>
+            // The change handler reads back its adopted registration (the
+            // serialized `ControlledHandler:` entry) instead of qualifying
+            // the compiler-built handler const.
+            hasChangeHandler && i === 1
+              ? t.memberExpression(
+                  scopeIdentifier,
+                  t.stringLiteral(
+                    getAccessorPrefix().ControlledHandler +
+                      getScopeAccessor(nodeBinding!),
+                  ),
+                  true,
+                )
+              : attr && getConstructReadExpr(attr.value, tagSection),
+          );
+          if (
+            constructValues.every((value, i) => value || !controllableAttrs[i])
+          ) {
+            if (
+              hasChangeHandler &&
+              defaultHelper !== `${staticControllable.helper}_default`
+            ) {
+              constructValues.push(importRuntime(defaultHelper));
+            }
+            addConstructFragment(
+              tagSection,
+              "fill",
+              t.expressionStatement(
+                callRuntime(
+                  hasChangeHandler ? staticControllable.helper : defaultHelper,
+                  scopeIdentifier,
+                  visitAccessor,
+                  ...constructValues,
+                ),
+              ),
+            );
+          }
 
           if (hasChangeHandler) {
             addStatement(
@@ -951,6 +999,20 @@ export default {
                     helper,
                     value,
                   );
+                  const constructRead = getConstructReadExpr(value, tagSection);
+                  if (constructRead) {
+                    addConstructFragment(
+                      tagSection,
+                      "fill",
+                      t.expressionStatement(
+                        callRuntime(
+                          helper,
+                          createScopeReadExpression(nodeBinding!),
+                          constructRead,
+                        ),
+                      ),
+                    );
+                  }
                   stmt = t.expressionStatement(
                     callRuntime(helper, nodeExpr, value),
                   );
@@ -1039,6 +1101,21 @@ export default {
                   "_attr",
                   value,
                 );
+                const constructRead = getConstructReadExpr(value, tagSection);
+                if (constructRead) {
+                  addConstructFragment(
+                    tagSection,
+                    "fill",
+                    t.expressionStatement(
+                      callRuntime(
+                        "_attr",
+                        createScopeReadExpression(nodeBinding!),
+                        t.stringLiteral(name),
+                        constructRead,
+                      ),
+                    ),
+                  );
+                }
                 const stmt = t.expressionStatement(
                   callRuntime(
                     "_attr",
@@ -1159,6 +1236,23 @@ export default {
                 getSection(tag),
                 textLiteral,
               );
+              const constructTextRead = getConstructReadExpr(
+                textLiteral,
+                getSection(tag),
+              );
+              if (constructTextRead) {
+                addConstructFragment(
+                  getSection(tag),
+                  "fill",
+                  t.expressionStatement(
+                    callRuntime(
+                      "_text_content",
+                      createScopeReadExpression(nodeBinding!),
+                      constructTextRead,
+                    ),
+                  ),
+                );
+              }
               const stmt = t.expressionStatement(
                 callRuntime(
                   "_text_content",
@@ -1695,10 +1789,17 @@ function buildAttrHoleValue(
 ) {
   if (!nodeBinding || !isPersisted() || !isMembraneLive(tagSection)) return;
   const sources = gateExtra && getSerializeSourcesForExpr(gateExtra);
+  // A state-computed value with no construct-fill fragment captures for
+  // fresh branches only (`_state_reason`): constructed scopes must never
+  // re-execute the compute, and matched patches must never clobber newer
+  // client state with the server's stale value.
+  const stateComputedFill =
+    isStateSerializeReason(sources) && !getConstructReadExpr(value, tagSection);
   // Skip values already updated by the client's signal chain.
   if (
+    !stateComputedFill &&
     (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(gateExtra)) &&
-    !(!sources && isReasonlessExpression(value, gateExtra))
+    !(!sources && isReasonlessCaptureExpression(value, gateExtra))
   )
     return;
   const accessor = getScopeAccessorLiteral(nodeBinding);
@@ -1710,7 +1811,7 @@ function buildAttrHoleValue(
     ),
     value,
     // The render-wide persisted reason is the complete capture guard.
-    callRuntime("_persisted_reason"),
+    callRuntime(stateComputedFill ? "_state_reason" : "_persisted_reason"),
   );
 }
 
@@ -1725,14 +1826,18 @@ function recordAttrUpdateMerge(
 ) {
   if (!nodeBinding || !isPersistedEntryBuild()) return;
   const sources = gateExtra && getSerializeSourcesForExpr(gateExtra);
+  const stateComputedFill =
+    isStateSerializeReason(sources) && !getConstructReadExpr(value, tagSection);
   if (
+    !stateComputedFill &&
     (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(gateExtra)) &&
-    !(!sources && isReasonlessExpression(value, gateExtra))
+    !(!sources && isReasonlessCaptureExpression(value, gateExtra))
   )
     return;
   const accessor = getScopeAccessorLiteral(nodeBinding);
   addUpdateMerge(tagSection, {
     kind: "attr",
+    constructOnly: stateComputedFill,
     patchAccessor: getAccessorPrefix().PatchAttr + name + ":" + accessor.value,
     name,
     helper,
@@ -1793,15 +1898,19 @@ function recordControllableUpdateMerge(
   if (!nodeBinding || !isPersistedEntryBuild()) return;
   const value = controllable.attrs[0]!.value;
   const sources = value.extra && getSerializeSourcesForExpr(value.extra);
+  const stateComputedFill =
+    isStateSerializeReason(sources) && !getConstructReadExpr(value, tagSection);
   if (
+    !stateComputedFill &&
     (!isReasonDynamic(sources) ||
       isUpdateCoveredByClientSignals(value.extra)) &&
-    !(!sources && isReasonlessExpression(value))
+    !(!sources && isReasonlessCaptureExpression(value))
   )
     return;
   const accessor = getScopeAccessorLiteral(nodeBinding);
   addUpdateMerge(tagSection, {
     kind: "controllable",
+    constructOnly: stateComputedFill,
     patchAccessor:
       getAccessorPrefix().PatchAttr +
       controllableAttrName(controllable.helper) +

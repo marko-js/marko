@@ -13,17 +13,17 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "e", 1, 1, 1, 0, 1);
+	}, $scope0_id, "e", 1, 1, 1, 0, 1, void 0, void 0, ["a1"]);
 	_html("<ul class=items>");
 	_for_of(list, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`<li>${_escape(item)}${_el_resume($scope2_id, "a")}:<!>${_escape(count)}${_el_resume($scope2_id, "b")}</li>`);
+		_html(`<li>${_escape(_hole_value($scope2_id, "Qa", item, _state_reason()))}${_el_resume($scope2_id, "a")}:<!>${_escape(count)}${_el_resume($scope2_id, "b")}</li>`);
 		writeScope($scope2_id, {});
 	}, function(item) {
 		return item;
-	}, $scope0_id, "f", 1, 1, 1, "</ul>", 1, "a1");
+	}, $scope0_id, "f", 1, 1, 1, "</ul>", 1, "a2");
 	_html(`<button class=add>add</button>${_el_resume($scope0_id, "g")}`);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		k: _state_reason() && show,
 		l: _state_reason() && count,
@@ -32,9 +32,9 @@ var template_default = _template("a", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a1": ["<li><!>:<!></li>", "D%c%l"],
-	"a3": ["<li><!>:<!></li>", "D%c%l"],
-	"a4": ["<p class=detail>detail <!></p>", "Db%l"],
+	"a2": ["<li><!>:<!></li>", "D%c%l"],
+	"a4": ["<li><!>:<!></li>", "D%c%l"],
+	"a1": ["<p class=detail>detail <!></p>", "Db%l"],
 	"a5": ["<p class=detail>detail <!></p>", "Db%l"],
 	"a0": ["<h1> </h1><button class=toggle>toggle</button><button class=count>clicked <!></button><!><ul class=items></ul><button class=add>add</button>", "D l b Db%l%b b b"],
 	"a": ["<h1> </h1><button class=toggle>toggle</button><button class=count>clicked <!></button><!><ul class=items></ul><button class=add>add</button>", "D l b Db%l%b b b"]

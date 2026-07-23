@@ -15,6 +15,7 @@ import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
 import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
 import {
+  finalizeMembranes,
   isMembraneLive,
   isRegionRoot,
   markStateCapable,
@@ -1144,6 +1145,8 @@ export function finalizeReferences() {
       );
     }
   });
+
+  finalizeMembranes();
 
   if (isPersisted()) {
     // Branch alternatives of one anchor must share liveness: a mixed anchor

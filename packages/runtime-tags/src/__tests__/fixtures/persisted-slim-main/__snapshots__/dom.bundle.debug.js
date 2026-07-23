@@ -76,6 +76,9 @@ const $results_items = /*@__PURE__*/ _const_persisted("results_items", $if_conte
 const $results_totalPages = /*@__PURE__*/ _const_persisted("results_totalPages", $if_content__results_totalPages);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -85,8 +88,9 @@ const $update2 = ($patch, $live) => {
 	if ("results_totalPages" in $patch) $live["results_totalPages"] = $patch["results_totalPages"];
 	if ("ConditionalRenderer:#text/2" in $patch) _update_region("#text/2")($patch, $live);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

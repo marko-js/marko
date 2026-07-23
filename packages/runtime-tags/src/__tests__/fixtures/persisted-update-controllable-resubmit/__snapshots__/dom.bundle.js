@@ -20,23 +20,34 @@ function $valueChange($scope) {
 const $qty_seed = _update_signal("b4");
 const $lastSubmit_seed = _update_signal("b5");
 const $itemId_update = _update_signal("b3");
+const $construct$1 = ($scope) => {
+	_attr_input_value($scope, "b", $scope.j, $scope["Eb"]);
+	_attr($scope.c, "value", $scope.i);
+	_text($scope.d, $scope.j);
+	_text($scope.e, $scope.k);
+};
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("j" in $patch) _update_seed($live, $qty_seed, $patch["j"]);
 	if ("k" in $patch) _update_seed($live, $lastSubmit_seed, $patch["k"]);
 	if ("i" in $patch) $itemId_update($live, $patch["i"]);
 };
+_construct("b1", $construct$1);
 const $merge$1 = _resume("b1", $update2$1);
-_update_content("b", $merge$1);
+_update_content("b", $merge$1, $construct$1);
 
 // template.marko.persisted.mjs
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
+const $construct = ($scope) => {
+	_construct_child($scope, "b", "b1");
+};
 const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("b" in $patch) $merge$1($patch["b"], $live["b"]);
 };
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

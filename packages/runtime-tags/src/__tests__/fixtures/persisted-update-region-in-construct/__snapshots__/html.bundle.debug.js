@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`</ul>${_el_resume($scope2_id, "#ul/0", _persisted_reason())}`);
 		const $childScope = _peek_scope_id();
 		sticky_default({});
-		_try($scope2_id, "#text/2", _content_resume("__tests__/template.marko_4_content", () => {
+		_try($scope2_id, "#text/3", _content_resume("__tests__/template.marko_4_content", () => {
 			const $scope4_id = _scope_id();
 			_scope_reason();
 			_await($scope4_id, "#text/0", resolveAfter(undefined, 1), () => {
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
 			_html("loading…");
-		}, $scope2_id) }) }, "__tests__/template.marko_2/update_boundary_#text/2", "__tests__/template.marko_4_update");
+		}, $scope2_id) }) }, "__tests__/template.marko_2/update_boundary_#text/3", "__tests__/template.marko_4_update");
 		_html("</section>");
 		_persisted_reason() && writeScope($scope2_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "11:2");
 	}) };
@@ -76,20 +76,20 @@ _renderer_shells({
 	"__tests__/template.marko_2_update": [[
 		"<section class=b><ul></ul>",
 		["__tests__/tags/sticky.marko"],
-		"<!></section>"
+		"<!><!></section>"
 	], [
 		"D b/",
 		["__tests__/tags/sticky.marko"],
-		"&%l"
+		"&%b%l"
 	]],
 	"__tests__/template.marko_2_content": [[
 		"<section class=b><ul></ul>",
 		["__tests__/tags/sticky.marko"],
-		"<!></section>"
+		"<!><!></section>"
 	], [
 		"D b/",
 		["__tests__/tags/sticky.marko"],
-		"&%l"
+		"&%b%l"
 	]],
 	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"__tests__/template.marko": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]

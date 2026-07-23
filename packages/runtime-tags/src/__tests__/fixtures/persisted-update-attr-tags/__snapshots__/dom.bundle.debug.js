@@ -55,8 +55,8 @@ function $patch2$1($fail) {
 }
 
 // template.marko.persisted.mjs
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_4_content", " ", " b"), { row($scope) {
 	_text($scope["#text/0"], $scope.row);
 } });
@@ -73,7 +73,7 @@ const $body_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_part($scope["#childScope/0"], attrTag({ content: $part_content($scope) }));
 };
-const $body_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $body_content__setup);
+const $body_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `/${_w0}&%b`)("D%l"), $body_content__setup);
 const $header_content__input_id = /*@__PURE__*/ _closure_get("input_id", ($scope) => {
 	if (!updating) {
 		_text($scope["#text/0"], getTitle($scope._.input_id));
@@ -83,7 +83,7 @@ const $header_content__setup = ($scope) => {
 	if (!updating) $header_content__input_id($scope);
 };
 const $header_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<h2> </h2>", "D l", $header_content__setup);
-const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/7", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/8", ($scope) => _text($scope["#text/1"], $scope.count)));
 const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -117,22 +117,32 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+const $item_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/0")) });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $body_content__construct = ($scope) => {
+	_construct_child($scope, "#childScope/0", "__tests__/tags/inner.marko_0_update");
+};
 const $body_content__update = ($patch, $live) => {
 	if ("#childScope/0" in $patch) $merge$2($patch["#childScope/0"], $live["#childScope/0"]);
+};
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	_construct_child($scope, "#childScope/2", "__tests__/tags/panel.marko_0_update");
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("#childScope/2" in $patch) $merge$1($patch["#childScope/2"], $live["#childScope/2"]);
 };
+_construct("__tests__/template.marko_2_update", $body_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
+_update_content("__tests__/template.marko_4_content", $item_content_holes);
 const $noop_update = () => {};
-_update_content("__tests__/template.marko_4_content", $noop_update);
 _update_content("__tests__/template.marko_3_content", $noop_update);
-_update_content("__tests__/template.marko_2_content", $body_content__update);
+_update_content("__tests__/template.marko_2_content", $body_content__update, $body_content__construct);
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -180,8 +190,8 @@ const $input$1 = ($scope, input) => {
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_4_content", " ", " b"), { row($scope) {
 	_text($scope["#text/0"], $scope.row);
 } });
@@ -198,7 +208,7 @@ const $body_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_part($scope["#childScope/0"], attrTag({ content: $part_content($scope) }));
 };
-const $body_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $body_content__setup);
+const $body_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `/${_w0}&%b`)("D%l"), $body_content__setup);
 const $header_content__input_id = /*@__PURE__*/ _closure_get("input_id", ($scope) => {
 	if (!updating) {
 		_text($scope["#text/0"], getTitle($scope._.input_id));
@@ -208,7 +218,7 @@ const $header_content__setup = ($scope) => {
 	if (!updating) $header_content__input_id($scope);
 };
 const $header_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<h2> </h2>", "D l", $header_content__setup);
-const $count = /*@__PURE__*/ _let_persisted("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

@@ -126,14 +126,20 @@ INSERT: .title + .gadget
     <button
       class="gadget__tap"
     >
-      taps 
+      taps 0
     </button>
   </div>
 </section>
 ```
 ## Change
 ```
+UPDATE: .gadget__tap::text@5 "" => "0"
 UPDATE: .gadget__label::text " " => "alpha"
+```
+
+# Update
+```js
+_strict.default.equal(document.querySelector(".gadget__tap").textContent, "taps 0");
 ```
 
 # Update
@@ -177,7 +183,7 @@ document.querySelector(".gadget__tap").click();
 ```
 ## Change
 ```
-UPDATE: .gadget__tap::text@5 "" => "1"
+UPDATE: .gadget__tap::text@5 "0" => "1"
 ```
 
 # Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"home","title":"","label":""}}`
@@ -240,7 +246,7 @@ REMOVE: section > div
     <button
       class="gadget__tap"
     >
-      taps 
+      taps 0
     </button>
   </div>
 </section>
@@ -251,6 +257,7 @@ INSERT: p + .title
 REMOVE: section > p
 UPDATE: .title::text " " => "Widget Two"
 INSERT: .title + .gadget
+UPDATE: .gadget__tap::text@5 "" => "0"
 UPDATE: .gadget__label::text " " => "beta"
 ```
 
@@ -295,7 +302,7 @@ document.querySelector(".gadget__tap").click();
 ```
 ## Change
 ```
-UPDATE: .gadget__tap::text@5 "" => "1"
+UPDATE: .gadget__tap::text@5 "0" => "1"
 ```
 
 # Update

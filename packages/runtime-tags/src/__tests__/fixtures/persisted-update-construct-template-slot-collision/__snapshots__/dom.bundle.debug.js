@@ -19,14 +19,14 @@ function $patch2$1($fail) {
 }
 
 // template.marko.persisted.mjs
-const $template = /*@__PURE__*/ ((_w0) => `<button> </button><!>${_w0}<!><!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` D l%b/${_w0}&%c`)("b%c");
+const $template = /*@__PURE__*/ ((_w0) => `<button> </button><!>${_w0}<!><!><!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` D l%b/${_w0}&%b%c`)("b%c");
 const $globalnativeTag_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "dynamic", "b");
 const $for_content__item_id = ($scope, item_id) => _text($scope["#text/0"], item_id);
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
-const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/5", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
 const $for = 0;
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/4", $globalnativeTag_content);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5", $globalnativeTag_content);
 const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -39,17 +39,21 @@ function $setup($scope) {
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("ConditionalRenderer:#text/2" in $patch) _update_region("#text/2")($patch, $live);
-	if ("ConditionalRenderer:#childScope/3" in $patch) _update_region("#childScope/3")($patch, $live);
-	if ("ConditionalRenderer:#text/4" in $patch || "BranchScopes:#text/4" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/4", "BranchScopes:#text/4");
+	if ("ConditionalRenderer:#text/4" in $patch) _update_region("#text/4")($patch, $live);
+	if ("ConditionalRenderer:#text/5" in $patch || "BranchScopes:#text/5" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/5", "BranchScopes:#text/5");
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_2_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -69,14 +73,14 @@ function $setup$1($scope) {
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", $setup$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<button> </button><!>${_w0}<!><!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` D l%b/${_w0}&%c`)("b%c");
+const $template = /*@__PURE__*/ ((_w0) => `<button> </button><!>${_w0}<!><!><!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` D l%b/${_w0}&%b%c`)("b%c");
 const $globalnativeTag_content = _content_resume("__tests__/template.marko_2_content", "dynamic", "b");
 const $for_content__item_id = ($scope, item_id) => _text($scope["#text/0"], item_id);
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
-const $count = /*@__PURE__*/ _let_persisted("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $for = /*@__PURE__*/ _for_of("#text/2", "<p>parent <!></p>", "Db%l", 0, $for_content__$params);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/4", $globalnativeTag_content);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5", $globalnativeTag_content);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

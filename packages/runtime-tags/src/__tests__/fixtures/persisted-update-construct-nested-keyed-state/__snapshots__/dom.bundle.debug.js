@@ -34,7 +34,10 @@ function $setup($scope) {
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
 const $watched_seed = _update_signal("__tests__/template.marko_2_watched/var");
-const $for_content2_holes = /*@__PURE__*/ _update_scopes({ "PatchAttr:data-key:#button/0": /*@__PURE__*/ _update_named_attr("#button/0", "data-key") });
+const $for_content2_holes = /*@__PURE__*/ _update_scopes({
+	"PatchAttr:data-key:#button/0": /*@__PURE__*/ _update_named_attr("#button/0", "data-key"),
+	"PatchHole:#text/1": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/1"))
+});
 const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $for_update = _update_for_keyed("#text/1", ($p, $l) => $for_content2__update($p, $l), "__tests__/template.marko_2_update");
 const $for_update2 = _update_for_keyed("#text/0", ($p2, $l2) => $for_content__update($p2, $l2), "__tests__/template.marko_1_update");
@@ -42,6 +45,9 @@ const $for_content2__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("watched" in $patch) _update_seed($live, $watched_seed, $patch["watched"]);
 	$for_content2_holes($patch, $live);
+};
+const $for_content__construct = ($scope) => {
+	_text($scope["#text/0"], $scope.group_id);
 };
 const $for_content__update = ($patch, $live) => {
 	if ("group_id" in $patch) $live["group_id"] = $patch["group_id"];
@@ -51,6 +57,7 @@ const $for_content__update = ($patch, $live) => {
 const $update2 = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) $for_update2($live, [$patch["BranchScopes:#text/0"], "#LoopKey"]);
 };
+_construct("__tests__/template.marko_1_update", $for_content__construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
 function $patch2($fail) {

@@ -55,9 +55,9 @@ var template_default = _template("a", (input) => {
 				mounter_default({ onReady: _resume(function() {
 					ready = true;
 				}, "a0", $scope5_id) });
-				_html(`<p class=status>${ready ? "ready" : "waiting"}${_el_resume($scope5_id, "b")} of ${_sep(_persisted_reason())}${_escape(_hole_value($scope5_id, "Qc", data.total, _persisted_reason()))}${_el_resume($scope5_id, "c", _persisted_reason())}</p>`);
+				_html(`<p class=status>${_escape(_hole_value($scope5_id, "Qc", ready ? "ready" : "waiting", _state_reason()))}${_el_resume($scope5_id, "c")} of ${_sep(_persisted_reason())}${_escape(_hole_value($scope5_id, "Qd", data.total, _persisted_reason()))}${_el_resume($scope5_id, "d", _persisted_reason())}</p>`);
 				writeScope($scope5_id, {
-					g: _state_reason() && ready,
+					h: _state_reason() && ready,
 					a: _persisted_reason() && _existing_scope($childScope)
 				});
 				_resume_branch($scope5_id);
@@ -73,34 +73,42 @@ var template_default = _template("a", (input) => {
 	layout_default({ content: $global().view === "reports" ? Reports : Home });
 	_script($scope0_id, "a9");
 	writeScope($scope0_id, {
-		d: _state_reason() && count,
+		e: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope2)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a4": [[["c"], "<p class=status><!> of <!></p>"], [
+	"a4": [[["c"], "<!><p class=status><!> of <!></p>"], [
 		"/",
 		["c"],
-		"&D%c%l"
+		"&%bD%c%l"
 	]],
-	"a10": [[["c"], "<p class=status><!> of <!></p>"], [
+	"a10": [[["c"], "<!><p class=status><!> of <!></p>"], [
 		"/",
 		["c"],
-		"&D%c%l"
+		"&%bD%c%l"
 	]],
 	"a7": ["<!><!><!>", "b%c"],
 	"a6": ["<!><!><!>", "b%c"],
 	"a11": ["<!><!><!>", "b%c"],
 	"a8": ["<!><!><!>", "b%c"],
-	"a2": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a2": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

@@ -80,7 +80,7 @@ UPDATE: .count::text@8 "0" => "1"
     <button
       class="bump"
     >
-      tally 
+      tally 0
     </button>
     <p
       class="greeting"
@@ -133,7 +133,7 @@ document.querySelector("button.bump").click();
 ```
 ## Change
 ```
-UPDATE: .bump::text@6 "" => "1"
+UPDATE: .bump::text@6 "0" => "1"
 ```
 
 # Update `{"$global":{"persisted":true,"view":"dashboard","user":"grace"}}`

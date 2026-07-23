@@ -18,6 +18,7 @@ import { closest, distance } from "fastest-levenshtein";
 import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
+import { addConstructFragment } from "../../util/construct-pass";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import {
@@ -64,6 +65,7 @@ import { getTemplateContentName } from "../program/html";
 import { withChildTemplateId } from "../program/renderers";
 
 const kLoadTagBinding = Symbol("load tag binding");
+const kRegionAnchorBinding = Symbol("region anchor binding");
 // Caches the trigger and attr signal declarations for a load import so they
 // are shared by all tags in a template using that import.
 const [getLoadIdentifiers] = createProgramState(() => ({
@@ -74,6 +76,7 @@ const [getLoadIdentifiers] = createProgramState(() => ({
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kLoadTagBinding]?: Binding;
+    [kRegionAnchorBinding]?: Binding;
   }
 }
 
@@ -134,6 +137,19 @@ export default {
           ? programSection.params && getBindingPropTree(programSection.params)
           : childExtra.domExports?.params,
       );
+
+      if (isPersisted() && !tagExtra.tagNameLoad) {
+        // A nucleus-free child delivers as region markup; a constructed
+        // parent's shell omits that markup, so this `<!>` marker (walked
+        // right after the child, where its markup ends) is the region's
+        // only stable anchor. Created after `knownTagAnalyze` so its dense
+        // walker index follows the child scope's.
+        tagExtra[kRegionAnchorBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          getOrCreateSection(tag),
+        );
+      }
     },
   },
   translate: {
@@ -178,7 +194,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       childScopeBinding &&
       isMembraneLive(getSection(tag)) &&
       !isChildTreeLive(childProgram)
-      ? getScopeAccessorLiteral(childScopeBinding)
+      ? getScopeAccessorLiteral(node.extra![kRegionAnchorBinding]!)
       : undefined,
   );
 }
@@ -361,9 +377,48 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         file.metadata.marko.id,
       ),
     );
+    writeRegionAnchor(tag);
   } else {
-    recordChildUpdateMerge(tag, relativePath, tagName, childExports.update);
+    const regionChild = recordChildUpdateMerge(
+      tag,
+      relativePath,
+      tagName,
+      childExports.update,
+    );
+    if (isPersisted() && !regionChild) {
+      // Owner-wires the adopted child scope, then recurses into the child
+      // template's construct pass (the fills of a live inlined child).
+      addConstructFragment(
+        getSection(tag),
+        "structural",
+        t.expressionStatement(
+          callRuntime(
+            "_construct_child",
+            scopeIdentifier,
+            getScopeAccessorLiteral(getKnownTagChildScopeBinding(tag)!),
+            t.stringLiteral(
+              getTemplateId(
+                getMarkoOpts(),
+                childFile.opts.filename as string,
+                buildResumeRegisterKey(childSection, "update"),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     const importPath = getChildImportPath(file, relativePath);
+    // A nucleus-free child never registers its template id (that absence is
+    // the dynamic-tag liveness signal); compose shells by the root update id
+    // its renderers entry does register.
+    const childShellId =
+      !isPersisted() || isChildTreeLive(childFile.ast.program)
+        ? childFile.metadata.marko.id
+        : getTemplateId(
+            getMarkoOpts(),
+            childFile.opts.filename as string,
+            buildResumeRegisterKey(childSection, "update"),
+          );
     knownTagTranslateDOM(
       tag,
       childExports.params,
@@ -403,19 +458,34 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         childExports.template,
         `${tagName}_template`,
       ),
-      childFile.metadata.marko.id,
+      childShellId,
+      regionChild,
     )}`;
     walks.injectWalks(
       tag,
       tagName,
       withChildTemplateId(
         importNamed(file, importPath, childExports.walks, `${tagName}_walks`),
-        childFile.metadata.marko.id,
+        childShellId,
+        regionChild,
       ),
     );
+    writeRegionAnchor(tag);
   }
 
   tag.remove();
+}
+
+// A region child's rendered markup arrives per response, so construct shells
+// carry only this marker as its anchor. Emitted right after the child (where
+// its walks end in every variant) and for every non-load child: region-ness
+// is not knowable at analyze, and the walker's dense accessor indexes
+// require walking every created dom binding.
+function writeRegionAnchor(tag: t.NodePath<t.MarkoTag>) {
+  if (tag.node.extra?.[kRegionAnchorBinding]) {
+    walks.visit(tag, WalkCode.Replace);
+    walks.enterShallow(tag);
+  }
 }
 
 // Keep child render graphs out of eager page chunks; circular references
@@ -619,14 +689,23 @@ function recordChildUpdateMerge(
   const childScopeBinding = getKnownTagChildScopeBinding(tag);
   if (childScopeBinding) {
     const childProgram = loadFileForTag(tag)?.ast.program;
+    // A nucleus-free child (no tag variable, not lazily loaded) delivers
+    // as region markup; delegation would dispatch an empty update graph.
+    const regionChild = !!(
+      isPersisted() &&
+      !tag.node.var &&
+      !loadId &&
+      childProgram &&
+      !isChildTreeLive(childProgram)
+    );
     addUpdateMerge(
       getSection(tag),
-      // A nucleus-free child (no tag variable, not lazily loaded) delivers
-      // as region markup; delegation would dispatch an empty update graph.
-      !tag.node.var && !loadId && childProgram && !isChildTreeLive(childProgram)
+      regionChild
         ? {
             kind: "region",
-            accessor: getScopeAccessorLiteral(childScopeBinding),
+            accessor: getScopeAccessorLiteral(
+              tag.node.extra![kRegionAnchorBinding]!,
+            ),
           }
         : {
             kind: "child",
@@ -640,6 +719,7 @@ function recordChildUpdateMerge(
             loadTemplateId,
           },
     );
+    return regionChild;
   }
 }
 

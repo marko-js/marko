@@ -65,24 +65,32 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_3_update": ["<button class=bump>tally <!></button><p class=greeting>hello <!></p>", " Db%lDb%l"],
 	"__tests__/template.marko_3_content": ["<button class=bump>tally <!></button><p class=greeting>hello <!></p>", " Db%lDb%l"],
-	"__tests__/template.marko_2_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko_2_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko_2_content": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko_2_content": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko_0_update": [[["__tests__/tags/frame.marko"]], [
+	"__tests__/template.marko_0_update": [[["__tests__/tags/frame.marko"], "<!>"], [
 		"/",
 		["__tests__/tags/frame.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [[["__tests__/tags/frame.marko"]], [
+	"__tests__/template.marko": [[["__tests__/tags/frame.marko"], "<!>"], [
 		"/",
 		["__tests__/tags/frame.marko"],
-		"&"
+		"&%b"
 	]]
 });

@@ -38,18 +38,18 @@ function $patch2$1($fail) {
 }
 
 // template.marko.persisted.mjs
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)("D%l");
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)("D%l");
 _enable_catch();
-const $await_content__ready = _var_resume("__tests__/template.marko_5_ready/var", /*@__PURE__*/ _let_persisted("ready/6", ($scope) => _text($scope["#text/1"], $scope.ready ? "ready" : "waiting")));
+const $await_content__ready = _var_resume("__tests__/template.marko_5_ready/var", /*@__PURE__*/ _let_persisted("ready/7", ($scope) => _text($scope["#text/2"], $scope.ready ? "ready" : "waiting")));
 const $await_content__setup = ($scope) => {
 	$input_onReady($scope["#childScope/0"], $onReady($scope));
 	$await_content__ready($scope, false);
 };
-const $await_content__data_total = ($scope, data_total) => _text($scope["#text/2"], data_total);
+const $await_content__data_total = ($scope, data_total) => _text($scope["#text/3"], data_total);
 const $await_content__$params = ($scope, $params2) => $await_content__data_total($scope, $params2[0]?.total);
 const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_4_content", "<p class=loading>loading…</p>", "b");
-const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<p class=status><!> of <!></p>`)(""), /*@__PURE__*/ ((_w0) => `/${_w0}&D%c%l`)(""), $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<!><p class=status><!> of <!></p>`)(""), /*@__PURE__*/ ((_w0) => `/${_w0}&%bD%c%l`)(""), $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
@@ -59,8 +59,8 @@ const $Reports_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%c", 
 const $Reports_content__setup = ($scope) => $Reports_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 const $Reports_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<!><!><!>", "b%c", $Reports_content__setup);
 const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>home</p>", "b");
-const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count)));
-const $Home__OR__Reports = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "reports" ? $scope.Reports : $scope.Home));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/4", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $Home__OR__Reports = /*@__PURE__*/ _or(7, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "reports" ? $scope.Reports : $scope.Home));
 const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Reports);
 const $Reports = /*@__PURE__*/ _const_persisted("Reports", $Home__OR__Reports);
 const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
@@ -80,8 +80,14 @@ function $onReady($scope) {
 }
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 const $ready_seed = _update_signal("__tests__/template.marko_5_ready/var");
-const $await_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/2": /*@__PURE__*/ _update_text("#text/2") });
+const $await_content_holes = /*@__PURE__*/ _update_scopes({
+	"PatchHole:#text/2": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/2")),
+	"PatchHole:#text/3": /*@__PURE__*/ _update_text("#text/3")
+});
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $await_content__construct = ($scope) => {
+	_construct_child($scope, "#childScope/0", "__tests__/tags/mounter.marko_0_update");
+};
 const $await_content__update = ($patch, $live) => {
 	if ("ready" in $patch) _update_seed($live, $ready_seed, $patch["ready"]);
 	$await_content_holes($patch, $live);
@@ -93,17 +99,23 @@ const $try_content__update = ($patch, $live) => {
 const $Reports_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $try_content__update, "__tests__/template.marko_3_update", "__tests__/template.marko_4_content");
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	_construct_child($scope, "#childScope/2", "__tests__/tags/layout.marko_0_update");
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("#childScope/2" in $patch) $merge$1($patch["#childScope/2"], $live["#childScope/2"]);
 };
+_construct("__tests__/template.marko_5_update", $await_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_4_content", $noop_update);
 _update_content("__tests__/template.marko_2_content", $Reports_content__update);
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -138,18 +150,18 @@ const $input = ($scope, input) => $input_content($scope, input.content);
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, "D%l", $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)("D%l");
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)("D%l");
 _enable_catch();
-const $await_content__ready = /*@__PURE__*/ _let_persisted("ready/6", ($scope) => _text($scope["#text/1"], $scope.ready ? "ready" : "waiting"));
+const $await_content__ready = /*@__PURE__*/ _let_persisted("ready/7", ($scope) => _text($scope["#text/2"], $scope.ready ? "ready" : "waiting"));
 const $await_content__setup = ($scope) => {
 	$input_onReady($scope["#childScope/0"], $onReady($scope));
 	$await_content__ready($scope, false);
 };
-const $await_content__data_total = ($scope, data_total) => _text($scope["#text/2"], data_total);
+const $await_content__data_total = ($scope, data_total) => _text($scope["#text/3"], data_total);
 const $await_content__$params = ($scope, $params2) => $await_content__data_total($scope, $params2[0]?.total);
 const $placeholder_content = _content_resume("__tests__/template.marko_4_content", "<p class=loading>loading…</p>", "b");
-const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<p class=status><!> of <!></p>`)(""), /*@__PURE__*/ ((_w0) => `/${_w0}&D%c%l`)(""), $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<!><p class=status><!> of <!></p>`)(""), /*@__PURE__*/ ((_w0) => `/${_w0}&%bD%c%l`)(""), $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
@@ -159,8 +171,8 @@ const $Reports_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%c", 
 const $Reports_content__setup = ($scope) => $Reports_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 const $Reports_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<!><!><!>", "b%c", $Reports_content__setup);
 const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>home</p>", "b");
-const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $Home__OR__Reports = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "reports" ? $scope.Reports : $scope.Home));
+const $count = /*@__PURE__*/ _let_persisted("count/4", ($scope) => _text($scope["#text/1"], $scope.count));
+const $Home__OR__Reports = /*@__PURE__*/ _or(7, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "reports" ? $scope.Reports : $scope.Home));
 const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Reports);
 const $Reports = /*@__PURE__*/ _const_persisted("Reports", $Home__OR__Reports);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

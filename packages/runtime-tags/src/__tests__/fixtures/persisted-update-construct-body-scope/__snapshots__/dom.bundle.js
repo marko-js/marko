@@ -20,16 +20,22 @@ _update_content("b", $merge$1);
 
 // template.marko.persisted.mjs
 _enable_catch();
-const $await_content__ready = _var_resume("a12", /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting")));
-const $count = _var_resume("a13", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $await_content__ready = _var_resume("a12", /*@__PURE__*/ _let_persisted(7, ($scope) => _text($scope.c, $scope.h ? "ready" : "waiting")));
+const $count = _var_resume("a13", /*@__PURE__*/ _let_persisted(4, ($scope) => _text($scope.b, $scope.e)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, $scope.e + 1);
 }));
 const $ready_seed = _update_signal("a12");
-const $await_content_holes = /*@__PURE__*/ _update_scopes({ "Qc": /*@__PURE__*/ _update_text("c") });
+const $await_content_holes = /*@__PURE__*/ _update_scopes({
+	"Qc": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("c")),
+	"Qd": /*@__PURE__*/ _update_text("d")
+});
 const $count_seed = _update_signal("a13");
+const $await_content__construct = ($scope) => {
+	_construct_child($scope, "a", "c0");
+};
 const $await_content__update = ($patch, $live) => {
-	if ("g" in $patch) _update_seed($live, $ready_seed, $patch["g"]);
+	if ("h" in $patch) _update_seed($live, $ready_seed, $patch["h"]);
 	$await_content_holes($patch, $live);
 	if ("a" in $patch) $merge$2($patch["a"], $live["a"]);
 };
@@ -39,17 +45,23 @@ const $try_content__update = ($patch, $live) => {
 const $Reports_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $try_content__update, "a7", "a5");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.e);
+	_construct_child($scope, "c", "b1");
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
-	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
+	if ("e" in $patch) _update_seed($live, $count_seed, $patch["e"]);
 	if ("c" in $patch) $merge$1($patch["c"], $live["c"]);
 };
+_construct("a4", $await_content__construct);
+_construct("a2", $construct);
 const $noop_update = () => {};
 _update_content("a5", $noop_update);
 _update_content("a8", $Reports_content__update);
 _update_content("a3", $noop_update);
 const $merge = _resume("a2", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -61,11 +73,11 @@ const $input_onReady__script = _script_update("c1", ($scope) => _lifecycle($scop
 
 // template.marko
 _enable_catch();
-const $await_content__ready = /*@__PURE__*/ _let_persisted(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting"));
+const $await_content__ready = /*@__PURE__*/ _let_persisted(7, ($scope) => _text($scope.c, $scope.h ? "ready" : "waiting"));
 const $placeholder_content = _content_resume("a5", "<p class=loading>loading…</p>", "b");
-const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(4, ($scope) => _text($scope.b, $scope.e));
 const $setup__script = _script_update("a9", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, $scope.e + 1);
 }));
 function $onReady($scope) {
 	return function() {

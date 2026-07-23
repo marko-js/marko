@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 	shell_default({ content: Page });
 	_script($scope0_id, "a5");
 	writeScope($scope0_id, {
-		d: _state_reason() && count,
+		e: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
@@ -53,14 +53,22 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a6": ["<h3 class=page-heading>Page</h3><!><!>", "b%c"],
 	"a4": ["<h3 class=page-heading>Page</h3><!><!>", "b%c"],
-	"a1": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a1": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

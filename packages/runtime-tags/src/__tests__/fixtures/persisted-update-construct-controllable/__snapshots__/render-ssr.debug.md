@@ -42,11 +42,12 @@ UPDATE: .count::text@8 "0" => "1"
 </button>
 <input
   class="field"
+  value="draft"
 />
 <output
   class="echo"
 >
-   
+  draft
 </output>
 ```
 ## Change

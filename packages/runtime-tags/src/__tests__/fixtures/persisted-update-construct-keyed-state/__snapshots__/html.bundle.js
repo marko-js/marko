@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_for_of(getItems?.($global().filter), (item) => {
 		const $scope1_id = _scope_id();
 		let watched = false;
-		_html(`<li><span>${_escape(_hole_value($scope1_id, "Qa", item.name, _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</span><button${_attr("data-id", _hole_value($scope1_id, "Ndata-id:b", item.id, _persisted_reason()))}>watch${_el_resume($scope1_id, "c")}</button>${_el_resume($scope1_id, "b")}</li>`);
+		_html(`<li><span>${_escape(_hole_value($scope1_id, "Qa", item.name, _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}</span><button${_attr("data-id", _hole_value($scope1_id, "Ndata-id:b", item.id, _persisted_reason()))}>${_escape(_hole_value($scope1_id, "Qc", "watch", _state_reason()))}${_el_resume($scope1_id, "c")}</button>${_el_resume($scope1_id, "b")}</li>`);
 		_script($scope1_id, "a1");
 		writeScope($scope1_id, { h: _state_reason() && watched });
 	}, function(item) {

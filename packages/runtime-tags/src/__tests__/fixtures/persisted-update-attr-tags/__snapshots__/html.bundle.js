@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_escape(getTitle(input.id))}${_el_resume($scope3_id, "a", $sg__input_id)}</p>`);
 			$sg__input_id && _subscribe($input_id__closures, writeScope($scope3_id, {
 				_: _scope_with_id($scope2_id),
-				Ck: 1
+				Cl: 1
 			}));
 			_resume_branch($scope3_id);
 		}) }) });
@@ -85,7 +85,7 @@ var template_default = _template("a", (input) => {
 			content: _content("a4", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
-				_html(`${_escape(row)}${_el_resume($scope4_id, "a")}`);
+				_html(`${_escape(_hole_value($scope4_id, "Qa", row, _state_reason()))}${_el_resume($scope4_id, "a")}`);
 				writeScope($scope4_id, {});
 			})
 		});
@@ -103,8 +103,8 @@ var template_default = _template("a", (input) => {
 	});
 	_script($scope0_id, "a5");
 	writeScope($scope0_id, {
-		h: _state_reason() && count,
-		k: $sg__input_id && $input_id__closures,
+		i: _state_reason() && count,
+		l: $sg__input_id && $input_id__closures,
 		c: $sg__input_id__OR__input_show | _persisted_reason() && _existing_scope($childScope2)
 	});
 	_resume_branch($scope0_id);
@@ -112,24 +112,32 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a6": [" ", " b"],
 	"a4": [" ", " b"],
-	"a7": [[["b"]], [
+	"a7": [[["b"], "<!>"], [
 		"/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a3": [[["b"]], [
+	"a3": [[["b"], "<!>"], [
 		"/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a0": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a0": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]]
 });

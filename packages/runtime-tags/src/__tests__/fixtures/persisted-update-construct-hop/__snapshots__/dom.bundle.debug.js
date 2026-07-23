@@ -40,14 +40,18 @@ const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_lab
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
 var widget_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/widget.marko", $template$2, $walks$2, $setup$2, $input$1);
 const $clicks_seed = _update_signal("__tests__/tags/widget.marko_0_clicks/var");
-const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1") });
+const $_holes$1 = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1") });
+const $construct$1 = ($scope) => {
+	_text($scope["#text/2"], $scope.clicks);
+};
 const $update2$2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("clicks" in $patch) _update_seed($live, $clicks_seed, $patch["clicks"]);
-	$_holes($patch, $live);
+	$_holes$1($patch, $live);
 };
+_construct("__tests__/tags/widget.marko_0_update", $construct$1);
 const $merge$2 = _resume("__tests__/tags/widget.marko_0_update", $update2$2);
-_update_content("__tests__/tags/widget.marko", $merge$2);
+_update_content("__tests__/tags/widget.marko", $merge$2, $construct$1);
 function $patch2$2($fail) {
 	return patch($merge$2, $fail);
 }
@@ -69,9 +73,11 @@ const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
 var layout_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input);
 const $open_seed = _update_signal("__tests__/tags/layout.marko_0_open/var");
+const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/1")) });
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("open" in $patch) _update_seed($live, $open_seed, $patch["open"]);
+	$_holes($patch, $live);
 	if ("ConditionalRenderer:#text/2" in $patch || "BranchScopes:#text/2" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
 const $merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update2$1);
@@ -81,8 +87,8 @@ function $patch2$1($fail) {
 }
 
 // template.marko.persisted.mjs
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
 const $for_content__metric_name = ($scope, metric_name) => {
 	_attr_class($scope["#li/0"], metric_name === $scope.$global.focus && "focus");
 	_text($scope["#text/1"], metric_name);
@@ -97,16 +103,16 @@ const $Dashboard_content__session = ($scope, session) => {
 	$Dashboard_content__session_plan($scope, session?.plan);
 };
 const $Dashboard_content__session_greeting = ($scope, session_greeting) => _text($scope["#text/0"], session_greeting);
-const $Dashboard_content__session_plan = ($scope, session_plan) => $input_label($scope["#childScope/5"], session_plan);
+const $Dashboard_content__session_plan = ($scope, session_plan) => $input_label($scope["#childScope/6"], session_plan);
 const $Dashboard_content__for = 0;
-const $Dashboard_content__if = /*@__PURE__*/ _if("#text/7", "<p class=admin>admin tools enabled</p>", "b");
-const $Dashboard_content__setup__script = _script_shared(($scope) => _on($scope["#button/3"], "click", function() {
+const $Dashboard_content__if = /*@__PURE__*/ _if("#text/9", "<p class=admin>admin tools enabled</p>", "b");
+const $Dashboard_content__setup__script = _script_shared(($scope) => _on($scope["#button/4"], "click", function() {
 	_var_change($scope["#childScope/1"], $scope.tally + 1, "tally");
 }));
 const $Dashboard_content__setup = ($scope) => {
 	_var($scope, "#childScope/1", $Dashboard_content__tally);
 	$setup$3($scope["#childScope/1"]);
-	$setup$2($scope["#childScope/5"]);
+	$setup$2($scope["#childScope/6"]);
 	if (!updating) $Dashboard_content__session($scope, getSession?.($scope.$global.user));
 	if (!updating) $Dashboard_content__for($scope, [getMetrics?.($scope.$global.range), function(metric) {
 		return metric.name;
@@ -114,11 +120,11 @@ const $Dashboard_content__setup = ($scope) => {
 	if (!updating) $Dashboard_content__if($scope, $scope.$global.admin ? 0 : 1);
 	$Dashboard_content__setup__script($scope);
 };
-const $Dashboard_content__tally = _var_resume("__tests__/template.marko_2_tally/var", /*@__PURE__*/ _const_persisted("tally", ($scope) => _text($scope["#text/4"], $scope.tally)));
-const $Dashboard_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0, _w1) => `<h2 class=greeting> </h2>${_w0}<button class=bump>tally <!></button>${_w1}<ul class=metrics></ul><!><!>`)("", $template$2), /*@__PURE__*/ ((_w0, _w1) => `D l0${_w0}& Db%l/${_w1}& b%c`)("", $walks$2), $Dashboard_content__setup);
+const $Dashboard_content__tally = _var_resume("__tests__/template.marko_2_tally/var", /*@__PURE__*/ _const_persisted("tally", ($scope) => _text($scope["#text/5"], $scope.tally)));
+const $Dashboard_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0, _w1) => `<h2 class=greeting> </h2>${_w0}<!><button class=bump>tally <!></button>${_w1}<!><ul class=metrics></ul><!><!>`)("", $template$2), /*@__PURE__*/ ((_w0, _w1) => `D l0${_w0}&%b Db%l/${_w1}&%b b%c`)("", $walks$2), $Dashboard_content__setup);
 const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>welcome home</p>", "b");
-const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count)));
-const $Home__OR__Dashboard = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "dashboard" ? $scope.Dashboard : $scope.Home));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/4", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $Home__OR__Dashboard = /*@__PURE__*/ _or(7, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "dashboard" ? $scope.Dashboard : $scope.Home));
 const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Dashboard);
 const $Dashboard = /*@__PURE__*/ _const_persisted("Dashboard", $Home__OR__Dashboard);
 const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
@@ -134,24 +140,36 @@ function $setup($scope) {
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 const $Dashboard_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $Dashboard_content__construct = ($scope) => {
+	_construct_child($scope, "#childScope/1", "__tests__/tags/store.marko_0_update");
+	_var($scope, "#childScope/1", $Dashboard_content__tally);
+	_text($scope["#text/5"], $scope.tally);
+	_construct_child($scope, "#childScope/6", "__tests__/tags/widget.marko_0_update");
+};
 const $Dashboard_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	$Dashboard_content_holes($patch, $live);
 	if ("#childScope/1" in $patch) $merge$3($patch["#childScope/1"], $live["#childScope/1"]);
-	if ("#childScope/5" in $patch) $merge$2($patch["#childScope/5"], $live["#childScope/5"]);
-	if ("ConditionalRenderer:#ul/6" in $patch) _update_region("#ul/6")($patch, $live);
-	if ("ConditionalRenderer:#text/7" in $patch) _update_region("#text/7")($patch, $live);
+	if ("#childScope/6" in $patch) $merge$2($patch["#childScope/6"], $live["#childScope/6"]);
+	if ("ConditionalRenderer:#ul/8" in $patch) _update_region("#ul/8")($patch, $live);
+	if ("ConditionalRenderer:#text/9" in $patch) _update_region("#text/9")($patch, $live);
+};
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	_construct_child($scope, "#childScope/2", "__tests__/tags/layout.marko_0_update");
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("#childScope/2" in $patch) $merge$1($patch["#childScope/2"], $live["#childScope/2"]);
 };
-_update_content("__tests__/template.marko_2_content", $Dashboard_content__update);
+_construct("__tests__/template.marko_2_update", $Dashboard_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
+_update_content("__tests__/template.marko_2_content", $Dashboard_content__update, $Dashboard_content__construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -227,8 +245,8 @@ const $input = ($scope, input) => $input_content($scope, input.content);
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
 const $for_content__metric_name = ($scope, metric_name) => {
 	_attr_class($scope["#li/0"], metric_name === $scope.$global.focus && "focus");
 	_text($scope["#text/1"], metric_name);
@@ -243,16 +261,16 @@ const $Dashboard_content__session = ($scope, session) => {
 	$Dashboard_content__session_plan($scope, session?.plan);
 };
 const $Dashboard_content__session_greeting = ($scope, session_greeting) => _text($scope["#text/0"], session_greeting);
-const $Dashboard_content__session_plan = ($scope, session_plan) => $input_label($scope["#childScope/5"], session_plan);
-const $Dashboard_content__for = /*@__PURE__*/ _for_of("#ul/6", "<li><!>: <!></li>", " D%c%l", 0, $for_content__$params);
-const $Dashboard_content__if = /*@__PURE__*/ _if("#text/7", "<p class=admin>admin tools enabled</p>", "b");
-const $Dashboard_content__setup__script = _script_update("__tests__/template.marko_2", ($scope) => _on($scope["#button/3"], "click", function() {
+const $Dashboard_content__session_plan = ($scope, session_plan) => $input_label($scope["#childScope/6"], session_plan);
+const $Dashboard_content__for = /*@__PURE__*/ _for_of("#ul/8", "<li><!>: <!></li>", " D%c%l", 0, $for_content__$params);
+const $Dashboard_content__if = /*@__PURE__*/ _if("#text/9", "<p class=admin>admin tools enabled</p>", "b");
+const $Dashboard_content__setup__script = _script_update("__tests__/template.marko_2", ($scope) => _on($scope["#button/4"], "click", function() {
 	_var_change($scope["#childScope/1"], $scope.tally + 1, "tally");
 }));
 const $Dashboard_content__setup = ($scope) => {
 	_var($scope, "#childScope/1", $Dashboard_content__tally);
 	$setup$3($scope["#childScope/1"]);
-	$setup$2($scope["#childScope/5"]);
+	$setup$2($scope["#childScope/6"]);
 	if (!updating) $Dashboard_content__session($scope, getSession?.($scope.$global.user));
 	if (!updating) $Dashboard_content__for($scope, [getMetrics?.($scope.$global.range), function(metric) {
 		return metric.name;
@@ -260,11 +278,11 @@ const $Dashboard_content__setup = ($scope) => {
 	if (!updating) $Dashboard_content__if($scope, $scope.$global.admin ? 0 : 1);
 	$Dashboard_content__setup__script($scope);
 };
-const $Dashboard_content__tally = _var_resume("__tests__/template.marko_2_tally/var", /*@__PURE__*/ _const_persisted("tally", ($scope) => _text($scope["#text/4"], $scope.tally)));
-const $Dashboard_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0, _w1) => `<h2 class=greeting> </h2>${_w0}<button class=bump>tally <!></button>${_w1}<ul class=metrics></ul><!><!>`)("", $template$2), /*@__PURE__*/ ((_w0, _w1) => `D l0${_w0}& Db%l/${_w1}& b%c`)("", $walks$2), $Dashboard_content__setup);
+const $Dashboard_content__tally = _var_resume("__tests__/template.marko_2_tally/var", /*@__PURE__*/ _const_persisted("tally", ($scope) => _text($scope["#text/5"], $scope.tally)));
+const $Dashboard_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0, _w1) => `<h2 class=greeting> </h2>${_w0}<!><button class=bump>tally <!></button>${_w1}<!><ul class=metrics></ul><!><!>`)("", $template$2), /*@__PURE__*/ ((_w0, _w1) => `D l0${_w0}&%b Db%l/${_w1}&%b b%c`)("", $walks$2), $Dashboard_content__setup);
 const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>welcome home</p>", "b");
-const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $Home__OR__Dashboard = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "dashboard" ? $scope.Dashboard : $scope.Home));
+const $count = /*@__PURE__*/ _let_persisted("count/4", ($scope) => _text($scope["#text/1"], $scope.count));
+const $Home__OR__Dashboard = /*@__PURE__*/ _or(7, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "dashboard" ? $scope.Dashboard : $scope.Home));
 const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Dashboard);
 const $Dashboard = /*@__PURE__*/ _const_persisted("Dashboard", $Home__OR__Dashboard);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

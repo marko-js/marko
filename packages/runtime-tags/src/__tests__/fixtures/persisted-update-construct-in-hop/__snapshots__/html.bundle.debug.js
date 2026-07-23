@@ -73,14 +73,22 @@ _renderer_shells({
 	"__tests__/template.marko_4_content": ["<p class=home>welcome home</p><!><!><!><!>", "b/b%c&b"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]]
 });

@@ -35,7 +35,7 @@
   <button
     class="sticky"
   >
-    s
+    s0
   </button>
   loading…
 </section>
@@ -69,7 +69,7 @@ INSERT: .sticky + ::text("loading…")
   <button
     class="sticky"
   >
-    s
+    s0
   </button>
   <div
     class="reviews"
@@ -101,7 +101,7 @@ REMOVE: .reviews + ::text("loading…")
 # Update
 ```js
 _assert.default.equal(document.querySelector("section.b ul")?.textContent, "spec onespec two");
-_assert.default.ok(document.querySelector("button.sticky"));
+_assert.default.equal(document.querySelector("button.sticky")?.textContent, "s0");
 ```
 
 # Update
@@ -159,7 +159,7 @@ document.querySelector("button.sticky").click();
 ```
 ## Change
 ```
-UPDATE: .sticky::text@1 "" => "1"
+UPDATE: .sticky::text@1 "0" => "1"
 ```
 
 # Update

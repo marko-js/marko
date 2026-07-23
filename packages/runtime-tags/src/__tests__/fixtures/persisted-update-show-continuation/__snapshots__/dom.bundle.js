@@ -9,13 +9,17 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 	"Qe": /*@__PURE__*/ _update_text("e"),
 	"Qf": /*@__PURE__*/ _update_text("f")
 });
+const $construct = ($scope) => {
+	_text($scope.c, $scope.n);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("n" in $patch) _update_seed($live, $n_seed, $patch["n"]);
 	$_holes($patch, $live);
 };
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

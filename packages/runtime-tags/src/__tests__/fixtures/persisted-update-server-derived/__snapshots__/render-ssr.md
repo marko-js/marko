@@ -41,7 +41,7 @@ UPDATE: .count::text@8 "0" => "1"
     Part 7
   </h2>
   <p>
-    costs 
+    costs 70
   </p>
   <button
     class="copy"
@@ -72,7 +72,7 @@ document.querySelector("button.copy").click();
     Part 7
   </h2>
   <p>
-    costs 
+    costs 70
   </p>
   <button
     class="copy"

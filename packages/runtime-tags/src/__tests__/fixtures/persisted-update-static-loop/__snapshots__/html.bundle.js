@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (categories.length) {
 			const $scope1_id = _scope_id();
-			_html(`<em>pick:${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qb", $global().params.pick, _persisted_reason()))}${_el_resume($scope1_id, "b", _persisted_reason())}</em>${_el_resume($scope1_id, "a", 1 | _persisted_reason())}`);
+			_html(`<em${_attr_class(_hole_value($scope1_id, "Nclass:a", count, _state_reason()))}>pick:${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qb", $global().params.pick, _persisted_reason()))}${_el_resume($scope1_id, "b", _persisted_reason())}</em>${_el_resume($scope1_id, "a", 1 | _persisted_reason())}`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

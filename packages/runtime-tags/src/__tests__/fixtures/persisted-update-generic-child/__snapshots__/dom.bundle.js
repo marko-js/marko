@@ -17,7 +17,10 @@ const $setup__script$1 = _script_shared(($scope) => _on($scope.a, "click", funct
 	$on($scope, !$scope.g);
 }));
 const $on_seed = _update_signal("d2");
-const $_holes = /*@__PURE__*/ _update_scopes({ "Qc": /*@__PURE__*/ _update_text("c") });
+const $_holes = /*@__PURE__*/ _update_scopes({
+	"Qb": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("b")),
+	"Qc": /*@__PURE__*/ _update_text("c")
+});
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("g" in $patch) _update_seed($live, $on_seed, $patch["g"]);
@@ -27,20 +30,26 @@ const $merge$1 = _resume("d0", $update2$1);
 _update_content("d", $merge$1);
 
 // template.marko.persisted.mjs
-const $count = _var_resume("a2", /*@__PURE__*/ _let_persisted(14, ($scope) => _text($scope.b, $scope.o)));
+const $count = _var_resume("a2", /*@__PURE__*/ _let_persisted(17, ($scope) => _text($scope.b, $scope.r)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.o + 1);
+	$count($scope, $scope.r + 1);
 }));
 const $count_seed = _update_signal("a2");
+const $construct = ($scope) => {
+	_text($scope.b, $scope.r);
+	_construct_child($scope, "e", "c0");
+	_construct_child($scope, "g", "d0");
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
-	if ("o" in $patch) _update_seed($live, $count_seed, $patch["o"]);
-	if ("Dc" in $patch) _update_region("c")($patch, $live);
-	if ("d" in $patch) $merge$2($patch["d"], $live["d"]);
-	if ("e" in $patch) $merge$1($patch["e"], $live["e"]);
+	if ("r" in $patch) _update_seed($live, $count_seed, $patch["r"]);
+	if ("Dd" in $patch) _update_region("d")($patch, $live);
+	if ("e" in $patch) $merge$2($patch["e"], $live["e"]);
+	if ("g" in $patch) $merge$1($patch["g"], $live["g"]);
 };
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -52,7 +61,7 @@ const $setup__script$1 = _script_update("d1", ($scope) => _on($scope.a, "click",
 }));
 
 // template.marko
-const $count = /*@__PURE__*/ _let_persisted(14, ($scope) => _text($scope.b, $scope.o));
+const $count = /*@__PURE__*/ _let_persisted(17, ($scope) => _text($scope.b, $scope.r));
 const $setup__script = _script_update("a1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.o + 1);
+	$count($scope, $scope.r + 1);
 }));

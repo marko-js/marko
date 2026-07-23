@@ -5,6 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<div${_attr_class(input.class)}${_attr("data-request", input["data-request"])}></div>${_el_resume($scope0_id, "#div/0", $sg__input_class__OR__input_data_request)}`);
 	$sg__input_class__OR__input_data_request && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
+_renderer_shells({ "__tests__/tags/child.marko_0_update": ["<div></div>", " b"] });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -29,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"data-request": input.title,
 			...attrs
 		});
-	}, $scope0_id, "#childScope/4");
+	}, $scope0_id, "#text/5");
 	_script($scope0_id, "__tests__/template.marko_0_input_title_attrs");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
@@ -45,14 +46,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [["<button>clicked <!></button><input><div>dynamic</div>", ["__tests__/tags/child.marko"]], [
-		" Db%l b b/",
-		["__tests__/tags/child.marko"],
-		"&"
-	]],
-	"__tests__/template.marko": [["<button>clicked <!></button><input><div>dynamic</div>", ["__tests__/tags/child.marko"]], [
-		" Db%l b b/",
-		["__tests__/tags/child.marko"],
-		"&"
-	]]
+	"__tests__/template.marko_0_update": ["<button>clicked <!></button><input><div>dynamic</div><!>", " Db%l b b/&%b"],
+	"__tests__/template.marko": ["<button>clicked <!></button><input><div>dynamic</div><!>", " Db%l b b/&%b"]
 });

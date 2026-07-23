@@ -1,3 +1,5 @@
+import assert from "node:assert/strict";
+
 import type { TestConfig } from "../../main.test";
 import { navigate } from "../../utils/resolve";
 
@@ -48,6 +50,15 @@ export const config: TestConfig = {
         serializedGlobals: { data: true },
       },
     }),
+    // The cart's state-only branch constructs under the fresh Cart scope:
+    // its linkage and wire shell must arrive in the patch.
+    (document: Document) => {
+      assert.equal(document.querySelectorAll("ul.cart li").length, 1);
+      assert.equal(
+        document.querySelector("p.total")?.textContent,
+        "total $200.5",
+      );
+    },
     clickCount,
   ],
 };

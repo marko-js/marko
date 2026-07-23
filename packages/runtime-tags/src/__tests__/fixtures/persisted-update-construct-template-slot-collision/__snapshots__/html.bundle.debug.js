@@ -9,6 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "id", $scope0_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1);
 	_persisted_reason() && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
+_renderer_shells({ "__tests__/tags/child.marko_0_update": ["<!><!><!>", "b%c"] });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -26,12 +27,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	_region(() => {
 		child_default({});
-	}, $scope0_id, "#childScope/3");
-	_dynamic_tag($scope0_id, "#text/4", $global().nativeTag, {}, _content_resume("__tests__/template.marko_2_content", () => {
+	}, $scope0_id, "#text/4");
+	_dynamic_tag($scope0_id, "#text/5", $global().nativeTag, {}, _content_resume("__tests__/template.marko_2_content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("dynamic");
-	}, $scope0_id), 0, _persisted_reason() | _persisted_reason(), "__tests__/template.marko_0/update_dynamic_#text/4");
+	}, $scope0_id), 0, _persisted_reason() | _persisted_reason(), "__tests__/template.marko_0/update_dynamic_#text/5");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count: _state_reason() && count,
@@ -40,22 +41,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [[
-		"<button> </button><!>",
-		["__tests__/tags/child.marko"],
-		"<!><!>"
-	], [
-		" D l%b/",
-		["__tests__/tags/child.marko"],
-		"&%c"
-	]],
-	"__tests__/template.marko": [[
-		"<button> </button><!>",
-		["__tests__/tags/child.marko"],
-		"<!><!>"
-	], [
-		" D l%b/",
-		["__tests__/tags/child.marko"],
-		"&%c"
-	]]
+	"__tests__/template.marko_0_update": ["<button> </button><!><!><!><!>", " D l%b/&%b%c"],
+	"__tests__/template.marko": ["<button> </button><!><!><!><!>", " D l%b/&%b%c"]
 });

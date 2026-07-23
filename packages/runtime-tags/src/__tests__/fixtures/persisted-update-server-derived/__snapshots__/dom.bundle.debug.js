@@ -39,10 +39,16 @@ var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/templa
 const $details_price_update = _update_signal("__tests__/template.marko_1_details_price/var");
 const $if_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $if_content__construct = ($scope) => {
+	_text($scope["#text/1"], $scope.details_price);
+};
 const $if_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("details_price" in $patch) $details_price_update($live, $patch["details_price"]);
 	$if_content_holes($patch, $live);
+};
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -50,8 +56,10 @@ const $update2 = ($patch, $live) => {
 	if ("input_detailId" in $patch) $live["input_detailId"] = $patch["input_detailId"];
 	if ("ConditionalRenderer:#text/2" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", [$if_content__update, 0], ["__tests__/template.marko_1_update", "__tests__/template.marko_2_update"]);
 };
+_construct("__tests__/template.marko_1_update", $if_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

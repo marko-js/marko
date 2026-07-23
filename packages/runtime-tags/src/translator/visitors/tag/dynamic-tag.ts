@@ -666,11 +666,13 @@ export default {
         if (!isClassAPI) {
           enableDynamicTagResume(tag);
         }
+        // Construct path: adopted renderer linkage via the dynamic merge.
         addValue(
           tagSection,
           tagExtra.referencedBindings,
           signal,
           tagExpression,
+          "structural",
         );
         tag.remove();
       }

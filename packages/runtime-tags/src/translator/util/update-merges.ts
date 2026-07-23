@@ -1,5 +1,6 @@
 // Records per-section patch merges while normal DOM translation runs.
 import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import evaluate from "./evaluate";
 import { isPersisted, isPersistedEntryBuild } from "./marko-config";
@@ -30,12 +31,15 @@ export type UpdateMerge =
       /** Prefixed patch accessor (`PatchHole:<node accessor>`). */
       patchAccessor: string;
       accessor: t.StringLiteral | t.NumericLiteral;
+      /** State-computed capture: applies only to construct-stamped scopes. */
+      constructOnly?: boolean;
     }
   | {
       kind: "html";
       /** Prefixed patch accessor (`PatchHtml:<node accessor>`). */
       patchAccessor: string;
       accessor: t.StringLiteral | t.NumericLiteral;
+      constructOnly?: boolean;
     }
   | {
       kind: "attr";
@@ -44,11 +48,13 @@ export type UpdateMerge =
       name: string;
       helper: "_attr" | "_attr_class" | "_attr_style" | "_text_content";
       accessor: t.StringLiteral | t.NumericLiteral;
+      constructOnly?: boolean;
     }
   | {
       kind: "controllable";
       /** Prefixed patch accessor (`PatchAttr:<name>:<node accessor>`). */
       patchAccessor: string;
+      constructOnly?: boolean;
       helper:
         | "_update_input_value"
         | "_update_input_value_dynamic"
@@ -63,6 +69,9 @@ export type UpdateMerge =
       kind: "if";
       accessor: t.StringLiteral | t.NumericLiteral;
       branchBodySections: (Section | undefined)[];
+      /** A state-only selection's adopted branch linkage: dispatched by the
+       * construct pass only, never on matched patches. */
+      constructOnly?: boolean;
     }
   | {
       kind: "for";
@@ -188,22 +197,46 @@ export function isUpdateRequestDerivedAnchor(
   );
 }
 
+// Structural anchors (if/for/dynamic selection) treat an untracked
+// expression as navigation-variant only when it visibly re-computes per
+// render; captures use `isReasonlessCaptureExpression`'s safety polarity.
 export function isReasonlessExpression(
   expression?: t.Expression,
   gateExtra: t.NodeExtra | undefined = expression?.extra,
 ) {
   return (
-    !!expression &&
-    !evaluate(expression).confident &&
-    !(gateExtra && getSerializeSourcesForExpr(gateExtra)) &&
-    isRenderVariant(expression)
+    isUntrackedExpression(expression, gateExtra) && hasVariantCall(expression!)
   );
 }
 
-// Untracked expressions are render-invariant (module constants, statics)
-// unless something in them re-computes per render; only those can change on
-// navigation, so only those need reasonless capture.
-function isRenderVariant(expression: t.Node) {
+// Capture positions (attr/hole/controllable values) invert the polarity:
+// an untracked expression captures unless provably render- and
+// environment-invariant — a `typeof window` branch, possibly behind an
+// imported constant this compile cannot see, evaluates differently in a
+// browser module than in the server render a construct must reproduce.
+// Resolution only ever widens the invariant fast path; opaque captures.
+export function isReasonlessCaptureExpression(
+  expression?: t.Expression,
+  gateExtra: t.NodeExtra | undefined = expression?.extra,
+) {
+  return (
+    isUntrackedExpression(expression, gateExtra) &&
+    !isProvablyInvariant(expression!, 0)
+  );
+}
+
+function isUntrackedExpression(
+  expression: t.Expression | undefined,
+  gateExtra: t.NodeExtra | undefined,
+): expression is t.Expression {
+  return (
+    !!expression &&
+    !evaluate(expression).confident &&
+    !(gateExtra && getSerializeSourcesForExpr(gateExtra))
+  );
+}
+
+function hasVariantCall(expression: t.Node) {
   let variant = false;
   t.traverseFast(expression, (node) => {
     switch (node.type) {
@@ -217,6 +250,76 @@ function isRenderVariant(expression: t.Node) {
     }
   });
   return variant;
+}
+
+function isProvablyInvariant(node: t.Node, depth: number): boolean {
+  switch (node.type) {
+    case "StringLiteral":
+    case "NumericLiteral":
+    case "BooleanLiteral":
+    case "NullLiteral":
+    case "BigIntLiteral":
+    case "RegExpLiteral":
+      return true;
+    case "TemplateLiteral":
+      return node.expressions.every((expr) => isProvablyInvariant(expr, depth));
+    case "UnaryExpression":
+      return (
+        node.operator !== "delete" && isProvablyInvariant(node.argument, depth)
+      );
+    case "BinaryExpression":
+    case "LogicalExpression":
+      return (
+        node.left.type !== "PrivateName" &&
+        isProvablyInvariant(node.left, depth) &&
+        isProvablyInvariant(node.right, depth)
+      );
+    case "ConditionalExpression":
+      return (
+        isProvablyInvariant(node.test, depth) &&
+        isProvablyInvariant(node.consequent, depth) &&
+        isProvablyInvariant(node.alternate, depth)
+      );
+    case "SequenceExpression":
+      return node.expressions.every((expr) => isProvablyInvariant(expr, depth));
+    case "ArrayExpression":
+      return node.elements.every(
+        (el) =>
+          el !== null &&
+          el.type !== "SpreadElement" &&
+          isProvablyInvariant(el, depth),
+      );
+    case "ObjectExpression":
+      return node.properties.every(
+        (prop) =>
+          prop.type === "ObjectProperty" &&
+          !prop.computed &&
+          isProvablyInvariant(prop.value, depth),
+      );
+    case "Identifier": {
+      if (node.extra?.read) return false;
+      switch (node.name) {
+        case "undefined":
+        case "NaN":
+        case "Infinity":
+          return true;
+      }
+      if (depth < 8) {
+        const init = getModuleConstInit(node.name);
+        if (init) return isProvablyInvariant(init, depth + 1);
+      }
+      return false;
+    }
+    default:
+      return false;
+  }
+}
+
+function getModuleConstInit(name: string) {
+  const binding = getProgram().scope.getBinding(name);
+  return binding?.constant && binding.path.isVariableDeclarator()
+    ? (binding.path.node.init ?? undefined)
+    : undefined;
 }
 
 export function isUpdateStructuralMerge(

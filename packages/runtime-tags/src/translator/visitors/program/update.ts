@@ -1,6 +1,8 @@
 import { types as t } from "@marko/compiler";
 import { importNamed, loadFileForImport } from "@marko/compiler/babel-utils";
 
+import { scopeIdentifier } from ".";
+import { getConstructFragments } from "../../util/construct-pass";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
@@ -38,6 +40,8 @@ export default {
       const emittedLoadReady = new Set<string>();
       const patchName = generateUid("patch");
       const liveName = generateUid("live");
+      const constructIdentifiers = new Map<Section, t.Identifier>();
+      const constructRegistrations: t.Statement[] = [];
       forEachSectionReverse((section) => {
         const patchIdentifier = t.identifier(patchName);
         const liveIdentifier = t.identifier(liveName);
@@ -50,6 +54,51 @@ export default {
           file,
           emittedLoadReady,
         );
+
+        // The section's construct pass: declared fill/wiring fragments plus
+        // structural merges that only apply to constructed scopes (adopted
+        // branch linkage of state-only selections), registered under the
+        // section's shell id so construction can look it up.
+        const constructStatements = [
+          ...getConstructFragments(section).map(
+            (fragment) => fragment.statement,
+          ),
+          ...buildConstructMergeStatements(
+            section,
+            mergeIdentifiers,
+            hoistedDeclarations,
+            file,
+            emittedLoadReady,
+          ),
+        ];
+        if (constructStatements.length) {
+          const identifier = generateUidIdentifier(
+            section === rootSection
+              ? "construct"
+              : `${section.name}__construct`,
+          );
+          constructIdentifiers.set(section, identifier);
+          mergeFunctions.push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                identifier,
+                t.arrowFunctionExpression(
+                  [scopeIdentifier],
+                  t.blockStatement(constructStatements),
+                ),
+              ),
+            ]),
+          );
+          constructRegistrations.push(
+            t.expressionStatement(
+              callRuntime(
+                "_construct",
+                t.stringLiteral(getResumeRegisterId(section, "update")),
+                t.cloneNode(identifier, true),
+              ),
+            ),
+          );
+        }
 
         const directMerge = getDirectMerge(statements, patchName, liveName);
         if (directMerge) {
@@ -120,7 +169,11 @@ export default {
         t.exportSpecifier(patchFactoryIdentifier, t.identifier("patch")),
       ]);
       const body: t.Statement[] = [];
-      body.push(...hoistedDeclarations, ...mergeFunctions);
+      body.push(
+        ...hoistedDeclarations,
+        ...mergeFunctions,
+        ...constructRegistrations,
+      );
       // Every dispatchable content section registers a merge (a shared noop
       // when it has no values): registration is how `_update_dynamic` proves
       // a dispatched renderer id is known before constructing or merging.
@@ -144,12 +197,16 @@ export default {
           }
           identifier = noopIdentifier;
         }
+        const constructIdentifier = constructIdentifiers.get(section);
         body.push(
           t.expressionStatement(
             callRuntime(
               "_update_content",
               t.stringLiteral(getResumeRegisterId(section, "content")),
               t.cloneNode(identifier, true),
+              ...(constructIdentifier
+                ? [t.cloneNode(constructIdentifier, true)]
+                : []),
             ),
           ),
         );
@@ -175,6 +232,7 @@ export default {
           );
         }
       }
+      const rootConstructIdentifier = constructIdentifiers.get(rootSection);
       body.push(
         mergeDeclaration,
         t.expressionStatement(
@@ -182,6 +240,9 @@ export default {
             "_update_content",
             t.stringLiteral(file.metadata.marko.id),
             t.cloneNode(mergeIdentifier),
+            ...(rootConstructIdentifier
+              ? [t.cloneNode(rootConstructIdentifier, true)]
+              : []),
           ),
         ),
         t.exportNamedDeclaration(null, [
@@ -351,7 +412,9 @@ function buildMergeStatements(
   }
 
   for (const merge of merges) {
-    if (isUpdateHandlerMerge(merge)) continue;
+    if (isUpdateHandlerMerge(merge) || isConstructOnlyStructuralMerge(merge)) {
+      continue;
+    }
     statements.push(
       ...buildMerge(
         merge,
@@ -394,6 +457,50 @@ type UpdateHandlerMerge = Extract<
   { kind: "text" | "html" | "attr" | "controllable" }
 >;
 
+// A structural merge that only applies to constructed scopes (a state-only
+// selection's adopted branch linkage): never dispatched on matched patches.
+function isConstructOnlyStructuralMerge(
+  merge: UpdateMerge,
+): merge is Extract<UpdateMerge, { kind: "if" }> {
+  return merge.kind === "if" && !!merge.constructOnly;
+}
+
+function buildConstructMergeStatements(
+  section: Section,
+  mergeIdentifiers: Map<Section, t.Identifier>,
+  hoistedDeclarations: t.Statement[],
+  file: t.BabelFile,
+  emittedLoadReady: Set<string>,
+) {
+  const statements: t.Statement[] = [];
+  const scopeGet = (accessor: string | t.StringLiteral | t.NumericLiteral) =>
+    t.memberExpression(scopeIdentifier, toAccessorLiteral(accessor), true);
+  const ifPresent = (
+    accessor: string | t.StringLiteral | t.NumericLiteral,
+    whenPresent: t.Statement,
+  ) =>
+    t.ifStatement(
+      t.binaryExpression("in", toAccessorLiteral(accessor), scopeIdentifier),
+      whenPresent,
+    );
+  for (const merge of getUpdateMerges(section)) {
+    if (!isConstructOnlyStructuralMerge(merge)) continue;
+    statements.push(
+      ...buildMerge(
+        merge,
+        scopeIdentifier,
+        scopeIdentifier,
+        mergeIdentifiers,
+        hoistedDeclarations,
+        file,
+        emittedLoadReady,
+        { patchGet: scopeGet, liveGet: scopeGet, ifPresent },
+      ),
+    );
+  }
+  return statements;
+}
+
 function isUpdateHandlerMerge(merge: UpdateMerge): merge is UpdateHandlerMerge {
   return (
     merge.kind === "text" ||
@@ -434,7 +541,10 @@ function buildUpdateHandler(merge: UpdateHandlerMerge): t.ObjectProperty {
       );
       break;
   }
-  return t.objectProperty(t.stringLiteral(merge.patchAccessor), handler);
+  return t.objectProperty(
+    t.stringLiteral(merge.patchAccessor),
+    merge.constructOnly ? callRuntime("_update_construct", handler) : handler,
+  );
 }
 
 function buildMerge(

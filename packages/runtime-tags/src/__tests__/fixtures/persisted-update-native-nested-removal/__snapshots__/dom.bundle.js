@@ -8,6 +8,9 @@ const $count_seed = _update_signal("a9");
 const $inputouter_content__update = ($patch, $live) => {
 	if ("Da" in $patch || "Aa" in $patch) _update_dynamic($patch, $live, "Da", "Aa");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.h);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("h" in $patch) _update_seed($live, $count_seed, $patch["h"]);
@@ -15,10 +18,11 @@ const $update2 = ($patch, $live) => {
 	if ("i" in $patch) $live["i"] = $patch["i"];
 	if ("Dc" in $patch || "Ac" in $patch) _update_dynamic($patch, $live, "Dc", "Ac");
 };
+_construct("a2", $construct);
 _update_content("a3", _update_pair);
 _update_content("a5", $inputouter_content__update);
 const $merge = _resume("a2", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

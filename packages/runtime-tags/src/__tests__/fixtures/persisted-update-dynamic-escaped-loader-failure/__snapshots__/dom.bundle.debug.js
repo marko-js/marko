@@ -29,9 +29,9 @@ function $patch2$1($fail) {
 }
 
 // template.marko.persisted.mjs
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
-const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/7", ($scope) => _text($scope["#text/1"], $scope.count)));
 const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -45,47 +45,19 @@ const $input_crew = ($scope, input_crew) => $input_crew$1($scope["#childScope/2"
 const $input = ($scope, input) => $input_crew($scope, input.crew);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	_construct_child($scope, "#childScope/2", "__tests__/tags/board.marko_0_update");
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("#childScope/2" in $patch) $merge$1($patch["#childScope/2"], $live["#childScope/2"]);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 _update_loader("__tests__/tags/roster.marko", () => import("./roster.marko.persisted.mjs"));
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
-function $patch2($fail) {
-	return patch($merge, $fail);
-}
-
-// tags/roster.marko.persisted.mjs
-const $template = "<button class=pin>pin <!></button><ul class=crew></ul>";
-const $walks = " Db%l b";
-const $for_content__name = ($scope, name) => _text($scope["#text/0"], name);
-const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
-const $pinned = _var_resume("__tests__/tags/roster.marko_0_pinned/var", /*@__PURE__*/ _let_persisted("pinned/6", ($scope) => _text($scope["#text/1"], $scope.pinned)));
-const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
-	$pinned($scope, $scope.pinned + 1);
-}));
-function $setup($scope) {
-	$pinned($scope, 0);
-	$setup__script($scope);
-}
-const $for = 0;
-const $input_crew = ($scope, input_crew) => {
-	if (!updating) $for($scope, [input_crew, function(name) {
-		return name;
-	}]);
-};
-const $input = ($scope, input) => $input_crew($scope, input.crew);
-var roster_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/roster.marko", $template, $walks, $setup, $input);
-const $pinned_seed = _update_signal("__tests__/tags/roster.marko_0_pinned/var");
-const $update2 = ($patch, $live) => {
-	_update_pair($patch, $live);
-	if ("pinned" in $patch) _update_seed($live, $pinned_seed, $patch["pinned"]);
-	if ("ConditionalRenderer:#ul/2" in $patch) _update_region("#ul/2")($patch, $live);
-};
-const $merge = _resume("__tests__/tags/roster.marko_0_update", $update2);
-_update_content("__tests__/tags/roster.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -112,6 +84,43 @@ const $input_crew = ($scope, input_crew) => {
 const $input = ($scope, input) => $input_crew($scope, input.crew);
 var roster_default = /*@__PURE__*/ _template("__tests__/tags/roster.marko", $template, $walks, $setup, $input);
 
+// tags/roster.marko.persisted.mjs
+const $template = "<button class=pin>pin <!></button><ul class=crew></ul>";
+const $walks = " Db%l b";
+const $for_content__name = ($scope, name) => _text($scope["#text/0"], name);
+const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
+const $pinned = _var_resume("__tests__/tags/roster.marko_0_pinned/var", /*@__PURE__*/ _let_persisted("pinned/6", ($scope) => _text($scope["#text/1"], $scope.pinned)));
+const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
+	$pinned($scope, $scope.pinned + 1);
+}));
+function $setup($scope) {
+	$pinned($scope, 0);
+	$setup__script($scope);
+}
+const $for = 0;
+const $input_crew = ($scope, input_crew) => {
+	if (!updating) $for($scope, [input_crew, function(name) {
+		return name;
+	}]);
+};
+const $input = ($scope, input) => $input_crew($scope, input.crew);
+var roster_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/roster.marko", $template, $walks, $setup, $input);
+const $pinned_seed = _update_signal("__tests__/tags/roster.marko_0_pinned/var");
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.pinned);
+};
+const $update2 = ($patch, $live) => {
+	_update_pair($patch, $live);
+	if ("pinned" in $patch) _update_seed($live, $pinned_seed, $patch["pinned"]);
+	if ("ConditionalRenderer:#ul/2" in $patch) _update_region("#ul/2")($patch, $live);
+};
+_construct("__tests__/tags/roster.marko_0_update", $construct);
+const $merge = _resume("__tests__/tags/roster.marko_0_update", $update2);
+_update_content("__tests__/tags/roster.marko", $merge, $construct);
+function $patch2($fail) {
+	return patch($merge, $fail);
+}
+
 // tags/board.marko
 const $template$1 = "<section class=board><h2 class=tally><!> aboard</h2><!></section>";
 const $walks$1 = "E%l%l";
@@ -131,9 +140,9 @@ const $input$1 = ($scope, input) => {
 var board_default = /*@__PURE__*/ _template("__tests__/tags/board.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
-const $count = /*@__PURE__*/ _let_persisted("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
+const $count = /*@__PURE__*/ _let_persisted("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

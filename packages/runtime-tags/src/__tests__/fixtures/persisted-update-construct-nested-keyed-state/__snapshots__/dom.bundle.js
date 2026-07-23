@@ -4,7 +4,10 @@ _script_shared(($scope) => _on($scope.a, "click", function() {
 	$for_content2__watched($scope, !$scope.g);
 }));
 const $watched_seed = _update_signal("a6");
-const $for_content2_holes = /*@__PURE__*/ _update_scopes({ "Ndata-key:a": /*@__PURE__*/ _update_named_attr("a", "data-key") });
+const $for_content2_holes = /*@__PURE__*/ _update_scopes({
+	"Ndata-key:a": /*@__PURE__*/ _update_named_attr("a", "data-key"),
+	"Qb": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("b"))
+});
 const $for_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
 const $for_update = _update_for_keyed(1, ($p, $l) => $for_content2__update($p, $l), "a2");
 const $for_update2 = _update_for_keyed(0, ($p2, $l2) => $for_content__update($p2, $l2), "a3");
@@ -12,6 +15,9 @@ const $for_content2__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("g" in $patch) _update_seed($live, $watched_seed, $patch["g"]);
 	$for_content2_holes($patch, $live);
+};
+const $for_content__construct = ($scope) => {
+	_text($scope.a, $scope.e);
 };
 const $for_content__update = ($patch, $live) => {
 	if ("e" in $patch) $live["e"] = $patch["e"];
@@ -21,6 +27,7 @@ const $for_content__update = ($patch, $live) => {
 const $update2 = ($patch, $live) => {
 	if ("Aa" in $patch) $for_update2($live, [$patch["Aa"], "M"]);
 };
+_construct("a3", $for_content__construct);
 const $merge = _resume("a0", $update2);
 _update_content("a", $merge);
 function $patch2($fail) {

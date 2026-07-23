@@ -87,6 +87,9 @@ const $elseif_content__update = ($patch, $live) => {
 	if ("title" in $patch) $live["title"] = $patch["title"];
 	if ("ConditionalRenderer:#text/0" in $patch || "BranchScopes:#text/0" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -102,11 +105,12 @@ const $update2 = ($patch, $live) => {
 		"__tests__/template.marko_4_update"
 	]);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_5_content", $noop_update);
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

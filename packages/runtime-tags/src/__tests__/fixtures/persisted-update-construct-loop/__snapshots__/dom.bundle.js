@@ -10,6 +10,9 @@ const $for_content__update = ($patch, $live) => {
 	$for_content_holes($patch, $live);
 	if ("Db" in $patch || "Ab" in $patch) _update_dynamic($patch, $live, "Db", "Ab");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.d);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
@@ -17,11 +20,12 @@ const $update2 = ($patch, $live) => {
 	if ("f" in $patch) $live["f"] = $patch["f"];
 	if ("Ac" in $patch) $for_update($live, [$patch["Ac"], "M"]);
 };
+_construct("a1", $construct);
 const $noop_update = () => {};
 _update_content("a3", $noop_update);
 _update_content("a2", $noop_update);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

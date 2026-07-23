@@ -25,7 +25,8 @@ var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/templa
 const $watched_seed = _update_signal("__tests__/template.marko_1_watched/var");
 const $for_content_holes = /*@__PURE__*/ _update_scopes({
 	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchAttr:data-id:#button/1": /*@__PURE__*/ _update_named_attr("#button/1", "data-id")
+	"PatchAttr:data-id:#button/1": /*@__PURE__*/ _update_named_attr("#button/1", "data-id"),
+	"PatchHole:#text/2": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/2"))
 });
 const $for_update = _update_for_keyed("#ul/0", ($p, $l) => $for_content__update($p, $l), "__tests__/template.marko_1_update");
 const $for_content__update = ($patch, $live) => {

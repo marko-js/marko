@@ -41,7 +41,7 @@ var layout_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "Qb", "expand", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
 	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "b0");
 	_html("</section>");
 	_script($scope0_id, "b2");
@@ -86,8 +86,8 @@ var template_default = _template("a", (input) => {
 						_html(`<li${report.name === $global().focus ? " class=focus" : ""}>${_escape(report.name)}${_el_resume($scope6_id, "b", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(report.value)}${_el_resume($scope6_id, "c", _persisted_reason())}</li>${_el_resume($scope6_id, "a", _persisted_reason())}`);
 						_persisted_reason() && writeScope($scope6_id, {});
 					});
-				}, $scope4_id, "b");
-				_html(`</ul>${_el_resume($scope4_id, "b", _persisted_reason())}`);
+				}, $scope4_id, "c");
+				_html(`</ul>${_el_resume($scope4_id, "c", _persisted_reason())}`);
 				_persisted_reason() && writeScope($scope4_id, {
 					_: _scope_with_id($scope3_id),
 					a: _existing_scope($childScope)
@@ -108,34 +108,42 @@ var template_default = _template("a", (input) => {
 	layout_default({ content: $global().view === "reports" ? Reports : Home });
 	_script($scope0_id, "a9");
 	writeScope($scope0_id, {
-		d: _state_reason() && count,
+		e: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope2)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a4": [[["c"], "<ul class=reports></ul>"], [
+	"a4": [[["c"], "<!><ul class=reports></ul>"], [
 		"/",
 		["c"],
-		"& b"
+		"&%b b"
 	]],
-	"a10": [[["c"], "<ul class=reports></ul>"], [
+	"a10": [[["c"], "<!><ul class=reports></ul>"], [
 		"/",
 		["c"],
-		"& b"
+		"&%b b"
 	]],
 	"a7": ["<!><!><!>", "b%c"],
 	"a6": ["<!><!><!>", "b%c"],
 	"a11": ["<h2 class=greeting> </h2><!><p class=footer>updated <!></p>", "D l%bDb%l"],
 	"a8": ["<h2 class=greeting> </h2><!><p class=footer>updated <!></p>", "D l%bDb%l"],
-	"a1": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a1": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

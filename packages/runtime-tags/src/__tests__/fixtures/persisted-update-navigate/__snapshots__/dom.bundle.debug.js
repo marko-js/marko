@@ -19,7 +19,7 @@ function $patch2$1($fail) {
 const $template = "<h1> </h1><a>specs</a><button> </button><section></section><ul></ul>";
 const $walks = "D l b D l b b";
 const $for_content__item_price = ($scope, item_price) => $input_amount($scope["#childScope/0"], item_price);
-const $for_content__item_name = ($scope, item_name) => _text($scope["#text/1"], item_name);
+const $for_content__item_name = ($scope, item_name) => _text($scope["#text/2"], item_name);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_price($scope, $params2[0]?.price);
 	$for_content__item_name($scope, $params2[0]?.name);
@@ -74,7 +74,9 @@ const $expanded_seed = _update_signal("__tests__/template.marko_0_expanded/var")
 const $input_product_featured_update = _update_signal("__tests__/template.marko_0_input_product_featured/var");
 const $_holes = /*@__PURE__*/ _update_scopes({
 	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchAttr:href:#a/1": /*@__PURE__*/ _update_named_attr("#a/1", "href")
+	"PatchAttr:href:#a/1": /*@__PURE__*/ _update_named_attr("#a/1", "href"),
+	"PatchHole:#text/3": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/3")),
+	"PatchAttr:class:#section/4": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_attr("#section/4", _attr_class))
 });
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -106,7 +108,7 @@ var price_default = /*@__PURE__*/ _template("__tests__/tags/price.marko", $templ
 const $template = "<h1> </h1><a>specs</a><button> </button><section></section><ul></ul>";
 const $walks = "D l b D l b b";
 const $for_content__item_price = ($scope, item_price) => $input_amount($scope["#childScope/0"], item_price);
-const $for_content__item_name = ($scope, item_name) => _text($scope["#text/1"], item_name);
+const $for_content__item_name = ($scope, item_name) => _text($scope["#text/2"], item_name);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_price($scope, $params2[0]?.price);
 	$for_content__item_name($scope, $params2[0]?.name);
@@ -139,7 +141,7 @@ const $input_product_sale = ($scope, input_product_sale) => {
 	$input_product_sale_percent($scope, input_product_sale?.percent);
 	if (!updating) $if($scope, input_product_sale ? 0 : 1);
 };
-const $for = /*@__PURE__*/ _for_of("#ul/5", /*@__PURE__*/ ((_w0) => `<li>${_w0} <!></li>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&b%l`)($walks$1), 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#ul/5", /*@__PURE__*/ ((_w0) => `<li>${_w0}<!> <!></li>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&%c%l`)($walks$1), 0, $for_content__$params);
 const $input_related = ($scope, input_related) => {
 	if (!updating) $for($scope, [input_related, function(item) {
 		return item.id;

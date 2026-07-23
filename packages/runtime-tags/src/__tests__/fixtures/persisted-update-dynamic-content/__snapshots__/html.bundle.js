@@ -3,7 +3,7 @@ var layout_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "Qb", "expand", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
 	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "b0");
 	_html("</section>");
 	_script($scope0_id, "b2");
@@ -50,28 +50,36 @@ var template_default = _template("a", (input) => {
 	layout_default({ content: input.view === "specs" ? Specs : Overview });
 	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
-		g: ($si__input_view || _patch_reason()) && input.title,
-		h: ($si__input_view || _patch_reason()) && input.summary,
-		i: ($si__input_view || _patch_reason()) && input.specs,
-		k: _state_reason() && count,
-		l: ($si__input_view || _patch_reason()) && Overview,
-		m: ($si__input_view || _patch_reason()) && Specs,
-		o: $sg__input_title && $input_title__closures,
-		p: $sg__input_summary && $input_summary__closures,
-		q: $sg__input_specs && $input_specs__closures,
+		h: ($si__input_view || _patch_reason()) && input.title,
+		i: ($si__input_view || _patch_reason()) && input.summary,
+		j: ($si__input_view || _patch_reason()) && input.specs,
+		l: _state_reason() && count,
+		m: ($si__input_view || _patch_reason()) && Overview,
+		n: ($si__input_view || _patch_reason()) && Specs,
+		p: $sg__input_title && $input_title__closures,
+		q: $sg__input_summary && $input_summary__closures,
+		r: $sg__input_specs && $input_specs__closures,
 		d: $sg__input_view | _persisted_reason() && _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a0": [["<h1> </h1><button class=count>clicked <!></button>", ["b"]], [
+	"a0": [[
+		"<h1> </h1><button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		"D l Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<h1> </h1><button class=count>clicked <!></button>", ["b"]], [
+	"a": [[
+		"<h1> </h1><button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		"D l Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

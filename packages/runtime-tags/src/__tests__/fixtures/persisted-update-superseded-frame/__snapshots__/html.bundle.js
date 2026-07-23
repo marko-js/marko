@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_tick__closures = /* @__PURE__ */ new Set();
 	let show = true;
-	_html(`<button class=toggle>hide${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=toggle>${_escape(_hole_value($scope0_id, "Qb", "hide", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
@@ -29,8 +29,8 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "c", 1, 1, 1, 0, 1);
-	_script($scope0_id, "a6");
+	}, $scope0_id, "c", 1, 1, 1, 0, 1, void 0, void 0, ["a6"]);
+	_script($scope0_id, "a7");
 	writeScope($scope0_id, {
 		f: input.note,
 		g: input.tick,
@@ -42,10 +42,10 @@ var template_default = _template("a", (input) => {
 }, 1);
 _renderer_shells({
 	"a2": ["<p class=note> </p>", "D l"],
-	"a7": ["<p class=note> </p>", "D l"],
+	"a8": ["<p class=note> </p>", "D l"],
 	"a5": ["<!><!><!>", "b%c"],
 	"a4": ["<!><!><!>", "b%c"],
-	"a8": ["<section><!></section>", "D%l"],
+	"a6": ["<section><!></section>", "D%l"],
 	"a9": ["<section><!></section>", "D%l"],
 	"a1": ["<button class=toggle> </button><!><!>", " D l%c"],
 	"a": ["<button class=toggle> </button><!><!>", " D l%c"]

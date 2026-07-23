@@ -65,13 +65,17 @@ const $for_content3__update = ($patch, $live) => {
 const $for_content2__update = ($patch, $live) => {
 	if ("page_slug" in $patch) $live["page_slug"] = $patch["page_slug"];
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("ConditionalRenderer:#nav/2" in $patch) _update_region("#nav/2")($patch, $live);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

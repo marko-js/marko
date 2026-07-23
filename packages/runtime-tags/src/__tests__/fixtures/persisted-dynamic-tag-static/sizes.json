@@ -1,8 +1,8 @@
 {
   "dom": {
     "nav.js": {
-      "min": 5851,
-      "brotli": 2403
+      "min": 6146,
+      "brotli": 2523
     },
     "template.mjs": {
       "min": 8753,

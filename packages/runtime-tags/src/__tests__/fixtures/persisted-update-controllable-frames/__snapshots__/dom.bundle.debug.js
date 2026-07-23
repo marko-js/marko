@@ -53,6 +53,9 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content_holes, "__tests__/template.marko_3_update");
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -61,10 +64,11 @@ const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("BranchScopes:#text/4" in $patch) _update_branch($patch, $live, "#text/4", $try_content__update, "__tests__/template.marko_1_update", "__tests__/template.marko_2_content");
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_2_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

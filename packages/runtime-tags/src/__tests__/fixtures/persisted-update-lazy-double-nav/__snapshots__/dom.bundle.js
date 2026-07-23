@@ -6,14 +6,18 @@ const $setup__script = _script_shared(($scope) => _on($scope.b, "click", functio
 const $count_seed = _update_signal("a2");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
 _load_ready("_b", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:panel.marko.setup.mjs")));
+const $construct = ($scope) => {
+	_text($scope.c, $scope.k);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("k" in $patch) _update_seed($live, $count_seed, $patch["k"]);
 	$_holes($patch, $live);
 	if ("e" in $patch) _update_load($patch["e"], $live["e"], "b1", $live, 3, "b");
 };
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -47,14 +51,18 @@ const $input = ($scope, input) => {
 var panel_marko_persisted_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 const $hits_seed = _update_signal("b3");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qb": /*@__PURE__*/ _update_text("b") });
+const $construct = ($scope) => {
+	_text($scope.c, $scope.i);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("i" in $patch) _update_seed($live, $hits_seed, $patch["i"]);
 	$_holes($patch, $live);
 	if ("Dd" in $patch) _update_region("d")($patch, $live);
 };
+_construct("b1", $construct);
 const $merge = _resume("b1", $update2);
-_update_content("b", $merge);
+_update_content("b", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

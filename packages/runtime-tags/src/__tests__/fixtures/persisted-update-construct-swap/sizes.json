@@ -2,21 +2,21 @@
   "dom": {
     "nav.js": {
       "total": {
-        "min": 5835,
-        "brotli": 2395
+        "min": 546,
+        "brotli": 315
       },
       "files": {
         "tags/layout.marko.persisted.mjs": 257,
-        "template.marko.persisted.mjs": 748
+        "template.marko.persisted.mjs": 892
       }
     },
     "template.marko.page.mjs": {
-      "min": 182,
-      "brotli": 143
+      "min": 183,
+      "brotli": 137
     }
   },
   "html": {
     "min": 567,
-    "brotli": 343
+    "brotli": 342
   }
 }

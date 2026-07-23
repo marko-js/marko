@@ -11,21 +11,33 @@ const $for_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _u
 const $for_update = _update_for_keyed(1, ($p, $l) => $for_content2__update($p, $l), "a2");
 const $count_seed = _update_signal("a6");
 const $for_update2 = _update_for_keyed(1, ($p2, $l2) => $for_content__update($p2, $l2), "a3");
+const $for_content2__construct = ($scope) => {
+	_text($scope.b, $scope._.e);
+};
 const $for_content2__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	$for_content2_holes($patch, $live);
+};
+const $for_content__construct = ($scope) => {
+	_text($scope.a, $scope.e);
 };
 const $for_content__update = ($patch, $live) => {
 	if ("e" in $patch) $live["e"] = $patch["e"];
 	$for_content_holes($patch, $live);
 	if ("Ab" in $patch) $for_update($live, [$patch["Ab"], "M"]);
 };
+const $construct = ($scope) => {
+	_text($scope.a, $scope.c);
+};
 const $update2 = ($patch, $live) => {
 	if ("c" in $patch) _update_seed($live, $count_seed, $patch["c"]);
 	if ("Ab" in $patch) $for_update2($live, [$patch["Ab"], "M"]);
 };
+_construct("a2", $for_content2__construct);
+_construct("a3", $for_content__construct);
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

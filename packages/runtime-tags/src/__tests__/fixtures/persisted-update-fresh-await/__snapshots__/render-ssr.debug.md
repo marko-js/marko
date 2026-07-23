@@ -45,7 +45,6 @@ loading reviews…
 ```
 INSERT: h2
 REMOVE: .count + p
-UPDATE: h2::text@8 "" => "7"
 INSERT: h2 + ::text("loading reviews…")
 ```
 
@@ -142,7 +141,6 @@ REMOVE: .count + ul
 ```
 INSERT: p + h2
 REMOVE: .count + p
-UPDATE: h2::text@8 "" => "3"
 INSERT: h2 + ul
 INSERT: ul > :is(li, li)
 ```

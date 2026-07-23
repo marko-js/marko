@@ -69,7 +69,7 @@ var actions_default = _template("__tests__/tags/actions.marko", (input) => {
 	let list = shared_list_default({ name: "cart" });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/actions.marko_0_list/var");
 	let added = 0;
-	_html(`<button class=add>added <!>${_escape(added)}${_el_resume($scope0_id, "#text/3")} of ${_sep($sg__input_id)}${_escape(productId)}${_el_resume($scope0_id, "#text/4", $sg__input_id)} (<!>${_escape(list.length)}${_el_resume($scope0_id, "#text/5")} in cart)</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button class=add>added <!>${_escape(added)}${_el_resume($scope0_id, "#text/4")} of ${_sep($sg__input_id)}${_escape(productId)}${_el_resume($scope0_id, "#text/5", $sg__input_id)} (<!>${_escape(_hole_value($scope0_id, "PatchHole:#text/6", list.length, _state_reason()))}${_el_resume($scope0_id, "#text/6")} in cart)</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/tags/actions.marko_0");
 	writeScope($scope0_id, {
 		productId,
@@ -84,15 +84,15 @@ var actions_default = _template("__tests__/tags/actions.marko", (input) => {
 	_resume_branch($scope0_id);
 });
 _renderer_shells({
-	"__tests__/tags/actions.marko_0_update": [[["__tests__/tags/shared-list.marko"], "<button class=add>added <!> of <!> (<!> in cart)</button>"], [
+	"__tests__/tags/actions.marko_0_update": [[["__tests__/tags/shared-list.marko"], "<!><button class=add>added <!> of <!> (<!> in cart)</button>"], [
 		"0",
 		["__tests__/tags/shared-list.marko"],
-		"& Db%c%c%l"
+		"&%b Db%c%c%l"
 	]],
-	"__tests__/tags/actions.marko": [[["__tests__/tags/shared-list.marko"], "<button class=add>added <!> of <!> (<!> in cart)</button>"], [
+	"__tests__/tags/actions.marko": [[["__tests__/tags/shared-list.marko"], "<!><button class=add>added <!> of <!> (<!> in cart)</button>"], [
 		"0",
 		["__tests__/tags/shared-list.marko"],
-		"& Db%c%c%l"
+		"&%b Db%c%c%l"
 	]]
 });
 
@@ -101,7 +101,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>${open ? "collapse" : "expand"}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "PatchHole:#text/1", open ? "collapse" : "expand", _state_reason()))}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
 	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "__tests__/tags/layout.marko_0/update_dynamic_#text/2");
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/layout.marko_0");
@@ -138,8 +138,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<b${tag === $global().tag ? " class=on" : ""}${_attr("data-tag", tag)}>${_escape(label)}${_el_resume($scope3_id, "#text/1", _persisted_reason())}</b>${_el_resume($scope3_id, "#b/0", _persisted_reason())}`);
 				_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "13:6");
 			});
-		}, $scope1_id, "#nav/2");
-		_html(`</nav>${_el_resume($scope1_id, "#nav/2", _persisted_reason())}`);
+		}, $scope1_id, "#nav/3");
+		_html(`</nav>${_el_resume($scope1_id, "#nav/3", _persisted_reason())}`);
 		_if(() => {
 			if (!entries.length) {
 				const $scope4_id = _scope_id();
@@ -149,18 +149,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			} else {
 				const $scope2_id = _scope_id();
 				_html("<ul class=cart>");
-				_region(() => {
-					forOf(entries, (entry) => {
-						const $scope5_id = _scope_id();
-						_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "#text/0")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "#text/1")}</li>`);
-						writeScope($scope5_id, {}, "__tests__/template.marko", "25:8");
-					});
-				}, $scope2_id, "#ul/0");
-				_html(`</ul>${_el_resume($scope2_id, "#ul/0")}<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "#text/1")}</p>`);
+				_for_of(entries, (entry) => {
+					const $scope5_id = _scope_id();
+					_html(`<li>${_escape(_hole_value($scope5_id, "PatchHole:#text/0", entry.product.title, _state_reason()))}${_el_resume($scope5_id, "#text/0")} $<!>${_escape(_hole_value($scope5_id, "PatchHole:#text/1", entry.product.price, _state_reason()))}${_el_resume($scope5_id, "#text/1")}</li>`);
+					writeScope($scope5_id, {}, "__tests__/template.marko", "25:8");
+				}, function(entry) {
+					return entry.id;
+				}, $scope2_id, "#ul/0", 1, 1, 1, "</ul>", 1, "__tests__/template.marko_5_update");
+				_html(`<p class=total>total $<!>${_escape(_hole_value($scope2_id, "PatchHole:#text/1", entries.reduce((sum, e) => sum + e.product.price, 0), _state_reason()))}${_el_resume($scope2_id, "#text/1")}</p>`);
 				writeScope($scope2_id, {}, "__tests__/template.marko", "23:4");
 				return 1;
 			}
-		}, $scope1_id, "#text/3");
+		}, $scope1_id, "#text/4", void 0, void 0, void 0, void 0, void 0, void 0, void 0, ["__tests__/template.marko_4_update", "__tests__/template.marko_2_update"]);
 		writeScope($scope1_id, {
 			products: _state_reason() && products,
 			entries: _state_reason() && entries,
@@ -186,7 +186,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope2 = _peek_scope_id();
 			_set_serialize_reason(_persisted_reason());
 			actions_default({ id: product.id });
-			_try($scope7_id, "#text/4", _content_resume("__tests__/template.marko_8_content", () => {
+			_try($scope7_id, "#text/5", _content_resume("__tests__/template.marko_8_content", () => {
 				const $scope8_id = _scope_id();
 				const $scope8_reason = _scope_reason();
 				_await($scope8_id, "#text/0", getRecommendations(product.id), (recs) => {
@@ -208,7 +208,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope10_id = _scope_id();
 				_html("loading recommendations…");
-			}, $scope7_id) }) }, "__tests__/template.marko_7/update_boundary_#text/4", "__tests__/template.marko_8_update");
+			}, $scope7_id) }) }, "__tests__/template.marko_7/update_boundary_#text/5", "__tests__/template.marko_8_update");
 			_persisted_reason() && writeScope($scope7_id, {
 				_: _scope_with_id($scope6_id),
 				"#childScope/3": _existing_scope($childScope2)
@@ -241,45 +241,55 @@ _renderer_shells({
 	"__tests__/template.marko_7_update": [[
 		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
 		["__tests__/tags/actions.marko"],
-		"<!><!>"
+		"<!><!><!>"
 	], [
 		" bD lDb%l/",
 		["__tests__/tags/actions.marko"],
-		"&%c"
+		"&%b%c"
 	]],
 	"__tests__/template.marko_7_content": [[
 		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
 		["__tests__/tags/actions.marko"],
-		"<!><!>"
+		"<!><!><!>"
 	], [
 		" bD lDb%l/",
 		["__tests__/tags/actions.marko"],
-		"&%c"
+		"&%b%c"
 	]],
 	"__tests__/template.marko_6_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_6_content": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_5_update": ["<li><!> $<!></li>", "D%c%l"],
+	"__tests__/template.marko_5_content": ["<li><!> $<!></li>", "D%c%l"],
 	"__tests__/template.marko_4_update": ["<p class=cart>cart is empty</p>", "b"],
 	"__tests__/template.marko_4_content": ["<p class=cart>cart is empty</p>", "b"],
 	"__tests__/template.marko_2_update": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
 	"__tests__/template.marko_2_content": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
-	"__tests__/template.marko_1_update": [[["__tests__/tags/shared-list.marko"], "<nav class=tags></nav><!><!>"], [
+	"__tests__/template.marko_1_update": [[["__tests__/tags/shared-list.marko"], "<!><nav class=tags></nav><!><!>"], [
 		"0",
 		["__tests__/tags/shared-list.marko"],
-		"& b%c"
+		"&%b b%c"
 	]],
-	"__tests__/template.marko_1_content": [[["__tests__/tags/shared-list.marko"], "<nav class=tags></nav><!><!>"], [
+	"__tests__/template.marko_1_content": [[["__tests__/tags/shared-list.marko"], "<!><nav class=tags></nav><!><!>"], [
 		"0",
 		["__tests__/tags/shared-list.marko"],
-		"& b%c"
+		"&%b b%c"
 	]],
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]]
 });

@@ -8,6 +8,7 @@ import {
 import { type AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { scopeIdentifier } from "../visitors/program";
+import type { ConstructKind } from "./construct-pass";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -86,6 +87,10 @@ export interface Signal {
   values: Array<{
     signal: Signal;
     value: t.Expression;
+    // The construct pass never invokes signal fns, so every value forward
+    // is never-construct unless its site declares the kind whose fragment
+    // or merge carries the behavior on the construct path.
+    constructKind?: ConstructKind;
   }>;
   intersection: Opt<Signal>;
   render: t.Statement[];
@@ -991,12 +996,14 @@ export function addValue(
   referencedBindings: ReferencedBindings,
   signal: Signal,
   value: t.Expression,
+  constructKind?: ConstructKind,
 ) {
   const parentSignal = getSignal(targetSection, referencedBindings);
   addRenderReferences(parentSignal, referencedBindings);
   parentSignal.values.push({
     signal,
     value,
+    constructKind,
   });
 
   if (

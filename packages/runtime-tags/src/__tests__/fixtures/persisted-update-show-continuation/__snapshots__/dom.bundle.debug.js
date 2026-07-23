@@ -27,13 +27,17 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 	"PatchHole:#text/4": /*@__PURE__*/ _update_text("#text/4"),
 	"PatchHole:#text/5": /*@__PURE__*/ _update_text("#text/5")
 });
+const $construct = ($scope) => {
+	_text($scope["#text/2"], $scope.n);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("n" in $patch) _update_seed($live, $n_seed, $patch["n"]);
 	$_holes($patch, $live);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

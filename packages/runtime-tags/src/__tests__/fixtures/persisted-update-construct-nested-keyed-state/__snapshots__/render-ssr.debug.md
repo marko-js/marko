@@ -108,12 +108,12 @@ _assert.default.equal(item(document).textContent, "watching");
   <button
     data-key="parent-alpha-marker:shared-item"
   >
-     
+    watch
   </button>
   <button
     data-key="parent-alpha-marker:alpha-item"
   >
-     
+    watch
   </button>
 </section>
 <section>
@@ -128,7 +128,7 @@ _assert.default.equal(item(document).textContent, "watching");
   <button
     data-key="parent-beta-marker:beta-item"
   >
-     
+    watch
   </button>
 </section>
 ```

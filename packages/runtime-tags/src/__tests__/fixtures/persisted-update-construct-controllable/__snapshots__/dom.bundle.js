@@ -15,20 +15,29 @@ function $valueChange($scope) {
 }
 const $text_seed = _update_signal("a8");
 const $count_seed = _update_signal("a9");
+const $Editor_content__construct = ($scope) => {
+	_attr_input_value($scope, "a", $scope.c, $scope["Ea"]);
+	_text($scope.b, $scope.c);
+};
 const $Editor_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("c" in $patch) _update_seed($live, $text_seed, $patch["c"]);
+};
+const $construct = ($scope) => {
+	_text($scope.b, $scope.d);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
 	if ("Dc" in $patch || "Ac" in $patch) _update_dynamic($patch, $live, "Dc", "Ac");
 };
-_update_content("a4", $Editor_content__update);
+_construct("a7", $Editor_content__construct);
+_construct("a2", $construct);
+_update_content("a4", $Editor_content__update, $Editor_content__construct);
 const $noop_update = () => {};
 _update_content("a3", $noop_update);
 const $merge = _resume("a2", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

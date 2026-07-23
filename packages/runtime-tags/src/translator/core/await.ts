@@ -254,11 +254,13 @@ export default {
           ),
         );
 
+        // Construct path: adopted boundary linkage via the branch merge.
         addValue(
           section,
           valueExpr.extra?.referencedBindings,
           signal,
           valueExpr,
+          "structural",
         );
 
         tag.remove();

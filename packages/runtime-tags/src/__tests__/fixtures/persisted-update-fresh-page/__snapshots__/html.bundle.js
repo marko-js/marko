@@ -62,26 +62,26 @@ var actions_default = _template("b", (input) => {
 	let list = shared_list_default({ name: "cart" });
 	_var($scope0_id, "b", $childScope, "b1");
 	let added = 0;
-	_html(`<button class=add>added <!>${_escape(added)}${_el_resume($scope0_id, "d")} of ${_sep($sg__input_id)}${_escape(productId)}${_el_resume($scope0_id, "e", $sg__input_id)} (<!>${_escape(list.length)}${_el_resume($scope0_id, "f")} in cart)</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button class=add>added <!>${_escape(added)}${_el_resume($scope0_id, "e")} of ${_sep($sg__input_id)}${_escape(productId)}${_el_resume($scope0_id, "f", $sg__input_id)} (<!>${_escape(_hole_value($scope0_id, "Qg", list.length, _state_reason()))}${_el_resume($scope0_id, "g")} in cart)</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "b2");
 	writeScope($scope0_id, {
-		j: productId,
-		k: _state_reason() && list,
-		m: _state_reason() && added,
+		k: productId,
+		l: _state_reason() && list,
+		n: _state_reason() && added,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
 });
 _renderer_shells({
-	"b0": [[["d"], "<button class=add>added <!> of <!> (<!> in cart)</button>"], [
+	"b0": [[["d"], "<!><button class=add>added <!> of <!> (<!> in cart)</button>"], [
 		"0",
 		["d"],
-		"& Db%c%c%l"
+		"&%b Db%c%c%l"
 	]],
-	"b": [[["d"], "<button class=add>added <!> of <!> (<!> in cart)</button>"], [
+	"b": [[["d"], "<!><button class=add>added <!> of <!> (<!> in cart)</button>"], [
 		"0",
 		["d"],
-		"& Db%c%c%l"
+		"&%b Db%c%c%l"
 	]]
 });
 
@@ -90,7 +90,7 @@ var layout_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "Qb", "expand", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
 	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "c0");
 	_html("</section>");
 	_script($scope0_id, "c2");
@@ -108,7 +108,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const Cart = { content: _content("a4", () => {
+	const Cart = { content: _content("a7", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const $childScope = _peek_scope_id();
@@ -127,8 +127,8 @@ var template_default = _template("a", (input) => {
 				_html(`<b${tag === $global().tag ? " class=on" : ""}${_attr("data-tag", tag)}>${_escape(label)}${_el_resume($scope3_id, "b", _persisted_reason())}</b>${_el_resume($scope3_id, "a", _persisted_reason())}`);
 				_persisted_reason() && writeScope($scope3_id, {});
 			});
-		}, $scope1_id, "c");
-		_html(`</nav>${_el_resume($scope1_id, "c", _persisted_reason())}`);
+		}, $scope1_id, "d");
+		_html(`</nav>${_el_resume($scope1_id, "d", _persisted_reason())}`);
 		_if(() => {
 			if (!entries.length) {
 				const $scope4_id = _scope_id();
@@ -138,26 +138,26 @@ var template_default = _template("a", (input) => {
 			} else {
 				const $scope2_id = _scope_id();
 				_html("<ul class=cart>");
-				_region(() => {
-					forOf(entries, (entry) => {
-						const $scope5_id = _scope_id();
-						_html(`<li>${_escape(entry.product.title)}${_el_resume($scope5_id, "a")} $<!>${_escape(entry.product.price)}${_el_resume($scope5_id, "b")}</li>`);
-						writeScope($scope5_id, {});
-					});
-				}, $scope2_id, "a");
-				_html(`</ul>${_el_resume($scope2_id, "a")}<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "b")}</p>`);
+				_for_of(entries, (entry) => {
+					const $scope5_id = _scope_id();
+					_html(`<li>${_escape(_hole_value($scope5_id, "Qa", entry.product.title, _state_reason()))}${_el_resume($scope5_id, "a")} $<!>${_escape(_hole_value($scope5_id, "Qb", entry.product.price, _state_reason()))}${_el_resume($scope5_id, "b")}</li>`);
+					writeScope($scope5_id, {});
+				}, function(entry) {
+					return entry.id;
+				}, $scope2_id, "a", 1, 1, 1, "</ul>", 1, "a4");
+				_html(`<p class=total>total $<!>${_escape(_hole_value($scope2_id, "Qb", entries.reduce((sum, e) => sum + e.product.price, 0), _state_reason()))}${_el_resume($scope2_id, "b")}</p>`);
 				writeScope($scope2_id, {});
 				return 1;
 			}
-		}, $scope1_id, "d");
+		}, $scope1_id, "e", void 0, void 0, void 0, void 0, void 0, void 0, void 0, ["a6", "a5"]);
 		writeScope($scope1_id, {
-			f: _state_reason() && products,
-			h: _state_reason() && entries,
+			g: _state_reason() && products,
+			i: _state_reason() && entries,
 			a: _existing_scope($childScope)
 		});
 		_resume_branch($scope1_id);
 	}) };
-	const Item = { content: _content("a11", () => {
+	const Item = { content: _content("a14", () => {
 		const $scope6_id = _scope_id();
 		const $Item_content__product_id__closures = /* @__PURE__ */ new Set();
 		_scope_reason();
@@ -172,7 +172,7 @@ var template_default = _template("a", (input) => {
 			const $childScope2 = _peek_scope_id();
 			_set_serialize_reason(_persisted_reason());
 			actions_default({ id: product.id });
-			_try($scope7_id, "e", _content_resume("a7", () => {
+			_try($scope7_id, "f", _content_resume("a10", () => {
 				const $scope8_id = _scope_id();
 				_scope_reason();
 				_await($scope8_id, "a", getRecommendations(product.id), (recs) => {
@@ -187,80 +187,90 @@ var template_default = _template("a", (input) => {
 					}, $scope11_id, "a");
 					_html(`</ul>${_el_resume($scope11_id, "a", _persisted_reason())}`);
 					_persisted_reason() && writeScope($scope11_id, {});
-				}, _persisted_reason(), "a5");
+				}, _persisted_reason(), "a8");
 				_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope8_id, { _: _scope_with_id($scope7_id) }));
 				_resume_branch($scope8_id);
-			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a6", () => {
+			}, $scope7_id), { placeholder: attrTag({ content: _content_resume("a9", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading recommendations…");
-			}, $scope7_id) }) }, "a1", "a8");
+			}, $scope7_id) }) }, "a1", "a11");
 			_persisted_reason() && writeScope($scope7_id, {
 				_: _scope_with_id($scope6_id),
 				d: _existing_scope($childScope2)
 			});
-		}], ["a10", "a9"]);
+		}], ["a13", "a12"]);
 		_persisted_reason() && writeScope($scope6_id, { j: $Item_content__product_id__closures });
 	}) };
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "item" ? Item : Cart });
-	_script($scope0_id, "a12");
+	_script($scope0_id, "a15");
 	writeScope($scope0_id, {
-		d: _state_reason() && count,
+		e: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope3)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a5": ["<ul class=recs></ul>", " b"],
-	"a13": ["<ul class=recs></ul>", " b"],
-	"a10": ["<h2>not found</h2>", "b"],
-	"a14": ["<h2>not found</h2>", "b"],
-	"a8": ["<!><!><!>", "b%c"],
-	"a7": ["<!><!><!>", "b%c"],
-	"a9": [[
-		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
-		["b"],
-		"<!><!>"
-	], [
-		" bD lDb%l/",
-		["b"],
-		"&%c"
-	]],
-	"a15": [[
-		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
-		["b"],
-		"<!><!>"
-	], [
-		" bD lDb%l/",
-		["b"],
-		"&%c"
-	]],
-	"a16": ["<!><!><!>", "b%c"],
+	"a8": ["<ul class=recs></ul>", " b"],
+	"a16": ["<ul class=recs></ul>", " b"],
+	"a13": ["<h2>not found</h2>", "b"],
+	"a17": ["<h2>not found</h2>", "b"],
 	"a11": ["<!><!><!>", "b%c"],
-	"a17": ["<p class=cart>cart is empty</p>", "b"],
-	"a18": ["<p class=cart>cart is empty</p>", "b"],
-	"a19": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
-	"a20": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
-	"a21": [[["d"], "<nav class=tags></nav><!><!>"], [
+	"a10": ["<!><!><!>", "b%c"],
+	"a12": [[
+		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
+		["b"],
+		"<!><!><!>"
+	], [
+		" bD lDb%l/",
+		["b"],
+		"&%b%c"
+	]],
+	"a18": [[
+		"<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>",
+		["b"],
+		"<!><!><!>"
+	], [
+		" bD lDb%l/",
+		["b"],
+		"&%b%c"
+	]],
+	"a19": ["<!><!><!>", "b%c"],
+	"a14": ["<!><!><!>", "b%c"],
+	"a4": ["<li><!> $<!></li>", "D%c%l"],
+	"a20": ["<li><!> $<!></li>", "D%c%l"],
+	"a6": ["<p class=cart>cart is empty</p>", "b"],
+	"a21": ["<p class=cart>cart is empty</p>", "b"],
+	"a5": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
+	"a22": ["<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l"],
+	"a23": [[["d"], "<!><nav class=tags></nav><!><!>"], [
 		"0",
 		["d"],
-		"& b%c"
+		"&%b b%c"
 	]],
-	"a4": [[["d"], "<nav class=tags></nav><!><!>"], [
+	"a7": [[["d"], "<!><nav class=tags></nav><!><!>"], [
 		"0",
 		["d"],
-		"& b%c"
+		"&%b b%c"
 	]],
-	"a2": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a2": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]]
 });

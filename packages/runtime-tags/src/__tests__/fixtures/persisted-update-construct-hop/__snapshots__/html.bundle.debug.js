@@ -59,7 +59,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>${open ? "collapse" : "expand"}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "PatchHole:#text/1", open ? "collapse" : "expand", _state_reason()))}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
 	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "__tests__/tags/layout.marko_0/update_dynamic_#text/2");
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/layout.marko_0");
@@ -90,7 +90,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope = _peek_scope_id();
 		let tally = store_default({});
 		_var($scope2_id, "#scopeOffset/2", $childScope, "__tests__/template.marko_2_tally/var");
-		_html(`<button class=bump>tally <!>${_escape(tally)}${_el_resume($scope2_id, "#text/4")}</button>${_el_resume($scope2_id, "#button/3")}`);
+		_html(`<button class=bump>tally <!>${_escape(tally)}${_el_resume($scope2_id, "#text/5")}</button>${_el_resume($scope2_id, "#button/4")}`);
 		const $childScope2 = _peek_scope_id();
 		_set_serialize_reason(_persisted_reason());
 		widget_default({ label: session.plan });
@@ -101,9 +101,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<li${metric.name === $global().focus ? " class=focus" : ""}>${_escape(metric.name)}${_el_resume($scope3_id, "#text/1", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(metric.value)}${_el_resume($scope3_id, "#text/2", _persisted_reason())}</li>${_el_resume($scope3_id, "#li/0", _persisted_reason())}`);
 				_persisted_reason() && writeScope($scope3_id, {}, "__tests__/template.marko", "16:6");
 			});
-		}, $scope2_id, "#ul/6");
-		_html(`</ul>${_el_resume($scope2_id, "#ul/6", _persisted_reason())}`);
-		_if(() => $global().admin ? 0 : undefined, $scope2_id, "#text/7", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "__tests__/template.marko_2/update_if_#text/7", [() => {
+		}, $scope2_id, "#ul/8");
+		_html(`</ul>${_el_resume($scope2_id, "#ul/8", _persisted_reason())}`);
+		_if(() => $global().admin ? 0 : undefined, $scope2_id, "#text/9", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "__tests__/template.marko_2/update_if_#text/9", [() => {
 			const $scope4_id = _scope_id();
 			_html("<p class=admin>admin tools enabled</p>");
 			_persisted_reason() && writeScope($scope4_id, {}, "__tests__/template.marko", "20:4");
@@ -112,7 +112,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		writeScope($scope2_id, {
 			tally: _state_reason() && tally,
 			"#childScope/1": _existing_scope($childScope),
-			"#childScope/5": _persisted_reason() && _existing_scope($childScope2)
+			"#childScope/6": _persisted_reason() && _existing_scope($childScope2)
 		}, "__tests__/template.marko", "9:2", { tally: "12:10" });
 	}) };
 	const $childScope3 = _peek_scope_id();
@@ -129,37 +129,45 @@ _renderer_shells({
 	"__tests__/template.marko_2_update": [[
 		"<h2 class=greeting> </h2>",
 		["__tests__/tags/store.marko"],
-		"<button class=bump>tally <!></button>",
+		"<!><button class=bump>tally <!></button>",
 		["__tests__/tags/widget.marko"],
-		"<ul class=metrics></ul><!><!>"
+		"<!><ul class=metrics></ul><!><!>"
 	], [
 		"D l0",
 		["__tests__/tags/store.marko"],
-		"& Db%l/",
+		"&%b Db%l/",
 		["__tests__/tags/widget.marko"],
-		"& b%c"
+		"&%b b%c"
 	]],
 	"__tests__/template.marko_2_content": [[
 		"<h2 class=greeting> </h2>",
 		["__tests__/tags/store.marko"],
-		"<button class=bump>tally <!></button>",
+		"<!><button class=bump>tally <!></button>",
 		["__tests__/tags/widget.marko"],
-		"<ul class=metrics></ul><!><!>"
+		"<!><ul class=metrics></ul><!><!>"
 	], [
 		"D l0",
 		["__tests__/tags/store.marko"],
-		"& Db%l/",
+		"&%b Db%l/",
 		["__tests__/tags/widget.marko"],
-		"& b%c"
+		"&%b b%c"
 	]],
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]]
 });

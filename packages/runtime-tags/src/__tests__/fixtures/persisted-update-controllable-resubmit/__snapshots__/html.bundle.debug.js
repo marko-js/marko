@@ -36,14 +36,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_serialize_guard($scope0_reason, 0) | _persisted_reason() && writeScope($scope0_id, { "#childScope/1": $sg__input_id | _persisted_reason() && _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [["<h1 class=name> </h1>", ["__tests__/tags/order-form.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<h1 class=name> </h1>",
+		["__tests__/tags/order-form.marko"],
+		"<!>"
+	], [
 		"D l/",
 		["__tests__/tags/order-form.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<h1 class=name> </h1>", ["__tests__/tags/order-form.marko"]], [
+	"__tests__/template.marko": [[
+		"<h1 class=name> </h1>",
+		["__tests__/tags/order-form.marko"],
+		"<!>"
+	], [
 		"D l/",
 		["__tests__/tags/order-form.marko"],
-		"&"
+		"&%b"
 	]]
 });

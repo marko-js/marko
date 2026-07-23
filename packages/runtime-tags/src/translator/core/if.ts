@@ -48,6 +48,7 @@ import {
   addSerializeExpr,
   addSerializeReason,
   getSerializeReason,
+  getSerializeSourcesForExpr,
   isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
@@ -217,6 +218,17 @@ export const IfTag = {
             ifTagExtra,
             branchConditions,
           );
+          // A state-only conditional under a constructed parent applies its
+          // adopted branch linkage, so the writer must be able to ship the
+          // chosen branch's wire shell.
+          const constructIfIds =
+            splitSelection ||
+            (isPersisted() &&
+              isMembraneLive(ifTagSection) &&
+              isStateSerializeReason(getSerializeSourcesForExpr(ifTagExtra)) &&
+              branches.every(
+                ([, branchBody]) => !branchBody || isMembraneLive(branchBody),
+              ));
           let branchSerializeReasons: SerializeReasons | undefined =
             reasonlessSelection ? true : undefined;
           let statement: t.Statement | undefined;
@@ -280,15 +292,17 @@ export const IfTag = {
 
             const [testAttr] = branchTag.node.attributes;
 
+            if (constructIfIds) {
+              branchConstructIds[i] =
+                branchBody && isMembraneLive(branchBody)
+                  ? t.stringLiteral(getResumeRegisterId(branchBody, "update"))
+                  : t.numericLiteral(0);
+            }
             if (splitSelection) {
               branchRenderers[i] = t.arrowFunctionExpression(
                 [],
                 t.blockStatement(bodyStatements as t.Statement[]),
               );
-              branchConstructIds[i] =
-                branchBody && isMembraneLive(branchBody)
-                  ? t.stringLiteral(getResumeRegisterId(branchBody, "update"))
-                  : t.numericLiteral(0);
               selectorExpr = testAttr
                 ? t.conditionalExpression(
                     testAttr.value,
@@ -366,7 +380,7 @@ export const IfTag = {
                     )
                   : undefined,
                 splitSelection ? t.arrayExpression(branchRenderers) : undefined,
-                splitSelection
+                constructIfIds
                   ? t.arrayExpression(branchConstructIds)
                   : undefined,
               ),
@@ -455,6 +469,26 @@ export const IfTag = {
                   },
             );
             signal.updateGuard = true;
+          } else if (
+            isPersisted() &&
+            isMembraneLive(ifTagSection) &&
+            isStateSerializeReason(getSerializeSourcesForExpr(ifTagExtra)) &&
+            branches.every(
+              ([, branchBodySection]) =>
+                !branchBodySection || isMembraneLive(branchBodySection),
+            )
+          ) {
+            // A state-only selection never merges on patches (client state
+            // wins), but a constructed parent must still apply the adopted
+            // branch linkage; this record partitions into the construct pass.
+            addUpdateMerge(ifTagSection, {
+              kind: "if",
+              constructOnly: true,
+              accessor: getScopeAccessorLiteral(nodeRef),
+              branchBodySections: branches.map(
+                ([, branchBodySection]) => branchBodySection,
+              ),
+            });
           }
           signal.build = () => {
             const rendererArgs: (t.Expression | undefined)[] = [];
@@ -474,7 +508,14 @@ export const IfTag = {
               ...replaceNullishAndEmptyFunctionsWith0(rendererArgs),
             );
           };
-          addValue(ifTagSection, ifTagExtra.referencedBindings, signal, expr);
+          // Construct path: adopted linkage via the structural if merge.
+          addValue(
+            ifTagSection,
+            ifTagExtra.referencedBindings,
+            signal,
+            expr,
+            "structural",
+          );
         }
       },
     },

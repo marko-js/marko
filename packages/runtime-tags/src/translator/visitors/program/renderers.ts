@@ -21,14 +21,20 @@ declare module "@marko/compiler/dist/types" {
     /** Marks a composed template/walks reference with the child template's
      * registered id so the renderers entry can emit it as a shell part. */
     childTemplateId?: string;
+    /** A region-delivered child: its markup arrives per response, so shells
+     * compose it as empty (its `<!>` anchor rides the surrounding parts). */
+    childTemplateRegion?: boolean;
   }
 }
 
 export function withChildTemplateId<T extends t.Expression>(
   expr: T,
   id: string,
+  region?: boolean,
 ): T {
-  (expr.extra ??= {}).childTemplateId = id;
+  const extra = (expr.extra ??= {});
+  extra.childTemplateId = id;
+  extra.childTemplateRegion = region;
   return expr;
 }
 
@@ -53,7 +59,11 @@ export default {
       forEachSectionReverse((section) => {
         // Nucleus-free sections deliver as captured region markup, never as
         // values-free shells; registration marks a section shell-capable.
-        if (!isMembraneLive(section)) return;
+        // The root of an all-scaffold template still registers under its
+        // update id (never the template id — that absence is the dynamic-tag
+        // liveness signal) so live parents composing it by reference resolve.
+        const live = isMembraneLive(section);
+        if (!live && section !== rootSection) return;
         const meta = getSectionMeta(section);
         const template = asShellSource(meta.writes as t.Expression);
         const walks = asShellSource(meta.walks as t.Expression);
@@ -77,11 +87,13 @@ export default {
         shells[getResumeRegisterId(section, "update")] = shell;
         // Renderer ids resolve the same shell at dynamic hops: content ids
         // for same-template targets, the template id for escaped targets.
-        shells[
-          section === rootSection
-            ? program.hub.file.metadata.marko.id
-            : getResumeRegisterId(section, "content")
-        ] = shell;
+        if (live) {
+          shells[
+            section === rootSection
+              ? program.hub.file.metadata.marko.id
+              : getResumeRegisterId(section, "content")
+          ] = shell;
+        }
       });
       // The internal nested compile reads the map through this side channel
       // (see the html program exit) instead of parsing the emitted module.
@@ -142,7 +154,7 @@ let programConstants: Map<string, t.Expression> | undefined;
 
 function asShellParts(expr: t.Expression): ShellPart[] | undefined {
   if (expr.extra?.childTemplateId) {
-    return [[expr.extra.childTemplateId]];
+    return expr.extra.childTemplateRegion ? [] : [[expr.extra.childTemplateId]];
   }
   if (t.isStringLiteral(expr)) {
     return expr.value ? [expr.value] : [];

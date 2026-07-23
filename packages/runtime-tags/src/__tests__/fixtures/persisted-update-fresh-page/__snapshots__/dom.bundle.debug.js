@@ -39,16 +39,16 @@ function $patch2$3($fail) {
 }
 
 // tags/actions.marko.persisted.mjs
-const $template$2 = /*@__PURE__*/ ((_w0) => `${_w0}<button class=add>added <!> of <!> (<!> in cart)</button>`)("");
-const $walks$2 = /*@__PURE__*/ ((_w0) => `0${_w0}& Db%c%c%l`)("");
-const $productId = _var_resume("__tests__/tags/actions.marko_0_productId/var", /*@__PURE__*/ _const_persisted("productId", ($scope) => _text($scope["#text/4"], $scope.productId)));
+const $template$2 = /*@__PURE__*/ ((_w0) => `${_w0}<!><button class=add>added <!> of <!> (<!> in cart)</button>`)("");
+const $walks$2 = /*@__PURE__*/ ((_w0) => `0${_w0}&%b Db%c%c%l`)("");
+const $productId = _var_resume("__tests__/tags/actions.marko_0_productId/var", /*@__PURE__*/ _const_persisted("productId", ($scope) => _text($scope["#text/5"], $scope.productId)));
 const $input_id = ($scope, input_id) => {
 	if (!updating) $productId($scope, input_id);
 };
 const $list = _var_resume("__tests__/tags/actions.marko_0_list/var", /*@__PURE__*/ _const_persisted("list", ($scope) => $list_length($scope, $scope.list?.length)));
-const $list_length = ($scope, list_length) => _text($scope["#text/5"], list_length);
-const $added = _var_resume("__tests__/tags/actions.marko_0_added/var", /*@__PURE__*/ _let_persisted("added/12", ($scope) => _text($scope["#text/3"], $scope.added)));
-const $setup__script$2 = _script_shared(($scope) => _on($scope["#button/2"], "click", function() {
+const $list_length = ($scope, list_length) => _text($scope["#text/6"], list_length);
+const $added = _var_resume("__tests__/tags/actions.marko_0_added/var", /*@__PURE__*/ _let_persisted("added/13", ($scope) => _text($scope["#text/4"], $scope.added)));
+const $setup__script$2 = _script_shared(($scope) => _on($scope["#button/3"], "click", function() {
 	$added($scope, $scope.added + 1);
 	_var_change($scope["#childScope/0"], [...$scope.list, $scope.productId], "list");
 }));
@@ -63,14 +63,23 @@ const $input$1 = ($scope, input) => $input_id($scope, input.id);
 var actions_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/actions.marko", $template$2, $walks$2, $setup$2, $input$1);
 const $added_seed = _update_signal("__tests__/tags/actions.marko_0_added/var");
 const $productId_update = _update_signal("__tests__/tags/actions.marko_0_productId/var");
+const $_holes$1 = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/6": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/6")) });
+const $construct$1 = ($scope) => {
+	_construct_child($scope, "#childScope/0", "__tests__/tags/shared-list.marko_0_update");
+	_var($scope, "#childScope/0", $list);
+	_text($scope["#text/4"], $scope.added);
+	_text($scope["#text/5"], $scope.productId);
+};
 const $update2$2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("added" in $patch) _update_seed($live, $added_seed, $patch["added"]);
 	if ("productId" in $patch) $productId_update($live, $patch["productId"]);
+	$_holes$1($patch, $live);
 	if ("#childScope/0" in $patch) $merge$3($patch["#childScope/0"], $live["#childScope/0"]);
 };
+_construct("__tests__/tags/actions.marko_0_update", $construct$1);
 const $merge$2 = _resume("__tests__/tags/actions.marko_0_update", $update2$2);
-_update_content("__tests__/tags/actions.marko", $merge$2);
+_update_content("__tests__/tags/actions.marko", $merge$2, $construct$1);
 function $patch2$2($fail) {
 	return patch($merge$2, $fail);
 }
@@ -92,9 +101,11 @@ const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
 var layout_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input);
 const $open_seed = _update_signal("__tests__/tags/layout.marko_0_open/var");
+const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/1")) });
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("open" in $patch) _update_seed($live, $open_seed, $patch["open"]);
+	$_holes($patch, $live);
 	if ("ConditionalRenderer:#text/2" in $patch || "BranchScopes:#text/2" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
 const $merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update2$1);
@@ -104,8 +115,8 @@ function $patch2$1($fail) {
 }
 
 // template.marko.persisted.mjs
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
 _enable_catch();
 const $for_content3__rec_title = ($scope, rec_title) => _text($scope["#text/0"], rec_title);
 const $for_content3__$params = ($scope, $params5) => $for_content3__rec_title($scope, $params5[0]?.title);
@@ -133,7 +144,7 @@ const $else_content2__product_image = /*@__PURE__*/ _if_closure("#text/0", 1, ($
 		_attr($scope["#img/0"], "src", $scope._.product_image);
 	}
 });
-const $else_content2__try = /*@__PURE__*/ _try("#text/4", "<!><!><!>", "b%c", $try_content__setup);
+const $else_content2__try = /*@__PURE__*/ _try("#text/5", "<!><!><!>", "b%c", $try_content__setup);
 const $else_content2__setup = ($scope) => {
 	if (!updating) $else_content2__product_image._($scope);
 	if (!updating) $else_content2__product_title._($scope);
@@ -158,7 +169,7 @@ const $else_content2__product_id = /*@__PURE__*/ _if_closure("#text/0", 1, ($sco
 		$input_id($scope["#childScope/3"], $scope._.product_id);
 	}
 });
-const $Item_content__if = /*@__PURE__*/ _if("#text/0", "<h2>not found</h2>", "b", 0, /*@__PURE__*/ ((_w0) => `<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>${_w0}<!><!>`)($template$2), /*@__PURE__*/ ((_w0) => ` bD lDb%l/${_w0}&%c`)($walks$2), $else_content2__setup);
+const $Item_content__if = /*@__PURE__*/ _if("#text/0", "<h2>not found</h2>", "b", 0, /*@__PURE__*/ ((_w0) => `<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>${_w0}<!><!><!>`)($template$2), /*@__PURE__*/ ((_w0) => ` bD lDb%l/${_w0}&%b%c`)($walks$2), $else_content2__setup);
 const $Item_content__product = ($scope, product) => {
 	$Item_content__product_image($scope, product?.image);
 	$Item_content__product_title($scope, product?.title);
@@ -192,7 +203,7 @@ const $for_content__tag = ($scope, tag) => {
 };
 const $for_content__$params = ($scope, $params2) => $for_content__tag($scope, $params2[0]);
 const $else_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
-const $else_content__entries = /*@__PURE__*/ _if_closure("#text/3", 1, ($scope) => {
+const $else_content__entries = /*@__PURE__*/ _if_closure("#text/4", 1, ($scope) => {
 	_text($scope["#text/1"], $scope._.entries.reduce((sum, e) => sum + e.product.price, 0));
 	if (!updating) $else_content__for($scope, [$scope._.entries, function(entry) {
 		return entry.id;
@@ -203,11 +214,11 @@ const $Cart_content__entries = /*@__PURE__*/ _const_persisted("entries", ($scope
 	$Cart_content__entries_length($scope, $scope.entries?.length);
 	$else_content__entries($scope);
 });
-const $Cart_content__list__OR__products = /*@__PURE__*/ _or(6, ($scope) => $Cart_content__entries($scope, $scope.list.map((id) => ({
+const $Cart_content__list__OR__products = /*@__PURE__*/ _or(7, ($scope) => $Cart_content__entries($scope, $scope.list.map((id) => ({
 	product: $scope.products.find((p) => p.id === id),
 	id
 }))), 1, "#scopeOffset/1");
-const $Cart_content__products = _var_resume("__tests__/template.marko_1_products/var", /*@__PURE__*/ _let_persisted("products/5", $Cart_content__list__OR__products));
+const $Cart_content__products = _var_resume("__tests__/template.marko_1_products/var", /*@__PURE__*/ _let_persisted("products/6", $Cart_content__list__OR__products));
 const $Cart_content__list = _var_resume("__tests__/template.marko_1_list/var", /*@__PURE__*/ _const_persisted("list", ($scope) => {
 	$Cart_content__products($scope, getProducts?.($scope.list) || []);
 	$Cart_content__list__OR__products($scope);
@@ -219,11 +230,11 @@ const $Cart_content__setup = ($scope) => {
 	$input_name($scope["#childScope/0"], "cart");
 	if (!updating) $Cart_content__for($scope, [getTags?.()]);
 };
-const $Cart_content__if = /*@__PURE__*/ _if("#text/3", "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
+const $Cart_content__if = /*@__PURE__*/ _if("#text/4", "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
-const $Cart_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", /*@__PURE__*/ ((_w0) => `${_w0}<nav class=tags></nav><!><!>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)(""), $Cart_content__setup);
-const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count)));
-const $Cart__OR__Item = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "item" ? $scope.Item : $scope.Cart));
+const $Cart_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", /*@__PURE__*/ ((_w0) => `${_w0}<!><nav class=tags></nav><!><!>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&%b b%c`)(""), $Cart_content__setup);
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/4", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $Cart__OR__Item = /*@__PURE__*/ _or(7, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "item" ? $scope.Item : $scope.Cart));
 const $Cart = /*@__PURE__*/ _const_persisted("Cart", $Cart__OR__Item);
 const $Item = /*@__PURE__*/ _const_persisted("Item", $Cart__OR__Item);
 const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
@@ -243,6 +254,11 @@ const $else_content2_holes = /*@__PURE__*/ _update_scopes({
 	"PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1"),
 	"PatchHole:#text/2": /*@__PURE__*/ _update_text("#text/2")
 });
+const $for_content2_holes = /*@__PURE__*/ _update_scopes({
+	"PatchHole:#text/0": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/0")),
+	"PatchHole:#text/1": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/1"))
+});
+const $else_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/1")) });
 const $products_seed = _update_signal("__tests__/template.marko_1_products/var");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $await_content__update = ($patch, $live) => {
@@ -251,10 +267,16 @@ const $await_content__update = ($patch, $live) => {
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_11_update");
 };
+const $else_content2__construct = ($scope) => {
+	_attr($scope["#img/0"], "src", $scope._.product_image);
+	_attr($scope["#img/0"], "alt", $scope._.product_title);
+	_text($scope["#text/1"], $scope._.product_title);
+	_construct_child($scope, "#childScope/3", "__tests__/tags/actions.marko_0_update");
+};
 const $else_content2__update = ($patch, $live) => {
 	$else_content2_holes($patch, $live);
 	if ("#childScope/3" in $patch) $merge$2($patch["#childScope/3"], $live["#childScope/3"]);
-	if ("BranchScopes:#text/4" in $patch) _update_branch($patch, $live, "#text/4", $try_content__update, "__tests__/template.marko_8_update", "__tests__/template.marko_10_content");
+	if ("BranchScopes:#text/5" in $patch) _update_branch($patch, $live, "#text/5", $try_content__update, "__tests__/template.marko_8_update", "__tests__/template.marko_10_content");
 };
 const $Item_content__update = ($patch, $live) => {
 	if ("product_image" in $patch) $live["product_image"] = $patch["product_image"];
@@ -264,24 +286,37 @@ const $Item_content__update = ($patch, $live) => {
 	if ("ConditionalRenderer:#text/0" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, $else_content2__update], ["__tests__/template.marko_9_update", "__tests__/template.marko_7_update"]);
 };
 const $else_content__update = ($patch, $live) => {
-	if ("ConditionalRenderer:#ul/0" in $patch) _update_region("#ul/0")($patch, $live);
+	$else_content_holes($patch, $live);
+	if ("BranchScopes:#ul/0" in $patch) _update_for($patch["BranchScopes:#ul/0"], $live["BranchScopes:#ul/0"], $for_content2_holes, $live, "BranchScopes:#ul/0", "__tests__/template.marko_5_update");
+};
+const $Cart_content__construct = ($scope) => {
+	_construct_child($scope, "#childScope/0", "__tests__/tags/shared-list.marko_0_update");
+	_var($scope, "#childScope/0", $Cart_content__list);
+	if ("ConditionalRenderer:#text/4" in $scope) _update_if($scope, $scope, "ConditionalRenderer:#text/4", "BranchScopes:#text/4", [0, $else_content__update], ["__tests__/template.marko_4_update", "__tests__/template.marko_2_update"]);
 };
 const $Cart_content__update = ($patch, $live) => {
 	if ("products" in $patch) _update_seed($live, $products_seed, $patch["products"]);
 	if ("#childScope/0" in $patch) $merge$3($patch["#childScope/0"], $live["#childScope/0"]);
-	if ("ConditionalRenderer:#nav/2" in $patch) _update_region("#nav/2")($patch, $live);
+	if ("ConditionalRenderer:#nav/3" in $patch) _update_region("#nav/3")($patch, $live);
+};
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	_construct_child($scope, "#childScope/2", "__tests__/tags/layout.marko_0_update");
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("#childScope/2" in $patch) $merge$1($patch["#childScope/2"], $live["#childScope/2"]);
 };
+_construct("__tests__/template.marko_7_update", $else_content2__construct);
+_construct("__tests__/template.marko_1_update", $Cart_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_10_content", $noop_update);
 _update_content("__tests__/template.marko_6_content", $Item_content__update);
-_update_content("__tests__/template.marko_1_content", $Cart_content__update);
+_update_content("__tests__/template.marko_1_content", $Cart_content__update, $Cart_content__construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -352,16 +387,16 @@ _resume("__tests__/tags/shared-list.marko_0/valueChange", $valueChange);
 var shared_list_default = /*@__PURE__*/ _template("__tests__/tags/shared-list.marko", "", "", $setup, $input);
 
 // tags/actions.marko
-const $template$2 = /*@__PURE__*/ ((_w0) => `${_w0}<button class=add>added <!> of <!> (<!> in cart)</button>`)("");
-const $walks$2 = /*@__PURE__*/ ((_w0) => `0${_w0}& Db%c%c%l`)("");
-const $productId = /*@__PURE__*/ _const_persisted("productId", ($scope) => _text($scope["#text/4"], $scope.productId));
+const $template$2 = /*@__PURE__*/ ((_w0) => `${_w0}<!><button class=add>added <!> of <!> (<!> in cart)</button>`)("");
+const $walks$2 = /*@__PURE__*/ ((_w0) => `0${_w0}&%b Db%c%c%l`)("");
+const $productId = /*@__PURE__*/ _const_persisted("productId", ($scope) => _text($scope["#text/5"], $scope.productId));
 const $input_id = ($scope, input_id) => {
 	if (!updating) $productId($scope, input_id);
 };
 const $list = _var_resume("__tests__/tags/actions.marko_0_list/var", /*@__PURE__*/ _const_persisted("list", ($scope) => $list_length($scope, $scope.list?.length)));
-const $list_length = ($scope, list_length) => _text($scope["#text/5"], list_length);
-const $added = /*@__PURE__*/ _let_persisted("added/12", ($scope) => _text($scope["#text/3"], $scope.added));
-const $setup__script$2 = _script_update("__tests__/tags/actions.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+const $list_length = ($scope, list_length) => _text($scope["#text/6"], list_length);
+const $added = /*@__PURE__*/ _let_persisted("added/13", ($scope) => _text($scope["#text/4"], $scope.added));
+const $setup__script$2 = _script_update("__tests__/tags/actions.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$added($scope, $scope.added + 1);
 	_var_change($scope["#childScope/0"], [...$scope.list, $scope.productId], "list");
 }));
@@ -393,8 +428,8 @@ const $input = ($scope, input) => $input_content($scope, input.content);
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `<button class=count>clicked <!></button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%b`)($walks$1);
 _enable_catch();
 const $for_content3__rec_title = ($scope, rec_title) => _text($scope["#text/0"], rec_title);
 const $for_content3__$params = ($scope, $params5) => $for_content3__rec_title($scope, $params5[0]?.title);
@@ -422,7 +457,7 @@ const $else_content2__product_image = /*@__PURE__*/ _if_closure("#text/0", 1, ($
 		_attr($scope["#img/0"], "src", $scope._.product_image);
 	}
 });
-const $else_content2__try = /*@__PURE__*/ _try("#text/4", "<!><!><!>", "b%c", $try_content__setup);
+const $else_content2__try = /*@__PURE__*/ _try("#text/5", "<!><!><!>", "b%c", $try_content__setup);
 const $else_content2__setup = ($scope) => {
 	if (!updating) $else_content2__product_image._($scope);
 	if (!updating) $else_content2__product_title._($scope);
@@ -447,7 +482,7 @@ const $else_content2__product_id = /*@__PURE__*/ _if_closure("#text/0", 1, ($sco
 		$input_id($scope["#childScope/3"], $scope._.product_id);
 	}
 });
-const $Item_content__if = /*@__PURE__*/ _if("#text/0", "<h2>not found</h2>", "b", 0, /*@__PURE__*/ ((_w0) => `<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>${_w0}<!><!>`)($template$2), /*@__PURE__*/ ((_w0) => ` bD lDb%l/${_w0}&%c`)($walks$2), $else_content2__setup);
+const $Item_content__if = /*@__PURE__*/ _if("#text/0", "<h2>not found</h2>", "b", 0, /*@__PURE__*/ ((_w0) => `<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>${_w0}<!><!><!>`)($template$2), /*@__PURE__*/ ((_w0) => ` bD lDb%l/${_w0}&%b%c`)($walks$2), $else_content2__setup);
 const $Item_content__product = ($scope, product) => {
 	$Item_content__product_image($scope, product?.image);
 	$Item_content__product_title($scope, product?.title);
@@ -481,9 +516,9 @@ const $for_content__tag = ($scope, tag) => {
 };
 const $for_content__$params = ($scope, $params2) => $for_content__tag($scope, $params2[0]);
 const $else_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
-const $else_content__entries = /*@__PURE__*/ _if_closure("#text/3", 1, ($scope) => {
+const $else_content__entries = /*@__PURE__*/ _if_closure("#text/4", 1, ($scope) => {
 	_text($scope["#text/1"], $scope._.entries.reduce((sum, e) => sum + e.product.price, 0));
-	if (!updating) $else_content__for($scope, [$scope._.entries, function(entry) {
+	$else_content__for($scope, [$scope._.entries, function(entry) {
 		return entry.id;
 	}]);
 });
@@ -492,27 +527,27 @@ const $Cart_content__entries = /*@__PURE__*/ _const_persisted("entries", ($scope
 	$Cart_content__entries_length($scope, $scope.entries?.length);
 	$else_content__entries($scope);
 });
-const $Cart_content__list__OR__products = /*@__PURE__*/ _or(6, ($scope) => $Cart_content__entries($scope, $scope.list.map((id) => ({
+const $Cart_content__list__OR__products = /*@__PURE__*/ _or(7, ($scope) => $Cart_content__entries($scope, $scope.list.map((id) => ({
 	product: $scope.products.find((p) => p.id === id),
 	id
 }))), 1, "#scopeOffset/1");
-const $Cart_content__products = /*@__PURE__*/ _let_persisted("products/5", $Cart_content__list__OR__products);
+const $Cart_content__products = /*@__PURE__*/ _let_persisted("products/6", $Cart_content__list__OR__products);
 const $Cart_content__list = _var_resume("__tests__/template.marko_1_list/var", /*@__PURE__*/ _const_persisted("list", ($scope) => {
 	$Cart_content__products($scope, getProducts?.($scope.list) || []);
 	$Cart_content__list__OR__products($scope);
 }));
-const $Cart_content__for = /*@__PURE__*/ _for_of("#nav/2", "<b> </b>", " D l", 0, $for_content__$params);
+const $Cart_content__for = /*@__PURE__*/ _for_of("#nav/3", "<b> </b>", " D l", 0, $for_content__$params);
 const $Cart_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $Cart_content__list);
 	/* @__PURE__ */ $setup$3($scope["#childScope/0"]);
 	$input_name($scope["#childScope/0"], "cart");
 	if (!updating) $Cart_content__for($scope, [getTags?.()]);
 };
-const $Cart_content__if = /*@__PURE__*/ _if("#text/3", "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
+const $Cart_content__if = /*@__PURE__*/ _if("#text/4", "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
-const $Cart_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", /*@__PURE__*/ ((_w0) => `${_w0}<nav class=tags></nav><!><!>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)(""), $Cart_content__setup);
-const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $Cart__OR__Item = /*@__PURE__*/ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "item" ? $scope.Item : $scope.Cart));
+const $Cart_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", /*@__PURE__*/ ((_w0) => `${_w0}<!><nav class=tags></nav><!><!>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&%b b%c`)(""), $Cart_content__setup);
+const $count = /*@__PURE__*/ _let_persisted("count/4", ($scope) => _text($scope["#text/1"], $scope.count));
+const $Cart__OR__Item = /*@__PURE__*/ _or(7, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "item" ? $scope.Item : $scope.Cart));
 const $Cart = /*@__PURE__*/ _const_persisted("Cart", $Cart__OR__Item);
 const $Item = /*@__PURE__*/ _const_persisted("Item", $Cart__OR__Item);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

@@ -3,7 +3,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>${open ? "collapse" : "expand"}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "PatchHole:#text/1", open ? "collapse" : "expand", _state_reason()))}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
 	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "__tests__/tags/layout.marko_0/update_dynamic_#text/2");
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/layout.marko_0");
@@ -71,14 +71,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [["<h1> </h1><button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<h1> </h1><button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		"D l Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<h1> </h1><button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko": [[
+		"<h1> </h1><button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		"D l Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]]
 });

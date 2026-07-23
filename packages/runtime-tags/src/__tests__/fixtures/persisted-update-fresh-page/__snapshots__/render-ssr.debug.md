@@ -124,7 +124,7 @@ UPDATE: .count::text@8 "0" => "1"
   <button
     class="add"
   >
-    added  of  ( in cart)
+    added 0 of 2 (0 in cart)
   </button>
   loading recommendations…
 </section>
@@ -136,8 +136,9 @@ REMOVE: section > p
 INSERT: section > :is(.thumb, .title, .price, .add)
 UPDATE: .thumb[src] null => "/images/2.svg"
 UPDATE: .thumb[alt] null => "Product 2"
-UPDATE: .title::text " " => "Product 2"
+UPDATE: .title::text "" => "Product 2"
 UPDATE: .price::text@1 "" => "200.50"
+UPDATE: .add::text@14 "" => "0"
 INSERT: .add + ::text("loading recommendations…")
 ```
 
@@ -174,7 +175,7 @@ INSERT: .add + ::text("loading recommendations…")
   <button
     class="add"
   >
-    added  of  ( in cart)
+    added 0 of 2 (0 in cart)
   </button>
   <ul
     class="recs"
@@ -230,7 +231,7 @@ document.querySelector("button.add").click();
   <button
     class="add"
   >
-    added 1 of  ( in cart)
+    added 1 of 2 (1 in cart)
   </button>
   <ul
     class="recs"
@@ -246,7 +247,8 @@ document.querySelector("button.add").click();
 ```
 ## Change
 ```
-UPDATE: .add::text@6 "" => "1"
+UPDATE: .add::text@6 "0" => "1"
+UPDATE: .add::text@14 "0" => "1"
 ```
 
 # Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"cart","tag":"dev","data":{"cart":[2]},"serializedGlobals":{"data":true}}}`
@@ -284,17 +286,35 @@ UPDATE: .add::text@6 "" => "1"
       NEWS
     </b>
   </nav>
+  <ul
+    class="cart"
+  >
+    <li>
+      Product 2 $200.5
+    </li>
+  </ul>
+  <p
+    class="total"
+  >
+    total $200.5
+  </p>
 </section>
 ```
 ## Change
 ```
-INSERT: section > .tags
+INSERT: section > :is(.tags, .cart, .total)
 REMOVE: section > img
 REMOVE: section > h2
 REMOVE: section > div
 REMOVE: section > button
 REMOVE: section > ul
 INSERT: .tags > :is(b, .on, b)
+```
+
+# Update
+```js
+_strict.default.equal(document.querySelectorAll("ul.cart li").length, 1);
+_strict.default.equal(document.querySelector("p.total")?.textContent, "total $200.5");
 ```
 
 # Update
@@ -335,6 +355,18 @@ document.querySelector("button.count").click();
       NEWS
     </b>
   </nav>
+  <ul
+    class="cart"
+  >
+    <li>
+      Product 2 $200.5
+    </li>
+  </ul>
+  <p
+    class="total"
+  >
+    total $200.5
+  </p>
 </section>
 ```
 ## Change

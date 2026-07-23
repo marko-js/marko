@@ -16,12 +16,16 @@ const $if_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _up
 const $count_seed = _update_signal("a6");
 const $_holes = /*@__PURE__*/ _update_scopes({
 	"Qa": /*@__PURE__*/ _update_text("a"),
-	"Nhref:b": /*@__PURE__*/ _update_named_attr("b", "href")
+	"Nhref:b": /*@__PURE__*/ _update_named_attr("b", "href"),
+	"Nclass:e": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_attr("e", _attr_class))
 });
 const $globals_update = _update_signal("a7");
 const $if_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	$if_content_holes($patch, $live);
+};
+const $construct = ($scope) => {
+	_text($scope.d, $scope.f);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -30,8 +34,9 @@ const $update2 = ($patch, $live) => {
 	if ("De" in $patch) _update_if($patch, $live, "De", "Ae", [$if_content__update], ["a3"]);
 	$globals_update($live);
 };
+_construct("a1", $construct);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

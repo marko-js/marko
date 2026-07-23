@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(getItems?.($global().filter), (item) => {
 		const $scope1_id = _scope_id();
 		let watched = false;
-		_html(`<li><span>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", item.name, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</span><button${_attr("data-id", _hole_value($scope1_id, "PatchAttr:data-id:#button/1", item.id, _persisted_reason()))}>${watched ? "watching" : "watch"}${_el_resume($scope1_id, "#text/2")}</button>${_el_resume($scope1_id, "#button/1")}</li>`);
+		_html(`<li><span>${_escape(_hole_value($scope1_id, "PatchHole:#text/0", item.name, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}</span><button${_attr("data-id", _hole_value($scope1_id, "PatchAttr:data-id:#button/1", item.id, _persisted_reason()))}>${_escape(_hole_value($scope1_id, "PatchHole:#text/2", watched ? "watching" : "watch", _state_reason()))}${_el_resume($scope1_id, "#text/2")}</button>${_el_resume($scope1_id, "#button/1")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, { watched: _state_reason() && watched }, "__tests__/template.marko", "4:4", { watched: "5:10" });
 	}, function(item) {

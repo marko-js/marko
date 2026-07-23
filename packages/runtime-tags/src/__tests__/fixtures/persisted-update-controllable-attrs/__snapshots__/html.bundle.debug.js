@@ -44,14 +44,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_persisted_reason() && writeScope($scope0_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [["<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>", ["__tests__/tags/item-form.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>",
+		["__tests__/tags/item-form.marko"],
+		"<!>"
+	], [
 		" b b/",
 		["__tests__/tags/item-form.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>", ["__tests__/tags/item-form.marko"]], [
+	"__tests__/template.marko": [[
+		"<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>",
+		["__tests__/tags/item-form.marko"],
+		"<!>"
+	], [
 		" b b/",
 		["__tests__/tags/item-form.marko"],
-		"&"
+		"&%b"
 	]]
 });

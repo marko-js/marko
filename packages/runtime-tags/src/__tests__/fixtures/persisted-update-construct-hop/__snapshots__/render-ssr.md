@@ -74,12 +74,12 @@ UPDATE: .count::text@8 "0" => "1"
   <button
     class="bump"
   >
-    tally 
+    tally 5
   </button>
   <button
     class="widget"
   >
-    pro clicked 
+    pro clicked 0
   </button>
   <ul
     class="metrics"
@@ -102,6 +102,7 @@ REMOVE: section > p
 UPDATE: .greeting::text " " => "hello ada"
 UPDATE: .widget::text@0 "" => "pro"
 INSERT: .metrics > :is(.focus, li)
+UPDATE: .bump::text@6 "0" => "5"
 ```
 
 # Update
@@ -130,7 +131,7 @@ document.querySelector("button.widget").click();
   <button
     class="bump"
   >
-    tally 
+    tally 5
   </button>
   <button
     class="widget"
@@ -153,12 +154,59 @@ document.querySelector("button.widget").click();
 ```
 ## Change
 ```
-UPDATE: .widget::text@12 "" => "1"
+UPDATE: .widget::text@12 "0" => "1"
 ```
 
 # Update
 ```js
 document.querySelector("button.bump").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    expand
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello ada
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 8
+  </button>
+  <button
+    class="widget"
+  >
+    pro clicked 1
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li
+      class="focus"
+    >
+      views: 10
+    </li>
+    <li>
+      clicks: 3
+    </li>
+  </ul>
+</section>
+```
+## Change
+```
+UPDATE: .bump::text@6 "5" => "8"
 ```
 
 # Update
@@ -187,7 +235,7 @@ document.querySelector("button.toggle").click();
   <button
     class="bump"
   >
-    tally 
+    tally 8
   </button>
   <button
     class="widget"
@@ -236,7 +284,7 @@ UPDATE: .toggle::text "expand" => "collapse"
   <button
     class="bump"
   >
-    tally 
+    tally 5
   </button>
   <button
     class="widget"
@@ -273,6 +321,7 @@ INSERT: .metrics > :is(li, .focus, li)
 REMOVE: .metrics > li:nth-of-type(3) + .focus
 REMOVE: .metrics > li:nth-of-type(3) + li
 INSERT: .metrics + .admin
+UPDATE: .bump::text@6 "8" => "5"
 ```
 
 # Update
@@ -301,7 +350,7 @@ document.querySelector("button.widget").click();
   <button
     class="bump"
   >
-    tally 
+    tally 5
   </button>
   <button
     class="widget"
@@ -338,6 +387,61 @@ UPDATE: .widget::text@13 "1" => "2"
 # Update
 ```js
 document.querySelector("button.bump").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<aside>
+  <button
+    class="toggle"
+  >
+    collapse
+  </button>
+</aside>
+<section>
+  <h2
+    class="greeting"
+  >
+    hello grace
+  </h2>
+  <button
+    class="bump"
+  >
+    tally 8
+  </button>
+  <button
+    class="widget"
+  >
+    free clicked 2
+  </button>
+  <ul
+    class="metrics"
+  >
+    <li>
+      views: 70
+    </li>
+    <li
+      class="focus"
+    >
+      clicks: 21
+    </li>
+    <li>
+      sales: 7
+    </li>
+  </ul>
+  <p
+    class="admin"
+  >
+    admin tools enabled
+  </p>
+</section>
+```
+## Change
+```
+UPDATE: .bump::text@6 "5" => "8"
 ```
 
 # Update `{"$global":{"persisted":true,"persistedCrossRoute":true,"view":"home"}}`

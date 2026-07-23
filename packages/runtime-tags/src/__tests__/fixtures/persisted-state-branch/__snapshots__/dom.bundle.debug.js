@@ -15,9 +15,11 @@ const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/
 	$for_content__count($scope);
 }));
 const $for = /*@__PURE__*/ _for_of("#ul/5", "<li><!>:<!></li>", "D%c%l", $for_content__setup, $for_content__$params);
-const $list = _var_resume("__tests__/template.marko_0_list/var", /*@__PURE__*/ _let_persisted("list/12", ($scope) => $for($scope, [$scope.list, function(item) {
-	return item;
-}])));
+const $list = _var_resume("__tests__/template.marko_0_list/var", /*@__PURE__*/ _let_persisted("list/12", ($scope) => {
+	if (!updating) $for($scope, [$scope.list, function(item) {
+		return item;
+	}]);
+}));
 const $setup__script = _script_shared(($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$show($scope, !$scope.show);
@@ -38,19 +40,34 @@ function $setup($scope) {
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+const $for_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("#text/0")) });
 const $show_seed = _update_signal("__tests__/template.marko_0_show/var");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $list_seed = _update_signal("__tests__/template.marko_0_list/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
+const $for_content__construct = ($scope) => {
+	_text($scope["#text/1"], $scope._.count);
+};
+const $if_content__construct = ($scope) => {
+	_text($scope["#text/0"], $scope._.count);
+};
+const $construct = ($scope) => {
+	_text($scope["#text/3"], $scope.count);
+	if ("ConditionalRenderer:#text/4" in $scope) _update_if($scope, $scope, "ConditionalRenderer:#text/4", "BranchScopes:#text/4", 0, ["__tests__/template.marko_1_update"]);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("show" in $patch) _update_seed($live, $show_seed, $patch["show"]);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	if ("list" in $patch) _update_seed($live, $list_seed, $patch["list"]);
 	$_holes($patch, $live);
+	if ("BranchScopes:#ul/5" in $patch) _update_for($patch["BranchScopes:#ul/5"], $live["BranchScopes:#ul/5"], $for_content_holes, $live, "BranchScopes:#ul/5", "__tests__/template.marko_2_update");
 };
+_construct("__tests__/template.marko_2_update", $for_content__construct);
+_construct("__tests__/template.marko_1_update", $if_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

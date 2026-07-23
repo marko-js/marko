@@ -26,6 +26,7 @@ var chip_list_default = _template("__tests__/tags/chip-list.marko", (input) => {
 	}, $scope0_id, "#div/0", _persisted_reason(), 0, 0, 0, 1);
 	_html("</div>");
 });
+_renderer_shells({ "__tests__/tags/chip-list.marko_0_update": ["<div class=chips></div>", " b"] });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -36,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	_region(() => {
 		chip_list_default({});
-	}, $scope0_id, "#childScope/2");
+	}, $scope0_id, "#text/3");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count: _state_reason() && count,
@@ -45,14 +46,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/chip-list.marko"]], [
-		" Db%l/",
-		["__tests__/tags/chip-list.marko"],
-		"&"
-	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/chip-list.marko"]], [
-		" Db%l/",
-		["__tests__/tags/chip-list.marko"],
-		"&"
-	]]
+	"__tests__/template.marko_0_update": ["<button class=count>clicked <!></button><!>", " Db%l/&%b"],
+	"__tests__/template.marko": ["<button class=count>clicked <!></button><!>", " Db%l/&%b"]
 });

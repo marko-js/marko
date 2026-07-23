@@ -5,15 +5,19 @@ const $setup__script = _script_shared(($scope) => _on($scope.a, "click", functio
 }));
 const $count_seed = _update_signal("a3");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qd": /*@__PURE__*/ _update_text("d") });
+const $construct = ($scope) => {
+	_text($scope.b, $scope.e);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("e" in $patch) _update_seed($live, $count_seed, $patch["e"]);
 	$_holes($patch, $live);
 };
+_construct("a0", $construct);
 const $noop_update = () => {};
 _update_content("a1", $noop_update);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

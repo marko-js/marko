@@ -77,5 +77,5 @@ INSERT: section > .loading
 ```
 INSERT: section > .status
 REMOVE: .status + p
-UPDATE: .status::text@0 "" => "ready"
+UPDATE: .status::text@0 "waiting" => "ready"
 ```

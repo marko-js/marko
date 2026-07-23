@@ -38,6 +38,7 @@ export enum AccessorProp {
   Id = "L",
   Load = "X",
   LoopKey = "M",
+  NeedsConstruct = "Z",
   LoopIndex = "I",
   ParentBranch = "N",
   PendingEffects = "J",

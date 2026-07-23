@@ -31,12 +31,16 @@ const $if_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $_holes = /*@__PURE__*/ _update_scopes({
 	"PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0"),
-	"PatchAttr:href:#a/1": /*@__PURE__*/ _update_named_attr("#a/1", "href")
+	"PatchAttr:href:#a/1": /*@__PURE__*/ _update_named_attr("#a/1", "href"),
+	"PatchAttr:class:#section/4": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_attr("#section/4", _attr_class))
 });
 const $globals_update = _update_signal("__tests__/template.marko_0/update_globals");
 const $if_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	$if_content_holes($patch, $live);
+};
+const $construct = ($scope) => {
+	_text($scope["#text/3"], $scope.count);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -45,8 +49,9 @@ const $update2 = ($patch, $live) => {
 	if ("ConditionalRenderer:#section/4" in $patch) _update_if($patch, $live, "ConditionalRenderer:#section/4", "BranchScopes:#section/4", [$if_content__update], ["__tests__/template.marko_1_update"]);
 	$globals_update($live);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

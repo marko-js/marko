@@ -29,17 +29,30 @@ const $show = _var_resume("a10", /*@__PURE__*/ _let_persisted(7, ($scope) => {
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.h);
 }));
+const $await_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
 const $show_seed = _update_signal("a10");
+const $_holes = /*@__PURE__*/ _update_scopes({ "Qb": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("b")) });
+const $try_content__update = ($patch, $live) => {
+	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content_holes, "a2");
+};
+const $if_content__update = ($patch, $live) => {
+	if ("Aa" in $patch) _update_branch($patch, $live, "a", $try_content__update, "a5", "a3");
+};
+const $construct = ($scope) => {
+	if ("Dc" in $scope) _update_if($scope, $scope, "Dc", "Ac", [$if_content__update], ["a6"]);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("h" in $patch) _update_seed($live, $show_seed, $patch["h"]);
 	if ("f" in $patch) $live["f"] = $patch["f"];
 	if ("g" in $patch) $live["g"] = $patch["g"];
+	$_holes($patch, $live);
 };
+_construct("a1", $construct);
 const $noop_update = () => {};
 _update_content("a3", $noop_update);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -72,6 +85,6 @@ const $show = /*@__PURE__*/ _let_persisted(7, ($scope) => {
 	_text($scope.b, $scope.h ? "hide" : "show");
 	$if($scope, $scope.h ? 0 : 1);
 });
-const $setup__script = _script_update("a6", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script_update("a7", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.h);
 }));

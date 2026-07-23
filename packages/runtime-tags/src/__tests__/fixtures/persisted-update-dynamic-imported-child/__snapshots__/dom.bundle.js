@@ -15,6 +15,9 @@ const $setup__script = _script_shared(($scope) => _on($scope.b, "click", functio
 }));
 const $count_seed = _update_signal("a4");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
+const $construct = ($scope) => {
+	_text($scope.c, $scope.n);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("n" in $patch) _update_seed($live, $count_seed, $patch["n"]);
@@ -25,8 +28,9 @@ const $update2 = ($patch, $live) => {
 	if ("Dd" in $patch || "Ad" in $patch) _update_dynamic($patch, $live, "Dd", "Ad");
 	if ("De" in $patch || "Ae" in $patch) _update_dynamic($patch, $live, "De", "Ae");
 };
+_construct("a2", $construct);
 const $merge = _resume("a2", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

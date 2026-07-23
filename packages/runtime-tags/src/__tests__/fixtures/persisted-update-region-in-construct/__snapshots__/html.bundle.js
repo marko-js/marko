@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 		_html(`</ul>${_el_resume($scope2_id, "a", _persisted_reason())}`);
 		const $childScope = _peek_scope_id();
 		sticky_default({});
-		_try($scope2_id, "c", _content_resume("a6", () => {
+		_try($scope2_id, "d", _content_resume("a6", () => {
 			const $scope4_id = _scope_id();
 			_scope_reason();
 			_await($scope4_id, "a", resolveAfter(void 0, 1), () => {
@@ -76,20 +76,20 @@ _renderer_shells({
 	"a11": [[
 		"<section class=b><ul></ul>",
 		["b"],
-		"<!></section>"
+		"<!><!></section>"
 	], [
 		"D b/",
 		["b"],
-		"&%l"
+		"&%b%l"
 	]],
 	"a8": [[
 		"<section class=b><ul></ul>",
 		["b"],
-		"<!></section>"
+		"<!><!></section>"
 	], [
 		"D b/",
 		["b"],
-		"&%l"
+		"&%b%l"
 	]],
 	"a2": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
 	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]

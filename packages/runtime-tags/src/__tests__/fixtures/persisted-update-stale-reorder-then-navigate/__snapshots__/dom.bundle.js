@@ -17,6 +17,9 @@ const $await_content__update = ($patch, $live) => {
 const $try_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content__update, "a3");
 };
+const $construct = ($scope) => {
+	_text($scope.c, $scope.j);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("j" in $patch) _update_seed($live, $n_seed, $patch["j"]);
@@ -25,10 +28,11 @@ const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("Ad" in $patch) _update_branch($patch, $live, "d", $try_content__update, "a6", "a4");
 };
+_construct("a1", $construct);
 const $noop_update = () => {};
 _update_content("a4", $noop_update);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

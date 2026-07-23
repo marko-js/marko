@@ -23,6 +23,9 @@ const $input = ($scope, input) => {
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
+const $construct = ($scope) => {
+	_text($scope["#text/2"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -31,8 +34,9 @@ const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("ConditionalRenderer:#text/3" in $patch || "BranchScopes:#text/3" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3");
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -53,13 +57,17 @@ const $input = ($scope, input) => $input_label($scope, input.label);
 var panel_marko_persisted_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template, $walks, $setup, $input);
 const $hits_seed = _update_signal("__tests__/tags/panel.marko_0_hits/var");
 const $_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1") });
+const $construct = ($scope) => {
+	_text($scope["#text/2"], $scope.hits);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("hits" in $patch) _update_seed($live, $hits_seed, $patch["hits"]);
 	$_holes($patch, $live);
 };
+_construct("__tests__/tags/panel.marko_0_update", $construct);
 const $merge = _resume("__tests__/tags/panel.marko_0_update", $update2);
-_update_content("__tests__/tags/panel.marko", $merge);
+_update_content("__tests__/tags/panel.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

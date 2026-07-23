@@ -5,6 +5,7 @@ var badge_default = _template("b", (input) => {
 	_html(`<span${_attr_class(["badge", input.tone])}>${_escape(input.label)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<span> </span>", " D l"] });
 
 // tags/card.marko
 var card_default = _template("c", (input) => {
@@ -21,9 +22,10 @@ var card_default = _template("c", (input) => {
 		label: input.heading,
 		tone: input.tone
 	});
-	_html(`<h2>${_escape(input.heading)}${_el_resume($scope0_id, "b", $sg__input_heading)}</h2><p${_attr_class(["meta", input.flagged && "flagged"])}>${_escape(input.meta)}${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 5))}</p>${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 4))}</section>`);
+	_html(`<h2>${_escape(input.heading)}${_el_resume($scope0_id, "c", $sg__input_heading)}</h2><p${_attr_class(["meta", input.flagged && "flagged"])}>${_escape(input.meta)}${_el_resume($scope0_id, "e", _serialize_guard($scope0_reason, 5))}</p>${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 4))}</section>`);
 	_serialize_guard($scope0_reason, 1) && writeScope($scope0_id, { a: $sg__input_heading__OR__input_tone && _existing_scope($childScope) });
 });
+_renderer_shells({ "c0": ["<section class=card><!><h2> </h2><p> </p></section>", "D/&%bD l D m"] });
 
 // tags/counter.marko
 var counter_default = _template("d", (input) => {
@@ -54,20 +56,20 @@ _renderer_shells({
 	"e0": [[
 		"<div class=widget><em> </em>",
 		["d"],
-		"</div>"
+		"<!></div>"
 	], [
 		"E l/",
 		["d"],
-		"&l"
+		"&%l"
 	]],
 	"e": [[
 		"<div class=widget><em> </em>",
 		["d"],
-		"</div>"
+		"<!></div>"
 	], [
 		"E l/",
 		["d"],
-		"&l"
+		"&%l"
 	]]
 });
 
@@ -93,39 +95,35 @@ var template_default = _template("a", (input) => {
 			meta: input.meta,
 			flagged: input.flagged
 		});
-	}, $scope0_id, "c");
+	}, $scope0_id, "d");
 	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason($sg__input_widget);
 	widget_default({ label: input.widget });
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		l: _state_reason() && count,
+		n: _state_reason() && count,
 		c: $sg__input_heading__OR__input_tone__OR__input_meta__OR__input_flagged | _persisted_reason() && _existing_scope($childScope),
-		d: $sg__input_widget | _persisted_reason() && _existing_scope($childScope2)
+		e: $sg__input_widget | _persisted_reason() && _existing_scope($childScope2)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
 	"a0": [[
-		"<button class=bump>clicked <!></button>",
-		["c"],
-		["e"]
-	], [
-		" Db%l/",
-		["c"],
-		"&/",
+		"<button class=bump>clicked <!></button><!>",
 		["e"],
-		"&"
+		"<!>"
+	], [
+		" Db%l/&%b/",
+		["e"],
+		"&%b"
 	]],
 	"a": [[
-		"<button class=bump>clicked <!></button>",
-		["c"],
-		["e"]
-	], [
-		" Db%l/",
-		["c"],
-		"&/",
+		"<button class=bump>clicked <!></button><!>",
 		["e"],
-		"&"
+		"<!>"
+	], [
+		" Db%l/&%b/",
+		["e"],
+		"&%b"
 	]]
 });

@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (categories.length) {
 			const $scope1_id = _scope_id();
-			_html(`<em${count && $global().params.tag ? " class=hot" : ""}>pick:${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "PatchHole:#text/1", $global().params.pick, _persisted_reason()))}${_el_resume($scope1_id, "#text/1", _persisted_reason())}</em>${_el_resume($scope1_id, "#em/0", 1 | _persisted_reason())}`);
+			_html(`<em${_attr_class(_hole_value($scope1_id, "PatchAttr:class:#em/0", count && $global().params.tag && "hot", _state_reason()))}>pick:${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "PatchHole:#text/1", $global().params.pick, _persisted_reason()))}${_el_resume($scope1_id, "#text/1", _persisted_reason())}</em>${_el_resume($scope1_id, "#em/0", 1 | _persisted_reason())}`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2");
 			return 0;
 		}

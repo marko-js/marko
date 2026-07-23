@@ -37,7 +37,7 @@ UPDATE: button::text@8 "0" => "1"
 <p
   class="pair"
 >
-   
+  n-m
 </p>
 <button
   class="bump"
@@ -84,7 +84,7 @@ document.querySelector("button.bump").click();
 ```
 ## Change
 ```
-UPDATE: .pair::text " " => "n-m!"
+UPDATE: .pair::text "n-m" => "n-m!"
 ```
 
 # Update

@@ -56,20 +56,28 @@ var template_default = _template("a", (input) => {
 	});
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		g: _state_reason() && count,
+		h: _state_reason() && count,
 		c: $sg__input_crew | _persisted_reason() && _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a0": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a0": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

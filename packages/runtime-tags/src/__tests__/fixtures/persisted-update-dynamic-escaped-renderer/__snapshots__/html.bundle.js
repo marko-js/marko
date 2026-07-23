@@ -12,6 +12,7 @@ var lineup_default = _template("b", (input) => {
 	}, $scope0_id, "a", $sg__input_performers, $sg__input_performers, $sg__input_performers, "</ol>", 1);
 	$sg__input_performers && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<ol class=lineup></ol>", " b"] });
 
 // tags/stage.marko
 var stage_default = _template("c", (input) => {
@@ -48,20 +49,28 @@ var template_default = _template("a", (input) => {
 	});
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		g: _state_reason() && count,
+		h: _state_reason() && count,
 		c: $sg__input_performers | _persisted_reason() && _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"a0": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a0": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]]
 });

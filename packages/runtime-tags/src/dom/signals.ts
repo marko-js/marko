@@ -163,11 +163,7 @@ export function _const_persisted<T>(
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return ((scope: Scope, value: T | undefined) => {
-    if (
-      scope[valueAccessor] !== value ||
-      !(valueAccessor in scope) ||
-      (updating && rendering && scope[AccessorProp.Gen] === runId)
-    ) {
+    if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
       scope[valueAccessor] = value;
       fn?.(scope);
     }

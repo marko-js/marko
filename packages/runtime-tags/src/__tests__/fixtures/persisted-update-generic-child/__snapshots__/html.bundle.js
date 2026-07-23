@@ -5,6 +5,7 @@ var badge_default = _template("b", (input) => {
 	_html(`<span${_attr_class(["badge", input.tone])}${_attr("title", `tone: ${input.tone}`)}>${_escape(input.label)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</span>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
 	_serialize_guard($scope0_reason, 0) && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<span> </span>", " D l"] });
 
 // tags/panel.marko
 var panel_default = _template("c", (input) => {
@@ -23,7 +24,7 @@ var toggle_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let on = false;
-	_html(`<button class=toggle>off${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<em>${_escape(_hole_value($scope0_id, "Qc", input.name, _persisted_reason()))}${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 0))}</em>`);
+	_html(`<button class=toggle>${_escape(_hole_value($scope0_id, "Qb", "off", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<em>${_escape(_hole_value($scope0_id, "Qc", input.name, _persisted_reason()))}${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 0))}</em>`);
 	_script($scope0_id, "d1");
 	writeScope($scope0_id, { g: _state_reason() && on });
 	_resume_branch($scope0_id);
@@ -50,7 +51,7 @@ var template_default = _template("a", (input) => {
 			label: input.label,
 			tone: input.tone
 		});
-	}, $scope0_id, "c");
+	}, $scope0_id, "d");
 	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded,
@@ -68,40 +69,38 @@ var template_default = _template("a", (input) => {
 	toggle_default({ name: input.name });
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		o: _state_reason() && count,
+		r: _state_reason() && count,
 		c: $sg__input_label__OR__input_tone | _persisted_reason() && _existing_scope($childScope),
-		d: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded | _persisted_reason() && _existing_scope($childScope2),
-		e: $sg__input_name | _persisted_reason() && _existing_scope($childScope3)
+		e: $sg__input_panel_title__OR__input_panel_body__OR__input_panel_expanded | _persisted_reason() && _existing_scope($childScope2),
+		g: $sg__input_name | _persisted_reason() && _existing_scope($childScope3)
 	});
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
 	"a0": [[
-		"<button>clicked <!></button>",
-		["b"],
+		"<button>clicked <!></button><!>",
 		["c"],
-		["d"]
-	], [
-		" Db%l/",
-		["b"],
-		"&/",
-		["c"],
-		"&/",
+		"<!>",
 		["d"],
-		"&"
+		"<!>"
+	], [
+		" Db%l/&%b/",
+		["c"],
+		"&%b/",
+		["d"],
+		"&%b"
 	]],
 	"a": [[
-		"<button>clicked <!></button>",
-		["b"],
+		"<button>clicked <!></button><!>",
 		["c"],
-		["d"]
-	], [
-		" Db%l/",
-		["b"],
-		"&/",
-		["c"],
-		"&/",
+		"<!>",
 		["d"],
-		"&"
+		"<!>"
+	], [
+		" Db%l/&%b/",
+		["c"],
+		"&%b/",
+		["d"],
+		"&%b"
 	]]
 });

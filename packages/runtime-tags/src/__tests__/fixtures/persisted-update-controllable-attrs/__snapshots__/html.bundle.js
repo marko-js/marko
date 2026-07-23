@@ -42,14 +42,22 @@ var template_default = _template("a", (input) => {
 	_persisted_reason() && writeScope($scope0_id, { c: _existing_scope($childScope) });
 }, 1);
 _renderer_shells({
-	"a0": [["<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>", ["b"]], [
+	"a0": [[
+		"<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>",
+		["b"],
+		"<!>"
+	], [
 		" b b/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>", ["b"]], [
+	"a": [[
+		"<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>",
+		["b"],
+		"<!>"
+	], [
 		" b b/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

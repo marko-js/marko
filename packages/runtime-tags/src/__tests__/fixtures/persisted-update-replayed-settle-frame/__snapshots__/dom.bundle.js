@@ -11,6 +11,9 @@ const $setup__script = _script_shared(($scope) => _on($scope.a, "click", functio
 const $taps_seed = _update_signal("a9");
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "Qb": /*@__PURE__*/ _update_text("b") });
 const $clicks_seed = _update_signal("a10");
+const $await_content__construct = ($scope) => {
+	_text($scope.c, $scope.f);
+};
 const $await_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("f" in $patch) _update_seed($live, $taps_seed, $patch["f"]);
@@ -19,6 +22,9 @@ const $await_content__update = ($patch, $live) => {
 const $try_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content__update, "a3");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.h);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("h" in $patch) _update_seed($live, $clicks_seed, $patch["h"]);
@@ -26,10 +32,12 @@ const $update2 = ($patch, $live) => {
 	if ("g" in $patch) $live["g"] = $patch["g"];
 	if ("Ac" in $patch) _update_branch($patch, $live, "c", $try_content__update, "a6", "a4");
 };
+_construct("a3", $await_content__construct);
+_construct("a1", $construct);
 const $noop_update = () => {};
 _update_content("a4", $noop_update);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

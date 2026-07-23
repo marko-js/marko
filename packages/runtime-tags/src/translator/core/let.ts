@@ -162,7 +162,8 @@ export default {
         const signal = initValue(binding, true);
         const referencedBindings = tag.node.extra!.referencedBindings;
 
-        addValue(section, referencedBindings, signal, valueAttr.value);
+        // Construct path: the adopted scope already holds the seed value.
+        addValue(section, referencedBindings, signal, valueAttr.value, "fill");
 
         if (valueChangeAttr) {
           signal.extraArgs = [valueChangeAttr.value];

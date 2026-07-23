@@ -62,9 +62,15 @@ const $await_content__update = ($patch, $live) => {
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_5_update");
 };
+const $if_content__construct = ($scope) => {
+	_text($scope["#text/0"], $scope._.input_productId);
+};
 const $if_content__update = ($patch, $live) => {
 	$if_content_holes($patch, $live);
 	if ("BranchScopes:#text/1" in $patch) _update_branch($patch, $live, "#text/1", $try_content__update, "__tests__/template.marko_2_update", "__tests__/template.marko_4_content");
+};
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -72,10 +78,12 @@ const $update2 = ($patch, $live) => {
 	if ("input_productId" in $patch) $live["input_productId"] = $patch["input_productId"];
 	if ("ConditionalRenderer:#text/2" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", [$if_content__update, 0], ["__tests__/template.marko_1_update", "__tests__/template.marko_3_update"]);
 };
+_construct("__tests__/template.marko_1_update", $if_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_4_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

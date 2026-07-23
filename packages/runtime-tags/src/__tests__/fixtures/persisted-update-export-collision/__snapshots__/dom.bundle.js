@@ -4,14 +4,18 @@ const $setup__script = _script_shared(($scope) => _on($scope.a, "click", functio
 	$count($scope, $scope.g + 1);
 }));
 const $count_seed = _update_signal("a3");
+const $construct = ($scope) => {
+	_text($scope.b, $scope.g);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("g" in $patch) _update_seed($live, $count_seed, $patch["g"]);
 	if ("f" in $patch) $live["f"] = $patch["f"];
 	if ("Dc" in $patch) _update_region("c")($patch, $live);
 };
+_construct("a1", $construct);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

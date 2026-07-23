@@ -44,6 +44,9 @@ const $for_content__update = ($patch, $live) => {
 	$for_content_holes($patch, $live);
 	if ("ConditionalRenderer:#text/1" in $patch || "BranchScopes:#text/1" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/1", "BranchScopes:#text/1");
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -51,11 +54,12 @@ const $update2 = ($patch, $live) => {
 	if ("PanelB" in $patch) $live["PanelB"] = $patch["PanelB"];
 	if ("BranchScopes:#ul/2" in $patch) $for_update($live, [$patch["BranchScopes:#ul/2"], "#LoopKey"]);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_3_content", $noop_update);
 _update_content("__tests__/template.marko_1_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

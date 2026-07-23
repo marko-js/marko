@@ -8,13 +8,17 @@ const $setup__script = _script_shared(($scope) => {
 });
 const $mirror_seed = _update_signal("a2");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qc": /*@__PURE__*/ _update_text("c") });
+const $construct = ($scope) => {
+	_text($scope.b, $scope.d);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $mirror_seed, $patch["d"]);
 	$_holes($patch, $live);
 };
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

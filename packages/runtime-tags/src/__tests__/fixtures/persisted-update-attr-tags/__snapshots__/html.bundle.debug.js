@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: _content("__tests__/template.marko_4_content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
-				_html(`${_escape(row)}${_el_resume($scope4_id, "#text/0")}`);
+				_html(`${_escape(_hole_value($scope4_id, "PatchHole:#text/0", row, _state_reason()))}${_el_resume($scope4_id, "#text/0")}`);
 				writeScope($scope4_id, {}, "__tests__/template.marko", "20:6");
 			})
 		});
@@ -114,24 +114,32 @@ var template_default = _template("__tests__/template.marko", (input) => {
 _renderer_shells({
 	"__tests__/template.marko_4_update": [" ", " b"],
 	"__tests__/template.marko_4_content": [" ", " b"],
-	"__tests__/template.marko_2_update": [[["__tests__/tags/inner.marko"]], [
+	"__tests__/template.marko_2_update": [[["__tests__/tags/inner.marko"], "<!>"], [
 		"/",
 		["__tests__/tags/inner.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko_2_content": [[["__tests__/tags/inner.marko"]], [
+	"__tests__/template.marko_2_content": [[["__tests__/tags/inner.marko"], "<!>"], [
 		"/",
 		["__tests__/tags/inner.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/panel.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/panel.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/panel.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/panel.marko"]], [
+	"__tests__/template.marko": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/panel.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/panel.marko"],
-		"&"
+		"&%b"
 	]]
 });

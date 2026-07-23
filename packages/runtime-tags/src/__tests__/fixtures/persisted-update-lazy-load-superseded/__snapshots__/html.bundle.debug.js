@@ -8,6 +8,7 @@ var rejecting_default = _template("__tests__/tags/rejecting.marko", (input) => {
 	_html(`<button class=lazy>rejecting ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "#text/0", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {}, "__tests__/tags/rejecting.marko", 0);
 });
+_renderer_shells({ "__tests__/tags/rejecting.marko_0_update": ["<button class=lazy>rejecting <!></button>", "Db%l"] });
 
 // tags/resolving.marko
 if (typeof window !== "undefined") {
@@ -19,6 +20,7 @@ var resolving_default = _template("__tests__/tags/resolving.marko", (input) => {
 	_html(`<button class=lazy>resolving ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "#text/0", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {}, "__tests__/tags/resolving.marko", 0);
 });
+_renderer_shells({ "__tests__/tags/resolving.marko_0_update": ["<button class=lazy>resolving <!></button>", "Db%l"] });
 
 // template.marko
 const $Rejecting_withLoadAssets = withLoadAssets(rejecting_default, "ready:__tests__/tags/rejecting.marko", [{ type: "idle" }]);

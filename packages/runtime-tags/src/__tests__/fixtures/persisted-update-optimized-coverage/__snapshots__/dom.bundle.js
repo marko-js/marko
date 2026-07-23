@@ -9,6 +9,9 @@ const $elseif_content__update = ($patch, $live) => {
 	if ("b" in $patch) $live["b"] = $patch["b"];
 	if ("Da" in $patch || "Aa" in $patch) _update_dynamic($patch, $live, "Da", "Aa");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.j);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("j" in $patch) _update_seed($live, $count_seed, $patch["j"]);
@@ -24,11 +27,12 @@ const $update2 = ($patch, $live) => {
 		"a5"
 	]);
 };
+_construct("a2", $construct);
 const $noop_update = () => {};
 _update_content("a4", $noop_update);
 _update_content("a3", $noop_update);
 const $merge = _resume("a2", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

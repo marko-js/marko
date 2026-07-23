@@ -199,6 +199,7 @@ export default {
 
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;
+    bodySection.isLoopBody = true;
   },
   translate: translateByTarget({
     html: {
@@ -484,11 +485,13 @@ export default {
           loopArgs.push(forAttrs.by);
         }
 
+        // Construct path: adopted branch list via the structural loop merge.
         addValue(
           tagSection,
           referencedBindings,
           signal,
           t.arrayExpression(loopArgs),
+          "structural",
         );
 
         tag.remove();

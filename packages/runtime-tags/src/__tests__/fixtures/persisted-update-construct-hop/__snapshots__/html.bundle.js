@@ -59,7 +59,7 @@ var layout_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "Qb", "expand", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
 	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "b0");
 	_html("</section>");
 	_script($scope0_id, "b2");
@@ -90,7 +90,7 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id();
 		let tally = store_default({});
 		_var($scope2_id, "c", $childScope, "a3");
-		_html(`<button class=bump>tally <!>${_escape(tally)}${_el_resume($scope2_id, "e")}</button>${_el_resume($scope2_id, "d")}`);
+		_html(`<button class=bump>tally <!>${_escape(tally)}${_el_resume($scope2_id, "f")}</button>${_el_resume($scope2_id, "e")}`);
 		const $childScope2 = _peek_scope_id();
 		_set_serialize_reason(_persisted_reason());
 		widget_default({ label: session.plan });
@@ -101,18 +101,18 @@ var template_default = _template("a", (input) => {
 				_html(`<li${metric.name === $global().focus ? " class=focus" : ""}>${_escape(metric.name)}${_el_resume($scope3_id, "b", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(metric.value)}${_el_resume($scope3_id, "c", _persisted_reason())}</li>${_el_resume($scope3_id, "a", _persisted_reason())}`);
 				_persisted_reason() && writeScope($scope3_id, {});
 			});
-		}, $scope2_id, "g");
-		_html(`</ul>${_el_resume($scope2_id, "g", _persisted_reason())}`);
-		_if(() => $global().admin ? 0 : void 0, $scope2_id, "h", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0", [() => {
+		}, $scope2_id, "i");
+		_html(`</ul>${_el_resume($scope2_id, "i", _persisted_reason())}`);
+		_if(() => $global().admin ? 0 : void 0, $scope2_id, "j", _persisted_reason(), _persisted_reason(), _persisted_reason(), 0, 1, "a0", [() => {
 			const $scope4_id = _scope_id();
 			_html("<p class=admin>admin tools enabled</p>");
 			_persisted_reason() && writeScope($scope4_id, {});
 		}], [0]);
 		_script($scope2_id, "a5");
 		writeScope($scope2_id, {
-			l: _state_reason() && tally,
+			n: _state_reason() && tally,
 			b: _existing_scope($childScope),
-			f: _persisted_reason() && _existing_scope($childScope2)
+			g: _persisted_reason() && _existing_scope($childScope2)
 		});
 	}) };
 	const $childScope3 = _peek_scope_id();
@@ -120,7 +120,7 @@ var template_default = _template("a", (input) => {
 	layout_default({ content: $global().view === "dashboard" ? Dashboard : Home });
 	_script($scope0_id, "a6");
 	writeScope($scope0_id, {
-		d: _state_reason() && count,
+		e: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope3)
 	});
 	_resume_branch($scope0_id);
@@ -129,37 +129,45 @@ _renderer_shells({
 	"a7": [[
 		"<h2 class=greeting> </h2>",
 		["c"],
-		"<button class=bump>tally <!></button>",
+		"<!><button class=bump>tally <!></button>",
 		["d"],
-		"<ul class=metrics></ul><!><!>"
+		"<!><ul class=metrics></ul><!><!>"
 	], [
 		"D l0",
 		["c"],
-		"& Db%l/",
+		"&%b Db%l/",
 		["d"],
-		"& b%c"
+		"&%b b%c"
 	]],
 	"a4": [[
 		"<h2 class=greeting> </h2>",
 		["c"],
-		"<button class=bump>tally <!></button>",
+		"<!><button class=bump>tally <!></button>",
 		["d"],
-		"<ul class=metrics></ul><!><!>"
+		"<!><ul class=metrics></ul><!><!>"
 	], [
 		"D l0",
 		["c"],
-		"& Db%l/",
+		"&%b Db%l/",
 		["d"],
-		"& b%c"
+		"&%b b%c"
 	]],
-	"a1": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a1": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

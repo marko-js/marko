@@ -13,25 +13,33 @@ function $valueChange($scope) {
 }
 const $qty_seed = _update_signal("b3");
 const $_holes$1 = /*@__PURE__*/ _update_scopes({ "Nvalue:b": /*@__PURE__*/ _update_named_attr("b", "value") });
+const $construct$1 = ($scope) => {
+	_attr_input_value($scope, "a", $scope.h, $scope["Ea"]);
+};
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("h" in $patch) _update_seed($live, $qty_seed, $patch["h"]);
 	$_holes$1($patch, $live);
 };
+_construct("b1", $construct$1);
 const $merge$1 = _resume("b1", $update2$1);
-_update_content("b", $merge$1);
+_update_content("b", $merge$1, $construct$1);
 
 // template.marko.persisted.mjs
 const $_holes = /*@__PURE__*/ _update_scopes({
 	"Nvalue:a": /*@__PURE__*/ _update_controllable("a", _update_input_value),
 	"Nvalue:b": /*@__PURE__*/ _update_controllable("b", _update_select_value)
 });
+const $construct = ($scope) => {
+	_construct_child($scope, "c", "b1");
+};
 const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("c" in $patch) $merge$1($patch["c"], $live["c"]);
 };
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

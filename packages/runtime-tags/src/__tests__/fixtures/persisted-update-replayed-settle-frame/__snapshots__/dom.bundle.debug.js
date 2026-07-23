@@ -51,6 +51,9 @@ var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/templa
 const $taps_seed = _update_signal("__tests__/template.marko_3_taps/var");
 const $await_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/1": /*@__PURE__*/ _update_text("#text/1") });
 const $clicks_seed = _update_signal("__tests__/template.marko_0_clicks/var");
+const $await_content__construct = ($scope) => {
+	_text($scope["#text/2"], $scope.taps);
+};
 const $await_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("taps" in $patch) _update_seed($live, $taps_seed, $patch["taps"]);
@@ -59,6 +62,9 @@ const $await_content__update = ($patch, $live) => {
 const $try_content__update = ($patch, $live) => {
 	if ("BranchScopes:#text/0" in $patch) _update_branch($patch, $live, "#text/0", $await_content__update, "__tests__/template.marko_3_update");
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.clicks);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("clicks" in $patch) _update_seed($live, $clicks_seed, $patch["clicks"]);
@@ -66,10 +72,12 @@ const $update2 = ($patch, $live) => {
 	if ("input_tick" in $patch) $live["input_tick"] = $patch["input_tick"];
 	if ("BranchScopes:#text/2" in $patch) _update_branch($patch, $live, "#text/2", $try_content__update, "__tests__/template.marko_1_update", "__tests__/template.marko_2_content");
 };
+_construct("__tests__/template.marko_3_update", $await_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
 const $noop_update = () => {};
 _update_content("__tests__/template.marko_2_content", $noop_update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

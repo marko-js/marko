@@ -2,21 +2,21 @@
   "dom": {
     "nav.js": {
       "total": {
-        "min": 7481,
-        "brotli": 3026
+        "min": 922,
+        "brotli": 431
       },
       "files": {
-        "tags/sticky.marko.persisted.mjs": 527,
-        "template.marko.persisted.mjs": 1350
+        "tags/sticky.marko.persisted.mjs": 639,
+        "template.marko.persisted.mjs": 1615
       }
     },
     "template.marko.page.mjs": {
-      "min": 239,
-      "brotli": 181
+      "min": 251,
+      "brotli": 191
     },
-    "sticky.mjs": {
-      "min": 9901,
-      "brotli": 4196
+    "dom-persisted.mjs": {
+      "min": 16261,
+      "brotli": 6354
     }
   },
   "html": {

@@ -1,15 +1,15 @@
 {
   "dom": {
     "nav.js": {
-      "min": 470,
-      "brotli": 300
+      "min": 513,
+      "brotli": 294
     },
     "template.marko.page.mjs": {
       "min": 182,
       "brotli": 159
     },
     "rejecting.marko.persisted.mjs": {
-      "min": 458,
+      "min": 453,
       "brotli": 248
     },
     "rejecting.mjs": {
@@ -17,8 +17,8 @@
       "brotli": 223
     },
     "resolving.marko.persisted.mjs": {
-      "min": 458,
-      "brotli": 251
+      "min": 453,
+      "brotli": 248
     },
     "resolving.mjs": {
       "min": 358,

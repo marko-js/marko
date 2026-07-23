@@ -115,7 +115,7 @@ INSERT: .greeting + .loading
   <button
     class="widget"
   >
-    pro clicked 
+    pro clicked 0
   </button>
   <ul
     class="reports"
@@ -185,7 +185,7 @@ document.querySelector("button.widget").click();
 ```
 ## Change
 ```
-UPDATE: .widget::text@12 "" => "1"
+UPDATE: .widget::text@12 "0" => "1"
 ```
 
 # Update

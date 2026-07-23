@@ -40,6 +40,9 @@ const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $inputouter_content__update = ($patch, $live) => {
 	if ("ConditionalRenderer:#text/0" in $patch || "BranchScopes:#text/0" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
@@ -47,10 +50,11 @@ const $update2 = ($patch, $live) => {
 	if ("Child" in $patch) $live["Child"] = $patch["Child"];
 	if ("ConditionalRenderer:#text/2" in $patch || "BranchScopes:#text/2" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
+_construct("__tests__/template.marko_0_update", $construct);
 _update_content("__tests__/template.marko_2_content", _update_pair);
 _update_content("__tests__/template.marko_1_content", $inputouter_content__update);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

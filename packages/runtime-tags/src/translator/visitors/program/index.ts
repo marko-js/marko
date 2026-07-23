@@ -23,6 +23,7 @@ import {
   isPersistedEntryBuild,
   isRenderersEntryBuild,
 } from "../../util/marko-config";
+import { finalizeMembranes } from "../../util/membranes";
 import {
   BindingType,
   finalizeReferences,
@@ -104,7 +105,12 @@ export default {
     exit(program) {
       // Analyze failures were already reported as diagnostics and their tags
       // skipped, so skip finalization work that assumes an error-free template.
-      if (hasAnalyzeErrors()) return;
+      if (hasAnalyzeErrors()) {
+        // An error-free parent may still classify this program's sections
+        // (via its child tree); mark them so the phase guard stays quiet.
+        finalizeMembranes();
+        return;
+      }
       finalizeReferences();
       if (isPersisted()) {
         program.node.extra!.escapedTemplateImports =

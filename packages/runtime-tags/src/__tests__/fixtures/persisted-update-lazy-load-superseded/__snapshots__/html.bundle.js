@@ -6,6 +6,7 @@ var rejecting_default = _template("b", (input) => {
 	_html(`<button class=lazy>rejecting ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "a", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {});
 });
+_renderer_shells({ "b0": ["<button class=lazy>rejecting <!></button>", "Db%l"] });
 
 // tags/resolving.marko
 if (typeof window !== "undefined") await resolveAfter(0);
@@ -15,6 +16,7 @@ var resolving_default = _template("c", (input) => {
 	_html(`<button class=lazy>resolving ${_sep($sg__input_label)}${_escape(input.label)}${_el_resume($scope0_id, "a", $sg__input_label)}</button>`);
 	$sg__input_label && writeScope($scope0_id, {});
 });
+_renderer_shells({ "c0": ["<button class=lazy>resolving <!></button>", "Db%l"] });
 
 // template.marko
 const $Rejecting_withLoadAssets = withLoadAssets(rejecting_default, "_b", [{ type: "idle" }]);

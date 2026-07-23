@@ -13,6 +13,9 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 const $try_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content_holes, "a2");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.l);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("l" in $patch) _update_seed($live, $count_seed, $patch["l"]);
@@ -21,10 +24,11 @@ const $update2 = ($patch, $live) => {
 	$_holes($patch, $live);
 	if ("Ae" in $patch) _update_branch($patch, $live, "e", $try_content__update, "a5", "a3");
 };
+_construct("a1", $construct);
 const $noop_update = () => {};
 _update_content("a3", $noop_update);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

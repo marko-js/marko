@@ -22,6 +22,11 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 	"Nvalue:k": /*@__PURE__*/ _update_named_attr("k", "value"),
 	"NcheckedValue:k": /*@__PURE__*/ _update_controllable("k", _update_input_checkedValue)
 });
+const $construct = ($scope) => {
+	_text($scope.b, $scope.w);
+	_attr_input_checkedValue_default($scope, "k", $scope.t, $scope.s);
+	_text($scope.l, $scope.v);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("v" in $patch) _update_seed($live, $note_seed, $patch["v"]);
@@ -30,8 +35,9 @@ const $update2 = ($patch, $live) => {
 	if ("t" in $patch) $live["t"] = $patch["t"];
 	$_holes($patch, $live);
 };
+_construct("a2", $construct);
 const $merge = _resume("a2", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

@@ -740,21 +740,28 @@ export function _if(
     return;
   }
 
+  // Marker-based branch linkage cannot bind inside a fresh construct (its
+  // values-free shell carries no markers), so the branch scope rides the
+  // patch's scope data there and the chosen branch ships its wire shell
+  // for client construction.
+  const markerless = !resumeMarker || !!(state.patch && state.freshBranchDepth);
+  if (branchIds && shouldWriteBranch && state.patch && state.freshBranchDepth) {
+    const constructId = branchIds[branchIndex!];
+    if (constructId) emitShellFrame(state, constructId as string);
+  }
   if (anchorId !== undefined) {
     writeScope(scopeId, {
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
       [AccessorPrefix.BranchScopes + accessor]:
-        shouldWriteBranch && !resumeMarker
-          ? writeScope(branchId, {})
-          : undefined,
+        shouldWriteBranch && markerless ? writeScope(branchId, {}) : undefined,
     });
-  } else if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
+  } else if (shouldWriteBranch && (branchIndex || markerless)) {
     writeScope(scopeId, {
       // TODO: Write the renderer only for stateful conditions or direct closures.
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex || undefined, // we convert 0 to undefined since the runtime defaults branch to 0.
-      [AccessorPrefix.BranchScopes + accessor]: resumeMarker
-        ? undefined
-        : writeScope(branchId, {}),
+      [AccessorPrefix.BranchScopes + accessor]: markerless
+        ? writeScope(branchId, {})
+        : undefined,
     });
   }
 

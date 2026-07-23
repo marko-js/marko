@@ -31,6 +31,10 @@ const $input_title = /*@__PURE__*/ _const_persisted("input_title", $else_content
 var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
 const $else_content_holes = /*@__PURE__*/ _update_scopes({ "PatchHole:#text/0": /*@__PURE__*/ _update_text("#text/0") });
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $else_content__construct = ($scope) => {
+	_text($scope["#text/0"], $scope._.input_title);
+	_text($scope["#text/2"], $scope._.count);
+};
 const $else_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	$else_content_holes($patch, $live);
@@ -40,6 +44,7 @@ const $update2 = ($patch, $live) => {
 	if ("input_title" in $patch) $live["input_title"] = $patch["input_title"];
 	if ("ConditionalRenderer:#text/0" in $patch) _update_if($patch, $live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0", [0, $else_content__update], ["__tests__/template.marko_2_update", "__tests__/template.marko_1_update"]);
 };
+_construct("__tests__/template.marko_1_update", $else_content__construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
 _update_content("__tests__/template.marko", $merge);
 function $patch2($fail) {

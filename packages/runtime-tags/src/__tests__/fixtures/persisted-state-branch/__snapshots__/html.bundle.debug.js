@@ -13,11 +13,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope1_id, {}, "__tests__/template.marko", "7:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/4", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/4", 1, 1, 1, 0, 1, void 0, void 0, ["__tests__/template.marko_1_update"]);
 	_html("<ul class=items>");
 	_for_of(list, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`<li>${_escape(item)}${_el_resume($scope2_id, "#text/0")}:<!>${_escape(count)}${_el_resume($scope2_id, "#text/1")}</li>`);
+		_html(`<li>${_escape(_hole_value($scope2_id, "PatchHole:#text/0", item, _state_reason()))}${_el_resume($scope2_id, "#text/0")}:<!>${_escape(count)}${_el_resume($scope2_id, "#text/1")}</li>`);
 		writeScope($scope2_id, {}, "__tests__/template.marko", "11:4");
 	}, function(item) {
 		return item;

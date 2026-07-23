@@ -3,7 +3,7 @@ var layout_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<header><button>Menu${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</header><main>`);
+	_html(`<header><button>${_escape(_hole_value($scope0_id, "Qb", "Menu", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</header><main>`);
 	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "b0");
 	_html("</main>");
 	_script($scope0_id, "b2");
@@ -32,9 +32,9 @@ var template_default = _template("a", (input) => {
 		_resume_branch($scope1_id);
 	}) });
 	writeScope($scope0_id, {
-		e: _state_reason() && count,
-		f: $sg__input_title && $input_title__closures,
-		g: $count__closures,
+		f: _state_reason() && count,
+		g: $sg__input_title && $input_title__closures,
+		h: $count__closures,
 		a: _persisted_reason() && _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
@@ -42,14 +42,14 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a3": ["<h1> </h1><button class=inc> </button>", "D l D l"],
 	"a2": ["<h1> </h1><button class=inc> </button>", "D l D l"],
-	"a0": [[["b"]], [
+	"a0": [[["b"], "<!>"], [
 		"/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [[["b"]], [
+	"a": [[["b"], "<!>"], [
 		"/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

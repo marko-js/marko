@@ -17,7 +17,9 @@ const $expanded_seed = _update_signal("a3");
 const $input_product_featured_update = _update_signal("a4");
 const $_holes = /*@__PURE__*/ _update_scopes({
 	"Qa": /*@__PURE__*/ _update_text("a"),
-	"Nhref:b": /*@__PURE__*/ _update_named_attr("b", "href")
+	"Nhref:b": /*@__PURE__*/ _update_named_attr("b", "href"),
+	"Qd": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("d")),
+	"Nclass:e": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_attr("e", _attr_class))
 });
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);

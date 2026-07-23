@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 	layout_default({ content: $global().view === "dashboard" ? Dashboard : Home });
 	_script($scope0_id, "a7");
 	writeScope($scope0_id, {
-		d: _state_reason() && count,
+		e: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope3)
 	});
 	_resume_branch($scope0_id);
@@ -73,14 +73,22 @@ _renderer_shells({
 	"a5": ["<p class=home>welcome home</p><!><!><!><!>", "b/b%c&b"],
 	"a10": ["<!><!><!>", "b%c"],
 	"a4": ["<!><!><!>", "b%c"],
-	"a1": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a1": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["b"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["b"],
+		"<!>"
+	], [
 		" Db%l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

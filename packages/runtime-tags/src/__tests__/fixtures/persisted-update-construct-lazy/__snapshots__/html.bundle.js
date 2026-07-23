@@ -18,7 +18,7 @@ var layout_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "Qb", "expand", _state_reason()))}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
 	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "c0");
 	_html("</section>");
 	_script($scope0_id, "c2");
@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 	layout_default({ content: $global().view === "detail" ? Detail : Home });
 	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
-		d: _state_reason() && count,
+		e: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope2)
 	});
 	_resume_branch($scope0_id);
@@ -64,14 +64,22 @@ var template_default = _template("a", (input) => {
 _renderer_shells({
 	"a4": ["<h2 class=title> </h2><!><!><!>", "D l%/&c"],
 	"a2": ["<h2 class=title> </h2><!><!><!>", "D l%/&c"],
-	"a0": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a0": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<button class=count>clicked <!></button>", ["c"]], [
+	"a": [[
+		"<button class=count>clicked <!></button>",
+		["c"],
+		"<!>"
+	], [
 		" Db%l/",
 		["c"],
-		"&"
+		"&%b"
 	]]
 });

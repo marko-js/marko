@@ -10,13 +10,17 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 	"Nhref:e": /*@__PURE__*/ _update_named_attr("e", "href"),
 	"Qf": /*@__PURE__*/ _update_text("f")
 });
+const $construct = ($scope) => {
+	_text($scope.b, $scope.g);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("g" in $patch) _update_seed($live, $count_seed, $patch["g"]);
 	$_holes($patch, $live);
 };
+_construct("a0", $construct);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

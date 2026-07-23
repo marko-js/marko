@@ -9,15 +9,19 @@ const $count_seed = _update_signal("a7");
 const $try_content__update = ($patch, $live) => {
 	if ("Aa" in $patch) _update_branch($patch, $live, "a", $await_content_holes, "a1");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.d);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
 	if ("Ac" in $patch) _update_branch($patch, $live, "c", $try_content__update, "a4");
 };
+_construct("a0", $construct);
 const $noop_update = () => {};
 _update_content("a2", $noop_update);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

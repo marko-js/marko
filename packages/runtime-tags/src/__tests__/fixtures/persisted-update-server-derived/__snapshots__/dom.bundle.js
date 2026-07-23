@@ -13,10 +13,16 @@ const $setup__script = _script_shared(($scope) => _on($scope.a, "click", functio
 const $details_price_update = _update_signal("a8");
 const $if_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
 const $count_seed = _update_signal("a9");
+const $if_content__construct = ($scope) => {
+	_text($scope.b, $scope.f);
+};
 const $if_content__update = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("f" in $patch) $details_price_update($live, $patch["f"]);
 	$if_content_holes($patch, $live);
+};
+const $construct = ($scope) => {
+	_text($scope.b, $scope.g);
 };
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
@@ -24,8 +30,10 @@ const $update2 = ($patch, $live) => {
 	if ("f" in $patch) $live["f"] = $patch["f"];
 	if ("Dc" in $patch) _update_if($patch, $live, "Dc", "Ac", [$if_content__update, 0], ["a4", "a3"]);
 };
+_construct("a4", $if_content__construct);
+_construct("a1", $construct);
 const $merge = _resume("a1", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

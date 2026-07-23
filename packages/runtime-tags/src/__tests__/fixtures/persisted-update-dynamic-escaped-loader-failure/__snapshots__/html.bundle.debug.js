@@ -65,14 +65,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/board.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/board.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/board.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/board.marko"]], [
+	"__tests__/template.marko": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/board.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/board.marko"],
-		"&"
+		"&%b"
 	]]
 });

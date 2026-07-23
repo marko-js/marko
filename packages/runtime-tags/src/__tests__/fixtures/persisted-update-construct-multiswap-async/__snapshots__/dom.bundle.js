@@ -16,6 +16,9 @@ const $PanelAsync_content__update = ($patch, $live) => {
 const $for_content__update = ($patch, $live) => {
 	if ("Da" in $patch || "Aa" in $patch) _update_dynamic($patch, $live, "Da", "Aa");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.d);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
@@ -24,13 +27,14 @@ const $update2 = ($patch, $live) => {
 	if ("g" in $patch) $live["g"] = $patch["g"];
 	if ("Ac" in $patch) $for_update($live, [$patch["Ac"], "M"]);
 };
+_construct("a2", $construct);
 const $noop_update = () => {};
 _update_content("a6", $noop_update);
 _update_content("a9", $PanelAsync_content__update);
 _update_content("a4", $noop_update);
 _update_content("a3", $noop_update);
 const $merge = _resume("a2", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

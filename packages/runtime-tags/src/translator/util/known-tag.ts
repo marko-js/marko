@@ -8,6 +8,7 @@ import {
   getKnownFromPropTree,
   hasAllKnownProps,
 } from "./binding-prop-tree";
+import { addConstructFragment } from "./construct-pass";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
 import { isOptimize, isPersisted } from "./marko-config";
@@ -41,9 +42,11 @@ import {
   type InputBinding,
   isInvokeOnlyBinding,
   mergeReferences,
+  onFinalizeReferences,
   type ParamBinding,
   type ReferencedExtra,
   setBindingDownstream,
+  type Sources,
   trackParamsReferences,
   trackVarReferences,
 } from "./references";
@@ -177,12 +180,21 @@ export function knownTagAnalyze(
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
-  if (isPersisted() && isMembraneLive(section)) {
-    addSerializeReason(
-      section,
-      { state: undefined, param: undefined, global: true },
-      childScopeBinding,
-    );
+  if (isPersisted()) {
+    // Deferred: liveness only classifies once references are finalized. The
+    // callback postdates `finalizeSerializeReason`, so mirror its
+    // prop-to-scope merge by adding the reason at both levels.
+    onFinalizeReferences(() => {
+      if (isMembraneLive(section)) {
+        const reason: Sources = {
+          state: undefined,
+          param: undefined,
+          global: true,
+        };
+        addSerializeReason(section, reason, childScopeBinding);
+        addSerializeReason(section, reason);
+      }
+    });
   }
 }
 
@@ -397,6 +409,20 @@ export function knownTagTranslateDOM(
       "render",
       tagSection,
       undefined,
+      t.expressionStatement(
+        callRuntime(
+          "_var",
+          scopeIdentifier,
+          getScopeAccessorLiteral(childScopeBinding, true),
+          source.identifier,
+        ),
+      ),
+    );
+    // Pure structural wiring (child `<return>` -> parent var linkage) a
+    // constructed scope must re-establish; no compute is executed.
+    addConstructFragment(
+      tagSection,
+      "var-wire",
       t.expressionStatement(
         callRuntime(
           "_var",

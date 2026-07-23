@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		_for_of(group.items, (item) => {
 			const $scope2_id = _scope_id();
 			let watched = false;
-			_html(`<button${_attr("data-key", _hole_value($scope2_id, "Ndata-key:a", group.id + ":" + item.id, _persisted_reason()))}>watch${_el_resume($scope2_id, "b")}</button>${_el_resume($scope2_id, "a")}`);
+			_html(`<button${_attr("data-key", _hole_value($scope2_id, "Ndata-key:a", group.id + ":" + item.id, _persisted_reason()))}>${_escape(_hole_value($scope2_id, "Qb", "watch", _state_reason()))}${_el_resume($scope2_id, "b")}</button>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a1");
 			writeScope($scope2_id, {
 				g: _state_reason() && watched,

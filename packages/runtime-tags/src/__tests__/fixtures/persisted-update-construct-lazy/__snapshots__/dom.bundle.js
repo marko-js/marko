@@ -4,18 +4,20 @@ const $setup__script$1 = _script_shared(($scope) => _on($scope.a, "click", funct
 	$open($scope, !$scope.g);
 }));
 const $open_seed = _update_signal("c3");
+const $_holes = /*@__PURE__*/ _update_scopes({ "Qb": /*@__PURE__*/ _update_construct(/*@__PURE__*/ _update_text("b")) });
 const $update2$1 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("g" in $patch) _update_seed($live, $open_seed, $patch["g"]);
+	$_holes($patch, $live);
 	if ("Dc" in $patch || "Ac" in $patch) _update_dynamic($patch, $live, "Dc", "Ac");
 };
 const $merge$1 = _resume("c1", $update2$1);
 _update_content("c", $merge$1);
 
 // template.marko.persisted.mjs
-const $count = _var_resume("a5", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $count = _var_resume("a5", /*@__PURE__*/ _let_persisted(4, ($scope) => _text($scope.b, $scope.e)));
 const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, $scope.e + 1);
 }));
 const $Detail_content_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
 _load_ready("_b", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:gadget.marko.setup.mjs")));
@@ -24,16 +26,21 @@ const $Detail_content__update = ($patch, $live) => {
 	$Detail_content_holes($patch, $live);
 	if ("c" in $patch) _update_load($patch["c"], $live["c"], "b0", $live, 1, "b");
 };
+const $construct = ($scope) => {
+	_text($scope.b, $scope.e);
+	_construct_child($scope, "c", "c1");
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
-	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
+	if ("e" in $patch) _update_seed($live, $count_seed, $patch["e"]);
 	if ("c" in $patch) $merge$1($patch["c"], $live["c"]);
 };
+_construct("a0", $construct);
 _update_content("a2", $Detail_content__update);
 const $noop_update = () => {};
 _update_content("a1", $noop_update);
 const $merge = _resume("a0", $update2);
-_update_content("a", $merge);
+_update_content("a", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }
@@ -45,9 +52,9 @@ const $setup__script$1 = _script_update("c2", ($scope) => _on($scope.a, "click",
 }));
 
 // template.marko
-const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let_persisted(4, ($scope) => _text($scope.b, $scope.e));
 const $setup__script = _script_update("a3", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, $scope.e + 1);
 }));
 
 // tags/gadget.marko.persisted.mjs
@@ -66,13 +73,17 @@ const $input = ($scope, input) => $input_label($scope, input.label);
 var gadget_marko_persisted_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 const $taps_seed = _update_signal("b2");
 const $_holes = /*@__PURE__*/ _update_scopes({ "Qa": /*@__PURE__*/ _update_text("a") });
+const $construct = ($scope) => {
+	_text($scope.c, $scope.g);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("g" in $patch) _update_seed($live, $taps_seed, $patch["g"]);
 	$_holes($patch, $live);
 };
+_construct("b0", $construct);
 const $merge = _resume("b0", $update2);
-_update_content("b", $merge);
+_update_content("b", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

@@ -120,6 +120,7 @@ export function _update_pair(patch: Scope, live: Scope) {
 
 // This suffix cannot occur in generated register ids.
 const UPDATE_MERGE_SUFFIX = "!";
+const CONSTRUCT_SUFFIX = "^";
 
 /** Applies an await or try body after resolving its live branch. */
 export function _update_branch(
@@ -192,6 +193,8 @@ export function _update_branch(
       live,
       parentNode,
       patchBranch,
+      undefined,
+      constructId,
     ) as BranchScope;
     insertBranchBefore(branch, parentNode, anchorNode);
     if (placeholderBranch) {
@@ -231,6 +234,8 @@ export function _update_branch(
       live,
       parentNode,
       patchBranch,
+      undefined,
+      constructId,
     ) as BranchScope;
     insertBranchBefore(branch, parentNode, anchorNode);
     live[branchAccessor] = branch;
@@ -274,8 +279,65 @@ function showConstructedPlaceholder(
   }
 }
 
-export function _update_content(contentId: string, merge: UpdateMerge) {
+/** Registers a section's construct pass under its shell id, so whatever id
+ * a scope was constructed from also locates its fills/wiring. */
+export function _construct(id: string, construct: (scope: Scope) => void) {
+  _resume(id + CONSTRUCT_SUFFIX, construct);
+}
+
+// Constructed branches awaiting the frame-end clear: the outer dispatcher
+// owns check-and-clear (nested construct fns never clear the shared stamp);
+// lazy pre-built roots are excluded and clear independently at ready.
+const pendingConstructClears: BranchScope[] = [];
+
+function invokeConstruct(id: string | undefined, scope: Scope) {
+  if (id) {
+    (
+      registeredValues[id + CONSTRUCT_SUFFIX] as
+        | ((scope: Scope) => void)
+        | undefined
+    )?.(scope);
+  }
+}
+
+/** Frame-end clear: after complete delivery (merges + queued renders) a
+ * constructed branch settles into matched semantics — equality elision and
+ * skipped construct captures are CORRECT from here on; do not "fix" back. */
+export function drainConstructClears() {
+  for (const branch of pendingConstructClears) {
+    branch[AccessorProp.NeedsConstruct] = undefined;
+  }
+  pendingConstructClears.length = 0;
+}
+
+/** Owner-wires an adopted child scope (never clobbering a serialized `_`)
+ * and recurses into the child template's construct pass. */
+export function _construct_child(
+  scope: Scope,
+  childAccessor: Accessor,
+  constructId: string,
+) {
+  const child = scope[childAccessor] as Scope | undefined;
+  if (child) {
+    child[AccessorProp.Owner] ||= scope;
+    (
+      registeredValues[constructId + CONSTRUCT_SUFFIX] as
+        | ((scope: Scope) => void)
+        | undefined
+    )?.(child);
+  }
+}
+
+export function _update_content(
+  contentId: string,
+  merge: UpdateMerge,
+  construct?: (scope: Scope) => void,
+) {
   _resume(contentId + UPDATE_MERGE_SUFFIX, merge);
+  // The construct pass: declared fills/wiring rendering a values-free
+  // constructed scope's DOM from its adopted values (invocation lands with
+  // the dispatcher; registration establishes the compile contract).
+  if (construct) _resume(contentId + CONSTRUCT_SUFFIX, construct);
 }
 
 /** Dispatches a lazy child or parks its newest patch until ready. */
@@ -312,10 +374,15 @@ export function _update_load(
     } finally {
       setConstructingBranch(undefined);
     }
+    (live as BranchScope)[AccessorProp.NeedsConstruct] = 1;
     insertBranchBefore(live as BranchScope, parentNode, marker);
   }
   const merge = registeredValues[mergeId] as UpdateMerge | undefined;
   if (merge) {
+    if ((live as BranchScope)[AccessorProp.NeedsConstruct]) {
+      invokeConstruct(constructId, live);
+      pendingConstructClears.push(live as BranchScope);
+    }
     merge(patch, live);
   } else {
     for (const pending of pendingLoadUpdates) {
@@ -325,7 +392,7 @@ export function _update_load(
       }
     }
     installReadyUpdates();
-    pendingLoadUpdates.push([patch, live, mergeId]);
+    pendingLoadUpdates.push([patch, live, mergeId, constructId]);
   }
 }
 
@@ -393,6 +460,8 @@ export function _update_dynamic(
         live,
         parentNode,
         patchBranch,
+        regionTarget ? 1 : undefined,
+        regionTarget ? undefined : (rendererId as string),
       );
       insertBranchBefore(branch, parentNode, anchorNode);
       if (liveBranch) removeAndDestroyBranch(liveBranch as BranchScope);
@@ -424,6 +493,7 @@ export function _update_dynamic(
           live,
           parentNode,
           patchBranch,
+          1,
         );
         insertBranchBefore(nativeBranch as BranchScope, parentNode, anchorNode);
         if (liveBranch) removeAndDestroyBranch(liveBranch as BranchScope);
@@ -537,6 +607,8 @@ export function _update_if(
         live,
         parentNode,
         patchBranch,
+        undefined,
+        constructId,
       );
       insertBranchBefore(branch, parentNode, anchorNode);
       if (liveBranch) removeAndDestroyBranch(liveBranch as BranchScope);
@@ -555,6 +627,22 @@ export function _update_if(
 }
 
 type UpdateHandler = (patch: Scope, live: Scope, patchAccessor: string) => void;
+
+/** Applies a state-computed capture only while its scope still needs its
+ * construct pass (values-free DOM): matched scopes own newer client state
+ * and must never be clobbered by the server's fresh-branch value. */
+export function _update_construct(handler: UpdateHandler): UpdateHandler {
+  return (patch, live, accessor) => {
+    if (
+      live[AccessorProp.NeedsConstruct] ||
+      (live[AccessorProp.ClosestBranch] as BranchScope | undefined)?.[
+        AccessorProp.NeedsConstruct
+      ]
+    ) {
+      handler(patch, live, accessor);
+    }
+  };
+}
 
 export function _update_scopes(handlers: Record<string, UpdateHandler>) {
   return (patch: Scope, live: Scope) => {
@@ -885,6 +973,8 @@ export function _update_for(
         live,
         parentNode,
         patch[i],
+        undefined,
+        constructId,
       );
       insertBranchBefore(branch, parentNode, nextSibling);
       liveList.push(branch);
@@ -967,6 +1057,7 @@ export function _update_region(accessor: Accessor) {
       live,
       parentNode,
       patchBranch,
+      1,
     ) as BranchScope;
     const destroyPrior =
       liveBranch &&
@@ -993,10 +1084,33 @@ function constructBranch(
   parentScope: Scope | undefined,
   parentNode: ParentNode,
   into: Scope,
+  complete?: 1,
+  constructId?: string,
 ) {
   setConstructingBranch(1);
   try {
-    return createBranchInto($global, renderer, parentScope, parentNode, into);
+    const branch = createBranchInto(
+      $global,
+      renderer,
+      parentScope,
+      parentNode,
+      into,
+    );
+    // A values-free shell clone has never rendered its fills; the stamp is
+    // per-scope state (not an apply time window: parked lazy dispatches run
+    // after the apply). Region shells and native rebuilds are complete
+    // markup — no stamp. Invariant: once a stamped scope's initial render
+    // has happened and the stamp is cleared, the persisted signals'
+    // equality-elision is CORRECT — do not "fix" the elision back. Until
+    // the compiled construct pass lands (it will clear the stamp), the
+    // stamp stays set and stamped scopes re-render equal values; that
+    // over-render is idempotent and deliberate.
+    if (!complete) {
+      (branch as BranchScope)[AccessorProp.NeedsConstruct] = 1;
+      pendingConstructClears.push(branch as BranchScope);
+      invokeConstruct(constructId, branch);
+    }
+    return branch;
   } finally {
     setConstructingBranch(undefined);
   }
@@ -1040,6 +1154,8 @@ export function _update_for_keyed(
         parentScope,
         parentNode,
         patchItem,
+        undefined,
+        constructId,
       );
       if (merge) merge(patchItem, branch);
       return branch;
@@ -1083,15 +1199,22 @@ export const pendingLoadUpdates: [
   patch: Scope,
   live: Scope,
   mergeId: string,
+  constructId?: string,
 ][] = [];
 const flushPendingLoadUpdates = () => {
   for (let i = pendingLoadUpdates.length; i--;) {
-    const [patch, live, mergeId] = pendingLoadUpdates[i];
+    const [patch, live, mergeId, constructId] = pendingLoadUpdates[i];
     const merge = registeredValues[mergeId] as UpdateMerge | undefined;
     // Skip destroyed scopes (a later navigation removed the subtree).
     if (merge && live[AccessorProp.Gen]) {
       pendingLoadUpdates.splice(i, 1);
+      const needsConstruct = (live as BranchScope)[AccessorProp.NeedsConstruct];
+      if (needsConstruct) invokeConstruct(constructId, live);
       merge(patch, live);
+      // A lazy pre-built root clears independently, after its delivery.
+      if (needsConstruct) {
+        (live as BranchScope)[AccessorProp.NeedsConstruct] = undefined;
+      }
     } else if (!live[AccessorProp.Gen]) {
       pendingLoadUpdates.splice(i, 1);
     }
@@ -1213,6 +1336,7 @@ export function installReadyUpdates() {
         run();
       } finally {
         pendingBatchEffects = undefined;
+        drainConstructClears();
         setUpdating(0);
         activePairs = undefined;
       }

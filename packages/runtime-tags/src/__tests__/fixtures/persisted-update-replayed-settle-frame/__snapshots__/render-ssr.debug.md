@@ -38,7 +38,7 @@ INSERT: section::text("loading…")
   <button
     class="taps"
   >
-    second tapped 
+    second tapped 0
   </button>
 </section>
 ```
@@ -64,7 +64,7 @@ document.querySelector("button.clicks").click();
   <button
     class="taps"
   >
-    second tapped 
+    second tapped 0
   </button>
 </section>
 ```
@@ -84,7 +84,7 @@ UPDATE: .clicks::text@8 "0" => "1"
   <button
     class="taps"
   >
-    second tapped 
+    second tapped 0
   </button>
 </section>
 ```

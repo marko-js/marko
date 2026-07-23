@@ -75,12 +75,11 @@ REMOVE: button
   Back
 </h1>
 <button>
-   
+  2
 </button>
 ```
 ## Change
 ```
 INSERT: h2 + :is(h1, button)
 REMOVE: h2
-UPDATE: h1::text " " => "Back"
 ```

@@ -32,14 +32,22 @@ var template_default = _template("a", (input) => {
 	_serialize_guard($scope0_reason, 0) | _persisted_reason() && writeScope($scope0_id, { b: $sg__input_id | _persisted_reason() && _existing_scope($childScope) });
 }, 1);
 _renderer_shells({
-	"a0": [["<h1 class=name> </h1>", ["b"]], [
+	"a0": [[
+		"<h1 class=name> </h1>",
+		["b"],
+		"<!>"
+	], [
 		"D l/",
 		["b"],
-		"&"
+		"&%b"
 	]],
-	"a": [["<h1 class=name> </h1>", ["b"]], [
+	"a": [[
+		"<h1 class=name> </h1>",
+		["b"],
+		"<!>"
+	], [
 		"D l/",
 		["b"],
-		"&"
+		"&%b"
 	]]
 });

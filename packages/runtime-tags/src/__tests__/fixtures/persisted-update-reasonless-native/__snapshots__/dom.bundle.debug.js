@@ -17,13 +17,17 @@ const $_holes = /*@__PURE__*/ _update_scopes({
 	"PatchAttr:data-value:#div/2": /*@__PURE__*/ _update_named_attr("#div/2", "data-value"),
 	"PatchAttr:value:#input/3": /*@__PURE__*/ _update_named_attr("#input/3", "value")
 });
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+};
 const $update2 = ($patch, $live) => {
 	_update_pair($patch, $live);
 	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
 	$_holes($patch, $live);
 };
+_construct("__tests__/template.marko_0_update", $construct);
 const $merge = _resume("__tests__/template.marko_0_update", $update2);
-_update_content("__tests__/template.marko", $merge);
+_update_content("__tests__/template.marko", $merge, $construct);
 function $patch2($fail) {
 	return patch($merge, $fail);
 }

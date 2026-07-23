@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				mounter_default({ onReady: _resume(function() {
 					ready = true;
 				}, "__tests__/template.marko_5/onReady", $scope5_id) });
-				_html(`<p class=status>${ready ? "ready" : "waiting"}${_el_resume($scope5_id, "#text/1")} of ${_sep(_persisted_reason())}${_escape(_hole_value($scope5_id, "PatchHole:#text/2", data.total, _persisted_reason()))}${_el_resume($scope5_id, "#text/2", _persisted_reason())}</p>`);
+				_html(`<p class=status>${_escape(_hole_value($scope5_id, "PatchHole:#text/2", ready ? "ready" : "waiting", _state_reason()))}${_el_resume($scope5_id, "#text/2")} of ${_sep(_persisted_reason())}${_escape(_hole_value($scope5_id, "PatchHole:#text/3", data.total, _persisted_reason()))}${_el_resume($scope5_id, "#text/3", _persisted_reason())}</p>`);
 				writeScope($scope5_id, {
 					ready: _state_reason() && ready,
 					"#childScope/0": _persisted_reason() && _existing_scope($childScope)
@@ -81,28 +81,36 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_resume_branch($scope0_id);
 }, 1);
 _renderer_shells({
-	"__tests__/template.marko_5_update": [[["__tests__/tags/mounter.marko"], "<p class=status><!> of <!></p>"], [
+	"__tests__/template.marko_5_update": [[["__tests__/tags/mounter.marko"], "<!><p class=status><!> of <!></p>"], [
 		"/",
 		["__tests__/tags/mounter.marko"],
-		"&D%c%l"
+		"&%bD%c%l"
 	]],
-	"__tests__/template.marko_5_content": [[["__tests__/tags/mounter.marko"], "<p class=status><!> of <!></p>"], [
+	"__tests__/template.marko_5_content": [[["__tests__/tags/mounter.marko"], "<!><p class=status><!> of <!></p>"], [
 		"/",
 		["__tests__/tags/mounter.marko"],
-		"&D%c%l"
+		"&%bD%c%l"
 	]],
 	"__tests__/template.marko_3_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_3_content": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_update": ["<!><!><!>", "b%c"],
 	"__tests__/template.marko_2_content": ["<!><!><!>", "b%c"],
-	"__tests__/template.marko_0_update": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko_0_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]],
-	"__tests__/template.marko": [["<button class=count>clicked <!></button>", ["__tests__/tags/layout.marko"]], [
+	"__tests__/template.marko": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
 		" Db%l/",
 		["__tests__/tags/layout.marko"],
-		"&"
+		"&%b"
 	]]
 });
