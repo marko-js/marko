@@ -1,0 +1,11 @@
+<let/checked="pending"/>
+<const/root=(() => {
+  const root = { name: "root" };
+  const set = new Set();
+  set.add(root);
+  root.set = set;
+  return root;
+})()/>
+<button onClick() {
+  checked = root.set.size === 1 && root.set.has(root) ? "intact" : "broken";
+}>${checked}</button>

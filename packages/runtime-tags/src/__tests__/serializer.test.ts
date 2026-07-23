@@ -293,6 +293,85 @@ describe("serializer", () => {
     });
   });
 
+  // A member that references an ancestor (not the container itself) cannot be
+  // built into the constructor, so it is inserted afterwards.
+  describe("collection members referencing an ancestor", () => {
+    it("Set holds an ancestor", () => {
+      const parent: any = { name: "p" };
+      parent.set = new Set([parent]);
+      const rt = deserialize(parent);
+      assert.equal(rt.set.size, 1);
+      assert.ok(rt.set.has(rt));
+    });
+
+    it("Map value is an ancestor", () => {
+      const parent: any = { name: "p" };
+      parent.map = new Map<unknown, unknown>([["self", parent]]);
+      const rt = deserialize(parent);
+      assert.equal(rt.map.get("self"), rt);
+    });
+
+    it("Map key is an ancestor", () => {
+      const parent: any = { name: "p" };
+      parent.map = new Map<unknown, unknown>([[parent, "self"]]);
+      const rt = deserialize(parent);
+      assert.equal(rt.map.get(rt), "self");
+    });
+
+    it("undirected graph back-edge survives", () => {
+      const a: any = { id: "a", adj: new Set() };
+      const b: any = { id: "b", adj: new Set() };
+      a.adj.add(b);
+      b.adj.add(a);
+      const rt = deserialize(a);
+      const rtB = [...rt.adj][0];
+      assert.equal(rtB.id, "b");
+      assert.ok(rtB.adj.has(rt));
+    });
+
+    it("keeps non-ancestor members inline", () => {
+      const child = { name: "c" };
+      const parent: any = { name: "p", set: new Set([child]) };
+      const rt = deserialize(parent);
+      assert.equal(rt.set.size, 1);
+      assert.equal([...rt.set][0].name, "c");
+    });
+
+    it("preserves Set insertion order around a deferred member", () => {
+      const root: any = {};
+      root.set = new Set(["before", root, "after"]);
+      const rt = deserialize(root);
+      assert.deepEqual(
+        [...rt.set].map((x) => (x === rt ? "root" : x)),
+        ["before", "root", "after"],
+      );
+    });
+
+    it("preserves Map key order around a deferred entry", () => {
+      const root: any = {};
+      root.map = new Map<unknown, unknown>([
+        ["a", 1],
+        [root, 2],
+        ["b", 3],
+      ]);
+      const rt = deserialize(root);
+      assert.deepEqual(
+        [...rt.map.keys()].map((k) => (k === rt ? "root" : k)),
+        ["a", "root", "b"],
+      );
+    });
+
+    it("serializes a nested circular found inside a deferred insert arg", () => {
+      const root: any = {};
+      const child: any = {};
+      child.self = child;
+      root.map = new Map([[root, child]]);
+      const rt = deserialize(root);
+      const rtChild = rt.map.get(rt);
+      assert.equal(rtChild.self, rtChild);
+    });
+  });
+
   describe("object", () => {
     it("empty", () => assertStringify({}, `{}`));
     it("nested", () => assertStringify({ a: { b: 1 } }, `{a:{b:1}}`));

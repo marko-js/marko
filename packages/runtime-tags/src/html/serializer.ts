@@ -308,9 +308,19 @@ class State {
   mutated: Mutation[] = [];
 }
 
+// A `Map`/`Set` member that references an ancestor cannot be built into the
+// constructor (the ancestor's id isn't assigned yet), so it rides the
+// collection's reference in `assigned` and emits a post-construction call
+// (`.add(v)` / `.set(k, v)`) once every id exists.
+interface DeferredCall {
+  method: string;
+  args: unknown[];
+}
+
 class Reference {
   declare debug?: Debug;
   public assigns: null | string[] = null;
+  public calls: null | DeferredCall[] = null;
   public scopeId: number | undefined = undefined;
   public channel: SerializeChannel | undefined = undefined;
   constructor(
@@ -473,15 +483,38 @@ function writeAssigned(state: State) {
   let sep = state.buf.length ? "," : "";
 
   if (state.assigned.size) {
-    let buf = "";
-    for (const ref of state.assigned) {
-      buf += sep + assignsToString(ref.assigns!, ref.id!);
-      ref.assigns = null;
-      sep = ",";
-    }
-
-    state.buf.push(buf);
+    const assigned = state.assigned;
     state.assigned = new Set();
+    let buf = "";
+    let hasCalls = false;
+    for (const ref of assigned) {
+      if (ref.assigns) {
+        buf += sep + assignsToString(ref.assigns, ref.id!);
+        ref.assigns = null;
+        sep = ",";
+      }
+      hasCalls ||= ref.calls !== null;
+    }
+    if (buf) state.buf.push(buf);
+
+    // Batched assignments land in one entry above, so calls — which push
+    // their args directly — walk the same set afterwards.
+    if (hasCalls) {
+      for (const ref of assigned) {
+        if (!ref.calls) continue;
+        for (const { method, args } of ref.calls) {
+          state.buf.push(
+            (state.buf.length ? "," : "") + ref.id + "." + method + "(",
+          );
+          for (let a = 0; a < args.length; a++) {
+            if (a) state.buf.push(",");
+            writeCallArg(state, args[a]);
+          }
+          state.buf.push(")");
+        }
+        ref.calls = null;
+      }
+    }
   }
 
   if (hasChannelMutations(state)) {
@@ -540,10 +573,21 @@ function writeAssigned(state: State) {
       state.buf.push(")");
     }
     state.mutated = remaining;
+  }
 
-    if (state.assigned.size) {
-      writeAssigned(state);
-    }
+  // Serializing call args or channel-mutation values can surface fresh
+  // circular assignments/calls; drain them into this same payload.
+  if (state.assigned.size) {
+    writeAssigned(state);
+  }
+}
+
+function writeCallArg(state: State, val: unknown) {
+  if (val === undefined) {
+    state.wroteUndefined = true;
+    state.buf.push("$");
+  } else if (!writeProp(state, val, null, "")) {
+    state.buf.push("void 0");
   }
 }
 
@@ -1047,11 +1091,26 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
   const items: unknown[] = [];
   let assigns: undefined | string[];
   let needsId: undefined | boolean;
+  // Once an entry must defer, every later entry defers too so insertion order
+  // is preserved.
+  let deferring = false;
   let i = 0;
 
   // Small maps cost less as constructor entries than with the reduce runtime.
   if (val.size < 25) {
     for (let [itemKey, itemValue] of val) {
+      if (
+        !deferring &&
+        ((itemKey !== val && isAncestorMember(state, ref, itemKey)) ||
+          (itemValue !== val && isAncestorMember(state, ref, itemValue)))
+      ) {
+        deferring = true;
+      }
+      if (deferring) {
+        deferCall(state, ref, "set", [itemKey, itemValue]);
+        continue;
+      }
+
       if (itemKey === val) {
         itemKey = undefined;
         (assigns ||= []).push("a[" + i + "][0]");
@@ -1086,6 +1145,18 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
     );
   } else {
     for (let [itemKey, itemValue] of val) {
+      if (
+        !deferring &&
+        ((itemKey !== val && isAncestorMember(state, ref, itemKey)) ||
+          (itemValue !== val && isAncestorMember(state, ref, itemValue)))
+      ) {
+        deferring = true;
+      }
+      if (deferring) {
+        deferCall(state, ref, "set", [itemKey, itemValue]);
+        continue;
+      }
+
       if (itemKey === val) {
         itemKey = 0;
         (assigns ||= []).push("a[" + i + "]");
@@ -1126,8 +1197,19 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
   const items: (unknown | undefined)[] = [];
   let assigns: undefined | string[];
   let needsId: undefined | boolean;
+  let deferring = false;
   let i = 0;
   for (let item of val) {
+    // Once a member must defer, every later member defers too so insertion
+    // order is preserved.
+    if (!deferring && item !== val && isAncestorMember(state, ref, item)) {
+      deferring = true;
+    }
+    if (deferring) {
+      deferCall(state, ref, "add", [item]);
+      continue;
+    }
+
     if (item === val) {
       item = 0;
       (assigns ||= []).push("i[" + i + "]");
@@ -1150,6 +1232,31 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
     needsId,
   );
   return true;
+}
+
+// A member that is `===` an ancestor already on the write stack; its reference
+// exists and sits on the container's parent chain. Primitives never qualify, so
+// they skip the lookup entirely.
+function isAncestorMember(state: State, container: Reference, member: unknown) {
+  if (
+    member === null ||
+    (typeof member !== "object" && typeof member !== "function")
+  ) {
+    return false;
+  }
+  const ref = state.refs.get(member as WeakKey);
+  return ref !== undefined && isCircular(container, ref);
+}
+
+function deferCall(
+  state: State,
+  ref: Reference,
+  method: string,
+  args: unknown[],
+) {
+  ensureId(state, ref);
+  (ref.calls ||= []).push({ method, args });
+  state.assigned.add(ref);
 }
 
 // Reusable Map/Set members bind through their otherwise unreachable backing
