@@ -899,6 +899,12 @@ describe("serializer", () => {
         new BigUint64Array([1n, 2n, 3n]),
         `new BigUint64Array([1n,2n,3n])`,
       ));
+    it("partial view over a SharedArrayBuffer emits no hole", () => {
+      if (typeof SharedArrayBuffer === "undefined") return;
+      const ta = new Int8Array(new SharedArrayBuffer(8), 0, 2);
+      assert.doesNotMatch(serialize(ta), /Int8Array\(,/);
+    });
+
     it("BigInt64Array zero-filled", () =>
       assertStringify(new BigInt64Array(3), `new BigInt64Array(3)`));
   });
@@ -1120,6 +1126,39 @@ describe("serializer", () => {
           `Temporal.ZonedDateTime.from("2024-01-05T15:30:45+09:00[Asia/Tokyo]")`,
         ),
       );
+  });
+
+  describe("DataView", () => {
+    it("full buffer", () => {
+      const buf = new ArrayBuffer(8);
+      new DataView(buf).setInt32(0, 123456);
+      const rt = deserialize(new DataView(buf));
+      assert.equal(rt.byteOffset, 0);
+      assert.equal(rt.byteLength, 8);
+      assert.equal(rt.getInt32(0), 123456);
+    });
+
+    it("partial view keeps offset and length", () => {
+      const buf = new ArrayBuffer(16);
+      const view = new DataView(buf, 4, 8);
+      view.setFloat64(0, 1.5);
+      const rt = deserialize(view);
+      assert.equal(rt.byteOffset, 4);
+      assert.equal(rt.byteLength, 8);
+      assert.equal(rt.getFloat64(0), 1.5);
+    });
+
+    it("is unserializable over a SharedArrayBuffer rather than emitting a hole", () => {
+      if (typeof SharedArrayBuffer === "undefined") return;
+      const dv = new DataView(new SharedArrayBuffer(8), 0, 2);
+      assert.doesNotMatch(serialize(dv), /DataView\(,/);
+    });
+
+    it("shares a buffer with a sibling view", () => {
+      const buf = new ArrayBuffer(8);
+      const rt = deserialize({ a: new DataView(buf), b: new Int8Array(buf) });
+      assert.equal(rt.a.buffer, rt.b.buffer);
+    });
   });
 
   describe("URLSearchParams", () => {

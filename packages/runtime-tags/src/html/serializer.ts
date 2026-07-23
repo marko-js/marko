@@ -927,6 +927,9 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
     case BigInt64Array:
     case BigUint64Array:
       return writeTypedArray(state, val as TypedArray, ref);
+    case DataView:
+      return writeDataView(state, val as DataView, ref);
+    // Boxed primitives (`Object(1)`) are deliberately unsupported.
     case WeakSet:
       return writeWeakSet(state);
     case WeakMap:
@@ -1305,6 +1308,30 @@ function isDedupedMember(val: unknown) {
   }
 }
 
+// A view whose buffer the dispatch cannot write (e.g. `SharedArrayBuffer`)
+// would leave a hole in the constructor call and break the whole payload.
+function canWriteBuffer(state: State, buffer: ArrayBufferLike, ref: Reference) {
+  if (Object.getPrototypeOf(buffer)?.constructor === ArrayBuffer) return true;
+  MARKO_DEBUG && throwUnserializable(state, buffer, ref, "buffer");
+  return false;
+}
+
+function writeDataView(state: State, val: DataView, ref: Reference) {
+  const { buffer } = val;
+  if (!canWriteBuffer(state, buffer, ref)) return false;
+
+  // The buffer writes through so sibling views over it share one binding.
+  const needsLength = val.byteOffset + val.byteLength < buffer.byteLength;
+  state.buf.push("new DataView(");
+  writeProp(state, buffer, ref, "buffer");
+  state.buf.push(
+    (val.byteOffset || needsLength
+      ? "," + val.byteOffset + (needsLength ? "," + val.byteLength : "")
+      : "") + ")",
+  );
+  return true;
+}
+
 function writeArrayBuffer(state: State, val: ArrayBuffer) {
   let result: string;
 
@@ -1331,6 +1358,7 @@ function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
     val.byteLength < val.buffer.byteLength ||
     state.refs.has(val.buffer)
   ) {
+    if (!canWriteBuffer(state, val.buffer, ref)) return false;
     const needsLength = val.byteOffset + val.byteLength < val.buffer.byteLength;
     state.buf.push("new " + val.constructor.name + "(");
     writeProp(state, val.buffer, ref, "buffer");
