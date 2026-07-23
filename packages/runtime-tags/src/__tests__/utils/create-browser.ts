@@ -17,7 +17,11 @@ type MQLEntry = {
   listeners: Set<EventListenerOrEventListenerObject>;
 };
 
-export default function createBrowser(dir?: string, loadOrder?: string[]) {
+export default function createBrowser(
+  dir?: string,
+  loadOrder?: string[],
+  rejectLoad?: (id: string) => boolean,
+) {
   const virtualConsole = new VirtualConsole();
   const dom = new JSDOM("", {
     runScripts: "dangerously",
@@ -162,7 +166,12 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
         }
 
         for (const src of pending) {
-          importWithContext(path.join(dir, src), { browser: true }, ctx);
+          importWithContext(
+            path.join(dir, src),
+            { browser: true },
+            ctx,
+            rejectLoad,
+          );
           // With an explicit order each script is fully evaluated before
           // the next starts so that the arrival order is deterministic.
           if (loadOrder) await waitForPendingModules(ctx);

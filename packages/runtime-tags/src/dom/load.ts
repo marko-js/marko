@@ -119,6 +119,7 @@ function insertLoaded(
   renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
   branch[AccessorProp.Load] = 0;
   if ((remaining = values?.size as number)) {
+    const fail = loadFailed(branch, awaitCounter);
     for (const [promise, entry] of values!) {
       promise.then(
         (signal) => {
@@ -134,7 +135,9 @@ function insertLoaded(
             });
           }
         },
-        () => 0,
+        // A rejected input chunk drives the same `@catch` boundary as a setup
+        // failure; `remaining = 0` stops later chunks re-firing either arm.
+        (error) => remaining > 0 && ((remaining = 0), fail(error)),
       );
     }
   } else {

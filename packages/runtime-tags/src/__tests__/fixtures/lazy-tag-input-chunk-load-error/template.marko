@@ -1,0 +1,15 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/show=false/>
+<button id="toggle" onClick() { show = true }>toggle</button>
+<try>
+  <if=show>
+    <Child value=1/>
+  </if>
+  <@placeholder>
+    <div id="loading">loading</div>
+  </@placeholder>
+  <@catch|err|>
+    <div id="error">${err.message}</div>
+  </@catch>
+</try>

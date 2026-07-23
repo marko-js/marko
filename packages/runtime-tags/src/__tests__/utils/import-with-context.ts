@@ -50,6 +50,7 @@ export async function importWithContext<T>(
   entry: string,
   resolveOpts: Omit<ResolveOptions, "from">,
   context: vm.Context,
+  rejectLoad?: (id: string) => boolean,
 ): Promise<T> {
   vm.createContext(context);
   const state =
@@ -89,6 +90,11 @@ export async function importWithContext<T>(
   }
 
   function importModuleDynamically(id: string, parent: vm.Module) {
+    // Simulate a network-level chunk load failure (e.g. deploy skew) for the
+    // matched dynamic import while its siblings resolve normally.
+    if (rejectLoad?.(id)) {
+      return Promise.reject(new Error(`simulated chunk load failure: ${id}`));
+    }
     const from = parent.identifier;
     const resolved = resolveSync(id, { ...resolveOpts, from });
 

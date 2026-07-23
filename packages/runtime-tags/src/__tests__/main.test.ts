@@ -43,6 +43,11 @@ export type TestConfig = {
    * unlisted load scripts follow in document order.
    */
   load_order?: string[];
+  /**
+   * Rejects any dynamic chunk import whose specifier contains one of these
+   * substrings, simulating a network-level lazy-chunk load failure.
+   */
+  reject_load?: string[];
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
@@ -144,6 +149,9 @@ function testFixtures(interop?: true) {
             html?: Sizes;
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
+          const rejectLoad =
+            config.reject_load &&
+            ((id: string) => config.reject_load!.some((s) => id.includes(s)));
 
           // Mocha retains suite closures for the entire run, so the cached
           // browsers/bundles are released once the fixture finishes to keep
@@ -307,7 +315,11 @@ function testFixtures(interop?: true) {
               capture.cleanup();
             }
 
-            const browser = createBrowser(runner.assets, config.load_order);
+            const browser = createBrowser(
+              runner.assets,
+              config.load_order,
+              rejectLoad || undefined,
+            );
             browsers.push(browser);
             const { window } = browser;
             const flushNext = browser.stream(chunks);

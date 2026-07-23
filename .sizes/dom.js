@@ -1,4 +1,4 @@
-// size: 26275 (min) 9730 (brotli)
+// size: 26303 (min) 9707 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2576,7 +2576,8 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
     renderer.b(branch, parent.namespaceURI),
     (branch.X = 0),
     (remaining = values?.size))
-  )
+  ) {
+    let fail = loadFailed(branch, awaitCounter);
     for (let [promise, entry] of values)
       promise.then(
         (signal) => {
@@ -2589,9 +2590,9 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
                   insert());
               }));
         },
-        () => 0,
+        (error) => remaining > 0 && ((remaining = 0), fail(error)),
       );
-  else (setupBranch(renderer, branch), insert());
+  } else (setupBranch(renderer, branch), insert());
 }
 function loadFailed(scope, awaitCounter) {
   return (error) => {
