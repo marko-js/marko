@@ -1242,6 +1242,8 @@ function writeWeakMap(state: State) {
   return true;
 }
 
+// The own `constructor` is trusted here: dispatch already matched a built-in
+// error prototype, so only this object's owner could have replaced it.
 function writeError(state: State, val: Error, ref: Reference) {
   const result =
     "new " + val.constructor.name + "(" + quote(val.message + "", 0);
