@@ -115,8 +115,12 @@ Serialization in 6 is **need-based, not blanket**: the compiler computes what mu
 | `onRender(out)`                                                          | usually deleted — it was mostly used for derivations (→ `<const>`)                                                         |
 | `onCreate(input, out)`                                                   | initial values of `<let>` tags                                                                                             |
 | lifecycle _events_ (`this.on("update", fn)`, `this.once("destroy", fn)`) | same replacements as the methods                                                                                           |
+| `on-attach(fn)` on an element                                            | `<script>` or `<lifecycle onMount>` — both run with the element in the DOM                                                 |
+| `on-detach(fn)` on an element                                            | no equivalent — nothing can delay removal (see below)                                                                      |
 
 Prefer plain state and `<script>`; use `<lifecycle>` only to host imperative third-party instances (maps, charts) where a stable `this` across `onMount`/`onUpdate`/`onDestroy` is genuinely needed.
+
+Exit animations need rework. Marko 5's `on-detach` handler could hold a node in the DOM (`event.preventDefault()`, then `event.detach()` once the animation finished); nothing in Marko 6 can delay removal — `<lifecycle onDestroy>` only observes teardown, and `<show=false>` parks its nodes in a detached fragment, so a transition never runs. Stage it in state instead: keep the item rendered while marking it exiting (`class={ exiting: id === leavingId }`), then drop it from the list in a `transitionend`/`animationend` handler.
 
 ### Events
 

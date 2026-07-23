@@ -26,3 +26,4 @@ Documentation and this skill target **Marko 6**. Do not use Marko 5 syntax.
 - [ ] Event handlers use function form: `onClick() { ... }` or a reference, not string names.
 - [ ] Component stays small and readable; consider splitting large templates.
 - [ ] No unnecessary client-side JS; prefer built-in browser APIs and HTML/CSS features over scripts.
+- [ ] Props are declared with an exported `Input` interface, and templates are type checked with `mtc` (`@marko/type-check`) — `tsc` skips `.marko` files and reports nothing.

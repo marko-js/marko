@@ -113,6 +113,12 @@ Don't fetch while rendering: start data loads early, pass the PROMISE through th
 - `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces). `style=` keys are kebab-case CSS names (`{ "background-color": c }`), not camelCase.
 - `<id/x>` mints a collision-free id for label/input wiring (`<label for=x>`/`<input id=x>`) — don't hardcode ids in reusable tags; `<id/x=input.id>` reuses a caller's.
 
+## Sharing data (`$global`)
+
+- No provider/consumer context API. Prop-drill through `input`, or read request-scoped `$global` from any template with no threading: `${$global.messages.title}`.
+- Populate at the render call: `template.render({ $global: { messages } })`. Under @marko/run a middleware's `return next({ messages })` merges into `$global.data`.
+- `$global` is NOT serialized by default, so client-reactive reads (`<const>`, `<let>` init, handlers) throw after resume even though SSR looked fine. Allow-list first: `$global.serializedGlobals = { messages: true }` (@marko/run ships only `params`/`url`; add `context.serializedGlobals.data = true`). SSR-only markup needs no opt-in.
+
 ## Client-side effects (rare — prefer state/const)
 
 ```marko
@@ -125,7 +131,7 @@ Don't fetch while rendering: start data loads early, pass the PROMISE through th
 </script>
 ```
 
-`<style>` = real CSS, extracted & global. `<script>` = reactive effect, NOT an HTML script tag.
+`<style>` = real CSS, extracted & global; `<style/styles>` scopes it (CSS modules) — `.card {...}` then `class=styles.card`, or `<style/{card}>` then `class=card`. Don't hand-namespace globals. `<script>` = reactive effect, NOT an HTML script tag.
 
 Imperative libs (charts, maps) needing mount/update/destroy: use `<lifecycle>`, not a hand-wired `<script>`. `this` persists across all three; return an object from `onMount` to stash the instance:
 
@@ -146,6 +152,22 @@ Defer a tag's JS into its own bundle until a trigger fires: `render`, `visible#s
 import PriceChart from "<price-chart>" with { load: "visible#chart" }
 <div#chart><PriceChart symbol=input.symbol/></div>
 ```
+
+## TypeScript
+
+`export interface Input` types `input` — generic as `Input<T>`, body content as `Marko.Body<[params]>`, repeated attr tags as `Marko.AttrTag<T>`.
+
+```marko
+export interface Input<T> {
+  value: T;
+  onSelect?: (index: number) => void;              // event attrs: exact camelCase
+  then?: Marko.AttrTag<{ content: Marko.Body<[T]> }>;
+}
+
+<${input.then}(input.value)/>
+```
+
+`tsc` silently SKIPS `.marko` — a type-broken template still exits 0. Check with `mtc` (`@marko/type-check`).
 
 ## DON'T (these are errors or silently wrong)
 
@@ -172,3 +194,7 @@ import PriceChart from "<price-chart>" with { load: "visible#chart" }
 | hand-rolled radios `checked=x checkedChange(v){…}`          | `checkedValue:=picked` on each radio (shared var, distinct `value=`)                 |
 | hand-rolled `IntersectionObserver` to defer a widget's JS   | `import W from "<w>" with { load: "visible#sel" }`                                   |
 | imperative lib wired through `<script>` mount + cleanup     | `<lifecycle onMount/onUpdate/onDestroy>` (keeps `this` across all three)             |
+| `createContext`/provider to share data                      | `input` (prop drilling) or request-scoped `$global`                                  |
+| `$global.x` in client-reactive code, not allow-listed       | `$global.serializedGlobals = { x: true }` first, or it throws after resume           |
+| hand-namespaced global classes (`.my-card-title`)           | `<style/styles>` + `class=styles.card` (scoped CSS modules)                          |
+| `tsc --noEmit` to type check templates                      | `mtc` — `tsc` skips `.marko` files and exits 0                                       |
