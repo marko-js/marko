@@ -106,7 +106,7 @@ function mount(
   const args = this[RendererProp.Params];
   const effects = prepareEffects(() => {
     branch = createBranch(
-      $global as any as Scope[AccessorProp.Global],
+      $global as any as Scope[typeof AccessorProp.Global],
       this,
       undefined,
       parentNode,

@@ -1,81 +1,27 @@
-export enum AccessorPrefix {
-  BranchScopes = "BranchScopes:",
-  ClosureScopes = "ClosureScopes:",
-  ClosureSignalIndex = "ClosureSignalIndex:",
-  ConditionalRenderer = "ConditionalRenderer:",
-  ControlledHandler = "ControlledHandler:",
-  ControlledType = "ControlledType:",
-  ControlledValue = "ControlledValue:",
-  DynamicHTMLLastChild = "DynamicHTMLLastChild:",
-  EventAttributes = "EventAttributes:",
-  KeyedScopes = "KeyedScopes:",
-  Lifecycle = "Lifecycle:",
-  Promise = "Promise:",
-  TagVariableChange = "TagVariableChange:",
-}
+import * as AccessorPrefix from "./constants/accessor-prefix.debug";
+import * as AccessorProp from "./constants/accessor-prop.debug";
+import * as ClosureSignalProp from "./constants/closure-signal-prop.debug";
+import * as KeyedScopesProp from "./constants/keyed-scopes-prop.debug";
+import * as LoadSignalValue from "./constants/load-signal-value.debug";
+import * as PendingRenderProp from "./constants/pending-render-prop.debug";
+import * as RendererProp from "./constants/renderer-prop.debug";
+type AccessorPrefix = AccessorPrefix.Value;
+export { AccessorPrefix };
 
-export enum AccessorProp {
-  Global = "$global",
-  Owner = "_",
-  AbortControllers = "#AbortControllers",
-  AbortScopes = "#AbortScopes",
-  AwaitCounter = "#AwaitCounter",
-  BranchAccessor = "#BranchAccessor",
-  BranchScopes = "#BranchScopes",
-  CatchContent = "#CatchContent",
-  ClosestBranch = "#ClosestBranch",
-  ClosestBranchId = "#ClosestBranchId",
-  Gen = "#Gen",
-  DetachedAwait = "#DetachedAwait",
-  EndNode = "#EndNode",
-  Id = "#Id",
-  Load = "#Load",
-  LoopKey = "#LoopKey",
-  LoopIndex = "#LoopIndex",
-  ParentBranch = "#ParentBranch",
-  PendingEffects = "#PendingEffects",
-  PendingRenders = "#PendingRenders",
-  PendingScopes = "#PendingScopes",
-  PlaceholderBranch = "#PlaceholderBranch",
-  PlaceholderContent = "#PlaceholderContent",
-  Renderer = "#Renderer",
-  StartNode = "#StartNode",
-  TagVariable = "#TagVariable",
-  TagVariableChange = "#TagVariableChange",
-}
+type AccessorProp = AccessorProp.Value;
+export { AccessorProp };
 
-export enum RendererProp {
-  Id = "id",
-  Clone = "clone",
-  Setup = "setup",
-  Params = "params",
-  Owner = "owner",
-  Accessor = "accessor",
-  LocalClosures = "localClosures",
-  LocalClosureValues = "localClosureValues",
-  Embed = "embed",
-}
+type RendererProp = RendererProp.Value;
+export { RendererProp };
 
-export enum PendingRenderProp {
-  Key = "key",
-  Scope = "scope",
-  Signal = "signal",
-  Value = "value",
-  Gen = "gen",
-  Pending = "pending",
-}
+type PendingRenderProp = PendingRenderProp.Value;
+export { PendingRenderProp };
 
-export enum ClosureSignalProp {
-  ScopeInstancesAccessor = "scopeInstancesAccessor",
-  SignalIndexAccessor = "signalIndexAccessor",
-  Index = "index",
-}
+type ClosureSignalProp = ClosureSignalProp.Value;
+export { ClosureSignalProp };
 
-export enum KeyedScopesProp {
-  PreviousKey = "PreviousKey:",
-}
+type KeyedScopesProp = KeyedScopesProp.Value;
+export { KeyedScopesProp };
 
-export enum LoadSignalValue {
-  Value = "value",
-  Signal = "signal",
-}
+type LoadSignalValue = LoadSignalValue.Value;
+export { LoadSignalValue };

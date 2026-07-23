@@ -1,6 +1,11 @@
 import type { PendingRender } from "../dom/queue";
 import type { Renderer as ClientRenderer, Renderer } from "../dom/renderer";
 import type { AccessorProp } from "./accessor.debug";
+import * as ControlledType from "./constants/controlled-type";
+import * as NodeType from "./constants/node-type";
+import * as ResumeSymbol from "./constants/resume-symbol";
+import * as WalkCode from "./constants/walk-code";
+import * as WalkRangeSize from "./constants/walk-range-size";
 export type Falsy = undefined | null | false | 0 | "";
 export interface BranchScope extends Scope {
   [AccessorProp.StartNode]: ChildNode;
@@ -30,15 +35,8 @@ export interface Scope {
   [x: string | number]: any;
 }
 
-export enum ResumeSymbol {
-  Node = "*",
-  BranchStart = "[",
-  BranchEnd = "]",
-  BranchEndNativeTag = "'",
-  BranchEndSingleNode = "|",
-  BranchEndOnlyChildInParent = ")",
-  BranchEndSingleNodeOnlyChildInParent = "}",
-}
+type ResumeSymbol = ResumeSymbol.Value;
+export { ResumeSymbol };
 
 export interface AwaitCounter {
   m?: (effects: unknown[]) => unknown[];
@@ -55,43 +53,16 @@ export {
   RendererProp,
 } from "./accessor.debug";
 
-export enum NodeType {
-  Element = 1,
-  Text = 3,
-  Comment = 8,
-  DocumentFragment = 11,
-}
+type NodeType = NodeType.Value;
+export { NodeType };
 
 // Reserved character codes: 0-31 [control chars], 34 " [double quote],
 // 39 ' [single quote], 92 \ [backslash], 96 ` [backtick]
-export enum WalkCode {
-  Get = 32,
-  Replace = 37,
-  EndChild = 38,
+type WalkCode = WalkCode.Value;
+export { WalkCode };
 
-  BeginChild = 47,
-  BeginChildWithVar = 48,
-  DynamicTagWithVar = 49,
-
-  Next = 67,
-  NextEnd = 91,
-
-  Over = 97,
-  OverEnd = 106,
-
-  Out = 107,
-  OutEnd = 116,
-
-  Multiplier = 117,
-  MultiplierEnd = 126,
-}
-
-export enum WalkRangeSize {
-  Next = 20, // 67 through 91
-  Over = 10, // 97 through 106
-  Out = 10, // 107 through 116
-  Multiplier = 10, // 117 through 126
-}
+type WalkRangeSize = WalkRangeSize.Value;
+export { WalkRangeSize };
 
 export type Accessor = string;
 
@@ -133,11 +104,5 @@ export type RenderedTemplate = PromiseLike<string> &
     toReadable(): ReadableStream<Uint8Array<ArrayBufferLike>>;
   };
 
-export enum ControlledType {
-  InputChecked,
-  InputCheckedValue,
-  InputValue,
-  SelectValue,
-  DetailsOrDialogOpen,
-  None,
-}
+type ControlledType = ControlledType.Value;
+export { ControlledType };

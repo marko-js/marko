@@ -7,7 +7,7 @@ let nextScopeId = 1e6; // Intentionally high to avoid conflict with server rende
 let collectingScopes: Scope[] | undefined;
 
 export function createScope(
-  $global: Scope[AccessorProp.Global],
+  $global: Scope[typeof AccessorProp.Global],
   closestBranch?: BranchScope,
 ): Scope {
   const scope = {

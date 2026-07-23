@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { WalkCode, WalkRangeSize } from "../../common/types";
 import { ContentType, getSection, type Section } from "../util/sections";
+import * as Step from "./constants/step";
 import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
@@ -24,10 +25,8 @@ const [getSteps] = createSectionState<Step[]>("steps", (section) => {
   return [];
 });
 
-export enum Step {
-  Enter,
-  Exit,
-}
+type Step = Step.Value;
+export { Step };
 
 const walkCodeToName = {
   [WalkCode.Get]: "get",
@@ -46,7 +45,10 @@ const walkCodeToName = {
   [WalkCode.MultiplierEnd]: "multiplierEnd",
 };
 
-type VisitCodes = WalkCode.Get | WalkCode.Replace | WalkCode.DynamicTagWithVar;
+type VisitCodes =
+  | typeof WalkCode.Get
+  | typeof WalkCode.Replace
+  | typeof WalkCode.DynamicTagWithVar;
 
 export function enter(path: t.NodePath<any>) {
   const steps = getSteps(getSection(path));
@@ -136,7 +138,8 @@ function visitInternal(section: Section) {
     }
   }
 
-  let current = walkCodes[0];
+  // annotated because `let` widens a union of number literals to `number`
+  let current: WalkCode = walkCodes[0];
   let count = 0;
 
   for (const walk of walkCodes) {

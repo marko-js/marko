@@ -81,6 +81,7 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
+import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
@@ -100,10 +101,7 @@ function pushCompatRegistration(key: string, statement: t.Statement) {
   }
 }
 
-enum ClassHydration {
-  Self = "self",
-  Descendant = "descendant",
-}
+type ClassHydration = ClassHydration.Value;
 
 declare module "@marko/compiler" {
   export interface MarkoMeta {

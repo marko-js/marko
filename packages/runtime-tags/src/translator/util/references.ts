@@ -6,6 +6,7 @@ import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { scopeIdentifier } from "../visitors/program";
+import * as BindingType from "./constants/binding-type";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -77,15 +78,8 @@ import withPreviousLocation from "./with-previous-location";
 export const kBranchSerializeReason = Symbol("branch serialize reason");
 export type Aliases = undefined | Binding | { [property: string]: Aliases };
 
-export enum BindingType {
-  dom,
-  let,
-  input,
-  param,
-  local,
-  derived,
-  constant,
-}
+type BindingType = BindingType.Value;
+export { BindingType };
 
 export interface Sources {
   state: Opt<Binding>;
@@ -127,11 +121,11 @@ export interface Binding {
 }
 
 export interface InputBinding extends Binding {
-  type: BindingType.input;
+  type: typeof BindingType.input;
 }
 
 export interface ParamBinding extends Binding {
-  type: BindingType.param;
+  type: typeof BindingType.param;
 }
 
 export type ReferencedBindings = Opt<Binding>;

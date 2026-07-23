@@ -1,12 +1,8 @@
 import { getFile } from "@marko/compiler/babel-utils";
 
-enum CompileStage {
-  parse = "parse",
-  migrate = "migrate",
-  transform = "transform",
-  analyze = "analyze",
-  translate = "translate",
-}
+import * as CompileStage from "./constants/compile-stage";
+
+type CompileStage = CompileStage.Value;
 
 export function isTranslate() {
   return getCompileStage() === CompileStage.translate;

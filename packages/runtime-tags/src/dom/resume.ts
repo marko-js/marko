@@ -130,7 +130,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           (scopeLookup[0] ||= {
             runtimeId,
             renderId,
-          } as unknown as Scope) as unknown as Scope[AccessorProp.Global];
+          } as unknown as Scope) as unknown as Scope[typeof AccessorProp.Global];
         const initScope = (scope: Scope) => {
           scope[AccessorProp.Gen] = 1;
           scope[AccessorProp.Global] = initGlobal();

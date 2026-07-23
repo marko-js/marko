@@ -1,81 +1,27 @@
-export enum AccessorPrefix {
-  BranchScopes = "A",
-  ClosureScopes = "B",
-  ClosureSignalIndex = "C",
-  ConditionalRenderer = "D",
-  ControlledHandler = "E",
-  ControlledType = "F",
-  ControlledValue = "G",
-  DynamicHTMLLastChild = "H",
-  EventAttributes = "I",
-  KeyedScopes = "O",
-  Lifecycle = "K",
-  Promise = "L",
-  TagVariableChange = "M",
-}
+import * as AccessorPrefix from "./constants/accessor-prefix";
+import * as AccessorProp from "./constants/accessor-prop";
+import * as ClosureSignalProp from "./constants/closure-signal-prop";
+import * as KeyedScopesProp from "./constants/keyed-scopes-prop";
+import * as LoadSignalValue from "./constants/load-signal-value";
+import * as PendingRenderProp from "./constants/pending-render-prop";
+import * as RendererProp from "./constants/renderer-prop";
+type AccessorPrefix = AccessorPrefix.Value;
+export { AccessorPrefix };
 
-export enum AccessorProp {
-  Global = "$",
-  Owner = "_",
-  AbortControllers = "A",
-  AbortScopes = "B",
-  AwaitCounter = "O",
-  BranchAccessor = "C",
-  BranchScopes = "D",
-  CatchContent = "E",
-  ClosestBranch = "F",
-  ClosestBranchId = "G",
-  Gen = "H",
-  DetachedAwait = "V",
-  EndNode = "K",
-  Id = "L",
-  Load = "X",
-  LoopKey = "M",
-  LoopIndex = "I",
-  ParentBranch = "N",
-  PendingEffects = "J",
-  PendingRenders = "W",
-  PendingScopes = "Y",
-  PlaceholderBranch = "P",
-  PlaceholderContent = "Q",
-  Renderer = "R",
-  StartNode = "S",
-  TagVariable = "T",
-  TagVariableChange = "U",
-}
+type AccessorProp = AccessorProp.Value;
+export { AccessorProp };
 
-export enum RendererProp {
-  Id = "a",
-  Clone = "b",
-  Setup = "c",
-  Params = "d",
-  Owner = "e",
-  Accessor = "f",
-  LocalClosures = "g",
-  LocalClosureValues = "h",
-  Embed = "i",
-}
+type RendererProp = RendererProp.Value;
+export { RendererProp };
 
-export enum PendingRenderProp {
-  Key = "a",
-  Scope = "b",
-  Signal = "c",
-  Value = "d",
-  Gen = "e",
-  Pending = "f",
-}
+type PendingRenderProp = PendingRenderProp.Value;
+export { PendingRenderProp };
 
-export enum ClosureSignalProp {
-  ScopeInstancesAccessor = "a",
-  SignalIndexAccessor = "b",
-  Index = "c",
-}
+type ClosureSignalProp = ClosureSignalProp.Value;
+export { ClosureSignalProp };
 
-export enum KeyedScopesProp {
-  PreviousKey = "_",
-}
+type KeyedScopesProp = KeyedScopesProp.Value;
+export { KeyedScopesProp };
 
-export enum LoadSignalValue {
-  Value = "a",
-  Signal = "b",
-}
+type LoadSignalValue = LoadSignalValue.Value;
+export { LoadSignalValue };

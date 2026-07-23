@@ -693,7 +693,7 @@ export function setConditionalRenderer<T>(
   nodeAccessor: Accessor,
   newRenderer: T,
   createBranch: (
-    $global: Scope[AccessorProp.Global],
+    $global: Scope[typeof AccessorProp.Global],
     renderer: NonNullable<T>,
     parentScope: Scope,
     parentNode: ParentNode,
@@ -965,7 +965,7 @@ function loop<T extends unknown[] = unknown[]>(
 }
 
 function createBranchWithTagNameOrRenderer(
-  $global: Scope[AccessorProp.Global],
+  $global: Scope[typeof AccessorProp.Global],
   tagNameOrRenderer: Renderer | string,
   parentScope: Scope,
   parentNode: ParentNode,
