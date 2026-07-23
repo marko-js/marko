@@ -2,6 +2,37 @@
 
 Runtime speed and bundle size opportunities. Format and rules: [README.md](README.md).
 
+## Fixture size guards cannot see dist-chunk-granularity regressions; keep an app-level first-load gate
+
+`packages/runtime-tags/src/dom/queue.ts` › `renderCatch` | 2026-07-21 | impact:med | effort:low
+
+Moving `renderCatch` from `queue.ts` to `dom/control-flow.ts` kept every
+fixture size identical (fixtures bundle from src with module-level
+tree-shaking) yet regressed real persisted apps' first load by ~5 kB/route:
+published dist ships prebuilt chunks, and that one import created a static
+core-chunk → branches-chunk edge, so the whole branch-construction chunk
+loaded eagerly. Only the ecommerce app's `validate:sizes` ratchet caught it.
+When touching cross-module imports in `src/dom`, check the packed dist's
+chunk graph (`dist/*.mjs` import edges) — or run the app gate — before
+trusting fixture sizes; `renderCatch` stays hosted in `queue.ts` for this
+reason.
+
+## Walker adoption costs every page bundle ~64 min / ~23 brotli
+
+`packages/runtime-tags/src/dom/walker.ts` › `BeginChild` | 2026-07-21 | impact:low | effort:med
+
+The one-scope-identity rule (constructed branches adopt their patch scopes)
+puts two small checks in the shared core runtime: `createScope`'s `into`
+merge and the walker's `constructingBranch && scope[childKey]` adoption at
+`BeginChild`. Measured on `assign-to-owner-closure`'s page bundle this is
++64 min / +23 brotli for every page, persisted or not (down from +134/+45
+before the flag management moved into the persisted-only `constructBranch`
+wrapper in `dom/update-merges.ts`). If a zero-cost shape exists — e.g. a
+build-time walker variant or swapping the walker's scope factory only when
+the persisted module loads — it would remove the last non-persisted byte
+cost of the feature; rejected so far because both alternatives duplicate the
+walker or add an indirection with its own bytes.
+
 ## Derive await/try branch scope owners without serialization
 
 `packages/runtime-tags/src/translator/util/signals.ts` › `writeHTMLResumeStatements` | 2026-07-02 | impact:low | effort:high
@@ -74,17 +105,28 @@ When a section has no `sectionAccessor`, `getSectionInstancesAccessor` falls bac
 
 Bundlers retain every runtime module body as a potential side effect, so unused runtime code survives tree-shaking; a plain fixture page bundle measured 16.1 kB minified where 2.7 kB is reachable. Two categories block purity analysis: the serializer's iterator-consumption patch mutates `Generator.prototype`/`AsyncGenerator.prototype` at import time (`serializer.ts:6-9`), and getter-hazard constructs (bare `globalThis`/built-in member reads, the serializer's well-known-value tables) execute at module top level. A verified fix: install the iterator patch lazily from the `Serializer` constructor — every render's `State` creates one at render start, before user code can consume a generator — and wrap the remaining hazardous initializers in `/* @__PURE__ */`-annotated function calls. With both done, a bare import of the whole runtime (html + dom) tree-shakes to zero bytes (rolldown probe), with no bundler configuration or package metadata involved. Expect fixture `sizes.json` churn that mixes real wins with accounting: side-effect-free modules that previously landed in a shared chunk (never counted by per-entry sizes) inline into the measured entry chunks.
 
-## Split rarely-used dom machinery out of the eager runtime chunks
+## Split rarely-used dom machinery out of the eager runtime chunks (partially landed)
 
 `packages/runtime-tags/src/dom/queue.ts` › `_enable_catch` | 2026-07-11 | impact:med | effort:med
 
 A module is hosted in exactly one chunk, so machinery co-hosted with common helpers ships to every app that uses any of them. Three verified splits: (1) `_enable_catch` in the render queue imports `renderCatch` from `./control-flow` at module top level (`queue.ts:7`), so every stateful app's queue chunk hosts branch machinery — move catch/pending installation to a new `dom/catch.ts` (compiled output still calls `_enable_catch`) that installs its wrappers through an internal `enableCatchPending` hook on the queue, and move `setConditionalRenderer` to `dom/scope` (its dependency home; control-flow, spread, and catch all import it); note catch still pulls branch construction — `renderCatch` must swap in a newly rendered catch block — the win is dropping `dom/control-flow`'s loop, dynamic-tag, and spread imports. (2) The spread/`content`-attr machinery (`_attrs`/`_attrs_content` and helpers, `dom/dom.ts:169`) co-hosts with the plain write helpers — move it to a new `dom/spread.ts`. (3) `dom/controllable.ts` hosts all five control kinds in one module, so a page with one controllable pulls all five — split into `dom/controllable/` with one module per kind (input value, checked [checkedValue co-hosts, it calls checked], select, details/dialog open) over a shared delegation/change-detection core. Public exports stay unchanged and compiled output byte-identical (two bundle snapshots lose a bundler collision suffix, `_script$1` → `_script`).
+Landed 2026-07-21: split (1) — `renderCatch` moved into `dom/queue.ts` and
+`setConditionalRenderer` into `dom/scope.ts`, deleting the eager
+queue→control-flow edge; with dist `codeSplitting` groups this drops
+persisted first load ~19% (27.0→22.0 kB raw, 11.9→9.8 gzip per e-commerce
+route). Splits (2) spread machinery and (3) per-kind controllables remain.
 
-## Ship the dom runtime dist as preserved modules for file-granular chunking
+## Ship the dom runtime dist as preserved modules for file-granular chunking (superseded)
 
 `packages/runtime-tags/scripts/bundle.mts` | 2026-07-11 | impact:med | effort:low
 
 `dist` bundles the dom runtime into a single `dom.mjs`, so an application bundler hosts the whole runtime in the first chunk that needs any of it. Shipping preserved modules behind the `dom.mjs` re-export facade lets app bundlers chunk the runtime at file granularity (which is also what makes the hosting splits above land for published consumers, not just src-linked dev). Requires `scripts/sizes.ts` to classify the whole dist directory as runtime for the user/runtime split — the facade stops being the only runtime module id. Depends on the runtime being analyzably pure (previous entries) for the unused files to actually drop.
+Superseded 2026-07-21: rolldown `preserveModules` proved unreliable
+(nondeterministic magic-string corruption, re-export pruning, export-list
+omissions); `scripts/bundle.mts` instead uses `codeSplitting` groups with
+`includeDependenciesRecursively: false` to split the update and
+control-flow families into their own dist chunks, which application
+bundlers then host lazily. Finer granularity can extend the group list.
 
 ## Skip per-reference scope channel tracking when a render uses no channels
 
@@ -267,3 +309,87 @@ A binding read across a section boundary builds a `_closure_get`/dynamic `_closu
 `packages/runtime-tags/src/common/types.ts` › `WalkRangeSize (member Next)` | 2026-07-20 | impact:low | effort:low
 
 `WalkCode` reserves char codes 67..91 for `next` walks (`Next=67`, `NextEnd=91`, a 25-code span the `// 67 through 91` comment even documents), and `dom/walker.ts:100` already bounds the decode branch at `value < WalkCode.NextEnd + 1` (≤91), but `WalkRangeSize.Next` is 20, so `toCharString` (`translator/util/walks.ts:184`) only ever emits remainder codes 67..86 and codes 87..91 are dead — unlike Over/Out/Multiplier, each fully packed at size 10 (97..106, 107..116, 117..126). As a result a consecutive `next` run of 20-24 nodes emits a redundant Multiplier char (2 chars where 1 suffices), and runs of 200-249 emit 3 where 2 would do; walk strings ship in every compiled DOM template and bundle size is a tracked feature here. Setting `WalkRangeSize.Next = 25` uses the whole range: encoder and decoder both read the enum so the change is coordinated, the widest emitted `next` char becomes 91 (remainder 24), still below the reserved backslash 92, and the decoder's `WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next` reconstruction stays exact. Re-verify: mirror `toCharString` and the walker's `next` branch in node with `rangeSize=25` and confirm n=20..24 each encode to one char with max charCode 91 and decode back to 20..24 (I saw 0 roundtrip mismatches and 0 reserved-code emissions over n=0..600), then flip the enum and run `npm run test:update` plus the size hook to confirm affected DOM fixtures shrink rather than break.
+
+## Per-frame persisted re-dispatch grows with the accumulated patch table
+
+`packages/runtime-tags/src/dom/update.ts:186` | 2026-07-16 | impact:low | effort:high
+
+Each streamed frame re-runs the compiled root merge over every patch scope
+accumulated by earlier frames, so a navigation with F boundary frames does
+O(F² × scopes-per-frame) dispatch work. Measured (multi-`<await>` route,
+`persisted-pages-scratch/scripts/measure-persisted-scaling.ts` protocol): flat ~0.2-0.3 ms/frame at
+10-25 frames; at 400 awaits late frames cost ~0.7-0.9 ms vs ~0.4-0.5 ms
+early, ≈1.5 µs per accumulated frame's scopes — real but harmless at
+realistic frame counts. A dirty-set (only scopes touched this frame drive
+dispatch) is blocked on provability: compiled dispatch is top-down closures
+with no per-scope entry points, and patch scopes carry owner links only when
+serialization needed them, so skipping an "untouched" subtree can't be shown
+to preserve structural dispatch (replacement stashes, pending boundary bodies,
+post-`run()` branch pairing). Needs compiler-emitted per-section merge
+registrations or guaranteed parent links on every fill (wire-format changes).
+Numbers in persisted-pages-scratch/designs/persisted-pages-scaling.md, "Frames dimension".
+
+## Keyed persisted reconcile moves the majority run on rotations
+
+`packages/runtime-tags/src/dom/control-flow.ts:843` | 2026-07-16 | impact:low | effort:med
+
+`_for_keyed`'s placement loop is greedy: the cursor holds at the first
+surviving old branch, so a rotation `[k1667..k4999, k0..k1666]` detaches and
+re-inserts the 3,333-branch majority run while an LIS pass (as in the generic
+`loop()`) would move only the 1,667 minority. Inserts are already batched
+(one `DocumentFragment` per run), so the cost is per-moved-node detaches —
+O(1) each in real browsers, but O(preceding siblings) in jsdom's
+`SymbolTree.index` live-range bookkeeping, which is why the scaling
+benchmark's 5k apply still reads ~2.3 s (~72% inside jsdom sibling walks)
+despite the runtime issuing the minimal one DOM call per moved node. LIS
+would roughly halve moves on rotations at the price of extra bundle bytes on
+a persisted-only path; alternatively the benchmark could time apply in a real
+DOM engine to stop overstating this stage. See
+persisted-pages-scratch/designs/persisted-pages-scaling.md, "Superlinear pipeline stages".
+
+## Node-marker run compression is a candidate future document optimization
+
+`packages/runtime-tags/src/html/writer.ts` (`_el_resume`) | 2026-07-20 | impact:low | effort:med
+
+An earlier persisted-pages iteration compressed node-marker runs (repeated
+scope ids collapsed into leading-space continuations that a walker variant
+re-stamped during the walk); it was removed to keep one walker and one marker
+grammar. The mechanism is render-agnostic: it could return for all documents,
+saving bytes on marker-dense pages at the cost of a ~60-byte larger inlined
+walker and a document wire-format change. Measure marker density on real
+pages (`persisted-pages-scratch/scripts/measure-persisted-wire.ts`) before readopting.
+
+## Structural-patch second-pass optimizations (post shell refactor)
+
+`persisted-pages-scratch/designs/persisted-pages-structural-patch-proposal.md` | 2026-07-20 | impact:med | effort:med
+
+Once fresh branches construct from wire shells, three follow-ups are pure
+byte/CPU wins that should land as separate reviewable diffs: (1) tier-A reuse
+— skip the wire shell where the ordinary optimized DOM build already retains
+a section's template/walks (the `_resume` + retention test), constructing from
+the registered renderer instead; (2) a tier-B renderer-id echo (small sorted
+list) so repeat navigations skip re-sent shells, only if measurement shows
+resends matter; (3) keyed apply cost — constructed items skip HTML parsing
+entirely, so re-run `persisted-pages-scratch/scripts/measure-persisted-scaling.ts` and ratchet the
+apply-time column. Verify each against `measure:wire` and the scaling harness.
+
+## Construction landing left three measurable byte overheads
+
+`packages/runtime-tags/src/translator/core/let.ts`, `visitors/program/update.ts` | 2026-07-20 | impact:low | effort:med
+
+Three deliberate simplifications from the shell landing trade
+bytes for uniformity and could be narrowed with a measurement in hand:
+(1) persisted builds serialize every `<let>` under `_state_reason()`, so
+initial persisted SSR now carries seeds ordinary resume would recover from
+the DOM (e.g. controllable input values); a construct-only reason (patch +
+fresh branch, never document renders) would elide them. (2) every
+dispatchable content section registers a merge in the persisted entry — a
+shared noop when it has no values — as the client's known-renderer proof;
+sections that can never be a dynamic-hop target could skip registration.
+(3) shell frames and reasonless hole values (server-only expressions with
+no reactive sources) re-send per navigation — `state.sentShells` dedupes
+only within one response, and the server cannot prove a matched branch's
+opaque values unchanged; the tier-B renderer-id echo above would cover the
+shells, and a value-hash echo could cover the holes. Measure with
+`measure:wire` and the ecommerce `validate:sizes` gate before narrowing any
+of them.

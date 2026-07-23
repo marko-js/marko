@@ -17,18 +17,69 @@ is unaffected (later renders reuse `___marko5Component.___rootNode`), so this is
 dead optimization + a confusing stale-node invariant; verify destroy/move
 semantics before changing to `scope`.
 
----
+## Interop emits a duplicate registration scriptlet per class-tag occurrence
+
+`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts` › `translate.exit` | 2026-07-13 | impact:low | effort:low
+
+Each Class-API custom-tag occurrence pushes its own registration statement to
+`program.body` with no dedup by class-file id: three `<class-display/>` uses emit
+three identical `_resume("…",_classDisplay)` (DOM) / `_s("…",_classDisplay)`
+(HTML) statements (the `??=` non-template branch at lines 360-377 duplicates the
+same way). Idempotent, so not incorrect, but N× redundant given "bundle size is a
+feature" — one registration per unique class file would suffice.
+
+## Closure call-site `_updating` guards double the body guard but are not removable
+
+`packages/runtime-tags/src/translator/visitors/program/dom.ts:71` | 2026-07-17 | impact:low | effort:med
+
+Update-delivered closure signals carry the patch-apply guard twice: their
+render body is wrapped in `if (!_updating)` (`util/signals.ts`,
+`buildUpdatingGuard` in the closure `signal.build`), and compiled call sites
+(`visitors/program/dom.ts` child-section render statements) wrap the
+invocation again. Directly nested duplicates are now absorbed at the body
+wrap, but the call-site guard cannot be dropped as a pure duplicate: the
+`_closure_get` wrapper also stamps the signal index and subscribes the scope
+(`dom/signals.ts:389-397`), so the call-site guard additionally suppresses
+subscription during a patch apply (branch setup runs under `_updating` via
+`attachAwaitBranch`/fresh keyed branches). Centralizing to one layer means
+first deciding whether patch-time subscription is desired, then moving the
+guard inside the runtime wrapper or the body consistently.
+
+## `attachAwaitBranch` duplicates `resolveAwait`'s detached block by measured necessity
+
+`packages/runtime-tags/src/dom/control-flow.ts:245` | 2026-07-17 | impact:low | effort:med
+
+`attachAwaitBranch` (persisted update path) copies `resolveAwait`'s
+detached-await block (pending-scope sync, `setupBranch`, clear flag,
+`insertBranchBefore`). Factoring one into the other was attempted and
+reverted: with `resolveAwait` calling the exported helper, oxc does not
+inline the shared function, growing every ordinary await-using bundle by
+about +29 min / +14 brotli bytes (measured across the await/async fixture
+sizes) to save persisted-only duplication. A future dedup must keep the
+ordinary path inline -- e.g. a compile-time include of the shared body, or
+an explicit maintainer call that the ordinary cost is acceptable.
+
+## Truncated comment opens mid-sentence in referenced-identifier.ts
+
+`packages/runtime-tags/src/translator/visitors/referenced-identifier.ts:22` | 2026-07-17 | impact:low | effort:low
+
+The comment above `getAbortResetEmitted` now begins "// each id on its
+expression root's extra, so translates are REQUIRED to..." — its first three
+lines ("Abort ids must be identical across every compile of a template...")
+were deleted while nearby imports changed, leaving a dangling fragment that
+starts mid-sentence. Restore the opening lines or reword the survivor into a
+self-contained two-line comment.
 
 ## Pre-existing comments exceeding the two-line rule
 
-`packages/compiler/src/config.js`, `packages/runtime-tags/src/**` | 2026-07-18 | impact:low | effort:med
+`packages/compiler/src/config.js`, `packages/runtime-tags/src/**` | 2026-07-18 | impact:low | effort:medium
 
-A sweep for the two-line comment rule surfaced roughly ninety comment blocks
-longer than two lines (config option JSDoc in `compiler/src/config.js`,
-several `translator/util/references.ts` and `dom/resume.ts` blocks, and
-commented-out `serializer.test.ts` cases). Condensing them is a standalone
-cleanup. Verify: grep for comment runs of three or more consecutive `//`
-lines under the cited paths.
+Sweeping the persisted-pages diff for the two-line comment rule surfaced ~90
+comment blocks longer than two lines that predate the branch and are
+byte-identical to `main` (config option JSDoc in `compiler/src/config.js`,
+several `translator/util/references.ts` and `dom/resume.ts` blocks,
+serializer.test.ts commented-out cases). Left untouched to keep the feature
+diff comment-edits-only; condensing them is a standalone cleanup.
 
 ## Normalize inconsistent local naming flagged by a terminology audit
 

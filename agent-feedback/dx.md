@@ -2,6 +2,44 @@
 
 Friction in builds, tests, tooling, or repo workflows. Format and rules: [README.md](README.md).
 
+## Cleaning `dist/` bricks the build until `build-babel-types` reruns
+
+`packages/compiler/scripts/types.js` | 2026-07-23 | impact:low | effort:low
+
+`pnpm run build` never regenerates the compiler's `dist/{types,traverse}.d.ts`
+— only the install-time `prepare` hook (`build-babel-types`) writes them,
+while `babel-types.d.ts` re-exports them into every downstream typecheck.
+Removing `dist/` (e.g. so external packaging can guarantee no stale hashed
+chunks ship) fails the next build with "Cannot find module './dist/traverse'"
+until `pnpm --filter @marko/compiler run build-babel-types` is rerun, and
+nothing in the error points there. Either emit the two files from the
+compiler's `build` script as well, or document the dependency.
+
+## Rolldown natively retains `build()` callbacks past close(), pinning their whole defining scope
+
+`packages/runtime-tags/src/__tests__/utils/bundle.ts` › `createBuilds` | 2026-07-21 | impact:med | effort:med
+
+Root cause (heap-snapshot retainer paths) of the serial-suite OOM the fixture
+harness previously hit: rolldown's napi binding keeps global handles to every
+function passed into `build()` options/plugins even after its internal
+`close()`, and a JS function object pins its defining scope's V8 context — so
+a three-line `manualChunks` arrow defined in the runner scope transitively
+retained each fixture's entire `RolldownOutput` graph (~200 MiB per 150
+fixtures). The harness now builds everything that flows into `build()` inside
+module-level `createBuilds`, with the heavy captures (dom-output promise,
+per-fixture compile cache) cleared once the builds settle. The second
+retainer, visible only after the first was fixed, was Node's ESM
+`ModuleLoader.loadCache` permanently caching each fixture's dynamically
+imported SSR bundle; `runServer` now evaluates it as a current-realm
+`vm.SourceTextModule` (`importEvictable`) memoized per runner and dropped at
+fixture teardown. Snapshot-measured growth across teardowns 100→400 fell
+~200 MiB → ~18 MiB; a default-heap serial run completes (previously hard OOM
+at ~80%), though with little margin — the `.mocharc.json` heap flags stay as
+headroom, and forced-GC `heapUsed` proved too noisy for this work: only heap
+snapshot diffs (self-size aggregation + weak-edge-excluded retainer BFS) gave
+trustworthy attribution. If rolldown releases callback references after
+close() upstream, `createBuilds`' scope discipline becomes unnecessary.
+
 ## `c8` coverage crashes generating lcov when the wrapped process loads `~ts`
 
 `scripts/test-parallel.js` | 2026-07-02 | impact:med | effort:med
@@ -119,20 +157,42 @@ The universal DOM/JSX idiom `event.currentTarget.value` (and `event.target.value
 
 A throwaway node script — the fastest way an agent confirms a compiled component actually works before writing a full test setup — is mined with two import-order traps whose error strings point nowhere near the cause. (1) The DOM runtime evaluates `document.createTreeWalker(document)` at module top level (`dom/walker.ts:12`), so requiring the compiled `dom` output before a DOM global is installed throws `ReferenceError: document is not defined` at a `marko/dist` line. (2) `@marko/compiler`'s `modules.js` decides at first-require whether it is running in a browser via `typeof document === "object"` (`packages/compiler/modules.js:3`); installing jsdom globals (which define `global.document`) BEFORE requiring `@marko/compiler` takes that branch and sets `exports.resolve`/`tryResolve` to `null` (`:8-9`), so the first attempt to load a translator throws `TypeError: _modules.default.resolve is not a function` with no hint that a DOM global caused it (the branch is evaluated once and cached for the module lifetime). The only working order — compile with no DOM globals, THEN install jsdom, THEN require the runtime — is undocumented and easy to get backwards. `@marko/vite` and `@marko/testing-library` sequence this correctly, but an agent hand-rolling a verification script gets no guidance and burns turns guessing against two opaque messages. Lazy-init the walker on first `walk()` (drop the top-level `document` read), and either make the compiler's browser sniff robust to a node process that merely has jsdom installed or throw an error naming the cause; at minimum document a compile-then-shim-then-import recipe so headless self-checks are reliable.
 
+## No fixture discriminates cross-navigation parked-state leakage for keyed ready batches
+
+`packages/runtime-tags/src/dom/update.ts:158` | 2026-07-14 | impact:low | effort:med
+
+`createUpdate` now clears `pendingLoadUpdates`/`pendingDynamicUpdates`/
+`parkedReadyBatches` per navigation, and `persisted-update-lazy-double-nav`
+pins the two-navigations-while-loading race end to end (superseded parked
+patch, replacement-delivered `<if>` applied at replay). But the clearing itself
+is masked in that shape: `_update_load` already keeps only the newest patch
+per live scope, and a second same-route navigation re-serializes the lazy
+channel so its batch drains last either way. The scenario only the clearing
+prevents -- navigation 1 parks a keyed ready batch for a replacement-stamped
+subtree, navigation 2 (same route, subtree matched) does NOT re-deliver that
+channel, the module then loads and nav 1's stale scope fills/effects replay
+onto the live page -- needs the server to skip re-serializing a lazy
+channel on the second update, which the current update serializer never does
+(request-derived values ride every update). If a future serializer
+optimization makes update payloads delta-sparse across navigations, add a
+fixture for this before shipping it.
+
 ## Mutation-tracker jsdom workaround silently hides real text updates in snapshots
 
-`packages/runtime-tags/src/__tests__/utils/track-mutations.ts` › `formatMutationRecord` | 2026-07-14 | impact:low | effort:low
+`packages/runtime-tags/src/__tests__/utils/track-mutations.ts:238` | 2026-07-14 | impact:low | effort:low
 
-The characterData filter drops records where the new value starts with the
-old value and the boundary is whitespace, to hide jsdom's duplicate records
-(jsdom#3261) — but it also matches real updates of that shape: a step
-changing text "draft" to "draft edited" produces no `## Change` entry and no
-html block, so the step looks like a no-op in the render snapshot while the
-DOM did update, which costs real debugging time on new fixtures. Fix
-direction: re-check the jsdom issue, or drop a record only when an adjacent
-record re-reports the same target, or always emit the html block even when
-every record was filtered. Verify: a fixture step appending to an existing
-text node currently yields an empty snapshot entry.
+`formatMutationRecord` drops characterData records where the new value starts
+with the old value and the boundary is whitespace, to filter jsdom's
+duplicate records (jsdom#3261). The filter also matches REAL updates of that
+shape: a fixture step changing text "draft" -> "draft edited" produces no
+`## Change` entry and (because formattedMutations is empty) no html block
+either, so the step looks like a no-op in `render-ssr.md` while the DOM did
+update. This cost real debugging time on a new controllable fixture; the
+committed `persisted-update-lazy-load` snapshot's missing label updates were
+initially indistinguishable from this. Fix direction: check jsdom's issue
+status (may be fixed), or only drop the record when an adjacent record shows
+the same target being re-reported, or at least emit the html block even when
+every mutation record was filtered.
 
 ## `npm run build:sizes` dirties `.sizes*` on a clean checkout
 
@@ -152,29 +212,37 @@ run `npm run build && npm run build:sizes` on a clean checkout and check
 
 ## `npm test <file>` appends to the default spec glob instead of scoping to the file
 
-`.mocharc.json` | 2026-07-15 | impact:low | effort:low
+`.mocharc.json:1` | 2026-07-15 | impact:low | effort:low
 
-Passing an explicit test file (`npm test -- <path>.test.ts`) does not scope
-the run: mocha adds positional file args to the configured spec glob, so the
-whole suite runs anyway — silently, since the named file is also included.
-Scoping to one file requires bypassing the config
+Passing an explicit test file (`npm test -- packages/runtime-tags/src/__tests__/marker-conformance.test.ts`)
+does not scope the run: mocha adds positional file args to the configured
+spec (`packages/*/@(src|test)/**/*.test.@(js|ts)`), so the whole suite runs
+anyway — silently, since the named file is also included. Scoping to one file
+requires bypassing the config
 (`npx mocha --no-config --no-package --timeout 10000 --require ~ts <file>`),
-which is undocumented and easy to get wrong. Either document that
-incantation in CLAUDE.md next to the `--grep` guidance, or add a `test:file`
-script that forwards to mocha without the default spec. Verify:
-`npm test -- packages/runtime-tags/src/__tests__/serializer.test.ts` runs
-every spec file.
+which is undocumented and easy to get wrong (the `~ts` register hook and
+timeout must be repeated by hand). Either document that incantation in
+CLAUDE.md next to the `--grep` guidance, or add a small `test:file` script
+that forwards to mocha without the default spec.
+
+## Deduplicate `@oxc-project/types` in the Run lockfile
+
+`../run/packages/run/src/vite/plugin.ts:773` | 2026-07-16 | impact:med | effort:low
+
+Run's `npm run build` fails before source-specific checking because `Program`
+from Rolldown's nested `@oxc-project/types` is incompatible with the root copy
+of the same package. All Run and adapter builds report the same duplicate-type
+error. Refresh or constrain the lockfile so Rolldown and Run resolve one copy.
 
 ## Error-compile fixtures never refresh or clean `sizes.json`
 
-`packages/runtime-tags/src/__tests__/main.test.ts` › `hasCompilerError` sizes gate | 2026-07-20 | impact:low | effort:low
+`packages/runtime-tags/src/__tests__/main.test.ts:505` | 2026-07-20 | impact:low | effort:low
 
 The optimize `after()` sizes assertion is gated on `!hasCompilerError`, so a
 fixture that later becomes `error_compiler: true` keeps its last generated
-`sizes.json` forever — neither asserted nor rewritten by `test:update`. The
-harness could delete (or assert the absence of) `sizes.json` for error
-fixtures. Verify: add `sizes.json` to any `error_compiler` fixture and watch
-`npm run test:update` leave it untouched.
+`sizes.json` forever — neither asserted nor rewritten by `test:update`
+(found and removed one such orphan in `persisted-update-component-spread`).
+The harness could delete or assert absence of `sizes.json` for error fixtures.
 
 ## Emit the circular-reference error for mutually-referential `<const>` tags, not just self-references
 

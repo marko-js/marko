@@ -2,6 +2,25 @@
 
 Out-of-scope defects noticed while working on something else. Format and rules: [README.md](README.md).
 
+## Server shell registry is process-global, so optimized shell ids collide across builds
+
+`packages/runtime-tags/src/html/renderer-shells.ts` › `serverRenderers` | 2026-07-21 | impact:med | effort:high
+
+Optimized shell ids are compact and build-local (`"a"`, `"a3"`), but
+`serverRenderers` is a module-level map on the shared runtime. Two
+independently built Marko applications hosted in one Node process register
+into the same namespace, and last registration wins — a patch rendered for
+build B can compose build A's template/walks, producing structurally wrong
+construction programs that build-identity negotiation cannot catch (the
+response is produced under the correct build). The maps also grow without
+bound across uniquely-identified rebuilds. The memo-staleness and
+transient-failure caching halves of this were fixed in place (registration now
+invalidates `resolved`; failed resolutions are not cached), but the collision
+needs a design: key or namespace the registry by build identity end-to-end
+(shell ids are emitted by codegen and cross the wire, so this touches the
+translator, the wire format, and negotiation), or scope the registry per
+build/app instance instead of per process.
+
 ## `Sorted.isSuperset` arithmetic is wrong but the current behavior is load-bearing
 
 `packages/runtime-tags/src/translator/util/optional.ts` › `Sorted.isSuperset` | 2026-07-03 | impact:med | effort:med
@@ -67,6 +86,57 @@ resume.
 
 The dynamic-tag change checks compare `renderer?.[RendererProp.Id] || renderer` (`:535` for `_dynamic_tag`, `:647` for `_dynamic_tag_content`, plus the DOM `_attr_content`). `RendererProp.Id` is the template/section resume id, identical for every _instance_ of one content section — instances differ only by their `RendererProp.Owner` scope. So switching a dynamic tag between two instances of the same content — two `<attrs.content>` from two instances of one provider tag, or the list-detail `<${selected.content}/>` — is a silent no-op: no teardown or re-render, and closures stay subscribed to the old owner's scope. A control with two _distinct_ tag files behaves correctly, pinning the defect to the id-only comparison. Fix: compare `(id, owner)` — content renderer objects are recreated per render so identity alone over-fires, while the owner scope is stable per instance; the resume handshake must serialize a scope-registered renderer as its registered reference so the first post-resume update stays instance-aware.
 
+## An empty-bodied `<html-comment>` resumes as a text node instead of the comment
+
+`packages/runtime-tags/src/dom/resume.ts:402` | 2026-07-14 | impact:med | effort:med
+
+For an `<html-comment>${c}</html-comment>` whose body serializes empty, SSR writes `<!---->` immediately before the resume marker. The node-claim heuristic — `prev && (prev.nodeType < 8 /* COMMENT_NODE */ || (prev as Comment).data) ? prev : insertBefore(new Text())` — exists so an empty `<!>` separator is _not_ claimed (a fresh Text node is created instead), but it cannot distinguish an intentional empty comment: `prev` is a comment (`nodeType === 8`, so `< 8` is false) with empty `data` (falsy), so it builds a Text node as the binding rather than claiming the comment. After hydration, setting `c = "secret"` renders `secret` as visible text where a pure client render produces `<!--secret-->` — an SSR-resume vs CSR divergence. Fix: give the html-comment marker a dedicated resume symbol (e.g. `ResumeSymbol.NodeComment`) that claims the immediately-preceding sibling unconditionally, since the tag always writes its comment right before the marker.
+
+## Runtime-valued dynamic tag renderers: only never-referenced (constructed/interop) renderers fall to the loud fallback
+
+`packages/runtime-tags/src/dom/update-merges.ts` (`_update_dynamic`) | 2026-07-15 | impact:low | effort:med
+
+The compile-time-referenced cases are closed. Eagerly imported candidates a
+dynamic tag name reaches (conditional/logical/assignment/`<const>` chains)
+link each `?persisted` entry from the parent's persisted entry
+(`dynamic-tag.ts` `getDynamicTagImports` +
+`persisted-update-dynamic-imported-child`), merge-less content sections
+register a shared noop (`program/update.ts`), and templates whose default
+escapes a module as a runtime value (attribute, spread, store, return,
+object/array member) now register an escape-site loader: `dynamic-tag.ts`
+`getEscapedTemplateImports` records the escapes at analyze,
+`program/update.ts` emits `_update_loader(templateId, () =>
+import("./child.marko?persisted"))` into the provider's persisted entry, and
+`_update_dynamic` fires the loader once for an unregistered same-renderer
+pair, parks, and drains when the entry registers
+(`persisted-update-dynamic-escaped-renderer`); a rejected loader import
+surfaces through the `patch(fail)` sink
+(`persisted-update-dynamic-escaped-loader-failure`). Escape detection prefers
+over-registration (a false positive costs one idle loader registration, never
+a load). What remains, by design: a renderer never referenced as a
+compile-time template value in any compiled `.marko` module — constructed at
+runtime, interop-wrapped, or aggregated by a plain JS module the translator
+never compiles (e.g. a lookup object in a `.js` registry re-exporting
+templates) — has no escape site to register, so a renderer id with no
+registration and no live match still fails loudly through `patch(fail)`
+(`persisted-update-dynamic-unknown-renderer`) — defined behavior, recorded in
+persisted-pages-scratch/designs/persisted-pages-architecture.md.
+
+## Document-side lazy load entries float rejections and leave the ready channel silent
+
+`packages/runtime-tags/src/translator/visitors/program/index.ts:222` | 2026-07-16 | impact:low | effort:low
+
+The generated `.load.mjs` entry (both persisted and not) is
+`load().then(() => ready(id))` / `Promise.all([...]).then(() => readyPersisted(id))`
+with no rejection handler, so a chunk that fails to load from the initial
+document (deploy skew) surfaces only as an unhandled promise rejection and the
+module's ready id never resolves. The lazy tag's own render path recovers
+(`_load_setup`/`_load_template` route their load() failures to `renderCatch`),
+and persisted navigations now re-trigger the load through `_load_ready`, whose
+failure reaches the transport sink — but the document-side loader itself stays
+noisy and inert. Consider a `.catch` that at least reports through a defined
+channel (or retries), mirroring `_load_ready`'s handling.
+
 ## Initialize tag variables for dynamic native tags
 
 `packages/runtime-tags/src/html/dynamic-tag.ts` › `_dynamic_tag` | 2026-07-15 | impact:med | effort:high
@@ -77,19 +147,38 @@ CSR is a runtime-only fix: push `() => childScope[AccessorProp.StartNode]` throu
 
 A live `@marko/run` app shows this manifests as a HARD SSR 500 in dev, not just an empty render: reading the ref (`<${shape}/mark .../>` then `<effect>{ mark().getBBox() }` or a `<script>` reader) makes the HTML `_dynamic_tag` return `undefined` for `mark`, which the compiler guards with `_assert_hoist(mark)` — throwing MARKO_DEBUG's misleading `Hoisted values must be functions, received type "undefined"` (`packages/runtime-tags/src/common/errors.ts:109-114`), with a stack pointing at compiled runtime rather than the user's tag-variable construct. Under optimize `_assert_hoist` is compiled out, so SSR instead succeeds but serializes `mark: undefined`, and on the client `_hoist("mark")()` throws "undefined is not a function" when the effect/script runs — a silent dev-vs-prod divergence. Beyond the full high-effort compiler+serialization fix already noted, a low-effort, independently-valuable improvement is a compile-time error/warning when a tag variable is placed on a dynamic tag that can resolve to a native tag name, so users get a source-level diagnostic instead of an internal assert (dev) or broken hydration (prod).
 
-## Document-side lazy load entries float rejections and leave the ready channel silent
+## Refresh unaffected checkedValue members' controlled value on the first patch
 
-`packages/runtime-tags/src/translator/visitors/program/index.ts` › `translate` (`isLoadEntry` branch) | 2026-07-16 | impact:low | effort:low
+`packages/runtime-tags/src/dom/update-merges.ts` (`_update_input_checkedValue`) | 2026-07-17 | impact:low | effort:low
 
-The generated `.load.mjs` entry is `load().then(() => ready(id))` with no
-rejection handler, so a chunk that fails to load from the initial document
-(deploy skew) surfaces only as an unhandled promise rejection and the
-module's ready id never resolves. The lazy tag's own render path recovers
-(`_load_setup`/`_load_template` route their `load()` failures to
-`renderCatch`), but the document-side loader stays noisy and inert. Add a
-`.catch` that reports through a defined channel (or retries). Verify: reject
-the dynamic import in a generated load entry and watch for the unhandled
-rejection with the ready id never firing.
+The gated checkedValue assert refreshes `ControlledValue:<accessor>` only when
+it asserts. Its first-ever patch falls back to comparing this member's
+`defaultChecked` against the captured list, so a navigation whose changed list
+does not change THIS member's checked state (e.g. `["a","b"]` -> `["a","c"]`
+seen from the member with value `"a"`) skips the assert and leaves that
+member's resumed `ControlledValue` stale until some later capture differs.
+A change handler firing on that member before then computes `updateList`
+against the pre-navigation list ( `["b"]` instead of `["c"]` above). Later
+navigations are safe: the skip still records the applied capture
+(`PatchApplied:`/`S` key), so subsequent comparisons use it. Fix idea: on the
+first patch, also treat a missing record with a present `ControlledValue`
+whose normalized form differs from the capture as changed.
+
+## Ecommerce demo "wrong product id after navigation" is not reproducible in the applier
+
+`packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit` | 2026-07-17 | impact:med | effort:med
+
+The reported demo failure (submit after an item A -> item B same-route
+navigation sees A's id) does not reproduce against the update applier: the
+fixture pairs a bound (`value:Number:=`) quantity `<let>`, a request-derived
+hidden `itemId`, an optimistic mirror, and an `onSubmit` handler recording the
+scope values it read, both at the route root and across a child-tag boundary
+(`tags/order-form.marko`). Under both the pre-Option-C and gated appliers the
+hidden input's value attribute, the handler-read scope value, and the mirror
+all see B after the patch. The defect is therefore most likely in the app or
+in @marko/run's form-submission negotiation (e.g. what request/body the shell
+re-sends or how a POST response patch is applied), which lives outside this
+repo; investigate there with this fixture as the known-good applier baseline.
 
 ## writeMap/writeSet silently drop or corrupt any Map/Set member that directly references an ancestor object, because the member's fill is deferred to post-construction extras that never reach the already-built collection
 
