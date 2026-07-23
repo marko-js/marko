@@ -8,3 +8,9 @@ patchedDependencies:
   "@babel/types@7.29.7": patches/@babel__types@7.29.7.patch
   mocha@11.7.6: patches/mocha@11.7.6.patch
   mocha-autotest@1.1.3: patches/mocha-autotest@1.1.3.patch
+# The compiler resolves phantom workspace ids ("marko/translator",
+# "@marko/runtime-tags/translator") from the repo root; hoist them into the
+# root node_modules so that resolution works without pnpm's .bin-shim NODE_PATH.
+publicHoistPattern:
+  - marko
+  - "@marko/runtime-tags"

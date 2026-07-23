@@ -31,7 +31,7 @@
 
 # Update
 ```js
-document.querySelector(selector).click();
+(document.querySelector(selector)).click();
 ```
 ```html
 <ul>
@@ -69,7 +69,7 @@ UPDATE: .danger > span::text "a" => "a!"
 
 # Update
 ```js
-document.querySelector(selector).click();
+(document.querySelector(selector)).click();
 ```
 ```html
 <ul>

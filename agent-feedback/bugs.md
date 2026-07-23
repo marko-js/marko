@@ -965,7 +965,7 @@ modifier-name-or-none)` — e.g. a nested Map — so only genuinely identical
 handlers dedupe, keeping the existing `bound-attr-repeated-let` dedupe intact.
 Re-verify: compile `<let/value=0/><input type="number"
 value:parseInt:=value/><input type="text" value:=value/>` with `node -r ~ts
-scripts/inspect-compiled-output.ts -o dom -d -t <abs path to
+scripts/inspect-compiled-output.mts -o dom -d -t <abs path to
 packages/runtime-tags/src/translator/index.ts> <file>.marko` and confirm the
 second `_attr_input_value` no longer receives a `parseInt`-wrapped handler.
 
@@ -1218,7 +1218,7 @@ already uses it and is therefore correct) — while keeping the existing
 void-placeholder skip. Re-verify: compile `<let/n=1/>` + `<div>` Hello /
 `<const/m=n*2/>` / World / `<button onClick(){ n = n + m }>click</button>` /
 `<span>${n}</span>` `</div>` with `node -r ~ts
-scripts/inspect-compiled-output.ts -o dom -d x.marko`; `$walks` is `next(1),
+scripts/inspect-compiled-output.mts -o dom -d x.marko`; `$walks` is `next(1),
 over(2), get, over(1), next(1), get, out(2)` while deleting only the `<const>`
 line yields a byte-identical `$template` with `over(1)`.
 
@@ -1422,7 +1422,7 @@ compare, same `setConditionalRenderer`, same `subscribeToScopeSet`, same
 one of two ~243/~279-minified-byte copies of the same algorithm. `compat.render`
 (dom/compat.ts:133) calls `createAndSetupBranch` with the same omission.
 Re-verify: compile `<define/Wrap|input|><div ...input/></define>` plus `<Wrap
-class="x"><b>x</b></Wrap>` with `node -r ~ts scripts/inspect-compiled-output.ts
+class="x"><b>x</b></Wrap>` with `node -r ~ts scripts/inspect-compiled-output.mts
 -o dom -d -t packages/runtime-tags/src/translator/index.ts <file>` — the import
 list is `_attrs_content, _attrs_script, _text, _on, _script, _const,
 _closure_get, _content, _closure, _let, _template`, containing no helper that

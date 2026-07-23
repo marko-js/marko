@@ -84,7 +84,7 @@ A module is hosted in exactly one chunk, so machinery co-hosted with common help
 
 `packages/runtime-tags/scripts/bundle.mts` | 2026-07-11 | impact:med | effort:low
 
-`dist` bundles the dom runtime into a single `dom.mjs`, so an application bundler hosts the whole runtime in the first chunk that needs any of it. Shipping preserved modules behind the `dom.mjs` re-export facade lets app bundlers chunk the runtime at file granularity (which is also what makes the hosting splits above land for published consumers, not just src-linked dev). Requires `scripts/sizes.ts` to classify the whole dist directory as runtime for the user/runtime split — the facade stops being the only runtime module id. Depends on the runtime being analyzably pure (previous entries) for the unused files to actually drop.
+`dist` bundles the dom runtime into a single `dom.mjs`, so an application bundler hosts the whole runtime in the first chunk that needs any of it. Shipping preserved modules behind the `dom.mjs` re-export facade lets app bundlers chunk the runtime at file granularity (which is also what makes the hosting splits above land for published consumers, not just src-linked dev). Requires `scripts/sizes.mts` to classify the whole dist directory as runtime for the user/runtime split — the facade stops being the only runtime module id. Depends on the runtime being analyzably pure (previous entries) for the unused files to actually drop.
 
 ## Skip per-reference scope channel tracking when a render uses no channels
 

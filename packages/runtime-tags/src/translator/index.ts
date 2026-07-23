@@ -1,5 +1,6 @@
 import type { Config } from "@marko/compiler";
 
+import pkg from "../../package.json" with { type: "json" };
 import coreTagLib from "./core";
 import runtimeInfo from "./util/runtime-info";
 import { extractVisitors } from "./util/visitors";
@@ -16,7 +17,7 @@ import MarkoScriptlet from "./visitors/scriptlet";
 import MarkoTag from "./visitors/tag";
 import MarkoText from "./visitors/text";
 
-export { version } from "../../package.json";
+export const version = pkg.version;
 
 // LLM cheat sheet location, relative to this module. The compiler resolves it
 // against the translator's path and points terminal coding agents here on error.

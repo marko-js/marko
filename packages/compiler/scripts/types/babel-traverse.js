@@ -27,8 +27,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***********************************************************************************************/
 
 import fs from "fs";
+import { createRequire } from "module";
 
 import { MARKO_TYPES } from "@babel/types";
+
+const require = createRequire(import.meta.url);
 
 const HUB_INTERFACE = "export interface HubInterface {";
 const HUB_CLASS =

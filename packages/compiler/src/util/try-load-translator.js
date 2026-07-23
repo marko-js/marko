@@ -12,12 +12,16 @@ export default function (requested = config.translator) {
       const file = markoModules.resolve(requested);
       translator = markoModules.require(file);
       // The translator declares its LLM cheat sheet relative to its own module;
-      // resolve it to a cwd-relative path an agent can read directly.
+      // resolve it to a cwd-relative path an agent can read directly. Copy the
+      // translator since it may be a frozen ESM namespace.
       if (typeof translator.cheatsheet === "string") {
-        translator.cheatsheet = path.relative(
-          markoModules.cwd,
-          path.resolve(path.dirname(file), translator.cheatsheet),
-        );
+        translator = {
+          ...translator,
+          cheatsheet: path.relative(
+            markoModules.cwd,
+            path.resolve(path.dirname(file), translator.cheatsheet),
+          ),
+        };
       }
       cache[requested] = translator;
     }

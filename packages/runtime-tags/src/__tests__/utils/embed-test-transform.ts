@@ -1,8 +1,11 @@
+import { createRequire } from "module";
 import path from "path";
 
 import type { types as t } from "@marko/compiler";
 
 import type { TestConfig } from "../main.test";
+
+const require = createRequire(import.meta.url);
 
 export default {
   Program(program) {

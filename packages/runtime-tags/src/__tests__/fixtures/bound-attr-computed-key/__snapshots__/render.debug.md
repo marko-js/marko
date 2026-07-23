@@ -13,9 +13,7 @@
 const input = document.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
-input.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+input.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 ```html
 <div>

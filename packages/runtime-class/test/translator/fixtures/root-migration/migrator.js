@@ -1,6 +1,8 @@
-import { types as t } from "@marko/compiler";
+"use strict";
 
-export default {
+const { types: t } = require("@marko/compiler");
+
+module.exports = {
   Identifier(path) {
     if (path.node.name === "old") {
       path.replaceWith(t.identifier("new"));

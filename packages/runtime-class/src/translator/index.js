@@ -17,7 +17,7 @@ import {
   resolveRelativePath,
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
-import { version } from "marko/package.json";
+import markoPkg from "marko/package.json" with { type: "json" };
 
 import MarkoCDATA from "./cdata";
 import MarkoClass from "./class";
@@ -37,7 +37,7 @@ import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 const CLASS_HYDRATION_SELF = "self";
 const CLASS_HYDRATION_DESCENDANT = "descendant";
 
-export { version } from "../../package.json";
+export const version = markoPkg.version;
 export const tagDiscoveryDirs = ["components"];
 export { optionalTaglibs, default as taglibs } from "./taglib";
 export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
@@ -417,7 +417,7 @@ export const translate = {
       if (markoOpts.writeVersionComment) {
         path.addComment(
           "leading",
-          ` Compiled using marko@${version} - DO NOT EDIT`,
+          ` Compiled using marko@${markoPkg.version} - DO NOT EDIT`,
           true,
         );
       }

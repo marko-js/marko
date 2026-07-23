@@ -14,7 +14,7 @@
 
 # Update
 ```js
-document.querySelector("#tags").click();
+(document.querySelector("#tags")).click();
 ```
 ```html
 <div
@@ -36,7 +36,7 @@ UPDATE: #class::text "none" => "1"
 
 # Update
 ```js
-document.querySelector("#tags").click();
+(document.querySelector("#tags")).click();
 ```
 ```html
 <div

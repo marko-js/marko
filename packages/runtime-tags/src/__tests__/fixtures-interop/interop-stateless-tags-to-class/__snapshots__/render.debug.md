@@ -10,7 +10,7 @@
 
 # Update
 ```js
-document.querySelector("button").click();
+(document.querySelector("button")).click();
 ```
 ```html
 <button>

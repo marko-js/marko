@@ -5,16 +5,16 @@
     "@ci:build": "pnpm run build",
     "@ci:lint": "oxlint && oxfmt --check --with-node-modules .",
     "@ci:release": "pnpm run build && node scripts/pkg-override && changeset publish && pnpm run @ci:release-alias && node scripts/pkg-override && pnpm install --frozen-lockfile",
-    "@ci:release-alias": "node -r ~ts scripts/publish-alias.ts",
+    "@ci:release-alias": "node -r ~ts scripts/publish-alias.mts",
     "@ci:test": "node scripts/test-coverage.js",
     "@ci:test:fast": "cross-env NODE_OPTIONS=\"--max-old-space-size=8192 --max-semi-space-size=128\" MARKO_DEBUG=1 pnpm run test:parallel",
     "@ci:version": "changeset version && oxfmt \"**/package.json\" && pnpm install --lockfile-only",
     "audit": "pnpm audit --prod",
     "build": "pnpm -r --if-present run build && pnpm run build:types",
-    "build:sizes": "node -r ~ts scripts/sizes",
+    "build:sizes": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON -r ~ts scripts/sizes.mts",
     "build:types": "tsc -b tsconfig.build.json",
     "change": "changeset add",
-    "compile": "node -r ~ts scripts/inspect-compiled-output.ts",
+    "compile": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON -r ~ts scripts/inspect-compiled-output.mts",
     "format": "oxlint --fix; oxfmt --with-node-modules .",
     "lint": "oxlint && oxfmt --check --with-node-modules .",
     "prepare": "husky && pnpm --filter @marko/compiler run build-babel-types",
@@ -31,12 +31,9 @@
     "@babel/generator": "^7.29.1",
     "@babel/parser": "^7.29.3",
     "@babel/plugin-syntax-typescript": "^7.28.6",
-    "@babel/plugin-transform-export-namespace-from": "^7.29.7",
     "@babel/plugin-transform-modules-commonjs": "^7.28.6",
     "@babel/plugin-transform-typescript": "^7.28.6",
     "@babel/preset-env": "^7.29.5",
-    "@babel/preset-typescript": "^7.28.5",
-    "@babel/register": "^7.29.3",
     "@babel/traverse": "^7.29.0",
     "@babel/types": "^7.29.0",
     "@changesets/changelog-github": "^0.7.0",
@@ -75,7 +72,10 @@
     "through": "^2.3.8",
     "tiny-glob": "^0.2.9",
     "typescript": "^7.0.2",
-    "~ts": "file:scripts/babel-register"
+    "~ts": "file:scripts/ts-hooks"
+  },
+  "engines": {
+    "node": "^22.18.0 || ^24.0.0 || >=26.0.0"
   },
   "packageManager": "pnpm@11.15.1"
 }

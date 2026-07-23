@@ -14,9 +14,7 @@
 const input = document.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
-input.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+input.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 ```html
 <input
@@ -38,9 +36,7 @@ UPDATE: span::text "hello" => "w"
 const input = document.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
-input.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+input.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 ```html
 <input
@@ -62,9 +58,7 @@ UPDATE: span::text "w" => "wor"
 const input = document.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
-input.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+input.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 ```html
 <input

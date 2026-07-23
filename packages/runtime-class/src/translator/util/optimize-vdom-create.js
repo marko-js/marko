@@ -6,7 +6,9 @@ import {
   isLoopTag,
   isNativeTag,
 } from "@marko/compiler/babel-utils";
-import { decode } from "he";
+import he from "he";
+
+const { decode } = he;
 
 import translateAttributes from "../tag/native-tag[vdom]/attributes";
 import { getKeyManager, hasUserKey } from "./key-manager";

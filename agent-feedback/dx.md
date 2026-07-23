@@ -494,7 +494,7 @@ observe the returned arrow sitting inside the emitted IIFE with an empty
 (`:301-302`), and `translateHTML`/`translateDOM` just `tag.remove()` — the
 entire `<style>` block disappears from both targets with no error, warning or
 `meta.diagnostics` entry. This bites the repo's own documented iteration loop:
-`pnpm run compile` (`scripts/inspect-compiled-output.ts`) never sets the hook,
+`pnpm run compile` (`scripts/inspect-compiled-output.mts`) never sets the hook,
 so `<style>.a{color:red}</style><div class=a>hi</div>` compiles to output
 containing only the `<div>` and a contributor inspecting `<style>` codegen
 cannot tell whether the CSS was dropped by design or by their change; the same
@@ -503,7 +503,7 @@ already validates this exact option elsewhere
 (`packages/compiler/src/babel-plugin/index.js:47-50` throws "the
 `resolveVirtualDependency` option must be supplied when output is `hydrate`"),
 so a `diagnosticWarn` when a non-empty `<style>` body is discarded is consistent
-with existing behavior; independently, `scripts/inspect-compiled-output.ts`
+with existing behavior; independently, `scripts/inspect-compiled-output.mts`
 should pass a stub `resolveVirtualDependency` so inspected output shows the
 emitted style import. Re-verify: `pnpm run compile -- -o html -d file.marko` on
 that template and observe the emitted `_html("<div class=a>hi</div>")` with no
@@ -539,12 +539,12 @@ left-hand side in function parameter list.`
 
 ## Fix `pnpm run compile` — the documented translator-inspection command fails two different ways
 
-`scripts/inspect-compiled-output.ts` › `TRANSLATORS` | 2026-07-23 | impact:high | effort:low
+`scripts/inspect-compiled-output.mts` › `TRANSLATORS` | 2026-07-23 | impact:high | effort:low
 
 Root `AGENTS.md`/`CLAUDE.md` call `pnpm run compile -- -o dom -d foo.marko` "the
 fastest way to inspect what the translator generates", but neither the
 documented form nor the corrected form works in this repo. (1) pnpm forwards the
-literal `--` to the script, and `scripts/inspect-compiled-output.ts` uses Node
+literal `--` to the script, and `scripts/inspect-compiled-output.mts` uses Node
 `parseArgs({allowPositionals:true})`, which treats everything after a bare `--`
 as positionals — so `-o` becomes a file path and it dies with `ENOENT ... open
 '<repo>/-o'`. (2) Dropping the `--` gets further but then fails with `[BABEL]
@@ -565,3 +565,27 @@ compile -o dom -d /tmp/x.marko` → "Cannot find module
 '@marko/runtime-tags/translator'"; `pnpm run compile -o dom -d -t <abs path to
 packages/runtime-tags/src/translator/index.ts> /tmp/x.marko` → succeeds and
 writes `/tmp/x.marko.js`.
+||||||| parent of 001ef3300e (Replace @babel/register with native Node type stripping)
+Several built-ins still fall through the constructor dispatch to `throwUnserializable`, each a one-case addition: `DataView` is the only `ArrayBuffer` view missing while every `TypedArray` is handled, which is an inconsistency rather than a considered omission; boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) resume as nothing; and `DOMException`, `AbortSignal`, and `Event` reach templates through request handling yet cannot cross to the browser. `DataView` and the boxed primitives are pure wins with obvious constructor forms (`new DataView(buffer, byteOffset, byteLength)`, `Object(value)`); the DOM types are lower value and only worth adding if a real template needs them. Re-verify: pass each through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
+
+Several built-ins still fall through the constructor dispatch to `throwUnserializable`, each a one-case addition: `DataView` is the only `ArrayBuffer` view missing while every `TypedArray` is handled, which is an inconsistency rather than a considered omission; boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) resume as nothing; and `DOMException`, `AbortSignal`, and `Event` reach templates through request handling yet cannot cross to the browser. `DataView` and the boxed primitives are pure wins with obvious constructor forms (`new DataView(buffer, byteOffset, byteLength)`, `Object(value)`); the DOM types are lower value and only worth adding if a real template needs them. Re-verify: pass each through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
+
+## Coverage modernization: c8 numbers are inflated, but a monocart switch needs a dedicated PR
+
+`scripts/coverage-report.js` | 2026-07-23 | impact:high | effort:high
+
+Two findings from an attempted (and reverted) monocart switch; local commit 92566a18b7 holds a near-complete WIP.
+
+**The current c8 numbers are systematically inflated.** Files loaded into the jsdom context are recorded twice: once server-side (correct offsets) and once as vm scripts whose offsets include the 65-byte `Module.wrap`-style prefix. c8 (`omitRelative: false`) converts the wrapped copy against the unwrapped disk file, blanketing every line as covered, and istanbul merge sums it onto the correct record. Validated: `ServerComponent.js` reports LF:141/LH:141 (100%) while runtime probes prove `elId`/`setState`/`isDestroyed` never execute across the full suite (constructor control: 1,546 hits) — raw V8 ranges say 46%. The dead lines carry exactly the jsdom-copy count (+95). Any file the jsdom suite touches is affected.
+
+**What a correct monocart pipeline needs** (all verified in the WIP): (1) the runtime-tags DOM runtime (`src/dom/*.ts`) executes only through per-fixture bundles (`src/__tests__/fixtures/**/dist/**/*.mjs`, ~1.7k maps with no `sourcesContent`) — without remapping them, `signals.ts`/`scope.ts`/`walker.ts` report 0%; feeding them to monocart wholesale OOMs (~4GB), so remap them in a streaming pass (decode with `@jridgewell/sourcemap-codec`, project covered bytes onto original lines, fold into the lcov textually). (2) Never-loaded `.ts` needs `all.transformer` with `node:module.stripTypeScriptTypes`, else monocart emits LF:0 and the file escapes the denominator. (3) Pre-merge process covs with `@bcoe/v8-coverage` before `mcr.add()` — monocart holds all added entries until `generate()`. (4) The `mcr` CLI is not usable here: it injects deprecated `module.register` hooks into every child and crashes fetching `sourceMappingURL`s from vm-compiled `.marko` scripts. Expect codecov to step down when switched, and note the loader-side prerequisite already landed: the jsdom loader compiles with `vm.compileFunction`, so in-context offsets now match files on disk exactly.
+
+**Converter head-to-head (measured 2026-07-23, 1/16 fixture slice, identical merged input, single thread, capped heap):** `ast-v8-to-istanbul` (Vitest 4's remapper, oxc-parser AST): 4.3s, 324MB RSS, dom remap scope 30/30 / signals 130/139 / walker 45/48. `oxc-coverage-instrument` (Rust napi): 2.7s, 237MB RSS, near-identical lines (66.1% vs 65.9%); its flow is `v8ToIstanbulWithLoader` (external map by URL) then `remapCoverageMap` per bundle, resolving the map-relative result keys against the bundle dir. Both remap the fixture bundles **without `sourcesContent`**, so `sourcemapExcludeSources: true` in the test bundler can stay (flipping it would only add write-IO). Both stream per-entry with istanbul-lib-coverage merging, so memory stays flat — no monocart-style whole-run generate. Recommendation: `ast-v8-to-istanbul` for maturity (istanbul-lib-instrument test-suite parity, Vitest-proven) or `oxc-coverage-instrument` for ~1.6x speed; either slots into the same adapter. 6 entries failed parse in both (same entries) — these are rolldown _virtual_ lazy-chunks (`v:*.mjs`) whose maps only reference `.marko` templates outside the coverage set; skip them with a logged notice.
+
+**Update (later 2026-07-23): a complete, validated implementation exists — cherry-pick local commit `49741902cb`.** It uses `ast-v8-to-istanbul` + `oxc-parser`, pre-merges with `@bcoe/v8-coverage`, shards the ~4.3k bundle remaps across `worker_threads` (12.4s on 16 threads; istanbul `FileCoverage` does not survive structured clone — post plain JSON), keeps lcov/lcov-report at the c8-era paths, and converts never-loaded files via a zero-count whole-script range. Full-suite results: 86.4% lines / 78.3% branches / 84.4% functions, with the bundle-remapped `signals.ts` per-line output verified against raw V8 ranges (zero phantom covered lines). **Do not use `oxc-coverage-instrument` despite its ~2x conversion speed**: it credits zero hits to branch paths V8 emits no distinct range for — a ternary whose consequent runs reports `[0,0]` (10-line repro: `const t = f(2) === "big" ? 1 : 2` after both-path warmup) — which tanked this codebase to 43.5% branches; worth filing upstream at fallow-rs/oxc-coverage-instrument.
+
+## Unify `packages/compiler/src` on ESM so its module type can be declared
+
+`packages/compiler/package.json` › `main` | 2026-07-24 | impact:low | effort:high
+
+`packages/compiler/src` is split between 27 ESM-syntax `.js` files and 24 CommonJS ones (2620 lines, nearly all under `taglib/`), and the package declares no `"type"`, so Node parses each ESM file as CommonJS, fails, and reparses it as ESM — a real per-file cost that `pnpm run compile` and `pnpm run build:sizes` currently hide behind `--disable-warning=MODULE_TYPELESS_PACKAGE_JSON`. Node dedupes the warning per `package.json`, so `src/index.js` is only the first file it happens to hit, not the sole offender. The cheap fixes are all blocked: a `src/package.json` marker is copied into `dist/` by the build (`babel ./src --out-dir ./dist --copy-files`), mislabelling the CommonJS output that published consumers load; renaming the 24 to `.cjs` breaks their extensionless internal `require()`s, since Node's CommonJS resolver tries only `.js`/`.json`/`.node`; and renaming the 27 to `.mjs` breaks the `exports` entries pointing at `./src/index.js`, `./src/babel-utils/index.js` and `./src/config.js`, plus `main:override: dist/index.js`. Converting the 24 to ESM is the viable route and the dynamic requires are not an obstacle — they already funnel through `markoModules.require` rather than raw `require` — but it needs the `src` type marker kept out of `dist`, so it belongs in its own PR. Verify: `node -r ~ts scripts/sizes.mts 2>&1 | grep MODULE_TYPELESS` prints a warning naming `packages/compiler/package.json`.

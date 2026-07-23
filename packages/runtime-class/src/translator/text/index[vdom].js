@@ -1,5 +1,7 @@
 import { types as t } from "@marko/compiler";
-import { decode } from "he";
+import he from "he";
+
+const { decode } = he;
 
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";

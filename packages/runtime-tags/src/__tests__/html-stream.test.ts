@@ -6,7 +6,7 @@ import type { Template } from "@marko/runtime-tags/common/types";
 import * as tagsTranslator from "../translator";
 import { createServerRunner } from "./utils/bundle";
 
-const streamDir = path.join(__dirname, "html-stream");
+const streamDir = path.join(import.meta.dirname, "html-stream");
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 const deferred = <T>(ms: number, value: T) =>
   new Promise<T>((resolve) => setTimeout(() => resolve(value), ms));

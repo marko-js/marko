@@ -324,13 +324,24 @@ class Reference {
   public calls: null | DeferredCall[] = null;
   public scopeId: number | undefined = undefined;
   public channel: SerializeChannel | undefined = undefined;
+  public parent: Reference | null;
+  public accessor: string | null;
+  public flush: number;
+  public pos: number | null;
+  public id: string | null;
   constructor(
-    public parent: Reference | null,
-    public accessor: string | null,
-    public flush: number,
-    public pos: number | null = null,
-    public id: string | null = null,
-  ) {}
+    parent: Reference | null,
+    accessor: string | null,
+    flush: number,
+    pos: number | null = null,
+    id: string | null = null,
+  ) {
+    this.parent = parent;
+    this.accessor = accessor;
+    this.flush = flush;
+    this.pos = pos;
+    this.id = id;
+  }
 }
 
 interface Debug {

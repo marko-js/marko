@@ -1,9 +1,12 @@
 import assert from "assert";
 import fs from "fs";
+import { createRequire } from "module";
 import path from "path";
 
 import * as compiler from "@marko/compiler";
-import { html_beautify } from "js-beautify";
+import jsBeautify from "js-beautify";
+
+const { html_beautify } = jsBeautify;
 
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
@@ -32,6 +35,8 @@ import {
   stripOptimizeRuntime,
 } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
+
+const require = createRequire(import.meta.url);
 
 type Step = Input | Wait | Flush | Throws | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
@@ -103,7 +108,7 @@ function testFixtures(interop?: true) {
     ? require.resolve("marko/translator")
     : tagsTranslator;
   const fixturesDir = path.join(
-    __dirname,
+    import.meta.dirname,
     interop ? "fixtures-interop" : "fixtures",
   );
   let fixtureIndex = 0;

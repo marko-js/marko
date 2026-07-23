@@ -23,9 +23,7 @@ UPDATE: div::text@0 "0" => "1"
 ```js
 const div = document.querySelector("div");
 const win = document.defaultView;
-div.dispatchEvent(new win.MouseEvent("mouseover", {
-  bubbles: true
-}));
+div.dispatchEvent(new win.MouseEvent("mouseover", { bubbles: true }));
 ```
 
 # Update
@@ -46,9 +44,7 @@ UPDATE: div::text@0 "1" => "0"
 ```js
 const div = document.querySelector("div");
 const win = document.defaultView;
-div.dispatchEvent(new win.MouseEvent("mouseover", {
-  bubbles: true
-}));
+div.dispatchEvent(new win.MouseEvent("mouseover", { bubbles: true }));
 ```
 ```html
 <div>

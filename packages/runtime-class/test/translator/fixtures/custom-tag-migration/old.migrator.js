@@ -1,6 +1,8 @@
-import { types as t } from "@marko/compiler";
+"use strict";
 
-export function enter(path) {
+const { types: t } = require("@marko/compiler");
+
+exports.enter = function enter(path) {
   const oldAttr = path
     .get("attributes")
     .find((attrPath) => attrPath.get("name").node === "a");
@@ -10,7 +12,7 @@ export function enter(path) {
   }
 }
 
-export function exit(path) {
+exports.exit = function exit(path) {
   path.replaceWith(
     t.markoTag(
       t.stringLiteral("new"),

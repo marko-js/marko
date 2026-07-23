@@ -41,9 +41,7 @@ UPDATE: div::text@9 "" => "0"
 ```js
 const div = document.querySelector("div");
 const window = div.ownerDocument.defaultView;
-div.dispatchEvent(new window.Event("change", {
-  bubbles: true
-}));
+div.dispatchEvent(new window.Event("change", { bubbles: true }));
 ```
 ```html
 <div>

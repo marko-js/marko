@@ -14,10 +14,8 @@ document.querySelector("#inc").click();
 
 # Update
 ```js
-const {
-defaultView
-  } = document;
-  document.body.dispatchEvent(new defaultView.MouseEvent("mouseover"));
+const { defaultView } = document;
+document.body.dispatchEvent(new defaultView.MouseEvent("mouseover"));
 ```
 
 # Update

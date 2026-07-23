@@ -11,6 +11,7 @@ import {
 } from "@marko/compiler/internal/babel";
 import markoModules from "@marko/compiler/modules";
 
+import pkg from "../package.json" with { type: "json" };
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
@@ -19,7 +20,7 @@ import { buildCodeFrameError } from "./util/build-code-frame";
 import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
-export { version } from "../package.json";
+export const version = pkg.version;
 export { taglib, types };
 
 const hasBabel = !!(

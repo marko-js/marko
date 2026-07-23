@@ -37,7 +37,7 @@ interface Saved {
   results: Result[];
 }
 
-const rootDir = path.join(__dirname, "..");
+const rootDir = path.join(import.meta.dirname, "..");
 const runtimePath = path.join(rootDir, "packages/runtime-tags/dist/dom.mjs");
 const translatorPath = path.join(
   rootDir,
