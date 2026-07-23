@@ -1,4 +1,5 @@
 import {
+  diagnosticWarn,
   getTagDefForTagName,
   parseArgs,
   parseExpression,
@@ -16,6 +17,10 @@ import { buildCodeFrameError } from "../util/build-code-frame";
 import throwAggregateError from "../util/merge-errors";
 
 const noop = () => {};
+// A tag closed by the `>` of a comparison leaves the right operand and that `>`
+// as text (`<if=n > 0>` renders " 0>"); both parses are valid, so only warn.
+const truncatedComparisonTagReg = /=[\s\S]*\s\/?>$/;
+const truncatedComparisonTextReg = /^\s*=?\s*[^\s<>]+>/;
 const jsxStyleAttrValueReg = /^\{[\s\S]*\}$/;
 // A brace wrapped attribute value that only parses once unwrapped is almost
 // certainly a JSX/Svelte style value (eg `onClick={handler}`); say so instead
@@ -176,6 +181,20 @@ export function parseMarko(file) {
       }
 
       if (/^(?:[\n\r]\s*)?(?:[\n\r]\s*)?$/.test(rawValue)) return;
+
+      if (truncatedComparisonTextReg.test(rawValue)) {
+        const tagStart = file.code.lastIndexOf("<", part.start);
+        if (
+          tagStart !== -1 &&
+          truncatedComparisonTagReg.test(file.code.slice(tagStart, part.start))
+        ) {
+          diagnosticWarn(file.path, {
+            label:
+              "A `>` in this tag's value closed the tag, so the comparison is truncated and the rest is rendered as text. Wrap the value in parentheses.",
+            loc: locationAt(part),
+          });
+        }
+      }
 
       const { body } = currentBody.node;
       let prev;
