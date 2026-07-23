@@ -80,9 +80,9 @@
     "table": "^6.9.0",
     "through": "^2.3.8",
     "tiny-glob": "^0.2.9",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.63.0",
-    "~ts": "file:scripts/babel-register"
+    "typescript": "^7.0.2",
+    "~ts": "file:scripts/babel-register",
+    "~tseslint": "file:scripts/tseslint"
   },
   "packageManager": "pnpm@11.15.1"
 }
