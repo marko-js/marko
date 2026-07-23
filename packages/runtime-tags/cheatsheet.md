@@ -171,31 +171,30 @@ export interface Input<T> {
 
 ## DON'T (these are errors or silently wrong)
 
-| Wrong (React/Vue/Marko5 habit)                                    | Right                                                                                |
-| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| `{expr}` in markup, `className`, `key=`, `style={{...}}`          | `${expr}`, `class`, `by=` on `<for>`, `style={...}`                                  |
-| `onClick={() => ...}` / `@click` / `on-click("name")`             | `onClick() { ... }`                                                                  |
-| `const [x, setX] = useState()` / `state` / `class {}` block       | `<let/x=0>` then `x = 1`                                                             |
-| `$ const y = x * 2;` (scriptlets are removed)                     | `<const/y=x * 2>`                                                                    |
-| `<let x=0>`                                                       | `<let/x=0>`                                                                          |
-| `<if(cond)>`                                                      | `<if=cond>`                                                                          |
-| `items.push(x)`                                                   | `items = items.concat(x)`                                                            |
-| `input.renderBody`                                                | `input.content`                                                                      |
-| `<await>` with `@placeholder`/`@catch`                            | wrap in `<try>`                                                                      |
-| `el.focus()` on a ref                                             | `el().focus()` inside `<script>`/handler                                             |
-| `input.tab[0]` / `input.tab.length`                               | `[...input.tab ?? []]` first (attr tags are iterables, not arrays)                   |
-| bare text on its own line at template root                        | wrap in an element (`<p>...`), or prefix the line with `-- `                         |
-| `by=item` using the loop variable                                 | `by="propName"` or `by=(item) => key` — `by=` is evaluated outside the loop          |
-| `onInput(e) { q = e.target.value }` to sync an input              | `value:=q` — the change handler owns the value                                       |
-| fetching inside the component that renders the data               | start the promise early (route handler / top of template), pass it down to `<await>` |
-| `style={ backgroundColor: c }` (camelCase keys)                   | `style={ "background-color": c }` (kebab-case)                                       |
-| `this.querySelector` / `this.getRootNode()` in `<script>`         | element ref getter: `<div/el>` then `el()` (there is no `this`)                      |
-| `<div/my-el>` / `<input/card-input>` (hyphen in tag var)          | valid JS identifier: `<div/myEl>`                                                    |
-| hand-rolled radios `checked=x checkedChange(v){…}`                | `checkedValue:=picked` on each radio (shared var, distinct `value=`)                 |
-| hand-rolled `IntersectionObserver` to defer a widget's JS         | `import W from "<w>" with { load: "visible#sel" }`                                   |
-| imperative lib wired through `<script>` mount + cleanup           | `<lifecycle onMount/onUpdate/onDestroy>` (keeps `this` across all three)             |
-| `createContext`/provider to share data                            | `input` (prop drilling) or request-scoped `$global`                                  |
-| `$global.x` in client-reactive code, not allow-listed             | `$global.serializedGlobals = { x: true }` first, or it throws after resume           |
-| hand-namespaced global classes (`.my-card-title`)                 | `<style/styles>` + `class=styles.card` (scoped CSS modules)                          |
-| `tsc --noEmit` to type check templates                            | `mtc` — `tsc` skips `.marko` files and exits 0                                       |
-| `<const/fmt=new Intl.NumberFormat(...)>` used in reactive content | `static const fmt = ...` — anything reactive content reads must serialize            |
+| Wrong (React/Vue/Marko5 habit)                              | Right                                                                                |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `{expr}` in markup, `className`, `key=`, `style={{...}}`    | `${expr}`, `class`, `by=` on `<for>`, `style={...}`                                  |
+| `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                                  |
+| `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                                             |
+| `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                                    |
+| `<let x=0>`                                                 | `<let/x=0>`                                                                          |
+| `<if(cond)>`                                                | `<if=cond>`                                                                          |
+| `items.push(x)`                                             | `items = items.concat(x)`                                                            |
+| `input.renderBody`                                          | `input.content`                                                                      |
+| `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                                      |
+| `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                                             |
+| `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays)                   |
+| bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `-- `                         |
+| `by=item` using the loop variable                           | `by="propName"` or `by=(item) => key` — `by=` is evaluated outside the loop          |
+| `onInput(e) { q = e.target.value }` to sync an input        | `value:=q` — the change handler owns the value                                       |
+| fetching inside the component that renders the data         | start the promise early (route handler / top of template), pass it down to `<await>` |
+| `style={ backgroundColor: c }` (camelCase keys)             | `style={ "background-color": c }` (kebab-case)                                       |
+| `this.querySelector` / `this.getRootNode()` in `<script>`   | element ref getter: `<div/el>` then `el()` (there is no `this`)                      |
+| `<div/my-el>` / `<input/card-input>` (hyphen in tag var)    | valid JS identifier: `<div/myEl>`                                                    |
+| hand-rolled radios `checked=x checkedChange(v){…}`          | `checkedValue:=picked` on each radio (shared var, distinct `value=`)                 |
+| hand-rolled `IntersectionObserver` to defer a widget's JS   | `import W from "<w>" with { load: "visible#sel" }`                                   |
+| imperative lib wired through `<script>` mount + cleanup     | `<lifecycle onMount/onUpdate/onDestroy>` (keeps `this` across all three)             |
+| `createContext`/provider to share data                      | `input` (prop drilling) or request-scoped `$global`                                  |
+| `$global.x` in client-reactive code, not allow-listed       | `$global.serializedGlobals = { x: true }` first, or it throws after resume           |
+| hand-namespaced global classes (`.my-card-title`)           | `<style/styles>` + `class=styles.card` (scoped CSS modules)                          |
+| `tsc --noEmit` to type check templates                      | `mtc` — `tsc` skips `.marko` files and exits 0                                       |

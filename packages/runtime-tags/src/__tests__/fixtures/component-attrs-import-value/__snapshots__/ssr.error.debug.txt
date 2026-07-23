@@ -1,1 +1,1 @@
-Unable to serialize "input" in packages/runtime-tags/src/__tests__/fixtures/component-attrs-import-value/tags/counter.marko (reading format). Values reached from content that updates in the browser must be serializable.
+Unable to serialize "input" in packages/runtime-tags/src/__tests__/fixtures/component-attrs-import-value/tags/counter.marko (reading format). Values referenced in the browser must be serializable.

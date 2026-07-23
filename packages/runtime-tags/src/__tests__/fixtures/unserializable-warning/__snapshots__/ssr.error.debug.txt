@@ -1,1 +1,1 @@
-Unable to serialize "unserializable" in packages/runtime-tags/src/__tests__/fixtures/unserializable-warning/template.marko:2:10 (reading nested.thing). Values reached from content that updates in the browser must be serializable.
+Unable to serialize "unserializable" in packages/runtime-tags/src/__tests__/fixtures/unserializable-warning/template.marko:2:10 (reading nested.thing). Values referenced in the browser must be serializable.

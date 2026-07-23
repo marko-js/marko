@@ -1,0 +1,33 @@
+<button>1.234,50 €<!--M_*1 b-->
+  <!>Jan 1, 1970<!--M_*1 c-->
+</button><!--M_*1 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    d: 1234.5,
+    e: new Intl.NumberFormat("de-DE", {
+      numberingSystem: "latn",
+      style: "currency",
+      currency: "EUR",
+      currencyDisplay: "symbol",
+      currencySign: "standard",
+      minimumIntegerDigits: 1,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+      useGrouping: "auto",
+      notation: "standard",
+      signDisplay: "auto",
+      roundingIncrement: 1,
+      roundingMode: "halfExpand",
+      roundingPriority: "auto",
+      trailingZeroDisplay: "auto"
+    }),
+    g: new Intl.DateTimeFormat("en", {
+      calendar: "gregory",
+      numberingSystem: "latn",
+      timeZone: "UTC",
+      dateStyle: "medium"
+    })
+  }], "a0 1"];
+  M._.w()
+</script>

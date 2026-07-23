@@ -1,1 +1,1 @@
-Unable to serialize "\"ControlledHandler:#input/0\"" in packages/runtime-tags/src/__tests__/fixtures/error-spread-change-handler-not-controllable/template.marko. Values reached from content that updates in the browser must be serializable.
+Unable to serialize "\"ControlledHandler:#input/0\"" in packages/runtime-tags/src/__tests__/fixtures/error-spread-change-handler-not-controllable/template.marko. Values referenced in the browser must be serializable.

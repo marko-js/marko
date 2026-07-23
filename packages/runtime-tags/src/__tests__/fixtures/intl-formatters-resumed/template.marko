@@ -1,0 +1,4 @@
+<let/n=1234.5/>
+<const/money=new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" })/>
+<const/day=new Intl.DateTimeFormat("en", { dateStyle: "medium", timeZone: "UTC" })/>
+<button onClick() { n += 1000 }>${money.format(n)} ${day.format(new Date(n))}</button>

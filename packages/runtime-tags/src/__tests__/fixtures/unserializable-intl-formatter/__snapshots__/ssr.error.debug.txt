@@ -1,1 +1,0 @@
-Unable to serialize "fmt" in packages/runtime-tags/src/__tests__/fixtures/unserializable-intl-formatter/template.marko:2:8. Values reached from content that updates in the browser must be serializable.

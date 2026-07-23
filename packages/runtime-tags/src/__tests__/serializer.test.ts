@@ -836,6 +836,129 @@ describe("serializer", () => {
     });
   });
 
+  describe("Intl", () => {
+    // The resolved options a runtime reports vary by ICU version, so assert on
+    // rebuilt behavior rather than the payload text.
+    const roundTrips = <T>(val: T, run: (v: T) => string) => {
+      assert.equal(run(deserialize(val)), run(val));
+    };
+
+    it("emits a constructor call", () =>
+      assert.match(
+        serialize(new Intl.NumberFormat("en", { style: "percent" })),
+        /^new Intl\.NumberFormat\("en",\{/,
+      ));
+
+    it("NumberFormat", () =>
+      roundTrips(
+        new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }),
+        (f) => f.format(1234.5),
+      ));
+
+    it("Collator", () =>
+      roundTrips(new Intl.Collator("de", { sensitivity: "base" }), (c) =>
+        ["a", "A", "z", "ä"].sort(c.compare).join(""),
+      ));
+
+    it("PluralRules", () =>
+      roundTrips(new Intl.PluralRules("en", { type: "ordinal" }), (p) =>
+        [1, 2, 3, 4].map((n) => p.select(n)).join(","),
+      ));
+
+    it("ListFormat", () =>
+      roundTrips(new Intl.ListFormat("en", { type: "disjunction" }), (l) =>
+        l.format(["a", "b", "c"]),
+      ));
+
+    it("RelativeTimeFormat", () =>
+      roundTrips(new Intl.RelativeTimeFormat("en", { numeric: "auto" }), (r) =>
+        r.format(-1, "day"),
+      ));
+
+    it("DisplayNames", () =>
+      roundTrips(new Intl.DisplayNames("en", { type: "region" }), (d) =>
+        d.of("US")!,
+      ));
+
+    it("DateTimeFormat", () =>
+      roundTrips(
+        new Intl.DateTimeFormat("en", {
+          dateStyle: "full",
+          timeZone: "UTC",
+        }),
+        (f) => f.format(new Date(0)),
+      ));
+
+    it("Segmenter", () =>
+      roundTrips(new Intl.Segmenter("en", { granularity: "word" }), (s) =>
+        [...s.segment("hi there")].map((x) => x.segment).join("|"),
+      ));
+
+    it("a long option string reused elsewhere resumes", () => {
+      // The options object is temporary, so any reference recorded against it
+      // must not be rebuilt by reading a property off the formatter.
+      const tz = "America/Los_Angeles";
+      const resumed = deserialize({
+        f: new Intl.DateTimeFormat("en", { timeZone: tz }),
+        tz,
+      });
+      assert.equal(resumed.tz, tz);
+    });
+
+    it("a long option string reused in a later flush resumes", () => {
+      const tz = "America/Los_Angeles";
+      const { scopes, apply } = createSerializeContext({});
+      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const ser = new Serializer();
+      apply(
+        ser.stringifyScopes(
+          [[1, {}, { f: new Intl.DateTimeFormat("en", { timeZone: tz }) }]],
+          boundary,
+        ),
+      );
+      apply(ser.stringifyScopes([[2, {}, { tz }]], boundary));
+      assert.equal((scopes.get(2) as any).tz, tz);
+    });
+
+    it("a reusable option member resumes in a later flush", () => {
+      // `pluralCategories` is an array, so it is tracked as a reference rather
+      // than a deduped string.
+      const categories = ["one", "other"];
+      const rules = new Intl.PluralRules("en");
+      rules.resolvedOptions = () =>
+        ({ locale: "en", pluralCategories: categories }) as any;
+      const { scopes, apply } = createSerializeContext({});
+      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const ser = new Serializer();
+      apply(ser.stringifyScopes([[1, {}, { p: rules }]], boundary));
+      apply(ser.stringifyScopes([[2, {}, { c: categories }]], boundary));
+      assert.deepEqual((scopes.get(2) as any).c, categories);
+    });
+
+    it("takes the constructor name from dispatch, not the prototype", () => {
+      // A `constructor` that answers the dispatch read honestly and the second
+      // read with an attacker-chosen `name` must not reach the payload.
+      const fmt = new Intl.NumberFormat("en");
+      let reads = 0;
+      Object.setPrototypeOf(
+        fmt,
+        new Proxy(Intl.NumberFormat.prototype, {
+          get: (target, key) =>
+            key === "constructor" && ++reads > 1
+              ? { name: 'NumberFormat("en"),alert(1),(' }
+              : Reflect.get(target, key),
+        }),
+      );
+      assert.doesNotMatch(serialize(fmt), /alert/);
+    });
+
+    it("Locale", () => {
+      const locale = new Intl.Locale("ja-JP-u-ca-japanese");
+      assert.equal(serialize(locale), `new Intl.Locale("ja-JP-u-ca-japanese")`);
+      assert.equal(deserialize(locale).toString(), locale.toString());
+    });
+  });
+
   describe("URLSearchParams", () => {
     it("empty", () =>
       assertStringify(new URLSearchParams(), `new URLSearchParams`));
@@ -1959,6 +2082,20 @@ function assertStringify(
   ctx?: Record<PropertyKey, unknown>,
 ) {
   assertSerializer(ctx).assertStringify(val, serialized);
+}
+
+function serialize(val: unknown) {
+  const boundary = { signal: { aborted: false } } as any as Boundary;
+  return normalizePayload(
+    new Serializer().stringifyScopes([[1, {}, { value: val }]], boundary),
+  );
+}
+
+function deserialize<T>(val: T): T {
+  const { scopes, apply } = createSerializeContext({});
+  const boundary = { signal: { aborted: false } } as any as Boundary;
+  apply(new Serializer().stringifyScopes([[1, {}, { value: val }]], boundary));
+  return scopes.get(1)?.value as T;
 }
 
 function assertStringifyScopes(

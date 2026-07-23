@@ -7,6 +7,8 @@ const objectProto = Object.prototype;
 const arrayProto = Array.prototype;
 const Generator = (function* () {})().constructor;
 const AsyncGenerator = (async function* () {})().constructor;
+// `Intl.DurationFormat` is newer than the TypeScript lib types.
+type IntlWithDurationFormat = { DurationFormat?: new () => object } | undefined;
 patchIteratorNext(Generator.prototype);
 patchIteratorNext(AsyncGenerator.prototype);
 
@@ -901,6 +903,28 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
       return writeRequest(state, val as Request, ref);
     case globalThis.Response:
       return writeResponse(state, val as Response, ref);
+    // Each name is a literal: re-reading it off the prototype would let an
+    // exotic `constructor` inject arbitrary source into the payload.
+    case globalThis.Intl?.NumberFormat:
+      return writeIntl(state, val, "NumberFormat", ref);
+    case globalThis.Intl?.DateTimeFormat:
+      return writeIntl(state, val, "DateTimeFormat", ref);
+    case globalThis.Intl?.Collator:
+      return writeIntl(state, val, "Collator", ref);
+    case globalThis.Intl?.PluralRules:
+      return writeIntl(state, val, "PluralRules", ref);
+    case globalThis.Intl?.RelativeTimeFormat:
+      return writeIntl(state, val, "RelativeTimeFormat", ref);
+    case globalThis.Intl?.ListFormat:
+      return writeIntl(state, val, "ListFormat", ref);
+    case globalThis.Intl?.DisplayNames:
+      return writeIntl(state, val, "DisplayNames", ref);
+    case globalThis.Intl?.Segmenter:
+      return writeIntl(state, val, "Segmenter", ref);
+    case (globalThis.Intl as IntlWithDurationFormat)?.DurationFormat:
+      return writeIntl(state, val, "DurationFormat", ref);
+    case globalThis.Intl?.Locale:
+      return writeIntlLocale(state, val as Intl.Locale);
   }
 
   MARKO_DEBUG && throwUnserializable(state, val, ref);
@@ -1143,7 +1167,7 @@ function writeArrayArg(
   state.buf.push(")");
 }
 
-// Only reusable non-scope Map/Set members need backing-array ids.
+// Only a reusable non-scope member makes its container need an id.
 function isDedupedMember(val: unknown) {
   switch (typeof val) {
     case "object":
@@ -1444,6 +1468,45 @@ function writeResponse(state: State, val: Response, ref: Reference) {
   return true;
 }
 
+// Rebuilt from `resolvedOptions()`, with `locale` passed as the first argument
+// instead. Exact except `DateTimeFormat` widths in some locales (`ja`, `zh`).
+function writeIntl(state: State, val: object, name: string, ref: Reference) {
+  const { locale, ...options } = (val as Intl.NumberFormat).resolvedOptions();
+  let needsId = false;
+  for (const key in options) {
+    if (isDedupedMember((options as Record<string, unknown>)[key])) {
+      needsId = true;
+      break;
+    }
+  }
+
+  state.buf.push("new Intl." + name + "(" + quote(locale, 0) + ",");
+  // `resolvedOptions()` is a call, not a property, so a reusable member needs
+  // its own id here — it cannot be reached back through the formatter.
+  let optionsRef: Reference;
+  if (needsId) {
+    optionsRef = new Reference(
+      ref,
+      null,
+      state.flush,
+      null,
+      nextRefAccess(state),
+    );
+    state.buf.push(optionsRef.id + "={");
+  } else {
+    optionsRef = new Reference(ref, null, state.flush, state.buf.length);
+    state.buf.push("{");
+  }
+  writeObjectProps(state, options, optionsRef);
+  state.buf.push("})");
+  return true;
+}
+
+function writeIntlLocale(state: State, val: Intl.Locale) {
+  state.buf.push("new Intl.Locale(" + quote(val.toString(), 0) + ")");
+  return true;
+}
+
 function writeReadableStream(
   state: State,
   val: ReadableStream<unknown>,
@@ -1731,8 +1794,7 @@ function throwUnserializable(
       message += ` (reading ${access})`;
     }
 
-    message +=
-      ". Values reached from content that updates in the browser must be serializable.";
+    message += ". Values referenced in the browser must be serializable.";
 
     const err = new TypeError(message, { cause });
     err.stack = undefined;
