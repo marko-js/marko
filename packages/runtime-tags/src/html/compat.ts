@@ -24,6 +24,8 @@ import {
 } from "./writer";
 
 const K_TAGS_API_STATE = Symbol();
+// Module-global is safe: a scope-bound serializable function is a fresh closure
+// per render, so the same object is never reused (or re-scoped) across renders.
 const COMPAT_REGISTRY = new WeakMap<
   WeakKey,
   [registryId: string, scopeId: unknown]

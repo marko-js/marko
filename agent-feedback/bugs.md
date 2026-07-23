@@ -61,22 +61,6 @@ translator to surface interactivity on `metadata.marko`, `getClassHydrationMode`
 to return DESCENDANT for interactive tags children, and the boundary to actually
 resume.
 
-## `COMPAT_REGISTRY` caches `[id, scopeId]` for the module lifetime
-
-`packages/runtime-tags/src/html/compat.ts` › `compat.toJSON` | 2026-07-13 | impact:med | effort:med
-
-`toJSON`'s `COMPAT_REGISTRY` is a module-global `WeakMap` keyed by the registered
-function, and the `_script(scopeId, SET_SCOPE_REGISTER_ID)` side-effect (line 79)
-runs only on the first `toJSON()` for that function object, ever. For any
-registered function reused across renders (a module-level/hoisted `renderBody`,
-or a memoized handler), render #2 returns render #1's cached `scopeId` (per-render
-scope counters reset via `new State`) and never re-emits the `SET_SCOPE`
-registration, so its serialized reference points at a stale scope id and the
-client `getRenderScopes(...)[id]` lookup misses → broken hydration / dead bridged
-handler. Server-side the WeakMap persists across requests, so this is a
-cross-request hazard. Fix: key the cache per-render/per-`State` rather than
-module-globally.
-
 ## `_dynamic_tag` compares only the renderer id, conflating instances of the same content
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `_dynamic_tag` | 2026-07-14 | impact:high | effort:med
