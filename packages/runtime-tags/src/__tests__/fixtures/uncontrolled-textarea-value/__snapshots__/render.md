@@ -10,9 +10,7 @@
 const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 
 # Update
@@ -20,9 +18,7 @@ textarea.dispatchEvent(new window.Event("input", {
 const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 
 # Update
@@ -30,7 +26,5 @@ textarea.dispatchEvent(new window.Event("input", {
 const textarea = document.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```

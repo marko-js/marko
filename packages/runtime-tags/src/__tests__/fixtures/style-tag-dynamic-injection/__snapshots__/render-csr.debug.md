@@ -10,7 +10,10 @@
 # Update
 ```js
 const text = document.querySelector("style").textContent;
-_strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"), expected);
+assert.equal(
+  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
+  expected,
+);
 ```
 
 # Update `{"color":"red/* ("}`
@@ -18,7 +21,10 @@ _strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
 # Update
 ```js
 const text = document.querySelector("style").textContent;
-_strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"), expected);
+assert.equal(
+  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
+  expected,
+);
 ```
 
 # Update `{"color":"red; background: blue"}`
@@ -26,7 +32,10 @@ _strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
 # Update
 ```js
 const text = document.querySelector("style").textContent;
-_strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"), expected);
+assert.equal(
+  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
+  expected,
+);
 ```
 
 # Update `{"color":"green\\"}`
@@ -34,7 +43,10 @@ _strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
 # Update
 ```js
 const text = document.querySelector("style").textContent;
-_strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"), expected);
+assert.equal(
+  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
+  expected,
+);
 ```
 
 # Update `{"color":"green"}`
@@ -42,5 +54,8 @@ _strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
 # Update
 ```js
 const text = document.querySelector("style").textContent;
-_strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"), expected);
+assert.equal(
+  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
+  expected,
+);
 ```

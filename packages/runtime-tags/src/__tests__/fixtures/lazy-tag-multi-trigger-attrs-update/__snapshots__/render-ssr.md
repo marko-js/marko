@@ -20,9 +20,11 @@ document.querySelector("button").click();
 
 # Update
 ```js
-document.body.dispatchEvent(new document.defaultView.Event("mouseover", {
-bubbles: true
-  }));
+document.body.dispatchEvent(
+new document.defaultView.Event("mouseover", {
+  bubbles: true,
+}),
+  );
 ```
 ```html
 <button>

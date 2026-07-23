@@ -25,7 +25,5 @@ document.querySelector("button").click();
 const input = document.querySelectorAll("input")[2];
 const window = input.ownerDocument.defaultView;
 input.value = "typed";
-input.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+input.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```

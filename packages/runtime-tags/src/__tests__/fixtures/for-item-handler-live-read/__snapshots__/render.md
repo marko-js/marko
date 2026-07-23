@@ -26,7 +26,7 @@
 
 # Update
 ```js
-document.querySelector(selector).click();
+(document.querySelector(selector)).click();
 ```
 ```html
 <ul>
@@ -59,7 +59,7 @@ UPDATE: ul > li:nth-of-type(1) > button::text "a" => "a!"
 
 # Update
 ```js
-document.querySelector(selector).click();
+(document.querySelector(selector)).click();
 ```
 ```html
 <ul>

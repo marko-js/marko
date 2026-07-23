@@ -19,6 +19,7 @@ function overrideFile(file) {
       overrideField(details, "module"),
       overrideField(details, "browser"),
       overrideField(details, "exports"),
+      overrideField(details, "type"),
     ].some(Boolean)
   ) {
     fs.writeFileSync(file, `${JSON.stringify(details, null, 2)}\n`);

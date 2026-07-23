@@ -989,9 +989,9 @@ export class State implements SerializeState {
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
   public serializeReason: SerializeReasonValue;
-  constructor(
-    public $global: $Global & { renderId: string; runtimeId: string },
-  ) {
+  public $global: $Global & { renderId: string; runtimeId: string };
+  constructor($global: $Global & { renderId: string; runtimeId: string }) {
+    this.$global = $global;
     if ($global.cspNonce) {
       this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
     }
@@ -1066,12 +1066,12 @@ export { FlushStatus };
 export class Boundary extends AbortController {
   public onNext = NOOP;
   public count = 0;
-  constructor(
-    public state: State,
-    signal?: AbortSignal,
-    public parent?: Boundary,
-  ) {
+  public state: State;
+  public parent?: Boundary;
+  constructor(state: State, signal?: AbortSignal, parent?: Boundary) {
     super();
+    this.state = state;
+    this.parent = parent;
     this.signal.addEventListener("abort", () => {
       this.count = 0;
       this.state = new State(this.state.$global);
@@ -1130,12 +1130,21 @@ export class Chunk {
     render: () => void;
     branchId: number;
   } | null = null;
+  public boundary: Boundary;
+  public next: Chunk | null;
+  public context: Record<string | symbol, unknown> | null;
+  public serializeState: SerializeState;
   constructor(
-    public boundary: Boundary,
-    public next: Chunk | null,
-    public context: Record<string | symbol, unknown> | null,
-    public serializeState: SerializeState,
-  ) {}
+    boundary: Boundary,
+    next: Chunk | null,
+    context: Record<string | symbol, unknown> | null,
+    serializeState: SerializeState,
+  ) {
+    this.boundary = boundary;
+    this.next = next;
+    this.context = context;
+    this.serializeState = serializeState;
+  }
 
   fork(boundary: Boundary, next: Chunk | null) {
     return new Chunk(boundary, next, this.context, this.serializeState);

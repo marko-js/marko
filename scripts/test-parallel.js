@@ -10,7 +10,7 @@
 // `--grep` dev run wants. This is the "run everything, fast" path used by CI.
 //
 // Plain CommonJS on purpose: this orchestrator is what `c8` wraps for coverage,
-// and loading the `~ts` babel-register hook in that process breaks c8's report
+// and loading the `~ts` hook in that process breaks c8's report
 // step. The mocha workers it spawns still get `~ts` via `.mocharc.parallel.json`.
 //
 // Usage: node scripts/test-parallel.js [extra mocha args...]
@@ -143,13 +143,6 @@ function runBin(bin, index, slicedFiles, mochaArgs) {
   const args = [MOCHA, "--config", CONFIG, "--reporter", "dot", "--exit"];
   args.push(...mochaArgs);
   const env = { ...process.env };
-  // Workers spawn mocha's JS entry with bare `node`, bypassing pnpm's `.bin`
-  // shims. Those shims export NODE_PATH ending in pnpm's private hoist dir so
-  // bare workspace specifiers (e.g. `marko/translator`) resolve from the repo
-  // root; mirror it here or the compiler can't find the translator packages.
-  env.NODE_PATH =
-    path.join(ROOT, "node_modules/.pnpm/node_modules") +
-    (env.NODE_PATH ? path.delimiter + env.NODE_PATH : "");
   if (bin.slots.length) {
     args.push(...slicedFiles);
     env.MARKO_TEST_SLOTS = bin.slots.join(",");

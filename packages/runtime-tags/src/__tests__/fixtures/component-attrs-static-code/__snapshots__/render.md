@@ -10,7 +10,7 @@
 
 # Update
 ```js
-document.querySelectorAll("button").forEach(button => button.click());
+document.querySelectorAll("button").forEach((button) => button.click());
 ```
 ```html
 <button>

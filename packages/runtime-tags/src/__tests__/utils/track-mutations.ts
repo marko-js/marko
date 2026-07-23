@@ -340,7 +340,15 @@ function formatMutationRecord(record: MutationRecord) {
   }
 }
 
-function getFunctionBody(source: string) {
+function getFunctionBody(rawSource: string) {
+  // Node's type stripping blanks out type annotations, so `fn.toString()`
+  // contains space runs where generics/assertions were; collapse them,
+  // leaving string/template literals untouched.
+  const source = rawSource.replace(
+    /(["'`])(?:\\.|(?!\1)[^\\])*\1|(\S) +(?=[.),;\]])|(\S) {2,}/g,
+    (match, quote, beforePunct, beforeRun) =>
+      quote ? match : beforePunct || beforeRun,
+  );
   const match = source.match(/^[^(=]*(?:\(.*?\))?(?:\s*=>)?\s*({)?/m);
   if (match) {
     if (match[1]) {

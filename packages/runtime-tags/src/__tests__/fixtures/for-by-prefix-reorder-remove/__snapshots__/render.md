@@ -36,7 +36,7 @@
 
 # Update
 ```js
-document.querySelector(selector).click();
+(document.querySelector(selector)).click();
 ```
 ```html
 <ul>
@@ -78,7 +78,7 @@ INSERT: ul > li:nth-of-type(2) + li
 
 # Update
 ```js
-document.querySelector(selector).click();
+(document.querySelector(selector)).click();
 ```
 ```html
 <ul>
@@ -115,7 +115,7 @@ INSERT: ul > li
 
 # Update
 ```js
-document.querySelector(selector).click();
+(document.querySelector(selector)).click();
 ```
 ```html
 <ul>

@@ -3,7 +3,10 @@ export type OneMany<T> = T | Many<T>;
 export type Opt<T> = undefined | OneMany<T>;
 export type Compare<T> = (a: T, b: T) => number;
 export class Sorted<T> {
-  constructor(public compare: Compare<T>) {}
+  public compare: Compare<T>;
+  constructor(compare: Compare<T>) {
+    this.compare = compare;
+  }
   add<U extends NonNullable<T>>(data: Opt<U>, item: U): OneMany<U> {
     return data !== undefined
       ? Array.isArray(data)

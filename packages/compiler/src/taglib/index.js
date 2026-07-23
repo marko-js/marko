@@ -11,9 +11,9 @@ import Lookup from "./lookup";
 export const excludeDir = finder.excludeDir;
 export const excludePackage = finder.excludePackage;
 
-import markoHTMLTaglib from "./marko-html.json";
-import markoMathTaglib from "./marko-math.json";
-import markoSVGTaglib from "./marko-svg.json";
+import markoHTMLTaglib from "./marko-html.json" with { type: "json" };
+import markoMathTaglib from "./marko-math.json" with { type: "json" };
+import markoSVGTaglib from "./marko-svg.json" with { type: "json" };
 
 const registeredTaglibs = [];
 const loadedTranslatorsTaglibs = new Map();

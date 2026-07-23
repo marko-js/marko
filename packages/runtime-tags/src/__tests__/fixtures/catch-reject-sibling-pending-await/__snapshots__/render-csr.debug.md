@@ -37,7 +37,5 @@ REMOVE: ::text + div
 const div = document.querySelector("div");
 if (!div) return;
 const window = div.ownerDocument.defaultView;
-div.dispatchEvent(new window.Event("change", {
-  bubbles: true
-}));
+div.dispatchEvent(new window.Event("change", { bubbles: true }));
 ```

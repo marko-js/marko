@@ -29,7 +29,7 @@
 
 # Update
 ```js
-document.querySelector(sel).click();
+(document.querySelector(sel)).click();
 ```
 ```html
 <button
@@ -66,7 +66,7 @@ UPDATE: .sel[class] null => "sel"
 
 # Update
 ```js
-document.querySelector(sel).click();
+(document.querySelector(sel)).click();
 ```
 ```html
 <button

@@ -1,13 +1,15 @@
-import { types as t } from "@marko/compiler";
+"use strict";
 
-export function enter(path) {
+const { types: t } = require("@marko/compiler");
+
+exports.enter = function enter(path) {
   path.pushContainer(
     "attributes",
     t.markoAttribute("style", t.stringLiteral("display:block")),
   );
 }
 
-export function exit(path) {
+exports.exit = function exit(path) {
   path.replaceWith(
     t.markoTag(
       t.stringLiteral("span"),

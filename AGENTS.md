@@ -1,6 +1,6 @@
 # Marko Monorepo
 
-Marko compiles `.marko` templates into optimized server (streaming HTML) and client (fine-grained DOM) JavaScript. pnpm workspaces; Node >= 22. Primary development happens in `packages/runtime-tags`.
+Marko compiles `.marko` templates into optimized server (streaming HTML) and client (fine-grained DOM) JavaScript. pnpm workspaces; Node >= 22.18 (native TS type stripping + module.registerHooks). Primary development happens in `packages/runtime-tags`.
 
 ## Packages
 
@@ -12,7 +12,7 @@ A "translator" is the Babel-plugin half of a runtime package; the compiler loads
 
 ## Commands
 
-All from repo root. Tests and tooling run directly from TS source (`~ts` Babel register hook; package `exports` point at `src/` until publish), so no build step is needed to iterate.
+All from repo root. Tests and tooling run directly from TS source (native Node type stripping plus the `~ts` resolve hook for extensionless imports; package `exports` point at `src/` until publish), so no build step is needed to iterate.
 
 ```sh
 pnpm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run; bail: stops at first failure

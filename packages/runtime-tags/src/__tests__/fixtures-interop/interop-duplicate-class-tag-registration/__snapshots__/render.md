@@ -21,7 +21,7 @@
 
 # Update
 ```js
-document.querySelector("#tags").click();
+(document.querySelector("#tags")).click();
 ```
 ```html
 <button

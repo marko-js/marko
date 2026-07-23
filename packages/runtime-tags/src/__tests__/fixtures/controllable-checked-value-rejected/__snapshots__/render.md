@@ -23,5 +23,10 @@ document.querySelectorAll(`input`)[1].click();
 
 # Update
 ```js
-_strict.default.deepEqual([...document.querySelectorAll(`input`)].map(input => input.checked), [true, false]);
+assert.deepEqual(
+[...document.querySelectorAll(`input`)].map(
+  (input) => (input).checked,
+),
+[true, false],
+  );
 ```

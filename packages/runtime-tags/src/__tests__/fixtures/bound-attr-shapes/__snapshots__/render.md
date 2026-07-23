@@ -16,9 +16,7 @@
 const input = document.querySelectorAll("input")[index];
 const window = input.ownerDocument.defaultView;
 input.value = value;
-input.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+input.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 ```html
 <div>
@@ -42,9 +40,7 @@ UPDATE: div::text@0 "a1" => "a2"
 const input = document.querySelectorAll("input")[index];
 const window = input.ownerDocument.defaultView;
 input.value = value;
-input.dispatchEvent(new window.Event("input", {
-  bubbles: true
-}));
+input.dispatchEvent(new window.Event("input", { bubbles: true }));
 ```
 ```html
 <div>

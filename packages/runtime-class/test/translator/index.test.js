@@ -1,8 +1,10 @@
-import fs from "fs";
-import path from "path";
+"use strict";
 
-import { compileFileSync } from "@marko/compiler";
-import autotest from "mocha-autotest";
+const fs = require("fs");
+const path = require("path");
+
+const { compileFileSync } = require("@marko/compiler");
+const autotest = require("mocha-autotest").default;
 
 const ansiReg =
   // eslint-disable-next-line no-control-regex

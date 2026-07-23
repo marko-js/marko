@@ -1,10 +1,13 @@
 import * as assert from "assert/strict";
+import { createRequire } from "module";
 import path from "path";
 
 import { decode } from "@jridgewell/sourcemap-codec";
 import * as compiler from "@marko/compiler";
 
 import * as translator from "../translator";
+
+const require = createRequire(import.meta.url);
 
 const baseConfig: compiler.Config = {
   translator,
@@ -16,7 +19,8 @@ const baseConfig: compiler.Config = {
   },
 };
 
-const fixture = (name: string) => path.join(__dirname, "fixtures", name);
+const fixture = (name: string) =>
+  path.join(import.meta.dirname, "fixtures", name);
 
 describe("runtime-tags/translator-api", () => {
   describe("getRuntimeEntryFiles", () => {
@@ -52,16 +56,20 @@ describe("runtime-tags/translator-api", () => {
     const styleSrc = `<style>\n  .foo { color: red }\n</style>\n<div class="foo"/>\n`;
     const compileWithSourceMaps = (sourceMaps: "both" | "inline" | true) => {
       const deps: { code: string; map?: unknown }[] = [];
-      compiler.compileSync(styleSrc, path.join(__dirname, "tmp.marko"), {
-        ...baseConfig,
-        cache: new Map(),
-        output: "html",
-        sourceMaps,
-        resolveVirtualDependency(_filename, dep) {
-          deps.push(dep);
-          return `./${dep.virtualPath}`;
+      compiler.compileSync(
+        styleSrc,
+        path.join(import.meta.dirname, "tmp.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+          sourceMaps,
+          resolveVirtualDependency(_filename, dep) {
+            deps.push(dep);
+            return `./${dep.virtualPath}`;
+          },
         },
-      });
+      );
       return deps[0];
     };
 
@@ -86,7 +94,7 @@ describe("runtime-tags/translator-api", () => {
     it("maps the generated var() reference back to the source interpolation", () => {
       const src = `<style>\n  .foo { color: \${input.color} }\n</style>\n<div class="foo"/>\n`;
       const deps: { code: string; map?: { mappings: string } }[] = [];
-      compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+      compiler.compileSync(src, path.join(import.meta.dirname, "tmp.marko"), {
         ...baseConfig,
         cache: new Map(),
         output: "html",
@@ -196,12 +204,16 @@ describe("runtime-tags/translator-api", () => {
       for (const runtimeId of ["123-bad", "$bad"]) {
         assert.throws(
           () =>
-            compiler.compileSync("<div/>", path.join(__dirname, "tmp.marko"), {
-              ...baseConfig,
-              cache: new Map(),
-              output: "html",
-              runtimeId,
-            }),
+            compiler.compileSync(
+              "<div/>",
+              path.join(import.meta.dirname, "tmp.marko"),
+              {
+                ...baseConfig,
+                cache: new Map(),
+                output: "html",
+                runtimeId,
+              },
+            ),
           /Invalid runtimeId: .* The runtimeId must start with a letter or underscore and only contain letters, numbers, and underscores\./,
         );
       }
@@ -210,7 +222,7 @@ describe("runtime-tags/translator-api", () => {
 
   describe("embed determination", () => {
     const compileHTML = (src: string, linkAssets: boolean) =>
-      compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+      compiler.compileSync(src, path.join(import.meta.dirname, "tmp.marko"), {
         ...baseConfig,
         cache: new Map(),
         output: "html",
@@ -240,7 +252,7 @@ describe("runtime-tags/translator-api", () => {
   describe("camelCase style key warning", () => {
     const warnings = (src: string) =>
       (
-        compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+        compiler.compileSync(src, path.join(import.meta.dirname, "tmp.marko"), {
           ...baseConfig,
           cache: new Map(),
           output: "html",
@@ -301,7 +313,7 @@ describe("runtime-tags/translator-api", () => {
   describe("diagnostic branch coverage", () => {
     const compileError = (src: string) => {
       try {
-        compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+        compiler.compileSync(src, path.join(import.meta.dirname, "tmp.marko"), {
           ...baseConfig,
           cache: new Map(),
           output: "html",

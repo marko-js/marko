@@ -1,5 +1,5 @@
-import { name } from "../../../package.json";
+import pkg from "../../../package.json" with { type: "json" };
 export default {
-  name,
+  name: pkg.name,
   taglibId: "marko-core",
 };
