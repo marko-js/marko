@@ -1731,6 +1731,9 @@ function throwUnserializable(
       message += ` (reading ${access})`;
     }
 
+    message +=
+      ". Values reached from content that updates in the browser must be serializable.";
+
     const err = new TypeError(message, { cause });
     err.stack = undefined;
     state.boundary.abort(err);

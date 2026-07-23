@@ -65,12 +65,6 @@ The htmljs-parser tokenizer treats the first unenclosed `>` in a tag/attribute-v
 
 `<input onKeydown(e) {}>` fails @marko/type-check with TS2353 "Object literal may only specify known properties, and '\"onKeydown\"' does not exist in type 'Directives & Input'" — no "did you mean onKeyDown?" — while the runtime happily binds it: `isEventHandler` matches `/^on[A-Z-]/` and `getEventHandlerName` lowercases everything after "on" (`name.slice(2).toLowerCase()`), so both casings mean `keydown` at runtime. Canonicalizing the types to exact camelCase (`onKeyDown` at `packages/runtime-tags/tags-html.d.ts:5085`, plus the `on-keydown` alias) is a reasonable choice, but the bare excess-property error on a near-miss casing makes it look like event handlers are unsupported on that element rather than misspelled. Emitting a spelling suggestion for case-only near-misses in the type-check diagnostics, or documenting the exact-camelCase rule in `cheatsheet.md`, would fix the confusion cheaply.
 
-## Warn that `<const>` values captured by reactive content must serialize — Intl formatters crash SSR
-
-`packages/runtime-tags/src/html/serializer.ts` › `throwUnserializable` | 2026-07-18 | impact:med | effort:low
-
-The canonical i18n pattern — `<const/fmt=new Intl.NumberFormat(lang, { style: "currency", ... })>` reused by `${fmt.format(price)}` where `price` depends on a `<let>` — makes SSR throw `Unable to serialize "fmt" in <file>:<line>`: the formatter is captured in the resume payload and Intl instances are not serializable. Minimal repro: `<let/n=1/><const/fmt=new Intl.NumberFormat("en")/><button onClick(){n++}>${fmt.format(n)}</button>` fails SSR. The error already names the exact variable and location (excellent), but neither `packages/runtime-tags/cheatsheet.md` nor the `<const>` docs mention that values referenced from client-reactive expressions must survive serialization, and "create the formatter once and reuse it" is what every i18n guide teaches — the working pattern (a module-scope helper that constructs the formatter per call) is a dead-end discovery. Add a docs note plus a hint in `throwUnserializable`'s message (e.g. "move construction into a module-scope function").
-
 ## Give a structural error for a stray close tag / unwrapped text on a concise line instead of relaying htmljs-parser's "Unterminated regular expression."
 
 `packages/compiler/src/babel-plugin/parser.js` › `onError` | 2026-07-19 | impact:low | effort:med
