@@ -277,7 +277,7 @@ Component.prototype = componentProto = {
   },
   getComponent: function (key, index) {
     var rootNode = this.___keyedElements["@" + resolveKeyHelper(key, index)];
-    if (key.endsWith("[]")) {
+    if (/\[\]$/.test(key)) {
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         complain(

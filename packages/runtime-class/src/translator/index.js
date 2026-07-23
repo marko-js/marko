@@ -703,7 +703,7 @@ export function getRuntimeEntryFiles(output, optimize) {
 }
 
 function isRenderContent({ node }) {
-  return node.type.startsWith("Marko") && !node.static;
+  return /^Marko/.test(node.type) && !node.static;
 }
 
 function resolveRelativeTagEntry(file, tagDef) {

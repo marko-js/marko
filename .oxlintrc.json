@@ -31,7 +31,8 @@
     "no-unused-vars": "off",
     "typescript/no-duplicate-enum-values": "off",
     "unicorn/no-new-array": "off",
-    "unicorn/no-thenable": "off"
+    "unicorn/no-thenable": "off",
+    "unicorn/prefer-string-starts-ends-with": "off"
   },
   "overrides": [
     {
