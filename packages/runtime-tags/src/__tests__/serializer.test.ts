@@ -9,6 +9,7 @@ const [major, minor] = process.version
   .slice(1)
   .split(".")
   .map((v) => parseInt(v));
+const hasTemporal = "Temporal" in globalThis;
 const shouldTestRequestAndResponse =
   major > 24 || (major === 24 && minor >= 14);
 
@@ -957,6 +958,89 @@ describe("serializer", () => {
       assert.equal(serialize(locale), `new Intl.Locale("ja-JP-u-ca-japanese")`);
       assert.equal(deserialize(locale).toString(), locale.toString());
     });
+  });
+
+  describe("Temporal", () => {
+    const roundTrips =
+      (make: () => { toString(): string }, expected: string) => () => {
+        const val = make();
+        assert.equal(serialize(val), expected);
+        assert.equal(deserialize(val).toString(), val.toString());
+      };
+
+    hasTemporal &&
+      it(
+        "Instant",
+        roundTrips(
+          () => Temporal.Instant.from("2024-01-05T15:30:45.123456789Z"),
+          `Temporal.Instant.from("2024-01-05T15:30:45.123456789Z")`,
+        ),
+      );
+    hasTemporal &&
+      it(
+        "Duration",
+        roundTrips(
+          () => Temporal.Duration.from({ hours: 1, minutes: 2, seconds: 3 }),
+          `Temporal.Duration.from("PT1H2M3S")`,
+        ),
+      );
+    hasTemporal &&
+      it(
+        "PlainDate keeps a non-ISO calendar",
+        roundTrips(
+          () =>
+            Temporal.PlainDate.from({
+              year: 2024,
+              month: 1,
+              day: 5,
+              calendar: "japanese",
+            }),
+          `Temporal.PlainDate.from("2024-01-05[u-ca=japanese]")`,
+        ),
+      );
+    hasTemporal &&
+      it(
+        "PlainDateTime",
+        roundTrips(
+          () => Temporal.PlainDateTime.from("2024-01-05T15:30:45.123456789"),
+          `Temporal.PlainDateTime.from("2024-01-05T15:30:45.123456789")`,
+        ),
+      );
+    hasTemporal &&
+      it(
+        "PlainMonthDay",
+        roundTrips(
+          () => Temporal.PlainMonthDay.from("01-05"),
+          `Temporal.PlainMonthDay.from("01-05")`,
+        ),
+      );
+    hasTemporal &&
+      it(
+        "PlainTime",
+        roundTrips(
+          () => Temporal.PlainTime.from("15:30:45"),
+          `Temporal.PlainTime.from("15:30:45")`,
+        ),
+      );
+    hasTemporal &&
+      it(
+        "PlainYearMonth",
+        roundTrips(
+          () => Temporal.PlainYearMonth.from("2024-01"),
+          `Temporal.PlainYearMonth.from("2024-01")`,
+        ),
+      );
+    hasTemporal &&
+      it(
+        "ZonedDateTime keeps the time zone",
+        roundTrips(
+          () =>
+            Temporal.ZonedDateTime.from(
+              "2024-01-05T15:30:45+09:00[Asia/Tokyo]",
+            ),
+          `Temporal.ZonedDateTime.from("2024-01-05T15:30:45+09:00[Asia/Tokyo]")`,
+        ),
+      );
   });
 
   describe("URLSearchParams", () => {

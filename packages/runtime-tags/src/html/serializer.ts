@@ -925,6 +925,22 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
       return writeIntl(state, val, "DurationFormat", ref);
     case globalThis.Intl?.Locale:
       return writeIntlLocale(state, val as Intl.Locale);
+    case globalThis.Temporal?.Instant:
+      return writeTemporal(state, val, "Instant");
+    case globalThis.Temporal?.Duration:
+      return writeTemporal(state, val, "Duration");
+    case globalThis.Temporal?.PlainDate:
+      return writeTemporal(state, val, "PlainDate");
+    case globalThis.Temporal?.PlainDateTime:
+      return writeTemporal(state, val, "PlainDateTime");
+    case globalThis.Temporal?.PlainMonthDay:
+      return writeTemporal(state, val, "PlainMonthDay");
+    case globalThis.Temporal?.PlainTime:
+      return writeTemporal(state, val, "PlainTime");
+    case globalThis.Temporal?.PlainYearMonth:
+      return writeTemporal(state, val, "PlainYearMonth");
+    case globalThis.Temporal?.ZonedDateTime:
+      return writeTemporal(state, val, "ZonedDateTime");
   }
 
   MARKO_DEBUG && throwUnserializable(state, val, ref);
@@ -1506,6 +1522,15 @@ function writeIntl(state: State, val: object, name: string, ref: Reference) {
 
 function writeIntlLocale(state: State, val: Intl.Locale) {
   state.buf.push("new Intl.Locale(" + quote(val.toString(), 0) + ")");
+  return true;
+}
+
+// Every `Temporal` type parses back from its own `toString()`, which carries
+// the calendar and time zone annotations along with nanosecond precision.
+function writeTemporal(state: State, val: object, name: string) {
+  state.buf.push(
+    "Temporal." + name + ".from(" + quote(val.toString(), 0) + ")",
+  );
   return true;
 }
 
