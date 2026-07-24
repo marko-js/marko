@@ -207,11 +207,18 @@ export function knownTagTranslateHTML(
 
   if (childScopeSerializeReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
-    tag.insertBefore(
-      t.variableDeclaration("const", [
-        t.variableDeclarator(peekScopeId, callRuntime("_peek_scope_id")),
-      ]),
-    );
+    const peekScopeDeclaration = t.variableDeclaration("const", [
+      t.variableDeclarator(peekScopeId, callRuntime("_peek_scope_id")),
+    ]);
+    if (tagVar) {
+      // A tag variable renders the child from a declaration inserted before
+      // these statements, so the peek must precede it.
+      tag.insertBefore(peekScopeDeclaration);
+    } else {
+      // After the attr statements: building attribute tags can consume scope
+      // ids (eg `_resume_locals`), and the peek must see the child's root id.
+      statements.push(peekScopeDeclaration);
+    }
 
     setBindingSerializedValue(
       section,

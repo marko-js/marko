@@ -21,8 +21,8 @@ var template_default = _template("b", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
+			const $childScope = _peek_scope_id();
 			$Child_withLoadAssets({ value });
 			writeScope($scope1_id, { b: _existing_scope($childScope) });
 			return 0;

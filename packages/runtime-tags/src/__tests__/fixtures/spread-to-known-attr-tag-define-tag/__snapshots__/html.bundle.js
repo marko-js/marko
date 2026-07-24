@@ -19,11 +19,11 @@ var template_default = _template("a", (input) => {
 	({ content: _content("a2", ({ class: _class, ...rest }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		const $childScope = _peek_scope_id();
 		_set_serialize_reason({
 			0: _serialize_guard($scope2_reason, 0),
 			1: _serialize_guard($scope2_reason, 1)
 		});
+		const $childScope = _peek_scope_id();
 		Child.content({
 			class: _class,
 			...rest

@@ -5,7 +5,7 @@ import type { AccessorPrefix } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
-import { scopeIdentifier } from "../visitors/program";
+import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import * as BindingType from "./constants/binding-type";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
@@ -152,6 +152,8 @@ interface ExtraRead {
   props: Opt<string>;
   ownVar: boolean;
   getter: Getter | undefined;
+  /** Set for same-section local reads: the function root that owns the read. */
+  localFn?: ReferencedFunctionExtra;
 }
 
 declare module "@marko/compiler/dist/types" {
@@ -176,6 +178,7 @@ declare module "@marko/compiler/dist/types" {
   export interface FunctionExtra {
     referencesScope?: boolean;
     referencedBindingsInFunction?: ReferencedBindings;
+    referencedLocalBindingsInFunction?: Opt<Binding>;
     constantBindingsInFunction?: ReferencedBindings;
     name?: string;
     registerId?: string;
@@ -502,6 +505,21 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
       refSection !== binding.section
     ) {
       trackReference(ref, binding);
+    } else {
+      // Same-section local reads stay lexical unless their function root ends
+      // up registered (hoisted), so the read records that root for translate.
+      const fnRoot = getFnRoot(ref);
+      if (fnRoot) {
+        const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
+        fnExtra.referencedLocalBindingsInFunction = bindingUtil.add(
+          fnExtra.referencedLocalBindingsInFunction,
+          binding,
+        );
+        const refExtra = (ref.node.extra ??= {});
+        refExtra.section = refSection;
+        refExtra.read = createRead(binding, undefined);
+        refExtra.read.localFn = fnExtra;
+      }
     }
   }
 
@@ -1827,6 +1845,11 @@ export function getScopeAccessor(
   return canonicalBinding.scopeAccessor ?? canonicalBinding.name;
 }
 
+// Always includes the id so a debug accessor cannot collide with the owner key.
+export function getLocalsScopeAccessor(binding: Binding) {
+  return getScopeAccessor(binding, false, true);
+}
+
 // Value-coupled prefixes use reserved ids instead of prepending a letter;
 // other prefixes (and debug output) keep the letter scheme.
 export function getPrefixedScopeAccessor(
@@ -1967,6 +1990,20 @@ export function getReadReplacement(
       }
 
       if (isOutputDOM()) {
+        if (read.localFn) {
+          // A registered function receives its serialized locals scope; an
+          // inline one keeps the lexical reference (following renames).
+          if (isRegisteredFnExtra(read.localFn)) {
+            return toMemberExpression(
+              localsIdentifier,
+              getLocalsScopeAccessor(readBinding),
+            );
+          }
+          if (node.type === "Identifier" && node.name !== readBinding.name) {
+            node.name = readBinding.name;
+          }
+          return;
+        }
         const inlined = getSignals(extra.section!).get(readBinding)?.inline
           ?.value;
         if (inlined) {

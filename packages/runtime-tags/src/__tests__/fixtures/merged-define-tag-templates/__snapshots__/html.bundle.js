@@ -11,14 +11,14 @@ var template_default = _template("a", (input) => {
 	const B = { content: _content("a1", ({ value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		const $childScope = _peek_scope_id();
 		_set_serialize_reason(_serialize_guard($scope2_reason, 0));
+		const $childScope = _peek_scope_id();
 		A.content({ value: value.length });
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, { a: _existing_scope($childScope) });
 	}) };
 	let value = "";
-	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope2 = _peek_scope_id();
 	B.content({ value });
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, { a: _existing_scope($childScope2) });

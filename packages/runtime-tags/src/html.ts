@@ -66,6 +66,7 @@ export {
   _peek_scope_id,
   _resume,
   _resume_branch,
+  _resume_locals,
   _scope,
   _scope_id,
   _scope_reason,

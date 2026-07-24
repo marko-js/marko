@@ -7,7 +7,7 @@ import {
 
 import { type AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
-import { scopeIdentifier } from "../visitors/program";
+import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -29,6 +29,7 @@ import {
   getDebugScopeAccess,
   getPrefixedScopeAccessor,
   getReadReplacement,
+  getLocalsScopeAccessor,
   getScopeAccessor,
   getScopeAccessorLiteral,
   getSectionInstancesAccessorLiteral,
@@ -1111,11 +1112,37 @@ export function writeRegisteredFns() {
   if (registeredFns) {
     for (const registeredFn of registeredFns) {
       let fn: t.FunctionDeclaration;
-      if (registeredFn.referencedBindings || registeredFn.referencesScope) {
+      if (
+        registeredFn.referencedBindings ||
+        registeredFn.referencesScope ||
+        registeredFn.referencedLocals
+      ) {
+        let params: (t.Identifier | t.Pattern)[];
+        let prologue: t.Statement[] | undefined;
+        if (registeredFn.referencedLocals) {
+          // The scope hop stays inside the returned function: resume may call
+          // the factory before its scopes hydrate (stubs fill in place).
+          params = [localsIdentifier];
+          if (registeredFn.referencedBindings || registeredFn.referencesScope) {
+            prologue = [
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  scopeIdentifier,
+                  t.memberExpression(
+                    localsIdentifier,
+                    t.identifier(getAccessorProp().Owner),
+                  ),
+                ),
+              ]),
+            ];
+          }
+        } else {
+          params = [scopeIdentifier];
+        }
         fn = t.functionDeclaration(
           t.identifier(registeredFn.id),
-          [scopeIdentifier],
-          t.blockStatement(toReturnedFunction(registeredFn.node)),
+          params,
+          t.blockStatement(toReturnedFunction(registeredFn.node, prologue)),
         );
       } else if (
         registeredFn.node.type === "FunctionDeclaration" &&
@@ -1153,8 +1180,14 @@ export function writeRegisteredFns() {
   }
 }
 
-function toReturnedFunction(rawFn: t.Function) {
+function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
   const fn = simplifyFunction(rawFn);
+  if (prologue) {
+    if (fn.body.type !== "BlockStatement") {
+      fn.body = t.blockStatement([t.returnStatement(fn.body)]);
+    }
+    fn.body.body.unshift(...prologue);
+  }
   return fn.type === "FunctionDeclaration"
     ? [fn, t.returnStatement(fn.id!)]
     : [t.returnStatement(fn)];
@@ -1668,6 +1701,7 @@ const registeredFnsForProgram = new WeakMap<
     section: Section;
     referencesScope: undefined | boolean;
     referencedBindings: ReferencedBindings;
+    referencedLocals: Opt<Binding>;
   }[]
 >();
 export function replaceRegisteredFunctionNode(node: t.Node) {
@@ -1706,6 +1740,7 @@ function getRegisteredFnExpression(node: t.Function) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
     const referencedBindings = extra.referencedBindingsInFunction;
+    const referencedLocals = extra.referencedLocalBindingsInFunction;
     let registeredFns = registeredFnsForProgram.get(getProgram().node);
     if (!registeredFns) {
       registeredFnsForProgram.set(getProgram().node, (registeredFns = []));
@@ -1718,9 +1753,32 @@ function getRegisteredFnExpression(node: t.Function) {
       section: extra.section,
       referencesScope,
       referencedBindings,
+      referencedLocals,
     });
 
-    if (referencesScope || referencedBindings) {
+    if (referencedLocals) {
+      // The argument mirrors the locals scope `_resume_locals` serializes.
+      const properties: t.ObjectExpression["properties"] = [];
+      if (referencesScope || referencedBindings) {
+        properties.push(
+          t.objectProperty(
+            t.identifier(getAccessorProp().Owner),
+            scopeIdentifier,
+          ),
+        );
+      }
+      forEach(referencedLocals, (binding) => {
+        properties.push(
+          toObjectProperty(
+            getLocalsScopeAccessor(binding),
+            getDeclaredBindingExpression(binding),
+          ),
+        );
+      });
+      return t.callExpression(t.identifier(id), [
+        t.objectExpression(properties),
+      ]);
+    } else if (referencesScope || referencedBindings) {
       return t.callExpression(t.identifier(id), [scopeIdentifier]);
     } else {
       return t.identifier(id);

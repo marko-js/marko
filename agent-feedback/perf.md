@@ -701,3 +701,19 @@ names would make O(1). Re-verify by replacing the condition with
 scoped to a fixture with intersections (e.g. `--grep "runtime-tags/translator
 for-tag "`): snapshots must be unchanged, since the two expressions are equal by
 construction on the sorted intersection arrays.
+
+## Defer `_resume_locals` scope serialization until the registered function is actually serialized
+
+`packages/runtime-tags/src/html/writer.ts` › `_resume_locals` | 2026-07-24 | impact:low | effort:med
+
+`_resume_locals` eagerly `writeScope`s a per-iteration scope holding attr-tag
+loop params referenced by a registered function, so those values ride the
+resume payload on every SSR render even when the child template never
+serializes the handler (eg it only renders some attribute tags). The
+serializer already tracks registered-value scopes lazily at reference time
+(`writeRegistered` › `trackScope` in `packages/runtime-tags/src/html/serializer.ts`);
+a channel that flushes a scope's props only once the registered value is
+written would drop the dead weight, but it is serializer surgery rather than
+a helper tweak. Re-verify: SSR a template whose attr-tag `<for>` handler is
+never spread onto a native tag and observe the `{foo}` scope still in the
+payload.

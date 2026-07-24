@@ -35,11 +35,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { c, d, e, f, g, h } = input;
 	_html(`<div class=${$class[(c ? 1 : 0) + (d ? 2 : 0)]}></div>${_el_resume($scope0_id, "#div/0", $sg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${c ? " class=active" : ""}></div>${_el_resume($scope0_id, "#div/1", _serialize_guard($scope0_reason, 8))}<div${_attr_class("base" + (c ? " c" : "") + (d ? " d" : "") + (e ? " e" : "") + (f ? " f" : "") + (g ? " g" : "") + (h ? " h" : ""))}></div>${_el_resume($scope0_id, "#div/2", _serialize_guard($scope0_reason, 7))}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_c__OR__input_d,
 		2: $sg__input_c__OR__input_d
 	});
+	const $childScope = _peek_scope_id();
 	custom_tag_default({ class: ["a", {
 		b: c,
 		d

@@ -25,8 +25,8 @@ var template_default = _template("a", (input) => {
 		});
 	}) };
 	let x = 1;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(26);
+	const $childScope = _peek_scope_id();
 	Wrap.content({
 		as: "div",
 		onClick: _resume(function() {

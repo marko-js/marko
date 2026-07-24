@@ -27,8 +27,8 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	}, _content_resume("__tests__/tags/wrap.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		const $childScope = _peek_scope_id();
 		_set_serialize_reason(_serialize_guard($scope0_reason, 1));
+		const $childScope = _peek_scope_id();
 		child_default({ foo: input.foo });
 		_subscribe($si__input_foo && $input_foo__closures, writeScope($scope1_id, {
 			_: _scope_with_id($scope0_id),
@@ -52,12 +52,12 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input,
 		2: $sg__input,
 		3: $sg__input
 	});
+	const $childScope = _peek_scope_id();
 	wrap_default({
 		"data-one": 2,
 		"data-foo": 1,

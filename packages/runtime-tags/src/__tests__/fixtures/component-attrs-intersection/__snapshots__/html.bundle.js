@@ -14,8 +14,8 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	display_intersection_default({ value: count });
 	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");

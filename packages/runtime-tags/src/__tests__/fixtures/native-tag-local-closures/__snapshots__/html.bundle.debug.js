@@ -16,7 +16,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 0, $scope1_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	}) };
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
@@ -27,6 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope3_id, {}, "__tests__/template.marko", "11:6");
 		}, $scope0_id) });
 	});
+	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
 	_html(`<button>Add</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

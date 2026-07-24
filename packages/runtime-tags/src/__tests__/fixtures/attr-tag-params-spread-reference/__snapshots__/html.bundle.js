@@ -10,12 +10,12 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
 	let $item;
 	forUntil(1, 0, 1, (i) => {
 		$item = attrTags($item, { value: i });
 	});
+	const $childScope = _peek_scope_id();
 	child_default({
 		...input,
 		item: $item

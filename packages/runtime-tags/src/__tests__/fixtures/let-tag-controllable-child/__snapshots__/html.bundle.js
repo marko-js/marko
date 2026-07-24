@@ -25,8 +25,8 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let source = 1;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	child_default({
 		value: source,
 		valueChange: _resume((_new_source) => {

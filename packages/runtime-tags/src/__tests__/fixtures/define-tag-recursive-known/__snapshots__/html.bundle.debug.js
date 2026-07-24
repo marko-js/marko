@@ -8,11 +8,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (input.bar) {
 				const $scope2_id = _scope_id();
-				const $childScope = _peek_scope_id();
 				_set_serialize_reason({
 					0: $sg__input_bar,
 					2: $sg__input_bar
 				});
+				const $childScope = _peek_scope_id();
 				Foo.content({ message: input.bar });
 				$si__input_bar && writeScope($scope2_id, {
 					_: _scope_with_id($scope1_id),

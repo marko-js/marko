@@ -13,12 +13,12 @@ var wrap_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: _class, ...rest } = input;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: _serialize_guard($scope0_reason, 0),
 		1: _serialize_guard($scope0_reason, 1),
 		2: _serialize_guard($scope0_reason, 2)
 	});
+	const $childScope = _peek_scope_id();
 	child_default({
 		class: _class,
 		...rest

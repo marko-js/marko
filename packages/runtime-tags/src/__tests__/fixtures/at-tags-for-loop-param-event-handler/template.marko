@@ -1,0 +1,7 @@
+<let/clicked=""/>
+<my-menu>
+  <for|foo| of=["a", "b"]>
+    <@item onClick() { clicked += foo }>Click ${foo}</@item>
+  </for>
+</my-menu>
+<div>${clicked}</div>

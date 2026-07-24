@@ -14,8 +14,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let show = true;
 	let value = 0;
 	_html(`<button class=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}<button class=inc>Inc</button>${_el_resume($scope0_id, "#button/1")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value });
 	_dynamic_tag($scope0_id, "#text/4", show ? $Child_withLoadAssets : null, { value });
 	_script($scope0_id, "__tests__/template.marko_0");

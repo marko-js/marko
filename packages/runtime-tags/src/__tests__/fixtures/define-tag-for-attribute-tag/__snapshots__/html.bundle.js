@@ -21,8 +21,8 @@ var template_default = _template("a", (input) => {
 			_html("<span>The thing</span>");
 		})
 	};
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	child_default({ thing: myThing });
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");

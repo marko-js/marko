@@ -15,8 +15,8 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	const $childScope = _peek_scope_id();
 	echo_default(input);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input");
 	writeScope($scope0_id, {

@@ -15,8 +15,8 @@ var my_box_default = _template("c", (input) => {
 	_html("<div");
 	_attrs_content(input, "a", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	const $childScope = _peek_scope_id();
 	echo_default(input);
 	_script($scope0_id, "c0");
 	writeScope($scope0_id, {

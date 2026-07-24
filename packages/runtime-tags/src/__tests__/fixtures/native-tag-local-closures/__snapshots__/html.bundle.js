@@ -16,7 +16,6 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope1_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}) };
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
@@ -27,6 +26,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope3_id, {});
 		}, $scope0_id) });
 	});
+	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
 	_html(`<button>Add</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3");

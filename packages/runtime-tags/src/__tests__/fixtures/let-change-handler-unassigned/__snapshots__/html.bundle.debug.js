@@ -20,8 +20,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let initial = 1;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(6);
+	const $childScope = _peek_scope_id();
 	child_default({
 		initial,
 		onValue: _resume(() => {}, "__tests__/template.marko_0/onValue")

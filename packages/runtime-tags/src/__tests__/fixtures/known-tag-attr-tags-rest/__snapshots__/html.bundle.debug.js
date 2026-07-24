@@ -17,13 +17,13 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { title, ...rest } = input;
 	_html(`<h1>${_escape(title)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))}</h1>`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__rest,
 		1: $sg__rest,
 		2: $sg__rest,
 		3: $sg__rest
 	});
+	const $childScope = _peek_scope_id();
 	inner_default({ stuff: rest });
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { "#childScope/1": _serialize_if($scope0_reason, 2) && _existing_scope($childScope) }, "__tests__/tags/child/index.marko", 0);
 });
@@ -34,7 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let cond = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(10);
 	let $cond;
 	if (cond) {
@@ -42,6 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	} else {
 		$cond = attrTag({ a: 2 });
 	}
+	const $childScope = _peek_scope_id();
 	child_default({
 		title: "t",
 		cond: $cond,

@@ -14,16 +14,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	my_button_default({
 		value: { text: clickCount },
 		onClick: _resume(function() {
 			clickCount++;
 		}, "__tests__/template.marko_0/onClick", $scope0_id)
 	});
-	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope2 = _peek_scope_id();
 	my_button_default({
 		onClick: _resume(function() {
 			clickCount++;

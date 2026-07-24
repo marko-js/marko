@@ -11,11 +11,11 @@ var row_default = _template("__tests__/tags/row/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div class=row>");
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 1));
+	const $childScope = _peek_scope_id();
 	cell_default({ value: input.name });
-	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 2));
+	const $childScope2 = _peek_scope_id();
 	cell_default({ value: input.quantity });
 	_html("</div>");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let quantity = 2;
 	_html(`<button>add</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(10);
+	const $childScope = _peek_scope_id();
 	row_default({
 		name: "Widget",
 		quantity

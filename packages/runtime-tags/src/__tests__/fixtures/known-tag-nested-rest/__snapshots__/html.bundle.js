@@ -12,8 +12,8 @@ var mid_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const { first, group: { keep, ...rest } } = input;
 	_html(`<p>${_escape(first)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))} ${_sep($sg__input_group_keep)}${_escape(keep)}${_el_resume($scope0_id, "b", $sg__input_group_keep)}</p>`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 3));
+	const $childScope = _peek_scope_id();
 	leaf_default({ data: rest });
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { c: _serialize_if($scope0_reason, 3) && _existing_scope($childScope) });
 });
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(26);
+	const $childScope = _peek_scope_id();
 	mid_default({
 		first: "f",
 		group: {

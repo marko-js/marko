@@ -1,0 +1,7 @@
+<let/foo="outer"/>
+<my-menu>
+  <for|foo| of=["a", "b"]>
+    <@item onClick(ev) { ev.target.textContent = foo }>${foo}</@item>
+  </for>
+</my-menu>
+<div>${foo}</div>
