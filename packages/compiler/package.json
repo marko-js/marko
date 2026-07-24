@@ -66,7 +66,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production && node -e \"require('fs').rmSync('dist/package.json',{force:true})\" && node scripts/bundle-babel.mts",
+    "build": "node scripts/bundle.mts",
     "build-babel-types": "node -r ~ts scripts/types"
   },
   "dependencies": {
@@ -98,7 +98,7 @@
     },
     "./babel-utils": {
       "types": "./babel-utils.d.ts",
-      "default": "./dist/babel-utils/index.js"
+      "default": "./dist/babel-utils.js"
     },
     "./config": {
       "types": "./config.d.ts",
