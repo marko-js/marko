@@ -175,6 +175,20 @@ export function _resume<T extends WeakKey>(
   );
 }
 
+// Registers a function closing over render-only locals (attr tag control flow
+// params), written into a dedicated scope with the section scope as its owner.
+export function _resume_locals<T extends WeakKey>(
+  val: T,
+  id: string,
+  locals: Record<string, unknown>,
+  ownerScopeId?: number,
+): T {
+  if (ownerScopeId !== undefined) {
+    locals[AccessorProp.Owner] = _scope_with_id(ownerScopeId);
+  }
+  return serializerRegister(id, val, writeScope(_scope_id(), locals));
+}
+
 export function _el(scopeId: number, id: string) {
   return _resume(() => _el_read_error(), id, scopeId);
 }

@@ -24,8 +24,8 @@ var child_default = _template("a", (input) => {
 	_await($scope0_id, "c", resolveAfter(10, 1), (value) => {
 		const $scope1_id = _scope_id();
 		_html(`<span id=child-await>${_escape(value)}</span>`);
-		const $childScope = _peek_scope_id();
 		_set_serialize_reason(1);
+		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
 		_subscribe($count__closures, writeScope($scope1_id, {
 			_: _scope_with_id($scope0_id),

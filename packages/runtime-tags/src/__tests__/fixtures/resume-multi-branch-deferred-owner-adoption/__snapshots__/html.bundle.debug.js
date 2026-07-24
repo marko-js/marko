@@ -31,8 +31,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		const $childScope = _peek_scope_id();
 		_set_serialize_reason(1);
+		const $childScope = _peek_scope_id();
 		child_default({
 			item,
 			show,

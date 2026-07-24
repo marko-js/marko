@@ -10,14 +10,14 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 1));
+	const $childScope = _peek_scope_id();
 	child_default({
 		...input,
 		value: "override"
 	});
-	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	const $childScope2 = _peek_scope_id();
 	child_default({
 		value: "default",
 		...input

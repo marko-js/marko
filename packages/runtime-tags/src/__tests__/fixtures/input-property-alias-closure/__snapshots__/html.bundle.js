@@ -11,11 +11,11 @@ var template_default = _template("a", (input) => {
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}) };
 	const { text } = input;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_text,
 		1: $sg__input_text
 	});
+	const $childScope = _peek_scope_id();
 	Child.content({
 		text: input.text,
 		content: _content("a1", () => {

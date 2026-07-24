@@ -31,8 +31,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(items, (outerItem) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		const $childScope = _peek_scope_id();
 		_set_serialize_reason(1);
+		const $childScope = _peek_scope_id();
 		child_default({
 			write,
 			name: `${outerItem}`
@@ -40,8 +40,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_of(items, (middleItem) => {
 			const $scope2_id = _scope_id();
 			_html("<div>");
-			const $childScope2 = _peek_scope_id();
 			_set_serialize_reason(1);
+			const $childScope2 = _peek_scope_id();
 			child_default({
 				write,
 				name: `${outerItem}.${middleItem}`

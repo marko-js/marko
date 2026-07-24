@@ -13,8 +13,8 @@ const $content = (input) => {
 				_await($scope2_id, "a", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
 					$si__input_level && _script($scope3_id, "b0");
-					const $childScope = _peek_scope_id();
 					_set_serialize_reason($sg__input_level);
+					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
 					$si__input_level && writeScope($scope3_id, {
 						_: _scope_with_id($scope2_id),

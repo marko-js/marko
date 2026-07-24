@@ -26,8 +26,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const output = _el($scope0_id, "a0");
 	_html(`<div></div>${_el_resume($scope0_id, "a")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	const $childScope = _peek_scope_id();
 	child_default({
 		foo: input.foo,
 		output

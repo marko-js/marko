@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (count % 2 === 0) {
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			_set_serialize_reason(10);
+			const $childScope = _peek_scope_id();
 			$Child_withLoadAssets({
 				label: "x",
 				value: count

@@ -16,8 +16,8 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 3;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(6);
+	const $childScope = _peek_scope_id();
 	child_default({
 		value: count,
 		valueChange: _resume((_new_count) => {

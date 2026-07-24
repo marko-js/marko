@@ -23,8 +23,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $x__closures = /* @__PURE__ */ new Set();
 	let x = 0;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(8);
+	const $childScope = _peek_scope_id();
 	counter_default({
 		count: x,
 		countChange: _resume((_new_x) => {
@@ -39,8 +39,8 @@ var template_default = _template("a", (input) => {
 			_resume_branch($scope1_id);
 		})
 	});
-	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason(8);
+	const $childScope2 = _peek_scope_id();
 	counter_default({
 		count: x,
 		id: "uncontrolled",

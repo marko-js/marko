@@ -35,6 +35,7 @@ import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
 
 export let scopeIdentifier: t.Identifier;
+export let localsIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
 }
@@ -115,6 +116,9 @@ export default {
     enter(program) {
       scopeIdentifier = isOutputDOM()
         ? generateUidIdentifier("scope")
+        : (null as any as t.Identifier);
+      localsIdentifier = isOutputDOM()
+        ? generateUidIdentifier("locals")
         : (null as any as t.Identifier);
       {
         const markoOpts = getMarkoOpts();

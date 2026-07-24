@@ -25,8 +25,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:input_name": $si__input_name && $Child_content__input_name__closures
 		}, "__tests__/template.marko", "6:2", { input_name: ["input.name", "6:15"] });
 	}) };
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(6);
+	const $childScope = _peek_scope_id();
 	Child.content({ count });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

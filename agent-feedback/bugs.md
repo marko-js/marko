@@ -1651,3 +1651,33 @@ Re-verify: compile `<textarea>a &amp; b</textarea>` with `-o html` and check the
 emitted `_textarea_value("a &amp; b")`; at runtime it returns `"a &amp;amp; b"`,
 where the correct output is `"a &amp; b"` (matching `<title>a &amp; b</title>`,
 which compiles to raw static text).
+
+## Custom tag with a tag variable evaluates its child render before attribute tag statements (TDZ crash)
+
+`packages/runtime-tags/src/translator/util/known-tag.ts` › `translateHTML` | 2026-07-24 | impact:med | effort:med
+
+For a custom tag with both a tag variable and attribute tags under control flow
+(eg `<my-menu/menuEl><for|x| of=list><@item label=x/></for></my-menu>`), the
+HTML output emits `let menuEl = _myMenu({ item: $item })` via `translateVar`'s
+`tag.insertBefore` _before_ the `let $item; forOf(...)` statements produced by
+`translateAttrs`, so the render call reads `$item` in its temporal dead zone
+and SSR throws a ReferenceError. The DOM output has the same ordering problem.
+The call needs to be sequenced after the attr-tag statements (as the
+non-tag-variable path does by pushing the call onto `statements`).
+Re-verify: compile the template above with `pnpm run compile -o html -d` and
+observe the call precedes the `$item` declaration.
+
+## Reject (or support) assignments to attribute tag `<for>` params inside event handlers
+
+`packages/runtime-tags/src/translator/util/references.ts` › `trackAssignment` | 2026-07-24 | impact:low | effort:low
+
+An assignment like `<@item onClick() { foo = "x" }>` where `foo` is an
+attribute-tag `<for>` param (BindingType.local) is routed through the
+change-handler assignment path, generating code that calls a nonexistent
+change handler and throws at click time. Reads of such params in handlers now
+work (see `referencedLocalBindingsInFunction`), which makes the silent write
+failure more confusing by contrast. Since these loops re-run wholesale on
+input change, assignment has no meaningful reactive semantics; a compile
+error in `trackAssignment` when `binding.type === BindingType.local` would
+be cheap and clear. Re-verify: compile the template above with
+`pnpm run compile -o dom -d` and inspect the emitted assignment.

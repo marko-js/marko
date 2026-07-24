@@ -28,11 +28,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_color = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_style({ color: input.color })}></div>${_el_resume($scope0_id, "#div/0", $sg__input_color)}<div style=width:100px></div><div style="color: green"></div><div${input.color ? " style=color:red" : ""}></div>${_el_resume($scope0_id, "#div/1", $sg__input_color)}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_color,
 		2: $sg__input_color
 	});
+	const $childScope = _peek_scope_id();
 	custom_tag_default({ style: { color: input.color } });
 	custom_tag_default({ style: { width: "100px" } });
 	custom_tag_default({ style: "color: green" });

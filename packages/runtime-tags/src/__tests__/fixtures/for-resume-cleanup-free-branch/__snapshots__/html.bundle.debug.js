@@ -21,8 +21,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
+			const $childScope = _peek_scope_id();
 			list_default({ count });
 			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "5:2");
 			return 0;

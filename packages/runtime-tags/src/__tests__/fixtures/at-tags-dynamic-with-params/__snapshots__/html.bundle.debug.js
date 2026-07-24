@@ -11,7 +11,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = true;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	let $item;
 	if (x) {
@@ -22,6 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "4:10");
 		}) });
 	}
+	const $childScope = _peek_scope_id();
 	hello_default({ item: $item });
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

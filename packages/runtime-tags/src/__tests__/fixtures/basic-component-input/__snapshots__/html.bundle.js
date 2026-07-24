@@ -13,8 +13,8 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	my_button_default({
 		text: clickCount,
 		onClick: _resume(function() {

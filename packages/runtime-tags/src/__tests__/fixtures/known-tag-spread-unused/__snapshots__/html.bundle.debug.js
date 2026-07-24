@@ -11,8 +11,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Bar = { content: _content("__tests__/template.marko_2_content", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		const $childScope = _peek_scope_id();
 		_set_serialize_reason(_serialize_guard($scope2_reason, 0));
+		const $childScope = _peek_scope_id();
 		Foo.content(input);
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "5:2");
 	}) };

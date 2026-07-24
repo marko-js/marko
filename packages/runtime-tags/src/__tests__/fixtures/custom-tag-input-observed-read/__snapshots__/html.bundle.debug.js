@@ -12,8 +12,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	show_result_default({ get: function() {
 		return count;
 	} });

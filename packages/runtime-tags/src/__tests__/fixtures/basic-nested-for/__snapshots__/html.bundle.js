@@ -17,8 +17,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(items, (inner) => {
 			const $scope2_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
+			const $childScope = _peek_scope_id();
 			child_default({ name: `${outer}.${inner}` });
 			writeScope($scope2_id, { a: _existing_scope($childScope) });
 		}, 0, $scope1_id, "a", 1, 1, 1, 0, 1);

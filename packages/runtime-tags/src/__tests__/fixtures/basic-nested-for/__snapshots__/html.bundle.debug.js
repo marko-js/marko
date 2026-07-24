@@ -17,8 +17,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(items, (inner) => {
 			const $scope2_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
+			const $childScope = _peek_scope_id();
 			child_default({ name: `${outer}.${inner}` });
 			writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "5:4");
 		}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 1);

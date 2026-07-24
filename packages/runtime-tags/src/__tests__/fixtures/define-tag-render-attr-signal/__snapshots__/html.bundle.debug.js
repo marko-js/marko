@@ -9,8 +9,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<div>${_escape(number)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 0))}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}) };
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	MyTag.content({ number: x });
 	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

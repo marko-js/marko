@@ -6,8 +6,8 @@ const $content = (input) => {
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			_set_serialize_reason($sg__input_depth);
+			const $childScope = _peek_scope_id();
 			$content({ depth: input.depth - 1 });
 			$si__input_depth && writeScope($scope1_id, {
 				_: _scope_with_id($scope0_id),
@@ -27,8 +27,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 2;
 	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	tree_default({ depth: n });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

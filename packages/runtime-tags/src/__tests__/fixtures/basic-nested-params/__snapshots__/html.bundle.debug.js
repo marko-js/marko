@@ -22,8 +22,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = 1;
 	let y = 2;
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(10);
+	const $childScope = _peek_scope_id();
 	child_default({
 		value: x,
 		content: _content_resume("__tests__/template.marko_1_content", (outer) => {

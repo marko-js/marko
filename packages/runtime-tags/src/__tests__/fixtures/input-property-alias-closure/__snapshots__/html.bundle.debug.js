@@ -11,11 +11,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:1");
 	}) };
 	const { text } = input;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_text,
 		1: $sg__input_text
 	});
+	const $childScope = _peek_scope_id();
 	Child.content({
 		text: input.text,
 		content: _content("__tests__/template.marko_2_content", () => {

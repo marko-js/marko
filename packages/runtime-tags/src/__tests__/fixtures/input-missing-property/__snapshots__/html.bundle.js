@@ -25,8 +25,8 @@ var template_default = _template("a", (input) => {
 			f: $si__input_name && $Child_content__input_name__closures
 		});
 	}) };
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(6);
+	const $childScope = _peek_scope_id();
 	Child.content({ count });
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {

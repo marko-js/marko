@@ -12,14 +12,14 @@ var template_default = _template("a", (input) => {
 		(_serialize_if($scope0_reason, 0) || _serialize_if($scope1_reason, 0)) && _subscribe($si__input && $input__closures, writeScope($scope1_id, { _: $si__input && _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}) };
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	MyTag.content(...args);
 	MyTag.content(7, 8, 9);
-	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason(1);
 	let $cgrp;
 	$cgrp = attrTag({ y: 1 });
+	const $childScope2 = _peek_scope_id();
 	MyTag.content(...args, {
 		cgrp: $cgrp,
 		row: attrTag({ r: x })

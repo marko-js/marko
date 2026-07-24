@@ -18,8 +18,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}) };
 	let n = 1;
 	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z" + n });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

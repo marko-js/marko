@@ -12,7 +12,6 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_cond = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { cond } = input;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_cond,
 		1: $sg__input_cond,
@@ -24,6 +23,7 @@ var template_default = _template("a", (input) => {
 		$x = attrTag({ value: 1 });
 		$y = attrTag({ value: 2 });
 	}
+	const $childScope = _peek_scope_id();
 	custom_tag_default({
 		x: $x,
 		y: $y

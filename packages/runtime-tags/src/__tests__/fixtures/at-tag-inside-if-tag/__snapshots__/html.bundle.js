@@ -13,7 +13,6 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_x = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { x } = input;
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_x,
 		1: $sg__input_x,
@@ -36,6 +35,7 @@ var template_default = _template("a", (input) => {
 			_html("Goodbye");
 		})
 	});
+	const $childScope = _peek_scope_id();
 	custom_tag_default({ thing: $thing });
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

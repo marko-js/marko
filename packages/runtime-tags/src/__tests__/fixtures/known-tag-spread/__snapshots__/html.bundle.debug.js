@@ -24,24 +24,24 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	};
 	let n = 1;
 	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
+	const $childScope = _peek_scope_id();
 	child_a_default({
 		a: n,
 		...extras
 	});
-	const $childScope2 = _peek_scope_id();
 	_set_serialize_reason(6);
+	const $childScope2 = _peek_scope_id();
 	child_a_default({
 		...extras,
 		a: n
 	});
-	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason({
 		0: _serialize_guard($scope0_reason, 0),
 		1: _serialize_guard($scope0_reason, 1),
 		2: _serialize_guard($scope0_reason, 2)
 	});
+	const $childScope3 = _peek_scope_id();
 	child_c_default(input.settings);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
