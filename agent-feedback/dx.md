@@ -199,7 +199,6 @@ graph would surface the same clear compile error. Verify: compile
 
 `DOMException`, `AbortSignal`, and `Event` still fall through the constructor dispatch to `throwUnserializable`, each a one-case addition. They reach templates through request handling yet cannot cross to the browser, so a resumed value holding one is dropped. Each has a constructor form that round-trips its observable state (`new DOMException(message, name)`, `AbortSignal.abort(reason)` for an already-aborted signal, `new Event(type, { bubbles, cancelable, composed })`), but a live `AbortSignal` that has not yet aborted has no faithful representation — resume would need it wired to a fresh controller, so decide that semantics before adding it. Lower value than the rest of the dispatch table and only worth adding if a real template needs them. Re-verify: pass each through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
 
-
 ## Make `Cannot assign to hoisted tag variable.` say what the rule is and link the tag-variable docs
 
 `packages/runtime-tags/src/translator/util/references.ts` › `trackReferencesForBinding` | 2026-07-23 | impact:med | effort:low

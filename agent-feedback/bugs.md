@@ -77,7 +77,6 @@ CSR is a runtime-only fix: push `() => childScope[AccessorProp.StartNode]` throu
 
 A live `@marko/run` app shows this manifests as a HARD SSR 500 in dev, not just an empty render: reading the ref (`<${shape}/mark .../>` then `<effect>{ mark().getBBox() }` or a `<script>` reader) makes the HTML `_dynamic_tag` return `undefined` for `mark`, which the compiler guards with `_assert_hoist(mark)` — throwing MARKO_DEBUG's misleading `Hoisted values must be functions, received type "undefined"` (`packages/runtime-tags/src/common/errors.ts:109-114`), with a stack pointing at compiled runtime rather than the user's tag-variable construct. Under optimize `_assert_hoist` is compiled out, so SSR instead succeeds but serializes `mark: undefined`, and on the client `_hoist("mark")()` throws "undefined is not a function" when the effect/script runs — a silent dev-vs-prod divergence. Beyond the full high-effort compiler+serialization fix already noted, a low-effort, independently-valuable improvement is a compile-time error/warning when a tag variable is placed on a dynamic tag that can resolve to a native tag name, so users get a source-level diagnostic instead of an internal assert (dev) or broken hydration (prod).
 
-
 ## Reject (or drop references for) duplicate `<return>` attributes — today they emit a module that references an undeclared signal
 
 `packages/runtime-tags/src/translator/util/get-known-attr-values.ts` › `getKnownAttrValues` | 2026-07-23 | impact:med | effort:low
@@ -802,6 +801,7 @@ key alongside the escaped one on `Reference` (or keying `debugVars` by
 class Foo {} }` for that scope — the abort message reads `Unable to serialize
 "\"#LoopKey\"" in template.marko:3:1` instead of `... "#LoopKey" in
 template.marko:3:11`.
+
 ## Disambiguate `buildResumeRegisterKey` — `_`-joined binding names collide and silently break resume
 
 `packages/runtime-tags/src/translator/util/signals.ts` › `buildResumeRegisterKey` | 2026-07-23 | impact:med | effort:med
