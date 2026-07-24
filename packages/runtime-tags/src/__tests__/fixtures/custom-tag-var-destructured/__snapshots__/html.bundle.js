@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let { countChange: $countChange, count, inc, missing: $missing } = child_default({});
-	_var($scope0_id, "b", $childScope, "a0");
 	const missing = void 0 !== $missing ? $missing : "fallback";
+	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "c")}<button class=assign>assign</button>${_el_resume($scope0_id, "d")}<div>${_escape(count)}${_el_resume($scope0_id, "e")}:<!>${_escape(missing)}${_el_resume($scope0_id, "f")}</div>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");

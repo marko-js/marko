@@ -6,6 +6,7 @@ import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { scopeIdentifier } from "../visitors/program";
+import evaluate from "./evaluate";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -60,7 +61,7 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
-import { addSetupStatement } from "./setup-statements";
+import { addSetupExpr, addSetupStatement } from "./setup-statements";
 import {
   getBindingGetterIdentifier,
   getSignals,
@@ -112,6 +113,7 @@ export interface Binding {
   noSerialize: boolean;
   noSerializeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
+  defaultSource: Binding | undefined;
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
@@ -230,6 +232,7 @@ export function createBinding(
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
+    defaultSource: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
@@ -251,7 +254,8 @@ export function createBinding(
       binding.upstreamAlias = propBinding;
       propBinding.aliases.add(binding);
     } else {
-      // TODO: check if default is used, if so an intermediate binding is needed
+      // The alias root holds the raw property value: a defaulted destructure
+      // roots its source binding here, never the derived binding.
       upstreamAlias!.propertyAliases.set(property, binding);
     }
   } else if (upstreamAlias) {
@@ -757,6 +761,59 @@ function createBindingsAndTrackReferences(
       }
       break;
     }
+    // A default is two bindings: the source holds the applied value and
+    // `left` derives from it (see initDefaultedValue / stripDefaultValues).
+    case "AssignmentPattern": {
+      const { left, right } = lVal;
+      const defaultSource = createBinding(
+        generateUid(
+          (left.type === "Identifier" ? left.name : property) || "pattern",
+        ),
+        type,
+        section,
+        upstreamAlias,
+        property,
+        excludeProperties,
+        left.loc,
+        true,
+      );
+      const valueExtra = evaluate(right) as unknown as ReferencedExtra;
+      addRead(valueExtra, {}, defaultSource, section, undefined);
+
+      createBindingsAndTrackReferences(
+        left,
+        BindingType.derived,
+        scope,
+        section,
+        undefined,
+        undefined,
+        undefined,
+      );
+
+      const binding = left.extra?.binding;
+      if (binding) {
+        if (left.type === "Identifier") {
+          const constantViolations = scope.getBinding(
+            left.name,
+          )?.constantViolations;
+          if (constantViolations?.length) {
+            for (const assignment of constantViolations) {
+              if (assignment.type !== "MarkoTag") {
+                throw assignment.buildCodeFrameError(
+                  `${left.name} is readonly and cannot be mutated.`,
+                );
+              }
+            }
+          }
+        }
+
+        binding.defaultSource = defaultSource;
+        (lVal.extra ??= {}).binding = binding;
+        setBindingDownstream(binding, valueExtra);
+        addSetupExpr(section, right);
+      }
+      break;
+    }
   }
 }
 
@@ -909,6 +966,19 @@ export function finalizeReferences() {
   const readsByExpression = getReadsByExpression();
   const fnReadsByExpression = getFunctionReadsByExpression();
   const intersectionsBySection = new Map<Section, Intersection[]>();
+
+  // A pruned defaulted binding drops its fallback's read of the source so
+  // the source can prune too (reverse creation order visits inner defaults first).
+  for (const binding of [...bindings].reverse()) {
+    if (binding.defaultSource && pruneBinding(binding)) {
+      const valueExprs = getBindingValueExprs().get(binding);
+      if (valueExprs && valueExprs !== true) {
+        forEach(valueExprs, (expr) => {
+          if (!expr.merged) dropExtra(expr as ReferencedExtra);
+        });
+      }
+    }
+  }
 
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {

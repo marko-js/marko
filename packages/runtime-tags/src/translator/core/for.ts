@@ -54,6 +54,7 @@ import {
   setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { stripDefaultValuesFromParams } from "../util/strip-default-values";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
@@ -223,6 +224,11 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
+        const paramDefaultStatements: t.Statement[] = [];
+        stripDefaultValuesFromParams(params, paramDefaultStatements);
+        if (paramDefaultStatements.length) {
+          bodyStatements.unshift(...paramDefaultStatements);
+        }
         const singleChild =
           bodySection.content?.singleChild &&
           bodySection.content.startType !== ContentType.Text;

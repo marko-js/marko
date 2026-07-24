@@ -20,10 +20,39 @@ export function getMarkoRoot(path: t.NodePath<t.Node>) {
 export function getExprRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
   while (!isMarko(curPath.parentPath!)) {
+    if (isMarkoBindingDefaultValue(curPath)) break;
     curPath = curPath.parentPath!;
   }
 
   return curPath;
+}
+
+// A Marko binding's default is its own expression root: its references
+// drive that binding's derivation, not the expression the pattern is in.
+function isMarkoBindingDefaultValue(path: t.NodePath<t.Node>) {
+  if (path.key !== "right" || path.parentPath!.type !== "AssignmentPattern") {
+    return false;
+  }
+
+  let curPath = path.parentPath!;
+  while (true) {
+    const { parentPath } = curPath;
+    switch (parentPath?.type) {
+      case "ObjectProperty":
+      case "ObjectPattern":
+      case "ArrayPattern":
+      case "RestElement":
+      case "AssignmentPattern":
+        curPath = parentPath;
+        break;
+      case "MarkoTagBody":
+        return curPath.listKey === "params";
+      case "MarkoTag":
+        return curPath.key === "var";
+      default:
+        return false;
+    }
+  }
 }
 
 export function getFnRoot(path: t.NodePath<t.Node>) {

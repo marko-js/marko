@@ -7,6 +7,7 @@ import { toArray } from "./optional";
 import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";
+import { stripDefaultValues } from "./strip-default-values";
 import { toPropertyName } from "./to-property-name";
 
 export default function translateVar(
@@ -106,9 +107,17 @@ export default function translateVar(
     }
   });
 
-  tag.insertBefore(
-    t.variableDeclaration(kind, [t.variableDeclarator(tagVar, initialValue)]),
-  );
+  const defaultStatements: t.Statement[] = [];
+  const strippedVar = stripDefaultValues(tagVar, defaultStatements);
+  tag.insertBefore([
+    t.variableDeclaration(kind, [
+      t.variableDeclarator(
+        strippedVar as t.VariableDeclarator["id"],
+        initialValue,
+      ),
+    ]),
+    ...defaultStatements,
+  ]);
 }
 
 function getDestructurePattern(id: t.NodePath<t.Identifier>) {

@@ -21,11 +21,13 @@ _resume("b1", $_return2);
 _resume("b0", $_return);
 
 // template.marko
+const $missing2 = ($scope, missing = "fallback") => _text($scope.f, missing);
+const $missing3 = $missing2;
 const $pattern2 = _var_resume("a0", ($scope, $pattern) => {
 	$count($scope, $pattern.count);
 	$countChange2($scope, $pattern.countChange);
 	$inc($scope, $pattern.inc);
-	$missing2($scope, $pattern.missing);
+	$missing3($scope, $pattern.missing);
 });
 const $count__OR__$countChange = /*@__PURE__*/ _or(9, _script("a1", ($scope) => _on($scope.d, "click", function() {
 	$scope.i($scope.h + 10);
@@ -38,5 +40,3 @@ const $countChange2 = /*@__PURE__*/ _const(8, $count__OR__$countChange);
 const $inc = /*@__PURE__*/ _const(10, _script("a2", ($scope) => _on($scope.c, "click", function() {
 	$scope.k();
 })));
-const $missing3 = ($scope, missing) => _text($scope.f, missing);
-const $missing2 = ($scope, $missing) => $missing3($scope, void 0 !== $missing ? $missing : "fallback");

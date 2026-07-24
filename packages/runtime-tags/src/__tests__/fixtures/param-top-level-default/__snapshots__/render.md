@@ -1,0 +1,125 @@
+# Render
+```html
+<div
+  id="known"
+>
+  one:10
+</div>
+<div
+  id="known"
+>
+  two:0
+</div>
+<div
+  id="local"
+>
+  L:101
+</div>
+<ul>
+  <li>
+    1
+  </li>
+  <li>
+    a
+  </li>
+</ul>
+<button
+  id="x"
+>
+  x
+</button>
+<button
+  id="y"
+>
+  y
+</button>
+```
+
+# Update
+```js
+container.querySelector("#x").click();
+```
+```html
+<div
+  id="known"
+>
+  one:20
+</div>
+<div
+  id="known"
+>
+  two:0
+</div>
+<div
+  id="local"
+>
+  L:101
+</div>
+<ul>
+  <li>
+    2
+  </li>
+  <li>
+    a
+  </li>
+</ul>
+<button
+  id="x"
+>
+  x
+</button>
+<button
+  id="y"
+>
+  y
+</button>
+```
+## Change
+```
+UPDATE: #known::text@4 "10" => "20"
+UPDATE: ul > li:nth-of-type(1)::text "1" => "2"
+```
+
+# Update
+```js
+container.querySelector("#y").click();
+```
+```html
+<div
+  id="known"
+>
+  one:20
+</div>
+<div
+  id="known"
+>
+  two:0
+</div>
+<div
+  id="local"
+>
+  L:102
+</div>
+<ul>
+  <li>
+    2
+  </li>
+  <li>
+    a
+  </li>
+</ul>
+<button
+  id="x"
+>
+  x
+</button>
+<button
+  id="y"
+>
+  y
+</button>
+```
+## Change
+```
+UPDATE: #local::text@2 "101" => "102"
+```

@@ -1,0 +1,20 @@
+<let/x=1/>
+<let/y=1/>
+
+<child|a, b = x * 10|>
+  <div id="known">${a}:${b}</div>
+</child>
+
+<define/Local|a, b = y + 100|>
+  <div id="local">${a}:${b}</div>
+</define>
+<Local("L")/>
+
+<ul>
+  <for|{ label = x }| of=[{}, { label: "a" }]>
+    <li>${label}</li>
+  </for>
+</ul>
+
+<button id="x" onClick() { x++ }>x</button>
+<button id="y" onClick() { y++ }>y</button>

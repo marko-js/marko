@@ -87,6 +87,7 @@ export interface Signal {
   hasSideEffect: boolean;
   forcePersist: boolean;
   inline: { value: t.Expression } | undefined;
+  valueParamDefault: t.Expression | undefined;
   export: boolean;
   extraArgs: t.Expression[] | undefined;
   prependStatements: t.Statement[] | undefined;
@@ -278,6 +279,7 @@ export function getSignal(
         ),
         forcePersist: false,
         inline: undefined,
+        valueParamDefault: undefined,
         extraArgs: undefined,
         prependStatements: undefined,
         buildAssignment: undefined,
@@ -695,7 +697,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   if (!signal.hasSideEffect) {
-    if (isValue && signal.render.length === 1) {
+    if (isValue && !signal.valueParamDefault && signal.render.length === 1) {
       const render = signal.render[0];
       if (render.type === "ExpressionStatement") {
         const { expression } = render;
@@ -715,7 +717,15 @@ export function getSignalFn(signal: Signal): t.Expression {
 
     return t.arrowFunctionExpression(
       isValue
-        ? [scopeIdentifier, getSignalValueIdentifier(signal)]
+        ? [
+            scopeIdentifier,
+            signal.valueParamDefault
+              ? t.assignmentPattern(
+                  getSignalValueIdentifier(signal),
+                  signal.valueParamDefault,
+                )
+              : getSignalValueIdentifier(signal),
+          ]
         : [scopeIdentifier],
       toFirstExpressionOrBlock(signal.render),
     );
@@ -953,6 +963,7 @@ export function getResumeRegisterId(
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
+  collapseDefaultedValues(section);
   writeGetters(section);
 
   for (const signal of getSignals(section).values()) {
@@ -1055,6 +1066,68 @@ export function writeSignals(section: Section) {
   }
 
   return written;
+}
+
+// A defaulted binding's derivation; collapseDefaultedValues may replace
+// the conditional with a parameter default once every signal exists.
+export function initDefaultedValue(binding: Binding, value: t.Expression) {
+  if (!binding.pruned) {
+    const section = binding.section;
+    const source = binding.defaultSource!;
+    addValue(
+      section,
+      value.extra!.referencedBindings,
+      initValue(binding),
+      t.conditionalExpression(
+        t.binaryExpression(
+          "!==",
+          t.unaryExpression("void", t.numericLiteral(0)),
+          createScopeReadExpression(source, section),
+        ),
+        createScopeReadExpression(source, section),
+        value,
+      ),
+    );
+  }
+}
+
+// Moves a defaulted binding's fallback onto a value parameter (preferring
+// the derived signal's own) when the source read would lower to one.
+function collapseDefaultedValues(section: Section) {
+  const signals = getSignals(section);
+  forEach(section.bindings, (binding) => {
+    const source = binding.defaultSource;
+    if (source && !binding.pruned) {
+      const derivedSignal = signals.get(binding);
+      const sourceSignal = signals.get(source);
+      const entry =
+        derivedSignal &&
+        !derivedSignal.inline &&
+        sourceSignal &&
+        canDefaultValueParam(sourceSignal) &&
+        sourceSignal.values.find((value) => value.signal === derivedSignal);
+      if (entry && entry.value.type === "ConditionalExpression") {
+        const target = canDefaultValueParam(derivedSignal)
+          ? derivedSignal
+          : sourceSignal;
+        target.valueParamDefault = entry.value.alternate;
+        entry.value = entry.value.consequent;
+      }
+    }
+  });
+}
+
+function canDefaultValueParam(signal: Signal) {
+  return (
+    !signal.hasSideEffect &&
+    !signal.forcePersist &&
+    !signal.inline &&
+    !signal.valueParamDefault &&
+    !getSerializeReason(
+      signal.section,
+      signal.referencedBindings as ReferencedBindings & Binding,
+    )
+  );
 }
 
 function writeGetters(section: Section) {

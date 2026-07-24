@@ -862,7 +862,7 @@ function writeParamsToSignals(
         addStatement(
           "render",
           info.tagSection,
-          arg.extra?.referencedBindings, // TODO: pretty sure content needs to have the reference group of it's param defaults.
+          arg.extra?.referencedBindings,
           t.expressionStatement(
             t.callExpression(argExportIdentifier, [
               createScopeReadExpression(
@@ -882,8 +882,44 @@ function writeParamsToSignals(
   }
 
   const attrPropsTree = propTree.props[i];
-  if (attrPropsTree) {
+  if (
+    attrPropsTree &&
+    (!tag.node.arguments?.length ||
+      tag.node.attributes.length ||
+      tag.node.attributeTags.length ||
+      tag.node.body.body.length)
+  ) {
     writeAttrsToSignals(tag, attrPropsTree, `${importAlias}_input`, info);
+    i++;
+  }
+
+  // Missing args still apply (as undefined) to match the runtime params
+  // applier; otherwise joined signals never settle during initial render.
+  for (const key in propTree.props) {
+    if (+key >= i) {
+      addStatement(
+        "render",
+        info.tagSection,
+        undefined,
+        t.expressionStatement(
+          t.callExpression(
+            info.getBindingIdentifier(
+              propTree.props[key].binding,
+              `${importAlias}_param_${key}`,
+            ),
+            [
+              createScopeReadExpression(
+                info.childScopeBinding,
+                info.tagSection,
+              ),
+              t.unaryExpression("void", t.numericLiteral(0)),
+            ],
+          ),
+        ),
+        undefined,
+        true,
+      );
+    }
   }
 }
 
@@ -1229,7 +1265,9 @@ function writeAttrsToSignals(
         addStatement(
           "render",
           info.tagSection,
-          undefined, // TODO: pretty sure content needs to have the reference group of it's param defaults.
+          // Param defaults derive within the body section, so their
+          // references belong to the body rather than this statement.
+          undefined,
           t.expressionStatement(
             t.callExpression(
               info.getBindingIdentifier(
