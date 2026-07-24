@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.5
+
+### Patch Changes
+
+- [#3580](https://github.com/marko-js/marko/pull/3580) [`6ad87d9`](https://github.com/marko-js/marko/commit/6ad87d998bb33215a020fdc67dca176b0e540123) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Convert the compiler's sources to ES modules. The published CommonJS output and every `exports` entry point are unchanged.
+
 ## 5.41.4
 
 ### Patch Changes
@@ -67,6 +73,7 @@
 ### Patch Changes
 
 - [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compiler entry compilation and native asset handling for bundler integrations.
+
   - `entry: "page" | "load"` compiles a template as a top level page entry or a lazily loaded entry, replacing the deprecated `output: "hydrate"`.
   - `linkAssets: { runtime, onAsset }` connects the bundler: `onAsset(kind, file, id)` is called for every discovered page and load entry, and `runtime` names a module whose `flush` function resolves an asset id into the HTML for its tags while rendering.
 
