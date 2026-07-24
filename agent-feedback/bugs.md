@@ -621,30 +621,6 @@ ch.length; ... }`). Re-verify: `resolveCursorPosition("", 5, "(𠮷𠮸𠮹) x",
 𠮸𠮹y")` returns 10 (end of value) where 8 is correct, while the all-BMP
 `resolveCursorPosition("", 5, "(5405) 810-9227", "(540) 581-0922")` returns 7.
 
-## Clear the pending `resolve`/`reject` in the async iterator so a slow consumer does not silently lose stream chunks
-
-`packages/runtime-tags/src/html/template.ts` › `ServerRendered[Symbol.asyncIterator]` | 2026-07-23 | impact:high | effort:low
-
-The `onWrite` callback passed to `#read` is `(html) => { value += html; if
-(resolve) { resolve({ value, done }); value = ""; } }`, but `resolve`/`reject`
-(assigned by the inner `exec` executor) are never cleared once their promise
-settles. A stale `resolve` is therefore still truthy on the next flush: calling
-it is a no-op on the already-settled promise, yet `value = ""` still runs and
-discards the buffered HTML. Because `#read` gates flushes on `queueTick`
-(setImmediate), any `for await` body that takes longer than one tick loses every
-chunk written while it was busy; worse, `onClose` also hits the stale `resolve`,
-so `done` flips to true and the iterator ends normally — the caller gets a
-truncated document with a 200 and no error. `toReadable()`/`pipe()` are
-unaffected because they push unconditionally, so the loss is specific to the
-documented `for await (const chunk of template.render(...))` API. Fix: capture
-the settler into a local, null out `resolve`/`reject` before invoking it, and
-add a fixture/unit test that consumes a multi-`<await>` render with an
-artificial per-chunk delay. Re-verify with `node -r ~ts` on a script that
-renders a template with four staggered `_await`s and consumes it via `for await`
-with `await new Promise(r=>setTimeout(r,60))` in the loop body: today it yields
-only the first chunk, and should yield the same joined HTML as a zero-delay
-consumer.
-
 ## Make the hidden `<show>` wrapper legal in table/select insertion contexts; `<t hidden>` is foster-parented and the hidden content renders
 
 `packages/runtime-tags/src/html/writer.ts` › `_show_start` | 2026-07-23 | impact:high | effort:med
