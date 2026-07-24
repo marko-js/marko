@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.7
+
+### Patch Changes
+
+- [#3586](https://github.com/marko-js/marko/pull/3586) [`8f38f88`](https://github.com/marko-js/marko/commit/8f38f880daf4edddf2e7c0b76f9293b33f79b95d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop publishing `internal/babel` as `"type": "commonjs"`. The directory ships only the ESM `index.ts` that `exports["./internal/babel"].types` points at, so the CommonJS marker made TypeScript reject it under `verbatimModuleSyntax` with `TS1295: ECMAScript imports and exports cannot be written in a CommonJS file`.
+
 ## 5.41.6
 
 ### Patch Changes
