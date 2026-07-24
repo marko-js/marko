@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.6
+
+### Patch Changes
+
+- [#3583](https://github.com/marko-js/marko/pull/3583) [`44e3dc5`](https://github.com/marko-js/marko/commit/44e3dc523b2128699ef0ea16f153b712a1bf06c2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `dist/babel.js` shipping an unresolvable `require("@babel/preset-typescript/package.json")`, which broke bundling the compiler — `@marko/ts-plugin` and `marko-vscode` both failed with `Could not resolve "@babel/preset-typescript/package.json"`.
+
 ## 5.41.5
 
 ### Patch Changes
