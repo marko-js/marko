@@ -44,15 +44,10 @@
 ## Change
 ```
 INSERT: p:nth-of-type(1)::text@5 + ::text("2")
-UPDATE: p:nth-of-type(1)::text@8 " " => "2"
 INSERT: p:nth-of-type(5)::text@5 + ::text("10")
-UPDATE: p:nth-of-type(5)::text@8 " " => "10"
 INSERT: p:nth-of-type(4)::text@5 + ::text("8")
-UPDATE: p:nth-of-type(4)::text@8 " " => "8"
 INSERT: p:nth-of-type(3)::text@5 + ::text("6")
-UPDATE: p:nth-of-type(3)::text@8 " " => "6"
 INSERT: p:nth-of-type(2)::text@5 + ::text("4")
-UPDATE: p:nth-of-type(2)::text@8 " " => "4"
 ```
 
 # Update

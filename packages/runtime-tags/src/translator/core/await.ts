@@ -3,12 +3,14 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoVar,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { some } from "../util/optional";
 import {
   type Binding,
   BindingType,
@@ -44,6 +46,7 @@ import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
 const kDOMBinding = Symbol("await tag dom binding");
+const hasEnabledHold = new WeakSet<t.Program>();
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -222,12 +225,20 @@ export default {
           ),
         );
 
-        addValue(
-          section,
-          valueExpr.extra?.referencedBindings,
-          signal,
-          valueExpr,
-        );
+        const referencedBindings = valueExpr.extra?.referencedBindings;
+        addValue(section, referencedBindings, signal, valueExpr);
+
+        // A state-derived value can re-run the await on the client, so its
+        // pending updates may need to be held while a fresher one resolves.
+        if (some(referencedBindings, (binding) => !!binding.sources?.state)) {
+          const program = getProgram().node;
+          if (!hasEnabledHold.has(program)) {
+            hasEnabledHold.add(program);
+            program.body.push(
+              t.expressionStatement(callRuntime("_enable_hold")),
+            );
+          }
+        }
 
         tag.remove();
       },

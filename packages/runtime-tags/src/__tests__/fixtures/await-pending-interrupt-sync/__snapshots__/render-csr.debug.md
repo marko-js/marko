@@ -18,5 +18,4 @@ Got: SYNC
 ## Change
 ```
 INSERT: ::text("Got: "), ::text("SYNC")
-UPDATE: ::text@5 "" => "SYNC"
 ```

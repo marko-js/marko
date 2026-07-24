@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/n=1/>
+
+<button id="inc" onClick() { n++ }>inc</button>
+
+<ul>
+  <for|i| of=Array.from({ length: n }, (_, i) => i)>
+    <li>item ${i} of ${n}</li>
+  </for>
+</ul>
+<await|v|=resolveAfter(n)>
+  <div id="awaited">awaited ${v}</div>
+</await>

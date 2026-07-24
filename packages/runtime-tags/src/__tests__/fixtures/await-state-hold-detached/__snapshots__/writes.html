@@ -1,0 +1,22 @@
+<button id=inc>inc</button><!--M_*1 a--><button
+  id=toggle>toggle</button><!--M_*1 b-->
+<div id=visible>visible <!>0<!--M_*1 c--></div>
+<t hidden>
+  <div id=hidden>hidden <!>0<!--M_*1 e--></div>
+</t><!--M_|1 f 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    h: 0,
+    i: !1
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[-->
+<div id=awaited>awaited <!>0<!--M_*3 a--></div><!--M_]1 g 3-->
+<script>
+  M._.r.push("a0 1");
+  M._.w()
+</script>

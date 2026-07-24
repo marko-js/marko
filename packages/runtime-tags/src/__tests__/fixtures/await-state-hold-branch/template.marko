@@ -1,0 +1,15 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/n=0/>
+
+<button id="inc" onClick() { n++ }>inc</button>
+
+<if=(n % 2)>
+  <div id="odd">odd ${n}</div>
+</if>
+<else>
+  <div id="even">even ${n}</div>
+</else>
+<await|v|=resolveAfter(n)>
+  <div id="awaited">awaited ${v}</div>
+</await>

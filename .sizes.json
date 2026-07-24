@@ -7,8 +7,8 @@
     {
       "name": "*",
       "total": {
-        "min": 26303,
-        "brotli": 9707
+        "min": 28272,
+        "brotli": 10326
       }
     },
     {
@@ -18,12 +18,12 @@
         "brotli": 119
       },
       "runtime": {
-        "min": 3904,
-        "brotli": 1732
+        "min": 3899,
+        "brotli": 1723
       },
       "total": {
-        "min": 4065,
-        "brotli": 1851
+        "min": 4060,
+        "brotli": 1842
       }
     },
     {
@@ -33,12 +33,12 @@
         "brotli": 80
       },
       "runtime": {
-        "min": 2463,
-        "brotli": 1239
+        "min": 2458,
+        "brotli": 1241
       },
       "total": {
-        "min": 2543,
-        "brotli": 1319
+        "min": 2538,
+        "brotli": 1321
       }
     },
     {
@@ -48,12 +48,12 @@
         "brotli": 365
       },
       "runtime": {
-        "min": 6430,
-        "brotli": 2823
+        "min": 6461,
+        "brotli": 2819
       },
       "total": {
-        "min": 7076,
-        "brotli": 3188
+        "min": 7107,
+        "brotli": 3184
       }
     },
     {
@@ -63,11 +63,11 @@
         "brotli": 101
       },
       "runtime": {
-        "min": 2668,
+        "min": 2663,
         "brotli": 1309
       },
       "total": {
-        "min": 2783,
+        "min": 2778,
         "brotli": 1410
       }
     }

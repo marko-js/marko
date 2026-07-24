@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/text = ""/>
+
+<input id="field" value:=text/>
+<span id="mirror">${text}</span>
+<await|v|=resolveAfter(text)>
+  <div id="awaited">awaited: ${v}</div>
+</await>

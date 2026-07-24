@@ -38,6 +38,16 @@ import {
   _attr_select_value_script,
 } from "./controllable";
 import { _on } from "./event";
+import {
+  heldText,
+  holdAttr,
+  holdClass,
+  holdCommit,
+  holdData,
+  holdStyle,
+  holdText,
+  holding,
+} from "./hold";
 import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { _id, subscribeToScopeSet } from "./signals";
@@ -64,7 +74,9 @@ function setAttribute(
   value: string | undefined,
 ) {
   // TODO: benchmark if it is actually faster to check first
-  if (element.getAttribute(name) != value) {
+  if (holding && element.isConnected) {
+    holdAttr(element, name, value);
+  } else if (element.getAttribute(name) != value) {
     if (value === undefined) {
       element.removeAttribute(name);
     } else {
@@ -95,7 +107,11 @@ export function _attr_class_item(
   name: string,
   value: unknown,
 ) {
-  element.classList.toggle(name, !!value);
+  if (holding && element.isConnected) {
+    holdClass(element, name, !!value);
+  } else {
+    element.classList.toggle(name, !!value);
+  }
 }
 
 export function _attr_style(element: Element, value: unknown) {
@@ -120,7 +136,11 @@ export function _attr_style_item(
   name: string,
   value: unknown,
 ) {
-  element.style.setProperty(name, _to_text(value));
+  if (holding && element.isConnected) {
+    holdStyle(element, name, _to_text(value));
+  } else {
+    element.style.setProperty(name, _to_text(value));
+  }
 }
 
 export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
@@ -136,7 +156,9 @@ export function _style_rule_item(
   name: string,
   value: unknown,
 ) {
-  const text = element.textContent!;
+  // Rules on one element share a flush, so read back the pending text: while
+  // holding, the live `textContent` still lags the previous rule's update.
+  const text = (holding ? heldText(element) : 0) || element.textContent!;
   const decl = name + ":" + escapeStyleValue(_to_text(value)) + ";";
   let start = text.indexOf("{" + name + ":");
   if (!~start) start = text.indexOf(";" + name + ":");
@@ -156,7 +178,9 @@ export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
 export function _text(node: Text | Comment, value: unknown) {
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
-  if (node.data !== normalizedValue) {
+  if (holding && node.isConnected) {
+    holdData(node, normalizedValue);
+  } else if (node.data !== normalizedValue) {
     node.data = normalizedValue;
   }
 }
@@ -164,7 +188,9 @@ export function _text(node: Text | Comment, value: unknown) {
 export function _text_content(node: ParentNode, value: unknown) {
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
-  if (node.textContent !== normalizedValue) {
+  if (holding && (node as Node).isConnected) {
+    holdText(node as Node, normalizedValue);
+  } else if (node.textContent !== normalizedValue) {
     node.textContent = normalizedValue;
   }
 }
@@ -432,15 +458,33 @@ export function _html(scope: Scope, value: unknown, accessor: Accessor) {
     (parentNode as Element).namespaceURI!,
   );
 
-  insertChildNodes(
-    parentNode,
-    firstChild,
-    (scope[accessor] =
-      newContent.firstChild || newContent.appendChild(new Text())),
-    (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] =
-      newContent.lastChild!),
-  );
-  removeChildNodes(firstChild, lastChild);
+  // Parsing the new content proceeds while holding; swapping it into the
+  // connected parent is deferred as one step, and the scope keeps pointing at
+  // the shown nodes until then so a superseding render still reads them.
+  const next: [ChildNode, ChildNode] = [
+    newContent.firstChild || newContent.appendChild(new Text()),
+    newContent.lastChild!,
+  ];
+  const commit = (
+    [shownStart, shownEnd]: [ChildNode, ChildNode],
+    [start, end]: [ChildNode, ChildNode],
+  ) => {
+    scope[accessor] = start;
+    scope[AccessorPrefix.DynamicHTMLLastChild + accessor] = end;
+    insertChildNodes(parentNode, shownStart, start, end);
+    removeChildNodes(shownStart, shownEnd);
+  };
+  if (holding && (parentNode as Node).isConnected) {
+    holdCommit(
+      scope,
+      AccessorPrefix.HeldCommit + accessor,
+      [firstChild, lastChild],
+      next,
+      commit,
+    );
+  } else {
+    commit([firstChild, lastChild], next);
+  }
 }
 
 function normalizeClientRender(value: any) {

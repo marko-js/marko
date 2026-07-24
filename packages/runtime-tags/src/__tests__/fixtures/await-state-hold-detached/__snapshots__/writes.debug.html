@@ -1,0 +1,24 @@
+<button id=inc>inc</button><!--M_*1 #button/0--><button
+  id=toggle>toggle</button><!--M_*1 #button/1-->
+<div id=visible>visible <!>0<!--M_*1 #text/2--></div>
+<t hidden>
+  <div id=hidden>hidden <!>0<!--M_*1 #text/4--></div>
+</t><!--M_|1 #text/5 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    n: 0,
+    shown: !1
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[-->
+<div id=awaited>awaited <!>0<!--M_*3 #text/0--></div><!--M_]1 #text/6 3-->
+<script>
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/await-state-hold-detached/template.marko_0 1"
+    );
+  M._.w()
+</script>

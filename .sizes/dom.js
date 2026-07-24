@@ -1,4 +1,4 @@
-// size: 26303 (min) 9707 (brotli)
+// size: 28272 (min) 10326 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -79,6 +79,11 @@ let empty = [],
   readyIds,
   isResuming,
   inputType = "",
+  holding,
+  holdEnabled$1,
+  heldNodes,
+  heldCommits,
+  unkeyed = {},
   _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
@@ -176,7 +181,33 @@ let empty = [],
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
+  runRenders = () => {
+    for (; pendingRenders.length;) {
+      let render = pendingRenders[0],
+        item = pendingRenders.pop();
+      if (render !== item) {
+        let i = 0,
+          mid = pendingRenders.length >> 1,
+          key = (pendingRenders[0] = item).a;
+        for (; i < mid;) {
+          let bestChild = (i << 1) + 1,
+            right = bestChild + 1;
+          if (
+            (right < pendingRenders.length &&
+              pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
+              (bestChild = right),
+            pendingRenders[bestChild].a - key >= 0)
+          )
+            break;
+          ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
+        }
+        pendingRenders[i] = item;
+      }
+      runRender(render);
+    }
+  },
   runRender = (render) => render.c(render.b, render.d),
+  holdEnabled,
   catchEnabled,
   classIdToBranch = /* @__PURE__ */ new Map(),
   classEventResolver,
@@ -1287,6 +1318,75 @@ function updateList(arr, val, push) {
       : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
   );
 }
+function holdData(node, value) {
+  heldNode(node).data = value;
+}
+function holdText(node, value) {
+  heldNode(node).text = value;
+}
+function holdAttr(el, name, value) {
+  (heldNode(el).attrs ||= {})[name] = value;
+}
+function holdClass(el, name, value) {
+  (heldNode(el).classes ||= {})[name] = value;
+}
+function holdStyle(el, name, value) {
+  (heldNode(el).styles ||= {})[name] = value;
+}
+function _hold(commit) {
+  (heldCommits ||= []).push({
+    scope: unkeyed,
+    key: "",
+    from: 0,
+    to: 0,
+    apply: commit,
+  });
+}
+function holdCommit(scope, key, from, to, apply, drop) {
+  let held = scope[key];
+  held
+    ? (drop?.(held.to, to, held.from), (held.to = to))
+    : (heldCommits ||= []).push(
+        (scope[key] = {
+          scope,
+          key,
+          from,
+          to,
+          apply,
+        }),
+      );
+}
+function heldText(node) {
+  return heldNodes?.get(node)?.text;
+}
+function holdRenders(runRenders) {
+  if (((holdEnabled$1 = holding = 1), runRenders(), (holding = 0), heldNodes)) {
+    let nodes = heldNodes;
+    ((heldNodes = void 0), nodes.forEach(applyHeldNode));
+  }
+  if (heldCommits) {
+    let commits = heldCommits;
+    heldCommits = void 0;
+    for (let commit of commits)
+      ((commit.scope[commit.key] = 0), commit.apply(commit.from, commit.to));
+  }
+}
+function heldNode(node) {
+  let nodes = (heldNodes ||= /* @__PURE__ */ new Map()),
+    held = nodes.get(node);
+  return (held || nodes.set(node, (held = {})), held);
+}
+function applyHeldNode(held, node) {
+  (held.data !== void 0 && node.data !== held.data && (node.data = held.data),
+    held.text !== void 0 && node.textContent !== held.text && (node.textContent = held.text));
+  for (let name in held.attrs) {
+    let value = held.attrs[name];
+    node.getAttribute(name) != value &&
+      (value === void 0 ? node.removeAttribute(name) : node.setAttribute(name, value));
+  }
+  for (let name in held.classes) node.classList.toggle(name, held.classes[name]);
+  for (let name in held.styles) node.style.setProperty(name, held.styles[name]);
+}
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
 }
@@ -1294,8 +1394,10 @@ function _attr(element, name, value) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 function setAttribute(element, name, value) {
-  element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+  holding && element.isConnected
+    ? holdAttr(element, name, value)
+    : element.getAttribute(name) != value &&
+      (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
 function _attr_class(element, value) {
   setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassObject) || void 0);
@@ -1304,7 +1406,9 @@ function _attr_class_items(element, items) {
   for (let key in items) _attr_class_item(element, key, items[key]);
 }
 function _attr_class_item(element, name, value) {
-  element.classList.toggle(name, !!value);
+  holding && element.isConnected
+    ? holdClass(element, name, !!value)
+    : element.classList.toggle(name, !!value);
 }
 function _attr_style(element, value) {
   setAttribute(element, "style", toDelimitedString(value, ";", stringifyStyleObject) || void 0);
@@ -1313,7 +1417,9 @@ function _attr_style_items(element, items) {
   for (let key in items) _attr_style_item(element, key, items[key]);
 }
 function _attr_style_item(element, name, value) {
-  element.style.setProperty(name, _to_text(value));
+  holding && element.isConnected
+    ? holdStyle(element, name, _to_text(value))
+    : element.style.setProperty(name, _to_text(value));
 }
 function _style_shell(scope, nodeAccessor) {
   let element = scope[nodeAccessor],
@@ -1323,7 +1429,7 @@ function _style_shell(scope, nodeAccessor) {
     _text_content(element, "." + id + "~*{}"));
 }
 function _style_rule_item(element, name, value) {
-  let text = element.textContent,
+  let text = (holding ? heldText(element) : 0) || element.textContent,
     decl = name + ":" + escapeStyleValue(_to_text(value)) + ";",
     start = text.indexOf("{" + name + ":");
   (~start || (start = text.indexOf(";" + name + ":")),
@@ -1339,11 +1445,15 @@ function _attr_nonce(scope, nodeAccessor) {
 }
 function _text(node, value) {
   let normalizedValue = _to_text(value);
-  node.data !== normalizedValue && (node.data = normalizedValue);
+  holding && node.isConnected
+    ? holdData(node, normalizedValue)
+    : node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function _text_content(node, value) {
   let normalizedValue = _to_text(value);
-  node.textContent !== normalizedValue && (node.textContent = normalizedValue);
+  holding && node.isConnected
+    ? holdText(node, normalizedValue)
+    : node.textContent !== normalizedValue && (node.textContent = normalizedValue);
 }
 function _attrs(scope, nodeAccessor, nextAttrs) {
   let el = scope[nodeAccessor];
@@ -1478,14 +1588,17 @@ function _html(scope, value, accessor) {
   let firstChild = scope[accessor],
     parentNode = firstChild.parentNode,
     lastChild = scope["H" + accessor] || firstChild,
-    newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
-  (insertChildNodes(
-    parentNode,
-    firstChild,
-    (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
-    (scope["H" + accessor] = newContent.lastChild),
-  ),
-    removeChildNodes(firstChild, lastChild));
+    newContent = parseHTML(_to_text(value), parentNode.namespaceURI),
+    next = [newContent.firstChild || newContent.appendChild(new Text()), newContent.lastChild],
+    commit = ([shownStart, shownEnd], [start, end]) => {
+      ((scope[accessor] = start),
+        (scope["H" + accessor] = end),
+        insertChildNodes(parentNode, shownStart, start, end),
+        removeChildNodes(shownStart, shownEnd));
+    };
+  holding && parentNode.isConnected
+    ? holdCommit(scope, "J" + accessor, [firstChild, lastChild], next, commit)
+    : commit([firstChild, lastChild], next);
 }
 function normalizeClientRender(value) {
   let renderer = normalizeDynamicRenderer(value);
@@ -1554,16 +1667,18 @@ function _await_promise(nodeAccessor, params) {
                   i: 0,
                   c() {
                     if (--awaitCounter.i) return 1;
-                    if (tryBranch === scope[branchAccessor]) {
-                      let anchor = scope[nodeAccessor];
-                      if (anchor.parentNode) {
-                        let detachedParent = scope[branchAccessor].S.parentNode;
-                        detachedParent === anchor.parentNode
-                          ? anchor.remove()
-                          : anchor.replaceWith(detachedParent);
-                      }
-                    } else dismissPlaceholder(tryBranch);
-                    queueEffect(tryBranch, runPendingEffects);
+                    let commit = () => {
+                      if (tryBranch === scope[branchAccessor]) {
+                        let anchor = scope[nodeAccessor];
+                        if (anchor.parentNode) {
+                          let detachedParent = scope[branchAccessor].S.parentNode;
+                          detachedParent === anchor.parentNode
+                            ? anchor.remove()
+                            : anchor.replaceWith(detachedParent);
+                        }
+                      } else dismissPlaceholder(tryBranch);
+                    };
+                    (holding ? _hold(commit) : commit(), queueEffect(tryBranch, runPendingEffects));
                   },
                 }),
             scope[promiseAccessor] ||
@@ -1577,12 +1692,16 @@ function _await_promise(nodeAccessor, params) {
                         queueRender(
                           scope,
                           () => {
-                            awaitBranch.V ||
-                              (awaitBranch.S.parentNode.insertBefore(
-                                scope[nodeAccessor],
-                                awaitBranch.S,
-                              ),
-                              tempDetachBranch(tryBranch));
+                            if (!awaitBranch.V) {
+                              let commit = () => {
+                                (awaitBranch.S.parentNode.insertBefore(
+                                  scope[nodeAccessor],
+                                  awaitBranch.S,
+                                ),
+                                  tempDetachBranch(tryBranch));
+                              };
+                              holding ? _hold(commit) : commit();
+                            }
                           },
                           -1,
                         ),
@@ -1640,16 +1759,18 @@ function _await_promise(nodeAccessor, params) {
 }
 function resolveAwait(scope, branchAccessor, nodeAccessor, referenceNode, params, value) {
   let awaitBranch = scope[branchAccessor];
-  return (
-    awaitBranch.V &&
-      ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
+  if (awaitBranch.V) {
+    ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
       setupBranch(awaitBranch.V, awaitBranch),
-      (awaitBranch.V = 0),
-      insertBranchBefore(awaitBranch, scope[nodeAccessor].parentNode, scope[nodeAccessor]),
-      referenceNode.remove()),
-    params?.(awaitBranch, [value]),
-    awaitBranch
-  );
+      (awaitBranch.V = 0));
+    let anchor = scope[nodeAccessor],
+      parentNode = anchor.parentNode,
+      commit = () => {
+        (insertBranchBefore(awaitBranch, parentNode, anchor), referenceNode.remove());
+      };
+    holding ? _hold(commit) : commit();
+  }
+  return (params?.(awaitBranch, [value]), awaitBranch);
 }
 function _await_content(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
@@ -1694,17 +1815,17 @@ function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
               queueRender(
                 tryBranch,
                 () => {
-                  (insertBranchBefore(
-                    (tryBranch.P = createAndSetupBranch(
+                  let placeholderBranch = (tryBranch.P = createAndSetupBranch(
                       tryBranch.$,
                       tryBranch.Q,
                       tryBranch._,
                       tryBranch.S.parentNode,
                     )),
-                    tryBranch.S.parentNode,
-                    tryBranch.S,
-                  ),
-                    tempDetachBranch(tryBranch));
+                    commit = () => {
+                      (insertBranchBefore(placeholderBranch, tryBranch.S.parentNode, tryBranch.S),
+                        tempDetachBranch(tryBranch));
+                    };
+                  holding ? _hold(commit) : commit();
                 },
                 -1,
               ),
@@ -1720,10 +1841,14 @@ function runPendingEffects(scope) {
 }
 function dismissPlaceholder(tryBranch) {
   let placeholderBranch = tryBranch.P;
-  placeholderBranch &&
-    ((tryBranch.P = 0),
-    placeholderBranch.S.parentNode.insertBefore(tryBranch.S.parentNode, placeholderBranch.S),
-    removeAndDestroyBranch(placeholderBranch));
+  if (placeholderBranch) {
+    tryBranch.P = 0;
+    let commit = () => {
+      (placeholderBranch.S.parentNode.insertBefore(tryBranch.S.parentNode, placeholderBranch.S),
+        removeAndDestroyBranch(placeholderBranch));
+    };
+    holding ? _hold(commit) : commit();
+  }
 }
 function _try(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
@@ -1797,10 +1922,16 @@ function _show(nodeAccessor, startNodeAccessor) {
           (range.K = wrapper.lastChild),
           wrapper.replaceWith(...wrapper.childNodes));
       }
-      let inDom = startNode.parentNode === parentNode;
-      display
-        ? inDom || insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode)
-        : inDom && tempDetachBranch(range);
+      let shownRange = range,
+        commit = (_from, show) => {
+          let inDom = shownRange.S.parentNode === parentNode;
+          show
+            ? inDom || insertBranchBefore(shownRange, parentNode, onlyChild ? null : referenceNode)
+            : inDom && tempDetachBranch(shownRange);
+        };
+      holding && parentNode.isConnected
+        ? holdCommit(scope, "J" + nodeAccessor, 0, display, commit)
+        : commit(0, display);
     }
   );
 }
@@ -1837,17 +1968,24 @@ function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) 
     parentNode =
       referenceNode.nodeType > 1 ? (prevBranch?.S || referenceNode).parentNode : referenceNode,
     newBranch = (scope["A" + nodeAccessor] =
-      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
-  referenceNode === parentNode
-    ? (prevBranch && (destroyBranch(prevBranch), (referenceNode.textContent = "")),
-      newBranch && insertBranchBefore(newBranch, parentNode, null))
-    : prevBranch
-      ? (newBranch
-          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
-          : parentNode.insertBefore(referenceNode, prevBranch.S),
-        removeAndDestroyBranch(prevBranch))
-      : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode)),
+    commit = (prev, next) => {
+      referenceNode === parentNode
+        ? (prev && (destroyBranch(prev), (referenceNode.textContent = "")),
+          next && insertBranchBefore(next, parentNode, null))
+        : prev
+          ? (next
+              ? insertBranchBefore(next, parentNode, prev.S)
+              : parentNode.insertBefore(referenceNode, prev.S),
+            removeAndDestroyBranch(prev))
+          : next && (insertBranchBefore(next, parentNode, referenceNode), referenceNode.remove());
+    };
+  holding && parentNode.isConnected
+    ? holdCommit(scope, "J" + nodeAccessor, prevBranch, newBranch, commit, dropBranch)
+    : commit(prevBranch, newBranch);
+}
+function dropBranch(superseded) {
+  superseded && destroyBranch(superseded);
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {
@@ -1890,66 +2028,90 @@ function loop(forEach) {
             newScopes.push(branch),
             params?.(branch, args));
         });
-        let newLen = newScopes.length,
-          hasSiblings = referenceNode !== parentNode,
-          afterReference = null,
-          oldEnd = oldLen - 1,
-          newEnd = newLen - 1;
-        if (
-          (hasSiblings &&
-            (oldLen
-              ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
-                newLen || parentNode.insertBefore(referenceNode, afterReference))
-              : newLen && ((afterReference = referenceNode.nextSibling), referenceNode.remove())),
-          !hasPotentialMoves)
-        ) {
-          oldLen &&
-            (oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
-            hasSiblings || (parentNode.textContent = ""));
-          for (let newScope of newScopes) insertBranchBefore(newScope, parentNode, afterReference);
-          return;
-        }
-        if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
-        else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
-        for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
-          (oldEnd--, newEnd--);
-        if (
-          (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
-          start > oldEnd || start > newEnd)
-        ) {
-          for (let i = start; i <= newEnd; i++)
-            insertBranchBefore(newScopes[i], parentNode, afterReference);
-          return;
-        }
-        let diffLen = newEnd - start + 1,
-          sources = Array(diffLen),
-          pred = Array(diffLen),
-          tails = [],
-          tail = -1,
-          lo,
-          hi,
-          mid;
-        for (let i = diffLen; i--;) sources[i] = newScopes[start + i].I ?? -1;
-        for (let i = 0; i < diffLen; i++)
-          if (~sources[i])
-            if (tail < 0 || sources[tails[tail]] < sources[i])
-              (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
-            else {
-              for (lo = 0, hi = tail; lo < hi;)
-                ((mid = ((lo + hi) / 2) | 0),
-                  sources[tails[mid]] < sources[i] ? (lo = mid + 1) : (hi = mid));
-              sources[i] < sources[tails[lo]] &&
-                (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
-            }
-        for (hi = tails[tail], lo = tail + 1; lo-- > 0;) ((tails[lo] = hi), (hi = pred[hi]));
-        for (let i = diffLen; i--;)
-          (~tail && i === tails[tail]
-            ? tail--
-            : insertBranchBefore(newScopes[start + i], parentNode, afterReference),
-            (afterReference = newScopes[start + i].S));
+        let commit = (from, to) => {
+          holdEnabled$1 &&
+            from !== oldScopes &&
+            ([oldScopesByKey, start, hasPotentialMoves] = reindexLoop(from, to));
+          let fromLen = from.length,
+            newLen = to.length,
+            hasSiblings = referenceNode !== parentNode,
+            afterReference = null,
+            oldEnd = fromLen - 1,
+            newEnd = newLen - 1;
+          if (
+            (hasSiblings &&
+              (fromLen
+                ? ((afterReference = from[oldEnd].K.nextSibling),
+                  newLen || parentNode.insertBefore(referenceNode, afterReference))
+                : newLen && ((afterReference = referenceNode.nextSibling), referenceNode.remove())),
+            !hasPotentialMoves)
+          ) {
+            fromLen &&
+              (from.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
+              hasSiblings || (parentNode.textContent = ""));
+            for (let newScope of to) insertBranchBefore(newScope, parentNode, afterReference);
+            return;
+          }
+          if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
+          else for (let i = newLen; i < fromLen; i++) removeAndDestroyBranch(from[i]);
+          for (; oldEnd >= start && newEnd >= start && from[oldEnd] === to[newEnd];)
+            (oldEnd--, newEnd--);
+          if (
+            (oldEnd + 1 < fromLen && (afterReference = from[oldEnd + 1].S),
+            start > oldEnd || start > newEnd)
+          ) {
+            for (let i = start; i <= newEnd; i++)
+              insertBranchBefore(to[i], parentNode, afterReference);
+            return;
+          }
+          let diffLen = newEnd - start + 1,
+            sources = Array(diffLen),
+            pred = Array(diffLen),
+            tails = [],
+            tail = -1,
+            lo,
+            hi,
+            mid;
+          for (let i = diffLen; i--;) sources[i] = to[start + i].I ?? -1;
+          for (let i = 0; i < diffLen; i++)
+            if (~sources[i])
+              if (tail < 0 || sources[tails[tail]] < sources[i])
+                (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
+              else {
+                for (lo = 0, hi = tail; lo < hi;)
+                  ((mid = ((lo + hi) / 2) | 0),
+                    sources[tails[mid]] < sources[i] ? (lo = mid + 1) : (hi = mid));
+                sources[i] < sources[tails[lo]] &&
+                  (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
+              }
+          for (hi = tails[tail], lo = tail + 1; lo-- > 0;) ((tails[lo] = hi), (hi = pred[hi]));
+          for (let i = diffLen; i--;)
+            (~tail && i === tails[tail]
+              ? tail--
+              : insertBranchBefore(to[start + i], parentNode, afterReference),
+              (afterReference = to[start + i].S));
+        };
+        holding && parentNode.isConnected
+          ? holdCommit(scope, "J" + nodeAccessor, oldScopes, newScopes, commit, dropLoopBranches)
+          : commit(oldScopes, newScopes);
       }
     );
   };
+}
+function reindexLoop(from, to) {
+  let byKey = /* @__PURE__ */ new Map(),
+    common = 0,
+    moves;
+  for (let i = 0; i < from.length; i++) ((from[i].I = i), byKey.set(from[i].M ?? i, from[i]));
+  for (; common < to.length && to[common] === from[common];) common++;
+  for (let branch of to)
+    byKey.get(branch.M) === branch ? ((moves = !0), byKey.delete(branch.M)) : (branch.I = -1);
+  return [byKey, common, moves];
+}
+function dropLoopBranches(superseded, to, from) {
+  let kept = new Set(to);
+  for (let branch of from) kept.add(branch);
+  for (let branch of superseded) kept.has(branch) || destroyBranch(branch);
 }
 function createBranchWithTagNameOrRenderer($global, tagNameOrRenderer, parentScope, parentNode) {
   let branch = createBranch($global, tagNameOrRenderer, parentScope, parentNode);
@@ -2029,35 +2191,19 @@ function prepareEffects(fn) {
   }
   return preparedEffects;
 }
-function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
-    if (render !== item) {
-      let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
-      for (; i < mid;) {
-        let bestChild = (i << 1) + 1,
-          right = bestChild + 1;
-        if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
-            (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
-        )
-          break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
-      }
-      pendingRenders[i] = item;
-    }
-    runRender(render);
-  }
-}
 function skipDestroyedRenders() {
   runRender = ((runRender) => (render) => {
     render.b.F?.H !== 0 && runRender(render);
   })(runRender);
+}
+function _enable_hold() {
+  holdEnabled ||
+    ((holdEnabled = 1),
+    enableBranches(),
+    (runRenders = (
+      (runRenders) => () =>
+        holdRenders(runRenders)
+    )(runRenders)));
 }
 function _enable_catch() {
   if (!catchEnabled) {

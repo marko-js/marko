@@ -1,6 +1,7 @@
 // template.marko
 const $template = "<div id=outside> </div><!><!>";
 const $walks = "D l%c";
+_enable_hold();
 _enable_catch();
 const $await_content__value__script = _script("__tests__/template.marko_3_value", ($scope) => console.log(`effect ran value=${$scope.value}`));
 const $await_content__value = /*@__PURE__*/ _const("value", ($scope) => {

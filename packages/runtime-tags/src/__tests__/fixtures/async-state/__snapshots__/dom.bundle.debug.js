@@ -1,6 +1,7 @@
 // template.marko
 const $template = "<button>inc</button><!><!>";
 const $walks = " b%c";
+_enable_hold();
 _enable_catch();
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);

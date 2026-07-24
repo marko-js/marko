@@ -1,0 +1,15 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/n=0/>
+<let/shown=false/>
+
+<button id="inc" onClick() { n++ }>inc</button>
+<button id="toggle" onClick() { shown = !shown }>toggle</button>
+
+<div id="visible">visible ${n}</div>
+<show=shown>
+  <div id="hidden">hidden ${n}</div>
+</show>
+<await|v|=resolveAfter(n)>
+  <div id="awaited">awaited ${v}</div>
+</await>

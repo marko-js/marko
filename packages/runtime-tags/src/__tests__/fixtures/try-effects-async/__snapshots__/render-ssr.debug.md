@@ -100,5 +100,4 @@ Error: ERROR!
 ```
 INSERT: div + ::text("Error: ERROR!")
 REMOVE: ::text + ::text("LOADING...")
-UPDATE: ::text " " => "Error: ERROR!"
 ```

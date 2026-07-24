@@ -5,6 +5,7 @@ import {
   type Scope,
 } from "../common/types";
 import { renderCatch } from "./control-flow";
+import { holdRenders } from "./hold";
 import { enableBranches } from "./resume";
 import type { Signal, SignalFn } from "./signals";
 
@@ -128,7 +129,9 @@ export let runEffects = ((effects) => {
   }
 }) as (effects: unknown[], checkPending?: boolean | 1) => void;
 
-function runRenders() {
+// A `let` (not a declaration) so `_enable_hold` can wrap it; `run` and
+// `prepareEffects` both flush pending renders through this binding.
+let runRenders = () => {
   while (pendingRenders.length) {
     const render = pendingRenders[0];
     const item = pendingRenders.pop()!;
@@ -164,7 +167,7 @@ function runRenders() {
 
     runRender(render);
   }
-}
+};
 
 let runRender = (render: PendingRender) =>
   render[PendingRenderProp.Signal](
@@ -184,6 +187,21 @@ export function skipDestroyedRenders() {
       runRender(render);
     }
   })(runRender);
+}
+
+let holdEnabled: undefined | 1;
+// Wrap the flush so observable DOM writes buffer during rendering and apply
+// after it, before effects. Renders themselves are untouched — only the writes
+// they make to connected nodes are held (see `holding` in dom.ts/control-flow.ts).
+export function _enable_hold() {
+  if (!holdEnabled) {
+    holdEnabled = 1;
+    enableBranches();
+    runRenders = (
+      (runRenders) => () =>
+        holdRenders(runRenders)
+    )(runRenders);
+  }
 }
 
 let catchEnabled: undefined | 1;

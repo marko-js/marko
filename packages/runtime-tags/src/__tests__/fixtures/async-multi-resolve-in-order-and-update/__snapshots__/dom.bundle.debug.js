@@ -2,6 +2,7 @@
 const $template = "<button>increment</button><p>1 * <!> = <!></p><p>2 * <!> = <!></p><p>3 * <!> = <!></p><p>4 * <!> = <!></p><p>5 * <!> = <!></p>";
 const $walks = " bDb%c%lDb%c%lDb%c%lDb%c%lDb%c%l";
 const multiply = (multiplier, n) => resolveAfter(multiplier * n);
+_enable_hold();
 const $await_content5__result = ($scope, result) => _text($scope["#text/0"], result);
 const $await_content5__$params = ($scope, $params6) => $await_content5__result($scope, $params6[0]);
 const $await_content4__result = ($scope, result) => _text($scope["#text/0"], result);

@@ -258,6 +258,9 @@ export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
   });
 }
 function setInputValue(el: HTMLInputElement, value: string) {
+  // Never held: a controlled input drives its value from a synchronous
+  // valueChange -> run() -> setInputValue round-trip, so deferring it would
+  // desync the field and lag the user's own typing.
   if (el.value !== value) {
     const updatedPosition = resolveCursorPosition(
       inputType,

@@ -19,6 +19,7 @@ import {
   type Scope,
 } from "../common/types";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
+import { _hold, holdCommit, holdEnabled, holding } from "./hold";
 import {
   _enable_catch,
   caughtError,
@@ -105,22 +106,29 @@ export function _await_promise(
           i: 0,
           c() {
             if (--awaitCounter!.i) return 1;
-            if (tryBranch === scope[branchAccessor]) {
-              const anchor = scope[nodeAccessor] as ChildNode;
-              if (anchor.parentNode) {
-                const detachedParent = (scope[branchAccessor] as BranchScope)[
-                  AccessorProp.StartNode
-                ].parentNode!;
-                if (detachedParent === anchor.parentNode) {
-                  // Branch never detached (re-await raced its resolution);
-                  // replacing the anchor with its own parent would cycle.
-                  anchor.remove();
-                } else {
-                  anchor.replaceWith(detachedParent);
+            const commit = () => {
+              if (tryBranch === scope[branchAccessor]) {
+                const anchor = scope[nodeAccessor] as ChildNode;
+                if (anchor.parentNode) {
+                  const detachedParent = (scope[branchAccessor] as BranchScope)[
+                    AccessorProp.StartNode
+                  ].parentNode!;
+                  if (detachedParent === anchor.parentNode) {
+                    // Branch never detached (re-await raced its resolution);
+                    // replacing the anchor with its own parent would cycle.
+                    anchor.remove();
+                  } else {
+                    anchor.replaceWith(detachedParent);
+                  }
                 }
+              } else {
+                dismissPlaceholder(tryBranch);
               }
+            };
+            if (holding) {
+              _hold(commit);
             } else {
-              dismissPlaceholder(tryBranch);
+              commit();
             }
             queueEffect(tryBranch, runPendingEffects);
           },
@@ -141,13 +149,20 @@ export function _await_promise(
                     scope,
                     () => {
                       if (!awaitBranch[AccessorProp.DetachedAwait]) {
-                        awaitBranch[
-                          AccessorProp.StartNode
-                        ].parentNode!.insertBefore(
-                          scope[nodeAccessor] as Node,
-                          awaitBranch[AccessorProp.StartNode],
-                        );
-                        tempDetachBranch(tryBranch);
+                        const commit = () => {
+                          awaitBranch[
+                            AccessorProp.StartNode
+                          ].parentNode!.insertBefore(
+                            scope[nodeAccessor] as Node,
+                            awaitBranch[AccessorProp.StartNode],
+                          );
+                          tempDetachBranch(tryBranch);
+                        };
+                        if (holding) {
+                          _hold(commit);
+                        } else {
+                          commit();
+                        }
                       }
                     },
                     -1,
@@ -238,12 +253,20 @@ function resolveAwait(
     setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
     awaitBranch[AccessorProp.DetachedAwait] = 0;
 
-    insertBranchBefore(
-      awaitBranch,
-      (scope[nodeAccessor] as ChildNode).parentNode!,
-      scope[nodeAccessor] as ChildNode,
-    );
-    referenceNode.remove();
+    const anchor = scope[nodeAccessor] as ChildNode;
+    const parentNode = anchor.parentNode!;
+    // Held alongside the awaitCounter's anchor op below so that, at drain, the
+    // insert-then-remove runs before the counter re-checks the (now gone)
+    // anchor and no-ops — keeping the reveal coordinated.
+    const commit = () => {
+      insertBranchBefore(awaitBranch, parentNode, anchor);
+      referenceNode.remove();
+    };
+    if (holding) {
+      _hold(commit);
+    } else {
+      commit();
+    }
   }
   params?.(awaitBranch, [value]);
   return awaitBranch;
@@ -306,18 +329,29 @@ export function addAwaitCounter(
             queueRender(
               tryBranch,
               () => {
-                insertBranchBefore(
-                  (tryBranch[AccessorProp.PlaceholderBranch] =
-                    createAndSetupBranch(
-                      tryBranch[AccessorProp.Global],
-                      tryBranch[AccessorProp.PlaceholderContent] as Renderer,
-                      tryBranch[AccessorProp.Owner]!,
-                      tryBranch[AccessorProp.StartNode].parentNode!,
-                    )),
+                // Building the placeholder proceeds; only swapping it in for
+                // the detached try content is held.
+                const placeholderBranch = (tryBranch[
+                  AccessorProp.PlaceholderBranch
+                ] = createAndSetupBranch(
+                  tryBranch[AccessorProp.Global],
+                  tryBranch[AccessorProp.PlaceholderContent] as Renderer,
+                  tryBranch[AccessorProp.Owner]!,
                   tryBranch[AccessorProp.StartNode].parentNode!,
-                  tryBranch[AccessorProp.StartNode],
-                );
-                tempDetachBranch(tryBranch);
+                ));
+                const commit = () => {
+                  insertBranchBefore(
+                    placeholderBranch,
+                    tryBranch[AccessorProp.StartNode].parentNode!,
+                    tryBranch[AccessorProp.StartNode],
+                  );
+                  tempDetachBranch(tryBranch);
+                };
+                if (holding) {
+                  _hold(commit);
+                } else {
+                  commit();
+                }
               },
               -1,
             ),
@@ -342,11 +376,18 @@ function dismissPlaceholder(tryBranch: BranchScope) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
     // The temporarily detached try branch has a DocumentFragment parent
     // containing its complete DOM range.
-    placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
-      tryBranch[AccessorProp.StartNode].parentNode!,
-      placeholderBranch[AccessorProp.StartNode],
-    );
-    removeAndDestroyBranch(placeholderBranch);
+    const commit = () => {
+      placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
+        tryBranch[AccessorProp.StartNode].parentNode!,
+        placeholderBranch[AccessorProp.StartNode],
+      );
+      removeAndDestroyBranch(placeholderBranch);
+    };
+    if (holding) {
+      _hold(commit);
+    } else {
+      commit();
+    }
   }
 }
 
@@ -505,13 +546,34 @@ export function _show(
       wrapper.replaceWith(...wrapper.childNodes);
     }
 
-    const inDom = startNode.parentNode === parentNode;
-    if (display) {
-      if (!inDom) {
-        insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode);
+    const shownRange = range;
+    // Re-reads whether the range is on screen at apply time, so a superseding
+    // render only has to retarget the display value.
+    const commit = (_from: unknown, show: unknown) => {
+      const inDom =
+        shownRange[AccessorProp.StartNode].parentNode === parentNode;
+      if (show) {
+        if (!inDom) {
+          insertBranchBefore(
+            shownRange,
+            parentNode,
+            onlyChild ? null : referenceNode,
+          );
+        }
+      } else if (inDom) {
+        tempDetachBranch(shownRange);
       }
-    } else if (inDom) {
-      tempDetachBranch(range);
+    };
+    if (holding && (parentNode as Node).isConnected) {
+      holdCommit(
+        scope,
+        AccessorPrefix.HeldCommit + nodeAccessor,
+        0,
+        display,
+        commit,
+      );
+    } else {
+      commit(0, display);
     }
   };
 }
@@ -707,37 +769,55 @@ export function setConditionalRenderer<T>(
     referenceNode.nodeType > NodeType.Element
       ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
       : (referenceNode as ParentNode);
+  // Creating and setting up the branch proceeds even while holding, so its
+  // content is built (detached) during the flush; only the visible swap is
+  // deferred until the hold drains.
   const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
     newRenderer &&
     createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
-  if (referenceNode === parentNode) {
-    if (prevBranch) {
-      destroyBranch(prevBranch);
-      referenceNode.textContent = "";
-    }
+  // Reads the swap's endpoints as arguments, so a superseding render can retarget
+  // it to the latest branch while it still starts from what is on screen.
+  const commit = (prev: BranchScope | undefined, next: BranchScope) => {
+    if (referenceNode === parentNode) {
+      if (prev) {
+        destroyBranch(prev);
+        referenceNode.textContent = "";
+      }
 
-    if (newBranch) {
-      insertBranchBefore(newBranch, parentNode, null);
-    }
-  } else if (prevBranch) {
-    if (newBranch) {
-      insertBranchBefore(
-        newBranch,
-        parentNode,
-        prevBranch[AccessorProp.StartNode],
-      );
-    } else {
-      parentNode.insertBefore(
-        referenceNode,
-        prevBranch[AccessorProp.StartNode],
-      );
-    }
+      if (next) {
+        insertBranchBefore(next, parentNode, null);
+      }
+    } else if (prev) {
+      if (next) {
+        insertBranchBefore(next, parentNode, prev[AccessorProp.StartNode]);
+      } else {
+        parentNode.insertBefore(referenceNode, prev[AccessorProp.StartNode]);
+      }
 
-    removeAndDestroyBranch(prevBranch);
-  } else if (newBranch) {
-    insertBranchBefore(newBranch, parentNode, referenceNode);
-    referenceNode.remove();
+      removeAndDestroyBranch(prev);
+    } else if (next) {
+      insertBranchBefore(next, parentNode, referenceNode);
+      referenceNode.remove();
+    }
+  };
+  if (holding && (parentNode as Node).isConnected) {
+    holdCommit(
+      scope,
+      AccessorPrefix.HeldCommit + nodeAccessor,
+      prevBranch,
+      newBranch,
+      commit,
+      dropBranch,
+    );
+  } else {
+    commit(prevBranch, newBranch);
   }
+}
+
+// A branch a superseding render replaced before it was ever shown: its DOM is
+// still detached, so releasing the scope is all that is needed.
+function dropBranch(superseded: BranchScope | undefined) {
+  if (superseded) destroyBranch(superseded);
 }
 
 export const _for_of = loop<
@@ -842,126 +922,190 @@ function loop<T extends unknown[] = unknown[]>(
         params?.(branch, args);
       });
 
-      const newLen = newScopes.length;
-      const hasSiblings = referenceNode !== parentNode;
-      let afterReference: null | Node = null;
-      let oldEnd = oldLen - 1;
-      let newEnd = newLen - 1;
-
-      if (hasSiblings) {
-        if (oldLen) {
-          afterReference = oldScopes[oldEnd][AccessorProp.EndNode].nextSibling;
-          if (!newLen) {
-            parentNode.insertBefore(referenceNode, afterReference);
-          }
-        } else if (newLen) {
-          afterReference = referenceNode.nextSibling;
-          referenceNode.remove();
-        }
-      }
-
-      if (!hasPotentialMoves) {
-        // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
-        if (oldLen) {
-          oldScopes.forEach(
-            hasSiblings ? removeAndDestroyBranch : destroyBranch,
-          );
-          if (!hasSiblings) {
-            parentNode.textContent = "";
-          }
+      // Building the branches above proceeds even while holding; the
+      // reconciliation reads and mutates the live list as it goes, so it must
+      // run as one atomic step — held whole (not op-by-op) when connected.
+      // Both lists are arguments so a superseding render can retarget it while
+      // it still starts from the branches that are on screen.
+      const commit = (from: BranchScope[], to: BranchScope[]) => {
+        if (holdEnabled && from !== oldScopes) {
+          [oldScopesByKey, start, hasPotentialMoves] = reindexLoop(from, to);
         }
 
-        for (const newScope of newScopes) {
-          insertBranchBefore(newScope, parentNode, afterReference);
-        }
+        const fromLen = from.length;
+        const newLen = to.length;
+        const hasSiblings = referenceNode !== parentNode;
+        let afterReference: null | Node = null;
+        let oldEnd = fromLen - 1;
+        let newEnd = newLen - 1;
 
-        return;
-      }
-
-      if (oldScopesByKey) {
-        oldScopesByKey.forEach(removeAndDestroyBranch);
-      } else {
-        for (let i = newLen; i < oldLen; i++) {
-          removeAndDestroyBranch(oldScopes[i]);
-        }
-      }
-
-      // Skip common suffix
-      while (
-        oldEnd >= start &&
-        newEnd >= start &&
-        oldScopes[oldEnd] === newScopes[newEnd]
-      ) {
-        oldEnd--;
-        newEnd--;
-      }
-
-      // Update afterReference to account for common suffix
-      if (oldEnd + 1 < oldLen) {
-        afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
-      }
-
-      if (start > oldEnd || start > newEnd) {
-        for (let i = start; i <= newEnd; i++) {
-          insertBranchBefore(newScopes[i], parentNode, afterReference);
-        }
-        return;
-      }
-
-      // Handle mixed new/moves
-      const diffLen = newEnd - start + 1;
-      const sources = new Array<number>(diffLen);
-      const pred = new Array<number>(diffLen);
-      const tails: number[] = [];
-      let tail: number = -1;
-      let lo: number;
-      let hi: number;
-      let mid: number;
-
-      for (let i = diffLen; i--;) {
-        sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
-      }
-
-      for (let i = 0; i < diffLen; i++) {
-        if (~sources[i]) {
-          if (tail < 0 || sources[tails[tail]] < sources[i]) {
-            if (~tail) pred[i] = tails[tail];
-            tails[++tail] = i;
-          } else {
-            lo = 0;
-            hi = tail;
-            while (lo < hi) {
-              mid = ((lo + hi) / 2) | 0;
-              if (sources[tails[mid]] < sources[i]) lo = mid + 1;
-              else hi = mid;
+        if (hasSiblings) {
+          if (fromLen) {
+            afterReference = from[oldEnd][AccessorProp.EndNode].nextSibling;
+            if (!newLen) {
+              parentNode.insertBefore(referenceNode, afterReference);
             }
-            if (sources[i] < sources[tails[lo]]) {
-              if (lo > 0) pred[i] = tails[lo - 1];
-              tails[lo] = i;
+          } else if (newLen) {
+            afterReference = referenceNode.nextSibling;
+            referenceNode.remove();
+          }
+        }
+
+        if (!hasPotentialMoves) {
+          // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
+          if (fromLen) {
+            from.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch);
+            if (!hasSiblings) {
+              parentNode.textContent = "";
             }
           }
+
+          for (const newScope of to) {
+            insertBranchBefore(newScope, parentNode, afterReference);
+          }
+
+          return;
         }
-      }
 
-      // Backtrack to build LIS indices (reuse tails array)
-      hi = tails[tail];
-      lo = tail + 1;
-      while (lo-- > 0) {
-        tails[lo] = hi;
-        hi = pred[hi];
-      }
-
-      for (let i = diffLen; i--;) {
-        if (~tail && i === tails[tail]) {
-          tail--;
+        if (oldScopesByKey) {
+          oldScopesByKey.forEach(removeAndDestroyBranch);
         } else {
-          insertBranchBefore(newScopes[start + i], parentNode, afterReference);
+          for (let i = newLen; i < fromLen; i++) {
+            removeAndDestroyBranch(from[i]);
+          }
         }
 
-        afterReference = newScopes[start + i][AccessorProp.StartNode];
+        // Skip common suffix
+        while (
+          oldEnd >= start &&
+          newEnd >= start &&
+          from[oldEnd] === to[newEnd]
+        ) {
+          oldEnd--;
+          newEnd--;
+        }
+
+        // Update afterReference to account for common suffix
+        if (oldEnd + 1 < fromLen) {
+          afterReference = from[oldEnd + 1][AccessorProp.StartNode];
+        }
+
+        if (start > oldEnd || start > newEnd) {
+          for (let i = start; i <= newEnd; i++) {
+            insertBranchBefore(to[i], parentNode, afterReference);
+          }
+          return;
+        }
+
+        // Handle mixed new/moves
+        const diffLen = newEnd - start + 1;
+        const sources = new Array<number>(diffLen);
+        const pred = new Array<number>(diffLen);
+        const tails: number[] = [];
+        let tail: number = -1;
+        let lo: number;
+        let hi: number;
+        let mid: number;
+
+        for (let i = diffLen; i--;) {
+          sources[i] = to[start + i][AccessorProp.LoopIndex] ?? -1;
+        }
+
+        for (let i = 0; i < diffLen; i++) {
+          if (~sources[i]) {
+            if (tail < 0 || sources[tails[tail]] < sources[i]) {
+              if (~tail) pred[i] = tails[tail];
+              tails[++tail] = i;
+            } else {
+              lo = 0;
+              hi = tail;
+              while (lo < hi) {
+                mid = ((lo + hi) / 2) | 0;
+                if (sources[tails[mid]] < sources[i]) lo = mid + 1;
+                else hi = mid;
+              }
+              if (sources[i] < sources[tails[lo]]) {
+                if (lo > 0) pred[i] = tails[lo - 1];
+                tails[lo] = i;
+              }
+            }
+          }
+        }
+
+        // Backtrack to build LIS indices (reuse tails array)
+        hi = tails[tail];
+        lo = tail + 1;
+        while (lo-- > 0) {
+          tails[lo] = hi;
+          hi = pred[hi];
+        }
+
+        for (let i = diffLen; i--;) {
+          if (~tail && i === tails[tail]) {
+            tail--;
+          } else {
+            insertBranchBefore(to[start + i], parentNode, afterReference);
+          }
+
+          afterReference = to[start + i][AccessorProp.StartNode];
+        }
+      };
+      if (holding && parentNode.isConnected) {
+        holdCommit(
+          scope,
+          AccessorPrefix.HeldCommit + nodeAccessor,
+          oldScopes,
+          newScopes,
+          commit,
+          dropLoopBranches,
+        );
+      } else {
+        commit(oldScopes, newScopes);
       }
     };
   };
+}
+
+// A superseding render diffed against branches that were never shown, so the
+// keyed lookup, common prefix, and source indexes are rebuilt against the
+// branches actually on screen.
+function reindexLoop(from: BranchScope[], to: BranchScope[]) {
+  const byKey = new Map<unknown, BranchScope>();
+  let common = 0;
+  let moves: boolean | undefined;
+
+  // Forward, so the leftovers this map yields are removed in document order.
+  for (let i = 0; i < from.length; i++) {
+    from[i][AccessorProp.LoopIndex] = i;
+    byKey.set(from[i][AccessorProp.LoopKey] ?? i, from[i]);
+  }
+
+  while (common < to.length && to[common] === from[common]) common++;
+
+  for (const branch of to) {
+    if (byKey.get(branch[AccessorProp.LoopKey]) === branch) {
+      moves = true;
+      byKey.delete(branch[AccessorProp.LoopKey]);
+    } else {
+      branch[AccessorProp.LoopIndex] = -1;
+    }
+  }
+
+  return [byKey, common, moves] as const;
+}
+
+// Branches a superseding render built but never showed; the ones still on screen
+// stay for the drain's own reconciliation to remove.
+function dropLoopBranches(
+  superseded: BranchScope[],
+  to: BranchScope[],
+  from: BranchScope[],
+) {
+  const kept = new Set(to);
+  for (const branch of from) kept.add(branch);
+  for (const branch of superseded) {
+    if (!kept.has(branch)) destroyBranch(branch);
+  }
 }
 
 function createBranchWithTagNameOrRenderer(

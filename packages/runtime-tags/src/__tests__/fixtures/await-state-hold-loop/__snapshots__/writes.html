@@ -1,0 +1,19 @@
+<button id=inc>inc</button><!--M_*1 a-->
+<ul>
+  <li>item <!>0<!--M_*2 a--> of <!>1<!--M_*2 b--></li><!--M_}1 b 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    d: 1
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[-->
+<div id=awaited>awaited <!>1<!--M_*3 a--></div><!--M_]1 c 3-->
+<script>
+  M._.r.push("a0 1");
+  M._.w()
+</script>

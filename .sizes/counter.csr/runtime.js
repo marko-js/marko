@@ -1,4 +1,4 @@
-// size: 3904 (min) 1732 (brotli)
+// size: 3899 (min) 1723 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -56,6 +56,31 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   pendingRenders = [],
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
+  },
+  runRenders = () => {
+    for (; pendingRenders.length;) {
+      let render = pendingRenders[0],
+        item = pendingRenders.pop();
+      if (render !== item) {
+        let i = 0,
+          mid = pendingRenders.length >> 1,
+          key = (pendingRenders[0] = item).a;
+        for (; i < mid;) {
+          let bestChild = (i << 1) + 1,
+            right = bestChild + 1;
+          if (
+            (right < pendingRenders.length &&
+              pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
+              (bestChild = right),
+            pendingRenders[bestChild].a - key >= 0)
+          )
+            break;
+          ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
+        }
+        pendingRenders[i] = item;
+      }
+      runRender(render);
+    }
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
@@ -263,31 +288,6 @@ function prepareEffects(fn) {
     (runId++, (rendering = 0), (pendingRenders = prevRenders), (pendingEffects = prevEffects));
   }
   return preparedEffects;
-}
-function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
-    if (render !== item) {
-      let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
-      for (; i < mid;) {
-        let bestChild = (i << 1) + 1,
-          right = bestChild + 1;
-        if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
-            (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
-        )
-          break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
-      }
-      pendingRenders[i] = item;
-    }
-    runRender(render);
-  }
 }
 function $signalReset(scope, id) {
   let ctrl = scope.A?.[id];

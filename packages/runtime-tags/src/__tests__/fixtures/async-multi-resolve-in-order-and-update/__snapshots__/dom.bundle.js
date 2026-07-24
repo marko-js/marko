@@ -1,5 +1,6 @@
 // template.marko
 const multiply = (multiplier, n) => resolveAfter(multiplier * n);
+_enable_hold();
 const $await_content5__result = ($scope, result) => _text($scope.a, result);
 const $await_content5__$params = ($scope, $params6) => $await_content5__result($scope, $params6[0]);
 const $await_content4__result = ($scope, result) => _text($scope.a, result);
