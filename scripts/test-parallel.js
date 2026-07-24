@@ -9,9 +9,8 @@
 // A plain `pnpm test` is untouched — it stays serial, which is what a scoped
 // `--grep` dev run wants. This is the "run everything, fast" path used by CI.
 //
-// Plain CommonJS on purpose: this orchestrator is what `c8` wraps for coverage,
-// and loading the `~ts` hook in that process breaks c8's report
-// step. The mocha workers it spawns still get `~ts` via `.mocharc.parallel.json`.
+// Plain CommonJS because it needs no types and is spawned directly by `node`;
+// the mocha workers it spawns get `~ts` via `.mocharc.parallel.json`.
 //
 // Usage: node scripts/test-parallel.js [extra mocha args...]
 //        MARKO_TEST_WORKERS=8 node scripts/test-parallel.js
