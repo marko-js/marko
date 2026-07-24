@@ -267,7 +267,6 @@ packages/runtime-tags/src/translator/core/for.ts | sed
 packages/runtime-tags/src/translator/core/client.ts
 packages/runtime-tags/src/translator/core/server.ts` reports only the four
 keyword/description lines.
-||||||| parent of 001ef3300e (Replace @babel/register with native Node type stripping)
 
 ## Stray debug `console.error` in the mocha patch
 
@@ -275,8 +274,8 @@ keyword/description lines.
 
 The repo's only mocha patch adds a bare `console.error(requireErr)` in `lib/nodejs/esm-utils.js`'s `requireModule` catch block, printing the full require error every time a spec file fails plain `require()` before mocha's `import()` fallback succeeds. With `.mocharc` `"no-warnings"` runs this is silent today only because spec requires no longer throw, but any environment where the require path fails first (e.g. an older Node loading `.ts` specs) spews stack traces for tests that then load fine. Looks like leftover debugging, not intentional patching. Fix: regenerate the patch without the `console.error` line (`pnpm patch mocha@11.7.6`), or delete the patch if that line was its only content — inspect with `cat patches/mocha@11.7.6.patch` (it is currently a single-hunk, one-line addition).
 
-## Dead markoc test fixture requires a removed devDependency
+## Delete or resurrect the dead `test/markoc` suite — mocha loads it every run for zero tests
 
-`packages/runtime-class/test/markoc/babel-register.js` | 2026-07-23 | impact:low | effort:low
+`packages/runtime-class/test/markoc/index.test.js` | 2026-07-24 | impact:low | effort:low
 
-The markoc CLI test (`test/markoc/index.test.js`) has been fully commented out for a long time, and its helper `babel-register.js` requires `@babel/register` — a devDependency that no longer exists since the native type-stripping migration. Nothing loads the file (the only reference is inside the commented-out test), so nothing breaks, but the fixture can never work again as written. Either delete `test/markoc/` or resurrect the test without babel (spawn `bin/markoc` with `-r ~ts`). Verify: `grep -rn "babel-register" packages/runtime-class/test/markoc/`.
+The mocha spec glob (`packages/*/@(src|test)/**/*.test.@(js|ts)`) matches this file, so every suite run loads it — and it defines no tests at all. Its entire `autotest` body has been commented out for years; the eight live lines only `require` `../__util__/test-init`, `chai`, and `../../compiler`, so the run pays that load cost for nothing. The commented body also now references `./babel-register`, which was deleted with the native-type-stripping migration, so it cannot be uncommented as written, and seven unused fixture directories remain under `fixtures/`. Either delete `test/markoc/` outright or resurrect the test by spawning `bin/markoc` with `-r ~ts` instead of a babel hook. Verify: `grep -vn "^\s*//" packages/runtime-class/test/markoc/index.test.js` lists eight non-comment lines and no `describe`/`it`.

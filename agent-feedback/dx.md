@@ -2,12 +2,6 @@
 
 Friction in builds, tests, tooling, or repo workflows. Format and rules: [README.md](README.md).
 
-## `c8` coverage crashes generating lcov when the wrapped process loads `~ts`
-
-`scripts/test-parallel.js` | 2026-07-02 | impact:med | effort:med
-
-`c8 node -r ~ts <script>` (i.e. any c8-wrapped process that loads `scripts/babel-register.js` via `-r ~ts`) throws `TypeError: Cons is not a constructor` at `istanbul-reports/index.js:22` during c8's report step while constructing the `lcov` reporter — no `coverage/lcov.info` is written and the process exits 1. Coverage collection itself succeeds (the text-summary reporter prints correct numbers); only lcov report generation dies. This is why `scripts/test-parallel.js` is deliberately plain CommonJS (its spawned mocha workers still load `~ts` via `.mocharc.parallel.json`, which does _not_ trigger the bug — only `-r ~ts` on the c8-monitored process does). Worth root-causing, since it silently blocks lcov/codecov for any future `node -r ~ts` script someone wraps in `c8`; likely a c8@11 ↔ @babel/register require-hook interaction.
-
 ## Migrate to Babel 8 and chai 6 as dedicated efforts (deferred from the deps upgrade)
 
 `patches/@babel+types+7.29.7.patch` | 2026-07-07 | impact:med | effort:high
@@ -52,6 +46,14 @@ and merge the istanbul JSON at the end (the ~50s remap work splits cleanly
 per dump); prewarm the babel cache with one serial require pass in
 `scripts/test-parallel.js` before spawning workers on a cold cache (~6s net,
 needs a hardcoded heavy-module list that can rot).
+
+**Both profiles above predate the drop of `@babel/register` and must be
+re-measured before anyone acts on them.** Node now strips types natively, so
+the ~13% `@babel/register` TS transform, the ~12s cold-cache penalty on fresh
+CI checkouts, and the babel-cache prewarm suggestion no longer describe
+anything that exists. The parallel-remap win was since implemented in
+`scripts/coverage-report.js`. Whether the run is still CPU-bound — the entry's
+actual conclusion — is untested against the current tooling.
 
 ## Emit a compile-time diagnostic when an unenclosed `>`/`>=` truncates an attribute-value expression
 
@@ -565,10 +567,12 @@ compile -o dom -d /tmp/x.marko` → "Cannot find module
 '@marko/runtime-tags/translator'"; `pnpm run compile -o dom -d -t <abs path to
 packages/runtime-tags/src/translator/index.ts> /tmp/x.marko` → succeeds and
 writes `/tmp/x.marko.js`.
-||||||| parent of 001ef3300e (Replace @babel/register with native Node type stripping)
-Several built-ins still fall through the constructor dispatch to `throwUnserializable`, each a one-case addition: `DataView` is the only `ArrayBuffer` view missing while every `TypedArray` is handled, which is an inconsistency rather than a considered omission; boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) resume as nothing; and `DOMException`, `AbortSignal`, and `Event` reach templates through request handling yet cannot cross to the browser. `DataView` and the boxed primitives are pure wins with obvious constructor forms (`new DataView(buffer, byteOffset, byteLength)`, `Object(value)`); the DOM types are lower value and only worth adding if a real template needs them. Re-verify: pass each through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
 
-Several built-ins still fall through the constructor dispatch to `throwUnserializable`, each a one-case addition: `DataView` is the only `ArrayBuffer` view missing while every `TypedArray` is handled, which is an inconsistency rather than a considered omission; boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) resume as nothing; and `DOMException`, `AbortSignal`, and `Event` reach templates through request handling yet cannot cross to the browser. `DataView` and the boxed primitives are pure wins with obvious constructor forms (`new DataView(buffer, byteOffset, byteLength)`, `Object(value)`); the DOM types are lower value and only worth adding if a real template needs them. Re-verify: pass each through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
+## Serialize `DataView` and boxed primitives
+
+`packages/runtime-tags/src/html/serializer.ts` › `writeUnknownObject` | 2026-07-24 | impact:low | effort:low
+
+`DataView` is the only `ArrayBuffer` view that falls through the constructor dispatch to `throwUnserializable` while every `TypedArray` is handled, which is an inconsistency rather than a considered omission; boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) likewise resume as nothing. Both are one-case additions with obvious constructor forms (`new DataView(buffer, byteOffset, byteLength)` and `Object(value)`), making them pure wins — the DOM built-ins originally recorded alongside them are tracked separately in "Serialize the remaining DOM built-ins reachable from browser code". Re-verify: pass each through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
 
 ## Coverage modernization: c8 numbers are inflated, but a monocart switch needs a dedicated PR
 
