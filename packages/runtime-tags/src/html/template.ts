@@ -113,8 +113,8 @@ class ServerRendered implements RenderedTemplate {
 
   [Symbol.asyncIterator]() {
     type Iter = { value: string; done: boolean };
-    let resolve: (value: Iter) => void;
-    let reject: (reason: unknown) => void;
+    let resolve: ((value: Iter) => void) | undefined;
+    let reject: ((reason: unknown) => void) | undefined;
     let value = "";
     let done = false;
     let aborted = false;
@@ -122,8 +122,12 @@ class ServerRendered implements RenderedTemplate {
     const boundary = this.#read(
       (html) => {
         value += html;
+        // Clear the settler before running it; a stale one still empties
+        // `value`, dropping whatever buffered while the consumer was busy.
         if (resolve) {
-          resolve({ value, done });
+          const settle = resolve;
+          resolve = reject = undefined;
+          settle({ value, done });
           value = "";
         }
       },
@@ -132,13 +136,17 @@ class ServerRendered implements RenderedTemplate {
         reason = err;
 
         if (reject) {
-          reject(err);
+          const settle = reject;
+          resolve = reject = undefined;
+          settle(err);
         }
       },
       () => {
         done = true;
         if (resolve) {
-          resolve({ value, done: !value });
+          const settle = resolve;
+          resolve = reject = undefined;
+          settle({ value, done: !value });
           value = "";
         }
       },
