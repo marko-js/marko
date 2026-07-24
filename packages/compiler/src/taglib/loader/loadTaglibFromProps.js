@@ -1,16 +1,16 @@
-"use strict";
+import { ok } from "assert";
+import nodePath from "path";
 
-var ok = require("assert").ok;
-var nodePath = require("path");
-var createError = require("raptor-util/createError");
-var markoModules = require("@marko/compiler/modules");
-var taglibFS = require("../config");
-var DependencyChain = require("./DependencyChain");
-var jsonFileReader = require("./json-file-reader");
-var loaders = require("./loaders");
-var propertyHandlers = require("./property-handlers");
-var scanTagsDir = require("./scanTagsDir");
-var types = require("./types");
+import markoModules from "@marko/compiler/modules";
+import createError from "raptor-util/createError";
+
+import taglibFS from "../config";
+import DependencyChain from "./DependencyChain";
+import * as jsonFileReader from "./json-file-reader";
+import * as loaders from "./loaders";
+import propertyHandlers from "./property-handlers";
+import scanTagsDir from "./scanTagsDir";
+import * as types from "./types";
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
@@ -430,4 +430,4 @@ function loadTaglibFromProps(taglib, taglibProps, dependencyChain) {
   return taglib;
 }
 
-module.exports = loadTaglibFromProps;
+export default loadTaglibFromProps;

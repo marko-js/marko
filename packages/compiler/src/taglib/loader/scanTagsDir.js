@@ -1,10 +1,9 @@
-"use strict";
+import nodePath from "path";
 
-const nodePath = require("path");
-const taglibConfig = require("../config");
-const jsonFileReader = require("./json-file-reader");
-const loaders = require("./loaders");
-const types = require("./types");
+import taglibConfig from "../config";
+import * as jsonFileReader from "./json-file-reader";
+import * as loaders from "./loaders";
+import * as types from "./types";
 
 const tagFileTypes = [
   "template",
@@ -125,7 +124,7 @@ function isDirectory(path) {
  * @param {String|Object} dir the path to directory to scan
  * @param {String} taglib the taglib that is being loaded
  */
-module.exports = function scanTagsDir(
+export default function scanTagsDir(
   // oxlint-disable-next-line only-used-in-recursion -- part of the loader signature
   tagsConfigPath,
   tagsConfigDirname,
@@ -234,4 +233,4 @@ module.exports = function scanTagsDir(
     tag.name = tag.name || tagName;
     taglib.addTag(tag);
   }
-};
+}

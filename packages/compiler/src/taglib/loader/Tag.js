@@ -1,6 +1,6 @@
-"use strict";
-var ok = require("assert").ok;
-var path = require("path");
+import { ok } from "assert";
+import path from "path";
+
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 class Tag {
@@ -97,4 +97,4 @@ class Tag {
   }
 }
 
-module.exports = Tag;
+export default Tag;

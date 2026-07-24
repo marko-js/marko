@@ -8,4 +8,4 @@ class Property {
   }
 }
 
-module.exports = Property;
+export default Property;

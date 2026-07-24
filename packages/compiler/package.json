@@ -49,7 +49,7 @@
     },
     "./register": {
       "types": "./register.d.ts",
-      "default": "./src/register.js"
+      "default": "./src/register.cjs"
     },
     "./modules": {
       "types": "./modules.d.ts",
@@ -66,7 +66,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production && node scripts/bundle-babel.mts",
+    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production && node -e \"require('fs').rmSync('dist/package.json',{force:true})\" && node scripts/bundle-babel.mts",
     "build-babel-types": "node -r ~ts scripts/types"
   },
   "dependencies": {

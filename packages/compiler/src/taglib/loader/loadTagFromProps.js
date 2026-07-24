@@ -1,14 +1,14 @@
-"use strict";
+import { ok } from "assert";
+import nodePath from "path";
 
-var ok = require("assert").ok;
-var nodePath = require("path");
-var createError = require("raptor-util/createError");
-var isObjectEmpty = require("raptor-util/isObjectEmpty");
-var markoModules = require("@marko/compiler/modules");
-var taglibConfig = require("../config");
-var loaders = require("./loaders");
-var propertyHandlers = require("./property-handlers");
-var types = require("./types");
+import markoModules from "@marko/compiler/modules";
+import createError from "raptor-util/createError";
+import isObjectEmpty from "raptor-util/isObjectEmpty";
+
+import taglibConfig from "../config";
+import * as loaders from "./loaders";
+import propertyHandlers from "./property-handlers";
+import * as types from "./types";
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
@@ -580,6 +580,6 @@ function loadTagFromProps(tag, tagProps, dependencyChain) {
   return tag;
 }
 
-module.exports = loadTagFromProps;
+export default loadTagFromProps;
 
 loadTagFromProps.isSupportedProperty = isSupportedProperty;

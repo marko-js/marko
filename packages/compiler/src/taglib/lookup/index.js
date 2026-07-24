@@ -1,9 +1,9 @@
-"use strict";
+import { ok } from "assert";
+import nodePath from "path";
 
-var nodePath = require("path");
-var ok = require("assert").ok;
-var extend = require("raptor-util/extend");
-var taglibTypes = require("../loader/types");
+import extend from "raptor-util/extend";
+
+import * as taglibTypes from "../loader/types";
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function TAG_COMPARATOR(a, b) {
@@ -288,4 +288,4 @@ class TaglibLookup {
   }
 }
 
-module.exports = TaglibLookup;
+export default TaglibLookup;

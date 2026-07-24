@@ -1,9 +1,10 @@
-var ok = require("assert").ok;
-var nodePath = require("path");
-var cache = require("./cache");
-var DependencyChain = require("./DependencyChain");
-var scanTagsDir = require("./scanTagsDir");
-var types = require("./types");
+import { ok } from "assert";
+import nodePath from "path";
+
+import * as cache from "./cache";
+import DependencyChain from "./DependencyChain";
+import scanTagsDir from "./scanTagsDir";
+import * as types from "./types";
 
 function loadFromDir(dir, tagDiscoveryDir) {
   ok(dir, '"dir" is required');
@@ -28,4 +29,4 @@ function loadFromDir(dir, tagDiscoveryDir) {
   return taglib;
 }
 
-module.exports = loadFromDir;
+export default loadFromDir;

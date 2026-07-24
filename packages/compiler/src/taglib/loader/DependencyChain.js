@@ -14,4 +14,4 @@ class DependencyChain {
   }
 }
 
-module.exports = DependencyChain;
+export default DependencyChain;

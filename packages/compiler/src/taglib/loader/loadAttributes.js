@@ -1,7 +1,8 @@
-var ok = require("assert").ok;
-var loaders = require("./loaders");
+import { ok } from "assert";
 
-module.exports = function loadAttributes(value, parent, dependencyChain) {
+import * as loaders from "./loaders";
+
+export default function loadAttributes(value, parent, dependencyChain) {
   ok(parent);
   ok(dependencyChain);
 
@@ -15,4 +16,4 @@ module.exports = function loadAttributes(value, parent, dependencyChain) {
 
     parent.addAttribute(attr);
   }
-};
+}

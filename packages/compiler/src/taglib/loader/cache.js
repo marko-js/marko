@@ -12,6 +12,4 @@ function clear() {
   cache = {};
 }
 
-exports.get = get;
-exports.put = put;
-exports.clear = clear;
+export { get, put, clear };
