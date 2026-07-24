@@ -1,24 +1,33 @@
-var types = require("./types");
+import loadAttributeFromProps from "./loadAttributeFromProps";
+import loadAttributes from "./loadAttributes";
+import loadTagFromFile from "./loadTagFromFile";
+import loadTagFromProps from "./loadTagFromProps";
+import loadTaglibFromDir from "./loadTaglibFromDir";
+import loadTaglibFromFile from "./loadTaglibFromFile";
+import loadTaglibFromProps from "./loadTaglibFromProps";
+import * as types from "./types";
 
 function isSupportedAttributeProperty(propertyName) {
-  return exports.loadAttributeFromProps.isSupportedProperty(propertyName);
+  return loadAttributeFromProps.isSupportedProperty(propertyName);
 }
 
 function isSupportedTagProperty(propertyName) {
-  return exports.loadTagFromProps.isSupportedProperty(propertyName);
+  return loadTagFromProps.isSupportedProperty(propertyName);
 }
 
 function createTaglib(taglibPath) {
   return new types.Taglib(taglibPath);
 }
 
-exports.createTaglib = createTaglib;
-exports.loadAttributeFromProps = require("./loadAttributeFromProps");
-exports.loadTagFromProps = require("./loadTagFromProps");
-exports.loadTagFromFile = require("./loadTagFromFile");
-exports.loadTaglibFromProps = require("./loadTaglibFromProps");
-exports.loadTaglibFromFile = require("./loadTaglibFromFile");
-exports.loadTaglibFromDir = require("./loadTaglibFromDir");
-exports.loadAttributes = require("./loadAttributes");
-exports.isSupportedAttributeProperty = isSupportedAttributeProperty;
-exports.isSupportedTagProperty = isSupportedTagProperty;
+export {
+  createTaglib,
+  isSupportedAttributeProperty,
+  isSupportedTagProperty,
+  loadAttributeFromProps,
+  loadAttributes,
+  loadTagFromFile,
+  loadTagFromProps,
+  loadTaglibFromDir,
+  loadTaglibFromFile,
+  loadTaglibFromProps,
+};

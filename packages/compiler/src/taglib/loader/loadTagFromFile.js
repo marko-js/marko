@@ -1,8 +1,9 @@
-var ok = require("assert").ok;
-var cache = require("./cache");
-var jsonFileReader = require("./json-file-reader");
-var loaders = require("./loaders");
-var types = require("./types");
+import { ok } from "assert";
+
+import * as cache from "./cache";
+import * as jsonFileReader from "./json-file-reader";
+import * as loaders from "./loaders";
+import * as types from "./types";
 
 function loadTagFromFile(filePath) {
   ok(filePath, '"filePath" is required');
@@ -22,4 +23,4 @@ function loadTagFromFile(filePath) {
   return tag;
 }
 
-module.exports = loadTagFromFile;
+export default loadTagFromFile;

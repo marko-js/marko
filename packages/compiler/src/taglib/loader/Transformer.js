@@ -15,4 +15,4 @@ class Transformer {
   }
 }
 
-module.exports = Transformer;
+export default Transformer;

@@ -1,10 +1,10 @@
-"use strict";
+import * as assert from "assert";
 
-var assert = require("assert");
-var raptorRegexp = require("raptor-regexp");
-var createError = require("raptor-util/createError");
-var propertyHandlers = require("./property-handlers");
-var types = require("./types");
+import raptorRegexp from "raptor-regexp";
+import createError from "raptor-util/createError";
+
+import propertyHandlers from "./property-handlers";
+import * as types from "./types";
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 class AttrLoader {
@@ -240,4 +240,4 @@ loadAttributeFromProps.isSupportedProperty = function (name) {
   return hasOwnProperty.call(AttrLoader.prototype, name);
 };
 
-module.exports = loadAttributeFromProps;
+export default loadAttributeFromProps;

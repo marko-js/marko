@@ -1,7 +1,8 @@
-"use strict";
-var ok = require("assert").ok;
-var path = require("path");
-var loaders = require("./loaders");
+import { ok } from "assert";
+import path from "path";
+
+import * as loaders from "./loaders";
+
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function handleImport(taglib, importedTaglib) {
@@ -132,4 +133,4 @@ class Taglib {
   }
 }
 
-module.exports = Taglib;
+export default Taglib;

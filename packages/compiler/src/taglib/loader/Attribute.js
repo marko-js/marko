@@ -12,4 +12,4 @@ class Attribute {
   }
 }
 
-module.exports = Attribute;
+export default Attribute;

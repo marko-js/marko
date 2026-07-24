@@ -4,8 +4,8 @@ import markoModules from "@marko/compiler/modules";
 
 import tryLoadTranslator from "../util/try-load-translator";
 import taglibConfig from "./config";
-import finder from "./finder";
-import loader from "./loader";
+import * as finder from "./finder";
+import * as loader from "./loader";
 import Lookup from "./lookup";
 
 export const excludeDir = finder.excludeDir;

@@ -1,8 +1,10 @@
-var stripJsonComments = require("@luxass/strip-json-comments").strip;
-var taglibConfig = require("../config");
+import { strip as stripJsonComments } from "@luxass/strip-json-comments";
+
+import taglibConfig from "../config";
+
 var fsReadOptions = { encoding: "utf8" };
 
-exports.readFileSync = function (path) {
+export function readFileSync(path) {
   var json = String(taglibConfig.fs.readFileSync(path, fsReadOptions));
 
   try {
@@ -13,4 +15,4 @@ exports.readFileSync = function (path) {
       cause,
     });
   }
-};
+}

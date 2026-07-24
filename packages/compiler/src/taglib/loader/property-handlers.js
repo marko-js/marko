@@ -1,7 +1,6 @@
-"use strict";
+import taglibConfig from "../config";
 
 const { hasOwnProperty } = Object.prototype;
-const taglibConfig = require("../config");
 
 function removeDashes(str) {
   return str.replace(/-([a-z])/g, function (match, lower) {
@@ -9,7 +8,7 @@ function removeDashes(str) {
   });
 }
 
-module.exports = function invokeHandlers(config, handlers, path) {
+export default function invokeHandlers(config, handlers, path) {
   function error(message, cause) {
     if (cause) {
       if (cause.__propertyHandlers) {
@@ -82,4 +81,4 @@ module.exports = function invokeHandlers(config, handlers, path) {
       error("Error after applying properties", e);
     }
   }
-};
+}

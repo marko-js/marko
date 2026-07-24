@@ -1,9 +1,11 @@
-"use strict";
-var nodePath = require("path");
-var lassoPackageRoot = require("lasso-package-root");
-var markoModules = require("@marko/compiler/modules");
-var taglibConfig = require("../config");
-var taglibLoader = require("../loader");
+import nodePath from "path";
+
+import markoModules from "@marko/compiler/modules";
+import lassoPackageRoot from "lasso-package-root";
+
+import taglibConfig from "../config";
+import * as taglibLoader from "../loader";
+
 var findCache = {};
 var excludedDirs = {};
 var excludedPackages = {};
@@ -178,8 +180,4 @@ function existsSync(file) {
   }
 }
 
-exports.reset = reset;
-exports.find = find;
-exports.clearCache = clearCache;
-exports.excludeDir = excludeDir;
-exports.excludePackage = excludePackage;
+export { clearCache, excludeDir, excludePackage, find, reset };

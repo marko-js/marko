@@ -1,8 +1,9 @@
-var ok = require("assert").ok;
-var cache = require("./cache");
-var jsonFileReader = require("./json-file-reader");
-var loaders = require("./loaders");
-var types = require("./types");
+import { ok } from "assert";
+
+import * as cache from "./cache";
+import * as jsonFileReader from "./json-file-reader";
+import * as loaders from "./loaders";
+import * as types from "./types";
 
 function loadFromFile(filePath, isFromPackageJson, packageName) {
   ok(filePath, '"filePath" is required');
@@ -26,4 +27,4 @@ function loadFromFile(filePath, isFromPackageJson, packageName) {
   return taglib;
 }
 
-module.exports = loadFromFile;
+export default loadFromFile;

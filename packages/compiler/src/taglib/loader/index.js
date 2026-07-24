@@ -1,8 +1,7 @@
-var cache = require("./cache");
-
-var DependencyChain = require("./DependencyChain");
-var loaders = require("./loaders");
-var types = require("./types");
+import * as cache from "./cache";
+import DependencyChain from "./DependencyChain";
+import * as loaders from "./loaders";
+import * as types from "./types";
 
 function loadTaglibFromProps(taglib, taglibProps) {
   return loaders.loadTaglibFromProps(taglib, taglibProps);
@@ -34,9 +33,11 @@ function loadTag(tagProps, filePath) {
   return tag;
 }
 
-exports.clearCache = clearCache;
-exports.createTaglib = createTaglib;
-exports.loadTaglibFromProps = loadTaglibFromProps;
-exports.loadTaglibFromFile = loadTaglibFromFile;
-exports.loadTaglibFromDir = loadTaglibFromDir;
-exports.loadTag = loadTag;
+export {
+  clearCache,
+  createTaglib,
+  loadTag,
+  loadTaglibFromDir,
+  loadTaglibFromFile,
+  loadTaglibFromProps,
+};
