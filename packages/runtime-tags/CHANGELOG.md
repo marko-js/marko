@@ -1,5 +1,23 @@
 # @marko/runtime-tags
 
+## 6.3.21
+
+### Patch Changes
+
+- [#3557](https://github.com/marko-js/marko/pull/3557) [`e6da1fd`](https://github.com/marko-js/marko/commit/e6da1fda3ed4f6af489d8e4fedc71ce59837ca0c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Route a failed lazy input-signal chunk load to the surrounding `<try>@catch` boundary. Previously, when a lazy tag's input chunk rejected on its own (a network-level partial failure, e.g. deploy skew) while its setup chunk resolved, the branch was cloned but never inserted: the `@placeholder` stayed shown forever and `@catch` never fired. The rejection now drives the same boundary as a setup failure.
+
+- [#3570](https://github.com/marko-js/marko/pull/3570) [`e91efd4`](https://github.com/marko-js/marko/commit/e91efd40162586789383519f93d1227d3d1eb8d2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `Map`/`Set` serialization silently dropping (Set) or corrupting (Map) a member that references an ancestor object — e.g. a back-reference or undirected-graph edge. Such members are now inserted after construction so the resumed collection is intact.
+
+- [#3571](https://github.com/marko-js/marko/pull/3571) [`ee882c8`](https://github.com/marko-js/marko/commit/ee882c82bb4deef3aee3c0c151c06c8e35035fee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize `DataView` so it can be read from content that updates in the browser. A `DataView` or typed array over a buffer that cannot be serialized (e.g. `SharedArrayBuffer`) is now reported as unserializable instead of emitting a malformed constructor call that broke the whole payload.
+
+- [#3566](https://github.com/marko-js/marko/pull/3566) [`909d56d`](https://github.com/marko-js/marko/commit/909d56da5db7d3c9de107a893ce4d77b128d7678) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize `Intl` formatters and `Intl.Locale` so they can be read from content that updates in the browser, instead of failing to serialize. Formatters are rebuilt from `resolvedOptions()`; note that `Intl.DateTimeFormat` reports a resolved `month`/`weekday` width that can differ from the requested one in some locales (`ja`, `zh`), so a rebuilt formatter may render those fields differently than the server did.
+
+- [#3568](https://github.com/marko-js/marko/pull/3568) [`09ee04b`](https://github.com/marko-js/marko/commit/09ee04b3e42f8a3c2c88b79d073714a2e982a3ce) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize `Temporal` values so they can be read from content that updates in the browser. Each type is rebuilt from its own string form, preserving calendar and time zone annotations along with nanosecond precision.
+
+- [#3578](https://github.com/marko-js/marko/pull/3578) [`952dcae`](https://github.com/marko-js/marko/commit/952dcaee7b9e79bc329086c98740173d24a03061) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `template.render()`'s async iterator (`for await`) silently dropping HTML chunks — truncating the streamed document with no error — when the consumer took longer than a flush tick between reads. Buffered chunks are now retained until the consumer reads them.
+
+- [#3566](https://github.com/marko-js/marko/pull/3566) [`f0ff1bf`](https://github.com/marko-js/marko/commit/f0ff1bf98316c3f4619a584ccc16aa62e3523058) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Say why a value is being serialized in the `Unable to serialize` development error, so it reads as a requirement on values the browser references rather than an arbitrary restriction.
+
 ## 6.3.20
 
 ### Patch Changes
@@ -181,7 +199,7 @@
 
 - [#3362](https://github.com/marko-js/marko/pull/3362) [`1aeec4b`](https://github.com/marko-js/marko/commit/1aeec4bf050391fcb21d270e95a9c7387d52e35a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix values yielded/returned by a serialized sync generator registering for reference dedup at positions inside the generator's lazy body. Reusing such a value in the same flush resumed it as `undefined` (the binding assignment only ran if the generator was iterated), and reuse in a later flush emitted invalid JS that killed that flush's resume script. Values are now hoisted into eagerly evaluated arguments, matching the `Symbol.iterator` serialization strategy.
 
-- [#3357](https://github.com/marko-js/marko/pull/3357) [`4b85c0e`](https://github.com/marko-js/marko/commit/4b85c0ef3e0421d1257ac69e722f0e0200c131e7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serialized object keys made of digits beyond 2**53 (e.g. 64-bit/snowflake ids) resuming as a different key. Bare numeric keys are canonicalized through `ToString(ToNumber(...))`, so digit runs that do not survive that round trip are now quoted.
+- [#3357](https://github.com/marko-js/marko/pull/3357) [`4b85c0e`](https://github.com/marko-js/marko/commit/4b85c0ef3e0421d1257ac69e722f0e0200c131e7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serialized object keys made of digits beyond 2\*\*53 (e.g. 64-bit/snowflake ids) resuming as a different key. Bare numeric keys are canonicalized through `ToString(ToNumber(...))`, so digit runs that do not survive that round trip are now quoted.
 
 ## 6.3.6
 
@@ -484,6 +502,7 @@
 - [#3253](https://github.com/marko-js/marko/pull/3253) [`ce92da6`](https://github.com/marko-js/marko/commit/ce92da60f04ce5b0e9bf5fa6a61eb4b07cbb3154) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<for to>`/`<for until>` range loops corrupting their DOM on the first update after an SSR resume. Without an explicit `by`, these loops are keyed by their iteration value, but the HTML writer decided whether to serialize the loop key by comparing the key against the iteration value rather than the positional index — so the key was never written. On resume the branches were keyed by position while the client re-keyed them by value, and any range loop where the value differs from the position (`from` other than `0`, or a `step` other than `1`) with resumable content (event handlers, `<let>`, etc.) would tear down and rebuild its branches. The writer now compares against the positional index, matching `<for of>`.
 
 - [#3251](https://github.com/marko-js/marko/pull/3251) [`8fb0bd7`](https://github.com/marko-js/marko/commit/8fb0bd7e01f4819141837377ebd7e3bb8faae1c4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error on native tags when an attribute name is a recognizable idiom from another framework (React, Svelte, Vue) that is not valid in Marko, with a suggestion for the correct syntax. These previously compiled but silently produced a junk attribute (HTML attribute names are case-insensitive, so e.g. `className` becomes the `classname` attribute, not `class`). Examples:
+
   - React: `className` → `class`, `htmlFor` → `for`, `defaultValue` → `value`, `defaultChecked` → `checked`, `acceptCharset` → `accept-charset`, `httpEquiv` → `http-equiv`
   - Svelte: `class:active` → `class={ active: condition }`, `style:color` → `style={ color: value }`, `on:click` → `onClick`, `bind:value` → `value:=state`
   - Vue: `v-if` → `<if>`, `v-for` → `<for>`, `v-model` → `value:=state`, `v-on:click` → `onClick`, `v-bind:class` → `class`
@@ -608,6 +627,7 @@
   ```
 
   The attribute value is either `render`, which loads the module when the tag first renders in the browser, or one or more `|` separated triggers that start the load:
+
   - `visible <selector>` loads when an element matching the selector intersects the viewport (supports `?rootMargin=`).
   - `idle` loads when the browser becomes idle (supports `?timeout=`).
   - `media <query>` loads when the media query matches.
@@ -616,6 +636,7 @@
   Lazily loaded content still server renders, tree shakes, and resumes. The server tracks the assets each lazy section needs, writing inline trigger scripts into the HTML as it streams to avoid network waterfalls. Lazy loading requires a bundler integration through the `linkAssets` compiler option.
 
 - [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compiler entry compilation and native asset handling for bundler integrations.
+
   - `entry: "page" | "load"` compiles a template as a top level page entry or a lazily loaded entry, replacing the deprecated `output: "hydrate"`.
   - `linkAssets: { runtime, onAsset }` connects the bundler: `onAsset(kind, file, id)` is called for every discovered page and load entry, and `runtime` names a module whose `flush` function resolves an asset id into the HTML for its tags while rendering.
 
