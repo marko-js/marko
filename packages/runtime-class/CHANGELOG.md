@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.28
+
+### Patch Changes
+
+- [#3590](https://github.com/marko-js/marko/pull/3590) [`1ce25d1`](https://github.com/marko-js/marko/commit/1ce25d1d8ea4205dec4e048a9eef0058cba8a4f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Declare `engines.node: ">=22"`, matching `@marko/runtime-tags`. The previous `18 || 20 || >=22` range had already been unsatisfiable: this package takes a hard dependency on `@marko/runtime-tags`, which requires `>=22`, so no Node 18 or 20 install could resolve a working tree. Both versions are also past end-of-life.
+
+- Updated dependencies [[`2e09659`](https://github.com/marko-js/marko/commit/2e0965955920da25befee30708f7b05779a8331e), [`77230ef`](https://github.com/marko-js/marko/commit/77230ef44e5efba557e5b9f163529ce2389ae96c), [`f9b04ee`](https://github.com/marko-js/marko/commit/f9b04eec3fdbe9573c38e00926b684cc91eb4344)]:
+  - @marko/compiler@5.41.9
+  - @marko/runtime-tags@6.3.23
+
 ## 5.39.27
 
 ### Patch Changes
@@ -275,6 +285,7 @@
   ```
 
   The attribute value is either `render`, which loads the module when the tag first renders in the browser, or one or more `|` separated triggers that start the load:
+
   - `visible <selector>` loads when an element matching the selector intersects the viewport (supports `?rootMargin=`).
   - `idle` loads when the browser becomes idle (supports `?timeout=`).
   - `media <query>` loads when the media query matches.
@@ -283,6 +294,7 @@
   Lazily loaded content still server renders, tree shakes, and resumes. The server tracks the assets each lazy section needs, writing inline trigger scripts into the HTML as it streams to avoid network waterfalls. Lazy loading requires a bundler integration through the `linkAssets` compiler option.
 
 - [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compiler entry compilation and native asset handling for bundler integrations.
+
   - `entry: "page" | "load"` compiles a template as a top level page entry or a lazily loaded entry, replacing the deprecated `output: "hydrate"`.
   - `linkAssets: { runtime, onAsset }` connects the bundler: `onAsset(kind, file, id)` is called for every discovered page and load entry, and `runtime` names a module whose `flush` function resolves an asset id into the HTML for its tags while rendering.
 
@@ -1660,6 +1672,7 @@
 ### Patch Changes
 
 - [#2246](https://github.com/marko-js/marko/pull/2246) [`a699cd9`](https://github.com/marko-js/marko/commit/a699cd9434996b8da0a14acba39fd1db03c0329a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc backward compat improvements:
+
   - Expose `marko/browser-refresh` as a noop
   - Allow translators to specify "optional" taglibs to load if they're installed (used for automatically loading compat taglibs)
   - `marko/node-require` legacy require hook now disables user babel transforms by default
@@ -5652,7 +5665,7 @@ exports.renderer = function (input, out) {
     {
       tabs: tabs,
     },
-    out,
+    out
   );
 };
 ```
