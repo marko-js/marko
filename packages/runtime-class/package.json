@@ -91,7 +91,7 @@
     "marko": "workspace:*"
   },
   "engines": {
-    "node": "18 || 20 || >=22"
+    "node": ">=22"
   },
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
