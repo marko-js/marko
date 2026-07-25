@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.8
+
+### Patch Changes
+
+- [#3582](https://github.com/marko-js/marko/pull/3582) [`2349fdb`](https://github.com/marko-js/marko/commit/2349fdb2e7dee53e19f17dceed75840ede5c3ae4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bundle the compiler with rolldown instead of compiling file-by-file with babel. The published output drops from 54 files to 5 and is 17% smaller; every `exports` entry point and its module shape are unchanged.
+
 ## 5.41.7
 
 ### Patch Changes

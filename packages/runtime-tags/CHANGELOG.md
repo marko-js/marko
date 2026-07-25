@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.3.22
+
+### Patch Changes
+
+- [#3585](https://github.com/marko-js/marko/pull/3585) [`c2a119d`](https://github.com/marko-js/marko/commit/c2a119d8cd512e3923c2964fa95e4c8c8644135d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix event handlers on attribute tags referencing `<for>` loop params
+
+- Updated dependencies [[`2349fdb`](https://github.com/marko-js/marko/commit/2349fdb2e7dee53e19f17dceed75840ede5c3ae4)]:
+  - @marko/compiler@5.41.8
+
 ## 6.3.21
 
 ### Patch Changes
