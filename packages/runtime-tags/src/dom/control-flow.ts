@@ -60,25 +60,30 @@ export function _await_promise(
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   _enable_catch();
+  const resolveAwait = (
+    scope: Scope,
+    referenceNode: ChildNode,
+    value: unknown,
+  ) => {
+    const awaitBranch = scope[branchAccessor] as BranchScope;
+    if (awaitBranch[AccessorProp.DetachedAwait]) {
+      awaitBranch[AccessorProp.PendingScopes] =
+        awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
+      setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
+      awaitBranch[AccessorProp.DetachedAwait] = 0;
+
+      insertBranchBefore(
+        awaitBranch,
+        (scope[nodeAccessor] as ChildNode).parentNode!,
+        scope[nodeAccessor] as ChildNode,
+      );
+      referenceNode.remove();
+    }
+    params?.(awaitBranch, [value]);
+    return awaitBranch;
+  };
   const awaitPromise = (scope: Scope, promise: Promise<unknown>) => {
-    if (!isPromise(promise)) {
-      if (!scope[promiseAccessor]) {
-        const resolve = () =>
-          resolveAwait(
-            scope,
-            branchAccessor,
-            nodeAccessor,
-            scope[nodeAccessor] as ChildNode,
-            params,
-            promise,
-          );
-        if (scope[branchAccessor]) {
-          resolve();
-        } else {
-          scope[promiseAccessor] = resolve;
-        }
-        return;
-      }
+    if (!isPromise(promise) && scope[promiseAccessor]) {
       promise = Promise.resolve(promise);
     }
 
@@ -88,10 +93,15 @@ export function _await_promise(
       AccessorProp.PlaceholderContent,
     );
     const tryBranch = tryPlaceholder || awaitBranch;
-    if (!tryBranch) {
+    if (!(isPromise(promise) ? tryBranch : awaitBranch)) {
       // `_await_content` creates the branch and can run after this signal, so
-      // hand the promise back to it the way the synchronous path above does.
+      // hand the promise back to it to replay once the branch exists.
       scope[promiseAccessor] = () => awaitPromise(scope, promise);
+      return;
+    }
+
+    if (!isPromise(promise)) {
+      resolveAwait(scope, scope[nodeAccessor] as ChildNode, promise);
       return;
     }
 
@@ -99,70 +109,58 @@ export function _await_promise(
 
     placeholderShown.add(pendingEffects);
 
-    if (tryPlaceholder) {
-      if (!scope[promiseAccessor]) {
-        if (awaitBranch) {
-          awaitBranch[AccessorProp.PendingRenders] ||= [];
-        }
-        awaitCounter = addAwaitCounter(scope, tryPlaceholder)!;
-      }
-    } else {
-      if (!awaitCounter?.i) {
-        awaitCounter = tryBranch[AccessorProp.AwaitCounter] = {
-          i: 0,
-          c() {
-            if (--awaitCounter!.i) return 1;
-            if (tryBranch === scope[branchAccessor]) {
-              const anchor = scope[nodeAccessor] as ChildNode;
-              if (anchor.parentNode) {
-                const detachedParent = (scope[branchAccessor] as BranchScope)[
-                  AccessorProp.StartNode
-                ].parentNode!;
-                if (detachedParent === anchor.parentNode) {
-                  // Branch never detached (re-await raced its resolution);
-                  // replacing the anchor with its own parent would cycle.
-                  anchor.remove();
-                } else {
-                  anchor.replaceWith(detachedParent);
-                }
-              }
+    if (!tryPlaceholder && !awaitCounter?.i) {
+      awaitCounter = createAwaitCounter(tryBranch, () => {
+        if (tryBranch === scope[branchAccessor]) {
+          const anchor = scope[nodeAccessor] as ChildNode;
+          if (anchor.parentNode) {
+            const detachedParent = (scope[branchAccessor] as BranchScope)[
+              AccessorProp.StartNode
+            ].parentNode!;
+            if (detachedParent === anchor.parentNode) {
+              // Branch never detached (re-await raced its resolution);
+              // replacing the anchor with its own parent would cycle.
+              anchor.remove();
             } else {
-              dismissPlaceholder(tryBranch);
+              anchor.replaceWith(detachedParent);
             }
-            queueEffect(tryBranch, runPendingEffects);
-          },
-        };
-      }
-
-      if (!scope[promiseAccessor]) {
-        if (awaitBranch) {
-          awaitBranch[AccessorProp.PendingRenders] ||= [];
+          }
+        } else {
+          dismissPlaceholder(tryBranch);
         }
-        if (!awaitCounter.i++) {
-          requestAnimationFrame(
-            () =>
-              awaitCounter!.i &&
-              runEffects(
-                prepareEffects(() =>
-                  queueRender(
-                    scope,
-                    () => {
-                      if (!awaitBranch[AccessorProp.DetachedAwait]) {
-                        awaitBranch[
-                          AccessorProp.StartNode
-                        ].parentNode!.insertBefore(
-                          scope[nodeAccessor] as Node,
-                          awaitBranch[AccessorProp.StartNode],
-                        );
-                        tempDetachBranch(tryBranch);
-                      }
-                    },
-                    -1,
-                  ),
+      });
+    }
+
+    if (!scope[promiseAccessor]) {
+      if (awaitBranch) {
+        awaitBranch[AccessorProp.PendingRenders] ||= [];
+      }
+      if (tryPlaceholder) {
+        awaitCounter = addAwaitCounter(scope, tryPlaceholder)!;
+      } else if (!awaitCounter!.i++) {
+        requestAnimationFrame(
+          () =>
+            awaitCounter!.i &&
+            runEffects(
+              prepareEffects(() =>
+                queueRender(
+                  scope,
+                  () => {
+                    if (!awaitBranch[AccessorProp.DetachedAwait]) {
+                      awaitBranch[
+                        AccessorProp.StartNode
+                      ].parentNode!.insertBefore(
+                        scope[nodeAccessor] as Node,
+                        awaitBranch[AccessorProp.StartNode],
+                      );
+                      tempDetachBranch(tryBranch);
+                    }
+                  },
+                  -1,
                 ),
               ),
-          );
-        }
+            ),
+        );
       }
     }
 
@@ -173,14 +171,7 @@ export function _await_promise(
           scope[promiseAccessor] = 0;
 
           queueAsyncRender(scope, () => {
-            awaitBranch = resolveAwait(
-              scope,
-              branchAccessor,
-              nodeAccessor,
-              referenceNode,
-              params,
-              data,
-            );
+            awaitBranch = resolveAwait(scope, referenceNode, data);
 
             const pendingRenders = awaitBranch[AccessorProp.PendingRenders] as
               | PendingRender[]
@@ -232,32 +223,6 @@ export function _await_promise(
   return awaitPromise;
 }
 
-function resolveAwait(
-  scope: Scope,
-  branchAccessor: string,
-  nodeAccessor: EncodedAccessor,
-  referenceNode: ChildNode,
-  params: Signal<unknown> | undefined,
-  value: unknown,
-) {
-  const awaitBranch = scope[branchAccessor] as BranchScope;
-  if (awaitBranch[AccessorProp.DetachedAwait]) {
-    awaitBranch[AccessorProp.PendingScopes] =
-      awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
-    setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
-    awaitBranch[AccessorProp.DetachedAwait] = 0;
-
-    insertBranchBefore(
-      awaitBranch,
-      (scope[nodeAccessor] as ChildNode).parentNode!,
-      scope[nodeAccessor] as ChildNode,
-    );
-    referenceNode.remove();
-  }
-  params?.(awaitBranch, [value]);
-  return awaitBranch;
-}
-
 export function _await_content(
   nodeAccessor: EncodedAccessor,
   template?: string | 0,
@@ -296,14 +261,9 @@ export function addAwaitCounter(
   if (!tryBranch) return;
   let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
   if (!awaitCounter?.i) {
-    awaitCounter = tryBranch[AccessorProp.AwaitCounter] = {
-      i: 0,
-      c() {
-        if (--awaitCounter!.i) return 1;
-        dismissPlaceholder(tryBranch);
-        queueEffect(tryBranch, runPendingEffects);
-      },
-    };
+    awaitCounter = createAwaitCounter(tryBranch, () =>
+      dismissPlaceholder(tryBranch),
+    );
   }
   placeholderShown.add(pendingEffects);
   if (!awaitCounter.i++) {
@@ -334,6 +294,18 @@ export function addAwaitCounter(
         ),
     );
   }
+  return awaitCounter;
+}
+
+function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
+  const awaitCounter: AwaitCounter = (tryBranch[AccessorProp.AwaitCounter] = {
+    i: 0,
+    c() {
+      if (--awaitCounter.i) return 1;
+      done();
+      queueEffect(tryBranch, runPendingEffects);
+    },
+  });
   return awaitCounter;
 }
 
