@@ -1543,37 +1543,6 @@ onClick(){show=0}>hide</button>`, click the button while `input.p` is pending,
 then resolve it — the DOM stays `loading...` forever, while the identical run
 without the click resolves to `<span>VALUE</span>`.
 
-## Escape `<html-script>`/`<html-style>` interpolations as markup inside `<svg>`/`<math>`, where they are not raw text
-
-`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `getTextOnlyEscapeHelper` | 2026-07-23 | impact:high | effort:med
-
-In HTML foreign content — anything inside `<svg>`/`<math>` that is not an HTML
-integration point (`foreignObject`, `desc`, `title`, `annotation-xml`) —
-`<style>` and `<script>` are NOT raw-text elements: the tokenizer parses their
-children as markup and decodes character references. `getTextOnlyEscapeHelper`
-(native-tag.ts:1476) nevertheless always maps `style`/`script` to
-`_escape_style` (`/<(\/style)/gi`) and `_escape_script` (`/<(\/?script|!--)/gi`)
-in `packages/runtime-tags/src/html/content.ts`, both of which leave a bare `<`
-untouched, so `<svg><html-style>.bar{fill:${input.color}}</html-style></svg>`
-rendered with `input.color = '<img src=x onerror=alert(1)>'` streams that markup
-verbatim and the browser builds a live HTML `<img onerror>` element (same for
-`<html-script>` under `<svg>`). This is a server-side XSS on the SSR path only —
-the DOM output routes the same body through `_text_content`, which cannot
-execute markup — and one interpolation is enough, no adjacency trick required.
-The translator has no namespace tracking at all today (`rg -i svg
-packages/runtime-tags/src --include=*.ts` matches only `dom/control-flow.ts`),
-so the fix is to have `getTextOnlyEscapeHelper` (or its caller, the `isTextOnly`
-loop in the html `translate.exit`, native-tag.ts:664-670) return `_escape` when
-the tag has a foreign-content ancestor — `_escape` escapes `<` and `&`, which is
-exactly how foreign content is parsed — or, if ancestor analysis is unreliable
-under dynamic tags, reject `<html-script>`/`<html-style>` inside
-`<svg>`/`<math>` at compile time. Re-verify: render that template with the
-payload above and feed the HTML to parse5
-(`node_modules/.pnpm/parse5@8.0.1/.../parse5/dist/index.js` `parseFragment`);
-the tree today contains `img` in the `http://www.w3.org/1999/xhtml` namespace
-carrying `onerror=alert(1)`, and must contain only `svg > style` text after the
-fix.
-
 ## Escape `<script>`/`<style>` raw-text bodies once per element, not once per interpolation
 
 `packages/runtime-tags/src/html/content.ts` › `_escape_script` | 2026-07-23 | impact:high | effort:med

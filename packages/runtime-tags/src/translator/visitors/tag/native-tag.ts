@@ -1486,8 +1486,8 @@ function assertOptionInSelectWithValue(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// The raw text elements, whose escapers rewrite multi-character tokens. Other
-// text-only tags use `_escape`, which is per-character and cannot straddle.
+// The html raw text elements, whose token-rewriting escapers only hold in that
+// namespace; other text-only tags use `_escape`, which is per-character.
 function getRawTextEscapeHelper(tagName: string) {
   switch (tagName) {
     case "script":
