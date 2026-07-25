@@ -1,9 +1,9 @@
 ---
 BEFORE-OUT-OF-ORDER
-<await(new Promise(r => setTimeout(r, 20))) name="a" client-reorder>
+<await(data.ticks(1)) name="a" client-reorder>
     <@then>
         BEFORE-IN-ORDER
-        <await(new Promise(r => setTimeout(r, 20))) name="b">
+        <await(data.ticks(1)) name="b">
             <@then>INSIDE-IN-ORDER</>
         </>
         <await(Promise.resolve()) name="c" client-reorder>
