@@ -1570,34 +1570,50 @@ without the click resolves to `<span>VALUE</span>`.
 
 ## Escape `<html-script>`/`<html-style>` interpolations as markup inside `<svg>`/`<math>`, where they are not raw text
 
-`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `getTextOnlyEscapeHelper` | 2026-07-23 | impact:high | effort:med
+`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `getRawTextEscapeHelper` | 2026-07-23 | impact:high | effort:high
+
+**Known issue — a correct fix needs runtime namespace tracking. The obvious
+compile-time fix does not work; see the second paragraph before attempting.**
 
 In HTML foreign content — anything inside `<svg>`/`<math>` that is not an HTML
-integration point (`foreignObject`, `desc`, `title`, `annotation-xml`) —
+integration point (`foreignObject`, `desc`, `title`, the MathML text points
+`mi`/`mo`/`mn`/`ms`/`mtext`, and `annotation-xml` with an html `encoding`) —
 `<style>` and `<script>` are NOT raw-text elements: the tokenizer parses their
-children as markup and decodes character references. `getTextOnlyEscapeHelper`
-(native-tag.ts:1476) nevertheless always maps `style`/`script` to
-`_escape_style` (`/<(\/style)/gi`) and `_escape_script` (`/<(\/?script|!--)/gi`)
-in `packages/runtime-tags/src/html/content.ts`, both of which leave a bare `<`
-untouched, so `<svg><html-style>.bar{fill:${input.color}}</html-style></svg>`
+children as markup and decodes character references. `getRawTextEscapeHelper`
+nevertheless maps `style`/`script` to `_escape_style` (`/<(\/style)/gi`) and
+`_escape_script` (`/<(\/?script|!--)/gi`) in
+`packages/runtime-tags/src/html/content.ts` purely by tag name, and both leave a
+bare `<` untouched, so `<svg><html-style>.bar{fill:${input.color}}</html-style></svg>`
 rendered with `input.color = '<img src=x onerror=alert(1)>'` streams that markup
 verbatim and the browser builds a live HTML `<img onerror>` element (same for
 `<html-script>` under `<svg>`). This is a server-side XSS on the SSR path only —
 the DOM output routes the same body through `_text_content`, which cannot
 execute markup — and one interpolation is enough, no adjacency trick required.
-The translator has no namespace tracking at all today (`rg -i svg
-packages/runtime-tags/src --include=*.ts` matches only `dom/control-flow.ts`),
-so the fix is to have `getTextOnlyEscapeHelper` (or its caller, the `isTextOnly`
-loop in the html `translate.exit`, native-tag.ts:664-670) return `_escape` when
-the tag has a foreign-content ancestor — `_escape` escapes `<` and `&`, which is
-exactly how foreign content is parsed — or, if ancestor analysis is unreliable
-under dynamic tags, reject `<html-script>`/`<html-style>` inside
-`<svg>`/`<math>` at compile time. Re-verify: render that template with the
-payload above and feed the HTML to parse5
-(`node_modules/.pnpm/parse5@8.0.1/.../parse5/dist/index.js` `parseFragment`);
-the tree today contains `img` in the `http://www.w3.org/1999/xhtml` namespace
-carrying `onerror=alert(1)`, and must contain only `svg > style` text after the
-fix.
+
+Choosing the escaper from a **static ancestor walk is insufficient**: it only
+sees the lexical structure of one template, so a `<html-style>` that lands in
+foreign content through any indirection still picks the raw-text escaper and
+stays exploitable — `<svg><icon-styles/></svg>` where `tags/icon-styles.marko`
+holds the `<html-style>` is enough, since that file compiles with no `<svg>` in
+scope. That makes a compile-time fix worse than none: it closes the lexical case
+while leaving the component-boundary case open under a changelog line that
+implies otherwise. There is also no single escaper safe in both contexts —
+foreign content needs `<` → `&lt;`, and applying that in HTML raw text corrupts
+`if (a<b)` into `if (a&lt;b)`. So the escaper choice has to be made where the
+namespace is actually known: at render time. The chunk context used to reach
+`<option>`s from a controlled `<select>` (`withContext`/`getContext` in
+`html/writer.ts`) composes across template boundaries and is the right channel,
+but `<svg>`/`</svg>` are currently literal text inside one flat concatenated
+string, so pushing a context around every foreign-content subtree means emitting
+statements that break that concatenation for all SVG — plus the escape helper
+becomes runtime-dependent, losing the build-time folding of static raw text
+bodies. Hence effort:high and a deliberate size/perf trade, not a spot fix.
+Re-verify: render that template with the payload above and feed the HTML to
+parse5 (`node_modules/.pnpm/parse5@8.0.1/.../parse5/dist/index.js`
+`parseFragment`); the tree today contains `img` in the
+`http://www.w3.org/1999/xhtml` namespace carrying `onerror=alert(1)`, and must
+contain only `svg > style` text after the fix — with the indirection variant
+above covered too.
 
 ## Escape `<script>`/`<style>` raw-text bodies once per element, not once per interpolation
 
