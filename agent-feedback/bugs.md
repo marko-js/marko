@@ -964,10 +964,9 @@ affected. Fix direction: make the cache key `(binding.identifier,
 modifier-name-or-none)` — e.g. a nested Map — so only genuinely identical
 handlers dedupe, keeping the existing `bound-attr-repeated-let` dedupe intact.
 Re-verify: compile `<let/value=0/><input type="number"
-value:parseInt:=value/><input type="text" value:=value/>` with `node -r ~ts
-scripts/inspect-compiled-output.mts -o dom -d -t <abs path to
-packages/runtime-tags/src/translator/index.ts> <file>.marko` and confirm the
-second `_attr_input_value` no longer receives a `parseInt`-wrapped handler.
+value:parseInt:=value/><input type="text" value:=value/>` with `pnpm run compile
+-o dom -d <file>.marko` and confirm the second `_attr_input_value` no longer
+receives a `parseInt`-wrapped handler.
 
 ## Preserve `computed`/`static` when lowering registered object and class methods in DOM output
 
@@ -1189,8 +1188,8 @@ replace the `isVoid`/`isNotVoid` tests in `isStaticText`, `isEmptyPlaceholder`
 and the two `placeholder.ts` drop checks with the text-coercion emptiness rule
 (`computed || computed === 0`) so these placeholders are removed outright —
 output-identical, since they already emit the empty string. Re-verify: `pnpm run
-compile -o dom -d -t <abs>/packages/runtime-tags/src/translator/index.ts
-x.marko` on `<div>${""}${input.x}<b/><i/></div>` and on the same template
+compile -o dom -d x.marko` on `<div>${""}${input.x}<b/><i/></div>` and on the
+same template
 without `${""}`; the walk comments differ (`next(1), over(1), replace, out(1)`
 vs `next(1), get, out(1)`) even though the DOM the two describe is the same
 shape.
@@ -1215,12 +1214,16 @@ optimize, where accessors are numeric). Fix direction: make the skip predicate
 `util/sections.ts` already returns null for scriptlets, comments, import/export
 and every non-rendering core tag (`placeholder.ts`'s own `analyzeSiblingText`
 already uses it and is therefore correct) — while keeping the existing
-void-placeholder skip. Re-verify: compile `<let/n=1/>` + `<div>` Hello /
-`<const/m=n*2/>` / World / `<button onClick(){ n = n + m }>click</button>` /
-`<span>${n}</span>` `</div>` with `node -r ~ts
-scripts/inspect-compiled-output.mts -o dom -d x.marko`; `$walks` is `next(1),
-over(2), get, over(1), next(1), get, out(2)` while deleting only the `<const>`
-line yields a byte-identical `$template` with `over(1)`.
+void-placeholder skip. Re-verify: add a fixture whose `template.marko` is
+`<let/n=1/>` + `<div>` Hello / `<const/m=n*2/>` / World / `<button onClick(){ n =
+n + m }>click</button>` / `<span>${n}</span>` `</div>` with `steps: [{}, click]`
+— the `csr` test throws `TypeError: Cannot read properties of undefined (reading
+'$click')` from `_on`, because the extra `over` consumed the `<button>` and
+`$scope["#button/0"]` is never populated (`ssr`/`html`/`dom` all pass, so this is
+CSR-only). Compiling the same template with `pnpm run compile -o dom -d` shows
+`$walks` = `next(1), over(2), get, over(1), next(1), get, out(2)` over a
+`$template` holding a single `Hello  World ` text node; deleting only the
+`<const>` line yields the same node shape with `over(1)`.
 
 ## Strip the `load` import attribute from HTML output — it is emitted verbatim and Node rejects it
 
@@ -1422,8 +1425,7 @@ compare, same `setConditionalRenderer`, same `subscribeToScopeSet`, same
 one of two ~243/~279-minified-byte copies of the same algorithm. `compat.render`
 (dom/compat.ts:133) calls `createAndSetupBranch` with the same omission.
 Re-verify: compile `<define/Wrap|input|><div ...input/></define>` plus `<Wrap
-class="x"><b>x</b></Wrap>` with `node -r ~ts scripts/inspect-compiled-output.mts
--o dom -d -t packages/runtime-tags/src/translator/index.ts <file>` — the import
+class="x"><b>x</b></Wrap>` with `pnpm run compile -o dom -d <file>` — the import
 list is `_attrs_content, _attrs_script, _text, _on, _script, _const,
 _closure_get, _content, _closure, _let, _template`, containing no helper that
 enables branches, yet `_attr_content` creates a `BranchScope` at mount.
@@ -1654,7 +1656,7 @@ which compiles to raw static text).
 
 ## Custom tag with a tag variable evaluates its child render before attribute tag statements (TDZ crash)
 
-`packages/runtime-tags/src/translator/util/known-tag.ts` › `translateHTML` | 2026-07-24 | impact:med | effort:med
+`packages/runtime-tags/src/translator/util/known-tag.ts` › `knownTagTranslateHTML` | 2026-07-24 | impact:med | effort:med
 
 For a custom tag with both a tag variable and attribute tags under control flow
 (eg `<my-menu/menuEl><for|x| of=list><@item label=x/></for></my-menu>`), the

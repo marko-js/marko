@@ -4,15 +4,15 @@ Friction in builds, tests, tooling, or repo workflows. Format and rules: [README
 
 ## Migrate to Babel 8 and chai 6 as dedicated efforts (deferred from the deps upgrade)
 
-`patches/@babel+types+7.29.7.patch` | 2026-07-07 | impact:med | effort:high
+`patches/@babel__types@7.29.7.patch` | 2026-07-07 | impact:med | effort:high
 
-The dependency upgrade took everything to latest except two majors that are true migrations, not refreshes. **Babel 8** (`@babel/*` held at 7.29.7): the compiler ships four hand-authored patches against Babel 7's compiled `lib/` (`patches/@babel+{types,traverse,generator,helper-compilation-targets}+7.29.7.patch`, the types one 79 KB, injecting Marko AST node types) plus `packages/compiler` code that reaches Babel-7 internals via `@marko/compiler/internal/babel`; Babel 8 restructures those modules so the patches won't apply and the codegen needs porting. **chai 6** (held at 4.5.0): chai 5+ is ESM-only (`"type":"module"`), but there are 379 CommonJS `require("chai")` call sites (all under `packages/runtime-class/test/**` and `packages/runtime-tags/src/__tests__`), so adopting it means converting every test fixture to ESM or dynamic import. Each should be its own PR with focused testing.
+The dependency upgrade took everything to latest except two majors that are true migrations, not refreshes. **Babel 8** (`@babel/*` held at 7.29.7): the compiler ships four hand-authored patches against Babel 7's compiled `lib/` (`patches/@babel__{types,traverse,generator,helper-compilation-targets}@7.29.7.patch`, the types one 79 KB, injecting Marko AST node types) plus `packages/compiler` code that reaches Babel-7 internals via `@marko/compiler/internal/babel`; Babel 8 restructures those modules so the patches won't apply and the codegen needs porting. **chai 6** (held at 4.5.0): chai 5+ is ESM-only (`"type":"module"`), but there are 379 CommonJS `require("chai")` call sites (all under `packages/runtime-class/test/**` and `packages/runtime-tags/src/__tests__`), so adopting it means converting every test fixture to ESM or dynamic import. Each should be its own PR with focused testing.
 
-## `npm audit` reports 3 dev-only advisories; gate on `npm run audit` instead
+## Bump `minimatch` in runtime-class — the `pnpm run audit` production gate now fails
 
-`package.json` › `scripts` | 2026-07-07 | impact:low | effort:low
+`package.json` › `scripts` | 2026-07-24 | impact:med | effort:low
 
-Bare `npm audit` shows 3 advisories (`serialize-javascript` high, `js-yaml`/mocha moderate, `diff` low), all transitively under `mocha` and `@changesets/cli` — dev tooling that never ships. They can't be resolved by version bumps: the fixes live in higher majors than mocha's ranges allow (`serialize-javascript ^6`→fix in 7.x, `diff ^7`→8.x, `js-yaml ^4`→5.x), mocha 11.7.6 is the newest stable, and the latest `@changesets/parse` still pins `js-yaml ^4.1.1`. Rather than pin them via `overrides`, the repo audits production deps only: **`npm run audit`** (`npm audit --omit=dev`) is the gate and returns 0 — that's what consumers of the published packages actually receive. Revisit and drop the distinction once mocha/changesets update their transitive deps upstream.
+`pnpm run audit` (`pnpm audit --prod`) is the repo's advisory gate, chosen because bare `pnpm audit` only ever surfaced dev tooling that never ships. It no longer returns 0: it reports one **high** advisory and exits non-zero — `brace-expansion` DoS via unbounded expansion (GHSA-mh99-v99m-4gvg, fixed in >=5.0.8) reaching production through `packages/runtime-class > minimatch > brace-expansion`. Unlike the dev-only advisories this is in a published package's dependency tree, so consumers of `marko@5`/`@marko/runtime-class` receive it. Fix by bumping `minimatch` in `packages/runtime-class/package.json` to a range that resolves `brace-expansion >=5.0.8` (or adding a pnpm `overrides` pin). Separately, bare `pnpm audit` is now 7 advisories (1 low / 1 moderate / 5 high) rather than the 3 recorded when this gate was introduced, all still transitively under `mocha`/`mocha-autotest`/`@changesets/cli` and still unresolvable within their ranges — that half of the rationale stands. Re-verify: `pnpm run audit` exits 1 today; `pnpm audit` lists the mocha-only set.
 
 ## Further `test:parallel` speedups need CPU cuts, not scheduling
 
@@ -129,22 +129,6 @@ direction: re-check the jsdom issue, or drop a record only when an adjacent
 record re-reports the same target, or always emit the html block even when
 every record was filtered. Verify: a fixture step appending to an existing
 text node currently yields an empty snapshot entry.
-
-## `npm run build:sizes` dirties `.sizes*` on a clean checkout
-
-`.sizes/dom.js` | 2026-07-14 | impact:med | effort:low
-
-With lockfile-installed deps (rolldown 1.1.4, linux) and zero source changes,
-a fresh `node -r ~ts scripts/sizes` run rewrites `.sizes.json` (+8 min /
-+2 brotli on `dom.js`) and all `.sizes/**` outputs: the minifier emits
-`for (; i && a[i - 1].x > y;) (i--, f())` where the committed files have
-`for (; i && a[--i].x > y;) f()`, and the shared-chunk hash flips. The
-committed `.sizes*` no longer reproduce from the committed lockfile, so
-every next commit's pre-commit size diff carries unrelated noise. Fix:
-regenerate and commit `.sizes*` once (confirming which toolchain produced
-the committed files), or pin the minifier the sizes script uses. Verify:
-run `npm run build && npm run build:sizes` on a clean checkout and check
-`git status`.
 
 ## `npm test <file>` appends to the default spec glob instead of scoping to the file
 
@@ -539,34 +523,23 @@ tokenizer messages in concise mode, not Babel messages from the tag-variable
 wrapper. Re-verify: compile `<div/my-el>hi</div>` and observe `Binding invalid
 left-hand side in function parameter list.`
 
-## Fix `pnpm run compile` — the documented translator-inspection command fails two different ways
+## Make `pnpm run compile` tolerate the `--` that root AGENTS.md documents
 
-`scripts/inspect-compiled-output.mts` › `TRANSLATORS` | 2026-07-23 | impact:high | effort:low
+`scripts/inspect-compiled-output.mts` › `parseArgs` | 2026-07-23 | impact:med | effort:low
 
 Root `AGENTS.md`/`CLAUDE.md` call `pnpm run compile -- -o dom -d foo.marko` "the
-fastest way to inspect what the translator generates", but neither the
-documented form nor the corrected form works in this repo. (1) pnpm forwards the
-literal `--` to the script, and `scripts/inspect-compiled-output.mts` uses Node
+fastest way to inspect what the translator generates", but the documented form
+with `--` does not work: pnpm forwards the literal `--` to the script, and
+`scripts/inspect-compiled-output.mts` uses Node
 `parseArgs({allowPositionals:true})`, which treats everything after a bare `--`
 as positionals — so `-o` becomes a file path and it dies with `ENOENT ... open
-'<repo>/-o'`. (2) Dropping the `--` gets further but then fails with `[BABEL]
-...: Cannot find module '@marko/runtime-tags/translator'`, because
-`packages/compiler/modules.js` resolves the translator id from
-`lasso-package-root(process.cwd())` = the repo root, and pnpm's non-hoisted
-layout only links `@marko/runtime-tags` into
-`packages/runtime-tags/node_modules` (root `node_modules/@marko/` contains just
-`compiler`, and root `package.json` has no dependency on `@marko/runtime-tags`
-or `marko`); the `class` shorthand `marko/translator` is unresolvable for the
-same reason. The fix is local to the script: resolve both `TRANSLATORS`
-shorthands to absolute paths (`path.join(__dirname,
-"../packages/runtime-tags/src/translator/index.ts")` and the runtime-class
-equivalent) rather than bare package specifiers, and either document the no-`--`
-invocation or make the script tolerate a leading `--`. Re-verify from the repo
-root: `pnpm run compile -- -o dom -d /tmp/x.marko` → ENOENT on `-o`; `pnpm run
-compile -o dom -d /tmp/x.marko` → "Cannot find module
-'@marko/runtime-tags/translator'"; `pnpm run compile -o dom -d -t <abs path to
-packages/runtime-tags/src/translator/index.ts> /tmp/x.marko` → succeeds and
-writes `/tmp/x.marko.js`.
+'<repo>/-o'`. Fix by having the script drop a leading `--` before parsing (or by
+correcting the two AGENTS.md invocations to omit it). The translator-resolution
+half of this — `Cannot find module '@marko/runtime-tags/translator'`, which used
+to force an explicit `-t <abs path>` — no longer reproduces; the no-`--` form
+resolves the default translator on its own. Re-verify from the repo root: `pnpm
+run compile -- -o dom -d /tmp/x.marko` → ENOENT on `-o`, while `pnpm run compile
+-o dom -d /tmp/x.marko` succeeds and writes `/tmp/x.marko.js`.
 
 ## Serialize boxed primitives
 
