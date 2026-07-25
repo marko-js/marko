@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.9
+
+### Patch Changes
+
+- [#3590](https://github.com/marko-js/marko/pull/3590) [`2e09659`](https://github.com/marko-js/marko/commit/2e0965955920da25befee30708f7b05779a8331e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Declare `engines.node: ">=22"`, matching the other published packages. The previous `18 || 20 || >=22` range could not resolve on Node 18 — the `@luxass/strip-json-comments` dependency requires `>=20` — and both 18 and 20 are past end-of-life, so the range now matches the documented policy of supporting the maintained Node releases.
+
 ## 5.41.8
 
 ### Patch Changes

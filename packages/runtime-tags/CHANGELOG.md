@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.3.23
+
+### Patch Changes
+
+- [#3592](https://github.com/marko-js/marko/pull/3592) [`77230ef`](https://github.com/marko-js/marko/commit/77230ef44e5efba557e5b9f163529ce2389ae96c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Escape a `<script>`/`<style>` body as one string on the server instead of once per interpolation. Their escapers neutralize multi-character tokens (`</script`, `<script`, `<!--`, `</style`), so a token split across adjacent interpolations was seen by neither call: `<html-script>${a}${b}</html-script>` with `a = "<"` and `b = "/script>"` closed the element and let whatever followed be parsed as markup. The same straddle applied at the boundary between static body text and an interpolation. A fully static body is now escaped at build time, so it costs no runtime work.
+
+- [#3596](https://github.com/marko-js/marko/pull/3596) [`f9b04ee`](https://github.com/marko-js/marko/commit/f9b04eec3fdbe9573c38e00926b684cc91eb4344) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Emit one walk step for a run of static text split by a sibling that renders nothing. Adjacent static text merges into a single DOM text node even when a `<const>`, `<let>`, `<script>`, `<lifecycle>`, scriptlet, or import sits between the two runs, but each run still claimed its own step, so every accessor after that point in the section was off by one sibling. A client render then bound to the wrong node, which surfaced as a `TypeError` on the first event handler attach rather than as visibly wrong output.
+
+- Updated dependencies [[`2e09659`](https://github.com/marko-js/marko/commit/2e0965955920da25befee30708f7b05779a8331e)]:
+  - @marko/compiler@5.41.9
+
 ## 6.3.22
 
 ### Patch Changes
