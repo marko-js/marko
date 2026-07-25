@@ -8,11 +8,24 @@ Friction in builds, tests, tooling, or repo workflows. Format and rules: [README
 
 The dependency upgrade took everything to latest except two majors that are true migrations, not refreshes. **Babel 8** (`@babel/*` held at 7.29.7): the compiler ships four hand-authored patches against Babel 7's compiled `lib/` (`patches/@babel__{types,traverse,generator,helper-compilation-targets}@7.29.7.patch`, the types one 79 KB, injecting Marko AST node types) plus `packages/compiler` code that reaches Babel-7 internals via `@marko/compiler/internal/babel`; Babel 8 restructures those modules so the patches won't apply and the codegen needs porting. **chai 6** (held at 4.5.0): chai 5+ is ESM-only (`"type":"module"`), but there are 379 CommonJS `require("chai")` call sites (all under `packages/runtime-class/test/**` and `packages/runtime-tags/src/__tests__`), so adopting it means converting every test fixture to ESM or dynamic import. Each should be its own PR with focused testing.
 
-## Bump `minimatch` in runtime-class — the `pnpm run audit` production gate now fails
+## Decide whether `runtime-class` still claims Node 18, which its own dep tree no longer satisfies
 
-`package.json` › `scripts` | 2026-07-24 | impact:med | effort:low
+`packages/runtime-class/package.json` › `engines` | 2026-07-24 | impact:low | effort:low
 
-`pnpm run audit` (`pnpm audit --prod`) is the repo's advisory gate, chosen because bare `pnpm audit` only ever surfaced dev tooling that never ships. It no longer returns 0: it reports one **high** advisory and exits non-zero — `brace-expansion` DoS via unbounded expansion (GHSA-mh99-v99m-4gvg, fixed in >=5.0.8) reaching production through `packages/runtime-class > minimatch > brace-expansion`. Unlike the dev-only advisories this is in a published package's dependency tree, so consumers of `marko@5`/`@marko/runtime-class` receive it. Fix by bumping `minimatch` in `packages/runtime-class/package.json` to a range that resolves `brace-expansion >=5.0.8` (or adding a pnpm `overrides` pin). Separately, bare `pnpm audit` is now 7 advisories (1 low / 1 moderate / 5 high) rather than the 3 recorded when this gate was introduced, all still transitively under `mocha`/`mocha-autotest`/`@changesets/cli` and still unresolvable within their ranges — that half of the rationale stands. Re-verify: `pnpm run audit` exits 1 today; `pnpm audit` lists the mocha-only set.
+`packages/runtime-class` declares `engines.node: "18 || 20 || >=22"`, but the
+`brace-expansion@5.0.8` bump that cleared the `pnpm run audit` gate requires
+`node: "20 || >=22"` — it dropped 18 in the same release that fixed
+GHSA-mh99-v99m-4gvg. So `marko@5`'s advertised Node 18 support is now
+transitively unsatisfiable (`runtime-class > minimatch@10.2.5 >
+brace-expansion`), and `minimatch` itself still claims `18 || 20 || >=22` while
+depending on it, so the inconsistency is partly upstream. Nothing breaks today:
+npm treats an engine mismatch as a warning unless `engine-strict` is set, Node 18
+has been EOL since April 2025, and the repo root already requires `^22.18.0`.
+Pinning back to `brace-expansion@5.0.7` is not an option — that is the vulnerable
+version. So the choice is to drop `18` from the `engines` range (a semver-visible
+narrowing on a maintenance-mode package, hence a maintainer call) or to leave the
+field knowingly aspirational. Re-verify: `node -e 'console.log(require("minimatch/package.json").engines,
+require("brace-expansion/package.json").engines)'` shows the two disagree.
 
 ## Further `test:parallel` speedups need CPU cuts, not scheduling
 
