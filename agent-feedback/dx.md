@@ -8,23 +8,6 @@ Friction in builds, tests, tooling, or repo workflows. Format and rules: [README
 
 The dependency upgrade took everything to latest except two majors that are true migrations, not refreshes. **Babel 8** (`@babel/*` held at 7.29.7): the compiler ships four hand-authored patches against Babel 7's compiled `lib/` (`patches/@babel__{types,traverse,generator,helper-compilation-targets}@7.29.7.patch`, the types one 79 KB, injecting Marko AST node types) plus `packages/compiler` code that reaches Babel-7 internals via `@marko/compiler/internal/babel`; Babel 8 restructures those modules so the patches won't apply and the codegen needs porting. **chai 6** (held at 4.5.0): chai 5+ is ESM-only (`"type":"module"`), but there are 379 CommonJS `require("chai")` call sites (all under `packages/runtime-class/test/**` and `packages/runtime-tags/src/__tests__`), so adopting it means converting every test fixture to ESM or dynamic import. Each should be its own PR with focused testing.
 
-## Narrow `@marko/compiler`'s Node 18 claim, which one of its own dependencies rejects
-
-`packages/compiler/package.json` › `engines` | 2026-07-24 | impact:low | effort:low
-
-`packages/compiler` declares `engines.node: "18 || 20 || >=22"`, but its
-dependency `@luxass/strip-json-comments@2.0.1` declares `>=20`, so the Node 18
-arm of that range cannot resolve a working tree. This is the same defect that was
-fixed in `packages/runtime-class` (bumped to `>=22` to match
-`@marko/runtime-tags`, which it hard-depends on), but the right target here is
-not obvious and was deliberately left to a maintainer: unlike runtime-class, the
-compiler has no dependency on `@marko/runtime-tags`, so nothing forces `>=22`,
-and `20 || >=22` may be the honest range — Node 20 reached end-of-life in April
-2026, so `>=22` is defensible too. Note the repo root already requires
-`^22.18.0`, so neither choice affects local development. Re-verify: `node -e
-'console.log(require("@luxass/strip-json-comments/package.json").engines)'`
-prints `{ node: '>=20' }` against the compiler's declared `18 || 20 || >=22`.
-
 ## Further `test:parallel` speedups need CPU cuts, not scheduling
 
 `scripts/test-parallel.js` | 2026-07-11 | impact:med | effort:high

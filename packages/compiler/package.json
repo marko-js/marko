@@ -89,7 +89,7 @@
     "marko": "^5.39.26"
   },
   "engines": {
-    "node": "18 || 20 || >=22"
+    "node": ">=22"
   },
   "exports:override": {
     ".": {
