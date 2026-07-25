@@ -49,6 +49,8 @@ export let _dynamic_tag = (
   let result: unknown;
 
   if (typeof renderer === "string") {
+    // Debug-only: the name is written into markup unescaped, so passing a
+    // sanitized value is the caller's contract rather than a runtime guarantee.
     if (MARKO_DEBUG) {
       assertValidTagName(renderer);
     }
