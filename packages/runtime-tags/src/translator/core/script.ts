@@ -158,6 +158,8 @@ export default {
   types: runtimeInfo.name + "/tags/script.d.marko",
 } as Tag;
 
+// Only a `<script>` body is lowered to an async function. An `await` in a
+// reactive expression is left for the downstream parser to reject.
 function isAwaitExpression(node: t.Node) {
   switch (node.type) {
     case "ForOfStatement":

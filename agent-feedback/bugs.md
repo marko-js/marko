@@ -1399,32 +1399,6 @@ list is `_attrs_content, _attrs_script, _text, _on, _script, _const,
 _closure_get, _content, _closure, _let, _template`, containing no helper that
 enables branches, yet `_attr_content` creates a `BranchScope` at mount.
 
-## Reject `await` in a template expression instead of emitting a JavaScript SyntaxError
-
-`packages/runtime-tags/src/translator/core/const.ts` › `default export › analyze` | 2026-07-23 | impact:high | effort:low
-
-`<const/x=await fetch("/a")/>` compiles with no error, no warning and no
-`meta.diagnostics` entry, but the generated module is not valid JavaScript: the
-dom target emits `export function $setup($scope) { $x($scope, await
-fetch("/a")); }` and the html target emits `_template(id, input => { const x =
-await fetch("/a"); ... })` — `await` inside a non-async function. `node --check`
-on either output reports `SyntaxError: Unexpected reserved word`, so the failure
-surfaces at bundler/parse time against generated code with nothing tying it back
-to the template line. The same holds for `<let/x=await p/>`, a text placeholder
-`${await p}`, and an attribute value `<div title=await p>` (all four verified,
-html target). The translator already has the exact predicate needed: `<script>`
-marks its generated arrow async via `traverseContains(bodyStatements,
-isAwaitExpression)` (`core/script.ts:44-50`), and `isAwaitExpression`
-(`core/script.ts:161-177`) returns `skip` for nested function/method bodies, so
-the legitimate `async` method inside a `<const>` object literal (fixture
-`const-async-method-handler`) would still pass. Reuse it from the
-value-expression analyze paths (`core/const.ts`, `core/let.ts`, the
-placeholder/attribute visitors) and throw `buildCodeFrameError` pointing at the
-`<await>` tag, in the `core/if.ts` style. Re-verify: write `<const/x=await
-fetch("/a")/><div>${x}</div>`, run `pnpm run compile -- -o html -d file.marko`,
-rename the emitted `file.marko.js` to `.mjs` and run `node --check` — it fails
-with `Unexpected reserved word` on the `await`.
-
 ## Align the spread `<input>` controllable ladders in HTML `_attrs` and DOM `attrsInternal`
 
 `packages/runtime-tags/src/html/attrs.ts` › `_attrs` | 2026-07-23 | impact:med | effort:med
