@@ -1516,31 +1516,6 @@ with a click step and run it in debug SSR-resume mode — it throws inside
 `_attrs_script` because `scope["#linearGradient/0"]` is undefined, while the
 same template renders fine in CSR-only mode.
 
-## Validate dynamic native tag names in production, not only under MARKO_DEBUG
-
-`packages/runtime-tags/src/html/dynamic-tag.ts` › `_dynamic_tag` | 2026-07-23 | impact:high | effort:low
-
-The string-renderer branch of HTML `_dynamic_tag` guards the tag name with `if
-(MARKO_DEBUG) { assertValidTagName(renderer); }` and then interpolates it raw
-into markup: `_html(`<${renderer}${_attrs(input, …, renderer)}>`)` and later
-`_html(`</${renderer}>`)`, where `_html` is the unescaped writer
-(`html/writer.ts` › `_html` → `$chunk.writeHTML`). There is no ungated fallback
-guard, unlike the spread-attribute path in `html/attrs.ts`›`_attrs`, which
-keeps an always-on `skip = /[\s/>"'=]/`name filter with`assertValidAttrName`layered on top only in debug. So`<${input.tag}/>` with `input.tag = 'div
-onload=alert(1)'` throws a clear error in dev but emits `<div onload=alert(1)>`
-from a production SSR build — the absence of the gated check changes behavior,
-not just the message. The client half diverges too: `dom/control-flow.ts` ›
-`createBranchWithTagNameOrRenderer` reaches `document.createElementNS(ns,
-tagNameOrRenderer)`, which throws `InvalidCharacterError` in every build, so the
-same value fails loudly on CSR and injects silently on SSR. Give `_dynamic_tag`
-an ungated structural check on the tag name (a small always-on regex mirroring
-the `_attrs` `skip` pattern, with the descriptive `assertValidTagName` message
-still gated) so SSR and CSR agree and production cannot emit attacker-shaped
-markup. Re-verify: render a template with a runtime-valued dynamic tag
-(`<${input.tag}/>`fed`"div onload=alert(1)"`) through the optimize fixture
-mode and inspect `writes.html`for the injected`onload`; the identical CSR run
-throws `InvalidCharacterError`from`createElementNS`.
-
 ## Decrement the `<try>` await counter when a pending `<await>`'s branch is destroyed; the `@placeholder` sticks forever
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `addAwaitCounter` | 2026-07-23 | impact:high | effort:med
