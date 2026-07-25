@@ -662,11 +662,24 @@ export default {
             ),
           );
         } else if (isTextOnly) {
-          for (const child of tag.node.body.body) {
-            if (t.isMarkoText(child)) {
-              write`${child.value}`;
-            } else if (t.isMarkoPlaceholder(child)) {
-              write`${callRuntime(getTextOnlyEscapeHelper(tagName), child.value)}`;
+          const rawTextHelper = getRawTextEscapeHelper(tagName);
+          if (rawTextHelper) {
+            // Raw text escapers neutralize multi-character tokens, so the whole
+            // body escapes as one string: a `</script` split across adjacent
+            // interpolations slips past per-placeholder calls.
+            const body = bodyToTextLiteral(tag.node.body);
+            write`${
+              t.isStringLiteral(body)
+                ? getHTMLRuntime()[rawTextHelper](body.value)
+                : callRuntime(rawTextHelper, body)
+            }`;
+          } else {
+            for (const child of tag.node.body.body) {
+              if (t.isMarkoText(child)) {
+                write`${child.value}`;
+              } else if (t.isMarkoPlaceholder(child)) {
+                write`${callRuntime("_escape", child.value)}`;
+              }
             }
           }
         } else {
@@ -1473,14 +1486,14 @@ function assertOptionInSelectWithValue(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function getTextOnlyEscapeHelper(tagName: string) {
+// The raw text elements, whose escapers rewrite multi-character tokens. Other
+// text-only tags use `_escape`, which is per-character and cannot straddle.
+function getRawTextEscapeHelper(tagName: string) {
   switch (tagName) {
     case "script":
-      return "_escape_script";
+      return "_escape_script" as const;
     case "style":
-      return "_escape_style";
-    default:
-      return "_escape";
+      return "_escape_style" as const;
   }
 }
 
