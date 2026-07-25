@@ -1194,37 +1194,6 @@ without `${""}`; the walk comments differ (`next(1), over(1), replace, out(1)`
 vs `next(1), get, out(1)`) even though the DOM the two describe is the same
 shape.
 
-## Skip non-rendering siblings in `getPrevStaticSibling` so a split static-text run emits one walk step, not two
-
-`packages/runtime-tags/src/translator/util/static-text.ts` › `getPrevStaticSibling` | 2026-07-23 | impact:high | effort:low
-
-Adjacent static text merges into a single DOM text node in the generated
-template string even when a sibling that renders nothing sits between the two
-runs (`<const>`, `<let>`, `<script>`, `<lifecycle>`, `<effect>`, a top-level
-`static` scriptlet, an `import`/`export`). But `getPrevStaticSibling` only walks
-past `MarkoComment` and confidently-void placeholders, so
-`isStaticText(getPrevStaticSibling(...))` is false for the second run and
-neither `visitors/text.ts` (analyze, `kSharedText`) nor
-`visitors/placeholder.ts` (analyze, `isStaticText(node)` branch) defers its walk
-step — each run calls `walks.enterShallow`, producing `over(2)` for one text
-node. Every accessor claimed after that point in the section is off by one
-sibling, so DOM refs and event bindings attach to the wrong node (silently in
-optimize, where accessors are numeric). Fix direction: make the skip predicate
-"emits no DOM node" — `getNodeContentType(prev, "endType") === null` from
-`util/sections.ts` already returns null for scriptlets, comments, import/export
-and every non-rendering core tag (`placeholder.ts`'s own `analyzeSiblingText`
-already uses it and is therefore correct) — while keeping the existing
-void-placeholder skip. Re-verify: add a fixture whose `template.marko` is
-`<let/n=1/>` + `<div>` Hello / `<const/m=n*2/>` / World / `<button onClick(){ n =
-n + m }>click</button>` / `<span>${n}</span>` `</div>` with `steps: [{}, click]`
-— the `csr` test throws `TypeError: Cannot read properties of undefined (reading
-'$click')` from `_on`, because the extra `over` consumed the `<button>` and
-`$scope["#button/0"]` is never populated (`ssr`/`html`/`dom` all pass, so this is
-CSR-only). Compiling the same template with `pnpm run compile -o dom -d` shows
-`$walks` = `next(1), over(2), get, over(1), next(1), get, out(2)` over a
-`$template` holding a single `Hello  World ` text node; deleting only the
-`<const>` line yields the same node shape with `over(1)`.
-
 ## Strip the `load` import attribute from HTML output — it is emitted verbatim and Node rejects it
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low
