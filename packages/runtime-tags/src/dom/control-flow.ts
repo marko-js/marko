@@ -60,7 +60,7 @@ export function _await_promise(
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   _enable_catch();
-  return (scope: Scope, promise: Promise<unknown>) => {
+  const awaitPromise = (scope: Scope, promise: Promise<unknown>) => {
     if (!isPromise(promise)) {
       if (!scope[promiseAccessor]) {
         const resolve = () =>
@@ -88,6 +88,13 @@ export function _await_promise(
       AccessorProp.PlaceholderContent,
     );
     const tryBranch = tryPlaceholder || awaitBranch;
+    if (!tryBranch) {
+      // `_await_content` creates the branch and can run after this signal, so
+      // hand the promise back to it the way the synchronous path above does.
+      scope[promiseAccessor] = () => awaitPromise(scope, promise);
+      return;
+    }
+
     let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
 
     placeholderShown.add(pendingEffects);
@@ -221,6 +228,8 @@ export function _await_promise(
       },
     ));
   };
+
+  return awaitPromise;
 }
 
 function resolveAwait(

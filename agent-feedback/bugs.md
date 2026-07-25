@@ -373,38 +373,6 @@ the hole. Re-verify: `<div on-name(){ console.log("hi") }>x</div>`, then
 dispatch `new CustomEvent("name", { bubbles: true })` on the div — nothing logs
 today, and `on-click` in the same template works.
 
-## Fix `_await_promise` crashing when its `<await>` branch has not been created yet
-
-`packages/runtime-tags/src/dom/control-flow.ts` › `_await_promise` | 2026-07-23 | impact:high | effort:med
-
-`_await_promise`'s returned signal reads `let awaitCounter =
-tryBranch[AccessorProp.AwaitCounter]` (control-flow.ts:91) where `tryBranch =
-tryPlaceholder || awaitBranch` and `awaitBranch =
-scope[AccessorPrefix.BranchScopes + nodeAccessor]`. That branch is created by
-`_await_content`, and the runtime already anticipates running before it — the
-non-promise fast path at :64-81 stashes a `resolve` closure on
-`scope[promiseAccessor]` precisely for the "branch not created yet" case — but
-the promise path does not, so with no enclosing `<try placeholder>` both
-operands are `undefined` and it throws `TypeError: Cannot read properties of
-undefined (reading '#AwaitCounter')`. Two ordinary shapes hit this on the
-client: (a) `<for|item| of=items><await|v| =item.p>` — `loop` calls
-`createAndSetupBranch` (which only _queues_ setup via `setupBranch` →
-`queueRender(branch, setup, -1)`) and then invokes `params?.(branch, args)`
-synchronously at control-flow.ts:842, so the params chain containing
-`_await_promise` runs before `_await_content`; and (b) any `<if>`/`<for>` body
-whose awaited value is an outer closure, where the translator emits
-`$if_content__setup = $scope => { $if_content__input_p._($scope);
-$await_content($scope); }` — the closure feeding `_await_promise` is emitted
-_before_ `_await_content`. Because case (a) is structural in `loop` (params
-always precede queued setup), a runtime-side fix is needed regardless of
-translator emission order: mirror the sync path by deferring the whole promise
-handshake (stash a resolver on `scope[promiseAccessor]` and let `_await_content`
-drive it) or make branch creation lazy/idempotent so `_await_promise` can
-materialize it. Re-verify by adding a fixture `template.marko` of `<for|item|
-of=input.items><await|v| =item.p><div>${v}</div></await></for>` with `steps:
-[{items:[{p:resolveAfter(1)}]}, wait]` and running its CSR step; today it throws
-at control-flow.ts:91 instead of rendering.
-
 ## Treat a falsy-but-defined `<for by>` value as "no key" in the DOM runtime, matching SSR
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `_for_of` | 2026-07-23 | impact:med | effort:low

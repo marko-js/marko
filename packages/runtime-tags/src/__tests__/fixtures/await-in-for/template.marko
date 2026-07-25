@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<ul>
+  <for|item| of=input.items>
+    <li>
+      <await|v|=resolveAfter(item.label, 1)>
+        ${v}
+      </await>
+    </li>
+  </for>
+</ul>
