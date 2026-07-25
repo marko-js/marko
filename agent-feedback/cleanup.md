@@ -19,16 +19,23 @@ semantics before changing to `scope`.
 
 ---
 
-## Pre-existing comments exceeding the two-line rule
+## Delete or restore the commented-out serializer test cases
 
-`packages/compiler/src/config.js`, `packages/runtime-tags/src/**` | 2026-07-18 | impact:low | effort:med
+`packages/runtime-tags/src/__tests__/serializer.test.ts` | 2026-07-18 | impact:low | effort:low
 
-A sweep for the two-line comment rule surfaced roughly ninety comment blocks
-longer than two lines (config option JSDoc in `compiler/src/config.js`,
-several `translator/util/references.ts` and `dom/resume.ts` blocks, and
-commented-out `serializer.test.ts` cases). Condensing them is a standalone
-cleanup. Verify: grep for comment runs of three or more consecutive `//`
-lines under the cited paths.
+The two-line comment rule sweep that once found roughly ninety over-length
+blocks across `runtime-tags/src` was largely carried out by `9fc549115b`
+("condense over-length comments across src"): `dom/resume.ts` now has none,
+`translator/util/references.ts` one, and the remaining runtime blocks are the
+irreplaceable specs that commit deliberately preserved (the walks-string laws in
+`dom/walker.ts`, the serialize wire protocol, the abort-id invariant). What is
+left is not really a comment-length problem: `serializer.test.ts` carries 11
+multi-line `//` runs that are commented-out test cases, i.e. dead code to either
+restore or delete (the `_attrs` event-handler pair has its own entry below), and
+`packages/compiler/src/config.js` has 7 JSDoc blocks over two body lines, which
+are per-option API docs and arguably exempt. Verify: `awk` for runs of three or
+more consecutive `//` lines under `packages/runtime-tags/src` reports 36 blocks
+total, 11 of them in `serializer.test.ts`.
 
 ## Normalize inconsistent local naming flagged by a terminology audit
 
