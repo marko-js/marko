@@ -1,6 +1,9 @@
 packages:
   - packages/*
 linkWorkspacePackages: true
+minimumReleaseAge: 10080
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
 patchedDependencies:
   "@babel/generator@7.29.7": patches/@babel__generator@7.29.7.patch
   "@babel/helper-compilation-targets@7.29.7": patches/@babel__helper-compilation-targets@7.29.7.patch
