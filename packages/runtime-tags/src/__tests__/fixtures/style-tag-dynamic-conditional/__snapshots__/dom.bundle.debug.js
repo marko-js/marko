@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_color._($scope);
 	_style_shell($scope, "#style/0");
 };
-const $if = /*@__PURE__*/ _if("#text/0", "<style></style><div class=box>Hi</div>", " b", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<style></style><div class=box>Hi</div>", " ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
 	$input_show($scope, input.show);

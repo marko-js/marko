@@ -29,7 +29,7 @@ let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:c
 let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_shared.mjs"));
 _enable_catch();
 let $load_Child_setup2 = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
-const $placeholder_content = _content_resume("__tests__/template.marko_4_content", "loading", "b");
+const $placeholder_content = _content_resume("__tests__/template.marko_4_content", "loading");
 const $await_content2__shared = /*@__PURE__*/ _closure_get("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._.shared));
 const $await_content2__setup = ($scope) => {
 	$await_content2__shared($scope);
@@ -44,15 +44,15 @@ const $await_content__setup = ($scope) => {
 };
 const $await_content__label = ($scope, label) => $load_Child_tag_input_label($scope["#childScope/1"], label);
 const $await_content__$params = ($scope, $params2) => $await_content__label($scope, $params2[0]);
-const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!><!>", "b%/&c", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!><!>", "b%/&", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("reordered", 1));
 };
 const $shared = /*@__PURE__*/ _const("shared");
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%c", $try_content__setup);
-const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<!><!><!><!>", "b%/&c", $await_content2__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<!><!><!><!>", "b%/&", $await_content2__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
 function $setup($scope) {
 	$await_content2($scope);

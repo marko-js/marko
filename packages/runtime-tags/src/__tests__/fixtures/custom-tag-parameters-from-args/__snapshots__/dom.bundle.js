@@ -21,4 +21,4 @@ const $customtag_content__$params = ($scope, $params2) => {
 	$customtag_content__count($scope, $params2[0]);
 	$customtag_content__count2($scope, $params2[1]);
 };
-const $customtag_content = _content_resume("a0", "<div>Counts: <!>,<!></div>", "Db%c%l", 0, $customtag_content__$params);
+const $customtag_content = _content_resume("a0", "<div>Counts: <!>,<!></div>", "Db%c%", 0, $customtag_content__$params);

@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<!><!><button>More</button>";
 const $walks = "b%b b";
-const $for_content__if = /*@__PURE__*/ _if("#text/0", "<div>b</div>", "b");
+const $for_content__if = /*@__PURE__*/ _if("#text/0", "<div>b</div>");
 const $for_content__items_length = /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__if($scope, $scope._.items_length > 1 ? 0 : 1));
 const $for_content__setup = $for_content__items_length;
 const $itemId = /*@__PURE__*/ _let("itemId/2");
-const $for = /*@__PURE__*/ _for_of("#text/0", "<div>a</div><!><!>", "b%c", $for_content__setup);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div>a</div><!><!>", "b%", $for_content__setup);
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	$items_length($scope, $scope.items?.length);
 	$for($scope, [$scope.items]);

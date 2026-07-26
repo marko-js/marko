@@ -33,7 +33,7 @@ const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__count($scope);
 	$classlayout_content__setup__script($scope);
 };
-const $classlayout_content = _content_resume("a0", "<button id=tags> </button>", " D l", $classlayout_content__setup);
+const $classlayout_content = _content_resume("a0", "<button id=tags> </button>", " D ", $classlayout_content__setup);
 const $count = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($classlayout_content__count));
 
 // v:template.marko.hydrate-6.js

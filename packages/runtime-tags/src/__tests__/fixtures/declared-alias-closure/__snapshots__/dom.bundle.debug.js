@@ -14,10 +14,10 @@ const $if_content__setup = ($scope) => {
 	$if_content__text($scope);
 };
 const $if_content__text = /*@__PURE__*/ _closure_get("text", ($scope) => _text($scope["#text/1"], $scope._._.text), ($scope) => $scope._._);
-const $Child_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", " D l", $if_content__setup);
+const $Child_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", " D ", $if_content__setup);
 const $Child_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => $Child_content__if($scope, $scope._.value ? 0 : 1));
 const $Child_content__setup = $Child_content__value;
-const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<!><!><!>", "b%c", $Child_content__setup);
+const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<!><!><!>", "b%", $Child_content__setup);
 const $value = /*@__PURE__*/ _const("value", ($scope) => {
 	$value_class($scope, $scope.value?.class);
 	$text($scope, $scope.value?.text);

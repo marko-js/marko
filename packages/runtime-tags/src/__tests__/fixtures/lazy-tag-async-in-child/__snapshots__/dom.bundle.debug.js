@@ -14,7 +14,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__value($sco
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
 const $count = /*@__PURE__*/ _let("count/4", $count__closure);
 const $input_value = $count;
-const $await_content = /*@__PURE__*/ _await_content("#text/0", "<button><!>:<!></button>", " D%c%l", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<button><!>:<!></button>", " D%c%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 function $setup($scope) {
 	$await_content($scope);

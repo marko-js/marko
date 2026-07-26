@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _resume_dynamic_tag();
-const $startContent_content = /*@__PURE__*/ _content("__tests__/tags/my-tag.marko_1_content", "default", "b");
+const $startContent_content = /*@__PURE__*/ _content("__tests__/tags/my-tag.marko_1_content", "default");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_as__OR__input_class__OR__htmlInput__OR__content = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => ({
 	...$scope.htmlInput,
@@ -30,8 +30,8 @@ var my_tag_default = /*@__PURE__*/ _template("__tests__/tags/my-tag.marko", $tem
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&b`)("b%c", "b%c");
-const $mytag_content2 = _content_resume("__tests__/template.marko_2_content", "Span", "b");
-const $mytag_content = _content_resume("__tests__/template.marko_1_content", "Div", "b");
+const $mytag_content2 = _content_resume("__tests__/template.marko_2_content", "Span");
+const $mytag_content = _content_resume("__tests__/template.marko_1_content", "Div");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$inputContent($scope["#childScope/0"], $mytag_content($scope));

@@ -32,7 +32,7 @@ function $setup($scope) {
 	$load_Child_tag_input_id($scope["#childScope/1"], "sync");
 	$await_content($scope);
 }
-const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!><!>", "b%/&c", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!><!>", "b%/&", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 const $input_value = ($scope, input_value) => {
 	$load_Child_tag_input_value($scope["#childScope/1"], input_value);

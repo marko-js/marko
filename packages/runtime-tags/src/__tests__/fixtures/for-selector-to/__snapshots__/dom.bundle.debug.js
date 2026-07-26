@@ -11,7 +11,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
-const $for = /*@__PURE__*/ _for_to("#tbody/0", "<tr><td><button class=select> </button></td></tr>", " E D n", $for_content__setup);
+const $for = /*@__PURE__*/ _for_to("#tbody/0", "<tr><td><button class=select> </button></td></tr>", " E D ", $for_content__setup);
 function $setup($scope) {
 	$selected($scope, undefined);
 	$for($scope, [

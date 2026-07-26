@@ -5,7 +5,7 @@ const $MyThing_content__setup = ($scope) => {
 	$MyThing_content__count($scope);
 	_text($scope.b, sideEffect++);
 };
-const $MyThing_content = _content_resume("a0", "<!> <!>", "%c%b", $MyThing_content__setup);
+const $MyThing_content = _content_resume("a0", "<!> <!>", "%c%", $MyThing_content__setup);
 const $count__OR__MyThing = /*@__PURE__*/ _or(3, ($scope) => _attr_content($scope, "a", ($scope.b, $scope.c)));
 const $count__closure = /*@__PURE__*/ _closure($MyThing_content__count);
 const $count = /*@__PURE__*/ _let(1, ($scope) => {

@@ -18,7 +18,7 @@ const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $mybutton_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope["#text/0"], $scope._.clickCount));
 const $mybutton_content__setup = $mybutton_content__clickCount;
-const $mybutton_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " b", $mybutton_content__setup);
+const $mybutton_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " ", $mybutton_content__setup);
 const $clickCount__closure = /*@__PURE__*/ _closure($mybutton_content__clickCount);
 const $clickCount = /*@__PURE__*/ _let("clickCount/1", $clickCount__closure);
 function $setup($scope) {

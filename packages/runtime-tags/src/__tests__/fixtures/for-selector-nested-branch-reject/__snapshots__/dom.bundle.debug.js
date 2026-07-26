@@ -16,7 +16,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);
 };
-const $if_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><button class=select> </button></li>", " D D m", $for_content__setup, $for_content__$params);
+const $if_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><button class=select> </button></li>", " D D ", $for_content__setup, $for_content__$params);
 const $if_content__rows = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__for($scope, [$scope._.rows, "id"]));
 const $if_content__setup = $if_content__rows;
 const $selected__closure = /*@__PURE__*/ _closure($for_content__selected);
@@ -32,7 +32,7 @@ function $setup($scope) {
 		label: "b"
 	}]);
 }
-const $if = /*@__PURE__*/ _if("#text/0", "<ul></ul>", " b", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<ul></ul>", " ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => $input_show($scope, input.show);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

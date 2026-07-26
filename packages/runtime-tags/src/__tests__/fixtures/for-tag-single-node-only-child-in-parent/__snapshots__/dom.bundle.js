@@ -1,5 +1,5 @@
 // template.marko
-const $for = /*@__PURE__*/ _for_of(0, "<div></div>", "b");
+const $for = /*@__PURE__*/ _for_of(0, "<div></div>");
 const $children__script = _script("a0", ($scope) => {
 	if ($scope.b?.length === 1) $children($scope, [...$scope.b, 2]);
 });

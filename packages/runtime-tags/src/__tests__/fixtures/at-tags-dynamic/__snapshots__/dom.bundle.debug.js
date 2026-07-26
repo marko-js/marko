@@ -19,7 +19,7 @@ const $for_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	_attrs_partial_content($scope, "#div/0", $scope.attrs, { class: 1 });
 	$for_content2__attrs__script($scope);
 });
-const $for_content2__for = /*@__PURE__*/ _for_of("#text/1", "<div class=row><!></div>", " D%l", 0, $for_content3__$params);
+const $for_content2__for = /*@__PURE__*/ _for_of("#text/1", "<div class=row><!></div>", " D%", 0, $for_content3__$params);
 const $for_content2__row = ($scope, row) => $for_content2__for($scope, [row]);
 const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3?.[0]);
 const $for_content2__$temp = ($scope, $temp2) => {
@@ -38,9 +38,9 @@ const $for_content__$temp = ($scope, $temp) => {
 	(({ content, ...attrs }) => $for_content__attrs($scope, attrs))($temp);
 	$for_content__content($scope, $temp.content);
 };
-const $for = /*@__PURE__*/ _for_of("#text/0", "<div class=item><!></div>", " D%l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div class=item><!></div>", " D%", 0, $for_content__$params);
 const $input_list_item = ($scope, input_list_item) => $for($scope, [input_list_item]);
-const $for2 = /*@__PURE__*/ _for_of("#text/1", "<div class=col></div><!><!>", " b%c", 0, $for_content2__$params);
+const $for2 = /*@__PURE__*/ _for_of("#text/1", "<div class=col></div><!><!>", " b%", 0, $for_content2__$params);
 const $input_col = ($scope, input_col) => $for2($scope, [input_col]);
 const $input = ($scope, input) => {
 	$input_list($scope, input.list);
@@ -52,12 +52,12 @@ var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
-const $row_content2 = _content_resume("__tests__/template.marko_4_content", "Outside", "b");
-const $row_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_3_content", " ", " b"), { row($scope) {
+const $row_content2 = _content_resume("__tests__/template.marko_4_content", "Outside");
+const $row_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_3_content", " ", " "), { row($scope) {
 	_text($scope["#text/0"], $scope.row);
 } });
-const $item_content2 = _content_resume("__tests__/template.marko_2_content", "bar", "b");
-const $item_content = _content_resume("__tests__/template.marko_1_content", "foo", "b");
+const $item_content2 = _content_resume("__tests__/template.marko_2_content", "bar");
+const $item_content = _content_resume("__tests__/template.marko_1_content", "foo");
 function $setup($scope) {
 	let $item;
 	forOf([

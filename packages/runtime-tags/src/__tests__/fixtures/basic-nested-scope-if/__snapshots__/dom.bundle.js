@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__clickCount._($scope);
 	$if_content__setup__script($scope);
 };
-const $if = /*@__PURE__*/ _if(0, "<button> </button>", " D l", $if_content__setup, "<span>The button was clicked <!> times.</span>", "Db%l", $else_content__setup);
+const $if = /*@__PURE__*/ _if(0, "<button> </button>", " D ", $if_content__setup, "<span>The button was clicked <!> times.</span>", "Db%", $else_content__setup);
 const $clickCount = /*@__PURE__*/ _let(1, ($scope) => {
 	$if($scope, $scope.b < 3 ? 0 : 1);
 	$if_content__clickCount($scope);

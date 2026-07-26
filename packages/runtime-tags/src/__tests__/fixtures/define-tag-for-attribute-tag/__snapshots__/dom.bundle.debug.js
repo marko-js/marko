@@ -16,7 +16,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Toggle</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $myThing_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span>The thing</span>", "b");
+const $myThing_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span>The thing</span>");
 const $myThing = ($scope, myThing) => $input_thing($scope["#childScope/0"], myThing);
 const $selected = /*@__PURE__*/ _let("selected/2", ($scope) => $myThing($scope, {
 	selected: $scope.selected,

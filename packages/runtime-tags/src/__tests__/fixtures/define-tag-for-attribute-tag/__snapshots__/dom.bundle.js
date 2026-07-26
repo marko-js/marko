@@ -8,7 +8,7 @@ const $input_thing = ($scope, input_thing) => {
 };
 
 // template.marko
-const $myThing_content = /*@__PURE__*/ _content("a0", "<span>The thing</span>", "b");
+const $myThing_content = /*@__PURE__*/ _content("a0", "<span>The thing</span>");
 const $myThing = ($scope, myThing) => $input_thing($scope.a, myThing);
 const $selected = /*@__PURE__*/ _let(2, ($scope) => $myThing($scope, {
 	selected: $scope.c,

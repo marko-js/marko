@@ -5,11 +5,11 @@ const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
 	$for_content__item__script($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of(0, "<button></button>", " b", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<button></button>", " ", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a1", "Click <!>", "b%b"), { 4($scope) {
+const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a1", "Click <!>", "b%"), { 4($scope) {
 	_text($scope.a, $scope.e);
 } });
 const $clicked = /*@__PURE__*/ _let(2, ($scope) => {

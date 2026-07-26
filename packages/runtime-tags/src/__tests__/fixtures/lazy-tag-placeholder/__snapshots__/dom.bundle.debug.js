@@ -12,7 +12,7 @@ const $walks = "b%b b";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 _enable_catch();
-const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "loading...", "b");
+const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "loading...");
 const $try_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope._.count));
 const $try_content__setup = ($scope) => {
 	$try_content__count($scope);
@@ -21,7 +21,7 @@ const $try_content__setup = ($scope) => {
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);
 const $count = /*@__PURE__*/ _let("count/5", $count__closure);
 const $input_value = $count;
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%/&c", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%/&", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

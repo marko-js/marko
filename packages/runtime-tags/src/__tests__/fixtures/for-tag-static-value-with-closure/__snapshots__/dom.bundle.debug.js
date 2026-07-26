@@ -10,7 +10,7 @@ const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$for_content__count($scope);
 });
-const $for = /*@__PURE__*/ _for_to("#text/0", "<!>-<!>", "%c%b", $for_content__setup);
+const $for = /*@__PURE__*/ _for_to("#text/0", "<!>-<!>", "%c%", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

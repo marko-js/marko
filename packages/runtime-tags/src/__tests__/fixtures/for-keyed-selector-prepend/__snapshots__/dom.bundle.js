@@ -7,7 +7,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_label($scope, $params2[0]?.label);
 };
 const $for_content__row_id = /*@__PURE__*/ _const(4);
-const $for = /*@__PURE__*/ _for_of(1, "<li> </li>", " D l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(1, "<li> </li>", " D ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let(2, ($scope) => $for($scope, [$scope.c, "id"]));
 const $selected = /*@__PURE__*/ _let(3, $for_content__selected);
 const $nextId = /*@__PURE__*/ _let(4);

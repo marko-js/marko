@@ -18,7 +18,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $option_content = _content_resume("__tests__/template.marko_1_content", "1", "b");
+const $option_content = _content_resume("__tests__/template.marko_1_content", "1");
 function $setup($scope) {
 	$input_option($scope["#childScope/0"], attrTag({ content: $option_content($scope) }));
 }

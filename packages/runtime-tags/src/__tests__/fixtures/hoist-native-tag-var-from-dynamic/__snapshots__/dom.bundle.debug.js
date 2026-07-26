@@ -15,10 +15,10 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b%c`)($walks$1);
 const $el3_getter = /*@__PURE__*/ _hoist("#p/0", "ClosureScopes:4");
-const $inputshowsectionnull_content = _content_resume("__tests__/template.marko_4_content", "<p></p>", " b", 0, 0, "ClosureScopes:4");
+const $inputshowsectionnull_content = _content_resume("__tests__/template.marko_4_content", "<p></p>", " ", 0, 0, "ClosureScopes:4");
 const $inputshowChildnull_content__$el2_getter = _hoist_resume("__tests__/template.marko_2_#div/hoist", "#div/0", "ClosureScopes:3");
 const $el2_getter = _hoist_resume("__tests__/template.marko_0_#div/hoist", "#div/0", "ClosureScopes:3", "ClosureScopes:2");
-const $child_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3_content", "<div></div>", " b", 0, 0, "ClosureScopes:3");
+const $child_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3_content", "<div></div>", " ", 0, 0, "ClosureScopes:3");
 const $inputshowChildnull_content__setup__script = _script("__tests__/template.marko_2", ($scope) => {
 	for (const el of $inputshowChildnull_content__$el2_getter($scope)) {
 		el.classList.add("inner");
@@ -31,7 +31,7 @@ const $inputshowChildnull_content__setup = ($scope) => {
 };
 const $inputshowChildnull_content = _content_resume("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1), $inputshowChildnull_content__setup, 0, "ClosureScopes:2");
 const $el_getter = _hoist_resume("__tests__/template.marko_0_#span/hoist", "#span/0", "ClosureScopes:1");
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span></span>", " b", 0, 0, "ClosureScopes:1");
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span></span>", " ", 0, 0, "ClosureScopes:1");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	for (const el of $el_getter($scope)) {
 		el.innerHTML = "Hoist from custom tag";

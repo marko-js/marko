@@ -15,7 +15,7 @@ const $template = "<button class=toggle>Toggle</button><button class=inc>Inc</bu
 const $walks = " b b%c";
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", () => import("./child.mjs").then((mod) => mod.default));
 _enable_catch();
-const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "loading...", "b");
+const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "loading...");
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $try_content__show__OR__value = /*@__PURE__*/ _or(1, ($scope) => $try_content__dynamicTag($scope, $scope._.show ? Child : null, () => ({
 	label: "x",
@@ -31,7 +31,7 @@ const $show__closure = /*@__PURE__*/ _closure($try_content__show);
 const $show = /*@__PURE__*/ _let("show/3", $show__closure);
 const $value__closure = /*@__PURE__*/ _closure($try_content__value);
 const $value = /*@__PURE__*/ _let("value/4", $value__closure);
-const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%c", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$show($scope, !$scope.show);

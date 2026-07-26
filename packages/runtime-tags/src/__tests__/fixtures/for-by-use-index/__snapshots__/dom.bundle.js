@@ -11,9 +11,9 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__index($scope, $params2[1]);
 };
 const $for_content__index = /*@__PURE__*/ _const(4);
-const $for = /*@__PURE__*/ _for_of(0, "<button> </button>", " D l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 const $messages = /*@__PURE__*/ _let(2, ($scope) => $for($scope, [$scope.c, (f) => f]));
-const $if = /*@__PURE__*/ _if(1, "<div> </div>", "D l", $if_content__setup);
+const $if = /*@__PURE__*/ _if(1, "<div> </div>", "D ", $if_content__setup);
 const $last = /*@__PURE__*/ _let(3, ($scope) => {
 	$if($scope, $scope.d !== void 0 ? 0 : 1);
 	$if_content__last($scope);

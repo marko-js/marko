@@ -2,7 +2,7 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for = /*@__PURE__*/ _for_until("#ul/0", "<li> </li>", "D l", $for_content__setup);
+const $for = /*@__PURE__*/ _for_until("#ul/0", "<li> </li>", "D ", $for_content__setup);
 const $count = /*@__PURE__*/ _let("count/1", ($scope) => $for($scope, [
 	$scope.count,
 	0,

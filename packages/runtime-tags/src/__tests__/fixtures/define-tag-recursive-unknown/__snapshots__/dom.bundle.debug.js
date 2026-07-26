@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_bar._($scope);
 };
 const $if_content__input_bar = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__Foo__OR__input_bar);
-const $Foo_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%c", $if_content__setup, " ", " b", $else_content__setup);
+const $Foo_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup, " ", " ", $else_content__setup);
 const $Foo_content__input_bar = /*@__PURE__*/ _const("input_bar", ($scope) => {
 	$Foo_content__if($scope, $scope.input_bar ? 0 : 1);
 	$if_content__input_bar($scope);

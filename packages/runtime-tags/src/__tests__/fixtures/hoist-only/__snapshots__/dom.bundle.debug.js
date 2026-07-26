@@ -16,7 +16,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__if($scope, 1 ? 0 : 1);
 };
 const $hoist1_getter = _hoist_resume("__tests__/template.marko_0_hoist1/hoist", "hoist1");
-const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%c", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 function $setup($scope) {
 	$hoist1_getter($scope);
 	$if($scope, 1 ? 0 : 1);

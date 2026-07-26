@@ -24,6 +24,6 @@ const $store = _var_resume("a0", ($scope, store) => {
 	$list($scope, store.list);
 	$clear($scope, store.clear);
 });
-const $for = /*@__PURE__*/ _for_of(3, "<li> </li>", "D l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(3, "<li> </li>", "D ", 0, $for_content__$params);
 const $list = ($scope, list) => $for($scope, [list]);
 const $clear = /*@__PURE__*/ _const(6, _script("a1", ($scope) => _on($scope.c, "click", $scope.g)));

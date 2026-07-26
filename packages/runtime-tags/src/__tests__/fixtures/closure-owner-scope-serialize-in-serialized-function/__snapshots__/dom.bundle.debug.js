@@ -6,7 +6,7 @@ const $if_content__run = /*@__PURE__*/ _const("run", $if_content__run__script);
 const $if_content__text = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__run($scope, $run($scope)));
 const $if_content__setup = $if_content__text;
 const $text2 = /*@__PURE__*/ _const("text");
-const $if = /*@__PURE__*/ _if("#text/0", "<div></div>", " b", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<div></div>", " ", $if_content__setup);
 function $setup($scope) {
 	$text2($scope, $text);
 	$if($scope, 1 ? 0 : 1);

@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	_text($scope["#text/1"], $scope["#LoopKey"]);
 };
 const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
-const $for = /*@__PURE__*/ _for_until("#select/0", "<option> </option>", " D l", $for_content__setup);
+const $for = /*@__PURE__*/ _for_until("#select/0", "<option> </option>", " D ", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#select/0"], "change", function(e) {
 	$selected($scope, e.target.value);
 }));

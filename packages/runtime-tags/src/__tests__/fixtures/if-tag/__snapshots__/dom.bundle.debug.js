@@ -2,8 +2,8 @@
 const $template = "<!><!><!><div> </div>";
 const $walks = "b%b%bD l";
 const $setup = () => {};
-const $if = /*@__PURE__*/ _if("#text/0", "Hello", "b");
-const $if2 = /*@__PURE__*/ _if("#text/1", "World", "b");
+const $if = /*@__PURE__*/ _if("#text/0", "Hello");
+const $if2 = /*@__PURE__*/ _if("#text/1", "World");
 const $input_a__OR__input_b = /*@__PURE__*/ _or(7, ($scope) => {
 	$if($scope, $scope.input_a + $scope.input_b ? 0 : 1);
 	$if2($scope, ($scope.input_a, $scope.input_b) ? 0 : 1);

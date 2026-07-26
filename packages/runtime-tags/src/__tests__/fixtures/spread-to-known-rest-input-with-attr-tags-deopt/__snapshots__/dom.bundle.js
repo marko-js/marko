@@ -11,7 +11,7 @@ const $for_content__$temp = ($scope, $temp) => {
 	(({ desc, ...item }) => $for_content__item($scope, item))($temp);
 	$for_content__desc($scope, $temp.desc);
 };
-const $for = /*@__PURE__*/ _for_of(0, "<span><!></span>", " D%l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<span><!></span>", " D%", 0, $for_content__$params);
 const $foo = ($scope, foo) => $for($scope, [foo]);
 
 // tags/wrap.marko
@@ -20,5 +20,5 @@ const $_classspandiv_content__input_foo = /*@__PURE__*/ _closure_get(7, ($scope)
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("c0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__input_foo));
 
 // template.marko
-const $desc_content2 = _content_resume("a1", "Two", "b");
-const $desc_content = _content_resume("a0", "One", "b");
+const $desc_content2 = _content_resume("a1", "Two");
+const $desc_content = _content_resume("a0", "One");

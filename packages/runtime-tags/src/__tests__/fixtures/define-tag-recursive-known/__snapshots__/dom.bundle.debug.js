@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 	$Foo_content__tag_input_bar($scope["#childScope/0"]);
 };
 const $Foo_content__tag_input_message = /*@__PURE__*/ _const("input_message", $else_content__input_message);
-const $Foo_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Foo_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks), $if_content__setup, " ", " b", $else_content__setup);
+const $Foo_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Foo_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks), $if_content__setup, " ", " ", $else_content__setup);
 const $Foo_content__tag_input_bar = /*@__PURE__*/ _const("input_bar", ($scope) => {
 	$Foo_content__if($scope, $scope.input_bar ? 0 : 1);
 	$if_content__input_bar($scope);

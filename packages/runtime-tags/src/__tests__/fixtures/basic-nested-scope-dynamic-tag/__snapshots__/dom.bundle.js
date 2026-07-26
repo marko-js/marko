@@ -7,5 +7,5 @@ const $falseChild_content__setup = ($scope) => {
 	$falseChild_content__count($scope);
 	$falseChild_content__setup__script($scope);
 };
-const $falseChild_content = _content_resume("a0", "<button> </button>", " D l", $falseChild_content__setup);
+const $falseChild_content = _content_resume("a0", "<button> </button>", " D ", $falseChild_content__setup);
 const $count = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($falseChild_content__count));

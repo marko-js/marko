@@ -34,7 +34,7 @@ const $customtag_content__$params = ($scope, $params2) => {
 	$customtag_content__count($scope, ($params2?.[0]).count);
 	$customtag_content__name($scope, ($params2?.[0]).name);
 };
-const $customtag_content = _content_resume("__tests__/template.marko_1_content", "<div>Count (<!>): <!></div>", "Db%c%l", 0, $customtag_content__$params);
+const $customtag_content = _content_resume("__tests__/template.marko_1_content", "<div>Count (<!>): <!></div>", "Db%c%", 0, $customtag_content__$params);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $customtag_content($scope));

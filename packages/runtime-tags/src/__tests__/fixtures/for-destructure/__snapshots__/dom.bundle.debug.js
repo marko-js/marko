@@ -7,7 +7,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__name($scope, ($params2?.[0]).name);
 	$for_content__description($scope, ($params2?.[0]).description);
 };
-const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>: <!></div>", "D%c%l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>: <!></div>", "D%c%", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => $for($scope, [$scope.items]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {

@@ -8,7 +8,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_a($scope, $params2[0]?.a);
 	$for_content__item_b($scope, $params2[0]?.b);
 };
-const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D ", 0, $for_content__$params);
 const $list = /*@__PURE__*/ _let("list/2", ($scope) => $for($scope, [$scope.list]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$list($scope, [...$scope.list].reverse());

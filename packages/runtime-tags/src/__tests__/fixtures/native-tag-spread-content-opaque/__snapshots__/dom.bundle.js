@@ -19,4 +19,4 @@ const $setup__script = _script("b0", ($scope) => _on($scope.b, "click", function
 const $input__script = _script("b1", ($scope) => _attrs_script($scope, "a"));
 
 // template.marko
-const $mybox_content = _content_resume("a0", "Body Content", "b");
+const $mybox_content = _content_resume("a0", "Body Content");

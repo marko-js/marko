@@ -3,7 +3,7 @@ const $Layout_content__walks = "D%l", $Layout_content__template = "<section><!><
 const $template = "<button id=toggle>toggle</button><!><!>";
 const $walks = " b%c";
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
-const $Layout_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3_content", "shown content", "b");
+const $Layout_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3_content", "shown content");
 const $if_content__setup = ($scope) => $content_direct($scope["#childScope/0"], $Layout_content2($scope));
 const $Layout_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $Layout_content__content = $Layout_content__dynamicTag;

@@ -44,7 +44,7 @@ const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [
 	0,
 	1
 ]));
-const $for3 = /*@__PURE__*/ _for_to("#text/2", "<ul></ul>", " b", $for_content3__setup);
+const $for3 = /*@__PURE__*/ _for_to("#text/2", "<ul></ul>", " ", $for_content3__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	$setHtml_getter($scope)()("First Only");
 	$setHtml2_getter($scope)()("First Only");

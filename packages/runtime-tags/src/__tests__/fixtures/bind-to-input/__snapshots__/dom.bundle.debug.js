@@ -26,10 +26,10 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $tem
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1);
 const $counter_content2__x = /*@__PURE__*/ _closure_get("x", ($scope) => _text($scope["#text/0"], $scope._.x));
 const $counter_content2__setup = $counter_content2__x;
-const $counter_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2_content", " ", " b", $counter_content2__setup);
+const $counter_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2_content", " ", " ", $counter_content2__setup);
 const $counter_content__x = /*@__PURE__*/ _closure_get("x", ($scope) => _text($scope["#text/0"], $scope._.x));
 const $counter_content__setup = $counter_content__x;
-const $counter_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " b", $counter_content__setup);
+const $counter_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " ", $counter_content__setup);
 const $x__closure = /*@__PURE__*/ _closure($counter_content__x, $counter_content2__x);
 const $x = /*@__PURE__*/ _let("x/2", ($scope) => {
 	$count($scope["#childScope/0"], $scope.x);

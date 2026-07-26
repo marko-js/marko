@@ -16,7 +16,7 @@ const $for_content__$params = ($scope, $params2) => {
 };
 const $for_content__row_id = /*@__PURE__*/ _const("row_id");
 const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
-const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><button class=toggle> </button></li>", " D D m", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><button class=toggle> </button></li>", " D D ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => $for($scope, [$scope.rows, "id"]));
 function $setup($scope) {
 	$selected($scope, 1);
