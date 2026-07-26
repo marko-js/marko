@@ -72,10 +72,9 @@ function isNullableExpr(expr: t.Expression): boolean {
           return false;
         case "||=":
         case "??=":
-          return (
-            isNullableExpr(expr.right) ||
-            isNullableExpr(expr.left as t.Expression)
-          );
+          // The left operand can only be the result when it is truthy
+          // (`||=`) or non-nullish (`??=`), so only the right can be nullish.
+          return isNullableExpr(expr.right);
         case "&&=":
           return (
             isNullableExpr(expr.left as t.Expression) ||
@@ -92,7 +91,9 @@ function isNullableExpr(expr: t.Expression): boolean {
       switch (expr.operator) {
         case "||":
         case "??":
-          return isNullableExpr(expr.right) || isNullableExpr(expr.left);
+          // The left operand can only be the result when it is truthy (`||`)
+          // or non-nullish (`??`), so only the right can be nullish.
+          return isNullableExpr(expr.right);
         case "&&":
           return isNullableExpr(expr.left) || isNullableExpr(expr.right);
         default:

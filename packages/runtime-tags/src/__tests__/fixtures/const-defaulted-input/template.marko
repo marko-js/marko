@@ -1,0 +1,4 @@
+<const/nullish = input.opts ?? { label: "nullish", size: 1 }/>
+<const/falsy = input.opts || { label: "falsy", size: 2 }/>
+<const/guarded = input.opts && { label: "guarded", size: 3 }/>
+<div>${nullish.label}/${nullish.size} ${falsy.label}/${falsy.size} ${guarded?.label}</div>
