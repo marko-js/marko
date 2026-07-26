@@ -268,28 +268,6 @@ A binding read across a section boundary builds a `_closure_get`/dynamic `_closu
 
 `WalkCode` (`common/constants/walk-code.ts`) reserves char codes 67..91 for `next` walks (`Next=67`, `NextEnd=91`, a 25-code span the `// 67 through 91` comment even documents), and `dom/walker.ts` already bounds the decode branch at `value < WalkCode.NextEnd + 1` (≤91), but `WalkRangeSize.Next` is 20, so `toCharString` (`translator/util/walks.ts`) only ever emits remainder codes 67..86 and codes 87..91 are dead — unlike Over/Out/Multiplier, each fully packed at size 10 (97..106, 107..116, 117..126). As a result a consecutive `next` run of 20-24 nodes emits a redundant Multiplier char (2 chars where 1 suffices), and runs of 200-249 emit 3 where 2 would do; walk strings ship in every compiled DOM template and bundle size is a tracked feature here. Setting `WalkRangeSize.Next = 25` uses the whole range: encoder and decoder both read the enum so the change is coordinated, the widest emitted `next` char becomes 91 (remainder 24), still below the reserved backslash 92, and the decoder's `WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next` reconstruction stays exact. Re-verify: mirror `toCharString` and the walker's `next` branch in node with `rangeSize=25` and confirm n=20..24 each encode to one char with max charCode 91 and decode back to 20..24 (I saw 0 roundtrip mismatches and 0 reserved-code emissions over n=0..600), then flip the enum and run `npm run test:update` plus the size hook to confirm affected DOM fixtures shrink rather than break.
 
-## Narrow `isNullableExpr` for `||`/`??` (and `||=`/`??=`) to the right operand so `x ?? default` stops emitting optional chaining
-
-`packages/runtime-tags/src/translator/util/evaluate.ts` › `isNullableExpr` | 2026-07-23 | impact:med | effort:low
-
-`isNullableExpr` returns `isNullableExpr(right) || isNullableExpr(left)` for
-`LogicalExpression` `||`/`??` and for `AssignmentExpression` `||=`/`??=`, but in
-all four the left operand can only be the result when it is truthy (`||`) or
-non-nullish (`??`) — so the result's nullability depends solely on the right
-operand. The over-approximation flows through `core/const.ts` (`if
-(!valueExtra.nullable) binding.nullable = false`) into
-`getDeclaredBindingExpression` and `util/signals.ts`'s `toMemberExpression(...,
-alias.nullable)`, so the extremely common default idiom `<const/opts =
-input.opts ?? { … }/>` compiles (optimize `-o dom`) to `$opts($scope, opts) => {
-$opts_title($scope, opts?.title); $opts_n($scope, opts?.n); }` — one needless
-`?.` and one needless runtime nullish check per property read, on a value that
-is provably never nullish. Only `&&`/`&&=` need the current `left || right`
-form. Bundle size is a tracked feature here, and this is a two-line change in
-one switch. Re-verify: compile `<const/a = input.o ?? { y: 1 }/><const/b =
-input.o || { y: 2 }/><const/c = input.o && { y: 3 }/><const/d = { y: 4
-}/><div>${a.y} ${b.y} ${c.y} ${d.y}</div>` with `-o dom -d`; today it emits
-`a?.y`, `b?.y`, `c?.y`, `d.y` — after the fix only `c?.y` should keep the `?.`.
-
 ## Cache the resolved lazy-module signal in `_load_signal` so the first post-load input update isn't deferred a tick
 
 `packages/runtime-tags/src/dom/load.ts` › `_load_signal` | 2026-07-23 | impact:low | effort:low
