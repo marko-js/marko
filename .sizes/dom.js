@@ -1,4 +1,4 @@
-// size: 26331 (min) 9761 (brotli)
+// size: 26363 (min) 9754 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1611,32 +1611,35 @@ function _await_promise(nodeAccessor, params) {
         (data) => {
           if (thisPromise === scope[promiseAccessor]) {
             let referenceNode = scope[nodeAccessor];
-            ((scope[promiseAccessor] = 0),
-              queueAsyncRender(scope, () => {
-                awaitBranch = resolveAwait(scope, referenceNode, data);
-                let pendingRenders = awaitBranch.W;
-                if (
-                  ((awaitBranch.W = 0),
-                  pendingRenders?.forEach(queuePendingRender),
-                  placeholderShown.add(pendingEffects),
-                  awaitCounter.c(),
-                  awaitCounter.m)
-                ) {
-                  let fnScopes = /* @__PURE__ */ new Map(),
-                    effects = awaitCounter.m([]);
-                  for (let i = 0; i < pendingEffects.length;) {
-                    let fn = pendingEffects[i++],
-                      scopes = fnScopes.get(fn);
-                    (scopes || fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
-                      scopes.add(pendingEffects[i++]));
-                  }
-                  for (let i = 0; i < effects.length;) {
-                    let fn = effects[i++],
-                      scope = effects[i++];
-                    fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
-                  }
+            if (((scope[promiseAccessor] = 0), scope.F?.H === 0)) {
+              (awaitCounter.c(), run());
+              return;
+            }
+            queueAsyncRender(scope, () => {
+              awaitBranch = resolveAwait(scope, referenceNode, data);
+              let pendingRenders = awaitBranch.W;
+              if (
+                ((awaitBranch.W = 0),
+                pendingRenders?.forEach(queuePendingRender),
+                placeholderShown.add(pendingEffects),
+                awaitCounter.c(),
+                awaitCounter.m)
+              ) {
+                let fnScopes = /* @__PURE__ */ new Map(),
+                  effects = awaitCounter.m([]);
+                for (let i = 0; i < pendingEffects.length;) {
+                  let fn = pendingEffects[i++],
+                    scopes = fnScopes.get(fn);
+                  (scopes || fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
+                    scopes.add(pendingEffects[i++]));
                 }
-              }));
+                for (let i = 0; i < effects.length;) {
+                  let fn = effects[i++],
+                    scope = effects[i++];
+                  fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
+                }
+              }
+            });
           }
         },
         (error) => {

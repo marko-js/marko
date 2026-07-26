@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/show = true/>
+<button onClick() { show = !show }>toggle</button>
+<try>
+  <if=show>
+    <await|value|=resolveAfter("loaded", 2)>
+      ${value}
+    </await>
+  </if>
+  <div>settled</div>
+  <@placeholder>
+    LOADING...
+  </@placeholder>
+</try>
