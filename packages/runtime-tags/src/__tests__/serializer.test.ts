@@ -2131,6 +2131,32 @@ describe("serializer", () => {
     assert.equal(scopes.get(3), undefined);
   });
 
+  it("steps back to a scope flushed after a higher one", () => {
+    // The skip is a signed delta, so flushes need not ascend.
+    const scopes = assertStringifyScopes(
+      [
+        [3, {}, { a: 1 }],
+        [1, {}, { b: 2 }],
+      ],
+      `_=>[3,{a:1},-3,{b:2}]`,
+    );
+    assert.deepEqual(scopes.get(3), { a: 1 });
+    assert.deepEqual(scopes.get(1), { b: 2 });
+  });
+
+  it("steps back to a scope that flushes twice in one payload", () => {
+    const scopes = assertStringifyScopes(
+      [
+        [1, {}, { a: 1 }],
+        [2, {}, { b: 2 }],
+        [1, {}, { c: 3 }],
+      ],
+      `_=>[1,{a:1},{b:2},-2,{c:3}]`,
+    );
+    assert.deepEqual(scopes.get(1), { a: 1, c: 3 });
+    assert.deepEqual(scopes.get(2), { b: 2 });
+  });
+
   it("skips the payload entirely when every scope is empty", () => {
     const serializer = new Serializer();
     const boundary = { signal: { aborted: false } } as any as Boundary;

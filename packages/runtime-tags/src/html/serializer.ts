@@ -448,10 +448,12 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
+      // The skip is a SIGNED delta, so a flush that revisits a lower slot
+      // steps the cursor back rather than landing in the wrong one.
       buf[openIndex] =
         nextSlotId === -1
           ? "[" + scopeId + ",{"
-          : (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
+          : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
       buf.push("}");
