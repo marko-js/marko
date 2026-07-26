@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.29
+
+### Patch Changes
+
+- [#3610](https://github.com/marko-js/marko/pull/3610) [`0c1de05`](https://github.com/marko-js/marko/commit/0c1de05231ab01b1f09c0852401b2ca138b47a2e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resolve custom tags from installed packages by their package name instead of a realpath (eg pnpm's virtual store) that bundlers may not treat as a dependency.
+
+- Updated dependencies [[`5b5b9a1`](https://github.com/marko-js/marko/commit/5b5b9a1305a9febbff448255eaed80e56122c6b7), [`5823328`](https://github.com/marko-js/marko/commit/5823328d8a14ac7e7bad98b4976fab775a0a962f), [`374f228`](https://github.com/marko-js/marko/commit/374f22884723f4202d81bcf2cab1959a871e1b10)]:
+  - @marko/runtime-tags@6.3.24
+
 ## 5.39.28
 
 ### Patch Changes

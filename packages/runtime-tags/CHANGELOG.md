@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.3.24
+
+### Patch Changes
+
+- [#3598](https://github.com/marko-js/marko/pull/3598) [`5b5b9a1`](https://github.com/marko-js/marko/commit/5b5b9a1305a9febbff448255eaed80e56122c6b7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix an `<await>` inside a `<for>` throwing on the client. `_await_promise` read the await counter off a branch that `_await_content` had not created yet, since a loop invokes its params before the queued setup that builds the branch, so `<for|item| of=items><await|v|=item.promise>` died with `Cannot read properties of undefined (reading '#AwaitCounter')` on first render. The promise handshake is now deferred and driven by `_await_content`, matching what the non-promise path already did.
+
+- [#3609](https://github.com/marko-js/marko/pull/3609) [`5823328`](https://github.com/marko-js/marko/commit/5823328d8a14ac7e7bad98b4976fab775a0a962f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop writing a dynamic native tag's renderer name into the resume payload in production. Only the debug accessor reads it, so optimized pages paid `R:"<tagname>"` per instance for a field nothing consumes.
+
+- [#3605](https://github.com/marko-js/marko/pull/3605) [`374f228`](https://github.com/marko-js/marko/commit/374f22884723f4202d81bcf2cab1959a871e1b10) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Write scope slot deltas in the resume payload as signed. The writer only emitted a delta when the next scope id was higher than the cursor, so a scope flushed after one with a larger id emitted none at all and its props landed in whichever slot the cursor held. The client already accumulates signed deltas, so only the writer changed.
+
 ## 6.3.23
 
 ### Patch Changes
