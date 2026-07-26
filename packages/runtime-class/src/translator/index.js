@@ -709,7 +709,7 @@ function isRenderContent({ node }) {
 function resolveRelativeTagEntry(file, tagDef) {
   // TODO: support transform and other entries.
   const entry = tagDef.template || tagDef.renderer;
-  return entry && resolveRelativePath(file, entry);
+  return entry && resolveRelativePath(file, entry, tagDef);
 }
 
 function getClassHydrationMode(file, visited = new Set()) {
