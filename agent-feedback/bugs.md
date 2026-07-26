@@ -1427,33 +1427,6 @@ with a click step and run it in debug SSR-resume mode — it throws inside
 `_attrs_script` because `scope["#linearGradient/0"]` is undefined, while the
 same template renders fine in CSR-only mode.
 
-## Decrement the `<try>` await counter when a pending `<await>`'s branch is destroyed; the `@placeholder` sticks forever
-
-`packages/runtime-tags/src/dom/control-flow.ts` › `addAwaitCounter` | 2026-07-23 | impact:high | effort:med
-
-The counter created by `addAwaitCounter` only dismisses a `<try>`'s
-`@placeholder` when its `c()` runs, and `_await_promise`'s _resolve_ handler
-calls `awaitCounter.c()` from **inside** the callback passed to
-`queueAsyncRender` (control-flow.ts:186). `skipDestroyedRenders`
-(`packages/runtime-tags/src/dom/queue.ts`) drops any queued render whose
-`scope[AccessorProp.ClosestBranch][AccessorProp.Gen] === 0`, so if the branch
-containing the pending `<await>` is destroyed while the enclosing `<try>`
-survives — e.g. an `<if>`/`<for>` inside the `<try>` that stops rendering the
-item — the render never runs, the counter never reaches 0, `dismissPlaceholder`
-never fires, and the boundary is stuck on `loading…` permanently (a later
-re-mount just increments the counter again, so it never recovers). The reject
-handler already avoids this by calling `awaitCounter.c()` outside the queued
-render (:214), which is the asymmetry to fix: detect the destroyed closest
-branch in the resolve handler (or register pending awaits on the branch so
-`destroyNestedScopes` settles them) before deciding to skip. `dom/load.ts` ›
-`insertLoaded` has the same shape (`awaitCounter?.c()` inside a
-`queueAsyncRender` callback), so lazy tags under a `<try>` `@placeholder` are
-worth checking with the same repro. Re-verify: client-mount
-`<let/show=1/><try><@placeholder>loading...</@placeholder><if=show><await|v|=input.p><span>${v}</span></await></if></try><button
-onClick(){show=0}>hide</button>`, click the button while `input.p` is pending,
-then resolve it — the DOM stays `loading...` forever, while the identical run
-without the click resolves to `<span>VALUE</span>`.
-
 ## Escape `<script>`/`<style>` raw-text bodies once per element, not once per interpolation
 
 `packages/runtime-tags/src/html/content.ts` › `_escape_script` | 2026-07-23 | impact:high | effort:med

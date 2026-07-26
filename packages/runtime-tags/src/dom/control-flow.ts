@@ -30,6 +30,7 @@ import {
   queueEffect,
   queuePendingRender,
   queueRender,
+  run,
   runEffects,
 } from "./queue";
 import {
@@ -169,6 +170,15 @@ export function _await_promise(
         if (thisPromise === scope[promiseAccessor]) {
           const referenceNode = scope[nodeAccessor] as ChildNode;
           scope[promiseAccessor] = 0;
+
+          if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] === 0) {
+            // The branch holding this await is gone, so the render below is
+            // dropped; complete here or an ancestor `@placeholder` never
+            // dismisses.
+            awaitCounter!.c();
+            run();
+            return;
+          }
 
           queueAsyncRender(scope, () => {
             awaitBranch = resolveAwait(scope, referenceNode, data);
