@@ -1,0 +1,5 @@
+{
+    "dependencies": {
+        "imported-foo": "^1.0.0"
+    }
+}
