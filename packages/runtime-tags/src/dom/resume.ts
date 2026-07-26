@@ -215,6 +215,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
 
               if (singleNode) {
+                // A set makes this linear but adds ~18 B brotli to every
+                // bundle; the scan costs ~1 ms only past ~1000 branches here.
                 while (
                   startVisit.previousSibling &&
                   ~visits.indexOf(

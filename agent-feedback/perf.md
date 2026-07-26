@@ -504,31 +504,6 @@ signals as plain functions"), then flip it and audit snapshots. Re-verify:
 compile the two templates above with `pnpm run compile -o dom` and diff the
 emitted `$y`.
 
-## Replace the quadratic `visits.indexOf` marker test in the single-node branch resume walk with a Set
-
-`packages/runtime-tags/src/dom/resume.ts` › `init (createVisitBranches)` | 2026-07-23 | impact:med | effort:low
-
-Inside `init`'s `createVisitBranches`, the single-node branch-end walk tests
-whether a preceding sibling is one of this render's resume markers with
-`~visits.indexOf(startVisit = startVisit.previousSibling)` (resume.ts:218-223).
-`visits` is `render.v`, the array of _every_ marker comment in the render, so
-each test is a linear scan, and the loop's terminating test (the first
-non-marker sibling) always scans the whole array. This runs once per resumed
-branch, and every `<for>`/`<if>` body that the marker-elision optimization
-reduced to a single node emits one `|`/`}` marker per branch — see
-`src/__tests__/fixtures/for-by/__snapshots__/writes.html`, `<!--M_}1 a 4 3
-2-->`, one branch id per row — so resuming an N-row list costs ~1.5N² identity
-comparisons while N stays proportional to the marker count. Build the marker set
-once per `render.m` invocation (`new Set(render.v)`) and use `.has`: `visits` is
-never mutated during the loop when `branchesEnabled` (the `visits[retained++] =
-visit` compaction only runs in the `else if (render.b)` arm, which is the
-`!branchesEnabled` path), so the set stays valid, and it costs ~10 minified
-bytes in a runtime that already ships this code (`.sizes/dom.js:853`). Re-verify
-by counting comparisons: simulate the walk over a `text, marker, text, marker,
-…, end-marker` sibling chain of N rows — `indexOf` performs 1,501,500
-comparisons / 0.63 ms at N=1000, 13,504,500 / 9.9 ms at N=3000 and 150,015,000 /
-42.6 ms at N=10000, versus 2N comparisons / 1.57 ms at N=10000 with a Set.
-
 ## Stop serializing `AccessorProp.Renderer` for dynamic native tags in production
 
 `packages/runtime-tags/src/html/dynamic-tag.ts` › `_dynamic_tag` | 2026-07-23 | impact:low | effort:low
