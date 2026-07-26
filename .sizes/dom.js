@@ -1,4 +1,4 @@
-// size: 26307 (min) 9720 (brotli)
+// size: 26335 (min) 9736 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1206,16 +1206,20 @@ function _attr_select_value_script(scope, nodeAccessor) {
         }
     }
   (syncControllableFormInput(el, hasSelectChanged, onChange),
-    new MutationObserver(() => {
-      let value = scope["G" + nodeAccessor];
-      (Array.isArray(value)
-        ? value.length !== el.selectedOptions.length ||
-          value.some((_, i) => !value.includes(el.selectedOptions[i].value))
-        : el.value !== value) && onChange();
-    }).observe(el, {
-      childList: !0,
-      subtree: !0,
-    }));
+    observeOnce(
+      el,
+      {
+        childList: !0,
+        subtree: !0,
+      },
+      () => {
+        let value = scope["G" + nodeAccessor];
+        (Array.isArray(value)
+          ? value.length !== el.selectedOptions.length ||
+            value.some((_, i) => !value.includes(el.selectedOptions[i].value))
+          : el.value !== value) && onChange();
+      },
+    ));
 }
 function setSelectValue(el, value, multiple) {
   if (multiple) for (let opt of el.options) opt.selected = value.includes(opt.value);
@@ -1237,16 +1241,23 @@ function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
 }
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
-  new MutationObserver(() => {
-    let openChange = scope["E" + nodeAccessor];
-    if (openChange && el.open === !scope["G" + nodeAccessor]) {
-      let newValue = el.open;
-      ((el.open = !newValue), openChange(newValue), run());
-    }
-  }).observe(el, {
-    attributes: !0,
-    attributeFilter: ["open"],
-  });
+  observeOnce(
+    el,
+    {
+      attributes: !0,
+      attributeFilter: ["open"],
+    },
+    () => {
+      let openChange = scope["E" + nodeAccessor];
+      if (openChange && el.open === !scope["G" + nodeAccessor]) {
+        let newValue = el.open;
+        ((el.open = !newValue), openChange(newValue), run());
+      }
+    },
+  );
+}
+function observeOnce(el, init, callback) {
+  (el._o?.disconnect(), (el._o = new MutationObserver(callback)).observe(el, init));
 }
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),

@@ -2,6 +2,7 @@ export const BranchScopes = "BranchScopes:";
 export const ClosureScopes = "ClosureScopes:";
 export const ClosureSignalIndex = "ClosureSignalIndex:";
 export const ConditionalRenderer = "ConditionalRenderer:";
+export const ControlledObserver = "ControlledObserver:";
 export const ControlledHandler = "ControlledHandler:";
 export const ControlledType = "ControlledType:";
 export const ControlledValue = "ControlledValue:";
