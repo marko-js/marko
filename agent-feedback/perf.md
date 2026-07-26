@@ -414,32 +414,6 @@ onClick(){n++}>add</button><ul><for|i| to=n><li>row</li></for></ul>` and compare
 the length of the single `<!--M_}…-->` comment against total page bytes before
 and after.
 
-## Stop materializing empty branch scopes — they cost ~1/3 of SSR time on a stateless list and emit zero payload bytes
-
-`packages/runtime-tags/src/html/writer.ts` › `writeScope` | 2026-07-23 | impact:high | effort:med
-
-Every loop branch reaches `writeScope` twice with an empty partial: once from
-the compiled section epilogue (`_scope($scopeN_id, {})`, emitted by
-`translator/util/signals.ts` `writeHTMLResumeStatements` whenever
-`sectionSerializeReason` is truthy even with zero serialized props) and once
-from `forBranches`, whose return value is unused when `resumeMarker` is set.
-Each call allocates a `{}`, inserts a canonical scope into `state.scopes` (never
-deleted for the life of the render), writes a `writeScopes` entry and sets
-`flushScopes`; `flushSerializer` (writer.ts:1584) then allocates an
-`Object.getOwnPropertyNames(props)` array per entry only to discard it. The
-naive "skip empty writes" fix is unsafe: an empty `writeScopes` entry is exactly
-what lets `writeScopePassive` props ride along — see the `_existing_scope`
-comment ("Lets passive props join an existing scope flush without forcing wire
-data") and the `passiveScopes` merge at the top of `flushSerializer` — so the
-opt-in must move to a separate flushable-id set with props materialized lazily.
-A cheap first step is dropping the redundant `forBranches` call in the
-`resumeMarker && (!resumeKeys || sameAsIndex)` case, but note it currently also
-supplies `state.needsMainRuntime = true`, which `state.mark` does not set.
-Re-verify: wrap `Object.getOwnPropertyNames` and
-`Serializer.prototype.stringifyScopes` around an SSR render of a large stateless
-`<for>` and compare the count of empty-props probes against the number of
-flushes actually serialized.
-
 ## Mark class/style item writes pure so a single-consumer derived binding is not forced into a `_const` wrapper and scope slot
 
 `packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `translate.dom.enter` | 2026-07-23 | impact:med | effort:low
