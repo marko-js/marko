@@ -30,6 +30,8 @@ const propExprsBySection = new WeakMap<
   Map<SerializeKey, OneMany<t.NodeExtra>>
 >();
 const serializePropsByBinding = new WeakMap<Binding, SerializeKey>();
+// Param reason groups key this with a per-compile symbol, which the compile
+// cache bounds: recompiling an edited file adds none.
 const serializePropByModifier: Record<
   Accessor | symbol,
   WeakMap<Section | Binding, SerializeKey>
