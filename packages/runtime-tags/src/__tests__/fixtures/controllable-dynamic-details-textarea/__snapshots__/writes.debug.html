@@ -1,0 +1,32 @@
+<details><!--M_[-->
+  <summary>toggle</summary>
+  <textarea>first</textarea><!--M_'3 #text/0 4--><!--M_]2 #details/0 3-->
+</details><!--M_'1 #text/0 2--><output>closed<!--M_*1 #text/1-->/<!>
+    first<!--M_*1 #text/2--></output>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    "ConditionalRenderer:#text/0": "details",
+    text: "first",
+    detailsTag: "details",
+    textareaTag: "textarea",
+    "ClosureScopes:text": new Set([_(3)])
+  }, {
+    "ControlledType:#details/0": 4,
+    "ControlledHandler:#details/0": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-details-textarea/template.marko_0/openChange"
+      ),
+    "ConditionalRenderer:#details/0": "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-details-textarea/template.marko_1_content",
+    "#Renderer": "details"
+  }, {
+    "ConditionalRenderer:#text/0": "textarea",
+    _: _(1)
+  }, {
+    "ControlledType:#textarea/0": 2,
+    "ControlledHandler:#textarea/0": _(3,
+      "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-details-textarea/template.marko_1/valueChange"
+      ),
+    "#Renderer": "textarea"
+  }], "_dynamicTagScript 4 2"];
+  M._.w()
+</script>

@@ -504,27 +504,6 @@ signals as plain functions"), then flip it and audit snapshots. Re-verify:
 compile the two templates above with `pnpm run compile -o dom` and diff the
 emitted `$y`.
 
-## Stop serializing `AccessorProp.Renderer` for dynamic native tags in production
-
-`packages/runtime-tags/src/html/dynamic-tag.ts` › `_dynamic_tag` | 2026-07-23 | impact:low | effort:low
-
-When a dynamic native tag needs a resume script, HTML `_dynamic_tag`
-unconditionally writes `_scope(branchId, { [AccessorProp.Renderer]: renderer })`
-alongside `_script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID)`. That value has
-exactly one consumer in the whole package — the MARKO_DEBUG arm of
-`dom/control-flow.ts` › `dynamicTagScript`, which builds `` `#${branch[AccessorProp.Renderer]}/0` ``; the production arm uses the constant
-`"a"` and never reads it, and the client-side writer (`dom/renderer.ts` ›
-`createBranch`) only sets the slot under `if (MARKO_DEBUG)`. So every optimized
-page pays `R:"<tagname>"` of resume payload per dynamic-native-tag instance for
-a field nothing reads. Wrapping that `_scope` call in `if (MARKO_DEBUG)` is safe
-because `needsScript` is only true when `_attrs` already wrote
-`EventAttributes`/`ControlledHandler` into the same branch scope, so the scope
-is emitted regardless. Re-verify: `cat
-packages/runtime-tags/src/__tests__/fixtures/dynamic-native-tag-events/__snapshots__/writes.html`
-— the optimized resume payload contains `R: "span"` — and `rg -n
-"AccessorProp.Renderer" packages/runtime-tags/src` shows the only read is the
-MARKO_DEBUG ternary in `dynamicTagScript`.
-
 ## Elide the empty `$setup` export from the `_template` call so branches skip a no-op queued render
 
 `packages/runtime-tags/src/translator/visitors/program/dom.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low
