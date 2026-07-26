@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/hide=false/>
+<button onClick() { hide = !hide }>toggle</button>
+<ul><for|item| of=(hide ? [] : input.head)><i>${item}</i></for></ul>
+<await|mid|=resolveAfter(input.mid, 1)>
+  <ol><for|item| of=(hide ? [] : mid)><b>${item}</b></for></ol>
+</await>
+<await|tail|=resolveAfter(input.tail, 5)>
+  <ol><for|item| of=(hide ? [] : tail)><em>${item}</em></for></ol>
+</await>

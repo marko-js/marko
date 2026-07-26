@@ -1,4 +1,4 @@
-// size: 26307 (min) 9720 (brotli)
+// size: 26331 (min) 9742 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -850,7 +850,7 @@ function init(runtimeId = "M") {
                     for (
                       ;
                       startVisit.previousSibling &&
-                      ~visits.indexOf((startVisit = startVisit.previousSibling));
+                      (visitSet ||= new Set(visits)).has((startVisit = startVisit.previousSibling));
                     );
                     ((branch._ ??= visitScope),
                       (branch.K = branch.S = startVisit),
@@ -922,6 +922,7 @@ function init(runtimeId = "M") {
             },
             lastEffect,
             visits,
+            visitSet,
             visit,
             visitText,
             visitType,
@@ -942,6 +943,7 @@ function init(runtimeId = "M") {
                   }
                 }
               let retained = 0;
+              visitSet = void 0;
               for (visit of (visits = render.v))
                 if (
                   ((lastTokenIndex = render.i.length),

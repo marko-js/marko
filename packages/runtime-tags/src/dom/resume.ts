@@ -215,9 +215,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
 
               if (singleNode) {
+                // Skipping this render's own markers is a membership test over
+                // every marker in the render, so it is a set, not a scan.
                 while (
                   startVisit.previousSibling &&
-                  ~visits.indexOf(
+                  (visitSet ||= new Set(visits)).has(
                     (startVisit = startVisit.previousSibling) as Comment,
                   )
                 );
@@ -348,6 +350,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         };
         let lastEffect: unknown;
         let visits: RenderData["v"];
+        let visitSet: undefined | Set<Comment>;
         let visit: Comment;
         let visitText: string;
         let visitType: ResumeSymbol;
@@ -384,6 +387,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
 
           let retained = 0;
+          // Streamed content appends markers between passes.
+          visitSet = undefined;
           for (visit of (visits = render.v)) {
             lastTokenIndex = render.i.length;
             visitText = visit.data!;
