@@ -1,0 +1,6 @@
+<let/open=false/>
+<let/n=0/>
+<const/attrs = { open, openChange(next) { open = next }, "data-n": n }/>
+<button onClick() { n++ }>bump</button>
+<details ...attrs><summary>s</summary>body</details>
+<output>${open ? "open" : "closed"}/${n}</output>

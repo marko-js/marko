@@ -379,7 +379,7 @@ export function _attr_select_value_script(
   }
 
   syncControllableFormInput(el, hasSelectChanged, onChange);
-  new MutationObserver(() => {
+  observeOnce(scope, nodeAccessor, { childList: true, subtree: true }, () => {
     const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
     if (
       Array.isArray(value)
@@ -391,7 +391,7 @@ export function _attr_select_value_script(
     ) {
       onChange();
     }
-  }).observe(el, { childList: true, subtree: true });
+  });
 }
 function setSelectValue(
   el: HTMLSelectElement,
@@ -470,21 +470,41 @@ export function _attr_details_or_dialog_open_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLDetailsElement;
-  new MutationObserver(() => {
-    const openChange = scope[
-      AccessorPrefix.ControlledHandler + nodeAccessor
-    ] as undefined | ((value: unknown) => unknown);
+  observeOnce(
+    scope,
+    nodeAccessor,
+    { attributes: true, attributeFilter: ["open"] },
+    () => {
+      const openChange = scope[
+        AccessorPrefix.ControlledHandler + nodeAccessor
+      ] as undefined | ((value: unknown) => unknown);
 
-    if (
-      openChange &&
-      el.open === !scope[AccessorPrefix.ControlledValue + nodeAccessor]
-    ) {
-      const newValue = el.open;
-      el.open = !newValue;
-      openChange(newValue);
-      run();
-    }
-  }).observe(el, { attributes: true, attributeFilter: ["open"] });
+      if (
+        openChange &&
+        el.open === !scope[AccessorPrefix.ControlledValue + nodeAccessor]
+      ) {
+        const newValue = el.open;
+        el.open = !newValue;
+        openChange(newValue);
+        run();
+      }
+    },
+  );
+}
+
+// A spread re-render re-runs the setup script against the same element, so
+// A spread re-render re-runs the setup script; re-observing with the scope's
+// observer updates that registration instead of adding one.
+function observeOnce(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  init: MutationObserverInit,
+  callback: MutationCallback,
+) {
+  (
+    (scope[AccessorPrefix.ControlledObserver + nodeAccessor] ||=
+      new MutationObserver(callback)) as MutationObserver
+  ).observe(scope[nodeAccessor] as Element, init);
 }
 
 function syncControllableFormInput<
