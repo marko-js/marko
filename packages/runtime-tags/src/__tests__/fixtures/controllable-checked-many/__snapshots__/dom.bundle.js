@@ -9,7 +9,7 @@ const $for_content__setup = ($scope) => {
 };
 const $for_content__state = /*@__PURE__*/ _const(2, $for_content__states__OR__state);
 const $for_content__$params = ($scope, $params2) => $for_content__state($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of(0, "<input type=checkbox>", " b", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<input type=checkbox>", " ", $for_content__setup, $for_content__$params);
 const $states = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, $scope.c.join(","));
 	$for($scope, [$scope.c]);

@@ -46,7 +46,7 @@ const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__baseCount($scope, $params2[0]);
 	$classlayout_content__message($scope, $params2[1]);
 };
-const $classlayout_content = _content_resume("a0", "<h1> </h1><button id=tags><!> * <!> = <!></button>", "D l D%c%c%l", $classlayout_content__setup, $classlayout_content__$params);
+const $classlayout_content = _content_resume("a0", "<h1> </h1><button id=tags><!> * <!> = <!></button>", "D l D%c%c%", $classlayout_content__setup, $classlayout_content__$params);
 const $multiplier = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($classlayout_content__multiplier));
 
 // v:template.marko.hydrate-6.js

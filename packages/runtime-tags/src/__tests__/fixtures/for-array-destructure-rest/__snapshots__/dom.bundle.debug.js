@@ -14,7 +14,7 @@ const $for_content__$temp = ($scope, $temp) => {
 	$for_content__$temp_2($scope, $temp[2]);
 };
 const $for_content__rest = ($scope, rest) => $for_content__rest_length($scope, rest.length);
-const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!>: first=<!> rest0=<!> rest1=<!> len=<!></li>", "D%c%c%c%c%l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!>: first=<!> rest0=<!> rest1=<!> len=<!></li>", "D%c%c%c%c%", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => $for($scope, [$scope.rows]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$rows($scope, [[

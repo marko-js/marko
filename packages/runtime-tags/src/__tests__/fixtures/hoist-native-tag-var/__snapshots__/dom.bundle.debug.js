@@ -20,12 +20,12 @@ const $if_content2__setup = ($scope) => {
 const $if_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)(""), /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)(""), $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
-const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%c", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => {
 	$if($scope, $scope.input_show ? 0 : 1);
 	$if_content__input_show($scope);
 });
-const $if2 = /*@__PURE__*/ _if("#text/2", "<div></div>", " b");
+const $if2 = /*@__PURE__*/ _if("#text/2", "<div></div>", " ");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	{
 		const el = $el_getter($scope)();

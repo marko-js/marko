@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if_content__$checkedValueChange = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__checkedValue__OR__$checkedValueChange);
-const $if = /*@__PURE__*/ _if("#text/1", "<input type=radio>", " b", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", "<input type=radio>", " ", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(8, ($scope) => {
 	_attr_input_checkedValue($scope, "#input/0", $scope.checkedValue, $scope.$checkedValueChange, "a");

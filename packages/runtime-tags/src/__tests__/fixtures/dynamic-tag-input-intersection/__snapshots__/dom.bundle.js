@@ -10,5 +10,5 @@ const $content = /*@__PURE__*/ _let(8, $input_as__OR__input_class__OR__htmlInput
 const $inputContent__script = _script("b1", ($scope) => $content($scope, $scope.f));
 
 // template.marko
-const $mytag_content2 = _content_resume("a1", "Span", "b");
-const $mytag_content = _content_resume("a0", "Div", "b");
+const $mytag_content2 = _content_resume("a1", "Span");
+const $mytag_content = _content_resume("a0", "Div");

@@ -33,7 +33,7 @@ const $for_content__setup = ($scope) => {
 	]);
 	$for_content__setup__script($scope);
 };
-const $for = /*@__PURE__*/ _for_to("#text/3", "<!><!><!>", "b%c", $for_content__setup);
+const $for = /*@__PURE__*/ _for_to("#text/3", "<!><!><!>", "b%", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#pre/0"]).innerHTML += `${[...$ref_getter($scope)].length}; ${$ref_getter($scope)()}\n\t`);
 function $setup($scope) {
 	$for($scope, [

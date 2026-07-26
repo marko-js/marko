@@ -3,7 +3,7 @@ const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $if_content__text = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.text));
 const $if_content__setup = $if_content__text;
-const $if = /*@__PURE__*/ _if("#div/0", "<div> </div>", "D l", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#div/0", "<div> </div>", "D ", $if_content__setup);
 const $hide__OR__text_length = /*@__PURE__*/ _or(4, ($scope) => $if($scope, !$scope.hide && $scope.text_length ? 0 : 1));
 const $hide = /*@__PURE__*/ _let("hide/1", $hide__OR__text_length);
 const $text = /*@__PURE__*/ _let("text/2", ($scope) => {

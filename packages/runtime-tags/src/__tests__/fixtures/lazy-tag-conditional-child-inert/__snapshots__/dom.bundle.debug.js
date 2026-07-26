@@ -22,7 +22,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_label($scope["#childScope/1"], "x");
 };
-const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!><!>", "b%/&c", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!><!>", "b%/&", $if_content__setup);
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	$if($scope, $scope.count % 2 === 0 ? 0 : 1);
 	$if_content__count($scope);

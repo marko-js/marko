@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for = /*@__PURE__*/ _for_to("#text/0", "<li>item <!></li>", "Db%l", $for_content__setup);
+const $for = /*@__PURE__*/ _for_to("#text/0", "<li>item <!></li>", "Db%", $for_content__setup);
 const $count$1 = ($scope, count) => $for($scope, [
 	count,
 	0,

@@ -2,6 +2,6 @@
 const $for_content__option__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 
 // template.marko
-const $option_content3 = _content_resume("a2", "Three", "b");
-const $option_content2 = _content_resume("a1", "Two", "b");
-const $option_content = _content_resume("a0", "One", "b");
+const $option_content3 = _content_resume("a2", "Three");
+const $option_content2 = _content_resume("a1", "Two");
+const $option_content = _content_resume("a0", "One");

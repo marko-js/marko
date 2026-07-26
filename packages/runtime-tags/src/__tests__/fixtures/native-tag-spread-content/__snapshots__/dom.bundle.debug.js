@@ -1,7 +1,7 @@
 // tags/my-div.marko
 const $template$1 = "<div></div><button></button><span>Overridden</span><output></output><strong></strong><p></p><em></em>";
 const $walks$1 = " b b b b b b b";
-const $CustomContent_content = _content_resume("__tests__/tags/my-div.marko_1_content", "Custom content", "b");
+const $CustomContent_content = _content_resume("__tests__/tags/my-div.marko_1_content", "Custom content");
 const $input__OR__CustomContent_content__script = _script("__tests__/tags/my-div.marko_0_input_CustomContent_content", ($scope) => _attrs_script($scope, "#p/5"));
 const $input__OR__CustomContent_content = /*@__PURE__*/ _or(11, ($scope) => {
 	_attrs_content($scope, "#p/5", {
@@ -46,7 +46,7 @@ var my_div_default = /*@__PURE__*/ _template("__tests__/tags/my-div.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $mydiv_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "Hello", "b");
+const $mydiv_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "Hello");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { content: $mydiv_content($scope) });

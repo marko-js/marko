@@ -25,7 +25,7 @@ const $child_content__$params = ($scope, $params3) => {
 	$child_content__$params3_2($scope, $params3[2]);
 };
 const $child_content__others = ($scope, others) => $child_content__others_length($scope, others.length);
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<div><!>|<!>|<!>|<!></div>", "D%c%c%c%l", 0, $child_content__$params);
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<div><!>|<!>|<!>|<!></div>", "D%c%c%c%", 0, $child_content__$params);
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__setup = ($scope) => _text($scope["#text/1"], $scope["#LoopKey"]);
 const $for_content__meta_length = ($scope, meta_length) => _text($scope["#text/2"], meta_length);
@@ -34,7 +34,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item($scope, $params2[0]);
 };
 const $for_content__meta = ($scope, meta) => $for_content__meta_length($scope, meta.length);
-const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>:<!>:<!></div>", "D%c%c%l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>:<!>:<!></div>", "D%c%c%", $for_content__setup, $for_content__$params);
 const $list = /*@__PURE__*/ _let("list/2", ($scope) => $for($scope, [$scope.list]));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);

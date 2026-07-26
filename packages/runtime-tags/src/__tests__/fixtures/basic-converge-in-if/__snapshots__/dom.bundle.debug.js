@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__b = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__a__OR__b);
 const $a = /*@__PURE__*/ _let("a/1");
 const $b = /*@__PURE__*/ _let("b/2");
-const $if = /*@__PURE__*/ _if("#text/0", " ", " b", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", " ", " ", $if_content__setup);
 function $setup($scope) {
 	$a($scope, 0);
 	$b($scope, 0);

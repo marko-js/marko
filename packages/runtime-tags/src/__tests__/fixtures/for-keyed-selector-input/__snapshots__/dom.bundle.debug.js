@@ -22,7 +22,7 @@ function $setup($scope) {
 	$enabled($scope, true);
 	$setup__script($scope);
 }
-const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", " D l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", " D ", $for_content__setup, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, "id"]);
 const $input = ($scope, input) => {
 	$input_rows($scope, input.rows);

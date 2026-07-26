@@ -19,7 +19,7 @@ const $child_content__setup = ($scope) => {
 	$child_content__count($scope);
 	$child_content__setup__script($scope);
 };
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button> </button>", " D l", $child_content__setup);
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button> </button>", " D ", $child_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($child_content__count);
 const $count = /*@__PURE__*/ _let("count/1", $count__closure);
 function $setup($scope) {

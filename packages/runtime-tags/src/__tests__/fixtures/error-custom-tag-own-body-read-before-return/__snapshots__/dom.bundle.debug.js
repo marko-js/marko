@@ -16,7 +16,7 @@ const $child_content__setup = ($scope) => {
 	$child_content__x($scope);
 	_return($scope, 1);
 };
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span> </span>", "D l", $child_content__setup);
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span> </span>", "D ", $child_content__setup);
 const $x__closure = /*@__PURE__*/ _closure($child_content__x);
 const $x = _var_resume("__tests__/template.marko_0_x/var", /*@__PURE__*/ _const("x", ($scope) => {
 	_text($scope["#text/2"], $scope.x);

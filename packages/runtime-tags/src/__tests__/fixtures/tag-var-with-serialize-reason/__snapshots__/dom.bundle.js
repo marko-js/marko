@@ -1,5 +1,5 @@
 // tags/child.marko
-const $if = /*@__PURE__*/ _if(0, "<span></span>", "b");
+const $if = /*@__PURE__*/ _if(0, "<span></span>");
 const $input_value = ($scope, input_value) => $if($scope, input_value ? 0 : 1);
 
 // template.marko

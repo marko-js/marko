@@ -16,7 +16,7 @@ const $for_content__$params = ($scope, $params2) => {
 };
 const $enabled = /*@__PURE__*/ _let("enabled/2", $for_content__enabled);
 const $selected = /*@__PURE__*/ _let("selected/3");
-const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", " D l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", " D ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let("rows/4", ($scope) => $for($scope, [$scope.rows, "id"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$enabled($scope, !$scope.enabled);

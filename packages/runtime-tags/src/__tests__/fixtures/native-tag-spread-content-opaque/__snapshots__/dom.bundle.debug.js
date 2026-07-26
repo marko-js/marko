@@ -37,7 +37,7 @@ var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $mybox_content = _content_resume("__tests__/template.marko_1_content", "Body Content", "b");
+const $mybox_content = _content_resume("__tests__/template.marko_1_content", "Body Content");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], {

@@ -13,7 +13,7 @@ const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
 const $layout_content__input_name = /*@__PURE__*/ _closure_get("name", ($scope) => _text($scope["#text/0"], $scope._.name));
 const $layout_content__setup = $layout_content__input_name;
-const $layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<h1>Hello <!></h1>", "Db%l", $layout_content__setup);
+const $layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<h1>Hello <!></h1>", "Db%", $layout_content__setup);
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$content_direct($scope["#childScope/0"], $layout_content($scope));

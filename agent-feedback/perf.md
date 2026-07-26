@@ -497,41 +497,6 @@ parent `<wrap><p>hi</p></wrap>` and observe `import { $setup as _wrap ... }` +
 empty arrow alive because it is a live `_template` argument. 19 committed
 `dom.bundle.js` snapshots contain a `$setup = () => {}`.
 
-## Trim trailing walk exit codes at compile time for content and branch renderers
-
-`packages/runtime-tags/src/translator/util/walks.ts` › `getWalkString` | 2026-07-23 | impact:low | effort:low
-
-`_content` unconditionally strips trailing exit codes from every walk string it
-receives (`packages/runtime-tags/src/dom/renderer.ts:93`,
-`walks.replace(/[^\0-1]+$/, "")`), and every non-program walk string reaches the
-DOM runtime only through `_content` — `_if`, `_for_*` (`loop`),
-`_await_content`, `_try`, `_dynamic_tag_content` all funnel their `walks`
-argument into it (`dom/control-flow.ts:430`, `:261`, `:361`, `:787`). Those
-trailing codes exist only so a _program_ `$walks` export can also be inlined
-into a parent's walk by `injectWalks` (`util/walks.ts:67`, used from
-`custom-tag.ts:297/332`). Trim only for sections whose `SectionMeta` walks are
-never passed to `injectWalks` — **not** for all non-program sections:
-`dynamic-tag.ts:282` inlines a non-program section's walk into a parent walk
-(snapshots show `$MyTag_content__walks = "D l"` consumed as `` `b/${_w0}&b` ``),
-and the walker's position is not restored after `EndChild`, so those trailing
-exits are load-bearing whenever parent codes follow the `&` (`` `/${_w0}&D l` ``).
-Trimming blindly in `getWalkString` mis-positions the walker for merged
-define-tag bodies. Measured over
-the 522 committed `dom.bundle.js` snapshots (AST scan of the walk-argument
-position of
-`_content`/`_content_resume`/`_if`/`_for_*`/`_await_content`/`_try`): 188
-string-literal walk args, 447 characters total, of which 188 (42%) are trailing
-exit codes discarded at runtime, and 78 args reduce to the empty string entirely
-so the argument could be dropped or emitted as `0` (e.g. `_if(0,
-"<tr><td>Hi</td></tr>", "b")` and `_content("nfzlx94", "<p>hi</p>", "b")`).
-Bundle size is a tracked feature here and the transform is behaviour-preserving
-by construction since the runtime already performs it. Re-verify: `node -e
-'console.log(JSON.stringify("D l".replace(/[^\0-1]+$/,"")),
-JSON.stringify("b".replace(/[^\0-1]+$/,"")))'` prints `"D " ""`, and `grep -o
-'_if([^;]*'
-packages/runtime-tags/src/__tests__/fixtures/*/__snapshots__/dom.bundle.js`
-shows those exact literals being shipped.
-
 ## Encode an all-same param-reason group set as a bitmask instead of a per-render object literal
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `knownTagTranslateHTML` | 2026-07-23 | impact:low | effort:low

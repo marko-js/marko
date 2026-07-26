@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_item._($scope);
 };
 const $if_content__input_item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e));
-const $if = /*@__PURE__*/ _if(0, "<span> </span>", "D l", $if_content__setup);
+const $if = /*@__PURE__*/ _if(0, "<span> </span>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = /*@__PURE__*/ _const(2, ($scope) => {
 	$input_show($scope, $scope.c.show);

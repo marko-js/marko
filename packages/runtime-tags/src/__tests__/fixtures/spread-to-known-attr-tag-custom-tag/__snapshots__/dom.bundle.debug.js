@@ -9,7 +9,7 @@ const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 });
 const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
 const $input_class = ($scope, input_class) => _attr_class($scope["#select/0"], input_class);
-const $for = /*@__PURE__*/ _for_of("#select/0", "<option></option>", " b", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#select/0", "<option></option>", " ", 0, $for_content__$params);
 const $input_option = ($scope, input_option) => $for($scope, [input_option]);
 const $input$1 = ($scope, input) => {
 	$input_class($scope, input.class);
@@ -33,9 +33,9 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $option_content3 = _content_resume("__tests__/template.marko_3_content", "Three", "b");
-const $option_content2 = _content_resume("__tests__/template.marko_2_content", "Two", "b");
-const $option_content = _content_resume("__tests__/template.marko_1_content", "One", "b");
+const $option_content3 = _content_resume("__tests__/template.marko_3_content", "Three");
+const $option_content2 = _content_resume("__tests__/template.marko_2_content", "Two");
+const $option_content = _content_resume("__tests__/template.marko_1_content", "One");
 function $setup($scope) {
 	$rest_option($scope["#childScope/0"], attrTags(attrTags(attrTag({
 		value: 1,

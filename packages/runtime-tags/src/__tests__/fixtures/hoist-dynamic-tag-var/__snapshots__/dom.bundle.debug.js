@@ -36,16 +36,16 @@ const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml/hoist"
 const $if_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $if_content2__setHtml);
 const $if_content2__setHtml = _var_resume("__tests__/template.marko_2_setHtml/var", /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml)));
 const $if_content2__setup = ($scope) => $if_content2__dynamicTag($scope, 1 && child_default);
-const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b1c", $if_content2__setup);
+const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b1", $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
-const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%c", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => {
 	$if($scope, $scope.input_show ? 0 : 1);
 	$if_content__input_show($scope);
 });
-const $if2 = /*@__PURE__*/ _if("#text/2", "<!><!><!>", "b1c", $if_content3__setup);
-const $if3 = /*@__PURE__*/ _if("#text/3", "<!><!><!>", "b1c", $if_content4__setup);
+const $if2 = /*@__PURE__*/ _if("#text/2", "<!><!><!>", "b1", $if_content3__setup);
+const $if3 = /*@__PURE__*/ _if("#text/3", "<!><!><!>", "b1", $if_content4__setup);
 const $if4 = /*@__PURE__*/ _if("#text/4", 0, 0, $if_content5__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	$setHtml_getter($scope)()("Hello world");

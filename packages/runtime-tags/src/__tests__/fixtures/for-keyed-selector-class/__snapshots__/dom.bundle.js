@@ -14,7 +14,7 @@ const $for_content__$params = ($scope, $params2) => {
 };
 const $for_content__row_id = /*@__PURE__*/ _const(5);
 const $selected = /*@__PURE__*/ _let(4, $for_content__selected);
-const $for = /*@__PURE__*/ _for_of(0, "<tr><td><button class=select> </button></td></tr>", " E D n", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<tr><td><button class=select> </button></td></tr>", " E D ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let(5, ($scope) => $for($scope, [$scope.f, "id"]));
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.b, "click", function() {

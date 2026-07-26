@@ -18,7 +18,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_label($scope, $params2[0]?.label);
 };
 const $selected = /*@__PURE__*/ _let(2, $for_content__selected);
-const $for = /*@__PURE__*/ _for_of(0, "<li><span> </span><button class=select>x</button></li>", " E l l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<li><span> </span><button class=select>x</button></li>", " E l ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let(3, ($scope) => $for($scope, [$scope.d, "id"]));
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$rows($scope, $scope.d.map((r) => r.id === 1 ? {

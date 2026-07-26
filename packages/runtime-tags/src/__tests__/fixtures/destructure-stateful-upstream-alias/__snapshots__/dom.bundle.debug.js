@@ -32,7 +32,7 @@ const $store = _var_resume("__tests__/template.marko_0_store/var", ($scope, stor
 	$list($scope, store.list);
 	$clear($scope, store.clear);
 });
-const $for = /*@__PURE__*/ _for_of("#ul/3", "<li> </li>", "D l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#ul/3", "<li> </li>", "D ", 0, $for_content__$params);
 const $list = ($scope, list) => $for($scope, [list]);
 const $clear__script = _script("__tests__/template.marko_0_clear", ($scope) => _on($scope["#button/2"], "click", $scope.clear));
 const $clear = /*@__PURE__*/ _const("clear", $clear__script);

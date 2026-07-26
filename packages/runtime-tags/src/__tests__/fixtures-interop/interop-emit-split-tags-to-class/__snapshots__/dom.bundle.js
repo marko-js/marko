@@ -25,7 +25,7 @@ component_browser_default.renderer = _marko_template._ = (0, import_renderer.def
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $splitbutton_content = _content_resume("a1", "Reset", "b");
+const $splitbutton_content = _content_resume("a1", "Reset");
 const $msg = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
 function $onClick($scope) {
 	return function() {

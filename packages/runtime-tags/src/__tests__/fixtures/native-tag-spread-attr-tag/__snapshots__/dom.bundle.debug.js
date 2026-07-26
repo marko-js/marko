@@ -29,7 +29,7 @@ const $head_content__setup = ($scope) => {
 	$head_content__n($scope, 0);
 	$head_content__setup__script($scope);
 };
-const $head_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button> </button>", " D l", $head_content__setup);
+const $head_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button> </button>", " D ", $head_content__setup);
 function $setup($scope) {
 	$input_head($scope["#childScope/0"], attrTag({
 		id: "h",

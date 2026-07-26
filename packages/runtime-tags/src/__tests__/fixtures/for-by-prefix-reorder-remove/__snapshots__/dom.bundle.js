@@ -1,7 +1,7 @@
 // template.marko
 const $for_content__row_id = ($scope, row_id) => _text($scope.a, row_id);
 const $for_content__$params = ($scope, $params2) => $for_content__row_id($scope, $params2[0]?.id);
-const $for = /*@__PURE__*/ _for_of(0, "<li> </li>", "D l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<li> </li>", "D ", 0, $for_content__$params);
 const $rows_0__OR__rows_1__OR__rows_3__OR__rows_ = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$rows($scope, [
 		$scope.f,

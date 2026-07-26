@@ -16,10 +16,10 @@ var b_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $input);
 
 // template.marko
 const localTag = a_default;
-const $xdivA_content = _content_resume("a3", "m", "b");
-const $navigator_content = _content_resume("a2", "g", "b");
-const $xdivspan_content = _content_resume("a1", "n", "b");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1, _content_resume("a0", "u", "b"));
+const $xdivA_content = _content_resume("a3", "m");
+const $navigator_content = _content_resume("a2", "g");
+const $xdivspan_content = _content_resume("a1", "n");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1, _content_resume("a0", "u"));
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(2, $xdivspan_content);
 const $dynamicTag4 = /*@__PURE__*/ _dynamic_tag(4);
 const $dynamicTag5 = /*@__PURE__*/ _dynamic_tag(5, $xdivA_content);

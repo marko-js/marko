@@ -36,7 +36,7 @@ const $mytag_content__setup = ($scope) => {
 	$mytag_content__count($scope);
 	$mytag_content__setup__script($scope);
 };
-const $mytag_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button> </button>", " D l", $mytag_content__setup);
+const $mytag_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button> </button>", " D ", $mytag_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($mytag_content__count);
 const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _const("count", $count__closure));
 function $setup($scope) {

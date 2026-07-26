@@ -19,7 +19,7 @@ const $for_content__num = /*@__PURE__*/ _const("num", ($scope) => {
 });
 const $for_content__$params = ($scope, $params2) => $for_content__num($scope, $params2[0]);
 const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
-const $for = /*@__PURE__*/ _for_of("#text/0", "<button> </button>", " D l", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 function $setup($scope) {
 	$selected($scope, 0);
 	$for($scope, [[

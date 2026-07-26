@@ -36,7 +36,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><div id=tags-api> </div>";
 const $walks = "b%bD l";
-const $splitbutton_content = _content_resume("__tests__/template.marko_1_content", "Reset", "b");
+const $splitbutton_content = _content_resume("__tests__/template.marko_1_content", "Reset");
 const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => _text($scope["#text/1"], $scope.msg));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $splitbutton_content);
 function $setup($scope) {

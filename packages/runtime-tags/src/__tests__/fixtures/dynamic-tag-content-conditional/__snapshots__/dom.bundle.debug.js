@@ -11,7 +11,7 @@ var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $templ
 // template.marko
 const $template = "<button id=toggle>toggle</button><!><!>";
 const $walks = " b%c";
-const $inner_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "shown content", "b");
+const $inner_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "shown content");
 const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $inner_content($scope));

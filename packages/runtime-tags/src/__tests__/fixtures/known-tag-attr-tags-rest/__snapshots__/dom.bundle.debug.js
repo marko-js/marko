@@ -4,7 +4,7 @@ const $walks$2 = "b%bDb%lDb%l";
 const $setup$2 = () => {};
 const $for_content__row_x = ($scope, row_x) => _text($scope["#text/0"], row_x);
 const $for_content__$params = ($scope, $params2) => $for_content__row_x($scope, $params2[0]?.x);
-const $for = /*@__PURE__*/ _for_of("#text/0", "<div>row <!></div>", "Db%l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div>row <!></div>", "Db%", 0, $for_content__$params);
 const $input_stuff_row = ($scope, input_stuff_row) => $for($scope, [input_stuff_row]);
 const $input_stuff_other_y = ($scope, input_stuff_other_y) => _text($scope["#text/1"], input_stuff_other_y);
 const $input_stuff_cond_a = ($scope, input_stuff_cond_a) => _text($scope["#text/2"], input_stuff_cond_a);

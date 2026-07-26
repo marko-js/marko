@@ -189,6 +189,22 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
   return result;
 }
 
+/** `_content` strips trailing exit codes before it walks, so a renderer that
+ * reaches the runtime through it never needs them on the wire. */
+export function trimTrailingExits(walks: t.Expression | undefined) {
+  if (!t.isStringLiteral(walks)) return walks;
+  const value = walks.value.replace(/[^\0-1]+$/, "");
+  return value === walks.value
+    ? walks
+    : value
+      ? withLeadingComment(t.stringLiteral(value), getComment(walks))
+      : undefined;
+}
+
+function getComment(node: t.Node) {
+  return node.leadingComments?.[0]?.value.trim() || "";
+}
+
 export function getWalkString(section: Section) {
   if (section.content?.endType === ContentType.Dynamic) {
     getSteps(section).push(Step.Enter, Step.Exit);

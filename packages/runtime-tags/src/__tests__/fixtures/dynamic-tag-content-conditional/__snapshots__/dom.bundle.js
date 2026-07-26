@@ -4,7 +4,7 @@ const $setup = () => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content(0);
 
 // template.marko
-const $inner_content = /*@__PURE__*/ _content("a0", "shown content", "b");
+const $inner_content = /*@__PURE__*/ _content("a0", "shown content");
 const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup($scope.a);
 	$input_content_direct($scope.a, $inner_content($scope));

@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $if_content__input_test_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_test_content));
 const $input_class = ($scope, input_class) => _attr_class($scope["#div/0"], input_class);
-const $if = /*@__PURE__*/ _if("#text/1", "<div id=test><!></div>", " D%l", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", "<div id=test><!></div>", " D%", $if_content__setup);
 const $input_test = ($scope, input_test) => {
 	$input_test_class($scope, input_test?.class);
 	$input_test_content($scope, input_test?.content);
@@ -28,7 +28,7 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.mark
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<div class=a></div><div class="a b"></div><div class="a b c"></div><div></div><div class=base></div>${_w0}${_w1}<!><!>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` d b b/${_w0}&/${_w1}&%c`)($walks$1, $walks$1);
 const TestTag = custom_tag_default;
-const $test_content = _content_resume("__tests__/template.marko_1_content", "Hello", "b");
+const $test_content = _content_resume("__tests__/template.marko_1_content", "Hello");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5");
 const $input_c__OR__input_d = /*@__PURE__*/ _or(10, ($scope) => {
 	_attr_class_items($scope["#div/0"], {

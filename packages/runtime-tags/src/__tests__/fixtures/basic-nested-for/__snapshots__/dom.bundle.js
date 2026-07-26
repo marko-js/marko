@@ -13,7 +13,7 @@ const $for_content__items = /*@__PURE__*/ _for_closure(1, ($scope) => $for_conte
 const $for_content__setup = $for_content__items;
 const $for_content__$params = ($scope, $params2) => $for_content__outer($scope, $params2[0]);
 const $for_content__outer = /*@__PURE__*/ _const(2, $for_content2__outer);
-const $for = /*@__PURE__*/ _for_of(1, "<!><!><!>", "b%c", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(1, "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let(2, ($scope) => {
 	$for($scope, [$scope.c]);
 	$for_content__items($scope);

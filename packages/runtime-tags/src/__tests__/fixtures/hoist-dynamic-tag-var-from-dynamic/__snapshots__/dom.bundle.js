@@ -26,12 +26,12 @@ const $setHtml3_getter = /*@__PURE__*/ _hoist(2, "B4");
 const $inputshowsectionnull_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, () => $inputshowsectionnull_content__setHtml);
 const $inputshowsectionnull_content__setHtml = _var_resume("a6", /*@__PURE__*/ _const(2));
 const $inputshowsectionnull_content__setup = ($scope) => $inputshowsectionnull_content__dynamicTag($scope, child_default);
-const $inputshowsectionnull_content = _content_resume("a7", "<!><!><!>", "b1c", $inputshowsectionnull_content__setup, 0, "B4");
+const $inputshowsectionnull_content = _content_resume("a7", "<!><!><!>", "b1", $inputshowsectionnull_content__setup, 0, "B4");
 const $setHtml2_getter = /*@__PURE__*/ _hoist(2, "B3", "B2");
 const $thing_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, () => $thing_content2__setHtml);
 const $thing_content2__setHtml = _var_resume("a3", /*@__PURE__*/ _const(2));
 const $thing_content2__setup = ($scope) => $thing_content2__dynamicTag($scope, child_default);
-const $thing_content2 = /*@__PURE__*/ _content("a4", "<!><!><!>", "b1c", $thing_content2__setup, 0, "B3");
+const $thing_content2 = /*@__PURE__*/ _content("a4", "<!><!><!>", "b1", $thing_content2__setup, 0, "B3");
 const $inputshowThingnull_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup($scope.a);
 	$input_content($scope.a, $thing_content2($scope));

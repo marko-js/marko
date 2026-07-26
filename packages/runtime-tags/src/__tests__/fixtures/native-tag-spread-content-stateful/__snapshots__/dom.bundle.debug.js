@@ -20,7 +20,7 @@ const $mybox_content__setup = ($scope) => {
 	$mybox_content__count($scope, 0);
 	$mybox_content__setup__script($scope);
 };
-const $mybox_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button type=button class=inc>increment</button><span class=count> </span>", " bD l", $mybox_content__setup);
+const $mybox_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button type=button class=inc>increment</button><span class=count> </span>", " bD ", $mybox_content__setup);
 function $setup($scope) {
 	$input($scope["#childScope/0"], {
 		class: "x",

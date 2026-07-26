@@ -4,7 +4,7 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tag_content__templa
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tag_content__walks);
 const $if_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._);
 const $if_content__setup$1 = $if_content__count;
-const $Tag_content__if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D l", $if_content__setup$1);
+const $Tag_content__if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D ", $if_content__setup$1);
 const $Tag_content__input_x = ($scope, input_x) => $Tag_content__if($scope, input_x ? 0 : 1);
 const $Tag_content__$params = ($scope, $params2) => $Tag_content__input($scope, $params2[0]);
 const $Tag_content__input = ($scope, input) => $Tag_content__input_x($scope, input.x);

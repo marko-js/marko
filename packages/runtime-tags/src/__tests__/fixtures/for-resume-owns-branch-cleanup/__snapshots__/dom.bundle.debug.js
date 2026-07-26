@@ -9,7 +9,7 @@ const $for_content__setup = ($scope) => {
 	_text($scope["#text/0"], $scope["#LoopKey"]);
 	$for_content__setup__script($scope);
 };
-const $for = /*@__PURE__*/ _for_to("#text/0", "<p>item <!></p>", "Db%l", $for_content__setup);
+const $for = /*@__PURE__*/ _for_to("#text/0", "<p>item <!></p>", "Db%", $for_content__setup);
 const $count$1 = ($scope, count) => $for($scope, [
 	count,
 	0,

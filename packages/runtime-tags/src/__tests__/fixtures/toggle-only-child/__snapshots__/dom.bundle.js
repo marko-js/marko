@@ -1,6 +1,6 @@
 // template.marko
 const $if_content__value = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.f));
-const $if = /*@__PURE__*/ _if(0, "<span> </span>", "D l", $if_content__value);
+const $if = /*@__PURE__*/ _if(0, "<span> </span>", "D ", $if_content__value);
 const $value = /*@__PURE__*/ _let(5, ($scope) => {
 	_attr_input_value($scope, "b", $scope.f, $valueChange($scope));
 	$if($scope, $scope.f ? 0 : 1);

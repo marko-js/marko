@@ -7,7 +7,7 @@ const $input = ($scope, input) => $input_($scope, input[0]);
 var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 
 // template.marko
-const $x_content = _content_resume("a0", "Fallback Body", "b");
+const $x_content = _content_resume("a0", "Fallback Body");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $x_content, 0, 1);
 const $x = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c, () => [
 	1,

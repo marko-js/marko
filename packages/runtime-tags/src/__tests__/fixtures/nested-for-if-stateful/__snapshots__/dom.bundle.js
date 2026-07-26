@@ -20,7 +20,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 	$if_content__setup__script($scope);
 };
-const $for_content__if = /*@__PURE__*/ _if(0, "<button>Confirm <!></button>", " Db%l", $if_content__setup, "<button>Increment <!></button>", " Db%l", $else_content__setup);
+const $for_content__if = /*@__PURE__*/ _if(0, "<button>Confirm <!></button>", " Db%", $if_content__setup, "<button>Increment <!></button>", " Db%", $else_content__setup);
 const $for_content__editing = /*@__PURE__*/ _let(4, ($scope) => $for_content__if($scope, $scope.e ? 0 : 1));
 const $for_content__setup = ($scope) => $for_content__editing($scope, false);
 const $for_content__$params = ($scope, $params2) => $for_content__count($scope, $params2[0]);
@@ -28,5 +28,5 @@ const $for_content__count = /*@__PURE__*/ _const(2, ($scope) => {
 	$if_content__count($scope);
 	$else_content__count($scope);
 });
-const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%c", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $counts = /*@__PURE__*/ _let(1, ($scope) => $for($scope, [$scope.b]));

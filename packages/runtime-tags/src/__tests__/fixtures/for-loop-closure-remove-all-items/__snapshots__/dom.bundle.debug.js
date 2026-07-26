@@ -6,7 +6,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 	$items($scope._, []);
 }));
 const $for_content__setup = $for_content__setup__script;
-const $for = /*@__PURE__*/ _for_of("#text/0", "<button>Test</button>", " b", $for_content__setup);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<button>Test</button>", " ", $for_content__setup);
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $for($scope, [$scope.items]));
 function $setup($scope) {
 	$items($scope, ["hello"]);

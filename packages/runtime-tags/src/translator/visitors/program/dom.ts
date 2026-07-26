@@ -32,6 +32,7 @@ import {
 } from "../../util/signals";
 import { toPropertyName } from "../../util/to-property-name";
 import type { TemplateVisitor } from "../../util/visitors";
+import { trimTrailingExits } from "../../util/walks";
 import * as writer from "../../util/writer";
 
 export default {
@@ -90,7 +91,11 @@ export default {
             tagParamsSignal && signalHasStatements(tagParamsSignal)
               ? tagParamsSignal.identifier
               : undefined;
-          const { walks, writes, decls } = writer.getSectionMeta(childSection);
+          const { writes, decls } = writer.getSectionMeta(childSection);
+          // Reaches the runtime through `_content`, which strips these.
+          const walks = trimTrailingExits(
+            writer.getSectionMeta(childSection).walks,
+          );
           const setup = getSetup(childSection);
           const written = writeSignals(childSection);
           const setupIdentifier =

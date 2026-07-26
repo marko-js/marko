@@ -16,8 +16,8 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag/inde
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1);
-const $thing_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "Goodbye", "b");
-const $thing_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "Hello", "b");
+const $thing_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "Goodbye");
+const $thing_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "Hello");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 }
