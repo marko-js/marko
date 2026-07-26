@@ -23,6 +23,10 @@ const virtualFilePrefix = "v:";
 const virtualRe = /(?:^|\/)v:/;
 // Test-only helpers (utils/resolve) are excluded from the measured bundle.
 const testUtilRe = /[\\/]__tests__[\\/]utils[\\/]/;
+const testUtilChunkName = "test-utils";
+// Totals every chunk that holds only shared runtime, under one stable key
+// (chunk file names for those follow the module graph and would churn).
+const sharedChunkKey = "shared";
 
 interface Diagnostic {
   type: string;
@@ -202,7 +206,8 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
       chunkFileNames: "[name].mjs",
       // Split test-only helpers into their own chunk: still imported at runtime
       // (same realm, so behavior is unchanged) but skipped by buildSnapshot.
-      manualChunks: (id) => (testUtilRe.test(id) ? "test-utils" : undefined),
+      manualChunks: (id) =>
+        testUtilRe.test(id) ? testUtilChunkName : undefined,
     },
   });
   domBuiltBox.promise = domBuilt;
@@ -332,6 +337,7 @@ async function buildSnapshot(
   const sizes: Record<string, ChunkSizes | Sizes> | undefined = includeSizes
     ? {}
     : undefined;
+  let shared: Sizes | undefined;
   for (const chunk of result.output) {
     if (!("code" in chunk) || !chunk.code) continue;
     const { modules } = chunk;
@@ -348,7 +354,25 @@ async function buildSnapshot(
       fixtureCode += `// ${relId}\n${modCode}`;
       if (sizes) files[relId] = renderedLength;
     }
-    if (!fixtureCode) continue;
+    // A chunk with no fixture module has no snapshot, but it is still
+    // shipped: runtime that moves between a shared chunk and an entry would
+    // otherwise read as a size change with no total to check it against.
+    if (!fixtureCode) {
+      if (sizes && chunk.name !== testUtilChunkName) {
+        const chunkSizes = await getMinifiedSizes(chunk.code);
+        if (chunk.isEntry) {
+          sizes[chunk.fileName] = chunkSizes;
+        } else {
+          shared = shared
+            ? {
+                min: shared.min + chunkSizes.min,
+                brotli: shared.brotli + chunkSizes.brotli,
+              }
+            : chunkSizes;
+        }
+      }
+      continue;
+    }
     parts.push(fixtureCode);
     if (sizes) {
       const total = await getMinifiedSizes(chunk.code);
@@ -356,6 +380,7 @@ async function buildSnapshot(
         Object.keys(files).length === 1 ? total : { total, files };
     }
   }
+  if (sizes && shared) sizes[sharedChunkKey] = shared;
   return { snapshot: parts.length ? `${parts.join("\n\n")}\n` : "", sizes };
 }
 
