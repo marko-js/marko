@@ -1,4 +1,4 @@
-// size: 26335 (min) 9736 (brotli)
+// size: 26331 (min) 9761 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -63,7 +63,7 @@ let empty = [],
         )),
           value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 20 * currentMultiplier + value - 67; value--;) walker.nextNode();
+        for (value = 25 * currentMultiplier + value - 67; value--;) walker.nextNode();
       else if (value < 107)
         for (value = 10 * currentMultiplier + value - 97; value--;) walker.nextSibling();
       else if (value < 117) {
@@ -1207,7 +1207,8 @@ function _attr_select_value_script(scope, nodeAccessor) {
     }
   (syncControllableFormInput(el, hasSelectChanged, onChange),
     observeOnce(
-      el,
+      scope,
+      nodeAccessor,
       {
         childList: !0,
         subtree: !0,
@@ -1242,7 +1243,8 @@ function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
   observeOnce(
-    el,
+    scope,
+    nodeAccessor,
     {
       attributes: !0,
       attributeFilter: ["open"],
@@ -1256,8 +1258,8 @@ function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
     },
   );
 }
-function observeOnce(el, init, callback) {
-  (el._o?.disconnect(), (el._o = new MutationObserver(callback)).observe(el, init));
+function observeOnce(scope, nodeAccessor, init, callback) {
+  (scope["N" + nodeAccessor] ||= new MutationObserver(callback)).observe(scope[nodeAccessor], init);
 }
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),
