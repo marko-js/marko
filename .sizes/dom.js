@@ -1,4 +1,4 @@
-// size: 26363 (min) 9754 (brotli)
+// size: 26379 (min) 9790 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -193,7 +193,7 @@ let empty = [],
       (_resume("$C_s", (scope) => {
         if (
           ((getRenderScopes(scope.$)[scope.L] = scope),
-          scope.m5c && classIdToBranch.set(scope.m5c, scope),
+          scope.m5c && scope.m5i === void 0 && classIdToBranch.set(scope.m5c, scope),
           classEventResolver)
         )
           for (let key in scope) {

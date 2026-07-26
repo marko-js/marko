@@ -342,35 +342,6 @@ call `getSerializeReason(fakeSection, fakeBinding, Symbol())` 200k times with
 `--expose-gc` and compare `process.memoryUsage().heapUsed` against the same loop
 reusing one symbol.
 
-## Stop registering tags→class compat scopes in `classIdToBranch`, which is never pruned
-
-`packages/runtime-tags/src/dom/compat.ts` › `classIdToBranch` | 2026-07-23 | impact:low | effort:low
-
-`classIdToBranch` is filled by the `SET_SCOPE_REGISTER_ID` resume handler in
-`compat.init` for every resumed scope carrying `m5c`, but its only `delete` is
-in `compat.render`, which runs exclusively for the class→tags direction (the
-`TagsCompat` renderer in
-`packages/runtime-class/src/runtime/helpers/tags-compat/runtime-dom.js`). Scopes
-registered by the tags→class direction — written by
-`compat.writeSetScopeForComponent` in `html/compat.ts` and consumed on the
-client only through `scope.m5c` inside `renderAndMorph`, never through this map
-— are therefore inserted once and retained for the lifetime of the page, keeping
-the branch scope alive (and, after its first re-render, the attached
-`___marko5Component` and its `___rootNode` DOM fragment) even after the
-enclosing tags branch is destroyed. The two directions are distinguishable at
-registration time: the tags→class payload also carries `m5i` (`_scope(branchId,
-{ m5c, m5i })`) while the class→tags payload does not (`_scope(scopeId, { m5c:
-component.id })` in `html/compat.ts`'s `render`), so gating the
-`classIdToBranch.set` on `scope.m5i === undefined`, or deleting the entry when
-the branch is destroyed, removes the dead retention. This is distinct from the
-existing perf.md entry anchored at `dom/compat.ts › compat.init`, which concerns
-the `classEventResolver` for-in loop and the process-wide prototype patches.
-Re-verify: `rg -n "classIdToBranch" packages/runtime-tags/src/dom/compat.ts`
-shows exactly one `set` (in `init`) and one `delete` (in `render`), and
-`fixtures-interop/interop-basic-tags-to-class/__snapshots__/writes.debug.html`
-serialises `{ m5c: "_0", m5i: { count: 0 } }` — an id that no `compat.render`
-call ever looks up.
-
 ## Coalesce the serializer flush per async completion instead of once per streamed chunk
 
 `packages/runtime-tags/src/html/writer.ts` › `Boundary.flush` | 2026-07-23 | impact:med | effort:med

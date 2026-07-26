@@ -33,22 +33,27 @@ export const compat = {
   patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
-    _resume(SET_SCOPE_REGISTER_ID, (scope: Scope & { m5c?: string }) => {
-      getRenderScopes(scope[AccessorProp.Global]!)![scope[AccessorProp.Id]] =
-        scope;
-      if (scope.m5c) {
-        classIdToBranch.set(scope.m5c, scope as BranchScope);
-      }
-      // Revive any bridged class-method event references in this resumed scope.
-      if (classEventResolver) {
-        for (const key in scope) {
-          const resolved = classEventResolver(scope[key], scope);
-          if (resolved !== scope[key]) {
-            scope[key] = resolved;
+    _resume(
+      SET_SCOPE_REGISTER_ID,
+      (scope: Scope & { m5c?: string; m5i?: unknown }) => {
+        getRenderScopes(scope[AccessorProp.Global]!)![scope[AccessorProp.Id]] =
+          scope;
+        // Only the class->tags direction looks this up, and only it deletes;
+        // registering the tags->class scopes (which carry `m5i`) retains them.
+        if (scope.m5c && scope.m5i === undefined) {
+          classIdToBranch.set(scope.m5c, scope as BranchScope);
+        }
+        // Revive any bridged class-method event references in this resumed scope.
+        if (classEventResolver) {
+          for (const key in scope) {
+            const resolved = classEventResolver(scope[key], scope);
+            if (resolved !== scope[key]) {
+              scope[key] = resolved;
+            }
           }
         }
-      }
-    });
+      },
+    );
 
     _resume(RENDER_BODY_ID, warp10Noop);
   },
