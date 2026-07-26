@@ -134,7 +134,11 @@ export let _dynamic_tag = (
           ]);
 
       if (needsScript) {
-        _scope(branchId, { [AccessorProp.Renderer]: renderer });
+        // The debug accessor is this write's only consumer, and `needsScript`
+        // already means the branch scope ships.
+        if (MARKO_DEBUG) {
+          _scope(branchId, { [AccessorProp.Renderer]: renderer });
+        }
         _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
       }
 

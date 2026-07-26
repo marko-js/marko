@@ -1,0 +1,9 @@
+<let/open = false/>
+<let/text = "first"/>
+<const/detailsTag = "details"/>
+<const/textareaTag = "textarea"/>
+<${detailsTag} open=open openChange(next) { open = next }>
+  <summary>toggle</summary>
+  <${textareaTag} value=text valueChange(next) { text = next }/>
+</>
+<output>${open ? "open" : "closed"}/${text}</output>
