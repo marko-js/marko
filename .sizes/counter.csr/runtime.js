@@ -1,4 +1,4 @@
-// size: 3904 (min) 1732 (brotli)
+// size: 3904 (min) 1735 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -40,7 +40,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
         )),
           value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 20 * currentMultiplier + value - 67; value--;) walker.nextNode();
+        for (value = 25 * currentMultiplier + value - 67; value--;) walker.nextNode();
       else if (value < 107)
         for (value = 10 * currentMultiplier + value - 97; value--;) walker.nextSibling();
       else if (value < 117) {
