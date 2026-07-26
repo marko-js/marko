@@ -313,35 +313,6 @@ and optionally hoisting the composite too. Re-verify with `grep -Fn
 packages/runtime-tags/src/__tests__/fixtures/known-tag-args-spread/__snapshots__/html.bundle.js`
 — it must stop reporting both the hoisted declarator and a separate inline copy.
 
-## Stop `serializePropByModifier` from permanently retaining a per-compile Symbol for every param reason group
-
-`packages/runtime-tags/src/translator/util/serialize-reasons.ts` › `getPropKey` | 2026-07-23 | impact:low | effort:low
-
-`serializePropByModifier` (serialize-reasons.ts:33) is a module-level plain
-object, and `getPropKey` grows it with `serializePropByModifier[prefix] ||= new
-WeakMap()` (serialize-reasons.ts:315). Almost all `prefix`/`prop` keys are
-bounded (`AccessorPrefix`/`AccessorProp` strings and the module-constant
-`kStatefulReason`/`kBranchSerializeReason` symbols), but
-`ensureParamReasonGroup` in `util/sections.ts` mints a fresh `id:
-Symbol(getDebugNames(reason))` per param reason group per section per compile
-(sections.ts:446), and `util/known-tag.ts` passes that symbol as the `prefix` at
-three call sites (`getSerializeReason(section, childScopeBinding, group.id)` at
-:244 and :259, `addSerializeReason(..., group.id)` at :405). Because a plain
-object holds its symbol keys and values strongly and nothing ever prunes it,
-each group leaves a permanently retained `(Symbol, WeakMap)` pair; sections and
-groups are recreated on every compile, so a watch/dev-server process accumulates
-entries for the lifetime of the process rather than per build. Measured cost is
-~247 bytes per group symbol, so a single full pass is small (114 distinct group
-symbols over 245 fixture templates, ~28 KB) but growth is unbounded across
-recompiles. Minimal fix: split the registry so symbol prefixes go through a
-`WeakMap<symbol, WeakMap<Section | Binding, SerializeKey>>` (symbols as WeakMap
-keys work on the supported Node versions) and keep the plain object only for the
-bounded string accessors; alternatively hang the per-group key map off the
-`ParamSerializeReasonGroup` object itself. Re-verify: in a `node -r ~ts` script,
-call `getSerializeReason(fakeSection, fakeBinding, Symbol())` 200k times with
-`--expose-gc` and compare `process.memoryUsage().heapUsed` against the same loop
-reusing one symbol.
-
 ## Stop registering tags→class compat scopes in `classIdToBranch`, which is never pruned
 
 `packages/runtime-tags/src/dom/compat.ts` › `classIdToBranch` | 2026-07-23 | impact:low | effort:low
