@@ -531,6 +531,8 @@ function forBranches(
 
     withBranchId(branchId, () => {
       render();
+      // Empty for an unkeyed branch, but the scope it returns is what the
+      // parent's branch list holds and what passive props flush through.
       const branchScope = writeScope(
         branchId,
         resumeKeys && !sameAsIndex ? { [AccessorProp.LoopKey]: itemKey } : {},
