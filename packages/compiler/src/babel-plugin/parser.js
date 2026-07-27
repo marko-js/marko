@@ -77,14 +77,17 @@ export function parseMarko(file) {
         );
       }
 
-      let previousSiblingIndex = currentBody.length;
+      // `currentBody` is the body's own path, so the siblings are the paths
+      // it holds rather than anything indexable off it directly.
+      const siblings = currentBody.get("body");
+      let previousSiblingIndex = siblings.length;
       while (previousSiblingIndex) {
-        let previousSibling = currentBody[--previousSiblingIndex];
-        if (!t.isMarkoComment(previousSibling)) {
+        const previousSibling = siblings[--previousSiblingIndex];
+        if (!t.isMarkoComment(previousSibling.node)) {
           break;
         }
         currentTag.pushContainer("attributeTags", previousSibling.node);
-        currentBody.get("body").get(previousSiblingIndex).remove();
+        previousSibling.remove();
       }
 
       currentTag = currentTag.pushContainer("attributeTags", node)[0];
