@@ -828,32 +828,6 @@ of=input.words>constructor</for></div>` for dom and mount it with `{ words:
 ["a"] }` — it throws before rendering, while the same template with body text
 `x` renders fine.
 
-## Make `assertIsDeepSubset` compare Map/Set/Headers/Date contents instead of only the constructor name
-
-`packages/runtime-tags/src/__tests__/serializer.test.ts` › `assertIsDeepSubset` | 2026-07-23 | impact:high | effort:low
-
-`assertIsDeepSubset` is the round-trip correctness gate behind every
-`assertStringify` call in serializer.test.ts, but after the constructor-name
-check it walks `Reflect.ownKeys(subset)` — which is `[]` for `Map`, `Set`,
-`Date`, `URL`, `URLSearchParams`, `Headers`, `FormData`, `ArrayBuffer`,
-`Promise`, `Request` and `Response`, because their state is internal. Its `case
-Symbol.iterator:` arm never fires for those types either (their iterator lives
-on the prototype, not as an own key; it only fires for the
-plain-object-with-own-iterator attr-tag shape exercised by the `Symbol.iterator
-inline` tests), so for every built-in the deep check silently degenerates to
-"same constructor name". That is exactly the hole the already-filed
-`writeMap`/`writeSet` ancestor-reference data-loss bug slipped through: the
-payload string still looks plausible, so the string assertion passes, and the
-value check accepts a `Set` that round-tripped to `size === 0`. Fix by
-dispatching on the classified constructor — compare
-`[...map]`/`[...set]`/`[...headers]`/`[...formData]`/`[...searchParams]`
-entrywise and `+date`/`String(url)` for the opaque scalars — before falling back
-to the own-key walk. Re-verify: `assertIsDeepSubset(new Set(), new Set(["a"]))`
-currently returns without throwing, and round-tripping `const parent={name:'p'};
-const s=new Set(); s.add(parent); parent.set=s;` through
-`Serializer#stringifyScopes` yields a value whose `set.size` is 0 while
-`assertIsDeepSubset(result, parent)` still passes.
-
 ## Key the bound-attribute change-handler cache by refining function, not just the binding
 
 `packages/runtime-tags/src/translator/visitors/program/pre-analyze.ts` › `getChangeHandler` | 2026-07-23 | impact:med | effort:low
@@ -1358,34 +1332,6 @@ fixture `<svg><${"linearGradient"} onClick(){ … }><stop offset="0%"/></></svg>
 with a click step and run it in debug SSR-resume mode — it throws inside
 `_attrs_script` because `scope["#linearGradient/0"]` is undefined, while the
 same template renders fine in CSR-only mode.
-
-## Escape `<script>`/`<style>` raw-text bodies once per element, not once per interpolation
-
-`packages/runtime-tags/src/html/content.ts` › `_escape_script` | 2026-07-23 | impact:high | effort:med
-
-`_escape_script` (content.ts:36) and `_escape_style` (content.ts:47) neutralize
-multi-character tokens (`</script`, `<script`, `<!--`, `</style`), but the html
-`translate.exit` for text-only native tags in
-`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` (the
-`isTextOnly` loop, ~:664-670) applies them per placeholder, so a token that
-straddles two adjacent interpolations is never seen by either call.
-`<html-script>${a}${b}${c}</html-script>` with `a='<'`, `b='/script>'`, `c='<img
-src=x onerror=alert(1)>'` emits `<script></script><img src=x
-onerror=alert(1)></script>` — a real breakout — and
-`<html-style>${a}${b}</html-style>` with `a='<'`, `b='/style><img src=x
-onerror=alert(1)>'` breaks out identically; the same value passed as a single
-expression (`${a+b+c}`) is escaped correctly to `\x3C/script>`. Static template
-text ending in `<` immediately before a placeholder has the same straddle.
-`_escape` (used for `<title>`/`<textarea>`) and `_escape_comment` are
-single-character escapers and are immune, which is why only the script/style
-helpers are affected. Fix direction: build one expression for the whole
-text-only body (as `bodyToTextLiteral` in
-`translator/util/body-to-text-literal.ts` already does for the DOM path) and
-wrap that single expression in `getTextOnlyEscapeHelper(tagName)`, so the
-concatenation — including static text boundaries — is escaped as one string.
-Re-verify: render `<html-script>${a}${b}${c}</html-script>` with those three
-values and parse the output with parse5 `parseFragment`; today the tree contains
-`img` with `onerror`, and after the fix it must contain only `script`.
 
 ## Stop double-escaping character references in a static `<textarea>` body
 

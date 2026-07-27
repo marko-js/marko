@@ -2183,6 +2183,34 @@ describe("serializer", () => {
   });
 });
 
+// The round-trip gate every `assertStringify` leans on: a built-in that lost
+// or changed its contents must not pass as the value that went in.
+describe("assertIsDeepSubset", () => {
+  const rejects = (subset: unknown, superset: unknown) =>
+    assert.throws(() => assertIsDeepSubset(subset, superset));
+
+  it("compares collection contents, not just the constructor", () => {
+    rejects(new Set(), new Set(["a"]));
+    rejects(new Set(["b"]), new Set(["a"]));
+    rejects(new Map(), new Map([["a", 1]]));
+    rejects(new Map([["a", 2]]), new Map([["a", 1]]));
+    rejects(new URLSearchParams(), new URLSearchParams("a=1"));
+    rejects(new Headers(), new Headers({ a: "1" }));
+    assertIsDeepSubset(new Set(["a"]), new Set(["a"]));
+    assertIsDeepSubset(new Map([["a", 1]]), new Map([["a", 1]]));
+  });
+
+  it("compares the opaque scalars by value", () => {
+    rejects(new Date(0), new Date(1));
+    rejects(new URL("https://a.example/"), new URL("https://b.example/"));
+    assertIsDeepSubset(new Date(1), new Date(1));
+    assertIsDeepSubset(
+      new URL("https://a.example/"),
+      new URL("https://a.example/"),
+    );
+  });
+});
+
 // Minimal stand-in for the browser's per render serialize context: a
 // callable that resolves scopes by id (optionally invoking a registered
 // factory), applies fill arrays with adopt-or-merge semantics, and carries
@@ -2408,6 +2436,39 @@ function assertIsDeepSubset(
 
   if (aConstructor === "Promise") {
     (subset as Promise<unknown>).catch(() => {});
+  }
+
+  // These keep their state internal, so `Reflect.ownKeys` is empty for them
+  // and the walk below would accept any two values of the same class.
+  switch (aConstructor) {
+    case "Map":
+    case "Set":
+    case "Headers":
+    case "FormData":
+    case "URLSearchParams": {
+      const subsetEntries = [...(subset as Iterable<unknown>)];
+      const supersetEntries = [...(superset as Iterable<unknown>)];
+      assertEqualAtAccessor(
+        subsetEntries.length,
+        supersetEntries.length,
+        `${accessor} size`,
+      );
+      for (let i = 0; i < subsetEntries.length; i++) {
+        assertIsDeepSubset(
+          subsetEntries[i],
+          supersetEntries[i],
+          `${accessor}[${i}]`,
+          seen,
+        );
+      }
+      return;
+    }
+    case "Date":
+      assertEqualAtAccessor(+(subset as Date), +(superset as Date), accessor);
+      return;
+    case "URL":
+      assertEqualAtAccessor(String(subset), String(superset), accessor);
+      return;
   }
 
   for (const key of Reflect.ownKeys(subset)) {
