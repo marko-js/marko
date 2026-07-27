@@ -55,9 +55,6 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      # Coverage collection + the c8 report add ~45% to the job (the report
-      # alone is ~1 min of single-threaded remapping), so only the newest node
-      # version pays for it — coverage is version-independent for this suite.
       - name: Run tests
         if: ${{ matrix.node != 26 }}
         run: pnpm run @ci:test:fast

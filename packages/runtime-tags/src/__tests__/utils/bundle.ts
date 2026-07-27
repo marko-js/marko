@@ -269,35 +269,6 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
   return a;
 }`,
         },
-        async renderChunk(_code, _chunk, _options, meta) {
-          const { output } = await domBuiltBox.promise!;
-          const manifest: {
-            [entry: string]: {
-              block?: string;
-              defer?: string;
-            };
-          } = {};
-
-          for (const chunk of output) {
-            if (
-              chunk.type === "chunk" &&
-              chunk.isEntry &&
-              chunk.facadeModuleId
-            ) {
-              const id = domEntry.get(chunk.facadeModuleId);
-              if (
-                id &&
-                Object.values(chunk.modules).some((m) => m.renderedLength > 0)
-              )
-                manifest[id] = {
-                  defer: `<script async type=module src="${chunk.fileName}"></script>`,
-                };
-            }
-          }
-          return meta.magicString!.append(
-            `;var __MARKO_MANIFEST__=${JSON.stringify(manifest)}`,
-          );
-        },
       },
     ],
     output: {
@@ -306,6 +277,31 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
       sourcemap: true,
       sourcemapExcludeSources: true,
       entryFileNames: "[name].mjs",
+      // `renderChunk` returning code without a map discards every mapping
+      // rolldown accumulated, leaving bundled modules unattributable.
+      footer: async () => {
+        const { output } = await domBuiltBox.promise!;
+        const manifest: {
+          [entry: string]: {
+            block?: string;
+            defer?: string;
+          };
+        } = {};
+
+        for (const chunk of output) {
+          if (chunk.type === "chunk" && chunk.isEntry && chunk.facadeModuleId) {
+            const id = domEntry.get(chunk.facadeModuleId);
+            if (
+              id &&
+              Object.values(chunk.modules).some((m) => m.renderedLength > 0)
+            )
+              manifest[id] = {
+                defer: `<script async type=module src="${chunk.fileName}"></script>`,
+              };
+          }
+        }
+        return `;var __MARKO_MANIFEST__=${JSON.stringify(manifest)}`;
+      },
     },
   });
 

@@ -116,3 +116,4 @@ tmtags
 *.swp
 *.vim
 .netrwhist
+coverage-v8
