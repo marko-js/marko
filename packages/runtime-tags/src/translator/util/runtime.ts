@@ -21,10 +21,14 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 
 // Marked `@__PURE__` (see callRuntime) so a bundler may drop a call whose
 // result is unused, despite call-time side effects: `_resume` registration
-// (`_template`, `_dynamic_tag`) and the `_enable_catch()`/`enableBranches()`
-// latches. This is sound because registration only matters when the value is
-// referenced by a serialized register id (which keeps it in the module graph),
-// and the latches are re-triggered by whichever construct survives shaking.
+// (`_template`, `_dynamic_tag`). This is sound because registration only
+// matters when the value is referenced by a serialized register id, which
+// keeps it in the module graph.
+//
+// A latch belongs here only if a surviving runtime construct re-triggers it.
+// `_enable_catch` does not qualify: `_try` never calls it, so a `<try>` with
+// no `<await>` or lazy child has the program-scope call as its only trigger
+// and dropping it leaves the boundary unable to catch.
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_await_content",
