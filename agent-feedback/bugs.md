@@ -430,37 +430,6 @@ with the tags translator, then group the collected bindings by `(section, id,
 type===dom)` — section 1 id 6 holds both `$foo` (alias, `pruned === false`) and
 `$bar`, and `bindingUtil.compare($foo, $bar)` returns `0`.
 
-## Flush queued cleanup effects when a scope is destroyed outside a render, so `destroy()` runs `<lifecycle> onDestroy` and aborts `$signal`
-
-`packages/runtime-tags/src/dom/abort-signal.ts` › `$signalReset` | 2026-07-23 | impact:high | effort:low
-
-`$signalReset` does not abort its `AbortController` directly — it defers via
-`queueEffect(ctrl, abort)` (abort-signal.ts:7) into the module-level
-`pendingEffects` array in `dom/queue.ts`, which is only drained by
-`run()`/`prepareEffects`. That is fine for destroys that happen inside a render,
-but three destroy entry points run outside one and never flush:
-`MountedTemplate.destroy()` in `dom/template.ts` › `mount`
-(`removeAndDestroyBranch(branch)` at template.ts:147), `initEmbedded`'s
-MutationObserver in `dom/resume.ts` (`destroyScope(scopes[id])` at
-resume.ts:90), and `compat.runComponentDestroy` in `dom/compat.ts:84`. Because
-`<lifecycle>` wires teardown through the same channel — `_lifecycle` ends with
-`$signal(scope, accessor).onabort = () => thisObj.onDestroy?.()`
-(`dom/dom.ts:494`) — destroying a mounted template removes the DOM but never
-runs `onDestroy` and never aborts in-flight `$signal` fetches; the stranded
-`(abort, ctrl)` pair then fires at an arbitrary later time if any unrelated
-`run()` ever happens, or never at all in an otherwise idle host. This leaks
-timers/subscriptions/observers for every embedder that mounts and unmounts Marko
-6 imperatively (micro-frontends, testing-library cleanup, Class-API interop).
-Fix direction: have `destroyScope`/`destroyBranch` (or each out-of-render
-destroy site) run the effects it queues, e.g. wrap the destroy in
-`runEffects(prepareEffects(() => removeAndDestroyBranch(branch)))`, or make
-`$signalReset` abort synchronously when `rendering` is falsy. Re-verify: in
-jsdom, build `_script('t_0', $s => _lifecycle($s, {
-onMount(){log.push('mount')}, onDestroy(){log.push('destroy')} }))` under a
-`_let`, `_template(...).mount({}, document.body, 'afterbegin')`, then call
-`instance.destroy()` — `log` is `["mount"]` and `pendingEffects.length` is 2; a
-subsequent bare `queue.run()` turns it into `["mount","destroy"]`.
-
 ## Reset the scheduler's `isScheduled` guard without depending on `requestAnimationFrame`
 
 `packages/runtime-tags/src/dom/schedule.ts` › `schedule` | 2026-07-23 | impact:med | effort:low
