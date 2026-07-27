@@ -94,12 +94,15 @@ const importedDynamicTagResume = new WeakSet<t.Program>();
 const [getCompatRegistrations] = createProgramState<Set<string>>(
   () => new Set(),
 );
+const [getCompatBoundaryCalls] = createProgramState<
+  Map<string, t.CallExpression>
+>(() => new Map());
 function pushCompatRegistration(key: string, statement: t.Statement) {
   const keys = getCompatRegistrations();
-  if (!keys.has(key)) {
-    keys.add(key);
-    getProgram().node.body.push(statement);
-  }
+  if (keys.has(key)) return false;
+  keys.add(key);
+  getProgram().node.body.push(statement);
+  return true;
 }
 
 type ClassHydration = ClassHydration.Value;
@@ -336,41 +339,42 @@ export default {
             (classHydration === ClassHydration.Descendant ||
               (classHydration === ClassHydration.Self &&
                 !!classFile?.metadata.marko.hasComponentBrowser));
+          const classId = classFile!.metadata.marko.id;
+          const registration = isOutputHTML()
+            ? t.callExpression(
+                importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
+                [
+                  t.stringLiteral(classId),
+                  t.identifier((tagExpression as t.Identifier).name),
+                  ...(preserveBoundary ? [t.stringLiteral("preserve")] : []),
+                ],
+              )
+            : undefined;
           if (
             isOutputHTML() ? serializeReason || classHydration : serializeReason
           ) {
-            pushCompatRegistration(
-              classFile!.metadata.marko.id,
-              isOutputHTML()
-                ? t.markoScriptlet(
-                    [
-                      t.expressionStatement(
-                        t.callExpression(
-                          importNamed(
-                            tag.hub.file,
-                            getCompatRuntimeFile(),
-                            "s",
-                          ),
-                          [
-                            t.stringLiteral(classFile!.metadata.marko.id),
-                            t.identifier((tagExpression as t.Identifier).name),
-                            ...(preserveBoundary
-                              ? [t.stringLiteral("preserve")]
-                              : []),
-                          ],
-                        ),
-                      ),
-                    ],
-                    true,
-                  )
+            const pushed = pushCompatRegistration(
+              classId,
+              registration
+                ? t.markoScriptlet([t.expressionStatement(registration)], true)
                 : t.expressionStatement(
                     callRuntime(
                       "_resume",
-                      t.stringLiteral(classFile!.metadata.marko.id),
+                      t.stringLiteral(classId),
                       t.identifier((tagExpression as t.Identifier).name),
                     ),
                   ),
             );
+            if (pushed && registration) {
+              getCompatBoundaryCalls().set(classId, registration);
+            }
+          }
+
+          // The registration is per renderer but the mode is per call site, so
+          // one that cannot preserve drops it for every other use of the class.
+          if (!preserveBoundary) {
+            const emitted = getCompatBoundaryCalls().get(classId);
+            if (emitted) emitted.arguments.length = 2;
           }
         } else {
           const rendererName = (tagExpression as t.Identifier).name;

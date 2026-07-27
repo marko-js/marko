@@ -235,7 +235,12 @@ exports.p = function (htmlCompat) {
   });
 
   return function register(id, renderer, boundaryMode) {
-    boundaryModeByRenderer.set(renderer, boundaryMode || true);
+    // A renderer registered without "preserve" by any module keeps that mode:
+    // preserving a call site that updates stops it re-rendering in the browser.
+    boundaryModeByRenderer.set(
+      renderer,
+      boundaryModeByRenderer.get(renderer) === true || boundaryMode || true,
+    );
     return htmlCompat.register(id, renderer);
   };
 };

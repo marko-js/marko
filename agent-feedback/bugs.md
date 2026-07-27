@@ -1070,44 +1070,24 @@ callable. Type 'never' has no call signatures." `tags/html-script.d.marko` and
 HTMLStyleElement`. Re-verify: type-check `<html-comment/c>hi</html-comment>`
 followed by `<const/x=c()/>`; with the stub unchanged the call is TS2349.
 
-## Key the Class-API compat registration by boundary mode; the first call site's `preserve` decision currently wins for every other use of that component
+## Carry the Class-API compat boundary mode per call site instead of downgrading the whole program
 
-`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts` › `pushCompatRegistration` | 2026-07-23 | impact:high | effort:med
+`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts` › `pushCompatRegistration` | 2026-07-27 | impact:low | effort:med
 
-`pushCompatRegistration(key, statement)` (dynamic-tag.ts:95) dedupes on
-`classFile.metadata.marko.id`, but the statement it guards is NOT call-site
-invariant: `preserveBoundary` (`:335`) is `!tagsSerializeReason &&
-(classHydration === Descendant || (Self && hasComponentBrowser))`, and
-`tagsSerializeReason = getSerializeReason(tagSection, nodeBinding)` differs per
-tag. So when one template renders the same Class-API component at an inert call
-site (emits `s(id, Cmp, "preserve")`) and at a call site the Tags side can
-update (emits `s(id, Cmp)`), only the first-translated registration is emitted
-and BOTH call sites get that mode. This is not cosmetic: `register(id, renderer,
-boundaryMode)` does `boundaryModeByRenderer.set(renderer, boundaryMode || true)`
-(packages/runtime-class/src/runtime/helpers/tags-compat/runtime-html.js:239),
-and `beginComponent` maps `"preserve"` to `isSplitComponent = true`, skipping
-`componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER`
-(packages/runtime-class/src/node_modules/@internal/components-beginComponent/index.js:42-70)
-— visible on the wire as the missing `"f": 1` in the `$MC` payload (compare
-`fixtures-interop/interop-reactive-split-tags-to-class/__snapshots__/writes.html`,
-which has it, with
-`interop-self-interactive-split-tags-to-class/__snapshots__/writes.html`, which
-does not). A stateful call site that inherits `"preserve"` is therefore
-serialized as a component that will never re-render in the browser, while in the
-opposite source order the inert call site loses its preserve optimization;
-because `boundaryModeByRenderer` is a per-renderer Map, the same clobbering
-happens across templates in one process (last module evaluated wins). Fix
-direction: move the boundary mode off the module-level `s()` registration onto
-the per-call-site `_dynamic_tag` invocation. Merely keying the dedupe on the
-mode and emitting both registration forms does not work — `boundaryModeByRenderer`
-is keyed by renderer, so the second `s()` call just overwrites the first.
-Re-verify: copy
-`fixtures-interop/interop-self-interactive-split-tags-to-class/components/split-counter`
-next to two templates that differ only in statement order — `<let/n=0/><button
-onClick(){n++}>${n}</button><split-counter/><split-counter count=n/>` vs. the
-two `split-counter` lines swapped — compile both with `-o html` using the
-interop translator and diff the `s(...)` line: one emits `"preserve"`, the other
-does not.
+`preserveBoundary` is a per-call-site decision (`!tagsSerializeReason && …`)
+but `s(id, renderer, mode)` is emitted once per renderer, and
+`boundaryModeByRenderer` in
+`packages/runtime-class/src/runtime/helpers/tags-compat/runtime-html.js` is
+keyed by renderer as well. The order-dependence this caused is fixed — a call
+site that cannot preserve now drops the mode for the whole program, and
+`register` keeps a plain `true` sticky across modules — but the fix is a
+downgrade, so one updating call site costs every inert call site of that class
+its split-component optimization. Carrying the mode on the per-call-site
+`_dynamic_tag` invocation instead would keep both, at the cost of a parameter on
+a helper every dynamic tag pays for; measure before taking it. Re-verify: the
+`interop-mixed-boundary-split-tags-to-class` fixture emits `s(…, renderer)`
+with no `"preserve"`, while `interop-self-interactive-split-tags-to-class`,
+whose only call site is inert, still emits it.
 
 ## SSR silently drops `content=` on void and text-only native tags, and on any tag whose body is only Marko comments
 
