@@ -28,6 +28,8 @@ pnpm run change                                           # add a changeset (req
 
 `pnpm run compile` is the fastest way to inspect what the translator generates. (Pass `-t class` for the Marko 5 translator; `-t` also accepts a full translator module id.)
 
+`pnpm run change` prompts, so write `.changeset/<name>.md` directly. Name a workspace package — `@marko/compiler`, `@marko/runtime-tags` or `marko` (`packages/runtime-class`) — then check it with `pnpm exec changeset status`; a wrong name passes review and breaks the release on `main`.
+
 ## Repo invariants
 
 - **Babel is patched.** `patches/` (applied by pnpm patchedDependencies on install) adds Marko AST node types to `@babel/types`/`traverse`/`generator`. Import Babel only via `@marko/compiler/internal/babel` and helpers via `@marko/compiler/babel-utils`, never `@babel/*` directly. Bumping a `@babel/*` version requires regenerating its patch.
