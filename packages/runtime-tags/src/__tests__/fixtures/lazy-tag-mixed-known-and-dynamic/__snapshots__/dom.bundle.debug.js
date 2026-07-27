@@ -7,7 +7,7 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", $setup, $input);
 
 // template.marko
-const $template = "<button class=toggle>Toggle</button><button class=inc>Inc</button><!><!><!><!>";
+const $template = "<button class=toggle>Toggle</button><button class=inc>Inc</button><!><!><!>";
 const $walks = " b b%/&b%c";
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", () => import("./child.mjs").then((mod) => mod.default));
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/2", "#childScope/3", () => import("./v:child.marko.setup.mjs"));

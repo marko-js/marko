@@ -11,7 +11,7 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko
-const $template = "<button class=parent>parent <!></button><!><!><!>";
+const $template = "<button class=parent>parent <!></button><!><!>";
 const $walks = " Db%l%/&c";
 const $load_Child_trigger = /*@__PURE__*/ _load_visible_trigger("body", { rootMargin: "100px" });
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/2", "#childScope/3", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));

@@ -267,7 +267,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       },
     );
 
-    write`<!>`;
     walks.visit(tag, WalkCode.Replace);
     walks.injectWalks(tag, tagName);
     walks.enterShallow(tag);
