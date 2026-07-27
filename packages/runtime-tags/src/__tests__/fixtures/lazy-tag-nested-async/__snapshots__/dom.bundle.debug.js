@@ -16,7 +16,7 @@ const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	$count__closure($scope);
 });
 const $input_value = $count;
-const $await_content = /*@__PURE__*/ _await_content("#text/2", "<span id=child-await> </span><!><!><!>", "D l%/&", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/2", "<span id=child-await> </span><!><!>", "D l%/&", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
@@ -53,7 +53,7 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 var grand_child_default = /*@__PURE__*/ _template("__tests__/grand-child.marko", $template, $walks, $setup, $input);
 
 // template.marko
-const $template = "<div id=before>before</div><!><!><div id=after>after</div>";
+const $template = "<div id=before>before</div><!><div id=after>after</div>";
 const $walks = "b%/&c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));

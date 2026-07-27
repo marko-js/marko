@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__value._($scope);
 	$load_Child_setup($scope);
 };
-const $if = /*@__PURE__*/ _if(1, "<!><!><!><!>", "b%/&", $if_content__setup);
+const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%/&", $if_content__setup);
 const $show = /*@__PURE__*/ _let(3, ($scope) => $if($scope, $scope.d ? 0 : 1));
 const $value = /*@__PURE__*/ _let(4, $if_content__value);
 const $setup__script = _script("b0", ($scope) => {

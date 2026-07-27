@@ -41,7 +41,7 @@ const $input = ($scope, input) => {
 var child_s_default = /*@__PURE__*/ _template("__tests__/child-s.marko", $template, $walks, $setup, $input);
 
 // template.marko
-const $template = "<button class=main>main:<!></button><!><!><!><!><!>";
+const $template = "<button class=main>main:<!></button><!><!><!>";
 const $walks = " Db%l%/&b%/&c";
 let $load_ChildS_setup = /*@__PURE__*/ _load_setup("#text/2", "#childScope/3", () => import("./v:child-s.marko.setup.mjs"));
 let $load_ChildS_tag_input_holder = /*@__PURE__*/ _load_signal(() => import("./v:child-s.marko.input_holder.mjs"));

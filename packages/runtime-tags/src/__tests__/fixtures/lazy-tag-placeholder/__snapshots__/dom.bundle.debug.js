@@ -21,7 +21,7 @@ const $try_content__setup = ($scope) => {
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);
 const $count = /*@__PURE__*/ _let("count/5", $count__closure);
 const $input_value = $count;
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%/&", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

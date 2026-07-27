@@ -11,7 +11,7 @@ function $setup($scope) {
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "b", $setup);
 
 // template.marko
-const $template = "<!><!><!><!>";
+const $template = "<!><!><!>";
 const $walks = "b%/&c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 const $setup = $load_Child_setup;

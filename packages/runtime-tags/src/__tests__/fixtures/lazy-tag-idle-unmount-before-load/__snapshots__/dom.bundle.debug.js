@@ -18,7 +18,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__value._($scope);
 	$load_Child_setup($scope);
 };
-const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!><!>", "b%/&", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%/&", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $value = /*@__PURE__*/ _let("value/4", $if_content__value);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

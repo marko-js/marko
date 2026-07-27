@@ -7,7 +7,7 @@ const $await_content__setup = ($scope) => {
 	$load_Child_tag_input_value($scope.b, 1);
 };
 const $placeholder_content = _content_resume("b0", "loading");
-const $await_content = /*@__PURE__*/ _await_content(0, "<!><!><!><!>", "b%/&", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content(0, "<!><!><!>", "b%/&", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);

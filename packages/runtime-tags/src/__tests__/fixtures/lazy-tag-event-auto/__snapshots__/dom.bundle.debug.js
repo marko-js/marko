@@ -8,7 +8,7 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", $setup, $input);
 
 // template.marko
-const $template = "<!><!><!><!>";
+const $template = "<!><!><!>";
 const $walks = "b%/&c";
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", ".nonexistent");
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));

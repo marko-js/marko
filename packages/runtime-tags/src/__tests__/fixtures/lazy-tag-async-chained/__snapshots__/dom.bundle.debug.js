@@ -15,7 +15,7 @@ const $input = ($scope, input) => {
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko
-const $template = "<!><!><!><!><!>";
+const $template = "<!><!><!><!>";
 const $walks = "b%/&b%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_id = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_id.mjs"));
@@ -32,7 +32,7 @@ function $setup($scope) {
 	$load_Child_tag_input_id($scope["#childScope/1"], "sync");
 	$await_content($scope);
 }
-const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!><!>", "b%/&", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%/&", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 const $input_value = ($scope, input_value) => {
 	$load_Child_tag_input_value($scope["#childScope/1"], input_value);

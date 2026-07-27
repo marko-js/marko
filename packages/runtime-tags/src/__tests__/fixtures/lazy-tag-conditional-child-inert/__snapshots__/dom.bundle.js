@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_label($scope.b, "x");
 };
-const $if = /*@__PURE__*/ _if(1, "<!><!><!><!>", "b%/&", $if_content__setup);
+const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%/&", $if_content__setup);
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	$if($scope, $scope.c % 2 === 0 ? 0 : 1);
 	$if_content__count($scope);
