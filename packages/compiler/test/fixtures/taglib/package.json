@@ -1,0 +1,4 @@
+{
+  "name": "taglib-fixture",
+  "dependencies": { "marko-missing-taglib": "*" }
+}
