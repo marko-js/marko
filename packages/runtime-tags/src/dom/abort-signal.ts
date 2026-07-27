@@ -1,11 +1,14 @@
 import { AccessorProp, type Scope } from "../common/types";
-import { queueEffect } from "./queue";
+import { queueEffect, rendering } from "./queue";
 
 export function $signalReset(scope: Scope, id: string | number) {
   const ctrl = scope[AccessorProp.AbortControllers]?.[id];
   if (ctrl) {
-    queueEffect(ctrl as any, abort as any);
     scope[AccessorProp.AbortControllers]![id] = undefined;
+    // Deferred so `onabort` cannot run user code mid render; a destroy from
+    // outside a render has no effect flush to defer to.
+    if (rendering) queueEffect(ctrl as any, abort as any);
+    else abort(ctrl as AbortController);
   }
 }
 

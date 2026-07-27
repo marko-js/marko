@@ -1,4 +1,4 @@
-// size: 26420 (min) 9814 (brotli)
+// size: 26428 (min) 9840 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2124,7 +2124,7 @@ function _enable_catch() {
 }
 function $signalReset(scope, id) {
   let ctrl = scope.A?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
+  ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
 }
 function $signal(scope, id) {
   return (

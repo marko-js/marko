@@ -1,0 +1,8 @@
+<lifecycle
+  onMount() { window.log.push("mount"); }
+  onDestroy() { window.log.push("destroy"); }
+/>
+<script>
+  window.signal = $signal;
+</script>
+<div#out>mounted</div>

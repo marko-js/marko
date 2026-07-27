@@ -1,4 +1,4 @@
-// size: 3904 (min) 1733 (brotli)
+// size: 3911 (min) 1737 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -291,7 +291,7 @@ function runRenders() {
 }
 function $signalReset(scope, id) {
   let ctrl = scope.A?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
+  ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
 }
 function abort(ctrl) {
   ctrl.abort();
