@@ -838,37 +838,6 @@ value:=val/></define><Wrap a=n aChange(v){ n = v }/>` and observe the
 destructuring-key error pointing at the `<define>` tag; deleting `value:=val`
 makes it compile.
 
-## Stop the DOM compile from failing with an internal error on an unreferenced `<define>` that has body content
-
-`packages/runtime-tags/src/translator/core/define.ts` › `analyze` | 2026-07-23 | impact:med | effort:low
-
-A `<define>` with body content whose tag variable is never referenced aborts the
-`dom` compile with `Marko internal error: analysis marked this template's setup
-export as empty but translation produced statements for it. Please open an issue
-with a reproduction.` (thrown at `visitors/program/dom.ts:170-177`), while the
-same template compiles fine for `html` — so SSR-only checks pass and only the
-client build breaks, with an error that tells the user to file an issue. Cause:
-in `analyze`, when `babelBinding.referencePaths` is empty the loop never runs,
-`allDirectReferences` stays `true`, and the `if (allDirectReferences)` branch
-(define.ts:86-94) returns early, skipping `setBindingDownstream(varBinding,
-tagExtra)`; that call is the only thing that eventually reaches
-`finalizeReferences`' `addSetupStatement(expr.section)`
-(`util/references.ts:918-926`), because `core/define.ts` never calls
-`addSetupExpr`/`addSetupStatement` itself (contrast `core/await.ts:124`).
-`translate.exit` nevertheless still runs `addValue(section, …,
-initValue(tag.get("var").node!.extra!.binding!)!, propsToExpression(...))`
-(define.ts:172-177), which lands in the setup signal and contradicts the
-`setupEmpty` proof. The fix should make an unreferenced `<define>` emit nothing
-at all (the same shape as the existing `!varBinding` and
-`allDirectReferences`+refs paths, both of which drop the tag) rather than merely
-recording a setup statement — note that when the template has other setup work
-the current code compiles but emits dead `(/* Foo */{});` in `$setup`.
-Re-verify: `pnpm run compile -- -o dom` on a file containing exactly
-`<define/Foo>content</define>` and `<div>hi</div>` throws the internal error in
-both debug and optimize, while `-o html` succeeds; adding `<let/n=0/>` plus a
-`<button onClick(){n++}>` to the same file makes it compile and emit the dead
-`{}` instead.
-
 ## Flush pending HTML before the `<debug>`/`<log>` statement so SSR keeps the tag's source position
 
 `packages/runtime-tags/src/translator/core/debug.ts` › `translate.exit` | 2026-07-23 | impact:low | effort:low

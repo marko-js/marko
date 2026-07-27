@@ -140,20 +140,22 @@ export default {
             }
           }
 
-          if (hasDirectReferences) {
+          // Matches the analysis, which drops the tag whenever every reference
+          // is direct — including a `<define>` with no references at all.
+          if (allDirectReferences) {
             const bodySection = getSectionForBody(tag.get("body"));
             if (bodySection) {
-              const signal = getSignal(bodySection, undefined);
-              signal.build = () => {
-                if (signalHasStatements(signal)) {
-                  return callRuntime("_child_setup", getSignalFn(signal));
-                }
-              };
-
-              if (allDirectReferences) {
-                tag.remove();
-                return;
+              if (hasDirectReferences) {
+                const signal = getSignal(bodySection, undefined);
+                signal.build = () => {
+                  if (signalHasStatements(signal)) {
+                    return callRuntime("_child_setup", getSignalFn(signal));
+                  }
+                };
               }
+
+              tag.remove();
+              return;
             }
           }
         }
