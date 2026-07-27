@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-content-attr-void-tag/template.marko:4:8
+      2 |   <span>note</span>
+      3 | </define>
+    > 4 | <input content=Note>
+        |        ^^^^^^^^^^^^ The `<input>` tag cannot have content, so it does not support the `content` attribute.
+      5 |

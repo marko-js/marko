@@ -203,6 +203,22 @@ export default {
         throw tag.get("name").buildCodeFrameError(msg);
       });
 
+      if (seen.content) {
+        if (getTagDef(tag)?.parseOptions?.openTagOnly) {
+          throw tag.hub.buildError(
+            seen.content,
+            `The \`<${tagName}>\` tag cannot have content, so it does not support the \`content\` attribute.`,
+          );
+        }
+
+        if (isTextOnly) {
+          throw tag.hub.buildError(
+            seen.content,
+            `The \`<${tagName}>\` tag takes its content from its body as text, so it does not support the \`content\` attribute.`,
+          );
+        }
+      }
+
       let textPlaceholders: undefined | t.Node[];
       if (isTextOnly) {
         for (const child of tag.node.body.body) {

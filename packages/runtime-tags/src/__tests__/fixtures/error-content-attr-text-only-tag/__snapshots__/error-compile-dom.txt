@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-content-attr-text-only-tag/template.marko:4:11
+      2 |   <span>note</span>
+      3 | </define>
+    > 4 | <textarea content=Note/>
+        |           ^^^^^^^^^^^^ The `<textarea>` tag takes its content from its body as text, so it does not support the `content` attribute.
+      5 |

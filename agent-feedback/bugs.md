@@ -1133,33 +1133,6 @@ a helper every dynamic tag pays for; measure before taking it. Re-verify: the
 with no `"preserve"`, while `interop-self-interactive-split-tags-to-class`,
 whose only call site is inert, still emits it.
 
-## SSR silently drops `content=` on void and text-only native tags, and on any tag whose body is only Marko comments
-
-`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `translate.html.enter` | 2026-07-23 | impact:med | effort:low
-
-The native-tag `content=` attribute has two silent-drop paths. (1) In the HTML
-translate `enter`, the write-close chain tests `if (isOpenOnly || isTextOnly)
-write`>`` before `else if (staticContentAttr)` (native-tag.ts:560-579), so
-`content` is never rendered for a void (`openTagOnly`) or text-only tag; the DOM
-`enter` has no such guard and emits `_attr_content` unconditionally (:956-972),
-so `<textarea content=input.x/>` and `<input content=input.y>` compile to
-`_attr_content($scope, "#textarea/0", input_x)` for CSR but to plain
-`<textarea></textarea><input>` with no `_attr_content` for SSR — a CSR/SSR
-divergence with no diagnostic (`<div content=input.z/>` in the same file does
-emit `_attr_content` in both). (2) The analyze guard `attr.name === "content" &&
-tag.node.body.body.length` (:132-142, mirrored in `getUsedAttrs` at :1166)
-counts `MarkoComment` nodes as body content, so `<div content=input.x><!-- note
---></div>` renders an empty `<div>` in both outputs — the comment is stripped
-and the content attribute was dropped because of it.
-`translator/util/is-only-child-in-parent.ts` already filters `node.type !==
-"MarkoComment"` for exactly this kind of body-length test, so the same filter
-belongs here. For (1), either handle `content` consistently or raise a compile
-error saying `content` is not supported on void/text-only elements. Re-verify:
-`pnpm run compile -o dom -d` and `-o html -d` on a file containing `<div
-content=input.z/><textarea content=input.x/><input content=input.y>` and diff
-which tags get `_attr_content`; then compile `<div content=input.x><!-- hi
---></div>` and observe `<div></div>` with no `_attr_content` in either output.
-
 ## Enable branch machinery for spread `content=` branches; `_attr_content` creates branches without it
 
 `packages/runtime-tags/src/dom/dom.ts` › `_attr_content` | 2026-07-23 | impact:low | effort:med
