@@ -1,0 +1,5 @@
+<attrs/{ greeting }/>
+<let/count = 0/>
+<button id="inc" onClick() { count++ }>inc</button>
+<effect() { document.getElementById("out")!.textContent = `${greeting} ${count}` }/>
+<div#out/>
