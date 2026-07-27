@@ -1745,12 +1745,19 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     return true;
   }
 
+  // A return value that is an ancestor has no accessor path of its own to be
+  // assigned into later, so it is read back out of a holder that does.
+  const heldReturn =
+    returnValue !== undefined && isAncestorMember(state, ref, returnValue);
+
   // Yield/return values live in eagerly evaluated arguments — the body only
   // runs when iterated, so values written there would break reference dedup.
   state.buf.push(
     returnValue === undefined
       ? "(function*(a){yield*a})("
-      : "(function*(a,r){yield*a;return r})(",
+      : heldReturn
+        ? "(function*(a,r){yield*a;return r.v})("
+        : "(function*(a,r){yield*a;return r})(",
   );
   if (needsId) {
     const arrayRef = new Reference(
@@ -1770,7 +1777,17 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     );
   }
 
-  if (returnValue !== undefined) {
+  if (heldReturn) {
+    const holder = new Reference(
+      ref,
+      null,
+      state.flush,
+      null,
+      nextRefAccess(state),
+    );
+    state.buf.push("," + holder.id + "={}");
+    writeProp(state, returnValue, holder, "v");
+  } else if (returnValue !== undefined) {
     const sepIndex = state.buf.push(",") - 1;
     if (
       writeProp(state, returnValue, ref, "") &&

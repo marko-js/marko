@@ -644,29 +644,6 @@ precedes an `<await>` whose body contains `<footer id=footer>` — the first
 flushed chunk contains `…document.querySelector("#footer")||l()… ` while
 `<footer id=footer>` only appears in the next chunk.
 
-## Emit a circular generator return value lazily instead of a deferred assignment that produces invalid JS
-
-`packages/runtime-tags/src/html/serializer.ts` › `writeGenerator` | 2026-07-23 | impact:high | effort:med
-
-`writeGenerator` serializes a generator's return value with `writeProp(state,
-returnValue, ref, "")` (serializer.ts:1627) — an empty accessor, because the
-return value has no property path off the generator. When that value is
-already-referenced and circular relative to the generator (it is the generator
-itself, or any ancestor on the write tree), `writeReferenceOr` takes the
-deferred-assignment branch and builds `accessId(state, parent) + toAccess("")`.
-`toAccess("")` (serializer.ts:1941) reads `accessor[0]` as `undefined` and falls
-through to the `"." + accessor` branch, yielding a bare `"."`, so the extras
-section emits `_.b.=_.a` — a SyntaxError. Because the whole flush is written as
-one `<script>` (`M._.r=[...]` in html/writer.ts), the parse failure kills the
-entire page's resume payload, not just that value, and nothing warns even under
-MARKO_DEBUG. Since the generator body is lazily evaluated, the fix is to emit
-the circular return inside the body (`(function*(a){yield*a;return _.a})([1])`)
-rather than as an eager argument plus a post-hoc assignment; failing that,
-detect the empty accessor and abort loudly. Re-verify: serialize `const obj =
-{}; function* g(){ yield 1; return obj; } obj.g = g();` through
-`Serializer#stringifyScopes([[1, {}, { value: obj }]], boundary)` and `eval` the
-result — it currently throws `SyntaxError: Unexpected token '='`.
-
 ## Look up `debug.vars` with the raw accessor, not the escaped object key
 
 `packages/runtime-tags/src/html/serializer.ts` › `throwUnserializable` | 2026-07-23 | impact:low | effort:low

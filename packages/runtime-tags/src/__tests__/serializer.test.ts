@@ -1341,6 +1341,18 @@ describe("serializer", () => {
       serializer.assertStringify({ c: shared }, `{c:_.a}`);
     });
 
+    it("returns an ancestor", () => {
+      const parent: any = { name: "p" };
+      parent.gen = (function* () {
+        yield 1;
+        return parent;
+      })();
+      const rt = deserialize(parent);
+      const iter = rt.gen as Generator;
+      assert.deepEqual(iter.next(), { value: 1, done: false });
+      assert.deepEqual(iter.next(), { value: rt, done: true });
+    });
+
     it("partially consumed resumes as an exhausted sync generator", () => {
       const gen = (function* () {
         yield 1;
