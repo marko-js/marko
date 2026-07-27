@@ -1,0 +1,9 @@
+<div>
+  <let/entries={ a: 1, b: 2 }/>
+
+  <for|key, value| in=entries by=(key) => key>
+    <p>${key}:${value}</p>
+  </for>
+
+  <button onClick() { entries = { b: 2, c: 3 }; }>Change</button>
+</div>
