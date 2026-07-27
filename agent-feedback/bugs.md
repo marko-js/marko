@@ -173,28 +173,20 @@ under `node -r ~ts`,
 `""` while `require('.../src/dom/dom.ts')._attrs({a: el},'a',{className:null})`
 throws.
 
-## Compensate for the HTML parser dropping a `<textarea>`'s leading newline in `_textarea_value`
+## Escape a carriage return in a `<textarea>` body so SSR and CSR agree
 
-`packages/runtime-tags/src/html/attrs.ts` › `_textarea_value` | 2026-07-23 | impact:med | effort:low
+`packages/runtime-tags/src/html/attrs.ts` › `_textarea_value` | 2026-07-27 | impact:low | effort:low
 
-`_textarea_value` (attrs.ts:133) writes the textarea's value straight into the
-element body as `_escape(normalizeStrAttrValue(value))`, so a value beginning
-with a newline serializes as `<textarea>\nhello</textarea>`. The HTML tokenizer
-discards the first newline after a `<textarea>` start tag, so the browser parses
-that back as `"hello"` — the leading blank line is silently lost on every SSR
-render, while CSR keeps it (`dom.ts:42` aliases `_attr_textarea_value` to
-`_attr_input_value`, whose `_attr_input_value_default` in `dom/controllable.ts`
-assigns `el.defaultValue = value` verbatim). It affects all three authoring
-forms (`value=`, `value:=`, and a `${}` body), and for the controlled form it
-also corrupts resume: `_attr_input_value_script` seeds
-`AccessorPrefix.ControlledValue` from `el.defaultValue`, so the client's
-controlled value starts one character behind the server's. Fix as React does —
-have `_textarea_value` prepend a `\n` when the escaped string starts with `\n`
-or `\r` (all of `\n`, `\r\n`, `\r` leads lose the newline). Re-verify:
-SSR-render `<textarea value=input.v/>` with `v = "\nhello"`, confirm the emitted
-HTML is `<textarea>\nhello</textarea>`, parse it with jsdom and observe
-`el.value === "hello"`, versus `el.defaultValue = "\nhello"` giving `el.value
-=== "\nhello"` on the client.
+`_textarea_value` writes the value as element text, and the HTML tokenizer
+normalizes every CR and CRLF in text to a single LF, so a `\r` anywhere in the
+value — not just at the start — is lost on SSR: `"a\rb"` and `"a\r\nb"` both
+parse back as `"a\nb"`. CSR keeps them, since `_attr_input_value_default`
+assigns `el.defaultValue` verbatim, so the two halves disagree and a controlled
+`<textarea>` resumes with a value the server never rendered. Writing `\r` as
+`&#13;` survives, because character references are decoded after newline
+normalization. Weigh that against the bytes it costs every textarea, since a
+lone CR in user input is rare. Re-verify: SSR-render `<textarea value=input.v/>`
+with `v = "a\rb"` and parse the output — the value is `"a\nb"`.
 
 ## Don't emit the "no matching `<option>`" dev error when a controlled `<select>`'s options render asynchronously
 
