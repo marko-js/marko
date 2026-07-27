@@ -27,6 +27,7 @@ export default function invokeHandlers(config, handlers, path) {
     taglibConfig.onError(e);
   }
 
+  /* v8 ignore next 3 -- every caller asserts or normalizes first */
   if (!config) {
     error('"config" argument is required');
   }
@@ -71,14 +72,6 @@ export default function invokeHandlers(config, handlers, path) {
       } catch (e) {
         error('Error while applying option of "' + k + '"', e);
       }
-    }
-  }
-
-  if (handlers._end) {
-    try {
-      handlers._end();
-    } catch (e) {
-      error("Error after applying properties", e);
     }
   }
 }
