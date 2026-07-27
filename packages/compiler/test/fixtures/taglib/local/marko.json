@@ -1,0 +1,6 @@
+{
+  "taglib-id": "taglib-fixture-local",
+  "<probe-local>": {
+    "@message": "string"
+  }
+}
