@@ -1511,3 +1511,9 @@ input change, assignment has no meaningful reactive semantics; a compile
 error in `trackAssignment` when `binding.type === BindingType.local` would
 be cheap and clear. Re-verify: compile the template above with
 `pnpm run compile -o dom -d` and inspect the emitted assignment.
+
+## Declare `pipe`, `catch` and `finally` on `RenderedTemplate`
+
+`packages/runtime-tags/src/common/types.ts` › `RenderedTemplate` | 2026-07-27 | impact:med | effort:low
+
+`RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> & { toReadable() }`, but `ServerRendered` in `html/template.ts` also implements `pipe`, `catch`, `finally` and a synchronous `toString`. `PromiseLike` supplies only `then`, so TypeScript rejects `result.catch(...)` and `result.finally(...)`, and `pipe` — the Node streaming entry point — is not on the type at all: `template.render(input).pipe(res)` fails to compile with TS2339 and callers have to cast. `__tests__/render-result.test.ts` carries a local `ServerResult` intersection for exactly this reason, and it should be deleted once the public type is widened. Widening is safe: the DOM build's `render` only throws (`dom/template.ts` line 35), so `RenderedTemplate` is only ever produced by the HTML build. Re-verify: `const r = template.render({}); r.pipe(process.stdout);` in a `.ts` file, then `pnpm run build:types`.
