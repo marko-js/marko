@@ -1,4 +1,4 @@
-// size: 26418 (min) 9835 (brotli)
+// size: 26420 (min) 9814 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -22,7 +22,6 @@ let empty = [],
   decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
-  R = /[^\p{L}\p{N}]/gu,
   parsers = {},
   nextScopeId = 1e6,
   collectingScopes,
@@ -71,13 +70,14 @@ let empty = [],
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
-  cloneCache = {},
   registeredValues = {},
   curRenders,
   branchesEnabled,
   embedRenders,
   readyIds,
   isResuming,
+  cloneCache = {},
+  R = /[^\p{L}\p{N}]/gu,
   inputType = "",
   controllableScripts = {},
   controllableRenders = {},
@@ -130,6 +130,7 @@ let empty = [],
               childScope,
               "a",
               (inputIsArgs ? args[0] : args) || {},
+              controllableRenders[childScope.a.tagName],
             ),
               (childScope.Ia || childScope.Ea) && queueEffect(childScope, dynamicTagScript));
           else {
@@ -378,22 +379,6 @@ function handleDelegated(ev) {
   for (; target;)
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
-}
-function resolveCursorPosition(inputType, initialPosition, initialValue, updatedValue) {
-  if (
-    (initialPosition || initialPosition === 0) &&
-    (initialPosition !== initialValue.length || /kw/.test(inputType))
-  ) {
-    let before = initialValue.slice(0, initialPosition),
-      after = initialValue.slice(initialPosition);
-    if (updatedValue.startsWith(before)) return initialPosition;
-    if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
-    let count = before.replace(R, "").length,
-      pos = 0;
-    for (; count && updatedValue[pos];) updatedValue[pos++].replace(R, "") && count--;
-    return pos;
-  }
-  return -1;
 }
 function parseHTML(html, ns) {
   let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
@@ -678,74 +663,6 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function createBranch($global, renderer, parentScope, parentNode) {
-  let branch = createScope($global);
-  return (
-    (branch._ = renderer.e || parentScope),
-    setParentBranch(branch, parentScope?.F),
-    renderer.b?.(branch, parentNode.namespaceURI),
-    branch
-  );
-}
-function setParentBranch(branch, parentBranch) {
-  (parentBranch &&
-    ((branch.N = parentBranch), (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
-    (branch.F = branch));
-}
-function createAndSetupBranch($global, renderer, parentScope, parentNode) {
-  return setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
-}
-function setupBranch(renderer, branch) {
-  return (renderer.c && queueRender(branch, renderer.c, -1), branch);
-}
-function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
-  ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
-    (setup = setup ? setup._ || setup : void 0),
-    (params ||= void 0));
-  let clone = template
-    ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(template, ns))(branch, walks);
-      }
-    : (branch) => {
-        walk((branch.S = branch.K = new Text()), walks, branch);
-      };
-  return (owner) => ({
-    a: id,
-    b: clone,
-    e: owner,
-    c: setup,
-    d: params,
-    f: dynamicScopesAccessor,
-  });
-}
-function _content_resume(id, template, walks, setup, params, dynamicScopesAccessor) {
-  return _resume(id, _content(id, template, walks, setup, params, dynamicScopesAccessor));
-}
-function _content_closures(renderer, closureFns) {
-  let closureSignals = {};
-  for (let key in closureFns) closureSignals[key] = _const(+key, closureFns[key]);
-  return (owner, closureValues) => {
-    let instance = renderer(owner);
-    return ((instance.g = closureSignals), (instance.h = closureValues), instance);
-  };
-}
-function createCloneableHTML(html, ns) {
-  let { firstChild, lastChild } = parseHTML(html, ns),
-    parent = document.createElementNS(ns, "t");
-  return (
-    insertChildNodes(parent, null, firstChild, lastChild),
-    firstChild === lastChild && firstChild.nodeType < 8
-      ? (branch, walks) => {
-          walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch);
-        }
-      : (branch, walks) => {
-          let clone = parent.cloneNode(!0);
-          (walk(clone.firstChild, walks, branch),
-            (branch.S = clone.firstChild),
-            (branch.K = clone.lastChild));
-        }
-  );
-}
 function enableBranches() {
   branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
 }
@@ -1009,6 +926,272 @@ function _var_resume(id, signal) {
 }
 function _el(id, accessor) {
   return ((accessor = decodeAccessor(accessor)), _resume(id, (scope) => () => scope[accessor]));
+}
+function createBranch($global, renderer, parentScope, parentNode) {
+  let branch = createScope($global);
+  return (
+    (branch._ = renderer.e || parentScope),
+    setParentBranch(branch, parentScope?.F),
+    renderer.b?.(branch, parentNode.namespaceURI),
+    branch
+  );
+}
+function setParentBranch(branch, parentBranch) {
+  (parentBranch &&
+    ((branch.N = parentBranch), (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
+    (branch.F = branch));
+}
+function createAndSetupBranch($global, renderer, parentScope, parentNode) {
+  return setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
+}
+function setupBranch(renderer, branch) {
+  return (renderer.c && queueRender(branch, renderer.c, -1), branch);
+}
+function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
+  ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
+    (setup = setup ? setup._ || setup : void 0),
+    (params ||= void 0));
+  let clone = template
+    ? (branch, ns) => {
+        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(template, ns))(branch, walks);
+      }
+    : (branch) => {
+        walk((branch.S = branch.K = new Text()), walks, branch);
+      };
+  return (owner) => ({
+    a: id,
+    b: clone,
+    e: owner,
+    c: setup,
+    d: params,
+    f: dynamicScopesAccessor,
+  });
+}
+function _content_resume(id, template, walks, setup, params, dynamicScopesAccessor) {
+  return _resume(id, _content(id, template, walks, setup, params, dynamicScopesAccessor));
+}
+function _content_closures(renderer, closureFns) {
+  let closureSignals = {};
+  for (let key in closureFns) closureSignals[key] = _const(+key, closureFns[key]);
+  return (owner, closureValues) => {
+    let instance = renderer(owner);
+    return ((instance.g = closureSignals), (instance.h = closureValues), instance);
+  };
+}
+function createCloneableHTML(html, ns) {
+  let { firstChild, lastChild } = parseHTML(html, ns),
+    parent = document.createElementNS(ns, "t");
+  return (
+    insertChildNodes(parent, null, firstChild, lastChild),
+    firstChild === lastChild && firstChild.nodeType < 8
+      ? (branch, walks) => {
+          walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch);
+        }
+      : (branch, walks) => {
+          let clone = parent.cloneNode(!0);
+          (walk(clone.firstChild, walks, branch),
+            (branch.S = clone.firstChild),
+            (branch.K = clone.lastChild));
+        }
+  );
+}
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
+}
+function _attr(element, name, value) {
+  setAttribute(element, name, normalizeAttrValue(value));
+}
+function setAttribute(element, name, value) {
+  element.getAttribute(name) != value &&
+    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+}
+function _attr_class(element, value) {
+  setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassObject) || void 0);
+}
+function _attr_class_items(element, items) {
+  for (let key in items) _attr_class_item(element, key, items[key]);
+}
+function _attr_class_item(element, name, value) {
+  element.classList.toggle(name, !!value);
+}
+function _attr_style(element, value) {
+  setAttribute(element, "style", toDelimitedString(value, ";", stringifyStyleObject) || void 0);
+}
+function _attr_style_items(element, items) {
+  for (let key in items) _attr_style_item(element, key, items[key]);
+}
+function _attr_style_item(element, name, value) {
+  element.style.setProperty(name, _to_text(value));
+}
+function _style_shell(scope, nodeAccessor) {
+  let element = scope[nodeAccessor],
+    id = _id(scope);
+  (_attr_nonce(scope, nodeAccessor),
+    (element.className = id),
+    _text_content(element, "." + id + "~*{}"));
+}
+function _style_rule_item(element, name, value) {
+  let text = element.textContent,
+    decl = name + ":" + escapeStyleValue(_to_text(value)) + ";",
+    start = text.indexOf("{" + name + ":");
+  (~start || (start = text.indexOf(";" + name + ":")),
+    _text_content(
+      element,
+      ~start
+        ? text.slice(0, ++start) + decl + text.slice(text.indexOf(";", start) + 1)
+        : text.slice(0, -1) + decl + "}",
+    ));
+}
+function _attr_nonce(scope, nodeAccessor) {
+  _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
+}
+function _text(node, value) {
+  let normalizedValue = _to_text(value);
+  node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function _text_content(node, value) {
+  let normalizedValue = _to_text(value);
+  node.textContent !== normalizedValue && (node.textContent = normalizedValue);
+}
+function _attrs(scope, nodeAccessor, nextAttrs, controllable) {
+  let el = scope[nodeAccessor];
+  for (let i = el.attributes.length; i--;) {
+    let { name } = el.attributes.item(i);
+    (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
+      el.removeAttribute(name);
+  }
+  attrsInternal(scope, nodeAccessor, nextAttrs, controllable);
+}
+function _attrs_content(scope, nodeAccessor, nextAttrs, controllable) {
+  (_attrs(scope, nodeAccessor, nextAttrs, controllable),
+    _attr_content(scope, nodeAccessor, nextAttrs?.content));
+}
+function hasAttrAlias(element, attr, nextAttrs) {
+  return attr === "checked" && element.tagName === "INPUT" && "checkedValue" in nextAttrs;
+}
+function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
+  let el = scope[nodeAccessor],
+    partial = {};
+  for (let i = el.attributes.length; i--;) {
+    let { name } = el.attributes.item(i);
+    !skip[name] && !(nextAttrs && name in nextAttrs) && el.removeAttribute(name);
+  }
+  for (let name in nextAttrs) {
+    let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    skip[key] || (partial[key] = nextAttrs[name]);
+  }
+  attrsInternal(scope, nodeAccessor, partial, controllable);
+}
+function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip, controllable) {
+  (_attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable),
+    _attr_content(scope, nodeAccessor, nextAttrs?.content));
+}
+function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
+  let el = scope[nodeAccessor],
+    events = scope["I" + nodeAccessor],
+    skip;
+  for (let name in events) events[name] = 0;
+  controllable &&
+    ((scope["F" + nodeAccessor] = 5),
+    (scope["E" + nodeAccessor] = 0),
+    nextAttrs && (skip = controllable(scope, nodeAccessor, nextAttrs)));
+  for (let name in nextAttrs) {
+    let value = nextAttrs[name];
+    switch (name) {
+      case "class":
+        _attr_class(el, value);
+        break;
+      case "style":
+        _attr_style(el, value);
+        break;
+      default:
+        isEventHandler(name)
+          ? ((events ||= scope["I" + nodeAccessor] = {})[getEventHandlerName(name)] = value)
+          : skip?.test(name) ||
+            (name === "content" && el.tagName !== "META") ||
+            _attr(el, name, value);
+        break;
+    }
+  }
+}
+function _attr_content(scope, nodeAccessor, value) {
+  let content = normalizeClientRender(value);
+  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
+    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
+    content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
+  for (let accessor in content?.g)
+    content.g[accessor](scope["A" + nodeAccessor], content.h[accessor]);
+}
+function _attrs_script(scope, nodeAccessor) {
+  let el = scope[nodeAccessor],
+    events = scope["I" + nodeAccessor];
+  controllableScripts[scope["F" + nodeAccessor]]?.(scope, nodeAccessor);
+  for (let name in events) _on(el, name, events[name]);
+}
+function _html(scope, value, accessor) {
+  let firstChild = scope[accessor],
+    parentNode = firstChild.parentNode,
+    lastChild = scope["H" + accessor] || firstChild,
+    newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
+  (insertChildNodes(
+    parentNode,
+    firstChild,
+    (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
+    (scope["H" + accessor] = newContent.lastChild),
+  ),
+    removeChildNodes(firstChild, lastChild));
+}
+function normalizeClientRender(value) {
+  let renderer = normalizeDynamicRenderer(value);
+  if (renderer && renderer.a) return renderer;
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
+function _lifecycle(scope, thisObj, index = 0) {
+  let accessor = "K" + index,
+    instance = scope[accessor];
+  instance
+    ? (Object.assign(instance, thisObj), instance.onUpdate?.())
+    : ((scope[accessor] = thisObj),
+      Object.assign(thisObj, thisObj.onMount?.()),
+      ($signal(scope, accessor).onabort = () => thisObj.onDestroy?.()));
+}
+function removeChildNodes(startNode, endNode) {
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop;) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
+  }
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+}
+function toInsertNode(startNode, endNode) {
+  if (startNode === endNode) return startNode;
+  let parent = new DocumentFragment(),
+    stop = endNode.nextSibling;
+  for (; startNode !== stop;) {
+    let next = startNode.nextSibling;
+    (parent.appendChild(startNode), (startNode = next));
+  }
+  return parent;
+}
+function resolveCursorPosition(inputType, initialPosition, initialValue, updatedValue) {
+  if (
+    (initialPosition || initialPosition === 0) &&
+    (initialPosition !== initialValue.length || /kw/.test(inputType))
+  ) {
+    let before = initialValue.slice(0, initialPosition),
+      after = initialValue.slice(initialPosition);
+    if (updatedValue.startsWith(before)) return initialPosition;
+    if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
+    let count = before.replace(R, "").length,
+      pos = 0;
+    for (; count && updatedValue[pos];) updatedValue[pos++].replace(R, "") && count--;
+    return pos;
+  }
+  return -1;
 }
 function _attr_input_checked_default(scope, nodeAccessor, checked) {
   let el = scope[nodeAccessor],
@@ -1371,187 +1554,6 @@ function _controllable_open(scope, nodeAccessor, nextAttrs) {
       _attr_details_or_dialog_open(scope, nodeAccessor, nextAttrs.open, nextAttrs.openChange),
       /^open(?:Change)?$/
     );
-}
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
-}
-function _attr(element, name, value) {
-  setAttribute(element, name, normalizeAttrValue(value));
-}
-function setAttribute(element, name, value) {
-  element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
-}
-function _attr_class(element, value) {
-  setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassObject) || void 0);
-}
-function _attr_class_items(element, items) {
-  for (let key in items) _attr_class_item(element, key, items[key]);
-}
-function _attr_class_item(element, name, value) {
-  element.classList.toggle(name, !!value);
-}
-function _attr_style(element, value) {
-  setAttribute(element, "style", toDelimitedString(value, ";", stringifyStyleObject) || void 0);
-}
-function _attr_style_items(element, items) {
-  for (let key in items) _attr_style_item(element, key, items[key]);
-}
-function _attr_style_item(element, name, value) {
-  element.style.setProperty(name, _to_text(value));
-}
-function _style_shell(scope, nodeAccessor) {
-  let element = scope[nodeAccessor],
-    id = _id(scope);
-  (_attr_nonce(scope, nodeAccessor),
-    (element.className = id),
-    _text_content(element, "." + id + "~*{}"));
-}
-function _style_rule_item(element, name, value) {
-  let text = element.textContent,
-    decl = name + ":" + escapeStyleValue(_to_text(value)) + ";",
-    start = text.indexOf("{" + name + ":");
-  (~start || (start = text.indexOf(";" + name + ":")),
-    _text_content(
-      element,
-      ~start
-        ? text.slice(0, ++start) + decl + text.slice(text.indexOf(";", start) + 1)
-        : text.slice(0, -1) + decl + "}",
-    ));
-}
-function _attr_nonce(scope, nodeAccessor) {
-  _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
-}
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
-  node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function _text_content(node, value) {
-  let normalizedValue = _to_text(value);
-  node.textContent !== normalizedValue && (node.textContent = normalizedValue);
-}
-function _attrs(scope, nodeAccessor, nextAttrs, controllable) {
-  let el = scope[nodeAccessor];
-  for (let i = el.attributes.length; i--;) {
-    let { name } = el.attributes.item(i);
-    (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
-      el.removeAttribute(name);
-  }
-  attrsInternal(scope, nodeAccessor, nextAttrs, controllable);
-}
-function _attrs_content(scope, nodeAccessor, nextAttrs, controllable) {
-  (_attrs(scope, nodeAccessor, nextAttrs, controllable),
-    _attr_content(scope, nodeAccessor, nextAttrs?.content));
-}
-function hasAttrAlias(element, attr, nextAttrs) {
-  return attr === "checked" && element.tagName === "INPUT" && "checkedValue" in nextAttrs;
-}
-function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
-  let el = scope[nodeAccessor],
-    partial = {};
-  for (let i = el.attributes.length; i--;) {
-    let { name } = el.attributes.item(i);
-    !skip[name] && !(nextAttrs && name in nextAttrs) && el.removeAttribute(name);
-  }
-  for (let name in nextAttrs) {
-    let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
-    skip[key] || (partial[key] = nextAttrs[name]);
-  }
-  attrsInternal(scope, nodeAccessor, partial, controllable);
-}
-function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip, controllable) {
-  (_attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable),
-    _attr_content(scope, nodeAccessor, nextAttrs?.content));
-}
-function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
-  let el = scope[nodeAccessor],
-    events = scope["I" + nodeAccessor];
-  for (let name in events) events[name] = 0;
-  ((scope["F" + nodeAccessor] = 5), (scope["E" + nodeAccessor] = 0));
-  let skip =
-    nextAttrs &&
-    (controllable || controllableRenders[el.tagName])?.(scope, nodeAccessor, nextAttrs);
-  for (let name in nextAttrs) {
-    let value = nextAttrs[name];
-    switch (name) {
-      case "class":
-        _attr_class(el, value);
-        break;
-      case "style":
-        _attr_style(el, value);
-        break;
-      default:
-        isEventHandler(name)
-          ? ((events ||= scope["I" + nodeAccessor] = {})[getEventHandlerName(name)] = value)
-          : skip?.test(name) ||
-            (name === "content" && el.tagName !== "META") ||
-            _attr(el, name, value);
-        break;
-    }
-  }
-}
-function _attr_content(scope, nodeAccessor, value) {
-  let content = normalizeClientRender(value);
-  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
-    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
-  for (let accessor in content?.g)
-    content.g[accessor](scope["A" + nodeAccessor], content.h[accessor]);
-}
-function _attrs_script(scope, nodeAccessor) {
-  let el = scope[nodeAccessor],
-    events = scope["I" + nodeAccessor];
-  controllableScripts[scope["F" + nodeAccessor]]?.(scope, nodeAccessor);
-  for (let name in events) _on(el, name, events[name]);
-}
-function _html(scope, value, accessor) {
-  let firstChild = scope[accessor],
-    parentNode = firstChild.parentNode,
-    lastChild = scope["H" + accessor] || firstChild,
-    newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
-  (insertChildNodes(
-    parentNode,
-    firstChild,
-    (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
-    (scope["H" + accessor] = newContent.lastChild),
-  ),
-    removeChildNodes(firstChild, lastChild));
-}
-function normalizeClientRender(value) {
-  let renderer = normalizeDynamicRenderer(value);
-  if (renderer && renderer.a) return renderer;
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
-}
-function _lifecycle(scope, thisObj, index = 0) {
-  let accessor = "K" + index,
-    instance = scope[accessor];
-  instance
-    ? (Object.assign(instance, thisObj), instance.onUpdate?.())
-    : ((scope[accessor] = thisObj),
-      Object.assign(thisObj, thisObj.onMount?.()),
-      ($signal(scope, accessor).onabort = () => thisObj.onDestroy?.()));
-}
-function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (startNode.remove(), (startNode = next));
-  }
-}
-function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-}
-function toInsertNode(startNode, endNode) {
-  if (startNode === endNode) return startNode;
-  let parent = new DocumentFragment(),
-    stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (parent.appendChild(startNode), (startNode = next));
-  }
-  return parent;
 }
 function _await_promise(nodeAccessor, params) {
   nodeAccessor = decodeAccessor(nodeAccessor);

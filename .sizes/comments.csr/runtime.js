@@ -1,4 +1,4 @@
-// size: 6430 (min) 2833 (brotli)
+// size: 6429 (min) 2826 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -48,9 +48,9 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
-  cloneCache = {},
   registeredValues = {},
   branchesEnabled,
+  cloneCache = {},
   _for_of = /* @__PURE__ */ loop(([all, by = bySecondArg], cb) => {
     typeof by == "string"
       ? forOf(all, (item, i) => cb(item[by], [item, i]))
@@ -195,6 +195,12 @@ function _script(id, fn) {
 function walk(startNode, walkCodes, branch) {
   ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
+function enableBranches() {
+  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+}
+function _resume(id, obj) {
+  return (registeredValues[id] = obj);
+}
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);
   return (
@@ -251,12 +257,6 @@ function createCloneableHTML(html, ns) {
             (branch.K = clone.lastChild));
         }
   );
-}
-function enableBranches() {
-  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
 }
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";

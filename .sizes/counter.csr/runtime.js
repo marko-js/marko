@@ -1,4 +1,4 @@
-// size: 3904 (min) 1735 (brotli)
+// size: 3904 (min) 1733 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -48,8 +48,8 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
-  cloneCache = {},
   registeredValues = {},
+  cloneCache = {},
   rendering,
   runId = 2,
   pendingEffects = [],
@@ -133,6 +133,9 @@ function _script(id, fn) {
 function walk(startNode, walkCodes, branch) {
   ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
+function _resume(id, obj) {
+  return (registeredValues[id] = obj);
+}
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);
   return (
@@ -183,9 +186,6 @@ function createCloneableHTML(html, ns) {
             (branch.K = clone.lastChild));
         }
   );
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
 }
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
