@@ -918,6 +918,7 @@ function applyAttrObject(
   }
 
   if (isAttributeTag(tag)) {
+    translatedProps = t.objectExpression(translatedAttrs.properties);
     const attrTagName = getTagName(tag);
     const parentTag = tag.parentPath as t.NodePath<t.MarkoTag>;
     const repeated = analyzeAttributeTags(parentTag)?.[attrTagName]?.repeated;
@@ -977,7 +978,9 @@ function translateAttrTag(
   statements: t.Statement[],
 ) {
   const translatedAttrs = translateAttrs(tag, true, undefined, statements);
-  let translatedProps = propsToExpression(translatedAttrs.properties);
+  let translatedProps: t.Expression = t.objectExpression(
+    translatedAttrs.properties,
+  );
   const attrTagName = getTagName(tag);
   const parentTag = tag.parentPath as t.NodePath<t.MarkoTag>;
 

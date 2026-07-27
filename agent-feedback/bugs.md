@@ -122,37 +122,6 @@ attributes, which is about type-check messaging for `onKeydown` vs `onKeyDown`.
 Re-verify: compile `<div onX() { console.log(1) }>hi</div>` — it fails today;
 `<div on-x() { … }>` and `<div onXy() { … }>` both succeed.
 
-## Stop `attrTag`/`attrTags` from mutating a user object when an attribute tag's attrs are a lone spread
-
-`packages/runtime-tags/src/common/attr-tag.ts` › `attrTag` | 2026-07-23 | impact:high | effort:med
-
-`attrTag(attrs)` mutates its argument in place (`attrs[Symbol.iterator] =
-attrTagIterator; attrs[rest] = empty`), and `attrTags` then writes sibling attr
-tags into `first[rest]`. That is safe only while the argument is a
-compiler-built object literal — but `propsToExpression`
-(`packages/runtime-tags/src/translator/util/translate-attrs.ts`) returns the
-spread argument itself when the property list is a single `SpreadElement`, so
-`<@item ...obj/>` compiles to `attrTag(obj)` on the user's own binding.
-Consequences on a plain `<let>`/`input` object: it silently gains
-`Symbol.iterator` plus the internal `Symbol(Attribute Tag)` (both copied by
-`{...obj}`), `[...obj]` starts yielding the object and its attr-tag siblings,
-`Object.freeze`d objects throw `TypeError: Cannot add property
-Symbol(Symbol.iterator), object is not extensible` at render, and the HTML
-serializer's `writeMaybeIterableProps` switches the object to its iterable form,
-dragging an unrelated sibling attr tag's data into the resume payload. The
-`<for|row| of=input.rows><my-tag><@item ...row/></my-tag></for>` shape mutates
-every row of the caller's data. Fix at the translator: give the four
-`attrTag`/`attrTags` call sites (`translate-attrs.ts` ~105/113/208/221 and
-`packages/runtime-tags/src/translator/util/known-tag.ts` ~940/947/999/1006) a
-variant of `propsToExpression` that always emits `t.objectExpression(props)`, so
-the runtime always receives a fresh object; `propsToExpression`'s unwrapping
-stays correct for ordinary tag input. No fixture covers a lone-spread attribute
-tag today (`grep -rn '<@' packages/runtime-tags/src/__tests__/fixtures
---include=template.marko | grep '\.\.\.'` returns nothing), so add one.
-Re-verify: compile `<let/obj={label:'a'}/><my-tag><@item ...obj/></my-tag>` and
-confirm the output contains `_attrTag($scope.obj)` rather than
-`_attrTag({...})`.
-
 ## Validate (or coerce) `from`/`step` in `forTo`/`forUntil`; a string `from` silently produces concatenated indices
 
 `packages/runtime-tags/src/common/for.ts` › `forTo` | 2026-07-23 | impact:med | effort:low

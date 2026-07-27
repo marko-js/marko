@@ -102,7 +102,7 @@ export function translateAttrs(
               prevProp.value = callRuntime(
                 "attrTags",
                 prevProp.value as t.Expression,
-                propsToExpression(translatedAttrTag.properties),
+                t.objectExpression(translatedAttrTag.properties),
               );
             } else {
               contentProperties.push(
@@ -110,7 +110,7 @@ export function translateAttrs(
                   attrTagMeta.name,
                   callRuntime(
                     "attrTag",
-                    propsToExpression(translatedAttrTag.properties),
+                    t.objectExpression(translatedAttrTag.properties),
                   ),
                 ),
               );
@@ -205,7 +205,7 @@ export function addDynamicAttrTagStatements(
                 callRuntime(
                   "attrTags",
                   getAttrTagIdentifier(attrTagMeta),
-                  propsToExpression(translatedAttrTag.properties),
+                  t.objectExpression(translatedAttrTag.properties),
                 ),
               ),
             ),
@@ -218,7 +218,7 @@ export function addDynamicAttrTagStatements(
                 getAttrTagIdentifier(attrTagMeta),
                 callRuntime(
                   "attrTag",
-                  propsToExpression(translatedAttrTag.properties),
+                  t.objectExpression(translatedAttrTag.properties),
                 ),
               ),
             ),
@@ -254,6 +254,8 @@ export function addDynamicAttrTagStatements(
   return index;
 }
 
+/** Unwraps a lone spread to the spread argument itself, so the result may alias
+ * a caller binding; anything the runtime writes to needs its own object. */
 export function propsToExpression(
   props: t.ObjectExpression["properties"],
 ): t.Expression {
