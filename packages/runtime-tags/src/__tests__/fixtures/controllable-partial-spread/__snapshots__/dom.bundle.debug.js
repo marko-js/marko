@@ -26,7 +26,7 @@ const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	_attrs_partial($scope, "#input/3", $scope.rest, {
 		value: 1,
 		valueChange: 1
-	}, _controllable_input);
+	});
 	$v__OR__rest($scope);
 	$rest__script($scope);
 });

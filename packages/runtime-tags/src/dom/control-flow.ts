@@ -18,6 +18,7 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
+import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   _enable_catch,
@@ -578,21 +579,17 @@ export let _dynamic_tag = function dynamicTag(
       const childScope = scope[childScopeAccessor] as Scope;
       const args = getInput?.();
       if (typeof normalizedRenderer === "string") {
+        const nodeAccessor = MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a";
         (getContent ? _attrs : _attrs_content)(
           childScope,
-          MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a",
+          nodeAccessor,
           (inputIsArgs ? args[0] : args) || {},
+          controllableRenders[(childScope[nodeAccessor] as Element).tagName],
         );
 
         if (
-          childScope[
-            AccessorPrefix.EventAttributes +
-              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
-          ] ||
-          childScope[
-            AccessorPrefix.ControlledHandler +
-              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
-          ]
+          childScope[AccessorPrefix.EventAttributes + nodeAccessor] ||
+          childScope[AccessorPrefix.ControlledHandler + nodeAccessor]
         ) {
           queueEffect(childScope, dynamicTagScript);
         }

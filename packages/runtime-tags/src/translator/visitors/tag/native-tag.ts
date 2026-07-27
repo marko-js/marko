@@ -931,7 +931,8 @@ export default {
           const staticName = name.isStringLiteral()
             ? name.node.value
             : undefined;
-          const controllable = controllableClaimFor(staticName);
+          const controllable =
+            !staticControllable && controllableClaimFor(staticName);
           if (skipExpression) {
             addStatement(
               "render",
@@ -1843,8 +1844,9 @@ function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));
 }
 
-/** How a statically named tag claims its controlled attrs during render;
- * nothing for the many tags that control nothing. */
+/** How a spread claims its controlled attrs during render; nothing for the many
+ * tags that control nothing, and nothing when a static attr owns the
+ * controllable, since then the spread must leave the slots it wrote alone. */
 export function controllableClaimFor(tagName: string | undefined) {
   switch (tagName) {
     case "input":

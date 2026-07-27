@@ -24,11 +24,7 @@ import {
 } from "../common/types";
 import { $signal } from "./abort-signal";
 import { setConditionalRenderer } from "./control-flow";
-import {
-  type ControllableAttrs,
-  controllableRenders,
-  controllableScripts,
-} from "./controllable";
+import { type ControllableAttrs, controllableScripts } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
@@ -256,18 +252,17 @@ function attrsInternal(
   let events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as
     | undefined
     | Record<string, unknown>;
+  let skip: RegExp | void = undefined;
   for (const name in events) events[name] = 0;
-  scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
-  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = 0;
-  // A lone `null`/`undefined`/`false` spread reaches here unwrapped, and has no
-  // controlled attrs to claim; the attr loop below is a no-op on it.
-  const skip =
-    nextAttrs &&
-    (controllable || controllableRenders[el.tagName])?.(
-      scope,
-      nodeAccessor,
-      nextAttrs,
-    );
+  // Only a spread that claims the element's controllable may release it; one
+  // owned by a static attr is installed by a signal that does not re-run here.
+  if (controllable) {
+    scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
+    scope[AccessorPrefix.ControlledHandler + nodeAccessor] = 0;
+    // A lone `null`/`undefined`/`false` spread reaches here unwrapped, and has
+    // no controlled attrs to claim; the attr loop below is a no-op on it.
+    if (nextAttrs) skip = controllable(scope, nodeAccessor, nextAttrs);
+  }
 
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {

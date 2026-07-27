@@ -301,30 +301,6 @@ still reaches the options). Re-verify: server-render
 value=a>A${n}</option><option value=b>B</option></>` for `tag="div"` and
 `tag="select"` and diff the payloads.
 
-## Stop `attrsInternal` from clearing controlled slots the spread does not own
-
-`packages/runtime-tags/src/dom/dom.ts` › `attrsInternal` | 2026-07-23 | impact:high | effort:low
-
-`attrsInternal` unconditionally resets `scope[AccessorPrefix.ControlledType +
-nodeAccessor] = ControlledType.None` and `scope[AccessorPrefix.ControlledHandler
-
-- nodeAccessor] = 0`(dom.ts:264-265) before its tag switch, on the assumption
-that the spread owns the element's controllable. That is false for`_attrs_partial`(dom.ts:215): it filters every name present in`skip`out of`partial`, so when the controllable is declared as a static attribute alongside
-a spread (`<input ...rest value:=v/>`, which compiles to `_attrs_partial($scope,
-"#input/3", $scope.rest, { value: 1, valueChange: 1 })`), the switch never
-re-installs the handler and the reset wins. `_attr_input_value_script`/`_attr_input_checked*_script`/`_attr_select_value_script`in`dom/controllable.ts`all read the handler lazily out of that slot at
-interaction time, so the two-way binding is silently dead: typing into the input
-never calls`valueChange`, the state never updates, and the element is left
-holding the un-reverted user value. It fires on every CSR mount whose spread
-signal is ordered after the controllable's signal, and after any client re-run
-of the spread signal following SSR resume; the binding only revives if the
-controllable's own signal happens to re-run. The HTML runtime's `_attrs`never
-clears these slots, so this is a DOM-only asymmetry. Fix by giving`attrsInternal`a way to know the controllable is skipped (e.g.`_attrs_partial`suppressing the reset when the tag's controllable props appear in`skip`, or
-passing `skip`through). Re-verify: in`src/**tests**/fixtures/controllable-partial-spread`, add `<span>${v}</span>` to
-`template.marko` and change `config.steps` to `[{}, typeBound]` (dropping the
-`click` step, which currently masks the bug by re-running `$v`and reinstalling
-the handler) —`v`stays`"a"`while the input shows`"typed"`.
-
 ## Apply the `hasAttrAlias` guard in `_attrs_partial` so a `checkedValue` spread stops unchecking the box
 
 `packages/runtime-tags/src/dom/dom.ts` › `_attrs_partial` | 2026-07-23 | impact:med | effort:low
