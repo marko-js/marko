@@ -1,0 +1,7 @@
+{
+  "<info>": {
+    "open-tag-only": true,
+    "description": "Documented for tooling only.",
+    "deprecated": "Use <details> instead."
+  }
+}

@@ -101,44 +101,6 @@ class TagLoader {
     propertyHandlers(tagProps, this, this.dependencyChain.toString());
   }
 
-  _handleVar(value, dependencyChain) {
-    var tag = this.tag;
-
-    var nestedVariable;
-
-    if (typeof value === "string") {
-      nestedVariable = {
-        name: value,
-      };
-    } else {
-      nestedVariable = {};
-
-      propertyHandlers(
-        value,
-        {
-          name: function (value) {
-            nestedVariable.name = value;
-          },
-
-          nameFromAttribute: function (value) {
-            nestedVariable.nameFromAttribute = value;
-          },
-        },
-        dependencyChain.toString(),
-      );
-
-      if (!nestedVariable.name && !nestedVariable.nameFromAttribute) {
-        throw new Error(
-          'The "name" or "name-from-attribute" attribute is required for a nested variable (' +
-            dependencyChain +
-            ")",
-        );
-      }
-    }
-
-    tag.addNestedVariable(nestedVariable);
-  }
-
   /**
    * This is handler is for any properties that didn't match
    * one of the default property handlers. This is used to
