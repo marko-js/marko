@@ -673,32 +673,20 @@ onClick(){a++;b++;a_b++}>x</button><script>{console.log(a,b)}</script><script>{c
 with `npm run compile -- -o dom` and observe two `_script("<same hash>", …)`
 registrations.
 
-## Lower `||=` / `&&=` / `??=` on a tag variable — they crash the DOM translator with an internal Babel error
+## Apply `ToNumeric` when lowering `++`/`--` on a tag variable
 
-`packages/runtime-tags/src/translator/util/signals.ts` › `replaceAssignedNode` | 2026-07-23 | impact:med | effort:low
+`packages/runtime-tags/src/translator/util/signals.ts` › `replaceAssignedNode` | 2026-07-27 | impact:med | effort:med
 
-In `replaceAssignedNode`'s `AssignmentExpression` → `Identifier` case, a
-compound assignment is lowered with `t.binaryExpression(node.operator.slice(0,
--1) as t.BinaryExpression["operator"], …)` (signals.ts ~:1564). For the logical
-assignment operators the sliced operator is `||`, `&&` or `??`, which are
-`LogicalExpression` operators, not binary ones — the `as` cast hides this from
-TypeScript and Babel's validator throws `Property operator expected value to be
-one of ["+","-",…] but got "||"` with no code frame, from inside `writeSignals`
-→ `traverseReplace`. So `<let/x=1/><button onClick(){ x ||= 5 }>` is a hard
-build failure for any Marko 6 app: `-o html` compiles fine (the handler body is
-registered, not serialized) and only `-o dom` dies, so the error surfaces as an
-opaque internal TypeError rather than a source-level diagnostic. Fix by emitting
-`t.logicalExpression` for `||`/`&&`/`??` (and ideally preserving short-circuit
-assignment semantics — the current shape would call the setter unconditionally,
-which matters for a `<let>` with `valueChange`, whose `_let_change` invokes the
-parent's change handler on every call). Separately, the `UpdateExpression` case
-just above lowers `x++` to `$x(scope, scope.x + 1) - 1`, which is `x = x + 1`
-rather than JS's `ToNumeric(x) + 1`: for `<let/x="5"/>` an `x++` sets `x` to
-`"51"` and yields `50` instead of setting `6` and yielding `5`, and for a bigint
-`<let>` it throws "Cannot mix BigInt and other types". Re-verify: `npm run
-compile -- -o dom -d f.marko` on `<let/x=1/><button onClick(){ x ??= 5
-}>x</button>${x}` throws the Babel operator TypeError; the same file with `x +=
-5` compiles.
+The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix
+subtracting 1 from the result), which is `x = x + 1` rather than JS's
+`x = ToNumeric(x) + 1`. For `<let/x="5"/>` an `x++` therefore sets `x` to `"51"`
+and yields `50`, instead of setting `6` and yielding `5`. A `<let>` holding a
+bigint is worse: `1n + 1` throws `Cannot mix BigInt and other types`. Writing
+the read as `+scope.x` fixes the string case but breaks bigint, since unary plus
+throws on one, so the lowering needs a form that coerces the way `ToNumeric`
+does — or the operators need rejecting on a tag variable whose type is not
+known numeric. Re-verify: compile `<let/x="5"/><button onClick(){ x++ }>${x}</button>`
+with `-o dom`; the handler emits `$x($scope, $scope.x + 1)`.
 
 ## Lower (or reject) `for (x of …)` / `for (x in …)` writes to a tag variable — they bypass the signal
 
