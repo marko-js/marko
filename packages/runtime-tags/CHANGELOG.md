@@ -1,5 +1,21 @@
 # @marko/runtime-tags
 
+## 6.3.25
+
+### Patch Changes
+
+- [#3622](https://github.com/marko-js/marko/pull/3622) [`5df8639`](https://github.com/marko-js/marko/commit/5df86396b96a329c68948db09274505f84f50fa0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Only ship the controllable handling a page can actually use, instead of every kind on any page with a spread attribute.
+
+- [#3613](https://github.com/marko-js/marko/pull/3613) [`e91e6a1`](https://github.com/marko-js/marko/commit/e91e6a1d0a2af4190da39e88c7f74fa98757ed08) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Attach a controlled `<select>`/`<details>`/`<dialog>`'s MutationObserver once per element. Reached through spread attributes, the setup script re-runs on every render and attached a new observer each time with no disconnect, so they accumulated for the life of the page and all fired for the same mutation.
+
+- [#3611](https://github.com/marko-js/marko/pull/3611) [`dd3de49`](https://github.com/marko-js/marko/commit/dd3de49f79e97c7fa530dc6545c80a9733a3d93c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop treating `x ?? default` and `x || default` as possibly-nullish. The left operand can only be the result when it is non-nullish (`??`) or truthy (`||`), so the common default idiom `<const/opts = input.opts ?? { … }/>` no longer compiles every member read to an optional chain plus a runtime nullish check. `&&`/`&&=` keep the wider check, since their left operand can be the result.
+
+- [#3615](https://github.com/marko-js/marko/pull/3615) [`197ebe0`](https://github.com/marko-js/marko/commit/197ebe0ae2ee50f2f752e57e409a4b8964936539) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop shipping trailing walk exit codes on content and branch renderers. `_content` strips them before walking, so they were only ever bytes on the wire — 29 walks in the test fixtures drop out entirely.
+
+- [#3617](https://github.com/marko-js/marko/pull/3617) [`b7b758a`](https://github.com/marko-js/marko/commit/b7b758afce62a3d6262106138b65c7b5f10329da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Dismiss a `<try>`'s `@placeholder` when the branch holding a pending `<await>` is destroyed. The resolve handler completed the await counter from inside a queued render, which is dropped once the branch is gone, so the boundary stayed on its placeholder for the life of the page.
+
+- [#3614](https://github.com/marko-js/marko/pull/3614) [`82b66ab`](https://github.com/marko-js/marko/commit/82b66aba37dc6edac157e3b1543108e4a5df6474) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use the whole `next` walk-code range. Codes 87-91 were reserved for it but never emitted, so a run of 20-24 nodes spent a redundant multiplier character (and 200-249 spent two).
+
 ## 6.3.24
 
 ### Patch Changes
