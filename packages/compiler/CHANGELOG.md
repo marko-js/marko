@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.41.10
+
+### Patch Changes
+
+- [#3648](https://github.com/marko-js/marko/pull/3648) [`ded2fd5`](https://github.com/marko-js/marko/commit/ded2fd5c466dfbdf4191793638434dd99d403365) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move a comment that directly precedes an `@attributeTag` into the attribute tags with it, rather than leaving it behind in the body.
+
+- [#3642](https://github.com/marko-js/marko/pull/3642) [`3e29e2c`](https://github.com/marko-js/marko/commit/3e29e2c057d0dad921fb69a9315a74d85dd452a1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An object literal holding a method or accessor is no longer treated as a compile-time constant, a computed `__proto__` key stays an own property, and mixing a BigInt with a number no longer throws.
+
 ## 5.41.9
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.30
+
+### Patch Changes
+
+- [#3637](https://github.com/marko-js/marko/pull/3637) [`fe76065`](https://github.com/marko-js/marko/commit/fe7606506313f10dd9b366f38ef1cb6a70429379) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop a Class-API component rendered at both an inert and an updating call site from inheriting the first call site's `"preserve"` boundary mode, which left the updating one serialized as a component that never re-renders in the browser.
+
+- Updated dependencies [[`ded2fd5`](https://github.com/marko-js/marko/commit/ded2fd5c466dfbdf4191793638434dd99d403365), [`7a4306b`](https://github.com/marko-js/marko/commit/7a4306bb81920963018e75350852466d368c5b43), [`fe76065`](https://github.com/marko-js/marko/commit/fe7606506313f10dd9b366f38ef1cb6a70429379), [`3e29e2c`](https://github.com/marko-js/marko/commit/3e29e2c057d0dad921fb69a9315a74d85dd452a1), [`5e7e830`](https://github.com/marko-js/marko/commit/5e7e830aa1f77f214b437047c5ae611be5d1cfe8), [`9512e6d`](https://github.com/marko-js/marko/commit/9512e6de8571150d4ab40011f5bd8974a3fab5a1), [`66c377d`](https://github.com/marko-js/marko/commit/66c377d9c85ebecc6fb40135ae270caa06e448dc), [`d69a01b`](https://github.com/marko-js/marko/commit/d69a01bd018fc9718d39d871e52b200e0c0f34f9), [`bbeb2b4`](https://github.com/marko-js/marko/commit/bbeb2b4494bb752c4e8d683051fcf4456ef56c58), [`cab904b`](https://github.com/marko-js/marko/commit/cab904bbf925764976fb7ee9beceb01e34ea9eab), [`75de395`](https://github.com/marko-js/marko/commit/75de395a90106ad0a4361cc870a11f70c99951ab), [`c55d6cf`](https://github.com/marko-js/marko/commit/c55d6cf6511475af7288b58601b26e8915e711cf), [`7a20a61`](https://github.com/marko-js/marko/commit/7a20a618d2d82e9f1a5fa6ce3a592f0cec633f71), [`a6acdde`](https://github.com/marko-js/marko/commit/a6acdde91732964d37f9a71e7418fd65f81357bd)]:
+  - @marko/compiler@5.41.10
+  - @marko/runtime-tags@6.3.26
+
 ## 5.39.29
 
 ### Patch Changes
