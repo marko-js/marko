@@ -56,6 +56,7 @@ describe("serializer", () => {
     describe("string", () => {
       it("empty", () => assertStringify("", `""`));
       it("normal", () => assertStringify("test", `"test"`));
+      it("backslash", () => assertStringify("a\\b", `"a\\\\b"`));
       it("long strings deduped", () => {
         const long = "1234567890123";
         assertStringify({ a: long, b: long }, `{a:_.a="${long}",b:_.a}`);
@@ -405,6 +406,10 @@ describe("serializer", () => {
         JSON.parse('{"__proto__":{"x":1}}'),
         `{["__proto__"]:{x:1}}`,
       ));
+    it("empty key", () => assertStringify({ "": 1 }, `{"":1}`));
+    // Bare only for a canonical array index, so a leading zero stays quoted.
+    it("leading-zero numeric key", () =>
+      assertStringify({ "01": 1 }, `{"01":1}`));
     it("circular", () => {
       const obj: any = { a: 1 };
       obj.obj = obj;
@@ -978,6 +983,11 @@ describe("serializer", () => {
     it("Segmenter", () =>
       roundTrips(new Intl.Segmenter("en", { granularity: "word" }), (s) =>
         [...s.segment("hi there")].map((x) => x.segment).join("|"),
+      ));
+
+    it("DurationFormat", () =>
+      roundTrips(new Intl.DurationFormat("en", { style: "long" }), (f) =>
+        f.format({ hours: 1, minutes: 2 }),
       ));
 
     it("a long option string reused elsewhere resumes", () => {
