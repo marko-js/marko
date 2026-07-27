@@ -10,6 +10,7 @@ const [major, minor] = process.version
   .split(".")
   .map((v) => parseInt(v));
 const hasTemporal = "Temporal" in globalThis;
+const hasDurationFormat = "DurationFormat" in Intl;
 const shouldTestRequestAndResponse =
   major > 24 || (major === 24 && minor >= 14);
 
@@ -985,10 +986,11 @@ describe("serializer", () => {
         [...s.segment("hi there")].map((x) => x.segment).join("|"),
       ));
 
-    it("DurationFormat", () =>
-      roundTrips(new Intl.DurationFormat("en", { style: "long" }), (f) =>
-        f.format({ hours: 1, minutes: 2 }),
-      ));
+    hasDurationFormat &&
+      it("DurationFormat", () =>
+        roundTrips(new Intl.DurationFormat("en", { style: "long" }), (f) =>
+          f.format({ hours: 1, minutes: 2 }),
+        ));
 
     it("a long option string reused elsewhere resumes", () => {
       // The options object is temporary, so any reference recorded against it
