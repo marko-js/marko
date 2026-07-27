@@ -1,5 +1,36 @@
 # @marko/runtime-tags
 
+## 6.3.26
+
+### Patch Changes
+
+- [#3635](https://github.com/marko-js/marko/pull/3635) [`7a4306b`](https://github.com/marko-js/marko/commit/7a4306bb81920963018e75350852466d368c5b43) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop an attribute tag whose attributes are a lone spread (`<@item ...obj/>`) from mutating the spread object itself, which added `Symbol.iterator` and an internal symbol to the caller's own data and threw on a frozen object.
+
+- [#3637](https://github.com/marko-js/marko/pull/3637) [`fe76065`](https://github.com/marko-js/marko/commit/fe7606506313f10dd9b366f38ef1cb6a70429379) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop a Class-API component rendered at both an inert and an updating call site from inheriting the first call site's `"preserve"` boundary mode, which left the updating one serialized as a component that never re-renders in the browser.
+
+- [#3646](https://github.com/marko-js/marko/pull/3646) [`5e7e830`](https://github.com/marko-js/marko/commit/5e7e830aa1f77f214b437047c5ae611be5d1cfe8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a DOM compile of a template containing a `<define>` with body content whose tag variable is never referenced failing with `Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it.`
+
+- [#3626](https://github.com/marko-js/marko/pull/3626) [`9512e6d`](https://github.com/marko-js/marko/commit/9512e6de8571150d4ab40011f5bd8974a3fab5a1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Run `<lifecycle>` `onDestroy` and abort in-flight `$signal` requests when a scope is destroyed outside a render, such as from a mounted template's `destroy()`.
+
+- [#3639](https://github.com/marko-js/marko/pull/3639) [`66c377d`](https://github.com/marko-js/marko/commit/66c377d9c85ebecc6fb40135ae270caa06e448dc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a compile error when an `<import>`/`<export>` line holds more than one statement. Every statement after the first was silently discarded, leaving the template referencing an undefined binding at render.
+
+- [#3627](https://github.com/marko-js/marko/pull/3627) [`d69a01b`](https://github.com/marko-js/marko/commit/d69a01bd018fc9718d39d871e52b200e0c0f34f9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `TypeError: Cannot read properties of undefined (reading 'default')` when compiling a template containing `<attrs>` or `<effect>` through `marko/translator`, whose taglib merge dropped the array-form `migrate` hooks those tags declare.
+
+- [#3631](https://github.com/marko-js/marko/pull/3631) [`bbeb2b4`](https://github.com/marko-js/marko/commit/bbeb2b4494bb752c4e8d683051fcf4456ef56c58) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Detect `<attrs>` and `<effect>` as Tags-API markers, so a template whose only Marko 6 signal is one of them is no longer translated as Class API, where the tag is not defined.
+
+- [#3641](https://github.com/marko-js/marko/pull/3641) [`cab904b`](https://github.com/marko-js/marko/commit/cab904bbf925764976fb7ee9beceb01e34ea9eab) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `x ||= …`, `x &&= …` and `x ??= …` on a tag variable crashing the DOM compile with an internal Babel error, and skip the assignment entirely when the operator short circuits.
+
+- [#3647](https://github.com/marko-js/marko/pull/3647) [`75de395`](https://github.com/marko-js/marko/commit/75de395a90106ad0a4361cc870a11f70c99951ab) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop `$global` from the input a mounted template's `update` forwards, matching `mount`. A template that spreads its input previously threw `Invalid attribute name: "$global"` on update, since the branch's global is fixed at mount and the property was passed through as an ordinary one.
+
+- [#3634](https://github.com/marko-js/marko/pull/3634) [`c55d6cf`](https://github.com/marko-js/marko/commit/c55d6cf6511475af7288b58601b26e8915e711cf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `SyntaxError` in the resume payload when a serialized generator returns one of its own ancestors, which emitted an assignment with no property to assign to and broke the whole page's resume.
+
+- [#3603](https://github.com/marko-js/marko/pull/3603) [`7a20a61`](https://github.com/marko-js/marko/commit/7a20a618d2d82e9f1a5fa6ce3a592f0cec633f71) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep two-way bindings alive when a controllable is declared as a static attribute next to a spread, both at client-render mount and whenever the spread re-runs.
+
+- [#3644](https://github.com/marko-js/marko/pull/3644) [`a6acdde`](https://github.com/marko-js/marko/commit/a6acdde91732964d37f9a71e7418fd65f81357bd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep a `<textarea>` value's leading newline through an SSR render. The HTML parser discards one newline directly after the start tag, so the first line of the value was silently dropped on the server while the client kept it.
+
+- Updated dependencies [[`ded2fd5`](https://github.com/marko-js/marko/commit/ded2fd5c466dfbdf4191793638434dd99d403365), [`3e29e2c`](https://github.com/marko-js/marko/commit/3e29e2c057d0dad921fb69a9315a74d85dd452a1)]:
+  - @marko/compiler@5.41.10
+
 ## 6.3.25
 
 ### Patch Changes
