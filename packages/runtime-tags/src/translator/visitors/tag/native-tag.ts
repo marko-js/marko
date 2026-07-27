@@ -390,8 +390,6 @@ export default {
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
 
-        write`<${tagName}`;
-
         const usedAttrs = getUsedAttrs(tagName, tag.node);
         const {
           staticAttrs,
@@ -401,6 +399,14 @@ export default {
           injectNonce,
         } = usedAttrs;
         let { spreadExpression } = usedAttrs;
+
+        // A controlled `<select>` moves the whole pending buffer into its
+        // content arrow at exit, so earlier siblings have to leave it first.
+        if (tagName === "select" && (staticControllable || spreadExpression)) {
+          writer.flushBefore(tag);
+        }
+
+        write`<${tagName}`;
 
         if (injectNonce) {
           write`${callRuntime("_attr_nonce")}`;
