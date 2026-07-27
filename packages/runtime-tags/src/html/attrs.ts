@@ -131,7 +131,10 @@ export function _attr_textarea_value(
 // A textarea renders its value as text content, but coerces it like the `value=`
 // attribute (and like `<input>`/the client) so SSR and CSR agree on non-strings.
 export function _textarea_value(value: unknown) {
-  return _escape(normalizeStrAttrValue(value));
+  const escaped = _escape(normalizeStrAttrValue(value));
+  // The tokenizer drops one newline directly after the start tag, so a value
+  // beginning with one needs a second to survive the round trip.
+  return escaped[0] === "\n" || escaped[0] === "\r" ? "\n" + escaped : escaped;
 }
 
 export function _attr_input_value(
