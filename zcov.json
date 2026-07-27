@@ -1,0 +1,5 @@
+{
+  "reporter": ["text-summary", "lcov"],
+  "include": ["packages/*/src/**"],
+  "exclude": ["**/*.d.marko", "**/html/reorder-runtime.ts"]
+}

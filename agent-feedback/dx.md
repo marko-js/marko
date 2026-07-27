@@ -26,28 +26,14 @@ global console), corrupting `writes.html`/log snapshots. If someone wants the
 ~10-20% win, scope the console capture (or buffer build diagnostics) first,
 then pipeline builds one fixture ahead gated on `MARKO_TEST_SLOTS`.
 
-On the CI (`@ci:test`) shape specifically, measured on a 4-core runner clone:
-~81s tests + ~15s c8/V8 coverage collection on the workers + ~12s cold
-`@babel/register` cache (fresh checkouts never hit the mtime-keyed cache, so
-caching `node_modules/.cache` in CI is pointless) + ~65s single-threaded `c8
-report`. The report profile: ~36% istanbul report generation, ~19% GC (fixed:
-`--max-semi-space-size=128` cuts the step to ~56s), ~11% v8-to-istanbul remap
-over 182MB of dumps — `--reporter=lcovonly` and `--merge-async` measured
-neutral, and dropping `excludeAfterRemap`/`all` would corrupt the numbers
-(runtime coverage arrives via fixture-bundle sourcemaps; see `.c8rc.json`).
-Two unexplored wins: remap+report each worker's dumps in parallel processes
-and merge the istanbul JSON at the end (the ~50s remap work splits cleanly
-per dump); prewarm the babel cache with one serial require pass in
-`scripts/test-parallel.js` before spawning workers on a cold cache (~6s net,
-needs a hardcoded heavy-module list that can rot).
-
-**Both profiles above predate the drop of `@babel/register` and must be
-re-measured before anyone acts on them.** Node now strips types natively, so
-the ~13% `@babel/register` TS transform, the ~12s cold-cache penalty on fresh
-CI checkouts, and the babel-cache prewarm suggestion no longer describe
-anything that exists. The parallel-remap win was since implemented in
-`scripts/coverage-report.js`. Whether the run is still CPU-bound — the entry's
-actual conclusion — is untested against the current tooling.
+**The profile above predates the drop of `@babel/register` and must be
+re-measured before anyone acts on it.** Node now strips types natively, so the
+~13% `@babel/register` TS transform and the cold-cache penalty on fresh CI
+checkouts no longer describe anything that exists. Coverage is no longer a
+factor either: the report is a native `zcov` pass of a few seconds rather than
+the ~65s single-threaded `c8 report` this entry was originally written against.
+Whether the run is still CPU-bound — the entry's actual conclusion — is
+untested against the current tooling.
 
 ## Emit a compile-time diagnostic when an unenclosed `>`/`>=` truncates an attribute-value expression
 
@@ -540,20 +526,6 @@ run compile -- -o dom -d /tmp/x.marko` → ENOENT on `-o`, while `pnpm run compi
 `packages/runtime-tags/src/html/serializer.ts` › `writeUnknownObject` | 2026-07-24 | impact:low | effort:low
 
 Boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) fall through the constructor dispatch to `throwUnserializable` and resume as nothing. This is a one-case addition with an obvious constructor form (`Object(value)`). `DataView`, previously recorded alongside them, was serialized in #3571 and is done. Re-verify: pass `Object(1)` through `Serializer#stringifyScopes` and observe the value is omitted from the payload, against `new URL("https://a.b")` as a supported control.
-
-## Coverage modernization: c8 numbers are inflated, but a monocart switch needs a dedicated PR
-
-`scripts/coverage-report.js` | 2026-07-23 | impact:high | effort:high
-
-Two findings from an attempted (and reverted) monocart switch; local commit 92566a18b7 holds a near-complete WIP.
-
-**The current c8 numbers are systematically inflated.** Files loaded into the jsdom context are recorded twice: once server-side (correct offsets) and once as vm scripts whose offsets include the 65-byte `Module.wrap`-style prefix. c8 (`omitRelative: false`) converts the wrapped copy against the unwrapped disk file, blanketing every line as covered, and istanbul merge sums it onto the correct record. Validated: `ServerComponent.js` reports LF:141/LH:141 (100%) while runtime probes prove `elId`/`setState`/`isDestroyed` never execute across the full suite (constructor control: 1,546 hits) — raw V8 ranges say 46%. The dead lines carry exactly the jsdom-copy count (+95). Any file the jsdom suite touches is affected.
-
-**What a correct monocart pipeline needs** (all verified in the WIP): (1) the runtime-tags DOM runtime (`src/dom/*.ts`) executes only through per-fixture bundles (`src/__tests__/fixtures/**/dist/**/*.mjs`, ~1.7k maps with no `sourcesContent`) — without remapping them, `signals.ts`/`scope.ts`/`walker.ts` report 0%; feeding them to monocart wholesale OOMs (~4GB), so remap them in a streaming pass (decode with `@jridgewell/sourcemap-codec`, project covered bytes onto original lines, fold into the lcov textually). (2) Never-loaded `.ts` needs `all.transformer` with `node:module.stripTypeScriptTypes`, else monocart emits LF:0 and the file escapes the denominator. (3) Pre-merge process covs with `@bcoe/v8-coverage` before `mcr.add()` — monocart holds all added entries until `generate()`. (4) The `mcr` CLI is not usable here: it injects deprecated `module.register` hooks into every child and crashes fetching `sourceMappingURL`s from vm-compiled `.marko` scripts. Expect codecov to step down when switched, and note the loader-side prerequisite already landed: the jsdom loader compiles with `vm.compileFunction`, so in-context offsets now match files on disk exactly.
-
-**Converter head-to-head (measured 2026-07-23, 1/16 fixture slice, identical merged input, single thread, capped heap):** `ast-v8-to-istanbul` (Vitest 4's remapper, oxc-parser AST): 4.3s, 324MB RSS, dom remap scope 30/30 / signals 130/139 / walker 45/48. `oxc-coverage-instrument` (Rust napi): 2.7s, 237MB RSS, near-identical lines (66.1% vs 65.9%); its flow is `v8ToIstanbulWithLoader` (external map by URL) then `remapCoverageMap` per bundle, resolving the map-relative result keys against the bundle dir. Both remap the fixture bundles **without `sourcesContent`**, so `sourcemapExcludeSources: true` in the test bundler can stay (flipping it would only add write-IO). Both stream per-entry with istanbul-lib-coverage merging, so memory stays flat — no monocart-style whole-run generate. Recommendation: `ast-v8-to-istanbul` for maturity (istanbul-lib-instrument test-suite parity, Vitest-proven) or `oxc-coverage-instrument` for ~1.6x speed; either slots into the same adapter. 6 entries failed parse in both (same entries) — these are rolldown _virtual_ lazy-chunks (`v:*.mjs`) whose maps only reference `.marko` templates outside the coverage set; skip them with a logged notice.
-
-**Update (later 2026-07-23): a complete, validated implementation exists — cherry-pick local commit `49741902cb`.** It uses `ast-v8-to-istanbul` + `oxc-parser`, pre-merges with `@bcoe/v8-coverage`, shards the ~4.3k bundle remaps across `worker_threads` (12.4s on 16 threads; istanbul `FileCoverage` does not survive structured clone — post plain JSON), keeps lcov/lcov-report at the c8-era paths, and converts never-loaded files via a zero-count whole-script range. Full-suite results: 86.4% lines / 78.3% branches / 84.4% functions, with the bundle-remapped `signals.ts` per-line output verified against raw V8 ranges (zero phantom covered lines). **Do not use `oxc-coverage-instrument` despite its ~2x conversion speed**: it credits zero hits to branch paths V8 emits no distinct range for — a ternary whose consequent runs reports `[0,0]` (10-line repro: `const t = f(2) === "big" ? 1 : 2` after both-path warmup) — which tanked this codebase to 43.5% branches; worth filing upstream at fallow-rs/oxc-coverage-instrument.
 
 ## Unify `packages/runtime-class/src` on ESM so its module type can be declared
 
