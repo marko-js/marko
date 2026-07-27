@@ -164,6 +164,8 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
   const id = getTemplateId(markoOpts, filename);
+  // `stripTypes` is left out of the key on purpose: it is for cli flows, which
+  // compile once per process, so no cache is shared across its settings.
   const contentHash = canCache && new Hash().update(code).digest();
   let cached = canCache && compileCache.get(id);
 
