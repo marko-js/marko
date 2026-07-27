@@ -1,0 +1,6 @@
+{
+  "script-lang": "ts",
+  "tags-dir": ["./tags-a", "./tags-b"],
+  "transform": ["./transform-one.js", "./transform-two.js"],
+  "migrate": ["./migrate-one.js", "./migrate-two.js"]
+}
