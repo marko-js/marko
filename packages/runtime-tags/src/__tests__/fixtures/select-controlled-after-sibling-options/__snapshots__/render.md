@@ -1,0 +1,36 @@
+# Render
+```html
+<select
+  id="uncontrolled"
+>
+  <option
+    selected=""
+    value="a"
+  >
+    A
+  </option>
+  <option
+    value="b"
+  >
+    B
+  </option>
+</select>
+<select
+  id="controlled"
+>
+  <option
+    value="a"
+  >
+    A
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    B
+  </option>
+</select>
+<div>
+  b
+</div>
+```
