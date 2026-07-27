@@ -1,4 +1,4 @@
-// size: 6436 (min) 2833 (brotli)
+// size: 6473 (min) 2841 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -574,13 +574,14 @@ function mount(input = {}, reference, position) {
       set value(newValue) {
         _var_change(branch, newValue);
       },
-      update(newInput) {
+      update(newInput = {}) {
         args &&
+          (newInput.$global && ({ $global, ...newInput } = newInput),
           runEffects(
             prepareEffects(() => {
               args(branch, newInput);
             }),
-          );
+          ));
       },
       destroy() {
         removeAndDestroyBranch(branch);

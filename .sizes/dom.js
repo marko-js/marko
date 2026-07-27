@@ -1,4 +1,4 @@
-// size: 26428 (min) 9840 (brotli)
+// size: 26465 (min) 9827 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2184,13 +2184,14 @@ function mount(input = {}, reference, position) {
       set value(newValue) {
         _var_change(branch, newValue);
       },
-      update(newInput) {
+      update(newInput = {}) {
         args &&
+          (newInput.$global && ({ $global, ...newInput } = newInput),
           runEffects(
             prepareEffects(() => {
               args(branch, newInput);
             }),
-          );
+          ));
       },
       destroy() {
         removeAndDestroyBranch(branch);

@@ -11,6 +11,7 @@ const dir = path.join(import.meta.dirname, "mounted-template");
 // Each runner writes its own bundle into `<dir>/dist`, so a second fixture
 // needs its own directory rather than sharing and clobbering the first.
 const valueDir = path.join(import.meta.dirname, "mounted-template-value");
+const spreadDir = path.join(import.meta.dirname, "mounted-template-spread");
 
 describe("runtime-tags/dom mounted template", () => {
   let clientRunner: (ctx: any) => Promise<{ template: Template }>;
@@ -167,5 +168,50 @@ describe("runtime-tags/dom mounted template value", () => {
 
     assert.equal(instance.value, 7);
     assert.equal(window.document.getElementById("out")?.textContent, "7");
+  });
+});
+
+describe("runtime-tags/dom mounted template spread input", () => {
+  let clientRunner: (ctx: any) => Promise<{ template: Template }>;
+  let disposeServer: () => void;
+
+  before(async function () {
+    this.timeout(60000);
+    const runner = await createServerRunner(
+      spreadDir,
+      { spread: "./spread.marko" },
+      {
+        translator: tagsTranslator as any,
+        optimize: false,
+        babelConfig: {
+          babelrc: false,
+          configFile: false,
+          browserslistConfigFile: false,
+        },
+      },
+    );
+    clientRunner = runner.clientRunner!;
+    disposeServer = runner.disposeServer;
+  });
+
+  after(() => disposeServer?.());
+
+  it("keeps `$global` out of the input an update forwards", async () => {
+    const browser = createBrowser();
+    const { window } = browser;
+    const { template } = await clientRunner(browser.ctx);
+    const $global = { renderId: "r" };
+    const instance = template.mount(
+      { class: "a", $global },
+      window.document.body,
+      "afterbegin",
+    );
+    const div = window.document.querySelector("div")!;
+    assert.equal(div.getAttribute("class"), "a");
+
+    instance.update({ class: "b", $global });
+
+    assert.equal(div.getAttribute("class"), "b");
+    assert.equal(div.hasAttribute("$global"), false);
   });
 });

@@ -134,8 +134,11 @@ function mount(
     set value(newValue) {
       _var_change(branch, newValue);
     },
-    update(newInput: unknown) {
+    update(newInput: TemplateInput = {}) {
       if (args) {
+        // The branch's global is fixed at mount, so this one is dropped rather
+        // than reaching the input signal as an ordinary property.
+        if (newInput.$global) ({ $global, ...newInput } = newInput);
         runEffects(
           prepareEffects(() => {
             args(branch, newInput);
