@@ -1,0 +1,16 @@
+<div><input><!--M_'1 #text/0 2--><select>
+    <option value=a>a</option>
+  </select><!--M_*1 #select/1--><button>Swap</button><!--M_*1 #button/2--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#text/0": "input",
+      "ControlledHandler:#select/1": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-native-variants/template.marko_0/valueChange"
+        ),
+      tag: "input"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-native-variants/template.marko_0 1"
+  ];
+  M._.w()
+</script>

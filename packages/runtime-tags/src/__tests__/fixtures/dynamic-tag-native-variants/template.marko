@@ -1,0 +1,8 @@
+<let/tag="input"/>
+<div>
+  <${tag}/>
+  <${"select"} valueChange(next) { tag = next }>
+    <option value="a">a</option>
+  </>
+  <button onClick() { tag = tag === "input" ? "br" : "input" }>Swap</button>
+</div>
