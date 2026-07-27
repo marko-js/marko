@@ -988,52 +988,6 @@ contains no markup between the`<debug>`tags, so a fixture with a`<log>`/`<debug>
 compile -- -o html -d`on`<div>a</div>`/`<log="x"/>`/`<div>b</div>`currently yields`console.log("x"); _html("<div>a</div><div>b</div>");`, versus
 `-o dom` which keeps the call between the two text writes.
 
-## Treat `<attrs>`/`<effect>` as tags-API markers in interop feature detection
-
-`packages/runtime-tags/src/translator/interop/feature-detection.ts` › `getFeatureTypeFromCoreTagName` | 2026-07-27 | impact:med | effort:low
-
-`getFeatureTypeFromCoreTagName` lists `const`/`let`/`lifecycle`/`try` and friends
-as `FeatureType.Tags`, but not the deprecated core tags `attrs` and `effect`.
-A template whose only tags-API signal is one of those two — e.g. a file whose
-whole body is `<effect() { … }/>` — is therefore detected as class API, so the
-tags-side migrator that would rewrite it to `<script>` never runs (`mergeVisit`
-dispatches on `isTagsAPI()`), and the merged `<effect>` tag definition's
-`attributes: {}` then rejects the method shorthand with `<effect> does not
-support the "value" attribute.` The same body compiles under
-`@marko/runtime-tags/translator`, which has no such dispatch. `<attrs/{ a }/>`
-only escapes this because its tag variable is itself a marker; a var-less
-`<attrs/>` fails the same way, as `Unable to find entry point for custom tag
-<attrs>.` Re-verify: compile a template whose entire body is `<effect() {
-console.log(1) }/>` with `marko/translator` and with
-`@marko/runtime-tags/translator` — the first errors, the second migrates.
-
-## Classify `<html-script>`/`<html-style>` as Tags-API markers in interop feature detection
-
-`packages/runtime-tags/src/translator/interop/feature-detection.ts` › `getFeatureTypeFromCoreTagName` | 2026-07-23 | impact:med | effort:low
-
-`getFeatureTypeFromCoreTagName` enumerates the core tag names that identify a
-file as Class API or Tags API, but four Marko 6-only core tags registered in
-`translator/core/index.ts` appear in neither list: `<html-script>`,
-`<html-style>`, `<attrs>` and `<effect>` (the Marko 5 core taglib,
-`packages/runtime-class/src/translator/taglib/core/index.js`, defines none of
-them). A template outside a `tags/` directory — any file in a Marko 5 project,
-e.g. under `components/` or a route folder — whose only Marko 6 marker is
-`<html-style>` therefore falls through to `FeatureType.Class` and is translated
-by the Marko 5 translator, which has no such tag: the emitted server code
-contains a literal `out.w("<html-style>")`, so the stylesheet silently renders
-as an unknown element with no error, warning, or diagnostic in any mode.
-`<html-script>` behaves identically; `<attrs>`/`<effect>` crash first for an
-unrelated reason (separate entry). Both are current, documented core tags
-(website `docs/reference/core-tag.md` § `<html-script>` & `<html-style>`), so
-add them to the `FeatureType.Tags` case — or better, derive the two lists from
-the difference between the runtime-tags and runtime-class core taglibs so a
-future Marko 6-only tag cannot be forgotten. Re-verify: compile a template whose
-entire body is `<html-style>\n .a { color: red }\n</html-style>` from a
-directory that is not under `tags/`, using `marko/translator`; `meta.api` is
-`class` and the output contains `out.w("<html-style>")`, whereas prepending
-`<!-- use tags -->` flips `meta.api` to `tags` and emits
-`<style${_attr_nonce()}>`.
-
 ## Drop escaped placeholders that confidently render an empty string, so the DOM walk does not gain a step for a node that is never written
 
 `packages/runtime-tags/src/translator/util/static-text.ts` › `isStaticText` | 2026-07-23 | impact:med | effort:low

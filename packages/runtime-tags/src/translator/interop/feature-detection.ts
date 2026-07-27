@@ -184,9 +184,11 @@ function getFeatureTypeFromCoreTagName(
     case "module-code":
     case "while":
       return FeatureType.Class;
+    case "attrs":
     case "const":
     case "debug":
     case "define":
+    case "effect":
     case "id":
     case "let":
     case "lifecycle":
@@ -196,6 +198,8 @@ function getFeatureTypeFromCoreTagName(
     case "try":
       return FeatureType.Tags;
     default:
+      // `<html-script>`/`<html-style>` fall through on purpose: they are being
+      // backported to Marko 5, so they identify neither API.
       return undefined;
   }
 }
