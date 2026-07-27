@@ -1588,26 +1588,39 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
       switch (node.left.type) {
         case "Identifier": {
           const { extra } = node.left;
+          if (isAssignedBindingExtra(extra)) {
+            const { operator } = node;
+            const shortCircuits =
+              operator === "||=" || operator === "&&=" || operator === "??=";
+            const readAssigned = () =>
+              createScopeReadExpression(extra.assignment, extra.section);
+            const builtAssignment = getBuildAssignment(extra)?.(
+              extra.section,
+              operator === "=" || shortCircuits
+                ? node.right
+                : t.binaryExpression(
+                    operator.slice(0, -1) as t.BinaryExpression["operator"],
+                    readAssigned(),
+                    node.right,
+                  ),
+            );
+
+            if (builtAssignment) {
+              // Short circuits as the source does, so the setter — and any
+              // `valueChange` it calls — is skipped when the read decides.
+              return shortCircuits
+                ? t.logicalExpression(
+                    operator.slice(0, -1) as t.LogicalExpression["operator"],
+                    readAssigned(),
+                    builtAssignment,
+                  )
+                : builtAssignment;
+            }
+          }
+
           return (
-            (isAssignedBindingExtra(extra) &&
-              getBuildAssignment(extra)?.(
-                extra.section,
-                node.operator === "="
-                  ? node.right
-                  : t.binaryExpression(
-                      node.operator.slice(
-                        0,
-                        -1,
-                      ) as t.BinaryExpression["operator"],
-                      createScopeReadExpression(
-                        extra.assignment,
-                        extra.section,
-                      ),
-                      node.right,
-                    ),
-              )) ||
-            (extra?.assignment &&
-              withLeadingComment(node.right, getDebugName(extra.assignment)))
+            extra?.assignment &&
+            withLeadingComment(node.right, getDebugName(extra.assignment))
           );
         }
         case "ArrayPattern":

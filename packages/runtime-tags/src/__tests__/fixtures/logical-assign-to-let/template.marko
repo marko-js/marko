@@ -1,0 +1,10 @@
+<let/changes=0>
+<let/value=1>
+<let/x=value valueChange(v) {
+  value = v;
+  changes++;
+}>
+<button id="or" onClick() { x ||= 5 }>or</button>
+<button id="and" onClick() { x &&= 6 }>and</button>
+<button id="nullish" onClick() { x ??= 7 }>nullish</button>
+<div>value=${value} changes=${changes}</div>
