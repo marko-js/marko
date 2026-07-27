@@ -941,35 +941,6 @@ honest behavior). Re-verify: compile a template with`import A from
 is generated and `<B/>` compiles to `$A_withLoadAssets({})`; the same file with
 `output: "dom"`emits a separate`_load_idle_trigger()` for B.
 
-## Strip `$global` from the input `MountedTemplate.update` forwards to the input signal
-
-`packages/runtime-tags/src/dom/template.ts` › `mount (the returned object's `update`)` | 2026-07-23 | impact:med | effort:low
-
-`packages/runtime-tags/index.d.ts` declares `Marko.MountedTemplate.update(input:
-Marko.TemplateInput<Input>): void`, and `Marko.TemplateInput<Input> = Input & {
-$global?: Marko.Global }`, so the public type explicitly invites
-`instance.update({ ...input, $global })`. `mount` in `src/dom/template.ts`
-destructures `$global` out before invoking the input signal (`({ $global,
-...input } = input)` then `args?.(branch, input)`), but the returned
-`update(newInput)` passes the object through verbatim to `args(branch,
-newInput)`. `$global` is therefore neither applied (the branch's
-`AccessorProp.Global` is fixed by `createBranch` at mount time) nor removed, so
-it leaks into `input`: for any template that spreads or rests its input — `<div
-...input/>` compiles to `_attrs_content($scope, "#div/0", $scope.input)` —
-`attrsInternal` in `src/dom/dom.ts` walks every own key, throwing `Invalid
-attribute name: "$global"` from `assertValidAttrName` under `MARKO_DEBUG` and,
-with debug stripped, falling through to `_attr(el, "$global", value)` so the
-element renders a literal `$global="[object Object]"` attribute. Fix by
-destructuring `$global` in `update` exactly as `mount` does (or by narrowing the
-declared parameter to `Input`, matching `website/docs/reference/template.md` ›
-`instance.update(input)`, which never mentions `$global`). This is distinct from
-the existing unclear.md entry about typing `$global` for render tests/Storybook,
-which concerns `Marko.Global` being unchecked against a route `Context`.
-Re-verify: mount `<div ...input/>` with `template.mount({class:"a"},
-document.body, "afterbegin")` (renders `<div class="a">`), then call
-`instance.update({class:"b", $global:{renderId:"x"}})` and observe the `Invalid
-attribute name: "$global"` throw.
-
 ## Declare the element-getter `return=` in the `html-comment` / `html-script` / `html-style` type stubs
 
 `packages/runtime-tags/tags/html-comment.d.marko` › `Input` | 2026-07-23 | impact:med | effort:low
@@ -1141,7 +1112,7 @@ same template renders fine in CSR-only mode.
 
 ## Stop double-escaping character references in a static `<textarea>` body
 
-`packages/runtime-tags/src/translator/core/textarea.ts` › `preAnalyze` | 2026-07-23 | impact:med | effort:low
+`packages/runtime-tags/src/translator/core/textarea.ts` › `preAnalyze` | 2026-07-23 | impact:med | effort:med
 
 `preAnalyze` folds a `<textarea>` body into a synthetic `value` attribute by
 pushing each `MarkoText` child's raw source `child.value` into
@@ -1165,6 +1136,17 @@ Re-verify: compile `<textarea>a &amp; b</textarea>` with `-o html` and check the
 emitted `_textarea_value("a &amp; b")`; at runtime it returns `"a &amp;amp; b"`,
 where the correct output is `"a &amp; b"` (matching `<title>a &amp; b</title>`,
 which compiles to raw static text).
+
+Confirmed, and the effort is not low: the fix needs the static text decoded at
+compile time (CSR needs it too, since `_attr_textarea_value_default` assigns the
+literal to `el.defaultValue`), but `MarkoText.value` is raw source with no
+decoded form, `htmljs-parser` exposes no decoder, and the only one in the tree is
+`he` under `packages/compiler/node_modules` — unreachable from the translator and
+100KB, currently tree-shaken out of the compiler bundle. Using it means a new
+`babel-utils` export and that 100KB in the build-time bundle; weigh that against
+how rare authoring entities in a `<textarea>` is. Re-verify: compile
+`<textarea>&lt;p&gt;hi</textarea>` with `-o html`; the emitted literal is
+`_textarea_value("&lt;p&gt;hi")`, which escapes to `&amp;lt;p&amp;gt;hi`.
 
 ## Custom tag with a tag variable evaluates its child render before attribute tag statements (TDZ crash)
 
