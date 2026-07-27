@@ -184,7 +184,7 @@ export function _clearDefaults() {
 }
 
 function getFs(config) {
-  return config.fileSystem || globalConfig.fileSystem;
+  return config?.fileSystem || globalConfig.fileSystem;
 }
 
 function isTranslatedOutput(output) {
