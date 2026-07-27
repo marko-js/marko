@@ -1,6 +1,7 @@
 // template.marko
 const $template = "<button>inc</button><input><input><input>";
 const $walks = " b b b b";
+_enable_controllable_input();
 const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scope) => {
 	_attrs_script($scope, "#input/1");
 	_attrs_script($scope, "#input/2");
@@ -9,11 +10,11 @@ const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "#input/1", {
 		checkedValue: $scope.v,
 		...$scope.rest
-	});
+	}, _controllable_input);
 	_attrs($scope, "#input/2", {
 		...$scope.rest,
 		checkedValue: $scope.v
-	});
+	}, _controllable_input);
 	$v__OR__rest__script($scope);
 });
 const $v = /*@__PURE__*/ _let("v/4", ($scope) => {
@@ -25,7 +26,7 @@ const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	_attrs_partial($scope, "#input/3", $scope.rest, {
 		value: 1,
 		valueChange: 1
-	});
+	}, _controllable_input);
 	$v__OR__rest($scope);
 	$rest__script($scope);
 });

@@ -2,6 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _resume_dynamic_tag();
+_enable_controllable();
 const $startContent_content = /*@__PURE__*/ _content("__tests__/tags/my-tag.marko_1_content", "default");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_as__OR__input_class__OR__htmlInput__OR__content = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => ({

@@ -2,6 +2,7 @@
 const $template = "<!><!><span> </span>";
 const $walks = "b%bD l";
 _resume_dynamic_tag();
+_enable_controllable();
 const $tagselect_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {
 	_attrs_script($scope, "#option/0");
 	_attrs_script($scope, "#option/1");

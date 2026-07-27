@@ -1,5 +1,6 @@
 // template.marko
 _resume_dynamic_tag();
+_enable_controllable();
 const $detailsTag_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $detailsTag_content__text__OR__textareaTag = /*@__PURE__*/ _or(1, ($scope) => $detailsTag_content__dynamicTag($scope, $scope._.h, () => ({
 	value: $scope._.e,

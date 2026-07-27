@@ -1,7 +1,8 @@
 // tags/my-input.marko
+_enable_controllable_input();
 const $input__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 const $input = /*@__PURE__*/ _const(3, ($scope) => {
-	_attrs($scope, "a", $scope.d);
+	_attrs($scope, "a", $scope.d, _controllable_input);
 	$input_value($scope, $scope.d.value);
 	$input__script($scope);
 });

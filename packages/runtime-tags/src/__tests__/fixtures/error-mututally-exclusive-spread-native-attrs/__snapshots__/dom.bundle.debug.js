@@ -1,6 +1,7 @@
 // template.marko
 const $template = "<input>";
 const $walks = " b";
+_enable_controllable_input();
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attrs_script($scope, "#input/0"));
 function $setup($scope) {
 	_attrs($scope, "#input/0", {
@@ -9,7 +10,7 @@ function $setup($scope) {
 			checkedValue: 1,
 			checkedChange: $checkedChange
 		}
-	});
+	}, _controllable_input);
 	$setup__script($scope);
 }
 function $checkedChange() {}

@@ -1,0 +1,16 @@
+<select>
+  <option value=a>A</option>
+  <option value=b selected>B</option>
+  <option value=c>C</option>
+</select><!--M_'1 a 2--><output>b<!--M_*1 b--></output>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    Da: "select",
+    d: "select"
+  }, {
+    Fa: 3,
+    Ea: _(1, "a0")
+  }], "d 2"];
+  M._.w()
+</script>

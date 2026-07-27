@@ -32,6 +32,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<div id=value-missing>${_w0}</div><div id=value-undefined>${_w1}</div><div id=dynamic-value-set><!></div>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&lD%l`)($walks$1, $walks$1);
 const Wrap = wrap_default;
+_enable_controllable();
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

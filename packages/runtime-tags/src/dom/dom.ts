@@ -25,17 +25,9 @@ import {
 import { $signal } from "./abort-signal";
 import { setConditionalRenderer } from "./control-flow";
 import {
-  _attr_details_or_dialog_open,
-  _attr_details_or_dialog_open_script,
-  _attr_input_checked,
-  _attr_input_checked_script,
-  _attr_input_checkedValue,
-  _attr_input_checkedValue_script,
-  _attr_input_value,
-  _attr_input_value_dynamic_default,
-  _attr_input_value_script,
-  _attr_select_value,
-  _attr_select_value_script,
+  type ControllableAttrs,
+  controllableRenders,
+  controllableScripts,
 } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
@@ -173,6 +165,7 @@ export function _attrs(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
+  controllable?: ControllableAttrs,
 ) {
   const el = scope[nodeAccessor] as Element;
   for (let i = el.attributes.length; i--;) {
@@ -188,15 +181,16 @@ export function _attrs(
     assertExclusiveAttrs(nextAttrs);
   }
 
-  attrsInternal(scope, nodeAccessor, nextAttrs);
+  attrsInternal(scope, nodeAccessor, nextAttrs, controllable);
 }
 
 export function _attrs_content(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
+  controllable?: ControllableAttrs,
 ) {
-  _attrs(scope, nodeAccessor, nextAttrs);
+  _attrs(scope, nodeAccessor, nextAttrs, controllable);
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
@@ -217,6 +211,7 @@ export function _attrs_partial(
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
+  controllable?: ControllableAttrs,
 ) {
   const el = scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
@@ -237,7 +232,7 @@ export function _attrs_partial(
     assertExclusiveAttrs({ ...nextAttrs, ...skip });
   }
 
-  attrsInternal(scope, nodeAccessor, partial);
+  attrsInternal(scope, nodeAccessor, partial, controllable);
 }
 
 export function _attrs_partial_content(
@@ -245,8 +240,9 @@ export function _attrs_partial_content(
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
+  controllable?: ControllableAttrs,
 ) {
-  _attrs_partial(scope, nodeAccessor, nextAttrs, skip);
+  _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable);
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
@@ -254,85 +250,24 @@ function attrsInternal(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
+  controllable?: ControllableAttrs,
 ) {
   const el = scope[nodeAccessor] as Element;
   let events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as
     | undefined
     | Record<string, unknown>;
-  let skip: RegExp | undefined;
   for (const name in events) events[name] = 0;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = 0;
-  // A lone `null`/`undefined`/`false` spread reaches here unwrapped; skip the
-  // controllable switch (the attr loop below is a no-op on a nullish value).
-  switch (nextAttrs && el.tagName) {
-    case "INPUT":
-      if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
-        _attr_input_checked(
-          scope,
-          nodeAccessor,
-          nextAttrs.checked,
-          nextAttrs.checkedChange,
-        );
-        skip = /^checked(?:Value)?(?:Change)?$/;
-      } else if (
-        "checkedValue" in nextAttrs ||
-        "checkedValueChange" in nextAttrs
-      ) {
-        _attr_input_checkedValue(
-          scope,
-          nodeAccessor,
-          nextAttrs.checkedValue,
-          nextAttrs.checkedValueChange,
-          nextAttrs.value,
-        );
-        skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
-      } else if ("value" in nextAttrs || "valueChange" in nextAttrs) {
-        _attr_input_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-          _attr_input_value_dynamic_default,
-        );
-        skip = /^value(?:Change)?$/;
-      }
-      break;
-    case "SELECT":
-      if ("value" in nextAttrs || "valueChange" in nextAttrs) {
-        _attr_select_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        );
-        skip = /^value(?:Change)?$/;
-      }
-      break;
-    case "TEXTAREA":
-      if ("value" in nextAttrs || "valueChange" in nextAttrs) {
-        _attr_input_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        );
-        skip = /^value(?:Change)?$/;
-      }
-      break;
-    case "DETAILS":
-    case "DIALOG":
-      if ("open" in nextAttrs || "openChange" in nextAttrs) {
-        _attr_details_or_dialog_open(
-          scope,
-          nodeAccessor,
-          nextAttrs.open,
-          nextAttrs.openChange,
-        );
-        skip = /^open(?:Change)?$/;
-      }
-      break;
-  }
+  // A lone `null`/`undefined`/`false` spread reaches here unwrapped, and has no
+  // controlled attrs to claim; the attr loop below is a no-op on it.
+  const skip =
+    nextAttrs &&
+    (controllable || controllableRenders[el.tagName])?.(
+      scope,
+      nodeAccessor,
+      nextAttrs,
+    );
 
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {
@@ -399,23 +334,11 @@ export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
     any
   >;
 
-  switch (scope[AccessorPrefix.ControlledType + nodeAccessor]) {
-    case ControlledType.InputChecked:
-      _attr_input_checked_script(scope, nodeAccessor);
-      break;
-    case ControlledType.InputCheckedValue:
-      _attr_input_checkedValue_script(scope, nodeAccessor);
-      break;
-    case ControlledType.InputValue:
-      _attr_input_value_script(scope, nodeAccessor);
-      break;
-    case ControlledType.SelectValue:
-      _attr_select_value_script(scope, nodeAccessor);
-      break;
-    case ControlledType.DetailsOrDialogOpen:
-      _attr_details_or_dialog_open_script(scope, nodeAccessor);
-      break;
-  }
+  // A table, not a switch: naming each handler here, or a case per kind, puts
+  // all five in this shared function, so every page with a spread pays.
+  controllableScripts[
+    scope[AccessorPrefix.ControlledType + nodeAccessor] as ControlledType
+  ]?.(scope, nodeAccessor);
 
   for (const name in events) {
     _on(el, name as any, events[name] as any);

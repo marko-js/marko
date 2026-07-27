@@ -38,7 +38,12 @@ import {
   mergeReferences,
   trackDomVarReferences,
 } from "../../util/references";
-import { callRuntime, getHTMLRuntime, importRuntime } from "../../util/runtime";
+import {
+  callRuntime,
+  type DOMRuntimeHelpers,
+  getHTMLRuntime,
+  importRuntime,
+} from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
@@ -922,6 +927,11 @@ export default {
             hasChildren ||
             staticContentAttr
           );
+          const name = tag.get("name");
+          const staticName = name.isStringLiteral()
+            ? name.node.value
+            : undefined;
+          const controllable = controllableClaimFor(staticName);
           if (skipExpression) {
             addStatement(
               "render",
@@ -936,6 +946,7 @@ export default {
                   visitAccessor,
                   spreadExpression,
                   skipExpression,
+                  controllable && importRuntime(controllable),
                 ),
               ),
             );
@@ -950,11 +961,13 @@ export default {
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
+                  controllable && importRuntime(controllable),
                 ),
               ),
             );
           }
 
+          enableControllable(controllableScriptLatchFor(staticName));
           addStatement(
             "effect",
             tagSection,
@@ -1828,4 +1841,50 @@ function isDynamicControllable(controllable: RelatedControllable) {
 
 function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));
+}
+
+/** How a statically named tag claims its controlled attrs during render;
+ * nothing for the many tags that control nothing. */
+export function controllableClaimFor(tagName: string | undefined) {
+  switch (tagName) {
+    case "input":
+      return "_controllable_input" as const;
+    case "textarea":
+      return "_controllable_textarea" as const;
+    case "select":
+      return "_controllable_select" as const;
+    case "details":
+    case "dialog":
+      return "_controllable_open" as const;
+  }
+}
+
+/** The resume-pass latch for a tag: `_attrs_script` resolves the control kind
+ * at run time, and a run-time tag name can be any of them. */
+export function controllableScriptLatchFor(tagName: string | undefined) {
+  switch (tagName) {
+    case "input":
+      return "_enable_controllable_input" as const;
+    case "textarea":
+      return "_enable_controllable_textarea" as const;
+    case "select":
+      return "_enable_controllable_select" as const;
+    case "details":
+    case "dialog":
+      return "_enable_controllable_open" as const;
+    case undefined:
+      return "_enable_controllable" as const;
+  }
+}
+
+const enabledControllables = new WeakMap<t.Program, Set<string>>();
+/** Emits the latch once per program, like `_enable_catch`. */
+export function enableControllable(helper: DOMRuntimeHelpers | undefined) {
+  if (!helper) return;
+  const program = getProgram().node;
+  let enabled = enabledControllables.get(program);
+  if (!enabled) enabledControllables.set(program, (enabled = new Set()));
+  if (enabled.has(helper)) return;
+  enabled.add(helper);
+  program.body.push(t.expressionStatement(callRuntime(helper)));
 }

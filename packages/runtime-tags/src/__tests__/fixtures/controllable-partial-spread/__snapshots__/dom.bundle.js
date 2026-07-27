@@ -1,4 +1,5 @@
 // template.marko
+_enable_controllable_input();
 const $v__OR__rest__script = _script("a2", ($scope) => {
 	_attrs_script($scope, "b");
 	_attrs_script($scope, "c");
@@ -7,11 +8,11 @@ const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "b", {
 		checkedValue: $scope.e,
 		...$scope.f
-	});
+	}, _controllable_input);
 	_attrs($scope, "c", {
 		...$scope.f,
 		checkedValue: $scope.e
-	});
+	}, _controllable_input);
 	$v__OR__rest__script($scope);
 });
 const $v = /*@__PURE__*/ _let(4, ($scope) => {
