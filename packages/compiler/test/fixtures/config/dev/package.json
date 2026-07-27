@@ -1,0 +1,1 @@
+{ "name": "config-dev", "devDependencies": { "marko-runtime-example": "*" } }

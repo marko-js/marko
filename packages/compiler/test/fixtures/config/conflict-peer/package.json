@@ -1,0 +1,1 @@
+{ "name": "config-conflict-peer", "peerDependencies": { "marko-runtime-one": "*", "marko-runtime-two": "*" } }

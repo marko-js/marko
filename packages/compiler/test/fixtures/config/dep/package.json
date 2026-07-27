@@ -1,0 +1,1 @@
+{ "name": "config-dep-fixture", "dependencies": { "marko-runtime-example": "*" } }

@@ -1,0 +1,1 @@
+{ "name": "config-conflict-dev", "devDependencies": { "marko-runtime-one": "*", "marko-runtime-two": "*" } }
