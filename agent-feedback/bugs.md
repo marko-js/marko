@@ -1014,37 +1014,24 @@ contains no markup between the`<debug>`tags, so a fixture with a`<log>`/`<debug>
 compile -- -o html -d`on`<div>a</div>`/`<log="x"/>`/`<div>b</div>`currently yields`console.log("x"); _html("<div>a</div><div>b</div>");`, versus
 `-o dom` which keeps the call between the two text writes.
 
-## Handle array-form tag `migrate` hooks in the interop taglib merge — `<attrs>`/`<effect>` crash every interop compile
+## Treat `<attrs>`/`<effect>` as tags-API markers in interop feature detection
 
-`packages/runtime-tags/src/translator/interop/index.ts` › `mergeTagDef` | 2026-07-23 | impact:high | effort:low
+`packages/runtime-tags/src/translator/interop/feature-detection.ts` › `getFeatureTypeFromCoreTagName` | 2026-07-27 | impact:med | effort:low
 
-`mergeTagDef` routes a tag definition's `migrate` key through
-`mergeVisit(normalizeVisit(value5), normalizeVisit(value6))`, but
-`normalizeVisit` only recognises a function or a `{enter,exit}`/`{default}`
-object. `translator/core/attrs.ts` and `translator/core/effect.ts` declare
-`migrate: [fn]` — an array, which the compiler's taglib loader natively supports
-(`loadTagFromProps.migrate` recurses over arrays) — so
-`getVisitorEnter`/`getVisitorExit` both see `undefined` and `mergeVisit` returns
-`undefined`. `mergeObjects` still writes the key, so the merged `marko-core`
-taglib ends up with `"<attrs>".migrate === undefined`; the loader then pushes `{
-hook: undefined }` and `addMigrators`
-(`packages/compiler/src/babel-plugin/plugins/migrate.js:49`) dereferences
-`migrator.hook.default`, throwing `TypeError: Cannot read properties of
-undefined (reading 'default')` with no filename, line, or code frame. Every
-compile through `marko/translator` of a template containing `<attrs>` or
-`<effect>` fails this way, including inside a `tags/` directory, while the
-identical template compiles under `@marko/runtime-tags/translator` and merely
-emits the deprecation diagnostic that would have auto-rewritten it; `<attrs>`
-still appears in 10+ `src/__tests__/fixtures/` templates but in zero
-`fixtures-interop/` ones, which is why it is untested. Fix
-`normalizeVisit`/`mergeVisit` to flatten array-form hooks and make
-`mergeObjects` omit keys whose merged value is `undefined` so a dropped hook can
-never reach the loader as a null hook, then add a `fixtures-interop/` fixture.
-Re-verify: `node -r ~ts -e 'const
-core=require("./packages/runtime-class/src/translator.js").taglibs.find(([id])=>id==="marko-core")[1];console.log("migrate"
-in core["<attrs>"], core["<attrs>"].migrate)'` prints `true undefined`, and
-compiling a template whose body is `<attrs/{ a }/>\n<div>${a}</div>` with
-`marko/translator` throws the TypeError above.
+`getFeatureTypeFromCoreTagName` lists `const`/`let`/`lifecycle`/`try` and friends
+as `FeatureType.Tags`, but not the deprecated core tags `attrs` and `effect`.
+A template whose only tags-API signal is one of those two — e.g. a file whose
+whole body is `<effect() { … }/>` — is therefore detected as class API, so the
+tags-side migrator that would rewrite it to `<script>` never runs (`mergeVisit`
+dispatches on `isTagsAPI()`), and the merged `<effect>` tag definition's
+`attributes: {}` then rejects the method shorthand with `<effect> does not
+support the "value" attribute.` The same body compiles under
+`@marko/runtime-tags/translator`, which has no such dispatch. `<attrs/{ a }/>`
+only escapes this because its tag variable is itself a marker; a var-less
+`<attrs/>` fails the same way, as `Unable to find entry point for custom tag
+<attrs>.` Re-verify: compile a template whose entire body is `<effect() {
+console.log(1) }/>` with `marko/translator` and with
+`@marko/runtime-tags/translator` — the first errors, the second migrates.
 
 ## Classify `<html-script>`/`<html-style>` as Tags-API markers in interop feature detection
 

@@ -265,26 +265,32 @@ function mergeObjects<A, B, K extends keyof (B & {}) | keyof (A & {}), R>(
   ) => R,
 ): Record<K, R> {
   const merged: any = {};
+  // The taglib loader dispatches on key presence, so a key that merged to
+  // nothing is omitted rather than handed over as a hook it cannot call.
+  const assign = (key: unknown, aValue: unknown, bValue: unknown) => {
+    const value = (cb as any)(key, aValue, bValue);
+    if (value !== undefined) merged[key as string] = value;
+  };
 
   if (a) {
     if (b) {
       for (const key in a) {
-        merged[key] = (cb as any)(key, a[key], (b as any)[key]);
+        assign(key, a[key], (b as any)[key]);
       }
 
       for (const key in b) {
         if (!(key in (a as any))) {
-          merged[key] = (cb as any)(key, undefined, b[key]);
+          assign(key, undefined, b[key]);
         }
       }
     } else {
       for (const key in a) {
-        merged[key] = (cb as any)(key, a[key], undefined);
+        assign(key, a[key], undefined);
       }
     }
   } else if (b) {
     for (const key in b) {
-      merged[key] = (cb as any)(key, undefined, b[key]);
+      assign(key, undefined, b[key]);
     }
   }
 
@@ -331,7 +337,47 @@ function normalizeVisitor(visitor: any): t.Visitor | undefined {
 }
 
 function normalizeVisit(visitor: any): t.VisitNode<any, t.Node> | undefined {
+  if (Array.isArray(visitor)) {
+    // `migrate`/`transform` take a list of hooks, but the merge yields one
+    // hook per key, so the list has to run behind a single visit.
+    let merged: t.VisitNode<any, t.Node> | undefined;
+    for (const entry of visitor) {
+      merged = sequenceVisit(merged, normalizeVisit(entry));
+    }
+    return merged;
+  }
+
   return typeof visitor === "function" ? visitor : normalizeVisitor(visitor);
+}
+
+function sequenceVisit(
+  first: undefined | t.VisitNode<unknown, any>,
+  second: undefined | t.VisitNode<unknown, any>,
+): undefined | t.VisitNode<unknown, t.Node> {
+  if (!first || !second) return first || second;
+
+  const enterFirst = getVisitorEnter(first);
+  const enterSecond = getVisitorEnter(second);
+  const enter: undefined | t.VisitNode<unknown, t.Node> =
+    (enterFirst || enterSecond) &&
+    function enter(path, state) {
+      const { node } = path;
+      enterFirst?.call(this, path, state);
+      // Matches the hook loops these replace, which stop once one swaps the node.
+      if (path.node === node) enterSecond?.call(this, path, state);
+    };
+
+  const exitFirst = getVisitorExit(first);
+  const exitSecond = getVisitorExit(second);
+  const exit: undefined | t.VisitNode<unknown, t.Node> =
+    (exitFirst || exitSecond) &&
+    function exit(path, state) {
+      const { node } = path;
+      exitFirst?.call(this, path, state);
+      if (path.node === node) exitSecond?.call(this, path, state);
+    };
+
+  return exit ? (enter ? { enter, exit } : { exit }) : enter;
 }
 
 function getVisitorEnter<A, B extends t.Node>(
