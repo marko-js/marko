@@ -31,69 +31,79 @@ export function computeNode(node) {
       if (!left) return;
       const right = computeNode(node.right);
       if (!right) return;
-      switch (node.operator) {
-        case "+":
-          return { value: left.value + right.value };
-        case "-":
-          return { value: left.value - right.value };
-        case "*":
-          return { value: left.value * right.value };
-        case "/":
-          return { value: left.value / right.value };
-        case "%":
-          return { value: left.value % right.value };
-        case "**":
-          return { value: left.value ** right.value };
-        case "|":
-          return { value: left.value | right.value };
-        case "&":
-          return { value: left.value & right.value };
-        case "^":
-          return { value: left.value ^ right.value };
-        case "<<":
-          return { value: left.value << right.value };
-        case ">>":
-          return { value: left.value >> right.value };
-        case ">>>":
-          return { value: left.value >>> right.value };
-        case "==":
-          return { value: left.value == right.value };
-        case "!=":
-          return { value: left.value != right.value };
-        case "===":
-          return { value: left.value === right.value };
-        case "!==":
-          return { value: left.value !== right.value };
-        case "<":
-          return { value: left.value < right.value };
-        case "<=":
-          return { value: left.value <= right.value };
-        case ">":
-          return { value: left.value > right.value };
-        case ">=":
-          return { value: left.value >= right.value };
-        default:
-          return;
+      // Applying an operator can throw -- mixing a BigInt with a number does.
+      // That means "not a constant", not a compiler crash.
+      try {
+        switch (node.operator) {
+          case "+":
+            return { value: left.value + right.value };
+          case "-":
+            return { value: left.value - right.value };
+          case "*":
+            return { value: left.value * right.value };
+          case "/":
+            return { value: left.value / right.value };
+          case "%":
+            return { value: left.value % right.value };
+          case "**":
+            return { value: left.value ** right.value };
+          case "|":
+            return { value: left.value | right.value };
+          case "&":
+            return { value: left.value & right.value };
+          case "^":
+            return { value: left.value ^ right.value };
+          case "<<":
+            return { value: left.value << right.value };
+          case ">>":
+            return { value: left.value >> right.value };
+          case ">>>":
+            return { value: left.value >>> right.value };
+          case "==":
+            return { value: left.value == right.value };
+          case "!=":
+            return { value: left.value != right.value };
+          case "===":
+            return { value: left.value === right.value };
+          case "!==":
+            return { value: left.value !== right.value };
+          case "<":
+            return { value: left.value < right.value };
+          case "<=":
+            return { value: left.value <= right.value };
+          case ">":
+            return { value: left.value > right.value };
+          case ">=":
+            return { value: left.value >= right.value };
+          default:
+            return;
+        }
+      } catch {
+        return;
       }
     }
     case "UnaryExpression": {
       const arg = computeNode(node.argument);
       if (!arg) return;
-      switch (node.operator) {
-        case "+":
-          return { value: +arg.value };
-        case "-":
-          return { value: -arg.value };
-        case "~":
-          return { value: ~arg.value };
-        case "!":
-          return { value: !arg.value };
-        case "typeof":
-          return { value: typeof arg.value };
-        case "void":
-          return { value: void arg.value };
-        default:
-          return;
+      try {
+        switch (node.operator) {
+          case "+":
+            return { value: +arg.value };
+          case "-":
+            return { value: -arg.value };
+          case "~":
+            return { value: ~arg.value };
+          case "!":
+            return { value: !arg.value };
+          case "typeof":
+            return { value: typeof arg.value };
+          case "void":
+            return { value: void arg.value };
+          default:
+            return;
+        }
+      } catch {
+        return;
       }
     }
     case "LogicalExpression": {
@@ -156,7 +166,18 @@ export function computeNode(node) {
 
             const propValue = computeNode(prop.value);
             if (!propValue) return;
-            value[key] = propValue.value;
+            if (prop.computed && key === "__proto__") {
+              // Only the literal `__proto__:` sets the prototype; computed, it
+              // is an ordinary own property, and assigning would set it too.
+              Object.defineProperty(value, key, {
+                value: propValue.value,
+                writable: true,
+                enumerable: true,
+                configurable: true,
+              });
+            } else {
+              value[key] = propValue.value;
+            }
             break;
           }
           case "SpreadElement": {
@@ -165,6 +186,10 @@ export function computeNode(node) {
             Object.assign(value, arg.value);
             break;
           }
+          // A method or accessor has no value to fold, so the object is not
+          // constant -- dropping the member would understate it.
+          default:
+            return;
         }
       }
 
