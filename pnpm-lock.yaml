@@ -89,8 +89,8 @@ importers:
         specifier: ^26.1.0
         version: 26.1.0
       '@zcov/cli':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.1.3
+        version: 0.1.3
       babel-plugin-minprops:
         specifier: ^2.0.1
         version: 2.0.1
@@ -1524,57 +1524,57 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@zcov/cli@0.1.2':
-    resolution: {integrity: sha512-2fyUWLcnrBrcWBHxs1k+AsjLfjokFXv6zaLWU+RsoJGZidfxBZqzYtGwAcUM/ufgK0OHunLXVuId1iu5weCziQ==}
+  '@zcov/cli@0.1.3':
+    resolution: {integrity: sha512-d7yqUg6VXsfAsssEXPI0tWhvSPcj0Dby9ci/MMy3aNKpeuYB4rb8mrgXhtUVI9LP+OITgQZiW2sz7s+k5Z5CpQ==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@zcov/darwin-arm64@0.1.2':
-    resolution: {integrity: sha512-4SdB4cbZ9Kc154iysBo+VYfOgj0BeL2SQLevSFhudxNKgnAhzdnmx9LC2LtkvsLxxgMvetcNzO33hKwg1djLng==}
+  '@zcov/darwin-arm64@0.1.3':
+    resolution: {integrity: sha512-YtBmeg9dAC4yQafgtyYhFLqjgSllj9EG3E9KoapM2UTiUpCxuRDBG7RMrnbo6hVX7JCY5AV1SMqC5sDVNPHbmQ==}
     cpu: [arm64]
     os: [darwin]
 
-  '@zcov/darwin-x64@0.1.2':
-    resolution: {integrity: sha512-R3hpPZo7UzfSOHD/DMJnTfWz+AH7fH+jDtlp3mJ147Rcs0T9j0Cowmmn34/86zmBZgjPTr1rlNVFLQiUbEl6jQ==}
+  '@zcov/darwin-x64@0.1.3':
+    resolution: {integrity: sha512-b48VPuI95FIHjtCohxSxDw+iLWj7RenczWW82whtY7d6yubO5s8Bn1K4mQM7BENFWJ1xddaeuHgSd8SvL7Zu6w==}
     cpu: [x64]
     os: [darwin]
 
-  '@zcov/freebsd-x64@0.1.2':
-    resolution: {integrity: sha512-0iWPlCpm4YIHsDSEBfo3xe6wpg9y9lMsi1aZ3iEYBQ8pmVQ1Sp481Fh1J3SaVKucu8JFWO9WzB0fpJzUhNx1+g==}
+  '@zcov/freebsd-x64@0.1.3':
+    resolution: {integrity: sha512-mVrRzpKPVPmu3hPdaTIEF8G/Sj4QiX+XZTy55Bfk6dhZ5Mz7N9qTtKzeWNHxFQHZPRr0c2lAjp5m9vOBmMbTWA==}
     cpu: [x64]
     os: [freebsd]
 
-  '@zcov/linux-arm64-gnu@0.1.2':
-    resolution: {integrity: sha512-ZPX0JuaevlwwGM+LaraI2giwR9d8G7VXrxdO2z0vGYMdupNn9mV3V47bL6eVe9vCbIw2NPnOLqYOenTygJXIww==}
+  '@zcov/linux-arm64-gnu@0.1.3':
+    resolution: {integrity: sha512-MYZQgBMnCgiasgxAI//ouYmGIH/xtkKF9XgYlYyF6gtwkGqNJE9JARTVi3hANt7kgnumfkBQuo/LyD4yFQaT1w==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@zcov/linux-arm64-musl@0.1.2':
-    resolution: {integrity: sha512-3V+UVtjdmmZi6QEoW+D+Pv0h0ZjtRiaAYHlWOe0mk0qCaqj78C3b2tnaDMILhJeqAA0nA4uZkgKDEe0vR8Ewmw==}
+  '@zcov/linux-arm64-musl@0.1.3':
+    resolution: {integrity: sha512-R/EC+2Nfg0oRAIvlDZeh7h2Tj3XkbxRaLyq3oXyDlLBO+bqFcxveLJWaz5y8Goi36NbMAPSKtS731mMF/5G6Xg==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@zcov/linux-x64-gnu@0.1.2':
-    resolution: {integrity: sha512-rmduVO1QwKZyiFzQFn3s1UZvX4TbQm/fe6FWMd33WSJol90oZLZ3vghbj9jZ9tDqipDIyo2o0gVCn1uI6BG4TA==}
+  '@zcov/linux-x64-gnu@0.1.3':
+    resolution: {integrity: sha512-j0XlGmqM8+2cPkOqfivXZCysgt8fvcSOGXPSffV12vrGAfp0dm/MkoFw5PFOrMc1NejZGz2HRKd1j1j4V7uJ0Q==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@zcov/linux-x64-musl@0.1.2':
-    resolution: {integrity: sha512-3dyk8VLZWTqsnFriqhBd/LcaAA7trGQ/OGX+bsCdIdrCOsuxk8cS9EI8uesdGvL8sVVNWyevFFu84y573dJg9A==}
+  '@zcov/linux-x64-musl@0.1.3':
+    resolution: {integrity: sha512-b0Re1qmhoUwhsyPu5Ixrq20LT90lE7gcFC8bY3syw7OcA+cXNBzbKwYkxCT7z1YjsFhJEG/Nz0aABZNR/cJhng==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@zcov/win32-arm64@0.1.2':
-    resolution: {integrity: sha512-I0pWBEyd3FezFqu3aNzS8SD5W4belinT8fMPO5a0vgQ5SSBzVkw6l5IxgnU4lP02APjqw+lW4ZolZ7KDdMv3CQ==}
+  '@zcov/win32-arm64@0.1.3':
+    resolution: {integrity: sha512-rPvAWo9LJ01aQkVikJdAOgvYte6Pfs4v/iv5tk2PICGYq3WQC1n+vx+IJcCW4z2xV6g9s3jnjfvIfdtr/+pivw==}
     cpu: [arm64]
     os: [win32]
 
-  '@zcov/win32-x64@0.1.2':
-    resolution: {integrity: sha512-xbEmjQml4zR2P8ssDaBCUG0hEBgwO/DPihlhXoMUelcYtN8ATHEHa3y7tzrlhoVNoSQtdha5XuRjkHC488kQoA==}
+  '@zcov/win32-x64@0.1.3':
+    resolution: {integrity: sha512-wIhtShki6l0mKURCxS2/vWavhNhk/Vt4K6Ds6eCOIQdZtIDfxYEB5mjJT6tE35/bFtLxA5wVDeCQKwivrqEw2w==}
     cpu: [x64]
     os: [win32]
 
@@ -4399,43 +4399,43 @@ snapshots:
   '@typescript/typescript-win32-x64@7.0.2':
     optional: true
 
-  '@zcov/cli@0.1.2':
+  '@zcov/cli@0.1.3':
     optionalDependencies:
-      '@zcov/darwin-arm64': 0.1.2
-      '@zcov/darwin-x64': 0.1.2
-      '@zcov/freebsd-x64': 0.1.2
-      '@zcov/linux-arm64-gnu': 0.1.2
-      '@zcov/linux-arm64-musl': 0.1.2
-      '@zcov/linux-x64-gnu': 0.1.2
-      '@zcov/linux-x64-musl': 0.1.2
-      '@zcov/win32-arm64': 0.1.2
-      '@zcov/win32-x64': 0.1.2
+      '@zcov/darwin-arm64': 0.1.3
+      '@zcov/darwin-x64': 0.1.3
+      '@zcov/freebsd-x64': 0.1.3
+      '@zcov/linux-arm64-gnu': 0.1.3
+      '@zcov/linux-arm64-musl': 0.1.3
+      '@zcov/linux-x64-gnu': 0.1.3
+      '@zcov/linux-x64-musl': 0.1.3
+      '@zcov/win32-arm64': 0.1.3
+      '@zcov/win32-x64': 0.1.3
 
-  '@zcov/darwin-arm64@0.1.2':
+  '@zcov/darwin-arm64@0.1.3':
     optional: true
 
-  '@zcov/darwin-x64@0.1.2':
+  '@zcov/darwin-x64@0.1.3':
     optional: true
 
-  '@zcov/freebsd-x64@0.1.2':
+  '@zcov/freebsd-x64@0.1.3':
     optional: true
 
-  '@zcov/linux-arm64-gnu@0.1.2':
+  '@zcov/linux-arm64-gnu@0.1.3':
     optional: true
 
-  '@zcov/linux-arm64-musl@0.1.2':
+  '@zcov/linux-arm64-musl@0.1.3':
     optional: true
 
-  '@zcov/linux-x64-gnu@0.1.2':
+  '@zcov/linux-x64-gnu@0.1.3':
     optional: true
 
-  '@zcov/linux-x64-musl@0.1.2':
+  '@zcov/linux-x64-musl@0.1.3':
     optional: true
 
-  '@zcov/win32-arm64@0.1.2':
+  '@zcov/win32-arm64@0.1.3':
     optional: true
 
-  '@zcov/win32-x64@0.1.2':
+  '@zcov/win32-x64@0.1.3':
     optional: true
 
   abbrev@5.0.0: {}

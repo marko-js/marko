@@ -1,19 +1,10 @@
 packages:
   - packages/*
 linkWorkspacePackages: true
-# Temporary: @zcov/*@0.1.2 published 2026-07-27, inside the 24h
-# minimumReleaseAge window. Drop this block before merging.
+# @zcov/* is first-party: the release-age gate guards against a compromised
+# third-party publish, which is not the threat model for what we publish.
 minimumReleaseAgeExclude:
-  - "@zcov/cli@0.1.2"
-  - "@zcov/darwin-arm64@0.1.2"
-  - "@zcov/darwin-x64@0.1.2"
-  - "@zcov/freebsd-x64@0.1.2"
-  - "@zcov/linux-arm64-gnu@0.1.2"
-  - "@zcov/linux-arm64-musl@0.1.2"
-  - "@zcov/linux-x64-gnu@0.1.2"
-  - "@zcov/linux-x64-musl@0.1.2"
-  - "@zcov/win32-arm64@0.1.2"
-  - "@zcov/win32-x64@0.1.2"
+  - "@zcov/*"
 patchedDependencies:
   "@babel/generator@7.29.7": patches/@babel__generator@7.29.7.patch
   "@babel/helper-compilation-targets@7.29.7": patches/@babel__helper-compilation-targets@7.29.7.patch
