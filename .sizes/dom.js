@@ -1,4 +1,4 @@
-// size: 26363 (min) 9754 (brotli)
+// size: 26418 (min) 9835 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -79,6 +79,8 @@ let empty = [],
   readyIds,
   isResuming,
   inputType = "",
+  controllableScripts = {},
+  controllableRenders = {},
   _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
@@ -1017,6 +1019,34 @@ function _attr_input_checked_default(scope, nodeAccessor, checked) {
       restoreValue !== normalizedChecked && (el.checked = restoreValue));
   }
 }
+/** Filled by the latches a compiled page emits, so a page carries only the
+ * control kinds its tags can be (`_attrs_script` resolves the kind at run time). */
+/** The render pass equivalent, for a tag whose name is only known at run time;
+ * a statically named tag passes its claim to `_attrs` instead. */
+function _enable_controllable_input() {
+  ((controllableScripts[0] = _attr_input_checked_script),
+    (controllableScripts[1] = _attr_input_checkedValue_script),
+    (controllableScripts[2] = _attr_input_value_script));
+}
+function _enable_controllable_textarea() {
+  controllableScripts[2] = _attr_input_value_script;
+}
+function _enable_controllable_select() {
+  controllableScripts[3] = _attr_select_value_script;
+}
+function _enable_controllable_open() {
+  controllableScripts[4] = _attr_details_or_dialog_open_script;
+}
+/** A run-time tag name can be any controllable, so its page enables them all. */
+function _enable_controllable() {
+  (_enable_controllable_input(),
+    _enable_controllable_select(),
+    _enable_controllable_open(),
+    (controllableRenders.INPUT = _controllable_input),
+    (controllableRenders.TEXTAREA = _controllable_textarea),
+    (controllableRenders.SELECT = _controllable_select),
+    (controllableRenders.DETAILS = controllableRenders.DIALOG = _controllable_open));
+}
 function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
   let el = scope[nodeAccessor],
     normalizedChecked = isNotVoid(checked);
@@ -1300,6 +1330,48 @@ function updateList(arr, val, push) {
       : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
   );
 }
+function _controllable_input(scope, nodeAccessor, nextAttrs) {
+  return "checked" in nextAttrs || "checkedChange" in nextAttrs
+    ? (_attr_input_checked(scope, nodeAccessor, nextAttrs.checked, nextAttrs.checkedChange),
+      /^checked(?:Value)?(?:Change)?$/)
+    : "checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs
+      ? (_attr_input_checkedValue(
+          scope,
+          nodeAccessor,
+          nextAttrs.checkedValue,
+          nextAttrs.checkedValueChange,
+          nextAttrs.value,
+        ),
+        /^(?:value|checked(?:Value)?)(?:Change)?$/)
+      : _controllable_textarea(scope, nodeAccessor, nextAttrs, _attr_input_value_dynamic_default);
+}
+function _controllable_textarea(scope, nodeAccessor, nextAttrs, dynamicDefault) {
+  if ("value" in nextAttrs || "valueChange" in nextAttrs)
+    return (
+      _attr_input_value(
+        scope,
+        nodeAccessor,
+        nextAttrs.value,
+        nextAttrs.valueChange,
+        dynamicDefault,
+      ),
+      /^value(?:Change)?$/
+    );
+}
+function _controllable_select(scope, nodeAccessor, nextAttrs) {
+  if ("value" in nextAttrs || "valueChange" in nextAttrs)
+    return (
+      _attr_select_value(scope, nodeAccessor, nextAttrs.value, nextAttrs.valueChange),
+      /^value(?:Change)?$/
+    );
+}
+function _controllable_open(scope, nodeAccessor, nextAttrs) {
+  if ("open" in nextAttrs || "openChange" in nextAttrs)
+    return (
+      _attr_details_or_dialog_open(scope, nodeAccessor, nextAttrs.open, nextAttrs.openChange),
+      /^open(?:Change)?$/
+    );
+}
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
 }
@@ -1358,22 +1430,23 @@ function _text_content(node, value) {
   let normalizedValue = _to_text(value);
   node.textContent !== normalizedValue && (node.textContent = normalizedValue);
 }
-function _attrs(scope, nodeAccessor, nextAttrs) {
+function _attrs(scope, nodeAccessor, nextAttrs, controllable) {
   let el = scope[nodeAccessor];
   for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
     (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
       el.removeAttribute(name);
   }
-  attrsInternal(scope, nodeAccessor, nextAttrs);
+  attrsInternal(scope, nodeAccessor, nextAttrs, controllable);
 }
-function _attrs_content(scope, nodeAccessor, nextAttrs) {
-  (_attrs(scope, nodeAccessor, nextAttrs), _attr_content(scope, nodeAccessor, nextAttrs?.content));
+function _attrs_content(scope, nodeAccessor, nextAttrs, controllable) {
+  (_attrs(scope, nodeAccessor, nextAttrs, controllable),
+    _attr_content(scope, nodeAccessor, nextAttrs?.content));
 }
 function hasAttrAlias(element, attr, nextAttrs) {
   return attr === "checked" && element.tagName === "INPUT" && "checkedValue" in nextAttrs;
 }
-function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
+function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
   let el = scope[nodeAccessor],
     partial = {};
   for (let i = el.attributes.length; i--;) {
@@ -1384,60 +1457,20 @@ function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
     let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
     skip[key] || (partial[key] = nextAttrs[name]);
   }
-  attrsInternal(scope, nodeAccessor, partial);
+  attrsInternal(scope, nodeAccessor, partial, controllable);
 }
-function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip) {
-  (_attrs_partial(scope, nodeAccessor, nextAttrs, skip),
+function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip, controllable) {
+  (_attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable),
     _attr_content(scope, nodeAccessor, nextAttrs?.content));
 }
-function attrsInternal(scope, nodeAccessor, nextAttrs) {
+function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
   let el = scope[nodeAccessor],
-    events = scope["I" + nodeAccessor],
-    skip;
+    events = scope["I" + nodeAccessor];
   for (let name in events) events[name] = 0;
-  switch (
-    ((scope["F" + nodeAccessor] = 5), (scope["E" + nodeAccessor] = 0), nextAttrs && el.tagName)
-  ) {
-    case "INPUT":
-      "checked" in nextAttrs || "checkedChange" in nextAttrs
-        ? (_attr_input_checked(scope, nodeAccessor, nextAttrs.checked, nextAttrs.checkedChange),
-          (skip = /^checked(?:Value)?(?:Change)?$/))
-        : "checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs
-          ? (_attr_input_checkedValue(
-              scope,
-              nodeAccessor,
-              nextAttrs.checkedValue,
-              nextAttrs.checkedValueChange,
-              nextAttrs.value,
-            ),
-            (skip = /^(?:value|checked(?:Value)?)(?:Change)?$/))
-          : ("value" in nextAttrs || "valueChange" in nextAttrs) &&
-            (_attr_input_value(
-              scope,
-              nodeAccessor,
-              nextAttrs.value,
-              nextAttrs.valueChange,
-              _attr_input_value_dynamic_default,
-            ),
-            (skip = /^value(?:Change)?$/));
-      break;
-    case "SELECT":
-      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
-        (_attr_select_value(scope, nodeAccessor, nextAttrs.value, nextAttrs.valueChange),
-        (skip = /^value(?:Change)?$/));
-      break;
-    case "TEXTAREA":
-      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
-        (_attr_input_value(scope, nodeAccessor, nextAttrs.value, nextAttrs.valueChange),
-        (skip = /^value(?:Change)?$/));
-      break;
-    case "DETAILS":
-    case "DIALOG":
-      ("open" in nextAttrs || "openChange" in nextAttrs) &&
-        (_attr_details_or_dialog_open(scope, nodeAccessor, nextAttrs.open, nextAttrs.openChange),
-        (skip = /^open(?:Change)?$/));
-      break;
-  }
+  ((scope["F" + nodeAccessor] = 5), (scope["E" + nodeAccessor] = 0));
+  let skip =
+    nextAttrs &&
+    (controllable || controllableRenders[el.tagName])?.(scope, nodeAccessor, nextAttrs);
   for (let name in nextAttrs) {
     let value = nextAttrs[name];
     switch (name) {
@@ -1468,23 +1501,7 @@ function _attr_content(scope, nodeAccessor, value) {
 function _attrs_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
     events = scope["I" + nodeAccessor];
-  switch (scope["F" + nodeAccessor]) {
-    case 0:
-      _attr_input_checked_script(scope, nodeAccessor);
-      break;
-    case 1:
-      _attr_input_checkedValue_script(scope, nodeAccessor);
-      break;
-    case 2:
-      _attr_input_value_script(scope, nodeAccessor);
-      break;
-    case 3:
-      _attr_select_value_script(scope, nodeAccessor);
-      break;
-    case 4:
-      _attr_details_or_dialog_open_script(scope, nodeAccessor);
-      break;
-  }
+  controllableScripts[scope["F" + nodeAccessor]]?.(scope, nodeAccessor);
   for (let name in events) _on(el, name, events[name]);
 }
 function _html(scope, value, accessor) {

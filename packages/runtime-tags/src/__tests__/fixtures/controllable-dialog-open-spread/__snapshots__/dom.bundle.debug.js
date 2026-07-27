@@ -2,9 +2,10 @@
 const $template$1 = "<dialog></dialog>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
+_enable_controllable_open();
 const $input__script = _script("__tests__/tags/my-dialog.marko_0_input", ($scope) => _attrs_script($scope, "#dialog/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	_attrs_content($scope, "#dialog/0", $scope.input);
+	_attrs_content($scope, "#dialog/0", $scope.input, _controllable_open);
 	$input__script($scope);
 });
 var my_dialog_default = /*@__PURE__*/ _template("__tests__/tags/my-dialog.marko", $template$1, " b", $setup$1, $input);

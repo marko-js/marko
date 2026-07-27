@@ -83,6 +83,7 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath } from "./custom-tag";
+import { controllableScriptLatchFor, enableControllable } from "./native-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
@@ -593,6 +594,7 @@ export default {
 
         if (!isClassAPI) {
           enableDynamicTagResume(tag);
+          enableDynamicTagControllables(tag);
         }
         addValue(section, tagExtra.referencedBindings, signal, tagExpression);
         tag.remove();
@@ -600,6 +602,23 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.MarkoTag>;
+
+// Any attr that `attrsInternal` may claim, which a spread can also carry.
+const controlledAttrs = /^(?:value|checked(?:Value)?|open)(?:Change)?$/;
+/** The name resolves at run time, so any control kind is possible. */
+function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
+  if (analyzeTagNameType(tag, true) === TagNameType.CustomTag) return;
+
+  for (const attr of tag.node.attributes) {
+    if (
+      attr.type === "MarkoSpreadAttribute" ||
+      (attr.type === "MarkoAttribute" && controlledAttrs.test(attr.name))
+    ) {
+      enableControllable(controllableScriptLatchFor(undefined));
+      return;
+    }
+  }
+}
 
 function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
   const program = getProgram().node;

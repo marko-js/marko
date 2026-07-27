@@ -31,6 +31,55 @@ export function _attr_input_checked_default(
     }
   }
 }
+/** Filled by the latches a compiled page emits, so a page carries only the
+ * control kinds its tags can be (`_attrs_script` resolves the kind at run time). */
+export const controllableScripts: {
+  [T in ControlledType]?: (scope: Scope, nodeAccessor: Accessor) => void;
+} = {};
+
+/** The render pass equivalent, for a tag whose name is only known at run time;
+ * a statically named tag passes its claim to `_attrs` instead. */
+export const controllableRenders: {
+  [tagName: string]: ControllableAttrs;
+} = {};
+
+export type ControllableAttrs = (
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+) => RegExp | void;
+
+export function _enable_controllable_input() {
+  controllableScripts[ControlledType.InputChecked] = _attr_input_checked_script;
+  controllableScripts[ControlledType.InputCheckedValue] =
+    _attr_input_checkedValue_script;
+  controllableScripts[ControlledType.InputValue] = _attr_input_value_script;
+}
+
+export function _enable_controllable_textarea() {
+  controllableScripts[ControlledType.InputValue] = _attr_input_value_script;
+}
+
+export function _enable_controllable_select() {
+  controllableScripts[ControlledType.SelectValue] = _attr_select_value_script;
+}
+
+export function _enable_controllable_open() {
+  controllableScripts[ControlledType.DetailsOrDialogOpen] =
+    _attr_details_or_dialog_open_script;
+}
+
+/** A run-time tag name can be any controllable, so its page enables them all. */
+export function _enable_controllable() {
+  _enable_controllable_input();
+  _enable_controllable_select();
+  _enable_controllable_open();
+  controllableRenders.INPUT = _controllable_input;
+  controllableRenders.TEXTAREA = _controllable_textarea;
+  controllableRenders.SELECT = _controllable_select;
+  controllableRenders.DETAILS = controllableRenders.DIALOG = _controllable_open;
+}
+
 export function _attr_input_checked(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -580,4 +629,90 @@ function updateList(arr: unknown[], val: unknown, push: boolean) {
       ? !~index && [...arr, val]
       : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
   );
+}
+
+// Each claims its controlled attrs out of a spread and returns the pattern of
+// names the attr loop must then skip.
+export function _controllable_input(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+) {
+  if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
+    _attr_input_checked(
+      scope,
+      nodeAccessor,
+      nextAttrs.checked,
+      nextAttrs.checkedChange,
+    );
+    return /^checked(?:Value)?(?:Change)?$/;
+  }
+
+  if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs) {
+    _attr_input_checkedValue(
+      scope,
+      nodeAccessor,
+      nextAttrs.checkedValue,
+      nextAttrs.checkedValueChange,
+      nextAttrs.value,
+    );
+    return /^(?:value|checked(?:Value)?)(?:Change)?$/;
+  }
+
+  return _controllable_textarea(
+    scope,
+    nodeAccessor,
+    nextAttrs,
+    _attr_input_value_dynamic_default,
+  );
+}
+
+export function _controllable_textarea(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+  dynamicDefault?: typeof _attr_input_value_dynamic_default,
+) {
+  if ("value" in nextAttrs || "valueChange" in nextAttrs) {
+    _attr_input_value(
+      scope,
+      nodeAccessor,
+      nextAttrs.value,
+      nextAttrs.valueChange,
+      dynamicDefault,
+    );
+    return /^value(?:Change)?$/;
+  }
+}
+
+export function _controllable_select(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+) {
+  if ("value" in nextAttrs || "valueChange" in nextAttrs) {
+    _attr_select_value(
+      scope,
+      nodeAccessor,
+      nextAttrs.value,
+      nextAttrs.valueChange,
+    );
+    return /^value(?:Change)?$/;
+  }
+}
+
+export function _controllable_open(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+) {
+  if ("open" in nextAttrs || "openChange" in nextAttrs) {
+    _attr_details_or_dialog_open(
+      scope,
+      nodeAccessor,
+      nextAttrs.open,
+      nextAttrs.openChange,
+    );
+    return /^open(?:Change)?$/;
+  }
 }

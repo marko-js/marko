@@ -1,7 +1,8 @@
 // template.marko
+_enable_controllable_open();
 const $attrs2__script = _script("a1", ($scope) => _attrs_script($scope, "b"));
 const $attrs2 = /*@__PURE__*/ _const(7, ($scope) => {
-	_attrs($scope, "b", $scope.h);
+	_attrs($scope, "b", $scope.h, _controllable_open);
 	$attrs2__script($scope);
 });
 const $open__OR__n = /*@__PURE__*/ _or(6, ($scope) => $attrs2($scope, {

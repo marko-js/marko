@@ -1,7 +1,8 @@
 // tags/my-textarea.marko
+_enable_controllable_textarea();
 const $input__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 const $input = /*@__PURE__*/ _const(2, ($scope) => {
-	_attrs($scope, "a", $scope.c);
+	_attrs($scope, "a", $scope.c, _controllable_textarea);
 	$input__script($scope);
 });
 

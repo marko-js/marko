@@ -42,6 +42,15 @@ export {
   _attr_input_value as _attr_textarea_value,
   _attr_input_value_default as _attr_textarea_value_default,
   _attr_input_value_script as _attr_textarea_value_script,
+  _controllable_input,
+  _controllable_open,
+  _controllable_select,
+  _controllable_textarea,
+  _enable_controllable,
+  _enable_controllable_input,
+  _enable_controllable_open,
+  _enable_controllable_select,
+  _enable_controllable_textarea,
 } from "./dom/controllable";
 export {
   _attr,
