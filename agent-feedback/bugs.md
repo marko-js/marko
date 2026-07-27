@@ -858,29 +858,6 @@ value:=val/></define><Wrap a=n aChange(v){ n = v }/>` and observe the
 destructuring-key error pointing at the `<define>` tag; deleting `value:=val`
 makes it compile.
 
-## Emit every statement parsed from an `<import>`/`<export>` tag, not just the first
-
-`packages/runtime-tags/src/translator/core/import.ts` › `parse` | 2026-07-23 | impact:med | effort:low
-
-`parse` replaces the tag with `parseStatements(tag.hub.file, node.rawValue!,
-node.start!, node.end!)[0]` (import.ts:7) and discards every statement after the
-first; `packages/runtime-tags/src/translator/core/export.ts` › `parse` (:7) is
-byte-identical in this respect. `rawValue` is the whole raw open tag, so one
-source line can legitimately parse to several statements: a template beginning
-`import { a } from "./a"; import { b } from "./b"` compiles to a module
-containing only the first import while the body still references `b`, yielding
-generated code with a free identifier and no compile error, warning, or
-`meta.diagnostics` entry — the failure surfaces later as a render-time
-`ReferenceError` (or an unresolved global after bundling). `export const p = 1;
-export const q = 2` drops `q` the same way. The sibling statement tags already
-handle this correctly: `core/static.ts`, `core/server.ts`, and `core/client.ts`
-keep the full `parseStatements` result and wrap it in a `markoScriptlet`, so the
-fix is either `tag.replaceWithMultiple(parseStatements(...))` or a
-`buildCodeFrameError` when more than one statement comes back. Re-verify:
-compile a template whose first line is `import { a } from "./a"; import { b }
-from "./b"` followed by `<div>${a} ${b}</div>` and confirm the output contains
-only `import { a } from "./a";` while the render body still escapes a bare `b`.
-
 ## Stop the DOM compile from failing with an internal error on an unreferenced `<define>` that has body content
 
 `packages/runtime-tags/src/translator/core/define.ts` › `analyze` | 2026-07-23 | impact:med | effort:low
