@@ -204,7 +204,9 @@ export default {
       });
 
       if (seen.content) {
-        if (getTagDef(tag)?.parseOptions?.openTagOnly) {
+        const tagDef = getTagDef(tag);
+        // `<meta content=x>` is a real html attribute, not renderable content.
+        if (tagDef?.parseOptions?.openTagOnly && !tagDef.attributes?.content) {
           throw tag.hub.buildError(
             seen.content,
             `The \`<${tagName}>\` tag cannot have content, so it does not support the \`content\` attribute.`,
