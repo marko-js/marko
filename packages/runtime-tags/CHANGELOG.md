@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.28
+
+### Patch Changes
+
+- [#3673](https://github.com/marko-js/marko/pull/3673) [`8aa1b85`](https://github.com/marko-js/marko/commit/8aa1b853f25b6144602b77b163d2a24a69eb3918) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<meta content=x>` failing to compile. `content` is a real html attribute on `<meta>`, so the check for a `content` attribute on a void tag now only rejects tags that do not declare one.
+
 ## 6.3.27
 
 ### Patch Changes
