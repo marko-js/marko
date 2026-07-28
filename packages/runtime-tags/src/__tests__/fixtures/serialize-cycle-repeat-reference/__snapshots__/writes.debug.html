@@ -1,0 +1,21 @@
+<button id=go>go</button><!--M_*1 #button/0-->
+<div id=out>pending<!--M_*1 #text/1--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_([1, {
+      graph_byId: new Map(_.a = [
+        [1, _.b = {
+          id: 1,
+          next: _.c = {
+            id: 2
+          }
+        }],
+        [2, _.c]
+      ]),
+      graph_current: _.b,
+      graph_all: new Set(_.d = [_.b, _.c])
+    }]), _.c.prev = _.b, 0),
+    "packages/runtime-tags/src/__tests__/fixtures/serialize-cycle-repeat-reference/template.marko_0_graph_byId_graph_current_graph_all 1"
+  ];
+  M._.w()
+</script>

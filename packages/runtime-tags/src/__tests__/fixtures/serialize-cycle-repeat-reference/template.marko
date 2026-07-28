@@ -1,0 +1,19 @@
+static function buildGraph() {
+  const a = { id: 1 };
+  const b = { id: 2 };
+  a.next = b;
+  b.prev = a;
+  return { current: a, byId: new Map([[1, a], [2, b]]), all: new Set([a, b]) };
+}
+
+<let/graph = buildGraph()/>
+<let/result = "pending"/>
+<button id="go" onClick() {
+  result = [
+    graph.byId.get(1) === graph.current,
+    graph.byId.get(2) === graph.current.next,
+    graph.all.has(graph.current),
+    graph.current.next.prev === graph.current,
+  ].join(",");
+}>go</button>
+<div id="out">${result}</div>
