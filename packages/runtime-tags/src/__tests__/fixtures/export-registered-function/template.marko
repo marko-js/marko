@@ -1,0 +1,9 @@
+export function shout(message: string) { return message.toUpperCase() + "!"; }
+export const whisper = (message: string) => message.toLowerCase();
+
+<let/loud=shout/>
+<let/quiet=whisper/>
+<let/message="Hello"/>
+<button onClick() { message = loud(message) }>up</button>
+<button onClick() { message = quiet(message) }>down</button>
+<div>${message}</div>

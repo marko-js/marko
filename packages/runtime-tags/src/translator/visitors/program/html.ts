@@ -8,6 +8,7 @@ import {
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
 import { getMarkoOpts } from "../../util/marko-config";
+import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -163,6 +164,8 @@ export default {
           }
         }
       }
+
+      writeModuleRegistrations(program);
 
       const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(

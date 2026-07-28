@@ -3,6 +3,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
+import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -213,6 +214,8 @@ export default {
       if (extraDecls) {
         program.node.body.unshift(t.variableDeclaration("const", extraDecls));
       }
+
+      writeModuleRegistrations(program);
 
       program.node.body.push(
         t.exportDefaultDeclaration(

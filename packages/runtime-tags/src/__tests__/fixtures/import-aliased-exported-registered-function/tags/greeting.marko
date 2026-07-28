@@ -1,0 +1,9 @@
+static const whisper = (message: string) => message.toLowerCase();
+
+export function shout(message: string) {
+  return message.toUpperCase() + "!";
+}
+
+export { shout as yell, whisper };
+
+<div>${input.message}</div>

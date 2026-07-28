@@ -183,6 +183,9 @@ declare module "@marko/compiler/dist/types" {
     name?: string;
     registerId?: string;
     registerReason?: SerializeReason;
+    // Reserved for a function reachable through an export: importing templates
+    // resolve it to register the function without this template registering it.
+    exportRegisterId?: string;
   }
 
   export interface ArrowFunctionExpressionExtra extends FunctionExtra {}

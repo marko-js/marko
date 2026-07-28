@@ -1,0 +1,7 @@
+import { beta, gamma } from "./tags/barrel.marko";
+
+<let/first=beta/>
+<let/second=gamma/>
+<let/message="start"/>
+<button onClick() { message = second(first(message)) }>go</button>
+<div>${message}</div>

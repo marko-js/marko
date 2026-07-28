@@ -1,5 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  getProgram,
+  getTemplateId,
+  loadFileForImport,
+} from "@marko/compiler/babel-utils";
 
 import { generateUid } from "../util/generate-uid";
 import { getAttributeTagParent } from "../util/get-parent-tag";
@@ -26,10 +31,35 @@ import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import type { TemplateVisitor } from "../util/visitors";
 
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    // Every name an export is reachable by -> its reserved registration.
+    registeredExports?: Map<string, ReservedExport>;
+  }
+}
+
+/** The canonical name a reserved register id is exported under, and its id. */
+export interface ReservedExport {
+  registerId: string;
+  exportName: string;
+}
+
+/** A reserved export, plus the template that declares it. */
+export interface ResolvedExport extends ReservedExport {
+  filename: string;
+}
+
+interface ImportedFn extends ResolvedExport {
+  node: t.ImportDeclaration;
+  local: string;
+}
+
 const [getReferencesByFn] = createProgramState(
   () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
 );
-
+const [getReferencesByImportedFn] = createProgramState(
+  () => new Map<ImportedFn, Set<t.NodeExtra>>(),
+);
 export default {
   analyze(fn) {
     // bail on closures
@@ -60,8 +90,10 @@ export default {
             ? node.key.name
             : "anonymous");
 
+    reserveExportRegisterId(fnExtra, fn, markoRoot);
+
     if (isStaticRoot(markoRoot)) {
-      const refs = getStaticDeclRefs(fnExtra, fn);
+      const refs = getStaticDeclRefs(fn);
       if (refs === true) {
         registerFunction(fnExtra, true);
       } else if (refs.size) {
@@ -77,18 +109,208 @@ export default {
 
 export function finalizeFunctionRegistry() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
-    let reason: undefined | SerializeReason;
-    for (const exprExtra of exprExtras) {
-      reason = mergeSerializeReasons(
-        reason,
-        getAllSerializeReasonsForExtra(getCanonicalExtra(exprExtra)),
-      );
-    }
-
+    const reason = resolveSerializeReason(exprExtras);
     if (reason) {
       registerFunction(fnExtra, reason);
     }
   }
+
+  for (const [importedFn, exprExtras] of getReferencesByImportedFn()) {
+    if (resolveSerializeReason(exprExtras)) {
+      registerImportedFn(importedFn);
+    }
+  }
+}
+
+/**
+ * Tracks a function imported from another template that reserved a register id.
+ * The importing template registers it (under the reserved id) when its own
+ * references reach something serialized.
+ */
+export function trackImportedFn(
+  importDecl: t.NodePath<t.ImportDeclaration>,
+  local: string,
+  resolved: ResolvedExport,
+) {
+  const binding = importDecl.scope.getBinding(local);
+  if (!binding) return;
+
+  const importedFn: ImportedFn = { ...resolved, node: importDecl.node, local };
+  const refs = new Set<t.NodeExtra>();
+  if (addBindingRefs(binding, refs, new Set()) === true) {
+    registerImportedFn(importedFn);
+  } else if (refs.size) {
+    getReferencesByImportedFn().set(importedFn, refs);
+  }
+}
+
+/**
+ * Finds the id reserved for an export, following `export ... from` hops. Each
+ * template only records the exports it declares, so this resolves on demand:
+ * a template in an import cycle is read while it is still analyzing, and would
+ * hand out an incomplete map if the ids were pushed ahead of time.
+ */
+export function resolveRegisteredExport(
+  file: t.BabelFile,
+  exportName: string,
+  seen = new Set<string>(),
+): ResolvedExport | undefined {
+  const filename = file.opts.filename as string;
+  const key = `${filename}\0${exportName}`;
+  if (seen.has(key)) return;
+  seen.add(key);
+
+  const reserved = file.ast.program.extra?.registeredExports?.get(exportName);
+  if (reserved) return { ...reserved, filename };
+
+  for (const child of file.ast.program.body) {
+    if (
+      (child.type !== "ExportNamedDeclaration" &&
+        child.type !== "ExportAllDeclaration") ||
+      !child.source ||
+      (child.exportKind || "value") !== "value"
+    ) {
+      continue;
+    }
+
+    const sourceFile = loadFileForImport(file, child.source.value);
+    if (!sourceFile) continue;
+
+    if (child.type === "ExportAllDeclaration") {
+      const resolved = resolveRegisteredExport(sourceFile, exportName, seen);
+      if (resolved) return resolved;
+      continue;
+    }
+
+    for (const specifier of child.specifiers) {
+      if (
+        specifier.type !== "ExportSpecifier" ||
+        (specifier.exportKind || "value") !== "value" ||
+        getExportedName(specifier) !== exportName
+      ) {
+        continue;
+      }
+
+      const resolved = resolveRegisteredExport(
+        sourceFile,
+        specifier.local.name,
+        seen,
+      );
+      if (resolved) return resolved;
+    }
+  }
+}
+
+function resolveSerializeReason(exprExtras: Set<t.NodeExtra>) {
+  let reason: undefined | SerializeReason;
+  for (const exprExtra of exprExtras) {
+    reason = mergeSerializeReasons(
+      reason,
+      getAllSerializeReasonsForExtra(getCanonicalExtra(exprExtra)),
+    );
+  }
+
+  return reason;
+}
+
+function registerImportedFn({ node, ...importedFn }: ImportedFn) {
+  const extra = (node.extra ??= {});
+  extra.registeredImportedFns ??= [];
+  extra.registeredImportedFns.push(importedFn);
+  getProgram().node.extra.isInteractive = true;
+}
+
+// An exported function is always module scoped, so any template that imports it
+// can register it as is; the id is reserved here so every one of them agrees.
+// A function exported under several names still gets one id, keyed by the first.
+function reserveExportRegisterId(
+  fnExtra: RegisteredFnExtra,
+  fn: t.NodePath<t.Function>,
+  markoRoot: MarkoExprRootPath,
+) {
+  if (!isStaticRoot(markoRoot)) return;
+  const exportNames = getExportNames(fn, markoRoot);
+  // The generated module imports the function by name, so the id is keyed by a
+  // name that can be spelled in an import.
+  const exportName = exportNames?.find((name) => t.isValidIdentifier(name));
+  if (!exportName) return;
+
+  const {
+    markoOpts,
+    opts: { filename },
+  } = getFile();
+  const programExtra = getProgram().node.extra;
+  const registerId = getTemplateId(
+    markoOpts,
+    filename as string,
+    `${fnExtra.section.id}/export/${exportName}`,
+  );
+
+  fnExtra.exportRegisterId = registerId;
+  programExtra.registeredExports ??= new Map();
+  for (const name of exportNames!) {
+    programExtra.registeredExports.set(name, { registerId, exportName });
+  }
+}
+
+// Only a function that _is_ an exported value can be registered by an importer,
+// whether it is exported where it is declared or by a later `export { … }`.
+function getExportNames(
+  fn: t.NodePath<t.Function>,
+  markoRoot: MarkoExprRootPath,
+) {
+  const localName = getExportableName(fn);
+  if (localName === undefined) return;
+
+  const exportNames =
+    markoRoot.isExportNamedDeclaration() && !markoRoot.node.source
+      ? [localName]
+      : [];
+
+  // A later `export { … }` reads the binding, so its specifiers are among the
+  // references babel already tracks for it.
+  const binding = fn.scope.getBinding(localName);
+  if (binding) {
+    for (const ref of binding.referencePaths) {
+      const specifier = ref.parent;
+      if (
+        specifier?.type === "ExportSpecifier" &&
+        (specifier.exportKind || "value") === "value" &&
+        !(ref.parentPath!.parent as t.ExportNamedDeclaration).source
+      ) {
+        const exportName = getExportedName(specifier);
+        // A template's default export is the template itself.
+        if (exportName !== "default") {
+          exportNames.push(exportName);
+        }
+      }
+    }
+  }
+
+  return exportNames.length ? exportNames : undefined;
+}
+
+// The name this function is declared under, when it is bound to one it cannot
+// be reassigned through — the register id is bound to the value, not the name.
+function getExportableName(fn: t.NodePath<t.Function>) {
+  const { node, parent } = fn;
+  if (node.type === "FunctionDeclaration") {
+    return node.id?.name;
+  }
+
+  if (
+    t.isVariableDeclarator(parent) &&
+    parent.init === node &&
+    t.isIdentifier(parent.id) &&
+    t.isVariableDeclaration(fn.parentPath!.parent, { kind: "const" })
+  ) {
+    return parent.id.name;
+  }
+}
+
+function getExportedName(specifier: t.ExportSpecifier) {
+  const { exported } = specifier;
+  return exported.type === "Identifier" ? exported.name : exported.value;
 }
 
 function canIgnoreRegister(
@@ -115,8 +337,6 @@ function canIgnoreRegister(
 }
 
 function getStaticDeclRefs(
-  // oxlint-disable-next-line only-used-in-recursion
-  fnExtra: RegisteredFnExtra,
   path: t.NodePath<t.Node>,
   refs = new Set<t.NodeExtra>(),
   seen = new Set<t.Node>(),
@@ -131,27 +351,36 @@ function getStaticDeclRefs(
       for (const name in ids) {
         const binding = decl.scope.getBinding(name);
         if (!binding) continue;
-        for (const ref of binding.referencePaths) {
-          if (isInvokedFunction(ref) || ref.parentPath!.type === "Program")
-            continue;
-          const exprRoot = getExprRoot(ref);
-          const markoRoot = getMarkoRoot(exprRoot);
-          if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
-          if (isStaticRoot(markoRoot)) {
-            if (getStaticDeclRefs(fnExtra, ref, refs, seen) === true) {
-              return true;
-            }
-          } else if (shouldAlwaysRegister(markoRoot)) {
-            return true;
-          } else {
-            refs.add((exprRoot.node.extra ??= {}));
-          }
+        if (addBindingRefs(binding, refs, seen) === true) {
+          return true;
         }
       }
     }
   }
 
   return refs;
+}
+
+function addBindingRefs(
+  binding: NonNullable<ReturnType<t.Scope["getBinding"]>>,
+  refs: Set<t.NodeExtra>,
+  seen: Set<t.Node>,
+) {
+  for (const ref of binding.referencePaths) {
+    if (isInvokedFunction(ref) || ref.parentPath!.type === "Program") continue;
+    const exprRoot = getExprRoot(ref);
+    const markoRoot = getMarkoRoot(exprRoot);
+    if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
+    if (isStaticRoot(markoRoot)) {
+      if (getStaticDeclRefs(ref, refs, seen) === true) {
+        return true;
+      }
+    } else if (shouldAlwaysRegister(markoRoot)) {
+      return true;
+    } else {
+      refs.add((exprRoot.node.extra ??= {}));
+    }
+  }
 }
 
 function shouldAlwaysRegister(markoRoot: MarkoExprRootPath) {
@@ -207,11 +436,13 @@ function registerFunction(fnExtra: RegisteredFnExtra, reason: SerializeReason) {
   program.node.extra.isInteractive = true;
   fnExtra.registerReason = reason;
   fnExtra.name = generateUid(fnExtra.name);
-  fnExtra.registerId = getTemplateId(
-    markoOpts,
-    filename as string,
-    `${fnExtra.section.id}/${fnExtra.name.slice(1)}`,
-  );
+  fnExtra.registerId =
+    fnExtra.exportRegisterId ??
+    getTemplateId(
+      markoOpts,
+      filename as string,
+      `${fnExtra.section.id}/${fnExtra.name.slice(1)}`,
+    );
 }
 
 function isMarkoAttribute(

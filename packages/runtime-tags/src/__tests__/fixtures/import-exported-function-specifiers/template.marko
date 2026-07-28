@@ -1,0 +1,11 @@
+import { shout, type Message } from "./tags/handlers.marko";
+import type { Message as Alias } from "./tags/handlers.marko";
+import { default as Handlers } from "./tags/handlers.marko";
+import { shout as alsoShout } from "./tags/handlers.marko";
+
+<let/loud=shout/>
+<let/quiet=alsoShout/>
+<let/message=("Hello" as Message)/>
+<const/label=("static" as Alias)/>
+<button onClick() { message = loud(quiet(message)) }>${label}</button>
+<Handlers message=message/>
