@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	child_default({ action: _resume(function() {
 		(($el) => $el())(_el_read_error).classList.add("child1");
 	}, "__tests__/template.marko_0/action", $scope0_id) });
-	_html(`<div></div>${_el_resume($scope0_id, "#div/1")}`);
+	_html_opens("__tests__/template.marko:3:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/1")}`);
 	child_default({ action: _resume(function() {
 		(($el) => $el())(_el_read_error).classList.add("child2");
 	}, "__tests__/template.marko_0/action2", $scope0_id) });

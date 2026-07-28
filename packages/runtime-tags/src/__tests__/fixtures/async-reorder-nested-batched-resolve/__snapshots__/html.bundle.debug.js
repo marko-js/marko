@@ -8,26 +8,26 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope1_id, "#text/0", promiseA, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<div${_attr_class(value)} level=1>`);
+			_html_opens("__tests__/template.marko:8:5"), _html(`<div${_attr_class(value)} level=1>`);
 			_try($scope2_id, "#text/1", _content_resume("__tests__/template.marko_3_content", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
 				_await($scope3_id, "#text/0", promiseA, (value) => {
 					const $scope6_id = _scope_id();
 					const promiseB = resolveAfter("b", 2);
-					_html(`<div${_attr_class(value)} level=2>`);
+					_html_opens("__tests__/template.marko:13:11"), _html(`<div${_attr_class(value)} level=2>`);
 					_try($scope6_id, "#text/1", _content_resume("__tests__/template.marko_7_content", () => {
 						const $scope7_id = _scope_id();
 						_scope_reason();
 						_await($scope7_id, "#text/0", promiseB, (value) => {
 							const $scope8_id = _scope_id();
-							_html(`<div${_attr_class(value)} level=3>`);
+							_html_opens("__tests__/template.marko:19:17"), _html(`<div${_attr_class(value)} level=3>`);
 							_try($scope8_id, "#text/1", _content_resume("__tests__/template.marko_9_content", () => {
 								const $scope9_id = _scope_id();
 								_scope_reason();
 								_await($scope9_id, "#text/0", promiseB, (value) => {
 									const $scope12_id = _scope_id();
-									_html(`<div${_attr_class(value)} level=4></div>`);
+									_html_opens("__tests__/template.marko:24:23"), _html(`<div${_attr_class(value)} level=4></div>`);
 								}, 0);
 								_resume_branch($scope9_id);
 							}, $scope8_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_11_content", () => {

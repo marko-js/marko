@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<span id=child>child</span>");
+	_html_opens("__tests__/child.marko:9:1"), _html("<span id=child>child</span>");
 });
 
 // template.marko

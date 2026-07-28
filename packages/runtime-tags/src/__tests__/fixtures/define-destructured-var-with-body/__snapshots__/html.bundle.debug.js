@@ -7,8 +7,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_1_content", () => {
 			const $scope1_id = _scope_id();
 			_scope_reason();
-			_html("<div>body</div>");
+			_html_opens("__tests__/template.marko:1:27"), _html("<div>body</div>");
 		})
 	};
-	_html(`<span>${_escape(value)}</span>`);
+	_html_opens("__tests__/template.marko:2:1"), _html(`<span>${_escape(value)}</span>`);
 }, 1);

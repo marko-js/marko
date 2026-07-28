@@ -5,5 +5,5 @@ var v_template_marko_default = "button {\n  background-color: yellow;\n}";
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div></div>");
+	_html_opens("__tests__/template.marko:1:1"), _html("<div></div>");
 }, 1);

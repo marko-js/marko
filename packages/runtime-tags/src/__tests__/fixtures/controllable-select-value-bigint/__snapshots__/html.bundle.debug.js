@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_attr_select_value($scope0_id, "#select/0", value, _resume(function(v) {
 		value = v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
-		_html(`<select><option${_attr_option_value("")}>empty</option><option${_attr_option_value(0)}>zero</option><option${_attr_option_value(1)}>one</option></select>`);
+		_html_opens("__tests__/template.marko:2:1", "__tests__/template.marko:3:3", "__tests__/template.marko:4:3", "__tests__/template.marko:5:3"), _html(`<select><option${_attr_option_value("")}>empty</option><option${_attr_option_value(0)}>zero</option><option${_attr_option_value(1)}>one</option></select>`);
 	});
 	_html(_el_resume($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/template.marko_0");

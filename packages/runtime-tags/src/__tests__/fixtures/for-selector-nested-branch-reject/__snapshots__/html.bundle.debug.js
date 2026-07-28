@@ -14,10 +14,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html("<ul>");
+			_html_opens("__tests__/template.marko:4:3"), _html("<ul>");
 			forOf(rows, (row) => {
 				const $scope2_id = _scope_id();
-				_html(`<li${selected === row.id ? " class=danger" : ""}><button class=select>${_escape(row.label)}</button>${_el_resume($scope2_id, "#button/1")}</li>${_el_resume($scope2_id, "#li/0")}`);
+				_html_opens("__tests__/template.marko:6:7", "__tests__/template.marko:7:9"), _html(`<li${selected === row.id ? " class=danger" : ""}><button class=select>${_escape(row.label)}</button>${_el_resume($scope2_id, "#button/1")}</li>${_el_resume($scope2_id, "#li/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_subscribe($selected__closures, writeScope($scope2_id, {
 					row_id: row?.id,

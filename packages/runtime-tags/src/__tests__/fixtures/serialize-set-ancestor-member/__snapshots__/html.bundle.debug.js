@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		root.set = set;
 		return root;
 	})();
-	_html(`<button>${_escape(checked)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:9:1"), _html(`<button>${_escape(checked)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { root }, "__tests__/template.marko", 0, { root: "2:8" });
 	_resume_branch($scope0_id);

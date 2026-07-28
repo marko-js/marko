@@ -4,7 +4,7 @@ var display_intersection_default = _template("__tests__/tags/display-intersectio
 	const $scope0_id = _scope_id();
 	const { value } = input;
 	let dummy = {};
-	_html(`<div>${_escape((dummy, value))}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
+	_html_opens("__tests__/tags/display-intersection.marko:3:1"), _html(`<div>${_escape((dummy, value))}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { dummy }, "__tests__/tags/display-intersection.marko", 0, { dummy: "2:6" });
 	_resume_branch($scope0_id);
 });
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	display_intersection_default({ value: count });
-	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:3:1"), _html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count,

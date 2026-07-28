@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:2:1"), _html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const Child = { content: _content("__tests__/template.marko_1_content", (input) => {
 		const $scope1_id = _scope_id();
 		const $Child_content__input_name__closures = new Set();
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				if (true) {
 					const $scope3_id = _scope_id();
-					_html(`<div>${_escape(input.name || "Fallback")}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope1_reason, 2))}</div>`);
+					_html_opens("__tests__/template.marko:9:7"), _html(`<div>${_escape(input.name || "Fallback")}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope1_reason, 2))}</div>`);
 					$si__input_count__OR__input_name && _subscribe($si__input_name && $Child_content__input_name__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "8:6"));
 				}
 				$si__input_count__OR__input_name && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");

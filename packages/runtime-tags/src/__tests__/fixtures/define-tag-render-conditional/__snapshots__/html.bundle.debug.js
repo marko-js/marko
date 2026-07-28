@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const MyTag = { content: _content("__tests__/template.marko_2_content", ({ value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $sg__value = _serialize_guard($scope2_reason, 0);
-		_html(`<div>Hello ${_sep($sg__value)}${_escape(value)}${_el_resume($scope2_id, "#text/0", $sg__value)}</div>`);
+		_html_opens("__tests__/template.marko:5:3"), _html(`<div>Hello ${_sep($sg__value)}${_escape(value)}${_el_resume($scope2_id, "#text/0", $sg__value)}</div>`);
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {}, "__tests__/template.marko", "4:2");
 	}) };
 	_if(() => {
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
-	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:12:1"), _html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "2:6" });
 	_resume_branch($scope0_id);

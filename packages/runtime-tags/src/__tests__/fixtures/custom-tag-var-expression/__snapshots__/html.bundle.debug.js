@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	_html("<span>child</span>");
+	_html_opens("__tests__/tags/child.marko:2:1"), _html("<span>child</span>");
 	const $return = x + 3;
 	_resume_branch($scope0_id);
 	return $return;
@@ -14,5 +14,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let data = child_default({});
-	_html(`<div>${_escape(data)}</div>`);
+	_html_opens("__tests__/template.marko:2:1"), _html(`<div>${_escape(data)}</div>`);
 }, 1);

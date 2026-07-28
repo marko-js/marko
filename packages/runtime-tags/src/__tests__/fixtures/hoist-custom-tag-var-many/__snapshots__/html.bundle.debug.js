@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html_opens("__tests__/tags/child.marko:1:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	const $return = _resume(() => (html) => ((el) => el())(_el_read_error).innerHTML = html, "__tests__/tags/child.marko_0/_return", $scope0_id);
 	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 	return $return;
@@ -20,17 +20,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_assert_hoist(setHtml);
 	}, 0, $scope0_id, "#text/0", 1, 0, 0, 0, 1);
 	let to = 3;
-	_html("<hr>");
+	_html_opens("__tests__/template.marko:9:1"), _html("<hr>");
 	_for_to(to, 0, 1, () => {
 		const $scope2_id = _scope_id();
 		let setHtml2 = child_default({});
 		writeScope($scope2_id, { setHtml2 }, "__tests__/template.marko", "12:2", { setHtml2: "13:10" });
 		_assert_hoist(setHtml2);
 	}, 0, $scope0_id, "#text/1", 1, 0, 0, 0, 1);
-	_html("<hr>");
+	_html_opens("__tests__/template.marko:20:1"), _html("<hr>");
 	_for_to(3, 0, 1, (i) => {
 		const $scope3_id = _scope_id();
-		_html("<ul>");
+		_html_opens("__tests__/template.marko:23:3"), _html("<ul>");
 		_for_to(3, 0, 1, (j) => {
 			const $scope4_id = _scope_id();
 			let setHtml3 = child_default({});

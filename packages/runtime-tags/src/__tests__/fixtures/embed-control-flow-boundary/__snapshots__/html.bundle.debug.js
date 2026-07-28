@@ -3,11 +3,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let hide = undefined;
-	_html(`<button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}<button id=cleanup>Cleanup</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:8:1", "__tests__/template.marko:14:1"), _html(`<button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}<button id=cleanup>Cleanup</button>${_el_resume($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (!hide) {
 			const $scope1_id = _scope_id();
-			_html("<div>Hello</div>");
+			_html_opens("__tests__/template.marko:21:3"), _html("<div>Hello</div>");
 			writeScope($scope1_id, {}, "__tests__/template.marko", "20:2");
 			return 0;
 		}

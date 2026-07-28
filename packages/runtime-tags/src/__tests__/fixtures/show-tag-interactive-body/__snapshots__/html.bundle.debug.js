@@ -3,10 +3,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let visible = false;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	_show_start(visible, 1);
+	_html_opens("__tests__/template.marko:2:1"), _html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_show_start(visible, 1, "__tests__/template.marko:3:1");
 	let count = 0;
-	_html(`<button id=inc>count <!>${_escape(count)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html_opens("__tests__/template.marko:5:3"), _html(`<button id=inc>count <!>${_escape(count)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_show_end($scope0_id, "#text/5", visible);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

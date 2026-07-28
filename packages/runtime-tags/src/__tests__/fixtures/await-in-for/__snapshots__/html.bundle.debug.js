@@ -2,10 +2,10 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_items = _serialize_guard($scope0_reason, 0), $si__input_items = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html("<ul>");
+	_html_opens("__tests__/template.marko:3:1"), _html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html("<li>");
+		_html_opens("__tests__/template.marko:5:5"), _html("<li>");
 		_await($scope1_id, "#text/0", resolveAfter(item.label, 1), (v) => {
 			const $scope2_id = _scope_id();
 			_html(`${_escape(v)}${_el_resume($scope2_id, "#text/0", $sg__input_items)}`);

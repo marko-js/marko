@@ -6,12 +6,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Layout = { content: _content("__tests__/template.marko_1_content", ({ content }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html("<section>");
-		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
+		_html_opens("__tests__/template.marko:3:3"), _html("<section>");
+		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, _serialize_guard($scope1_reason, 0), "__tests__/template.marko:3:12");
 		_html("</section>");
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}) };
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:5:1"), _html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (show) {
 			const $scope2_id = _scope_id();

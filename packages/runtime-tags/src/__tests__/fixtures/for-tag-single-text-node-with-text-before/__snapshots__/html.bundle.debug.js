@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let children = [1];
-	_html(`<div${_attr("data-children", children.length)}>Before `);
+	_html_opens("__tests__/template.marko:2:1"), _html(`<div${_attr("data-children", children.length)}>Before `);
 	_for_of(children, () => {
 		const $scope1_id = _scope_id();
 		_html("Child");

@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<p>child</p>");
+	_html_opens("__tests__/tags/child.marko:1:1"), _html("<p>child</p>");
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_resume_branch($scope0_id);
 });
@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = true;
-	_html(`<div id=ref>initial</div><button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:2:1", "__tests__/template.marko:3:1"), _html(`<div id=ref>initial</div><button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();

@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_escape(input.value)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html_opens("__tests__/child.marko:1:1"), _html(`<span>${_escape(input.value)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</span>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
@@ -11,7 +11,7 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/chi
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<!DOCTYPE html><html><head><title>Head Flush Test</title>${_flush_head()}</head><body>`);
+	_html_opens("__tests__/template.marko:4:1", "__tests__/template.marko:5:1", "__tests__/template.marko:6:3", "__tests__/template.marko:8:1"), _html(`<!DOCTYPE html><html><head><title>Head Flush Test</title>${_flush_head()}</head><body>`);
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });

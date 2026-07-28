@@ -3,10 +3,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let selected = undefined;
-	_html("<table><tbody>");
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:3:8"), _html("<table><tbody>");
 	_for_to(4, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
-		_html(`<tr${selected === i ? " class=danger" : ""}><td><button class=select>${_escape(i)}</button>${_el_resume($scope1_id, "#button/1")}</td></tr>${_el_resume($scope1_id, "#tr/0")}`);
+		_html_opens("__tests__/template.marko:5:5", "__tests__/template.marko:6:7", "__tests__/template.marko:6:11"), _html(`<tr${selected === i ? " class=danger" : ""}><td><button class=select>${_escape(i)}</button>${_el_resume($scope1_id, "#button/1")}</td></tr>${_el_resume($scope1_id, "#tr/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			"#LoopKey": i,

@@ -26,8 +26,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onIncrement: _resume(function() {
 			count++;
 		}, "__tests__/template.marko_0/onIncrement", $scope0_id)
-	});
-	_html(`<div id=tags-api>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	}, void 0, void 0, void 0, "__tests__/template.marko:2:1");
+	_html_opens("__tests__/template.marko:3:1"), _html(`<div id=tags-api>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</div>`);
 	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

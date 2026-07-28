@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x = newValue + 1;
 	}, "__tests__/template.marko_0/handler", $scope0_id);
 	let y = x;
-	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/1")}|<!>${_escape(y)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:4:1"), _html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/1")}|<!>${_escape(y)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		handler,

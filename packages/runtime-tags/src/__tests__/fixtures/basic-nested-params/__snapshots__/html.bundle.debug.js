@@ -3,8 +3,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { content, value } = input;
-	_html("<div>");
-	_dynamic_tag($scope0_id, "#text/0", content, [value], 0, 1, _serialize_guard($scope0_reason, 0));
+	_html_opens("__tests__/tags/child.marko:2:1"), _html("<div>");
+	_dynamic_tag($scope0_id, "#text/0", content, [value], 0, 1, _serialize_guard($scope0_reason, 0), "__tests__/tags/child.marko:2:6");
 	_html("</div>");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
 		content: _serialize_if($scope0_reason, 2) && content,
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let x = 1;
 	let y = 2;
-	_html(`<button>Inc</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:4:1"), _html(`<button>Inc</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(10);
 	const $childScope = _peek_scope_id();
 	child_default({
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				content: _content_resume("__tests__/template.marko_2_content", (inner) => {
 					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0);
 					const $scope2_id = _scope_id();
-					_html(`<div>${_escape(outer)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope1_reason, 0))}.${_sep($sg__inner)}${_escape(inner)}${_el_resume($scope2_id, "#text/1", $sg__inner)}</div>`);
+					_html_opens("__tests__/template.marko:8:9"), _html(`<div>${_escape(outer)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope1_reason, 0))}.${_sep($sg__inner)}${_escape(inner)}${_el_resume($scope2_id, "#text/1", $sg__inner)}</div>`);
 					_subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"));
 					_resume_branch($scope2_id);
 				}, $scope1_id)

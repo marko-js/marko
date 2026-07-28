@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-show-tag-in-table-if/template.marko:4:6
+      2 | <table><tbody>
+      3 |   <if=true>
+    > 4 |     <show=show><tr><td>row</td></tr></show>
+        |      ^^^^ A [`<show>` tag](https://markojs.com/docs/reference/core-tag#show) cannot be used inside `<tbody>`: hidden content is wrapped in an element that `<tbody>` discards, which would render the content instead of hiding it. Move the `<show>` inside the row or option, or use [`<if>`](https://markojs.com/docs/reference/core-tag#if).
+      5 |   </if>
+      6 | </tbody></table>
+      7 |

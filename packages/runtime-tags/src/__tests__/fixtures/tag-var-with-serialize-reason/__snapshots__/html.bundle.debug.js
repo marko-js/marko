@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_if(() => {
 		if (input.value) {
 			const $scope1_id = _scope_id();
-			_html("<span></span>");
+			_html_opens("__tests__/tags/child.marko:2:3"), _html("<span></span>");
 			$si__input_value && writeScope($scope1_id, {}, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:2:1"), _html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	let x = child_default({ value: count });

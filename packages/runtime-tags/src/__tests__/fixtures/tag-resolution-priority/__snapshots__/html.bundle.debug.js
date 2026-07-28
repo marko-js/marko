@@ -2,7 +2,7 @@
 var foo_default = _template("__tests__/tags/foo.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<span></span>");
+	_html_opens("__tests__/tags/foo.marko:1:1"), _html("<span></span>");
 });
 
 // template.marko
@@ -12,7 +12,7 @@ const Bar = "div";
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div></div>");
+	_html_opens("__tests__/template.marko:5:1"), _html("<div></div>");
 	foo_default({});
-	_dynamic_tag($scope0_id, "#text/1", Bar, {}, 0, 0, 0);
+	_dynamic_tag($scope0_id, "#text/1", Bar, {}, 0, 0, 0, "__tests__/template.marko:7:1");
 }, 1);

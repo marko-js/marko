@@ -5,10 +5,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Child = { content: _content("__tests__/template.marko_1_content", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__input_option = _serialize_guard($scope1_reason, 1);
-		_html(`<select${_attr_class(input.class)}>`);
+		_html_opens("__tests__/template.marko:2:3"), _html(`<select${_attr_class(input.class)}>`);
 		_for_of(input.option, (option) => {
 			const $scope3_id = _scope_id();
-			_html("<option");
+			_html_opens("__tests__/template.marko:4:7"), _html("<option");
 			_attrs_content(option, "#option/0", $scope3_id, "option");
 			_html(`</option>${_el_resume($scope3_id, "#option/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3_option");

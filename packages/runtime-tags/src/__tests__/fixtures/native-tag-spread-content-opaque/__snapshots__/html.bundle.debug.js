@@ -2,7 +2,7 @@
 var render_input_default = _template("__tests__/tags/render-input.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.data.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "#text/0", input.data.content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/render-input.marko:1:1");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/render-input.marko", 0);
 });
 
@@ -11,9 +11,9 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let show = false;
-	_html("<div");
+	_html_opens("__tests__/tags/my-box.marko:3:1"), _html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}<button type=button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/1")}<div class=echo>`);
+	_html_opens("__tests__/tags/my-box.marko:5:1", "__tests__/tags/my-box.marko:7:1"), _html(`</div>${_el_resume($scope0_id, "#div/0")}<button type=button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/1")}<div class=echo>`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();

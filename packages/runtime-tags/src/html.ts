@@ -61,6 +61,8 @@ export {
   _for_until,
   _hoist,
   _html,
+  _html_opens,
+  _html_raw,
   _id,
   _if,
   _peek_scope_id,

@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const spreadAttrs = { nonce: "override-spread" };
 	let mounted = false;
-	_html(`<style${_attr_nonce()}>
+	_html_opens("__tests__/template.marko:1:1", "__tests__/template.marko:6:1", "__tests__/template.marko:11:1"), _html(`<style${_attr_nonce()}>
   A {}
 </style><style nonce=override>
   B {}
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (mounted) {
 			const $scope1_id = _scope_id();
-			_html(`<style${_attr_nonce()}>
+			_html_opens("__tests__/template.marko:18:3"), _html(`<style${_attr_nonce()}>
     D {}
   </style>`);
 			writeScope($scope1_id, {}, "__tests__/template.marko", "17:2");

@@ -3,7 +3,7 @@ var my_select_default = _template("__tests__/tags/my-select.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $select_input = input;
-	_html("<select");
+	_html_opens("__tests__/tags/my-select.marko:1:1"), _html("<select");
 	_attr_select_value($scope0_id, "#select/0", $select_input.value, $select_input.valueChange, () => {
 		_attrs_content($select_input, "#select/0", $scope0_id, "select");
 		_html("</select>");
@@ -27,10 +27,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_1_content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
+			_html_opens("__tests__/template.marko:3:3", "__tests__/template.marko:4:3", "__tests__/template.marko:5:3"), _html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
 		})
 	});
-	_html(`<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</span>`);
+	_html_opens("__tests__/template.marko:7:1"), _html(`<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</span>`);
 	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

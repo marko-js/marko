@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Unused = { content: _content("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html("<div>never rendered</div>");
+		_html_opens("__tests__/template.marko:2:3"), _html("<div>never rendered</div>");
 	}) };
-	_html("<span>only this</span>");
+	_html_opens("__tests__/template.marko:4:1"), _html("<span>only this</span>");
 }, 1);

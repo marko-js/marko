@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope1_reason, 0);
 		_for_of(input.item, (item) => {
 			const $scope2_id = _scope_id();
-			_html("<div");
+			_html_opens("__tests__/template.marko:5:5"), _html("<div");
 			_attrs_content(item, "#div/0", $scope2_id, "div");
 			_html(`</div>${_el_resume($scope2_id, "#div/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2_item");
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
-	_html(`<button>Add</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:15:1"), _html(`<button>Add</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		size,

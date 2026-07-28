@@ -19,6 +19,6 @@ s("__tests__/components/split-counter/index.marko", _marko_template, "preserve")
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div id=tags-api>tags</div>");
-	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, 0, 0, 0);
+	_html_opens("__tests__/template.marko:2:1"), _html("<div id=tags-api>tags</div>");
+	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, 0, 0, 0, "__tests__/template.marko:3:1");
 }, 1);

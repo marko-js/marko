@@ -5,11 +5,11 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let hide = true;
 	let text = "";
 	const id = _id();
-	_html(`<div${_attr("id", id)}>`);
+	_html_opens("__tests__/tags/child.marko:5:1"), _html(`<div${_attr("id", id)}>`);
 	_if(() => {
 		if (!hide && text.length) {
 			const $scope1_id = _scope_id();
-			_html(`<div>${_escape(text)}${_el_resume($scope1_id, "#text/0")}</div>`);
+			_html_opens("__tests__/tags/child.marko:7:5"), _html(`<div>${_escape(text)}${_el_resume($scope1_id, "#text/0")}</div>`);
 			writeScope($scope1_id, {}, "__tests__/tags/child.marko", "6:4");
 			return 0;
 		}

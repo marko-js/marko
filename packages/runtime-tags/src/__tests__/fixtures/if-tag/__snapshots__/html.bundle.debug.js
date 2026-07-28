@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b);
-	_html(`<div>${input.x ? "A" : input.y ? "B" : "C"}${_el_resume($scope0_id, "#text/2", _serialize_guard($scope0_reason, 1))}</div>`);
+	_html_opens("__tests__/template.marko:9:1"), _html(`<div>${input.x ? "A" : input.y ? "B" : "C"}${_el_resume($scope0_id, "#text/2", _serialize_guard($scope0_reason, 1))}</div>`);
 	_serialize_if($scope0_reason, 2) && writeScope($scope0_id, {
 		input_a: _serialize_if($scope0_reason, 4) && input.a,
 		input_b: _serialize_if($scope0_reason, 3) && input.b,

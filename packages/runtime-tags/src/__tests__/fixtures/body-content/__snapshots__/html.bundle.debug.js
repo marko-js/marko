@@ -3,8 +3,8 @@ var FancyButton_default = _template("__tests__/tags/FancyButton.marko", (input) 
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { content, ...attrs } = input;
-	_html(`<button${_attrs(attrs, "#button/0", $scope0_id, "button")}>`);
-	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_html_opens("__tests__/tags/FancyButton.marko:2:1"), _html(`<button${_attrs(attrs, "#button/0", $scope0_id, "button")}>`);
+	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/FancyButton.marko:2:18");
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/FancyButton.marko_0_attrs");
 	writeScope($scope0_id, {}, "__tests__/tags/FancyButton.marko", 0);

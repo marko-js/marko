@@ -6,7 +6,7 @@ const $content = (input) => {
 	_if(() => {
 		if (input.level) {
 			const $scope1_id = _scope_id();
-			_html(`<div${_attr("data-level", input.level)}>`);
+			_html_opens("__tests__/tags/recurse.marko:4:3"), _html(`<div${_attr("data-level", input.level)}>`);
 			_try($scope1_id, "#text/1", _content_resume("__tests__/tags/recurse.marko_2_content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();

@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let first = beta;
 	let second = gamma;
 	let message = "start";
-	_html(`<button>go</button>${_el_resume($scope0_id, "#button/0")}<div>${_escape(message)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	_html_opens("__tests__/template.marko:6:1", "__tests__/template.marko:7:1"), _html(`<button>go</button>${_el_resume($scope0_id, "#button/0")}<div>${_escape(message)}${_el_resume($scope0_id, "#text/1")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		first,

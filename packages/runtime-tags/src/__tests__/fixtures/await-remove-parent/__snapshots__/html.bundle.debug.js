@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = 1;
-	_html("<div id=outside>Pass</div>");
+	_html_opens("__tests__/template.marko:4:1"), _html("<div id=outside>Pass</div>");
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();

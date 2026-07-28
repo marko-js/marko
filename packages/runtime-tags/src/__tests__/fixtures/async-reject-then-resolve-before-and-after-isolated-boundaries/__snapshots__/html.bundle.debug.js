@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter("A Value", 2), (v) => {
 			const $scope3_id = _scope_id();
-			_html(`<div>Resolved A: ${_escape(v)}</div>`);
+			_html_opens("__tests__/template.marko:7:5"), _html(`<div>Resolved A: ${_escape(v)}</div>`);
 		}, 0);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
 		_scope_reason();
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope4_id, "#text/0", rejectAfter(new Error("rejected b"), 1), (v) => {
 			const $scope6_id = _scope_id();
-			_html(`<div>Resolved B: ${_escape(v)}</div>`);
+			_html_opens("__tests__/template.marko:16:5"), _html(`<div>Resolved B: ${_escape(v)}</div>`);
 		}, 0);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_5_content", () => {
 		_scope_reason();
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope7_id, "#text/0", resolveAfter("C Value", 2), (v) => {
 			const $scope9_id = _scope_id();
-			_html(`<div>Resolved C: ${_escape(v)}</div><button>Before</button>${_el_resume($scope9_id, "#button/1")}`);
+			_html_opens("__tests__/template.marko:25:5", "__tests__/template.marko:26:5"), _html(`<div>Resolved C: ${_escape(v)}</div><button>Before</button>${_el_resume($scope9_id, "#button/1")}`);
 			_script($scope9_id, "__tests__/template.marko_9");
 			writeScope($scope9_id, {}, "__tests__/template.marko", "24:4");
 		});

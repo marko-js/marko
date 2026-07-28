@@ -4,19 +4,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let value = "a";
 	_attr_select_value($scope0_id, "#select/0", "a", void 0, () => {
-		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("a")}></option></select>`);
+		_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:3", "__tests__/template.marko:5:3"), _html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("a")}></option></select>`);
 	});
 	_attr_select_value($scope0_id, "#select/1", "a", void 0, () => {
-		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
+		_html_opens("__tests__/template.marko:8:1", "__tests__/template.marko:9:3", "__tests__/template.marko:10:3"), _html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
 	_attr_select_value($scope0_id, "#select/2", value, void 0, () => {
-		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
+		_html_opens("__tests__/template.marko:13:1", "__tests__/template.marko:14:3", "__tests__/template.marko:15:3"), _html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
 	_html(_el_resume($scope0_id, "#select/2"));
 	_attr_select_value($scope0_id, "#select/3", value, undefined, () => {
-		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
+		_html_opens("__tests__/template.marko:18:1", "__tests__/template.marko:19:3", "__tests__/template.marko:20:3"), _html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
-	_html(`${_el_resume($scope0_id, "#select/3")}<button>Update</button>${_el_resume($scope0_id, "#button/4")}`);
+	_html_opens("__tests__/template.marko:23:1"), _html(`${_el_resume($scope0_id, "#select/3")}<button>Update</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);

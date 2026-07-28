@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.label)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))}: ${_sep($sg__input_value)}${_escape(input.value)}${_el_resume($scope0_id, "#text/1", $sg__input_value)}</div>`);
+	_html_opens("__tests__/child.marko:1:1"), _html(`<div>${_escape(input.label)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))}: ${_sep($sg__input_value)}${_escape(input.value)}${_el_resume($scope0_id, "#text/1", $sg__input_value)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
@@ -15,14 +15,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $value__closures = new Set();
 	let show = true;
 	let value = 1;
-	_html(`<button class=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}<button class=inc>Inc</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:5:1", "__tests__/template.marko:6:1"), _html(`<button class=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}<button class=inc>Inc</button>${_el_resume($scope0_id, "#button/1")}`);
 	_try($scope0_id, "#text/2", _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_dynamic_tag($scope1_id, "#text/0", show ? $Child_withLoadAssets : null, {
 			label: "x",
 			value
-		});
+		}, void 0, void 0, void 0, "__tests__/template.marko:8:3");
 		_subscribe($value__closures, _subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2")));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {

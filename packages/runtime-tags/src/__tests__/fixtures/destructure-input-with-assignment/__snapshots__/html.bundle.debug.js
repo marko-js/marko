@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const { valueChange: $valueChange, value, ...rest } = input;
-	_html("<div");
+	_html_opens("__tests__/tags/child.marko:5:1"), _html("<div");
 	_attrs_content(rest, "#div/0", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_rest");

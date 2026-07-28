@@ -10,7 +10,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var source_default = _template("__tests__/tags/source.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html_opens("__tests__/tags/source.marko:1:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	const $return = _resume(() => ({
 		setHtml(value) {
 			((el) => el())(_el_read_error).innerHTML = value;

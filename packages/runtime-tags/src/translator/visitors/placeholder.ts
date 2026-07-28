@@ -6,7 +6,7 @@ import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOptimize, isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
@@ -113,7 +113,16 @@ export default {
           : "_html";
 
       if (confident && canWriteHTML) {
-        write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
+        if (isHTML && !isOptimize() && method === "_unescaped") {
+          writer.writeRawHTML(
+            placeholder,
+            t.stringLiteral(
+              getHTMLRuntime()[method as HTMLMethod](computed) as string,
+            ),
+          );
+        } else {
+          write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
+        }
       } else {
         const section = getSection(placeholder);
         const siblingText = extra[kSiblingText]!;
@@ -144,11 +153,19 @@ export default {
         }
 
         if (isHTML) {
-          write`${
-            method === "_escape"
-              ? buildEscapedTextExpression(value)
-              : callRuntime(method as HTMLMethod | DOMMethod, value)
-          }`;
+          if (!isOptimize() && method === "_unescaped") {
+            // Own segment so tags inside $!{...} do not shift ordered open sources.
+            writer.writeRawHTML(
+              placeholder,
+              callRuntime(method as HTMLMethod | DOMMethod, value),
+            );
+          } else {
+            write`${
+              method === "_escape"
+                ? buildEscapedTextExpression(value)
+                : callRuntime(method as HTMLMethod | DOMMethod, value)
+            }`;
+          }
           if (nodeBinding) {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
           }

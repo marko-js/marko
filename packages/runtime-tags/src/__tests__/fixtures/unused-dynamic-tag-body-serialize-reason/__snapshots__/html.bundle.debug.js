@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", as, {
 			onClick,
 			content
-		}, 0, 0, _serialize_guard($scope1_reason, 3));
+		}, 0, 0, _serialize_guard($scope1_reason, 3), "__tests__/template.marko:2:3");
 		_serialize_if($scope1_reason, 3) && writeScope($scope1_id, {
 			as: _serialize_if($scope1_reason, 2) && as,
 			onClick: _serialize_if($scope1_reason, 1) && onClick,

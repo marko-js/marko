@@ -11,5 +11,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 0, 0);
-	_html(`<div>${_escape(((x) => x())(_hoist_read_error))}</div>`);
+	_html_opens("__tests__/template.marko:5:1"), _html(`<div>${_escape(((x) => x())(_hoist_read_error))}</div>`);
 }, 1);

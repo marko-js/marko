@@ -12,6 +12,7 @@ import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
   _html,
+  _html_opens,
   _peek_scope_id,
   _resume,
   _scope,
@@ -40,6 +41,8 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  // Debug-only open-tag source; declared only when this path actually writes a name.
+  source?: string,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
@@ -61,6 +64,9 @@ export let _dynamic_tag = (
     rendered = true;
     const renderNative = () => {
       _scope_id();
+      if (MARKO_DEBUG && source) {
+        _html_opens(source);
+      }
       _html(
         `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
       );

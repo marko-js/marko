@@ -2,5 +2,5 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("")}>None</option></select>`);
+	_html_opens("__tests__/template.marko:1:1", "__tests__/template.marko:2:3", "__tests__/template.marko:3:3"), _html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("")}>None</option></select>`);
 }, 1);

@@ -9,7 +9,7 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 		_if(() => {
 			if (input.x) {
 				const $scope2_id = _scope_id();
-				_html(`<div>${_escape(count)}</div>`);
+				_html_opens("__tests__/tags/test.marko:4:5"), _html(`<div>${_escape(count)}</div>`);
 				$si__input_x && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/test.marko", "3:4");
 				return 0;
 			}
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let m = undefined;
-	_html("<div>");
+	_html_opens("__tests__/template.marko:1:1"), _html("<div>");
 	_if(() => {
 		if (m) {
 			const $scope1_id = _scope_id();

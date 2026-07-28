@@ -4,12 +4,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let visible = true;
 	let inner = true;
-	_html(`<button id=t>t</button>${_el_resume($scope0_id, "#button/0")}<button id=i>i</button>${_el_resume($scope0_id, "#button/1")}<div id=c>x `);
-	_show_start(visible, 1);
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1", "__tests__/template.marko:5:1"), _html(`<button id=t>t</button>${_el_resume($scope0_id, "#button/0")}<button id=i>i</button>${_el_resume($scope0_id, "#button/1")}<div id=c>x `);
+	_show_start(visible, 1, "__tests__/template.marko:5:15");
 	_if(() => {
 		if (inner) {
 			const $scope1_id = _scope_id();
-			_html("<b>B</b>");
+			_html_opens("__tests__/template.marko:5:39"), _html("<b>B</b>");
 			writeScope($scope1_id, {}, "__tests__/template.marko", "5:30");
 			return 0;
 		}

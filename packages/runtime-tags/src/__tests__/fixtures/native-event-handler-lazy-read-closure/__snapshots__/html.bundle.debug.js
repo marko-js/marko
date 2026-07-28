@@ -10,14 +10,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		3
 	], (i) => {
 		const $scope1_id = _scope_id();
-		_html(`<button>pick ${_escape(i)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html_opens("__tests__/template.marko:5:3"), _html(`<button>pick ${_escape(i)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			i,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "4:2", { i: "4:6" });
 	});
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/1")}<div class=total>${_escape(total)}${_el_resume($scope0_id, "#text/2")}</div><div class=seen>${_escape(seen)}${_el_resume($scope0_id, "#text/3")}</div>`);
+	_html_opens("__tests__/template.marko:7:1", "__tests__/template.marko:8:1", "__tests__/template.marko:9:1"), _html(`<button>inc</button>${_el_resume($scope0_id, "#button/1")}<div class=total>${_escape(total)}${_el_resume($scope0_id, "#text/2")}</div><div class=seen>${_escape(seen)}${_el_resume($scope0_id, "#text/3")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		total,

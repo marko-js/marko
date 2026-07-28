@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let v = "a";
 	let rest = { placeholder: "p" };
-	_html(`<button>respread</button>${_el_resume($scope0_id, "#button/0")}<input${_attr_input_value($scope0_id, "#input/1", v, _resume((_new_v) => {
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1", "__tests__/template.marko:5:1"), _html(`<button>respread</button>${_el_resume($scope0_id, "#button/0")}<input${_attr_input_value($scope0_id, "#input/1", v, _resume((_new_v) => {
 		v = _new_v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))}${_attrs_partial(rest, {
 		value: 1,

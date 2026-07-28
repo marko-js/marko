@@ -2,7 +2,7 @@
 var radio_default = _template("__tests__/tags/radio.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attrs({
+	_html_opens("__tests__/tags/radio.marko:1:1"), _html(`<input${_attrs({
 		type: "radio",
 		...input
 	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		checkedValueChange: $checkedValueChange,
 		value: "c"
 	});
-	_html(`<span>${_escape(checkedValue)}${_el_resume($scope0_id, "#text/3")}</span>`);
+	_html_opens("__tests__/template.marko:6:1"), _html(`<span>${_escape(checkedValue)}${_el_resume($scope0_id, "#text/3")}</span>`);
 	writeScope($scope0_id, {
 		$checkedValueChange,
 		"#childScope/0": _existing_scope($childScope),

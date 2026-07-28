@@ -7,5 +7,5 @@ const { content } = v_template_marko_module_exports;
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(content)}>Hello</div>`);
+	_html_opens("__tests__/template.marko:7:1"), _html(`<div${_attr_class(content)}>Hello</div>`);
 }, 1);

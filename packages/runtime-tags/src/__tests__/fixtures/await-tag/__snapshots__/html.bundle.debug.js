@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
-	_html("<div>");
+	_html_opens("__tests__/template.marko:4:1"), _html("<div>");
 	_await($scope0_id, "#text/0", Promise.resolve("a"), (value) => {
 		const $scope1_id = _scope_id();
 		_html(`Got: ${_escape(value)} <!>${_escape(count)}${_el_resume($scope1_id, "#text/1")}`);
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "13:4"));
 		_resume_branch($scope3_id);
 	});
-	_html(`<button>Inc</button>${_el_resume($scope0_id, "#button/3")}</div>`);
+	_html_opens("__tests__/template.marko:17:3"), _html(`<button>Inc</button>${_el_resume($scope0_id, "#button/3")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count,

@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span id=child>${_escape(input.value)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html_opens("__tests__/child.marko:1:1"), _html(`<span id=child>${_escape(input.value)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</span>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $show__closures = new Set();
 	let show = false;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:4:1"), _html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
@@ -31,12 +31,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html("<div id=loading>loading</div>");
+			_html_opens("__tests__/template.marko:10:5"), _html("<div id=loading>loading</div>");
 		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_3_content", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<div id=error>${_escape(err.message)}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope3_reason, 0))}</div>`);
+			_html_opens("__tests__/template.marko:13:5"), _html(`<div id=error>${_escape(err.message)}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope3_reason, 0))}</div>`);
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {}, "__tests__/template.marko", "12:4");
 		}, $scope0_id) })
 	});

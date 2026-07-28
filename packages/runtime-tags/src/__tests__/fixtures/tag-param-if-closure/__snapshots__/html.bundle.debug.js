@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Foo = { content: _content("__tests__/template.marko_3_content", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1, _serialize_guard($scope3_reason, 0));
+		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1, _serialize_guard($scope3_reason, 0), "__tests__/template.marko:4:3");
 		_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {
 			input_content: _serialize_if($scope3_reason, 2) && input.content,
 			input_value: _serialize_if($scope3_reason, 1) && input.value
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_value: ["input.value", "3:13"]
 		});
 	}) };
-	_html(`<button>Increment</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:6:1"), _html(`<button>Increment</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(10);
 	const $childScope = _peek_scope_id();
 	Foo.content({

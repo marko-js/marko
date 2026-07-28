@@ -2,5 +2,5 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-show-tag-in-table/template.marko:2:16
       1 | <let/show=false/>
     > 2 | <table><tbody><show=show><tr><td>row</td></tr></show></tbody></table>
-        |                ^^^^ A [`<show>` tag](https://markojs.com/docs/reference/core-tag#show) cannot be a direct child of `<tbody>`: hidden content is wrapped in an element that `<tbody>` discards, which would render the content instead of hiding it. Move the `<show>` inside the row or option, or use [`<if>`](https://markojs.com/docs/reference/core-tag#if).
+        |                ^^^^ A [`<show>` tag](https://markojs.com/docs/reference/core-tag#show) cannot be used inside `<tbody>`: hidden content is wrapped in an element that `<tbody>` discards, which would render the content instead of hiding it. Move the `<show>` inside the row or option, or use [`<if>`](https://markojs.com/docs/reference/core-tag#if).
       3 |

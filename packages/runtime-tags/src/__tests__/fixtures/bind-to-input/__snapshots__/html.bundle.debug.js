@@ -4,8 +4,8 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { "countChange": $countChange, count } = input;
 	let x = count;
-	_html(`<button${_attr("id", input.id)}${_attr("data-internal", x)}>`);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_html_opens("__tests__/tags/counter.marko:5:1"), _html(`<button${_attr("id", input.id)}${_attr("data-internal", x)}>`);
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/counter.marko:6:3");
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	writeScope($scope0_id, {

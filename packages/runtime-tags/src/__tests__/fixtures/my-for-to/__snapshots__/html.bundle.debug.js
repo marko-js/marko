@@ -4,7 +4,7 @@ var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_for_to(input.to, 0, 1, (...args) => {
 		const $scope1_id = _scope_id();
-		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 0, 1, $sg__input_to__OR__input_content);
+		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 0, 1, $sg__input_to__OR__input_content, "__tests__/tags/my-for.marko:2:3");
 		_serialize_if($scope0_reason, 0) && writeScope($scope1_id, {
 			$params2: _serialize_if($scope0_reason, 2) && $params2,
 			_: _scope_with_id($scope0_id)

@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		value: "z",
 		placeholder: "p"
 	};
-	_html(`<button>pick</button>${_el_resume($scope0_id, "#button/0")}<input${_attrs({
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1", "__tests__/template.marko:5:1"), _html(`<button>pick</button>${_el_resume($scope0_id, "#button/0")}<input${_attrs({
 		type: "radio",
 		checkedValue: v,
 		...rest

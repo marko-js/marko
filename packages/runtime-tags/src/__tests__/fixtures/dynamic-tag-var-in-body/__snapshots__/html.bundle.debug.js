@@ -2,8 +2,8 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
-	_html(`<div></div>${_el_resume($scope0_id, "#div/1")}`);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/child.marko:1:1");
+	_html_opens("__tests__/tags/child.marko:2:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/1")}`);
 	const $return = _resume(() => (html) => ((el) => el())(_el_read_error).innerHTML = html, "__tests__/tags/child.marko_0/_return", $scope0_id);
 	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 	return $return;
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1_setHtml");
 		_subscribe($setHtml__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		_resume_branch($scope1_id);
-	}, $scope0_id));
+	}, $scope0_id), void 0, void 0, "__tests__/template.marko:3:1");
 	_var($scope0_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_0_setHtml/var");
 	writeScope($scope0_id, {
 		setHtml,

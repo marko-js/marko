@@ -7,7 +7,7 @@ import {
   type Section,
 } from "../util/sections";
 import { generateUidIdentifier } from "./generate-uid";
-import { isOutputHTML } from "./marko-config";
+import { isOptimize, isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
@@ -23,8 +23,16 @@ import { createSectionState } from "./state";
 import { getWalkString } from "./walks";
 
 type Write = string | t.Expression | (() => undefined | string | t.Expression);
-const [getWrites] = createSectionState<Write[]>("writes", () => [""]);
+// Segment barriers: open-tag sources stay ordered; raw forces its own write.
+const OPEN = Symbol("open");
+const RAW = Symbol("raw");
+const RUNTIME = Symbol("runtime");
+type OpenMarker = { [OPEN]: string | undefined };
+type RawMarker = { [RAW]: string | undefined; value: t.Expression };
+type RuntimeMarker = { [RUNTIME]: true };
+type WriteOrMarker = Write | OpenMarker | RawMarker | RuntimeMarker;
 
+const [getWrites] = createSectionState<WriteOrMarker[]>("writes", () => [""]);
 const [getTrailerWrites] = createSectionState<(string | t.Expression)[]>(
   "trailerWrites",
   () => [""],
@@ -44,18 +52,107 @@ export function writeTo(path: t.NodePath<any>, trailer?: boolean) {
   };
 }
 
+export function recordOpenTag(path: t.NodePath<any>) {
+  if (!isOutputHTML() || isOptimize()) return;
+  const loc = internLoc(path);
+  if (loc === undefined) return;
+  getWrites(getSection(path)).push({ [OPEN]: loc });
+}
+
+// Next write is runtime-injected markup (no template source).
+export function writeRuntimeHTML(path: t.NodePath<any>) {
+  return (strs: TemplateStringsArray, ...exprs: Write[]): void => {
+    if (isOutputHTML() && !isOptimize()) {
+      getWrites(getSection(path)).push({ [RUNTIME]: true });
+    }
+    writeTo(path)(strs, ...exprs);
+  };
+}
+
+// Unescaped raw HTML as its own `_html` segment (value is not mixed into neighbors).
+export function writeRawHTML(path: t.NodePath<any>, value: t.Expression) {
+  const section = getSection(path);
+  const writes = getWrites(section);
+  if (isOutputHTML() && !isOptimize()) {
+    writes.push({ [RAW]: internLoc(path), value });
+  } else {
+    writes.push(value, "");
+  }
+}
+
 export function consumeHTML(path: t.NodePath<any>) {
   const section = getSection(path);
   const writes = getWrites(section);
   const trailers = getTrailerWrites(section);
-  const writeResult = normalizeStringExpression(writes.map(unwrapWrite));
   const trailerResult = normalizeStringExpression(trailers);
+  const track = isOutputHTML() && !isOptimize();
+  let htmlCalls: t.Expression[] | undefined;
+
+  if (track) {
+    htmlCalls = [];
+    let parts: Write[] = [];
+    let opens: (string | undefined)[] = [];
+    let runtime = false;
+
+    const flush = () => {
+      const result = normalizeStringExpression(parts.map(unwrapWrite));
+      parts = [];
+      if (!result) {
+        opens = [];
+        runtime = false;
+        return;
+      }
+      if (runtime || !opens.length) {
+        htmlCalls!.push(callRuntime("_html", result));
+      } else {
+        htmlCalls!.push(
+          callRuntime("_html_opens", ...opens.map(locLiteral)),
+          callRuntime("_html", result),
+        );
+      }
+      opens = [];
+      runtime = false;
+    };
+
+    for (const write of writes) {
+      if (isOpenMarker(write)) {
+        if (runtime) flush();
+        opens.push(write[OPEN]);
+      } else if (isRawMarker(write)) {
+        flush();
+        htmlCalls!.push(
+          callRuntime(
+            "_html_raw",
+            write[RAW] === undefined ? undefined : t.stringLiteral(write[RAW]),
+          ),
+          callRuntime("_html", write.value),
+        );
+      } else if (isRuntimeMarker(write)) {
+        flush();
+        runtime = true;
+      } else {
+        parts.push(write);
+      }
+    }
+    flush();
+  }
+
+  const writeResult = track
+    ? undefined
+    : normalizeStringExpression((writes as Write[]).map(unwrapWrite));
   writes.length = 0;
   writes[0] = "";
   trailers.length = 0;
   trailers[0] = "";
 
-  if (writeResult && trailerResult) {
+  if (htmlCalls?.length) {
+    const calls = trailerResult
+      ? [...htmlCalls, callRuntime("_trailers", trailerResult)]
+      : htmlCalls;
+    return t.expressionStatement(
+      calls.length === 1 ? calls[0] : t.sequenceExpression(calls),
+    );
+  } else if (writeResult && trailerResult) {
     return t.expressionStatement(
       t.sequenceExpression([
         callRuntime("_html", writeResult),
@@ -105,7 +202,11 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
     const meta = {
       walks: getWalkString(section),
       writes: normalizeStringExpression(
-        [writePrefix, ...writes.map(unwrapWrite), writePostfix],
+        [
+          writePrefix,
+          ...writes.filter((w): w is Write => !isMarker(w)).map(unwrapWrite),
+          writePostfix,
+        ],
         true,
       ),
       decls: undefined,
@@ -166,6 +267,40 @@ export function markNode(
   }
 }
 
+export function formatNodeSource(path: t.NodePath<any>) {
+  const { loc } = path.node;
+  if (!loc) return;
+  const file =
+    (path.hub.file.opts.filenameRelative as string) ||
+    (path.hub.file.opts.filename as string);
+  return `${file}:${loc.start.line}:${loc.start.column + 1}`;
+}
+
+function internLoc(path: t.NodePath<any>) {
+  return formatNodeSource(path);
+}
+
+// A position is referenced once, so a lookup table would never dedupe anything.
+function locLiteral(source: string | undefined) {
+  return source === undefined ? t.numericLiteral(0) : t.stringLiteral(source);
+}
+
 function unwrapWrite(write: Write) {
   return typeof write === "function" ? write() || "" : write;
+}
+
+function isOpenMarker(write: WriteOrMarker): write is OpenMarker {
+  return typeof write === "object" && write !== null && OPEN in write;
+}
+
+function isRawMarker(write: WriteOrMarker): write is RawMarker {
+  return typeof write === "object" && write !== null && RAW in write;
+}
+
+function isRuntimeMarker(write: WriteOrMarker): write is RuntimeMarker {
+  return typeof write === "object" && write !== null && RUNTIME in write;
+}
+
+function isMarker(write: WriteOrMarker) {
+  return isOpenMarker(write) || isRawMarker(write) || isRuntimeMarker(write);
 }

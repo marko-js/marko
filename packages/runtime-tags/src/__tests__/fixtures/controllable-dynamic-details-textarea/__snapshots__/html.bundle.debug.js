@@ -15,17 +15,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html("<summary>toggle</summary>");
+		_html_opens("__tests__/template.marko:6:3"), _html("<summary>toggle</summary>");
 		_dynamic_tag($scope1_id, "#text/0", textareaTag, {
 			value: text,
 			valueChange: _resume(function(next) {
 				text = next;
 			}, "__tests__/template.marko_1/valueChange", $scope1_id)
-		});
+		}, void 0, void 0, void 0, "__tests__/template.marko:7:3");
 		_subscribe($text__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
 		_resume_branch($scope1_id);
-	}, $scope0_id));
-	_html(`<output>${open ? "open" : "closed"}${_el_resume($scope0_id, "#text/1")}/<!>${_escape(text)}${_el_resume($scope0_id, "#text/2")}</output>`);
+	}, $scope0_id), void 0, void 0, "__tests__/template.marko:5:1");
+	_html_opens("__tests__/template.marko:9:1"), _html(`<output>${open ? "open" : "closed"}${_el_resume($scope0_id, "#text/1")}/<!>${_escape(text)}${_el_resume($scope0_id, "#text/2")}</output>`);
 	writeScope($scope0_id, {
 		text,
 		detailsTag,

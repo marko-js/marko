@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $valueChange = _resume((_new_count) => {
 		count = _new_count;
 	}, "__tests__/template.marko_0/valueChange2", $scope0_id);
-	_html(`<button><input${_attr_input_value($scope0_id, "#input/1", count, $valueChange)}>${_el_resume($scope0_id, "#input/1")}<input${_attr_input_value($scope0_id, "#input/2", count, $valueChange)}>${_el_resume($scope0_id, "#input/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:2:1", "__tests__/template.marko:5:3", "__tests__/template.marko:6:3"), _html(`<button><input${_attr_input_value($scope0_id, "#input/1", count, $valueChange)}>${_el_resume($scope0_id, "#input/1")}<input${_attr_input_value($scope0_id, "#input/2", count, $valueChange)}>${_el_resume($scope0_id, "#input/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count,

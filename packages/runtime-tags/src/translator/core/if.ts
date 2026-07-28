@@ -486,6 +486,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     branches[i].remove();
   }
   const placeholder = t.markoPlaceholder(expr, true);
+  placeholder.loc = rootTag.node.loc;
   if (rawText) {
     (placeholder.extra ??= {})[kRawText] = true;
   }

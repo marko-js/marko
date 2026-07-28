@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (input.bar) {
 				const $scope2_id = _scope_id();
-				_dynamic_tag($scope2_id, "#text/0", 0 || Foo, { message: input.bar }, 0, 0, $sg__input_bar);
+				_dynamic_tag($scope2_id, "#text/0", 0 || Foo, { message: input.bar }, 0, 0, $sg__input_bar, "__tests__/template.marko:3:5");
 				$si__input_bar && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:3");
 				return 0;
 			} else {

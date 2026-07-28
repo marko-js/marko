@@ -17,7 +17,7 @@ s("__tests__/tags/components/hello-internal.marko", _marko_template);
 var hello_default = _template("__tests__/tags/hello.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, 0, 0, 0);
+	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, 0, 0, 0, "__tests__/tags/hello.marko:1:1");
 });
 
 // template.marko

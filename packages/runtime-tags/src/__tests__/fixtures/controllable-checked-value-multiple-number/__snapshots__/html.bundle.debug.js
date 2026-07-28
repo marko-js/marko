@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let checked = [1];
-	_html(`<input${_attr_input_checkedValue($scope0_id, "#input/0", checked, _resume(function(v) {
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1", "__tests__/template.marko:5:1", "__tests__/template.marko:7:1", "__tests__/template.marko:9:1"), _html(`<input${_attr_input_checkedValue($scope0_id, "#input/0", checked, _resume(function(v) {
 		checked = v.map((it) => Number(it));
 	}, "__tests__/template.marko_0/checkedValueChange", $scope0_id), 0)} type=checkbox>${_el_resume($scope0_id, "#input/0")}<input${_attr_input_checkedValue($scope0_id, "#input/1", checked, _resume(function(v) {
 		checked = v.map((it) => Number(it));

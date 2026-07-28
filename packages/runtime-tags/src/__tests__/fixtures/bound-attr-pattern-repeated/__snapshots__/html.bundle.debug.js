@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const $valueChange = $aChange;
-		_html(`<input${_attr_input_value($scope1_id, "#input/0", a, $valueChange)}>${_el_resume($scope1_id, "#input/0")}<input${_attr_input_value($scope1_id, "#input/1", a, $valueChange)}>${_el_resume($scope1_id, "#input/1")}<input${_attr_input_value($scope1_id, "#input/2", a, $valueChange)}>${_el_resume($scope1_id, "#input/2")}`);
+		_html_opens("__tests__/template.marko:2:3", "__tests__/template.marko:3:3", "__tests__/template.marko:4:3"), _html(`<input${_attr_input_value($scope1_id, "#input/0", a, $valueChange)}>${_el_resume($scope1_id, "#input/0")}<input${_attr_input_value($scope1_id, "#input/1", a, $valueChange)}>${_el_resume($scope1_id, "#input/1")}<input${_attr_input_value($scope1_id, "#input/2", a, $valueChange)}>${_el_resume($scope1_id, "#input/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			$aChange: _serialize_if($scope1_reason, 1) && $aChange,
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}) };
 	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:7:1"), _html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z" + n });

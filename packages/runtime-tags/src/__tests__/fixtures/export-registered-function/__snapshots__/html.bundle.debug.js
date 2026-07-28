@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let loud = shout;
 	let quiet = whisper;
 	let message = "Hello";
-	_html(`<button>up</button>${_el_resume($scope0_id, "#button/0")}<button>down</button>${_el_resume($scope0_id, "#button/1")}<div>${_escape(message)}${_el_resume($scope0_id, "#text/2")}</div>`);
+	_html_opens("__tests__/template.marko:7:1", "__tests__/template.marko:8:1", "__tests__/template.marko:9:1"), _html(`<button>up</button>${_el_resume($scope0_id, "#button/0")}<button>down</button>${_el_resume($scope0_id, "#button/1")}<div>${_escape(message)}${_el_resume($scope0_id, "#text/2")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		loud,

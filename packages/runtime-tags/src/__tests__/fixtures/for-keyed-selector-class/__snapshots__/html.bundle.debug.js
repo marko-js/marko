@@ -17,14 +17,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: "c"
 		}
 	];
-	_html("<table><tbody>");
+	_html_opens("__tests__/template.marko:4:1", "__tests__/template.marko:4:8"), _html("<table><tbody>");
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<tr${selected === row.id ? " class=danger" : ""}><td><button class=select>${_escape(row.label)}${_el_resume($scope1_id, "#text/2")}</button>${_el_resume($scope1_id, "#button/1")}</td></tr>${_el_resume($scope1_id, "#tr/0")}`);
+		_html_opens("__tests__/template.marko:6:5", "__tests__/template.marko:7:7", "__tests__/template.marko:7:11"), _html(`<tr${selected === row.id ? " class=danger" : ""}><td><button class=select>${_escape(row.label)}${_el_resume($scope1_id, "#text/2")}</button>${_el_resume($scope1_id, "#button/1")}</td></tr>${_el_resume($scope1_id, "#tr/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, { row_id: row?.id }, "__tests__/template.marko", "5:4", { row_id: ["row.id", "5:8"] });
 	}, "id", $scope0_id, "#tbody/0", 1, 1, 1, "</tbody>", 1);
-	_html(`</table><button class=remove>remove selected</button>${_el_resume($scope0_id, "#button/1")}<button class=rotate>rotate</button>${_el_resume($scope0_id, "#button/2")}<button class=clear>clear</button>${_el_resume($scope0_id, "#button/3")}`);
+	_html_opens("__tests__/template.marko:12:1", "__tests__/template.marko:13:1", "__tests__/template.marko:14:1"), _html(`</table><button class=remove>remove selected</button>${_el_resume($scope0_id, "#button/1")}<button class=rotate>rotate</button>${_el_resume($scope0_id, "#button/2")}<button class=clear>clear</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		selected,

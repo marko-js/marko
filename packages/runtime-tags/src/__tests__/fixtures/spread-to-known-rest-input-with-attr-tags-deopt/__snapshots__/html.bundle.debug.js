@@ -5,8 +5,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const { foo } = input;
 	_for_of(foo, ({ desc, ...item }) => {
 		const $scope1_id = _scope_id();
-		_html(`<span${_attrs(item, "#span/0", $scope1_id, "span")}>`);
-		_dynamic_tag($scope1_id, "#text/1", desc, {}, 0, 0, $sg__input_foo);
+		_html_opens("__tests__/tags/child.marko:3:3"), _html(`<span${_attrs(item, "#span/0", $scope1_id, "span")}>`);
+		_dynamic_tag($scope1_id, "#text/1", desc, {}, 0, 0, $sg__input_foo, "__tests__/tags/child.marko:3:17");
 		_html(`</span>${_el_resume($scope1_id, "#span/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item");
 		writeScope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
@@ -35,7 +35,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			"#childScope/0": $si__input_foo && _existing_scope($childScope)
 		}, "__tests__/tags/wrap.marko", "2:4"));
 		_resume_branch($scope1_id);
-	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
+	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/wrap.marko:2:1");
 	writeScope($scope0_id, {
 		input_foo: input.foo,
 		_class: _serialize_if($scope0_reason, 3) && _class,

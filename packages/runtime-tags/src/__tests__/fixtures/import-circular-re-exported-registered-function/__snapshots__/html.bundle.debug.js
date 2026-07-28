@@ -5,7 +5,7 @@ function bFn(message) {
 var chain_b_default = _template("__tests__/tags/chain-b.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div>b</div>");
+	_html_opens("__tests__/tags/chain-b.marko:7:1"), _html("<div>b</div>");
 });
 
 // tags/chain-a.marko
@@ -15,7 +15,7 @@ function aFn(message) {
 var chain_a_default = _template("__tests__/tags/chain-a.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div>a</div>");
+	_html_opens("__tests__/tags/chain-a.marko:7:1"), _html("<div>a</div>");
 });
 
 // template.marko
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let first = aFn;
 	let second = bFn;
 	let message = "start";
-	_html(`<button>go</button>${_el_resume($scope0_id, "#button/0")}<div>${_escape(message)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	_html_opens("__tests__/template.marko:7:1", "__tests__/template.marko:8:1"), _html(`<button>go</button>${_el_resume($scope0_id, "#button/0")}<div>${_escape(message)}${_el_resume($scope0_id, "#text/1")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		first,

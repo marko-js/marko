@@ -2,8 +2,8 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div>");
-	_dynamic_tag($scope0_id, "#text/0", input, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_html_opens("__tests__/tags/child.marko:1:1"), _html("<div>");
+	_dynamic_tag($scope0_id, "#text/0", input, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/child.marko:2:3");
 	_html("</div>");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });

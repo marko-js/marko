@@ -4,8 +4,8 @@ var box_default = _template("__tests__/tags/box/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(input.item, ({ content }) => {
 		const $scope1_id = _scope_id();
-		_html("<div class=item>");
-		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, $sg__input_item);
+		_html_opens("__tests__/tags/box/index.marko:2:3"), _html("<div class=item>");
+		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, $sg__input_item, "__tests__/tags/box/index.marko:2:13");
 		_html("</div>");
 		$si__input_item && writeScope($scope1_id, {}, "__tests__/tags/box/index.marko", "1:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);

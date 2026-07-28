@@ -73,7 +73,12 @@ export default function normalizeStringExpression(
 }
 
 export function appendLiteral(arr: unknown[], str: string) {
-  arr[arr.length - 1] += str;
+  const last = arr.length - 1;
+  if (typeof arr[last] === "string") {
+    arr[last] += str;
+  } else {
+    arr.push(str);
+  }
 }
 
 export function escapeTemplateRaw(raw: string) {
