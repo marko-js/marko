@@ -1,0 +1,6 @@
+import { shout } from "./greeting.marko";
+
+<let/format=shout/>
+<let/message="panel"/>
+<button onClick() { message = format(message) }>panel</button>
+<greeting message=message/>

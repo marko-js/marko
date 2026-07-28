@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-export-default/template.marko:1:1
+    > 1 | export default function shout(message: string) { return message.toUpperCase(); }
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ A template is already its own default export. Use a named export instead.
+      2 |
+      3 | <div>hello</div>
+      4 |

@@ -46,6 +46,16 @@ for (const entry of args.positionals) {
     optimize: !args.values.dev,
     sourceMaps: false,
     modules: "esm",
+    // Generated modules are written beside the output, with their path
+    // flattened into the name so they stay in one directory.
+    resolveVirtualDependency(filename, { virtualPath, code }) {
+      const request =
+        "./" + virtualPath.replace(/^\.\//, "").replaceAll("/", "__");
+      const virtualFileName = path.resolve(filename, "..", request);
+      fs.writeFileSync(virtualFileName, code);
+      console.log(virtualFileName);
+      return request;
+    },
     babelConfig: {
       babelrc: false,
       configFile: false,

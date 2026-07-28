@@ -1,0 +1,5 @@
+import { shout } from "./tags/greeting.marko";
+
+<let/message="hello"/>
+<button onClick() { message += "!" }>add</button>
+<greeting message=shout(message)/>

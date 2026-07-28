@@ -1,0 +1,7 @@
+static function base(message: string) { return message.toUpperCase() + "!"; }
+static const alias = base;
+
+<let/fn=alias/>
+<let/message="Hello"/>
+<button onClick() { message = fn(message) }>go</button>
+<div>${message}</div>

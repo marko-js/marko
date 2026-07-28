@@ -1,0 +1,8 @@
+import { bFn } from "./tags/chain-a.marko";
+import { aFn } from "./tags/chain-b.marko";
+
+<let/first=aFn/>
+<let/second=bFn/>
+<let/message="start"/>
+<button onClick() { message = second(first(message)) }>go</button>
+<div>${message}</div>

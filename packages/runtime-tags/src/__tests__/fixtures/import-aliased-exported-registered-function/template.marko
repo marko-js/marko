@@ -1,0 +1,8 @@
+import { yell, whisper } from "./tags/greeting.marko";
+
+<let/loud=yell/>
+<let/quiet=whisper/>
+<let/message="Hello"/>
+<button onClick() { message = loud(message) }>shout</button>
+<button onClick() { message = quiet(message) }>whisper</button>
+<greeting message=message/>
