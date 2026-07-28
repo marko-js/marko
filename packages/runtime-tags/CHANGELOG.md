@@ -1,5 +1,22 @@
 # @marko/runtime-tags
 
+## 6.3.27
+
+### Patch Changes
+
+- [#3669](https://github.com/marko-js/marko/pull/3669) [`564429a`](https://github.com/marko-js/marko/commit/564429aa58a382e1303bb6bc4769058390313b5b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix attribute tag variable names leaking from an HTML compile into a later DOM compile of the same file, which made output order-dependent and could shadow a generated binding or fail the build with `Duplicate declaration`.
+
+- [#3649](https://github.com/marko-js/marko/pull/3649) [`728b88a`](https://github.com/marko-js/marko/commit/728b88a29fb74af2b5878a5137ef9d939ea2b805) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a compile error for a `content` attribute on a void or text-only native tag. `<input content=x>` and `<textarea content=x/>` previously compiled, emitting the content for the client and silently dropping it on the server, and neither could render it.
+
+- [#3663](https://github.com/marko-js/marko/pull/3663) [`48e290d`](https://github.com/marko-js/marko/commit/48e290d5f5584a65953c9761a2a8783b9c6fd6db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a lazily-loaded custom tag emitting a surplus comment marker, which shifted every later walk step in its section by one. An element with an event handler after a lazy tag bound to the wrong node, throwing `Cannot read properties of undefined` on mount.
+
+- [#3660](https://github.com/marko-js/marko/pull/3660) [`093b693`](https://github.com/marko-js/marko/commit/093b6933c3d2123474356a92129ba66f92e42e90) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop markup preceding a controlled `<select>` from being rendered inside its content. Any `<option value>` in that markup — an earlier uncontrolled `<select>`, an `<optgroup>`, a `<datalist>` — was marked `selected` against the controlled select's value on the server, which the client never did.
+
+- [#3668](https://github.com/marko-js/marko/pull/3668) [`ca58e82`](https://github.com/marko-js/marko/commit/ca58e82c0e9abe101e535a341bc937dbfd4df987) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serializing a repeated reference to a value that already has a deferred cycle assignment: Map/Set members resumed as missing and a generator return emitted unparsable output.
+
+- Updated dependencies [[`180251f`](https://github.com/marko-js/marko/commit/180251f7773892e34bf1d2b8cb07dd84d746f121), [`0f2334b`](https://github.com/marko-js/marko/commit/0f2334b946c0286f95e6d2cd660ec18997dee1a0)]:
+  - @marko/compiler@5.41.11
+
 ## 6.3.26
 
 ### Patch Changes
