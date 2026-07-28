@@ -1,0 +1,9 @@
+<let/value="b"/>
+<let/options=["x", "b"]/>
+<select value:=value>
+  <for|opt| of=options by=v=>v>
+    <option value=opt>${opt}</>
+  </>
+</select>
+<div id="result">${value}</div>
+<button.reload onClick() { options = ["a", "b", "c"] }>reload</>

@@ -1,4 +1,4 @@
-// size: 26465 (min) 9827 (brotli)
+// size: 26547 (min) 9896 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1397,12 +1397,12 @@ function _attr_select_value(scope, nodeAccessor, value, valueChange) {
 }
 function _attr_select_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
-    onChange = () => {
+    onChange = (changedValue) => {
       let valueChange = scope["E" + nodeAccessor];
       if (valueChange) {
         let oldValue = scope["G" + nodeAccessor],
           multiple = Array.isArray(oldValue),
-          newValue = getSelectValue(el, multiple);
+          newValue = changedValue ?? getSelectValue(el, multiple);
         (setSelectValue(el, oldValue, multiple), valueChange(newValue), run());
       }
     };
@@ -1418,7 +1418,7 @@ function _attr_select_value_script(scope, nodeAccessor) {
           break;
         }
     }
-  (syncControllableFormInput(el, hasSelectChanged, onChange),
+  (syncControllableFormInput(el, hasSelectChanged, () => onChange()),
     observeOnce(
       scope,
       nodeAccessor,
@@ -1427,11 +1427,18 @@ function _attr_select_value_script(scope, nodeAccessor) {
         subtree: !0,
       },
       () => {
-        let value = scope["G" + nodeAccessor];
-        (Array.isArray(value)
-          ? value.length !== el.selectedOptions.length ||
-            value.some((_, i) => !value.includes(el.selectedOptions[i].value))
-          : el.value !== value) && onChange();
+        let value = scope["G" + nodeAccessor],
+          multiple = Array.isArray(value);
+        if (
+          multiple
+            ? value.length !== el.selectedOptions.length ||
+              value.some((_, i) => !value.includes(el.selectedOptions[i].value))
+            : el.value !== value
+        ) {
+          let fallback = getSelectValue(el, multiple);
+          (setSelectValue(el, value, multiple),
+            el.selectedOptions.length !== (multiple ? value.length : 1) && onChange(fallback));
+        }
       },
     ));
 }

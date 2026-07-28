@@ -392,7 +392,7 @@ export function _attr_select_value_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLSelectElement;
-  const onChange = () => {
+  const onChange = (changedValue?: string | string[]) => {
     const valueChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
@@ -401,7 +401,7 @@ export function _attr_select_value_script(
         | string
         | string[];
       const multiple = Array.isArray(oldValue);
-      const newValue = getSelectValue(el, multiple);
+      const newValue = changedValue ?? getSelectValue(el, multiple);
       setSelectValue(el, oldValue, multiple);
       valueChange(newValue);
       run();
@@ -427,18 +427,26 @@ export function _attr_select_value_script(
     }
   }
 
-  syncControllableFormInput(el, hasSelectChanged, onChange);
+  syncControllableFormInput(el, hasSelectChanged, () => onChange());
   observeOnce(scope, nodeAccessor, { childList: true, subtree: true }, () => {
     const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
+    const multiple = Array.isArray(value);
     if (
-      Array.isArray(value)
+      multiple
         ? value.length !== el.selectedOptions.length ||
           // Order-independent: the controlled order may differ from document
           // order, which must not count as a change (values are normalized strings).
           value.some((_, i) => !value.includes(el.selectedOptions[i].value))
         : el.value !== value
     ) {
-      onChange();
+      // Options arriving later make the browser select its own fallback, so
+      // re-apply the controlled value and only report what the browser chose
+      // when that value still has no option to land on.
+      const fallback = getSelectValue(el, multiple);
+      setSelectValue(el, value, multiple);
+      if (el.selectedOptions.length !== (multiple ? value.length : 1)) {
+        onChange(fallback);
+      }
     }
   });
 }
