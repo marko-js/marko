@@ -18,13 +18,13 @@ const $rest = ($scope, rest) => $input_stuff($scope.b, rest);
 
 // template.marko
 const $cond = /*@__PURE__*/ _let(2, ($scope) => {
-	let $cond;
-	if ($scope.c) $cond = attrTag({ a: 1 });
-	else $cond = attrTag({ a: 2 });
+	let $cond2;
+	if ($scope.c) $cond2 = attrTag({ a: 1 });
+	else $cond2 = attrTag({ a: 2 });
 	$rest($scope.b, {
 		row: attrTags(attrTag({ x: 1 }), { x: 2 }),
 		other: attrTag({ y: 1 }),
-		cond: $cond
+		cond: $cond2
 	});
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
