@@ -1,0 +1,10 @@
+<let/cond = true/>
+<button onClick() { cond = !cond }>toggle</button>
+<child>
+  <if=cond>
+    <@scope a=1/>
+  </if>
+  <else>
+    <@scope a=2/>
+  </else>
+</child>

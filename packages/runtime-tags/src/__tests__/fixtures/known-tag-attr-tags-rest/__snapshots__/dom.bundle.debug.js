@@ -34,16 +34,16 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", 
 const $template = /*@__PURE__*/ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($walks$1);
 const $cond = /*@__PURE__*/ _let("cond/2", ($scope) => {
-	let $cond;
+	let $cond2;
 	if ($scope.cond) {
-		$cond = attrTag({ a: 1 });
+		$cond2 = attrTag({ a: 1 });
 	} else {
-		$cond = attrTag({ a: 2 });
+		$cond2 = attrTag({ a: 2 });
 	}
 	$rest($scope["#childScope/1"], {
 		row: attrTags(attrTag({ x: 1 }), { x: 2 }),
 		other: attrTag({ y: 1 }),
-		cond: $cond
+		cond: $cond2
 	});
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
