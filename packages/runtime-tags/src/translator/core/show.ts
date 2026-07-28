@@ -12,6 +12,7 @@ import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
+import { discardsWrapperChildren } from "../util/insertion-context";
 import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
@@ -84,6 +85,8 @@ export default {
       }
 
       if (tagExtra[kStaticDisplay] === true) return;
+
+      assertLegalHiddenContext(tag);
 
       const tagSection = getOrCreateSection(tag);
 
@@ -342,6 +345,20 @@ function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
   assertNoSpreadAttrs(tag);
   assertHasBody(tag);
   assertHasValueAttribute(tag);
+}
+
+function assertLegalHiddenContext(tag: t.NodePath<t.MarkoTag>) {
+  const parentName = getParentTag(tag)?.node.name;
+  if (
+    t.isStringLiteral(parentName) &&
+    discardsWrapperChildren(parentName.value)
+  ) {
+    throw tag
+      .get("name")
+      .buildCodeFrameError(
+        `A [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) cannot be a direct child of \`<${parentName.value}>\`: hidden content is wrapped in an element that \`<${parentName.value}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
+      );
+  }
 }
 
 function assertHasBody(tag: t.NodePath<t.MarkoTag>) {

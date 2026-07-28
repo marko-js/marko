@@ -516,31 +516,11 @@ ch.length; ... }`). Re-verify: `resolveCursorPosition("", 5, "(𠮷𠮸𠮹) x",
 𠮸𠮹y")` returns 10 (end of value) where 8 is correct, while the all-BMP
 `resolveCursorPosition("", 5, "(5405) 810-9227", "(540) 581-0922")` returns 7.
 
-## Make the hidden `<show>` wrapper legal in table/select insertion contexts; `<t hidden>` is foster-parented and the hidden content renders
+## Give a hidden `<show>` a wrapper legal in table/select insertion contexts, instead of rejecting it
 
-`packages/runtime-tags/src/html/writer.ts` › `_show_start` | 2026-07-23 | impact:high | effort:med
+`packages/runtime-tags/src/html/writer.ts` › `_show_start` | 2026-07-28 | impact:med | effort:high
 
-`_show_start` writes a literal `<t hidden>` (and `_show_end` the matching
-`</t>`) around a non-displayed `<show>` range, with the same wrapper emitted
-statically at `translator/core/show.ts` (`writer.writeTo(tag)`<t hidden>``).
-`<t>` is an unknown element, so the HTML parser's "in table"/"in table body"
-insertion mode foster-parents it out of the table while its `<tr>` children are
-still inserted into the table, and "in select" mode ignores the `<t>` token
-entirely while keeping its `<option>` children — in both cases the content the
-author asked to hide is rendered and interactive after SSR, and the
-`BranchEndSingleNode` resume comment no longer bounds the nodes it names, so
-resume/toggle is wrong too. This is a plain SSR/CSR divergence (CSR moves the
-range into a detached fragment and correctly hides it), and it hits exactly the
-usage the docs recommend — website `docs/reference/core-tag.md` `## <show>`
-promotes `<show>` for form fields and bulky markup with no note about table or
-select ancestors. Direction: the translator knows the static ancestor tag at the
-`<show>` site, so pick a wrapper legal in that insertion context (or reject the
-construct with a compile-time diagnostic as a cheap first step) instead of
-always emitting `<t>`. Re-verify by adding a fixture
-`<table><tbody><show=show><tr><td>row</td></tr></show></tbody></table>` with
-`show=false` and running `pnpm test -- --grep "runtime-tags/translator
-show-tag-in-table "`: `render.md` will show the row inside the table (visible)
-and an empty `<t hidden>` before the table.
+A `<show>` directly inside `<table>`/`<thead>`/`<tbody>`/`<tfoot>`/`<tr>`/`<colgroup>`/`<select>`/`<optgroup>` is now a compile error (`assertLegalHiddenContext` in `translator/core/show.ts`), because `_show_start` wraps non-displayed content in `<t hidden>` and those insertion modes discard the unknown element while keeping its children — so the content the author asked to hide rendered, visible and interactive, with a `<option>` even coming back `selected` and a `<col>` escaping into a second `<colgroup>`. The same hazard applies to the `<t hidden>` that `Chunk.flushScript` wraps reordered content in (`html/writer.ts`), which is the subject of its own entry; the shared predicate for these insertion modes is `translator/util/insertion-context.ts` › `discardsWrapperChildren`. That diagnostic only stops the silent mis-render; it does not make the construct work, and the docs still recommend `<show>` for bulky markup that may well be a table body. The blocker for a real fix is that no ordinary element is legal in both contexts: `<tbody>` accepts only `<tr>`, `<template>`, `<script>` and `<style>`, and `<select>` only `<option>`, `<optgroup>`, `<hr>`, `<script>` and `<template>`. `<template>` is the sole universal candidate and is semantically apt (its children park in a `DocumentFragment`, which is exactly the runtime's hidden representation), but its children are not in the normal tree — `firstChild` is null and the content sits on `.content` — so the resume walker and `_show`'s `<t>`-dissolve path both need to reach through it before it can be adopted. A narrower alternative is to set `hidden` on each top-level node of the body when the parent is one of these tags, which needs no wrapper at all but only works when those nodes are statically known elements. Re-verify by deleting the `assertLegalHiddenContext` call and running `pnpm run test:update -- --grep "runtime-tags/translator error-show-tag-in-table "`: `render.debug.md` shows the row inside the table despite `show=false`.
 
 ## Wrap reordered out-of-order content in a parser-context-legal container; table rows streamed after a `@placeholder` are destroyed
 
