@@ -98,12 +98,6 @@ Every scope written as a value emits `_(id)` after `trackScope` (`serializer.ts:
 
 Profiling a 464 KB data-heavy payload (product records: nested objects, arrays, long strings) — after the prototype-dispatch and char-code key-escaping fast paths already landed — shows the remaining cost is dominated by intrinsic per-value bookkeeping: ~12% GC, driven by a `new Reference` (`serializer.ts:307`) allocated in `writeReferenceOr` (`serializer.ts:608`) / `writeString` (`serializer.ts:723`) for every object, array, and >12-char string, plus ~12% in output `StringAdd` and ~8% across the `refs`/`REGISTRY`/`strs` Map probes. Most of those References back a value that is written once and never referenced again, so they are immediate garbage. A lazy scheme — record only the buffer position on first write, upgrade to a full Reference only on a second occurrence — would remove the bulk of the allocation, but is blocked by cross-flush dedup: a value first written in one flush and reused in a later one resolves through `assignId`'s parent/accessor walk (`serializer.ts:1868`), which needs pos+parent+accessor+flush retained from the first write (essentially the whole Reference). Splitting within-flush dedup (the common case, which only needs `pos` via `assignId`'s early return) from the cross-flush path would let the first write store a cheap position marker and allocate a Reference only when one is actually reused. Output-preserving, but a deep change to the reference model, not a spot fix.
 
-## Remove the second-stage dynamic import from load entries
-
-`packages/runtime-tags/src/translator/visitors/program/index.ts` › `translate.enter` | 2026-07-13 | impact:high | effort:low
-
-A triggered load entry currently adds `import(template).then(() => ready(id))`, creating a second module-discovery/evaluation boundary. Use a static side-effect import then `ready(id)`; inspect complete emitted chunk graphs because `src/__tests__/utils/bundle.ts:274` currently omits entry-only chunks from `sizes.json`.
-
 ## Consolidate each lazy template behind one load adapter
 
 `packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts` › `translateDOM` | 2026-07-13 | impact:med | effort:med

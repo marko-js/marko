@@ -152,6 +152,8 @@ export default {
             ),
             // A rejected chunk blocks this ready id, but already surfaces as a
             // network error, so handling it is not worth the runtime bytes.
+            // Dynamic so the template stays mergeable with its virtual signal
+            // chunks; a static import splits it out, adding a chunk and bytes.
             t.expressionStatement(
               t.callExpression(
                 t.memberExpression(
