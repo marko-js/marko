@@ -1,5 +1,20 @@
 # @marko/runtime-tags
 
+## 6.3.29
+
+### Patch Changes
+
+- [#3685](https://github.com/marko-js/marko/pull/3685) [`ab06701`](https://github.com/marko-js/marko/commit/ab067010d2dc87559fa9833369f55beb4569696b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a default export in a template as a compile error. The template is compiled into the module's default export, so a second one silently produced a module with two.
+
+- [#3675](https://github.com/marko-js/marko/pull/3675) [`dcc9ffb`](https://github.com/marko-js/marko/commit/dcc9ffb0ae01fefb049b55b28e97c631ce748a94) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Give `<show>` an explicit end marker so control flow in its body cannot invalidate the range, which previously removed unrelated siblings, left the toggle stuck, or crashed on reveal.
+
+- [#3684](https://github.com/marko-js/marko/pull/3684) [`160d81d`](https://github.com/marko-js/marko/commit/160d81dccb123325218c8ca5aa9707d871e39e90) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a compile error when a `<show>` is a direct child of a table or select element, where its hidden-content wrapper was discarded by the HTML parser and the content rendered instead of being hidden.
+
+- [#3685](https://github.com/marko-js/marko/pull/3685) [`ab06701`](https://github.com/marko-js/marko/commit/ab067010d2dc87559fa9833369f55beb4569696b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support serializing functions imported from another template. A template that exports a function now reserves a register id for it, and templates that import it share a single generated module that registers it.
+
+- Updated dependencies [[`f47497c`](https://github.com/marko-js/marko/commit/f47497c0e250b60baa0e42db9ba71982ab045c36)]:
+  - @marko/compiler@5.41.12
+
 ## 6.3.28
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.12
+
+### Patch Changes
+
+- [#3680](https://github.com/marko-js/marko/pull/3680) [`f47497c`](https://github.com/marko-js/marko/commit/f47497c0e250b60baa0e42db9ba71982ab045c36) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix taglib attribute definitions being lost when a taglib is loaded a second time, which left `clearCaches()` (used by hot reload) with untyped attributes.
+
 ## 5.41.11
 
 ### Patch Changes
