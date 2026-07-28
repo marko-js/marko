@@ -1,0 +1,22 @@
+<select multiple>
+  <option value=x>x<!--M_*2 b--></option><!--M_*2 a-->
+  <option value=b selected>b<!--M_*3 b--></option><!--M_*3 a-->
+  <option value=c selected>c<!--M_*4 b--></option>
+  <!--M_*4 a--><!--M_}1 a 4 3 2-->
+</select>
+<div id=result>b,c<!--M_*1 b--></div><button
+  class=reload>reload</button><!--M_*1 c--><button
+  class=drop>drop</button><!--M_*1 d-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    Ea: _(1, "a0")
+  }, {
+    M: "x"
+  }, {
+    M: "b"
+  }, {
+    M: "c"
+  }], "a1 1"];
+  M._.w()
+</script>

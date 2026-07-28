@@ -1,0 +1,10 @@
+<let/value=["b", "c"]/>
+<let/options=["x", "b", "c"]/>
+<select multiple value:=value>
+  <for|opt| of=options by=v=>v>
+    <option value=opt>${opt}</>
+  </>
+</select>
+<div id="result">${value.join(",")}</div>
+<button.reload onClick() { options = ["a", "b", "c"] }>reload</>
+<button.drop onClick() { options = ["a", "b"] }>drop</>

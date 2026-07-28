@@ -1,0 +1,26 @@
+<select multiple>
+  <option value=x>x<!--M_*2 #text/1--></option><!--M_*2 #option/0-->
+  <option value=b selected>b<!--M_*3 #text/1--></option><!--M_*3 #option/0-->
+  <option value=c selected>c<!--M_*4 #text/1--></option>
+  <!--M_*4 #option/0--><!--M_}1 #select/0 4 3 2-->
+</select>
+<div id=result>b,c<!--M_*1 #text/1--></div><button
+  class=reload>reload</button><!--M_*1 #button/2--><button
+  class=drop>drop</button><!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#select/0": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-select-multiple-replaced-options/template.marko_0/valueChange"
+        )
+    }, {
+      "#LoopKey": "x"
+    }, {
+      "#LoopKey": "b"
+    }, {
+      "#LoopKey": "c"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/controllable-select-multiple-replaced-options/template.marko_0 1"
+  ];
+  M._.w()
+</script>

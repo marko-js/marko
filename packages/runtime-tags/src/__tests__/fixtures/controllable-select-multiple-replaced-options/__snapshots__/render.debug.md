@@ -1,0 +1,129 @@
+# Render
+```html
+<select
+  multiple=""
+>
+  <option
+    value="x"
+  >
+    x
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    b
+  </option>
+  <option
+    selected=""
+    value="c"
+  >
+    c
+  </option>
+</select>
+<div
+  id="result"
+>
+  b,c
+</div>
+<button
+  class="reload"
+>
+  reload
+</button>
+<button
+  class="drop"
+>
+  drop
+</button>
+```
+
+# Update
+```js
+document.querySelector(sel).click();
+```
+```html
+<select
+  multiple=""
+>
+  <option
+    value="a"
+  >
+    a
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    b
+  </option>
+  <option
+    selected=""
+    value="c"
+  >
+    c
+  </option>
+</select>
+<div
+  id="result"
+>
+  b,c
+</div>
+<button
+  class="reload"
+>
+  reload
+</button>
+<button
+  class="drop"
+>
+  drop
+</button>
+```
+## Change
+```
+REMOVE: select > option
+INSERT: select > option
+```
+
+# Update
+```js
+document.querySelector(sel).click();
+```
+```html
+<select
+  multiple=""
+>
+  <option
+    value="a"
+  >
+    a
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    b
+  </option>
+</select>
+<div
+  id="result"
+>
+  b
+</div>
+<button
+  class="reload"
+>
+  reload
+</button>
+<button
+  class="drop"
+>
+  drop
+</button>
+```
+## Change
+```
+REMOVE: select > option:nth-of-type(2) + option
+UPDATE: #result::text "b,c" => "b"
+```
