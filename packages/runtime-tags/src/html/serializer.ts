@@ -677,16 +677,11 @@ function writeReferenceOr(
       return false;
     }
 
-    if (parent) {
-      if (ref.assigns) {
-        addAssignment(ref, accessId(state, parent) + toAccess(accessor));
-        return false;
-      } else if (isCircular(parent, ref)) {
-        ensureId(state, ref);
-        state.assigned.add(ref);
-        addAssignment(ref, accessId(state, parent) + toAccess(accessor));
-        return false;
-      }
+    if (parent && isCircular(parent, ref)) {
+      ensureId(state, ref);
+      state.assigned.add(ref);
+      addAssignment(ref, accessId(state, parent) + toAccess(accessor));
+      return false;
     }
 
     state.buf.push(ensureId(state, ref));
