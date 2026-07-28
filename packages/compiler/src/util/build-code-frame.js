@@ -2,7 +2,9 @@ import path from "path";
 
 import { codeFrameColumns } from "@marko/compiler/internal/babel";
 import { cwd } from "@marko/compiler/modules";
-import color from "kleur";
+// Imported by name: a default import compiles to a `__toESM(mod, 1)` wrapper
+// that double-wraps once a bundler resolves kleur through its ESM entry.
+import { cyan, yellow } from "kleur/colors";
 
 import { stripAnsi } from "./strip-ansi";
 const indent = "    ";
@@ -103,10 +105,8 @@ function buildMessage(code, loc, message) {
 }
 
 function buildFileName(filename, loc) {
-  return `${color.cyan(path.relative(cwd, filename))}${
-    loc
-      ? `:${color.yellow(loc.start.line)}:${color.yellow(loc.start.column + 1)}`
-      : ""
+  return `${cyan(path.relative(cwd, filename))}${
+    loc ? `:${yellow(loc.start.line)}:${yellow(loc.start.column + 1)}` : ""
   }`;
 }
 
