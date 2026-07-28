@@ -1,4 +1,4 @@
-// size: 26465 (min) 9827 (brotli)
+// size: 26561 (min) 9887 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1796,9 +1796,10 @@ function _if(nodeAccessor, ...branchesArgs) {
     }
   );
 }
-function _show(nodeAccessor, startNodeAccessor) {
+function _show(nodeAccessor, startNodeAccessor, endNodeAccessor) {
   ((nodeAccessor = decodeAccessor(nodeAccessor)),
-    startNodeAccessor !== void 0 && (startNodeAccessor = decodeAccessor(startNodeAccessor)));
+    startNodeAccessor !== void 0 && (startNodeAccessor = decodeAccessor(startNodeAccessor)),
+    endNodeAccessor !== void 0 && (endNodeAccessor = decodeAccessor(endNodeAccessor)));
   let rangeAccessor = "A" + nodeAccessor;
   return (
     enableBranches(),
@@ -1810,7 +1811,11 @@ function _show(nodeAccessor, startNodeAccessor) {
       range ||
         ((range = scope[rangeAccessor] = {}),
         (range.S = onlyChild ? parentNode.firstChild : scope[startNodeAccessor]),
-        (range.K = onlyChild ? parentNode.lastChild : referenceNode.previousSibling));
+        (range.K = onlyChild
+          ? parentNode.lastChild
+          : endNodeAccessor === void 0
+            ? referenceNode.previousSibling
+            : scope[endNodeAccessor]));
       let startNode = range.S;
       if (range.L && startNode === range.K && startNode.tagName === "T") {
         let wrapper = startNode;
@@ -1820,10 +1825,12 @@ function _show(nodeAccessor, startNodeAccessor) {
           (range.K = wrapper.lastChild),
           wrapper.replaceWith(...wrapper.childNodes));
       }
-      let inDom = startNode.parentNode === parentNode;
+      let inDom = onlyChild ? !!parentNode.firstChild : startNode.parentNode === parentNode;
       display
         ? inDom || insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode)
-        : inDom && tempDetachBranch(range);
+        : inDom &&
+          (onlyChild && ((range.S = parentNode.firstChild), (range.K = parentNode.lastChild)),
+          tempDetachBranch(range));
     }
   );
 }

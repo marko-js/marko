@@ -11,14 +11,14 @@ var template_default = _template("a", (input) => {
 	_html(" dmg</span><em>+ ");
 	_show_start(vis, 1);
 	_html(`<!>${_escape(count)}${_el_resume($scope0_id, "d")}`);
-	_show_end($scope0_id, "e", vis);
+	_show_end($scope0_id, "f", vis);
 	_html("</em><b>+ ");
-	_html(`<!>${_escape(count)}${_el_resume($scope0_id, "f")}`);
-	_html(`</b><button>inc</button>${_el_resume($scope0_id, "g")}`);
+	_html(`<!>${_escape(count)}${_el_resume($scope0_id, "g")}`);
+	_html(`</b><button>inc</button>${_el_resume($scope0_id, "h")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		h: count,
-		i: vis
+		i: count,
+		j: vis
 	});
 	_resume_branch($scope0_id);
 }, 1);

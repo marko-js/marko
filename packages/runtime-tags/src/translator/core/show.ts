@@ -44,6 +44,7 @@ import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 const kStatefulReason = Symbol("<show> stateful reason");
 const kStartBinding = Symbol("<show> range start binding");
+const kEndBinding = Symbol("<show> range end binding");
 const kStaticDisplay = Symbol("<show> static display");
 const kSingleNodeBody = Symbol("<show> single node body");
 const kDisplayRef = Symbol("<show> hoisted display reference");
@@ -51,6 +52,7 @@ const kDisplayRef = Symbol("<show> hoisted display reference");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kStartBinding]?: Binding;
+    [kEndBinding]?: Binding;
     [kStaticDisplay]?: boolean;
     [kSingleNodeBody]?: boolean;
     [kDisplayRef]?: t.Expression;
@@ -110,6 +112,18 @@ export default {
       if (tagExtra[kStaticDisplay] === true) return;
 
       const tagSection = getSection(tag);
+
+      // Control flow in the body owns the nodes at the end of the range, so a
+      // multi-node body needs an end marker of its own that travels with it
+      // when hidden. Created before the reference node to keep walk order.
+      if (tagExtra[kStartBinding] && !tagExtra[kSingleNodeBody]) {
+        tagExtra[kEndBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          tagSection,
+        );
+      }
+
       const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
 
       if (tagExtra[kStaticDisplay] === undefined) {
@@ -250,12 +264,18 @@ export default {
         }
 
         const tagSection = getSection(tag);
+        const endBinding = tagExtra[kEndBinding];
         const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         const startBinding = tagExtra[kStartBinding];
         const display =
           tagExtra[kStaticDisplay] === false
             ? t.booleanLiteral(false)
             : tag.node.attributes[0].value;
+
+        if (endBinding) {
+          walks.visit(tag, WalkCode.Replace);
+          walks.enterShallow(tag);
+        }
 
         if (startBinding) {
           walks.visit(tag, WalkCode.Replace);
@@ -270,6 +290,7 @@ export default {
             startBinding
               ? getScopeAccessorLiteral(startBinding, true)
               : undefined,
+            endBinding ? getScopeAccessorLiteral(endBinding, true) : undefined,
           );
         };
         addValue(tagSection, tagExtra.referencedBindings, signal, display);

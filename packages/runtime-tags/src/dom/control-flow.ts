@@ -451,11 +451,15 @@ export function _if(
 export function _show(
   nodeAccessor: EncodedAccessor,
   startNodeAccessor?: EncodedAccessor,
+  endNodeAccessor?: EncodedAccessor,
 ) {
   if (!MARKO_DEBUG) {
     nodeAccessor = decodeAccessor(nodeAccessor as number);
     if (startNodeAccessor !== undefined) {
       startNodeAccessor = decodeAccessor(startNodeAccessor as number);
+    }
+    if (endNodeAccessor !== undefined) {
+      endNodeAccessor = decodeAccessor(endNodeAccessor as number);
     }
   }
   const rangeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
@@ -478,7 +482,10 @@ export function _show(
         : (scope[startNodeAccessor as Accessor] as ChildNode);
       range[AccessorProp.EndNode] = onlyChild
         ? parentNode.lastChild!
-        : referenceNode.previousSibling!;
+        : endNodeAccessor === undefined
+          ? // A single static node body bounds itself.
+            referenceNode.previousSibling!
+          : (scope[endNodeAccessor as Accessor] as ChildNode);
     }
 
     let startNode = range[AccessorProp.StartNode];
@@ -497,12 +504,22 @@ export function _show(
       wrapper.replaceWith(...wrapper.childNodes);
     }
 
-    const inDom = startNode.parentNode === parentNode;
+    // An only child owns every node in the parent, so the parent being empty is
+    // what says it is hidden; its cached marker may have been replaced by the body.
+    const inDom = onlyChild
+      ? !!parentNode.firstChild
+      : startNode.parentNode === parentNode;
     if (display) {
       if (!inDom) {
         insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode);
       }
     } else if (inDom) {
+      if (onlyChild) {
+        // An only child has no markers; body control flow can replace the
+        // parent's first and last child, so read them at each hide.
+        range[AccessorProp.StartNode] = parentNode.firstChild!;
+        range[AccessorProp.EndNode] = parentNode.lastChild!;
+      }
       tempDetachBranch(range);
     }
   };

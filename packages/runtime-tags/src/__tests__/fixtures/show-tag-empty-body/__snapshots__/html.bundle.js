@@ -6,8 +6,8 @@ var template_default = _template("a", (input) => {
 	_html(`<button>reveal</button>${_el_resume($scope0_id, "a")}`);
 	_show_start(reveal, 1);
 	_html(`${_escape(input.note)}${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 0))}`);
-	_show_end($scope0_id, "d", reveal);
+	_show_end($scope0_id, "e", reveal);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { h: reveal });
+	writeScope($scope0_id, { i: reveal });
 	_resume_branch($scope0_id);
 }, 1);

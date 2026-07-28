@@ -7,11 +7,11 @@ var template_default = _template("a", (input) => {
 	_show_start(visible, 1);
 	let count = 0;
 	_html(`<button id=inc>count <!>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
-	_show_end($scope0_id, "e", visible);
+	_show_end($scope0_id, "f", visible);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		f: visible,
-		g: count
+		g: visible,
+		h: count
 	});
 	_resume_branch($scope0_id);
 }, 1);
