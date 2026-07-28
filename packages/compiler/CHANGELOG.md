@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.41.11
+
+### Patch Changes
+
+- [#3665](https://github.com/marko-js/marko/pull/3665) [`180251f`](https://github.com/marko-js/marko/commit/180251f7773892e34bf1d2b8cb07dd84d746f121) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `compileFile` and `compileFileSync` throwing a `TypeError` when called without a config, instead of falling back to the configured file system.
+
+- [#3670](https://github.com/marko-js/marko/pull/3670) [`0f2334b`](https://github.com/marko-js/marko/commit/0f2334b946c0286f95e6d2cd660ec18997dee1a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix compile errors surfacing as `TypeError: cyan is not a function` when the compiler is bundled for the browser, so the diagnostic renders instead.
+
 ## 5.41.10
 
 ### Patch Changes
