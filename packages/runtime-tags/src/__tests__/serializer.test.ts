@@ -412,7 +412,7 @@ describe("serializer", () => {
       const rt = deserialize({ x, gen });
       const iter = rt.gen as Generator;
       assert.deepEqual(iter.next(), { value: 1, done: false });
-      assert.equal(iter.next().value, rt.x);
+      assert.deepEqual(iter.next(), { value: rt.x, done: true });
       assert.equal(rt.x.self, rt.x);
     });
   });
