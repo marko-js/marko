@@ -144,6 +144,9 @@ class TagLoader {
     var k;
 
     if (value != null && typeof value === "object") {
+      // Split into a copy: a taglib's props are shared module state that can be
+      // loaded again (after `clearCaches`), and consuming them empties it.
+      value = Object.assign({}, value);
       for (k in value) {
         if (hasOwnProperty.call(value, k)) {
           if (k.startsWith("@") || k.startsWith("<")) {
