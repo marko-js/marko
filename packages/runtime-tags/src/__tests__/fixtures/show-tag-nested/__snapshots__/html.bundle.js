@@ -11,11 +11,11 @@ var template_default = _template("a", (input) => {
 	_html("<em>nested</em>");
 	_show_end($scope0_id, "e", inner, 1, 1, 0, 1);
 	_html(" after");
-	_show_end($scope0_id, "f", outer);
+	_show_end($scope0_id, "g", outer);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		g: outer,
-		h: inner
+		h: outer,
+		i: inner
 	});
 	_resume_branch($scope0_id);
 }, 1);
