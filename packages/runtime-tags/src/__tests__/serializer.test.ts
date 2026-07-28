@@ -374,6 +374,49 @@ describe("serializer", () => {
     });
   });
 
+  describe("repeat references to a value with a pending cycle assignment", () => {
+    it("keeps a Map entry inline", () => {
+      const a: any = { id: 1 };
+      const b: any = { id: 2 };
+      a.next = b;
+      b.prev = a;
+      const rt = deserialize({
+        current: a,
+        byId: new Map([
+          [1, a],
+          [2, b],
+        ]),
+      });
+      assert.equal(rt.byId.get(1), rt.current);
+      assert.equal(rt.byId.get(2), rt.current.next);
+      assert.equal(rt.current.next.prev, rt.current);
+    });
+
+    it("keeps a Set member inline", () => {
+      const a: any = { id: 1 };
+      const b: any = { id: 2 };
+      a.next = b;
+      b.prev = a;
+      const rt = deserialize({ current: a, all: new Set([a, b]) });
+      assert.ok(rt.all.has(rt.current));
+      assert.ok(rt.all.has(rt.current.next));
+    });
+
+    it("keeps a generator return inline", () => {
+      const x: any = {};
+      x.self = x;
+      const gen = (function* () {
+        yield 1;
+        return x;
+      })();
+      const rt = deserialize({ x, gen });
+      const iter = rt.gen as Generator;
+      assert.deepEqual(iter.next(), { value: 1, done: false });
+      assert.equal(iter.next().value, rt.x);
+      assert.equal(rt.x.self, rt.x);
+    });
+  });
+
   describe("object", () => {
     it("empty", () => assertStringify({}, `{}`));
     it("nested", () => assertStringify({ a: { b: 1 } }, `{a:{b:1}}`));
