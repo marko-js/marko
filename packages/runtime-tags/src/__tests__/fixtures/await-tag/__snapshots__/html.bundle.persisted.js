@@ -1,5 +1,5 @@
 // template.marko
-var template_default = _template("a", (input) => {
+var template_default = _template_persisted("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_patch_unprovable();

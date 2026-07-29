@@ -41,10 +41,10 @@ const $content = (input) => {
 	}, 0, $scope0_id, "a", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, "</ul>", 1);
 	$si__input_comments && writeScope($scope0_id, { e: input.path });
 };
-var comments_default = _template("b", $content);
+var comments_default = _template_persisted("b", $content);
 
 // template.marko
-var template_default = _template("a", (input) => {
+var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_serialize_reason({

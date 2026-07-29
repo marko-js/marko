@@ -4,7 +4,7 @@ import type {
   Template,
   TemplateInput,
 } from "../common/types";
-import { type ServerRenderer, startRender } from "./template";
+import { _template, type ServerRenderer, startRender } from "./template";
 import { State } from "./writer";
 
 /**
@@ -12,6 +12,25 @@ import { State } from "./writer";
  * is newline-delimited frames of scope fills; the markup is discarded, since
  * matched structure is already live.
  */
+/**
+ * A persisted template also exposes its patch renderer, so a framework can
+ * negotiate one without reaching for the runtime. Ordinary builds call
+ * `_template` and never retain any of this.
+ */
+export function _template_persisted(
+  templateId: string,
+  renderer: ServerRenderer,
+  page?: 1,
+) {
+  const template = _template(templateId, renderer, page) as Template & {
+    renderPatch(input?: TemplateInput): RenderedTemplate;
+  };
+  template.renderPatch = function (input) {
+    return renderPatch(this as unknown as Template & ServerRenderer, input);
+  };
+  return template;
+}
+
 export function renderPatch(
   template: Template & ServerRenderer,
   input: TemplateInput = {},

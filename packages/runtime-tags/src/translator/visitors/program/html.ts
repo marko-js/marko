@@ -191,7 +191,7 @@ export default {
       );
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
-          "_template",
+          isPersisted() ? "_template_persisted" : "_template",
           t.stringLiteral(program.hub.file.metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
           // A non-page template gets a randomized render id ("embed") so several

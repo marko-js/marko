@@ -85,6 +85,32 @@ export default {
             : [],
       );
 
+      if (isPage && isPersisted()) {
+        // The applier is published on a stable global so a framework can drive
+        // navigation without importing the runtime itself.
+        const applyPatch = t.identifier("applyPatch");
+        body.push(
+          t.importDeclaration(
+            [t.importSpecifier(applyPatch, applyPatch)],
+            t.stringLiteral(
+              `${runtimeInfo.name}/${
+                entryFile.markoOpts.optimize ? "" : "debug/"
+              }dom`,
+            ),
+          ),
+          t.expressionStatement(
+            t.assignmentExpression(
+              "=",
+              t.memberExpression(
+                t.identifier("globalThis"),
+                t.identifier("__marko_apply_patch__"),
+              ),
+              applyPatch,
+            ),
+          ),
+        );
+      }
+
       body.push(
         exportInit
           ? t.exportDefaultDeclaration(

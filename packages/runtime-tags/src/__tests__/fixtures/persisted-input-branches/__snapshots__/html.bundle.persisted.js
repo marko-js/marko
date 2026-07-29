@@ -1,5 +1,5 @@
 // template.marko
-var template_default = _template("a", (input) => {
+var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 2), $sg__input_items = _serialize_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_patch_unprovable();

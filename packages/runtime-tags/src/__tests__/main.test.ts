@@ -517,10 +517,12 @@ function testFixtures(interop?: true) {
               snap(
                 async () => {
                   const runner = await ssrRunner();
-                  const { renderPatch, template } = await runner.runServer();
+                  const { template } = await runner.runServer();
                   const { input } = await getSteps(config);
                   let frames = "";
-                  for await (const frame of renderPatch!(template, input)) {
+                  for await (const frame of (template as any).renderPatch(
+                    input,
+                  )) {
                     frames += frame;
                   }
                   return stripFixtureDir(frames);
@@ -537,22 +539,21 @@ function testFixtures(interop?: true) {
                 async () => {
                   const { browser } = await ssr();
                   const runner = await ssrRunner();
-                  const { renderPatch, template } = await runner.runServer();
+                  const { template } = await runner.runServer();
                   let frames = "";
-                  for await (const frame of renderPatch!(
-                    template,
+                  for await (const frame of (template as any).renderPatch(
                     config.patch_input!,
                   )) {
                     frames += frame;
                   }
 
-                  const ctx =
-                    browser.ctx as typeof import("@marko/runtime-tags/dom");
+                  const applyPatch = (browser.window as any)
+                    .__marko_apply_patch__ as (frame: string) => boolean;
                   const before = browser.window.document.body.innerHTML;
                   const applied = frames
                     .split("\n")
                     .filter(Boolean)
-                    .every((frame) => ctx.applyPatch(frame));
+                    .every((frame) => applyPatch(frame));
                   const after = browser.window.document.body.innerHTML;
                   return stripFixtureDir(
                     `# Patch apply\n\napplied: ${applied}\n\n## Before\n\n${before}\n\n## After\n\n${after}\n`,

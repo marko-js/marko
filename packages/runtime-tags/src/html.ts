@@ -49,7 +49,7 @@ export {
   forUntil,
 } from "./html/for";
 export { UNPROVABLE } from "./common/patch-frame";
-export { renderPatch } from "./html/patch";
+export { _template_persisted, renderPatch } from "./html/patch";
 export { _template } from "./html/template";
 export {
   _attr_content,

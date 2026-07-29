@@ -1,5 +1,5 @@
 // tags/tag-a/index.marko
-var tag_a_default = _template("b", (input) => {
+var tag_a_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: className, other, content } = input;
@@ -10,7 +10,7 @@ var tag_a_default = _template("b", (input) => {
 });
 
 // tags/tag-b/index.marko
-var tag_b_default = _template("c", (input) => {
+var tag_b_default = _template_persisted("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: className, other, content } = input;
@@ -21,7 +21,7 @@ var tag_b_default = _template("c", (input) => {
 });
 
 // template.marko
-var template_default = _template("a", (input) => {
+var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show__OR__input_other = _serialize_guard($scope0_reason, 2), $sg__input_showTagA__OR__input_other = _serialize_guard($scope0_reason, 3), $sg__input_tag__OR__input_other = _serialize_guard($scope0_reason, 5), $sg__input_isLarge__OR__input_other = _serialize_guard($scope0_reason, 4), $sg__input_level__OR__input_other = _serialize_guard($scope0_reason, 6), $sg__input_other = _serialize_guard($scope0_reason, 9), $si__input_other = _serialize_if($scope0_reason, 9);
 	const $scope0_id = _scope_id();
 	_patch_unprovable();
