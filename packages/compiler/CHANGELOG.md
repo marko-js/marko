@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.14
+
+### Patch Changes
+
+- [#3690](https://github.com/marko-js/marko/pull/3690) [`596d441`](https://github.com/marko-js/marko/commit/596d44153f57651d52c24e933a0dec3dee633cb4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Restore three Babel modules that the last release pruned but the compiler does reach. `@babel/generator`'s flow printer is borrowed by the class printer and owns `TypeParameterDeclaration`, so dropping it mangled unrelated output: an arrow IIFE lost its wrapping parentheses and emitted `}()`. The flow and jsx node definitions are needed because `helper-create-class-features-plugin` registers a `JSXIdentifier` visitor, which `@babel/traverse` rejects when the type is missing.
+
 ## 5.41.13
 
 ### Patch Changes
