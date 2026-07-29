@@ -148,35 +148,6 @@ const pruneHelpers = {
   },
 };
 
-// Modules nothing in the bundle can reach. The jsx printer exists for nodes the
-// pruned parser cannot produce, and the missing-plugin helper is a table of
-// suggestions naming babel plugins this compiler does not bundle. The flow
-// printer is deliberately kept: `classes.js` borrows its variance helper and it
-// owns the `TypeParameterDeclaration` printer, so dropping it silently mangles
-// unrelated output.
-const EMPTY_MODULE =
-  '"use strict";Object.defineProperty(exports,"__esModule",{value:true});';
-const DEAD_MODULES: Record<string, string> = {
-  "@babel/generator/lib/generators/jsx.js": EMPTY_MODULE,
-  // `t.assertFoo()` and the uppercase `t.Foo()` builder aliases: neither the
-  // compiler nor any bundled babel package calls one.
-  "@babel/types/lib/asserts/generated/index.js": EMPTY_MODULE,
-  "@babel/types/lib/builders/generated/uppercase.js": EMPTY_MODULE,
-  "@babel/core/lib/parser/util/missing-plugin-helper.js":
-    EMPTY_MODULE +
-    "exports.default=(name)=>`Support for the experimental syntax '${name}' is not enabled.`;",
-};
-const stubDeadModules = {
-  name: "stub-dead-modules",
-  transform(code: string, id: string) {
-    const normalized = id.replace(/\\/g, "/");
-    for (const suffix in DEAD_MODULES) {
-      if (normalized.endsWith(suffix)) return DEAD_MODULES[suffix];
-    }
-    return null;
-  },
-};
-
 await Promise.all([
   // Every published entry is built in ONE rolldown pass so shared modules land
   // in shared chunks. `taglib/config` is a mutated singleton (`configure()`,
@@ -229,7 +200,6 @@ await Promise.all([
         pruneParserPlugins,
         classFeaturesMiscOnly,
         pruneHelpers,
-        stubDeadModules,
       ],
       input: "internal/babel/index.ts",
       cwd,
