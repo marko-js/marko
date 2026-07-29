@@ -151,21 +151,17 @@ export function _html(html: string) {
   $chunk.writeHTML(html);
 }
 
-// Dev-only: ordered open-tag sources for the next `_html` write.
+// Only emitted by an unoptimized compile, so the debug check is the call site.
 export function _html_opens(...sources: (string | 0)[]) {
-  if (MARKO_DEBUG) {
-    $chunk.structurePending = {
-      kind: "sourced",
-      opens: sources.map((source) => source || undefined),
-    };
-  }
+  $chunk.structurePending = {
+    kind: "sourced",
+    opens: sources.map((source) => source || undefined),
+  };
 }
 
-// Dev-only: next `_html` is unescaped raw markup from this template site.
+// Next `_html` is unescaped raw markup from this template site.
 export function _html_raw(source?: string) {
-  if (MARKO_DEBUG) {
-    $chunk.structurePending = { kind: "raw", source };
-  }
+  $chunk.structurePending = { kind: "raw", source };
 }
 
 export function writeScript(script: string) {
