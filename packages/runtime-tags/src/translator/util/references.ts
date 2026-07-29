@@ -14,7 +14,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -1120,9 +1120,15 @@ export function finalizeReferences() {
     ) {
       addSerializeReason(
         section,
-        !!(section.isHoistThrough || section.hoisted) ||
+        isPersisted() ||
+          !!(section.isHoistThrough || section.hoisted) ||
           getSerializeSourcesForRef(getDirectClosures(section)),
         kBranchSerializeReason,
+      );
+      addSerializeReason(
+        section.parent,
+        isPersisted(),
+        section.sectionAccessor.binding,
       );
       addSerializeExpr(
         section,
@@ -1283,8 +1289,12 @@ export function finalizeReferences() {
   }
 
   forEachSection(finalizeParamSerializeReasonGroups);
+  const persisted = isPersisted();
   forEachSectionReverse((section) => {
     finalizeKnownTags(section);
+    // Spine: a persisted document must stay addressable by a later patch, which
+    // is a separate decision from whether this render serializes any value.
+    if (persisted) addSerializeReason(section, true);
     finalizeSerializeReason(section);
     // TODO: this duplication is needed when a known tag is circular. We should find a better way.
     finalizeParamSerializeReasonGroups(section);

@@ -7,7 +7,7 @@ import {
   type Section,
 } from "../util/sections";
 import { generateUidIdentifier } from "./generate-uid";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPersisted } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
@@ -152,6 +152,9 @@ export function markNode(
   }
 
   if (isOutputHTML()) {
+    // Spine: a persisted document marks every markable node so a later patch
+    // can address it, even when this render serializes no value for it.
+    if (isPersisted()) reason = true;
     if (reason) {
       const section = getSection(path);
       // Deferred markers ride the stream trailer alongside a deferred end tag

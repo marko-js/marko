@@ -5,5 +5,6 @@ function click(document: Document) {
 }
 
 export const config: TestConfig = {
+  persisted: true,
   steps: [{}, click, click, click],
 };

@@ -6,7 +6,7 @@ import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
@@ -238,7 +238,7 @@ function writeSeparator(
   section: Section,
   reason: Exclude<ReturnType<typeof getSerializeReason>, undefined | false>,
 ) {
-  if (reason === true || reason.state) {
+  if (isPersisted() || reason === true || reason.state) {
     write`<!>`;
   } else {
     write`${callRuntime("_sep", getSerializeGuard(section, reason, true))}`;

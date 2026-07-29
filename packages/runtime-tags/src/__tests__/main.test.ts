@@ -69,6 +69,8 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** Also compiles the fixture with the `persisted` compiler option. */
+  persisted?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -82,6 +84,19 @@ const slots = process.env.MARKO_TEST_SLOTS
   : null;
 function inShard(index: number) {
   return slots === null || slots.has(index % slotTotal);
+}
+
+type Mode = "debug" | "optimize" | "persisted";
+
+const MODE_SUFFIX: Record<Mode, string> = {
+  debug: ".debug",
+  optimize: "",
+  persisted: ".persisted",
+};
+
+function withModeSuffix(file: string, mode: Mode) {
+  const suffix = MODE_SUFFIX[mode];
+  return suffix ? file.replace(/(\.[^.]+)$/, `${suffix}$1`) : file;
 }
 
 function noop() {}
@@ -140,11 +155,16 @@ function testFixtures(interop?: true) {
         return;
       }
 
+      const domBundles: Partial<Record<Mode, string>> = {};
+
       for (const mode of config.skip_optimize
-        ? ["debug"]
-        : (["debug", "optimize"] as const)) {
+        ? (["debug"] as const)
+        : config.persisted
+          ? (["debug", "optimize", "persisted"] as const)
+          : (["debug", "optimize"] as const)) {
         describe(mode, () => {
-          const optimize = mode === "optimize";
+          const optimize = mode !== "debug";
+          const persisted = mode === "persisted";
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
@@ -189,6 +209,7 @@ function testFixtures(interop?: true) {
                 browserslistConfigFile: false,
               },
               optimize,
+              persisted,
               optimizeKnownTemplates: optimize
                 ? (
                     fs.readdirSync(fixtureDir, {
@@ -221,14 +242,9 @@ function testFixtures(interop?: true) {
             return snap(
               fn,
               fixtureDir,
-              optimize
-                ? resolvedFile
-                : resolvedFile.replace(/(\.[^.]+)$/, ".debug$1"),
+              withModeSuffix(resolvedFile, mode),
               expectErr,
-              actualFile &&
-                (optimize
-                  ? actualFile
-                  : actualFile.replace(/(\.[^.]+)$/, ".debug$1")),
+              actualFile && withModeSuffix(actualFile, mode),
             );
           };
 
@@ -262,11 +278,26 @@ function testFixtures(interop?: true) {
               return;
             }
 
+            if (output === "dom" && persisted) {
+              // No revival: a persisted build must not bundle code an ordinary
+              // build tree-shakes, so its client output cannot differ at all.
+              const { snapshot, sizes } = await (await ssrRunner()).domBundle();
+              if (sizes) stats.dom = sizes;
+              assert.strictEqual(
+                await stripFixtureDir(snapshot),
+                domBundles.optimize,
+                "persisted dom output must match the ordinary build",
+              );
+              return;
+            }
+
             await snapMode(async () => {
               const runner = await ssrRunner();
               const { snapshot, sizes } = await runner[`${output}Bundle`]();
               if (optimize && sizes) stats.dom = sizes;
-              return stripFixtureDir(snapshot);
+              const stripped = await stripFixtureDir(snapshot);
+              if (output === "dom") domBundles[mode] = stripped;
+              return stripped;
             }, `${output}.bundle.js`);
           };
 
@@ -400,7 +431,10 @@ function testFixtures(interop?: true) {
           optimize &&
             !hasCompilerError &&
             after(() => {
-              const sizesFile = path.join(fixtureDir, "sizes.json");
+              const sizesFile = path.join(
+                fixtureDir,
+                persisted ? "sizes.persisted.json" : "sizes.json",
+              );
               const actual = JSON.stringify(stats, null, 2) + "\n";
               // Assert instead of rewriting: a --grep test:update refreshes only
               // matched fixtures, so a silent rewrite would bury stale sizes.
