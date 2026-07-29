@@ -1,13 +1,11 @@
+import * as SegmentKind from "./constants/segment-kind";
+import { voidElementsReg } from "./void-elements";
+
 // Development-only check that the HTML we stream survives parsing unchanged.
 // The parser silently relocates, drops or re-nests markup it considers invalid,
 // which desynchronizes the resume walk from the DOM the browser actually built.
 // This does not emulate the parser; it only detects where it would intervene.
 
-const voidElements = new Set(
-  "area base br col embed hr img input link meta param source track wbr".split(
-    " ",
-  ),
-);
 const rawTextElements = new Set(["script", "style", "textarea", "title"]);
 
 // Parents that relocate or discard any child outside their allow list.
@@ -149,9 +147,13 @@ const closesParagraph = new Set(
 );
 
 export type StructureSegment =
-  | { kind: "sourced"; html: string; opens: (string | undefined)[] }
-  | { kind: "raw"; html: string; source?: string }
-  | { kind: "runtime"; html: string; source?: string };
+  | {
+      kind: typeof SegmentKind.Sourced;
+      html: string;
+      opens: (string | undefined)[];
+    }
+  | { kind: typeof SegmentKind.Raw; html: string; source?: string }
+  | { kind: typeof SegmentKind.Runtime; html: string; source?: string };
 
 export function createStructureValidator() {
   const open: { name: string; source?: string }[] = [];
@@ -225,7 +227,7 @@ export function createStructureValidator() {
               : name === "p"
                 ? "`</p>` with no open `<p>` makes the parser insert an empty `<p>`."
                 : `\`</${name}>\` has no matching start tag.`,
-            segment.kind === "sourced"
+            segment.kind === SegmentKind.Sourced
               ? undefined
               : nextOpenSource(segment, 0, match.index - starts[segmentIndex]),
           );
@@ -248,7 +250,7 @@ export function createStructureValidator() {
         cursors[segmentIndex],
         match.index - starts[segmentIndex],
       );
-      if (segment.kind === "sourced") cursors[segmentIndex]++;
+      if (segment.kind === SegmentKind.Sourced) cursors[segmentIndex]++;
 
       // `<template>` content parses on its own, so it ends any select scope.
       const scoped = open.findLast(
@@ -353,7 +355,7 @@ export function createStructureValidator() {
         );
       }
 
-      if (voidElements.has(name) || /(^|\s)\/$/.test(attrs)) continue;
+      if (voidElementsReg.test(name) || /(^|\s)\/$/.test(attrs)) continue;
 
       if (rawTextElements.has(name)) {
         // Only a full tag name closes raw text, so `</scripts>` does not end a
@@ -379,11 +381,11 @@ export function createStructureValidator() {
     openCursor: number,
     offset: number,
   ) {
-    if (segment.kind === "sourced") return segment.opens[openCursor];
-    if (segment.kind === "raw" && segment.source != null) {
+    if (segment.kind === SegmentKind.Sourced) return segment.opens[openCursor];
+    if (segment.kind === SegmentKind.Raw && segment.source != null) {
       return segment.source + "+" + offset;
     }
-    if (segment.kind === "runtime" && segment.source != null) {
+    if (segment.kind === SegmentKind.Runtime && segment.source != null) {
       return segment.source + (offset ? "+" + offset : "");
     }
   }

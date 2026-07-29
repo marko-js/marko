@@ -10,6 +10,7 @@ import {
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
+import { voidElementsReg } from "./void-elements";
 import {
   _html,
   _html_opens,
@@ -24,8 +25,6 @@ import {
   withBranchId,
 } from "./writer";
 
-const voidElementsReg =
-  /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
 interface BodyContentObject {
   [x: PropertyKey]: unknown;
   content: ServerRenderer;

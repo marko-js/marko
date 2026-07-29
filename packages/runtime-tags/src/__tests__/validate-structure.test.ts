@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 
+import * as SegmentKind from "../html/constants/segment-kind";
 import {
   createStructureValidator,
   type StructureSegment,
@@ -34,8 +35,8 @@ function html(
   opens?: (string | undefined)[],
 ): StructureSegment {
   return opens
-    ? { kind: "sourced", html: markup, opens }
-    : { kind: "runtime", html: markup };
+    ? { kind: SegmentKind.Sourced, html: markup, opens }
+    : { kind: SegmentKind.Runtime, html: markup };
 }
 
 describe("html structure validation", () => {
@@ -245,7 +246,7 @@ describe("html structure validation", () => {
       assertReports(
         [
           html("<div>", ["a:1:1"]),
-          { kind: "raw", html: "a</br>b", source: "t.marko:2:6" },
+          { kind: SegmentKind.Raw, html: "a</br>b", source: "t.marko:2:6" },
           html("</div>", []),
         ],
         "at t.marko:2:6+1",
@@ -279,9 +280,9 @@ describe("html structure validation", () => {
   describe("segment boundaries", () => {
     it("a start tag split across writes is still one tag", () =>
       assertClean(
-        { kind: "sourced", html: "<table><tbody><tr><td", opens: [] },
+        { kind: SegmentKind.Sourced, html: "<table><tbody><tr><td", opens: [] },
         {
-          kind: "sourced",
+          kind: SegmentKind.Sourced,
           html: ' class="x">cell</td></tr></tbody></table>',
           opens: [],
         },
@@ -289,8 +290,16 @@ describe("html structure validation", () => {
 
     it("a problem is still found when the tag is split", () => {
       const messages = report(
-        { kind: "sourced", html: "<table><tbody><div", opens: ["a.marko:1:1"] },
-        { kind: "sourced", html: ">x</div></tbody></table>", opens: [] },
+        {
+          kind: SegmentKind.Sourced,
+          html: "<table><tbody><div",
+          opens: ["a.marko:1:1"],
+        },
+        {
+          kind: SegmentKind.Sourced,
+          html: ">x</div></tbody></table>",
+          opens: [],
+        },
       );
       assert.ok(
         messages.includes("`<div>` is not allowed in `<tbody>`"),
@@ -497,7 +506,7 @@ describe("html structure validation", () => {
 
     it("runtime segments report without a source", () => {
       const messages = report(html("<table><tbody>", ["a:1:1", "a:1:8"]), {
-        kind: "runtime",
+        kind: SegmentKind.Runtime,
         html: "<t hidden><tr></tr></t>",
       });
       assert.ok(messages.includes("`<t>` is not allowed in `<tbody>`"));
@@ -509,12 +518,12 @@ describe("html structure validation", () => {
         [
           html("<table><tbody>", ["a:1:1", "a:1:8"]),
           {
-            kind: "runtime",
+            kind: SegmentKind.Runtime,
             html: "<t hidden>",
             source: "template.marko:3:5",
           },
           html("<tr></tr>", ["a:3:12"]),
-          { kind: "runtime", html: "</t>" },
+          { kind: SegmentKind.Runtime, html: "</t>" },
           html("</tbody></table>"),
         ],
         "at template.marko:3:5",
@@ -527,7 +536,11 @@ describe("html structure validation", () => {
       // Unclosed <div> inside raw would leave a parent if skipped.
       assertReports(
         [
-          { kind: "raw", html: "<div>", source: "template.marko:2:5" },
+          {
+            kind: SegmentKind.Raw,
+            html: "<div>",
+            source: "template.marko:2:5",
+          },
           html("</span>", []),
         ],
         "`</span>` has no matching start tag",
@@ -538,7 +551,7 @@ describe("html structure validation", () => {
       assertReports(
         [
           {
-            kind: "raw",
+            kind: SegmentKind.Raw,
             html: "<table><tbody><div>x</div></tbody></table>",
             source: "template.marko:3:10",
           },
@@ -551,7 +564,7 @@ describe("html structure validation", () => {
       const messages = report(
         html("<div>", ["template.marko:1:1"]),
         {
-          kind: "raw",
+          kind: SegmentKind.Raw,
           html: "<table><tbody><div>x</div></tbody></table>",
           source: "template.marko:2:1",
         },

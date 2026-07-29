@@ -20,6 +20,7 @@ import { attrAssignment } from "./attrs";
 import * as FlushStatus from "./constants/flush-status";
 import * as Mark from "./constants/mark";
 import * as RuntimeKey from "./constants/runtime-key";
+import * as SegmentKind from "./constants/segment-kind";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -158,14 +159,14 @@ export function _html(html: string) {
 // silently shift these sources onto the wrong tags.
 export function _html_opens(...sources: (string | 0)[]) {
   $chunk.structurePending = {
-    kind: "sourced",
+    kind: SegmentKind.Sourced,
     opens: sources.map((source) => source || undefined),
   };
 }
 
 // Next `_html` is unescaped raw markup from this template site.
 export function _html_raw(source?: string) {
-  $chunk.structurePending = { kind: "raw", source };
+  $chunk.structurePending = { kind: SegmentKind.Raw, source };
 }
 
 export function writeScript(script: string) {
@@ -327,7 +328,7 @@ export function _show_start(display: unknown, mark?: unknown, source?: string) {
     }
   } else {
     if (MARKO_DEBUG && source) {
-      $chunk.structurePending = { kind: "runtime", source };
+      $chunk.structurePending = { kind: SegmentKind.Runtime, source };
     }
     $chunk.writeHTML("<t hidden>");
   }
@@ -985,7 +986,9 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
             cur.placeholder = cur.reorderId = cur.deferredReady = null;
             if (MARKO_DEBUG) {
               cur.structurePending = undefined;
-              cur.structureSegments = [{ kind: "runtime", html: endMarker }];
+              cur.structureSegments = [
+                { kind: SegmentKind.Runtime, html: endMarker },
+              ];
             }
           }
 
@@ -1182,9 +1185,9 @@ export class Chunk {
   public serializeState: SerializeState;
   // Pending meta for the next writeHTML; consumed into structureSegments.
   declare structurePending?:
-    | { kind: "sourced"; opens: (string | undefined)[] }
-    | { kind: "raw"; source?: string }
-    | { kind: "runtime"; source?: string };
+    | { kind: typeof SegmentKind.Sourced; opens: (string | undefined)[] }
+    | { kind: typeof SegmentKind.Raw; source?: string }
+    | { kind: typeof SegmentKind.Runtime; source?: string };
   // Mirrors `html`: anything that rewrites `html` (tryCatch, reorder, flush)
   // must make the matching edit here or reports point at the wrong source.
   declare structureSegments?: StructureSegment[];
@@ -1209,15 +1212,17 @@ export class Chunk {
       const pending = this.structurePending;
       this.structurePending = undefined;
       (this.structureSegments ||= []).push(
-        pending?.kind === "sourced"
-          ? { kind: "sourced", html, opens: pending.opens }
-          : pending?.kind === "raw"
-            ? { kind: "raw", html, source: pending.source }
+        pending?.kind === SegmentKind.Sourced
+          ? { kind: SegmentKind.Sourced, html, opens: pending.opens }
+          : pending?.kind === SegmentKind.Raw
+            ? { kind: SegmentKind.Raw, html, source: pending.source }
             : {
-                kind: "runtime",
+                kind: SegmentKind.Runtime,
                 html,
                 source:
-                  pending?.kind === "runtime" ? pending.source : undefined,
+                  pending?.kind === SegmentKind.Runtime
+                    ? pending.source
+                    : undefined,
               },
       );
     }
@@ -1587,9 +1592,11 @@ export class Chunk {
         html += openWrapper + reorderHTML + "</t>";
         if (MARKO_DEBUG) {
           (this.structureSegments ||= []).push(
-            { kind: "runtime", html: openWrapper },
-            ...(reorderSegments || [{ kind: "runtime", html: reorderHTML }]),
-            { kind: "runtime", html: "</t>" },
+            { kind: SegmentKind.Runtime, html: openWrapper },
+            ...(reorderSegments || [
+              { kind: SegmentKind.Runtime, html: reorderHTML },
+            ]),
+            { kind: SegmentKind.Runtime, html: "</t>" },
           );
         }
       }
@@ -1656,15 +1663,17 @@ export class Chunk {
       if (flushRewrote) {
         // A full rewrite discards per-tag segments; scan the final document.
         (state.validateStructure ||= createStructureValidator())([
-          { kind: "runtime", html },
+          { kind: SegmentKind.Runtime, html },
         ]);
       } else {
         const segments = structureSegments ? structureSegments.slice() : [];
         if (flushPrefix) {
-          segments.unshift({ kind: "runtime", html: flushPrefix });
+          segments.unshift({ kind: SegmentKind.Runtime, html: flushPrefix });
         }
-        if (scriptHTML) segments.push({ kind: "runtime", html: scriptHTML });
-        if (trailerHTML) segments.push({ kind: "runtime", html: trailerHTML });
+        if (scriptHTML)
+          segments.push({ kind: SegmentKind.Runtime, html: scriptHTML });
+        if (trailerHTML)
+          segments.push({ kind: SegmentKind.Runtime, html: trailerHTML });
         if (segments.length) {
           (state.validateStructure ||= createStructureValidator())(segments);
         }
