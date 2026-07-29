@@ -241,6 +241,15 @@ describe("html structure validation", () => {
         [html("<div></span></div>", ["a:1:1"])],
         "`</span>` has no matching start tag",
       ));
+    it("names the raw site the stray end tag came from", () =>
+      assertReports(
+        [
+          html("<div>", ["a:1:1"]),
+          { kind: "raw", html: "a</br>b", source: "t.marko:2:6" },
+          html("</div>", []),
+        ],
+        "at t.marko:2:6+1",
+      ));
   });
 
   describe("markup the parser re-nests", () => {

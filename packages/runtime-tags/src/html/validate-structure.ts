@@ -215,14 +215,19 @@ export function createStructureValidator() {
       if (closing) {
         const openIndex = open.findLastIndex((el) => el.name === name);
         if (openIndex === -1) {
-          // These two do not just get dropped: the parser turns them into an
-          // element, so the walk sees a node the template never described.
+          // The compiler rejects an unmatched end tag, so this came from raw
+          // markup: attribute it by offset, which consumes no open source.
           report(
+            // These two are not dropped; the parser builds an element the
+            // client render does not, so the two DOMs disagree.
             name === "br"
               ? "`</br>` is turned into a `<br>` element by the HTML parser."
               : name === "p"
                 ? "`</p>` with no open `<p>` makes the parser insert an empty `<p>`."
                 : `\`</${name}>\` has no matching start tag.`,
+            segment.kind === "sourced"
+              ? undefined
+              : nextOpenSource(segment, 0, match.index - starts[segmentIndex]),
           );
         } else {
           const skipped = open.slice(openIndex + 1);
