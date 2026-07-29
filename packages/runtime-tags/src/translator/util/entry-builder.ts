@@ -3,6 +3,7 @@ import path from "node:path";
 import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
 
+import { isPersisted } from "./marko-config";
 import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
 import type { DOMRuntimeHelpers } from "./runtime";
 import runtimeInfo from "./runtime-info";
@@ -33,7 +34,11 @@ export default {
       );
     }
     const body: t.Statement[] = [];
-    if (state.init) {
+    // A persisted page starts the runtime even with nothing interactive, so a
+    // later patch has a live document to address — but it must not import the
+    // template graph, which an ordinary build tree-shakes away.
+    const runtimeOnly = !state.init && isPersisted();
+    if (state.init || runtimeOnly) {
       const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
       // The main entry import below pulls in every template (and their client assets)
@@ -52,11 +57,20 @@ export default {
             }dom`,
           ),
         ),
-        t.importDeclaration(
-          [],
-          t.stringLiteral(`./${path.basename(entryFile.opts.filename)}`),
-        ),
       );
+
+      if (runtimeOnly) {
+        for (const asset of state.assets) {
+          body.push(t.importDeclaration([], t.stringLiteral(asset)));
+        }
+      } else {
+        body.push(
+          t.importDeclaration(
+            [],
+            t.stringLiteral(`./${path.basename(entryFile.opts.filename)}`),
+          ),
+        );
+      }
       const { runtimeId } = entryFile.markoOpts;
       const readyId =
         !isPage && getTemplateId(entryFile.markoOpts, entryFile.opts.filename);

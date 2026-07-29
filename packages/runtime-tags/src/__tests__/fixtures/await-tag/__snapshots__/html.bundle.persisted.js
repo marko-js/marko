@@ -2,18 +2,19 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	_patch_unprovable();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html("<div>");
 	_await($scope0_id, "a", Promise.resolve("a"), (value) => {
 		const $scope1_id = _scope_id();
-		_html(`Got: ${_escape(value)}${_el_resume($scope1_id, "a")} <!>${_escape(count)}${_el_resume($scope1_id, "b")}`);
+		_html(`Got: ${_escape(value)} <!>${_escape(count)}${_el_resume($scope1_id, "b")}`);
 		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	});
 	_await($scope0_id, "b", resolveAfter("b", 2), (value) => {
 		const $scope2_id = _scope_id();
-		_html(`Got: ${_escape(value)}${_el_resume($scope2_id, "a")} <!>${_escape(count)}${_el_resume($scope2_id, "b")}`);
+		_html(`Got: ${_escape(value)} <!>${_escape(count)}${_el_resume($scope2_id, "b")}`);
 		_subscribe($count__closures, writeScope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Cf: 1
@@ -22,7 +23,7 @@ var template_default = _template("a", (input) => {
 	});
 	_await($scope0_id, "c", resolveAfter("c", 1), (value) => {
 		const $scope3_id = _scope_id();
-		_html(`Got: ${_escape(value)}${_el_resume($scope3_id, "a")} <!>${_escape(count)}${_el_resume($scope3_id, "b")}`);
+		_html(`Got: ${_escape(value)} <!>${_escape(count)}${_el_resume($scope3_id, "b")}`);
 		_subscribe($count__closures, writeScope($scope3_id, {
 			_: _scope_with_id($scope0_id),
 			Cf: 2

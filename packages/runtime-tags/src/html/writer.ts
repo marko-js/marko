@@ -211,6 +211,29 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
+// A hole's value is only ever wire data for a patch; a document render has
+// already written it into the markup.
+export function _patch_hole(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatchHoles) {
+    writeScope(scopeId, { [AccessorPrefix.PatchHole + accessor]: value });
+  } else {
+    // A document render instead needs the client to adopt the marked node, so a
+    // later patch has somewhere to put this hole's value.
+    $chunk.needsWalk = true;
+  }
+
+  return "";
+}
+
+export function _patch_unprovable() {
+  $chunk.boundary.state.patchUnprovable();
+}
+
 export function _sep(shouldResume: number) {
   return shouldResume === 0 ? "" : "<!>";
 }
@@ -1033,6 +1056,12 @@ export class State implements SerializeState {
   walkScript() {
     return this.runtimePrefix + RuntimeKey.Walk + "()";
   }
+
+  get writesPatchHoles() {
+    return false;
+  }
+
+  patchUnprovable() {}
 
   get runtimePrefix() {
     const { $global } = this;

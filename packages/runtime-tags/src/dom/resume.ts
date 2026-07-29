@@ -64,6 +64,49 @@ let embedRenders:
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
 
+// Set only by `enablePatchHoles()`, so an app that never applies a patch keeps
+// the hole handling out of `applyScopes`.
+let patchHoles: undefined | 1;
+let patchHoleFailed: undefined | 1;
+
+export function enablePatchHoles() {
+  patchHoles = 1;
+}
+
+export function takePatchHoleFailure() {
+  const failed = patchHoleFailed;
+  patchHoleFailed = undefined;
+  return failed;
+}
+
+// The stored render, not `curRenders(renderId)`: calling that rebuilds the
+// render with a fresh scope lookup and drops every adopted node.
+export function getRender(renderId: string) {
+  return curRenders?.[renderId];
+}
+
+// A hole names a node the document already marked, so its value applies without
+// any of the template's own code. Anything else fails closed.
+function applyPatchHoles(scope: Scope, partial: Scope) {
+  for (const key in partial) {
+    if (key.indexOf(AccessorPrefix.PatchHole)) {
+      // Anything other than a hole is state this applier cannot interpret, so
+      // the frame is refused rather than partly applied.
+      patchHoleFailed = 1;
+      continue;
+    }
+
+    const node = scope[key.slice(AccessorPrefix.PatchHole.length)];
+    if (node && (node as Node).nodeType === 3 /* Node.TEXT_NODE */) {
+      (node as Text).data = (partial as any)[key] ?? "";
+    } else {
+      patchHoleFailed = 1;
+    }
+
+    delete (scope as any)[key];
+  }
+}
+
 export function enableBranches() {
   if (!branchesEnabled) {
     branchesEnabled = 1;
@@ -151,13 +194,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               if (scopeId) {
                 // Adopt the partial as the scope when new, else merge into
                 // the existing one; re-init so a closest branch id applies.
-                initScope(
+                const scope = initScope(
                   Object.assign(
                     (scopeLookup[scopeId] ||=
                       ((partial[AccessorProp.Id] = scopeId), partial)),
                     partial,
                   ),
                 );
+                if (patchHoles) applyPatchHoles(scope, partial);
               } else {
                 Object.assign(initGlobal(), partial);
               }

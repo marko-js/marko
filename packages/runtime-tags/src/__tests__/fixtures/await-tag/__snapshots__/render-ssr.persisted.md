@@ -16,12 +16,10 @@
 ```
 ## Change
 ```
-INSERT: div::text@7 + ::text("Got: b")
-INSERT: div::text@8 + ::text(" ")
-INSERT: div::text@14 + ::text("0")
-INSERT: div::text@15 + ::text("Got: c")
-INSERT: div::text@16 + ::text(" ")
-INSERT: div::text@22 + ::text("0")
+INSERT: div::text@7 + ::text("Got: b ")
+INSERT: div::text@8 + ::text("0")
+INSERT: div::text@15 + ::text("Got: c ")
+INSERT: div::text@16 + ::text("0")
 INSERT: div::text@23 + button
 INSERT: div > button::text("Inc")
 ```

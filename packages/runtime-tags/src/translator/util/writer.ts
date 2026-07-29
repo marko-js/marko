@@ -152,9 +152,9 @@ export function markNode(
   }
 
   if (isOutputHTML()) {
-    // Spine: a persisted document marks every markable node so a later patch
-    // can address it, even when this render serializes no value for it.
-    if (isPersisted()) reason = true;
+    // A hole needs its node marked. Only the root section: marking inside a
+    // branch would retain that branch's renderer, which must stay tree-shaken.
+    if (isPersisted() && !getSection(path).parent) reason = true;
     if (reason) {
       const section = getSection(path);
       // Deferred markers ride the stream trailer alongside a deferred end tag

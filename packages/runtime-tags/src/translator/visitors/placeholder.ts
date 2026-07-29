@@ -20,6 +20,7 @@ import {
   ContentType,
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
   type Section,
 } from "../util/sections";
@@ -151,6 +152,16 @@ export default {
           }`;
           if (nodeBinding) {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
+            // The hole's value is wire data for a patch only; the client sets
+            // the marked text node from it without any of this template's code.
+            if (isPersisted() && !section.parent) {
+              write`${callRuntime(
+                "_patch_hole",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(nodeBinding),
+                t.cloneNode(value, true),
+              )}`;
+            }
           }
         } else {
           addStatement(
@@ -238,7 +249,7 @@ function writeSeparator(
   section: Section,
   reason: Exclude<ReturnType<typeof getSerializeReason>, undefined | false>,
 ) {
-  if (isPersisted() || reason === true || reason.state) {
+  if ((isPersisted() && !section.parent) || reason === true || reason.state) {
     write`<!>`;
   } else {
     write`${callRuntime("_sep", getSerializeGuard(section, reason, true))}`;

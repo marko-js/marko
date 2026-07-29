@@ -82,17 +82,18 @@ function init(runtimeId = "M") {
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
                 let partial = partials[i];
-                typeof partial == "number"
-                  ? (scopeId += partial)
-                  : (scopeId
-                      ? initScope(
-                          Object.assign(
-                            (scopeLookup[scopeId] ||= ((partial.L = scopeId), partial)),
-                            partial,
-                          ),
-                        )
-                      : Object.assign(initGlobal(), partial),
-                    scopeId++);
+                if (typeof partial == "number") scopeId += partial;
+                else {
+                  if (scopeId)
+                    initScope(
+                      Object.assign(
+                        (scopeLookup[scopeId] ||= ((partial.L = scopeId), partial)),
+                        partial,
+                      ),
+                    );
+                  else Object.assign(initGlobal(), partial);
+                  scopeId++;
+                }
               }
             },
             serializeContext = (data, registryId) =>

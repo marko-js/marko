@@ -1,3 +1,4 @@
+import { UNPROVABLE } from "../common/patch-frame";
 import type {
   RenderedTemplate,
   Template,
@@ -29,11 +30,22 @@ class PatchState extends State {
     this.serializeReason = 1;
   }
 
+  unprovable = false;
+
   override flushChunk(_html: string, scripts: string) {
+    if (this.unprovable) return UNPROVABLE + "\n";
     return scripts ? scripts + "\n" : "";
   }
 
   override walkScript() {
     return "";
+  }
+
+  override get writesPatchHoles() {
+    return true;
+  }
+
+  override patchUnprovable() {
+    this.unprovable = true;
   }
 }

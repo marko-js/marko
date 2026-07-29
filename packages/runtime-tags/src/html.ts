@@ -48,6 +48,7 @@ export {
   forTo,
   forUntil,
 } from "./html/for";
+export { UNPROVABLE } from "./common/patch-frame";
 export { renderPatch } from "./html/patch";
 export { _template } from "./html/template";
 export {
@@ -73,6 +74,8 @@ export {
   _scope_reason,
   _scope_with_id,
   _script,
+  _patch_hole,
+  _patch_unprovable,
   _sep,
   _serialize_guard,
   _serialize_if,

@@ -87,6 +87,7 @@ export {
   _load_visible_trigger,
 } from "./dom/load";
 export { _enable_catch, run } from "./dom/queue";
+export { applyPatch } from "./dom/patch";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,

@@ -77,6 +77,8 @@ export type TestConfig = {
   runtime_id?: string;
   /** Also compiles the fixture with the `persisted` compiler option. */
   persisted?: boolean;
+  /** New server input to render a patch from and apply to the live document. */
+  patch_input?: Input;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -525,6 +527,39 @@ function testFixtures(interop?: true) {
                 },
                 fixtureDir,
                 "patch.txt",
+              ));
+
+          persisted &&
+            config.patch_input &&
+            !skipSSR &&
+            it("patch-apply", () =>
+              snap(
+                async () => {
+                  const { browser } = await ssr();
+                  const runner = await ssrRunner();
+                  const { renderPatch, template } = await runner.runServer();
+                  let frames = "";
+                  for await (const frame of renderPatch!(
+                    template,
+                    config.patch_input!,
+                  )) {
+                    frames += frame;
+                  }
+
+                  const ctx =
+                    browser.ctx as typeof import("@marko/runtime-tags/dom");
+                  const before = browser.window.document.body.innerHTML;
+                  const applied = frames
+                    .split("\n")
+                    .filter(Boolean)
+                    .every((frame) => ctx.applyPatch(frame));
+                  const after = browser.window.document.body.innerHTML;
+                  return stripFixtureDir(
+                    `# Patch apply\n\napplied: ${applied}\n\n## Before\n\n${before}\n\n## After\n\n${after}\n`,
+                  );
+                },
+                fixtureDir,
+                "patch-apply.md",
               ));
 
           skipCSR ||

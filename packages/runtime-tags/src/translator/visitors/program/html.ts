@@ -8,6 +8,7 @@ import {
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
 import { getMarkoOpts } from "../../util/marko-config";
+import { isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
@@ -39,6 +40,12 @@ import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
+
+function hasDivergentStructure() {
+  let sections = 0;
+  forEachSection(() => sections++);
+  return sections > 1;
+}
 
 export function getTemplateContentName() {
   return getSharedUid("content");
@@ -129,11 +136,21 @@ export default {
       });
     },
     exit(program) {
+      const section = getSection(program);
+
+      // Fail closed: structure that can diverge between renders cannot be
+      // expressed as a value patch yet, so such a template never patches.
+      if (isPersisted() && hasDivergentStructure()) {
+        getHTMLSectionStatements(section).unshift(
+          t.expressionStatement(callRuntime("_patch_unprovable")),
+        );
+      }
+
       flushInto(program);
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
       const renderContent: t.Statement[] = [];
-      const section = getSection(program);
+
       let dynamicSerializeReason =
         !!section.paramReasonGroups || isReasonDynamic(section.serializeReason);
 

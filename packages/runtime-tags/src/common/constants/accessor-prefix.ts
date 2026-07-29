@@ -10,6 +10,7 @@ export const DynamicHTMLLastChild = "H";
 export const EventAttributes = "I";
 export const KeyedScopes = "O";
 export const Lifecycle = "K";
+export const PatchHole = "P";
 export const Promise = "L";
 export const TagVariableChange = "M";
 

@@ -1,4 +1,4 @@
-// size: 26561 (min) 9887 (brotli)
+// size: 26987 (min) 10064 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -75,6 +75,8 @@ let empty = [],
   branchesEnabled,
   embedRenders,
   readyIds,
+  patchHoles,
+  patchHoleFailed,
   isResuming,
   cloneCache = {},
   R = /[^\p{L}\p{N}]/gu,
@@ -663,6 +665,27 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
+function enablePatchHoles() {
+  patchHoles = 1;
+}
+function takePatchHoleFailure() {
+  let failed = patchHoleFailed;
+  return ((patchHoleFailed = void 0), failed);
+}
+function getRender(renderId) {
+  return curRenders?.[renderId];
+}
+function applyPatchHoles(scope, partial) {
+  for (let key in partial) {
+    if (key.indexOf("P")) {
+      patchHoleFailed = 1;
+      continue;
+    }
+    let node = scope[key.slice(1)];
+    (node && node.nodeType === 3 ? (node.data = partial[key] ?? "") : (patchHoleFailed = 1),
+      delete scope[key]);
+  }
+}
 function enableBranches() {
   branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
 }
@@ -713,17 +736,19 @@ function init(runtimeId = "M") {
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
                 let partial = partials[i];
-                typeof partial == "number"
-                  ? (scopeId += partial)
-                  : (scopeId
-                      ? initScope(
-                          Object.assign(
-                            (scopeLookup[scopeId] ||= ((partial.L = scopeId), partial)),
-                            partial,
-                          ),
-                        )
-                      : Object.assign(initGlobal(), partial),
-                    scopeId++);
+                if (typeof partial == "number") scopeId += partial;
+                else {
+                  if (scopeId) {
+                    let scope = initScope(
+                      Object.assign(
+                        (scopeLookup[scopeId] ||= ((partial.L = scopeId), partial)),
+                        partial,
+                      ),
+                    );
+                    patchHoles && applyPatchHoles(scope, partial);
+                  } else Object.assign(initGlobal(), partial);
+                  scopeId++;
+                }
               }
             },
             serializeContext = (data, registryId) =>
@@ -2348,5 +2373,22 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+/**
+ * Applies one server frame to the live document as a single batch. Returns
+ * `false` when the frame cannot be proven safe to apply, so the caller takes the
+ * document navigation instead.
+ */
+function applyPatch(frame, renderId = "_") {
+  if (frame === "0") return !1;
+  (enablePatchHoles(), takePatchHoleFailure());
+  let render = getRender(renderId);
+  if (!render?.m) return !1;
+  try {
+    Function(frame)();
+  } catch {
+    return !1;
+  }
+  return render.m([]).length || takePatchHoleFailure() ? !1 : (run(), !0);
 }
 //#endregion

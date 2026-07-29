@@ -196,6 +196,12 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
                     interop
                       ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
                       : `globalThis.run=_run`
+                  }${
+                    // A persisted client entry ships the applier; this exposes
+                    // it the same way `run` is exposed to the harness.
+                    config.persisted
+                      ? `\nimport { applyPatch as _applyPatch } from "@marko/runtime-tags/dom"\nglobalThis.applyPatch=_applyPatch`
+                      : ""
                   }`
               : code;
           },
