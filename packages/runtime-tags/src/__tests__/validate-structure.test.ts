@@ -122,7 +122,7 @@ describe("html structure validation", () => {
             "a:1:19",
           ]),
         ],
-        "`<t>` is not allowed in `<select>`",
+        "`<t>` is dropped by the HTML parser inside `<select>`",
       ));
     it("in a colgroup", () =>
       assertReports(
@@ -155,6 +155,67 @@ describe("html structure validation", () => {
         "`<td>` is dropped",
       ));
   });
+
+  // The parser fills in the missing section, so the element sits one level
+  // below where the walk looks. This survives SSR but crashes on the client.
+  describe("a wrapper the parser inserts", () => {
+    it("a row directly in a table", () =>
+      assertReports(
+        [
+          html("<table><tr><td>x</td></tr></table>", [
+            "a:1:1",
+            "a:1:8",
+            "a:1:12",
+          ]),
+        ],
+        "`<tr>` makes the HTML parser insert a `<tbody>` around it",
+      ));
+    it("a cell directly in a table", () =>
+      assertReports(
+        [html("<table><td>x</td></table>", ["a:1:1", "a:1:8"])],
+        "`<td>` makes the HTML parser insert a `<tbody>` around it",
+      ));
+    it("a column directly in a table", () =>
+      assertReports(
+        [html("<table><col></table>", ["a:1:1", "a:1:8"])],
+        "`<col>` makes the HTML parser insert a `<colgroup>` around it",
+      ));
+  });
+
+  // "In select" persists for every descendant, but only inside a `<select>`.
+  describe("select content rules follow the select scope", () => {
+    it("reports a block nested well below the select", () =>
+      assertReports(
+        [
+          html("<select><span><option>a</option></span></select>", [
+            "a:1:1",
+            "a:1:9",
+            "a:1:15",
+          ]),
+        ],
+        "`<span>` is dropped by the HTML parser inside `<select>`",
+      ));
+    it("leaves a standalone optgroup alone", () =>
+      assertClean(
+        html("<optgroup><div>x</div></optgroup>", ["a:1:1", "a:1:11"]),
+      ));
+    it("leaves a standalone option alone", () =>
+      assertClean(html("<option><div>x</div></option>", ["a:1:1", "a:1:9"])));
+    it("lets a template escape the select scope", () =>
+      assertClean(
+        html("<select><template><div>x</div></template></select>", [
+          "a:1:1",
+          "a:1:9",
+          "a:1:19",
+        ]),
+      ));
+  });
+
+  it("treats a `<` that opens nothing as text", () =>
+    assertReports(
+      [html("<table><</table>", ["a:1:1"])],
+      "Text is moved out of `<table>`",
+    ));
 
   describe("markup the parser re-nests", () => {
     it("a block inside a paragraph", () =>

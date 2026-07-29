@@ -28,8 +28,26 @@ const allowedChildren: Record<string, Set<string>> = {
   tfoot: new Set(["tr", "template", "script", "style"]),
   tr: new Set(["td", "th", "template", "script", "style"]),
   colgroup: new Set(["col", "template"]),
-  select: new Set(["option", "optgroup", "hr", "script", "template"]),
-  optgroup: new Set(["option", "script", "template"]),
+};
+
+// "In select" persists for every descendant, so a stray element is dropped
+// however deep it sits. Outside a `<select>` an `<optgroup>` keeps its
+// children as written, so the restriction cannot be a per-parent rule.
+const selectContent = new Set([
+  "option",
+  "optgroup",
+  "hr",
+  "script",
+  "template",
+]);
+
+// Directly inside `<table>` the parser inserts the missing wrapper rather than
+// dropping, which still lands the element a level below where the walk looks.
+const impliedWrappers: Record<string, string> = {
+  tr: "tbody",
+  td: "tbody",
+  th: "tbody",
+  col: "colgroup",
 };
 // Parents that also discard text, so a stray expression is lost too.
 const discardsText = new Set([
@@ -139,10 +157,10 @@ export function createStructureValidator() {
   const open: { name: string; source?: string }[] = [];
   const reported = new Set<string>();
   // Per validator: `lastIndex` is mutable state and renders can interleave.
-  // `<!>` and other bogus declarations match no group, so a stray `<` is never
-  // mistaken for text the parser would move out of a table.
+  // Bogus declarations match no group so they stay out of the tree, while a
+  // `<` that opens nothing is text (the trailing alternative) as in a browser.
   const tokens =
-    /<!--[\s\S]*?-->|<[!?][^>]*>|<\/(?![a-zA-Z])[^>]*>|<(\/?)([a-zA-Z][^\s/>]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+)/g;
+    /<!--[\s\S]*?-->|<[!?][^>]*>|<\/(?![a-zA-Z])[^>]*>|<(\/?)([a-zA-Z][^\s/>]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+|<)/g;
   return (segments: StructureSegment[]) => {
     // Marko splits a start tag across writes, so the concatenation is scanned
     // and each match attributed to the segment its `<` fell in.
@@ -216,9 +234,29 @@ export function createStructureValidator() {
       );
       if (segment.kind === "sourced") cursors[segmentIndex]++;
 
+      // `<template>` content parses on its own, so it ends any select scope.
+      const scoped = open.findLast(
+        (el) => el.name === "select" || el.name === "template",
+      );
+      if (scoped?.name === "select" && !selectContent.has(name)) {
+        report(
+          `\`<${name}>\` is dropped by the HTML parser inside \`<select>\`.`,
+          source,
+        );
+      }
+
+      let wrapped = false;
       if (parent) {
+        const wrapper =
+          parent.name === "table" ? impliedWrappers[name] : undefined;
         const allowed = allowedChildren[parent.name];
-        if (allowed && !allowed.has(name)) {
+        if (wrapper) {
+          wrapped = true;
+          report(
+            `\`<${name}>\` makes the HTML parser insert a \`<${wrapper}>\` around it.`,
+            source,
+          );
+        } else if (allowed && !allowed.has(name)) {
           report(
             `\`<${name}>\` is not allowed in \`<${parent.name}>\` and the HTML parser moves or drops it.`,
             source,
@@ -289,6 +327,7 @@ export function createStructureValidator() {
 
       const needs = requiredAncestors[name];
       if (
+        !wrapped &&
         needs &&
         !open.some((el) => el.name === "template" || needs.includes(el.name))
       ) {
