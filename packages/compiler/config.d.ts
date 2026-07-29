@@ -32,6 +32,7 @@ declare const Config: {
   hydrateInit?: boolean;
   optimize?: boolean;
   optimizeKnownTemplates?: string[];
+  persisted?: boolean;
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated */

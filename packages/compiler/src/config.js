@@ -129,6 +129,12 @@ const config = {
   optimize: undefined,
 
   /**
+   * Compiles templates for a document that survives navigation, letting the
+   * translator emit what a later server response needs to address.
+   */
+  persisted: false,
+
+  /**
    * If `optimize` is enabled you can provide an array of template paths which the compiler will
    * use to generate shorter registry/template ids using incrementing ids. This can only be used
    * if the same `optimizeKnownTemplates` are used for both server and client compilations.

@@ -74,6 +74,14 @@ describe("compiler/compile", () => {
       assert.equal(getRuntimeVersion({}), "0.0.0"));
   });
 
+  it("caches analysis separately for a persisted compile", async () => {
+    const cache = new Map();
+    await compileFile(template, { cache });
+    await compileFile(template, { cache, persisted: true });
+    const [compiled] = cache.values();
+    assert.equal(compiled.size, 2);
+  });
+
   it("keeps the compile error when compiling asynchronously", () =>
     assert.rejects(
       () => compile("<div", template),

@@ -164,10 +164,12 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
   const id = getTemplateId(markoOpts, filename);
-  // `stripTypes` is left out of the key on purpose: it is for cli flows, which
+  // `persisted` changes analysis, which is shared across outputs, so it splits
+  // the cache. `stripTypes` is left out on purpose: it is for cli flows, which
   // compile once per process, so no cache is shared across its settings.
+  const cacheId = markoOpts.persisted ? "persisted\0" + id : id;
   const contentHash = canCache && new Hash().update(code).digest();
-  let cached = canCache && compileCache.get(id);
+  let cached = canCache && compileCache.get(cacheId);
 
   if (cached) {
     if (cached.contentHash !== contentHash) {
@@ -317,7 +319,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       }
     }
 
-    compileCache.set(id, {
+    compileCache.set(cacheId, {
       time: Date.now(),
       file,
       contentHash,
@@ -351,7 +353,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
           throwAggregateError(errors);
         }
       } catch (e) {
-        compileCache.delete(id);
+        compileCache.delete(cacheId);
         throw e;
       }
     }
