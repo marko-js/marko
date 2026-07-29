@@ -130,12 +130,6 @@ const closesParagraph = new Set(
   ),
 );
 
-// `<!>` and other bogus declarations are comments, not text, so they must not
-// look like content the parser would move out of a table.
-const tokenSource =
-  /<!--[\s\S]*?-->|<[!?][^>]*>|<\/(?![a-zA-Z])[^>]*>|<(\/?)([a-zA-Z][^\s/>]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+)/
-    .source;
-
 export type StructureSegment =
   | { kind: "sourced"; html: string; opens: (string | undefined)[] }
   | { kind: "raw"; html: string; source?: string }
@@ -144,7 +138,11 @@ export type StructureSegment =
 export function createStructureValidator() {
   const open: { name: string; source?: string }[] = [];
   const reported = new Set<string>();
-  const tokens = new RegExp(tokenSource, "g");
+  // Per validator: `lastIndex` is mutable state and renders can interleave.
+  // `<!>` and other bogus declarations match no group, so a stray `<` is never
+  // mistaken for text the parser would move out of a table.
+  const tokens =
+    /<!--[\s\S]*?-->|<[!?][^>]*>|<\/(?![a-zA-Z])[^>]*>|<(\/?)([a-zA-Z][^\s/>]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+)/g;
   return (segments: StructureSegment[]) => {
     // Marko splits a start tag across writes, so the concatenation is scanned
     // and each match attributed to the segment its `<` fell in.
