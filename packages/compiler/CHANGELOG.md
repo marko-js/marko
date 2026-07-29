@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.15
+
+### Patch Changes
+
+- [#3692](https://github.com/marko-js/marko/pull/3692) [`f0fc90a`](https://github.com/marko-js/marko/commit/f0fc90a38672b3d355d7e04c788600c175a18f63) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop blanking modules inside Babel's re-export barrels. Emptying `@babel/generator`'s jsx printer perturbed the bundler's analysis of the barrel that assembles the printer, and parentheses were dropped from generated code: `(await fetch(url)).json()` printed as `await fetch(url).json()`. The remaining prunes, which rewrite explicit registries rather than blanking modules, are unaffected.
+
 ## 5.41.14
 
 ### Patch Changes
