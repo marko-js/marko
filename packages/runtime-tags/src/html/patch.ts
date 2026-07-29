@@ -25,9 +25,10 @@ export function _template_persisted(
   const template = _template(templateId, renderer, page) as Template & {
     renderPatch(input?: TemplateInput): RenderedTemplate;
   };
-  template.renderPatch = function (input) {
-    return renderPatch(this as unknown as Template & ServerRenderer, input);
-  };
+  // Captures the template rather than using `this`, so a caller may pull the
+  // method off the object.
+  template.renderPatch = (input) =>
+    renderPatch(template as unknown as Template & ServerRenderer, input);
   return template;
 }
 
