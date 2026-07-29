@@ -7,6 +7,7 @@ function toggle(id: string) {
 }
 
 export const config: TestConfig = {
+  persisted: true,
   steps: [
     {
       comments: [

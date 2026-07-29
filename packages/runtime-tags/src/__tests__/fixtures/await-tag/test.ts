@@ -6,6 +6,7 @@ function click(document: Document) {
 }
 
 export const config: TestConfig = {
+  persisted: true,
   equivalent: false,
   steps: [{}, flush, flush, wait, click, click, click],
 };
