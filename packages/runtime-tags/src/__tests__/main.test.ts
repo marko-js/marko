@@ -8,6 +8,7 @@ import jsBeautify from "js-beautify";
 
 const { html_beautify } = jsBeautify;
 
+import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
@@ -18,6 +19,10 @@ import {
 } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
+import {
+  attributePayload,
+  type PayloadSpans,
+} from "./utils/payload-attribution";
 import {
   type Flush,
   type FlushType,
@@ -172,7 +177,7 @@ function testFixtures(interop?: true) {
             optimize || hasCompilerError || skipDOM || config.skip_csr;
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
-            html?: Sizes;
+            html?: Sizes & { spans: PayloadSpans };
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
           const rejectLoad =
@@ -472,9 +477,16 @@ function testFixtures(interop?: true) {
                     );
 
                     if (optimize) {
-                      stats.html = await getSizes(
-                        stripDefaultScript(chunks.join("")),
-                      );
+                      const payload = stripDefaultScript(chunks.join(""));
+                      stats.html = {
+                        ...(await getSizes(payload)),
+                        spans: attributePayload(payload, {
+                          runtimeId: config.runtime_id ?? DEFAULT_RUNTIME_ID,
+                          renderId: config.embedded
+                            ? "embedded"
+                            : DEFAULT_RENDER_ID,
+                        }),
+                      };
                     }
 
                     return `${pretty}\n`;

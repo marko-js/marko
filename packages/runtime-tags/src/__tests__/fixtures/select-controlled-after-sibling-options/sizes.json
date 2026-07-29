@@ -7,6 +7,13 @@
   },
   "html": {
     "min": 532,
-    "brotli": 290
+    "brotli": 290,
+    "spans": {
+      "markup": 189,
+      "marker": 26,
+      "reorder": 0,
+      "runtime": 245,
+      "resume": 72
+    }
   }
 }
