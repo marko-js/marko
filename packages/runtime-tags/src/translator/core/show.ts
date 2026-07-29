@@ -146,12 +146,9 @@ export default {
         if (staticDisplay === true) return;
 
         if (staticDisplay === false) {
-          // Own segment so a discarded wrapper still names this `<show>`.
-          if (isOutputHTML() && !isOptimize()) {
-            writer.writeRawHTML(tag, t.stringLiteral("<t hidden>"));
-          } else {
-            writer.writeRuntimeHTML(tag)`<t hidden>`;
-          }
+          // Attribute the injected wrapper to this `<show>` if it is discarded.
+          writer.recordOpenTag(tag);
+          writer.writeTo(tag)`<t hidden>`;
           return;
         }
 
@@ -172,7 +169,7 @@ export default {
         const staticDisplay = tagExtra[kStaticDisplay];
 
         if (staticDisplay === false) {
-          writer.writeRuntimeHTML(tag)`</t>`;
+          writer.writeTo(tag)`</t>`;
         }
 
         writer.flushInto(tag);

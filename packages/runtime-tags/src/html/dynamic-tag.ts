@@ -237,6 +237,7 @@ export const patchDynamicTag = (
       content,
       inputIsArgs,
       resume,
+      source,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -249,6 +250,7 @@ export const patchDynamicTag = (
         content,
         inputIsArgs,
         resume,
+        source,
       );
     };
   }
