@@ -1,0 +1,28 @@
+import { getDetail, getSummary } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  <try>
+    <@placeholder>
+      <p.loading>summary…</p>
+    </@placeholder>
+    <await|summary|=getSummary($global.topic)>
+      <p.summary>${summary}</p>
+      <try>
+        <@placeholder>
+          <p.sub>detail…</p>
+        </@placeholder>
+        <await|detail|=getDetail($global.topic)>
+          <p.detail>${detail}</p>
+        </await>
+      </try>
+    </await>
+  </try>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

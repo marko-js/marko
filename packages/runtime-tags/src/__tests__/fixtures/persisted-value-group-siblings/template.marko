@@ -1,0 +1,6 @@
+import Sheet from "./components/sheet.marko";
+<let/count=0/>
+<let/Comp=Sheet/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<${Comp} label=$global.a/>
+<${Comp} label=$global.b/>

@@ -1,0 +1,34 @@
+{
+  "dom": {
+    "nav.js": {
+      "min": 814,
+      "brotli": 425
+    },
+    "template.marko.page.mjs": {
+      "min": 170,
+      "brotli": 128
+    },
+    "sheet.marko.persisted.mjs": {
+      "min": 1421,
+      "brotli": 726
+    },
+    "sheet.mjs": {
+      "total": {
+        "min": 10524,
+        "brotli": 4381
+      },
+      "files": {
+        "components/classes.js": 118,
+        "components/sheet.marko": 253
+      }
+    },
+    "shared": {
+      "min": 10385,
+      "brotli": 4092
+    }
+  },
+  "html": {
+    "min": 813,
+    "brotli": 384
+  }
+}

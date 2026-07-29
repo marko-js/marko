@@ -1,0 +1,14 @@
+import { getNote } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Widget>
+  <p.widget>widget: ${getNote?.($global.topic)}</p>
+</define>
+
+<section.shell>
+  <${$global.view === "plain" ? "blockquote" : Widget} class="hop">
+    plain: ${getNote?.($global.topic)}
+  </>
+</section>

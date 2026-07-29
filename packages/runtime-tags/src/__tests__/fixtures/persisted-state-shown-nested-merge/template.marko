@@ -1,0 +1,19 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/open=true/>
+<button.toggle onClick() { open = !open }>toggle</button>
+<if=open>
+  <section.panel>
+    <try>
+      <@placeholder>loading</@placeholder>
+      <await|summary|=resolveAfter(input.summary, 1)>
+        <p.summary>${summary}</p>
+      </await>
+    </try>
+    <ol.entries>
+      <for|entry| of=input.entries by=(entry) => entry.id>
+        <li class="entry">${entry.text}</li>
+      </for>
+    </ol>
+  </section>
+</if>

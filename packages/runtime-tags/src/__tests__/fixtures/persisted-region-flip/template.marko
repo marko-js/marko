@@ -1,0 +1,8 @@
+<let/count=1/>
+<button.bump onClick() { count++ }>${count}</button>
+<if=input.mode === "a">
+  <p.note>alpha panel</p>
+</if>
+<else>
+  <p.note>beta panel</p>
+</else>

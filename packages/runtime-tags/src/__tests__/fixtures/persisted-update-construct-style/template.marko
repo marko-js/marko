@@ -1,0 +1,23 @@
+import { getTint } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Panel>
+  <let/n=0/>
+  <let/pad="4px"/>
+  <button.tap onClick() { n++ }>tap ${n}</button>
+  <button.grow onClick() { pad = "8px" }>grow</button>
+  <style>
+    .tinted {
+      color: ${getTint?.()};
+      padding: ${pad};
+    }
+  </style>
+  <div class="tinted">styled</div>
+</define>
+<define/About>
+  <p.about>about</p>
+</define>
+
+<layout content=$global.view === "panel" ? Panel : About/>

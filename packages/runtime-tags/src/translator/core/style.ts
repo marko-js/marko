@@ -17,8 +17,19 @@ import MagicString, { type SourceMap } from "magic-string";
 
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
+import {
+  addConstructClosureWires,
+  addConstructFragment,
+  getConstructReadExpr,
+} from "../util/construct-pass";
+import { getAccessorPrefix } from "../util/get-accessor-char";
 import { isCoreTagName } from "../util/is-core-tag";
-import { isOutputDOM } from "../util/marko-config";
+import {
+  isOutputDOM,
+  isPersisted,
+  isPersistedEntryBuild,
+} from "../util/marko-config";
+import { isMembraneLive } from "../util/membranes";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
 import {
@@ -33,11 +44,16 @@ import { createScopeReadExpression } from "../util/scope-read";
 import {
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
+  type Section,
 } from "../util/sections";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
+  isReasonDynamic,
+  isStateSerializeReason,
 } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
@@ -45,6 +61,11 @@ import {
   checkStyleInterpolations,
   htmlStyleTagAlternateMsg,
 } from "../util/style-interpolation";
+import {
+  addUpdateMerge,
+  isReasonlessCaptureExpression,
+  isUpdateCoveredByClientSignals,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -221,7 +242,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   if (dynamic) {
     const { binding } = dynamic;
     const section = getSection(tag);
-    writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
+    writer.writeTo(
+      tag,
+    )`${callRuntime("_style_html", buildStyleDecls(tag, node))}`;
     writer.markNode(tag, binding, getSerializeReason(section, binding));
   }
 
@@ -256,9 +279,50 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       undefined,
       true,
     );
+    // A constructed scope's values-free shell holds an empty <style>; the
+    // construct pass initializes the scoped stylesheet skeleton.
+    addConstructFragment(
+      section,
+      "structural",
+      t.expressionStatement(
+        callRuntime(
+          "_style_shell",
+          scopeIdentifier,
+          getScopeAccessorLiteral(binding),
+        ),
+      ),
+    );
 
     dynamicStyleValues(node).forEach((value, i) => {
       const valueRef = value.extra?.referencedBindings;
+      if (isPersistedEntryBuild()) {
+        const constructRead = getConstructReadExpr(value, section);
+        if (constructRead) {
+          addConstructFragment(
+            section,
+            "fill",
+            t.expressionStatement(
+              callRuntime(
+                "_style_rule_item",
+                readEl(),
+                t.stringLiteral(names[i]),
+                constructRead,
+              ),
+            ),
+          );
+          addConstructClosureWires(section, value);
+        }
+        const capture = classifyStyleItemCapture(section, binding, value, i);
+        if (capture) {
+          addUpdateMerge(section, {
+            kind: "style-item",
+            constructOnly: capture.stateComputedFill,
+            patchAccessor: capture.key,
+            name: names[i],
+            accessor: capture.accessor,
+          });
+        }
+      }
       addStatement(
         "render",
         section,
@@ -322,17 +386,69 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function buildStyleDecls(node: t.MarkoTag) {
-  const { names } = node.extra!.dynamicStyle!;
+function buildStyleDecls(tag: t.NodePath<t.MarkoTag>, node: t.MarkoTag) {
+  const { names, binding } = node.extra!.dynamicStyle!;
+  const section = getSection(tag);
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
+    // A capture-classified item serializes its computed value as a hole
+    // (the same lattice as attrs: state-computed fills construct-only,
+    // request-derived and reasonless captures on every patch).
+    const capture =
+      isPersisted() &&
+      isMembraneLive(section) &&
+      classifyStyleItemCapture(section, binding, value, i);
     parts.push(`${names[i]}:`);
-    parts.push(callRuntime("_escape_style_value", value));
+    parts.push(
+      callRuntime(
+        "_escape_style_value",
+        capture
+          ? callRuntime(
+              "_hole_value",
+              getScopeIdIdentifier(section),
+              t.stringLiteral(capture.key),
+              value,
+              callRuntime(
+                capture.stateComputedFill
+                  ? "_state_reason"
+                  : "_persisted_reason",
+              ),
+            )
+          : value,
+      ),
+    );
     parts.push(";");
   });
 
   return normalizeStringExpression(parts)!;
+}
+
+/** Mirrors the attr capture gate for a dynamic style rule item; the DOM
+ * merge recording and the HTML hole wrap must agree on key and class. */
+function classifyStyleItemCapture(
+  section: Section,
+  binding: Binding,
+  value: t.Expression,
+  i: number,
+) {
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
+  const stateComputedFill =
+    isStateSerializeReason(sources) && !getConstructReadExpr(value, section);
+  if (
+    !stateComputedFill &&
+    (!isReasonDynamic(sources) ||
+      isUpdateCoveredByClientSignals(value.extra)) &&
+    !(!sources && isReasonlessCaptureExpression(value, value.extra))
+  ) {
+    return;
+  }
+  const accessor = getScopeAccessorLiteral(binding);
+  return {
+    stateComputedFill,
+    accessor,
+    key: getAccessorPrefix().PatchAttr + "style" + i + ":" + accessor.value,
+  };
 }
 
 /**

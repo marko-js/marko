@@ -9,6 +9,7 @@ import jsBeautify from "js-beautify";
 const { html_beautify } = jsBeautify;
 
 import type { Input } from "../common/types";
+import { _merge_value_feedback } from "../common/value-claims";
 import * as tagsTranslator from "../translator";
 import {
   type ChunkSizes,
@@ -22,8 +23,12 @@ import {
   type Flush,
   type FlushType,
   isFlush,
+  isNavigate,
   isThrows,
   isWait,
+  type Navigate,
+  persistedPatchFrom,
+  persistedRenderFrom,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -38,8 +43,15 @@ import createMutationTracker from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
-type Step = Input | Wait | Flush | Throws | ((document: Document) => unknown);
-type Steps = [Input, ...Step[]];
+type Step =
+  | Input
+  | Wait
+  | Flush
+  | Throws
+  | Navigate
+  | ((document: Document) => unknown);
+export type Steps = [Input, ...Step[]];
+
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
   embedded?: true;
@@ -54,6 +66,12 @@ export type TestConfig = {
    * substrings, simulating a network-level lazy-chunk load failure.
    */
   reject_load?: string[];
+  /**
+   * Gates any dynamic chunk import whose specifier contains one of these
+   * substrings until a step releases (or fails) its handle from
+   * `window.__deferredLoads` — for pinning load-settlement races.
+   */
+  defer_load?: string[];
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
@@ -69,6 +87,14 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** User-code sentinels that must tree-shake out of the optimized DOM bundle. */
+  dom_bundle_excludes?: string[];
+  /** Markup a constructed section registers as its static shell: it belongs in
+   * the lazy `?persisted` entry and must not reach any eager module. */
+  persisted_entry_only?: string[];
+  /** Compiles the fixture with the `persisted` compiler option; pair with
+   * `$global.persisted` (and `persistedCrossRoute` for divergent navigations). */
+  persisted?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -85,6 +111,16 @@ function inShard(index: number) {
 }
 
 function noop() {}
+
+/** Splits a bundle snapshot into its `// <module id>` blocks. */
+function bundleModules(snapshot: string) {
+  const modules: [id: string, code: string][] = [];
+  for (const block of snapshot.split(/^\/\/ (?=\S)/m).slice(1)) {
+    const end = block.indexOf("\n");
+    modules.push([block.slice(0, end), block.slice(end + 1)]);
+  }
+  return modules;
+}
 
 function forceCodingAgent() {
   const prev = process.env.CLAUDECODE;
@@ -158,6 +194,9 @@ function testFixtures(interop?: true) {
           const rejectLoad =
             config.reject_load &&
             ((id: string) => config.reject_load!.some((s) => id.includes(s)));
+          const deferLoad =
+            config.defer_load &&
+            ((id: string) => config.defer_load!.some((s) => id.includes(s)));
 
           // Mocha retains suite closures for the entire run, so the cached
           // browsers/bundles are released once the fixture finishes to keep
@@ -182,6 +221,7 @@ function testFixtures(interop?: true) {
             (): compiler.Config => ({
               translator,
               runtimeId: config.runtime_id,
+              persisted: config.persisted,
               writeVersionComment: false,
               babelConfig: {
                 babelrc: false,
@@ -265,6 +305,24 @@ function testFixtures(interop?: true) {
             await snapMode(async () => {
               const runner = await ssrRunner();
               const { snapshot, sizes } = await runner[`${output}Bundle`]();
+              if (optimize && output === "dom") {
+                for (const excluded of config.dom_bundle_excludes || []) {
+                  assert.ok(
+                    !snapshot.includes(excluded),
+                    `optimized DOM bundle must exclude ${JSON.stringify(excluded)}`,
+                  );
+                }
+                for (const [id, code] of bundleModules(snapshot)) {
+                  for (const persistedOnly of config.persisted_entry_only ||
+                    []) {
+                    assert.ok(
+                      !code.includes(persistedOnly) ||
+                        id.endsWith(".persisted.mjs"),
+                      `${JSON.stringify(persistedOnly)} reached the eager module ${id}`,
+                    );
+                  }
+                }
+              }
               if (optimize && sizes) stats.dom = sizes;
               return stripFixtureDir(snapshot);
             }, `${output}.bundle.js`);
@@ -287,6 +345,12 @@ function testFixtures(interop?: true) {
                 instance.update(input);
                 tracker.logUpdate(input);
               },
+              // csr navigation is simply new input to the root -- the
+              // semantics the ssr patch is meant to reproduce.
+              onNavigate(nav) {
+                instance.update(nav.navigateInput as Input);
+                tracker.logUpdate(nav.navigateInput as Input);
+              },
             });
 
             tracker.cleanup();
@@ -302,7 +366,12 @@ function testFixtures(interop?: true) {
             const capture = captureConsole();
 
             try {
-              const { template } = await runner.runServer();
+              const server = await runner.runServer();
+              const { template } = server;
+              // Marko 5 treats the second argument as a stream, so omit it normally.
+              const persisted = persistedRenderFrom(
+                input.$global as Record<string, unknown> | undefined,
+              );
               for await (const data of template.render(
                 config.embedded
                   ? {
@@ -313,6 +382,7 @@ function testFixtures(interop?: true) {
                       },
                     }
                   : input,
+                persisted && { persisted },
               )) {
                 chunks.push(data);
                 logs.push(capture.records());
@@ -327,6 +397,7 @@ function testFixtures(interop?: true) {
               runner.assets,
               config.load_order,
               rejectLoad || undefined,
+              deferLoad || undefined,
             );
             browsers.push(browser);
             const { window } = browser;
@@ -351,8 +422,164 @@ function testFixtures(interop?: true) {
             const { run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
+            const navRunner = runner.navRunner;
+            // The previous patch's committed //E1: feedback, echoed on the
+            // next navigate exactly as the router's carrier does.
+            let echoValues: string | undefined;
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onNavigate: navRunner
+                ? async (nav) => {
+                    const navigateInput = nav.navigateInput as Input;
+                    const navEntry = await navRunner(
+                      browser.ctx,
+                      rejectLoad || undefined,
+                      deferLoad || undefined,
+                    );
+                    navEntry.__ready("__navigate");
+
+                    // Render the patch statelessly from the new input.
+                    const server = await runner.runServer();
+                    const { template } = server;
+                    let html = "";
+                    const navigateGlobal = {
+                      ...(navigateInput.$global as object),
+                      renderId: "navigate",
+                    } as Record<string, unknown>;
+                    // The echo snapshots the client's live possessions at
+                    // request time, exactly as the router's carrier will:
+                    // regions and committed value claims both pruned to
+                    // what the page still provably holds.
+                    const snapshot = navEntry.echo(echoValues);
+                    if (echoValues !== undefined) {
+                      echoValues = snapshot.values || undefined;
+                    }
+                    const persistedRender = persistedPatchFrom(
+                      navigateGlobal,
+                      navigateGlobal.persistedHeldRegions
+                        ? snapshot.regions
+                        : undefined,
+                      navigateGlobal.persistedEcho === false
+                        ? undefined
+                        : snapshot.values,
+                    );
+                    // The carrier binds a reserved claim-set id in this hook;
+                    // it must fire exactly once, at completion, with the
+                    // post-cap delta the body actually carried ("" included).
+                    const feedbackCalls: string[] = [];
+                    persistedRender.onFeedback = (delta) =>
+                      feedbackCalls.push(delta);
+                    for await (const chunk of template.render(
+                      { ...navigateInput, $global: navigateGlobal },
+                      { persisted: persistedRender },
+                    )) {
+                      html += chunk;
+                    }
+                    // Apply newline-delimited frames in resolution order. The
+                    // trailing //E1: feedback line is the carrier's, never
+                    // the applier's (mirrors persisted-navigation).
+                    let frames = html.split("\n").filter(Boolean);
+                    // The footer is the completion marker, and the carrier
+                    // trusts it only as the LAST content before EOF: every
+                    // successful completion writes it (an all-held response
+                    // as the bare `//E1:` line) and no late frame follows it.
+                    assert.ok(
+                      frames.at(-1)?.startsWith("//E1:"),
+                      "navigate(): patch body must END with its //E1: completion marker",
+                    );
+                    let feedback: string | undefined;
+                    frames = frames.filter((frame) => {
+                      if (frame.startsWith("//E1:")) {
+                        feedback = frame.slice(5);
+                        return false;
+                      }
+                      return true;
+                    });
+                    assert.deepEqual(
+                      feedbackCalls,
+                      [feedback],
+                      "navigate(): onFeedback must fire exactly once with the transmitted post-cap delta",
+                    );
+                    if (process.env.MARKO_WIRE_MEASURE) {
+                      process.stdout.write(
+                        `MARKO_WIRE_MEASURE:${Buffer.from(
+                          JSON.stringify({
+                            fixture: entry,
+                            interop: !!interop,
+                            optimize,
+                            fromRoute: persistedRender?.patch?.fromRoute,
+                            targetRoute: persistedRender?.patch?.targetRoute,
+                            echoed: persistedRender?.patch?.echoValues,
+                            feedback,
+                            frames,
+                          }),
+                        ).toString("base64")}\n`,
+                      );
+                    }
+                    nav.inspectWire?.({
+                      frames,
+                      feedback,
+                      echoed: persistedRender?.patch?.echoValues,
+                    });
+                    // Fixture transforms run before any frame applies.
+                    // Zero apply frames is a valid patch (everything held):
+                    // it applies as a no-op and still commits feedback.
+                    if (nav.mutateFrames) frames = nav.mutateFrames(frames);
+
+                    // Post-apply failures reach run through this sink (run
+                    // replaces the document); the harness pins them instead,
+                    // and records them PER NAVIGATION so steps can assert
+                    // fallback-vs-park for the navigation that just applied.
+                    const fallbacks: string[] = ((
+                      browser.window as any
+                    ).__persistedNavFallbacks = []);
+                    const applyFrame = navEntry.patch((error) => {
+                      fallbacks.push(`${error}`);
+                      browser.window.console.error(
+                        `navigate() document fallback: ${error}`,
+                      );
+                    });
+                    // Truncation models a superseded navigation between frames.
+                    const frameCount = Math.min(
+                      nav.abortAfterFrame ?? frames.length,
+                      frames.length,
+                    );
+                    for (let i = 0; i < frameCount; i++) {
+                      const result = applyFrame(frames[i]!);
+                      if (!result) {
+                        throw new Error(
+                          `navigate(): frame ${i + 1} carried no resume fills`,
+                        );
+                      }
+                      await browser.runAsyncScripts();
+                      run();
+                      if (i < frameCount - 1) {
+                        tracker.logUpdate(
+                          `update frame ${i + 1} of ${frames.length}`,
+                        );
+                        tracker.beginUpdate();
+                        if (nav.betweenFrames) {
+                          await nav.betweenFrames(
+                            browser.window.document.documentElement,
+                            i,
+                          );
+                          run();
+                          tracker.logUpdate(
+                            `between frame ${i + 1} and ${i + 2}`,
+                          );
+                          tracker.beginUpdate();
+                        }
+                      }
+                    }
+                    // Feedback commits only after every frame applied — a
+                    // truncated (superseded) stream forgoes the update.
+                    if (frameCount === frames.length && feedback) {
+                      // Delta semantics: merge into the committed store
+                      // (mirrors the carrier); absent entries mean keep.
+                      echoValues = _merge_value_feedback(echoValues, feedback);
+                    }
+                  }
+                : undefined,
             });
 
             while (hasFlush) {
@@ -475,10 +702,35 @@ async function runSteps(
   opts: {
     onInput?: (input: Input) => void;
     onFlush?: () => Promise<void>;
+    onNavigate?: (nav: Navigate) => void | Promise<void>;
   },
 ) {
   for (const update of steps) {
-    if (isWait(update)) {
+    if (isNavigate(update)) {
+      if (opts.onNavigate) {
+        tracker.beginUpdate();
+        if (update.expectError) {
+          // A failed apply must throw so Run can replace the partial document.
+          let error: unknown;
+          try {
+            await opts.onNavigate(update);
+          } catch (err) {
+            error = err;
+          }
+          if (!error) {
+            throw new Error("navigate(): expected the apply to fail");
+          }
+          tracker.logUpdate(
+            `\`${JSON.stringify(update.navigateInput)}\` failed: ${
+              (error as Error).message
+            }`,
+          );
+        } else {
+          await opts.onNavigate(update);
+          tracker.logUpdate(update.navigateInput as Input);
+        }
+      }
+    } else if (isWait(update)) {
       await update();
       await browser.runAsyncScripts();
       run();

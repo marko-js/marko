@@ -1,0 +1,38 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<ul class=rows>
+  <li class=row><span class=label>ROW ONE<!--M_*2 #text/0--></span><input value
+      class=note><!--M_*2 #input/1-->
+    <ol class=cells><!--M_[-->
+      <li class=cell>one-a<!--M_*4 #text/0--></li>
+      <li class=cell>one-b<!--M_*5 #text/0--></li><!--M_]2 #ol/2 3-->
+    </ol><!--M_*2 #ol/2-->
+  </li>
+  <li class=row><span class=label>ROW TWO<!--M_*6 #text/0--></span><input value
+      class=note><!--M_*6 #input/1-->
+    <ol class=cells><!--M_[-->
+      <li class=cell>two-a<!--M_*8 #text/0--></li><!--M_]6 #ol/2 7-->
+    </ol><!--M_*6 #ol/2-->
+  </li><!--M_}1 #ul/2 6 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0
+    }, {
+      "ControlledHandler:#input/1": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-keyed-item-nested-merge/template.marko_1/valueChange"
+        ),
+      note: "",
+      "#LoopKey": "r1"
+    }, 3, {
+      "ControlledHandler:#input/1": _(6,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-keyed-item-nested-merge/template.marko_1/valueChange"
+        ),
+      note: "",
+      "#LoopKey": "r2"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-keyed-item-nested-merge/template.marko_1 2 6 packages/runtime-tags/src/__tests__/fixtures/persisted-keyed-item-nested-merge/template.marko_0 1"
+  ];
+  M._.w()
+</script>

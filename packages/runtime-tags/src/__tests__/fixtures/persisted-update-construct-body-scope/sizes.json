@@ -1,0 +1,33 @@
+{
+  "dom": {
+    "nav.js": {
+      "total": {
+        "min": 1477,
+        "brotli": 744
+      },
+      "files": {
+        "tags/mounter.marko.persisted.mjs": 776,
+        "tags/layout.marko.persisted.mjs": 404,
+        "template.marko.persisted.mjs": 3015
+      }
+    },
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 397,
+        "brotli": 249
+      },
+      "files": {
+        "tags/mounter.marko": 169,
+        "template.marko": 598
+      }
+    },
+    "shared": {
+      "min": 20109,
+      "brotli": 7706
+    }
+  },
+  "html": {
+    "min": 458,
+    "brotli": 296
+  }
+}

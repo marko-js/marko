@@ -1,0 +1,17 @@
+import { getFeed } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<section>
+  <try>
+    <@placeholder>
+      <p.loading>loading…</p>
+    </@placeholder>
+    <@catch|err|>
+      <p.failed>failed: ${err.message}</p>
+    </@catch>
+    <await|feed|=getFeed($global.mode)>
+      <p.feed>${feed}</p>
+    </await>
+  </try>
+</section>

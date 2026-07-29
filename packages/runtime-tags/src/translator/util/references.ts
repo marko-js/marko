@@ -14,7 +14,14 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
+import {
+  finalizeMembranes,
+  isMembraneLive,
+  isRegionRoot,
+  markStateCapable,
+  MembraneCause,
+} from "./membranes";
 import {
   addSorted,
   concat,
@@ -55,8 +62,11 @@ import {
   finalizeSerializeReason,
   getSerializeReason,
   getSerializeSourcesForExpr,
+  getSerializeSourcesForExprs,
   getSerializeSourcesForRef,
   isForceSerialized,
+  isRequestDerivedSerializeReason,
+  isStateSerializeReason,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -84,6 +94,7 @@ export { BindingType };
 export interface Sources {
   state: Opt<Binding>;
   param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
 }
 
 export interface Binding {
@@ -167,6 +178,7 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
+    readsGlobal?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     spreadFrom?: Binding;
@@ -627,6 +639,17 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
+export function trackGlobalReference(identifier: t.NodePath<t.Identifier>) {
+  const fnRoot = getFnRoot(identifier);
+  const exprRoot = getExprRoot(fnRoot || identifier);
+  const section = getOrCreateSection(exprRoot);
+  const exprExtra = getCanonicalExtra(
+    (exprRoot.node.extra ??= { section }) as ReferencedExtra,
+  );
+  exprExtra.readsGlobal = true;
+  section.hasGlobalReads = true;
+}
+
 function createBindingsAndTrackReferences(
   lVal: t.LVal,
   type: BindingType,
@@ -843,6 +866,7 @@ export function mergeReferences<T extends t.Node>(
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
+      if (extra.readsGlobal) targetExtra.readsGlobal = true;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           read.binding.reads.delete(extra);
@@ -1136,6 +1160,98 @@ export function finalizeReferences() {
       );
     }
   });
+
+  finalizeMembranes();
+
+  if (isPersisted()) {
+    // Branch alternatives of one anchor must share liveness: a mixed anchor
+    // (one live body, one region body) would need per-branch delivery modes,
+    // so the region bodies are promoted instead.
+    const alternativesByAnchor = new Map<Binding, Section[]>();
+    forEachSection((section) => {
+      if (section.isBranch && section.sectionAccessor) {
+        const group = alternativesByAnchor.get(section.sectionAccessor.binding);
+        if (group) group.push(section);
+        else
+          alternativesByAnchor.set(section.sectionAccessor.binding, [section]);
+      }
+    });
+    let promoted = true;
+    while (promoted) {
+      promoted = false;
+      for (const group of alternativesByAnchor.values()) {
+        if (
+          group.length > 1 &&
+          group.some((section) => isMembraneLive(section)) &&
+          group.some((section) => !isMembraneLive(section))
+        ) {
+          for (const section of group) {
+            markStateCapable(section, MembraneCause.forced);
+          }
+          promoted = true;
+        }
+      }
+    }
+
+    forEachSectionReverse((section) => {
+      if (
+        section.parent &&
+        section.isBranch &&
+        section.sectionAccessor &&
+        section.upstreamExpression &&
+        (isMembraneLive(section) || isRegionRoot(section))
+      ) {
+        if (section.hasGlobalReads) {
+          addSerializeReason(section, globalSources, kBranchSerializeReason);
+        }
+        const closureSources = getSerializeSourcesForRef(
+          section.referencedClosures,
+        );
+        if (closureSources && (closureSources.param || closureSources.global)) {
+          addSerializeReason(
+            section,
+            createSources(
+              undefined,
+              closureSources.param,
+              closureSources.global,
+            ),
+            kBranchSerializeReason,
+          );
+        }
+        const branchReason = getSerializeReason(
+          section,
+          kBranchSerializeReason,
+        );
+        if (isRequestDerivedSerializeReason(branchReason)) {
+          const requestSources = createSources(
+            undefined,
+            branchReason.param,
+            branchReason.global,
+          );
+          addSerializeReason(
+            section.parent,
+            requestSources,
+            section.sectionAccessor.binding,
+          );
+          if (section.parent.isBranch) {
+            addSerializeReason(
+              section.parent,
+              requestSources,
+              kBranchSerializeReason,
+            );
+          }
+          if (
+            section.params &&
+            !isStateSerializeReason(
+              getSerializeSourcesForExprs(section.upstreamExpression),
+            )
+          ) {
+            addGlobalTaint(section.params);
+          }
+        }
+      }
+    });
+  }
 
   forEachSection(applySerializeExprs);
 
@@ -1446,7 +1562,7 @@ function getCollapsibleIntersectionSource(
     sources = mergeSources(sources, member.sources);
   }
 
-  if (!sources || (sources.state && sources.param)) {
+  if (!sources || sources.global || (sources.state && sources.param)) {
     return undefined;
   }
 
@@ -1475,6 +1591,30 @@ const [getResolvedSources] = createProgramState(() => new Set<Binding>());
 const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
+const globalSources: Sources = {
+  state: undefined,
+  param: undefined,
+  global: true,
+};
+
+export function getGlobalExprSources(expr: t.NodeExtra) {
+  if (isPersisted() && expr.readsGlobal) return globalSources;
+}
+
+function addGlobalTaint(binding: Binding) {
+  if (binding.sources?.global || binding.type === BindingType.let) return;
+  binding.sources = mergeSources(binding.sources, globalSources);
+  for (const alias of binding.aliases) {
+    addGlobalTaint(alias);
+  }
+  for (const [, alias] of binding.propertyAliases) {
+    addGlobalTaint(alias);
+  }
+  for (const read of binding.reads) {
+    forEach(read.downstream, addGlobalTaint);
+  }
+}
+
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
@@ -1549,6 +1689,12 @@ function resolveDerivedSources(binding: Binding) {
           }
         });
       }
+      if (binding.type !== BindingType.let) {
+        binding.sources = mergeSources(
+          binding.sources,
+          getGlobalExprSources(expr),
+        );
+      }
     });
   }
 }
@@ -1556,18 +1702,21 @@ function resolveDerivedSources(binding: Binding) {
 export function createSources(
   state: Sources["state"],
   param: Sources["param"],
+  global?: Sources["global"],
 ): Sources {
-  if (!(state || param)) {
+  if (!(state || param || global)) {
     throw new Error(
       "Cannot create a serialize reason that does not reference state or a param.",
     );
   }
 
-  return { state, param };
+  return { state, param, global };
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
+
+  if (a.global !== b.global) return a.global ? 1 : -1;
 
   if (a.param) {
     if (!b.param) return 1;
@@ -1589,10 +1738,13 @@ export function compareSources(a: Sources, b: Sources) {
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
-  if (a.state === b.state && a.param === b.param) return a;
+  if (a.state === b.state && a.param === b.param && a.global === b.global)
+    return a;
+  if (a.state === b.state && a.param === b.param) return a.global ? a : b;
   return createSources(
     bindingUtil.union(a.state, b.state),
     unionParamSources(a.param, b.param),
+    a.global || b.global,
   );
 }
 

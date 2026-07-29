@@ -1,0 +1,9 @@
+<ul.rows>
+  <for|row| of=input.rows by(row) { return row.id }>
+    <let/picks=0/>
+    <li class="row">
+      <button.pick onClick() { picks++ }>+${picks}</button>
+      <span.text>${row.text}</span>
+    </li>
+  </for>
+</ul>

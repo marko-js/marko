@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-update-dynamic-spread/template.marko:3:4
+      1 | import { getAttrs } from "./data";
+      2 |
+    > 3 | <${input.tag} ...getAttrs(input.id)/>
+        |    ^^^^^^^^^ Persisted pages cannot use a request-derived spread without a sparse update protocol. Use explicit attributes or a supported controllable/event spread.
+      4 |

@@ -1,0 +1,51 @@
+<button class=toggle>toggle</button><!--M_*1 #button/0-->
+<section class=panel>
+  <!--M_[--><!--M_!^3-->loading<!--M_!3--><!--M_]2 #text/0 3-->
+  <ol class=entries><!--M_[-->
+    <li class=entry>entry one<!--M_*5 #text/0--></li>
+    <li class=entry>entry two<!--M_*6 #text/0--></li><!--M_]2 #ol/1 4-->
+  </ol><!--M_*2 #ol/1-->
+</section><!--M_|1 #text/1 2-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      input_summary: "SUM 1",
+      input_entries: [{
+        id: "e1",
+        text: "entry one"
+      }, {
+        id: "e2",
+        text: "entry two"
+      }],
+      open: !0,
+      "ClosureScopes:input_summary": new Set([_(3)])
+    }, {
+      "BoundaryAnchor:#text/0": ""
+    }, {
+      _: _(2),
+      "#ClosestBranchId": 2,
+      "#BranchAccessor": "#text/0",
+      "#PlaceholderContent": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-state-shown-nested-merge/template.marko_3_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-state-shown-nested-merge/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->
+  <p class=summary>SUM 1<!--M_*8 #text/0--></p><!--M_]3 #text/0 8-->
+</t>
+<script>
+  if (!M._.n) {
+    M._.r.push(_ => [2, {
+      "BoundaryAnchor:#text/0": 0
+    }]);
+    M._.w()
+  }
+</script>

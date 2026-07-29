@@ -1,0 +1,11 @@
+import { live, patch } from "./data";
+
+<let/count=0/>
+<button onClick() { count++ }>clicked ${count}</button>
+<if=input.id>
+  <const/label=patch(input.id)>
+  <p>${label} / ${live(input.id)}</p>
+</if>
+<else>
+  <p>nothing selected</p>
+</else>

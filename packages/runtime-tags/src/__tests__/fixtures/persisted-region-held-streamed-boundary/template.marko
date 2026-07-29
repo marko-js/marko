@@ -1,0 +1,24 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Item>
+  <h2.title>${$global.title}</h2>
+  <try>
+    <@placeholder>loading…</@placeholder>
+    <await|reviews|=resolveAfter($global.reviews)>
+      <p.updated>updated ${$global.stamp}</p>
+      <div.reviews>
+        <for|i| of=reviews>
+          <div.review>review number ${i} is static</div>
+        </for>
+      </div>
+    </await>
+  </try>
+</define>
+
+<${$global.view === "item" ? Item : Home}/>

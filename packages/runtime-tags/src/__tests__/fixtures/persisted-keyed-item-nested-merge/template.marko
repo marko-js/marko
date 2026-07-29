@@ -1,0 +1,16 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<ul.rows>
+  <for|row| of=input.rows by=(row) => row.id>
+    <let/note=""/>
+    <li class="row">
+      <span.label>${row.label}</span>
+      <input class="note" value:=note/>
+      <ol.cells>
+        <for|cell| of=row.cells by=(cell) => cell.id>
+          <li class="cell">${cell.text}</li>
+        </for>
+      </ol>
+    </li>
+  </for>
+</ul>

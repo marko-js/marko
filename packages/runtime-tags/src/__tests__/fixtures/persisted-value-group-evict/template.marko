@@ -1,0 +1,9 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<let/show=true/>
+<button.toggle onClick() { show=!show }>toggle</button>
+<if=show>
+  <let/n=0/>
+  <button.tap onClick() { n++ }>tap ${n}</button>
+  <p.price>${input.price}</p>
+</if>

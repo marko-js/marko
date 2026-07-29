@@ -1,0 +1,25 @@
+static const themeColor = "tomato";
+
+<let/count=0>
+<let/items=[]>
+<button onClick() { count += input.step }>${count}</button>
+<button onClick() {
+  items = items.concat({ id: items.length + 1, text: `item ${items.length}` });
+}>Add</button>
+<if=count % 2><span>${count}</span></if>
+<else><b>even</b></else>
+<if=input.note><i>note ${count}</i></if>
+<else><small>quiet</small></else>
+<ul>
+  <for|item| of=items by="id">
+    <li>${item.text}<em>${item.id}</em></li>
+  </for>
+</ul>
+<p>${$global.flash + count}</p>
+<h2 style={ color: themeColor }>${input.title}</h2>
+<for|i| to=2>
+  <input/field placeholder=i>
+</for>
+<button onClick() { field()[0]?.focus() }>focus</button><for|row| of=input.rows by="id">
+  <b>${row.label}</b>
+</for>

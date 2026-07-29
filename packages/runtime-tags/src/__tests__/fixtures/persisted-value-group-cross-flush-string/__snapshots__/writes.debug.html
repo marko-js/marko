@@ -1,0 +1,57 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<ul class=cards>
+  <li class=card><span class=name>CARD-ONE<!--M_*2 #text/0--></span><button
+      class=pin>pin<!--M_*2 #text/2--></button><!--M_*2 #button/1--></li>
+  <li class=card><span class=name>CARD-TWO<!--M_*3 #text/0--></span><button
+      class=pin>pin<!--M_*3 #text/2--></button><!--M_*3 #button/1--></li>
+  <!--M_}1 #ul/2 3 2-->
+</ul><!--M_[--><!--M_!^4-->
+<p class=loading>loading…</p><!--M_!4--><!--M_]1 #text/3 4-->
+<t hidden M_=4><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "BoundaryAnchor:#text/3": "",
+      count: 0,
+      "ClosureScopes:input_note": new Set([_(4)])
+    }, {
+      opts: _.b = {
+        label: _.a = "PRIORITY-SUPPORT-TIER-LABEL"
+      },
+      opts_label: _.a,
+      pinned: !1,
+      "#LoopKey": "c1"
+    }, {
+      opts: _.b,
+      opts_label: _.a,
+      pinned: !1,
+      "#LoopKey": "c2"
+    }, {
+      _: _(1),
+      "#BranchAccessor": "#text/3",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-value-group-cross-flush-string/template.marko_3_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-value-group-cross-flush-string/template.marko_2_opts_label 2 3 packages/runtime-tags/src/__tests__/fixtures/persisted-value-group-cross-flush-string/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->
+  <p class=note>PRIORITY-SUPPORT-TIER-LABEL<!--M_*6 #text/0-->
+    <!>s1<!--M_*6 #text/1-->
+  </p><!--M_]4 #text/0 6-->
+</t>
+<script>
+  if (!M._.n) {
+    M._.r.push(_ => [1, {
+      "BoundaryAnchor:#text/3": 0
+    }]);
+    M._.w()
+  }
+</script>

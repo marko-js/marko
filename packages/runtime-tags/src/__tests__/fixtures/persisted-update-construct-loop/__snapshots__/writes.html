@@ -1,0 +1,22 @@
+<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_*1 a-->
+<ul><!--M_[--><em>LOOP_ONLY_MARKUP</em>server-only loop
+  sentinel<!--M_*2 a--><!--M_[--><span class=a>A: <!>
+      x<!--M_*3 a--></span><!--M_]2 b 3--><!--M_[2--><em>LOOP_ONLY_MARKUP</em>server-only
+  loop sentinel<!--M_*4 a--><!--M_[-->
+  <section class=b>B: <!>x<!--M_*5 a--></section><!--M_]4 b 5--><!--M_)1 c 4-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    d: 0
+  }, {
+    Db: "a2",
+    _: _(1),
+    M: 1
+  }, 1, {
+    Db: "a3",
+    _: _(1),
+    M: 2
+  }], "a5 1"];
+  M._.w()
+</script>

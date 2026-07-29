@@ -8,9 +8,11 @@ import {
   getKnownFromPropTree,
   hasAllKnownProps,
 } from "./binding-prop-tree";
+import { addConstructFragment } from "./construct-pass";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
-import { isOptimize } from "./marko-config";
+import { isOptimize, isPersisted } from "./marko-config";
+import { isMembraneLive } from "./membranes";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -40,9 +42,11 @@ import {
   type InputBinding,
   isInvokeOnlyBinding,
   mergeReferences,
+  onFinalizeReferences,
   type ParamBinding,
   type ReferencedExtra,
   setBindingDownstream,
+  type Sources,
   trackParamsReferences,
   trackVarReferences,
 } from "./references";
@@ -67,6 +71,7 @@ import { setTagDownstream } from "./set-tag-sections-downstream";
 import { addSetupExpr, addSetupStatement } from "./setup-statements";
 import {
   addStatement,
+  getRegionSiteId,
   getResumeRegisterId,
   initValue,
   setBindingSerializedValue,
@@ -111,6 +116,10 @@ declare module "@marko/compiler/dist/types" {
     [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
   }
+}
+
+export function getKnownTagChildScopeBinding(tag: t.NodePath<t.MarkoTag>) {
+  return tag.node.extra?.[kChildScopeBinding];
 }
 
 export function knownTagAnalyze(
@@ -172,6 +181,22 @@ export function knownTagAnalyze(
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
+  if (isPersisted()) {
+    // Deferred: liveness only classifies once references are finalized. The
+    // callback postdates `finalizeSerializeReason`, so mirror its
+    // prop-to-scope merge by adding the reason at both levels.
+    onFinalizeReferences(() => {
+      if (isMembraneLive(section)) {
+        const reason: Sources = {
+          state: undefined,
+          param: undefined,
+          global: true,
+        };
+        addSerializeReason(section, reason, childScopeBinding);
+        addSerializeReason(section, reason);
+      }
+    });
+  }
 }
 
 export function knownTagTranslateHTML(
@@ -179,6 +204,7 @@ export function knownTagTranslateHTML(
   tagIdentifier: t.Expression,
   contentSection: Section,
   propTree: BindingPropTree | undefined,
+  regionAccessor?: t.StringLiteral | t.NumericLiteral,
 ) {
   const tagBody = tag.get("body");
   const { node } = tag;
@@ -328,6 +354,24 @@ export function knownTagTranslateHTML(
 
   if (tagVar) {
     translateVar(tag, callExpression(tagIdentifier, ...getArgs()), "let");
+  } else if (regionAccessor) {
+    // A nucleus-free child ships as region markup: documents mark its range,
+    // patches capture its render as a per-response shell the region merge
+    // swaps wholesale.
+    statements.push(
+      t.expressionStatement(
+        callRuntime(
+          "_region",
+          t.arrowFunctionExpression(
+            [],
+            t.blockStatement([callStatement(tagIdentifier, ...getArgs())]),
+          ),
+          getScopeIdIdentifier(section),
+          regionAccessor,
+          t.stringLiteral(getRegionSiteId()),
+        ),
+      ),
+    );
   } else {
     statements.push(callStatement(tagIdentifier, ...getArgs()));
   }
@@ -374,6 +418,20 @@ export function knownTagTranslateDOM(
       "render",
       tagSection,
       undefined,
+      t.expressionStatement(
+        callRuntime(
+          "_var",
+          scopeIdentifier,
+          getScopeAccessorLiteral(childScopeBinding, true),
+          source.identifier,
+        ),
+      ),
+    );
+    // Pure structural wiring (child `<return>` -> parent var linkage) a
+    // constructed scope must re-establish; no compute is executed.
+    addConstructFragment(
+      tagSection,
+      "var-wire",
       t.expressionStatement(
         callRuntime(
           "_var",

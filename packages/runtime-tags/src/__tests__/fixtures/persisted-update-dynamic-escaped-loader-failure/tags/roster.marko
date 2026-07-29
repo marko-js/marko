@@ -1,0 +1,9 @@
+// Client state keeps this template membrane-live: its lazy module (and the
+// load-failure path this fixture exercises) stays required for construction.
+<let/pinned=0/>
+<button.pin onClick() { pinned++ }>pin ${pinned}</button>
+<ul.crew>
+  <for|name| of=input.crew by(name) { return name }>
+    <li>${name}</li>
+  </for>
+</ul>

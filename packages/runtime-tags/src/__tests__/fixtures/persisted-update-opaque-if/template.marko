@@ -1,0 +1,10 @@
+import { view } from "./data";
+
+<let/count=0/>
+<button onClick() { count++ }>count ${count}</button>
+<if=view.current === "primary">
+  <p.primary>primary</p>
+</if>
+<else>
+  <p.fallback>fallback</p>
+</else>

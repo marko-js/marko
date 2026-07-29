@@ -1,0 +1,9 @@
+// The script's `$global` read makes it a navigation-retriggered effect, so a
+// persisted apply re-seeds the mirror while local writes stay live between.
+<let/mirror=$global.stock>
+<script>
+  mirror = $global.stock;
+</script>
+<button.take onClick() { mirror-- }>take</button>
+<p.mirror>${mirror} in stock</p>
+<p.server>server says ${$global.stock}</p>

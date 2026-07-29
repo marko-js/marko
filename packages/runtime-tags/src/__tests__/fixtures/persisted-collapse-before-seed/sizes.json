@@ -1,0 +1,20 @@
+{
+  "dom": {
+    "nav.js": {
+      "min": 11797,
+      "brotli": 4653
+    },
+    "template.marko.page.mjs": {
+      "min": 532,
+      "brotli": 315
+    },
+    "shared": {
+      "min": 12807,
+      "brotli": 5228
+    }
+  },
+  "html": {
+    "min": 1169,
+    "brotli": 659
+  }
+}

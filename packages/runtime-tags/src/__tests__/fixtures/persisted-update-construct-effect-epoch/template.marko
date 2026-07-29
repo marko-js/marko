@@ -1,0 +1,26 @@
+import { getNote } from "./data";
+
+<let/count=0/>
+<let/veto=false/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<script>
+  if ($global.veto) veto = true;
+</script>
+
+<define/Panel>
+  <div/box class="box">panel</div>
+  <script>
+    box();
+    document.body.dataset.panelRuns = String(
+      +(document.body.dataset.panelRuns || 0) + 1,
+    );
+  </script>
+  <span.note>${getNote?.()}</span>
+</define>
+<define/About>
+  <p.about>about</p>
+</define>
+
+<if=!veto>
+  <layout content=$global.view === "panel" ? Panel : About/>
+</if>

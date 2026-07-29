@@ -1,0 +1,84 @@
+<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_*1 a-->
+<ul class=threads>
+  <li class=thread>
+    <h3 class=title>THREAD-ALPHA<!--M_*2 a--></h3><button
+      class=collapse>collapse<!--M_*2 c--></button><!--M_*2 b--><!--M_[--><!--M_[--><!--M_!^4-->
+    <p class=loading>loading…</p><!--M_!4--><!--M_]3 a 4-->
+    <ol class=replies><!--M_[-->
+      <li class=reply>reply one<!--M_*6 a--></li>
+      <li class=reply>reply two<!--M_*7 a--></li><!--M_]3 b 5-->
+    </ol><!--M_*3 b--><!--M_]2 d 3-->
+  </li>
+  <li class=thread>
+    <h3 class=title>THREAD-BETA<!--M_*8 a--></h3><button
+      class=collapse>collapse<!--M_*8 c--></button><!--M_*8 b--><!--M_[--><!--M_[--><!--M_!^10-->
+    <p class=loading>loading…</p><!--M_!10--><!--M_]9 a 10-->
+    <ol class=replies><!--M_[-->
+      <li class=reply>reply three<!--M_*12 a--></li><!--M_]9 b 11-->
+    </ol><!--M_*9 b--><!--M_]8 d 9-->
+  </li><!--M_}1 c 8 2-->
+</ul>
+<t hidden M_=4><!--M_#b--></t>
+<t hidden M_=10><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    g: 0
+  }, {
+    h: "note alpha v1",
+    i: [{
+      id: "r1",
+      text: "reply one"
+    }, {
+      id: "r2",
+      text: "reply two"
+    }],
+    j: !1,
+    k: new Set([_(4)]),
+    M: "t1"
+  }, {
+    Ta: ""
+  }, {
+    _: _(3),
+    G: 3,
+    C: "a",
+    Q: _(3, "a3")
+  }, 3, {
+    h: "note beta v1",
+    i: [{
+      id: "r3",
+      text: "reply three"
+    }],
+    j: !1,
+    k: new Set([_(10)]),
+    M: "t2"
+  }, {
+    Ta: ""
+  }, {
+    _: _(9),
+    G: 9,
+    C: "a",
+    Q: _(9, "a3")
+  }], "a8 2 a8 8 a10 1"];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->
+  <p class=note>note alpha v1<!--M_*15 a--></p><!--M_]4 a 15-->
+</t>
+<t hidden M_=c><!--M_[-->
+  <p class=note>note beta v1<!--M_*16 a--></p><!--M_]10 a 16-->
+</t>
+<script>
+  if (!M._.n) {
+    M._.r.push(_ => [3, {
+      Ta: 0
+    }], _ => [9, {
+      Ta: 0
+    }]);
+    M._.w()
+  }
+</script>

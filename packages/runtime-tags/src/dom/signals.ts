@@ -12,6 +12,7 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
+import { updating } from "./persisted-queue";
 import { queueEffect, queueRender, rendering, runId } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
@@ -38,6 +39,35 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
     if (rendering) {
       if (scope[AccessorProp.Gen] === runId) {
         scope[valueAccessor] = value;
+        fn?.(scope);
+      }
+    } else if (
+      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      ((scope[valueAccessor] = value), fn)
+    ) {
+      schedule();
+      queueRender(scope, fn, id as number);
+    }
+    return value;
+  };
+}
+
+/** Persisted `_let`: a fresh scope may already contain its server seed. */
+export function _let_persisted<T>(id: EncodedAccessor, fn?: SignalFn) {
+  const valueAccessor = MARKO_DEBUG
+    ? (id as string).slice(0, (id as string).lastIndexOf("/"))
+    : decodeAccessor(id as number);
+
+  if (MARKO_DEBUG) {
+    id = +(id as string).slice((id as string).lastIndexOf("/") + 1);
+  }
+
+  return (scope: Scope, value: T) => {
+    if (rendering) {
+      if (scope[AccessorProp.Gen] === runId) {
+        if (!(updating && valueAccessor in scope)) {
+          scope[valueAccessor] = value;
+        }
         fn?.(scope);
       }
     } else if (
@@ -83,7 +113,51 @@ export function _let_change<T>(id: EncodedAccessor, fn?: SignalFn) {
   };
 }
 
+/** Persisted `_let_change`, using the seed-preserving let signal. */
+export function _let_change_persisted<T>(id: EncodedAccessor, fn?: SignalFn) {
+  const valueAccessor = MARKO_DEBUG
+    ? (id as string).slice(0, (id as string).lastIndexOf("/"))
+    : decodeAccessor(id as number);
+  const valueChangeAccessor = MARKO_DEBUG
+    ? AccessorPrefix.TagVariableChange + valueAccessor
+    : decodeAccessor((id as number) + 1);
+  const base = _let_persisted<T>(id, fn);
+
+  return (scope: Scope, value: T, valueChange?: (v: T) => void) => {
+    if (rendering) {
+      if (
+        (scope[valueChangeAccessor] = valueChange) &&
+        (scope[valueAccessor] !== value || !(valueAccessor in scope))
+      ) {
+        scope[valueAccessor] = value;
+        fn?.(scope);
+      } else {
+        base(scope, value);
+      }
+    } else if (scope[valueChangeAccessor]) {
+      scope[valueChangeAccessor](value);
+    } else {
+      base(scope, value);
+    }
+    return value;
+  };
+}
+
 export function _const<T>(
+  valueAccessor: EncodedAccessor,
+  fn?: SignalFn,
+): Signal<T> {
+  if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
+  return ((scope: Scope, value: T | undefined) => {
+    if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
+      scope[valueAccessor] = value;
+      fn?.(scope);
+    }
+  }) as Signal<T>;
+}
+
+/** Persisted `_const`: equal patch values still run fresh-scope setup. */
+export function _const_persisted<T>(
   valueAccessor: EncodedAccessor,
   fn?: SignalFn,
 ): Signal<T> {
@@ -274,6 +348,24 @@ export function subscribeToScopeSet(
       ownerScope[accessor].delete(scope),
     );
   }
+}
+
+/** Construct-pass closure wiring: a constructed scope's fill fragments
+ * already rendered the closure's value from adopted data, so only the
+ * subscription (and its notify index) is re-established here — the signal
+ * fn itself is never invoked. */
+export function _construct_closure(
+  scope: Scope,
+  owner: Scope,
+  closureSignal: ReturnType<typeof _closure_get>,
+) {
+  scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
+    closureSignal[ClosureSignalProp.Index];
+  subscribeToScopeSet(
+    owner,
+    closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
+    scope,
+  );
 }
 
 export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {

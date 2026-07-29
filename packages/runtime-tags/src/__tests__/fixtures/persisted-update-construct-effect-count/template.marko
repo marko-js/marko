@@ -1,0 +1,17 @@
+import { getNote } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Panel>
+  <div/box class="box">panel ${count}</div>
+  <span.note>${getNote?.()}</span>
+  <script>
+    box().dataset.runs = String(+(box().dataset.runs || 0) + 1);
+  </script>
+</define>
+<define/About>
+  <p.about>about</p>
+</define>
+
+<layout content=$global.view === "panel" ? Panel : About/>

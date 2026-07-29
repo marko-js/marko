@@ -1,0 +1,4 @@
+import Panel from "./components/panel.marko" with { load: "idle" }
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<${Panel} label=$global.label/>

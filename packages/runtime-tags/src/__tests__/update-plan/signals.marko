@@ -1,0 +1,7 @@
+<let/count=0>
+<let/rows=[{ id: 1, text: "one" }]>
+<button onClick() { count += input.step }>${count}</button>
+<for|item| of=rows by="id">
+  <em>${item.text}</em>
+  <button.bump onClick() { count += item.id }>bump</button>
+</for>

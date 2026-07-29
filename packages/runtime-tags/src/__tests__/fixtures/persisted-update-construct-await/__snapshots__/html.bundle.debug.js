@@ -1,0 +1,151 @@
+// data.js
+const getProfile = typeof window === "undefined" ? (user) => ({
+	greeting: `hello ${user}`,
+	plan: user === "ada" ? "pro" : "free"
+}) : undefined;
+function getReports(range) {
+	if (typeof window !== "undefined") {
+		throw new Error("getReports is server-only");
+	}
+	return resolveAfter([
+		{
+			name: "views",
+			value: range === "week" ? 70 : 10
+		},
+		range === "week" && {
+			name: "clicks",
+			value: 21
+		},
+		range === "week" && {
+			name: "sales",
+			value: 7
+		}
+	].filter(Boolean), 1);
+}
+
+// tags/widget.marko
+var widget_default = _template("__tests__/tags/widget.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let clicks = 0;
+	_html(`<button class=widget>${_escape(_hole_value($scope0_id, "PatchHole:#text/1", input.label, _persisted_reason()))}${_el_resume($scope0_id, "#text/1", _serialize_guard($scope0_reason, 0))} clicked <!>${_escape(clicks)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_script($scope0_id, "__tests__/tags/widget.marko_0");
+	writeScope($scope0_id, { clicks: _seed_fill(_state_reason() && clicks) }, "__tests__/tags/widget.marko", 0, { clicks: "1:6" });
+	_resume_branch($scope0_id);
+});
+_renderer_shells({
+	"__tests__/tags/widget.marko_0_update": ["<button class=widget><!> clicked <!></button>", " D%c%l"],
+	"__tests__/tags/widget.marko": ["<button class=widget><!> clicked <!></button>", " D%c%l"]
+});
+
+// tags/layout.marko
+var layout_default = _template("__tests__/tags/layout.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let open = false;
+	_html(`<aside><button class=toggle>${_escape(_hole_value($scope0_id, "PatchHole:#text/1", open ? "collapse" : "expand", _state_reason()))}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}</aside><section>`);
+	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "__tests__/tags/layout.marko_0/update_dynamic_#text/2");
+	_html("</section>");
+	_script($scope0_id, "__tests__/tags/layout.marko_0");
+	writeScope($scope0_id, { open: _seed_fill(_state_reason() && open) }, "__tests__/tags/layout.marko", 0, { open: "1:6" });
+	_resume_branch($scope0_id);
+});
+_renderer_shells({
+	"__tests__/tags/layout.marko_0_update": ["<aside><button class=toggle> </button></aside><section><!></section>", "D D mD%l"],
+	"__tests__/tags/layout.marko": ["<aside><button class=toggle> </button></aside><section><!></section>", "D D mD%l"]
+});
+
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	const Home = { content: _content("__tests__/template.marko_1_content", () => {
+		const $scope1_id = _scope_id();
+		_scope_reason();
+		_html("<p class=home>welcome home</p>");
+	}) };
+	const Reports = { content: _content("__tests__/template.marko_2_content", () => {
+		const $scope2_id = _scope_id();
+		const $Reports_content__profile_plan__closures = new Set();
+		const $scope2_reason = _scope_reason();
+		const profile = getProfile?.($global().user);
+		_html(`<h2 class=greeting>${_escape(_hole_value($scope2_id, "PatchHole:#text/0", profile.greeting, _persisted_reason()))}${_el_resume($scope2_id, "#text/0", _persisted_reason())}</h2>`);
+		_try($scope2_id, "#text/1", _content_resume("__tests__/template.marko_3_content", () => {
+			const $scope3_id = _scope_id();
+			const $scope3_reason = _scope_reason();
+			_await($scope3_id, "#text/0", getReports($global().range), (reports) => {
+				const $scope4_id = _scope_id();
+				_persisted_reason() && _script($scope4_id, "__tests__/template.marko_4_profile_plan/pending");
+				_set_serialize_reason(_persisted_reason());
+				const $childScope = _peek_scope_id();
+				widget_default({ label: profile.plan });
+				_html("<ul class=reports>");
+				_region(() => {
+					forOf(reports, (report) => {
+						const $scope6_id = _scope_id();
+						_html(`<li${report.name === $global().focus ? " class=focus" : ""}>${_escape(report.name)}${_el_resume($scope6_id, "#text/1", _persisted_reason())}: ${_sep(_persisted_reason())}${_escape(report.value)}${_el_resume($scope6_id, "#text/2", _persisted_reason())}</li>${_el_resume($scope6_id, "#li/0", _persisted_reason())}`);
+						_persisted_reason() && writeScope($scope6_id, {}, "__tests__/template.marko", "21:10");
+					});
+				}, $scope4_id, "#ul/2", "__tests__/template.marko_r0");
+				_html(`</ul>${_el_resume($scope4_id, "#ul/2", _persisted_reason())}`);
+				_persisted_reason() && writeScope($scope4_id, {
+					_: _scope_with_id($scope3_id),
+					"#childScope/0": _existing_scope($childScope)
+				}, "__tests__/template.marko", "16:6");
+				_resume_branch($scope4_id);
+			}, _persisted_reason(), "__tests__/template.marko_4_update");
+			_persisted_reason() && writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "12:4");
+		}, $scope2_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5_content", () => {
+			_scope_reason();
+			const $scope5_id = _scope_id();
+			_html("<p class=loading>crunching numbers…</p>");
+		}, $scope2_id) }) }, "__tests__/template.marko_2/update_boundary_#text/1", "__tests__/template.marko_3_update");
+		_html(`<p class=footer>updated ${_sep(_persisted_reason())}${_escape(_hole_value($scope2_id, "PatchHole:#text/2", $global().stamp, _persisted_reason()))}${_el_resume($scope2_id, "#text/2", _persisted_reason())}</p>`);
+		_persisted_reason() && writeScope($scope2_id, { "ClosureScopes:profile_plan": $Reports_content__profile_plan__closures }, "__tests__/template.marko", "9:2", { profile_plan: ["profile.plan", "10:10"] });
+	}) };
+	_set_serialize_reason(_persisted_reason());
+	const $childScope2 = _peek_scope_id();
+	layout_default({ content: $global().view === "reports" ? Reports : Home });
+	_script($scope0_id, "__tests__/template.marko_0");
+	writeScope($scope0_id, {
+		count: _seed_fill(_state_reason() && count),
+		"#childScope/2": _persisted_reason() && _existing_scope($childScope2)
+	}, "__tests__/template.marko", 0, { count: "3:6" });
+	_resume_branch($scope0_id);
+}, 1);
+_renderer_shells({
+	"__tests__/template.marko_4_update": [[["__tests__/tags/widget.marko"], "<!><ul class=reports></ul>"], [
+		"/",
+		["__tests__/tags/widget.marko"],
+		"&%b b"
+	]],
+	"__tests__/template.marko_4_content": [[["__tests__/tags/widget.marko"], "<!><ul class=reports></ul>"], [
+		"/",
+		["__tests__/tags/widget.marko"],
+		"&%b b"
+	]],
+	"__tests__/template.marko_3_update": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_3_content": ["<!><!><!>", "b%c"],
+	"__tests__/template.marko_2_update": ["<h2 class=greeting> </h2><!><p class=footer>updated <!></p>", "D l%bDb%l"],
+	"__tests__/template.marko_2_content": ["<h2 class=greeting> </h2><!><p class=footer>updated <!></p>", "D l%bDb%l"],
+	"__tests__/template.marko_0_update": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
+		" Db%l/",
+		["__tests__/tags/layout.marko"],
+		"&%b"
+	]],
+	"__tests__/template.marko": [[
+		"<button class=count>clicked <!></button>",
+		["__tests__/tags/layout.marko"],
+		"<!>"
+	], [
+		" Db%l/",
+		["__tests__/tags/layout.marko"],
+		"&%b"
+	]]
+});

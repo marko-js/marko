@@ -1,0 +1,12 @@
+static function getProps() {
+  if (typeof window !== "undefined") throw new Error("server only");
+  return { label: "server" };
+}
+
+<let/n=0/>
+<define/Child|{ label }|>
+  <button.child onClick() { n++ }>${label} ${n}</button>
+</define>
+<if=input.show>
+  <Child ...getProps()/>
+</if>

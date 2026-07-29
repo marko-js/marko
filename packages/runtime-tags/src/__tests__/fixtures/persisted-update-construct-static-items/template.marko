@@ -1,0 +1,26 @@
+import { getRatings } from "./data";
+
+<let/clicks=0/>
+<button.clicks onClick() { clicks++ }>clicked ${clicks}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Ratings>
+  // A static-count loop with server-only hole values and no client state:
+  // its branches have no resume-time serialize reason, yet under a
+  // constructed boundary each item must still construct from the body's
+  // wire shell and pair its fills.
+  <try>
+    <@placeholder>loading ratings…</@placeholder>
+    <await|ratings|=getRatings($global.topic)>
+      <div.ratings>
+        <for|i| to=ratings.length from=1>
+          <div.rating>${ratings[i - 1]} for ${$global.topic}</div>
+        </for>
+      </div>
+    </await>
+  </try>
+</define>
+
+<${$global.view === "ratings" ? Ratings : Home}/>

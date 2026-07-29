@@ -1,3 +1,4 @@
+import { RendererProp } from "../common/types";
 import * as Char from "./constants/char";
 import type { Boundary } from "./writer";
 
@@ -307,6 +308,61 @@ class State {
   channel: SerializeChannel | undefined = undefined;
   channelDeps: Set<string> | null = null;
   mutated: Mutation[] = [];
+  // Patch value-group instrumentation (see html/patch-groups): per-flush
+  // prop spans, alias reuse sites, def splices, and first emissions —
+  // handed to the hook at flush end, null when inactive.
+  patchHooks: PatchFlushHooks | null = null;
+  spans: PropSpan[] | null = null;
+  reuseAt: Map<number, WeakKey | string> | null = null;
+  scopeRefs: Map<number, number> | null = null;
+  defSplices: Map<number, [prefix: number, suffix: number]> | null = null;
+  newRefs: Reference[] | null = null;
+  pinned: string[] | null = null;
+  defValueAt: Map<number, unknown> | null = null;
+  strEmitAt: Map<number, string> | null = null;
+  flushScopeId: number | undefined = undefined;
+}
+
+/** One top-level scope-flush prop's emitted piece range. */
+export interface PropSpan {
+  scopeId: number;
+  key: string;
+  start: number;
+  end: number;
+  /** The span's first piece began with a `,` separator. */
+  hadSep: boolean;
+}
+
+/** Installed by the patch writer; consulted once per flush before join. */
+export interface PatchFlushHooks {
+  /** Classify, digest, and divert; the hook may blank buf pieces (drop),
+   * rewrite separators in place, and push confirmed reuse-site pins into
+   * `facts.pinned` for this flush's prepend. */
+  flush(facts: PatchFlushFacts): void;
+}
+
+export interface PatchFlushFacts {
+  buf: string[];
+  spans: PropSpan[];
+  reuseAt: Map<number, WeakKey | string>;
+  scopeRefs: Map<number, number>;
+  defSplices: Map<number, [prefix: number, suffix: number]>;
+  /** Def-splice piece position -> the assigned value (same-flush
+   * assignments only; lets the hook key string defs by value). */
+  defValueAt: Map<number, unknown>;
+  /** Piece position -> emitted dedup-length string content (first
+   * emissions and re-emissions alike): canonicalization hashes every
+   * such piece so digests are invariant under def-site migration. */
+  strEmitAt: Map<number, string>;
+  /** Confirmed pins prepend to this flush ahead of the fills that
+   * reference them. */
+  pinned: string[];
+  newRefs: {
+    value: WeakKey;
+    pos: number | null;
+    endPos: number | null;
+  }[];
+  readyId: string | undefined;
 }
 
 // A `Map`/`Set` member that references an ancestor cannot be built into the
@@ -329,6 +385,9 @@ class Reference {
   public flush: number;
   public pos: number | null;
   public id: string | null;
+  public endPos: number | null = null;
+  /** Only while patch hooks are active (cleared with the flush lists). */
+  public value: WeakKey | null = null;
   constructor(
     parent: Reference | null,
     accessor: string | null,
@@ -370,18 +429,49 @@ export class Serializer {
       if (mutation.channel?.readyId) return mutation.channel;
     }
   }
+  /** Activates patch value-group instrumentation for this response. */
+  installPatchHooks(hooks: PatchFlushHooks) {
+    this.#state.patchHooks = hooks;
+  }
   stringifyScopes(
     flushes: ScopeFlush[],
     boundary: Boundary,
     channel?: SerializeChannel,
   ) {
+    const state = this.#state;
     try {
-      this.#state.boundary = boundary;
-      this.#state.channel = channel;
-      return writeScopesRoot(this.#state, flushes);
+      state.boundary = boundary;
+      state.channel = channel;
+      if (state.patchHooks) {
+        state.spans = [];
+        state.reuseAt = new Map();
+        state.scopeRefs = new Map();
+        state.defSplices = new Map();
+        state.newRefs = [];
+        state.pinned = [];
+        state.defValueAt = new Map();
+        state.strEmitAt = new Map();
+      }
+      let result = writeScopesRoot(state, flushes);
+      if (state.patchHooks) {
+        // Pinned defs apply before the fills that reference them; the
+        // hook pushes dependencies first, so prepending walks backwards
+        // to keep each def ahead of its dependents.
+        for (let i = state.pinned!.length; i--;) {
+          const pinned = state.pinned![i];
+          result = result ? pinned + "," + result : pinned;
+        }
+      }
+      return result;
     } finally {
-      this.#state.flush++;
-      this.#state.buf = [];
+      state.flush++;
+      state.buf = [];
+      state.spans = state.defSplices = state.newRefs = null;
+      state.reuseAt = null;
+      state.scopeRefs = null;
+      state.pinned = null;
+      state.defValueAt = null;
+      state.strEmitAt = null;
     }
   }
   written(val: WeakKey) {
@@ -427,17 +517,16 @@ export function getRegistered(val: WeakKey) {
   }
 }
 
-// A payload with only scope data returns the fill array directly
-// (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
-// assigns/mutations, which may reference bindings created inside the fill
-// and so must evaluate after it) the fill is applied through the serialize
-// context instead and the payload ends in `,0` so an arbitrary value from
-// its last expression can never be misread as a fill — the browser only
-// applies a payload's return value when it is an array.
+// Trailing expressions apply the fill through the context and end in 0 so
+// their result cannot be mistaken for a fill.
 function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
   let nextSlotId = -1;
   let fillIndex = -1;
+  // Written slot bounds, for the post-hook fold (patch responses only).
+  const slots = state.spans
+    ? ([] as [open: number, close: number, scopeId: number][])
+    : null;
 
   for (const flush of flushes) {
     const scopeId = flush[0];
@@ -447,6 +536,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
 
     // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
+    if (state.spans) state.flushScopeId = scopeId;
     if (writeObjectProps(state, flush[2], ref)) {
       // The skip is a SIGNED delta, so a flush that revisits a lower slot
       // steps the cursor back rather than landing in the wrong one.
@@ -456,14 +546,71 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
-      buf.push("}");
+      const closeIndex = buf.push("}") - 1;
+      if (slots) slots.push([openIndex, closeIndex, scopeId]);
     } else {
       buf.pop();
     }
   }
 
-  if (nextSlotId !== -1) {
-    buf.push("]");
+  const endIndex = nextSlotId === -1 ? -1 : buf.push("]") - 1;
+
+  // Classification sees final pieces (after every write and retro-splice),
+  // and a dropped span can never be mutated afterward. The extras wrapper
+  // assembles after the fold below, so it never wraps a folded slot.
+  if (state.patchHooks && state.spans) {
+    state.patchHooks.flush({
+      buf,
+      spans: state.spans,
+      reuseAt: state.reuseAt!,
+      scopeRefs: state.scopeRefs!,
+      defSplices: state.defSplices!,
+      defValueAt: state.defValueAt!,
+      strEmitAt: state.strEmitAt!,
+      pinned: state.pinned!,
+      newRefs: state.newRefs!.map((ref) => ({
+        value: ref.value!,
+        pos: ref.pos,
+        endPos: ref.endPos,
+      })),
+      readyId: state.channel?.readyId,
+    });
+
+    // A slot whose props all left the live stream folds into the
+    // neighboring skip count exactly as a never-written scope does (the
+    // signed-delta grammar already covers it), and a run whose slots all
+    // fold emits nothing — the client cannot distinguish an absent slot
+    // from an empty one (assign/getScope/effects/pairs all create scope
+    // records lazily).
+    if (slots!.length) {
+      fillIndex = -1;
+      let lastKeptNext = -1;
+      for (const [open, close, scopeId] of slots!) {
+        let kept = false;
+        for (let i = open + 1; i < close; i++) {
+          if (buf[i]) {
+            kept = true;
+            break;
+          }
+        }
+        if (kept) {
+          buf[open] =
+            lastKeptNext === -1
+              ? "[" + scopeId + ",{"
+              : (scopeId !== lastKeptNext
+                  ? "," + (scopeId - lastKeptNext)
+                  : "") + ",{";
+          if (fillIndex === -1) fillIndex = open;
+          lastKeptNext = scopeId + 1;
+        } else {
+          buf[open] = buf[close] = "";
+        }
+      }
+      if (lastKeptNext === -1) {
+        buf[endIndex] = "";
+        nextSlotId = -1;
+      }
+    }
   }
 
   let extras = "";
@@ -473,7 +620,8 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
       buf[fillIndex] = "_(" + buf[fillIndex];
       buf.push(")");
     }
-    writeAssigned(state);
+    // Every slot folded: assigns stand alone in the never-wrote shape.
+    writeAssigned(state, nextSlotId !== -1);
   }
 
   let result = extras && "(";
@@ -482,8 +630,12 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   }
   result += extras;
 
-  // Everything elided and nothing else to flush.
-  if (!result) return "";
+  // Everything elided and nothing else to flush. The `$` flag clears
+  // even here: a folded flush must not leak its wrapper to the next.
+  if (!result) {
+    state.wroteUndefined = false;
+    return "";
+  }
 
   if (state.wroteUndefined) {
     state.wroteUndefined = false;
@@ -493,8 +645,8 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   }
 }
 
-function writeAssigned(state: State) {
-  let sep = state.buf.length ? "," : "";
+function writeAssigned(state: State, hasText: boolean) {
+  let sep = hasText ? "," : "";
 
   if (state.assigned.size) {
     const assigned = state.assigned;
@@ -509,7 +661,10 @@ function writeAssigned(state: State) {
       }
       hasCalls ||= ref.calls !== null;
     }
-    if (buf) state.buf.push(buf);
+    if (buf) {
+      state.buf.push(buf);
+      hasText = true;
+    }
 
     // Batched assignments land in one entry above, so calls — which push
     // their args directly — walk the same set afterwards.
@@ -517,9 +672,8 @@ function writeAssigned(state: State) {
       for (const ref of assigned) {
         if (!ref.calls) continue;
         for (const { method, args } of ref.calls) {
-          state.buf.push(
-            (state.buf.length ? "," : "") + ref.id + "." + method + "(",
-          );
+          state.buf.push((hasText ? "," : "") + ref.id + "." + method + "(");
+          hasText = true;
           for (let a = 0; a < args.length; a++) {
             if (a) state.buf.push(",");
             writeCallArg(state, args[a]);
@@ -540,9 +694,8 @@ function writeAssigned(state: State) {
       }
 
       const hasSeen = state.refs.get(mutation.object as object)?.id;
-      const objectStartIndex = state.buf.push(
-        state.buf.length === 0 ? "" : ",",
-      );
+      const objectStartIndex = state.buf.push(hasText ? "," : "");
+      hasText = true;
 
       if (writeProp(state, mutation.object, null, "")) {
         const objectRef = state.refs.get(mutation.object as object);
@@ -592,7 +745,7 @@ function writeAssigned(state: State) {
   // Serializing call args or channel-mutation values can surface fresh
   // circular assignments/calls; drain them into this same payload.
   if (state.assigned.size) {
-    writeAssigned(state);
+    writeAssigned(state, hasText);
   }
 }
 
@@ -657,7 +810,7 @@ function writeProp(
       return writeObject(state, val, parent, accessor);
 
     default:
-      MARKO_DEBUG && throwUnserializable(state, val, parent, accessor);
+      reportUnserializable(state, val, parent, accessor);
       return false;
   }
 }
@@ -684,13 +837,25 @@ function writeReferenceOr(
       return false;
     }
 
-    state.buf.push(ensureId(state, ref));
+    const at = state.buf.push(ensureId(state, ref, val)) - 1;
+    if (state.reuseAt) {
+      if (ref.scopeId === undefined) state.reuseAt.set(at, val);
+      else state.scopeRefs!.set(at, ref.scopeId);
+    }
     return true;
   }
 
   const registered = REGISTRY.get(val);
-  if (registered)
+  if (registered) {
+    if (
+      state.boundary?.state.patch &&
+      typeof val === "function" &&
+      (val as { [RendererProp.Id]?: string })[RendererProp.Id] === registered.id
+    ) {
+      return false;
+    }
     return writeRegistered(state, val, parent, accessor, registered);
+  }
 
   state.refs.set(
     val,
@@ -702,7 +867,14 @@ function writeReferenceOr(
     ref.debug = DEBUG.get(val);
   }
 
-  if (write(state, val, ref)) return true;
+  if (write(state, val, ref)) {
+    if (state.newRefs) {
+      ref.endPos = state.buf.length;
+      ref.value = val;
+      state.newRefs.push(ref);
+    }
+    return true;
+  }
 
   state.refs.delete(val);
   return false;
@@ -750,7 +922,14 @@ function writeRegistered(
     // The serialize context resolves both registry id and render-local scope.
     const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
     trackScope(state, scope, scopeId);
-    state.buf.push("_(" + scopeId + "," + quote(registered.id, 0) + ")");
+    ref.pos =
+      state.buf.push("_(" + scopeId + "," + quote(registered.id, 0) + ")") - 1;
+    if (state.scopeRefs) state.scopeRefs.set(ref.pos, scopeId);
+    if (state.newRefs) {
+      ref.endPos = state.buf.length;
+      ref.value = val;
+      state.newRefs.push(ref);
+    }
   } else {
     state.buf.push(registered.access);
   }
@@ -770,7 +949,8 @@ function writeString(
     const ref = state.strs.get(val);
     if (ref) {
       if (trackChannel(state, ref)) {
-        state.buf.push(ensureId(state, ref));
+        const at = state.buf.push(ensureId(state, ref, val)) - 1;
+        if (state.reuseAt) state.reuseAt.set(at, val);
         return true;
       }
     } else {
@@ -783,6 +963,7 @@ function writeString(
       ref.channel = state.channel;
       state.strs.set(val, ref);
     }
+    if (state.strEmitAt) state.strEmitAt.set(state.buf.length, val);
   }
   state.buf.push(quote(val, 0));
   return true;
@@ -848,7 +1029,7 @@ function writeUnknownSymbol(state: State) {
 }
 
 function writeNever(state: State, val: unknown, ref: Reference) {
-  MARKO_DEBUG && throwUnserializable(state, val, ref);
+  reportUnserializable(state, val, ref);
   return false;
 }
 
@@ -869,7 +1050,8 @@ function writeObject(
   const scopeId = (val as ScopeInternals)[K_SCOPE_ID];
   if (scopeId !== undefined) {
     trackScope(state, val, scopeId);
-    state.buf.push("_(" + scopeId + ")");
+    const at = state.buf.push("_(" + scopeId + ")") - 1;
+    if (state.scopeRefs) state.scopeRefs.set(at, scopeId);
     return true;
   }
 
@@ -999,7 +1181,7 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
       return writeTemporal(state, val, "ZonedDateTime");
   }
 
-  MARKO_DEBUG && throwUnserializable(state, val, ref);
+  reportUnserializable(state, val, ref);
   return false;
 }
 
@@ -1321,7 +1503,7 @@ function isDedupedMember(val: unknown) {
 // would leave a hole in the constructor call and break the whole payload.
 function canWriteBuffer(state: State, buffer: ArrayBufferLike, ref: Reference) {
   if (Object.getPrototypeOf(buffer)?.constructor === ArrayBuffer) return true;
-  MARKO_DEBUG && throwUnserializable(state, buffer, ref, "buffer");
+  reportUnserializable(state, buffer, ref, "buffer");
   return false;
 }
 
@@ -1479,7 +1661,7 @@ function writeFormData(state: State, val: FormData, ref: Reference) {
     if (typeof value !== "string") {
       // `File`/`Blob` entries aren't serializable yet; fail like any other
       // unsupported value rather than silently dropping the entry.
-      MARKO_DEBUG && throwUnserializable(state, value, ref, key);
+      reportUnserializable(state, value, ref, key);
       return false;
     }
 
@@ -1851,11 +2033,15 @@ function writeNullObject(state: State, val: object, ref: Reference) {
 }
 
 function writeObjectProps(state: State, val: object, ref: Reference) {
+  // Span recording covers scope-flush roots only; nested objects clear the
+  // one-shot id before descending.
+  const flushScopeId = state.flushScopeId;
+  state.flushScopeId = undefined;
   let sep = "";
   for (const key in val) {
     if (hasOwnProperty.call(val, key)) {
       const escapedKey = toObjectKey(key);
-      state.buf.push(sep + escapedKey + ":");
+      const start = state.buf.push(sep + escapedKey + ":") - 1;
       if (
         writeProp(
           state,
@@ -1864,6 +2050,15 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
           escapedKey,
         )
       ) {
+        if (flushScopeId !== undefined && state.spans) {
+          state.spans.push({
+            scopeId: flushScopeId,
+            key: escapedKey,
+            start,
+            end: state.buf.length,
+            hadSep: sep !== "",
+          });
+        }
         sep = ",";
       } else {
         state.buf.pop();
@@ -1938,6 +2133,23 @@ function writeAsyncCall(
   boundary.endAsync();
 }
 
+/** Debug builds diagnose. A patch must still fail in production: a skipped
+ * value is indistinguishable from an unchanged one, so the navigation would
+ * report success over stale content (the client falls back to a document
+ * load instead). */
+function reportUnserializable(
+  state: State,
+  cause: unknown,
+  ref: Reference | null = null,
+  accessor: string = "",
+) {
+  if (MARKO_DEBUG) {
+    throwUnserializable(state, cause, ref, accessor);
+  } else if (cause !== undefined && state.boundary?.state.patch) {
+    state.boundary.abort(new TypeError("Unable to serialize a patch value"));
+  }
+}
+
 function throwUnserializable(
   state: State,
   cause: unknown,
@@ -1983,6 +2195,15 @@ function throwUnserializable(
     }
 
     message += ". Values referenced in the browser must be serializable.";
+    if (state.boundary.state.patch) {
+      // A sparse patch key means "unchanged", so skipping an unserializable
+      // request-derived value would silently leave the client's stale one
+      // in place under a navigation that reported success. Fail the patch
+      // instead: the carrier falls back to a document navigation, which
+      // renders the value correctly server-side.
+      message +=
+        " A patch cannot express it, so this navigation falls back to a document load.";
+    }
 
     const err = new TypeError(message, { cause });
     err.stack = undefined;
@@ -2155,7 +2376,7 @@ export function quote(str: string, startPos: number): string {
   return '"' + (lastPos === startPos ? str : result + str.slice(lastPos)) + '"';
 }
 
-function ensureId(state: State, ref: Reference) {
+function ensureId(state: State, ref: Reference, val?: unknown) {
   if (ref.scopeId !== undefined) {
     trackChannel(state, ref);
     return "_(" + ref.scopeId + ")";
@@ -2166,7 +2387,7 @@ function ensureId(state: State, ref: Reference) {
     return ref.id;
   }
 
-  return assignId(state, ref);
+  return assignId(state, ref, val);
 }
 
 function accessId(state: State, ref: Reference) {
@@ -2174,7 +2395,7 @@ function accessId(state: State, ref: Reference) {
   return id === ref.id || ref.scopeId !== undefined ? id : "(" + id + ")";
 }
 
-function assignId(state: State, ref: Reference) {
+function assignId(state: State, ref: Reference, val?: unknown) {
   const { pos } = ref;
   ref.id = nextRefAccess(state);
 
@@ -2183,6 +2404,19 @@ function assignId(state: State, ref: Reference) {
       state.buf[0] = ref.id + "=" + state.buf[0];
     } else {
       state.buf[pos - 1] += ref.id + "=";
+    }
+    if (state.defSplices) {
+      // Recorded by exact position so canonicalization can strip the
+      // splice without touching identical text inside string values.
+      const piece = pos === 0 ? 0 : pos - 1;
+      if (val !== undefined) state.defValueAt!.set(piece, val);
+      const [prefix, suffix] = state.defSplices.get(piece) || [0, 0];
+      state.defSplices.set(
+        piece,
+        pos === 0
+          ? [prefix + ref.id.length + 1, suffix]
+          : [prefix, suffix + ref.id.length + 1],
+      );
     }
 
     return ref.id;

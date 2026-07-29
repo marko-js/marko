@@ -1,0 +1,15 @@
+// A `$global`-backed shared value: a `<let>` seeded from `$global`, synced
+// across instances through a module-level registry, written back on change.
+static const subsByKey = {};
+
+<let/value=$global.data[input.name]>
+<script>
+  const subs = subsByKey[input.name] ??= new Set();
+  const sub = () => value = $global.data[input.name];
+  $signal.onabort = () => subs.delete(sub);
+  subs.add(sub);
+</script>
+<return=value valueChange(next) {
+  $global.data[input.name] = next;
+  subsByKey[input.name]?.forEach(cb => cb());
+}>

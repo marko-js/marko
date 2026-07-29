@@ -2,6 +2,7 @@ import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
   type RenderedTemplate,
   RendererProp,
+  type RenderOptions,
   type Template,
   type TemplateInput,
 } from "../common/types";
@@ -28,22 +29,27 @@ export const _template = (
   renderer: ServerRenderer,
   page?: 1,
 ) => {
-  (renderer as unknown as Template).render = render;
-  (renderer as unknown as ServerRenderer)[RendererProp.Embed] = !page;
-  (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
+  const template = renderer;
+  (template as unknown as Template).render = render;
+  template[RendererProp.Embed] = !page;
+  (template as unknown as any)._ = template; // This is added exclusively for the compat layer, maybe someday it can be removed.
 
   if (MARKO_DEBUG) {
-    (renderer as unknown as Template).mount = () => {
+    (template as unknown as Template).mount = () => {
       throw new Error(
         `mount() is not implemented for the HTML compilation of a Marko template`,
       );
     };
   }
 
-  return _content_resume(templateId, renderer) as unknown as Template;
+  return _content_resume(templateId, template) as unknown as Template;
 };
 
-function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
+function render(
+  this: Template & ServerRenderer,
+  input: TemplateInput = {},
+  options?: RenderOptions,
+) {
   let { $global } = input;
   if ($global) {
     ({ $global, ...input } = input);
@@ -73,7 +79,7 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
     };
   }
 
-  const state = new State($global as State["$global"]);
+  const state = new State($global as State["$global"], options?.persisted);
   const head = new Chunk(
     new Boundary(state, $global.signal),
     null,
@@ -302,7 +308,10 @@ class ServerRendered implements RenderedTemplate {
           case FlushStatus.complete: {
             // `consume` may abort and re-enter through the boundary listener.
             const consumed = head.consume();
-            if (!boundary.signal.aborted) resolve(consumed.flushHTML());
+            if (!boundary.signal.aborted) {
+              // Buffered patch consumers get the same tail a stream would.
+              resolve(consumed.flushHTML() + boundary.state.takePatchTail());
+            }
             break;
           }
         }
@@ -337,6 +346,10 @@ class ServerRendered implements RenderedTemplate {
         const html = head.flushHTML();
         if (html) onWrite(html);
         if (status === FlushStatus.complete) {
+          // A completed patch stream appends its late frames and digest
+          // feedback after the last flushed frame.
+          const tail = boundary.state.takePatchTail();
+          if (tail) onWrite(tail);
           if (!tick) offTick(onNext);
           onClose();
         } else {

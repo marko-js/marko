@@ -14,6 +14,7 @@ import markoModules from "@marko/compiler/modules";
 import pkg from "../package.json" with { type: "json" };
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
+import { isPlanOnlyPersistedEntry } from "./plan-only-persisted-entry";
 import * as taglib from "./taglib";
 import appendAgentFixGuide from "./util/agent-fix-guide";
 import { buildCodeFrameError } from "./util/build-code-frame";
@@ -22,6 +23,11 @@ import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 export const version = pkg.version;
 export { taglib, types };
+export {
+  isPlanOnlyPersistedEntry,
+  PLAN_ONLY_PERSISTED_ENTRY,
+  withPlanOnlyPersistedEntry,
+} from "./plan-only-persisted-entry";
 
 const hasBabel = !!(
   markoModules.pkg &&
@@ -29,6 +35,13 @@ const hasBabel = !!(
     markoModules.pkg.devDependencies?.["@babel/core"])
 );
 export let globalConfig = { ...defaultConfig };
+
+/** THE persisted-entry-build predicate: shared by the plan-only code-skip
+ * gate below and the translator's `isPersistedEntryBuild`, so the print
+ * decision and the plan-publication gate can never drift apart. */
+export function isPersistedEntryConfig(config) {
+  return config.entry === "persisted" && config.output === "dom";
+}
 export function configure(newConfig) {
   globalConfig = { ...defaultConfig, ...newConfig };
 }
@@ -92,6 +105,17 @@ function loadMarkoConfig(config) {
     markoConfig.stripTypes = isTranslatedOutput(markoConfig.output);
   }
 
+  if (
+    isPlanOnlyPersistedEntry(markoConfig) &&
+    markoConfig.entry === "persisted" &&
+    !isPersistedEntryConfig(markoConfig)
+  ) {
+    // Plan-only with no publishable plan would compile to NOTHING.
+    throw new Error(
+      `A plan-only persisted entry requires the persisted DOM entry build; output "${markoConfig.output}" cannot publish a plan.`,
+    );
+  }
+
   return markoConfig;
 }
 
@@ -136,7 +160,13 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
     // An entry wrapper's own map is meaningless; the translator still keeps
     // extracted `<style>` maps off `markoConfig.sourceMaps` regardless.
     sourceMaps: isEntryOutput(markoConfig) ? false : markoConfig.sourceMaps,
-    code: markoConfig.code,
+    // Plan-only (host-tagged) persisted entries skip the module print; the
+    // translator still runs and publishes `metadata.marko.updatePlan`.
+    // Trigger is the internal flag only — not bare Babel `code: false`.
+    code:
+      isPlanOnlyPersistedEntry(markoConfig) && markoConfig.entry === "persisted"
+        ? false
+        : markoConfig.code,
     ast: markoConfig.ast,
     plugins:
       babelConfig && babelConfig.plugins

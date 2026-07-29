@@ -1,0 +1,19 @@
+<let/note="none"/>
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<fieldset.plan>
+  <input.plan-basic type="radio" name="plan" value="basic" checkedValue=input.plan>
+  <input.plan-pro type="radio" name="plan" value="pro" checkedValue=input.plan>
+  <input.plan-max type="radio" name="plan" value="max" checkedValue=input.plan>
+</fieldset>
+<fieldset.ship>
+  <input.ship-ground type="radio" name="ship" value="ground" checkedValue=input.ship checkedValueChange(v) { note = `ship ${v}` }>
+  <input.ship-air type="radio" name="ship" value="air" checkedValue=input.ship checkedValueChange(v) { note = `ship ${v}` }>
+</fieldset>
+<fieldset.extras>
+  <input.extra-warranty type="checkbox" value="warranty" checkedValue=input.extras>
+  <input.extra-setup type="checkbox" value="setup" checkedValue=input.extras>
+</fieldset>
+<input.gift type="checkbox" checked=input.gift>
+<input.promo type="checkbox" name="promo" value=input.promoCode checkedValue=input.promo>
+<output.note>${note}</output>

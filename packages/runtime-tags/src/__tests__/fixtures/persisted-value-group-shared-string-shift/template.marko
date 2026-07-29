@@ -1,0 +1,13 @@
+<ul.posts>
+  <for|post| of=input.posts by(post) { return post.id }>
+    <let/faved=false/>
+    <li class="post">
+      <span.tag>${post.tag}</span>
+      <if=post.flair>
+        <span.flair>${post.flair}</span>
+      </if>
+      <span.body>${post.body}</span>
+      <button.fave onClick() { faved = !faved }>${faved ? "faved" : "fave"}</button>
+    </li>
+  </for>
+</ul>

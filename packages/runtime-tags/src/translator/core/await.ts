@@ -9,6 +9,12 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { isPersisted } from "../util/marko-config";
+import {
+  isMembraneLive,
+  markStateCapable,
+  MembraneCause,
+} from "../util/membranes";
 import {
   type Binding,
   BindingType,
@@ -33,11 +39,13 @@ import { addSetupStatement } from "../util/setup-statements";
 import {
   addStatement,
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
+import { addUpdateMerge } from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -110,6 +118,12 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    if (isPersisted()) {
+      // Streamed continuation frames need the fine-grained machinery; region
+      // capture across async flush boundaries is not supported.
+      markStateCapable(bodySection, MembraneCause.forced);
+      markStateCapable(section, MembraneCause.forced);
+    }
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -148,6 +162,13 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
+        // The construct id keys the body section's wire shell so an await
+        // under a constructed parent builds client-side from template/walks.
+        const bodyId =
+          isPersisted() && bodySection
+            ? t.stringLiteral(getResumeRegisterId(bodySection, "update"))
+            : undefined;
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -160,7 +181,13 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(section, bodySection?.serializeReason, true),
+                getSerializeGuard(
+                  section,
+                  bodySection?.serializeReason,
+                  true,
+                ) ||
+                  (bodyId && t.numericLiteral(0)),
+                bodyId,
               ),
             ),
           )[0]
@@ -190,6 +217,24 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "await_promise");
         const valueExpr = node.attributes[0].value;
+
+        if (isPersisted()) {
+          // Only sound when the merge registered (membrane-dead attach
+          // sections drop it; see for.ts). Awaits stay guarded during
+          // patch application everywhere — gated branches included: the
+          // response already resolved the promise and delivers its body
+          // through the boundary path (or, for a hidden branch, through
+          // assigned state the re-render reads on re-entry), so an apply-
+          // time re-arm would recompute what the wire just shipped. The
+          // guard only blocks while `updating`; client interactions still
+          // re-arm. persisted-hold-state-branch covers both flows.
+          signal.updateGuard = isMembraneLive(section);
+          addUpdateMerge(section, {
+            kind: "branch",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            bodySection,
+          });
+        }
 
         signal.build = () => {
           const branchRenderArgs = getBranchRendererArgs(bodySection);
@@ -222,11 +267,13 @@ export default {
           ),
         );
 
+        // Construct path: adopted boundary linkage via the branch merge.
         addValue(
           section,
           valueExpr.extra?.referencedBindings,
           signal,
           valueExpr,
+          "structural",
         );
 
         tag.remove();

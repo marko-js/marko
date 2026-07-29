@@ -1,0 +1,13 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Editor>
+  <let/text="draft"/>
+  <input.field value:=text/>
+  <output.echo>${text}</output>
+</define>
+
+<${$global.view === "editor" ? Editor : Home}/>

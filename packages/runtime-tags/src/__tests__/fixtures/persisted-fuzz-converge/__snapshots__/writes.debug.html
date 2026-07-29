@@ -1,0 +1,26 @@
+<h1 class=title>T0<!--M_*1 #text/0--></h1><button
+  class=toggle>toggle</button><!--M_*1 #button/1--><button class=count>clicked
+  <!>0<!--M_*1 #text/3--></button><!--M_*1 #button/2-->
+<ul class=items><!--M_[-->
+  <li class=item>a0<!--M_*3 #text/0--></li>
+  <li class=item>b0<!--M_*4 #text/0--></li><!--M_]1 #ul/4 2-->
+</ul><!--M_*1 #ul/4-->
+<section class=details>
+  <p class=note>N0<!--M_*5 #text/0--></p>
+  <ol class=tags>
+    <li class=tag>x<!--M_*6 #text/0--></li>
+    <li class=tag>y<!--M_*7 #text/0--></li><!--M_}5 #ol/1 7 6-->
+  </ol>
+</section><!--M_|1 #text/5 5-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      input_note: "N0",
+      input_tags: ["x", "y"],
+      showDetails: !0,
+      clicks: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-fuzz-converge/template.marko_0 1"
+  ];
+  M._.w()
+</script>

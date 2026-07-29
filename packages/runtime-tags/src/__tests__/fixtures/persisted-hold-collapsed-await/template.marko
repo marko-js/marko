@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<h1>${input.title}</h1>
+<let/collapsed=false/>
+<button.collapse onClick() { collapsed = !collapsed }>toggle</button>
+<if=!collapsed>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|note|=resolveAfter(input.note, 1)>
+      <p.note>${note}</p>
+    </await>
+  </try>
+</if>

@@ -9,14 +9,22 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
-import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { getTagName } from "../util/get-tag-name";
+import { isPersisted } from "../util/marko-config";
+import { markStateCapable, MembraneCause } from "../util/membranes";
+import {
+  analyzeAttributeTags,
+  getAttrTagPaths,
+} from "../util/nested-attribute-tags";
 import {
   type Binding,
   BindingType,
   createBinding,
   getAllTagReferenceNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
+  onFinalizeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -32,6 +40,7 @@ import {
 import {
   addStatement,
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setTryHasPlaceholder,
@@ -42,12 +51,25 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../util/translate-attrs";
+import {
+  addUpdateMerge,
+  getUpdateAnchorRegisterId,
+  isUpdateBoundaryAnchor,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 
 const hasEnabledCatch = new WeakSet<t.Program>();
 const kDOMBinding = Symbol("try tag dom binding");
+
+function getPlaceholderSection(tag: t.NodePath<t.MarkoTag>) {
+  for (const child of getAttrTagPaths(tag)) {
+    if (child.isMarkoTag() && getTagName(child) === "@placeholder") {
+      return getSectionForBody(child.get("body"));
+    }
+  }
+}
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -79,9 +101,24 @@ export default {
     }
 
     const bodySection = startSection(tag.get("body"));
+    if (isPersisted() && bodySection) {
+      // Boundary placeholder/settle swaps use the live branch machinery.
+      markStateCapable(bodySection, MembraneCause.forced);
+      markStateCapable(getOrCreateSection(tag), MembraneCause.forced);
+    }
 
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;
+    }
+
+    if (isUpdateBoundaryAnchor(tag.node)) {
+      onFinalizeReferences(() =>
+        getUpdateAnchorRegisterId(
+          section,
+          "boundary",
+          getScopeAccessor(tagExtra[kDOMBinding]!),
+        ),
+      );
     }
   },
   translate: translateByTarget({
@@ -123,6 +160,25 @@ export default {
         writeHTMLResumeStatements(tagBody);
         tag.insertBefore(translatedAttrs.statements);
 
+        // Pending boundaries need a build-stable id across document and patch
+        // scope allocation.
+        const anchorId = isUpdateBoundaryAnchor(tag.node)
+          ? t.stringLiteral(
+              getUpdateAnchorRegisterId(
+                section,
+                "boundary",
+                getScopeAccessor(nodeRef),
+              ),
+            )
+          : undefined;
+        const bodySection = getSectionForBody(tagBody);
+        // The construct id keys the body section's wire shell so a boundary
+        // under a constructed parent builds client-side from template/walks.
+        const bodyId =
+          isPersisted() && bodySection
+            ? t.stringLiteral(getResumeRegisterId(bodySection, "update"))
+            : undefined;
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -132,6 +188,8 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                bodyId && !anchorId ? t.numericLiteral(0) : anchorId,
+                bodyId,
               ),
             ),
           )[0]
@@ -157,6 +215,7 @@ export default {
         const tagExtra = node.extra!;
         const nodeRef = tagExtra[kDOMBinding]!;
         const referencedBindings = tagExtra.referencedBindings;
+        const placeholderSection = getPlaceholderSection(tag);
 
         const translatedAttrs = translateAttrs(tag);
         const contentProp = getTranslatedBodyContentProperty(
@@ -172,6 +231,15 @@ export default {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
+
+        if (isPersisted()) {
+          addUpdateMerge(section, {
+            kind: "branch",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            bodySection,
+            placeholderSection,
+          });
+        }
 
         signal.build = () => {
           return callRuntime(
@@ -200,11 +268,13 @@ export default {
           );
         }
 
+        // Construct path: adopted boundary linkage via the branch merge.
         addValue(
           section,
           referencedBindings,
           signal,
           propsToExpression(translatedAttrs.properties),
+          "structural",
         );
 
         tag.remove();

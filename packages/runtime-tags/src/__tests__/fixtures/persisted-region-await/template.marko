@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=1/>
+<button.bump onClick() { count++ }>${count}</button>
+<try>
+  <@placeholder>loading…</@placeholder>
+  <await|reviews|=resolveAfter(input.reviews, 1)>
+    <div.reviews>
+      <for|i| of=reviews>
+        <div.review>review number ${i} is static</div>
+      </for>
+    </div>
+  </await>
+</try>

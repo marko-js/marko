@@ -1,0 +1,31 @@
+<button class=count>clicked <!>0<!--M_*1 b--></button><!--M_*1 a-->
+<ul class=rows>
+  <li class=row><span class=label>ROW ONE<!--M_*2 a--></span><input value
+      class=note><!--M_*2 b-->
+    <ol class=cells><!--M_[-->
+      <li class=cell>one-a<!--M_*4 a--></li>
+      <li class=cell>one-b<!--M_*5 a--></li><!--M_]2 c 3-->
+    </ol><!--M_*2 c-->
+  </li>
+  <li class=row><span class=label>ROW TWO<!--M_*6 a--></span><input value
+      class=note><!--M_*6 b-->
+    <ol class=cells><!--M_[-->
+      <li class=cell>two-a<!--M_*8 a--></li><!--M_]6 c 7-->
+    </ol><!--M_*6 c-->
+  </li><!--M_}1 c 6 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    g: 0
+  }, {
+    Eb: _(2, "a0"),
+    h: "",
+    M: "r1"
+  }, 3, {
+    Eb: _(6, "a0"),
+    h: "",
+    M: "r2"
+  }], "a3 2 6 a5 1"];
+  M._.w()
+</script>

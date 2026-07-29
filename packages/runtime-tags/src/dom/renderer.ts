@@ -10,7 +10,7 @@ import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
 import { _resume } from "./resume";
-import { createScope } from "./scope";
+import { createScope, createScopeInto } from "./scope";
 import { _const, type Signal, type SignalFn } from "./signals";
 import { walk } from "./walker";
 
@@ -33,7 +33,35 @@ export function createBranch(
   parentScope: Scope | undefined,
   parentNode: ParentNode,
 ) {
-  const branch = createScope($global) as BranchScope;
+  return finishBranch(
+    createScope($global) as BranchScope,
+    renderer,
+    parentScope,
+    parentNode,
+  );
+}
+
+export function createBranchInto(
+  $global: Scope[typeof AccessorProp.Global],
+  renderer: Renderer,
+  parentScope: Scope | undefined,
+  parentNode: ParentNode,
+  into: Scope,
+) {
+  return finishBranch(
+    createScopeInto($global, undefined, into) as BranchScope,
+    renderer,
+    parentScope,
+    parentNode,
+  );
+}
+
+function finishBranch(
+  branch: BranchScope,
+  renderer: Renderer | string,
+  parentScope: Scope | undefined,
+  parentNode: ParentNode,
+) {
   branch[AccessorProp.Owner] =
     (renderer as Renderer)[RendererProp.Owner] || parentScope;
   setParentBranch(branch, parentScope?.[AccessorProp.ClosestBranch]);

@@ -1,0 +1,9 @@
+// Client state keeps this template membrane-live: deploy-skew handling
+// (unknown renderer client-side) stays the behavior under test.
+<let/marks=0/>
+<button.mark onClick() { marks++ }>mark ${marks}</button>
+<ol.ticker>
+  <for|entry| of=input.entries by(entry) { return entry }>
+    <li>${entry}</li>
+  </for>
+</ol>

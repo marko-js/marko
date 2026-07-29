@@ -1,0 +1,10 @@
+<let/opens=0/>
+<for|item| of=input.items by(item) { return item.id }>
+  <article.item>
+    <button.open onClick() { opens++ }>${item.title}</button>
+    <if=item.badge>
+      <span.badge>${item.badge}</span>
+    </if>
+  </article>
+</for>
+<p.opens>${opens} opened</p>

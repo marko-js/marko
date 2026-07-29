@@ -46,11 +46,19 @@ interface State {
 
 const stateForCtx = new WeakMap<WeakKey, State>();
 
+/** A gated dynamic import a fixture step releases (or fails) on demand. */
+export type DeferredLoad = {
+  id: string;
+  release: () => void;
+  fail: (message: string) => void;
+};
+
 export async function importWithContext<T>(
   entry: string,
   resolveOpts: Omit<ResolveOptions, "from">,
   context: vm.Context,
   rejectLoad?: (id: string) => boolean,
+  deferLoad?: (id: string) => boolean,
 ): Promise<T> {
   vm.createContext(context);
   const state =
@@ -102,6 +110,20 @@ export async function importWithContext<T>(
       throw new Error(
         `Could not resolve ${JSON.stringify(id)} from ${JSON.stringify(from)}`,
       );
+    }
+
+    // A deferred import settles only when a fixture step releases it —
+    // deliberately outside the pending-module accounting so intervening
+    // navigations don't block on the gate.
+    if (deferLoad?.(id)) {
+      return new Promise<vm.Module>((resolve, reject) => {
+        ((context as { __deferredLoads?: DeferredLoad[] }).__deferredLoads ||=
+          []).push({
+          id,
+          release: () => resolve(load(resolved)),
+          fail: (message) => reject(new Error(message)),
+        });
+      });
     }
 
     return load(resolved);

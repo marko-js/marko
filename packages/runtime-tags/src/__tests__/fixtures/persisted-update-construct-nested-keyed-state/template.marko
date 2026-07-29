@@ -1,0 +1,14 @@
+import { getGroups } from "./data";
+
+<for|group| of=getGroups?.($global.filter) by="id">
+  <section>
+    <h2>${group.id}</h2>
+    <for|item| of=group.items by="id">
+      <let/watched=false>
+      <button
+        data-key=group.id + ":" + item.id
+        onClick() { watched = !watched }
+      >${watched ? "watching" : "watch"}</button>
+    </for>
+  </section>
+</for>

@@ -1,0 +1,22 @@
+// template.marko
+var template_default = _template("a", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html(`<h1>${_escape(_hole_value($scope0_id, "Qa", $global().title, _persisted_reason()))}${_el_resume($scope0_id, "a", _persisted_reason())}</h1><a${_attr("href", _hole_value($scope0_id, "Nhref:b", `/items/${$global().params.id}`, _persisted_reason()))}>link</a>${_el_resume($scope0_id, "b", _persisted_reason())}<button>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}<section${_attr_class(_hole_value($scope0_id, "Nclass:e", count, _state_reason()))}>`);
+	_if(() => $global().params.sale ? 0 : void 0, $scope0_id, "e", _persisted_reason(), 1 | _persisted_reason(), _persisted_reason(), "</section>", void 0, "a0", [() => {
+		const $scope1_id = _scope_id();
+		_html(`<em>Sale ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "Qa", $global().params.sale, _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}% off</em><button class=buy>buy</button>${_el_resume($scope1_id, "b")}`);
+		_script($scope1_id, "a2");
+		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+	}], ["a3"], "a4");
+	_script($scope0_id, "a5");
+	writeScope($scope0_id, { f: _seed_fill(_state_reason() && count) });
+	_resume_branch($scope0_id);
+}, 1);
+_renderer_shells({
+	"a3": ["<em>Sale <!>% off</em><button class=buy>buy</button>", "Db%l b"],
+	"a6": ["<em>Sale <!>% off</em><button class=buy>buy</button>", "Db%l b"],
+	"a1": ["<h1> </h1><a>link</a><button> </button><section></section>", "D l b D l b"],
+	"a": ["<h1> </h1><a>link</a><button> </button><section></section>", "D l b D l b"]
+});

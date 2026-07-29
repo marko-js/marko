@@ -1,0 +1,20 @@
+<let/showDetails=true/>
+<let/clicks=0/>
+<h1.title>${input.title}</h1>
+<button.toggle onClick() { showDetails = !showDetails }>toggle</button>
+<button.count onClick() { clicks++ }>clicked ${clicks}</button>
+<ul.items>
+  <for|item| of=input.items by=(item) => item.id>
+    <li.item>${item.label}</li>
+  </for>
+</ul>
+<if=showDetails>
+  <section.details>
+    <p.note>${input.note}</p>
+    <ol.tags>
+      <for|tag| of=input.tags>
+        <li.tag>${tag}</li>
+      </for>
+    </ol>
+  </section>
+</if>

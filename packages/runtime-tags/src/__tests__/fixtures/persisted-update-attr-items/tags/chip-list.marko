@@ -1,0 +1,9 @@
+import { getCategories } from "../data";
+
+<const/[search]=$global.search>
+<const/categories=getCategories()>
+<div.chips>
+  <for|cat| of=categories by(cat) { return cat }>
+    <span class=["chip", { "chip--active": search.category === cat }]>${cat}</span>
+  </for>
+</div>

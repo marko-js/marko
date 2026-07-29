@@ -1,9 +1,12 @@
 import { types as t } from "@marko/compiler";
-import { importDefault } from "@marko/compiler/babel-utils";
+import {
+  importDefault,
+  resolveRelativePath,
+} from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
-import { writeModuleRegistrations } from "../../util/module-registrations";
+import { isPersisted, isPersistedEntryBuild } from "../../util/marko-config";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -12,15 +15,19 @@ import {
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
+  composesDocumentFrame,
   forEachSectionReverse,
   getSectionForBody,
   getSectionParentIsOwner,
   getSectionRegisterReasons,
   isDynamicClosure,
+  type Section,
   setBranchRendererArgs,
 } from "../../util/sections";
 import {
   addStatement,
+  buildUpdatingGuard,
+  finalizeRenderStatements,
   getResumeRegisterId,
   getSetup,
   getSignal,
@@ -32,9 +39,22 @@ import {
   writeSignals,
 } from "../../util/signals";
 import { toPropertyName } from "../../util/to-property-name";
+import {
+  cloneUpdateGlobalsStatements,
+  getUpdateGlobalsRegisterId,
+  getUpdateGlobalsStatements,
+  isUpdateDeliveredClosure,
+  registerUpdateValueSignals,
+} from "../../util/update-merges";
+import {
+  type PlanShellFact,
+  recordPlanImport,
+  recordPlanShells,
+} from "../../util/update-plan-records";
 import type { TemplateVisitor } from "../../util/visitors";
 import { trimTrailingExits } from "../../util/walks";
 import * as writer from "../../util/writer";
+import { forEachSectionShell } from "./renderers";
 
 export default {
   translate: {
@@ -57,7 +77,14 @@ export default {
                     [scopeIdentifier],
                   ),
                 );
-                addStatement("render", childSection, undefined, invocation);
+                addStatement(
+                  "render",
+                  childSection,
+                  undefined,
+                  isPersisted() && isUpdateDeliveredClosure(closure)
+                    ? buildUpdatingGuard(invocation)
+                    : invocation,
+                );
               }
             }
           });
@@ -65,10 +92,27 @@ export default {
       });
     },
     exit(program) {
+      if (isPersistedEntryBuild()) {
+        // Snapshot before any writeSignals call rewrites the originals.
+        forEachSectionReverse(cloneUpdateGlobalsStatements);
+      }
       forEachSectionReverse(writer.getSectionMeta);
 
       const section = getSectionForBody(program)!;
-      const { walks, writes, decls } = writer.getSectionMeta(section);
+      // A root holding the document frame is patch-stable: patches only ever
+      // target regions of an existing document, so its markup ships neither
+      // as a template nor as a client-held shell.
+      const patchStable = isPersistedEntryBuild() && section.hasDocumentFrame;
+      // Shell-capable sections hoist their template/walks before the renderer
+      // args consume them, so the static registration below re-references
+      // them instead of duplicating the strings.
+      const staticShells = isPersistedEntryBuild()
+        ? collectStaticShells(program, section)
+        : undefined;
+      const meta = writer.getSectionMeta(section);
+      const { decls } = meta;
+      const walks = patchStable ? undefined : meta.walks;
+      const writes = patchStable ? undefined : meta.writes;
       const domExports = program.node.extra.domExports!;
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
@@ -82,6 +126,14 @@ export default {
       const styleFile = program.node.extra.styleFile;
       if (styleFile) {
         importDefault(program.hub.file, styleFile);
+        if (isPersistedEntryBuild()) {
+          // Bare side-effect request (census site 32).
+          recordPlanImport(
+            program.hub.file,
+            resolveRelativePath(program.hub.file, styleFile),
+            "external",
+          );
+        }
       }
 
       forEachSectionReverse((childSection) => {
@@ -98,6 +150,13 @@ export default {
             writer.getSectionMeta(childSection).walks,
           );
           const setup = getSetup(childSection);
+          // Deferred entries register update signals — only after initValue
+          // materialized param/input property-alias signals, immediately
+          // before the write; eager modules leave them unregistered so an
+          // unused client render graph can tree-shake.
+          if (isPersistedEntryBuild()) {
+            registerUpdateValueSignals(childSection);
+          }
           const written = writeSignals(childSection);
           const setupIdentifier =
             setup && written.has(setup) ? setup.identifier : undefined;
@@ -112,7 +171,10 @@ export default {
               ]);
             } else {
               let renderer = callRuntime(
-                getSectionRegisterReasons(childSection)
+                // Persisted entries never register content construction:
+                // divergent content arrives as a resumable HTML replacement.
+                !isPersistedEntryBuild() &&
+                  getSectionRegisterReasons(childSection)
                   ? "_content_resume"
                   : "_content",
                 t.stringLiteral(getResumeRegisterId(childSection, "content")),
@@ -170,8 +232,32 @@ export default {
         }
       });
 
+      if (isPersistedEntryBuild()) {
+        registerUpdateValueSignals(section);
+      }
       const written = writeSignals(section);
       writeRegisteredFns();
+
+      if (isPersistedEntryBuild()) {
+        forEachSectionReverse((globalsSection) => {
+          const statements = getUpdateGlobalsStatements(globalsSection);
+          if (statements.length) {
+            finalizeRenderStatements(statements);
+            program.node.body.push(
+              t.expressionStatement(
+                callRuntime(
+                  "_resume",
+                  t.stringLiteral(getUpdateGlobalsRegisterId(globalsSection)),
+                  t.arrowFunctionExpression(
+                    [scopeIdentifier],
+                    t.arrowFunctionExpression([], t.blockStatement(statements)),
+                  ),
+                ),
+              ),
+            );
+          }
+        });
+      }
 
       const setup = getSetup(section);
       if (domExports.setupEmpty && setup && written.has(setup)) {
@@ -181,7 +267,6 @@ export default {
           "Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it. Please open an issue with a reproduction.",
         );
       }
-
       if (!setup) {
         program.node.body.unshift(
           t.exportNamedDeclaration(
@@ -215,8 +300,6 @@ export default {
         program.node.body.unshift(t.variableDeclaration("const", extraDecls));
       }
 
-      writeModuleRegistrations(program);
-
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
@@ -229,6 +312,77 @@ export default {
           ),
         ),
       );
+
+      if (staticShells?.length) {
+        program.node.body.push(
+          t.expressionStatement(
+            callRuntime(
+              "_static_shells",
+              t.objectExpression(
+                staticShells.map(([id, sources]) =>
+                  t.objectProperty(
+                    t.stringLiteral(id),
+                    t.arrayExpression([
+                      t.cloneNode(sources[0] ?? emptyString),
+                      t.cloneNode(sources[1] ?? emptyString),
+                    ]),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+
+      if (isPersistedEntryBuild()) {
+        recordPlanShells(
+          program.hub.file,
+          (staticShells || []).flatMap<PlanShellFact>(([shellId, sources]) =>
+            sources[0]?.type === "Identifier" &&
+            sources[1]?.type === "Identifier"
+              ? [
+                  {
+                    shellId,
+                    templateSym: `%${sources[0].name}`,
+                    walksSym: `%${sources[1].name}`,
+                  },
+                ]
+              : [],
+          ),
+        );
+      }
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+const emptyString = t.stringLiteral("");
+
+/** The shells this entry's chunk holds: the server omits their wire entries
+ * for a client that evaluated this module. Sources are the section's own
+ * hoisted template/walks — the root's are its exported consts. */
+function collectStaticShells(
+  program: t.NodePath<t.Program>,
+  rootSection: Section,
+) {
+  const { template, walks } = program.node.extra.domExports!;
+  const shells: [id: string, sources: [t.Expression?, t.Expression?]][] = [];
+  forEachSectionShell(
+    rootSection,
+    program.hub.file.metadata.marko.id,
+    (section, ids) => {
+      // A shell composing the document frame is missing it: the client build
+      // elides that markup, so claiming the shell would construct the section
+      // without it. Unheld, the server ships the composed wire shell instead.
+      if (composesDocumentFrame(section)) return;
+      let sources: [t.Expression?, t.Expression?];
+      if (section === rootSection) {
+        sources = [t.identifier(template), t.identifier(walks)];
+      } else {
+        const meta = writer.getSectionMetaIdentifiers(section);
+        sources = [meta.writes, meta.walks];
+      }
+      for (const id of ids) shells.push([id, sources]);
+    },
+  );
+  return shells;
+}

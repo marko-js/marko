@@ -1,0 +1,23 @@
+<h1 class=name>Alpha lamp<!--M_*1 #text/0--></h1>
+<form class=order><input value=1 type=number
+    class=qty><!--M_*2 #input/1--><input type=hidden name=itemId value=11
+    class=item><!--M_*2 #input/2--><button class=buy>buy</button></form>
+<!--M_*2 #form/0-->
+<p class=mirror>adding <!>1<!--M_*2 #text/3--> to cart</p><output
+  class=last>none<!--M_*2 #text/4--></output>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "#childScope/1": _(2)
+    }, {
+      "ControlledHandler:#input/1": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit/tags/order-form.marko_0/valueChange"
+        ),
+      itemId: 11,
+      qty: 1,
+      lastSubmit: "none"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-controllable-resubmit/tags/order-form.marko_0 2"
+  ];
+  M._.w()
+</script>

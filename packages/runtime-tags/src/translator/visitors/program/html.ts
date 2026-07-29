@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { compileSync, types as t } from "@marko/compiler";
 
 import {
   generateUidIdentifier,
@@ -7,8 +7,7 @@ import {
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
-import { getMarkoOpts } from "../../util/marko-config";
-import { writeModuleRegistrations } from "../../util/module-registrations";
+import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -39,6 +38,7 @@ import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
+import { type RendererShells, shellSourceToExpression } from "./renderers";
 
 export function getTemplateContentName() {
   return getSharedUid("content");
@@ -165,8 +165,6 @@ export default {
         }
       }
 
-      writeModuleRegistrations(program);
-
       const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(
         [t.identifier("input")],
@@ -195,9 +193,53 @@ export default {
       } else {
         program.node.body.push(exportDefault);
       }
+
+      if (isPersisted()) {
+        const shells = getRendererShells(program.hub.file);
+        const ids = Object.keys(shells);
+        if (ids.length) {
+          program.node.body.push(
+            t.expressionStatement(
+              callRuntime(
+                "_renderer_shells",
+                t.objectExpression(
+                  ids.map((id) =>
+                    t.objectProperty(
+                      t.stringLiteral(id),
+                      t.arrayExpression([
+                        shellSourceToExpression(shells[id][0]),
+                        shellSourceToExpression(shells[id][1]),
+                      ]),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+      }
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+// Patch construction needs each section's values-free [template, walks] on
+// the server; an internal nested `renderers` compile (shared analysis cache)
+// hands them back through a side channel rather than a parsed module.
+function getRendererShells(file: t.BabelFile) {
+  let shells: RendererShells = {};
+  compileSync((file as unknown as { code: string }).code, file.opts.filename!, {
+    ...file.markoOpts,
+    output: "dom",
+    entry: "renderers",
+    code: false,
+    ast: false,
+    sourceMaps: false,
+    __onRendererShells(result: RendererShells) {
+      shells = result;
+    },
+  } as unknown as Parameters<typeof compileSync>[2]);
+  return shells;
+}
 
 function replaceNode(node: t.Node) {
   return replaceBindingReadNode(node) || replaceRegisteredFunctionNode(node);

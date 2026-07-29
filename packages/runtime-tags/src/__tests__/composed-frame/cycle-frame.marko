@@ -1,0 +1,15 @@
+import CycleBack from "./cycle-back.marko"
+<let/n=0/>
+<if=input.depth>
+  <CycleBack depth=input.depth - 1/>
+  <span.sibling>${n}</span>
+</if>
+<html lang="en">
+  <head>
+    <title>frame</title>
+  </head>
+  <body>
+    <header.frame>STATIC FRAME</header>
+    <button onClick() { n++ }>${n}</button>
+  </body>
+</html>

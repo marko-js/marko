@@ -75,8 +75,18 @@ export interface Section {
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */
   abortSignalExprs: number;
+  hasGlobalReads: boolean;
   readsOwner: boolean;
   isBranch: boolean;
+  /** A `<for>` body: its instance count follows the loop expression even
+   * when no params exist (the membrane `param` cause keys on this). */
+  isLoopBody: boolean;
+  /** Holds a document frame (`html`/`head`/`body`) in its own markup. */
+  hasDocumentFrame: boolean;
+  /** Root sections whose template this one splices into its own shell.
+   * Recorded as edges — a same-file or cyclic child is still mid-analysis —
+   * and resolved by `composesDocumentFrame` once every section is analyzed. */
+  composedShellSections: Set<Section> | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -150,8 +160,12 @@ export function startSection(
       downstreamBinding: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
+      hasGlobalReads: false,
       readsOwner: false,
       isBranch: false,
+      isLoopBody: false,
+      hasDocumentFrame: false,
+      composedShellSections: undefined,
     };
     sections.push(section);
   }
@@ -190,6 +204,32 @@ export function getSection(path: t.NodePath) {
   }
 
   return section;
+}
+
+/** Records that this section splices `childSection`'s template into its shell,
+ * so a document frame that child renders is also composed here. */
+export function addComposedShellSection(
+  section: Section,
+  childSection: Section,
+) {
+  (section.composedShellSections ??= new Set()).add(childSection);
+}
+
+/** Whether the section renders a document frame — in its own markup, or through
+ * a spliced child template whose frame the persisted build elides. Resolved by
+ * reachability so recursive and cyclic composition terminate. */
+export function composesDocumentFrame(section: Section) {
+  const visited = new Set([section]);
+  for (const current of visited) {
+    if (current.hasDocumentFrame) return true;
+    if (current.composedShellSections) {
+      for (const composed of current.composedShellSections) {
+        visited.add(composed);
+      }
+    }
+  }
+
+  return false;
 }
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(

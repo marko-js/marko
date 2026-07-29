@@ -1,0 +1,16 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/PanelA>
+  <span.a>A</span>
+</define>
+<define/PanelB>
+  <section.b>B</section>
+</define>
+
+<ul>
+  <for|item| of=$global.items by(item) { return item.id }>
+    <em>ROW_MARKUP</em>
+    <${item.view === "b" ? PanelB : PanelA}/>
+  </for>
+</ul>

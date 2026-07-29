@@ -1,0 +1,33 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<ul.threads>
+  <for|thread| of=input.threads by(thread) { return thread.id }>
+    <let/draft=""/>
+    <let/collapsed=false/>
+    <li class="thread">
+      <h3.title>${thread.title}</h3>
+      <button.collapse onClick() { collapsed = !collapsed }>
+        ${collapsed ? "expand" : "collapse"}
+      </button>
+      <input class="draft" value:=draft/>
+      <ol.replies>
+        <for|reply| of=thread.replies by(reply) { return reply.id }>
+          <li class="reply">${reply.text}</li>
+        </for>
+      </ol>
+    </li>
+  </for>
+</ul>
+
+<ul.tags>
+  <for|tag| of=input.tags>
+    <let/starred=false/>
+    <li class="tag">
+      ${tag}
+      <button.star onClick() { starred = !starred }>
+        ${starred ? "★" : "☆"}
+      </button>
+    </li>
+  </for>
+</ul>

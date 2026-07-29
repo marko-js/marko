@@ -8,12 +8,22 @@ import {
 import { type AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
+import {
+  addConstructFragment,
+  assertConstructForwardKind,
+  type ConstructKind,
+} from "./construct-pass";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML } from "./marko-config";
+import {
+  isOptimize,
+  isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+} from "./marko-config";
 import { find, forEach, type Opt, push } from "./optional";
 import {
   type AssignedBindingExtra,
@@ -40,7 +50,7 @@ import {
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
-import { callRuntime } from "./runtime";
+import { callRuntime, importRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   getDynamicClosureIndex,
@@ -51,7 +61,7 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { getExprIfSerialized } from "./serialize-guard";
+import { getExprGuardSerialized, getExprIfSerialized } from "./serialize-guard";
 import {
   getSerializeReason,
   isReasonDynamic,
@@ -67,6 +77,9 @@ import {
   toPropertyName,
 } from "./to-property-name";
 import { traverseReplace } from "./traverse";
+// Cycle with ./update-merges (it reads signal state); safe -- only used
+// inside deferred `signal.build` thunks.
+import { isUpdateDeliveredClosure } from "./update-merges";
 import { withLeadingComment } from "./with-comment";
 
 export interface Signal {
@@ -75,9 +88,14 @@ export interface Signal {
   section: Section;
   build: undefined | (() => t.Expression | undefined);
   register?: boolean;
+  updateGuard?: boolean;
   values: Array<{
     signal: Signal;
     value: t.Expression;
+    // The construct pass never invokes signal fns, so every value forward
+    // is never-construct unless its site declares the kind whose fragment
+    // or merge carries the behavior on the construct path.
+    constructKind?: ConstructKind;
   }>;
   intersection: Opt<Signal>;
   render: t.Statement[];
@@ -85,6 +103,7 @@ export interface Signal {
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
   hasHTMLEffect: boolean;
+  effectRetrigger?: boolean;
   hasSideEffect: boolean;
   forcePersist: boolean;
   inline: { value: t.Expression } | undefined;
@@ -214,6 +233,27 @@ export function getBindingGetterIdentifier(
   return identifier;
 }
 
+const updatingGuards = new WeakSet<t.Statement>();
+/** Skips a statement while a patch apply is delivering its values. */
+export function buildUpdatingGuard(statement: t.Statement) {
+  const guard = t.ifStatement(
+    t.unaryExpression("!", importRuntime("_updating")),
+    statement,
+  );
+  updatingGuards.add(guard);
+  return guard;
+}
+
+// A guard directly inside another guard's consequent can never fire.
+function absorbUpdatingGuards(block: t.BlockStatement) {
+  block.body = block.body.map((statement) =>
+    updatingGuards.has(statement)
+      ? (statement as t.IfStatement).consequent
+      : statement,
+  );
+  return block;
+}
+
 export function getSignal(
   section: Section,
   referencedBindings: ReferencedBindings,
@@ -329,7 +369,31 @@ export function getSignal(
     ) {
       signal.build = () => {
         const closure = referencedBindings;
-        const render = getSignalFn(signal);
+        let render = getSignalFn(signal);
+        if (isPersisted() && isUpdateDeliveredClosure(closure)) {
+          if (render.type === "ArrowFunctionExpression") {
+            render.body = t.blockStatement([
+              buildUpdatingGuard(
+                render.body.type === "BlockStatement"
+                  ? absorbUpdatingGuards(render.body)
+                  : t.expressionStatement(render.body),
+              ),
+            ]);
+          } else {
+            render = t.arrowFunctionExpression(
+              [scopeIdentifier],
+              t.blockStatement([
+                buildUpdatingGuard(
+                  t.expressionStatement(
+                    t.callExpression(t.cloneNode(render, true), [
+                      scopeIdentifier,
+                    ]),
+                  ),
+                ),
+              ]),
+            );
+          }
+        }
         const closureSignalBuilder = getClosureSignalBuilder(section);
 
         if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
@@ -396,7 +460,17 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     return callRuntime(
-      isLet ? (signal.extraArgs ? "_let_change" : "_let") : "_const",
+      isLet
+        ? signal.extraArgs
+          ? isPersisted()
+            ? "_let_change_persisted"
+            : "_let_change"
+          : isPersisted()
+            ? "_let_persisted"
+            : "_let"
+        : isPersisted()
+          ? "_const_persisted"
+          : "_const",
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
@@ -415,6 +489,41 @@ export function initValue(binding: Binding, isLet = false) {
   }
 
   return signal;
+}
+
+/** Owner-side invocation of a section's closure signal for `binding`:
+ * builder closures (loop/if bodies) compile to owner signals already;
+ * the rest fan out through their subscription set. */
+export function buildClosureSignalInvocation(
+  closureSection: Section,
+  binding: Binding,
+  ownerExpression: t.Expression,
+) {
+  const { identifier } = getSignal(closureSection, binding);
+  return t.callExpression(
+    getClosureSignalBuilder(closureSection) &&
+      !isDynamicClosure(closureSection, binding)
+      ? t.cloneNode(identifier, true)
+      : // NOT callRuntime: its @__PURE__ annotation binds to the outer
+        // call chain and a bundler drops the whole (result-less)
+        // invocation statement.
+        t.callExpression(importRuntime("_closure"), [
+          t.cloneNode(identifier, true),
+        ]),
+    [ownerExpression],
+  );
+}
+
+function isUpdatePatchedValueSignal(signal: Signal) {
+  const binding = signal.referencedBindings;
+  return (
+    binding &&
+    !Array.isArray(binding) &&
+    (binding.type === BindingType.input ||
+      binding.type === BindingType.param ||
+      binding.type === BindingType.derived) &&
+    !binding.sources?.state
+  );
 }
 
 export function signalHasStatements(signal: Signal): boolean {
@@ -617,7 +726,12 @@ export function getSignalFn(signal: Signal): t.Expression {
           ...getTranslatedExtraArgs(value.signal),
         ]),
       );
-      signal.render.push(invocation);
+      signal.render.push(
+        isPersisted() &&
+          (value.signal.updateGuard || isUpdatePatchedValueSignal(value.signal))
+          ? buildUpdatingGuard(invocation)
+          : invocation,
+      );
     } else {
       signal.render.push(
         t.expressionStatement(
@@ -845,6 +959,13 @@ export function replaceNullishAndEmptyFunctionsWith0(
   args.length = finalLen || 0;
   return args as t.Expression[];
 }
+export function markEffectRetrigger(
+  section: Section,
+  referencedBindings: ReferencedBindings,
+) {
+  getSignal(section, referencedBindings).effectRetrigger = true;
+}
+
 export function addStatement(
   type: "render" | "effect",
   targetSection: Section,
@@ -903,12 +1024,15 @@ export function addValue(
   referencedBindings: ReferencedBindings,
   signal: Signal,
   value: t.Expression,
+  constructKind?: ConstructKind,
 ) {
+  if (constructKind) assertConstructForwardKind(constructKind);
   const parentSignal = getSignal(targetSection, referencedBindings);
   addRenderReferences(parentSignal, referencedBindings);
   parentSignal.values.push({
     signal,
     value,
+    constructKind,
   });
 
   if (
@@ -918,7 +1042,7 @@ export function addValue(
   }
 }
 
-function buildResumeRegisterKey(
+export function buildResumeRegisterKey(
   section: Section,
   referencedBindings: string | ReferencedBindings,
   type?: string,
@@ -936,6 +1060,22 @@ function buildResumeRegisterKey(
     }
   }
   return `${section.id}${name}${type ? "/" + type : ""}`;
+}
+
+const regionSiteCounts = new WeakMap<object, { n: number }>();
+
+/** A dense, build-stable identity for a region-capable emission site.
+ * Region wire ids join site, instance, and digest with `|`; ids from this
+ * namespace never contain `|`, so the join stays parseable. */
+export function getRegionSiteId() {
+  const file = getFile();
+  let counter = regionSiteCounts.get(file);
+  if (!counter) regionSiteCounts.set(file, (counter = { n: 0 }));
+  return getTemplateId(
+    file.markoOpts,
+    file.opts.filename as string,
+    "r" + counter.n++,
+  );
 }
 
 export function getResumeRegisterId(
@@ -981,15 +1121,37 @@ export function writeSignals(section: Section) {
         [scopeIdentifier],
         toFirstExpressionOrBlock(signal.effect),
       );
+      if (isPersistedEntryBuild()) {
+        // Fresh-construct serialization elides this effect's wire entry;
+        // the construct pass queues it (epoch-guarded) instead. Lazy
+        // deliveries keep their batch entries and suppress this fragment.
+        addConstructFragment(
+          section,
+          "effect",
+          t.expressionStatement(
+            callRuntime(
+              "_construct_effect",
+              scopeIdentifier,
+              t.cloneNode(effectIdentifier),
+            ),
+          ),
+        );
+      }
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
-        callRuntime(
-          "_script",
-          t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings),
-          ),
-          effectFn,
-        ),
+        isPersistedEntryBuild()
+          ? callRuntime("_script_shared", effectFn)
+          : callRuntime(
+              isPersisted()
+                ? signal.effectRetrigger
+                  ? "_script_refresh"
+                  : "_script_update"
+                : "_script",
+              t.stringLiteral(
+                getResumeRegisterId(section, signal.referencedBindings),
+              ),
+              effectFn,
+            ),
       );
     }
 
@@ -1056,6 +1218,10 @@ export function writeSignals(section: Section) {
   }
 
   return written;
+}
+
+export function finalizeRenderStatements(statements: t.Statement[]) {
+  traverseReplace({ statements }, "statements", replaceRenderNode);
 }
 
 function writeGetters(section: Section) {
@@ -1164,16 +1330,18 @@ export function writeRegisteredFns() {
       statements.push(fn);
     }
 
-    for (const registeredFn of registeredFns) {
-      statements.push(
-        t.expressionStatement(
-          callRuntime(
-            "_resume",
-            t.stringLiteral(registeredFn.registerId),
-            t.identifier(registeredFn.id),
+    if (!isPersistedEntryBuild()) {
+      for (const registeredFn of registeredFns) {
+        statements.push(
+          t.expressionStatement(
+            callRuntime(
+              "_resume",
+              t.stringLiteral(registeredFn.registerId),
+              t.identifier(registeredFn.id),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
 
     getProgram().node.body.push(...statements);
@@ -1213,6 +1381,9 @@ export function writeHTMLResumeStatements(
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
     ? true
     : section.serializeReason;
+  const exprSpineSerialized = isPersisted()
+    ? getExprGuardSerialized
+    : getExprIfSerialized;
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
@@ -1258,7 +1429,7 @@ export function writeHTMLResumeStatements(
           if (reason) {
             getHTMLSectionStatements(section).push(
               t.expressionStatement(
-                getExprIfSerialized(
+                exprSpineSerialized(
                   section,
                   reason,
                   callRuntime(
@@ -1281,7 +1452,7 @@ export function writeHTMLResumeStatements(
           const subscribeArg =
             isReasonDynamic(closureScopesReason) &&
             !isSameReason(closureScopesReason, sectionSerializeReason)
-              ? getExprIfSerialized(
+              ? exprSpineSerialized(
                   closure.section,
                   closureScopesReason,
                   identifier,
@@ -1318,8 +1489,16 @@ export function writeHTMLResumeStatements(
   const serializedProperties: t.ObjectProperty[] = [];
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (isSameReason(sectionSerializeReason, reason)) return expr;
-    return getExprIfSerialized(section, reason, expr);
+    return exprSpineSerialized(section, reason, expr);
   };
+  const ifSerializedValue = (
+    binding: Binding,
+    reason: SerializeReason,
+    expr: t.Expression,
+  ) =>
+    isPersisted()
+      ? getExprIfSerialized(section, reason, expr, binding.sources)
+      : ifSerialized(reason, expr);
 
   let debugVars: t.ObjectProperty[] | undefined;
   const writeSerializedBinding = (binding: Binding) => {
@@ -1339,9 +1518,18 @@ export function writeHTMLResumeStatements(
       });
       expr = t.objectExpression(props);
     }
-    serializedProperties.push(
-      toObjectProperty(accessor, ifSerialized(reason, expr)),
-    );
+    // Undefined means the value provably never serializes (purely
+    // global-sourced reason under the persisted option).
+    let serializedValue = ifSerializedValue(binding, reason, expr);
+    if (serializedValue) {
+      // Client-owned state seeds mark themselves for the digest layer:
+      // their values stay out of group digests (matched scopes own that
+      // state), while request-derived values keep content identity.
+      if (isPersisted() && binding.sources?.state) {
+        serializedValue = callRuntime("_seed_fill", serializedValue);
+      }
+      serializedProperties.push(toObjectProperty(accessor, serializedValue));
+    }
 
     if (debug) {
       const { root, access } = getDebugScopeAccess(binding);
@@ -1435,7 +1623,7 @@ export function writeHTMLResumeStatements(
 
     body.push(
       t.expressionStatement(
-        getExprIfSerialized(
+        exprSpineSerialized(
           section,
           sectionSerializeReason,
           writeScopeBuilder

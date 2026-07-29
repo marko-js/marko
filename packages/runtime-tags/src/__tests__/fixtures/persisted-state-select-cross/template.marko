@@ -1,0 +1,35 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/tab=0/>
+<button.a onClick() { tab = 0 }>A</button>
+<button.b onClick() { tab = 1 }>B</button>
+<if=tab === 0>
+  <section.pane-a>
+    <try>
+      <@placeholder>loading a</@placeholder>
+      <await|note|=resolveAfter(input.a, 1)>
+        <p.note-a>${note}</p>
+      </await>
+    </try>
+    <ol.rows-a>
+      <for|row| of=input.rowsA by=(row) => row.id>
+        <li.row-a>${row.text}</li>
+      </for>
+    </ol>
+  </section>
+</if>
+<else>
+  <section.pane-b>
+    <try>
+      <@placeholder>loading b</@placeholder>
+      <await|note|=resolveAfter(input.b, 1)>
+        <p.note-b>${note}</p>
+      </await>
+    </try>
+    <ol.rows-b>
+      <for|row| of=input.rowsB by=(row) => row.id>
+        <li.row-b>${row.text}</li>
+      </for>
+    </ol>
+  </section>
+</else>

@@ -1,0 +1,9 @@
+<let/tab=0/>
+<button.a onClick() { tab = 0 }>A</button>
+<button.b onClick() { tab = 1 }>B</button>
+<if=tab === 0>
+  <p.a>${input.a}</p>
+</if>
+<else>
+  <p.b>${input.b}</p>
+</else>

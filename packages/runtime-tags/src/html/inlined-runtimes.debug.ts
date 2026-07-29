@@ -40,7 +40,8 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
     placeholder,
     nextSibling,
     placeholders = runtime.p = {},
-    replace = (id, container) => runtime.l[id].replaceWith(...container.childNodes);
+    replace = (id, container) =>
+      runtime.l[id].replaceWith(...container.childNodes);
   runtime.j = {};
   runtime.x = (op, id, node, placeholderRoot, placeholderCb) => {
     if (node == nextSibling) {

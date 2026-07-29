@@ -1,0 +1,10 @@
+<define/Panel>
+  <let/hits=0/>
+  <button.hit onClick() { hits++ }>hits ${hits}</button>
+</define>
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<if=input.show>
+  <div.host content=Panel/>
+</if>

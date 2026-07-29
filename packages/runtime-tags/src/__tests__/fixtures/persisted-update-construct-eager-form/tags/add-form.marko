@@ -1,0 +1,16 @@
+<shared-list/cart name="cart"/>
+<const/productId=input.productId/>
+<let/watched=false/>
+<let/quantity=1/>
+
+<button.watch onClick() { watched = !watched }>${watched ? "watching" : "watch"}</button>
+<form.add onSubmit() {
+  const i = cart.findIndex((item) => item.productId === productId);
+  const prev = i !== -1 && cart[i];
+  const item = { productId, quantity: (prev ? prev.quantity : 0) + quantity };
+  cart = prev ? cart.with(i, item) : [...cart, item];
+}>
+  <input.pid type="hidden" name="productId" value=productId/>
+  <input.qty type="number" name="quantity" value:Number:=quantity min="1"/>
+  <button.plus type="button" onClick() { quantity++ }>+</button>
+</form>

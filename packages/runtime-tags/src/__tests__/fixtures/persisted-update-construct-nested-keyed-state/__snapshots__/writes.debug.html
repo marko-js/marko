@@ -1,0 +1,37 @@
+<section>
+  <h2>parent-alpha-marker<!--M_*2 #text/0--></h2><button
+    data-key=parent-alpha-marker:shared-item>watch<!--M_*3 #text/1--></button><!--M_*3 #button/0--><button
+    data-key=parent-alpha-marker:alpha-item>watch<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_|2 #text/1 4 3-->
+</section>
+<section>
+  <h2>parent-beta-marker<!--M_*5 #text/0--></h2><button
+    data-key=parent-beta-marker:shared-item>watch<!--M_*6 #text/1--></button><!--M_*6 #button/0--><button
+    data-key=parent-beta-marker:beta-item>watch<!--M_*7 #text/1--></button><!--M_*7 #button/0--><!--M_|5 #text/1 7 6-->
+</section><!--M_|1 #text/0 5 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      "#LoopKey": "parent-alpha-marker"
+    }, {
+      watched: !1,
+      _: _(2),
+      "#LoopKey": "shared-item"
+    }, {
+      watched: !1,
+      _: _(2),
+      "#LoopKey": "alpha-item"
+    }, {
+      "#LoopKey": "parent-beta-marker"
+    }, {
+      watched: !1,
+      _: _(5),
+      "#LoopKey": "shared-item"
+    }, {
+      watched: !1,
+      _: _(5),
+      "#LoopKey": "beta-item"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-construct-nested-keyed-state/template.marko_2 3 4 6 7"
+  ];
+  M._.w()
+</script>

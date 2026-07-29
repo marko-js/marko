@@ -1,0 +1,29 @@
+<article class=item><button
+    class=open>One<!--M_*2 #text/1--></button><!--M_*2 #button/0--><span
+    class=badge>new<!--M_*3 #text/0--></span><!--M_|2 #text/2 3--></article>
+<article class=item><button
+    class=open>Two<!--M_*4 #text/1--></button><!--M_*4 #button/0--><span
+    class=badge>hot<!--M_*5 #text/0--></span><!--M_|4 #text/2 5--></article>
+<!--M_|1 #text/0 4 2-->
+<p class=opens>0<!--M_*1 #text/1--> opened</p>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      opens: 0
+    }, {
+      "ConditionalRenderer:#text/2": 0,
+      _: _(1),
+      "#LoopKey": "one"
+    }, {
+      _: _(2)
+    }, {
+      "ConditionalRenderer:#text/2": 0,
+      _: _(1),
+      "#LoopKey": "two"
+    }, {
+      _: _(4)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-region-keyed/template.marko_1 2 4"
+  ];
+  M._.w()
+</script>

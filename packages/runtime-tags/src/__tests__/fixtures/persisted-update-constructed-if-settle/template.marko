@@ -1,0 +1,24 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<h1>${input.title}</h1>
+<button onClick() { count++ }>clicked ${count}</button>
+<if=input.missing>
+  <p>gone</p>
+</if>
+<else>
+  <if=input.title.length > 5>
+    <h2>long ${input.title}</h2>
+  </if>
+  <else>
+    <h2>short ${input.title}</h2>
+  </else>
+  <section>
+    <try>
+      <@placeholder>loading extras…</@placeholder>
+      <await=resolveAfter(0, 1)>
+        <p>extras for ${input.title}</p>
+      </await>
+    </try>
+  </section>
+</else>

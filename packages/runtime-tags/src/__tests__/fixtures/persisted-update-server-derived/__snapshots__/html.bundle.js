@@ -1,0 +1,44 @@
+// data.js
+function getDetails(id) {
+	if (typeof window !== "undefined") throw new Error("getDetails is server-only");
+	return {
+		name: `Part ${id}`,
+		price: id * 10
+	};
+}
+
+// template.marko
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $sg__input_detailId = _serialize_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_if(() => input.detailId ? 0 : 1, $scope0_id, "c", $sg__input_detailId, $sg__input_detailId, $sg__input_detailId, 0, 1, "a0", [() => {
+		const $scope1_id = _scope_id();
+		const details = getDetails(input.detailId);
+		_html(`<section><h2>${_escape(_hole_value($scope1_id, "Qa", details.name, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_detailId)}</h2><p>costs ${_sep($sg__input_detailId)}${_escape(details.price)}${_el_resume($scope1_id, "b", $sg__input_detailId)}</p><button class=copy>use price</button>${_el_resume($scope1_id, "c")}</section>`);
+		_script($scope1_id, "a2");
+		writeScope($scope1_id, {
+			f: details?.price,
+			_: _scope_with_id($scope0_id)
+		});
+	}, () => {
+		const $scope2_id = _scope_id();
+		_html("<p>no selection</p>");
+		$sg__input_detailId && writeScope($scope2_id, {});
+	}], ["a4", "a3"], "a5");
+	_script($scope0_id, "a6");
+	writeScope($scope0_id, {
+		f: (_serialize_if($scope0_reason, 0) || _patch_reason()) && input.detailId,
+		g: _seed_fill(_state_reason() && count)
+	});
+	_resume_branch($scope0_id);
+}, 1);
+_renderer_shells({
+	"a3": ["<p>no selection</p>", "b"],
+	"a7": ["<p>no selection</p>", "b"],
+	"a4": ["<section><h2> </h2><p>costs <!></p><button class=copy>use price</button></section>", "E lDb%l l"],
+	"a8": ["<section><h2> </h2><p>costs <!></p><button class=copy>use price</button></section>", "E lDb%l l"],
+	"a1": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"],
+	"a": ["<button class=count>clicked <!></button><!><!>", " Db%l%c"]
+});

@@ -1,0 +1,18 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-static-assign/template.marko:10:3
+       8 | <button.count onClick() { renders++; count++ }>clicked ${count} of ${renders}</button>
+       9 | <script>
+    > 10 |   renders = count;
+         |   ^^^^^^^^^^^^^^^ Persisted pages cannot assign to the `static` binding `renders` from rendered code: the lazy navigation entry shares the page module's bindings as imports, and assigning an import fails at runtime. Wrap the assignment in a `static` function and call it instead.
+      11 | </script>
+      12 | <span.allowed onClick() { trackRender() }>via static function is fine</span>
+      13 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-static-assign/template.marko:8:27
+       6 |
+       7 | <let/count=0/>
+    >  8 | <button.count onClick() { renders++; count++ }>clicked ${count} of ${renders}</button>
+         |                           ^^^^^^^^^ Persisted pages cannot assign to the `static` binding `renders` from rendered code: the lazy navigation entry shares the page module's bindings as imports, and assigning an import fails at runtime. Wrap the assignment in a `static` function and call it instead.
+       9 | <script>
+      10 |   renders = count;
+      11 | </script>

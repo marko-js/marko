@@ -1,0 +1,19 @@
+import { getTasks, serverTaskSentinel } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<if=$global.lane === "active">
+  <ol.lane>
+    <for|task| of=getTasks?.($global.day) by(task) { return task.id }>
+      <li>
+        <em>TASK_ROW_MARKUP</em>
+        ${serverTaskSentinel?.()}
+        <span.name>${task.name}</span>: <span.eta>${task.eta}</span>
+      </li>
+    </for>
+  </ol>
+</if>
+<else>
+  <p.closed>lane closed</p>
+</else>

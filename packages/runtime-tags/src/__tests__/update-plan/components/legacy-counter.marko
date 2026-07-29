@@ -1,0 +1,9 @@
+class {
+  onCreate(input) {
+    this.state = { count: input.start };
+  }
+  increment() {
+    this.state.count++;
+  }
+}
+<button onClick("increment")>${state.count}</button>

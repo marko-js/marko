@@ -1,0 +1,7 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<select.sort value=input.sort>
+  <for|opt| of=input.options by(opt) { return opt.key }>
+    <option value=opt.id>${opt.label}</option>
+  </for>
+</select>

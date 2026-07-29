@@ -1,0 +1,24 @@
+import { getNoteLabel, getOpts } from "./data";
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<ul.cards>
+  <for|card| of=input.cards by(card) { return card.id }>
+    <let/opts=getOpts?.(card.id)/>
+    <let/pinned=false/>
+    <li class="card">
+      <span.name>${card.name}</span>
+      <button.pin onClick() { pinned = !!opts.label && !pinned }>
+        ${pinned ? "pinned" : "pin"}
+      </button>
+    </li>
+  </for>
+</ul>
+<try>
+  <@placeholder><p.loading>loading…</p></@placeholder>
+  <await|note|=resolveAfter(input.note, 1)>
+    <p.note>${getNoteLabel?.()} ${note.stamp}</p>
+  </await>
+</try>

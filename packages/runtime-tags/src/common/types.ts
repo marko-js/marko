@@ -77,6 +77,45 @@ export interface $Global {
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }
+
+/** @internal Per-render options kept separate from user `$global`. */
+export interface RenderOptions {
+  persisted?: PersistedRender;
+}
+
+/** @internal Persisted request facts normalized by the router. */
+export interface PersistedRender {
+  patch?: PersistedPatch;
+  /** Maps a wire identity (a value group or region key) to the opaque token
+   * that stands in for it, so application keys never leave the server. The
+   * router owns the secret; marko only asks for a stable mapping within a
+   * build. Absent means identities ship verbatim. */
+  token?: (identity: string) => string;
+  /** Called exactly once, at successful patch completion, with the post-cap
+   * value feedback the response actually carried ("" when every claim held).
+   * The router uses it to name the store this response induces client-side;
+   * an aborted render never fires it. */
+  onFeedback?: (delta: string) => void;
+}
+
+/** @internal An enhanced navigation within one persisted build. */
+export type PersistedPatch = {
+  fromRoute: string;
+  targetRoute: string;
+  /** Shell ids the client provably holds — the target route's static chunk
+   * closure plus anything it echoed. A held shell ships no wire entry; the
+   * client constructs from its own chunk registration. */
+  heldShells?: (id: string) => boolean;
+  /** The request echo's value section, verbatim: the previous response's
+   * `//E1:` feedback the carrier committed after apply. The codec is
+   * marko-owned (see html/patch-groups); the router only transports it. */
+  echoValues?: string;
+  /** The digest the client's echo asserts for a region identity, if any. A
+   * byte-identical region ships its fill alone; the client verifies its
+   * live range and falls back to a document navigation on any mismatch, so
+   * a stale echo can only re-ship or re-navigate, never corrupt. */
+  heldRegions?: (token: string) => string | undefined;
+};
 export interface Input {
   [x: PropertyKey]: unknown;
 }
@@ -90,7 +129,7 @@ export interface Template {
     reference: Node,
     position?: InsertPosition,
   ): MountedTemplate;
-  render(input?: Input): RenderedTemplate;
+  render(input?: Input, options?: RenderOptions): RenderedTemplate;
 }
 
 export interface MountedTemplate {

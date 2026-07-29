@@ -1,0 +1,10 @@
+<define/Plain>
+  <let/n=0/>
+  <main.plain>
+    <button onClick() { n++ }>${n}</button>
+  </main>
+</define>
+<if=input.show>
+  <Plain/>
+  <span.sibling>sibling</span>
+</if>

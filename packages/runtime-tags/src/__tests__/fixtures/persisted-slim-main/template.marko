@@ -1,0 +1,26 @@
+import { getResults } from "./data";
+
+<const/[search]=$global.search>
+<const/results=getResults(search)>
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<if=results.total>
+  <ul.items>
+    <for|item| of=results.items by(item) { return item.id }>
+      <li>${item.name}</li>
+    </for>
+  </ul>
+  <nav.pagination>
+    <for|page| from=1 to=results.totalPages>
+      <if=page === search.page>
+        <span.current>${page}</span>
+      </if>
+      <else>
+        <a href=`/search?page=${page}&q=${search.q}`>${page}</a>
+      </else>
+    </for>
+  </nav>
+</if>
+<else>
+  <p.empty>No results</p>
+</else>

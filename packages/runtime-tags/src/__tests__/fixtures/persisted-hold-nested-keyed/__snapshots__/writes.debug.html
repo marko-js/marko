@@ -1,0 +1,57 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<ul class=threads>
+  <li class=thread>
+    <h3 class=title>THREAD-ALPHA<!--M_*2 #text/0--></h3><button
+      class=collapse>collapse<!--M_*2 #text/2--></button><!--M_*2 #button/1--><input
+      value class=draft><!--M_*2 #input/3-->
+    <ol class=replies><!--M_[-->
+      <li class=reply>reply one<!--M_*4 #text/0--></li>
+      <li class=reply>reply two<!--M_*5 #text/0--></li><!--M_]2 #ol/4 3-->
+    </ol><!--M_*2 #ol/4-->
+  </li>
+  <li class=thread>
+    <h3 class=title>THREAD-BETA<!--M_*6 #text/0--></h3><button
+      class=collapse>collapse<!--M_*6 #text/2--></button><!--M_*6 #button/1--><input
+      value class=draft><!--M_*6 #input/3-->
+    <ol class=replies><!--M_[-->
+      <li class=reply>reply three<!--M_*8 #text/0--></li><!--M_]6 #ol/4 7-->
+    </ol><!--M_*6 #ol/4-->
+  </li><!--M_}1 #ul/2 6 2-->
+</ul>
+<ul class=tags>
+  <li class=tag>tag-perf<!--M_*9 #text/0--><button
+      class=star>☆<!--M_*9 #text/2--></button><!--M_*9 #button/1--></li>
+  <li class=tag>tag-infra<!--M_*10 #text/0--><button
+      class=star>☆<!--M_*10 #text/2--></button><!--M_*10 #button/1--></li>
+  <!--M_}1 #ul/3 10 9-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0
+    }, {
+      "ControlledHandler:#input/3": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-hold-nested-keyed/template.marko_1/valueChange"
+        ),
+      draft: "",
+      collapsed: !1,
+      "#LoopKey": "t1"
+    }, 3, {
+      "ControlledHandler:#input/3": _(6,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-hold-nested-keyed/template.marko_1/valueChange"
+        ),
+      draft: "",
+      collapsed: !1,
+      "#LoopKey": "t2"
+    }, 2, {
+      starred: !1,
+      "#LoopKey": 0
+    }, {
+      starred: !1,
+      "#LoopKey": 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-hold-nested-keyed/template.marko_1 2 6 packages/runtime-tags/src/__tests__/fixtures/persisted-hold-nested-keyed/template.marko_3 9 10 packages/runtime-tags/src/__tests__/fixtures/persisted-hold-nested-keyed/template.marko_0 1"
+  ];
+  M._.w()
+</script>

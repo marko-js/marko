@@ -1,0 +1,107 @@
+// template.marko.persisted.mjs
+const $Editor_content__walks = " bD l", $Editor_content__template = "<input class=field><output class=echo> </output>";
+const $template = "<button class=count>clicked <!></button><!><!>";
+const $walks = " Db%l%c";
+const $Editor_content__text = _var_resume("__tests__/template.marko_2_text/var", /*@__PURE__*/ _let_persisted("text/2", ($scope) => {
+	_attr_input_value($scope, "#input/0", $scope.text, $valueChange($scope));
+	_text($scope["#text/1"], $scope.text);
+}));
+const $Editor_content__setup__script = _script_shared(($scope) => _attr_input_value_script($scope, "#input/0"));
+const $Editor_content__setup = ($scope) => {
+	$Editor_content__text($scope, "draft");
+	$Editor_content__setup__script($scope);
+};
+const $Editor_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", $Editor_content__template, $Editor_content__walks, $Editor_content__setup);
+const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>welcome home</p>");
+const $count = _var_resume("__tests__/template.marko_0_count/var", /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
+const $Home__OR__Editor = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.$global.view === "editor" ? $scope.Editor : $scope.Home));
+const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Editor);
+const $Editor = /*@__PURE__*/ _const_persisted("Editor", $Home__OR__Editor);
+const $setup__script = _script_shared(($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	if (!updating) $Home($scope, { content: $Home_content($scope) });
+	if (!updating) $Editor($scope, { content: $Editor_content($scope) });
+	$setup__script($scope);
+}
+function $valueChange($scope) {
+	return (_new_text) => {
+		$Editor_content__text($scope, _new_text);
+	};
+}
+var template_marko_persisted_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+_static_shells({
+	"__tests__/template.marko_2_update": [$Editor_content__template, $Editor_content__walks],
+	"__tests__/template.marko_2_content": [$Editor_content__template, $Editor_content__walks],
+	"__tests__/template.marko_0_update": [$template, $walks],
+	"__tests__/template.marko": [$template, $walks]
+});
+const $text_seed = _update_signal("__tests__/template.marko_2_text/var");
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $Editor_content__construct = ($scope) => {
+	_attr_input_value($scope, "#input/0", $scope.text, $scope["ControlledHandler:#input/0"]);
+	_text($scope["#text/1"], $scope.text);
+	_construct_effect($scope, $Editor_content__setup__script);
+};
+const $Editor_content__update = ($patch, $live) => {
+	_update_pair($patch, $live);
+	if ("text" in $patch) _update_seed($live, $text_seed, $patch["text"]);
+};
+const $construct = ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	_construct_effect($scope, $setup__script);
+};
+const $update2 = ($patch, $live) => {
+	_update_pair($patch, $live);
+	if ("count" in $patch) _update_seed($live, $count_seed, $patch["count"]);
+	if ("ConditionalRenderer:#text/2" in $patch || "BranchScopes:#text/2" in $patch) _update_dynamic($patch, $live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
+};
+_construct("__tests__/template.marko_2_update", $Editor_content__construct);
+_construct("__tests__/template.marko_0_update", $construct);
+_update_content("__tests__/template.marko_2_content", $Editor_content__update, $Editor_content__construct);
+const $noop_update = () => {};
+_update_content("__tests__/template.marko_1_content", $noop_update);
+const $merge = _resume("__tests__/template.marko_0_update", $update2);
+_update_content("__tests__/template.marko", $merge, $construct);
+function $patch2($fail) {
+	return patch($merge, $fail);
+}
+
+// template.marko
+const $template = "<button class=count>clicked <!></button><!><!>";
+const $walks = " Db%l%c";
+const $Editor_content__text = /*@__PURE__*/ _let_persisted("text/2", ($scope) => {
+	_attr_input_value($scope, "#input/0", $scope.text, $valueChange($scope));
+	_text($scope["#text/1"], $scope.text);
+});
+const $Editor_content__setup__script = _script_update("__tests__/template.marko_2", ($scope) => _attr_input_value_script($scope, "#input/0"));
+const $Editor_content__setup = ($scope) => {
+	$Editor_content__text($scope, "draft");
+	$Editor_content__setup__script($scope);
+};
+const $Editor_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<input class=field><output class=echo> </output>", " bD ", $Editor_content__setup);
+const $Home_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<p class=home>welcome home</p>");
+const $count = /*@__PURE__*/ _let_persisted("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
+const $Home__OR__Editor = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.$global.view === "editor" ? $scope.Editor : $scope.Home));
+const $Home = /*@__PURE__*/ _const_persisted("Home", $Home__OR__Editor);
+const $Editor = /*@__PURE__*/ _const_persisted("Editor", $Home__OR__Editor);
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	if (!updating) $Home($scope, { content: $Home_content($scope) });
+	if (!updating) $Editor($scope, { content: $Editor_content($scope) });
+	$setup__script($scope);
+}
+function $valueChange($scope) {
+	return (_new_text) => {
+		$Editor_content__text($scope, _new_text);
+	};
+}
+_resume("__tests__/template.marko_2/valueChange", $valueChange);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

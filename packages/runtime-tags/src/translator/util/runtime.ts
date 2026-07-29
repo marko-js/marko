@@ -13,10 +13,18 @@ import {
   _unescaped,
 } from "../../html";
 import { isTranslate } from "./get-compile-stage";
-import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
+import {
+  getMarkoOpts,
+  isOutputDOM,
+  isOutputHTML,
+  isPersistedEntryBuild,
+} from "./marko-config";
 import runtimeInfo from "./runtime-info";
+import { recordPlanImport } from "./update-plan-records";
 
-export type DOMRuntimeHelpers = keyof typeof import("../../dom");
+export type DOMRuntimeHelpers =
+  | keyof typeof import("../../dom")
+  | keyof typeof import("../../dom-persisted");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 
 // Marked `@__PURE__` (see callRuntime) so a bundler may drop a call whose
@@ -54,7 +62,10 @@ const pureDOMFunctions = new Set<string>([
   "_hoist",
   "_let",
   "_let_change",
+  "_let_change_persisted",
+  "_let_persisted",
   "_const",
+  "_const_persisted",
   "_load_signal",
   "_load_setup",
   "_load_template",
@@ -63,6 +74,52 @@ const pureDOMFunctions = new Set<string>([
   "_load_idle_trigger",
   "_load_media_trigger",
   "_load_race_trigger",
+  "_update_attr",
+  "_update_construct",
+  "_update_controllable",
+  "_update_html",
+  "_update_named_attr",
+  "_update_scopes",
+  "_update_text",
+] satisfies DOMRuntimeHelpers[]);
+
+const updateDOMFunctions = new Set<string>([
+  "patch",
+  "_construct",
+  "_construct_attr_content",
+  "_construct_child",
+  "_construct_closure",
+  "_echo_snapshot",
+  "_load_ready",
+  "_static_shells",
+  "_update_branch",
+  "_update_content",
+  "_update_details_or_dialog_open",
+  "_update_dynamic",
+  "_update_for",
+  "_update_for_keyed",
+  "_update_if",
+  "_update_if_state",
+  "_update_input_checked",
+  "_update_input_checkedValue",
+  "_update_input_value",
+  "_update_input_value_dynamic",
+  "_update_load",
+  "_update_loader",
+  "_update_attr",
+  "_update_child",
+  "_update_construct",
+  "_update_controllable",
+  "_update_html",
+  "_update_named_attr",
+  "_update_pair",
+  "_update_region",
+  "_update_scopes",
+  "_update_seed",
+  "_update_select_value",
+  "_update_signal",
+  "_update_style_item",
+  "_update_text",
 ] satisfies DOMRuntimeHelpers[]);
 
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
@@ -74,7 +131,16 @@ export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
     );
   }
   const { output } = getMarkoOpts();
-  return importNamed(getFile(), getRuntimePath(output), name);
+  const request =
+    output === "dom" && updateDOMFunctions.has(name)
+      ? getPersistedRuntimePath()
+      : getRuntimePath(output);
+  if (isPersistedEntryBuild()) {
+    // The plan records the ACTUAL emitted raw specifier (debug vs optimize
+    // spell the runtime paths differently) — census site 31.
+    recordPlanImport(getFile(), request, "external");
+  }
+  return importNamed(getFile(), request, name);
 }
 
 export function callRuntime(
@@ -109,6 +175,11 @@ export function getRuntimePath(output: string) {
   return `${runtimeInfo.name}/${
     optimize ? "" : "debug/"
   }${output === "html" ? "html" : "dom"}`;
+}
+
+export function getPersistedRuntimePath() {
+  const { optimize } = getMarkoOpts();
+  return `${runtimeInfo.name}/${optimize ? "" : "debug/"}dom-persisted`;
 }
 
 function filterArguments<A>(args: (A | Falsy)[]) {

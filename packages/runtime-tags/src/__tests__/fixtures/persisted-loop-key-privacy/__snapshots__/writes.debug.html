@@ -1,0 +1,37 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<ul class=users>
+  <li class=user><span class=name>N4ME-ALPHA<!--M_*2 #text/0--></span><button
+      class=toggle>more<!--M_*2 #text/2--></button><!--M_*2 #button/1--></li>
+  <li class=user><span class=name>N4ME-BETA<!--M_*3 #text/0--></span><button
+      class=toggle>more<!--M_*3 #text/2--></button><!--M_*3 #button/1--></li>
+  <!--M_}1 #ul/2 3 2-->
+</ul>
+<ul class=tags>
+  <li class=tag>tag-one<!--M_*4 #text/0--><button
+      class=star>☆<!--M_*4 #text/2--></button><!--M_*4 #button/1--></li>
+  <li class=tag>tag-two<!--M_*5 #text/0--><button
+      class=star>☆<!--M_*5 #text/2--></button><!--M_*5 #button/1--></li>
+  <!--M_}1 #ul/3 5 4-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0
+    }, {
+      open: !1,
+      "#LoopKey": "pr1v-alpha@example.test"
+    }, {
+      open: !1,
+      "#LoopKey": "pr1v-beta@example.test"
+    }, {
+      starred: !1,
+      "#LoopKey": 0
+    }, {
+      starred: !1,
+      "#LoopKey": 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-key-privacy/template.marko_1 2 3 packages/runtime-tags/src/__tests__/fixtures/persisted-loop-key-privacy/template.marko_2 4 5 packages/runtime-tags/src/__tests__/fixtures/persisted-loop-key-privacy/template.marko_0 1"
+  ];
+  M._.w()
+</script>

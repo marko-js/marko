@@ -1,0 +1,16 @@
+<define/Frame>
+  <let/n=0/>
+  <html lang="en">
+    <head>
+      <title>frame</title>
+    </head>
+    <body>
+      <header.frame>STATIC FRAME</header>
+      <button onClick() { n++ }>${n}</button>
+    </body>
+  </html>
+</define>
+<if=input.show>
+  <Frame/>
+  <span.sibling>sibling</span>
+</if>

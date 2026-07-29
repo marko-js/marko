@@ -2,7 +2,8 @@ import { types as t } from "@marko/compiler";
 import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 
 import { assertNoTagVarMutation } from "../util/assert";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { addLocalChildTree } from "../util/membranes";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   BindingType,
@@ -81,6 +82,12 @@ export default {
           } else {
             allHaveInput = false;
             allDirectReferences = false;
+            if (isPersisted()) {
+              // The value flows to a render site this visitor cannot see
+              // (`content=`, a helper call): the body's nuclei must count
+              // in the referencing section's tree.
+              addLocalChildTree(getOrCreateSection(ref), bodySection);
+            }
           }
         }
         if (allDirectReferences) {

@@ -21,6 +21,7 @@ export default function createBrowser(
   dir?: string,
   loadOrder?: string[],
   rejectLoad?: (id: string) => boolean,
+  deferLoad?: (id: string) => boolean,
 ) {
   const virtualConsole = new VirtualConsole();
   const dom = new JSDOM("", {
@@ -171,6 +172,7 @@ export default function createBrowser(
             { browser: true },
             ctx,
             rejectLoad,
+            deferLoad,
           );
           // With an explicit order each script is fully evaluated before
           // the next starts so that the arrival order is deterministic.

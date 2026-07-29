@@ -1,0 +1,17 @@
+import { getUnit } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Tools>
+  <let/limit=10/>
+  <counter/tally start=$global.start/>
+  <p.readout>${tally} of ${limit}</p>
+  <span.unit>${getUnit?.()}</span>
+  <button.raise onClick() { limit += 5 }>raise</button>
+</define>
+<define/About>
+  <p.about>elsewhere</p>
+</define>
+
+<layout content=$global.view === "tools" ? Tools : About/>

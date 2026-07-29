@@ -1,0 +1,22 @@
+<button>clicked <!>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><input
+  data-request="request title" title="client title"
+  class=client><!--M_*1 #input/2-->
+<div data-request="request title" title="client title" class=client>dynamic
+</div><!--M_*1 #div/3--><!--M_[-->
+<div class=client data-request="request title"></div>
+<!--M_*3 #div/0--><!--M_]1 #text/5 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      input_title: "request title",
+      attrs: {
+        title: "client title",
+        class: "client"
+      },
+      count: 0,
+      "#childScope/4": _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-spread-safe/template.marko_0_input_title_attrs 1 packages/runtime-tags/src/__tests__/fixtures/persisted-update-spread-safe/template.marko_0 1"
+  ];
+  M._.w()
+</script>

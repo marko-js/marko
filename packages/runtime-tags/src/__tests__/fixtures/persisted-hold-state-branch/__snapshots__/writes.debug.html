@@ -1,0 +1,91 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<ul class=threads>
+  <li class=thread>
+    <h3 class=title>THREAD-ALPHA<!--M_*2 #text/0--></h3><button
+      class=collapse>collapse<!--M_*2 #text/2--></button><!--M_*2 #button/1--><!--M_[--><!--M_[--><!--M_!^4-->
+    <p class=loading>loading…</p><!--M_!4--><!--M_]3 #text/0 4-->
+    <ol class=replies><!--M_[-->
+      <li class=reply>reply one<!--M_*6 #text/0--></li>
+      <li class=reply>reply two<!--M_*7 #text/0--></li><!--M_]3 #ol/1 5-->
+    </ol><!--M_*3 #ol/1--><!--M_]2 #text/3 3-->
+  </li>
+  <li class=thread>
+    <h3 class=title>THREAD-BETA<!--M_*8 #text/0--></h3><button
+      class=collapse>collapse<!--M_*8 #text/2--></button><!--M_*8 #button/1--><!--M_[--><!--M_[--><!--M_!^10-->
+    <p class=loading>loading…</p><!--M_!10--><!--M_]9 #text/0 10-->
+    <ol class=replies><!--M_[-->
+      <li class=reply>reply three<!--M_*12 #text/0--></li><!--M_]9 #ol/1 11-->
+    </ol><!--M_*9 #ol/1--><!--M_]8 #text/3 9-->
+  </li><!--M_}1 #ul/2 8 2-->
+</ul>
+<t hidden M_=4><!--M_#b--></t>
+<t hidden M_=10><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0
+    }, {
+      thread_note: "note alpha v1",
+      thread_replies: [{
+        id: "r1",
+        text: "reply one"
+      }, {
+        id: "r2",
+        text: "reply two"
+      }],
+      collapsed: !1,
+      "ClosureScopes:thread_note": new Set([_(4)]),
+      "#LoopKey": "t1"
+    }, {
+      "BoundaryAnchor:#text/0": ""
+    }, {
+      _: _(3),
+      "#ClosestBranchId": 3,
+      "#BranchAccessor": "#text/0",
+      "#PlaceholderContent": _(3,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-hold-state-branch/template.marko_4_content"
+        )
+    }, 3, {
+      thread_note: "note beta v1",
+      thread_replies: [{
+        id: "r3",
+        text: "reply three"
+      }],
+      collapsed: !1,
+      "ClosureScopes:thread_note": new Set([_(10)]),
+      "#LoopKey": "t2"
+    }, {
+      "BoundaryAnchor:#text/0": ""
+    }, {
+      _: _(9),
+      "#ClosestBranchId": 9,
+      "#BranchAccessor": "#text/0",
+      "#PlaceholderContent": _(9,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-hold-state-branch/template.marko_4_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-hold-state-branch/template.marko_1 2 packages/runtime-tags/src/__tests__/fixtures/persisted-hold-state-branch/template.marko_1 8 packages/runtime-tags/src/__tests__/fixtures/persisted-hold-state-branch/template.marko_0 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->
+  <p class=note>note alpha v1<!--M_*15 #text/0--></p><!--M_]4 #text/0 15-->
+</t>
+<t hidden M_=c><!--M_[-->
+  <p class=note>note beta v1<!--M_*16 #text/0--></p><!--M_]10 #text/0 16-->
+</t>
+<script>
+  if (!M._.n) {
+    M._.r.push(_ => [3, {
+      "BoundaryAnchor:#text/0": 0
+    }], _ => [9, {
+      "BoundaryAnchor:#text/0": 0
+    }]);
+    M._.w()
+  }
+</script>

@@ -1,0 +1,35 @@
+// template.marko.persisted.mjs
+const $template = "<button class=count>clicked <!></button><ul><!><li class=trailing>end</li></ul>";
+const $walks = " Db%lD%l";
+const $count = _var_resume("a3", /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d)));
+const $setup__script = _script_shared(($scope) => _on($scope.a, "click", function() {
+	$count($scope, $scope.d + 1);
+}));
+_static_shells({
+	"a0": [$template, $walks],
+	"a": [$template, $walks]
+});
+const $count_seed = _update_signal("a3");
+const $construct = ($scope) => {
+	_text($scope.b, $scope.d);
+	_construct_effect($scope, $setup__script);
+};
+const $update2 = ($patch, $live) => {
+	_update_pair($patch, $live);
+	if ("d" in $patch) _update_seed($live, $count_seed, $patch["d"]);
+	if ("Dc" in $patch) _update_region("c")($patch, $live);
+};
+_construct("a0", $construct);
+const $noop_update = () => {};
+_update_content("a4", $noop_update);
+const $merge = _resume("a0", $update2);
+_update_content("a", $merge, $construct);
+function $patch2($fail) {
+	return patch($merge, $fail);
+}
+
+// template.marko
+const $count = /*@__PURE__*/ _let_persisted(3, ($scope) => _text($scope.b, $scope.d));
+const $setup__script = _script_update("a2", ($scope) => _on($scope.a, "click", function() {
+	$count($scope, $scope.d + 1);
+}));

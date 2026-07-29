@@ -1,0 +1,21 @@
+import { getBadge } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Panel>
+  <let/on=$global.on/>
+  <button.flip onClick() { on = !on }>flip</button>
+  <if=on>
+    <p.msg>msg ${count}</p>
+  </if>
+  <else>
+    <!-- intentionally renders nothing -->
+  </else>
+  <span.badge>${getBadge?.()}</span>
+</define>
+<define/About>
+  <p.about>about</p>
+</define>
+
+<layout content=$global.view === "panel" ? Panel : About/>

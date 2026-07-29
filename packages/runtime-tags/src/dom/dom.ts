@@ -23,11 +23,11 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { setConditionalRenderer } from "./control-flow";
 import { type ControllableAttrs, controllableScripts } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
+import { setConditionalRenderer } from "./scope";
 import { _id, subscribeToScopeSet } from "./signals";
 
 export function _to_text(value: unknown) {

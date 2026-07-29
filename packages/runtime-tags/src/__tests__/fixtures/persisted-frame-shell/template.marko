@@ -1,0 +1,14 @@
+<let/count=0/>
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Frame ${$global.search?.[0]?.q ?? ""}</title>
+  </head>
+  <body>
+    <header class="site">Store</header>
+    <button.count onClick() { count++ }>clicked ${count}</button>
+    <if=input.show>
+      <button.detail onClick() { count += 2 }>detail ${count}</button>
+    </if>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+import Roster from "./tags/roster.marko"
+import Digest from "./tags/digest.marko"
+
+<let/count=0/>
+<h1>${input.title}</h1>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<${input.view === "roster" ? Roster : "div"} members=input.members/>
+<${input.wide ? Roster : Digest} members=input.members/>

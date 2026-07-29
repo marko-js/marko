@@ -9,6 +9,7 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import { hasServerRenderer } from "./renderer-shells";
 import type { ServerRenderer } from "./template";
 import {
   _html,
@@ -18,6 +19,8 @@ import {
   _scope_id,
   _script,
   _set_serialize_reason,
+  captureRegionShell,
+  emitShellFrame,
   getScopeById,
   getState,
   withBranchId,
@@ -40,13 +43,54 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  anchorId?: string,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
+  // The server never patches client-state-driven structure.
+  const updateStructural =
+    state.patch && (serializeReason as unknown as number) & 2;
   let rendered: boolean;
   let result: unknown;
+  let constructibleNative: string | undefined;
+
+  const targetRendererId =
+    (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
+  let regionRendererId: string | undefined;
+  // A diverged hop constructs client-side from the target's wire shell; the
+  // client falls back to a document navigation when no shell arrived. Native
+  // targets always render plainly (typed captures rebuild or update the
+  // element).
+  // A nucleus-free target has no registered shell; its rendered markup ships
+  // as a per-response region shell under a `;`-prefixed id instead.
+  // Cross-module invariant: the renderers entry registers a shell for every
+  // live tree, keyed for the root under the template id
+  // (`translator/visitors/program/renderers.ts` — nucleus-free roots register
+  // only their composition-facing update id), and the target's server module
+  // runs that `_renderer_shells` call on load
+  // (`translator/visitors/program/html.ts`), so "template id unregistered"
+  // means the target's tree is nucleus-free. A live target that lost its
+  // registration (a dropped side effect, failed shell extraction) is not
+  // assertable at runtime: region capture suppresses the serialization that
+  // would betray it, and the effect writes that do escape (hoisted serialize
+  // guards) also occur for legitimately inert content.
+  const regionTarget =
+    state.patch &&
+    !state.regionDepth &&
+    updateStructural &&
+    typeof renderer !== "string" &&
+    typeof targetRendererId === "string" &&
+    !hasServerRenderer(targetRendererId);
+  if (
+    state.patch &&
+    anchorId !== undefined &&
+    typeof targetRendererId === "string" &&
+    hasServerRenderer(targetRendererId)
+  ) {
+    emitShellFrame(state, targetRendererId);
+  }
 
   if (typeof renderer === "string") {
     // Debug-only: the name is written into markup unescaped, so passing a
@@ -59,7 +103,10 @@ export let _dynamic_tag = (
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
     rendered = true;
-    const renderNative = () => {
+    // A contentless native branch is fully described by its typed captures,
+    // so a diverged hop can rebuild the element client-side.
+    constructibleNative = MARKO_DEBUG ? `#${renderer}/0` : "a";
+    {
       _scope_id();
       _html(
         `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
@@ -68,6 +115,9 @@ export let _dynamic_tag = (
       if (!voidElementsReg.test(renderer)) {
         const renderContent =
           content || normalizeDynamicRenderer<ServerRenderer>(input.content);
+        if (renderContent || renderer === "textarea") {
+          constructibleNative = undefined;
+        }
         if (renderer === "textarea") {
           if (MARKO_DEBUG && renderContent) {
             throw new Error(
@@ -150,8 +200,7 @@ export let _dynamic_tag = (
           ),
         );
       }
-    };
-    renderNative();
+    }
 
     // TODO: this needs to set result the element getter
   } else {
@@ -162,8 +211,17 @@ export let _dynamic_tag = (
     const render = () => {
       if (renderer) {
         try {
+          // A patch-participating hop leaves the reason unset so child guards
+          // bottom out at `_persisted_reason()`, keeping the patch-structural bit.
           _set_serialize_reason(
-            shouldResume && inputOrArgs !== undefined ? 1 : 0,
+            updateStructural
+              ? regionTarget
+                ? // Region content is inert markup; nothing inside resumes.
+                  0
+                : undefined
+              : shouldResume && inputOrArgs !== undefined
+                ? 1
+                : 0,
           );
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
@@ -179,7 +237,28 @@ export let _dynamic_tag = (
         return content();
       }
     };
-    result = shouldResume ? withBranchId(branchId, render) : render();
+    if (!shouldResume) {
+      result = render();
+    } else {
+      // A replay-constructed hop branch (renderer mismatch client-side)
+      // seeds like other patch-list branches (see `_state_reason`).
+      if (updateStructural) state.freshBranchDepth++;
+      if (regionTarget) {
+        regionRendererId = captureRegionShell(state, branchId, render);
+        result = undefined;
+      } else {
+        // The registered renderer (or content body) id keys the branch's
+        // value group; a native tag's inline content stays response-local.
+        result = withBranchId(
+          branchId,
+          render,
+          ((renderer || content) as ServerRenderer | undefined)?.[
+            RendererProp.Id
+          ] as string | undefined,
+        );
+      }
+      if (updateStructural) state.freshBranchDepth--;
+    }
     rendered = _peek_scope_id() !== branchId;
 
     if (shouldResume) {
@@ -196,11 +275,35 @@ export let _dynamic_tag = (
     if (shouldResume) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]:
+          regionRendererId ||
           (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
           renderer,
+        // Patch branches link explicitly; native renderers retain their tag so
+        // later frames cannot confuse them with component registry ids, and a
+        // constructible native carries its element accessor.
+        ...(updateStructural
+          ? {
+              [AccessorPrefix.BranchScopes + accessor]: _scope(
+                branchId,
+                typeof renderer === "string"
+                  ? {
+                      [AccessorProp.Renderer]: renderer,
+                      [AccessorProp.BranchAccessor]: constructibleNative,
+                    }
+                  : {},
+              ),
+            }
+          : null),
       });
     }
   } else {
+    if (updateStructural) {
+      // Zero explicitly removes a request-derived branch; absence is unchanged.
+      _scope(scopeId, {
+        [AccessorPrefix.ConditionalRenderer + accessor]: 0,
+        [AccessorPrefix.BranchScopes + accessor]: undefined,
+      });
+    }
     _scope_id();
   }
 
@@ -231,6 +334,7 @@ export const patchDynamicTag = (
       content,
       inputIsArgs,
       resume,
+      anchorId,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -243,6 +347,7 @@ export const patchDynamicTag = (
         content,
         inputIsArgs,
         resume,
+        anchorId,
       );
     };
   }

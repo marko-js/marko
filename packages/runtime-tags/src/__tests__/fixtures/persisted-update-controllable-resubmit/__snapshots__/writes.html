@@ -1,0 +1,18 @@
+<h1 class=name>Alpha lamp<!--M_*1 a--></h1>
+<form class=order><input value=1 type=number class=qty><!--M_*2 b--><input
+    type=hidden name=itemId value=11 class=item><!--M_*2 c--><button
+    class=buy>buy</button></form><!--M_*2 a-->
+<p class=mirror>adding <!>1<!--M_*2 d--> to cart</p><output
+  class=last>none<!--M_*2 e--></output>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    b: _(2)
+  }, {
+    Eb: _(2, "b0"),
+    i: 11,
+    j: 1,
+    k: "none"
+  }], "b2 2"];
+  M._.w()
+</script>

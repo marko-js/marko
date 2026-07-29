@@ -86,15 +86,25 @@ export {
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
+export {
+  _construct_effect,
+  _script_refresh,
+  _script_shared,
+  _script_update,
+  _updating,
+} from "./dom/persisted-queue";
 export { _enable_catch, run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
+  enableBranchesPersisted as _enable_branches_persisted,
   _resume,
   _var_resume,
   init,
   initEmbedded,
   ready,
+  readyPersisted,
+  readyPersistedFailed,
 } from "./dom/resume";
 export { _assert_init } from "./dom/scope";
 export {
@@ -102,6 +112,7 @@ export {
   _closure,
   _closure_get,
   _const,
+  _const_persisted,
   _el_read,
   _for_closure,
   _for_selector,
@@ -111,6 +122,8 @@ export {
   _if_closure,
   _let,
   _let_change,
+  _let_change_persisted,
+  _let_persisted,
   _or,
   _return,
   _return_change,

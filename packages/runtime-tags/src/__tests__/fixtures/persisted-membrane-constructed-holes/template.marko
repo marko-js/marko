@@ -1,0 +1,9 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<if=input.show>
+  <section.arrived>
+    <button.inner onClick() { count++ }>inner</button>
+    <info-card title=input.title note=input.note/>
+    <info-card title=input.title2 note=input.note2/>
+  </section>
+</if>

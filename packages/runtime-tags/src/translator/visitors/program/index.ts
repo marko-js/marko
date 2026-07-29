@@ -19,7 +19,11 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+  isRenderersEntryBuild,
 } from "../../util/marko-config";
+import { finalizeMembranes } from "../../util/membranes";
 import {
   BindingType,
   finalizeReferences,
@@ -29,10 +33,16 @@ import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { getResumeRegisterId } from "../../util/signals";
+import { recordPlanImport } from "../../util/update-plan-records";
 import type { TemplateVisitor } from "../../util/visitors";
+import { getEscapedTemplateImports } from "../tag/dynamic-tag";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
+import programRenderers from "./renderers";
+import programUpdate from "./update";
+import { publishUpdatePlan } from "./update-plan";
 
 export let scopeIdentifier: t.Identifier;
 export let localsIdentifier: t.Identifier;
@@ -46,6 +56,7 @@ declare module "@marko/compiler/dist/types" {
       template: string;
       walks: string;
       setup: string;
+      update: string;
       setupEmpty?: true;
       params: BindingPropTree | undefined;
     };
@@ -81,6 +92,7 @@ export default {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
+        update: generateUid("update"),
         params: undefined,
       };
 
@@ -96,8 +108,17 @@ export default {
     exit(program) {
       // Analyze failures were already reported as diagnostics and their tags
       // skipped, so skip finalization work that assumes an error-free template.
-      if (hasAnalyzeErrors()) return;
+      if (hasAnalyzeErrors()) {
+        // An error-free parent may still classify this program's sections
+        // (via its child tree); mark them so the phase guard stays quiet.
+        finalizeMembranes();
+        return;
+      }
       finalizeReferences();
+      if (isPersisted()) {
+        program.node.extra!.escapedTemplateImports =
+          getEscapedTemplateImports(program);
+      }
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
@@ -110,6 +131,7 @@ export default {
         // importing and calling it (checked when this template translates).
         programExtra.domExports!.setupEmpty = true;
       }
+      if (isPersisted()) getResumeRegisterId(section, "update");
     },
   },
   translate: {
@@ -128,9 +150,19 @@ export default {
           (output === "dom" && entry === "page") || output === "hydrate";
         const isServerEntry = output === "html" && entry === "page";
 
-        if (entry && !markoOpts.linkAssets) {
+        // Persisted entries have no assets to link; only facades bake wiring in.
+        if ((entry === "page" || entry === "load") && !markoOpts.linkAssets) {
           throw program.buildCodeFrameError(
             'The "entry" option requires the `linkAssets` compiler option to be configured.',
+          );
+        }
+
+        if (
+          (entry === "persisted" || entry === "renderers") &&
+          !markoOpts.persisted
+        ) {
+          throw program.buildCodeFrameError(
+            `The "${entry}" entry kind requires the \`persisted\` compiler option to be enabled.`,
           );
         }
 
@@ -145,23 +177,53 @@ export default {
         if (isLoadEntry) {
           const entryFile = program.hub.file;
           const { filename } = entryFile.opts;
+          const relativePath = resolveRelativePath(entryFile, filename);
+          // Persisted lazy children load their merge module before declaring ready.
+          const loadExpr = isPersisted()
+            ? t.callExpression(
+                t.memberExpression(
+                  t.identifier("Promise"),
+                  t.identifier("all"),
+                ),
+                [
+                  t.arrayExpression([
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath),
+                    ]),
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath + "?persisted"),
+                    ]),
+                  ]),
+                ],
+              )
+            : t.callExpression(t.import(), [t.stringLiteral(relativePath)]);
           program.node.body = [
             t.importDeclaration(
-              [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
+              [
+                t.importSpecifier(
+                  t.identifier("ready"),
+                  t.identifier(isPersisted() ? "readyPersisted" : "ready"),
+                ),
+                ...(isPersisted()
+                  ? [
+                      t.importSpecifier(
+                        t.identifier("failed"),
+                        t.identifier("readyPersistedFailed"),
+                      ),
+                    ]
+                  : []),
+              ],
               t.stringLiteral(getRuntimePath("dom")),
             ),
-            // A rejected chunk blocks this ready id, but already surfaces as a
-            // network error, so handling it is not worth the runtime bytes.
+            // Persisted dispatches may be parked on this ready id, so a
+            // rejected chunk must fail them closed rather than strand them;
+            // without persisted pages a rejection only surfaces as the
+            // network error it already is.
             // Dynamic so the template stays mergeable with its virtual signal
             // chunks; a static import splits it out, adding a chunk and bytes.
             t.expressionStatement(
               t.callExpression(
-                t.memberExpression(
-                  t.callExpression(t.import(), [
-                    t.stringLiteral(resolveRelativePath(entryFile, filename)),
-                  ]),
-                  t.identifier("then"),
-                ),
+                t.memberExpression(loadExpr, t.identifier("then")),
                 [
                   t.arrowFunctionExpression(
                     [],
@@ -169,6 +231,16 @@ export default {
                       t.stringLiteral(getReadyId(entryFile)!),
                     ]),
                   ),
+                  ...(isPersisted()
+                    ? [
+                        t.arrowFunctionExpression(
+                          [],
+                          t.callExpression(t.identifier("failed"), [
+                            t.stringLiteral(getReadyId(entryFile)!),
+                          ]),
+                        ),
+                      ]
+                    : []),
                 ],
               ),
             ),
@@ -255,6 +327,13 @@ export default {
     exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
+      } else if (isRenderersEntryBuild()) {
+        // Data-only: section metas exist without the DOM program assembly.
+        programRenderers.translate.exit(program);
+        return;
+      } else if (isPersistedEntryBuild()) {
+        programDOM.translate.exit(program);
+        programUpdate.translate.exit(program);
       } else {
         programDOM.translate.exit(program);
       }
@@ -276,6 +355,17 @@ export default {
 
         body[0] ??= t.importDeclaration([], t.stringLiteral(compatFile));
         program.node.body = body as t.Statement[];
+        if (isPersistedEntryBuild()) {
+          // The relocated compat request is an external runtime helper
+          // (census site 40); its ordinal stays finalizer-owned below.
+          recordPlanImport(program.hub.file, compatFile, "external");
+        }
+      }
+
+      // After the `needsCompat` relocation above: the plan finalizer assigns
+      // statement ordinals from the final print order (never emission order).
+      if (isPersistedEntryBuild()) {
+        publishUpdatePlan(program);
       }
     },
   },

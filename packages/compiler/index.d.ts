@@ -43,6 +43,15 @@ export const version: string;
 
 export const globalConfig: Config;
 
+export function isPersistedEntryConfig(config: Config): boolean;
+
+/** @internal Host-only plan-only tag; not a public Config field. */
+export const PLAN_ONLY_PERSISTED_ENTRY: string;
+/** @internal */
+export function withPlanOnlyPersistedEntry<T extends object>(config?: T): T;
+/** @internal */
+export function isPlanOnlyPersistedEntry(config: unknown): boolean;
+
 export function configure(config: Config): void;
 
 export function compile(

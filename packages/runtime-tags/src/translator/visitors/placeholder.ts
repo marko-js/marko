@@ -3,16 +3,24 @@ import { types as t } from "@marko/compiler";
 import { isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
+import {
+  addConstructClosureWires,
+  addConstructFragment,
+  getConstructReadExpr,
+} from "../util/construct-pass";
 import evaluate from "../util/evaluate";
+import { getAccessorPrefix } from "../util/get-accessor-char";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { isMembraneLive } from "../util/membranes";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
+  onFinalizeReferences,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -20,17 +28,27 @@ import {
   ContentType,
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
   type Section,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
+  getSerializeSourcesForExpr,
+  isReasonDynamic,
+  isStateSerializeReason,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
+import {
+  addUpdateGlobalsStatement,
+  addUpdateMerge,
+  isUpdateCoveredByClientSignals,
+} from "../util/update-merges";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -38,6 +56,7 @@ import * as SiblingText from "./constants/sibling-text";
 import { scopeIdentifier } from "./program";
 
 const kNodeBinding = Symbol("placeholder node binding");
+const kReasonlessHole = Symbol("placeholder hole with no serialize sources");
 const kSiblingText = Symbol("placeholder has sibling text");
 const kSharedText = Symbol(
   "placeholder will merge its visitor with a another node",
@@ -46,6 +65,7 @@ type SiblingText = SiblingText.Value;
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
     [kNodeBinding]?: Binding;
+    [kReasonlessHole]?: true;
     [kSiblingText]?: SiblingText;
     [kSharedText]?: true;
   }
@@ -79,6 +99,21 @@ export default {
       analyzeSiblingText(placeholder);
       addSetupExpr(section, node.value);
       addSerializeExpr(section, valueExtra, nodeBinding);
+      if (isPersisted()) {
+        onFinalizeReferences(() => {
+          // A nucleus hole with no serialize sources still captures for
+          // constructed branches (markup ordinarily carries it), so its
+          // marker must serialize for resume to bind the node the capture
+          // fills. Scaffold holes ride region markup and need neither.
+          if (
+            isMembraneLive(section) &&
+            !getSerializeReason(section, nodeBinding)
+          ) {
+            (node.extra ??= {})[kReasonlessHole] = true;
+            addSerializeReason(section, true, nodeBinding);
+          }
+        });
+      }
     }
   },
   translate: {
@@ -144,33 +179,122 @@ export default {
         }
 
         if (isHTML) {
+          // Reasonless holes (no reactive sources, e.g. server-only calls)
+          // ride markup on ordinary renders but must fill constructed
+          // branches, so they capture like request-derived ones. A
+          // state-computed hole with no construct-fill fragment captures
+          // for fresh branches only (`_state_reason`): constructs never
+          // re-execute the compute, matched patches never clobber state.
+          const stateComputedFill =
+            nodeBinding &&
+            isPersisted() &&
+            isMembraneLive(section) &&
+            isStateSerializeReason(
+              value.extra && getSerializeSourcesForExpr(value.extra),
+            ) &&
+            !getConstructReadExpr(value, section);
+          const holeValue =
+            nodeBinding &&
+            isPersisted() &&
+            isMembraneLive(section) &&
+            (stateComputedFill ||
+              ((isReasonDynamic(markerSerializeReason) ||
+                extra[kReasonlessHole]) &&
+                !isUpdateCoveredByClientSignals(valueExtra)))
+              ? callRuntime(
+                  "_hole_value",
+                  getScopeIdIdentifier(section),
+                  t.stringLiteral(
+                    (method === "_escape"
+                      ? getAccessorPrefix().PatchHole
+                      : getAccessorPrefix().PatchHtml) +
+                      getScopeAccessorLiteral(nodeBinding).value,
+                  ),
+                  value,
+                  callRuntime(
+                    stateComputedFill ? "_state_reason" : "_persisted_reason",
+                  ),
+                )
+              : undefined;
           write`${
             method === "_escape"
-              ? buildEscapedTextExpression(value)
-              : callRuntime(method as HTMLMethod | DOMMethod, value)
+              ? holeValue
+                ? callRuntime("_escape", holeValue)
+                : buildEscapedTextExpression(value)
+              : callRuntime(
+                  method as HTMLMethod | DOMMethod,
+                  holeValue || value,
+                )
           }`;
           if (nodeBinding) {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
           }
         } else {
+          // Update entries merge server-computed hole values (G1) for the
+          // same request-derived, reasonless, and state-computed holes the
+          // html output captures.
+          if (
+            nodeBinding &&
+            ((isStateSerializeReason(
+              value.extra && getSerializeSourcesForExpr(value.extra),
+            ) &&
+              !getConstructReadExpr(value, section)) ||
+              ((isReasonDynamic(markerSerializeReason) ||
+                extra[kReasonlessHole]) &&
+                !isUpdateCoveredByClientSignals(valueExtra)))
+          ) {
+            const accessor = getScopeAccessorLiteral(nodeBinding);
+            const isText = method === "_text";
+            addUpdateMerge(section, {
+              kind: isText ? "text" : "html",
+              patchAccessor:
+                (isText
+                  ? getAccessorPrefix().PatchHole
+                  : getAccessorPrefix().PatchHtml) + accessor.value,
+              accessor,
+              constructOnly:
+                isStateSerializeReason(
+                  value.extra && getSerializeSourcesForExpr(value.extra),
+                ) && !getConstructReadExpr(value, section),
+            });
+          }
+          const stmt = t.expressionStatement(
+            method === "_text"
+              ? callRuntime(
+                  "_text",
+                  createScopeReadExpression(nodeBinding!),
+                  value,
+                )
+              : callRuntime(
+                  "_html",
+                  scopeIdentifier,
+                  value,
+                  getScopeAccessorLiteral(nodeBinding!),
+                ),
+          );
+          if (method === "_text") {
+            const constructRead = getConstructReadExpr(value, section);
+            if (constructRead) {
+              addConstructFragment(
+                section,
+                "fill",
+                t.expressionStatement(
+                  callRuntime(
+                    "_text",
+                    createScopeReadExpression(nodeBinding!),
+                    constructRead,
+                  ),
+                ),
+              );
+              addConstructClosureWires(section, value);
+            }
+          }
+          addUpdateGlobalsStatement(section, valueExtra, stmt);
           addStatement(
             "render",
             section,
             valueExtra.referencedBindings,
-            t.expressionStatement(
-              method === "_text"
-                ? callRuntime(
-                    "_text",
-                    createScopeReadExpression(nodeBinding!),
-                    value,
-                  )
-                : callRuntime(
-                    "_html",
-                    scopeIdentifier,
-                    value,
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
-            ),
+            stmt,
             undefined,
             true,
           );

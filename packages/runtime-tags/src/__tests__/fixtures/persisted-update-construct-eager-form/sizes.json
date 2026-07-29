@@ -1,0 +1,33 @@
+{
+  "dom": {
+    "nav.js": {
+      "total": {
+        "min": 2320,
+        "brotli": 1096
+      },
+      "files": {
+        "tags/shared-list.marko.persisted.mjs": 1413,
+        "tags/add-form.marko.persisted.mjs": 2592,
+        "template.marko.persisted.mjs": 1831
+      }
+    },
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 630,
+        "brotli": 372
+      },
+      "files": {
+        "tags/add-form.marko": 1076,
+        "template.marko": 253
+      }
+    },
+    "shared-list.mjs": {
+      "min": 19343,
+      "brotli": 7379
+    }
+  },
+  "html": {
+    "min": 465,
+    "brotli": 306
+  }
+}

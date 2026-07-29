@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=true/>
+<button.toggle onClick() { show = !show }>${show ? "hide" : "show"}</button>
+<if=show>
+  <section>
+    <try>
+      <@placeholder>loading…</@placeholder>
+      <await|note|=resolveAfter(input.note, input.tick)>
+        <p.note>${note}</p>
+      </await>
+    </try>
+  </section>
+</if>

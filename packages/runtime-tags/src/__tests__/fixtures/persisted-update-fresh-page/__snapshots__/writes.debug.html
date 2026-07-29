@@ -1,0 +1,44 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<aside><button
+    class=toggle>expand<!--M_*2 #text/1--></button><!--M_*2 #button/0--></aside>
+<section><!--M_[-->
+  <nav class=tags><!--M_[--><b class=on
+      data-tag=all>ALL<!--M_*7 #text/1--></b><!--M_*7 #b/0--><b
+      data-tag=dev>DEV<!--M_*8 #text/1--></b><!--M_*8 #b/0--><b
+      data-tag=news>NEWS<!--M_*9 #text/1--></b><!--M_*9 #b/0--><!--M_]3 #nav/3 6-->
+  </nav><!--M_*3 #nav/3--><!--M_[-->
+  <p class=cart>cart is empty</p><!--M_]3 #text/4 10--><!--M_]2 #text/2 3-->
+</section>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [0, {
+      data: {
+        cart: _.a = []
+      }
+    }, {
+      count: 0,
+      "#childScope/2": _(2)
+    }, {
+      "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/template.marko_1_content",
+      open: !1
+    }, {
+      "#scopeOffset/1": 5,
+      products: [],
+      entries: [],
+      "#childScope/0": _(4)
+    }, {
+      "#TagVariable": _(3,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/template.marko_1_list/var"
+        ),
+      input_name: "cart",
+      value: _.a,
+      "#TagVariableChange": _(4,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/tags/shared-list.marko_0/valueChange"
+        ),
+      "#ClosestBranchId": 3
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/tags/shared-list.marko_0_input_name 4 packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/tags/layout.marko_0 2 packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/template.marko_0 1"
+  ];
+  M._.w()
+</script>

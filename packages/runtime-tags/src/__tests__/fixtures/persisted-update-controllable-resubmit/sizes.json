@@ -1,0 +1,26 @@
+{
+  "dom": {
+    "nav.js": {
+      "total": {
+        "min": 1208,
+        "brotli": 610
+      },
+      "files": {
+        "tags/order-form.marko.persisted.mjs": 1860,
+        "template.marko.persisted.mjs": 738
+      }
+    },
+    "template.marko.page.mjs": {
+      "min": 341,
+      "brotli": 223
+    },
+    "shared": {
+      "min": 18598,
+      "brotli": 7123
+    }
+  },
+  "html": {
+    "min": 666,
+    "brotli": 390
+  }
+}

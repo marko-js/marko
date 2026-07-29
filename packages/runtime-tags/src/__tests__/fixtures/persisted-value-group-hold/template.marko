@@ -1,0 +1,14 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<if=input.a>
+  <let/n=0/>
+  <const/line=`${input.name}/${input.price}`/>
+  <button.tap onClick() { n++ }>tap ${n}</button>
+  <p.info>${line}</p>
+</if>
+<if=input.b>
+  <let/m=0/>
+  <const/tag=input.badge.toLowerCase()/>
+  <button.bump onClick() { m++ }>bump ${m}</button>
+  <span.badge>${tag}</span>
+</if>

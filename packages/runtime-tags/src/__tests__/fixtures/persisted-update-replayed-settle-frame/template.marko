@@ -1,0 +1,15 @@
+import { resolveAfter } from "../../utils/resolve";
+
+// The click handler gives the root scope a resumable effect for the harness's
+// live-root pairing, and is client state the corrupted nav must not touch.
+<let/clicks=0/>
+<button.clicks onClick() { clicks++ }>clicked ${clicks}</button>
+<section>
+  <try>
+    <@placeholder>loading…</@placeholder>
+    <await|note|=resolveAfter(input.note, input.tick)>
+      <let/taps=0/>
+      <button.taps onClick() { taps++ }>${note} tapped ${taps}</button>
+    </await>
+  </try>
+</section>

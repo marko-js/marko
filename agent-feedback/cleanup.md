@@ -17,26 +17,6 @@ is unaffected (later renders reuse `___marko5Component.___rootNode`), so this is
 dead optimization + a confusing stale-node invariant; verify destroy/move
 semantics before changing to `scope`.
 
----
-
-## Delete or restore the commented-out serializer test cases
-
-`packages/runtime-tags/src/__tests__/serializer.test.ts` | 2026-07-18 | impact:low | effort:low
-
-The two-line comment rule sweep that once found roughly ninety over-length
-blocks across `runtime-tags/src` was largely carried out by `9fc549115b`
-("condense over-length comments across src"): `dom/resume.ts` now has none,
-`translator/util/references.ts` one, and the remaining runtime blocks are the
-irreplaceable specs that commit deliberately preserved (the walks-string laws in
-`dom/walker.ts`, the serialize wire protocol, the abort-id invariant). What is
-left is not really a comment-length problem: `serializer.test.ts` carries 11
-multi-line `//` runs that are commented-out test cases, i.e. dead code to either
-restore or delete (the `_attrs` event-handler pair has its own entry below), and
-`packages/compiler/src/config.js` has 7 JSDoc blocks over two body lines, which
-are per-option API docs and arguably exempt. Verify: `awk` for runs of three or
-more consecutive `//` lines under `packages/runtime-tags/src` reports 36 blocks
-total, 11 of them in `serializer.test.ts`.
-
 ## Normalize inconsistent local naming flagged by a terminology audit
 
 `packages/runtime-tags/src/html/serializer.ts` › `State` | 2026-07-20 | impact:low | effort:low
@@ -288,3 +268,51 @@ The repo's only mocha patch adds a bare `console.error(requireErr)` in `lib/node
 `packages/runtime-class/test/markoc/index.test.js` | 2026-07-24 | impact:low | effort:low
 
 The mocha spec glob (`packages/*/@(src|test)/**/*.test.@(js|ts)`) matches this file, so every suite run loads it — and it defines no tests at all. Its entire `autotest` body has been commented out for years; the eight live lines only `require` `../__util__/test-init`, `chai`, and `../../compiler`, so the run pays that load cost for nothing. The commented body also now references `./babel-register`, which was deleted with the native-type-stripping migration, so it cannot be uncommented as written, and seven unused fixture directories remain under `fixtures/`. Either delete `test/markoc/` outright or resurrect the test by spawning `bin/markoc` with `-r ~ts` instead of a babel hook. Verify: `grep -vn "^\s*//" packages/runtime-class/test/markoc/index.test.js` lists eight non-comment lines and no `describe`/`it`.
+
+## Delete or restore the commented-out serializer test cases
+
+`packages/runtime-tags/src/__tests__/serializer.test.ts` | 2026-07-18 | impact:low | effort:low
+
+The two-line comment rule sweep that once found roughly ninety over-length
+blocks across `runtime-tags/src` was largely carried out by `9fc549115b`
+("condense over-length comments across src"): `dom/resume.ts` now has none,
+`translator/util/references.ts` one, and the remaining runtime blocks are the
+irreplaceable specs that commit deliberately preserved (the walks-string laws in
+`dom/walker.ts`, the serialize wire protocol, the abort-id invariant). What is
+left is not really a comment-length problem: `serializer.test.ts` carries 11
+multi-line `//` runs that are commented-out test cases, i.e. dead code to either
+restore or delete (the `_attrs` event-handler pair has its own entry below), and
+`packages/compiler/src/config.js` has 7 JSDoc blocks over two body lines, which
+are per-option API docs and arguably exempt. Verify: `awk` for runs of three or
+more consecutive `//` lines under `packages/runtime-tags/src` reports 36 blocks
+total, 11 of them in `serializer.test.ts`.
+
+## Composed-shell edge recording is decoupled from the splice it guards
+
+`packages/runtime-tags/src/translator/util/sections.ts` › `addComposedShellSection` | 2026-07-27 | impact:med | effort:med
+
+A section that splices another section's template/walks must record a
+`composedShellSections` edge during ANALYZE so `collectStaticShells`
+can drop frame-composing shells from `_static_shells`, but the splice
+itself happens in TRANSLATE (`custom-tag.ts` `withChildTemplateId`/
+`injectWalks`, `dynamic-tag.ts` define-body splice) with nothing tying
+the two sites together. Two of the three known splice paths originally
+shipped without the edge (cross-module custom-tag and direct-define —
+silent held-claim holes). A third splice path fails the same way.
+Derive the edge from the splice itself, or assert at translate time that
+any spliced section already carries an edge from the invoking section.
+Re-verify: add a splice path that omits `addComposedShellSection` and
+confirm the build does not fail today.
+
+## Persisted client registries have no HMR disposal (dev-only staleness)
+
+`packages/runtime-tags/src/dom/update-merges.ts` › `_update_loader` | 2026-07-28 | impact:low | effort:med
+
+Persisted client registries are append-only: `_update_loader` refuses to
+overwrite an existing own property (including a consumed `0`), and
+`failedReadyIds` never clears. Production is sound (monotonic build facts);
+under dev HMR, removing or renaming an escaped template can leave a stale
+loader that parks forever. Dispose owned ids on module replacement, or
+force a full reload when a persisted-registry-owning module hot-updates.
+Re-verify: edit a `load=` candidate under HMR and watch whether a later
+nav to the old id parks instead of reloading.

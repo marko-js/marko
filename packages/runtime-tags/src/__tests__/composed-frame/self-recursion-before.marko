@@ -1,0 +1,15 @@
+import Self from "./self-recursion-before.marko"
+<let/n=0/>
+<if=input.depth>
+  <Self depth=input.depth - 1/>
+  <span.sibling>${n}</span>
+</if>
+<html lang="en">
+  <head>
+    <title>frame</title>
+  </head>
+  <body>
+    <header.frame>STATIC FRAME</header>
+    <button onClick() { n++ }>${n}</button>
+  </body>
+</html>

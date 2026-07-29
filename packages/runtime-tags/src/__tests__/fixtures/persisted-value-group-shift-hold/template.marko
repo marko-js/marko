@@ -1,0 +1,13 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<ul.alerts>
+  <for|alert| of=input.alerts by(alert) { return alert.id }>
+    <li class="alert">${alert.text}</li>
+  </for>
+</ul>
+<ul.items>
+  <for|item| of=input.items by(item) { return item.id }>
+    <let/n=0/>
+    <li class="item">${item.name}<button.tap onClick() { n++ }>tap ${n}</button></li>
+  </for>
+</ul>

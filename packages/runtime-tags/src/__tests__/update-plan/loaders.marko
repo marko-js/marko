@@ -1,0 +1,11 @@
+import Panel from "./tags/panel.marko" with { load: "idle" }
+import Widget from "./tags/widget.marko"
+
+<let/count=0>
+<button onClick() { count++ }>${count}</button>
+<Panel label=input.label/>
+<Panel label="two"/>
+<${count % 2 ? Panel : null} label="odd">slot ${count}</>
+<${count % 3 ? Panel : null} label="third"/>
+<${count % 5 ? Widget : null}/>
+<stage view=Widget/>

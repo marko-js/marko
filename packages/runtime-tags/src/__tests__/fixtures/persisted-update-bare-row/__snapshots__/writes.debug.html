@@ -1,0 +1,29 @@
+<button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<ul>
+  <li>a<!--M_*3 #text/0-->: <!--M_[--><strong>A</strong><!--M_]3 #text/1 4-->
+  </li>
+  <li>b<!--M_*5 #text/0-->: <!--M_[--><strong>A</strong><!--M_]5 #text/1 6-->
+  </li>
+</ul><!--M_*2 #ul/0--><!--M_|1 #text/2 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0
+    }, {
+      "BranchScopes:#ul/0": [_(3), _(5)],
+      _: _(1),
+      "#LoopKey": "g"
+    }, {
+      "ConditionalRenderer:#text/1": _.a =
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-bare-row/template.marko_1_content",
+      _: _(2),
+      "#LoopKey": "a"
+    }, 1, {
+      "ConditionalRenderer:#text/1": _.a,
+      _: _(2),
+      "#LoopKey": "b"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-bare-row/template.marko_0 1"
+  ];
+  M._.w()
+</script>

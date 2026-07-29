@@ -8,7 +8,7 @@ import {
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getAccessorPrefix } from "../util/get-accessor-char";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPersisted } from "../util/marko-config";
 import {
   BindingType,
   mergeReferences,
@@ -18,6 +18,7 @@ import {
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
+import { getResumeOnlyExpr } from "../util/serialize-guard";
 import { addSerializeReason } from "../util/serialize-reasons";
 import {
   addValue,
@@ -118,6 +119,12 @@ export default {
       valueChangeAttr?.value,
     ]);
 
+    // A patch-constructed branch clones values-free markup, so every let
+    // seeds through the wire even when resume could recover it from the DOM.
+    if (isPersisted()) {
+      addSerializeReason(tagSection, true, binding);
+    }
+
     if (valueChangeAttr) {
       // Reserves the TagVariableChange accessor at `id + 1`.
       binding.reserveSize = 1;
@@ -155,7 +162,8 @@ export default {
         const signal = initValue(binding, true);
         const referencedBindings = tag.node.extra!.referencedBindings;
 
-        addValue(section, referencedBindings, signal, valueAttr.value);
+        // Construct path: the adopted scope already holds the seed value.
+        addValue(section, referencedBindings, signal, valueAttr.value, "fill");
 
         if (valueChangeAttr) {
           signal.extraArgs = [valueChangeAttr.value];
@@ -176,10 +184,12 @@ export default {
           setBindingSerializedValue(
             section,
             binding,
-            t.logicalExpression(
-              "||",
-              valueChangeAttr.value,
-              t.unaryExpression("void", t.numericLiteral(0)),
+            getResumeOnlyExpr(
+              t.logicalExpression(
+                "||",
+                valueChangeAttr.value,
+                t.unaryExpression("void", t.numericLiteral(0)),
+              ),
             ),
             getAccessorPrefix().TagVariableChange,
           );

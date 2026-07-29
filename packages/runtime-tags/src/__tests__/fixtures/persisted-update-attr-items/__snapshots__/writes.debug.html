@@ -1,0 +1,23 @@
+<button class=count>clicked <!>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[-->
+<div class=chips><span class=chip>alpha</span><!--M_*4 #span/0--><span
+    class="chip chip--active">beta</span><!--M_*5 #span/0--><span
+    class=chip>gamma</span><!--M_*6 #span/0--></div><!--M_]1 #text/3 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "#childScope/2": _(2)
+    }, 1, {
+      "BranchScopes:#div/0": [_(4), _(5), _(6)]
+    }, {
+      _: _(3)
+    }, {
+      _: _(3)
+    }, {
+      _: _(3)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-attr-items/template.marko_0 1"
+  ];
+  M._.w()
+</script>

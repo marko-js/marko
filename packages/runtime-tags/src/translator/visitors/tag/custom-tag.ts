@@ -7,6 +7,7 @@ import {
   getTagDef,
   getTaglibLookup,
   getTagTemplate,
+  getTemplateId,
   importDefault,
   importNamed,
   loadFileForTag,
@@ -17,14 +18,31 @@ import { closest, distance } from "fastest-levenshtein";
 import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
+import { addConstructFragment } from "../../util/construct-pass";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import {
+  getKnownTagChildScopeBinding,
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+} from "../../util/marko-config";
+import {
+  addChildTree,
+  isChildTreeLive,
+  isMembraneLive,
+} from "../../util/membranes";
+import {
+  PRELIMINARY_PLAN_VERSION,
+  type PreliminaryPlan,
+} from "../../util/preliminary-plan";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -33,18 +51,37 @@ import {
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
-import { getOrCreateSection } from "../../util/sections";
+import {
+  addComposedShellSection,
+  getOrCreateSection,
+  getSection,
+} from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
-import { addStatement, getSignal } from "../../util/signals";
+import {
+  addStatement,
+  buildResumeRegisterKey,
+  getSignal,
+} from "../../util/signals";
 import { createProgramState } from "../../util/state";
+import { addUpdateMerge } from "../../util/update-merges";
+import {
+  recordPlanImport,
+  recordPlanVirtual,
+} from "../../util/update-plan-records";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import type { LoadImportConfig } from "../import-declaration";
 import { scopeIdentifier } from "../program";
 import { getTemplateContentName } from "../program/html";
+import { withChildTemplateId } from "../program/renderers";
+import {
+  buildFingerprintFields,
+  GENERATED_STATEMENT_LINE,
+} from "../program/update-plan";
 
 const kLoadTagBinding = Symbol("load tag binding");
+const kRegionAnchorBinding = Symbol("region anchor binding");
 // Caches the trigger and attr signal declarations for a load import so they
 // are shared by all tags in a template using that import.
 const [getLoadIdentifiers] = createProgramState(() => ({
@@ -55,6 +92,7 @@ const [getLoadIdentifiers] = createProgramState(() => ({
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kLoadTagBinding]?: Binding;
+    [kRegionAnchorBinding]?: Binding;
   }
 }
 
@@ -82,8 +120,20 @@ export default {
       const childExtra = childProgram.extra;
       const childSection = childExtra.section!;
 
+      if (isPersisted()) {
+        addChildTree(getOrCreateSection(tag), childProgram);
+      }
+
       if (childExtra.page) {
         programExtra.page ??= true;
+      }
+
+      // A statically inlined child splices its root template into this
+      // section's shell; a load tag constructs from its own. Record the edge
+      // rather than the child's frame status — a same-file or cyclic child is
+      // still mid-analysis here, so only a later resolve sees the whole graph.
+      if (childExtra.section && !tagExtra.tagNameLoad) {
+        addComposedShellSection(getOrCreateSection(tag), childExtra.section);
       }
 
       if (tagExtra.tagNameLoad) {
@@ -100,6 +150,10 @@ export default {
         addSetupStatement(getOrCreateSection(tag));
       }
 
+      // Statically inlined children ride the parent's composed shell; a
+      // load tag's child constructs separately from its own root shell (see
+      // `_update_load`), so the parent section stays constructible.
+
       knownTagAnalyze(
         tag,
         childSection,
@@ -107,6 +161,19 @@ export default {
           ? programSection.params && getBindingPropTree(programSection.params)
           : childExtra.domExports?.params,
       );
+
+      if (isPersisted() && !tagExtra.tagNameLoad) {
+        // A nucleus-free child delivers as region markup; a constructed
+        // parent's shell omits that markup, so this `<!>` marker (walked
+        // right after the child, where its markup ends) is the region's
+        // only stable anchor. Created after `knownTagAnalyze` so its dense
+        // walker index follows the child scope's.
+        tagExtra[kRegionAnchorBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          getOrCreateSection(tag),
+        );
+      }
     },
   },
   translate: {
@@ -140,11 +207,19 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     tagIdentifier = node.name;
   }
 
+  const childScopeBinding = getKnownTagChildScopeBinding(tag);
   knownTagTranslateHTML(
     tag,
     tagIdentifier,
     childExtra.section!,
     childExtra.domExports?.params,
+    isPersisted() &&
+      !node.var &&
+      childScopeBinding &&
+      isMembraneLive(getSection(tag)) &&
+      !isChildTreeLive(childProgram)
+      ? getScopeAccessorLiteral(node.extra![kRegionAnchorBinding]!)
+      : undefined,
   );
 }
 
@@ -168,6 +243,26 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
   if (isLoad) {
     const childFileName = childFile.opts.filename;
+    recordChildUpdateMerge(
+      tag,
+      relativePath,
+      tagName,
+      childExports.update,
+      isPersisted()
+        ? getTemplateId(
+            getMarkoOpts(),
+            childFileName,
+            buildResumeRegisterKey(childSection, "update"),
+          )
+        : undefined,
+      isPersistedEntryBuild()
+        ? buildLoadReadyConfig(file, childFile, childExports, loadConfig)
+        : undefined,
+      isPersisted()
+        ? getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true)
+        : undefined,
+      isPersisted() ? childFile.metadata.marko.id : undefined,
+    );
     const { triggers, signals } = getLoadIdentifiers();
     let triggerIdent = triggers.get(loadConfig);
     if (!triggerIdent) {
@@ -271,6 +366,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     walks.injectWalks(tag, tagName);
     walks.enterShallow(tag);
   } else if (programSection === childSection) {
+    recordChildUpdateMerge(tag, relativePath, tagName, childExports.update);
     knownTagTranslateDOM(
       tag,
       childExports.params,
@@ -292,16 +388,77 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           },
     );
 
-    write`${t.identifier(childExports.template)}`;
-    walks.injectWalks(tag, tagName, t.identifier(childExports.walks));
+    write`${withChildTemplateId(
+      t.identifier(childExports.template),
+      file.metadata.marko.id,
+    )}`;
+    walks.injectWalks(
+      tag,
+      tagName,
+      withChildTemplateId(
+        t.identifier(childExports.walks),
+        file.metadata.marko.id,
+      ),
+    );
+    writeRegionAnchor(tag);
   } else {
+    const regionChild = recordChildUpdateMerge(
+      tag,
+      relativePath,
+      tagName,
+      childExports.update,
+    );
+    if (isPersisted() && !regionChild) {
+      // Owner-wires the adopted child scope, then recurses into the child
+      // template's construct pass (the fills of a live inlined child).
+      addConstructFragment(
+        getSection(tag),
+        "structural",
+        t.expressionStatement(
+          callRuntime(
+            "_construct_child",
+            scopeIdentifier,
+            getScopeAccessorLiteral(getKnownTagChildScopeBinding(tag)!),
+            t.stringLiteral(
+              getTemplateId(
+                getMarkoOpts(),
+                childFile.opts.filename as string,
+                buildResumeRegisterKey(childSection, "update"),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    const importPath = getChildImportPath(file, relativePath);
+    if (importPath !== relativePath) {
+      // The `?persisted` rewrite marks every consumer import (setup,
+      // template, walks, update) as one internalized-child request —
+      // census site 35; a conflicting kind assertion would throw.
+      recordPlanImport(
+        file,
+        resolveRelativePath(file, importPath),
+        "internalized-child",
+      );
+    }
+    // A nucleus-free child never registers its template id (that absence is
+    // the dynamic-tag liveness signal); compose shells by the root update id
+    // its renderers entry does register.
+    const childShellId =
+      !isPersisted() || isChildTreeLive(childFile.ast.program)
+        ? childFile.metadata.marko.id
+        : getTemplateId(
+            getMarkoOpts(),
+            childFile.opts.filename as string,
+            buildResumeRegisterKey(childSection, "update"),
+          );
     knownTagTranslateDOM(
       tag,
       childExports.params,
       (binding, preferredName, directContent) =>
         importOrSelfReferenceName(
           tag.hub.file,
-          relativePath,
+          importPath,
           (directContent && binding.directContentExport) || binding.export!,
           preferredName,
         ),
@@ -316,7 +473,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 t.callExpression(
                   importOrSelfReferenceName(
                     file,
-                    relativePath,
+                    importPath,
                     childExports.setup,
                     tagName,
                   ),
@@ -327,15 +484,51 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           },
     );
 
-    write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
+    write`${withChildTemplateId(
+      importNamed(
+        file,
+        importPath,
+        childExports.template,
+        `${tagName}_template`,
+      ),
+      childShellId,
+      regionChild,
+    )}`;
     walks.injectWalks(
       tag,
       tagName,
-      importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+      withChildTemplateId(
+        importNamed(file, importPath, childExports.walks, `${tagName}_walks`),
+        childShellId,
+        regionChild,
+      ),
     );
+    writeRegionAnchor(tag);
   }
 
   tag.remove();
+}
+
+// A region child's rendered markup arrives per response, so construct shells
+// carry only this marker as its anchor. Emitted right after the child (where
+// its walks end in every variant) and for every non-load child: region-ness
+// is not knowable at analyze, and the walker's dense accessor indexes
+// require walking every created dom binding.
+function writeRegionAnchor(tag: t.NodePath<t.MarkoTag>) {
+  if (tag.node.extra?.[kRegionAnchorBinding]) {
+    walks.visit(tag, WalkCode.Replace);
+    walks.enterShallow(tag);
+  }
+}
+
+// Keep child render graphs out of eager page chunks; circular references
+// stay local to avoid importing the entry from itself.
+export function getChildImportPath(file: t.BabelFile, relativePath: string) {
+  return isPersistedEntryBuild() &&
+    relativePath.endsWith(".marko") &&
+    !isCircularRequest(file, relativePath)
+    ? `${relativePath}?persisted`
+    : relativePath;
 }
 
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
@@ -480,16 +673,180 @@ function isCircularRequest(file: t.BabelFile, request: string) {
   );
 }
 
-function buildLoadSetupVirtualModule(
+export function buildLoadSetupVirtualModule(
   file: t.BabelFile,
   childFileName: string,
   childExports: { template: string; walks: string; setup: string },
 ) {
   const parts = `${childExports.template}, ${childExports.walks}, ${childExports.setup}`;
-  return getMarkoOpts().resolveVirtualDependency!(file.opts.filename, {
-    virtualPath: `${resolveRelativePath(file, childFileName)}.setup.js`,
-    code: `import { ${parts} } from "./${path.basename(childFileName)}"\nexport const _ = [${parts}]`,
-  })!;
+  const base = path.basename(childFileName);
+  const updateImport = isPersisted() ? `\nimport "./${base}?persisted"` : "";
+  const virtualId = getMarkoOpts().resolveVirtualDependency!(
+    file.opts.filename,
+    {
+      virtualPath: `${resolveRelativePath(file, childFileName)}.setup.js`,
+      code: `import { ${parts} } from "./${base}"${updateImport}\nexport const _ = [${parts}]`,
+    },
+  )!;
+  if (isPersistedEntryBuild()) {
+    // The virtual has no translate pass: its sibling mini-plan is recorded
+    // at generation, published beside the entry (brief §2e.2); the virtual
+    // OWNS the load-edge-child request, the parent owns the demand loader.
+    recordPlanVirtual(
+      file,
+      virtualId,
+      buildSetupVirtualPlan(file, virtualId, base, [
+        childExports.template,
+        childExports.walks,
+        childExports.setup,
+      ]),
+    );
+  }
+  return virtualId;
+}
+
+function buildSetupVirtualPlan(
+  file: t.BabelFile,
+  virtualId: string,
+  base: string,
+  names: [string, string, string],
+): PreliminaryPlan {
+  const plainSpecifier = `./${base}`;
+  const persistedSpecifier = `./${base}?persisted`;
+  const importText = `import { ${names.join(", ")} } from "${plainSpecifier}"`;
+  const persistedText = `import "${persistedSpecifier}"`;
+  const exportText = `export const _ = [${names.join(", ")}]`;
+  const emptyComments = () => ({ leading: [], internal: [], trailing: [] });
+  const generatedOrigin = () => ({
+    file: file.opts.filename as string,
+    line: GENERATED_STATEMENT_LINE,
+    column: GENERATED_STATEMENT_LINE,
+  });
+  const literalSpan = (text: string, specifier: string) => {
+    const start = text.indexOf(`"${specifier}"`);
+    return { start, end: start + specifier.length + 2 };
+  };
+  return {
+    schemaVersion: PRELIMINARY_PLAN_VERSION,
+    importer: virtualId,
+    originFile: file.opts.filename as string,
+    fingerprintFields: buildFingerprintFields(file),
+    statements: [
+      {
+        ordinal: 0,
+        evalOrdinal: 0,
+        kind: "import",
+        text: importText,
+        nodeOffset: 0,
+        spans: tokenSpans(importText, names),
+        comments: emptyComments(),
+        origin: generatedOrigin(),
+      },
+      {
+        ordinal: 1,
+        evalOrdinal: 1,
+        kind: "import",
+        text: persistedText,
+        nodeOffset: 0,
+        spans: [],
+        comments: emptyComments(),
+        origin: generatedOrigin(),
+      },
+      {
+        ordinal: 2,
+        evalOrdinal: 2,
+        kind: "export-decl",
+        text: exportText,
+        nodeOffset: 0,
+        innerOffset: exportText.indexOf("const"),
+        spans: tokenSpans(exportText, ["_", ...names]),
+        comments: emptyComments(),
+        origin: generatedOrigin(),
+      },
+    ],
+    symbols: {
+      ...Object.fromEntries(
+        names.map((name) => [
+          `%${name}`,
+          {
+            name,
+            kind: "import" as const,
+            declKind: "module",
+            refCount: 1,
+            declOrdinal: 0,
+            import: {
+              specifier: plainSpecifier,
+              imported: name,
+              attributes: [],
+            },
+          },
+        ]),
+      ),
+      "%_": {
+        name: "_",
+        kind: "local",
+        declKind: "const",
+        refCount: 0,
+        declOrdinal: 2,
+      },
+    },
+    requestedModules: [
+      {
+        specifier: plainSpecifier,
+        attributes: [],
+        kind: "external",
+        form: "import",
+        bare: false,
+        ordinal: 0,
+        firstOccurrence: true,
+        plainTemplate: true,
+        span: literalSpan(importText, plainSpecifier),
+      },
+      {
+        specifier: persistedSpecifier,
+        attributes: [],
+        kind: "load-edge-child",
+        form: "import",
+        bare: true,
+        ordinal: 1,
+        firstOccurrence: true,
+        plainTemplate: false,
+        span: literalSpan(persistedText, persistedSpecifier),
+      },
+    ],
+    exports: [
+      { exported: "_", ordinal: 2, target: { kind: "local", symId: "%_" } },
+    ],
+    loaders: [],
+    moduleStateLinks: [],
+    eagerCandidates: [],
+    // The virtual registers no shells and demands nothing itself.
+    shellCapability: { shells: [] },
+    shellPossession: { claimable: [], deferred: [] },
+  };
+}
+
+const VIRTUAL_IDENT_CHAR = /[\p{ID_Continue}$]/u;
+
+function tokenSpans(
+  text: string,
+  tokens: string[],
+): [number, number, string][] {
+  const spans: [number, number, string][] = [];
+  for (const token of tokens) {
+    let index = 0;
+    while ((index = text.indexOf(token, index)) !== -1) {
+      const end = index + token.length;
+      if (
+        (index === 0 || !VIRTUAL_IDENT_CHAR.test(text[index - 1])) &&
+        (end === text.length || !VIRTUAL_IDENT_CHAR.test(text[end]))
+      ) {
+        spans.push([index, end, `%${token}`]);
+      }
+      index = end;
+    }
+  }
+  return spans.sort((a, b) => a[0] - b[0]);
 }
 
 function buildLoadSignalVirtualModule(
@@ -511,6 +868,79 @@ function loadTriggersToExpression(loadConfig: LoadImportConfig | undefined) {
   return triggers.length === 1
     ? triggers[0]
     : callRuntime("_load_race_trigger", ...triggers);
+}
+
+function recordChildUpdateMerge(
+  tag: t.NodePath<t.MarkoTag>,
+  relativePath: string,
+  tagName: string,
+  updateName: string,
+  loadId?: string,
+  loadReady?: { id: string; loadExpr: t.Expression },
+  loadMarker?: t.StringLiteral | t.NumericLiteral,
+  loadTemplateId?: string,
+) {
+  const childScopeBinding = getKnownTagChildScopeBinding(tag);
+  if (childScopeBinding) {
+    const childProgram = loadFileForTag(tag)?.ast.program;
+    // A nucleus-free child (no tag variable, not lazily loaded) delivers
+    // as region markup; delegation would dispatch an empty update graph.
+    const regionChild = !!(
+      isPersisted() &&
+      !tag.node.var &&
+      !loadId &&
+      childProgram &&
+      !isChildTreeLive(childProgram)
+    );
+    addUpdateMerge(
+      getSection(tag),
+      regionChild
+        ? {
+            kind: "region",
+            accessor: getScopeAccessorLiteral(
+              tag.node.extra![kRegionAnchorBinding]!,
+            ),
+          }
+        : {
+            kind: "child",
+            accessor: getScopeAccessorLiteral(childScopeBinding),
+            relativePath,
+            tagName,
+            updateName,
+            load: loadId,
+            loadReady,
+            loadMarker,
+            loadTemplateId,
+          },
+    );
+    return regionChild;
+  }
+}
+
+function buildLoadReadyConfig(
+  file: t.BabelFile,
+  childFile: t.BabelFile,
+  childExports: { template: string; walks: string; setup: string },
+  loadConfig: LoadImportConfig | undefined,
+) {
+  const childFileName = childFile.opts.filename as string;
+  const readyId = getReadyId(childFile);
+  if (!readyId) return undefined;
+  const loadExpr = t.arrowFunctionExpression(
+    [],
+    t.callExpression(t.import(), [
+      t.stringLiteral(
+        buildLoadSetupVirtualModule(file, childFileName, childExports),
+      ),
+    ]),
+  );
+  const triggerExpr = loadTriggersToExpression(loadConfig);
+  return {
+    id: readyId,
+    loadExpr: triggerExpr
+      ? t.callExpression(triggerExpr, [loadExpr])
+      : loadExpr,
+  };
 }
 
 function toDOMTriggerExpression(trigger: LoadTrigger) {

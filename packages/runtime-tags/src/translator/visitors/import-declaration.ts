@@ -10,10 +10,19 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
-import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPersistedEntryBuild,
+} from "../util/marko-config";
 import { callRuntime } from "../util/runtime";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
+import {
+  markPlanStatement,
+  recordPlanImport,
+} from "../util/update-plan-records";
 import type { TemplateVisitor } from "../util/visitors";
 import {
   resolveRegisteredExport,
@@ -151,37 +160,46 @@ export default {
                 file,
                 loadFile.opts.filename,
               );
-              importDecl.replaceWith(
-                t.variableDeclaration("const", [
-                  t.variableDeclarator(
-                    local,
-                    callRuntime(
-                      "_load_template",
-                      t.stringLiteral(loadFile.metadata.marko.id),
-                      t.arrowFunctionExpression(
-                        [],
-                        t.callExpression(
-                          t.memberExpression(
-                            t.callExpression(t.import(), [
-                              t.stringLiteral(resolvedPath),
-                            ]),
-                            t.identifier("then"),
-                          ),
-                          [
-                            t.arrowFunctionExpression(
-                              [t.identifier("mod")],
-                              toMemberExpression(
-                                t.identifier("mod"),
-                                "default",
-                              ),
-                            ),
-                          ],
+              const loadTemplateDeclaration = t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  local,
+                  callRuntime(
+                    "_load_template",
+                    t.stringLiteral(loadFile.metadata.marko.id),
+                    t.arrowFunctionExpression(
+                      [],
+                      t.callExpression(
+                        t.memberExpression(
+                          t.callExpression(t.import(), [
+                            t.stringLiteral(resolvedPath),
+                          ]),
+                          t.identifier("then"),
                         ),
+                        [
+                          t.arrowFunctionExpression(
+                            [t.identifier("mod")],
+                            toMemberExpression(t.identifier("mod"), "default"),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ]),
-              );
+                ),
+              ]);
+              if (isPersistedEntryBuild()) {
+                // Lazy default-template load (census site 38): plain child
+                // specifier, never `?persisted`.
+                markPlanStatement(file, loadTemplateDeclaration, {
+                  loader: {
+                    targetKind: "template-loader",
+                    registryFn: "_load_template",
+                    rendererId: loadFile.metadata.marko.id,
+                    targets: [resolvedPath],
+                  },
+                  lazyEdges: [resolvedPath],
+                });
+              }
+              importDecl.replaceWith(loadTemplateDeclaration);
             }
           }
 
@@ -189,6 +207,16 @@ export default {
         }
 
         node.source.value = tagImport;
+      }
+      if (isPersistedEntryBuild() && node.loc) {
+        // A surviving user-authored import (parse-time loc): the request is
+        // an external edge; template imports keep the plain-template flag.
+        recordPlanImport(
+          importDecl.hub.file,
+          node.source.value,
+          "external",
+          !!tagImport,
+        );
       }
     },
   },

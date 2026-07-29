@@ -1,0 +1,22 @@
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<ul.users>
+  <for|user| of=input.users by(user) { return user.email }>
+    <let/open=false/>
+    <li class="user">
+      <span.name>${user.name}</span>
+      <button.toggle onClick() { open = !open }>${open ? "less" : "more"}</button>
+    </li>
+  </for>
+</ul>
+
+<ul.tags>
+  <for|tag| of=input.tags>
+    <let/starred=false/>
+    <li class="tag">
+      ${tag}
+      <button.star onClick() { starred = !starred }>${starred ? "★" : "☆"}</button>
+    </li>
+  </for>
+</ul>

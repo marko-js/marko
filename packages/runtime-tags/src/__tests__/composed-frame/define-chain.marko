@@ -1,0 +1,27 @@
+import Frame from "./frame-doc.marko"
+<define/Inner>
+  <let/n=0/>
+  <html lang="en">
+    <head>
+      <title>frame</title>
+    </head>
+    <body>
+      <header.frame>STATIC FRAME</header>
+      <button onClick() { n++ }>${n}</button>
+    </body>
+  </html>
+</define>
+<define/ViaDefine>
+  <Inner/>
+  <span.mid>mid</span>
+</define>
+<define/ViaCustom>
+  <Frame/>
+  <span.custom>custom</span>
+</define>
+<if=input.show>
+  <ViaDefine/>
+</if>
+<if=input.other>
+  <ViaCustom/>
+</if>

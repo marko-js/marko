@@ -25,6 +25,9 @@ export const Renderer = "R";
 export const StartNode = "S";
 export const TagVariable = "T";
 export const TagVariableChange = "U";
+export const NeedsConstruct = "Z";
+// Patch-only: a group-keyed branch's stable key for the anchor registry.
+export const GroupKey = "GK";
 
 type Self = typeof import("./accessor-prop");
 export type Value = Self[keyof Self];

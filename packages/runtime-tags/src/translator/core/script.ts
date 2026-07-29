@@ -9,12 +9,18 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPersisted } from "../util/marko-config";
+import { markStateCapable, MembraneCause } from "../util/membranes";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
+import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
-import { addHTMLEffectCall, addStatement } from "../util/signals";
+import {
+  addHTMLEffectCall,
+  addStatement,
+  markEffectRetrigger,
+} from "../util/signals";
 import { skip, traverseContains } from "../util/traverse";
 
 const htmlScriptTagAlternateMsg =
@@ -78,8 +84,14 @@ export default {
           throw tag.hub.buildError(attr, "Invalid duplicate value attribute.");
         }
         seenValueAttr = true;
+        const section = getOrCreateSection(tag);
         (attr.value.extra ??= {}).isEffect = true;
-        addSetupExpr(getOrCreateSection(tag), attr.value);
+        addSetupExpr(section, attr.value);
+        if (isPersisted()) {
+          // A script referencing no bindings produces no effect reads, so
+          // the classifier cannot see it; every `<script>` is an effect.
+          markStateCapable(section, MembraneCause.effect);
+        }
         getProgram().node.extra.isInteractive = true;
       } else {
         throw tag.hub.buildError(
@@ -106,6 +118,13 @@ export default {
       const section = getSection(tag);
       const { value } = valueAttr;
       const referencedBindings = value.extra?.referencedBindings;
+      if (
+        isPersisted() &&
+        value.extra &&
+        getSerializeSourcesForExpr(value.extra)?.global
+      ) {
+        markEffectRetrigger(section, referencedBindings);
+      }
       if (isOutputDOM()) {
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
