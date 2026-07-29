@@ -183,6 +183,9 @@ export function createStructureValidator() {
   ) {
     let segmentIndex = 0;
     tokens.lastIndex = 0;
+    // Raw-text skipping searches case-insensitively; fold the flush once
+    // rather than per raw-text element.
+    const lower = html.toLowerCase();
     let match: RegExpExecArray | null;
     while ((match = tokens.exec(html))) {
       const [, closing, rawName, attrs, text] = match;
@@ -212,7 +215,15 @@ export function createStructureValidator() {
       if (closing) {
         const openIndex = open.findLastIndex((el) => el.name === name);
         if (openIndex === -1) {
-          report(`\`</${name}>\` has no matching start tag.`);
+          // These two do not just get dropped: the parser turns them into an
+          // element, so the walk sees a node the template never described.
+          report(
+            name === "br"
+              ? "`</br>` is turned into a `<br>` element by the HTML parser."
+              : name === "p"
+                ? "`</p>` with no open `<p>` makes the parser insert an empty `<p>`."
+                : `\`</${name}>\` has no matching start tag.`,
+          );
         } else {
           const skipped = open.slice(openIndex + 1);
           if (skipped.some((el) => !optionalEndTags.has(el.name))) {
@@ -340,7 +351,15 @@ export function createStructureValidator() {
       if (voidElements.has(name) || /(^|\s)\/$/.test(attrs)) continue;
 
       if (rawTextElements.has(name)) {
-        const start = html.toLowerCase().indexOf(`</${name}`, tokens.lastIndex);
+        // Only a full tag name closes raw text, so `</scripts>` does not end a
+        // `<script>`. End of string terminates it, as it does in a browser.
+        let start = lower.indexOf(`</${name}`, tokens.lastIndex);
+        while (
+          start !== -1 &&
+          !/[\s/>]/.test(lower[start + 2 + name.length] ?? ">")
+        ) {
+          start = lower.indexOf(`</${name}`, start + 1);
+        }
         const end = start === -1 ? -1 : html.indexOf(">", start);
         tokens.lastIndex = end === -1 ? html.length : end + 1;
         continue;

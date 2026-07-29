@@ -84,6 +84,13 @@ describe("html structure validation", () => {
       ));
     it("textarea holding markup characters", () =>
       assertClean(html("<div><textarea>a < b</textarea></div>", ["a:1:1"])));
+    it("a longer tag name does not end raw text", () =>
+      assertClean(
+        html("<div><script>x</scripts>y</script></div>", ["a:1:1"]),
+        html("<div><title>a</titlebar>b</title></div>", ["a:1:1"]),
+      ));
+    it("unterminated raw text runs to the end", () =>
+      assertClean(html("<div><script>a < b", ["a:1:1"])));
     it("comments", () =>
       assertClean(html("<div><!-- <tr> --></div>", ["a:1:1"])));
     it("template holds anything", () =>
@@ -216,6 +223,25 @@ describe("html structure validation", () => {
       [html("<table><</table>", ["a:1:1"])],
       "Text is moved out of `<table>`",
     ));
+
+  // The parser builds an element from these rather than discarding them.
+  describe("an end tag the parser turns into an element", () => {
+    it("a stray `</br>`", () =>
+      assertReports(
+        [html("<div>a</br>b</div>", ["a:1:1"])],
+        "`</br>` is turned into a `<br>` element",
+      ));
+    it("a stray `</p>`", () =>
+      assertReports(
+        [html("<div></p></div>", ["a:1:1"])],
+        "`</p>` with no open `<p>` makes the parser insert an empty `<p>`",
+      ));
+    it("any other unmatched end tag still reads as unmatched", () =>
+      assertReports(
+        [html("<div></span></div>", ["a:1:1"])],
+        "`</span>` has no matching start tag",
+      ));
+  });
 
   describe("markup the parser re-nests", () => {
     it("a block inside a paragraph", () =>

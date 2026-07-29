@@ -152,6 +152,10 @@ export function _html(html: string) {
 }
 
 // Only emitted by an unoptimized compile, so the debug check is the call site.
+// Assumes every `<` start tag in the paired `_html` was recorded via
+// `recordOpenTag` — escaped interpolations cannot emit `<`, so this holds for
+// every static write. A new static-write path emitting an unrecorded tag would
+// silently shift these sources onto the wrong tags.
 export function _html_opens(...sources: (string | 0)[]) {
   $chunk.structurePending = {
     kind: "sourced",
@@ -1181,6 +1185,8 @@ export class Chunk {
     | { kind: "sourced"; opens: (string | undefined)[] }
     | { kind: "raw"; source?: string }
     | { kind: "runtime"; source?: string };
+  // Mirrors `html`: anything that rewrites `html` (tryCatch, reorder, flush)
+  // must make the matching edit here or reports point at the wrong source.
   declare structureSegments?: StructureSegment[];
   constructor(
     boundary: Boundary,
