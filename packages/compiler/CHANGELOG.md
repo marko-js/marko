@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.13
+
+### Patch Changes
+
+- [#3688](https://github.com/marko-js/marko/pull/3688) [`ab1087b`](https://github.com/marko-js/marko/commit/ab1087b0010f269902b9efa6160fcb6f3b46d162) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Prune unreachable Babel code from the bundled compiler. The parser's flow, jsx, estree and v8intrinsic syntax plugins are stubbed; `helper-create-class-features-plugin` is pointed at the one module the TypeScript transform uses instead of its barrel; the runtime helper table keeps only the four helpers anything here can request; and the flow/jsx printers and node definitions, the generated `assertFoo` helpers, the uppercase builder aliases and the missing-plugin suggestion table are dropped. `dist/babel.js` goes from 2084 KB to 1626 KB and `dist/babel.web.js` from 1966 KB to 1509 KB, with compiled output unchanged.
+
 ## 5.41.12
 
 ### Patch Changes
