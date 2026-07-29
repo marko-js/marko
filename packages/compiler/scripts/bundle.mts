@@ -41,6 +41,143 @@ const presetTypeScriptVersionStub = {
   },
 };
 
+// Marko's parser options only ever enable `objectRestSpread`, `classProperties`
+// and `typescript`. The parser keeps its syntax plugins in one object literal
+// that is indexed by name, so nothing can tree-shake the rest; stubbing the
+// entries makes those mixins unreachable and DCE drops them.
+const UNUSED_PARSER_PLUGINS = [
+  "estree",
+  "jsx",
+  "flow",
+  "v8intrinsic",
+  "placeholders",
+];
+const REGISTRY =
+  "const mixinPlugins = {\n  estree,\n  jsx,\n  flow,\n  typescript,\n  v8intrinsic,\n  placeholders\n};";
+const pruneParserPlugins = {
+  name: "prune-parser-plugins",
+  transform(code: string, id: string) {
+    if (!id.includes("@babel/parser")) return null;
+    if (!code.includes(REGISTRY)) {
+      throw new Error(
+        "prune-parser-plugins: @babel/parser mixin registry not found; the pruning is stale",
+      );
+    }
+    const stubs = UNUSED_PARSER_PLUGINS.map(
+      (name) =>
+        `  ${name}: () => { throw new Error("@marko/compiler: the '${name}' parser plugin is not available in the browser build."); },`,
+    ).join("\n");
+    return code.replace(
+      REGISTRY,
+      `const mixinPlugins = {\n${stubs}\n  typescript,\n  placeholders\n};`,
+    );
+  },
+};
+
+// `plugin-transform-typescript` reaches for exactly one export here,
+// `injectInitialization`, but the package barrel eagerly requires its class
+// fields and decorators transforms, which no plugin in either bundle runs.
+// Point the specifier at the module that export actually lives in. A user's
+// own babel plugins resolve their copy of this package themselves, so they are
+// unaffected.
+const CLASS_FEATURES = "@babel/helper-create-class-features-plugin";
+const classFeaturesMiscOnly = {
+  name: "class-features-misc-only",
+  async resolveId(id: string, importer: string | undefined) {
+    if (id !== CLASS_FEATURES) return null;
+    const resolved = await this.resolve(id, importer, { skipSelf: true });
+    return resolved && resolved.id.replace(/index\.js$/, "misc.js");
+  },
+};
+
+// Babel ships 122 runtime helpers in one object literal indexed by name. The
+// only ones anything here can request are the four the bundled transforms name
+// outright, and none of those declare dependencies, so the rest is unreachable
+// weight. A helper that is dropped but somehow asked for still fails loudly:
+// babel reports it as an unknown helper.
+const USED_HELPERS = new Set([
+  "classNameTDZError",
+  "interopRequireDefault",
+  "interopRequireWildcard",
+  "newArrowCheck",
+]);
+const pruneHelpers = {
+  name: "prune-helpers",
+  transform(code: string, id: string) {
+    if (
+      !id.includes("@babel/helpers") ||
+      !id.endsWith("helpers-generated.js")
+    ) {
+      return null;
+    }
+
+    // The table is split across an object literal and an `Object.assign` that
+    // tops it up, so both get the same treatment.
+    let total = 0;
+    const out = code.replace(
+      /(\{\n  __proto__: null,|Object\.assign\(helpers, \{)([\s\S]*?)(\n\}\);|\n\};)/g,
+      (whole, head: string, body: string, tail: string) => {
+        const entry = /\n  ([A-Za-z_$][\w$]*): helper\(/g;
+        const marks: [string, number][] = [];
+        for (let m = entry.exec(body); m; m = entry.exec(body)) {
+          marks.push([m[1], m.index]);
+        }
+        if (!marks.length) return whole;
+        total += marks.length;
+        let kept = "";
+        for (let i = 0; i < marks.length; i++) {
+          const to = i + 1 < marks.length ? marks[i + 1][1] : body.length;
+          if (USED_HELPERS.has(marks[i][0]))
+            kept += body.slice(marks[i][1], to);
+        }
+        return head + kept + tail;
+      },
+    );
+
+    if (total < 100) {
+      throw new Error(
+        `prune-helpers: found ${total} helpers, expected the full table; the pruning is stale`,
+      );
+    }
+    for (const name of USED_HELPERS) {
+      if (!out.includes(`\n  ${name}: helper(`)) {
+        throw new Error(`prune-helpers: dropped ${name}, which is still used`);
+      }
+    }
+    return out;
+  },
+};
+
+// Modules nothing in the bundle can reach. The flow and jsx printers exist for
+// nodes the pruned parser can no longer produce, and the missing-plugin helper
+// is a table of suggestions naming babel plugins this compiler does not bundle.
+const EMPTY_MODULE =
+  '"use strict";Object.defineProperty(exports,"__esModule",{value:true});';
+const DEAD_MODULES: Record<string, string> = {
+  "@babel/generator/lib/generators/flow.js": EMPTY_MODULE,
+  "@babel/generator/lib/generators/jsx.js": EMPTY_MODULE,
+  // Node definitions for syntax the pruned parser cannot produce.
+  "@babel/types/lib/definitions/flow.js": EMPTY_MODULE,
+  "@babel/types/lib/definitions/jsx.js": EMPTY_MODULE,
+  // `t.assertFoo()` and the uppercase `t.Foo()` builder aliases: neither the
+  // compiler nor any bundled babel package calls one.
+  "@babel/types/lib/asserts/generated/index.js": EMPTY_MODULE,
+  "@babel/types/lib/builders/generated/uppercase.js": EMPTY_MODULE,
+  "@babel/core/lib/parser/util/missing-plugin-helper.js":
+    EMPTY_MODULE +
+    "exports.default=(name)=>`Support for the experimental syntax '${name}' is not enabled.`;",
+};
+const stubDeadModules = {
+  name: "stub-dead-modules",
+  transform(code: string, id: string) {
+    const normalized = id.replace(/\\/g, "/");
+    for (const suffix in DEAD_MODULES) {
+      if (normalized.endsWith(suffix)) return DEAD_MODULES[suffix];
+    }
+    return null;
+  },
+};
+
 await Promise.all([
   // Every published entry is built in ONE rolldown pass so shared modules land
   // in shared chunks. `taglib/config` is a mutated singleton (`configure()`,
@@ -88,7 +225,13 @@ await Promise.all([
   ...(["browser", "node"] as const).map((platform) =>
     build({
       platform,
-      plugins: [presetTypeScriptVersionStub],
+      plugins: [
+        presetTypeScriptVersionStub,
+        pruneParserPlugins,
+        classFeaturesMiscOnly,
+        pruneHelpers,
+        stubDeadModules,
+      ],
       input: "internal/babel/index.ts",
       cwd,
       external: ["browserslist", "path", "assert", "fs"],
