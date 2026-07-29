@@ -19,6 +19,7 @@ import {
 } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
+import { findRevivedUserCode } from "./utils/no-revival";
 import {
   attributePayload,
   type PayloadSpans,
@@ -284,15 +285,23 @@ function testFixtures(interop?: true) {
             }
 
             if (output === "dom" && persisted) {
-              // No revival: a persisted build must not bundle code an ordinary
-              // build tree-shakes, so its client output cannot differ at all.
+              // No revival: capturing a hole may change how a signal reads its
+              // input, but it must never bring back user code the ordinary
+              // build already removed.
               const { snapshot, sizes } = await (await ssrRunner()).domBundle();
               if (sizes) stats.dom = sizes;
-              assert.strictEqual(
-                await stripFixtureDir(snapshot),
-                domBundles.optimize,
-                "persisted dom output must match the ordinary build",
+              const persistedBundle = await stripFixtureDir(snapshot);
+              const revived = findRevivedUserCode(
+                fixtureDir,
+                domBundles.optimize!,
+                persistedBundle,
               );
+              assert.deepEqual(
+                revived,
+                [],
+                "persisted dom output revived user code the ordinary build removed",
+              );
+              await snapMode(() => persistedBundle, `${output}.bundle.js`);
               return;
             }
 

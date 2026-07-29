@@ -1015,6 +1015,7 @@ export function finalizeReferences() {
     }
   }
 
+  const persistedBuild = isPersisted();
   forEachSection(finalizeTagDownstreams);
 
   for (const binding of bindings) {
@@ -1098,6 +1099,16 @@ export function finalizeReferences() {
             !!isEffect || canonicalUpstreamAlias.sources,
           );
         }
+      }
+    }
+  }
+
+  if (persistedBuild) {
+    // Value: a navigation can change request-derived input, so a persisted
+    // build keeps the slot and lets each render decide whether to fill it.
+    for (const binding of bindings) {
+      if (isPatchableValue(binding)) {
+        addSerializeReason(binding.section, binding.sources, binding);
       }
     }
   }
@@ -1289,12 +1300,11 @@ export function finalizeReferences() {
   }
 
   forEachSection(finalizeParamSerializeReasonGroups);
-  const persisted = isPersisted();
   forEachSectionReverse((section) => {
     finalizeKnownTags(section);
     // Spine: a persisted document must stay addressable by a later patch, which
     // is a separate decision from whether this render serializes any value.
-    if (persisted) addSerializeReason(section, true);
+    if (persistedBuild) addSerializeReason(section, true);
     finalizeSerializeReason(section);
     // TODO: this duplication is needed when a known tag is circular. We should find a better way.
     finalizeParamSerializeReasonGroups(section);
@@ -1920,6 +1930,7 @@ export function getDebugName(binding: Binding) {
     let root = binding;
     let access = "";
     while (
+      root !== root.section.params &&
       root.upstreamAlias !== root.section.params &&
       root.excludeProperties === undefined
     ) {
@@ -2176,6 +2187,17 @@ export function hasNonConstantPropertyAlias(ref: Binding) {
     }
   }
   return false;
+}
+
+// A value a later patch may have to re-deliver: something client work reads,
+// not a container the wire would have to carry whole.
+function isPatchableValue(binding: Binding) {
+  return (
+    binding.type !== BindingType.dom &&
+    binding !== binding.section.params &&
+    !!binding.reads.size &&
+    !(binding.type === BindingType.input && !binding.upstreamAlias)
+  );
 }
 
 export function pruneBinding(binding: Binding) {
