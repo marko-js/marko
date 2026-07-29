@@ -1013,6 +1013,27 @@ export class State implements SerializeState {
     }
   }
 
+  // Overridden to deliver a chunk as something other than document HTML.
+  flushChunk(html: string, scripts: string, pending: number) {
+    const { $global, nonceAttr } = this;
+    const { __flush__ } = $global;
+
+    if (scripts) {
+      html += "<script" + nonceAttr + ">" + scripts + "</script>";
+    }
+
+    if (__flush__) {
+      $global.__flush__ = undefined;
+      html = __flush__($global, html);
+    }
+
+    return pending ? html : html + this.trailerHTML;
+  }
+
+  walkScript() {
+    return this.runtimePrefix + RuntimeKey.Walk + "()";
+  }
+
   get runtimePrefix() {
     const { $global } = this;
     return $global.runtimeId + "." + $global.renderId;
@@ -1519,7 +1540,7 @@ export class Chunk {
     }
 
     if (needsWalk) {
-      scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
+      scripts = concatScripts(scripts, state.walkScript());
     }
 
     this.html = html;
@@ -1538,26 +1559,9 @@ export class Chunk {
     }
 
     this.flushScript();
-    const { scripts } = this;
-    const { $global, nonceAttr } = state;
-    const { __flush__ } = $global;
-    let { html } = this;
+    const { html, scripts } = this;
     this.html = this.scripts = "";
-
-    if (scripts) {
-      html += "<script" + nonceAttr + ">" + scripts + "</script>";
-    }
-
-    if (__flush__) {
-      $global.__flush__ = undefined;
-      html = __flush__($global, html);
-    }
-
-    if (!boundary.count) {
-      html += state.trailerHTML;
-    }
-
-    return html;
+    return state.flushChunk(html, scripts, boundary.count);
   }
 }
 

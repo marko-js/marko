@@ -33,6 +33,10 @@ interface Diagnostic {
   label: string;
 }
 
+type ServerModule<T> = Record<keyof T, Template> & {
+  renderPatch?: (template: Template, input: unknown) => AsyncIterable<string>;
+};
+
 export async function createServerRunner<T extends Record<string, string>>(
   cwd: string,
   entries: T,
@@ -40,7 +44,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   interop?: boolean,
 ): Promise<{
   assets: string;
-  runServer(): Promise<Record<keyof T, Template>>;
+  runServer(): Promise<ServerModule<T>>;
   disposeServer(): void;
   clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
   domBundle(): Promise<SnapshotResult>;
@@ -83,14 +87,14 @@ export async function createServerRunner<T extends Record<string, string>>(
         )
     : undefined;
 
-  let server: Promise<Record<keyof T, Template>> | undefined;
+  let server: Promise<ServerModule<T>> | undefined;
   return {
     assets: domOut,
     // Memoized so server module state lives across a fixture's renders, as on
     // a real server; disposed by the fixture teardown because mocha's suite
     // graph can retain this runner for the whole run.
     runServer: () =>
-      (server ||= importEvictable<Record<keyof T, Template>>(
+      (server ||= importEvictable<ServerModule<T>>(
         path.join(htmlOut, "main.mjs"),
       )),
     disposeServer: () => {
@@ -220,6 +224,13 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
           .map(
             (name) =>
               `export { default as ${name} } from "${entries[name] + pageExt}";`,
+          )
+          .concat(
+            // Only a persisted server serves patches, which is also what keeps
+            // the patch renderer out of every other bundle.
+            config.persisted
+              ? `export { renderPatch } from "@marko/runtime-tags/html";`
+              : [],
           )
           .join("\n"),
       ),

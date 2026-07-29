@@ -499,6 +499,25 @@ function testFixtures(interop?: true) {
               );
             });
 
+          persisted &&
+            !skipSSR &&
+            it("patch", () =>
+              // No mode suffix: a patch only exists in this mode.
+              snap(
+                async () => {
+                  const runner = await ssrRunner();
+                  const { renderPatch, template } = await runner.runServer();
+                  const { input } = await getSteps(config);
+                  let frames = "";
+                  for await (const frame of renderPatch!(template, input)) {
+                    frames += frame;
+                  }
+                  return stripFixtureDir(frames);
+                },
+                fixtureDir,
+                "patch.txt",
+              ));
+
           skipCSR ||
             it("csr", () =>
               snapMode(

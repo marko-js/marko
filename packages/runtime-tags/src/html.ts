@@ -48,6 +48,7 @@ export {
   forTo,
   forUntil,
 } from "./html/for";
+export { renderPatch } from "./html/patch";
 export { _template } from "./html/template";
 export {
   _attr_content,
