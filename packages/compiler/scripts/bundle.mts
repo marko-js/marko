@@ -148,17 +148,16 @@ const pruneHelpers = {
   },
 };
 
-// Modules nothing in the bundle can reach. The flow and jsx printers exist for
-// nodes the pruned parser can no longer produce, and the missing-plugin helper
-// is a table of suggestions naming babel plugins this compiler does not bundle.
+// Modules nothing in the bundle can reach. The jsx printer exists for nodes the
+// pruned parser cannot produce, and the missing-plugin helper is a table of
+// suggestions naming babel plugins this compiler does not bundle. The flow
+// printer is deliberately kept: `classes.js` borrows its variance helper and it
+// owns the `TypeParameterDeclaration` printer, so dropping it silently mangles
+// unrelated output.
 const EMPTY_MODULE =
   '"use strict";Object.defineProperty(exports,"__esModule",{value:true});';
 const DEAD_MODULES: Record<string, string> = {
-  "@babel/generator/lib/generators/flow.js": EMPTY_MODULE,
   "@babel/generator/lib/generators/jsx.js": EMPTY_MODULE,
-  // Node definitions for syntax the pruned parser cannot produce.
-  "@babel/types/lib/definitions/flow.js": EMPTY_MODULE,
-  "@babel/types/lib/definitions/jsx.js": EMPTY_MODULE,
   // `t.assertFoo()` and the uppercase `t.Foo()` builder aliases: neither the
   // compiler nor any bundled babel package calls one.
   "@babel/types/lib/asserts/generated/index.js": EMPTY_MODULE,
