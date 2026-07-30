@@ -39,7 +39,7 @@ import { simplifyFunction } from "../../util/simplify-fn";
 import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
-import { flushInto } from "../../util/writer";
+import { flushInto, getSectionShell } from "../../util/writer";
 
 function hasDivergentStructure() {
   let sections = 0;
@@ -137,6 +137,20 @@ export default {
     },
     exit(program) {
       const section = getSection(program);
+
+      if (isPersisted()) {
+        const shell = getSectionShell(section);
+        if (shell) {
+          getHTMLSectionStatements(section).unshift(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                generateUidIdentifier(`${section.name}__shell`),
+                t.stringLiteral(shell),
+              ),
+            ]),
+          );
+        }
+      }
 
       // Fail closed: structure that can diverge between renders cannot be
       // expressed as a value patch yet, so such a template never patches.

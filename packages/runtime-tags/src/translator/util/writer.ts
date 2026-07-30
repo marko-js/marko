@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import * as ResumeSymbol from "../../common/constants/resume-symbol";
 import {
   ContentType,
   getScopeIdIdentifier,
@@ -30,16 +31,49 @@ const [getTrailerWrites] = createSectionState<(string | t.Expression)[]>(
   () => [""],
 );
 
+// The values-free structure of a section, accumulated alongside the writes and
+// deliberately not cleared by `consumeHTML`: a shell spans a whole section while
+// the writes are flushed in pieces.
+const [getShellWrites] = createSectionState<string[]>("shellWrites", () => []);
+
+/** Stands in for the runtime comment prefix, which a shell cannot know. */
+const SHELL_PREFIX = "\0";
+
+export function getSectionShell(section: Section) {
+  return getShellWrites(section).join("");
+}
+
+/** Records structure that a value-carrying expression stands in for. */
+export function appendShell(path: t.NodePath<any>, str: string) {
+  getShellWrites(getSection(path)).push(str);
+}
+
+// An interpolated write is structure when it is already known to be a string:
+// a static tag name or attribute. Anything else is a value the shell omits.
+function shellPart(write: Write) {
+  if (typeof write === "string") return write;
+  if (typeof write !== "function" && t.isStringLiteral(write)) {
+    return write.value;
+  }
+}
+
 export function writeTo(path: t.NodePath<any>, trailer?: boolean) {
   const section = getSection(path);
   const get = trailer ? getTrailerWrites : getWrites;
   return (strs: TemplateStringsArray, ...exprs: Write[]): void => {
     const exprsLen = exprs.length;
     const writes = get(section);
+    const shell = trailer ? undefined : getShellWrites(section);
     appendLiteral(writes, strs[0]);
+    shell?.push(strs[0]);
 
     for (let i = 0; i < exprsLen; i++) {
       writes.push(exprs[i], strs[i + 1]);
+      if (shell) {
+        const part = shellPart(exprs[i]);
+        if (part !== undefined) shell.push(part);
+        shell.push(strs[i + 1]);
+      }
     }
   };
 }
@@ -154,7 +188,17 @@ export function markNode(
   if (isOutputHTML()) {
     // A hole needs its node marked. Only the root section: marking inside a
     // branch would retain that branch's renderer, which must stay tree-shaken.
-    if (isPersisted() && !getSection(path).parent) reason = true;
+    if (isPersisted() && !getSection(path).parent) {
+      reason = true;
+      // The shell carries the marker with the comment prefix and scope id
+      // elided; a constructing client supplies both.
+      appendShell(
+        path,
+        `<!--${SHELL_PREFIX}${ResumeSymbol.Node}${
+          getScopeAccessorLiteral(nodeBinding).value
+        }-->`,
+      );
+    }
     if (reason) {
       const section = getSection(path);
       // Deferred markers ride the stream trailer alongside a deferred end tag

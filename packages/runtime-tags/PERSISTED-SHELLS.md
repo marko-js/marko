@@ -1,7 +1,7 @@
 # Persisted pages: the shell wire format
 
-Status: **design, not implemented.** Everything below the "What is already true"
-section is unbuilt. This note exists because the shell encoding is a wire-format
+Status: **slice 1 landed; slices 2-4 unbuilt.** No navigation is visible until
+slice 4. This note exists because the shell encoding is a wire-format
 decision that construction, nested anchors and loop iterations all inherit, and
 it is cheaper to argue it here than to discover it three slices in.
 
@@ -101,18 +101,18 @@ the document fallback. The demo needs the former: `search/+page.marko` drives
    the dynamism corpus. No wire or client change. Gate: no-revival plus
    byte-identical non-persisted output.
 
-   Two things found by attempting it, both of which change the approach:
-   `consumeHTML` clears a section's `writes` on every flush, so the shell stream
-   must accumulate separately rather than piggyback on that array — and, more
-   importantly, `writeTo`'s template literals are **not** where a section's
-   static native structure flows. Tapping them yields only the markers:
-   `"<><><!--\0*a--></><><!--\0*b--></></>"` for a `<div><h1>${a}</h1><p>${b}</p></div>`,
-   with the element markup absent. Find where native tag structure is actually
-   emitted (`visitors/tag/native-tag.ts` and `util/walks.ts` are the candidates)
-   before threading an accumulator; the DOM build's `$template` is assembled
-   from that same structure and is the better model to copy.
-   The emission point itself is fine: `getHTMLSectionStatements(section)`
-   already exists and takes per-section declarations.
+   **Done.** `translator/util/writer.ts` accumulates a per-section stream
+   alongside the writes; `getHTMLSectionStatements` takes the constant. Two
+   things the attempt corrected: `consumeHTML` clears a section's `writes` per
+   flush, so the shell stream accumulates separately — and a section's static
+   structure arrives as _interpolated expressions_, not literals
+   (`` write`<${tagName}` ``, one expression per attribute), so the classifier
+   keeps any write already known to be a string and drops the rest. The
+   bundler tree-shakes the unused constant, so it costs nothing until a wire
+   consumer exists, which also means bundle snapshots cannot evidence it;
+   `__tests__/persisted-shell.test.ts` asserts the strings at the compiler
+   instead. Known gap pinned there: a template whose entire content is one
+   placeholder has no element to hang a marker on and yields no shell.
 
 2. **Attribute holes.** Marker on the owning element, fill keyed by
    `(accessor, attribute)`. Gate: a fixture whose only dynamism is an
