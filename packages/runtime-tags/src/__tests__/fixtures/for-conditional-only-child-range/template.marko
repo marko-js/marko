@@ -1,0 +1,18 @@
+<let/items=[{ id: 0, code: false }, { id: 1, code: true }, { id: 2, code: false }]/>
+
+<div.list>
+  <for|item| of=items by="id">
+    <if=item.code>
+      <pre>code ${item.id}</pre>
+    </if>
+    <else>
+      <p>text ${item.id}</p>
+    </else>
+  </for>
+</div>
+
+<button.rotate onClick() { items = [...items.slice(1), items[0]]; }>Rotate</button>
+<button.toggle onClick() {
+  items = items.map((item) => ({ ...item, code: !item.code }));
+}>Toggle</button>
+<button.drop onClick() { items = items.slice(1); }>Drop</button>

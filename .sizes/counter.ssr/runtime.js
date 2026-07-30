@@ -1,4 +1,4 @@
-// size: 2463 (min) 1239 (brotli)
+// size: 2681 (min) 1312 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -185,6 +185,23 @@ function _to_text(value) {
 function _text(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  if (parentNode.isConnected)
+    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  else {
+    let stop = endNode.nextSibling;
+    for (; startNode !== stop;) {
+      let next = startNode.nextSibling;
+      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
+    }
+  }
+  return parentNode;
+}
+function toInsertNode(startNode, endNode) {
+  return startNode === endNode
+    ? startNode
+    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;

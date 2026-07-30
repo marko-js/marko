@@ -1,0 +1,33 @@
+<div class=list><!--M_[-->
+  <p>text <!>0<!--M_*3 #text/0--></p><!--M_|2 #text/0 3--><!--M_[2-->
+  <pre>code <!>1<!--M_*5 #text/0--></pre><!--M_|4 #text/0 5--><!--M_[4-->
+  <p>text <!>2<!--M_*7 #text/0--></p><!--M_|6 #text/0 7--><!--M_)1 #div/0 6-->
+</div><button class=rotate>Rotate</button><!--M_*1 #button/1--><button
+  class=toggle>Toggle</button><!--M_*1 #button/2--><button
+  class=drop>Drop</button><!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      items: [{
+        id: 0,
+        code: !1
+      }, {
+        id: 1,
+        code: !0
+      }, {
+        id: 2,
+        code: !1
+      }]
+    }, {
+      "ConditionalRenderer:#text/0": 1,
+      item_id: 0
+    }, 1, {
+      item_id: 1
+    }, 1, {
+      "ConditionalRenderer:#text/0": 1,
+      item_id: 2
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-conditional-only-child-range/template.marko_0 1"
+  ];
+  M._.w()
+</script>

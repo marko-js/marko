@@ -428,18 +428,23 @@ export function insertChildNodes(
   startNode: Node,
   endNode: Node,
 ) {
-  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  // Branches are assembled into a detached tree, where staging the range in a
+  // DocumentFragment costs an allocation and buys no layout work.
+  if ((parentNode as Node).isConnected) {
+    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  } else {
+    const stop = endNode.nextSibling;
+    while (startNode !== stop) {
+      const next = startNode.nextSibling;
+      parentNode.insertBefore(startNode, referenceNode);
+      startNode = next!;
+    }
+  }
+  return parentNode;
 }
 
 export function toInsertNode(startNode: Node, endNode: Node) {
-  if (startNode === endNode) return startNode;
-  const parent = new DocumentFragment();
-  const stop = endNode.nextSibling;
-  while (startNode !== stop) {
-    const next = startNode.nextSibling;
-    parent.appendChild(startNode);
-    startNode = next!;
-  }
-
-  return parent;
+  return startNode === endNode
+    ? startNode
+    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }

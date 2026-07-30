@@ -1,4 +1,4 @@
-// size: 6521 (min) 2867 (brotli)
+// size: 6554 (min) 2873 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -287,17 +287,21 @@ function removeChildNodes(startNode, endNode) {
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  if (parentNode.isConnected)
+    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  else {
+    let stop = endNode.nextSibling;
+    for (; startNode !== stop;) {
+      let next = startNode.nextSibling;
+      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
+    }
+  }
+  return parentNode;
 }
 function toInsertNode(startNode, endNode) {
-  if (startNode === endNode) return startNode;
-  let parent = new DocumentFragment(),
-    stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (parent.appendChild(startNode), (startNode = next));
-  }
-  return parent;
+  return startNode === endNode
+    ? startNode
+    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 function _if(nodeAccessor, ...branchesArgs) {
   nodeAccessor = decodeAccessor(nodeAccessor);
