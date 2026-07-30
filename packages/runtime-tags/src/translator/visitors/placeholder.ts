@@ -1,11 +1,12 @@
 import { types as t } from "@marko/compiler";
 
 import { WalkCode } from "../../common/types";
+import { addAssetImport } from "../util/asset-imports";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
@@ -13,17 +14,19 @@ import {
   createBinding,
   getScopeAccessorLiteral,
 } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { callRuntime, getHTMLRuntime, getRuntimePath } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   ContentType,
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
   type Section,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
+  addSerializeReason,
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
@@ -52,7 +55,14 @@ type DOMMethod = "_html" | "_text";
 export default {
   analyze: {
     enter(placeholder) {
-      if (isNonHTMLText(placeholder)) return;
+      if (isNonHTMLText(placeholder)) {
+        if (isPersisted() && !evaluate(placeholder.node.value).confident) {
+          throw placeholder.buildCodeFrameError(
+            "Persisted templates currently support only escaped dynamic text in native HTML.",
+          );
+        }
+        return;
+      }
 
       const { node } = placeholder;
       const valueExtra = evaluate(node.value);
@@ -74,6 +84,13 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
+        if (isPersisted() && node.escape && !section.parent) {
+          addSerializeReason(section, true, nodeBinding);
+          addAssetImport(
+            placeholder.hub.file,
+            `${getRuntimePath("dom")}/patch-text.feat`,
+          );
+        }
       }
     },
     exit(placeholder) {
@@ -161,6 +178,12 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const siblingText = extra[kSiblingText]!;
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
+    const isPatchText =
+      isHTML &&
+      isPersisted() &&
+      node.escape &&
+      !section.parent &&
+      !!nodeBinding;
 
     if (isHTML && markerSerializeReason) {
       if (siblingText === SiblingText.Before) {
@@ -173,6 +196,14 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
 
     if (isHTML) {
+      if (isPatchText) {
+        write`${callRuntime(
+          "_patch_text",
+          getScopeIdIdentifier(section),
+          getScopeAccessorLiteral(nodeBinding),
+          value,
+        )}`;
+      }
       write`${
         method === "_escape"
           ? buildEscapedTextExpression(value)

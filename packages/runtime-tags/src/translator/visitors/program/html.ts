@@ -1,5 +1,7 @@
 import { types as t } from "@marko/compiler";
+import { getTagDefForTagName } from "@marko/compiler/babel-utils";
 
+import evaluate from "../../util/evaluate";
 import {
   generateUidIdentifier,
   getSharedUid,
@@ -7,7 +9,7 @@ import {
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
-import { getMarkoOpts } from "../../util/marko-config";
+import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
@@ -142,6 +144,7 @@ export default {
         );
       }
 
+      const persisted = isPersisted();
       flushInto(program);
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
@@ -187,7 +190,7 @@ export default {
       );
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
-          "_template",
+          persisted ? "_template_persisted" : "_template",
           t.stringLiteral(program.hub.file.metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
           // A non-page template gets a randomized render id ("embed") so several
@@ -211,6 +214,53 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+export function assertSupportedPatch(program: t.NodePath<t.Program>) {
+  let unsupported: t.Node | undefined;
+  t.traverseFast(program.node, (node) => {
+    switch (node.type) {
+      case "MarkoAttribute":
+      case "MarkoSpreadAttribute":
+        if (!evaluate(node.value).confident) {
+          unsupported = node;
+          return t.traverseFast.stop;
+        }
+        break;
+      case "MarkoPlaceholder":
+        if (!node.escape) {
+          unsupported = node;
+          return t.traverseFast.stop;
+        }
+        break;
+      case "MarkoScriptlet":
+        unsupported = node;
+        return t.traverseFast.stop;
+      case "MarkoTag": {
+        const tagDef =
+          t.isStringLiteral(node.name) &&
+          getTagDefForTagName(program.hub.file, node.name.value);
+        if (
+          !(
+            tagDef &&
+            tagDef.html &&
+            ((tagDef.htmlType as string) === "custom-element" ||
+              (!tagDef.template && !tagDef.renderer))
+          )
+        ) {
+          unsupported = node;
+          return t.traverseFast.stop;
+        }
+        break;
+      }
+    }
+  });
+  if (unsupported) {
+    throw program.hub.buildError(
+      unsupported,
+      "Persisted templates currently support only escaped dynamic text in native HTML.",
+    );
+  }
+}
 
 function replaceNode(node: t.Node) {
   return replaceBindingReadNode(node) || replaceRegisteredFunctionNode(node);

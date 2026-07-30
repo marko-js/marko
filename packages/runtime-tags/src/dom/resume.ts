@@ -53,8 +53,10 @@ export interface RenderData {
   p?: Record<string | number, AwaitCounter>;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
+type Patcher = (scope: Scope, key: string, value: unknown) => void;
 
 export const registeredValues: Record<string, unknown> = {};
+export const patchers: Record<string, Patcher> = {};
 let curRenders: Renders;
 let embedRenders:
   | undefined
@@ -66,6 +68,26 @@ let failedIds: undefined | Set<string>;
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
+let patchFailed: 0 | 1 = 0;
+let patchRender: RenderData | 0 = 0;
+let patching: 0 | 1 = 0;
+
+export function beginPatch(renderId: string) {
+  const render = (patchRender = curRenders[renderId]);
+  patchFailed = 0;
+  patching = 1;
+  return render;
+}
+
+export function finishPatch() {
+  const applied = !patchFailed;
+  abortPatch();
+  return applied;
+}
+
+export function abortPatch() {
+  patchRender = patchFailed = patching = 0;
+}
 
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
@@ -157,6 +179,26 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           return scope;
         };
         const applyScopes = (partials: (Scope | number)[]) => {
+          if (patching && patchRender === render) {
+            let scopeId = partials[0] as number;
+            for (let i = 1; i < partials.length; i++) {
+              const partial = partials[i];
+              if (typeof partial === "number") {
+                scopeId += partial;
+              } else {
+                const scope = scopeLookup[scopeId]!;
+                for (const key in partial) {
+                  patchers[
+                    // Debug accessor prefixes are multi-character, ending ":".
+                    MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+                  ](scope, key, partial[key]);
+                }
+                scopeId++;
+              }
+            }
+            return;
+          }
+
           let scopeId = partials[0] as number;
           for (let i = 1; i < partials.length; i++) {
             const partial = partials[i];
@@ -184,11 +226,13 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           data: number | (Scope | number)[],
           registryId?: string,
         ) =>
-          typeof data === "number"
-            ? registryId
-              ? (registeredValues[registryId] as RegisteredFn)(getScope(data))
-              : getScope(data)
-            : applyScopes(data)) as SerializeContext;
+          patching && patchRender === render && typeof data === "number"
+            ? ((patchFailed = 1), undefined)
+            : typeof data === "number"
+              ? registryId
+                ? (registeredValues[registryId] as RegisteredFn)(getScope(data))
+                : getScope(data)
+              : applyScopes(data)) as SerializeContext;
         const createVisitBranches = (
           branchScopesStack: Opt<BranchScope>[] = [],
           branchStarts: Comment[] = [],
