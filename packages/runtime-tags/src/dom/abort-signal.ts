@@ -13,13 +13,18 @@ export function $signalReset(scope: Scope, id: string | number) {
 }
 
 export function $signal(scope: Scope, id: string | number) {
+  trackCleanup(scope);
+
+  return ((scope[AccessorProp.AbortControllers] ||= {})[id] ||=
+    new AbortController()).signal;
+}
+
+/** Enrolls `scope` with its branch so destroying the branch cleans it up. */
+export function trackCleanup(scope: Scope) {
   if (scope[AccessorProp.ClosestBranch]) {
     (scope[AccessorProp.ClosestBranch][AccessorProp.AbortScopes] ||=
       new Set()).add(scope);
   }
-
-  return ((scope[AccessorProp.AbortControllers] ||= {})[id] ||=
-    new AbortController()).signal;
 }
 
 function abort(ctrl: AbortController) {

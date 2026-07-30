@@ -23,6 +23,7 @@ export const PlaceholderBranch = "#PlaceholderBranch";
 export const PlaceholderContent = "#PlaceholderContent";
 export const Renderer = "#Renderer";
 export const StartNode = "#StartNode";
+export const Subscriptions = "#Subscriptions";
 export const TagVariable = "#TagVariable";
 export const TagVariableChange = "#TagVariableChange";
 
