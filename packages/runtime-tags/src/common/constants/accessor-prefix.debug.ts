@@ -11,6 +11,7 @@ export const EventAttributes = "EventAttributes:";
 export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
+export const PatchText = "PatchText:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";
 
