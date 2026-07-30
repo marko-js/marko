@@ -1,0 +1,13 @@
+<let/items=[{ id: "a", n: 1 }, { id: "b", n: 2 }, { id: "c", n: 3 }]/>
+
+<ul>
+  <for|item, index| of=items by="id">
+    <li>${index}:${item.id}=${item.n}</li>
+  </for>
+</ul>
+
+<button.rotate onClick() { items = [...items.slice(1), items[0]]; }>Rotate</button>
+<button.bump onClick() {
+  items = items.map((item) => (item.id === "b" ? { ...item, n: item.n + 10 } : item));
+}>Bump b</button>
+<button.resettle onClick() { items = [...items]; }>Same items</button>

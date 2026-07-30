@@ -1,4 +1,4 @@
-// size: 26624 (min) 9899 (brotli)
+// size: 26657 (min) 9896 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1168,17 +1168,21 @@ function removeChildNodes(startNode, endNode) {
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  if (parentNode.isConnected)
+    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  else {
+    let stop = endNode.nextSibling;
+    for (; startNode !== stop;) {
+      let next = startNode.nextSibling;
+      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
+    }
+  }
+  return parentNode;
 }
 function toInsertNode(startNode, endNode) {
-  if (startNode === endNode) return startNode;
-  let parent = new DocumentFragment(),
-    stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (parent.appendChild(startNode), (startNode = next));
-  }
-  return parent;
+  return startNode === endNode
+    ? startNode
+    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 function resolveCursorPosition(inputType, initialPosition, initialValue, updatedValue) {
   if (
