@@ -1,6 +1,6 @@
 // tags/inner/index.marko
-const $template$2 = "<!><!><div>other <!></div><div>cond <!></div>";
-const $walks$2 = "b%bDb%lDb%l";
+const $template$2 = "<!><div>other <!></div><div>cond <!></div>";
+const $walks$2 = "%bDb%lDb%l";
 const $setup$2 = () => {};
 const $for_content__row_x = ($scope, row_x) => _text($scope["#text/0"], row_x);
 const $for_content__$params = ($scope, $params2) => $for_content__row_x($scope, $params2[0]?.x);

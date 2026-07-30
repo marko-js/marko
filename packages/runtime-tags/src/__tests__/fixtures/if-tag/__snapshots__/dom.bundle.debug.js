@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!><div> </div>";
-const $walks = "b%b%bD l";
+const $template = "<!><!><div> </div>";
+const $walks = "%b%bD l";
 const $setup = () => {};
 const $if = /*@__PURE__*/ _if("#text/0", "Hello");
 const $if2 = /*@__PURE__*/ _if("#text/1", "World");

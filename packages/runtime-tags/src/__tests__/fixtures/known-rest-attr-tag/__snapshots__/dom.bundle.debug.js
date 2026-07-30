@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__button = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.button));
 const $if_content__setup = $if_content__button;
-const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
+const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!>", "%", $if_content__setup);
 const $for_content__button = /*@__PURE__*/ _const("button", ($scope) => {
 	$for_content__if($scope, $scope.button ? 0 : 1);
 	$if_content__button($scope);
@@ -16,7 +16,7 @@ const $htmlInput = /*@__PURE__*/ _const("htmlInput", ($scope) => {
 	_attrs($scope, "#div/0", $scope.htmlInput);
 	$htmlInput__script($scope);
 });
-const $for = /*@__PURE__*/ _for_of("#div/0", "<!><!><!>", "b%", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#div/0", "<!>", "%", 0, $for_content__$params);
 const $buttons = ($scope, buttons) => $for($scope, [buttons]);
 const $input = ($scope, input) => {
 	(({ button, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);

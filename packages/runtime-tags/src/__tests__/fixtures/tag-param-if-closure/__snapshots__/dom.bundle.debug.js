@@ -1,7 +1,7 @@
 // template.marko
-const $Foo_content2__walks = "b%c", $Foo_content2__template = "<!><!><!>";
-const $template = /*@__PURE__*/ ((_w0) => `<button>Increment</button>${_w0}<!>`)($Foo_content2__template);
-const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($Foo_content2__walks);
+const $Foo_content2__walks = "%b", $Foo_content2__template = "<!>";
+const $template = /*@__PURE__*/ ((_w0) => `<button>Increment</button>${_w0}`)($Foo_content2__template);
+const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($Foo_content2__walks);
 const $Foo_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
 const $Foo_content2__input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $Foo_content2__dynamicTag($scope, $scope.input_content, () => [$scope.input_value]));
 const $Foo_content2__input_content = /*@__PURE__*/ _const("input_content", $Foo_content2__input_content__OR__input_value);
@@ -16,7 +16,7 @@ const $if_content__setup = $if_content__a;
 const $Foo_content__if = /*@__PURE__*/ _if("#text/0", " ", " ", $if_content__setup);
 const $Foo_content__v = ($scope, v) => $Foo_content__if($scope, v ? 0 : 1);
 const $Foo_content__$params = ($scope, $params3) => $Foo_content__v($scope, $params3[0]);
-const $Foo_content = _content_resume("__tests__/template.marko_1_content", "<!><!><!>", "b%", 0, $Foo_content__$params);
+const $Foo_content = _content_resume("__tests__/template.marko_1_content", "<!>", "%", 0, $Foo_content__$params);
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => $Foo_content2__input_value($scope["#childScope/1"], $scope.count));
 const $a = /*@__PURE__*/ _const("a");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

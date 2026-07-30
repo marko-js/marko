@@ -271,6 +271,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     } else if (
       contentType === ContentType.Text ||
       contentType === ContentType.Dynamic ||
+      contentType === ContentType.DynamicAnchored ||
       contentType === ContentType.Placeholder
     ) {
       return (placeholderExtra[kSiblingText] = SiblingText.Before);
@@ -303,6 +304,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     } else if (
       contentType === ContentType.Text ||
       contentType === ContentType.Dynamic ||
+      contentType === ContentType.DynamicAnchored ||
       contentType === ContentType.Placeholder
     ) {
       return (placeholderExtra[kSiblingText] = SiblingText.After);

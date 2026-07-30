@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<style>\n  A {}\n</style><style nonce=override>\n  B {}\n</style><style>\n  C {}\n</style><!><!>";
-const $walks = " c b%c";
+const $template = "<style>\n  A {}\n</style><style nonce=override>\n  B {}\n</style><style>\n  C {}\n</style><!>";
+const $walks = " c b%b";
 const $if_content__setup = ($scope) => _attr_nonce($scope, "#style/0");
 const $spreadAttrs__script = _script("__tests__/template.marko_0_spreadAttrs", ($scope) => _attrs_script($scope, "#style/1"));
 const $spreadAttrs = /*@__PURE__*/ _const("spreadAttrs", ($scope) => {

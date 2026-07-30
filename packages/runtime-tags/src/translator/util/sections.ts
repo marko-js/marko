@@ -234,7 +234,10 @@ function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
     if (endType !== null) {
       contentInfo.endType = endType;
 
-      if (endType === ContentType.Dynamic) {
+      if (
+        endType === ContentType.Dynamic ||
+        endType === ContentType.DynamicAnchored
+      ) {
         contentInfo.singleChild = false;
       }
 
@@ -289,10 +292,11 @@ export function getNodeContentType(
               : null;
           case "for":
           case "if":
+            return ContentType.Dynamic;
+          case "show":
           case "await":
           case "try":
-          case "show":
-            return ContentType.Dynamic;
+            return ContentType.DynamicAnchored;
           default:
             return null;
         }

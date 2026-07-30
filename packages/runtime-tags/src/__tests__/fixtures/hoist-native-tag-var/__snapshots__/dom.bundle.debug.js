@@ -8,8 +8,8 @@ const $input$1 = /*@__PURE__*/ _const("input", $input__script);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<hr><!><!>`)("");
-const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b%c`)("");
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<hr><!>`)("");
+const $walks = /*@__PURE__*/ ((_w0) => `%b/${_w0}&b%b`)("");
 const $el2_getter = /*@__PURE__*/ _hoist("#div/0", "BranchScopes:#text/2");
 const $el_getter = _hoist_resume("__tests__/template.marko_0_#div/hoist", "#div/0", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__$el_getter = _el("__tests__/template.marko_2_#div", "#div/0");
@@ -20,7 +20,7 @@ const $if_content2__setup = ($scope) => {
 const $if_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)(""), /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)(""), $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
-const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<!>", "%", $if_content__setup);
 const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => {
 	$if($scope, $scope.input_show ? 0 : 1);
 	$if_content__input_show($scope);

@@ -1,6 +1,6 @@
 // tags/hello/index.marko
-const $template$1 = "<!><!><!><!>";
-const $walks$1 = "b%b%c";
+const $template$1 = "<!><!>";
+const $walks$1 = "%b%b";
 const $setup$1 = () => {};
 const $for_content3__attrs__script = _script("__tests__/tags/hello/index.marko_3_attrs", ($scope) => _attrs_script($scope, "#div/0"));
 const $for_content3__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
@@ -40,7 +40,7 @@ const $for_content__$temp = ($scope, $temp) => {
 };
 const $for = /*@__PURE__*/ _for_of("#text/0", "<div class=item><!></div>", " D%", 0, $for_content__$params);
 const $input_list_item = ($scope, input_list_item) => $for($scope, [input_list_item]);
-const $for2 = /*@__PURE__*/ _for_of("#text/1", "<div class=col></div><!><!>", " b%", 0, $for_content2__$params);
+const $for2 = /*@__PURE__*/ _for_of("#text/1", "<div class=col></div><!>", " b%", 0, $for_content2__$params);
 const $input_col = ($scope, input_col) => $for2($scope, [input_col]);
 const $input = ($scope, input) => {
 	$input_list($scope, input.list);
@@ -50,8 +50,8 @@ const $input_list = ($scope, input_list) => $input_list_item($scope, input_list?
 var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $row_content2 = _content_resume("__tests__/template.marko_4_content", "Outside");
 const $row_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_3_content", " ", " "), { row($scope) {
 	_text($scope["#text/0"], $scope.row);

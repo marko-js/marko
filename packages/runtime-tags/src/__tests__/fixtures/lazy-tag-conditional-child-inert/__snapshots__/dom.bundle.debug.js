@@ -11,8 +11,8 @@ const $input = ($scope, input) => {
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko
-const $template = "<button>Inc</button><!><!>";
-const $walks = " b%c";
+const $template = "<button>Inc</button><!>";
+const $walks = " b%b";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
@@ -22,7 +22,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_label($scope["#childScope/1"], "x");
 };
-const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%/&", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", "<!>", "%/&", $if_content__setup);
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	$if($scope, $scope.count % 2 === 0 ? 0 : 1);
 	$if_content__count($scope);

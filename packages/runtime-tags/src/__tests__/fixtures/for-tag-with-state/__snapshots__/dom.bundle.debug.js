@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!><!>";
-const $walks = "b%b%c";
+const $template = "<!><!>";
+const $walks = "%b%b";
 const $for_content2__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content2__val = ($scope, val) => _text($scope["#text/1"], val);
 const $for_content2__$params = ($scope, $params3) => $for_content2__val($scope, $params3[0]);

@@ -12,7 +12,7 @@ const $detailsTag_content__setup = ($scope) => {
 	$detailsTag_content__textareaTag($scope);
 };
 const $detailsTag_content__textareaTag = /*@__PURE__*/ _closure_get(9, $detailsTag_content__text__OR__textareaTag);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a2", "<summary>toggle</summary><!><!>", "b%", $detailsTag_content__setup));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a2", "<summary>toggle</summary><!>", "b%", $detailsTag_content__setup));
 const $open__OR__detailsTag = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.f, () => ({
 	open: $scope.d,
 	openChange: $openChange($scope)

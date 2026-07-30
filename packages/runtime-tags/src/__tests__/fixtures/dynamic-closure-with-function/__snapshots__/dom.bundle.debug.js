@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $setup = () => {};
 const $if_content2__bar__OR__foo = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.bar($scope._.foo)));
 const $if_content2__bar = /*@__PURE__*/ _closure_get("bar", $if_content2__bar__OR__foo, ($scope) => $scope._._);
@@ -19,7 +19,7 @@ const $if_content__setup = ($scope) => {
 const $bar2__closure = /*@__PURE__*/ _closure($if_content2__bar);
 const $bar2 = /*@__PURE__*/ _const("bar", $bar2__closure);
 const $input_c = /*@__PURE__*/ _const("input_c", ($scope) => $bar2($scope, $bar($scope)));
-const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<!>", "%", $if_content__setup);
 const $input_a = ($scope, input_a) => $if($scope, input_a ? 0 : 1);
 const $input = ($scope, input) => {
 	$input_c($scope, input.c);
@@ -33,4 +33,4 @@ function $bar($scope) {
 	};
 }
 _resume("__tests__/template.marko_0/bar", $bar);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup, $input);

@@ -47,6 +47,7 @@ import {
   collectScopes,
   destroyBranch,
   findBranchWithKey,
+  fixBranchEdges,
   insertBranchBefore,
   removeAndDestroyBranch,
   syncGen,
@@ -74,10 +75,14 @@ export function _await_promise(
       setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
       awaitBranch[AccessorProp.DetachedAwait] = 0;
 
-      insertBranchBefore(
-        awaitBranch,
-        (scope[nodeAccessor] as ChildNode).parentNode!,
-        scope[nodeAccessor] as ChildNode,
+      const anchor = scope[nodeAccessor] as ChildNode;
+      insertBranchBefore(awaitBranch, anchor.parentNode!, anchor);
+      fixBranchEdges(
+        awaitBranch[AccessorProp.ParentBranch],
+        anchor,
+        anchor,
+        awaitBranch[AccessorProp.StartNode],
+        awaitBranch[AccessorProp.EndNode],
       );
       referenceNode.remove();
     }
@@ -125,6 +130,13 @@ export function _await_promise(
               anchor.remove();
             } else {
               anchor.replaceWith(detachedParent);
+              fixBranchEdges(
+                tryBranch[AccessorProp.ParentBranch],
+                anchor,
+                anchor,
+                tryBranch[AccessorProp.StartNode],
+                tryBranch[AccessorProp.EndNode],
+              );
             }
           }
         } else {
@@ -149,11 +161,19 @@ export function _await_promise(
                   scope,
                   () => {
                     if (!awaitBranch[AccessorProp.DetachedAwait]) {
+                      const anchor = scope[nodeAccessor] as ChildNode;
                       awaitBranch[
                         AccessorProp.StartNode
                       ].parentNode!.insertBefore(
-                        scope[nodeAccessor] as Node,
+                        anchor,
                         awaitBranch[AccessorProp.StartNode],
+                      );
+                      fixBranchEdges(
+                        tryBranch[AccessorProp.ParentBranch],
+                        tryBranch[AccessorProp.StartNode],
+                        tryBranch[AccessorProp.EndNode],
+                        anchor,
+                        anchor,
                       );
                       tempDetachBranch(tryBranch);
                     }
@@ -286,16 +306,25 @@ export function addAwaitCounter(
             queueRender(
               tryBranch,
               () => {
+                const parent = tryBranch[AccessorProp.StartNode].parentNode!;
+                const placeholder = (tryBranch[AccessorProp.PlaceholderBranch] =
+                  createAndSetupBranch(
+                    tryBranch[AccessorProp.Global],
+                    tryBranch[AccessorProp.PlaceholderContent] as Renderer,
+                    tryBranch[AccessorProp.Owner]!,
+                    parent,
+                  ));
                 insertBranchBefore(
-                  (tryBranch[AccessorProp.PlaceholderBranch] =
-                    createAndSetupBranch(
-                      tryBranch[AccessorProp.Global],
-                      tryBranch[AccessorProp.PlaceholderContent] as Renderer,
-                      tryBranch[AccessorProp.Owner]!,
-                      tryBranch[AccessorProp.StartNode].parentNode!,
-                    )),
-                  tryBranch[AccessorProp.StartNode].parentNode!,
+                  placeholder,
+                  parent,
                   tryBranch[AccessorProp.StartNode],
+                );
+                fixBranchEdges(
+                  tryBranch[AccessorProp.ParentBranch],
+                  tryBranch[AccessorProp.StartNode],
+                  tryBranch[AccessorProp.EndNode],
+                  placeholder[AccessorProp.StartNode],
+                  placeholder[AccessorProp.EndNode],
                 );
                 tempDetachBranch(tryBranch);
               },
@@ -337,6 +366,13 @@ function dismissPlaceholder(tryBranch: BranchScope) {
     placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
       tryBranch[AccessorProp.StartNode].parentNode!,
       placeholderBranch[AccessorProp.StartNode],
+    );
+    fixBranchEdges(
+      tryBranch[AccessorProp.ParentBranch],
+      placeholderBranch[AccessorProp.StartNode],
+      placeholderBranch[AccessorProp.EndNode],
+      tryBranch[AccessorProp.StartNode],
+      tryBranch[AccessorProp.EndNode],
     );
     removeAndDestroyBranch(placeholderBranch);
   }
@@ -501,6 +537,13 @@ export function _show(
       range = scope[rangeAccessor] = {} as BranchScope;
       range[AccessorProp.StartNode] = startNode = wrapper.firstChild!;
       range[AccessorProp.EndNode] = wrapper.lastChild!;
+      fixBranchEdges(
+        scope[AccessorProp.ClosestBranch],
+        wrapper,
+        wrapper,
+        startNode,
+        range[AccessorProp.EndNode],
+      );
       wrapper.replaceWith(...wrapper.childNodes);
     }
 
@@ -512,6 +555,15 @@ export function _show(
     if (display) {
       if (!inDom) {
         insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode);
+        if (!onlyChild) {
+          fixBranchEdges(
+            scope[AccessorProp.ClosestBranch],
+            referenceNode,
+            range[AccessorProp.EndNode],
+            range[AccessorProp.StartNode],
+            range[AccessorProp.EndNode],
+          );
+        }
       }
     } else if (inDom) {
       if (onlyChild) {
@@ -519,6 +571,17 @@ export function _show(
         // parent's first and last child, so read them at each hide.
         range[AccessorProp.StartNode] = parentNode.firstChild!;
         range[AccessorProp.EndNode] = parentNode.lastChild!;
+      } else {
+        // The reference node always trails this range, so an owner can begin
+        // at it but never end there; passing the end through unchanged keeps
+        // that a no-op rather than a range whose start follows its end.
+        fixBranchEdges(
+          scope[AccessorProp.ClosestBranch],
+          range[AccessorProp.StartNode],
+          range[AccessorProp.EndNode],
+          referenceNode,
+          range[AccessorProp.EndNode],
+        );
       }
       tempDetachBranch(range);
     }
@@ -724,24 +787,31 @@ export function setConditionalRenderer<T>(
     if (newBranch) {
       insertBranchBefore(newBranch, parentNode, null);
     }
-  } else if (prevBranch) {
+  } else if (prevBranch || newBranch) {
+    const oldStart = prevBranch
+      ? prevBranch[AccessorProp.StartNode]
+      : referenceNode;
     if (newBranch) {
-      insertBranchBefore(
-        newBranch,
-        parentNode,
-        prevBranch[AccessorProp.StartNode],
-      );
+      insertBranchBefore(newBranch, parentNode, oldStart);
     } else {
-      parentNode.insertBefore(
-        referenceNode,
-        prevBranch[AccessorProp.StartNode],
-      );
+      parentNode.insertBefore(referenceNode, oldStart);
     }
 
-    removeAndDestroyBranch(prevBranch);
-  } else if (newBranch) {
-    insertBranchBefore(newBranch, parentNode, referenceNode);
-    referenceNode.remove();
+    // The slot swaps the previous branch (or its bare marker) for the new one,
+    // so owners bounded by the old range adopt the new one's edges.
+    fixBranchEdges(
+      scope[AccessorProp.ClosestBranch],
+      oldStart,
+      prevBranch ? prevBranch[AccessorProp.EndNode] : referenceNode,
+      newBranch ? newBranch[AccessorProp.StartNode] : referenceNode,
+      newBranch ? newBranch[AccessorProp.EndNode] : referenceNode,
+    );
+
+    if (prevBranch) {
+      removeAndDestroyBranch(prevBranch);
+    } else {
+      referenceNode.remove();
+    }
   }
 }
 
@@ -879,91 +949,102 @@ function loop<T extends unknown[] = unknown[]>(
         for (const newScope of newScopes) {
           insertBranchBefore(newScope, parentNode, afterReference);
         }
-
-        return;
-      }
-
-      if (oldScopesByKey) {
-        oldScopesByKey.forEach(removeAndDestroyBranch);
       } else {
-        for (let i = newLen; i < oldLen; i++) {
-          removeAndDestroyBranch(oldScopes[i]);
+        if (oldScopesByKey) {
+          oldScopesByKey.forEach(removeAndDestroyBranch);
+        } else {
+          for (let i = newLen; i < oldLen; i++) {
+            removeAndDestroyBranch(oldScopes[i]);
+          }
         }
-      }
 
-      // Skip common suffix
-      while (
-        oldEnd >= start &&
-        newEnd >= start &&
-        oldScopes[oldEnd] === newScopes[newEnd]
-      ) {
-        oldEnd--;
-        newEnd--;
-      }
-
-      // Update afterReference to account for common suffix
-      if (oldEnd + 1 < oldLen) {
-        afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
-      }
-
-      if (start > oldEnd || start > newEnd) {
-        for (let i = start; i <= newEnd; i++) {
-          insertBranchBefore(newScopes[i], parentNode, afterReference);
+        // Skip common suffix
+        while (
+          oldEnd >= start &&
+          newEnd >= start &&
+          oldScopes[oldEnd] === newScopes[newEnd]
+        ) {
+          oldEnd--;
+          newEnd--;
         }
-        return;
-      }
 
-      // Handle mixed new/moves
-      const diffLen = newEnd - start + 1;
-      const sources = new Array<number>(diffLen);
-      const pred = new Array<number>(diffLen);
-      const tails: number[] = [];
-      let tail: number = -1;
-      let lo: number;
-      let hi: number;
-      let mid: number;
+        // Update afterReference to account for common suffix
+        if (oldEnd + 1 < oldLen) {
+          afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
+        }
 
-      for (let i = diffLen; i--;) {
-        sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
-      }
+        if (start > oldEnd || start > newEnd) {
+          for (let i = start; i <= newEnd; i++) {
+            insertBranchBefore(newScopes[i], parentNode, afterReference);
+          }
+        } else {
+          // Handle mixed new/moves
+          const diffLen = newEnd - start + 1;
+          const sources = new Array<number>(diffLen);
+          const pred = new Array<number>(diffLen);
+          const tails: number[] = [];
+          let tail: number = -1;
+          let lo: number;
+          let hi: number;
+          let mid: number;
 
-      for (let i = 0; i < diffLen; i++) {
-        if (~sources[i]) {
-          if (tail < 0 || sources[tails[tail]] < sources[i]) {
-            if (~tail) pred[i] = tails[tail];
-            tails[++tail] = i;
-          } else {
-            lo = 0;
-            hi = tail;
-            while (lo < hi) {
-              mid = ((lo + hi) / 2) | 0;
-              if (sources[tails[mid]] < sources[i]) lo = mid + 1;
-              else hi = mid;
+          for (let i = diffLen; i--;) {
+            sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
+          }
+
+          for (let i = 0; i < diffLen; i++) {
+            if (~sources[i]) {
+              if (tail < 0 || sources[tails[tail]] < sources[i]) {
+                if (~tail) pred[i] = tails[tail];
+                tails[++tail] = i;
+              } else {
+                lo = 0;
+                hi = tail;
+                while (lo < hi) {
+                  mid = ((lo + hi) / 2) | 0;
+                  if (sources[tails[mid]] < sources[i]) lo = mid + 1;
+                  else hi = mid;
+                }
+                if (sources[i] < sources[tails[lo]]) {
+                  if (lo > 0) pred[i] = tails[lo - 1];
+                  tails[lo] = i;
+                }
+              }
             }
-            if (sources[i] < sources[tails[lo]]) {
-              if (lo > 0) pred[i] = tails[lo - 1];
-              tails[lo] = i;
+          }
+
+          // Backtrack to build LIS indices (reuse tails array)
+          hi = tails[tail];
+          lo = tail + 1;
+          while (lo-- > 0) {
+            tails[lo] = hi;
+            hi = pred[hi];
+          }
+
+          for (let i = diffLen; i--;) {
+            if (~tail && i === tails[tail]) {
+              tail--;
+            } else {
+              insertBranchBefore(
+                newScopes[start + i],
+                parentNode,
+                afterReference,
+              );
             }
+
+            afterReference = newScopes[start + i][AccessorProp.StartNode];
           }
         }
       }
 
-      // Backtrack to build LIS indices (reuse tails array)
-      hi = tails[tail];
-      lo = tail + 1;
-      while (lo-- > 0) {
-        tails[lo] = hi;
-        hi = pred[hi];
-      }
-
-      for (let i = diffLen; i--;) {
-        if (~tail && i === tails[tail]) {
-          tail--;
-        } else {
-          insertBranchBefore(newScopes[start + i], parentNode, afterReference);
-        }
-
-        afterReference = newScopes[start + i][AccessorProp.StartNode];
+      if (hasSiblings) {
+        fixBranchEdges(
+          scope[AccessorProp.ClosestBranch],
+          oldLen ? oldScopes[0][AccessorProp.StartNode] : referenceNode,
+          oldLen ? oldScopes[oldLen - 1][AccessorProp.EndNode] : referenceNode,
+          newLen ? newScopes[0][AccessorProp.StartNode] : referenceNode,
+          newLen ? newScopes[newLen - 1][AccessorProp.EndNode] : referenceNode,
+        );
       }
     };
   };

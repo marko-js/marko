@@ -300,7 +300,7 @@ export function _show_start(display: unknown, mark?: unknown) {
     // The wrapper itself is the range's single node.
     if (mark) {
       $chunk.writeHTML(
-        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+        $chunk.boundary.state.mark(ResumeSymbol.BranchStartAnchored, ""),
       );
     }
   } else {
@@ -787,7 +787,7 @@ export function _await<T>(
     if (resumeMarker) {
       const branchId = _peek_scope_id();
       $chunk.writeHTML(
-        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+        $chunk.boundary.state.mark(ResumeSymbol.BranchStartAnchored, ""),
       );
       content(promise);
       $chunk.writeHTML(
@@ -820,7 +820,10 @@ export function _await<T>(
             if (resumeMarker) {
               const branchId = _peek_scope_id();
               $chunk.writeHTML(
-                $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+                $chunk.boundary.state.mark(
+                  ResumeSymbol.BranchStartAnchored,
+                  "",
+                ),
               );
               withIsAsync(content, value);
               $chunk.writeHTML(
@@ -854,7 +857,9 @@ export function _try(
   },
 ) {
   const branchId = _peek_scope_id();
-  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(ResumeSymbol.BranchStartAnchored, ""),
+  );
 
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0

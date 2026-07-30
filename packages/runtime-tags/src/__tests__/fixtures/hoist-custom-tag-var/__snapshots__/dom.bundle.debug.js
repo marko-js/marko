@@ -20,8 +20,8 @@ const $input$1 = ($scope, input) => $input_value($scope, input.value);
 var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", "", "", $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!><!><!>`)("");
-const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&%b%b%c`)("");
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)("");
+const $walks = /*@__PURE__*/ ((_w0) => `%b/${_w0}&%b%b%b`)("");
 const $if_content5__setup__script = _script("__tests__/template.marko_5", ($scope) => $setHtml3_getter($scope._)()("Hello world"));
 const $if_content5__setup = $if_content5__setup__script;
 const $setHtml3_getter = /*@__PURE__*/ _hoist("setHtml3", "BranchScopes:#text/3");
@@ -45,7 +45,7 @@ const $if_content2__setup = ($scope) => {
 const $if_content__if = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
-const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<!>", "%", $if_content__setup);
 const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => {
 	$if($scope, $scope.input_show ? 0 : 1);
 	$if_content__input_show($scope);

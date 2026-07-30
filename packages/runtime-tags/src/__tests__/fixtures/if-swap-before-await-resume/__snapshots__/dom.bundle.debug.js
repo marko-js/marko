@@ -38,7 +38,7 @@ const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern/var", ($scope
 const $if = /*@__PURE__*/ _if("#text/3", "<a href=/go-to>Go</a>", 0, 0, "<button>Go to</button>");
 const $hasHydrate = ($scope, hasHydrate) => $if($scope, !hasHydrate ? 0 : 1);
 const $cart = ($scope, cart) => $hasHydrate($scope, cart !== null);
-const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%");
+const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!>", "%");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $pattern2);

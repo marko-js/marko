@@ -31,7 +31,7 @@ const $show__closure = /*@__PURE__*/ _closure($try_content__show);
 const $show = /*@__PURE__*/ _let("show/3", $show__closure);
 const $value__closure = /*@__PURE__*/ _closure($try_content__value);
 const $value = /*@__PURE__*/ _let("value/4", $value__closure);
-const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/2", "<!>", "%", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$show($scope, !$scope.show);

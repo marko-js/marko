@@ -1,11 +1,11 @@
 // template.marko
-const $Wrap_content__walks = "b%c", $Wrap_content__template = "<!><!><!>", $Message_content__walks = " b", $Message_content__template = " ";
+const $Wrap_content__walks = "%b", $Wrap_content__template = "<!>", $Message_content__walks = " b", $Message_content__template = " ";
 _resume_dynamic_tag();
 const $Wrap_content2__setup = ($scope) => {
 	$Message_content__input_before($scope.a, "hello");
 	$Message_content__input_after($scope.a, "world");
 };
-const $Wrap_content2 = _content_resume("a3", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Message_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Message_content__walks), $Wrap_content2__setup);
+const $Wrap_content2 = _content_resume("a3", $Message_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Message_content__walks), $Wrap_content2__setup);
 const $Message_content__input_before__OR__input_after = /*@__PURE__*/ _or(5, ($scope) => _text($scope.a, $scope.d + $scope.e));
 const $Message_content__input_before = /*@__PURE__*/ _const(3, $Message_content__input_before__OR__input_after);
 const $Message_content__input_after = /*@__PURE__*/ _const(4, $Message_content__input_before__OR__input_after);

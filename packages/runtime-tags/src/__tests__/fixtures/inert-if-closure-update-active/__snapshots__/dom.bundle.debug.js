@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><button>Update</button>";
-const $walks = "b%b b";
+const $template = "<!><button>Update</button>";
+const $walks = "%b b";
 const $if_content__value = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.value));
 const $if_content__setup = $if_content__value;
 const $value = /*@__PURE__*/ _let("value/5", $if_content__value);

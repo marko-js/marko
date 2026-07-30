@@ -24,8 +24,8 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $template = "<button id=tags> </button><!><!>";
-const $walks = " D l%c";
+const $template = "<button id=tags> </button><!>";
+const $walks = " D l%b";
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

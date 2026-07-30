@@ -8,15 +8,15 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%/&c";
+const $template = "<!>";
+const $walks = "%/&b";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 function $setup($scope) {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_value($scope["#childScope/1"], "hi");
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", $walks, $setup);
 
 // v:child.marko.setup.js
 const _ = [

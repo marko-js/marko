@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><span> </span>";
-const $walks = "b%bD l";
+const $template = "<!><span> </span>";
+const $walks = "%bD l";
 _resume_dynamic_tag();
 _enable_controllable();
 const $tagselect_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {

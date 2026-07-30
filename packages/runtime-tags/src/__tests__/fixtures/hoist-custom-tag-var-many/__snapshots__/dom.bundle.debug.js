@@ -11,8 +11,8 @@ _resume("__tests__/tags/child.marko_0/_return", $_return);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1);
 
 // template.marko
-const $template = "<!><!><hr><!><hr><!><!>";
-const $walks = "b%c%c%c";
+const $template = "<!><hr><!><hr><!>";
+const $walks = "%c%c%b";
 const $setHtml3_getter = _hoist_resume("__tests__/template.marko_0_setHtml3/hoist", "setHtml3", "BranchScopes:#ul/0", "BranchScopes:#text/2");
 const $for_content4__setHtml = /*@__PURE__*/ _const("setHtml3", ($scope) => _assert_hoist($scope.setHtml3));
 const $for_content4__setup = ($scope) => {

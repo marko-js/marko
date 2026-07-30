@@ -7,8 +7,8 @@ const $input = ($scope, input) => $id($scope, input.id);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = "<button></button><!><!>";
-const $walks = " b%c";
+const $template = "<button></button><!>";
+const $walks = " b%b";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $tagName = /*@__PURE__*/ _let("tagName/2", ($scope) => $dynamicTag($scope, $scope.tagName, () => ({ id: "dynamic" })));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

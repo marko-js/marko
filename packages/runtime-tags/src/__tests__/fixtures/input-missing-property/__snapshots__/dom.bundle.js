@@ -2,7 +2,7 @@
 const $if_content2__input_name = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._._.e || "Fallback"), ($scope) => $scope._._);
 const $if_content__if = /*@__PURE__*/ _if(0, "<div> </div>", "D ", $if_content2__input_name);
 const $if_content__setup = ($scope) => $if_content__if($scope, 0);
-const $Child_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__setup);
+const $Child_content__if = /*@__PURE__*/ _if(0, "<!>", "%", $if_content__setup);
 const $Child_content__input_count = ($scope, input_count) => $Child_content__if($scope, input_count ? 0 : 1);
 const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);

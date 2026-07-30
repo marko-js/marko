@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$end($scope._, $scope._.end + 1);
 }));
@@ -17,4 +17,4 @@ const $end = /*@__PURE__*/ _let("end/1", ($scope) => $for($scope, [
 function $setup($scope) {
 	$end($scope, 4);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup);

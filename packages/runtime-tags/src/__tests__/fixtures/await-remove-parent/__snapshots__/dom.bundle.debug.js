@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<div id=outside>Pass</div><!><!>";
-const $walks = "b%c";
+const $template = "<div id=outside>Pass</div><!>";
+const $walks = "b%b";
 _enable_catch();
 const $await_content__setup__script = _script("__tests__/template.marko_4", ($scope) => document.querySelector("#outside").textContent = "Fail");
 const $await_content__setup = $await_content__setup__script;
@@ -20,4 +20,4 @@ function $setup($scope) {
 	$show($scope, 1);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%b", $setup);

@@ -23,8 +23,8 @@ const $input$1 = /*@__PURE__*/ _const("input", ($scope) => {
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = "<div></div><!><!>";
-const $walks = " b%c";
+const $template = "<div></div><!>";
+const $walks = " b%b";
 const $setup = () => {};
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);

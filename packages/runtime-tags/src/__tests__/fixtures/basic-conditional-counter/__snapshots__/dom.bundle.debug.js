@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<button class=inc></button><button class=toggle></button><!><!>";
-const $walks = " b b%c";
+const $template = "<button class=inc></button><button class=toggle></button><!>";
+const $walks = " b b%b";
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.count));
 const $if_content__setup = $if_content__count;
 const $if = /*@__PURE__*/ _if("#text/2", "<span> </span>", "D ", $if_content__setup);

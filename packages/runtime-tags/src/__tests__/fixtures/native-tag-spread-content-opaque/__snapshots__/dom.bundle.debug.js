@@ -1,13 +1,13 @@
 // tags/render-input.marko
-const $template$2 = "<!><!><!>";
-const $walks$2 = "b%c";
+const $template$2 = "<!>";
+const $walks$2 = "%b";
 const $setup$2 = () => {};
 const $input_data_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_data_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_data($scope, input.data);
 const $input_data = ($scope, input_data) => $input_data_content($scope, input_data?.content);
-var render_input_default = /*@__PURE__*/ _template("__tests__/tags/render-input.marko", $template$2, "b%c", $setup$2, $input$1);
+var render_input_default = /*@__PURE__*/ _template("__tests__/tags/render-input.marko", "<!>", "%b", $setup$2, $input$1);
 
 // tags/my-box.marko
 const $template$1 = "<div></div><button type=button class=toggle>toggle</button><div class=echo></div>";
@@ -17,7 +17,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input._($scope);
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 };
-const $if = /*@__PURE__*/ _if("#div/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
+const $if = /*@__PURE__*/ _if("#div/2", "<!>", /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b"), $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/tags/my-box.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);

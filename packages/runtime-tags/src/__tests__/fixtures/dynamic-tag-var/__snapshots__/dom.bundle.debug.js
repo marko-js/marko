@@ -7,8 +7,8 @@ function $setup$1($scope) {
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", "", "", $setup$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!><!>`)("");
-const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}&1b1b1c`)("");
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!><!>`)("");
+const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&1b1b1b`)("");
 const $data = _var_resume("__tests__/template.marko_0_data1/var", ($scope, data1) => {});
 function $setup($scope) {
 	_var($scope, "#childScope/0", $data);

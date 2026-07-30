@@ -35,8 +35,8 @@ import_component_browser.default.renderer = _marko_template._ = (0, import_rende
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $template = "<!><!><div id=tags-api> </div>";
-const $walks = "b%bD l";
+const $template = "<!><div id=tags-api> </div>";
+const $walks = "%bD l";
 _resume("__tests__/components/split-counter/index.marko", _marko_template);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {

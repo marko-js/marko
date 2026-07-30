@@ -1,6 +1,6 @@
 // tags/custom-tag.marko
-const $template$1 = "<div></div><!><!>";
-const $walks$1 = " b%c";
+const $template$1 = "<div></div><!>";
+const $walks$1 = " b%b";
 const $setup$1 = () => {};
 const $if_content__input_test_class = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr_class($scope["#div/0"], $scope._.input_test_class));
 const $if_content__setup = ($scope) => {
@@ -25,8 +25,8 @@ const $input_test_content = /*@__PURE__*/ _const("input_test_content", $if_conte
 var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0, _w1) => `<div class=a></div><div class="a b"></div><div class="a b c"></div><div></div><div class=base></div>${_w0}${_w1}<!><!>`)($template$1, $template$1);
-const $walks = /*@__PURE__*/ ((_w0, _w1) => ` d b b/${_w0}&/${_w1}&%c`)($walks$1, $walks$1);
+const $template = /*@__PURE__*/ ((_w0, _w1) => `<div class=a></div><div class="a b"></div><div class="a b c"></div><div></div><div class=base></div>${_w0}${_w1}<!>`)($template$1, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => ` d b b/${_w0}&/${_w1}&%b`)($walks$1, $walks$1);
 const TestTag = custom_tag_default;
 const $test_content = _content_resume("__tests__/template.marko_1_content", "Hello");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5");

@@ -1,12 +1,12 @@
 // tags/recurse.marko
-const $template$1 = "<!><!><!>";
-const $walks$1 = "b%c";
+const $template$1 = "<!>";
+const $walks$1 = "%b";
 const $setup$1 = () => {};
 _enable_catch();
 const $placeholder_content = _content_resume("__tests__/tags/recurse.marko_4_content", "LOADING...");
 const $await_content__input_level = /*@__PURE__*/ _closure_get("input_level", ($scope) => $input_level($scope["#childScope/0"], $scope._._._.input_level - 1), ($scope) => $scope._._._, "__tests__/tags/recurse.marko_3_input_level/pending");
 const $await_content__setup = $await_content__input_level;
-const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!>", /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b"), $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
@@ -26,11 +26,11 @@ const $input_level = /*@__PURE__*/ _const("input_level", ($scope) => {
 	$input_level__closure($scope);
 });
 const $input = ($scope, input) => $input_level($scope, input.level);
-var recurse_default = /*@__PURE__*/ _template("__tests__/tags/recurse.marko", $template$1, "b%c", $setup$1, $input);
+var recurse_default = /*@__PURE__*/ _template("__tests__/tags/recurse.marko", "<!>", "%b", $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
+const $template = "<!>";
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b");
 function $setup($scope) {
 	$input_level($scope["#childScope/0"], 4);
 }

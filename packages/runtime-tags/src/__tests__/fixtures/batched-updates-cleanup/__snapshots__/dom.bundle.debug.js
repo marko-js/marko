@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<button></button><!><!>";
-const $walks = " b%c";
+const $template = "<button></button><!>";
+const $walks = " b%b";
 const $if_content__message = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.message));
 const $if_content__setup = $if_content__message;
 const $if = /*@__PURE__*/ _if("#text/1", "<span> </span>", "D ", $if_content__setup);

@@ -192,7 +192,10 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             i = orphanBranches.length,
             j = deferredOwners.length,
           ) => {
-            if (visitType !== ResumeSymbol.BranchStart) {
+            const isStart =
+              visitType === ResumeSymbol.BranchStart ||
+              visitType === ResumeSymbol.BranchStartAnchored;
+            if (!isStart) {
               visitScope[nextToken(/* read accessor */)] =
                 visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
                 visitType === ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
@@ -246,11 +249,25 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 if (parent !== startVisit.parentNode) {
                   parent.prepend(startVisit);
                 }
-                branch[AccessorProp.StartNode] = startVisit;
-                branch[AccessorProp.EndNode] =
-                  visit.previousSibling === startVisit
-                    ? startVisit
-                    : parent.insertBefore(new Text(), visit);
+                if (
+                  visit.previousSibling === startVisit ||
+                  (startVisit as Comment).data[render.i.length] ===
+                    ResumeSymbol.BranchStartAnchored
+                ) {
+                  // Nothing rendered, or a range the branch chain cannot
+                  // repair: the markers stay as the range itself.
+                  branch[AccessorProp.StartNode] = startVisit;
+                  branch[AccessorProp.EndNode] =
+                    visit.previousSibling === startVisit
+                      ? startVisit
+                      : parent.insertBefore(new Text(), visit);
+                } else {
+                  // Own the real edge nodes instead of the markers; nested
+                  // slots repair these as they move (see `fixBranchEdges`).
+                  branch[AccessorProp.StartNode] = startVisit.nextSibling!;
+                  branch[AccessorProp.EndNode] = visit.previousSibling!;
+                  startVisit.remove();
+                }
               }
 
               while (i && orphanBranches[i - 1][AccessorProp.Id] > branchId) {
@@ -283,7 +300,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
             }
 
-            if (visitType === ResumeSymbol.BranchStart) {
+            if (isStart) {
               if (!endedBranches) {
                 branchScopesStack.push(curBranchScopes);
                 curBranchScopes = undefined;

@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><button> </button>";
-const $walks = "b%b D l";
+const $template = "<!><button> </button>";
+const $walks = "%b D l";
 const $for_content__count = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/1"], $scope._.count));
 const $for_content__setup = ($scope) => {
 	$for_content__count._($scope);

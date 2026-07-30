@@ -1,15 +1,15 @@
 // tags/hello/index.marko
-const $template$1 = "<!><!><!>";
-const $walks$1 = "b%c";
+const $template$1 = "<!>";
+const $walks$1 = "%b";
 const $setup$1 = () => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
 const $input_item = ($scope, input_item) => $dynamicTag($scope, input_item, () => [1]);
 const $input = ($scope, input) => $input_item($scope, input.item);
-var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, "b%c", $setup$1, $input);
+var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", "<!>", "%b", $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Toggle</button>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Toggle</button>`)("<!>");
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("%b");
 const $item_content__y = ($scope, y) => _text($scope["#text/0"], y);
 const $item_content__$params = ($scope, $params2) => $item_content__y($scope, $params2[0]);
 const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "y: <!>", "b%", 0, $item_content__$params);

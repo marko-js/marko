@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><div class=log> </div>";
-const $walks = "b%bD l";
+const $template = "<!><div class=log> </div>";
+const $walks = "%bD l";
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$log($scope._, `${$scope._.log}[${$scope.label}]`);
 }));

@@ -20,12 +20,12 @@ const $catch_content__err_message = ($scope, err_message) => _text($scope["#text
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("__tests__/template.marko_3_content", "<div id=error> </div>", "D ", 0, $catch_content__$params);
 const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "<div id=loading>loading</div>");
-const $try_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $if_content__setup);
+const $try_content__if = /*@__PURE__*/ _if("#text/0", "<!>", "%/&", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1));
 const $try_content__setup = $try_content__show;
 const $show__closure = /*@__PURE__*/ _closure($try_content__show);
 const $show = /*@__PURE__*/ _let("show/2", $show__closure);
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!>", "%", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope, true);
 }));

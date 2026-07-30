@@ -8,8 +8,8 @@ const $input = ($scope, input) => $input_valueChange($scope, input.valueChange);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1, $input);
 
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $if_content__setter = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_valueChange($scope["#childScope/0"], $valueChange($scope)));
 const $if_content__setup = $if_content__setter;
 const $setter2 = /*@__PURE__*/ _const("setter");
@@ -31,4 +31,4 @@ function $setter($scope) {
 }
 _resume("__tests__/template.marko_1/valueChange", $valueChange);
 _resume("__tests__/template.marko_0/setter", $setter);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup);

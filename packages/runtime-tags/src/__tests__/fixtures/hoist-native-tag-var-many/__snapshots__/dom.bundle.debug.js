@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><hr><!><hr><!><!>";
-const $walks = "b%c%c%c";
+const $template = "<!><hr><!><hr><!>";
+const $walks = "%c%c%b";
 const $el3_getter = _hoist_resume("__tests__/template.marko_0_#li/hoist", "#li/0", "BranchScopes:#ul/0", "BranchScopes:#text/2");
 const $for_content4__setup = ($scope) => _attr($scope["#li/0"], "data-index", $scope._["#LoopKey"] * 4 + $scope["#LoopKey"]);
 const $for_content3__for = /*@__PURE__*/ _for_to("#ul/0", "<li></li>", " ", $for_content4__setup);

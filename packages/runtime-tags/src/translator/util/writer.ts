@@ -97,10 +97,13 @@ interface SectionMeta {
 export const [getSectionMeta] = createSectionState<SectionMeta>(
   "SectionMeta",
   (section) => {
+    // `Dynamic` edges need no padding: the runtime fixes up enclosing branch
+    // edges as slots transition (see `fixBranchEdges`), so only `DynamicAnchored`
+    // content (whose anchor nodes move) still pads the ends of the template.
     const writePrefix =
-      section.content?.startType === ContentType.Dynamic ? "<!>" : "";
+      section.content?.startType === ContentType.DynamicAnchored ? "<!>" : "";
     const writePostfix =
-      section.content?.endType === ContentType.Dynamic ? "<!>" : "";
+      section.content?.endType === ContentType.DynamicAnchored ? "<!>" : "";
     const writes = getWrites(section);
     const meta = {
       walks: getWalkString(section),

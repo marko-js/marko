@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><button>pick c</button>";
-const $walks = "b%b b";
+const $template = "<!><button>pick c</button>";
+const $walks = "%b b";
 _enable_controllable();
 const $tag_content = _content_resume("__tests__/template.marko_1_content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tag_content);

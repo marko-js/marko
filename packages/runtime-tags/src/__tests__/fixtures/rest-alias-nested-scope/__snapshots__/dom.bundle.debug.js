@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $setup = () => {};
 const $if_content__input_value_foo = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.foo));
 const $if_content__setup = ($scope) => {
@@ -21,4 +21,4 @@ const $value = ($scope, value) => {
 const $input = ($scope, input) => $value($scope, input.value);
 const $rest = /*@__PURE__*/ _const("rest", $if_content__rest);
 const $input_value_foo = /*@__PURE__*/ _const("foo", $if_content__input_value_foo);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup, $input);

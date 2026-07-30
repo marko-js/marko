@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<button></button><div id=one>Fail</div><div id=two>Fail</div><!><!>";
-const $walks = " d%c";
+const $template = "<button></button><div id=one>Fail</div><div id=two>Fail</div><!>";
+const $walks = " d%b";
 _enable_catch();
 const $await_content2__setup__script = _script("__tests__/template.marko_5", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#two").textContent = "Pass");
 const $await_content2__setup = ($scope) => {

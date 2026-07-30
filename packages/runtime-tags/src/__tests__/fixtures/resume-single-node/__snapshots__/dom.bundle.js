@@ -3,7 +3,7 @@ const $for_content__if = /*@__PURE__*/ _if(0, "<div>b</div>");
 const $for_content__items_length = /*@__PURE__*/ _for_closure(0, ($scope) => $for_content__if($scope, $scope._.e > 1 ? 0 : 1));
 const $for_content__setup = $for_content__items_length;
 const $itemId = /*@__PURE__*/ _let(2);
-const $for = /*@__PURE__*/ _for_of(0, "<div>a</div><!><!>", "b%", $for_content__setup);
+const $for = /*@__PURE__*/ _for_of(0, "<div>a</div><!>", "b%", $for_content__setup);
 const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	$items_length($scope, $scope.d?.length);
 	$for($scope, [$scope.d]);

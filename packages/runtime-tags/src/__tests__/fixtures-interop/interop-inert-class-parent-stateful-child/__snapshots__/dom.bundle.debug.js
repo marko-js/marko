@@ -35,13 +35,13 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 function $setup($scope) {
 	$dynamicTag($scope, _marko_template);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup);
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => {};

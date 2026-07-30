@@ -13,8 +13,8 @@ var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", 
 _resume("__tests__/tags/handlers.marko_0/export/shout", shout);
 
 // template.marko
-const $template = "<button> </button><!><!>";
-const $walks = " D l%c";
+const $template = "<button> </button><!>";
+const $walks = " D l%b";
 const $loud = /*@__PURE__*/ _let("loud/3");
 const $quiet = /*@__PURE__*/ _let("quiet/4");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");

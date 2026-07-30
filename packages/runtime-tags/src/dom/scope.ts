@@ -105,6 +105,7 @@ function unsubscribe(this: Scope, subscribers: Set<Scope>) {
 }
 
 export function removeAndDestroyBranch(branch: BranchScope) {
+  if (MARKO_DEBUG) assertBranchRange(branch);
   destroyBranch(branch);
   removeChildNodes(
     branch[AccessorProp.StartNode],
@@ -112,11 +113,41 @@ export function removeAndDestroyBranch(branch: BranchScope) {
   );
 }
 
+// When a slot's DOM range changes (branch filled, swapped, emptied to its
+// marker, or hidden), enclosing branches whose start/end landed on the old
+// range's edges must adopt the new edges; without owned boundary nodes this
+// replaces the padding markers that used to pin those edges.
+//
+// Start above the branch that already owns the new range: `ParentBranch` for a
+// range that is itself a branch, `ClosestBranch` for one that is not (a
+// `<show>` range, or content rendered into a plain child scope).
+export function fixBranchEdges(
+  branch: BranchScope | undefined,
+  oldStart: ChildNode,
+  oldEnd: ChildNode,
+  newStart: ChildNode,
+  newEnd: ChildNode,
+) {
+  for (; branch; branch = branch[AccessorProp.ParentBranch]) {
+    if (branch[AccessorProp.StartNode] === oldStart) {
+      branch[AccessorProp.StartNode] = newStart;
+    } else if (branch[AccessorProp.EndNode] !== oldEnd) {
+      // Sharing neither edge means this owner encloses the range outright, as
+      // does every owner above it.
+      return;
+    }
+    if (branch[AccessorProp.EndNode] === oldEnd) {
+      branch[AccessorProp.EndNode] = newEnd;
+    }
+  }
+}
+
 export function insertBranchBefore(
   branch: BranchScope,
   parentNode: ParentNode,
   nextSibling: Node | null,
 ) {
+  if (MARKO_DEBUG) assertBranchRange(branch);
   insertChildNodes(
     parentNode,
     nextSibling,
@@ -125,7 +156,25 @@ export function insertBranchBefore(
   );
 }
 
+function assertBranchRange(branch: BranchScope) {
+  const startNode = branch[AccessorProp.StartNode];
+  const endNode = branch[AccessorProp.EndNode];
+  if (
+    startNode !== endNode &&
+    (startNode.parentNode !== endNode.parentNode ||
+      !(
+        startNode.compareDocumentPosition(endNode) &
+        /* DOCUMENT_POSITION_FOLLOWING */ 4
+      ))
+  ) {
+    throw new Error(
+      "Invalid branch DOM range; a slot transition failed to repair an enclosing branch's edges.",
+    );
+  }
+}
+
 export function tempDetachBranch(branch: BranchScope) {
+  if (MARKO_DEBUG) assertBranchRange(branch);
   // Park the range in a DocumentFragment; the namespaceURI shim preserves the
   // namespace for branches created while it is detached.
   const fragment = new DocumentFragment() as any;
