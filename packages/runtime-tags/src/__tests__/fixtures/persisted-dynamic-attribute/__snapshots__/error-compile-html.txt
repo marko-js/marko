@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-attribute/template.marko:1:4
+    > 1 | <a href=input.href>${input.label}</a>
+        |    ^^^^^^^^^^^^^^^ Persisted templates currently support only escaped dynamic text in native HTML.
+      2 |
