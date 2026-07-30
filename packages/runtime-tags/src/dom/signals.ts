@@ -268,6 +268,8 @@ export function subscribeToScopeSet(
   scope: Scope,
 ) {
   const subscribers = (ownerScope[accessor] ||= new Set()) as Set<Scope>;
+  // Resume adopts the server's set already holding its subscribers, so those
+  // register no unsubscribe: bounded, and `_closure` skips destroyed scopes.
   if (!subscribers.has(scope)) {
     subscribers.add(scope);
     $signal(scope, -1).addEventListener("abort", () =>
