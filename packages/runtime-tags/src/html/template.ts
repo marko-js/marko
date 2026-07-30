@@ -1,5 +1,6 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
+  type $Global,
   type RenderedTemplate,
   RendererProp,
   type Template,
@@ -38,18 +39,33 @@ export const _template = (
         `mount() is not implemented for the HTML compilation of a Marko template`,
       );
     };
+    (renderer as unknown as Template).renderPatch = () => {
+      throw new Error(
+        `renderPatch() is only implemented for templates compiled with the \`persisted\` option`,
+      );
+    };
   }
 
   return _content_resume(templateId, renderer) as unknown as Template;
 };
 
 function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
+  return startRender(this, input, State);
+}
+
+export function startRender(
+  template: Template & ServerRenderer,
+  input: TemplateInput,
+  makeState: new (
+    $global: $Global & { renderId: string; runtimeId: string },
+  ) => State,
+): RenderedTemplate {
   let { $global } = input;
   if ($global) {
     ({ $global, ...input } = input);
     $global = {
       runtimeId: DEFAULT_RUNTIME_ID,
-      renderId: getDefaultRenderId(this),
+      renderId: getDefaultRenderId(template),
       ...$global,
     };
 
@@ -69,11 +85,11 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
   } else {
     $global = {
       runtimeId: DEFAULT_RUNTIME_ID,
-      renderId: getDefaultRenderId(this),
+      renderId: getDefaultRenderId(template),
     };
   }
 
-  const state = new State($global as State["$global"]);
+  const state = new makeState($global as State["$global"]);
   const head = new Chunk(
     new Boundary(state, $global.signal),
     null,
@@ -81,10 +97,12 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
     state,
   );
 
-  if (this[RendererProp.Embed]) {
-    head.render(() => writeWaitReady(this[RendererProp.Id]!, this, input));
+  if (template[RendererProp.Embed]) {
+    head.render(() =>
+      writeWaitReady(template[RendererProp.Id]!, template, input),
+    );
   } else {
-    head.render(this, input);
+    head.render(template, input);
   }
   return new ServerRendered(head);
 }

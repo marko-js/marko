@@ -20,6 +20,7 @@ import { attrAssignment } from "./attrs";
 import * as FlushStatus from "./constants/flush-status";
 import * as Mark from "./constants/mark";
 import * as RuntimeKey from "./constants/runtime-key";
+import { _to_text } from "./content";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -209,6 +210,23 @@ export function _el_resume(
   const { state } = $chunk.boundary;
   state.needsMainRuntime = true;
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
+}
+
+export function _patch_text(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatches) {
+    writeScope(scopeId, {
+      [AccessorPrefix.PatchText + accessor]: _to_text(value),
+    });
+  } else {
+    $chunk.needsWalk = true;
+  }
+
+  return "";
 }
 
 export function _sep(shouldResume: number) {
@@ -1013,6 +1031,30 @@ export class State implements SerializeState {
     }
   }
 
+  flushChunk(html: string, scripts: string, pending: number) {
+    const { $global, nonceAttr } = this;
+    const { __flush__ } = $global;
+
+    if (scripts) {
+      html += "<script" + nonceAttr + ">" + scripts + "</script>";
+    }
+
+    if (__flush__) {
+      $global.__flush__ = undefined;
+      html = __flush__($global, html);
+    }
+
+    return pending ? html : html + this.trailerHTML;
+  }
+
+  walkScript() {
+    return this.runtimePrefix + RuntimeKey.Walk + "()";
+  }
+
+  get writesPatches() {
+    return false;
+  }
+
   get runtimePrefix() {
     const { $global } = this;
     return $global.runtimeId + "." + $global.renderId;
@@ -1519,7 +1561,7 @@ export class Chunk {
     }
 
     if (needsWalk) {
-      scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
+      scripts = concatScripts(scripts, state.walkScript());
     }
 
     this.html = html;
@@ -1538,26 +1580,9 @@ export class Chunk {
     }
 
     this.flushScript();
-    const { scripts } = this;
-    const { $global, nonceAttr } = state;
-    const { __flush__ } = $global;
-    let { html } = this;
+    const { html, scripts } = this;
     this.html = this.scripts = "";
-
-    if (scripts) {
-      html += "<script" + nonceAttr + ">" + scripts + "</script>";
-    }
-
-    if (__flush__) {
-      $global.__flush__ = undefined;
-      html = __flush__($global, html);
-    }
-
-    if (!boundary.count) {
-      html += state.trailerHTML;
-    }
-
-    return html;
+    return state.flushChunk(html, scripts, boundary.count);
   }
 }
 

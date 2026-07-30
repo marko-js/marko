@@ -188,7 +188,13 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
 
             return isPage
               ? code +
-                  `\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
+                  `\nimport { run as _run${
+                    compileOpts.persisted ? ", applyPatch as _applyPatch" : ""
+                  } } from "@marko/runtime-tags/dom"\n${
+                    compileOpts.persisted
+                      ? "globalThis.applyPatch=_applyPatch;\n"
+                      : ""
+                  }${
                     interop
                       ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
                       : `globalThis.run=_run`
