@@ -547,3 +547,37 @@ payload.
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `knownTagTranslateDOM` | 2026-07-27 | impact:med | effort:low
 
 `knownTagTranslateDOM` sets `source.register = !!getSerializeReason(tagSection, childScopeBinding) || !signalHasStatements(source)`, but it runs at the tag's translate exit — before the placeholders and scripts that read the tag variable have pushed their render statements onto that signal — so the `!signalHasStatements(source)` escape hatch (added in e917c2d to keep an empty signal's declaration from being elided, where the commit message calls the case "empty/unread") fires on signals that are non-empty by the time `writeSignals` builds them. That wraps the signal in an impure `_var_resume("…/var", …)` whose id the HTML output never writes, shipping a dead registry entry and pinning the declaration in the bundle: `pnpm run compile -o dom template.marko` on `<child/data/><div>${data}</div>` emits `const $data = _var_resume("…_0_data/var", ($scope, data) => _text($scope.c, data))` while `-o html` on the same template contains no `/var` id, and forcing `register` to the serialize reason alone drops the helper import plus call (and restores a top-level `const $get = /*@__PURE__*/_const(…)` in `return-value-registered`, which `_var_resume` currently makes unshakeable). Deleting the disjunct outright is wrong — a genuinely unread tag variable then loses its declaration while `_var($scope, 0, $data)` still references it — so move the emptiness half into `writeSignals`, where `signalHasStatements` is final, giving "keep the declaration" its own flag distinct from `register`; `visitors/tag/dynamic-tag.ts` still sets `tagVarSignal.register = true` unconditionally and needs the same gate (`dynamic-tag-var`'s `data1`). Re-verify from the repo root: `for d in packages/runtime-tags/src/__tests__/fixtures/*/__snapshots__; do a=$(grep -oh '"[^"]*/var"' "$d/dom.bundle.debug.js" 2>/dev/null | sort -u); b=$(grep -oh '"[^"]*/var"' "$d/html.bundle.debug.js" 2>/dev/null | sort -u); if [ "$a" != "$b" ]; then echo "$d"; fi; done` prints `custom-tag-var-expression`, `custom-tag-var-multiple`, `dynamic-tag-var`, `return-tag-no-state` and `return-value-registered` today, and should print nothing — every `/var` id registered in a DOM bundle must also be written by its sibling HTML bundle.
+
+## Skip the `AbortController` when a section only uses `$signal` for cleanup
+
+`packages/runtime-tags/src/translator/visitors/referenced-identifier.ts` › `analyze` | 2026-07-29 | impact:med | effort:med
+
+`$signal` is the only DOM-side `AbortController` allocation left, and it is
+emitted from a single translator site whenever a template names `$signal` at
+all — so a section doing nothing but `$signal.onabort = fn` still allocates a
+controller AND its signal, then tears down through `ctrl.abort()`, which
+dispatches a real DOM event. That teardown is not cheap: when closure
+subscriptions used this same mechanism, native `abort` plus its JS wrapper
+measured ~21% of profiled self time on a keyed list torn down and rebuilt five
+times. Across the fixtures every single use is elidable — `$signal.onabort` x18,
+`$signal.aborted` x2, `$signal.addEventListener` x1, and not one bare reference —
+and `.onabort` is the idiom `cheatsheet.md` teaches, so this is the dominant
+shape rather than a fixture artifact.
+
+`analyze` already visits each `$signal` identifier and allocates a per-expression
+`abortId`, which is the natural place to classify the parent: an `onabort`
+member as an assignment LHS, or `addEventListener` with a literal `"abort"`, is
+cleanup-only; an `aborted` member needs a boolean but no controller; ANYTHING
+else — a bare reference, an argument, a spread, an alias into a variable — must
+keep a real controller, since something else may hold that signal. When every
+reference for an `abortId` is cleanup-only, emit the callback into the slot
+`AccessorProp.AbortControllers` already uses and have `$signalReset`
+(`packages/runtime-tags/src/dom/abort-signal.ts`) invoke it instead of aborting,
+keeping the existing render-time deferral. Note the fixture counts are a biased
+sample: if real apps commonly pass `$signal` to `fetch`, the win narrows to the
+`<script>`-cleanup case, which is still the one that lands inside keyed lists.
+Re-verify: `pnpm run compile -- -o dom -d` on a template whose only signal use is
+`<script>$signal.onabort = () => {}</script>` emits
+`$signal($scope, 0).onabort = …`, and
+`grep -rhoE '\$signal[.a-zA-Z]*' packages/runtime-tags/src/__tests__/fixtures/*/template.marko | sort | uniq -c`
+lists no bare `$signal`.
