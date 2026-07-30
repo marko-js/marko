@@ -1,4 +1,4 @@
-// size: 26009 (min) 9653 (brotli)
+// size: 26464 (min) 9828 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -33,7 +33,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   catchEnabled,
   delegate = (type, handler) =>
-    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
+    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
   nextScopeId = 1e6,
   collectingScopes,
@@ -90,9 +90,13 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
+  patchers = {},
   curRenders,
   embedRenders,
   readyIds,
+  patchFailed = 0,
+  patchRender = 0,
+  patching = 0,
   isResuming,
   cloneCache = {},
   R = /[^\p{L}\p{N}]/gu,
@@ -232,7 +236,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
           renderer.g[accessor](scope[childScopeAccessor], renderer.h[accessor]);
     };
   }),
-  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => _resume("d", dynamicTagScript)),
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
@@ -328,21 +331,20 @@ let unsafeStyleAttrReg = /[\\;]/g,
           (afterReference = newScopes[start + i].S));
     };
   }),
-  _for_of = /*@__PURE__*/ loop(([all, by], cb) => {
-    ((by ||= bySecondArg),
-      typeof by == "string"
-        ? forOf(all, (item, i) => cb(item[by], [item, i]))
-        : forOf(all, (item, i) => cb(by(item, i), [item, i])));
+  _for_of = /*@__PURE__*/ loop(([all, by = bySecondArg], cb) => {
+    typeof by == "string"
+      ? forOf(all, (item, i) => cb(item[by], [item, i]))
+      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
   }),
-  _for_in = /*@__PURE__*/ loop(([obj, by], cb) => {
-    ((by ||= byFirstArg), forIn(obj, (key, value) => cb(by(key, value), [key, value])));
-  }),
-  _for_to = /*@__PURE__*/ loop(([to, from, step, by], cb) => {
-    ((by ||= byFirstArg), forTo(to, from, step, (v) => cb(by(v), [v])));
-  }),
-  _for_until = /*@__PURE__*/ loop(([until, from, step, by], cb) => {
-    ((by ||= byFirstArg), forUntil(until, from, step, (v) => cb(by(v), [v])));
-  });
+  _for_in = /*@__PURE__*/ loop(([obj, by = byFirstArg], cb) =>
+    forIn(obj, (key, value) => cb(by(key, value), [key, value])),
+  ),
+  _for_to = /*@__PURE__*/ loop(([to, from, step, by = byFirstArg], cb) =>
+    forTo(to, from, step, (v) => cb(by(v), [v])),
+  ),
+  _for_until = /*@__PURE__*/ loop(([until, from, step, by = byFirstArg], cb) =>
+    forUntil(until, from, step, (v) => cb(by(v), [v])),
+  );
 function _call(fn, v) {
   return (fn(v), v);
 }
@@ -518,13 +520,13 @@ function push(opt, item) {
   return opt ? (Array.isArray(opt) ? (opt.push(item), opt) : [opt, item]) : item;
 }
 function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
+  (element["$" + type] === void 0 && delegate(type, handleDelegated),
+    (element["$" + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
   for (; target;)
-    (target[1 + ev.type]?.(ev, target),
+    (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function parseHTML(html, ns) {
@@ -769,7 +771,7 @@ function _var(scope, childAccessor, signal) {
   scope[decodeAccessor(childAccessor)].T = (value) => signal(scope, value);
 }
 function _return_change(scope, changeHandler) {
-  scope.U = changeHandler || void 0;
+  changeHandler && (scope.U = changeHandler);
 }
 function _id({ $: $global }) {
   let id = tagIdsByGlobal.get($global) || 0;
@@ -813,6 +815,17 @@ function _hoist_resume(id, ...path) {
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
+}
+function beginPatch(renderId) {
+  let render = (patchRender = curRenders[renderId]);
+  return ((patchFailed = 0), (patching = 1), render);
+}
+function finishPatch() {
+  let applied = !patchFailed;
+  return (abortPatch(), applied);
+}
+function abortPatch() {
+  patchRender = patchFailed = patching = 0;
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
@@ -858,6 +871,19 @@ function init(runtimeId = "M") {
               scope
             ),
             applyScopes = (partials) => {
+              if (patching && patchRender === render) {
+                let scopeId = partials[0];
+                for (let i = 1; i < partials.length; i++) {
+                  let partial = partials[i];
+                  if (typeof partial == "number") scopeId += partial;
+                  else {
+                    let scope = scopeLookup[scopeId];
+                    for (let key in partial) patchers[key[0]](scope, key, partial[key]);
+                    scopeId++;
+                  }
+                }
+                return;
+              }
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
                 let partial = partials[i];
@@ -875,11 +901,13 @@ function init(runtimeId = "M") {
               }
             },
             serializeContext = (data, registryId) =>
-              typeof data == "number"
-                ? registryId
-                  ? registeredValues[registryId](getScope(data))
-                  : getScope(data)
-                : applyScopes(data),
+              patching && patchRender === render && typeof data == "number"
+                ? ((patchFailed = 1), void 0)
+                : typeof data == "number"
+                  ? registryId
+                    ? registeredValues[registryId](getScope(data))
+                    : getScope(data)
+                  : applyScopes(data),
             createVisitBranches =
               (
                 branchScopesStack = [],
@@ -1733,11 +1761,27 @@ function _await_promise(nodeAccessor, params) {
           (awaitBranch && (awaitBranch.W ||= []),
           tryPlaceholder
             ? (awaitCounter = addAwaitCounter(scope, tryPlaceholder))
-            : scheduleAwaitFrame(awaitCounter, scope, () => {
-                awaitBranch.V ||
-                  (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
-                  tempDetachBranch(tryBranch));
-              })));
+            : awaitCounter.i++ ||
+              requestAnimationFrame(
+                () =>
+                  awaitCounter.i &&
+                  runEffects(
+                    prepareEffects(() =>
+                      queueRender(
+                        scope,
+                        () => {
+                          awaitBranch.V ||
+                            (awaitBranch.S.parentNode.insertBefore(
+                              scope[nodeAccessor],
+                              awaitBranch.S,
+                            ),
+                            tempDetachBranch(tryBranch));
+                        },
+                        -1,
+                      ),
+                    ),
+                  ),
+              )));
       let thisPromise = (scope[promiseAccessor] = promise.then(
         (data) => {
           if (thisPromise === scope[promiseAccessor]) {
@@ -1810,27 +1854,34 @@ function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
     awaitCounter?.i ||
       (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
     placeholderShown.add(pendingEffects),
-    scheduleAwaitFrame(awaitCounter, tryBranch, () => {
-      (insertBranchBefore(
-        (tryBranch.P = createAndSetupBranch(
-          tryBranch.$,
-          tryBranch.Q,
-          tryBranch._,
-          tryBranch.S.parentNode,
-        )),
-        tryBranch.S.parentNode,
-        tryBranch.S,
+    awaitCounter.i++ ||
+      requestAnimationFrame(
+        () =>
+          awaitCounter.i &&
+          runEffects(
+            prepareEffects(() =>
+              queueRender(
+                tryBranch,
+                () => {
+                  (insertBranchBefore(
+                    (tryBranch.P = createAndSetupBranch(
+                      tryBranch.$,
+                      tryBranch.Q,
+                      tryBranch._,
+                      tryBranch.S.parentNode,
+                    )),
+                    tryBranch.S.parentNode,
+                    tryBranch.S,
+                  ),
+                    tempDetachBranch(tryBranch));
+                },
+                -1,
+              ),
+            ),
+          ),
       ),
-        tempDetachBranch(tryBranch));
-    }),
     awaitCounter
   );
-}
-function scheduleAwaitFrame(awaitCounter, scope, render) {
-  awaitCounter.i++ ||
-    requestAnimationFrame(
-      () => awaitCounter.i && runEffects(prepareEffects(() => queueRender(scope, render, -1))),
-    );
 }
 function createAwaitCounter(tryBranch, done) {
   let awaitCounter = (tryBranch.O = {
@@ -1883,6 +1934,9 @@ function renderCatch(scope, error) {
 }
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
+}
+function _resume_dynamic_tag() {
+  _resume("d", dynamicTagScript);
 }
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
@@ -2045,6 +2099,15 @@ function attrTags(first, attrs) {
 }
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
+}
+function applyPatch(frame, renderId = "_", runtimeId = "M") {
+  init(runtimeId);
+  let render = beginPatch(renderId);
+  try {
+    return (Function(frame)(), render.m([]).length || !finishPatch() ? !1 : (run(), !0));
+  } finally {
+    abortPatch();
+  }
 }
 function mount(input = {}, reference, position) {
   let branch,
