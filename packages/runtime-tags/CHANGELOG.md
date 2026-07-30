@@ -6,8 +6,6 @@
 
 - [#3704](https://github.com/marko-js/marko/pull/3704) [`96c0ba3`](https://github.com/marko-js/marko/commit/96c0ba389c08c00a617f66cf4d8298554c8323db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move nodes directly into a detached parent instead of staging them in a `DocumentFragment`, speeding up building and tearing down keyed lists.
 
-- [#3704](https://github.com/marko-js/marko/pull/3704) [`96c0ba3`](https://github.com/marko-js/marko/commit/96c0ba389c08c00a617f66cf4d8298554c8323db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Speed up keyed lists. A section whose only content is an exhaustive conditional now builds no node of its own — the conditional's content IS the section's range — so a `<for>` over `<if>`/`<else>` allocates one fewer template clone, walk and DOM swap per item, and the rendered DOM carries no marker comments for it. A loop item whose args are unchanged skips its whole params pass, including any nested loop it would otherwise re-run per item. Also drops the per-scope `AbortController` behind closure subscriptions, holds a lone child branch directly instead of allocating a `Set`, memoizes the per-branch cloner lookup, skips the `DocumentFragment` when inserting into a detached tree, keys `_or`'s pending counter by string, and walks cloned templates without a `TreeWalker`.
-
 - [#3698](https://github.com/marko-js/marko/pull/3698) [`09e51a1`](https://github.com/marko-js/marko/commit/09e51a1ce5763e2bb986ff2e3bee5f450f5d0866) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the per-scope `AbortController` behind closure subscriptions, cutting the cost of building and tearing down keyed lists.
 
 ## 6.3.29
