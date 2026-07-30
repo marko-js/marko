@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function clickAllButtons(document: Document) {
   document.querySelectorAll("button")!.forEach((item) => item.click());

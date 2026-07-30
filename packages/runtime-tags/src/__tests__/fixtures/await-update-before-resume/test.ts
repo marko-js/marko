@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { after, flush, wait } from "../../utils/resolve";
 
 export const config: TestConfig = {

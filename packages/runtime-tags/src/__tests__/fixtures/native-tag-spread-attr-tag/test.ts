@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // Spreading attribute-tag attributes (`...input.foot`) drops the object, and
 // attribute-tag content (`...input.head` body) resumes via the host tag's

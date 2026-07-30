@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { wait } from "../../utils/resolve";
 
 // Two waits: the outer load (child) resolves first and triggers the inner

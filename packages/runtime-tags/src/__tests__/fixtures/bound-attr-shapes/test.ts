@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function type(index: number, value: string) {
   return (document: Document) => {

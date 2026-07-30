@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function toggle(id: string) {
   return (document: Document) => {

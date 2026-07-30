@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function clickBoth(document: Document) {
   document.querySelectorAll("button").forEach((button) => button.click());

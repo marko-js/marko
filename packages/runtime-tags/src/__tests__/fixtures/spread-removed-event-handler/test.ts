@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // When attributes come from a spread (`<div ...attrs>`), a delegated event
 // handler that was applied on a previous render but is absent now must be

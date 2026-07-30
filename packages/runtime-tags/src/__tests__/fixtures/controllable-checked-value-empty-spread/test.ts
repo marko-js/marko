@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A one-way `checkedValue=""` provided through a spread must still be routed to
 // the controlled-value logic. It is falsy, so the old truthy `data.checkedValue`

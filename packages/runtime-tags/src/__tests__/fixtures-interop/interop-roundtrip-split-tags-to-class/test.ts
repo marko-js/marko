@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // Round-trip: `count` flows Tags -> Class (the split child renders it) and the
 // split child's event flows Class -> Tags (incrementing the same <let>), which

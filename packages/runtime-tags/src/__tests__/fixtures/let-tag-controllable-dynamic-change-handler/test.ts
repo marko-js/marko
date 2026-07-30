@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function increment(document: Document) {
   document.querySelector<HTMLButtonElement>("#inc")!.click();

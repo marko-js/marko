@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function respread(document: Document) {
   document.querySelector("button")!.click();

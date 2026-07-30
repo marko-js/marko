@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // Regression: a keyed `<for|item| of=list by="id">` whose body is a multi-node
 // `<if>/<else>` reconciled a reorder differently after SSR-resume than on a

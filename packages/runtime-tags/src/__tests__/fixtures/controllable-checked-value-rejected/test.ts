@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function clickB(document: Document) {
   document.querySelectorAll(`input`)[1]!.click();

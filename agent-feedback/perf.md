@@ -46,7 +46,7 @@ Existing TODO: `<${input.component}/>` style dynamic tags always compile against
 
 ## Parallel test workers oversubscribe cores via rolldown's thread pool
 
-`scripts/test-parallel.js` › `SLICED_FILES` | 2026-07-02 | impact:low | effort:med
+`.mocharc.parallel.cjs` | 2026-07-02 | impact:low | effort:med
 
 `npm run test:parallel` runs one mocha process per core, but each fixture bundle already drives rolldown's own multi-threaded build (`packages/runtime-tags/src/__tests__/utils/bundle.ts`), so even a serial run uses ~1.4 cores. On a 4-core box the whole suite lands at ~87s vs ~238s serial (2.7×), short of the ~4× the core count implies, because the workers contend for the same native threads. `RAYON_NUM_THREADS=1` in the worker env made no measurable difference, so rolldown isn't honoring it. If rolldown (or its native binding) exposes a per-build thread cap, pinning workers to 1 bundler thread each — so N workers ≈ N threads total — could recover much of the lost efficiency and let the runner scale closer to linearly on higher core counts.
 

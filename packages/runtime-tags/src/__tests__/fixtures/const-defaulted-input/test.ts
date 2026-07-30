@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // `??`/`||` defaults cannot be nullish, so their members read directly; `&&`
 // still can, and keeps its optional chain. Both inputs run so the falsy

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { wait } from "../../utils/resolve";
 
 // Same as lazy-tag-nested-shared, but the lazy modules finish loading in

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A text-only `<if>` inside a native element that references the enclosing
 // `<for>` tag param. Flattening the conditional into a placeholder moved that

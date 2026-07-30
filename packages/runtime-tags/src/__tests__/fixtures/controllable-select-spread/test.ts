@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function selectC(document: Document) {
   const select = document.querySelector(`select`)!;

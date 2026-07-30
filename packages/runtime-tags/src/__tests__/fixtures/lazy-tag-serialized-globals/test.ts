@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { wait } from "../../utils/resolve";
 
 // The lazy child's handler reads a serialized global object — the

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { wait } from "../../utils/resolve";
 
 // An object created in a lazy loaded parent is serialized by both the

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { wait } from "../../utils/resolve";
 
 // A lazy loaded child that consumes `input` as a whole — `input.report`

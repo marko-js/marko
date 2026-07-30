@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A split Class API child whose input is reactively updated by its Tags API
 // parent must be re-rendered in the browser by that parent.

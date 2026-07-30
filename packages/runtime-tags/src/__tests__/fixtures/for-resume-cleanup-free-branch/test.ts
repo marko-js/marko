@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 function c(document: Document) {
   document.querySelector<HTMLButtonElement>("#c")!.click();
 }

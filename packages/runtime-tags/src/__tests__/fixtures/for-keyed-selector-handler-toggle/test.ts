@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const clickToggle = (n: number) => (document: Document) =>
   (document.querySelectorAll("button.toggle")[n] as HTMLButtonElement).click();

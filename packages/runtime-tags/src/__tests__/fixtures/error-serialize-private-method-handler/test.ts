@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // Private class methods cannot be re-created on the client; the debug
 // serializer reports this at SSR time (production builds skip the check).

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const clickFlip = (document: Document) =>
   (document.querySelector("button.flip") as HTMLButtonElement).click();

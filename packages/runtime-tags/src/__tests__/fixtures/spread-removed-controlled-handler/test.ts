@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A controlled binding (`value` + `valueChange`) applied via a spread must stop
 // taking effect once the spread drops it. The stored change handler used to

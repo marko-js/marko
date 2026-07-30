@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // An `async` method-shorthand handler must keep its `async` flag through
 // function normalization (it would otherwise become a generator and its

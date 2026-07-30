@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A controlled `<select>` whose `value` matches no `<option>` is a mistake: a
 // single select always forces one option selected, so the browser falls back

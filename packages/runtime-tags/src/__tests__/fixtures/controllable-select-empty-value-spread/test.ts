@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A spread `<option ...{ value: "" }>` must be marked selected when the
 // enclosing controlled <select> is bound to "". Previously SSR's `_attrs` used a

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A loop item whose args are unchanged skips its params pass, so the cases that
 // must NOT be skipped are the interesting ones: a reorder changes the index

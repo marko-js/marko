@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A child component whose only interactive feature is a `<lifecycle>` (no
 // `let`, no closures, no source `$signal`). Its `onDestroy` cleanup is wired

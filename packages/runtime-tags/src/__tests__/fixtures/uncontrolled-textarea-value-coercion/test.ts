@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A non-string value must coerce the same on SSR and CSR. `true` renders as
 // text "true" on SSR today but "" on CSR; both now use the attribute coercion.

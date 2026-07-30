@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A Class API component with its own interactivity but no event handler from
 // the Tags API parent must still hydrate after SSR (`classHydration: "self"`).

@@ -1,2 +1,2 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 export const config: TestConfig = { steps: [{}] };

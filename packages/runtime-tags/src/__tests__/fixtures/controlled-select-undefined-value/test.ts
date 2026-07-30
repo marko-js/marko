@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A void controlled value must select the `value=""` option on both SSR and
 // CSR (equivalence), not diverge (SSR auto-first vs CSR empty option).

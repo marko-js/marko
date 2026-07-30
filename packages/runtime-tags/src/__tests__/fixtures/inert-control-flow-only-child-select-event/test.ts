@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function selectLast(document: Document) {
   const select = document.querySelector<HTMLSelectElement>("select")!;

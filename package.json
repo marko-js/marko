@@ -20,9 +20,9 @@
     "prepare": "husky && pnpm --filter @marko/compiler run build-babel-types",
     "report": "zcov report -r html && open ./coverage/index.html",
     "test": "mocha",
-    "test:parallel": "node scripts/test-parallel.js",
+    "test:parallel": "mocha --config .mocharc.parallel.cjs",
     "test:update": "UPDATE_EXPECTATIONS=1 mocha",
-    "test:update:parallel": "cross-env UPDATE_EXPECTATIONS=1 node scripts/test-parallel.js"
+    "test:update:parallel": "cross-env UPDATE_EXPECTATIONS=1 mocha --config .mocharc.parallel.cjs"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const increment_child = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button.inc-child")!.click();

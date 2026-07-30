@@ -10,7 +10,7 @@ The dependency upgrade took everything to latest except two majors that are true
 
 ## Further `test:parallel` speedups need CPU cuts, not scheduling
 
-`scripts/test-parallel.js` | 2026-07-11 | impact:med | effort:high
+`.mocharc.parallel.cjs` | 2026-07-11 | impact:med | effort:high
 
 With suite slicing in place the run is CPU-bound: ~285s of user time across
 workers (~80s wall on 4 cores, workers finish within ~2s of each other), so

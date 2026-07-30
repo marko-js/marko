@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { flush, wait } from "../../utils/resolve";
 
 // Two instances of the same lazy module share one ready stream. The first

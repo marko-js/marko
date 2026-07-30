@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // `value:=state[key]` binds the change handler to `state[key + "Change"]`
 // (here `state.vChange`), so typing updates `v`, not `wrong`.

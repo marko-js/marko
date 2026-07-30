@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const click = (id: string) => (document: Document) =>
   document.getElementById(id)!.click();

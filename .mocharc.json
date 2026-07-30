@@ -8,6 +8,6 @@
     "max-old-space-size=8192",
     "max-semi-space-size=128"
   ],
-  "require": ["~ts"],
+  "require": ["~ts", "./packages/runtime-tags/src/__tests__/utils/snap.ts"],
   "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"]
 }

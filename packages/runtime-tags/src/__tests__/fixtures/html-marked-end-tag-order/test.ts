@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A marked `<html lang>` in a stateful page must still emit `</body></html>`
 // after the resume scripts (full-document CSR isn't supported by the harness).

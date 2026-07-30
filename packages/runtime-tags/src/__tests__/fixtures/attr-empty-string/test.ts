@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A reactive attribute whose value is "" must render as a present (bare)
 // attribute, matching SSR, rather than being removed on the client. Toggling

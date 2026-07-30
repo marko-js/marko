@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A `<for to/from/step>` range loop without an explicit `by` is keyed by its
 // iteration *value*, but the HTML writer computed `sameAsIndex` against the

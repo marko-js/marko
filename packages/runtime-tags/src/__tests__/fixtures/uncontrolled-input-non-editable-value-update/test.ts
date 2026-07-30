@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function update(document: Document) {
   document.querySelectorAll("button")[0].click();

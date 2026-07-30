@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // Same as interop-self-interactive-tags-to-class but the Class API child is a
 // split component (browser logic in component-browser.js), like ebay-button.

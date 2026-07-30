@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const clickControlled = (document: Document) => {
   document.querySelector<HTMLButtonElement>("#controlled")!.click();

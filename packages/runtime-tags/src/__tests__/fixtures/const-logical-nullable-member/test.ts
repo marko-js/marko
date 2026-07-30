@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // `on && {…}`, `on ? {…} : null`, and `box.inner &&= {…}` (where `box.inner`
 // is itself `on ? {…} : null`) are all nullable: each yields a nullish value

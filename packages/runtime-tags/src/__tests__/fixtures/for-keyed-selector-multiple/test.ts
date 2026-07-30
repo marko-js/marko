@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const click = (sel: string) => (document: Document) =>
   (document.querySelector(sel) as HTMLButtonElement).click();

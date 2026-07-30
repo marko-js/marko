@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // A `<for>` whose only child is an `<if>` has no boundary markers of its own:
 // each item's range IS whichever branch is rendered. Reordering, swapping the

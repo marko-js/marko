@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function clickClass(document: Document) {
   (document.querySelector("#class") as HTMLButtonElement).click();

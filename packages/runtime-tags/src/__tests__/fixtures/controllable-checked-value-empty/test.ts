@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // `null`/`undefined`/`""` are treated as the same empty value, so a `value=""`
 // checkbox bound to a void value renders as checked and resumes with that state

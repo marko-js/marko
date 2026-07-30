@@ -3,7 +3,7 @@ import path from "path";
 
 import type { types as t } from "@marko/compiler";
 
-import type { TestConfig } from "../main.test";
+import type { TestConfig } from "../main";
 
 const require = createRequire(import.meta.url);
 

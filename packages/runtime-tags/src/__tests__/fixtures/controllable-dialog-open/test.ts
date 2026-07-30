@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function toggle(document: Document) {
   const dialog = document.querySelector<HTMLDialogElement>("dialog")!;

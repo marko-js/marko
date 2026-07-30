@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 import { flushRAF, wait } from "../../utils/resolve";
 
 function inc(document: Document) {

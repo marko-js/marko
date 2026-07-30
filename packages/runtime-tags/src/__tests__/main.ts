@@ -71,17 +71,19 @@ export type TestConfig = {
   runtime_id?: string;
 };
 
-// `scripts/test-parallel` fans the fixtures across CPU cores by giving each
-// worker a subset of round-robin "slots" via the env below: a fixture runs here
-// when `index % slotTotal` is one of this worker's slots. Round-robin keeps the
-// expensive fixtures spread evenly across workers. With no env set (a plain
-// `pnpm test`, or a scoped `--grep`) `slots` is null and every fixture runs.
-const slotTotal = Number(process.env.MARKO_TEST_SLOT_TOTAL) || 1;
-const slots = process.env.MARKO_TEST_SLOTS
-  ? new Set(process.env.MARKO_TEST_SLOTS.split(",").map(Number))
-  : null;
-function inShard(index: number) {
-  return slots === null || slots.has(index % slotTotal);
+// Each `main.shard-N.test.ts` registers one round-robin slice of the fixtures,
+// so mocha's own `--parallel` spreads this (by far the largest) suite across
+// workers: a fixture runs in shard N when `index % total === N`.
+export default function main(shard = 0, total = 1) {
+  const inShard = (index: number) => index % total === shard;
+
+  describe("runtime-tags/translator", () => {
+    testFixtures(inShard);
+  });
+
+  describe("translator-interop", () => {
+    testFixtures(inShard, true);
+  });
 }
 
 function noop() {}
@@ -95,15 +97,7 @@ function forceCodingAgent() {
   };
 }
 
-describe("runtime-tags/translator", () => {
-  testFixtures();
-});
-
-describe("translator-interop", () => {
-  testFixtures(true);
-});
-
-function testFixtures(interop?: true) {
+function testFixtures(inShard: (index: number) => boolean, interop?: true) {
   const translator = interop
     ? require.resolve("marko/translator")
     : tagsTranslator;

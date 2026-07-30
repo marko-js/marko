@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function clickParent(document: Document) {
   (document.querySelector(".toggle-parent") as HTMLButtonElement).click();

@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function click0(document: Document) {
   document.querySelectorAll("input").item(0).click();

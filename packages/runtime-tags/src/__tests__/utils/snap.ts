@@ -100,15 +100,20 @@ export async function snap(
   }
 }
 
-if (UPDATE) {
-  after(function cleanupSnapshots() {
-    for (const snapdir of writtenDirs) {
-      for (const entry of fs.readdirSync(snapdir)) {
-        const filePath = path.join(snapdir, entry);
-        if (!writtenFiles.has(filePath)) {
-          fs.rmSync(filePath, { recursive: true });
+// A root hook (loaded via `require` in .mocharc.json) rather than a top-level
+// `after`: mocha's parallel workers reuse this module across spec files, so a
+// hook registered on import would only ever run for the worker's first file.
+export const mochaHooks = UPDATE
+  ? {
+      afterAll: function cleanupSnapshots() {
+        for (const snapdir of writtenDirs) {
+          for (const entry of fs.readdirSync(snapdir)) {
+            const filePath = path.join(snapdir, entry);
+            if (!writtenFiles.has(filePath)) {
+              fs.rmSync(filePath, { recursive: true });
+            }
+          }
         }
-      }
+      },
     }
-  });
-}
+  : {};

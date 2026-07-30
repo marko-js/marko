@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const pickB = (document: Document) =>
   document.querySelectorAll("button")[1].click();

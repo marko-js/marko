@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 // Tracks observers still attached, so replacing one reads the same as never
 // attaching a second.

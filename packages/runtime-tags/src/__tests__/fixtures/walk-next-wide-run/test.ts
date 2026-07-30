@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 const bump = (document: Document) =>
   document.querySelector<HTMLButtonElement>("button")!.click();

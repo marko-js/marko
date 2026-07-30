@@ -1,4 +1,4 @@
-import type { TestConfig } from "../../main.test";
+import type { TestConfig } from "../../main";
 
 function toggleDetails(document: Document) {
   const details = document.querySelector("details")!;
