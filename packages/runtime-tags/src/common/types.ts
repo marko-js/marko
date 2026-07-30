@@ -31,6 +31,7 @@ export interface Scope {
     | undefined;
   [AccessorProp.ClosestBranch]: BranchScope | undefined;
   [AccessorProp.ClosestBranchId]: number | undefined;
+  [AccessorProp.Subscriptions]: Set<Scope>[] | undefined;
   [x: `___${string}`]: never;
   [x: string | number]: any;
 }

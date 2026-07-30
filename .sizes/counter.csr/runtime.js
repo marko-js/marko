@@ -1,4 +1,4 @@
-// size: 3948 (min) 1743 (brotli)
+// size: 3995 (min) 1757 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -6,7 +6,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   parsers = {},
   nextScopeId = 1e6,
   destroyNestedScopes = function destroyNestedScopes(scope) {
-    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(resetControllers));
+    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
   },
   isScheduled,
   channel,
@@ -91,8 +91,12 @@ function skipScope() {
 function destroyBranch(branch) {
   (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
 }
-function resetControllers(scope) {
+function cleanupScope(scope) {
+  scope.Z?.forEach(unsubscribe, scope);
   for (let id in scope.A) $signalReset(scope, id);
+}
+function unsubscribe(subscribers) {
+  subscribers.delete(this);
 }
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
