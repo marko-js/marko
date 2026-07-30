@@ -75,6 +75,7 @@ export {
   _scope_with_id,
   _script,
   _patch_hole,
+  _patch_hole_attr,
   _patch_unprovable,
   _sep,
   _serialize_guard,

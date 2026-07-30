@@ -97,8 +97,23 @@ function applyPatchHoles(scope: Scope, partial: Scope) {
     }
 
     const node = scope[key.slice(AccessorPrefix.PatchHole.length)];
+    const value = (partial as any)[key];
     if (node && (node as Node).nodeType === 3 /* Node.TEXT_NODE */) {
-      (node as Text).data = (partial as any)[key] ?? "";
+      (node as Text).data = value ?? "";
+    } else if (
+      node &&
+      (node as Node).nodeType === 1 /* Node.ELEMENT_NODE */ &&
+      value &&
+      typeof value === "object"
+    ) {
+      for (const name in value) {
+        const attr = (value as Record<string, unknown>)[name];
+        if (attr == null || attr === false) {
+          (node as Element).removeAttribute(name);
+        } else {
+          (node as Element).setAttribute(name, attr === true ? "" : `${attr}`);
+        }
+      }
     } else {
       patchHoleFailed = 1;
     }

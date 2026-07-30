@@ -1,4 +1,4 @@
-// size: 26987 (min) 10064 (brotli)
+// size: 27147 (min) 10118 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -681,9 +681,18 @@ function applyPatchHoles(scope, partial) {
       patchHoleFailed = 1;
       continue;
     }
-    let node = scope[key.slice(1)];
-    (node && node.nodeType === 3 ? (node.data = partial[key] ?? "") : (patchHoleFailed = 1),
-      delete scope[key]);
+    let node = scope[key.slice(1)],
+      value = partial[key];
+    if (node && node.nodeType === 3) node.data = value ?? "";
+    else if (node && node.nodeType === 1 && value && typeof value == "object")
+      for (let name in value) {
+        let attr = value[name];
+        attr == null || attr === !1
+          ? node.removeAttribute(name)
+          : node.setAttribute(name, attr === !0 ? "" : `${attr}`);
+      }
+    else patchHoleFailed = 1;
+    delete scope[key];
   }
 }
 function enableBranches() {

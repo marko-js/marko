@@ -230,6 +230,28 @@ export function _patch_hole(
   return "";
 }
 
+// An attribute has no marker of its own, so its value rides the owning element's
+// hole as an object keyed by attribute name.
+export function _patch_hole_attr(
+  scopeId: number,
+  accessor: Accessor,
+  name: string,
+  value: unknown,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatchHoles) {
+    const key = AccessorPrefix.PatchHole + accessor;
+    const attrs = (state.writeScopes[scopeId]?.[key] || {}) as Record<
+      string,
+      unknown
+    >;
+    attrs[name] = value;
+    writeScope(scopeId, { [key]: attrs });
+  }
+
+  return "";
+}
+
 export function _patch_unprovable() {
   $chunk.boundary.state.patchUnprovable();
 }
