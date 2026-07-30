@@ -1,4 +1,4 @@
-// size: 4028 (min) 1775 (brotli)
+// size: 4032 (min) 1792 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -11,7 +11,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   isScheduled,
   channel,
   _var_change = (scope, value) => scope.U?.(value),
-  walker = /* @__PURE__ */ document.createTreeWalker(document),
+  currentNode,
   walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
     let value,
       currentMultiplier,
@@ -23,12 +23,11 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
         (currentMultiplier = storedMultiplier),
         (storedMultiplier = 0),
         value === 32)
-      ) {
-        let node = walker.currentNode;
-        scope[decodeAccessor(currentScopeIndex++)] = node;
-      } else if (value === 37 || value === 49)
-        (walker.currentNode.replaceWith(
-          (walker.currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
+      )
+        scope[decodeAccessor(currentScopeIndex++)] = currentNode;
+      else if (value === 37 || value === 49)
+        (currentNode.replaceWith(
+          (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
         ),
           value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value === 38) return currentWalkIndex;
@@ -40,14 +39,22 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
         )),
           value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 25 * currentMultiplier + value - 67; value--;) walker.nextNode();
+        for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
       else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--;) walker.nextSibling();
+        for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
       else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--;) walker.parentNode();
-        walker.nextSibling();
+        for (value = 10 * currentMultiplier + value - 107; value--;)
+          currentNode = currentNode.parentNode || currentNode;
+        walkNextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
   },
+  walkNextNode = () => {
+    if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
+    for (; !currentNode.nextSibling && currentNode.parentNode;)
+      currentNode = currentNode.parentNode;
+    walkNextSibling();
+  },
+  walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
   cloneCache = {},
   rendering,
@@ -134,8 +141,9 @@ function _script(id, fn) {
     }
   );
 }
+/** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
-  ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
+  ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
