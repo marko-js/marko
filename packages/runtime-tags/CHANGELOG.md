@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.31
+
+### Patch Changes
+
+- [#3705](https://github.com/marko-js/marko/pull/3705) [`10e6b9d`](https://github.com/marko-js/marko/commit/10e6b9df0e49da33ac20cc473f038a072672afb8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Walk cloned templates with direct node traversal instead of a `TreeWalker`, speeding up branch creation.
+
 ## 6.3.30
 
 ### Patch Changes
