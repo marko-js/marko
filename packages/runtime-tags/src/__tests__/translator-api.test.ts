@@ -52,6 +52,24 @@ describe("runtime-tags/translator-api", () => {
     });
   });
 
+  it("imports the shared text patch register module", () => {
+    const { meta } = compiler.compileSync(
+      "<div>${input.value}</div>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "html",
+        optimize: true,
+        persisted: true,
+      },
+    );
+    assert.deepEqual(
+      [...meta.assetImports!],
+      ["@marko/runtime-tags/dom/patch-text.feat"],
+    );
+  });
+
   describe("style blocks with sourceMaps", () => {
     const styleSrc = `<style>\n  .foo { color: red }\n</style>\n<div class="foo"/>\n`;
     const compileWithSourceMaps = (sourceMaps: "both" | "inline" | true) => {
