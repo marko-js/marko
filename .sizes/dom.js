@@ -1,4 +1,4 @@
-// size: 26607 (min) 9908 (brotli)
+// size: 26640 (min) 9890 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -580,9 +580,10 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   return ((ownerSignal._ = fn), ownerSignal);
 }
 function subscribeToScopeSet(ownerScope, accessor, scope) {
-  let subscribers = (ownerScope[accessor] ||= /* @__PURE__ */ new Set());
-  subscribers.has(scope) ||
-    (subscribers.add(scope), trackCleanup(scope), (scope.Z ||= []).push(subscribers));
+  let subscribers = (ownerScope[accessor] ||= /* @__PURE__ */ new Set()),
+    subscriptions = (scope.Z ||= []);
+  subscriptions.includes(subscribers) ||
+    (subscribers.add(scope), trackCleanup(scope), subscriptions.push(subscribers));
 }
 function _closure(...closureSignals) {
   let [firstSignal] = closureSignals,
@@ -590,11 +591,15 @@ function _closure(...closureSignals) {
     signalIndex = firstSignal.b;
   for (let i = closureSignals.length; i--;) closureSignals[i].c = i;
   return (scope) => {
-    if (scope[scopeInstances])
-      for (let childScope of scope[scopeInstances])
-        childScope.H > 0 &&
-          childScope.H < runId &&
-          queueRender(childScope, closureSignals[childScope[signalIndex] || 0], -1);
+    let childScopes = scope[scopeInstances];
+    if (childScopes)
+      for (let childScope of childScopes) {
+        let gen = childScope.H;
+        gen === 0
+          ? childScopes.delete(childScope)
+          : gen < runId &&
+            queueRender(childScope, closureSignals[childScope[signalIndex] || 0], -1);
+      }
   };
 }
 function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {

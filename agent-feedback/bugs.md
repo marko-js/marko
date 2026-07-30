@@ -1412,23 +1412,3 @@ The `observeOnce({ childList: true, subtree: true })` callback treats any diverg
 `packages/compiler/src/babel-plugin/index.js` › `shallowClone` | 2026-07-27 | impact:low | effort:low
 
 `shallowClone` is the only channel carrying `metadata.marko` from the cached analyze file into each output's translate metadata, and it dispatches on `v.constructor`; the `case null:` arm sitting beside `case Object:` is dead, because a prototype-less object has `constructor === undefined`, not `null`. So an `Object.create(null)` value — the idiomatic prototype-less lookup map, used freely elsewhere in the tree (`runtime-tags/src/translator/util/binding-prop-tree.ts`, `visitors/tag/native-tag.ts`) — falls through to `default` and aborts the compile with `TypeError: Cannot read properties of undefined (reading 'name')` thrown out of `Ctor.name`, instead of being spread-cloned as the arm plainly intends; the arm has been there since the switch was written, so the intent is not in question, and the `default` case cannot even name the type it rejected. Fix is two tokens plus a guard: `case undefined:` in place of `case null:`, and `Ctor?.name ?? "null prototype object"` in the `default` message so the fallback still reports something useful. Do **not** widen the surrounding `for (const key in data)` loop to `Reflect.ownKeys` while here: skipping symbol keys is load-bearing, since the compiler uses symbol-keyed metadata for per-source scratch that must not cross the analyze→translate boundary (`babel-utils/imports.js` `IMPORTS_KEY` holds NodePaths into the analyze file's AST, which `parserOverride` clones per output; also `taglib.js` `SEEN_TAGS_KEY` and `loc.js` line indexes), and `babel-utils/tags.js` states the rule inline — `const MACRO_NAMES_KEY = "__marko_macro_names__"; // must be a string literal since it is used across compiler stages.` Re-verify from the repo root: `node -r ~ts -e 'const c=require("./packages/compiler/src/index.js");const mk=v=>({taglibs:[],tagDiscoveryDirs:[],analyze:{Program:{enter(p){p.hub.file.metadata.marko.custom=v()}}},translate:{Program:{exit(p){console.log("cloned:",p.hub.file.metadata.marko.custom);p.node.body.length=0}}}});for(const[l,v]of[["Object.create(null)",()=>Object.create(null)],["{}",()=>({})]]){try{c.compileSync("<div/>","/tmp/x.marko",{output:"html",translator:mk(v),cache:new Map(),optimize:false})}catch(e){console.log(l,"->",e.message.split("\n")[0])}}'` prints `Object.create(null) -> /tmp/x.marko: Cannot read properties of undefined (reading 'name')` for the first value and `cloned: {}` for the second.
-
-## Server-rendered closure subscriptions are never removed from their owner's set
-
-`packages/runtime-tags/src/dom/signals.ts` › `subscribeToScopeSet` | 2026-07-29 | impact:med | effort:med
-
-`subscribeToScopeSet` only records cleanup for a scope it actually adds
-(`if (!subscribers.has(scope))`). SSR builds the subscriber sets and puts the
-item scopes in them, and hydration installs those sets wholesale through
-`Object.assign` in `applyScopes` (`packages/runtime-tags/src/dom/resume.ts`), so
-on the client the guard is already satisfied and no cleanup is registered for
-them. Destroying a server-rendered list therefore leaves every initial item
-scope retained by the owner's set — later passes skip them via `Gen`, so it is a
-retention leak rather than a correctness bug, but a large resumed list keeps all
-of its item scopes alive for the owner's lifetime. This predates the move off
-per-scope `AbortController`s: the old code installed its abort listener inside
-the same guard, so resumed subscribers were never unsubscribed there either.
-The fix is for resume to enrol adopted subscriber scopes the same way a
-client-side subscribe does. Re-verify: SSR a keyed list whose items close over
-owner state, resume it, remove the list, and check the owner's subscriber set is
-empty.

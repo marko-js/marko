@@ -268,10 +268,13 @@ export function subscribeToScopeSet(
   scope: Scope,
 ) {
   const subscribers = (ownerScope[accessor] ||= new Set()) as Set<Scope>;
-  if (!subscribers.has(scope)) {
+  // Keyed on the cleanup record rather than membership: resume adopts the
+  // server's set with this scope already in it, and it still needs unsubscribing.
+  const subscriptions = (scope[AccessorProp.Subscriptions] ||= []);
+  if (!subscriptions.includes(subscribers)) {
     subscribers.add(scope);
     trackCleanup(scope);
-    (scope[AccessorProp.Subscriptions] ||= []).push(subscribers);
+    subscriptions.push(subscribers);
   }
 }
 
@@ -284,12 +287,15 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
   }
 
   return (scope: Scope) => {
-    if (scope[scopeInstances]) {
-      for (const childScope of scope[scopeInstances] as Set<Scope>) {
-        if (
-          childScope[AccessorProp.Gen] > 0 &&
-          childScope[AccessorProp.Gen] < runId
-        ) {
+    const childScopes = scope[scopeInstances] as Set<Scope> | undefined;
+    if (childScopes) {
+      for (const childScope of childScopes) {
+        const gen = childScope[AccessorProp.Gen];
+        if (gen === 0) {
+          // Destroyed. A scope this set adopted from the server carries no
+          // cleanup record, so this is the only chance to drop it.
+          childScopes.delete(childScope);
+        } else if (gen < runId) {
           queueRender(
             childScope,
             closureSignals[childScope[signalIndex] || 0],
