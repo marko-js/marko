@@ -41,6 +41,7 @@ export {
 export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
 export { forIn, forOf, forTo, forUntil } from "./html/for";
 export { _template } from "./html/template";
+export { _template_persisted, renderPatch } from "./html/patch";
 export {
   _attr_content,
   _await,
@@ -55,6 +56,7 @@ export {
   _html,
   _id,
   _if,
+  _patch_text,
   _peek_scope_id,
   _resume,
   _resume_branch,
