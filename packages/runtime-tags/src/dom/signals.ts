@@ -11,7 +11,7 @@ import {
   KeyedScopesProp,
   type Scope,
 } from "../common/types";
-import { $signal } from "./abort-signal";
+import { trackCleanup } from "./abort-signal";
 import { queueEffect, queueRender, rendering, runId } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
@@ -270,12 +270,8 @@ export function subscribeToScopeSet(
   const subscribers = (ownerScope[accessor] ||= new Set()) as Set<Scope>;
   // Resume adopts the server's set already holding its subscribers, so those
   // register no unsubscribe: bounded, and `_closure` skips destroyed scopes.
-  if (!subscribers.has(scope)) {
-    subscribers.add(scope);
-    $signal(scope, -1).addEventListener("abort", () =>
-      ownerScope[accessor].delete(scope),
-    );
-  }
+  const { size } = subscribers;
+  if (subscribers.add(scope).size !== size) trackCleanup(scope, subscribers);
 }
 
 export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {

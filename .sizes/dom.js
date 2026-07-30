@@ -1,4 +1,4 @@
-// size: 26561 (min) 9887 (brotli)
+// size: 26624 (min) 9899 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -26,7 +26,7 @@ let empty = [],
   nextScopeId = 1e6,
   collectingScopes,
   destroyNestedScopes = function destroyNestedScopes(scope) {
-    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(resetControllers));
+    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
   },
   isScheduled,
   channel,
@@ -420,10 +420,14 @@ function destroyBranch(branch) {
   (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
 }
 function destroyScope(scope) {
-  scope.H && (destroyNestedScopes(scope), resetControllers(scope));
+  scope.H && (destroyNestedScopes(scope), cleanupScope(scope));
 }
-function resetControllers(scope) {
+function cleanupScope(scope) {
+  scope.Z?.forEach(unsubscribe, scope);
   for (let id in scope.A) $signalReset(scope, id);
+}
+function unsubscribe(subscribers) {
+  subscribers.delete(this);
 }
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
@@ -575,10 +579,9 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   return ((ownerSignal._ = fn), ownerSignal);
 }
 function subscribeToScopeSet(ownerScope, accessor, scope) {
-  let subscribers = (ownerScope[accessor] ||= /* @__PURE__ */ new Set());
-  subscribers.has(scope) ||
-    (subscribers.add(scope),
-    $signal(scope, -1).addEventListener("abort", () => ownerScope[accessor].delete(scope)));
+  let subscribers = (ownerScope[accessor] ||= /* @__PURE__ */ new Set()),
+    { size } = subscribers;
+  subscribers.add(scope).size !== size && trackCleanup(scope, subscribers);
 }
 function _closure(...closureSignals) {
   let [firstSignal] = closureSignals,
@@ -2134,10 +2137,13 @@ function $signalReset(scope, id) {
   ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
 }
 function $signal(scope, id) {
-  return (
-    scope.F && (scope.F.B ||= /* @__PURE__ */ new Set()).add(scope),
-    ((scope.A ||= {})[id] ||= new AbortController()).signal
-  );
+  return (trackCleanup(scope), ((scope.A ||= {})[id] ||= new AbortController()).signal);
+}
+/** Enrols `scope` with its branch so destroying the branch cleans it up. */
+function trackCleanup(scope, subscribers) {
+  let branch = scope.F;
+  (branch && (branch.B ||= /* @__PURE__ */ new Set()).add(scope),
+    subscribers && (scope.Z ||= []).push(subscribers));
 }
 function abort(ctrl) {
   ctrl.abort();

@@ -81,7 +81,7 @@ export function destroyBranch(branch: BranchScope) {
 export function destroyScope(scope: Scope) {
   if (scope[AccessorProp.Gen]) {
     destroyNestedScopes(scope);
-    resetControllers(scope);
+    cleanupScope(scope);
   }
 }
 
@@ -89,13 +89,19 @@ export function destroyScope(scope: Scope) {
 const destroyNestedScopes = function destroyNestedScopes(scope: Scope) {
   scope[AccessorProp.Gen] = 0;
   scope[AccessorProp.BranchScopes]?.forEach(destroyNestedScopes);
-  scope[AccessorProp.AbortScopes]?.forEach(resetControllers);
+  scope[AccessorProp.AbortScopes]?.forEach(cleanupScope);
 };
 
-function resetControllers(scope: Scope) {
+function cleanupScope(scope: Scope) {
+  scope[AccessorProp.Subscriptions]?.forEach(unsubscribe, scope);
+
   for (const id in scope[AccessorProp.AbortControllers]) {
     $signalReset(scope, id);
   }
+}
+
+function unsubscribe(this: Scope, subscribers: Set<Scope>) {
+  subscribers.delete(this);
 }
 
 export function removeAndDestroyBranch(branch: BranchScope) {
