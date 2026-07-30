@@ -1,4 +1,4 @@
-// size: 26624 (min) 9899 (brotli)
+// size: 26706 (min) 9933 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -26,7 +26,9 @@ let empty = [],
   nextScopeId = 1e6,
   collectingScopes,
   destroyNestedScopes = function destroyNestedScopes(scope) {
-    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
+    ((scope.H = 0),
+      scope.D && (scope.D.$ ? destroyNestedScopes(scope.D) : scope.D.forEach(destroyNestedScopes)),
+      scope.B?.forEach(cleanupScope));
   },
   isScheduled,
   channel,
@@ -417,7 +419,9 @@ function findBranchWithKey(scope, key) {
   return branch;
 }
 function destroyBranch(branch) {
-  (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
+  let parent = branch.N;
+  (parent?.D && (parent.D.$ ? parent.D === branch && (parent.D = void 0) : parent.D.delete(branch)),
+    destroyNestedScopes(branch));
 }
 function destroyScope(scope) {
   scope.H && (destroyNestedScopes(scope), cleanupScope(scope));
@@ -941,7 +945,12 @@ function createBranch($global, renderer, parentScope, parentNode) {
 }
 function setParentBranch(branch, parentBranch) {
   (parentBranch &&
-    ((branch.N = parentBranch), (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
+    ((branch.N = parentBranch),
+    (parentBranch.D = parentBranch.D
+      ? parentBranch.D.$
+        ? /* @__PURE__ */ new Set([parentBranch.D, branch])
+        : parentBranch.D.add(branch)
+      : branch)),
     (branch.F = branch));
 }
 function createAndSetupBranch($global, renderer, parentScope, parentNode) {

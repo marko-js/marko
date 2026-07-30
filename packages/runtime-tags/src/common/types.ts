@@ -12,7 +12,7 @@ export interface BranchScope extends Scope {
   [AccessorProp.EndNode]: ChildNode;
   [AccessorProp.ParentBranch]: BranchScope | undefined;
   [AccessorProp.AbortScopes]: Set<Scope> | undefined;
-  [AccessorProp.BranchScopes]: Set<BranchScope> | undefined;
+  [AccessorProp.BranchScopes]: Set<BranchScope> | BranchScope | undefined;
   [AccessorProp.Renderer]: ClientRenderer | string;
   [AccessorProp.AwaitCounter]: AwaitCounter | undefined;
   [AccessorProp.PendingEffects]: unknown[] | undefined;

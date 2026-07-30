@@ -1,4 +1,4 @@
-// size: 3995 (min) 1757 (brotli)
+// size: 4077 (min) 1797 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
@@ -6,7 +6,9 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   parsers = {},
   nextScopeId = 1e6,
   destroyNestedScopes = function destroyNestedScopes(scope) {
-    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
+    ((scope.H = 0),
+      scope.D && (scope.D.$ ? destroyNestedScopes(scope.D) : scope.D.forEach(destroyNestedScopes)),
+      scope.B?.forEach(cleanupScope));
   },
   isScheduled,
   channel,
@@ -89,7 +91,9 @@ function skipScope() {
   return nextScopeId++;
 }
 function destroyBranch(branch) {
-  (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
+  let parent = branch.N;
+  (parent?.D && (parent.D.$ ? parent.D === branch && (parent.D = void 0) : parent.D.delete(branch)),
+    destroyNestedScopes(branch));
 }
 function cleanupScope(scope) {
   scope.Z?.forEach(unsubscribe, scope);
@@ -151,7 +155,12 @@ function createBranch($global, renderer, parentScope, parentNode) {
 }
 function setParentBranch(branch, parentBranch) {
   (parentBranch &&
-    ((branch.N = parentBranch), (parentBranch.D ||= /* @__PURE__ */ new Set()).add(branch)),
+    ((branch.N = parentBranch),
+    (parentBranch.D = parentBranch.D
+      ? parentBranch.D.$
+        ? /* @__PURE__ */ new Set([parentBranch.D, branch])
+        : parentBranch.D.add(branch)
+      : branch)),
     (branch.F = branch));
 }
 function _content(id, template, walks, setup, params, dynamicScopesAccessor) {

@@ -56,7 +56,17 @@ export function setParentBranch(
 ) {
   if (parentBranch) {
     branch[AccessorProp.ParentBranch] = parentBranch;
-    (parentBranch[AccessorProp.BranchScopes] ||= new Set()).add(branch);
+    // Most branches parent exactly one child; hold it directly and pay for a Set
+    // only on the second. A scope always carries `$global`; a Set never does.
+    parentBranch[AccessorProp.BranchScopes] = parentBranch[
+      AccessorProp.BranchScopes
+    ]
+      ? (parentBranch[AccessorProp.BranchScopes] as BranchScope)[
+          AccessorProp.Global
+        ]
+        ? new Set([parentBranch[AccessorProp.BranchScopes], branch])
+        : parentBranch[AccessorProp.BranchScopes].add(branch)
+      : branch;
   }
   branch[AccessorProp.ClosestBranch] = branch;
 }

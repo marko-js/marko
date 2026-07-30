@@ -72,9 +72,16 @@ export function findBranchWithKey(
 }
 
 export function destroyBranch(branch: BranchScope) {
-  branch[AccessorProp.ParentBranch]?.[AccessorProp.BranchScopes]?.delete(
-    branch,
-  );
+  const parent = branch[AccessorProp.ParentBranch];
+  if (parent?.[AccessorProp.BranchScopes]) {
+    if (
+      (parent[AccessorProp.BranchScopes] as BranchScope)[AccessorProp.Global]
+    ) {
+      if (parent[AccessorProp.BranchScopes] === branch) {
+        parent[AccessorProp.BranchScopes] = undefined;
+      }
+    } else parent[AccessorProp.BranchScopes].delete(branch);
+  }
   destroyNestedScopes(branch);
 }
 
@@ -88,7 +95,12 @@ export function destroyScope(scope: Scope) {
 // TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
 const destroyNestedScopes = function destroyNestedScopes(scope: Scope) {
   scope[AccessorProp.Gen] = 0;
-  scope[AccessorProp.BranchScopes]?.forEach(destroyNestedScopes);
+  if (scope[AccessorProp.BranchScopes]) {
+    // A lone child is held directly: a scope always carries `$global`, a Set never.
+    (scope[AccessorProp.BranchScopes] as BranchScope)[AccessorProp.Global]
+      ? destroyNestedScopes(scope[AccessorProp.BranchScopes])
+      : scope[AccessorProp.BranchScopes].forEach(destroyNestedScopes);
+  }
   scope[AccessorProp.AbortScopes]?.forEach(cleanupScope);
 };
 
