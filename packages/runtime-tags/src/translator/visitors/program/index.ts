@@ -19,6 +19,7 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isPersisted,
 } from "../../util/marko-config";
 import {
   BindingType,
@@ -31,7 +32,7 @@ import { startSection } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
-import programHTML from "./html";
+import programHTML, { assertSupportedPatch } from "./html";
 import { preAnalyze } from "./pre-analyze";
 
 export let scopeIdentifier: t.Identifier;
@@ -241,6 +242,10 @@ export default {
           program.skip();
           return;
         }
+      }
+
+      if (isPersisted()) {
+        assertSupportedPatch(program);
       }
 
       if (isOutputHTML()) {

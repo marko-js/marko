@@ -77,6 +77,8 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** Compiles the fixture with the `persisted` compiler option. */
+  persisted?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -136,6 +138,7 @@ function testFixtures(interop?: true) {
         ? (require(testFile).config ?? {})
         : {};
       const hasCompilerError = !!config.error_compiler;
+      const persisted = !!config.persisted;
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const stripFixtureDir = async (str: string | Promise<string>) =>
@@ -172,11 +175,18 @@ function testFixtures(interop?: true) {
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
+          // Persisted mode is inherently SSR: the client only resumes and
+          // applies patches, so there is no meaningful CSR mount.
           const skipCSR =
-            optimize || hasCompilerError || skipDOM || config.skip_csr;
+            optimize ||
+            persisted ||
+            hasCompilerError ||
+            skipDOM ||
+            config.skip_csr;
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
+            patch?: Sizes;
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
           const rejectLoad =
@@ -213,6 +223,7 @@ function testFixtures(interop?: true) {
                 browserslistConfigFile: false,
               },
               optimize,
+              persisted,
               optimizeKnownTemplates: optimize
                 ? (
                     fs.readdirSync(fixtureDir, {
@@ -257,16 +268,16 @@ function testFixtures(interop?: true) {
           };
 
           const snapCompile = async (output: "html" | "dom") => {
-            if (config.error_compiler) {
+            if (hasCompilerError) {
               await snapMode(
                 () => {
                   // The fix-guide only fires for an agent-driven terminal and a
                   // translator resolved from a specifier, so force both here.
                   const restore = config.fix_guide ? forceCodingAgent() : noop;
                   try {
-                    for (const f of config.error_compiler === true
-                      ? [templateFile]
-                      : (config.error_compiler as string[]).map(resolve)) {
+                    for (const f of Array.isArray(config.error_compiler)
+                      ? config.error_compiler.map(resolve)
+                      : [templateFile]) {
                       compiler.compileFileSync(f, {
                         ...getModeOpts(),
                         ...(config.fix_guide && {
@@ -328,11 +339,15 @@ function testFixtures(interop?: true) {
             const runner = await ssrRunner();
             const { input, steps } = await getSteps(config);
             const chunks: string[] = [];
+            const patches: string[] = [];
             const logs: ConsoleRecord[][] = [];
+            let template!: Awaited<
+              ReturnType<typeof runner.runServer>
+            >["template"];
             const capture = captureConsole();
 
             try {
-              const { template } = await runner.runServer();
+              ({ template } = await runner.runServer());
               for await (const data of template.render(
                 config.embedded
                   ? {
@@ -378,11 +393,25 @@ function testFixtures(interop?: true) {
             }
 
             await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { run } =
+            const { applyPatch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onInput: persisted
+                ? async (input) => {
+                    tracker.beginUpdate();
+                    let applied = true;
+                    const frames: string[] = [];
+                    for await (const frame of template.renderPatch(input)) {
+                      frames.push(frame);
+                      applied = applyPatch(frame) && applied;
+                    }
+                    patches.push(frames.join(""));
+                    tracker.logUpdate(input);
+                    return applied;
+                  }
+                : undefined,
             });
 
             while (hasFlush) {
@@ -394,7 +423,7 @@ function testFixtures(interop?: true) {
 
             tracker.cleanup();
 
-            return { browser, tracker, chunks };
+            return { browser, tracker, chunks, patches };
           });
 
           skipHTML || it("html", () => snapCompile("html"));
@@ -456,7 +485,13 @@ function testFixtures(interop?: true) {
             it("ssr", async () => {
               await snapMode(
                 async () => {
-                  const { tracker, chunks } = await ssr();
+                  const { tracker, chunks, patches } = await ssr();
+                  if (persisted) {
+                    await snapMode(
+                      () => `${patches.join("\n\n// PATCH\n\n")}\n`,
+                      "patches.js",
+                    );
+                  }
                   await snapMode(async () => {
                     const pretty = html_beautify(
                       (optimize ? stripOptimizeRuntime : stripDebugRuntime)(
@@ -475,6 +510,9 @@ function testFixtures(interop?: true) {
                       stats.html = await getSizes(
                         stripDefaultScript(chunks.join("")),
                       );
+                      if (persisted) {
+                        stats.patch = await getSizes(patches.join(""));
+                      }
                     }
 
                     return `${pretty}\n`;
@@ -507,7 +545,7 @@ async function runSteps(
   browser: ReturnType<typeof createBrowser>,
   run: () => void,
   opts: {
-    onInput?: (input: Input) => void;
+    onInput?: (input: Input) => void | boolean | Promise<void | boolean>;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
   },
@@ -550,7 +588,7 @@ async function runSteps(
         tracker.logUpdate(update);
       }
     } else if (opts.onInput) {
-      opts.onInput(update);
+      if ((await opts.onInput(update)) === false) break;
     } else {
       // if new input is detected, stop testing
       // this will be covered by the client tests
