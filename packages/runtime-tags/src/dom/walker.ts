@@ -9,7 +9,8 @@ import {
 } from "../common/types";
 import { createScope, skipScope } from "./scope";
 
-export const walker = /* @__PURE__ */ document.createTreeWalker(document);
+/** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
+let currentNode: Node;
 
 // Laws of the walks string:
 //  - Always prefer Get to Before to After, or Replace
@@ -25,7 +26,7 @@ export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 //  - A component must assume the walker is on its first node, and include instructions for walking to its assumed nextSibling
 
 export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
-  walker.currentNode = startNode;
+  currentNode = startNode;
   walkInternal(0, walkCodes, branch);
 }
 
@@ -46,18 +47,17 @@ const walkInternal = function walkInternal(
     storedMultiplier = 0;
 
     if (value === WalkCode.Get) {
-      const node = walker.currentNode;
       scope[
         MARKO_DEBUG
-          ? getDebugKey(currentScopeIndex++, node)
+          ? getDebugKey(currentScopeIndex++, currentNode)
           : decodeAccessor(currentScopeIndex++)
-      ] = node;
+      ] = currentNode;
     } else if (
       value === WalkCode.Replace ||
       value === WalkCode.DynamicTagWithVar
     ) {
-      (walker.currentNode as ChildNode).replaceWith(
-        (walker.currentNode = scope[
+      (currentNode as ChildNode).replaceWith(
+        (currentNode = scope[
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#text")
             : decodeAccessor(currentScopeIndex++)
@@ -99,19 +99,19 @@ const walkInternal = function walkInternal(
     } else if (value < WalkCode.NextEnd + 1) {
       value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;
       while (value--) {
-        walker.nextNode();
+        walkNextNode();
       }
     } else if (value < WalkCode.OverEnd + 1) {
       value = WalkRangeSize.Over * currentMultiplier + value - WalkCode.Over;
       while (value--) {
-        walker.nextSibling();
+        walkNextSibling();
       }
     } else if (value < WalkCode.OutEnd + 1) {
       value = WalkRangeSize.Out * currentMultiplier + value - WalkCode.Out;
       while (value--) {
-        walker.parentNode();
+        currentNode = currentNode.parentNode || currentNode;
       }
-      walker.nextSibling();
+      walkNextSibling();
     } else {
       if (
         MARKO_DEBUG &&
@@ -140,3 +140,14 @@ export function getDebugKey(index: number, node: Node | string) {
 
   return index;
 }
+
+const walkNextNode = () => {
+  if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
+  while (!currentNode.nextSibling && currentNode.parentNode) {
+    currentNode = currentNode.parentNode;
+  }
+  walkNextSibling();
+};
+
+const walkNextSibling = () =>
+  (currentNode = currentNode.nextSibling || currentNode);
