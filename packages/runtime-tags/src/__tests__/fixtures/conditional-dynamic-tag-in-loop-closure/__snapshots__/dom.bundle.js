@@ -7,7 +7,7 @@ const $for_content__content = /*@__PURE__*/ _const(3, ($scope) => {
 	$if_content__content($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__content($scope, ($params2?.[0]).content);
-const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<!>", "b%", 0, $for_content__$params);
 const $input_section = ($scope, input_section) => $for($scope, [input_section]);
 
 // template.marko

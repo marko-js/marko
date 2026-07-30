@@ -77,6 +77,9 @@ export interface Section {
   abortSignalExprs: number;
   readsOwner: boolean;
   isBranch: boolean;
+  /** An exhaustive conditional is the section's whole content, so its branch
+   * bounds the section and no markers or anchor are emitted for it. */
+  rangeFromChild: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -152,6 +155,7 @@ export function startSection(
       abortSignalExprs: 0,
       readsOwner: false,
       isBranch: false,
+      rangeFromChild: false,
     };
     sections.push(section);
   }

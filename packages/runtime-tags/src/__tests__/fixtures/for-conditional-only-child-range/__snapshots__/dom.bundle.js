@@ -12,7 +12,7 @@ const $for_content__item_id = /*@__PURE__*/ _const(4, ($scope) => {
 	$if_content__item_id($scope);
 	$else_content__item_id($scope);
 });
-const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<!>", "b%", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let(4, ($scope) => $for($scope, [$scope.e, "id"]));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.b, "click", function() {

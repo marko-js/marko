@@ -16,7 +16,7 @@ const $htmlInput = /*@__PURE__*/ _const("htmlInput", ($scope) => {
 	_attrs($scope, "#div/0", $scope.htmlInput);
 	$htmlInput__script($scope);
 });
-const $for = /*@__PURE__*/ _for_of("#div/0", "<!><!><!>", "b%", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#div/0", "<!>", "b%", 0, $for_content__$params);
 const $buttons = ($scope, buttons) => $for($scope, [buttons]);
 const $input = ($scope, input) => {
 	(({ button, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);

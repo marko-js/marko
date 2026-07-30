@@ -8,7 +8,7 @@ const $for_content__if = /*@__PURE__*/ _if("#text/0", " ", " ", $if_content__set
 const $for_content__setup = ($scope) => $for_content__if($scope, true ? 0 : 1);
 const $for_content__$params = ($scope, $params2) => $for_content__foo($scope, $params2[0]);
 const $for_content__foo = /*@__PURE__*/ _const("foo");
-const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<!>", "b%", $for_content__setup, $for_content__$params);
 function $setup($scope) {
 	$for($scope, [["foo"]]);
 }

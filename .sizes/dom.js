@@ -1,4 +1,4 @@
-// size: 26671 (min) 9915 (brotli)
+// size: 26819 (min) 9999 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1890,9 +1890,21 @@ function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) 
       ? (newBranch
           ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
           : parentNode.insertBefore(referenceNode, prevBranch.S),
+        adoptRange(scope, prevBranch, newBranch || referenceNode),
         removeAndDestroyBranch(prevBranch))
       : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove(),
+        adoptRange(scope, referenceNode, newBranch));
+}
+function adoptRange(scope, prev, next) {
+  let prevStart = prev.S || prev,
+    prevEnd = prev.K || prev,
+    branch = scope.F;
+  for (; branch && (branch.S === prevStart || branch.K === prevEnd);)
+    (branch.S === prevStart && (branch.S = next.S || next),
+      branch.K === prevEnd && (branch.K = next.K || next),
+      (branch = branch.N));
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {

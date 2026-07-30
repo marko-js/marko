@@ -1,5 +1,5 @@
 // tags/test.marko
-const $Tag_content__walks = "b%c", $Tag_content__template = "<!><!><!>";
+const $Tag_content__walks = "b%c", $Tag_content__template = "<!>";
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tag_content__template);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tag_content__walks);
 const $if_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._);

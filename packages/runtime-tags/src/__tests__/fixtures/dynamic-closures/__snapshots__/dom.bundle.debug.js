@@ -32,7 +32,7 @@ const $customtag_content = /*@__PURE__*/ _content("__tests__/template.marko_1_co
 const $b = /*@__PURE__*/ _const("b");
 const $c__closure = /*@__PURE__*/ _closure($customtag_content__c, $if_content2__c);
 const $c = /*@__PURE__*/ _let("c/4", $c__closure);
-const $if = /*@__PURE__*/ _if("#div/2", "<!><!><!>", "b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#div/2", "<!>", "b%", $if_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, 4);
 }));

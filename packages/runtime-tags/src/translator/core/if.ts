@@ -16,6 +16,7 @@ import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
+  isOnlyChildOfSection,
 } from "../util/is-only-child-in-parent";
 import { addSorted } from "../util/optional";
 import {
@@ -88,6 +89,9 @@ export const IfTag = {
         binding: nodeBinding,
         prefix: getAccessorPrefix().BranchScopes,
       };
+      ifTagSection.rangeFromChild =
+        !getOnlyChildParentTagName(ifTag, branches.length) &&
+        isOnlyChildOfSection(ifTag, branches.length);
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {

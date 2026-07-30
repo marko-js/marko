@@ -98,9 +98,15 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
   "SectionMeta",
   (section) => {
     const writePrefix =
-      section.content?.startType === ContentType.Dynamic ? "<!>" : "";
+      section.content?.startType === ContentType.Dynamic &&
+      !section.rangeFromChild
+        ? "<!>"
+        : "";
     const writePostfix =
-      section.content?.endType === ContentType.Dynamic ? "<!>" : "";
+      section.content?.endType === ContentType.Dynamic &&
+      !section.rangeFromChild
+        ? "<!>"
+        : "";
     const writes = getWrites(section);
     const meta = {
       walks: getWalkString(section),

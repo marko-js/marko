@@ -738,10 +738,39 @@ export function setConditionalRenderer<T>(
       );
     }
 
+    adoptRange(scope, prevBranch, newBranch || referenceNode);
     removeAndDestroyBranch(prevBranch);
   } else if (newBranch) {
     insertBranchBefore(newBranch, parentNode, referenceNode);
     referenceNode.remove();
+    adoptRange(scope, referenceNode, newBranch);
+  }
+}
+
+// A section whose whole content is this conditional is bounded by the branch
+// itself, so every owner still holding the replaced range follows it.
+function adoptRange(
+  scope: Scope,
+  prev: BranchScope | ChildNode,
+  next: BranchScope | ChildNode,
+) {
+  const prevStart = (prev as BranchScope)[AccessorProp.StartNode] || prev;
+  const prevEnd = (prev as BranchScope)[AccessorProp.EndNode] || prev;
+  let branch = scope[AccessorProp.ClosestBranch];
+  while (
+    branch &&
+    (branch[AccessorProp.StartNode] === prevStart ||
+      branch[AccessorProp.EndNode] === prevEnd)
+  ) {
+    if (branch[AccessorProp.StartNode] === prevStart) {
+      branch[AccessorProp.StartNode] =
+        (next as BranchScope)[AccessorProp.StartNode] || (next as ChildNode);
+    }
+    if (branch[AccessorProp.EndNode] === prevEnd) {
+      branch[AccessorProp.EndNode] =
+        (next as BranchScope)[AccessorProp.EndNode] || (next as ChildNode);
+    }
+    branch = branch[AccessorProp.ParentBranch];
   }
 }
 

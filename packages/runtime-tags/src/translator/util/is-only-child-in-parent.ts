@@ -36,6 +36,20 @@ export function getOnlyChildParentTagName(
       : false);
 }
 
+export function isOnlyChildOfSection(
+  tag: t.NodePath<t.MarkoTag>,
+  branchSize: number,
+) {
+  const parentTag = getParentTag(tag);
+  return !!(
+    parentTag &&
+    !getTagDef(parentTag)?.html &&
+    (tag.parent as t.MarkoTagBody).body.filter(
+      (node) => node.type !== "MarkoComment",
+    ).length === branchSize
+  );
+}
+
 export function getOptimizedOnlyChildNodeBinding(
   tag: t.NodePath<t.MarkoTag>,
   section: Section,
