@@ -2,218 +2,86 @@
 
 Things that were hard to understand, and what would have clarified them. Format and rules: [README.md](README.md).
 
-## Document that text interpolation drops `NaN`/`0n` while attributes write them
+## Document the `Marko.Global` augmentation path so `$global` in tests is type-checked
 
-`packages/runtime-tags/src/html/content.ts` › `_to_text` | 2026-07-18 | impact:low | effort:low
+`packages/runtime-tags/index.d.ts` › `TemplateInput` | 2026-07-19 | impact:low | effort:low
 
-The same value coerces differently in text position and attribute position, and only the attribute rule is documented. Text uses `_to_text` = `val || val === 0 ? val + "" : ""` (`html/content.ts:10`, mirrored by `dom/dom.ts` for CSR), so `NaN` and `0n` are falsy and not `=== 0` and render as an empty string. Attributes use `_attr` → `isVoid` = `value == null || value === false` (`common/helpers.ts:137`), so `NaN`/`0n` are non-void and `nonVoidAttr` (`html/attrs.ts:442-455`) writes them — a `number` (including `NaN`) as `name=NaN` and a bigint `0n` as `name=0`. So `<div>${NaN} ${0n}</div>` renders empty text while `<div data-a=NaN data-b=0n/>` writes `data-a=NaN data-b=0`. The language reference at website `docs/reference/language.md:220-223` documents only the attribute rule and explicitly promises "`0`, `NaN`, and `""` will still be written", with no text-coercion note, so the two positions silently disagree for the non-zero falsy numerics. The text drop is intentional (the `content.ts:10` comment says `0n` is deliberately not special-cased for hot-path size), and even MARKO_DEBUG's `assertValidTextValue` (`common/errors.ts`) does not flag `NaN`/`0n`, so a blank price/quantity cell produced by bad numeric arithmetic is silent in dev too. Direction: add a text-coercion table near the dynamic-text section of the language reference and cross-link the attribute note at `:220-223`; optionally warn in DEBUG when a `NaN` `number` reaches a text position. Distinct from the existing `normalizeStrAttrValue` bugs.md entry, which concerns controlled-value selection, not text-vs-attribute rendering.
+`TemplateInput<Input> = Input & { $global?: Global }` is the only typed slot for `$global`, and both `html/template.ts` `render` and `dom/template.ts` `mount` destructure it - but `Marko.Global` carries `[x: PropertyKey]: unknown` (index.d.ts:16), so a render test or story can pass any shape and nothing checks it against the route `Context` the component reads. `Marko.Global` is an interface in `declare global`, so `declare global { namespace Marko { interface Global { data?: Run.Context } } }` does restore checking (verified: a wrong-typed member errors TS2322) - but only with OPTIONAL members; a required member makes `render({ $global: {} })` error TS2741 everywhere. Direction: document that merge in `index.d.ts` and the `## TypeScript` section of `cheatsheet.md` (which currently covers only Input/Body/AttrTag), including the optional-member caveat, so `@marko/run` can type route context. Context, unverifiable in this repo: Storybook has no slot at all - `Story<Input>.args` is `Input`, so `$global` gets smuggled through `args` and surfaces as a bogus control. Distinct from the separate finding on typing `@marko/run`'s `ctx.search` - same `Run.Context`, different surface, so fixing one does not cover the other. Re-verify: `rg -n 'PropertyKey' packages/runtime-tags/index.d.ts` still shows the open index signature at :16.
 
-The same `0n`/`NaN` drop also occurs on the **style-object** surface, where the consequence is more insidious than empty text: `stringifyStyleObject` returns `value || value === 0 ? name + ":" + value : ""` (`packages/runtime-tags/src/common/helpers.ts:77`; the in-file comment at :75-76 confirms `0n` is deliberately not special-cased for hot-path size), so `<div style={ width: input.v }>` renders `width:0` for `0` but drops the `width` declaration entirely for `0n` or `NaN` — a missing CSS declaration / silent layout shift rather than a visibly-empty text node. Reached via `_attr_style` → `toDelimitedString(value, ";", stringifyStyleObject)` in both `html/attrs.ts` and `dom/dom.ts`; no warning even under `MARKO_DEBUG`. Extend the coercion-table doc note to cover style objects, and/or warn in DEBUG when a `NaN` reaches a style value.
-
----
-
-## Document the client-only-init + localStorage-persist idiom (`<script>` effects run at dependency-init, not source order)
-
-`packages/runtime-tags/src/dom/signals.ts` › `_script` | 2026-07-18 | impact:med | effort:low
-
-The intuitive two-`<script>` pattern for restoring then persisting state through localStorage silently clobbers saved state. Given a restore script (`const s = localStorage.getItem('k'); if (s) board = JSON.parse(s)`, assign-only, first in source) followed by a persist script (`localStorage.setItem('k', JSON.stringify(board))`, which reads `board`, second in source), on mount the persist script runs before the restore script and writes the DEFAULT board to storage, destroying the previously-saved state; the restore then reads back the just-clobbered default, so state does not survive a reload — with no error or hydration-mismatch warning. This is correct fine-grained-reactivity behavior, not a bug: a state-reading `<script>` compiles as a downstream of its `<let>` signal, so `$setup` running `$board($scope, DEFAULT)` at the `<let>` position immediately queues the persist effect via `_script` → `queueEffect` (`dom/signals.ts:386-390`), while the assign-only restore script is a plain mount effect queued later at its own source position; `runEffects` (`dom/queue.ts`) runs them in queue order, so persist(read) precedes restore(assign). It is undocumented and surprising: no docs page mentions localStorage or `<script>` execution order, and `core-tag.md`'s `<script>` section (`:304`) says only that it runs "when the template has finished rendering", implying source order. The working idiom is `<lifecycle onMount(){ restore } onUpdate(){ persist } />` (onMount runs first with the pre-restore value, onUpdate persists after), but nothing points users there, and a `<let>` init expression cannot read localStorage because it also runs during SSR. Direction: a guide page on persisting state to localStorage recommending `<lifecycle>`, plus a note in the `<script>` reference that state reads run at dependency-init time; optionally a MARKO_DEBUG warning when a `<script>` both depends on state and writes storage before that state is initialized.
-
-## Provide or document a head-management primitive; nested `<title>`/`<meta>`/`<link>` render in `<body>` with no hoisting
-
-`packages/runtime-tags/src/html/writer.ts` › `_hoist` | 2026-07-19 | impact:med | effort:med
-
-A component nested under `<main>` that emits `<title>`, `<meta name=description>`, or `<link rel=canonical>` renders those tags inline in the `<body>`, not hoisted into `<head>` — producing an invalid document with duplicate `<title>`/`<meta>` elements and a canonical `<link>` stranded in the body where it is inert. Marko 6's HTML runtime writes tags in document/source order and has no head-relocation pass: the sole `_hoist`/`hoist` symbol in `html/writer.ts` (:180) is scope-reactivity plumbing (`_hoist_read_error`), unrelated to `<head>`. The only documented head idiom (`website/docs/reference/language.md:446-489`) is prop-drilling a `title` attribute up to the layout that owns the real `<head>`, which cannot express "this deeply nested widget sets the canonical/OG tag" and forces threading meta through every intermediate layer. Peer frameworks ship a component-scoped primitive (Svelte `<svelte:head>`, Next metadata API, SolidStart `@solidjs/meta`, Astro head slot). Either add such a primitive so a descendant can contribute to `<head>`, or document explicitly that Marko renders head tags in source order with no hoisting, that children must never emit `<head>` elements, and that dynamic/computed meta must be prop-drilled to (or passed via `$global`/`+meta.json` and read in) the root layout. Docs are low-effort; a real primitive is medium. Distinct from the run meta-union typing finding (that concerns typing heterogeneous `+meta.json` across sibling routes).
-
-## Document + type how to supply route `$global` when render-testing or writing a Storybook story
-
-`packages/runtime-tags/index.d.ts` › `TemplateInput` | 2026-07-19 | impact:med | effort:low
-
-A tag that reads `$global.url.pathname` / `$global.data.user` (how `@marko/run` threads its `Context`) can be render-tested with `render(Tag, { $global: { url, data } })` and it works — but nothing tells you so, and nothing checks the shape. `Marko.TemplateInput<Input> = Input & { $global?: Marko.Global }` (`index.d.ts:29-32`) is the typed slot, and `render`/`mount` pull it out (`html/template.ts:44-52`, `dom/template.ts:54-56`), but it is typed only as bare `Marko.Global` (`[x: PropertyKey]: unknown`, `index.d.ts:16`), so a test's `$global` is not checked against the real route `Context`. `@marko/testing-library`'s `RenderOptions` exposes only `container` and its README never mentions `$global`, so authors defensively write `render(Tag, {…} as any)` (the cast is unnecessary — `mtc` is clean without it). For Storybook there is no typed slot at all: `Story<Input>.args` is `Input`, so route context has to be smuggled as an untyped `args.$global` (which then also shows up as a bogus Storybook control). Testing-library docs (and `@marko/run` docs) should show `render(Tmpl, { $global })` as the way to provide route context, and ideally `@marko/run` should export a `Context`-shaped test type (or augment `Marko.Global`) so `$global` in a test is checked against the real `Context`; Storybook needs a documented, typed way to attach `$global` per story. The generated `.marko-run/routes.d.ts` defines a per-file `Run.Context` but never augments `Marko.Global`, so in-component and in-test `$global` are both untyped against the real context — the discoverability gap is pure docs. Distinct from the run `ctx.search` typing entry.
-
-## Consider renaming `signal`, which clashes with the ecosystem meaning
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `signals` | 2026-07-20 | impact:med | effort:high
-
-"Signal" in this codebase is a compiled setup/update program keyed by a binding or intersection — not a reactive value container, which is what most contributors will assume from other frameworks; alternatives if renamed: "effect program", "update unit", "work unit". Any rename is a broad churn (runtime helper names, `callRuntime` sites, snapshots), so it should ride a major refactor; until then the disclaimer in `packages/runtime-tags/CONTEXT.md` (Signal entry) is the mitigation. Re-verify by reading that entry.
-
-## Key (or document) the `getOnlyChildParentTagName` memo on `branchSize` — the argument is ignored on every call after the first
+## Make the `getOnlyChildParentTagName` memo order-independent — `branchSize` is ignored after the first call
 
 `packages/runtime-tags/src/translator/util/is-only-child-in-parent.ts` › `getOnlyChildParentTagName` | 2026-07-23 | impact:low | effort:low
 
-`getOnlyChildParentTagName(tag, branchSize = 1)` memoizes its answer in
-`tag.node.extra[kOnlyChildInParent]` and returns the cached value before
-`branchSize` is ever consulted, so the parameter only has an effect on the very
-first call for a given tag node — and `node.extra` survives the
-analyze→translate node cloning, so "first call" spans phases. The whole
-`<if>`/`<else-if>`/`<else>` chain optimization depends on this: `core/if.ts`
-`IfTag.analyze` is the only caller that passes the real branch count
-(`getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection, branches.length)`),
-while `core/if.ts:117`/`:167`/`:296` and `core/for.ts`/`core/show.ts` all call
-with the default `1` during translate and silently ride that cached answer. Any
-future caller that touches an `<if>` tag before `IfTag.analyze` (a new
-pre-analyze pass, a transform-phase visitor, a reordered core-tag registration)
-would poison the memo with `branchSize === 1`, and every multi-branch chain
-would quietly stop reusing its parent element as the marker node — an extra
-`<!>` in the template string, an extra walk char, and an extra `#text` DOM
-binding per chain, with no test naming the invariant. Either include
-`branchSize` in the memo key (or assert it matches the cached computation) or
-state the ordering contract in a comment on the function. Distinct from the
-existing perf.md entry "Extend marker-elision optimizations to
-await/try/html-comment", which is about adding the optimization elsewhere, not
-about this memo's key. Re-verify: compile
-`<div><if=input.x><p>a</p></if><else-if=input.y><i>c</i></else-if><else><b>b</b></else></div>`
-with `-o dom -d` and confirm the marker is `_if("#div/0", …)` with `$template
-=== "<div></div>"`; forcing `branchSize` to 1 turns it into `_if("#text/0", …)`
-with `$template === "<div><!></div>"`, which is what the sibling case
-`<div>z<if=input.x><p>a</p></if></div>` already produces.
+The cached `tag.node.extra[kOnlyChildInParent]` is returned before `branchSize` is read, so only the first call per node decides the answer — in practice `IfTag.analyze`, the sole caller passing `branches.length`, since `core/if.ts` translate, `core/for.ts` and `core/show.ts` pass the default `1` and ride the cache across the analyze→translate clone. Any new pass touching an `<if>` before `IfTag.analyze` poisons the memo with `1`, silently costing every multi-branch chain its parent-element marker (an extra `<!>`, walk char and `#text` binding). Nothing catches that: every multi-branch fixture snapshot uses `_if("#text/…")`. Pass the real branch count at the `core/if.ts` translate sites too — keying the memo on `branchSize` alone would break them, since they pass `1` — and add a chain-as-only-child fixture. Distinct from the won't-fix entry "Extend only-child marker elision to `<await>`/`<try>`", which spreads the optimization to more tags rather than fixing this memo's key. Re-verify: compile `<div><if=input.x><p>a</p></if><else-if=input.y><i>c</i></else-if><else><b>b</b></else></div>` with `-o dom -d`; today it yields `_if("#div/0", …)` with `$template === "<div></div>"`.
 
-## Explain the `doc` parameter's double duty in the debug walker runtime
+## Name the `doc`-becomes-runtime trick in the debug walker runtime
 
 `packages/runtime-tags/src/html/inlined-runtimes.debug.ts` › `WALKER_RUNTIME_CODE` | 2026-07-23 | impact:low | effort:low
 
-The whole point of the `.debug` half of the inlined-runtimes pair is that a
-human can read what the minified string does, but the walker's central trick is
-undocumented and reads as a bug. The default parameter `doc = document` is used
-for `doc.createTreeWalker(doc, 129)` and stored as the runtime's `d` field, and
-then the body immediately reassigns it: `doc = (self[runtimeId][renderId] = { …,
-d: doc, … })`. From that point `doc` is the runtime object, which is why `w()`
-calls `doc.x(...)` — a late-bound call so the reorder runtime's replacement of
-`runtime.x` (see `REORDER_RUNTIME_CODE`, which assigns `runtime.x`) is picked
-up, without re-indexing `self[runtimeId][renderId]` per node. A reader tracing
-`doc.x` naturally expects `document.x`. The reorder half already carries the
-precedent fix (`// repurpose "op" for callbacks ...carefully`); add the same
-one-line intent comment here, or — since only exported member names must match
-the minified file — give the debug version a separate `runtime` default
-parameter so `doc` keeps meaning the document. Re-verify: read
-`WALKER_RUNTIME_CODE` in inlined-runtimes.debug.ts and confirm `d: doc` is
-evaluated before the `doc = (...)` assignment, so `d` holds the document while
-every later `doc.` reference is the runtime object.
+The debug half of the pair exists to be readable, yet its central trick is unexplained and reads as a bug: `doc = document` builds the TreeWalker and is captured as the runtime's `d` field, then `doc = (self[runtimeId][renderId] = {…})` rebinds `doc` to the runtime object, which is why `w()`'s `doc.x(...)` is a late-bound call that picks up `REORDER_RUNTIME_CODE`'s `runtime.x` replacement. A reader tracing `doc.x` expects `document.x`. Add the one-line intent comment (the reorder half already sets the precedent) or give the debug version its own `runtime` parameter, since only exported member names must match `inlined-runtimes.ts`. Re-verify: confirm `d: doc` is evaluated before `doc` is reassigned, so `d` holds the document while every later `doc.` is the runtime.
 
-## Correct the two wrong file citations in AGENTS.md's Translator section — `util/assert.ts` and `util/known-tag.ts`
+## Fix the two wrong citations in the runtime-tags AGENTS.md Translator section
 
 `packages/runtime-tags/AGENTS.md` › `Translator` | 2026-07-23 | impact:low | effort:low
 
-The Translator section says "Validate early with `assertNoArgs` /
-`assertNoParams` / `assertNoSpreadAttrs` (`util/assert.ts`)", but
-`packages/runtime-tags/src/translator/util/assert.ts` exports only
-`assertNoSpreadAttrs`, `assertNoTagVarMutation`, and `assertNoBodyContent`.
-`assertNoArgs`/`assertNoParams` are defined in
-`packages/compiler/src/babel-utils/assert.js` and are imported by core tags from
-`@marko/compiler/babel-utils` (see `core/if.ts`, `core/debug.ts`,
-`core/return.ts`), alongside siblings the doc never names (`assertNoVar`,
-`assertNoAttributeTags`, `assertAllowedAttributes`, `diagnosticDeprecate`). So
-the one pointer an agent has for tag validation names two symbols that are not
-in the cited file and omits the two local helpers that are. Reword to "local
-helpers `assertNoSpreadAttrs`/`assertNoTagVarMutation`/`assertNoBodyContent`
-(`util/assert.ts`), plus
-`assertNoArgs`/`assertNoParams`/`assertNoVar`/`assertAllowedAttributes` from
-`@marko/compiler/babel-utils`". Re-verify: `grep -n '^export'
-packages/runtime-tags/src/translator/util/assert.ts` lists three names, none of
-them `assertNoArgs`/`assertNoParams`.
+The validation bullet credits `util/assert.ts` with `assertNoArgs`/`assertNoParams`, which it does not export (it has `assertNoSpreadAttrs`, `assertNoTagVarMutation`, `assertNoBodyContent`); those two plus `assertNoVar`/`assertAllowedAttributes` come from `@marko/compiler/babel-utils` (`packages/compiler/src/babel-utils/assert.js`), as `core/if.ts`, `core/debug.ts` and `core/return.ts` show. The next bullet says `util/known-tag.ts` "holds native HTML tag/attribute metadata"; it holds none — it exports `knownTagAnalyze`/`knownTagTranslateHTML`/`knownTagTranslateDOM`/`finalizeKnownTags` (custom and dynamic tag input contracts) and is imported only by `custom-tag.ts`, `dynamic-tag.ts` and `references.ts`, so an agent sent there for native-element work lands in the wrong subsystem. Reword both: split local from babel-utils assert helpers, and point native-element work at `visitors/tag/native-tag.ts` (plus `common/helpers.ts`, `util/is-non-html-text.ts`). Re-verify: `grep -n '^export' packages/runtime-tags/src/translator/util/assert.ts` and `rg -l 'known-tag' packages/runtime-tags/src`.
 
-The next bullet in the same section is wrong the same way: it ends "`util/known-tag.ts` holds native HTML tag/attribute metadata", but that file holds no native HTML metadata at all. It exports `knownTagAnalyze` / `knownTagTranslateHTML` / `knownTagTranslateDOM` / `finalizeKnownTags`, which model the input contract of a custom or dynamic tag whose renderer is statically known — child-scope bindings, `trackParamsReferences`, attribute-to-signal binding, param serialize-reason groups, attr-tag grouping — and its only importers are `visitors/tag/custom-tag.ts`, `visitors/tag/dynamic-tag.ts` and `util/references.ts`. `visitors/tag/native-tag.ts` never imports it, so an agent sent to `known-tag.ts` to change how a native element or attribute is handled lands in the wrong subsystem entirely; the real native-element knowledge lives in `visitors/tag/native-tag.ts` plus `common/helpers.ts` (`isEventHandler`, `getWrongAttrSuggestion`, `stringifyClassObject`), `util/is-non-html-text.ts` (`isTextOnlyNativeTag`), `common/constants/controlled-type.ts` and the taglib via `getTagDef`. Reword that clause to describe known custom/dynamic tag contracts (matching RESUMABILITY.md's "known-tag contracts" usage) and point native-element work at `visitors/tag/native-tag.ts`. Re-verify: `grep -n '^export function' packages/runtime-tags/src/translator/util/known-tag.ts` lists only the four `knownTag*`/`finalizeKnownTags` functions, and `grep -rl 'known-tag' packages/runtime-tags/src --include='*.ts'` returns `custom-tag.ts`, `dynamic-tag.ts` and `references.ts` — never `native-tag.ts`.
-
-## Document the fixture `diagnostics.md` snapshot and the missing `TestConfig` options in the Testing section
+## Document the `diagnostics.md` and error snapshots plus the missing `TestConfig` keys
 
 `packages/runtime-tags/AGENTS.md` › `Testing › Fixture anatomy` | 2026-07-23 | impact:med | effort:low
 
-The fixture-anatomy block lists four snapshot kinds (`dom.bundle`,
-`html.bundle`, `render`, `writes`) and a `TestConfig` summary, and both are out
-of date with `main.test.ts`. Missing entirely is the `diagnostics` test, which
-snapshots the html build's `meta.diagnostics` into
-`__snapshots__/diagnostics.md` (debug mode only, 19 fixtures have one today) and
-asserts it like any other snapshot — so a change that adds or removes a
-recoverable/deprecation diagnostic fails a test the docs never mention, and the
-AGENTS.md instruction to "read the generated snapshots as part of your change"
-never points at it. Also undocumented: the error snapshots
-`error-compile-{html,dom}[.debug].txt` and `{ssr,csr}.error[.debug].txt`, and
-the config options `error_dom`/`error_html` (used by 41 fixtures), `embedded`,
-`load_order`, `reject_load`, and `fix_guide`; the stated "~800 fixtures" is now
-910 directories. Add `diagnostics.md` and the error-snapshot filenames to the
-anatomy block and extend the `TestConfig` list. Re-verify: `find
-packages/runtime-tags/src/__tests__/fixtures -path '*__snapshots__*' -type f |
-sed 's#.*/##' | sort | uniq -c` shows `diagnostics.md`, `error-compile-*.txt`
-and `*.error*.txt` alongside the four documented kinds, and `TestConfig` in
-`main.test.ts` lists the extra keys.
+The anatomy block lists four snapshot kinds (`dom.bundle`, `html.bundle`, `render`, `writes`) but not `diagnostics.md` (debug-only `meta.diagnostics` snapshot, 19 fixtures today), `error-compile-{html,dom}[.debug].txt`, or `{ssr,csr}.error[.debug].txt` — so adding or dropping a recoverable/deprecation diagnostic fails a test the docs never name, and "read the generated snapshots" never points at it. The `TestConfig` summary also omits `error_dom`/`error_html` (41 fixtures), `embedded`, `load_order`, `reject_load` and `fix_guide`, and the stated "~800 fixtures" is 964 dirs. Add the missing snapshot kinds and config keys. Re-verify: `find packages/runtime-tags/src/__tests__/fixtures -path '*__snapshots__*' -type f | sed 's#.*/##' | sort -u` against the block, and `TestConfig` in `main.test.ts`.
 
-## Say "following siblings" — dynamic `<style>` values silently miss any target that is not a sibling of the tag
+## Say "following siblings" in the dynamic `<style>` placement warning
 
 `packages/runtime-tags/src/translator/core/style.ts` › `checkDynamicStylePlacement` | 2026-07-23 | impact:med | effort:low
 
-A dynamic `<style>` renders as `<style class=ID>.ID~*{--M_x:value}</style>`
-(`html/attrs.ts` › `_style_html`, mirrored by `dom/dom.ts` › `_style_shell`), so
-the custom properties reach only the _subsequent siblings_ of the `<style>`
-element and their descendants. Both the compile-time warning in
-`checkDynamicStylePlacement` ("only apply to elements rendered after it, so the
-content before this tag will not receive them") and the website reference
-(`website/docs/reference/core-tag.md`, "### Dynamic Values" NOTE: "Dynamic
-values only apply to elements rendered after the `<style>` tag") describe this
-as document order, which is wrong for anything outside the `<style>`'s own
-parent: the tag's parent element, and any element rendered later but in a
-shallower or different subtree, get nothing — with no diagnostic, because
-`checkDynamicStylePlacement` only scans `tag.getAllPrevSiblings()`. Authors hit
-this when scoping styles to a component root (`<div
-class=panel><style>.panel{--accent:${input.accent}}</style>…`) or when the
-`<style>` sits inside a header/wrapper while the styled element follows outside
-it. Direction: reword the warning label and the docs NOTE to "subsequent
-siblings of the `<style>` tag and their descendants", and consider extending
-`checkDynamicStylePlacement` to also warn when a dynamic `<style>` has no
-renderable following siblings at all (today the most-broken shape is the
-quietest). Re-verify: compile
-`<header><style>.badge{color:${input.c}}</style></header><span
-class="badge">New</span>` with `errorRecovery: true` — `meta.diagnostics` is
-empty and the emitted `_style_html(...)` sits inside `<header>`, so `.ID~*` can
-never match the `<span>`; moving the `<style>` after the `<span>` instead
-produces the existing "content before this tag" warning.
+A dynamic `<style>` renders as `.ID~*{--M_x:value}` (`html/attrs.ts` › `_style_html`, mirrored by `dom/dom.ts` › `_style_shell`), so the custom properties reach only the style element's _following siblings_ and their descendants — never its own parent or a different subtree. The warning's "only apply to elements rendered after it, so the content before this tag will not receive them" reads as document order, and `checkDynamicStylePlacement` only scans `getAllPrevSiblings()`, so `<div class=panel><style>.panel{--accent:${input.accent}}</style>…>` — where the styled element is the parent — is silent. Reword the label to "subsequent siblings of the `<style>` tag and their descendants". Re-verify: compile `<header><style>.badge{color:${input.c}}</style></header><span class=badge>New</span>` with `errorRecovery: true` — `meta.diagnostics` is empty and `_style_html` sits inside `<header>`.
 
-## Document `Scope[AccessorProp.Gen]`'s four states; one numeric slot means destroyed, resumed, this-run, and earlier-run
+## Document the four states of `Scope[AccessorProp.Gen]`
 
 `packages/runtime-tags/src/common/types.ts` › `Scope` | 2026-07-23 | impact:med | effort:low
 
-`Scope[AccessorProp.Gen]` (debug name `#Gen`, declared bare as
-`[AccessorProp.Gen]: number` in `common/types.ts:23`) is read four different
-ways across the DOM runtime with no comment on the declaration, no `accessor.ts`
-note, and no CONTEXT.md glossary entry: `0` means destroyed (`dom/scope.ts` ›
-`destroyNestedScopes` sets it; `dom/queue.ts` › `skipDestroyedRenders` and
-`_enable_catch` test `?.[Gen] !== 0`), `1` means resumed from SSR
-(`dom/resume.ts:135` in `initScope`, viable only because `queue.ts` starts
-`runId` at 2), `=== runId` means "created/rendered during the current run" and
-is the branch that decides whether `_let` assigns in place or schedules a render
-(`dom/signals.ts:39-49`), whether `_or` counts intersection arrivals or queues
-(`dom/signals.ts:103-121`), and whether `controllable.ts` reads the live DOM
-value or the bound one (nine sites, e.g. `:27`, `:193`, `:281`, `:442`), and `>
-0 && < runId` means "live scope from an earlier run" (`dom/signals.ts` ›
-`_for_closure` and `runLiveBranch`). RESUMABILITY.md mentions only "`runId` as
-the generation boundary (resumed scopes start at 1; normal client work at 2)"
-and never says `Gen` doubles as the destroyed flag, so a reader tracing why a
-`<let>` write does not re-render has to reconstruct the state machine from nine
-call sites. Add a **Generation** entry to CONTEXT.md's "DOM runtime" section and
-a two-line comment on the `Scope[AccessorProp.Gen]` member enumerating the four
-states (0 destroyed / 1 resumed / `runId` created this run / in-between live
-from a previous run). Re-verify: `rg -n "AccessorProp.Gen"
-packages/runtime-tags/src --glob '!**/__tests__/**'` lists the sites and shows
-no explanatory comment on any of them.
+`[AccessorProp.Gen]: number` is declared bare and read four ways: `0` destroyed (`dom/scope.ts` › `destroyNestedScopes`; tested by `queue.ts` › `skipDestroyedRenders`), `1` resumed from SSR (`dom/resume.ts` › `initScope`, viable only because `runId` starts at 2), `=== runId` created during this run (decides whether `_let`/`_or`/`controllable.ts` write in place or queue a render), and `> 0 && < runId` live from an earlier run (`_for_closure`, `runLiveBranch`). Nothing says so — no comment on the member, no CONTEXT.md glossary entry, and RESUMABILITY.md covers only the `runId` boundary — so tracing why a `<let>` write does not re-render means reconstructing the state machine from ~20 call sites. Add a two-line comment plus a **Generation** entry in CONTEXT.md's DOM runtime section. Re-verify: `rg -n "AccessorProp.Gen" packages/runtime-tags/src --glob '!**/__tests__/**'` lists the sites with no explanation on any.
 
-## Point the accessor-enum lockstep guidance at `src/common/constants/*[.debug].ts` — `accessor.ts` / `accessor.debug.ts` are now member-less barrels
+## Point the accessor-lockstep guidance at `src/common/constants/*[.debug].ts`
 
-`packages/runtime-tags/AGENTS.md` › `Runtime conventions › `.debug.ts` pairs` | 2026-07-27 | impact:low | effort:low
+`packages/runtime-tags/AGENTS.md` › `Runtime conventions` | 2026-07-27 | impact:low | effort:low
 
-The Runtime-conventions bullet says to "mirror any accessor enum change in `accessor.ts` **and** `accessor.debug.ts`", the Gotchas list repeats "keep `accessor.ts` / `accessor.debug.ts` in lockstep (same members, char vs. readable string values)", and CONTEXT.md's `Accessor` glossary entry calls them "the lockstep `accessor.ts` / `accessor.debug.ts` pair" — but since the `replace enums with top-level const module exports` refactor both files are barrels that only re-export namespaces as declaration-merged type/value aliases, and neither declares a single member. The members now live in seven `.debug`-paired modules under `src/common/constants/` (`accessor-prefix`, `accessor-prop`, `closure-signal-prop`, `keyed-scopes-prop`, `load-signal-value`, `pending-render-prop`, `renderer-prop`), and nothing checks the two halves of a pair against each other: each file's `Value` is `typeof import("./<itself>")`, all six consuming source files import the `.debug` half, and the one site that reads both (`translator/util/get-accessor-char.ts` › `getAccessorProp`) casts `as any` — so a member added to only one half type-checks clean and surfaces as `undefined` only in an optimize build. The same bullet's parenthetical "(the other pair is `html/inlined-runtimes[.debug].ts`)" implies two `.debug` pairs when there are nine, and the Layout table's `src/common/` row ("Types, accessor enums, helpers") never names `constants/`, so an agent following the docs literally opens `accessor.ts`, finds nothing resembling an enum, and either edits the barrel or patches one half of the real pair. Point both AGENTS.md mentions and the CONTEXT.md glossary entry at `src/common/constants/<name>[.debug].ts` as the edit site, state the pair count, and add `constants/` to the Layout row; a parity assertion over the seven pairs would make the lockstep rule enforced rather than documented. Re-verify: `grep -c '^export const' packages/runtime-tags/src/common/accessor.ts` prints `0` while the same command on `packages/runtime-tags/src/common/constants/accessor-prop.ts` prints `27`, and `find packages/runtime-tags/src -name '*.debug.ts' | wc -l` prints `9`.
+The `.debug.ts`-pairs bullet, the Gotchas line and CONTEXT.md's `Accessor` entry all say to keep `accessor.ts` / `accessor.debug.ts` in lockstep, but since the const-module refactor both files are member-less barrels; the members live in seven `.debug`-paired modules under `src/common/constants/`, and the Layout table's `src/common/` row never names `constants/`. Nothing enforces parity: each module's `Value` is `typeof import("./<itself>")` and `translator/util/get-accessor-char.ts` › `getAccessorProp` casts `as any`, so a member added to one half type-checks and surfaces as `undefined` only in an optimize build. Retarget the three mentions, fix "the other pair" (there are nine `.debug.ts` files), and consider a parity assertion over the seven pairs. Re-verify: `grep -c '^export const' packages/runtime-tags/src/common/accessor.ts` prints 0 while `constants/accessor-prop.ts` prints 28.
 
-## Document `static` for module-level values and helpers in cheatsheet.md — it is the fix the compiler's own diagnostics name, and the cheatsheet never mentions it
+## Cover `static` for module-level values and helpers in cheatsheet.md
 
 `packages/runtime-tags/cheatsheet.md` › `Golden rules` | 2026-07-27 | impact:med | effort:low
 
-`cheatsheet.md` — the LLM syntax reference shipped in the published package (`files` plus `exports["./cheatsheet.md"]` in `packages/runtime-tags/package.json`) — contains zero occurrences of `static`, even though `static` is a core tag (`src/translator/core/static.ts`) and is exactly what the compiler's own diagnostics tell authors to reach for: both `core/let.ts` and `core/const.ts` append "For a one time module level value, prefix a plain JavaScript statement with `static`." to their tag-variable errors. The gap is worst for module-level helpers, where no diagnostic names `static` at all: a template whose first line is `function fmt(n) { return n + "!" }` fails with the bogus ``Unable to find entry point for custom tag `<function>`. Did you mean `<section>`?``, and the `$ const y = ...` scriptlet an LLM otherwise reaches for hard-errors with "Scriptlets are not supported when using the tags api." (`src/translator/visitors/scriptlet.ts`) — also with no `static` hint. Meanwhile the cheatsheet's only adjacent guidance is the DON'T row `$ const y = x * 2;` → `<const/y=x * 2>`, which steers a never-changing value into a per-instance reactive binding: `<const/LIMIT=10>` emits an extra signal function `const $LIMIT = ($scope, LIMIT) => _text(…)` plus a `$LIMIT($scope, 10)` call in `$setup`, while `static const LIMIT = 10;` emits a plain module-scope `const` and inlines the read. Add a golden rule covering module-level values and helpers plus a DON'T row (`$ const CONFIG = {…}` or a bare `function helper() {}` at the template root → `static const CONFIG = {…}` / `static function helper() {}`); this is distinct from the perf.md entry "Document resume-payload cost of per-item custom tags and patterns to contain it", which is anchored to the same heading but is about resume-payload size. Re-verify: `grep -c static packages/runtime-tags/cheatsheet.md` prints `0`, and `printf 'function fmt(n) { return n + "!" }\n<p>${fmt(1)}</p>\n' > /tmp/r.marko && pnpm run compile -o dom -d /tmp/r.marko` fails with the `<function>` custom-tag error, while the same file with `static ` prefixed onto that first line compiles.
+The shipped LLM syntax reference contains zero occurrences of `static`, though it is a core tag (`translator/core/static.ts`) and the exact fix `core/let.ts` and `core/const.ts` name in their tag-variable errors. Module-level helpers are worse: a template starting with `function fmt(n) { … }` fails with ``Unable to find entry point for custom tag `<function>` `` and no diagnostic mentions `static`. The only adjacent guidance, the DON'T row `$ const y = x * 2;` → `<const/y=x * 2>`, steers never-changing values into per-instance signals — `<const/LIMIT=10>` emits a `$LIMIT` signal plus a `$setup` call where `static const LIMIT = 10;` emits a module-scope const. Add a golden rule plus a DON'T row for module-level values and helpers. Distinct from the entry "Document the resume-payload cost of per-item custom tags", which is anchored to the same heading but is about resume-payload size; both additions land in the same `Golden rules` list. Re-verify: `grep -c static packages/runtime-tags/cheatsheet.md` prints 0, and the `function fmt` template fails to compile until `static` is prefixed.
 
-## Mark the five `@marko/compiler` config options that only the Marko 5 translator implements
+## Mark the five `@marko/compiler` options only the Marko 5 translator implements
 
 `packages/compiler/src/config.js` › `config (default export)` | 2026-07-27 | impact:med | effort:low
 
-`config.js` documents `writeVersionComment`, `ignoreUnrecognizedTags`, `hydrateInit`, `hot` and `meta` as plain compiler options with no qualifier, but the only code that reads any of them is the Marko 5 translator (`packages/runtime-class/src/translator/index.js:417,444`, `tag/custom-tag.js:66`, `tag/native-tag.js:16`, `tag/index.js:54`, `util/add-dependencies.js:74`, `util/load-import.js:31`); grepping the five names across `packages/runtime-tags/src` hits only two `__tests__` files, and their reference docs live in `packages/runtime-class/docs/compiler.md`. Under `@marko/runtime-tags/translator` all five are silently inert: toggling `writeVersionComment`, `hot` or `meta` produces byte-identical `code`, `hydrateInit` likewise at `output: "hydrate"`, and `ignoreUnrecognizedTags: true` still hard-fails `<unknown-thing/>` with ``Unable to find entry point for custom tag `<unknown-thing>` `` — every one of which changes Marko 5 output. Since Marko 6 is the primary runtime, someone reading `config.js` to pick options cannot tell which still apply, and setting an inert one yields no diagnostic; `config.d.ts` currently flags only `meta` (`@deprecated`) and the deprecated `output: "hydrate"`, so the other four read as current API. Add a "Marko 5 (class API) translator only" line to each of those five JSDoc blocks in `config.js` and to the matching `config.d.ts` fields, following the note already carried on `output`. Re-verify from the repo root: `node -r ~ts -e` a script that calls `compileSync("<div>hi</div>\n", f, {translator, output:"html", cache:new Map(), [opt]:true/false})` for each of `writeVersionComment`/`hot`/`meta` — the two `code` strings are equal under `@marko/runtime-tags/translator` and differ under `marko/translator` — and `compileSync("<unknown-thing/>\n", f, {translator, output:"html", cache:new Map(), ignoreUnrecognizedTags:true})` throws under the former while the latter returns a result.
+`writeVersionComment`, `ignoreUnrecognizedTags`, `hydrateInit`, `hot` and `meta` are documented as plain compiler options, but the only readers are in the Marko 5 translator (`packages/runtime-class/src/translator/index.js`, `tag/{custom-tag,native-tag,index}.js`, `util/{add-dependencies,load-import}.js`). Under `@marko/runtime-tags/translator` all five are inert with no diagnostic: toggling `writeVersionComment`/`hot`/`meta` yields byte-identical `code`, `hydrateInit` likewise at `output: "hydrate"`, and `ignoreUnrecognizedTags: true` still hard-fails `<unknown-thing/>`. Since Marko 6 is primary and `config.d.ts` flags only `meta`, the other four read as current API. Add a "Marko 5 (class API) translator only" line to each JSDoc block in `config.js` and to the matching `config.d.ts` fields, following the note already on `output`. Re-verify: `compileSync("<div>hi</div>", f, {translator, output:"html", cache:new Map(), [opt]:true|false})` gives equal `code` under the tags translator and differing `code` under `marko/translator`.
 
-## Correct the compiler AGENTS.md stage bullet — migrate runs no translator visitor and analyze runs no taglib visitors
+## Fix the compiler AGENTS.md stage bullet: no `translator.migrate`, no taglib visitors in analyze
 
-`packages/compiler/AGENTS.md` › `Map › `src/babel-plugin/`` | 2026-07-27 | impact:low | effort:low
+`packages/compiler/AGENTS.md` › `Map` | 2026-07-27 | impact:low | effort:low
 
-The `src/babel-plugin/` bullet says "Stages: `parse → migrate → transform → analyze` … Each stage merges visitors from taglibs + the translator", but only `transform` and the later `translate` merge both. `getMarkoFile` builds `rootMigrators` from taglib migrators plus the compiler's own `migrate` visitor and never reads a `translator.migrate` — the string appears nowhere in `packages/compiler/src`, and neither `@marko/runtime-tags/translator` nor `marko/translator` exports one — while the analyze stage runs `traverseAll(file, translator.analyze)` with no taglib list at all; `loadTaglibFromProps` accepts only `migrate`/`migrator`, `transform`/`transformer` and `translate` at taglib level, so a taglib `analyze` prop is not ignored but a hard load error ("Invalid option: analyze"). The bullet also contradicts the Translator-contract section directly below it, which lists no `migrate` export, leaving an agent extending the pipeline to hunt for a translator `migrate` hook that cannot exist or to write a taglib analyze visitor that fails to load. Reword it per stage: migrate = taglib migrators + the compiler's `migrate`; transform = taglib transformers + the compiler's `transform` + optional `translator.transform`; analyze = `translator.analyze` only; translate = taglib `translate` hooks (skipped for `output: "hydrate"`) + `translator.translate`. Re-verify: `node -r ~ts -e 'const {compileSync}=require("@marko/compiler");const log=[];const mk=(n)=>({Program:{enter(p){log.push(n+"@"+p.hub.file.___compileStage)}}});compileSync("<div>hi</div>",process.cwd()+"/probe.marko",{cache:new Map(),translator:{taglibs:[["/probe/marko.json",{migrate:mk("taglib.migrate"),transform:mk("taglib.transform"),translate:mk("taglib.translate")}]],tagDiscoveryDirs:[],optionalTaglibs:[],migrate:mk("translator.migrate"),transform:mk("translator.transform"),analyze:mk("translator.analyze"),translate:mk("translator.translate")}});console.log("FIRED "+log.join(" "))'` prints `FIRED taglib.migrate@migrate taglib.transform@transform translator.transform@transform translator.analyze@analyze taglib.translate@translate translator.translate@translate` — `translator.migrate` never fires and no taglib visitor runs during analyze.
+The `src/babel-plugin/` bullet says "Each stage merges visitors from taglibs + the translator", but only `transform` and `translate` do. `getMarkoFile` builds `rootMigrators` from taglib migrators plus the compiler's own `migrate` and never reads `translator.migrate` (no translator exports one, matching the Translator-contract section right below); analyze runs `traverseAll(file, translator.analyze)` alone, and a taglib-level `analyze` prop is a hard load error, "Invalid option: analyze". Reword per stage: migrate = taglib migrators + compiler `migrate`; transform = taglib transformers + compiler `transform` + optional `translator.transform`; analyze = `translator.analyze` only; translate = taglib `translate` (skipped for `output: "hydrate"`) + `translator.translate`. Re-verify with `compileSync` and an inline translator whose every hook logs `p.hub.file.___compileStage`: `translator.migrate` never fires and no taglib visitor runs during analyze.
+
+## Warn under `MARKO_DEBUG` when `NaN`/`0n` vanish from text and style values
+
+`packages/runtime-tags/src/html/content.ts` › `_to_text` | 2026-07-18 | impact:low | effort:low
+
+Text and style-object values use `val || val === 0`, so `NaN` and `0n` render as nothing (`_to_text`/`_escape` in `html/content.ts`, `_to_text` in `dom/dom.ts`, `stringifyStyleObject` in `common/helpers.ts`), while attributes skip only `null`/`undefined`/`false` (`isVoid` → `nonVoidAttr`) and write `data-a=NaN`, `data-b=0`. A stray `NaN` therefore blanks a text node or drops an entire `width:` declaration with no signal: `assertValidTextValue` rejects only symbols and objects, so `MARKO_DEBUG` is silent too. Direction: warn in `MARKO_DEBUG` when `NaN` reaches a text or style value, alongside the existing camelCase-key warn in `stringifyStyleObject`. Distinct from the controlled-value selection path, where `normalizeStrAttrValue` (`html/attrs.ts`) already mirrors the DOM for `NaN`/`0n` — the drop survives only in text and style positions. The coercion-table half of this entry has been ported to the markojs.com website repo, which documents the drop rules for text and `style=`. Re-verify: `rg -n "val \|\| val === 0|value \|\| value === 0" packages/runtime-tags/src` beside `isVoid` in `common/helpers.ts`.
+
+## Add a head-contribution primitive, or state that nested `<title>`/`<meta>`/`<link>` never hoist
+
+`packages/runtime-tags/src/html/assets.ts` › `_flush_head` | 2026-07-19 | impact:med | effort:med
+
+The HTML runtime writes in source order with no head-relocation pass, so a component under `<main>` that emits `<title>`, `<meta name=description>` or `<link rel=canonical>` renders them in the body — duplicate titles and an inert canonical link. The only head hook is `_flush_head`, written at a literal `</head>` by native-tag.ts:719 when `linkAssets` is on; it flushes assets already collected and cannot pick up tags written later. (`_hoist` in html/writer.ts is scope-resume plumbing, not head hoisting.) The only answer today is prop-drilling meta up to the layout that owns `<head>` — unrelated to the `@marko/run` `+meta.json` finding, which is about typing heterogeneous meta across sibling routes, not where head tags land. Direction: a descendant-contributes-to-head primitive (cf. `<svelte:head>`, `@solidjs/meta`), or — since the website docs live in the separate markojs.com repo — at minimum an explicit no-hoisting note in `packages/runtime-tags/cheatsheet.md`. Re-verify: `pnpm run compile -o html -d` on `<html><head><title>Layout</title></head><body><main><title>Nested</title></main></body></html>` emits both titles in source order.
+
+## Consider renaming translator "signal", which clashes with the ecosystem meaning
+
+`packages/runtime-tags/src/translator/util/signals.ts` › `getSignal` | 2026-07-20 | impact:med | effort:high
+
+A `Signal` here is a compiled setup/update program keyed by setup, a binding, or an intersection — not a reactive value container, which is what contributors arriving from other frameworks assume. A rename ("update unit", "effect program") churns runtime helper names, every `callRuntime` site and every snapshot, so it can only ride a major refactor. Until then the `packages/runtime-tags/CONTEXT.md` Signal entry ("_Avoid_: observable, reactive value") is the mitigation. Re-verify: read that entry.
