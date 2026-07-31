@@ -2,7 +2,7 @@ import {
   assertHandlerIsFunction,
   assertNoValueBindingOnCheckable,
 } from "../common/errors";
-import { isNotVoid } from "../common/helpers";
+import { isNotVoid, normalizeAttrValue } from "../common/helpers";
 import {
   type Accessor,
   AccessorPrefix,
@@ -10,7 +10,7 @@ import {
   ControlledType,
   type Scope,
 } from "../common/types";
-import { _attr, normalizeAttrValue } from "./dom";
+import { _attr } from "./dom";
 import { delegate } from "./event";
 import { pendingEffects, run, runId } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
