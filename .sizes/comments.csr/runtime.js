@@ -1,4 +1,4 @@
-// size: 6348 (min) 2808 (brotli)
+// size: 6509 (min) 2870 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -14,7 +14,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   },
   catchEnabled,
   delegate = (type, handler) =>
-    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
+    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
   nextScopeId = 1e6,
   destroyNestedScopes = function destroyNestedScopes(scope) {
@@ -183,14 +183,16 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
             (afterReference = newScopes[start + i].S));
       };
     },
-  )(([all, by], cb) => {
-    ((by ||= bySecondArg),
-      typeof by == "string"
-        ? forOf(all, (item, i) => cb(item[by], [item, i]))
-        : forOf(all, (item, i) => cb(by(item, i), [item, i])));
+  )(([all, by = bySecondArg], cb) => {
+    typeof by == "string"
+      ? forOf(all, (item, i) => cb(item[by], [item, i]))
+      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
   });
 function isNotVoid(value) {
   return value != null && value !== !1;
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function withBranches(runtime) {
   return ((branchesEnabled = 1), runtime);
@@ -276,17 +278,24 @@ function runRenders() {
     runRender(render);
   }
 }
+function $signalReset(scope, id) {
+  let ctrl = scope.A?.[id];
+  ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
+}
+function abort(ctrl) {
+  ctrl.abort();
+}
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
 function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
+  (element["$" + type] === void 0 && delegate(type, handleDelegated),
+    (element["$" + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
   for (; target;)
-    (target[1 + ev.type]?.(ev, target),
+    (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function parseHTML(html, ns) {
@@ -307,7 +316,13 @@ function skipScope() {
 function destroyBranch(branch) {
   (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
 }
-function cleanupScope(scope) {}
+function cleanupScope(scope) {
+  scope.Z?.forEach(unsubscribe, scope);
+  for (let id in scope.A) $signalReset(scope, id);
+}
+function unsubscribe(subscribers) {
+  subscribers.delete(this);
+}
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
@@ -421,10 +436,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     (params ||= void 0));
   let clone = template
     ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(template, ns))(
-          branch,
-          walks,
-        );
+        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(template, ns))(branch, walks);
       }
     : (branch) => {
         walk((branch.S = branch.K = new Text()), walks, branch);
@@ -468,9 +480,6 @@ function setAttribute(element, name, value) {
 function _text(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;

@@ -56,7 +56,7 @@ export default {
       if (isNonHTMLText(placeholder)) {
         if (isPersisted() && !evaluate(placeholder.node.value).confident) {
           throw placeholder.buildCodeFrameError(
-            "Persisted templates currently support only escaped dynamic text in native HTML.",
+            "Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.",
           );
         }
         return;

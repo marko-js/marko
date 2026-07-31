@@ -4,7 +4,11 @@ import {
   assertValidLoopKey,
 } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
-import { isPromise, normalizeDynamicRenderer } from "../common/helpers";
+import {
+  isPromise,
+  normalizeAttrValue,
+  normalizeDynamicRenderer,
+} from "../common/helpers";
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { concat, forEach, type Opt, push } from "../common/opt";
@@ -301,6 +305,27 @@ function markText(
         text +
         state.mark(ResumeSymbol.Node, scopeId + " " + accessor)
     : state.mark(ResumeSymbol.EmptyText, scopeId + " " + accessor);
+}
+
+export function _patch_attr(
+  scopeId: number,
+  accessor: Accessor,
+  name: string,
+  value: unknown,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatches) {
+    writeScope(scopeId, {
+      // `0` is the removal sentinel: normalized values are always strings and
+      // the serializer drops `undefined` members entirely.
+      [AccessorPrefix.PatchAttr + accessor + " " + name]:
+        normalizeAttrValue(value) ?? 0,
+    });
+  } else {
+    $chunk.needsWalk = true;
+  }
+
+  return "";
 }
 
 export function _patch_text(

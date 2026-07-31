@@ -9,6 +9,7 @@ import {
   getEventHandlerName,
   isEventHandler,
   isNotVoid,
+  normalizeAttrValue,
   withDynamicHtml,
   normalizeDynamicRenderer,
   stringifyClassObject,
@@ -47,7 +48,7 @@ export function _attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 
-function setAttribute(
+export function setAttribute(
   element: Element,
   name: string,
   value: string | undefined,
@@ -381,12 +382,6 @@ function normalizeClientRender(value: any) {
         `Invalid \`content\` attribute. Received ${typeof value}`,
       );
     }
-  }
-}
-
-export function normalizeAttrValue(value: unknown) {
-  if (isNotVoid(value)) {
-    return value === true ? "" : value + "";
   }
 }
 
