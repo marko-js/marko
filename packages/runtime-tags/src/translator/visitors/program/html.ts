@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getTagDefForTagName } from "@marko/compiler/babel-utils";
 
+import { isEventHandler } from "../../../common/helpers";
 import evaluate from "../../util/evaluate";
 import {
   generateUidIdentifier,
@@ -241,7 +242,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               ? !evaluate(attr.value).confident
               : !evaluate(attr.value).confident &&
                 (controllable ||
-                  isEventOrChangeHandler(attr.name) ||
+                  (isEventOrChangeHandler(attr.name) &&
+                    !isEventHandler(attr.name)) ||
                   attr.name === "class" ||
                   attr.name === "style" ||
                   (tagName === "option" && attr.name === "value"))

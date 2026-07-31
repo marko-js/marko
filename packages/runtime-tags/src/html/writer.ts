@@ -1124,6 +1124,14 @@ export class State implements SerializeState {
     return this.runtimePrefix + RuntimeKey.Walk + "()";
   }
 
+  resumeScript(resumes: string) {
+    if (this.hasWrittenResume) {
+      return this.runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")";
+    }
+    this.hasWrittenResume = true;
+    return this.runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]";
+  }
+
   get writesPatches() {
     return false;
   }
@@ -1507,18 +1515,7 @@ export class Chunk {
     }
 
     if (state.resumes) {
-      if (state.hasWrittenResume) {
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
-        );
-      } else {
-        state.hasWrittenResume = true;
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
-        );
-      }
+      scripts = concatScripts(scripts, state.resumeScript(state.resumes));
     }
 
     if (state.writeReorders) {
