@@ -2,7 +2,6 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const never = new Promise(() => {});
-_enable_catch();
 const $catch_content2 = _content_resume("__tests__/template.marko_7_content", "inner caught");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "never inner");
 const $try_content3__await_promise = /*@__PURE__*/ _await_promise("#text/0");

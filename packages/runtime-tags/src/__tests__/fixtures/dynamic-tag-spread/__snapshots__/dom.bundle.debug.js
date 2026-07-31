@@ -3,7 +3,6 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
 _resume_dynamic_tag();
-_enable_controllable();
 const $inputAsdiv_content = _content_resume("__tests__/tags/wrapper.marko_1_content", "hi");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputAsdiv_content);
 const $input_as__OR__input_foo__OR__htmlInput = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => ({

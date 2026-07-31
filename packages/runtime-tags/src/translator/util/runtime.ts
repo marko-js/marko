@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile, importNamed } from "@marko/compiler/babel-utils";
+import { getFile, getProgram, importNamed } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
 import {
@@ -25,10 +25,6 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 // matters when the value is referenced by a serialized register id, which
 // keeps it in the module graph.
 //
-// A latch belongs here only if a surviving runtime construct re-triggers it.
-// `_enable_catch` does not qualify: `_try` never calls it, so a `<try>` with
-// no `<await>` or lazy child has the program-scope call as its only trigger
-// and dropping it leaves the boundary unable to catch.
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_await_content",
@@ -89,6 +85,37 @@ export function callRuntime(
     return t.addComment(callExpression, "leading", "@__PURE__");
   }
   return callExpression;
+}
+
+// A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
+// import: it enables optional runtime behavior that referenced imports alone
+// cannot keep alive under tree shaking (eg catch enablement).
+export type DOMRuntimeFeature =
+  | "catch"
+  | "controllable"
+  | "controllable-input"
+  | "controllable-open"
+  | "controllable-select"
+  | "controllable-textarea";
+const importedFeatures = new WeakMap<t.Program, Set<string>>();
+export function importRuntimeFeature(feature: DOMRuntimeFeature) {
+  if (!isTranslate()) {
+    throw new Error(
+      `\`importRuntimeFeature(${JSON.stringify(feature)})\` may only be called during the translate stage.`,
+    );
+  }
+  const program = getProgram().node;
+  let features = importedFeatures.get(program);
+  if (!features) importedFeatures.set(program, (features = new Set()));
+  if (!features.has(feature)) {
+    features.add(feature);
+    program.body.push(
+      t.importDeclaration(
+        [],
+        t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),
+      ),
+    );
+  }
 }
 
 export function getHTMLRuntime() {

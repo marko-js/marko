@@ -1,6 +1,5 @@
 // template.marko
 _resume_dynamic_tag();
-_enable_controllable();
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a1", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>"));
 const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.d, () => ({
 	value: $scope.c,

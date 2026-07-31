@@ -1,5 +1,4 @@
 // template.marko
-_enable_controllable_input();
 const $attrs2__script = _script("a2", ($scope) => _attrs_script($scope, "a"));
 const $attrs2 = /*@__PURE__*/ _let(4, ($scope) => {
 	_attrs($scope, "a", $scope.e, _controllable_input);

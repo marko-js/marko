@@ -46,11 +46,6 @@ export {
   _controllable_open,
   _controllable_select,
   _controllable_textarea,
-  _enable_controllable,
-  _enable_controllable_input,
-  _enable_controllable_open,
-  _enable_controllable_select,
-  _enable_controllable_textarea,
 } from "./dom/controllable";
 export {
   _attr,
@@ -86,7 +81,7 @@ export {
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
-export { _enable_catch, run } from "./dom/queue";
+export { run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,

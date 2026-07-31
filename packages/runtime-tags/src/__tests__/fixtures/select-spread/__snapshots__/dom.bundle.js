@@ -1,5 +1,4 @@
 // template.marko
-_enable_controllable_select();
 const $n = /*@__PURE__*/ _let(6, ($scope) => _attr($scope.c, "value", $scope.g));
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, "a");

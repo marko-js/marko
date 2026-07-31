@@ -4,7 +4,6 @@ import {
   assertNoAttributes,
   assertNoParams,
   assertNoVar,
-  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -18,7 +17,7 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -46,7 +45,6 @@ import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 
-const hasEnabledCatch = new WeakSet<t.Program>();
 const kDOMBinding = Symbol("try tag dom binding");
 
 declare module "@marko/compiler/dist/types" {
@@ -174,6 +172,7 @@ export default {
         const signal = getSignal(section, nodeRef, "try");
 
         signal.build = () => {
+          importRuntimeFeature("catch");
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),
@@ -189,14 +188,6 @@ export default {
             section,
             referencedBindings,
             translatedAttrs.statements,
-          );
-        }
-
-        const program = getProgram().node;
-        if (!hasEnabledCatch.has(program)) {
-          hasEnabledCatch.add(program);
-          program.body.push(
-            t.expressionStatement(callRuntime("_enable_catch")),
           );
         }
 

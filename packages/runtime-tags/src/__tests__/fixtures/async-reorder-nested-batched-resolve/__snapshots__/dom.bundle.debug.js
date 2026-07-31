@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-_enable_catch();
 const $await_content4__value = ($scope, value) => _attr_class($scope["#div/0"], value);
 const $await_content4__$params = ($scope, $params5) => $await_content4__value($scope, $params5[0]);
 const $placeholder_content4 = _content_resume("__tests__/template.marko_11_content", "LOADING B2");

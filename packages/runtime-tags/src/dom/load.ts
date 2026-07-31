@@ -9,7 +9,7 @@ import {
   type Template,
 } from "../common/types";
 import { addAwaitCounter, renderCatch } from "./control-flow";
-import { _enable_catch, queueAsyncRender, runId } from "./queue";
+import { queueAsyncRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
@@ -31,7 +31,6 @@ export interface LoadTrigger {
 }
 
 export function _load_template(id: string, load: () => Promise<Renderer>) {
-  _enable_catch();
   let pending: ReturnType<typeof load> | undefined;
   const lazyTemplate = _template(
     id,
@@ -75,7 +74,6 @@ export function _load_setup(
   let pending: ReturnType<typeof load> | undefined;
   let renderer: Renderer | undefined;
 
-  _enable_catch();
   return (owner: Scope) => {
     const child = owner[childScopeAccessor] as BranchScope;
     if (renderer) {

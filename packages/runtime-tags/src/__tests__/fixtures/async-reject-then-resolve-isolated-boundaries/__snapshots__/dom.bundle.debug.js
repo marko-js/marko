@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-_enable_catch();
 const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $catch_content2 = _content_resume("__tests__/template.marko_5_content", "Rejected B");

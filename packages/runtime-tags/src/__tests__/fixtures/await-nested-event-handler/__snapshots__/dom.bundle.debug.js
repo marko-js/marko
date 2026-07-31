@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-_enable_catch();
 const $placeholder_content2 = _content_resume("__tests__/template.marko_6_content", "loading inner...");
 const $placeholder_content = _content_resume("__tests__/template.marko_5_content", "loading outer...");
 const $await_content2__changes = /*@__PURE__*/ _closure_get("changes", ($scope) => _text($scope["#text/1"], $scope._._._._.changes), ($scope) => $scope._._._._, "__tests__/template.marko_4_changes/pending");

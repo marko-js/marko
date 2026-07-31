@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $await_content3__setup = _script("a4", ($scope) => _on($scope.b, "click", function() {
 	document.querySelector("button").textContent = "After";
 }));

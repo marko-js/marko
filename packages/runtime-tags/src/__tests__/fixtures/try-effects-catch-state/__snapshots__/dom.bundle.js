@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $catch_content__err = ($scope, err) => _text($scope.a, err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _content_resume("a0", " ", " ", 0, $catch_content__$params);

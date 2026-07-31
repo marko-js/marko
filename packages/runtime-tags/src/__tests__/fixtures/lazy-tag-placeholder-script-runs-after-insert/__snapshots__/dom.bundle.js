@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $placeholder_content = _content_resume("b0", "loading...");
 
 // child.marko

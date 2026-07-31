@@ -1,12 +1,6 @@
-import {
-  AccessorProp,
-  type BranchScope,
-  PendingRenderProp,
-  type Scope,
-} from "../common/types";
-import { renderCatch } from "./control-flow";
-import { enableBranches } from "./resume";
-import type { Signal, SignalFn } from "./signals";
+import { branchesEnabled, withBranches } from "../common/helpers";
+import { AccessorProp, PendingRenderProp, type Scope } from "../common/types";
+import type { Signal } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 export type PendingRender = {
@@ -128,6 +122,35 @@ export let runEffects = ((effects) => {
   }
 }) as (effects: unknown[], checkPending?: boolean | 1) => void;
 
+let runRender = (render: PendingRender) => {
+  // Skip renders whose branch was destroyed; short-circuits to a single flag
+  // check for apps without branches.
+  if (
+    !branchesEnabled ||
+    render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
+      AccessorProp.Gen
+    ] !== 0
+  ) {
+    render[PendingRenderProp.Signal](
+      render[PendingRenderProp.Scope],
+      render[PendingRenderProp.Value],
+    );
+  }
+};
+
+let catchEnabled: undefined | 1;
+// The catch machinery lives in `catch.feat`; it installs by wrapping the
+// plain dispatchers, which imported bindings cannot reassign directly.
+export function installCatch(
+  wrapEffects: (base: typeof runEffects) => typeof runEffects,
+  wrapRender: (base: typeof runRender) => typeof runRender,
+) {
+  catchEnabled = 1;
+  withBranches();
+  runEffects = wrapEffects(runEffects);
+  runRender = wrapRender(runRender);
+}
+
 function runRenders() {
   while (pendingRenders.length) {
     const render = pendingRenders[0];
@@ -163,89 +186,5 @@ function runRenders() {
     }
 
     runRender(render);
-  }
-}
-
-let runRender = (render: PendingRender) =>
-  render[PendingRenderProp.Signal](
-    render[PendingRenderProp.Scope],
-    render[PendingRenderProp.Value],
-  );
-
-// Installed by `enableBranches` so apps without branches don't pay for
-// the destroyed branch check.
-export function skipDestroyedRenders() {
-  runRender = ((runRender) => (render: PendingRender) => {
-    if (
-      render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
-        AccessorProp.Gen
-      ] !== 0
-    ) {
-      runRender(render);
-    }
-  })(runRender);
-}
-
-let catchEnabled: undefined | 1;
-export function _enable_catch() {
-  if (!catchEnabled) {
-    catchEnabled = 1;
-    enableBranches();
-    const handlePendingTry = (
-      fn: ExecFn,
-      scope: Scope,
-      branch: BranchScope | undefined,
-    ) => {
-      // Defer the fn onto the nearest ancestor try branch still awaiting;
-      // a truthy return means it was deferred.
-      while (branch) {
-        if (branch[AccessorProp.AwaitCounter]?.i) {
-          return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
-        }
-        branch = branch[AccessorProp.ParentBranch];
-      }
-    };
-    runEffects = (
-      (runEffects) =>
-      (effects: unknown[], checkPending = placeholderShown.has(effects)) => {
-        if (checkPending || caughtError.has(effects)) {
-          let i = 0;
-          let fn: SignalFn;
-          let scope: Scope;
-          let branch: BranchScope | undefined;
-          for (; i < effects.length;) {
-            fn = effects[i++] as SignalFn;
-            scope = effects[i++] as Scope;
-            if (
-              (branch = scope[AccessorProp.ClosestBranch])?.[
-                AccessorProp.Gen
-              ] !== 0 &&
-              !(checkPending && handlePendingTry(fn, scope, branch))
-            ) {
-              fn(scope);
-            }
-          }
-        } else {
-          runEffects(effects);
-        }
-      }
-    )(runEffects);
-    runRender = ((runRender) => (render: PendingRender) => {
-      try {
-        let branch =
-          render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
-        while (branch) {
-          if (branch[AccessorProp.PendingRenders]) {
-            render[PendingRenderProp.Pending] = 1;
-            return branch[AccessorProp.PendingRenders].push(render);
-          }
-          branch = branch![AccessorProp.ParentBranch];
-        }
-        render[PendingRenderProp.Pending] = 0;
-        runRender(render);
-      } catch (error) {
-        renderCatch(render[PendingRenderProp.Scope], error);
-      }
-    })(runRender);
   }
 }

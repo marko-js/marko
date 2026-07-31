@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $await_content2__setup__script = _script("a2", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#two").textContent = "Pass");
 const $await_content2__setup = ($scope) => {
 	$signalReset($scope, 0);

@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<input><span>value=[<!>]</span><button>drop</button>";
 const $walks = " bDb%l b";
-_enable_controllable_input();
 const $attrs2__script = _script("__tests__/template.marko_0_attrs", ($scope) => _attrs_script($scope, "#input/0"));
 const $attrs2 = /*@__PURE__*/ _let("attrs/4", ($scope) => {
 	_attrs($scope, "#input/0", $scope.attrs, _controllable_input);

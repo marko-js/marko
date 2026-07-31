@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<input>";
 const $walks = " b";
-_enable_controllable_input();
 const $input_rest__OR__checked__script = _script("__tests__/template.marko_0_input_rest_checked", ($scope) => _attrs_script($scope, "#input/0"));
 const $input_rest__OR__checked = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs($scope, "#input/0", {

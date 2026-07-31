@@ -1,6 +1,17 @@
-// size: 4032 (min) 1792 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 4038 (min) 1804 (brotli)
+//#region packages/runtime-tags/dist/dom-Cj4HQ7T_.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
+  rendering,
+  runId = 2,
+  pendingEffects = [],
+  pendingRenders = [],
+  runEffects = (effects) => {
+    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
+  },
+  runRender = (render) => {
+    render.c(render.b, render.d);
+  },
+  catchEnabled,
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
@@ -56,20 +67,89 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
-  cloneCache = {},
-  rendering,
-  runId = 2,
-  pendingEffects = [],
-  pendingRenders = [],
-  runEffects = (effects) => {
-    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
-  },
-  runRender = (render) => render.c(render.b, render.d),
-  catchEnabled,
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
-  };
+  cloneCache = {};
+function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
+  let render;
+  if (signalKey >= 0 && (render = scope[signalKey])) {
+    if (((render.d = value), render.e === runId || catchEnabled)) return;
+    render.e = runId;
+  } else
+    ((render = {
+      a: scopeKey * 1e6 + signalKey,
+      b: scope,
+      c: signal,
+      d: value,
+      e: runId,
+    }),
+      signalKey >= 0 && (scope[signalKey] = render));
+  queuePendingRender(render);
+}
+function queuePendingRender(render) {
+  let i = pendingRenders.push(render) - 1;
+  for (; i;) {
+    let parentIndex = (i - 1) >> 1,
+      parent = pendingRenders[parentIndex];
+    if (render.a - parent.a >= 0) break;
+    ((pendingRenders[i] = parent), (i = parentIndex));
+  }
+  pendingRenders[i] = render;
+}
+function queueEffect(scope, fn) {
+  pendingEffects.push(fn, scope);
+}
+function run() {
+  let effects = pendingEffects;
+  try {
+    ((rendering = 1), runRenders());
+  } finally {
+    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
+  }
+  runEffects(effects);
+}
+function prepareEffects(fn) {
+  let prevRenders = pendingRenders,
+    prevEffects = pendingEffects,
+    preparedEffects = (pendingEffects = []);
+  pendingRenders = [];
+  try {
+    ((rendering = 1), fn(), runRenders());
+  } finally {
+    (runId++, (rendering = 0), (pendingRenders = prevRenders), (pendingEffects = prevEffects));
+  }
+  return preparedEffects;
+}
+function runRenders() {
+  for (; pendingRenders.length;) {
+    let render = pendingRenders[0],
+      item = pendingRenders.pop();
+    if (render !== item) {
+      let i = 0,
+        mid = pendingRenders.length >> 1,
+        key = (pendingRenders[0] = item).a;
+      for (; i < mid;) {
+        let bestChild = (i << 1) + 1,
+          right = bestChild + 1;
+        if (
+          (right < pendingRenders.length &&
+            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
+            (bestChild = right),
+          pendingRenders[bestChild].a - key >= 0)
+        )
+          break;
+        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
+      }
+      pendingRenders[i] = item;
+    }
+    runRender(render);
+  }
+}
+function $signalReset(scope, id) {
+  let ctrl = scope.A?.[id];
+  ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
+}
+function abort(ctrl) {
+  ctrl.abort();
+}
 function _on(element, type, handler) {
   (element["$" + type] === void 0 && delegate(type, handleDelegated),
     (element["$" + type] = handler || null));
@@ -230,88 +310,12 @@ function toInsertNode(startNode, endNode) {
     ? startNode
     : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
-function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let render;
-  if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || catchEnabled)) return;
-    render.e = runId;
-  } else
-    ((render = {
-      a: scopeKey * 1e6 + signalKey,
-      b: scope,
-      c: signal,
-      d: value,
-      e: runId,
-    }),
-      signalKey >= 0 && (scope[signalKey] = render));
-  queuePendingRender(render);
-}
-function queuePendingRender(render) {
-  let i = pendingRenders.push(render) - 1;
-  for (; i;) {
-    let parentIndex = (i - 1) >> 1,
-      parent = pendingRenders[parentIndex];
-    if (render.a - parent.a >= 0) break;
-    ((pendingRenders[i] = parent), (i = parentIndex));
-  }
-  pendingRenders[i] = render;
-}
-function queueEffect(scope, fn) {
-  pendingEffects.push(fn, scope);
-}
-function run() {
-  let effects = pendingEffects;
-  try {
-    ((rendering = 1), runRenders());
-  } finally {
-    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
-  }
-  runEffects(effects);
-}
-function prepareEffects(fn) {
-  let prevRenders = pendingRenders,
-    prevEffects = pendingEffects,
-    preparedEffects = (pendingEffects = []);
-  pendingRenders = [];
-  try {
-    ((rendering = 1), fn(), runRenders());
-  } finally {
-    (runId++, (rendering = 0), (pendingRenders = prevRenders), (pendingEffects = prevEffects));
-  }
-  return preparedEffects;
-}
-function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
-    if (render !== item) {
-      let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
-      for (; i < mid;) {
-        let bestChild = (i << 1) + 1,
-          right = bestChild + 1;
-        if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
-            (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
-        )
-          break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
-      }
-      pendingRenders[i] = item;
-    }
-    runRender(render);
-  }
-}
-function $signalReset(scope, id) {
-  let ctrl = scope.A?.[id];
-  ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
-}
-function abort(ctrl) {
-  ctrl.abort();
-}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
+};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,

@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $await_content__value = ($scope, value) => _text($scope.a, value > 1 ? (() => {
 	throw new Error("ERROR!");
 })() : value);
