@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-class-attribute/template.marko:1:6
+    > 1 | <div class=input.class>content</div>
+        |      ^^^^^^^^^^^^^^^^^ Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.
+      2 |
