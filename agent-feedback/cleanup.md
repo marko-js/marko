@@ -2,289 +2,98 @@
 
 Duplication, dead code, inconsistencies, refactor opportunities. Format and rules: [README.md](README.md).
 
-## Compat re-render writes scope nodes onto a DOM node instead of the branch scope
+## Pass the branch scope, not the fragment marker, to `setScopeNodes`
 
 `packages/runtime-class/src/runtime/helpers/tags-compat/runtime-dom.js` › `renderAndMorph` | 2026-07-13 | impact:low | effort:low
 
-In `renderAndMorph`, after `host = rootNode.startNode`, the call
-`domCompat.setScopeNodes(host, rootNode.startNode, rootNode.endNode)` writes
-`#StartNode`/`#EndNode` onto the fragment's DOM marker node (a self-assign plus
-an unused end ref) rather than onto the tags branch **scope** — the argument was
-almost certainly meant to be `scope`. Consequence: the `host.fragment` fast-path
-at line 158 can never fire for a resumed child, so every re-render falls through
-to the `___componentLookup` / `___marko5Component.___rootNode` lookup. Correctness
-is unaffected (later renders reuse `___marko5Component.___rootNode`), so this is a
-dead optimization + a confusing stale-node invariant; verify destroy/move
-semantics before changing to `scope`.
-
----
-
-## Delete or restore the commented-out serializer test cases
-
-`packages/runtime-tags/src/__tests__/serializer.test.ts` | 2026-07-18 | impact:low | effort:low
-
-The two-line comment rule sweep that once found roughly ninety over-length
-blocks across `runtime-tags/src` was largely carried out by `9fc549115b`
-("condense over-length comments across src"): `dom/resume.ts` now has none,
-`translator/util/references.ts` one, and the remaining runtime blocks are the
-irreplaceable specs that commit deliberately preserved (the walks-string laws in
-`dom/walker.ts`, the serialize wire protocol, the abort-id invariant). What is
-left is not really a comment-length problem: `serializer.test.ts` carries 11
-multi-line `//` runs that are commented-out test cases, i.e. dead code to either
-restore or delete (the `_attrs` event-handler pair has its own entry below), and
-`packages/compiler/src/config.js` has 7 JSDoc blocks over two body lines, which
-are per-option API docs and arguably exempt. Verify: `awk` for runs of three or
-more consecutive `//` lines under `packages/runtime-tags/src` reports 36 blocks
-total, 11 of them in `serializer.test.ts`.
-
-## Normalize inconsistent local naming flagged by a terminology audit
-
-`packages/runtime-tags/src/html/serializer.ts` › `State` | 2026-07-20 | impact:low | effort:low
-
-A file-by-file terminology audit flagged several local naming inconsistencies that are too narrow for CONTEXT.md but worth normalizing when touching these files: `html/serializer.ts` uses `assigns`/`assigned`/`addAssignment` for one mechanism and names its generation counter `flush` (reads as an output flush; it is compared, not flushed — see `parent.flush === state.flush`); `translator/core/if.ts` destructures the same branches array as `branchBodySection` in one place and `branchBody` in another; `dom/controllable.ts` mixes `Controllable` (file, `syncControllableFormInput`) with `Controlled*` accessor/type prefixes for the same concept — CONTEXT.md now canonicalizes "controllable"; `translator/core/await.ts` pairs the near-homophones `startBinding` (a Binding) and `startMark` (a serialize-guard expression). Each is a rename-in-place with no behavior change; snapshots regenerate where identifiers leak into debug output. Re-verify by grepping the cited symbols.
-
-The three-line comment above `observeOnce` opens with an abandoned draft of its own next sentence: line 544 reads `// A spread re-render re-runs the setup script against the same element, so` and stops mid-clause, then lines 545-546 restate the same point in full (`… re-observing with the scope's observer updates that registration instead of adding one.`). Both lines were added together by `e91e6a1d0a` ("keep one MutationObserver per controllable element"), so the dangling line is an editing leftover rather than a second thought, but a reader still has to decide whether the clause dropped after `so` carried a constraint the surviving sentence omits. The complete sentence is accurate on its own — `observe()` on the same node replaces that node's registration, and the `||=` reuses the observer stored at `AccessorPrefix.ControlledObserver + nodeAccessor` — and the extra line also pushes the block past the two-line cap AGENTS.md sets for comments. Delete line 544. Re-verify: `grep -n -B3 "^function observeOnce" packages/runtime-tags/src/dom/controllable.ts` prints both sentences above the declaration.
-
-## Normalize the params-binding `BindingType` so a param is identifiable by type
-
-`packages/runtime-tags/src/translator/util/references.ts` › `trackParamsReferences` | 2026-07-22 | impact:med | effort:high
-
-Every section's "params binding" is created by `trackParamsReferences`, but each caller passes a different `BindingType`: `<for>`/`<await>` use `derived` (`core/for.ts`, `core/await.ts`), `<define>`/attribute-tags/dynamic-tag/known-tag use `param`, program input uses `input`, and an attribute-tag `<for>` uses `local`. So "is this a param?" cannot be answered from `binding.type` and the codebase instead keys off identity — `root === root.section.params` (see `isParamBinding`, `getDebugName`, and the assignment guard `binding.upstreamAlias === binding.section.params`). The heterogeneity is currently load-bearing, not accidental: `BindingType` selects the `resolveBindingSources` path, and `<for>`/`<await>` deliberately use `derived` so `resolveDerivedSources` makes the item param's `Sources` transparently reflect its loop/await source (`<for of=stateVal>` → `state` source; `<for of=input.list>` → `param` source), which drives serialize-reason scheduling (`isStateSerializeReason` vs `isReasonDynamic` in `serialize-reasons.ts`) and `scopeOffset` propagation (`getMaxOwnSourceOffset`). A naive `derived→param` flip severs the `setBindingDownstream` link (it goes dead before `resolveDerivedSources` runs), mis-scheduling serialization and losing scope offsets. The cleanup: give params a correct, uniform type (or a dedicated param marker on the binding) so `isParamBinding` reduces to a `binding.type` check, while moving the source-transparency of `<for>`/`<await>` params off the overloaded `derived` type onto an explicit source-resolution input. Verify current state: `rg -n "trackParamsReferences\(" packages/runtime-tags/src/translator` shows the four distinct `BindingType` args; `isParamBinding` in `references.ts` still uses the identity walk because no type distinguishes them.
-
-## Factor the duplicated await-counter construction shared by `_await_promise` and `addAwaitCounter`
-
-`packages/runtime-tags/src/dom/control-flow.ts` › `addAwaitCounter` | 2026-07-23 | impact:low | effort:med
-
-`addAwaitCounter` (control-flow.ts:283-329) and the `else` arm of
-`_await_promise`'s signal (:102-159) are the same ~25-line skeleton written
-twice: the `if (!awaitCounter?.i)` guard, the
-`tryBranch[AccessorProp.AwaitCounter] = { i: 0, c() { if (--awaitCounter.i)
-return 1; …; queueEffect(tryBranch, runPendingEffects); } }` literal, and the
-`if (!awaitCounter.i++) requestAnimationFrame(() => awaitCounter.i &&
-runEffects(prepareEffects(() => queueRender(<scope>, () => { …;
-tempDetachBranch(tryBranch); }, -1))))` frame scheduler. Only three things
-differ: the body of `c()` (anchor swap vs. `dismissPlaceholder(tryBranch)`), the
-body of the queued frame render (re-insert the await anchor vs. create and
-insert the placeholder branch), and the scope passed to `queueRender` (`scope`
-vs. `tryBranch`). Extracting a shared factory that takes `(tryBranch, onZero,
-frameScope, onFrame)` would collapse both call sites, and since bundle size is a
-tracked feature here the duplicated
-`requestAnimationFrame`/`prepareEffects`/`queueRender` chains are shipped twice
-in every app that uses `<await>`. Re-verify by diffing the two blocks side by
-side and then checking the `await-*`/`try-*` fixture `sizes.json` and the root
-`.sizes.json` after the extraction.
+After `host = rootNode.startNode`, `renderAndMorph` calls `domCompat.setScopeNodes(host, rootNode.startNode, rootNode.endNode)`, writing `#StartNode`/`#EndNode` onto the fragment's DOM marker (a self-assign plus an unused end ref) instead of onto the tags branch `scope`. Since `scope[#StartNode]` never becomes the fragment marker, the `rootNode = host.fragment` fast path can never fire for a resumed child and every re-render falls back to the `___componentLookup` / `___marko5Component.___rootNode` lookup. Correctness is unaffected, so this is a dead optimization plus a misleading invariant; passing `scope` restores it, but check destroy/move first, since the fragment markers sit inside the scope's original start/end range. Re-verify: on a second re-render of a server-rendered class child, `domCompat.getStartNode(scope).fragment` should be set.
 
 ## Delete the unreachable non-identifier tag-var guard in `trackDomVarReferences`
 
 `packages/runtime-tags/src/translator/util/references.ts` › `trackDomVarReferences` | 2026-07-23 | impact:low | effort:low
 
-`trackDomVarReferences` opens with a `!t.isIdentifier(tagVar)` check that throws
-`Tag variables on native elements cannot be destructured.`
-(references.ts:287-293), but both call sites already reject a destructured tag
-var earlier with a better, docs-linked message:
-`visitors/tag/native-tag.ts:98-104` throws "Tag variables on [native
-tags](https://markojs.com/docs/reference/native-tag) cannot be destructured." at
-the top of the same `analyze.enter` that later calls `trackDomVarReferences`
-(line 354), and `core/html-comment.ts:51-57` throws its own
-`<html-comment>`-specific version before calling it at line 86. So the guard is
-dead, and it is also the only place in the package that says "native elements"
-instead of CONTEXT.md's "native tag". Drop the branch (keeping the non-null
-cast) so the one live message is the linked one. Re-verify: compile `<div/{a}/>`
-and observe the code frame quotes the native-tag.ts wording with the docs link,
-never the references.ts wording; `grep -rn "cannot be destructured"
-packages/runtime-tags/src` shows the four distinct messages and their owners.
+`trackDomVarReferences` opens by throwing "Tag variables on native elements cannot be destructured." for a non-identifier `tag.node.var`, but both call sites already reject one with a better, docs-linked message: `visitors/tag/native-tag.ts` throws at the top of the same `analyze.enter` that later calls it, and `core/html-comment.ts` throws its `<html-comment>` variant before its call. The branch is dead, and it is the only place in the package that says "native elements" instead of CONTEXT.md's "native tag". Drop it, keeping the non-null cast, so the one live message is the linked one. Re-verify: compiling `<div/{a}/>` reports the native-tag.ts wording with the docs link, and `rg -n "cannot be destructured" packages/runtime-tags/src --glob '!**/__snapshots__/**'` shows one message per owner.
 
 ## Drop the write-only `renderReferencedBindings`/`effectReferencedBindings` signal fields
 
 `packages/runtime-tags/src/translator/util/signals.ts` › `addRenderReferences` | 2026-07-23 | impact:low | effort:low
 
-`Signal.renderReferencedBindings` and `Signal.effectReferencedBindings`
-(signals.ts:83, 85) are initialized in `getSignal` (signals.ts:264, 266) and
-updated by `addRenderReferences`/`addEffectReferences` (signals.ts:890-898,
-880-888) but never read anywhere in the repo. Every `addStatement` and
-`addValue` therefore pays a `bindingUtil.union` — a sorted merge that allocates
-a fresh array per call (`util/optional.ts` `unionSortedRepeatable`/`addSorted`)
-— to build state that is discarded. Removing the two fields and their two
-helpers deletes two of the five post-`finalizeReferences` `bindingUtil` call
-sites, which also shrinks the surface of the binding-id renumbering hazard filed
-separately. Re-verify: `grep -rn
-"renderReferencedBindings\|effectReferencedBindings" packages/` returns only the
-eight lines in `signals.ts` listed above (declaration, initialization, and the
-two assignment helpers) and no reader.
+`Signal.renderReferencedBindings` and `Signal.effectReferencedBindings` are declared, initialized in `getSignal`, and written by `addRenderReferences`/`addEffectReferences`, but nothing in the workspace reads them. Every `addStatement` and `addValue` therefore pays a `bindingUtil.union` — `unionSortedRepeatable` in `util/optional.ts`, which allocates a fresh array per call — to build state that is discarded. Deleting the two fields also makes `addStatement`'s `usedReferences` parameter dead, so its call sites can drop it. Re-verify: `rg -n "renderReferencedBindings|effectReferencedBindings" packages/` returns only the declaration, the two `getSignal` initializers, and the two assignment helpers in `signals.ts`, with no reader.
 
 ## Stop re-exporting `forOfBy`/`forInBy`/`forStepBy` from the html runtime entry
 
-`packages/runtime-tags/src/html.ts` › `forOfBy (export block from "./html/for")` | 2026-07-23 | impact:low | effort:low
+`packages/runtime-tags/src/html.ts` › `export { … } from "./html/for"` | 2026-07-23 | impact:low | effort:low
 
-`src/html.ts` re-exports seven names from `./html/for`, but only four of them
-(`forIn`, `forOf`, `forTo`, `forUntil`) are ever emitted by codegen —
-`translator/core/for.ts` › `forTypeToRuntime` maps the four `<for>` kinds to
-exactly those. `forInBy`, `forOfBy` and `forStepBy` are private helpers of
-`html/writer.ts`, which imports them directly from `./for` and uses them inside
-`_for_of`/`_for_in`/`_for_to`/`_for_until`; no `callRuntime`/`importRuntime`
-call site names them, and `dom.ts` correspondingly exports only the four base
-helpers from `./common/for`. Keeping them on the entry has two costs: because
-`HTMLRuntimeHelpers = keyof typeof import("../../html")`
-(`translator/util/runtime.ts`), `callRuntime("forOfBy", …)` type-checks even
-though it would emit a call to a non-codegen helper; and as entry exports they
-must survive as top-level named bindings in `dist/html.mjs`, so the minifier
-cannot inline or rename them into their single use sites (SSR size is tracked in
-`.sizes/counter.ssr` et al.). Drop the three names from the `export { … } from
-"./html/for"` block. Re-verify: `rg -n "forOfBy|forInBy|forStepBy" packages/`
-returns hits only in `src/html.ts`, `src/html/for.ts` and `src/html/writer.ts`,
-and the test suite still passes for a `<for by=…>` fixture.
+`src/html.ts` re-exports seven names from `./html/for`, but codegen emits only four — `translator/core/for.ts` › `forTypeToRuntime` maps the `<for>` kinds to `forOf`/`forIn`/`forTo`/`forUntil`, which is also all `dom.ts` re-exports from `./common/for`. `forOfBy`, `forInBy` and `forStepBy` are internal helpers that `html/writer.ts` imports straight from `./for`; no `callRuntime`/`importRuntime` call site names them. Since `HTMLRuntimeHelpers = keyof typeof import("../../html")` (`translator/util/runtime.ts`), exporting them makes `callRuntime("forOfBy", …)` type-check even though codegen never emits it. Drop the three names from the export block. Re-verify: `rg -n "forOfBy|forInBy|forStepBy" packages/` hits only `src/html/for.ts` and `src/html/writer.ts`, and a `<for by=…>` fixture still renders.
 
-## Remove the dead `_attrs` event-handler assertions in html-attrs.test.ts or give the routing real coverage
+## Retitle the `_attrs` test or give its event-handler routing real coverage
 
-`packages/runtime-tags/src/__tests__/html-attrs.test.ts` › `describe("attrs") › it("should strip event handlers, invalid attribute names and content")` | 2026-07-23 | impact:low | effort:low
+`packages/runtime-tags/src/__tests__/html-attrs.test.ts` › `it("should strip event handlers, invalid attribute names and content")` | 2026-07-23 | impact:low | effort:low
 
-The test is titled "should strip event handlers, ..." but its only two
-event-handler assertions are commented out, so nothing in the file exercises
-that behavior — and the title is also wrong about what happens: `_attrs`
-(`src/html/attrs.ts`) does not strip `on*` attributes, it collects them into an
-`events` object and registers it via `_scope(scopeId, {
-[AccessorPrefix.EventAttributes + nodeAccessor]: events })`. That is why the
-commented lines cannot simply be uncommented: called outside a render they throw
-`TypeError: Cannot read properties of undefined (reading 'boundary')` from
-`_scope`. Either delete the two dead comments and retitle the test to what it
-verifies (invalid attribute names and the non-`<meta>` `content` attribute), or
-add a case that drives `_attrs` inside an active writer boundary and asserts the
-event lands on the scope under `AccessorPrefix.EventAttributes`. Re-verify:
-`node -r ~ts -e
-'require("./packages/runtime-tags/src/html/attrs.ts")._attrs({onClick(){}}, "a",
-0, "")'` throws the `boundary` TypeError, confirming the commented assertions
-can never pass as written.
+The test's only two event-handler assertions are commented out (and call a long-gone `helpers.attrs`), and the title is wrong: `_attrs` (`src/html/attrs.ts`) does not strip `on*` names, it collects them into `events` and registers them via `_scope(scopeId, { [AccessorPrefix.EventAttributes + nodeAccessor]: events })`. They cannot simply be uncommented — outside a render `_scope` reads `$chunk.boundary` and throws. Either delete the dead comments and retitle to what the test actually checks (invalid attribute names, and `content` on a non-`<meta>` tag), or drive `_attrs` inside an active writer boundary and assert the handler lands on the scope. Re-verify: `node -r ~ts -e 'require("./packages/runtime-tags/src/html/attrs.ts")._attrs({onClick(){}},"a",0,"")'` throws `TypeError: Cannot read properties of undefined (reading 'boundary')`.
 
-## Drop the ignored `state` argument from `compat.toJSON` and its two runtime-class call sites
+## Drop the ignored `state` argument from the two `htmlCompat.toJSON` call sites
 
 `packages/runtime-tags/src/html/compat.ts` › `compat.toJSON` | 2026-07-23 | impact:low | effort:low
 
-`compat.toJSON()` declares an empty parameter list, yet both call sites in
-`packages/runtime-class/src/runtime/helpers/tags-compat/runtime-html.js` still
-pass a `State`: `renderBody.toJSON =
-htmlCompat.toJSON(htmlCompat.ensureState(out.global))` and `value.toJSON =
-htmlCompat.toJSON(state)`. The parameter was real until commit 9e043c0724
-("refactor: unify scope serialization and concurrent resume"), which replaced
-the body's `writeScopeToState(state, scopeId, {})` with `_script(scopeId,
-SET_SCOPE_REGISTER_ID)` and removed `state` from the TypeScript signature; the
-untyped JS call sites were never updated, so the code still reads as though the
-returned `toJSON` were bound to one render's `State` when it is not. The
-`ensureState` calls are still load-bearing (they seed
-`$global.runtimeId`/`renderId` and memoise the `State` that `flushScripts` later
-mutates via `walkOnNextFlush`), so the cleanup is to keep them as standalone
-statements and call `htmlCompat.toJSON()` with no argument, dropping the
-now-unused `const state` local. Re-verify: `compat.toJSON` in
-`packages/runtime-tags/src/html/compat.ts` is declared `toJSON()`, while `rg -n
-"htmlCompat\\.toJSON\\(" packages/runtime-class` returns two call sites that
-each pass an argument.
+`compat.toJSON()` takes no parameters, yet both call sites in `packages/runtime-class/src/runtime/helpers/tags-compat/runtime-html.js` still pass a `State`: `htmlCompat.toJSON(htmlCompat.ensureState(out.global))` and `htmlCompat.toJSON(state)`. The parameter disappeared in 9e043c0724 ("refactor: unify scope serialization and concurrent resume") but the untyped JS callers were never updated, so the code reads as though the returned `toJSON` were bound to one render's `State` when it is not. Keep the `ensureState` calls — they seed `$global.runtimeId`/`renderId` and memoise the `State` — as standalone statements, call `toJSON()` with no argument, and drop the then-unused `const state` local. Re-verify: `rg -n "htmlCompat\.toJSON\(" packages/runtime-class` shows two callers passing an argument while `compat.toJSON` is declared `toJSON()`.
 
-## Extract one helper for merging repeated attribute tags into `attrTag`/`attrTags`, now duplicated four times
+## Extract one helper for the `attrTag`/`attrTags` merge duplicated in `known-tag.ts`
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `translateAttrTag` | 2026-07-23 | impact:low | effort:low
 
-The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a
-non-repeated one becomes `attrTag(props)`" is implemented four separate times.
-Two of them are near-verbatim copies of the same ~35-line block, including the
-non-obvious trick of wrapping the first call in `t.parenthesizedExpression` so a
-later sibling can mutate `.expression` in place: `known-tag.ts` ›
-`translateAttrTag` (:977-1007) and the `isAttributeTag(tag)` branch of
-`known-tag.ts` › `applyAttrObject` (:913-949), which differ only in whether
-`repeated` comes from a passed `AttrTagMeta` or a fresh
-`analyzeAttributeTags(parentTag)?.[name]` lookup, and in returning the
-expression versus assigning a local. The other two express the same rule in
-different shapes: `translate-attrs.ts` › `translateAttrs` (:98-117, merging via
-`findObjectProperty` over the accumulated `contentProperties`) and
-`translate-attrs.ts` › `addDynamicAttrTagStatements` (:199-226, merging via an
-`attrTags(id, props)` assignment to the attr-tag identifier). A single helper
-taking `(attrTagMeta, translatedProps, mergeTarget)` would collapse the two
-known-tag copies outright and let the other two share the `repeated ? attrTags :
-attrTag` decision, so a future change to attr-tag merging cannot be applied to
-three of four sites. Re-verify: `rg -n 'callRuntime\("attrTags"'
-packages/runtime-tags/src/translator` lists the four call sites, and
-`translateAttrTag`/`applyAttrObject` diff to only the `repeated` lookup and the
-return style.
+The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repeated one becomes `attrTag(props)`" is implemented four times. `translateAttrTag` and the `isAttributeTag(tag)` branch of `applyAttrObject` are near-verbatim ~35-line copies, including the `t.parenthesizedExpression` mutation trick, differing only in where `repeated` comes from and whether the result is returned or handed to `addStatement`. `translate-attrs.ts` › `translateAttrs` and `addDynamicAttrTagStatements` encode the same rule over `contentProperties` and over an attr-tag identifier assignment. One helper would collapse the two `known-tag.ts` copies and let the other two share the `repeated ? attrTags : attrTag` decision, so a future change cannot land on three of four sites. Re-verify: `rg -n '"attrTags"' packages/runtime-tags/src/translator` lists exactly those four sites.
 
-## Drop the write-only `tagNameNullable` tag extra and the nullability bookkeeping that computes it
+## Drop the write-only `tagNameNullable` tag extra and its nullability tracking
 
 `packages/runtime-tags/src/translator/util/tag-name-type.ts` › `analyzeExpressionTagName` | 2026-07-23 | impact:low | effort:low
 
-`MarkoTagExtra.tagNameNullable` is declared (tag-name-type.ts:18, the module
-augmentation) and assigned in three places — `:50`/`:53` in `analyzeTagNameType`
-and `:208` in `analyzeExpressionTagName` — but never read anywhere in the
-workspace. It is also not computed correctly: the `while ((path = pending.pop())
-&& type !== TagNameType.DynamicTag)` loop aborts as soon as the type resolves to
-`DynamicTag`, so pending nullable operands are never visited. Delete the field
-and the `nullable` tracking, or, if it is meant to feed a future "dynamic tag
-can be null" specialization, wire it up and fix the early-exit before relying on
-it. Note the traversal's `&&`, `NullLiteral`, and `undefined`-identifier cases
-are **not** removable along with it — they exist to classify the tag name, so
-the `&&` branch must still avoid pushing `left` and the null/`undefined`
-branches must stay no-op `continue`s; collapsing them into the final `else`
-forces `TagNameType.DynamicTag` and would flip e.g. `<${cond ? null : "div"}/>`
-from NativeTag to DynamicTag.
-Re-verify: `rg -n "tagNameNullable" .` returns only the declaration and the
-three assignments in
-`packages/runtime-tags/src/translator/util/tag-name-type.ts`.
+`MarkoTagExtra.tagNameNullable` is declared in the module augmentation and assigned three times — twice in `analyzeTagNameType`, once in `analyzeExpressionTagName` — but never read, and it is wrong anyway: the `while ((path = pending.pop()) && type !== TagNameType.DynamicTag)` loop stops as soon as the type resolves, leaving pending nullable operands unvisited. Delete the field and the `nullable` local, but keep the traversal's `&&`, `NullLiteral` and `undefined`-identifier branches: they classify the tag name, so `&&` must still skip pushing `left` and the null/`undefined` cases must stay no-op `continue`s. Folding them into the final `else` forces `TagNameType.DynamicTag` and flips `<${cond ? null : "div"}/>` from NativeTag to DynamicTag. Re-verify: `rg -n "tagNameNullable" .` returns only the declaration and the three assignments in `tag-name-type.ts`.
 
 ## Delete translator/runtime residue left behind by completed refactors
 
 `packages/runtime-tags/src/translator/visitors/program/index.ts` › `isScopeIdentifier` | 2026-07-23 | impact:low | effort:low
 
-Three leftovers, each a pure delete/rename with no behavior change. (1)
-`translator/visitors/program/index.ts` still exports `isScopeIdentifier`; its
-only consumer was removed in commit `0a654cda92` ("drop the always-false
-referencesScope in the `<script>` translator", 2026-07-21), so a repo-wide `rg
--n "isScopeIdentifier"` now matches nothing but the definition — it is dead in
-the translator, where dead exports are unreachable by codegen string references
-and can simply go. (2) `html/dynamic-tag.ts:33` still carries `// TODO: refactor
-dynamicTagInput and dynamicTagArgs to be the same impl with a flag for input vs
-args.`, but neither symbol has existed since `ff59411349` (2025-03-28) and the
-refactor it asks for already shipped — `_dynamic_tag` takes a single
-`inputOrArgs` parameter plus the `inputIsArgs` flag; the comment also violates
-the AGENTS.md rule that comments capture intent and never describe removed code.
-(3) `translator/util/get-accessor-char.ts` exports only
-`getAccessorPrefix`/`getAccessorProp`; `getAccessorChar` was removed by #2577
-(`33c3979dcb`), so the filename no longer matches the module (e.g.
-`get-accessor-enums.ts`). Re-verify: `rg -n
-"isScopeIdentifier|dynamicTagInput|dynamicTagArgs|getAccessorChar"
-packages/runtime-tags` returns only the dead export declaration and the stale
-TODO line.
+Three pure deletes with no behavior change. `isScopeIdentifier` has no callers left after `0a654cda92`, though the `scopeIdentifier` it wraps is used throughout the visitors. `html/dynamic-tag.ts` still carries `// TODO: refactor dynamicTagInput and dynamicTagArgs …`, but neither symbol exists and `_dynamic_tag` already takes one `inputOrArgs` plus an `inputIsArgs` flag, so the comment describes removed code (AGENTS.md forbids that). `translator/util/get-accessor-char.ts` now exports only `getAccessorPrefix`/`getAccessorProp`, so rename it (e.g. `get-accessor-enums.ts`) and update the import specifiers. Re-verify: `rg -n "isScopeIdentifier|dynamicTagInput|dynamicTagArgs" packages/runtime-tags` matches only the dead export and the stale TODO, and `rg -n "get-accessor-char" packages/runtime-tags` lists the 11 import specifiers the rename has to follow.
 
 ## Collapse copy-pasted sibling implementations in the `<for>` and scriptlet core tags
 
 `packages/runtime-tags/src/translator/core/for.ts` › `forTypeToDOMRuntime` | 2026-07-23 | impact:low | effort:low
 
-Two copy-paste sets in the translator differ by a single token.
-`translator/core/for.ts` defines `forTypeToHTMLResumeRuntime` (`:571`) and
-`forTypeToDOMRuntime` (`:584`) as byte-identical `ForType` switches, both
-mapping `of|in|to|until` to `_for_of|_for_in|_for_to|_for_until`; they are
-called from `:261` and `:367`, so one can simply be deleted and both call sites
-pointed at the survivor, leaving `forTypeToRuntime` (`:558`, the non-underscored
-`forOf`/`forIn`/`forTo`/`forUntil` names) as the only genuinely different
-mapping. Separately, `translator/core/{client,server,static}.ts` are three
-31-line files whose only differences are the keyword stripped by
-`rawValue.replace(/^X\s*/, "")`, the third argument to `t.markoScriptlet(body,
-true, …)` (`"client"` / `"server"` / omitted), and their autocomplete strings —
-a single `createScriptletTag(keyword, target?)` factory would cut roughly 60
-lines while leaving the three `core/index.ts` registrations untouched. Both
-changes are mechanical and produce byte-identical generated output, so no
-snapshot or `sizes.json` churn. Re-verify: `diff <(sed -n '571,583p'
-packages/runtime-tags/src/translator/core/for.ts | sed
-'s/forTypeToHTMLResumeRuntime/F/') <(sed -n '584,596p'
-packages/runtime-tags/src/translator/core/for.ts | sed
-'s/forTypeToDOMRuntime/F/')` is empty, and `diff
-packages/runtime-tags/src/translator/core/client.ts
-packages/runtime-tags/src/translator/core/server.ts` reports only the four
-keyword/description lines.
+`forTypeToHTMLResumeRuntime` and `forTypeToDOMRuntime` are byte-identical `ForType` switches returning `_for_of|_for_in|_for_to|_for_until`, and both `dom` and `html` export those names, so delete one and point both call sites at the survivor; `forTypeToRuntime` stays as the only distinct mapping. Separately, `translator/core/{client,server,static}.ts` are three 31-line files differing only in the stripped keyword, the third `t.markoScriptlet(body, true, …)` argument, and their autocomplete text — a `createScriptletTag(keyword, target?)` factory would cut ~60 lines and leave the `core/index.ts` registrations untouched. Both edits are output-identical, so no snapshot or `sizes.json` churn. Re-verify: normalize the two function names and `diff` their bodies; `diff core/client.ts core/server.ts` shows only keyword/description lines.
 
 ## Stray debug `console.error` in the mocha patch
 
 `patches/mocha@11.7.6.patch` › `requireModule` | 2026-07-23 | impact:low | effort:low
 
-The repo's only mocha patch adds a bare `console.error(requireErr)` in `lib/nodejs/esm-utils.js`'s `requireModule` catch block, printing the full require error every time a spec file fails plain `require()` before mocha's `import()` fallback succeeds. With `.mocharc` `"no-warnings"` runs this is silent today only because spec requires no longer throw, but any environment where the require path fails first (e.g. an older Node loading `.ts` specs) spews stack traces for tests that then load fine. Looks like leftover debugging, not intentional patching. Fix: regenerate the patch without the `console.error` line (`pnpm patch mocha@11.7.6`), or delete the patch if that line was its only content — inspect with `cat patches/mocha@11.7.6.patch` (it is currently a single-hunk, one-line addition).
+The patch's only change adds `console.error(requireErr)` to `lib/nodejs/esm-utils.js`'s `requireModule` catch block, so any spec that fails plain `require()` and then loads fine via mocha's `import()` fallback prints a full stack trace for a passing file. Upstream already rethrows `requireErr` for the cases where it is the informative error, so the line adds nothing but noise, and it arrived with the npm→pnpm conversion (`0187289c71`) rather than as intentional patching. Fix: delete the patch file and its `pnpm-workspace.yaml` `patchedDependencies` entry, then `pnpm install`. Re-verify: `cat patches/mocha@11.7.6.patch` — the one-line hunk is the entire patch.
 
-## Delete or resurrect the dead `test/markoc` suite — mocha loads it every run for zero tests
+## Delete or resurrect the dead `test/markoc` suite
 
 `packages/runtime-class/test/markoc/index.test.js` | 2026-07-24 | impact:low | effort:low
 
-The mocha spec glob (`packages/*/@(src|test)/**/*.test.@(js|ts)`) matches this file, so every suite run loads it — and it defines no tests at all. Its entire `autotest` body has been commented out for years; the eight live lines only `require` `../__util__/test-init`, `chai`, and `../../compiler`, so the run pays that load cost for nothing. The commented body also now references `./babel-register`, which was deleted with the native-type-stripping migration, so it cannot be uncommented as written, and seven unused fixture directories remain under `fixtures/`. Either delete `test/markoc/` outright or resurrect the test by spawning `bin/markoc` with `-r ~ts` instead of a babel hook. Verify: `grep -vn "^\s*//" packages/runtime-class/test/markoc/index.test.js` lists eight non-comment lines and no `describe`/`it`.
+The mocha spec glob (`packages/*/@(src|test)/**/*.test.@(js|ts)`) matches this file, yet it declares no `describe`/`it`: the whole `mocha-autotest` body has been commented out for years, leaving five live lines that only `require` `../__util__/test-init`, `chai`, and `../../compiler`. The commented body resolves `./babel-register`, deleted in `3867db2ca8` (native type stripping), so it cannot be uncommented as written, seven `fixtures/` directories are unused, and `markoc` is still a published bin with no coverage. Delete `test/markoc/`, or resurrect it by spawning `bin/markoc` with `-r ~ts` instead of the babel hook. Re-verify: `rg -n "describe\(|it\(" packages/runtime-class/test/markoc/index.test.js` matches nothing outside comments.
+
+## Delete or restore the commented-out `Symbol.iterator` serializer test
+
+`packages/runtime-tags/src/__tests__/serializer.test.ts` | 2026-07-18 | impact:low | effort:low
+
+One commented-out test survives at `serializer.test.ts:733-751`: an `it.skip("Symbol.iterator registered", …)` case whose inner note reads "Unsupported for now since we share the reference for iterators on attribute tags." Either restore it as a live `it.skip` so the runner reports it, or delete it — commented-out code hides whether the limitation still holds. Decide it alongside "Remove the dead `_attrs` event-handler assertions in html-attrs.test.ts or give the routing real coverage", the other commented-out-assertion site in the same test suite. Re-verify: `rg -n "^\s*// *it\.skip" packages/runtime-tags/src/__tests__/serializer.test.ts` prints exactly that one block, and no other commented-out `it`/`describe` remains in the file.
+
+## Normalize the local naming flagged by the terminology audit
+
+`packages/runtime-tags/src/html/serializer.ts` › `State` | 2026-07-20 | impact:low | effort:low
+
+Three rename-in-place inconsistencies remain. `html/serializer.ts` spreads one mechanism over `assigns`/`assigned`/`addAssignment` and calls its generation counter `flush` though it is only compared (`parent.flush === state.flush`); `translator/core/if.ts` destructures the same branches entry as `branchBodySection` and as `branchBody`; `dom/controllable.ts` mixes `syncControllableFormInput` with `Controlled*` accessor/type prefixes while CONTEXT.md canonicalizes "controllable". The `startBinding`/`startMark` near-homophones live in `translator/core/show.ts`, not `core/await.ts`. While in `dom/controllable.ts`, drop the truncated first line of the three-line comment above `observeOnce` — an editing leftover that half-restates the next sentence and pushes the block past the two-line cap. Re-verify by grepping those symbols and `grep -n -B3 "^function observeOnce" packages/runtime-tags/src/dom/controllable.ts`.
+
+## Make a params binding identifiable from `binding.type`
+
+`packages/runtime-tags/src/translator/util/references.ts` › `trackParamsReferences` | 2026-07-22 | impact:med | effort:high
+
+Every section's params binding comes from `trackParamsReferences`, but callers pass four different `BindingType`s: `param` (`define`, attribute-tag, dynamic-tag, `known-tag`), `input` (program), `derived` (`core/for.ts`, `core/await.ts`) and `local` (attribute-tag `<for>`). So "is this a param?" is answered by an identity walk — `isParamBinding`, `getDebugName`, and the assignment guard `binding.upstreamAlias === binding.section.params` — instead of a type check. The heterogeneity is load-bearing: `BindingType` selects the `resolveBindingSources` branch, and `derived` routes `<for>`/`<await>` params through `resolveDerivedSources` so the item param's `Sources` reflect its loop/await source, driving serialize-reason scheduling and `scopeOffset`. Give params a uniform type or a dedicated marker and move that source transparency onto an explicit source-resolution input rather than the overloaded `derived`. Re-verify: `rg -n "trackParamsReferences\(" packages/runtime-tags/src/translator` still shows four distinct type args.
+
+## Share the await frame scheduler between `addAwaitCounter` and `_await_promise`
+
+`packages/runtime-tags/src/dom/control-flow.ts` › `addAwaitCounter` | 2026-07-23 | impact:low | effort:med
+
+`da6433e520` already factored the counter literal into `createAwaitCounter`, but the frame scheduler is still written twice: `if (!counter.i++) requestAnimationFrame(() => counter.i && runEffects(prepareEffects(() => queueRender(<scope>, …, -1))))` appears in `addAwaitCounter` (~~:280-307) and in the `else` arm of `_await_promise` (~~:139-165). Only the queued body (create and insert the placeholder branch vs. re-insert the await anchor, then `tempDetachBranch`) and the `queueRender` scope (`tryBranch` vs. `scope`) differ, so the `requestAnimationFrame`/`prepareEffects`/`queueRender` chain ships twice in every app using `<await>`. Extract a `scheduleFrame(counter, scope, onFrame)` helper alongside `createAwaitCounter`. Re-verify with the root `.sizes.json` and the `await-*`/`try-*` fixture `sizes.json` after the change.
