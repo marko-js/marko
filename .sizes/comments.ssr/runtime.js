@@ -1,4 +1,4 @@
-// size: 2855 (min) 1378 (brotli)
+// size: 2888 (min) 1392 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -13,7 +13,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   },
   catchEnabled,
   delegate = (type, handler) =>
-    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
+    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   isScheduled,
   channel,
   registeredValues = {},
@@ -21,6 +21,9 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   readyIds;
 function isNotVoid(value) {
   return value != null && value !== !1;
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
@@ -86,13 +89,13 @@ function runRenders() {
   }
 }
 function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
+  (element["$" + type] === void 0 && delegate(type, handleDelegated),
+    (element["$" + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
   for (; target;)
-    (target[1 + ev.type]?.(ev, target),
+    (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function schedule() {
@@ -218,7 +221,7 @@ function init(runtimeId = "M") {
                     prev && (prev.nodeType < 8 || prev.data)
                       ? prev
                       : visit.parentNode.insertBefore(new Text(), visit);
-                }
+                } else render.b && (visits[retained++] = visit);
               return ((visits.length = retained), effects);
             }),
             (render.w = () => {
@@ -260,9 +263,6 @@ function setAttribute(element, name, value) {
 function _text(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
   if (parentNode.isConnected)
