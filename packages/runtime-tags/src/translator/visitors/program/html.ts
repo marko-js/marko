@@ -8,6 +8,7 @@ import {
   usedSharedUid,
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
+import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
@@ -41,6 +42,7 @@ import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
+import { controllableFeatureFor } from "../tag/native-tag";
 
 export function getTemplateContentName() {
   return getSharedUid("content");
@@ -206,13 +208,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   let unsupported: t.Node | undefined;
   t.traverseFast(program.node, (node) => {
     switch (node.type) {
-      case "MarkoAttribute":
-      case "MarkoSpreadAttribute":
-        if (!evaluate(node.value).confident) {
-          unsupported = node;
-          return t.traverseFast.stop;
-        }
-        break;
       case "MarkoPlaceholder":
         if (!node.escape) {
           unsupported = node;
@@ -223,9 +218,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         unsupported = node;
         return t.traverseFast.stop;
       case "MarkoTag": {
+        const tagName = t.isStringLiteral(node.name) && node.name.value;
         const tagDef =
-          t.isStringLiteral(node.name) &&
-          getTagDefForTagName(program.hub.file, node.name.value);
+          tagName && getTagDefForTagName(program.hub.file, tagName);
         if (
           !(
             tagDef &&
@@ -237,6 +232,24 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           unsupported = node;
           return t.traverseFast.stop;
         }
+        // A tag that may become controllable keeps all of its dynamic
+        // attributes unsupported until patching understands controlled state.
+        const controllable = !!controllableFeatureFor(tagName as string);
+        for (const attr of node.attributes) {
+          if (
+            attr.type === "MarkoSpreadAttribute"
+              ? !evaluate(attr.value).confident
+              : !evaluate(attr.value).confident &&
+                (controllable ||
+                  isEventOrChangeHandler(attr.name) ||
+                  attr.name === "class" ||
+                  attr.name === "style" ||
+                  (tagName === "option" && attr.name === "value"))
+          ) {
+            unsupported = attr;
+            return t.traverseFast.stop;
+          }
+        }
         break;
       }
     }
@@ -244,7 +257,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   if (unsupported) {
     throw program.hub.buildError(
       unsupported,
-      "Persisted templates currently support only escaped dynamic text in native HTML.",
+      "Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.",
     );
   }
 }
