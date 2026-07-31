@@ -218,6 +218,12 @@ export function normalizeDynamicRenderer<Renderer>(
 export const decodeAccessor = (num: number): string =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 
+export function normalizeAttrValue(value: unknown) {
+  if (isNotVoid(value)) {
+    return value === true ? "" : value + "";
+  }
+}
+
 // Branch (control flow) support latch. A `let` written only by
 // `withBranches` folds away with it, dropping guarded branch handling from
 // bundles without branches; an object property would defeat that analysis.
