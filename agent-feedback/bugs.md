@@ -523,3 +523,24 @@ When a property's value is circular, `writeProp` returns false, `writeObjectProp
 `packages/runtime-tags/src/html/writer.ts` › `_if` | 2026-07-30 | impact:high | effort:med
 
 `_if` writes `state.mark(ResumeSymbol.BranchStart, "")` before running `cb()`, so an `<if>` whose condition is false still ships a `<!--M_[-->` comment, while `dom/resume.ts` › `createVisitBranches` pushes every BranchStart onto `branchStarts` but pops only inside `while ((branchId = +lastToken))` — a not-taken `<if>` emits a BranchEnd carrying no branch ids, so its start is never consumed and the next enclosing BranchEnd pops it instead of its own. The enclosing branch's `StartNode` then lands after the content it owns: SSR + resume of `<let/x=0/><button onClick(){x++}>${x}</button><if=(x<1)><b>outer</b><if=(x>9)>inner</if></if>` leaves `<!--M_[--><b>outer</b>` in the DOM after one click, a toggling variant re-renders into `<b>outer</b><b>outer</b>`, and `<let/items=[1,2]/><for|i| of=items><div>item ${i}</div><if=(i>9)>never</if></for>` fails to remove a dropped row — while the same templates with a taken inner `<if>`, or with no inner `<if>`, tear down correctly (reproduced in both debug and optimize builds). Fix it on the HTML side, emitting the start marker only when a branch actually renders (capture the chunk and its `html.length` before `cb()` and splice the mark in afterwards, gated against a fork/flush caused by an `<await>`/`<try>` in the body; or have `_if` pass the already-computed decision into `cb` so the translator writes the start as the first statement of each taken arm), and leave `dom/resume.ts` alone: popping `branchStarts` on an id-less BranchEnd is the mirror-image bug, because an empty non-`singleNode` `<for>` (`<if=(x<1)><b>outer</b><for|i| of=[]><i>${i}</i><span>y</span></for></if>`) emits an id-less BranchEnd with no start at all and would then crash on `startVisit.parentNode`. `_await`, `_try` and `forBranches` always pair a start with an id-carrying end, so `_if` is the sole stray producer; nine fixtures already emit the stray marker (`if-default-false`, `lazy-tag-load-error`, …) but none has content before a nested not-taken `<if>` inside a rendered branch, which is why the suite is blind to it. Re-verify: SSR the first template, click the button, and assert `document.body` contains no `<b>outer</b>`.
+
+## Round-trip `Intl.DateTimeFormat` through a form that preserves `month`/`weekday`, not `resolvedOptions()`
+
+`packages/runtime-tags/src/html/serializer.ts` › `writeIntl` | 2026-07-31 | impact:med | effort:med
+
+`Intl` serialization (added in #3566) rebuilds a formatter by feeding
+`resolvedOptions()` back into the constructor, but those options are not a
+faithful round trip: for `Intl.DateTimeFormat` the resolved `month` and
+`weekday` fields are normalized to values that re-resolve differently in some
+locales, notably `ja` and `zh`, so a date formatted on the server renders
+differently once the same formatter is used after resume. That is a silent
+server/client divergence in rendered text rather than a crash, which makes it
+harder to notice than the unserializable-value error it replaced, and the
+changeset currently records it as an accepted limitation. A fix likely needs to
+capture the constructor's original `options` argument at the call site (the
+compiler already sees `new Intl.DateTimeFormat(...)` in `<const>` position)
+rather than recovering them from the built formatter, or to special-case the
+fields whose resolved form is lossy. Re-verify by server-rendering
+`<const/fmt=new Intl.DateTimeFormat("ja", { month: "long", weekday: "long" })/>`
+reached from browser-updating content, then comparing `fmt.format(date)` before
+and after resume.
