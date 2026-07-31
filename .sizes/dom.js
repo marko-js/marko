@@ -1,4 +1,4 @@
-// size: 26464 (min) 9828 (brotli)
+// size: 26464 (min) 9800 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -390,6 +390,9 @@ function normalizeDynamicRenderer(value) {
     let normalized = value.content || value.default || value;
     if ("a" in normalized) return normalized;
   }
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function withBranches(runtime) {
   return ((branchesEnabled = 1), runtime);
@@ -1320,9 +1323,6 @@ function _html(scope, value, accessor) {
 function normalizeClientRender(value) {
   let renderer = normalizeDynamicRenderer(value);
   if (renderer && renderer.a) return renderer;
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function _lifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,
