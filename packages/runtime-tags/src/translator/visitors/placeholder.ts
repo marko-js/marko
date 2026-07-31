@@ -15,7 +15,12 @@ import {
   createBinding,
   getScopeAccessorLiteral,
 } from "../util/references";
-import { callRuntime, getHTMLRuntime, getRuntimePath } from "../util/runtime";
+import {
+  callRuntime,
+  getHTMLRuntime,
+  getRuntimePath,
+  importRuntimeFeature,
+} from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   ContentType,
@@ -168,12 +173,12 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const siblingText = extra[kSiblingText]!;
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
-    const isPatchText =
-      isHTML &&
-      isPersisted() &&
-      node.escape &&
-      !section.parent &&
-      !!nodeBinding;
+    const isPatch =
+      isPersisted() && node.escape && !section.parent && !!nodeBinding;
+    const isPatchText = isHTML && isPatch;
+    // An interactive page receives assets transitively through its dom
+    // program, so the feature import rides both outputs.
+    if (isPatch && !isHTML) importRuntimeFeature("patch-text");
 
     if (isHTML && markerSerializeReason) {
       if (siblingText === SiblingText.Before) {
