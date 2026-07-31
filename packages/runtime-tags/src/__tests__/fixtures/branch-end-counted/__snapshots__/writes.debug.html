@@ -1,0 +1,25 @@
+<div class=host>
+  <h3>list</h3><em>1<!--M_*2 #text/0--></em><span>#<!>
+      1<!--M_*2 #text/1--></span><em>2<!--M_*3 #text/0--></em><span>#<!>
+      2<!--M_*3 #text/1--></span><em>3<!--M_*4 #text/0--></em><span>#<!>
+      3<!--M_*4 #text/1--></span><!--M_(1 #text/0 2 4 3 2-->
+  <h4>tail</h4><b>big</b><i>really</i><!--M_(1 #text/1 2 5-->
+</div><button class=rev>Reverse</button><!--M_*1 #button/2--><button
+  class=pop>Pop</button><!--M_*1 #button/3--><button
+  class=big>Big</button><!--M_*1 #button/4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      items: [1, 2, 3],
+      big: !0
+    }, {
+      "#LoopKey": 1
+    }, {
+      "#LoopKey": 2
+    }, {
+      "#LoopKey": 3
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/branch-end-counted/template.marko_0 1"
+  ];
+  M._.w()
+</script>

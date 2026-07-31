@@ -1,0 +1,275 @@
+# Render
+```html
+<div
+  class="host"
+>
+  <h3>
+    list
+  </h3>
+  <em>
+    1
+  </em>
+  <span>
+    #1
+  </span>
+  <em>
+    2
+  </em>
+  <span>
+    #2
+  </span>
+  <em>
+    3
+  </em>
+  <span>
+    #3
+  </span>
+  <h4>
+    tail
+  </h4>
+  <b>
+    big
+  </b>
+  <i>
+    really
+  </i>
+</div>
+<button
+  class="rev"
+>
+  Reverse
+</button>
+<button
+  class="pop"
+>
+  Pop
+</button>
+<button
+  class="big"
+>
+  Big
+</button>
+```
+
+# Update
+```js
+(document.querySelector(selector)).click();
+```
+```html
+<div
+  class="host"
+>
+  <h3>
+    list
+  </h3>
+  <em>
+    3
+  </em>
+  <span>
+    #3
+  </span>
+  <em>
+    2
+  </em>
+  <span>
+    #2
+  </span>
+  <em>
+    1
+  </em>
+  <span>
+    #1
+  </span>
+  <h4>
+    tail
+  </h4>
+  <b>
+    big
+  </b>
+  <i>
+    really
+  </i>
+</div>
+<button
+  class="rev"
+>
+  Reverse
+</button>
+<button
+  class="pop"
+>
+  Pop
+</button>
+<button
+  class="big"
+>
+  Big
+</button>
+```
+## Change
+```
+REMOVE: .host > span:nth-of-type(3) + em
+REMOVE: .host > span:nth-of-type(3) + span
+INSERT: .host > h3 + :is(em, span)
+REMOVE: .host > span:nth-of-type(3) + em
+REMOVE: .host > span:nth-of-type(3) + span
+INSERT: .host > h3 + :is(em, span)
+```
+
+# Update
+```js
+(document.querySelector(selector)).click();
+```
+```html
+<div
+  class="host"
+>
+  <h3>
+    list
+  </h3>
+  <em>
+    3
+  </em>
+  <span>
+    #3
+  </span>
+  <em>
+    2
+  </em>
+  <span>
+    #2
+  </span>
+  <h4>
+    tail
+  </h4>
+  <b>
+    big
+  </b>
+  <i>
+    really
+  </i>
+</div>
+<button
+  class="rev"
+>
+  Reverse
+</button>
+<button
+  class="pop"
+>
+  Pop
+</button>
+<button
+  class="big"
+>
+  Big
+</button>
+```
+## Change
+```
+REMOVE: .host > span:nth-of-type(2) + em
+REMOVE: .host > span:nth-of-type(2) + span
+```
+
+# Update
+```js
+(document.querySelector(selector)).click();
+```
+```html
+<div
+  class="host"
+>
+  <h3>
+    list
+  </h3>
+  <em>
+    3
+  </em>
+  <span>
+    #3
+  </span>
+  <em>
+    2
+  </em>
+  <span>
+    #2
+  </span>
+  <h4>
+    tail
+  </h4>
+</div>
+<button
+  class="rev"
+>
+  Reverse
+</button>
+<button
+  class="pop"
+>
+  Pop
+</button>
+<button
+  class="big"
+>
+  Big
+</button>
+```
+## Change
+```
+REMOVE: .host > h4 + b
+REMOVE: .host > h4 + i
+```
+
+# Update
+```js
+(document.querySelector(selector)).click();
+```
+```html
+<div
+  class="host"
+>
+  <h3>
+    list
+  </h3>
+  <em>
+    3
+  </em>
+  <span>
+    #3
+  </span>
+  <em>
+    2
+  </em>
+  <span>
+    #2
+  </span>
+  <h4>
+    tail
+  </h4>
+  <b>
+    big
+  </b>
+  <i>
+    really
+  </i>
+</div>
+<button
+  class="rev"
+>
+  Reverse
+</button>
+<button
+  class="pop"
+>
+  Pop
+</button>
+<button
+  class="big"
+>
+  Big
+</button>
+```
+## Change
+```
+INSERT: .host > h4 + :is(b, i)
+```

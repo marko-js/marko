@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							writeScope($scope3_id, {}, "__tests__/template.marko", "17:10");
 							return 0;
 						}
-					}, $scope2_id, "#text/1");
+					}, $scope2_id, "#text/1", void 0, void 0, void 0, 0, 3);
 					_html("</div>");
 					_subscribe($showInner__closures, writeScope($scope2_id, {}, "__tests__/template.marko", "14:6"));
 					return 0;

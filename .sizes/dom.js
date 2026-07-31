@@ -1,4 +1,4 @@
-// size: 27187 (min) 10109 (brotli)
+// size: 27235 (min) 10132 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -768,6 +768,7 @@ function init(runtimeId = "M") {
                 startVisit = visit,
                 i = orphanBranches.length,
                 j = deferredOwners.length,
+                count = 1,
               ) => {
                 let isStart = visitType === "[" || visitType === "{";
                 for (
@@ -776,6 +777,7 @@ function init(runtimeId = "M") {
                     visitType === ")" || visitType === "}" ? parent : visit),
                   (accessor = "A" + lastToken),
                   (singleNode = visitType !== "]" && visitType !== ")"),
+                  visitType === "(" && (nextToken(), (count = +lastToken)),
                   nextToken());
                   (branchId = +lastToken);
                 ) {
@@ -785,13 +787,16 @@ function init(runtimeId = "M") {
                     (branch.O = render.p?.[branchId]) && (branch.O.m = render.m),
                     singleNode)
                   ) {
-                    for (
-                      ;
-                      startVisit.previousSibling &&
-                      ~visits.indexOf((startVisit = startVisit.previousSibling));
-                    );
+                    for (let n = count; n--;) {
+                      for (
+                        ;
+                        startVisit.previousSibling &&
+                        ~visits.indexOf((startVisit = startVisit.previousSibling));
+                      );
+                      branch.K ||= startVisit;
+                    }
                     ((branch._ ??= visitScope),
-                      (branch.K = branch.S = startVisit),
+                      (branch.S = startVisit),
                       visitType === "'" && (branch.a = startVisit));
                   } else
                     ((curBranchScopes = push(curBranchScopes, branch)),

@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 							writeScope($scope3_id, {});
 							return 0;
 						}
-					}, $scope2_id, "b");
+					}, $scope2_id, "b", void 0, void 0, void 0, 0, 3);
 					_html("</div>");
 					_subscribe($showInner__closures, writeScope($scope2_id, {}));
 					return 0;

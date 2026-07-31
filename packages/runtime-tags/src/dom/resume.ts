@@ -191,6 +191,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             startVisit: ChildNode = visit,
             i = orphanBranches.length,
             j = deferredOwners.length,
+            count = 1,
           ) => {
             const isStart =
               visitType === ResumeSymbol.BranchStart ||
@@ -205,6 +206,10 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               singleNode =
                 visitType !== ResumeSymbol.BranchEnd &&
                 visitType !== ResumeSymbol.BranchEndOnlyChildInParent;
+              if (visitType === ResumeSymbol.BranchEndCounted) {
+                nextToken(/* read per-branch node count */);
+                count = +lastToken;
+              }
               nextToken(/* read optional first branchId */);
             }
 
@@ -220,15 +225,19 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               if (singleNode) {
                 // A set makes this linear but adds ~18 B brotli to every
                 // bundle; the scan costs ~1 ms only past ~1000 branches here.
-                while (
-                  startVisit.previousSibling &&
-                  ~visits.indexOf(
-                    (startVisit = startVisit.previousSibling) as Comment,
-                  )
-                );
+                // A counted branch spans `count` top-level nodes; the first
+                // scanned (the deepest in document order) is its end.
+                for (let n = count; n--;) {
+                  while (
+                    startVisit.previousSibling &&
+                    ~visits.indexOf(
+                      (startVisit = startVisit.previousSibling) as Comment,
+                    )
+                  );
+                  branch[AccessorProp.EndNode] ||= startVisit;
+                }
                 branch[AccessorProp.Owner] ??= visitScope;
-                branch[AccessorProp.EndNode] = branch[AccessorProp.StartNode] =
-                  startVisit;
+                branch[AccessorProp.StartNode] = startVisit;
                 if (visitType === ResumeSymbol.BranchEndNativeTag) {
                   branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : "a"] =
                     startVisit;

@@ -374,27 +374,31 @@ A monotonically increasing list of distinct scope ids is the least compressible 
 
 `syncControllableFormInput(el, hasChanged, onChange)` already receives the element's own change detector and stores `onChange` on the element as `el._`, but `handleFormReset` discards it and calls `hasFormElementChanged(el)`, which branches on `el.options` into `hasSelectChanged` / `hasValueChanged` / `hasCheckboxChanged` — so a page whose only controllable is `value:=` on a text input still ships every kind's detector (~300 of that page's 2355 raw bytes of `controllable.ts`, ≈115 min / ≈40 brotli). Stash the detector alongside the handler (`el._c = hasChanged`) and have `handleFormReset` call `el._c(el)`; `hasFormElementChanged` and the two foreign detectors then disappear from single-kind pages. This is also the concrete blocker for the per-kind `controllable.ts` split proposed in "Split rarely-used dom machinery out of the eager runtime chunks": with `hasFormElementChanged` in the shared core, per-kind modules would still cross-reference every kind's detector, so that split alone would not stop a value-only page pulling select and checkbox code. Re-verify: build `<let/x=""/><input value:=x>` and grep the entry chunk for `hasCheckboxChanged` and `hasSelectChanged`.
 
-## Shrink the resume payload's branch boundary encoding
+## Extend counted branch ends past statically-countable bodies
 
-`packages/runtime-tags/src/html/writer.ts` › `forBranches` | 2026-07-30 | impact:med | effort:high
+`packages/runtime-tags/src/translator/util/sections.ts` › `getStaticChildCount` | 2026-07-30 | impact:med | effort:high
 
-A branch whose body is not a single node still costs a whole `BranchStart`
-comment on the wire — `<!--` + runtime and render id + `[` + `-->` — one per
-branch, so an N item loop writes N of them plus its end marker. Resume now
-consumes and deletes those comments rather than keeping them as range
-endpoints, so the cost is purely payload, and the `singleNode` path shows the
-shape of a cheaper encoding: it emits no start comments at all and lists every
-branch id on the one end marker, with the client walking back a node per id.
+`BranchEndCounted` now drops the per-branch start comment whenever every
+top-level body node is a native tag, `<html-comment>`/`<html-script>`/
+`<html-style>`, or a countable custom tag. The corpus still writes `[` start
+comments for the remaining shapes, each needing its own extension:
 
-The direction is to generalize that from "one node per branch" to a per branch
-node count carried on the end marker, which needs the count to be known where
-the HTML is written: the translator knows each branch body's static top level
-node count, and nested control flow would have to report its own total up to
-the enclosing branch's counter. Text nodes are the hazard, since adjacent
-writes coalesce in the parser and a count that assumes two nodes would walk
-back too far — `analyzeSiblingText` in
-`packages/runtime-tags/src/translator/visitors/placeholder.ts` already models
-where separators are required and is the place to reuse. Re-verify the prize:
+- **Nested control flow at top level** (`<if>` inside a `<for>` item): the
+  nested branch's own end marker bounds its range before the outer end is
+  processed, so the outer walk-back in `packages/runtime-tags/src/dom/resume.ts`
+  › `init` could treat it as one position by jumping from its end node to its
+  recorded start — needs a node→branch map populated as branch ends resolve,
+  and the nested slot to count as exactly one position (its collapsed marker
+  when empty). Anchored (`{`) children already span their own markers.
+- **Static text between tags**: exactly one text node when both neighbors are
+  non-text, but body-edge text coalesces with whatever precedes/follows the
+  branch (including the previous loop item), so edges need the surrounding
+  context `analyzeSiblingText` in
+  `packages/runtime-tags/src/translator/visitors/placeholder.ts` models.
+- **Placeholders** can render empty (zero nodes) and are only countable with a
+  runtime-counted encoding, not a static one.
+
+Re-verify the prize:
 `grep -oh 'M_\[' packages/runtime-tags/src/__tests__/fixtures/*/__snapshots__/writes.html | wc -l`
 counts the start comments still written across the fixture corpus.
 
