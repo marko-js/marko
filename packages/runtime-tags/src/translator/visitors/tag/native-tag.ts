@@ -18,6 +18,7 @@ import {
   toDelimitedString,
 } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import { addAssetImport } from "../../util/asset-imports";
 import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
@@ -29,7 +30,11 @@ import { getTagName } from "../../util/get-tag-name";
 import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOutputHTML,
+  isPersisted,
+} from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
@@ -45,6 +50,7 @@ import {
   callRuntime,
   type DOMRuntimeFeature,
   getHTMLRuntime,
+  getRuntimePath,
   importRuntime,
   importRuntimeFeature,
 } from "../../util/runtime";
@@ -58,6 +64,7 @@ import {
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
@@ -270,6 +277,14 @@ export default {
 
         if (hasEventHandlers) {
           getProgram().node.extra.isInteractive = true;
+        }
+
+        if (isPersisted() && hasDynamicAttributes && !tagSection.parent) {
+          addSerializeReason(tagSection, true, nodeBinding);
+          addAssetImport(
+            tag.hub.file,
+            `${getRuntimePath("dom")}/patch-attr.feat`,
+          );
         }
 
         if (spreadReferenceNodes) {
@@ -605,6 +620,15 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
+                if (isPersisted() && !tagSection.parent) {
+                  write`${callRuntime(
+                    "_patch_attr",
+                    getScopeIdIdentifier(tagSection),
+                    getScopeAccessorLiteral(nodeBinding!),
+                    t.stringLiteral(name),
+                    value,
+                  )}`;
+                }
                 write`${factorAttrConditional(
                   buildAttrExpression(
                     value,
