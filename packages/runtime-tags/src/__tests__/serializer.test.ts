@@ -2548,6 +2548,37 @@ describe("serializer", () => {
     assert.equal(partials[0], 1);
     assert.equal(partials.length, 25001);
   });
+
+  describe("patch frames", () => {
+    const patchBoundary = () =>
+      ({
+        signal: { aborted: false },
+        state: { writesPatches: true },
+      }) as any as Boundary;
+
+    it("serializes a scope run bare", () => {
+      assert.equal(
+        new Serializer().stringifyScopes(
+          [[1, {}, { value: 1 }]],
+          patchBoundary(),
+        ),
+        `1,{value:1}`,
+      );
+    });
+
+    it("serializes deferred assignments as a self-contained expression", () => {
+      const err = new Error("boom") as Error & { cause: unknown };
+      const wrapper = { err };
+      err.cause = wrapper;
+      assert.equal(
+        new Serializer().stringifyScopes(
+          [[1, {}, { value: { wrapper } }]],
+          patchBoundary(),
+        ),
+        `(_([1,{value:{wrapper:_.a={err:_.b=new Error("boom")}}}]),_.b.cause=_.a,0)`,
+      );
+    });
+  });
 });
 
 // The round-trip gate every `assertStringify` leans on: a built-in that lost
