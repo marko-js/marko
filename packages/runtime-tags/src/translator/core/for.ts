@@ -295,12 +295,17 @@ export default {
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
           }
 
-          if (singleChild) {
+          // A statically countable body resumes from the end marker alone
+          // (its data carries the per-item node count), so no start markers.
+          const countedChildren = singleChild
+            ? 1
+            : (!skipParentEnd && bodySection.content?.staticChildCount) || 0;
+          if (countedChildren) {
             if (!skipParentEnd) {
               forTagArgs.push(t.numericLiteral(0));
             }
 
-            forTagArgs.push(t.numericLiteral(1));
+            forTagArgs.push(t.numericLiteral(countedChildren));
           }
         }
 

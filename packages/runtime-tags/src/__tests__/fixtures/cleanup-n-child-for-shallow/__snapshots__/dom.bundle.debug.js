@@ -26,8 +26,8 @@ const $input = ($scope, input) => {
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = "<button>Toggle</button><div></div><!><!>";
-const $walks = " b b%c";
+const $template = "<button>Toggle</button><div></div><!>";
+const $walks = " b b%b";
 const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write));
 const $for_content__setup = $for_content__write;
 const $for_content__item = ($scope, item) => $name($scope["#childScope/0"], item);

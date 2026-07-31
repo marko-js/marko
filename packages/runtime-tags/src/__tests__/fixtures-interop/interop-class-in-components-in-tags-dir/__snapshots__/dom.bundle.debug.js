@@ -1,15 +1,15 @@
 // tags/hello.marko
-const $template$1 = "<!><!><!>";
-const $walks$1 = "b%c";
+const $template$1 = "<!>";
+const $walks$1 = "%b";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 function $setup$1($scope) {
 	$dynamicTag($scope, _marko_template);
 }
-var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello.marko", $template$1, "b%c", $setup$1);
+var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello.marko", "<!>", "%b", $setup$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
+const $template = "<!>";
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 }

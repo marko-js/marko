@@ -20,8 +20,8 @@ _resume("__tests__/tags/child/index.marko_0/_return", $_return);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=inc>inc</button><div> </div>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}& bD l`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=inc>inc</button><div> </div>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& bD l`)($walks$1);
 const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern/var", ($scope, $pattern) => {
 	$count($scope, $pattern.count);
 	$inc($scope, $pattern.inc);

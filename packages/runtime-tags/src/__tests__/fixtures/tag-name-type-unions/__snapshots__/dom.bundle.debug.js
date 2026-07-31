@@ -15,8 +15,8 @@ const $input = ($scope, input) => $input_label($scope, input.label);
 var b_default = /*@__PURE__*/ _template("__tests__/tags/b/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = "<button>toggle</button><!><!><!><!><!><!><!>";
-const $walks = " b%b%b%b%b%b%c";
+const $template = "<button>toggle</button><!><!><!><!><!><!>";
+const $walks = " b%b%b%b%b%b%b";
 const localTag = a_default;
 const $xdivA_content = _content_resume("__tests__/template.marko_4_content", "m");
 const $navigator_content = _content_resume("__tests__/template.marko_3_content", "g");

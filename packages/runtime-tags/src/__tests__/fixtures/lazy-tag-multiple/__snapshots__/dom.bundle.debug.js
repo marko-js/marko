@@ -17,8 +17,8 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 var child_b_default = /*@__PURE__*/ _template("__tests__/child-b.marko", $template, "D l", $setup, $input);
 
 // template.marko
-const $template = "<button>Inc</button><!><!><!>";
-const $walks = " b%/&b%/&c";
+const $template = "<button>Inc</button><!><!>";
+const $walks = " b%/&b%/&b";
 let $load_ChildA_setup = /*@__PURE__*/ _load_setup("#text/1", "#childScope/2", () => import("./v:child-a.marko.setup.mjs"));
 let $load_ChildA_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child-a.marko.input_value.mjs"));
 let $load_ChildB_setup = /*@__PURE__*/ _load_setup("#text/3", "#childScope/4", () => import("./v:child-b.marko.setup.mjs"));

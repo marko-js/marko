@@ -1,0 +1,15 @@
+<let/outer=true/>
+<let/shown=true/>
+
+<div.host>
+  <if=outer>
+    <show=shown>
+      <b>hi</b>
+    </show>
+    <span.tail>tail</span>
+  </if>
+  <span.sib>sib</span>
+</div>
+
+<button.show onClick() { shown = !shown }>Show</button>
+<button.outer onClick() { outer = !outer }>Outer</button>

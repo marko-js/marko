@@ -1,6 +1,6 @@
 // tags/child.marko
-const $template$2 = "<!><!><!>";
-const $walks$2 = "b%c";
+const $template$2 = "<!>";
+const $walks$2 = "%b";
 const $setup$2 = () => {};
 const $for_content__item__script = _script("__tests__/tags/child.marko_1_item", ($scope) => _attrs_script($scope, "#span/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
@@ -17,17 +17,17 @@ const $for_content__$temp = ($scope, $temp) => {
 const $for = /*@__PURE__*/ _for_of("#text/0", "<span><!></span>", " D%", 0, $for_content__$params);
 const $foo = ($scope, foo) => $for($scope, [foo]);
 const $input$2 = ($scope, input) => $foo($scope, input.foo);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, "b%c", $setup$2, $input$2);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "<!>", "%b", $setup$2, $input$2);
 
 // tags/wrap.marko
-const $template$1 = " <!><!>";
-const $walks$1 = "b%c";
+const $template$1 = " <!>";
+const $walks$1 = "b%b";
 const $setup$1 = () => {};
 _resume_dynamic_tag();
 _enable_controllable();
 const $_classspandiv_content__input_foo = /*@__PURE__*/ _closure_get("input_foo", ($scope) => $foo($scope["#childScope/0"], $scope._.input_foo));
 const $_classspandiv_content__setup = $_classspandiv_content__input_foo;
-const $_classspandiv_content = _content_resume("__tests__/tags/wrap.marko_1_content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__setup);
+const $_classspandiv_content = _content_resume("__tests__/tags/wrap.marko_1_content", "<!>", /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b"), $_classspandiv_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $_classspandiv_content);
 const $input_class__OR__rest = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope._class ? "span" : "div", () => ({
 	...$scope.rest,
@@ -42,11 +42,11 @@ const $input$1 = ($scope, input) => {
 };
 const $input_foo__closure = /*@__PURE__*/ _closure($_classspandiv_content__input_foo);
 const $input_foo = /*@__PURE__*/ _const("input_foo", $input_foo__closure);
-var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, "b%c", $setup$1, $input$1);
+var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, "b%b", $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)("b%c");
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b%b");
 const $desc_content2 = _content_resume("__tests__/template.marko_2_content", "Two");
 const $desc_content = _content_resume("__tests__/template.marko_1_content", "One");
 function $setup($scope) {

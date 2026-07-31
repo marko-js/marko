@@ -1,5 +1,4 @@
 // tags/child.marko
-const $template = "<!><!><!>";
 const $for_content__item__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 const $for_content__item = /*@__PURE__*/ _const(5, ($scope) => {
 	_attrs($scope, "a", $scope.f);
@@ -18,7 +17,7 @@ const $foo = ($scope, foo) => $for($scope, [foo]);
 _resume_dynamic_tag();
 _enable_controllable();
 const $_classspandiv_content__input_foo = /*@__PURE__*/ _closure_get(7, ($scope) => $foo($scope.a, $scope._.d));
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("c0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__input_foo));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("c0", "<!>", /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b"), $_classspandiv_content__input_foo));
 
 // template.marko
 const $desc_content2 = _content_resume("a1", "Two");

@@ -18,7 +18,7 @@ const $try_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_value($scope["#childScope/1"], "hi");
 };
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!>", "%/&", $try_content__setup);
 function $setup($scope) {
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 }

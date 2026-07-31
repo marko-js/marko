@@ -1,0 +1,25 @@
+<let/outer=true/>
+<let/items=[{ id: 0 }, { id: 1 }]/>
+<let/shown=true/>
+
+<div.host>
+  <if=outer>
+    <for|item| of=items by="id">
+      <if=item.id % 2 === 0>
+        <b>even ${item.id}</b>
+      </if>
+      <else>
+        <i>odd ${item.id}</i>
+      </else>
+    </for>
+    <show=shown>
+      <u>tail</u>
+    </show>
+  </if>
+</div>
+
+<button.outer onClick() { outer = !outer }>Outer</button>
+<button.rotate onClick() { items = [...items.slice(1), items[0]] }>Rotate</button>
+<button.drop onClick() { items = items.slice(1) }>Drop</button>
+<button.clear onClick() { items = [] }>Clear</button>
+<button.show onClick() { shown = !shown }>Show</button>

@@ -27,8 +27,8 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $template = "<!><!><div id=tags-api> </div>";
-const $walks = "b%bD l";
+const $template = "<!><div id=tags-api> </div>";
+const $walks = "%bD l";
 const $inlinebutton_content = _content_resume("__tests__/template.marko_1_content", "Reset");
 const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => _text($scope["#text/1"], $scope.msg));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inlinebutton_content);

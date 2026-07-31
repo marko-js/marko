@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $if_content__a__OR__b = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.a + $scope._.b));
 const $if_content__a = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__a__OR__b);
 const $if_content__setup = ($scope) => {
@@ -16,4 +16,4 @@ function $setup($scope) {
 	$b($scope, 0);
 	$if($scope, true ? 0 : 1);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup);

@@ -16,7 +16,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__inner._($scope);
 	$if_content__setup__script($scope);
 };
-const $if = /*@__PURE__*/ _if(1, "<button id=inner></button><!><!>", " b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if(1, "<button id=inner></button><!>", " b%", $if_content__setup);
 const $outer = /*@__PURE__*/ _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
 const $inner = /*@__PURE__*/ _let(3, $if_content__inner);
 const $count = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($if_content2__count));

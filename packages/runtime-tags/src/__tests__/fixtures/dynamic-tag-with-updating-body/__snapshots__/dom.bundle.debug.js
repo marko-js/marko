@@ -12,8 +12,8 @@ function $setup$1($scope) {
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
-const $template = "<!><!><button id=changeTag></button>";
-const $walks = "b%b b";
+const $template = "<!><button id=changeTag></button>";
+const $walks = "%b b";
 const $tagName_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };

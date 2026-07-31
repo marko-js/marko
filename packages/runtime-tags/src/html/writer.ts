@@ -300,7 +300,7 @@ export function _show_start(display: unknown, mark?: unknown) {
     // The wrapper itself is the range's single node.
     if (mark) {
       $chunk.writeHTML(
-        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+        $chunk.boundary.state.mark(ResumeSymbol.BranchStartAnchored, ""),
       );
     }
   } else {
@@ -344,7 +344,7 @@ export function _for_of(
   serializeMarker?: number,
   serializeStateful?: number,
   parentEndTag?: string | 0,
-  singleNode?: 1,
+  singleNode?: number,
 ): void {
   forBranches(
     by,
@@ -375,7 +375,7 @@ export function _for_in(
   serializeMarker?: number,
   serializeStateful?: number,
   parentEndTag?: string | 0,
-  singleNode?: 1,
+  singleNode?: number,
 ): void {
   forBranches(
     by,
@@ -409,7 +409,7 @@ export function _for_to(
   serializeMarker?: number,
   serializeStateful?: number,
   parentEndTag?: string | 0,
-  singleNode?: 1,
+  singleNode?: number,
 ): void {
   forBranches(
     by,
@@ -444,7 +444,7 @@ export function _for_until(
   serializeMarker?: number,
   serializeStateful?: number,
   parentEndTag?: string | 0,
-  singleNode?: 1,
+  singleNode?: number,
 ): void {
   forBranches(
     by,
@@ -481,7 +481,7 @@ function forBranches(
   serializeMarker: undefined | number,
   serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
-  singleNode?: 1,
+  singleNode?: number,
 ) {
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
@@ -568,7 +568,8 @@ export function _if(
   serializeMarker?: number,
   serializeStateful?: number,
   parentEndTag?: string | 0,
-  singleNode?: 1,
+  // A per-branch-index array resolves against the taken branch below.
+  singleNode?: number | number[],
 ) {
   const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
@@ -598,7 +599,11 @@ export function _if(
     serializeStateful,
     serializeMarker,
     parentEndTag,
-    singleNode,
+    typeof singleNode === "object"
+      ? shouldWriteBranch
+        ? singleNode[branchIndex as number]
+        : undefined
+      : singleNode,
     shouldWriteBranch ? " " + branchId : "",
   );
 }
@@ -609,26 +614,32 @@ function writeBranchEnd(
   serializeStateful: undefined | number,
   serializeMarker: undefined | number,
   parentEndTag: string | undefined | 0,
-  singleNode?: 1,
+  singleNode?: number,
   branchIds?: string,
 ) {
   const endTag = parentEndTag || "";
   if (serializeMarker !== 0) {
     if (!parentEndTag || serializeStateful !== 0) {
       const { state } = $chunk.boundary;
-      const mark = singleNode
-        ? state.mark(
-            parentEndTag
-              ? ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-              : ResumeSymbol.BranchEndSingleNode,
-            scopeId + " " + accessor + (branchIds || ""),
-          )
-        : state.mark(
-            parentEndTag
-              ? ResumeSymbol.BranchEndOnlyChildInParent
-              : ResumeSymbol.BranchEnd,
-            scopeId + " " + accessor + (branchIds || ""),
-          );
+      const mark =
+        (singleNode as number) > 1 && branchIds
+          ? state.mark(
+              ResumeSymbol.BranchEndCounted,
+              scopeId + " " + accessor + " " + singleNode + branchIds,
+            )
+          : singleNode
+            ? state.mark(
+                parentEndTag
+                  ? ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
+                  : ResumeSymbol.BranchEndSingleNode,
+                scopeId + " " + accessor + (branchIds || ""),
+              )
+            : state.mark(
+                parentEndTag
+                  ? ResumeSymbol.BranchEndOnlyChildInParent
+                  : ResumeSymbol.BranchEnd,
+                scopeId + " " + accessor + (branchIds || ""),
+              );
       $chunk.writeHTML(mark + endTag);
     } else {
       $chunk.writeHTML(endTag + _el_resume(scopeId, accessor));
@@ -787,7 +798,7 @@ export function _await<T>(
     if (resumeMarker) {
       const branchId = _peek_scope_id();
       $chunk.writeHTML(
-        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+        $chunk.boundary.state.mark(ResumeSymbol.BranchStartAnchored, ""),
       );
       content(promise);
       $chunk.writeHTML(
@@ -820,7 +831,10 @@ export function _await<T>(
             if (resumeMarker) {
               const branchId = _peek_scope_id();
               $chunk.writeHTML(
-                $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+                $chunk.boundary.state.mark(
+                  ResumeSymbol.BranchStartAnchored,
+                  "",
+                ),
               );
               withIsAsync(content, value);
               $chunk.writeHTML(
@@ -854,7 +868,9 @@ export function _try(
   },
 ) {
   const branchId = _peek_scope_id();
-  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(ResumeSymbol.BranchStartAnchored, ""),
+  );
 
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0

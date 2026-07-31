@@ -1,0 +1,19 @@
+<let/items=[1, 2, 3]/>
+<let/big=true/>
+
+<div.host>
+  <h3>list</h3>
+  <for|item| of=items by=(x => x)>
+    <em>${item}</em>
+    <span>#${item}</span>
+  </for>
+  <h4>tail</h4>
+  <if=big>
+    <b>big</b>
+    <i>really</i>
+  </if>
+</div>
+
+<button.rev onClick() { items = [...items].reverse() }>Reverse</button>
+<button.pop onClick() { items = items.slice(0, -1) }>Pop</button>
+<button.big onClick() { big = !big }>Big</button>

@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><html><head><title>Head Flush Test</title></head><body><!></body></html>";
-const $walks = "bDbD%/&m";
+const $template = "<html><head><title>Head Flush Test</title></head><body><!></body></html>";
+const $walks = "DbD%/&m";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $setup = $load_Child_setup;

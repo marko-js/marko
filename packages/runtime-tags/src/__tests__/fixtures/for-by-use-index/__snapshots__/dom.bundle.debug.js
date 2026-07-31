@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<div></div><!><!>";
-const $walks = " b%c";
+const $template = "<div></div><!>";
+const $walks = " b%b";
 const $if_content__last = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.last));
 const $if_content__setup = $if_content__last;
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {

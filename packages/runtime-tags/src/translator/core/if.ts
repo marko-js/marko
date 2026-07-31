@@ -240,6 +240,22 @@ export const IfTag = {
               getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
             }
 
+            // A statically countable taken branch resumes from the end marker
+            // alone (its data carries the branch's node count), so no start
+            // marker; every branch must be countable since any may be taken.
+            let countedChildren: number[] | 0 =
+              skipParentEnd || singleChild ? 0 : [];
+            if (countedChildren) {
+              for (const [, branchBody] of branches) {
+                const branchCount = branchBody?.content?.staticChildCount;
+                if (!branchCount) {
+                  countedChildren = 0;
+                  break;
+                }
+                countedChildren.push(branchCount);
+              }
+            }
+
             const statefulSerializeArg = getSerializeGuard(
               ifTagSection,
               getSerializeReason(ifTagSection, kStatefulReason),
@@ -270,10 +286,18 @@ export const IfTag = {
                 statefulSerializeArg,
                 skipParentEnd
                   ? t.stringLiteral(`</${onlyChildParentTagName}>`)
-                  : singleChild
+                  : singleChild || countedChildren
                     ? t.numericLiteral(0)
                     : undefined,
-                singleChild ? t.numericLiteral(1) : undefined,
+                singleChild
+                  ? t.numericLiteral(1)
+                  : countedChildren
+                    ? countedChildren.every((n) => n === countedChildren[0])
+                      ? t.numericLiteral(countedChildren[0])
+                      : t.arrayExpression(
+                          countedChildren.map((n) => t.numericLiteral(n)),
+                        )
+                    : undefined,
               ),
             );
           }

@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "c");
+	}, $scope0_id, "c", void 0, void 0, void 0, 0, 3);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, { d: show });
 	_resume_branch($scope0_id);

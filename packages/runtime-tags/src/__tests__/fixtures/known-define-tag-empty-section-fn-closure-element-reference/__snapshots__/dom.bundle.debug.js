@@ -1,7 +1,7 @@
 // template.marko
 const $MyButton_content__walks = " c", $MyButton_content__template = "<button></button> ";
-const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}<!>`)($MyButton_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($MyButton_content__walks);
+const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)($MyButton_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($MyButton_content__walks);
 const $MyButton_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	_el_read($scope._["#div/0"]).textContent += `[onClick(${$scope.input_message})]`;
 }));

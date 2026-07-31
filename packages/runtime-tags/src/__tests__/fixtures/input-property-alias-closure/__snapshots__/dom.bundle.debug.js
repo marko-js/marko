@@ -1,7 +1,7 @@
 // template.marko
-const $Child_content__walks = "%c%c", $Child_content__template = "<!> and <!><!>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks);
+const $Child_content__walks = "%c%b", $Child_content__template = "<!> and <!>";
+const $template = $Child_content__template;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Child_content__walks);
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $Child_content2__input_text = /*@__PURE__*/ _closure_get("input_text", ($scope) => _text($scope["#text/0"], $scope._.input_text));
 const $Child_content2__setup = $Child_content2__input_text;

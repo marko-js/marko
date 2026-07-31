@@ -106,6 +106,10 @@ export function getNodeSelector(
   parent: Node,
 ): string {
   let after: Node | null = prev;
+  // A recorded previous sibling can be removed by a later mutation (a control
+  // flow marker giving way to its branch); its detached position would report
+  // the insert as having no preceding content, so use where the nodes landed.
+  if (after && !after.isConnected) after = nodes[0].previousSibling;
   while (after && isIgnoredNode(after)) after = after.previousSibling;
   const names = nodes.map(getNodeName);
   const body = parent.ownerDocument?.body;

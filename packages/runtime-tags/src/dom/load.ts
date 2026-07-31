@@ -11,7 +11,7 @@ import {
 import { addAwaitCounter, renderCatch } from "./control-flow";
 import { _enable_catch, queueAsyncRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
-import { insertBranchBefore, syncGen } from "./scope";
+import { fixBranchEdges, insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
 
@@ -111,6 +111,15 @@ function insertLoaded(
     values = branch[AccessorProp.Load] as LoadValues,
     insert = () => {
       insertBranchBefore(branch, parent, marker);
+      // The loaded branch already owns its edges; `_load_setup` renders into a
+      // plain child scope, so the enclosing branch is the closest one.
+      fixBranchEdges(
+        branch[AccessorProp.ParentBranch] || branch[AccessorProp.ClosestBranch],
+        marker,
+        marker,
+        branch[AccessorProp.StartNode],
+        branch[AccessorProp.EndNode],
+      );
       marker.remove();
       awaitCounter?.c();
     };

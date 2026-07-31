@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_serialize_if($scope0_reason, 0) && writeScope($scope1_id, { _: _serialize_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show);
+	}, $scope0_id, "#text/0", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, 0, 2);
 	_html("<span>after</span>");
 	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, { input_color: input.color }, "__tests__/template.marko", 0, { input_color: ["input.color"] });
 }, 1);

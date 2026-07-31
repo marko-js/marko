@@ -31,8 +31,8 @@ const $input$1 = ($scope, input) => {
 var tag_b_default = /*@__PURE__*/ _template("__tests__/tags/tag-b/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = "<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";
-const $walks = "b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%c";
+const $template = "<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";
+const $walks = "%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b";
 const foo = "";
 const $showTagAtagA_content = _content_resume("__tests__/template.marko_1_content", "Body content");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");

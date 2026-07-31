@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 			_serialize_if($scope0_reason, 0) && writeScope($scope1_id, { _: _serialize_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show);
+	}, $scope0_id, "a", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, 0, 2);
 	_html("<span>after</span>");
 	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, { e: input.color });
 }, 1);

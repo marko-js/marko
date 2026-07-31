@@ -1,7 +1,7 @@
 // template.marko
 const $Child_content__walks = "D lD l", $Child_content__template = "<div> </div><div> </div>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks);
+const $template = $Child_content__template;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Child_content__walks);
 const $setup = () => {};
 const $Child_content__a__script = _script("__tests__/template.marko_1_a", ($scope) => {
 	if ($scope.input_a !== "a") throw new Error("did not serialize a");

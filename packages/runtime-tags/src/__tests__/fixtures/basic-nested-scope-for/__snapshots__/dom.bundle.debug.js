@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $for_content__selected__OR__num = /*@__PURE__*/ _or(4, ($scope) => {
 	_attr($scope["#button/0"], "data-selected", $scope._.selected === $scope.num);
 	_attr($scope["#button/0"], "data-multiple", $scope.num % $scope._.selected === 0);
@@ -37,4 +37,4 @@ function $setup($scope) {
 		12
 	]]);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup);

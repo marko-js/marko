@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<button id=toggle>Toggle</button><button id=cleanup>Cleanup</button><!><!>";
-const $walks = " b b%c";
+const $template = "<button id=toggle>Toggle</button><button id=cleanup>Cleanup</button><!>";
+const $walks = " b b%b";
 const $if = /*@__PURE__*/ _if("#text/2", "<div>Hello</div>");
 const $hide = /*@__PURE__*/ _let("hide/3", ($scope) => $if($scope, !$scope.hide ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

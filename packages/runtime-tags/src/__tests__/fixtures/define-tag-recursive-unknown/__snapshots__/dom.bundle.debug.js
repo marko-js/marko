@@ -1,7 +1,7 @@
 // template.marko
-const $Foo_content__walks = "b%c", $Foo_content__template = "<!><!><!>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Foo_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks);
+const $Foo_content__walks = "%b", $Foo_content__template = "<!>";
+const $template = $Foo_content__template;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Foo_content__walks);
 const $else_content__input_message = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], JSON.stringify($scope._.input_message)));
 const $else_content__setup = $else_content__input_message;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_bar._($scope);
 };
 const $if_content__input_bar = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__Foo__OR__input_bar);
-const $Foo_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup, " ", " ", $else_content__setup);
+const $Foo_content__if = /*@__PURE__*/ _if("#text/0", "<!>", "%", $if_content__setup, " ", " ", $else_content__setup);
 const $Foo_content__input_bar = /*@__PURE__*/ _const("input_bar", ($scope) => {
 	$Foo_content__if($scope, $scope.input_bar ? 0 : 1);
 	$if_content__input_bar($scope);
@@ -31,4 +31,4 @@ function $setup($scope) {
 	$Foo_content__tag_input_message($scope["#childScope/0"]);
 	$Foo($scope, { content: $Foo_content($scope) });
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", $walks, $setup);

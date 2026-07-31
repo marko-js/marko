@@ -22,8 +22,8 @@ _resume("__tests__/tags/counter.marko_0/valueChange", $valueChange);
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
-const $template = "<!><!><button class=reset>reset</button>";
-const $walks = "b1b b";
+const $template = "<!><button class=reset>reset</button>";
+const $walks = "1b b";
 function getCounter() {
 	return counter_default;
 }

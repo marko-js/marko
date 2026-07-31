@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<button>hide</button><!><!>";
-const $walks = " b%c";
+const $template = "<button>hide</button><!>";
+const $walks = " b%b";
 const $if_content__message_text = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.message_text));
 const $if_content__setup = $if_content__message_text;
 const $message = /*@__PURE__*/ _let("message/2", ($scope) => $message_text($scope, $scope.message?.text));

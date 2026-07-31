@@ -29,8 +29,8 @@ const $input_footer = ($scope, input_footer) => {
 var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const x = hello_default;
 const $footer_content = _content_resume("__tests__/template.marko_3_content", "Footer content");
 const $header_content = _content_resume("__tests__/template.marko_2_content", "Header content");
@@ -48,4 +48,4 @@ function $setup($scope) {
 		})
 	}));
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup);

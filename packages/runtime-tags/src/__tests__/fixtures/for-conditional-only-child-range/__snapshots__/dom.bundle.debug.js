@@ -15,7 +15,7 @@ const $for_content__item_id = /*@__PURE__*/ _const("item_id", ($scope) => {
 	$if_content__item_id($scope);
 	$else_content__item_id($scope);
 });
-const $for = /*@__PURE__*/ _for_of("#div/0", "<!><!><!>", "b%", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#div/0", "<!>", "%", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/4", ($scope) => $for($scope, [$scope.items, "id"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {

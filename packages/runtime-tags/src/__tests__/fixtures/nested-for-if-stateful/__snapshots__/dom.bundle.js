@@ -28,5 +28,5 @@ const $for_content__count = /*@__PURE__*/ _const(2, ($scope) => {
 	$if_content__count($scope);
 	$else_content__count($scope);
 });
-const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<!>", "%", $for_content__setup, $for_content__$params);
 const $counts = /*@__PURE__*/ _let(1, ($scope) => $for($scope, [$scope.b]));

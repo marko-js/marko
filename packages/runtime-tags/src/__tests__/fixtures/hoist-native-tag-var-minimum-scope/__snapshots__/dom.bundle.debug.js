@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<pre id=root></pre><pre id=outer></pre><pre id=inner></pre><!><!>";
-const $walks = " b b b%c";
+const $template = "<pre id=root></pre><pre id=outer></pre><pre id=inner></pre><!>";
+const $walks = " b b b%b";
 const $el_getter = _hoist_resume("__tests__/template.marko_0_#div/hoist", "#div/0", "BranchScopes:#text/0", "BranchScopes:#text/3");
 const $for_content__$el_getter = _hoist_resume("__tests__/template.marko_1_#div/hoist", "#div/0", "BranchScopes:#text/0");
 const $for_content2__$el_getter = _hoist_resume("__tests__/template.marko_2_#div/hoist", "#div/0");
@@ -19,7 +19,7 @@ const $for_content__setup = ($scope) => {
 	]);
 	$for_content__setup__script($scope);
 };
-const $for = /*@__PURE__*/ _for_to("#text/3", "<!><!><!>", "b%", $for_content__setup);
+const $for = /*@__PURE__*/ _for_to("#text/3", "<!>", "%", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#pre/0"]).innerHTML += `${[...$el_getter($scope)].length}; ${$el_getter($scope)().className}\n\t`);
 function $setup($scope) {
 	$for($scope, [

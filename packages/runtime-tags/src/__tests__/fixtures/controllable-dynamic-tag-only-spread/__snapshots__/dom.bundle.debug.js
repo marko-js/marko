@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><output> </output>";
-const $walks = "b%bD l";
+const $template = "<!><output> </output>";
+const $walks = "%bD l";
 _resume_dynamic_tag();
 _enable_controllable();
 const $tag_content = _content_resume("__tests__/template.marko_1_content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>");

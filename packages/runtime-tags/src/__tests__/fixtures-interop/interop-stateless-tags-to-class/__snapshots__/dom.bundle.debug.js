@@ -37,8 +37,8 @@ component_browser_default.renderer = _marko_template._ = (0, import_renderer.def
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $template = "<!><!><span id=display></span>";
-const $walks = "b%c";
+const $template = "<!><span id=display></span>";
+const $walks = "%c";
 const $mybutton_content = _content_resume("__tests__/template.marko_1_content", "Say Hi");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $mybutton_content);
 function $setup($scope) {
@@ -48,4 +48,4 @@ function $onClick() {
 	document.getElementById("display").innerHTML = "Hi!";
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "%c", $setup);

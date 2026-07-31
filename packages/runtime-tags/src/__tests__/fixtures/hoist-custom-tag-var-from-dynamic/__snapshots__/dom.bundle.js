@@ -1,6 +1,6 @@
 // tags/thing.marko
-const $template$1 = "<!><!><!><!>";
-const $walks = "b%b%c";
+const $template$1 = "<!><!>";
+const $walks = "%b%b";
 const $setup$1 = () => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(1);
@@ -38,7 +38,7 @@ const $inputshowThingnull_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope.a);
 	$input_content($scope.a, $thing_content2($scope));
 };
-const $inputshowThingnull_content = _content_resume("a3", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks), $inputshowThingnull_content__setup, 0, "B2");
+const $inputshowThingnull_content = _content_resume("a3", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $inputshowThingnull_content__setup, 0, "B2");
 const $setHtml_getter = _hoist_resume("a0", 2, "B1");
 const $setup__script = _script("a5", ($scope) => {
 	for (const fn of $setHtml_getter($scope)) fn("Hoist from custom tag");

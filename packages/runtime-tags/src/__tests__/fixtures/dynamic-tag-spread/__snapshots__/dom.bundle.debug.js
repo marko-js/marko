@@ -1,6 +1,6 @@
 // tags/wrapper.marko
-const $template$1 = "<!><!><!>";
-const $walks$1 = "b%c";
+const $template$1 = "<!>";
+const $walks$1 = "%b";
 const $setup$1 = () => {};
 _resume_dynamic_tag();
 _enable_controllable();
@@ -18,11 +18,11 @@ const $input = ($scope, input) => {
 	$inputAs($scope, input.as);
 	$foo($scope, input.foo);
 };
-var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", $setup$1, $input);
+var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", "<!>", "%b", $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)($template$1, $template$1);
-const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)("b%c", "b%c");
+const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)("<!>", "<!>");
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)("%b", "%b");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { id: "foo" });

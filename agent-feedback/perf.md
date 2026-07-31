@@ -373,3 +373,56 @@ A monotonically increasing list of distinct scope ids is the least compressible 
 `packages/runtime-tags/src/dom/controllable.ts` › `syncControllableFormInput` | 2026-07-30 | impact:low | effort:low
 
 `syncControllableFormInput(el, hasChanged, onChange)` already receives the element's own change detector and stores `onChange` on the element as `el._`, but `handleFormReset` discards it and calls `hasFormElementChanged(el)`, which branches on `el.options` into `hasSelectChanged` / `hasValueChanged` / `hasCheckboxChanged` — so a page whose only controllable is `value:=` on a text input still ships every kind's detector (~300 of that page's 2355 raw bytes of `controllable.ts`, ≈115 min / ≈40 brotli). Stash the detector alongside the handler (`el._c = hasChanged`) and have `handleFormReset` call `el._c(el)`; `hasFormElementChanged` and the two foreign detectors then disappear from single-kind pages. This is also the concrete blocker for the per-kind `controllable.ts` split proposed in "Split rarely-used dom machinery out of the eager runtime chunks": with `hasFormElementChanged` in the shared core, per-kind modules would still cross-reference every kind's detector, so that split alone would not stop a value-only page pulling select and checkbox code. Re-verify: build `<let/x=""/><input value:=x>` and grep the entry chunk for `hasCheckboxChanged` and `hasSelectChanged`.
+
+## Extend counted branch ends past statically-countable bodies
+
+`packages/runtime-tags/src/translator/util/sections.ts` › `getStaticChildCount` | 2026-07-30 | impact:med | effort:high
+
+`BranchEndCounted` now drops the per-branch start comment whenever every
+top-level body node is a native tag, `<html-comment>`/`<html-script>`/
+`<html-style>`, or a countable custom tag. The corpus still writes `[` start
+comments for the remaining shapes, each needing its own extension:
+
+- **Nested control flow at top level** (`<if>` inside a `<for>` item): the
+  nested branch's own end marker bounds its range before the outer end is
+  processed, so the outer walk-back in `packages/runtime-tags/src/dom/resume.ts`
+  › `init` could treat it as one position by jumping from its end node to its
+  recorded start — needs a node→branch map populated as branch ends resolve,
+  and the nested slot to count as exactly one position (its collapsed marker
+  when empty). Anchored (`{`) children already span their own markers.
+- **Static text between tags**: exactly one text node when both neighbors are
+  non-text, but body-edge text coalesces with whatever precedes/follows the
+  branch (including the previous loop item), so edges need the surrounding
+  context `analyzeSiblingText` in
+  `packages/runtime-tags/src/translator/visitors/placeholder.ts` models.
+- **Placeholders** can render empty (zero nodes) and are only countable with a
+  runtime-counted encoding, not a static one.
+
+Re-verify the prize:
+`grep -oh 'M_\[' packages/runtime-tags/src/__tests__/fixtures/*/__snapshots__/writes.html | wc -l`
+counts the start comments still written across the fixture corpus.
+
+## Let `<await>`/`<try>` join the branch edge repair chain and drop `BranchStartAnchored`
+
+`packages/runtime-tags/src/common/constants/resume-symbol.ts` › `BranchStartAnchored` | 2026-07-31 | impact:med | effort:high
+
+Resumed `if`/`for`/dynamic-tag branches now adopt their real edge nodes and
+delete their start comment, but `<await>` and `<try>` still resume as
+"anchored": the start comment stays and a text node is inserted as the end pin
+(see the `BranchStartAnchored` arm in `packages/runtime-tags/src/dom/resume.ts`
+› `init`), so a streamed page keeps two extra nodes per boundary. They are
+real `BranchScope`s in the `ParentBranch` chain, so `fixBranchEdges` could in
+principle repair them like any other branch; what forces the carve-out is that
+their client runtime moves its own anchors (placeholder swap and
+`tempDetachBranch` in `packages/runtime-tags/src/dom/control-flow.ts` ›
+`addAwaitCounter`/`dismissPlaceholder`) against markers whose position resume
+would no longer preserve, and out-of-order streaming chunks are located by
+those same markers. Restructuring those transitions to run purely off the
+branch's own `StartNode`/`EndNode` (already repaired via
+`replaceRange`/`collapseRange`) would let resume treat them like any branch
+and retire `BranchStartAnchored` plus `ContentType.DynamicAnchored` and the
+remaining `<!>` edge padding in
+`packages/runtime-tags/src/translator/util/writer.ts` › `getSectionMeta`.
+`<show>` must stay anchored: its body is inlined into the enclosing scope, so
+no branch exists for the chain to repair. Re-verify the prize: count `{`
+markers in `packages/runtime-tags/src/__tests__/fixtures/*/__snapshots__/writes.html`.

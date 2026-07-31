@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><button></button>";
-const $walks = "b%b b";
+const $template = "<!><button></button>";
+const $walks = "%b b";
 const $tagName_content = _content_resume("__tests__/template.marko_1_content", "body content");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagName_content);
 const $tagName__OR__className = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.tagName, () => ({ class: $scope.className })));

@@ -15,8 +15,8 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "d", $setup$1, $input);
 
 // template.marko
-const $template = "<button>Toggle</button><div></div><!><!>";
-const $walks = " b b%c";
+const $template = "<button>Toggle</button><div></div><!>";
+const $walks = " b b%b";
 const $if_content__setup = ($scope) => $input($scope["#childScope/0"], { write: $write($scope) });
 const $if = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("d"), $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));

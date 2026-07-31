@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><button> </button>";
-const $walks = "b0& D l";
+const $template = "<button> </button>";
+const $walks = "0& D l";
 const $Let_content__internal = /*@__PURE__*/ _let("internal/0", ($scope) => _return($scope, $scope.internal));
 const $Let_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
 	_return_change($scope, $valueChange($scope));

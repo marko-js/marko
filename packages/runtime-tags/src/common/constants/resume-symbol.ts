@@ -1,6 +1,14 @@
 export const Node = "*";
 export const BranchStart = "[";
+// A range the branch chain cannot repair the edges of: `<show>` inlines its
+// body into the enclosing scope and `<await>`/`<try>` move their own anchors,
+// so for these the markers stay in place as the range itself.
+export const BranchStartAnchored = "{";
 export const BranchEnd = "]";
+// Like `BranchEndSingleNode` but the data carries a per-branch top-level node
+// count (after the accessor, before the branch ids), so bodies whose top-level
+// nodes are statically countable need no start comment at all.
+export const BranchEndCounted = "(";
 export const BranchEndNativeTag = "'";
 export const BranchEndSingleNode = "|";
 export const BranchEndOnlyChildInParent = ")";

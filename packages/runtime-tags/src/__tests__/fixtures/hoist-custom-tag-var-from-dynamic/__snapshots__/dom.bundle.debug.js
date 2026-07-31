@@ -1,6 +1,6 @@
 // tags/thing.marko
-const $template$2 = "<!><!><!><!>";
-const $walks$2 = "b%b%c";
+const $template$2 = "<!><!>";
+const $walks$2 = "%b%b";
 const $setup$2 = () => {};
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $dynamicTag2$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
@@ -24,8 +24,8 @@ _resume("__tests__/tags/child.marko_0/_return", $_return);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)($template$2);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b%c`)($walks$2);
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$2);
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%b%b`)($walks$2);
 const $setHtml3_getter = /*@__PURE__*/ _hoist("setHtml3", "ClosureScopes:4");
 const $inputshowsectionnull_content__setHtml = /*@__PURE__*/ _const("setHtml3", ($scope) => _assert_hoist($scope.setHtml3));
 const $inputshowsectionnull_content__setup = ($scope) => {
@@ -44,7 +44,7 @@ const $inputshowThingnull_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $thing_content2($scope));
 };
-const $inputshowThingnull_content = _content_resume("__tests__/template.marko_2_content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$2), $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
+const $inputshowThingnull_content = _content_resume("__tests__/template.marko_2_content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
 const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml/hoist", "setHtml", "ClosureScopes:1");
 const $thing_content__setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 const $thing_content__setup = ($scope) => {

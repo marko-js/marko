@@ -14,7 +14,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__if2 = /*@__PURE__*/ _if("#text/1", "<span> </span>", "D ", $if_content3__setup);
 const $if_content__input_value2 = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => $if_content__if2($scope, $scope._.value2 ? 0 : 1));
-const $if = /*@__PURE__*/ _if("#div/0", "<!><!><!><!>", "b%b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#div/0", "<!><!>", "%b%", $if_content__setup);
 const $show = ($scope, show) => $if($scope, show ? 0 : 1);
 const $input = ($scope, input) => {
 	$show($scope, input.show);

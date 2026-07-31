@@ -1,6 +1,6 @@
 // tags/my-menu/index.marko
-const $template$1 = "<!><!><!>";
-const $walks$1 = "b%c";
+const $template$1 = "<!>";
+const $walks$1 = "%b";
 const $setup$1 = () => {};
 const $for_content__item__script = _script("__tests__/tags/my-menu/index.marko_1_item", ($scope) => _attrs_script($scope, "#button/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
@@ -11,11 +11,11 @@ const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $
 const $for = /*@__PURE__*/ _for_of("#text/0", "<button></button>", " ", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input = ($scope, input) => $input_item($scope, input.item);
-var my_menu_default = /*@__PURE__*/ _template("__tests__/tags/my-menu/index.marko", $template$1, "b%c", $setup$1, $input);
+var my_menu_default = /*@__PURE__*/ _template("__tests__/tags/my-menu/index.marko", "<!>", "%b", $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div> </div>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&D l`)("b%c");
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)("<!>");
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)("%b");
 const $item_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_1_content", " ", " "), { $foo($scope) {
 	_text($scope["#text/0"], $scope.$foo);
 } });

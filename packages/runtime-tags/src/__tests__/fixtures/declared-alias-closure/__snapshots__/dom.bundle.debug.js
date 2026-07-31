@@ -1,7 +1,7 @@
 // template.marko
 const $Child_content2__walks = " b", $Child_content2__template = "<div></div>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content2__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content2__walks);
+const $template = $Child_content2__template;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Child_content2__walks);
 const $Child_content2__input__script = _script("__tests__/template.marko_3_input", ($scope) => _attrs_script($scope, "#div/0"));
 const $Child_content2__input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input);
@@ -17,7 +17,7 @@ const $if_content__text = /*@__PURE__*/ _closure_get("text", ($scope) => _text($
 const $Child_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", " D ", $if_content__setup);
 const $Child_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => $Child_content__if($scope, $scope._.value ? 0 : 1));
 const $Child_content__setup = $Child_content__value;
-const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<!><!><!>", "b%", $Child_content__setup);
+const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<!>", "%", $Child_content__setup);
 const $value = /*@__PURE__*/ _const("value", ($scope) => {
 	$value_class($scope, $scope.value?.class);
 	$text($scope, $scope.value?.text);

@@ -191,8 +191,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             startVisit: ChildNode = visit,
             i = orphanBranches.length,
             j = deferredOwners.length,
+            count = 1,
           ) => {
-            if (visitType !== ResumeSymbol.BranchStart) {
+            const isStart =
+              visitType === ResumeSymbol.BranchStart ||
+              visitType === ResumeSymbol.BranchStartAnchored;
+            if (!isStart) {
               visitScope[nextToken(/* read accessor */)] =
                 visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
                 visitType === ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
@@ -202,6 +206,10 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               singleNode =
                 visitType !== ResumeSymbol.BranchEnd &&
                 visitType !== ResumeSymbol.BranchEndOnlyChildInParent;
+              if (visitType === ResumeSymbol.BranchEndCounted) {
+                nextToken(/* read per-branch node count */);
+                count = +lastToken;
+              }
               nextToken(/* read optional first branchId */);
             }
 
@@ -217,15 +225,19 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               if (singleNode) {
                 // A set makes this linear but adds ~18 B brotli to every
                 // bundle; the scan costs ~1 ms only past ~1000 branches here.
-                while (
-                  startVisit.previousSibling &&
-                  ~visits.indexOf(
-                    (startVisit = startVisit.previousSibling) as Comment,
-                  )
-                );
+                // A counted branch spans `count` top-level nodes; the first
+                // scanned (the deepest in document order) is its end.
+                for (let n = count; n--;) {
+                  while (
+                    startVisit.previousSibling &&
+                    ~visits.indexOf(
+                      (startVisit = startVisit.previousSibling) as Comment,
+                    )
+                  );
+                  branch[AccessorProp.EndNode] ||= startVisit;
+                }
                 branch[AccessorProp.Owner] ??= visitScope;
-                branch[AccessorProp.EndNode] = branch[AccessorProp.StartNode] =
-                  startVisit;
+                branch[AccessorProp.StartNode] = startVisit;
                 if (visitType === ResumeSymbol.BranchEndNativeTag) {
                   branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : "a"] =
                     startVisit;
@@ -246,11 +258,25 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 if (parent !== startVisit.parentNode) {
                   parent.prepend(startVisit);
                 }
-                branch[AccessorProp.StartNode] = startVisit;
-                branch[AccessorProp.EndNode] =
-                  visit.previousSibling === startVisit
-                    ? startVisit
-                    : parent.insertBefore(new Text(), visit);
+                if (
+                  visit.previousSibling === startVisit ||
+                  (startVisit as Comment).data[render.i.length] ===
+                    ResumeSymbol.BranchStartAnchored
+                ) {
+                  // Nothing rendered, or a range the branch chain cannot
+                  // repair: the markers stay as the range itself.
+                  branch[AccessorProp.StartNode] = startVisit;
+                  branch[AccessorProp.EndNode] =
+                    visit.previousSibling === startVisit
+                      ? startVisit
+                      : parent.insertBefore(new Text(), visit);
+                } else {
+                  // Own the real edge nodes instead of the markers; nested
+                  // slots repair these as they move (see `fixBranchEdges`).
+                  branch[AccessorProp.StartNode] = startVisit.nextSibling!;
+                  branch[AccessorProp.EndNode] = visit.previousSibling!;
+                  startVisit.remove();
+                }
               }
 
               while (i && orphanBranches[i - 1][AccessorProp.Id] > branchId) {
@@ -283,7 +309,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
             }
 
-            if (visitType === ResumeSymbol.BranchStart) {
+            if (isStart) {
               if (!endedBranches) {
                 branchScopesStack.push(curBranchScopes);
                 curBranchScopes = undefined;

@@ -18,7 +18,8 @@ const [getWalkComment] = createSectionState<(string | t.Expression)[]>(
   () => [],
 );
 const [getSteps] = createSectionState<Step[]>("steps", (section) => {
-  if (section.content?.startType === ContentType.Dynamic) {
+  if (section.content?.startType === ContentType.DynamicAnchored) {
+    // Walk over the `<!>` padding written before `DynamicAnchored` content.
     return [Step.Enter, Step.Exit];
   }
 
@@ -206,7 +207,7 @@ function getComment(node: t.Node) {
 }
 
 export function getWalkString(section: Section) {
-  if (section.content?.endType === ContentType.Dynamic) {
+  if (section.content?.endType === ContentType.DynamicAnchored) {
     getSteps(section).push(Step.Enter, Step.Exit);
   }
 

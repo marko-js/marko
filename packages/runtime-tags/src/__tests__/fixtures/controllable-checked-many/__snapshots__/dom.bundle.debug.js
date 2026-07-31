@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><div> </div>";
-const $walks = "b%bD l";
+const $template = "<!><div> </div>";
+const $walks = "%bD l";
 const $for_content__checked = /*@__PURE__*/ _let_change("checked/6", ($scope) => _attr_input_checked($scope, "#input/0", $scope.checked, $checkedChange($scope)));
 const $for_content__states__OR__state = /*@__PURE__*/ _or(3, ($scope) => $for_content__checked($scope, $scope.state, $valueChange($scope)));
 const $for_content__states = /*@__PURE__*/ _for_closure("#text/0", $for_content__states__OR__state);

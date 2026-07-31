@@ -81,6 +81,9 @@ export interface Section {
     startType: ContentType;
     endType: ContentType;
     singleChild: boolean;
+    /** Top-level DOM nodes rendered when every child is statically countable
+     * (native tags, html comments, or countable custom tags), else 0. */
+    staticChildCount: number;
   };
 }
 
@@ -228,13 +231,17 @@ function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
     startType: null!,
     endType: null!,
     singleChild: true,
+    staticChildCount: getStaticChildCount(body),
   };
   for (let endIndex = body.length; endIndex--;) {
     const endType = getNodeContentType(body[endIndex], "endType", contentInfo);
     if (endType !== null) {
       contentInfo.endType = endType;
 
-      if (endType === ContentType.Dynamic) {
+      if (
+        endType === ContentType.Dynamic ||
+        endType === ContentType.DynamicAnchored
+      ) {
         contentInfo.singleChild = false;
       }
 
@@ -253,6 +260,43 @@ function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   }
 
   return null;
+}
+
+// Total top-level DOM nodes the body renders, when that is statically known:
+// every child must render a fixed number of nodes — a native tag,
+// `<html-comment>`/`<html-script>`/`<html-style>`, nothing at all, or a custom
+// tag whose own content is countable. 0 means unknowable.
+function getStaticChildCount(body: t.NodePath<t.Statement>[]) {
+  let count = 0;
+  for (const child of body) {
+    const tag = child as t.NodePath<t.MarkoTag>;
+    if (
+      child.isMarkoTag() &&
+      !isCoreTag(tag) &&
+      !isNativeTag(tag) &&
+      !isAttributeTag(tag) &&
+      t.isStringLiteral(tag.node.name)
+    ) {
+      const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
+      if (!tagSection) return 0;
+      if (tagSection.content) {
+        if (!tagSection.content.staticChildCount) return 0;
+        count += tagSection.content.staticChildCount;
+      }
+    } else {
+      switch (getNodeContentType(child, "startType")) {
+        case null:
+          break;
+        case ContentType.Comment:
+        case ContentType.Tag:
+          count++;
+          break;
+        default:
+          return 0;
+      }
+    }
+  }
+  return count;
 }
 
 export function getNodeContentType(
@@ -289,10 +333,11 @@ export function getNodeContentType(
               : null;
           case "for":
           case "if":
+            return ContentType.Dynamic;
+          case "show":
           case "await":
           case "try":
-          case "show":
-            return ContentType.Dynamic;
+            return ContentType.DynamicAnchored;
           default:
             return null;
         }

@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><!><div>to 3: <!></div><div>until 3: <!></div><div>from 1 to 3: <!></div><div>from 1 until 3: <!></div><div>from 1 to 5 step 2: <!></div><div>from 1 until 5 step 2: <!></div><div>from 4 to 2 step -0.6: <!></div><div>from 4 until 2 step -0.6: <!></div>";
-const $walks = "b%b%bDb%lDb%lDb%lDb%lDb%lDb%lDb%lDb%l";
+const $template = "<!><!><div>to 3: <!></div><div>until 3: <!></div><div>from 1 to 3: <!></div><div>from 1 until 3: <!></div><div>from 1 to 5 step 2: <!></div><div>from 1 until 5 step 2: <!></div><div>from 4 to 2 step -0.6: <!></div><div>from 4 until 2 step -0.6: <!></div>";
+const $walks = "%b%bDb%lDb%lDb%lDb%lDb%lDb%lDb%lDb%l";
 const $for_content10__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content9__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content8__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);

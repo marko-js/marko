@@ -38,7 +38,7 @@
 ## Change
 ```
 INSERT: div > a
-REMOVE: a + input
+REMOVE: div > input
 INSERT: div > input
 REMOVE: div > input + a
 ```

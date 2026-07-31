@@ -1,7 +1,7 @@
 // template.marko
 const $Wrap_content__walks = " b b b", $Wrap_content__template = "<input><input><input>";
-const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}<!>`)($Wrap_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&b`)($Wrap_content__walks);
+const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}`)($Wrap_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($Wrap_content__walks);
 const $Wrap_content__a__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
 	_attr_input_value($scope, "#input/0", $scope.a, $scope.$aChange);
 	_attr_input_value($scope, "#input/1", $scope.a, $scope.$aChange);

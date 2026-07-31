@@ -15,8 +15,8 @@ const $input = ($scope, input) => $value($scope, input.value);
 var child2_default = /*@__PURE__*/ _template("__tests__/tags/child2.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = "<!><!><button></button>";
-const $walks = "b%b b";
+const $template = "<!><button></button>";
+const $walks = "%b b";
 _enable_controllable();
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $tagName__OR__val = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.tagName, () => ({ value: $scope.val })));

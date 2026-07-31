@@ -35,8 +35,8 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
+const $template = "<!>";
+const $walks = "%b";
 const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/4"], $scope._.multiplier * $scope.baseCount));
 const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get("multiplier", ($scope) => {
 	_text($scope["#text/2"], $scope._.multiplier);
@@ -66,4 +66,4 @@ function $setup($scope) {
 	$multiplier($scope, 1);
 	$dynamicTag($scope, _marko_template);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", "<!>", "%b", $setup);

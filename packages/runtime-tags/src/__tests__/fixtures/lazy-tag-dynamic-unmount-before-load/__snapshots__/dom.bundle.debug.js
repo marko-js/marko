@@ -16,7 +16,7 @@ const $placeholder_content = _content_resume("__tests__/template.marko_3_content
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $await_content__dynamicTag($scope, $scope._._.show ? Child : null, () => ({ value: 1 })), ($scope) => $scope._._, "__tests__/template.marko_2_show/pending");
 const $await_content__setup = $await_content__show;
-const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!>", "%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {
 	$await_content($scope);

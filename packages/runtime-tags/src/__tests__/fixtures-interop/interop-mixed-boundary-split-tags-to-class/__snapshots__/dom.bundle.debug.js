@@ -41,8 +41,8 @@ import_component_browser.default.renderer = _marko_template._ = (0, import_rende
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $template = "<button id=bump> </button><!><!><!>";
-const $walks = " D l%b%c";
+const $template = "<button id=bump> </button><!><!>";
+const $walks = " D l%b%b";
 _resume("__tests__/components/split-counter/index.marko", _marko_template);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3");
 const $n = /*@__PURE__*/ _let("n/4", ($scope) => {

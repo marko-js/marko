@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><!><button>inc</button><div class=total> </div><div class=seen> </div>";
-const $walks = "b%b bD lD l";
+const $template = "<!><button>inc</button><div class=total> </div><div class=seen> </div>";
+const $walks = "%b bD lD l";
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$seen($scope._, `${$scope._.seen}(${$scope.i}:${$scope._.total})`);
 }));

@@ -8,8 +8,8 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", $setup, $input);
 
 // template.marko
-const $template = "<button>Toggle</button><!><!>";
-const $walks = " b%c";
+const $template = "<button>Toggle</button><!>";
+const $walks = " b%b";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 _enable_catch();
@@ -18,7 +18,7 @@ const $await_content__setup = ($scope) => {
 	$load_Child_tag_input_value($scope["#childScope/1"], 1);
 };
 const $placeholder_content = _content_resume("__tests__/template.marko_3_content", "loading");
-const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!>", "%/&", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {
 	$await_content($scope);

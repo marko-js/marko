@@ -1,7 +1,7 @@
 // template.marko
 const $MyTag_content__walks = "D%c%c%l", $MyTag_content__template = "<div><!>|<!>|<!></div>";
-const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<button>inc <!></button>`)($MyTag_content__template, $MyTag_content__template, $MyTag_content__template);
-const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}& Db%l`)($MyTag_content__walks, $MyTag_content__walks, $MyTag_content__walks);
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<button>inc <!></button>`)($MyTag_content__template, $MyTag_content__template, $MyTag_content__template);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}& Db%l`)($MyTag_content__walks, $MyTag_content__walks, $MyTag_content__walks);
 const $MyTag_content__input = /*@__PURE__*/ _closure_get("input", ($scope) => _text($scope["#text/2"], JSON.stringify($scope._.input)));
 const $MyTag_content__setup = /*@__PURE__*/ _child_setup($MyTag_content__input);
 const $MyTag_content__a = ($scope, a) => _text($scope["#text/0"], a);

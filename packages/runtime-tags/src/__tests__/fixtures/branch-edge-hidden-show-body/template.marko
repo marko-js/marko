@@ -1,0 +1,17 @@
+<let/outer=true/>
+<let/shown=true/>
+<let/items=[1]/>
+
+<div.host>
+  <if=outer>
+    <show=shown>
+      <for|item| of=items>
+        <b>${item}</b>
+      </for>
+    </show>
+  </if>
+</div>
+
+<button.outer onClick() { outer = !outer }>Outer</button>
+<button.show onClick() { shown = !shown }>Show</button>
+<button.items onClick() { items = items.length ? [] : [1, 2] }>Items</button>

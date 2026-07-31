@@ -7,8 +7,8 @@ const $input = ($scope, input) => $name($scope, input.name);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", $setup$1, $input);
 
 // template.marko
-const $template = "<button>Push</button><!><!>";
-const $walks = " b%c";
+const $template = "<button>Push</button><!>";
+const $walks = " b%b";
 const $for_content2__outer__OR__inner = /*@__PURE__*/ _or(3, ($scope) => $name($scope["#childScope/0"], `${$scope._.outer}.${$scope.inner}`));
 const $for_content2__outer = /*@__PURE__*/ _for_closure("#text/0", $for_content2__outer__OR__inner);
 const $for_content2__setup = $for_content2__outer;
@@ -19,7 +19,7 @@ const $for_content__items = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $f
 const $for_content__setup = $for_content__items;
 const $for_content__$params = ($scope, $params2) => $for_content__outer($scope, $params2[0]);
 const $for_content__outer = /*@__PURE__*/ _const("outer", $for_content2__outer);
-const $for = /*@__PURE__*/ _for_of("#text/1", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/1", "<!>", "%", $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => {
 	$for($scope, [$scope.items]);
 	$for_content__items($scope);

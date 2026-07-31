@@ -1,10 +1,10 @@
 // tags/consumer.marko
-const $template$1 = "<button id=toggle>toggle</button><!><!>";
-const $walks$1 = " b%c";
+const $template$1 = "<button id=toggle>toggle</button><!>";
+const $walks$1 = " b%b";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
 const $if_content__setup = $if_content__input_content;
-const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", "<!>", "%", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/tags/consumer.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope, !$scope.show);
@@ -18,8 +18,8 @@ const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_
 var consumer_default = /*@__PURE__*/ _template("__tests__/tags/consumer.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $consumer_content = _content_resume("__tests__/template.marko_1_content", "<div>static content</div>");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
