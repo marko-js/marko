@@ -21,7 +21,7 @@ const $Wrap_content__tag_param_ = ($scope, $temp) => {
 };
 const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__tag_param_($scope, $params2?.[0]);
 const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
+	_text($scope, "#text/1", $scope.n);
 	$Wrap_content__tag_param_($scope["#childScope/2"], { a: "z" + $scope.n });
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

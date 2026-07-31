@@ -17,7 +17,7 @@ var my_menu_default = /*@__PURE__*/ _template("__tests__/tags/my-menu/index.mark
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&D l`)("b%c");
 const $item_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_1*content", "Click <!>", "b%"), { foo($scope) {
-	_text($scope["#text/0"], $scope.foo);
+	_text($scope, "#text/0", $scope.foo);
 } });
 const $clicked = /*@__PURE__*/ _let("clicked/2", ($scope) => {
 	let $item;
@@ -31,7 +31,7 @@ const $clicked = /*@__PURE__*/ _let("clicked/2", ($scope) => {
 		});
 	});
 	$input_item($scope["#childScope/0"], $item);
-	_text($scope["#text/1"], $scope.clicked);
+	_text($scope, "#text/1", $scope.clicked);
 });
 function $setup($scope) {
 	$clicked($scope, "");

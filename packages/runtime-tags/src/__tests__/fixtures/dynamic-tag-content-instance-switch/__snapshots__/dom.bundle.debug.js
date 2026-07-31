@@ -1,7 +1,7 @@
 // tags/provider.marko
 const $template$1 = "<button class=bump>bump</button>";
 const $walks$1 = " b";
-const $body_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $body_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope, "#text/0", $scope._.count));
 const $body_content__setup = $body_content__count;
 const $body_content = _content_resume("__tests__/tags/provider.marko_1*content", "<div>value <!></div>", "Db%", $body_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($body_content__count);

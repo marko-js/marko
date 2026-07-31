@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc <!></button><input>";
 const $walks = " Db%l b";
-const $n = /*@__PURE__*/ _let("n/3", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = /*@__PURE__*/ _let("n/3", ($scope) => _text($scope, "#text/1", $scope.n));
 const $state = ($scope, state) => {
 	$state_x($scope, state.x);
 	$state_xChange($scope, state.xChange);

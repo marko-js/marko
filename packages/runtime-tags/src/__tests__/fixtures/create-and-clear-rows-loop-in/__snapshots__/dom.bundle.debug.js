@@ -2,9 +2,9 @@
 const $template = "<div><!><!></div>";
 const $walks = "D%b%l";
 const $setup = () => {};
-const $for_content2__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content__text = ($scope, text) => _text($scope["#text/1"], text);
+const $for_content2__setup = ($scope) => _text($scope, "#text/0", $scope["#LoopKey"]);
+const $for_content__setup = ($scope) => _text($scope, "#text/0", $scope["#LoopKey"]);
+const $for_content__text = ($scope, text) => _text($scope, "#text/1", text);
 const $for_content__$params = ($scope, $params2) => $for_content__text($scope, $params2[1]);
 const $for = /*@__PURE__*/ _for_in("#text/0", "<p><!>: <!></p>", "D%c%", $for_content__setup, $for_content__$params);
 const $for2 = /*@__PURE__*/ _for_in("#text/1", "<p> </p>", "D ", $for_content2__setup);

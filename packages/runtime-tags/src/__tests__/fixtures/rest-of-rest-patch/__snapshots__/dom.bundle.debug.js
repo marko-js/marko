@@ -2,8 +2,8 @@
 const $template$1 = "<em><!><!></em>";
 const $walks$1 = "D%b%l";
 const $setup$1 = () => {};
-const $skip = ($scope, skip) => _text($scope["#text/0"], skip);
-const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
+const $skip = ($scope, skip) => _text($scope, "#text/0", skip);
+const $input_label = ($scope, input_label) => _text($scope, "#text/1", input_label);
 const $input = ($scope, input) => {
 	$skip($scope, input.skip);
 	$input_label($scope, input.label);

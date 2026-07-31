@@ -5,7 +5,7 @@ const $bound = /*@__PURE__*/ _let("bound/7", ($scope) => _attr_input_value($scop
 const $input_v = /*@__PURE__*/ _const("input_v", ($scope) => {
 	_attr_input_value_default($scope, "#textarea/0", $scope.input_v);
 	_attr_input_value_default($scope, "#textarea/2", $scope.input_v);
-	_text($scope["#text/3"], $scope.input_v);
+	_text($scope, "#text/3", $scope.input_v);
 	$bound($scope, $scope.input_v);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#textarea/1"));

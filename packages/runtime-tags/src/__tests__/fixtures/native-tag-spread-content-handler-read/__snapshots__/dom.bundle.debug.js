@@ -1,7 +1,7 @@
 // tags/my-box.marko
 const $template$1 = "<div></div><button type=button class=cap>check</button><div class=out> </div>";
 const $walks$1 = " b bD l";
-const $captured = /*@__PURE__*/ _let("captured/6", ($scope) => _text($scope["#text/2"], $scope.captured));
+const $captured = /*@__PURE__*/ _let("captured/6", ($scope) => _text($scope, "#text/2", $scope.captured));
 const $setup__script = _script("__tests__/tags/my-box.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$captured($scope, $scope.input_content ? "has-content" : "no-content");
 }));

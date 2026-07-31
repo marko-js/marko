@@ -22,10 +22,10 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
 const $other_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "other");
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!>:<!>", "%c%"), {
 	a($scope) {
-		_text($scope["#text/0"], $scope.a);
+		_text($scope, "#text/0", $scope.a);
 	},
 	v($scope) {
-		_text($scope["#text/1"], $scope.v);
+		_text($scope, "#text/1", $scope.v);
 	}
 });
 function $setup($scope) {

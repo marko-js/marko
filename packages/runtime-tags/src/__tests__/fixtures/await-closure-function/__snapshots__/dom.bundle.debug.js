@@ -4,7 +4,7 @@ const $walks = "b%c";
 const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading...");
 const $await_content__value__script = _script("__tests__/template.marko_2_value#1", ($scope) => !$scope._._.value && $value($scope._._, +$scope._._.value + 1) - 1);
 const $await_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => {
-	_text($scope["#text/0"], $scope._._.value);
+	_text($scope, "#text/0", $scope._._.value);
 	$await_content__value__script($scope);
 }, ($scope) => $scope._._, "__tests__/template.marko_2_value#1/pending");
 const $await_content__setup = $await_content__value;

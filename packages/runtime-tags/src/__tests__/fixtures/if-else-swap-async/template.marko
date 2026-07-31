@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/flip=false/>
+<button onClick() { flip = !flip }>flip</button>
+<div>
+  x
+  <if=flip>
+    <span>A</span>
+  </if>
+  <else>
+    <span>B</span>
+  </else>
+  y
+</div>
+<await|_|=resolveAfter(0, 1)>ready</await>

@@ -10,15 +10,16 @@ import {
   ControlledType,
   type Scope,
 } from "../common/types";
-import { _attr, normalizeAttrValue } from "./dom";
+import { setAttr, normalizeAttrValue } from "./dom";
 import { delegate } from "./event";
-import { pendingEffects, run, runId } from "./queue";
+import { type held, pendingEffects, run, runId } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
 
 let inputType = "";
 
-export function _attr_input_checked_default(
+export let _attr_input_checked_default = attrInputCheckedDefault;
+function attrInputCheckedDefault(
   scope: Scope,
   nodeAccessor: Accessor,
   checked: boolean,
@@ -34,9 +35,8 @@ export function _attr_input_checked_default(
     }
   }
 }
-/** Filled by the `controllable-*.feat` modules a compiled page imports, so a
- * page carries only the control kinds its tags can be (`_attrs_script`
- * resolves the kind at run time). */
+/** Filled by the latches a compiled page emits, so a page carries only the
+ * control kinds its tags can be (`_attrs_script` resolves the kind at run time). */
 export const controllableScripts: {
   [T in ControlledType]?: (scope: Scope, nodeAccessor: Accessor) => void;
 } = {};
@@ -53,13 +53,13 @@ export type ControllableAttrs = (
   nextAttrs: Record<string, unknown>,
 ) => RegExp | void;
 
-export function _attr_input_checked(
+export let _attr_input_checked = attrInputChecked;
+function attrInputChecked(
   scope: Scope,
   nodeAccessor: Accessor,
   checked: unknown,
   checkedChange: unknown,
 ) {
-  const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedChecked = isNotVoid(checked);
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("checkedChange", checkedChange);
@@ -70,9 +70,9 @@ export function _attr_input_checked(
     : ControlledType.None;
 
   if (checkedChange && scope[AccessorProp.Gen] < runId) {
-    el.checked = normalizedChecked;
+    (scope[nodeAccessor] as HTMLInputElement).checked = normalizedChecked;
   } else {
-    _attr_input_checked_default(scope, nodeAccessor, normalizedChecked);
+    attrInputCheckedDefault(scope, nodeAccessor, normalizedChecked);
   }
 }
 export function _attr_input_checked_script(
@@ -93,7 +93,10 @@ export function _attr_input_checked_script(
   });
 }
 
-export function _attr_input_checkedValue_default(
+// Patched composites call the eager implementations of their parts, so one
+// update queues one record.
+export let _attr_input_checkedValue_default = attrInputCheckedvalueDefault;
+function attrInputCheckedvalueDefault(
   scope: Scope,
   nodeAccessor: Accessor,
   checkedValue: unknown,
@@ -105,8 +108,8 @@ export function _attr_input_checkedValue_default(
     ? checkedValue.map(normalizeStrProp)
     : normalizeStrProp(checkedValue);
 
-  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
-  _attr_input_checked_default(
+  setAttr(scope[nodeAccessor] as Element, "value", value);
+  attrInputCheckedDefault(
     scope,
     nodeAccessor,
     multiple
@@ -114,7 +117,8 @@ export function _attr_input_checkedValue_default(
       : normalizedValue === normalizedCheckedValue,
   );
 }
-export function _attr_input_checkedValue(
+export let _attr_input_checkedValue = attrInputCheckedvalue;
+function attrInputCheckedvalue(
   scope: Scope,
   nodeAccessor: Accessor,
   checkedValue: unknown,
@@ -140,9 +144,9 @@ export function _attr_input_checkedValue(
     el.checked = multiple
       ? normalizedCheckedValue.includes(normalizeStrProp(value))
       : normalizeStrProp(value) === normalizedCheckedValue;
-    _attr(el, "value", value);
+    setAttr(el, "value", value);
   } else {
-    _attr_input_checkedValue_default(scope, nodeAccessor, checkedValue, value);
+    attrInputCheckedvalueDefault(scope, nodeAccessor, checkedValue, value);
   }
 }
 export function _attr_input_checkedValue_script(
@@ -201,7 +205,8 @@ export function _attr_input_checkedValue_script(
   });
 }
 
-export function _attr_input_value_default(
+export let _attr_input_value_default = attrInputValueDefault;
+function attrInputValueDefault(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -217,7 +222,8 @@ export function _attr_input_value_default(
     setInputValue(el, restoreValue);
   }
 }
-export function _attr_input_value_dynamic_default(
+export let _attr_input_value_dynamic_default = attrInputValueDynamicDefault;
+function attrInputValueDynamicDefault(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -225,23 +231,28 @@ export function _attr_input_value_dynamic_default(
   const el = scope[nodeAccessor] as HTMLInputElement;
   // Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
   if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
-    _attr(el, "value", value);
+    setAttr(el, "value", value);
   } else {
-    _attr_input_value_default(scope, nodeAccessor, value);
+    attrInputValueDefault(scope, nodeAccessor, value);
   }
 }
-export function _attr_input_value(
+export let _attr_input_value = attrInputValue;
+function attrInputValue(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
+  // The public binding the template passed: at replay the queue flag is
+  // cleared so it applies directly instead of re-queueing.
   setDefault = _attr_input_value_default,
 ) {
-  const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedValue = normalizeAttrValue(value) || "";
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("valueChange", valueChange);
-    assertNoValueBindingOnCheckable(el.type, valueChange);
+    assertNoValueBindingOnCheckable(
+      (scope[nodeAccessor] as HTMLInputElement).type,
+      valueChange,
+    );
   }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
   scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
@@ -250,20 +261,22 @@ export function _attr_input_value(
     : ControlledType.None;
 
   if (valueChange && scope[AccessorProp.Gen] < runId) {
-    setInputValue(el, normalizedValue);
+    setInputValue(scope[nodeAccessor] as HTMLInputElement, normalizedValue);
   } else {
     // The raw value, so attribute-backed defaults drop the attribute for void
     // values like the server does; `_attr_input_value_default` re-normalizes.
     setDefault(scope, nodeAccessor, value);
   }
 }
-export function _attr_input_value_attribute_default(
+export let _attr_input_value_attribute_default = attrInputValueAttributeDefault;
+function attrInputValueAttributeDefault(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
 ) {
-  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
+  setAttr(scope[nodeAccessor] as Element, "value", value);
 }
+
 export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   if (MARKO_DEBUG) {
@@ -288,6 +301,7 @@ export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
     }
   });
 }
+
 function setInputValue(el: HTMLInputElement, value: string) {
   if (el.value !== value) {
     const updatedPosition = resolveCursorPosition(
@@ -302,7 +316,8 @@ function setInputValue(el: HTMLInputElement, value: string) {
   }
 }
 
-export function _attr_select_value_default(
+export let _attr_select_value_default = attrSelectValueDefault;
+function attrSelectValueDefault(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -333,7 +348,9 @@ export function _attr_select_value_default(
     }
   }, scope);
 }
-export function _attr_select_value(
+
+export let _attr_select_value = attrSelectValue;
+function attrSelectValue(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -366,9 +383,10 @@ export function _attr_select_value(
       scope,
     );
   } else {
-    _attr_select_value_default(scope, nodeAccessor, normalizedValue);
+    attrSelectValueDefault(scope, nodeAccessor, normalizedValue);
   }
 }
+
 export function _attr_select_value_script(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -467,7 +485,9 @@ function assertSelectValueMatchesOption(
   }
 }
 
-export function _attr_details_or_dialog_open_default(
+export let _attr_details_or_dialog_open_default =
+  attrDetailsOrDialogOpenDefault;
+function attrDetailsOrDialogOpenDefault(
   scope: Scope,
   nodeAccessor: Accessor,
   open: unknown,
@@ -476,7 +496,8 @@ export function _attr_details_or_dialog_open_default(
     (scope[nodeAccessor] as HTMLDetailsElement).open = isNotVoid(open);
   }
 }
-export function _attr_details_or_dialog_open(
+export let _attr_details_or_dialog_open = attrDetailsOrDialogOpen;
+function attrDetailsOrDialogOpen(
   scope: Scope,
   nodeAccessor: Accessor,
   open: unknown,
@@ -495,7 +516,7 @@ export function _attr_details_or_dialog_open(
   if (openChange && scope[AccessorProp.Gen] < runId) {
     (scope[nodeAccessor] as HTMLDetailsElement).open = normalizedOpen;
   } else {
-    _attr_details_or_dialog_open_default(scope, nodeAccessor, normalizedOpen);
+    attrDetailsOrDialogOpenDefault(scope, nodeAccessor, normalizedOpen);
   }
 }
 export function _attr_details_or_dialog_open_script(
@@ -692,4 +713,31 @@ export function _controllable_open(
     );
     return /^open(?:Change)?$/;
   }
+}
+
+// Patches the controllable helpers for queueing variants
+// (`render-effects.feat`). Assignment-only references keep each helper
+// tree-shakable: an unused helper's patch line is a dead store the minifier
+// removes along with the helper itself.
+export function enable(patch: typeof held) {
+  _attr_input_checked_default = /* @__PURE__ */ patch(attrInputCheckedDefault);
+  _attr_input_checked = /* @__PURE__ */ patch(attrInputChecked);
+  _attr_input_checkedValue = /* @__PURE__ */ patch(attrInputCheckedvalue);
+  _attr_input_checkedValue_default = /* @__PURE__ */ patch(
+    attrInputCheckedvalueDefault,
+  );
+  _attr_input_value = /* @__PURE__ */ patch(attrInputValue);
+  _attr_input_value_default = /* @__PURE__ */ patch(attrInputValueDefault);
+  _attr_input_value_attribute_default = /* @__PURE__ */ patch(
+    attrInputValueAttributeDefault,
+  );
+  _attr_input_value_dynamic_default = /* @__PURE__ */ patch(
+    attrInputValueDynamicDefault,
+  );
+  _attr_select_value_default = /* @__PURE__ */ patch(attrSelectValueDefault);
+  _attr_select_value = /* @__PURE__ */ patch(attrSelectValue);
+  _attr_details_or_dialog_open_default = /* @__PURE__ */ patch(
+    attrDetailsOrDialogOpenDefault,
+  );
+  _attr_details_or_dialog_open = /* @__PURE__ */ patch(attrDetailsOrDialogOpen);
 }

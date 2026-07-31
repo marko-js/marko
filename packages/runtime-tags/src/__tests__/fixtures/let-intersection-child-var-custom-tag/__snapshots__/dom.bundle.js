@@ -16,13 +16,13 @@ const $valueChange = ($scope) => function(next) {
 _resume("c0", $valueChange);
 
 // template.marko
-const $a__OR__b = /*@__PURE__*/ _or(8, ($scope) => _text($scope.f, `${$scope.g},${$scope.h}`), 1, 1);
+const $a__OR__b = /*@__PURE__*/ _or(8, ($scope) => _text($scope, "f", `${$scope.g},${$scope.h}`), 1, 1);
 const $b = /*@__PURE__*/ _let(7, ($scope) => {
-	_text($scope.d, $scope.h);
+	_text($scope, "d", $scope.h);
 	$a__OR__b($scope);
 });
 const $a = _var_resume("a0", /*@__PURE__*/ _const(6, ($scope) => {
-	_text($scope.c, $scope.g);
+	_text($scope, "c", $scope.g);
 	$b($scope, $scope.g + 1);
 	$a__OR__b($scope);
 }));

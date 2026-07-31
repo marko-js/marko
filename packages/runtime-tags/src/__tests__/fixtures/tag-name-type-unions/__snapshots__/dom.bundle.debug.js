@@ -2,7 +2,7 @@
 const $template$2 = "<div>A <!></div>";
 const $walks$2 = "Db%l";
 const $setup$2 = () => {};
-const $input_label$1 = ($scope, input_label) => _text($scope["#text/0"], input_label);
+const $input_label$1 = ($scope, input_label) => _text($scope, "#text/0", input_label);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);
 var a_default = /*@__PURE__*/ _template("__tests__/tags/a/index.marko", $template$2, $walks$2, 0, $input$1);
 
@@ -10,7 +10,7 @@ var a_default = /*@__PURE__*/ _template("__tests__/tags/a/index.marko", $templat
 const $template$1 = "<div>B <!></div>";
 const $walks$1 = "Db%l";
 const $setup$1 = () => {};
-const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
+const $input_label = ($scope, input_label) => _text($scope, "#text/0", input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var b_default = /*@__PURE__*/ _template("__tests__/tags/b/index.marko", $template$1, $walks$1, 0, $input);
 

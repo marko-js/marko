@@ -1,7 +1,7 @@
 // template.marko
-const $for_content__index = ($scope, index) => _text($scope.a, index);
-const $for_content__item_id = ($scope, item_id) => _text($scope.b, item_id);
-const $for_content__item_n = ($scope, item_n) => _text($scope.c, item_n);
+const $for_content__index = ($scope, index) => _text($scope, "a", index);
+const $for_content__item_id = ($scope, item_id) => _text($scope, "b", item_id);
+const $for_content__item_n = ($scope, item_n) => _text($scope, "c", item_n);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_id($scope, $params2[0]?.id);
 	$for_content__item_n($scope, $params2[0]?.n);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button id=swap>swap</button><button id=bump>bump</button><!><!>";
 const $walks = " b b%c";
-const $tag_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope["#text/0"], $scope._.n));
+const $tag_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope, "#text/0", $scope._.n));
 const $tag_content__setup = $tag_content__n;
 const $tag_content = _content_resume("__tests__/template.marko_1*content", "<option value=a>A<!></option>", "Db%", $tag_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $tag_content);

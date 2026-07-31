@@ -10,7 +10,7 @@ const $tag__OR__v = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.
 const $tag = /*@__PURE__*/ _let("tag/5", $tag__OR__v);
 const $input_tag = $tag;
 const $v = /*@__PURE__*/ _let("v/6", ($scope) => {
-	_text($scope["#text/1"], $scope.v);
+	_text($scope, "#text/1", $scope.v);
 	$tag__OR__v($scope);
 });
 function $setup($scope) {

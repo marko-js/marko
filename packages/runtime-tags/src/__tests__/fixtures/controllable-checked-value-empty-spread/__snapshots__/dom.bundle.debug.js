@@ -12,7 +12,7 @@ const $v__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	$v__OR__rest__script($scope);
 });
 const $v = /*@__PURE__*/ _let("v/3", ($scope) => {
-	_text($scope["#text/2"], $scope.v === undefined ? "undefined" : "value=" + $scope.v);
+	_text($scope, "#text/2", $scope.v === undefined ? "undefined" : "value=" + $scope.v);
 	$v__OR__rest($scope);
 });
 const $rest = /*@__PURE__*/ _const("rest", $v__OR__rest);

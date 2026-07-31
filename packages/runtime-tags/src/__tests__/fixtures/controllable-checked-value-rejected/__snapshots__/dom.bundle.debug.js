@@ -4,7 +4,7 @@ const $walks = " b bD l";
 const $picked = /*@__PURE__*/ _let("picked/3", ($scope) => {
 	_attr_input_checkedValue($scope, "#input/0", $scope.picked, $checkedValueChange, "a");
 	_attr_input_checkedValue($scope, "#input/1", $scope.picked, $checkedValueChange2, "b");
-	_text($scope["#text/2"], $scope.picked);
+	_text($scope, "#text/2", $scope.picked);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_input_checkedValue_script($scope, "#input/0");

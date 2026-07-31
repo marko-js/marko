@@ -1,7 +1,7 @@
 // template.marko
 const $for_content__if = /*@__PURE__*/ _if(1, "never");
 const $for_content__i = ($scope, i) => {
-	_text($scope.a, i);
+	_text($scope, "a", i);
 	$for_content__if($scope, i > 9 ? 0 : 1);
 };
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);

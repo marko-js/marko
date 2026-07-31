@@ -3,7 +3,7 @@ const $template = "<span id=child> </span>";
 const $walks = "D l";
 const $setup = () => {};
 throw new Error("load failed");
-const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
+const $input_value = ($scope, input_value) => _text($scope, "#text/0", input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", $setup, $input);
 
@@ -16,7 +16,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_value($scope["#childScope/1"], 1);
 };
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
+const $catch_content__err_message = ($scope, err_message) => _text($scope, "#text/0", err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("__tests__/template.marko_3*content", "<div id=error> </div>", "D ", 0, $catch_content__$params);
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<div id=loading>loading</div>");

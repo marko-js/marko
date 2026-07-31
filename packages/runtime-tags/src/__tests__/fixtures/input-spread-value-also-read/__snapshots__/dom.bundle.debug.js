@@ -8,7 +8,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$input_value($scope, $scope.input.value);
 	$input__script($scope);
 });
-const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
+const $input_value = ($scope, input_value) => _text($scope, "#text/1", input_value);
 var my_input_default = /*@__PURE__*/ _template("__tests__/tags/my-input.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko

@@ -14,11 +14,11 @@ const $a__OR__b = /*@__PURE__*/ _or(6, ($scope) => $state3($scope, {
 	bChange: $state2($scope)
 }));
 const $a = /*@__PURE__*/ _let("a/4", ($scope) => {
-	_text($scope["#text/0"], $scope.a);
+	_text($scope, "#text/0", $scope.a);
 	$a__OR__b($scope);
 });
 const $b = /*@__PURE__*/ _let("b/5", ($scope) => {
-	_text($scope["#text/1"], $scope.b);
+	_text($scope, "#text/1", $scope.b);
 	$a__OR__b($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

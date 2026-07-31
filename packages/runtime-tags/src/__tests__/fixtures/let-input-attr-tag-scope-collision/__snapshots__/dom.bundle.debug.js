@@ -11,12 +11,12 @@ var child_tag_default = /*@__PURE__*/ _template("__tests__/tags/child-tag/index.
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-const $footer_content__input_submitLabel = /*@__PURE__*/ _closure_get("input_submitLabel", ($scope) => _text($scope["#text/0"], $scope._.input_submitLabel || "OK"));
+const $footer_content__input_submitLabel = /*@__PURE__*/ _closure_get("input_submitLabel", ($scope) => _text($scope, "#text/0", $scope._.input_submitLabel || "OK"));
 const $footer_content__setup = ($scope) => {
 	$footer_content__input_submitLabel($scope);
 	$footer_content__input_label($scope);
 };
-const $footer_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => _text($scope["#text/1"], $scope._.input_label));
+const $footer_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => _text($scope, "#text/1", $scope._.input_label));
 const $footer_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button> </button><span> </span>", "D lD ", $footer_content__setup);
 const $open = /*@__PURE__*/ _let_change("open/8");
 const $input_open__OR__input_openChange = /*@__PURE__*/ _or(5, ($scope) => $open($scope, $scope.input_open, $scope.input_openChange));

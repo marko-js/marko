@@ -10,6 +10,7 @@ export const ClosestBranch = "#ClosestBranch";
 export const ClosestBranchId = "#ClosestBranchId";
 export const Gen = "#Gen";
 export const DetachedAwait = "#DetachedAwait";
+export const Doomed = "#Doomed";
 export const EndNode = "#EndNode";
 export const Id = "#Id";
 export const Load = "#Load";

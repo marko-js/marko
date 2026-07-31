@@ -1,5 +1,5 @@
 // tags/provider.marko
-const $body_content__count = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, $scope._.e));
+const $body_content__count = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope, "a", $scope._.e));
 const $body_content = _content_resume("b0", "<div>value <!></div>", "Db%", $body_content__count);
 const $count = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($body_content__count));
 const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", function() {

@@ -28,7 +28,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $classlayout_content__setup = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$scope.e();
 }));
-const $classlayout_content__count = ($scope, count) => _text($scope.b, count);
+const $classlayout_content__count = ($scope, count) => _text($scope, "b", count);
 const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__count($scope, $params2[0]);
 	$classlayout_content__onBump($scope, $params2[1]);

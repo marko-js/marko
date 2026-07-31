@@ -9,7 +9,7 @@ const $name__script = _script("__tests__/tags/child.marko_0_name#3", ($scope) =>
 	$signal($scope, 0).onabort = () => console.log(`effect ${$scope.name} destroyed`);
 });
 const $name = /*@__PURE__*/ _const("name", ($scope) => {
-	_text($scope["#text/0"], $scope.name);
+	_text($scope, "#text/0", $scope.name);
 	$signalReset($scope, 0);
 	$name__script($scope);
 });

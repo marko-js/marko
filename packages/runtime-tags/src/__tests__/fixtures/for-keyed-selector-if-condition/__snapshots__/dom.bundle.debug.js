@@ -10,7 +10,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__row_label = ($scope, row_label) => _text($scope["#text/2"], row_label);
+const $for_content__row_label = ($scope, row_label) => _text($scope, "#text/2", row_label);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);

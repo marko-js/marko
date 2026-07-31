@@ -10,7 +10,7 @@ var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Toggle</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}& b`)("b%c");
-const $item_content__y = ($scope, y) => _text($scope["#text/0"], y);
+const $item_content__y = ($scope, y) => _text($scope, "#text/0", y);
 const $item_content__$params = ($scope, $params2) => $item_content__y($scope, $params2[0]);
 const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "y: <!>", "b%", 0, $item_content__$params);
 const $x = /*@__PURE__*/ _let("x/3", ($scope) => {

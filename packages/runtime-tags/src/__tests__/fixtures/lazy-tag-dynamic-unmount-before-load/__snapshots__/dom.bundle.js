@@ -11,7 +11,7 @@ const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function
 // child.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = ($scope, input_value) => _text($scope, "a", input_value);
 const $setup__script = _script("a0", ($scope) => console.log("SHOULD NOT LOG"));
 const $setup = $setup__script;
 const $input = ($scope, input) => $input_value($scope, input.value);

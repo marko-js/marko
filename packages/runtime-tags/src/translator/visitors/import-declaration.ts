@@ -155,6 +155,7 @@ export default {
                 loadFile.opts.filename,
               );
               importRuntimeFeature("catch");
+              importRuntimeFeature("render-effects");
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(

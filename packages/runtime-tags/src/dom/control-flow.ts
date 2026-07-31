@@ -23,8 +23,9 @@ import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   caughtError,
-  runEffects,
+  type held,
   pendingEffects,
+  runId,
   type PendingRender,
   placeholderShown,
   prepareEffects,
@@ -33,6 +34,7 @@ import {
   queuePendingRender,
   queueRender,
   run,
+  runEffects,
 } from "./queue";
 import {
   _content,
@@ -53,6 +55,71 @@ import {
   tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
+
+// Queueing variants of the structural halves of the deferring control-flow
+// sites; their presence is also the "defer is enabled" signal.
+let heldRetireBranch: undefined | typeof swapBranches;
+let heldBranchInsert: undefined | typeof insertHeldBranch;
+
+// Patches the structural halves of branch swaps and loops for queueing
+// variants (`render-effects.feat`).
+export function enable(patch: typeof held) {
+  if (!heldRetireBranch) {
+    const heldLoop = /* @__PURE__ */ patch(applyHeldLoop, 1);
+    heldRetireBranch = /* @__PURE__ */ patch(swapBranches, 1);
+    heldBranchInsert = /* @__PURE__ */ patch(insertHeldBranch, 1);
+    // The show marker (or only-child parent) is the toggle's own target, so
+    // the patch's connectedness check is exactly the right one.
+    applyShow = /* @__PURE__ */ patch(applyHeldShow);
+    applyLoopChanges = (
+      scope,
+      nodeAccessor,
+      oldScopes,
+      oldScopesByKey,
+      hasPotentialMoves,
+      start,
+    ) => {
+      // The marker is out of the document while items show, so the site is
+      // observable if either it or the first existing branch is connected. A
+      // detached site reconciles eagerly with the loop pass's own derivations,
+      // exactly as without the hold.
+      if (
+        (scope[nodeAccessor] as ChildNode).isConnected ||
+        oldScopes[0]?.[AccessorProp.StartNode].isConnected
+      ) {
+        // Doom the branches this batch drops so its renders into them skip; the
+        // held apply recomputes the removal set, so only the doom needs it now.
+        const dropped =
+          oldScopesByKey ||
+          oldScopes.slice(
+            (scope[AccessorPrefix.BranchScopes + nodeAccessor] as BranchScope[])
+              .length,
+          );
+        dropped.forEach(doomBranch);
+        heldLoop(scope, nodeAccessor, oldScopes);
+      } else {
+        finishLoop(
+          scope,
+          nodeAccessor,
+          oldScopes,
+          oldScopesByKey,
+          hasPotentialMoves,
+          start,
+        );
+      }
+    };
+  }
+}
+
+// Recursive so every liveness check inside stays one hop, mirroring how
+// destroy zeroes `Gen` on the whole subtree. Recursion goes through the inner
+// function-expression name so the module binding is reference-free and
+// rolldown can drop it when orphaned (a self-recursive declaration defeats
+// its DCE: https://github.com/oxc-project/oxc/issues/17364).
+const doomBranch = function doom(branch: BranchScope) {
+  branch[AccessorProp.Doomed] = runId;
+  branch[AccessorProp.BranchScopes]?.forEach(doom);
+};
 
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
@@ -425,6 +492,7 @@ export const _if = /*@__PURE__*/ withBranches(
           nodeAccessor as string,
           branches[(scope[branchAccessor] = newBranch)],
           createAndSetupBranch,
+          1,
         );
       }
     };
@@ -450,67 +518,24 @@ export const _show = /*@__PURE__*/ withBranches(
     }
     const rangeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
     return (scope: Scope, display: unknown) => {
-      // The reference node is the parent element when the `<show>` is its only
-      // child, otherwise a marker node just after the body.
-      const referenceNode = scope[nodeAccessor] as ChildNode;
-      const onlyChild = referenceNode.nodeType === NodeType.Element;
-      const parentNode = onlyChild
-        ? (referenceNode as unknown as ParentNode & Element)
-        : referenceNode.parentNode!;
-      let range = scope[rangeAccessor] as BranchScope | undefined;
-
-      if (!range) {
-        // Client render: derive the range from the template's static shape.
-        range = scope[rangeAccessor] = {} as BranchScope;
+      if (!scope[rangeAccessor]) {
+        // Client render: derive the range from the template's static shape. The
+        // reference node is the parent element when the `<show>` is its only
+        // child, otherwise a marker node just after the body.
+        const referenceNode = scope[nodeAccessor] as ChildNode;
+        const onlyChild = referenceNode.nodeType === NodeType.Element;
+        const range = (scope[rangeAccessor] = {} as BranchScope);
         range[AccessorProp.StartNode] = onlyChild
-          ? parentNode.firstChild!
+          ? (referenceNode as unknown as ParentNode).firstChild!
           : (scope[startNodeAccessor as Accessor] as ChildNode);
         range[AccessorProp.EndNode] = onlyChild
-          ? parentNode.lastChild!
+          ? (referenceNode as unknown as ParentNode).lastChild!
           : endNodeAccessor === undefined
             ? // A single static node body bounds itself.
               referenceNode.previousSibling!
             : (scope[endNodeAccessor as Accessor] as ChildNode);
       }
-
-      let startNode = range[AccessorProp.StartNode];
-      if (
-        range[AccessorProp.Id] &&
-        startNode === range[AccessorProp.EndNode] &&
-        (startNode as Partial<Element>).tagName === "T"
-      ) {
-        // First update after resuming hidden: dissolve the `<t>` wrapper, leaving its
-        // children. Replacing it with a plain holder ensures a body `<t>` is never mistaken for it.
-        const wrapper = startNode as Element;
-        if (!wrapper.firstChild) wrapper.appendChild(new Text());
-        range = scope[rangeAccessor] = {} as BranchScope;
-        range[AccessorProp.StartNode] = startNode = wrapper.firstChild!;
-        range[AccessorProp.EndNode] = wrapper.lastChild!;
-        wrapper.replaceWith(...wrapper.childNodes);
-      }
-
-      // An only child owns every node in the parent, so the parent being empty is
-      // what says it is hidden; its cached marker may have been replaced by the body.
-      const inDom = onlyChild
-        ? !!parentNode.firstChild
-        : startNode.parentNode === parentNode;
-      if (display) {
-        if (!inDom) {
-          insertBranchBefore(
-            range,
-            parentNode,
-            onlyChild ? null : referenceNode,
-          );
-        }
-      } else if (inDom) {
-        if (onlyChild) {
-          // An only child has no markers; body control flow can replace the
-          // parent's first and last child, so read them at each hide.
-          range[AccessorProp.StartNode] = parentNode.firstChild!;
-          range[AccessorProp.EndNode] = parentNode.lastChild!;
-        }
-        tempDetachBranch(range);
-      }
+      applyShow(scope, nodeAccessor as string, display);
     };
   },
 );
@@ -526,6 +551,66 @@ export function rendererKey(renderer: Renderer | string | undefined) {
         " " +
         (renderer as Renderer)[RendererProp.Owner]![AccessorProp.Id]
     : (renderer as Renderer | undefined)?.[RendererProp.Id] || renderer;
+}
+
+// The DOM half of `<show>`; `enable` patches this with a queueing variant so
+// the toggle (and a resumed `<t>` wrapper's dissolve) waits for the commit.
+let applyShow = eagerShow;
+
+function eagerShow(scope: Scope, nodeAccessor: Accessor, display?: unknown) {
+  const referenceNode = scope[nodeAccessor] as ChildNode;
+  const parentNode = getParentNode(referenceNode);
+  const onlyChild = (referenceNode as Node) === parentNode;
+  let range = scope[AccessorPrefix.BranchScopes + nodeAccessor] as BranchScope;
+
+  let startNode = range[AccessorProp.StartNode];
+  if (
+    range[AccessorProp.Id] &&
+    startNode === range[AccessorProp.EndNode] &&
+    (startNode as Partial<Element>).tagName === "T"
+  ) {
+    // First update after resuming hidden: dissolve the `<t>` wrapper, leaving its
+    // children. Replacing it with a plain holder ensures a body `<t>` is never mistaken for it.
+    const wrapper = startNode as Element;
+    if (!wrapper.firstChild) wrapper.appendChild(new Text());
+    range = scope[AccessorPrefix.BranchScopes + nodeAccessor] =
+      {} as BranchScope;
+    range[AccessorProp.StartNode] = startNode = wrapper.firstChild!;
+    range[AccessorProp.EndNode] = wrapper.lastChild!;
+    wrapper.replaceWith(...wrapper.childNodes);
+  }
+
+  // An only child owns every node in the parent, so the parent being empty is
+  // what says it is hidden; its cached marker may have been replaced by the body.
+  const inDom = onlyChild
+    ? !!parentNode.firstChild
+    : startNode.parentNode === parentNode;
+  if (display) {
+    if (!inDom) {
+      insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode);
+    }
+  } else if (inDom) {
+    if (onlyChild) {
+      // An only child has no markers; body control flow can replace the
+      // parent's first and last child, so read them at each hide.
+      range[AccessorProp.StartNode] = parentNode.firstChild!;
+      range[AccessorProp.EndNode] = parentNode.lastChild!;
+    }
+    tempDetachBranch(range);
+  }
+}
+
+// The held apply can run after an earlier record in the same flush destroyed
+// the owning branch, leaving the range's nodes parentless; the toggle is
+// meaningless then and its parent reads would throw.
+function applyHeldShow(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  display?: unknown,
+) {
+  if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] !== 0) {
+    eagerShow(scope, nodeAccessor, display);
+  }
 }
 
 export function patchDynamicTag(
@@ -557,6 +642,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
           nodeAccessor as string,
           normalizedRenderer || (getContent ? getContent(scope) : undefined),
           createBranchWithTagNameOrRenderer,
+          1,
         );
 
         if (getTagVar) {
@@ -582,6 +668,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
               MARKO_DEBUG ? `#${normalizedRenderer.toLowerCase()}/0` : "a",
               content,
               createAndSetupBranch,
+              1,
             );
             if (content[RendererProp.Accessor]) {
               subscribeToScopeSet(
@@ -676,6 +763,7 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
           nodeAccessor as string,
           renderer,
           createAndSetupBranch,
+          1,
         );
 
         if (renderer?.[RendererProp.Accessor]) {
@@ -731,24 +819,83 @@ export function setConditionalRenderer<T>(
     parentScope: Scope,
     parentNode: ParentNode,
   ) => BranchScope,
+  // Opt-in: only the plain branch swaps hold their insert. `<try>` and the catch
+  // path drive their own DOM around these accessors and must stay eager.
+  defer?: 1,
 ) {
   const referenceNode = scope[nodeAccessor] as Comment | Element;
   const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
     | BranchScope
     | undefined;
-  const parentNode =
-    referenceNode.nodeType > NodeType.Element
-      ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
-      : (referenceNode as ParentNode);
+  const parentNode = getParentNode(referenceNode, prevBranch);
   const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
     newRenderer &&
     createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
-  if (referenceNode === parentNode) {
+
+  if (defer && heldRetireBranch) {
+    // The outgoing branch stays fully viable (visible, live scopes) until the
+    // retire applies at commit; only renders from this same batch are doomed
+    // away from it. A prev created by this very batch was never shown, so it
+    // needs no retire -- teardown now matches the eager path's timing. A
+    // detached site (the swap sits inside detached async content) is not
+    // observable and swaps eagerly, exactly as without the hold. Retire and
+    // insert must share one answer for whether the site shows: while a branch
+    // shows its marker is out of the document, so the marker only speaks for
+    // an empty (or same-batch-created, never shown) site. An element site
+    // (the content is its parent's only child) always speaks for itself --
+    // a resumed only-child branch may not even carry a start node.
+    const attached =
+      referenceNode.nodeType > NodeType.Element &&
+      prevBranch &&
+      prevBranch[AccessorProp.Gen] !== runId
+        ? prevBranch[AccessorProp.StartNode].isConnected
+        : referenceNode.isConnected;
+    if (prevBranch) {
+      if (prevBranch[AccessorProp.Gen] === runId) {
+        destroyBranch(prevBranch);
+      } else if (attached) {
+        doomBranch(prevBranch);
+        heldRetireBranch(scope, nodeAccessor, prevBranch);
+      } else {
+        swapBranches(scope, nodeAccessor, prevBranch);
+      }
+    }
+    if (newBranch) {
+      if (attached) {
+        heldBranchInsert!(scope, nodeAccessor);
+      } else {
+        insertHeldBranch(scope, nodeAccessor);
+      }
+    }
+  } else {
+    swapBranches(
+      scope,
+      nodeAccessor,
+      prevBranch,
+      newBranch as BranchScope | undefined,
+    );
+  }
+}
+
+// The whole eager transition with either half optional; it doubles as the
+// held retire applier (queued with the outgoing branch, the incoming half
+// absent), so the `Gen` guard skips a branch an earlier record in the same
+// flush already tore down (an outer swap retiring a branch holding an inner
+// one) -- vacuous on the eager path, where prev is always live.
+function swapBranches(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  prevBranch?: BranchScope,
+  newBranch?: BranchScope,
+) {
+  if (prevBranch && !prevBranch[AccessorProp.Gen]) return;
+  const referenceNode = scope[nodeAccessor] as ChildNode;
+  const parentNode = getParentNode(referenceNode, prevBranch);
+  if ((referenceNode as Node) === parentNode) {
     if (prevBranch) {
       destroyBranch(prevBranch);
       referenceNode.textContent = "";
     }
-
     if (newBranch) {
       insertBranchBefore(newBranch, parentNode, null);
     }
@@ -773,6 +920,74 @@ export function setConditionalRenderer<T>(
   }
 }
 
+// The reference node is the parent element when the content is its parent's
+// only child, otherwise a marker beside it. A marker leaves the document while
+// content shows (a resumed one stays beside its nodes, sharing a parent), so
+// fall back to the current content's first node.
+function getParentNode(referenceNode: ChildNode, branch?: BranchScope) {
+  return (
+    referenceNode.nodeType > NodeType.Element
+      ? (branch?.[AccessorProp.StartNode] || referenceNode).parentNode!
+      : referenceNode
+  ) as ParentNode & Element;
+}
+
+// The insert applier runs at commit, in park order, and re-reads the branch
+// from the scope slot so a second swap in the same flush needs no
+// reconciliation.
+function insertHeldBranch(scope: Scope, nodeAccessor: Accessor) {
+  const branch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
+    | BranchScope
+    | undefined;
+  const referenceNode = scope[nodeAccessor] as ChildNode;
+  const parentNode = getParentNode(referenceNode);
+  if (
+    branch &&
+    branch[AccessorProp.Gen] &&
+    ((referenceNode as Node) === parentNode
+      ? // Skip a branch an earlier insert in the same flush already appended.
+        branch[AccessorProp.StartNode].parentNode !== (referenceNode as Node)
+      : // The marker is gone once an earlier insert in the same flush landed.
+        !!parentNode)
+  ) {
+    swapBranches(scope, nodeAccessor, undefined, branch);
+  }
+}
+
+function applyHeldLoop(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  oldScopes?: BranchScope[],
+) {
+  if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] === 0) return;
+  const newScopes = scope[
+    AccessorPrefix.BranchScopes + nodeAccessor
+  ] as BranchScope[];
+  // Recomputing from (original old scopes, current new scopes) rather than
+  // carrying the loop pass's derivations keeps a later fire in the same batch
+  // correct by construction; `start` is provably the common branch prefix.
+  let hasPotentialMoves: boolean | undefined;
+  let removed: Set<BranchScope> | undefined;
+  let start = 0;
+  if (oldScopes!.length) {
+    removed = new Set(oldScopes);
+    for (const branch of newScopes) {
+      if (removed.delete(branch)) hasPotentialMoves = true;
+    }
+    while (start < newScopes.length && oldScopes![start] === newScopes[start]) {
+      start++;
+    }
+  }
+  finishLoop(
+    scope,
+    nodeAccessor,
+    oldScopes!,
+    removed,
+    hasPotentialMoves,
+    start,
+  );
+}
+
 const loop = /*@__PURE__*/ withBranches(
   <T extends unknown[] = unknown[]>(
     forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
@@ -789,17 +1004,14 @@ const loop = /*@__PURE__*/ withBranches(
       const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
       const renderer = _content("", template, walks, setup)();
       return (scope: Scope, value: T) => {
-        const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
         const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
         const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
         scope[keyedScopesAccessor] = null;
         const oldLen = oldScopes.length;
-        const parentNode = (
-          referenceNode.nodeType > NodeType.Element
-            ? referenceNode.parentNode ||
-              oldScopes[0]?.[AccessorProp.StartNode].parentNode
-            : referenceNode
-        ) as Element;
+        const parentNode = getParentNode(
+          scope[nodeAccessor] as ChildNode,
+          oldScopes[0],
+        );
         let oldScopesByKey: Map<unknown, BranchScope> | undefined;
         let hasPotentialMoves: boolean | undefined;
         let start = 0;
@@ -844,129 +1056,14 @@ const loop = /*@__PURE__*/ withBranches(
           params?.(branch, args);
         });
 
-        const newLen = newScopes.length;
-        const hasSiblings = referenceNode !== parentNode;
-        let afterReference: null | Node = null;
-        let oldEnd = oldLen - 1;
-        let newEnd = newLen - 1;
-
-        if (hasSiblings) {
-          if (oldLen) {
-            afterReference =
-              oldScopes[oldEnd][AccessorProp.EndNode].nextSibling;
-            if (!newLen) {
-              parentNode.insertBefore(referenceNode, afterReference);
-            }
-          } else if (newLen) {
-            afterReference = referenceNode.nextSibling;
-            referenceNode.remove();
-          }
-        }
-
-        if (!hasPotentialMoves) {
-          // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
-          if (oldLen) {
-            oldScopes.forEach(
-              hasSiblings ? removeAndDestroyBranch : destroyBranch,
-            );
-            if (!hasSiblings) {
-              parentNode.textContent = "";
-            }
-          }
-
-          for (const newScope of newScopes) {
-            insertBranchBefore(newScope, parentNode, afterReference);
-          }
-
-          return;
-        }
-
-        if (oldScopesByKey) {
-          oldScopesByKey.forEach(removeAndDestroyBranch);
-        } else {
-          for (let i = newLen; i < oldLen; i++) {
-            removeAndDestroyBranch(oldScopes[i]);
-          }
-        }
-
-        // Skip common suffix
-        while (
-          oldEnd >= start &&
-          newEnd >= start &&
-          oldScopes[oldEnd] === newScopes[newEnd]
-        ) {
-          oldEnd--;
-          newEnd--;
-        }
-
-        // Update afterReference to account for common suffix
-        if (oldEnd + 1 < oldLen) {
-          afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
-        }
-
-        if (start > oldEnd || start > newEnd) {
-          for (let i = start; i <= newEnd; i++) {
-            insertBranchBefore(newScopes[i], parentNode, afterReference);
-          }
-          return;
-        }
-
-        // Handle mixed new/moves
-        const diffLen = newEnd - start + 1;
-        const sources = new Array<number>(diffLen);
-        const pred = new Array<number>(diffLen);
-        const tails: number[] = [];
-        let tail: number = -1;
-        let lo: number;
-        let hi: number;
-        let mid: number;
-
-        for (let i = diffLen; i--;) {
-          sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
-        }
-
-        for (let i = 0; i < diffLen; i++) {
-          if (~sources[i]) {
-            if (tail < 0 || sources[tails[tail]] < sources[i]) {
-              if (~tail) pred[i] = tails[tail];
-              tails[++tail] = i;
-            } else {
-              lo = 0;
-              hi = tail;
-              while (lo < hi) {
-                mid = ((lo + hi) / 2) | 0;
-                if (sources[tails[mid]] < sources[i]) lo = mid + 1;
-                else hi = mid;
-              }
-              if (sources[i] < sources[tails[lo]]) {
-                if (lo > 0) pred[i] = tails[lo - 1];
-                tails[lo] = i;
-              }
-            }
-          }
-        }
-
-        // Backtrack to build LIS indices (reuse tails array)
-        hi = tails[tail];
-        lo = tail + 1;
-        while (lo-- > 0) {
-          tails[lo] = hi;
-          hi = pred[hi];
-        }
-
-        for (let i = diffLen; i--;) {
-          if (~tail && i === tails[tail]) {
-            tail--;
-          } else {
-            insertBranchBefore(
-              newScopes[start + i],
-              parentNode,
-              afterReference,
-            );
-          }
-
-          afterReference = newScopes[start + i][AccessorProp.StartNode];
-        }
+        applyLoopChanges(
+          scope,
+          nodeAccessor as string,
+          oldScopes,
+          oldScopesByKey,
+          hasPotentialMoves,
+          start,
+        );
       };
     },
 );
@@ -1004,6 +1101,150 @@ export const _for_until = /*@__PURE__*/ loop<
   by ||= byFirstArg;
   forUntil(until, from, step, (v) => cb(by(v), [v]));
 });
+
+// The DOM half of a loop update; `enable` patches this with a queueing
+// variant, so branch matching and creation above stay eager while removals,
+// moves, and inserts wait for the commit.
+let applyLoopChanges: (
+  scope: Scope,
+  nodeAccessor: Accessor,
+  oldScopes: BranchScope[],
+  oldScopesByKey: Map<unknown, BranchScope> | undefined,
+  hasPotentialMoves: boolean | undefined,
+  start: number,
+) => void = finishLoop;
+
+function finishLoop(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  oldScopes: BranchScope[],
+  removed: { forEach(cb: (branch: BranchScope) => void): void } | undefined,
+  hasPotentialMoves: boolean | undefined,
+  start: number,
+) {
+  const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+  const newScopes = scope[
+    AccessorPrefix.BranchScopes + nodeAccessor
+  ] as BranchScope[];
+  const oldLen = oldScopes.length;
+  const newLen = newScopes.length;
+  const parentNode = getParentNode(referenceNode, oldScopes[0]);
+  const hasSiblings = referenceNode !== parentNode;
+  let afterReference: null | Node = null;
+  let oldEnd = oldLen - 1;
+  let newEnd = newLen - 1;
+
+  if (hasSiblings) {
+    if (oldLen) {
+      afterReference = oldScopes[oldEnd][AccessorProp.EndNode].nextSibling;
+      if (!newLen) {
+        parentNode.insertBefore(referenceNode, afterReference);
+      }
+    } else if (newLen) {
+      afterReference = referenceNode.nextSibling;
+      referenceNode.remove();
+    }
+  }
+
+  if (!hasPotentialMoves) {
+    // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
+    if (oldLen) {
+      oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch);
+      if (!hasSiblings) {
+        parentNode.textContent = "";
+      }
+    }
+
+    for (const newScope of newScopes) {
+      insertBranchBefore(newScope, parentNode, afterReference);
+    }
+
+    return;
+  }
+
+  if (removed) {
+    removed.forEach(removeAndDestroyBranch);
+  } else {
+    for (let i = newLen; i < oldLen; i++) {
+      removeAndDestroyBranch(oldScopes[i]);
+    }
+  }
+
+  // Skip common suffix
+  while (
+    oldEnd >= start &&
+    newEnd >= start &&
+    oldScopes[oldEnd] === newScopes[newEnd]
+  ) {
+    oldEnd--;
+    newEnd--;
+  }
+
+  // Update afterReference to account for common suffix
+  if (oldEnd + 1 < oldLen) {
+    afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
+  }
+
+  if (start > oldEnd || start > newEnd) {
+    for (let i = start; i <= newEnd; i++) {
+      insertBranchBefore(newScopes[i], parentNode, afterReference);
+    }
+    return;
+  }
+
+  // Handle mixed new/moves
+  const diffLen = newEnd - start + 1;
+  const sources = new Array<number>(diffLen);
+  const pred = new Array<number>(diffLen);
+  const tails: number[] = [];
+  let tail: number = -1;
+  let lo: number;
+  let hi: number;
+  let mid: number;
+
+  for (let i = diffLen; i--;) {
+    sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
+  }
+
+  for (let i = 0; i < diffLen; i++) {
+    if (~sources[i]) {
+      if (tail < 0 || sources[tails[tail]] < sources[i]) {
+        if (~tail) pred[i] = tails[tail];
+        tails[++tail] = i;
+      } else {
+        lo = 0;
+        hi = tail;
+        while (lo < hi) {
+          mid = ((lo + hi) / 2) | 0;
+          if (sources[tails[mid]] < sources[i]) lo = mid + 1;
+          else hi = mid;
+        }
+        if (sources[i] < sources[tails[lo]]) {
+          if (lo > 0) pred[i] = tails[lo - 1];
+          tails[lo] = i;
+        }
+      }
+    }
+  }
+
+  // Backtrack to build LIS indices (reuse tails array)
+  hi = tails[tail];
+  lo = tail + 1;
+  while (lo-- > 0) {
+    tails[lo] = hi;
+    hi = pred[hi];
+  }
+
+  for (let i = diffLen; i--;) {
+    if (~tail && i === tails[tail]) {
+      tail--;
+    } else {
+      insertBranchBefore(newScopes[start + i], parentNode, afterReference);
+    }
+
+    afterReference = newScopes[start + i][AccessorProp.StartNode];
+  }
+}
 
 function createBranchWithTagNameOrRenderer(
   $global: Scope[typeof AccessorProp.Global],

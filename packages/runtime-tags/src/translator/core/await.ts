@@ -207,6 +207,7 @@ export default {
             ]),
           );
           importRuntimeFeature("catch");
+          importRuntimeFeature("render-effects");
           return callRuntime(
             "_await_promise",
             getScopeAccessorLiteral(nodeRef, true),

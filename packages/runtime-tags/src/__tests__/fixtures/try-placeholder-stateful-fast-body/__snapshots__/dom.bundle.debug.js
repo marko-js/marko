@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope["#text/1"], $scope._._.clicks), ($scope) => $scope._._, "__tests__/template.marko_3_clicks#1/pending");
+const $await_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope, "#text/1", $scope._._.clicks), ($scope) => $scope._._, "__tests__/template.marko_3_clicks#1/pending");
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clicks($scope._._, +$scope._._.clicks + 1);
 }));
@@ -15,7 +15,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("done", 1));
 };
-const $placeholder_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope["#text/1"], $scope._.clicks));
+const $placeholder_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope, "#text/1", $scope._.clicks));
 const $placeholder_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clicks($scope._, +$scope._.clicks + 1);
 }));

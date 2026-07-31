@@ -13,11 +13,11 @@ const $a__OR__b = /*@__PURE__*/ _or(6, ($scope) => $state3($scope, {
 	bChange: $state2($scope)
 }));
 const $a = /*@__PURE__*/ _let(4, ($scope) => {
-	_text($scope.c, $scope.e);
+	_text($scope, "c", $scope.e);
 	$a__OR__b($scope);
 });
 const $b = /*@__PURE__*/ _let(5, ($scope) => {
-	_text($scope.d, $scope.f);
+	_text($scope, "d", $scope.f);
 	$a__OR__b($scope);
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);

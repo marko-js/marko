@@ -22,10 +22,10 @@ const $state_n = /*@__PURE__*/ _const("state_n", ($scope) => {
 	$state_tag__OR__n($scope);
 });
 const $n = ($scope) => {
-	_text($scope["#text/2"], $scope.state_n);
+	_text($scope, "#text/2", $scope.state_n);
 };
 const $state_tag = /*@__PURE__*/ _const("state_tag", $state_tag__OR__n);
-const $log = /*@__PURE__*/ _let("log/7", ($scope) => _text($scope["#text/3"], $scope.log));
+const $log = /*@__PURE__*/ _let("log/7", ($scope) => _text($scope, "#text/3", $scope.log));
 function $setup($scope) {
 	$state($scope, {
 		n: 0,

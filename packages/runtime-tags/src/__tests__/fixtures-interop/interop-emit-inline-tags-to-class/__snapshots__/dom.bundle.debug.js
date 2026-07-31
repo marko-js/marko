@@ -30,7 +30,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $template = "<!><!><div id=tags-api> </div>";
 const $walks = "b%bD l";
 const $inlinebutton_content = _content_resume("__tests__/template.marko_1*content", "Reset");
-const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => _text($scope["#text/1"], $scope.msg));
+const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => _text($scope, "#text/1", $scope.msg));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inlinebutton_content);
 function $setup($scope) {
 	$msg($scope, "hello");

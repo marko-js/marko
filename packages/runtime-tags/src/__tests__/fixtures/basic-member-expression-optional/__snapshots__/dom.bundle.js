@@ -17,5 +17,5 @@ const $setup__script = _script("a0", ($scope) => _on($scope.c, "click", function
 		name: names[$scope.d]
 	});
 }));
-const $user_id = /*@__PURE__*/ _const(5, ($scope) => _text($scope.a, $scope.f));
-const $user_name = /*@__PURE__*/ _const(6, ($scope) => _text($scope.b, $scope.g));
+const $user_id = /*@__PURE__*/ _const(5, ($scope) => _text($scope, "a", $scope.f));
+const $user_name = /*@__PURE__*/ _const(6, ($scope) => _text($scope, "b", $scope.g));

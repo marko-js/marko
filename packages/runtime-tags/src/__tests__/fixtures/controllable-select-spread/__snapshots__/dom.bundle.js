@@ -13,7 +13,7 @@ const $value = /*@__PURE__*/ _let(2, ($scope) => {
 		valueChange: $valueChange($scope),
 		content: $myselect_content($scope)
 	});
-	_text($scope.b, $scope.c);
+	_text($scope, "b", $scope.c);
 });
 const $valueChange = ($scope) => function(v) {
 	$value($scope, v);

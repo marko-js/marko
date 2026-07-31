@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $loaded = /*@__PURE__*/ _let("loaded/2", ($scope) => _text($scope["#text/1"], $scope.loaded));
+const $loaded = /*@__PURE__*/ _let("loaded/2", ($scope) => _text($scope, "#text/1", $scope.loaded));
 const $handlers2 = ($scope, handlers) => $handlers_load($scope, handlers.load);
 function $setup($scope) {
 	$loaded($scope, "no");

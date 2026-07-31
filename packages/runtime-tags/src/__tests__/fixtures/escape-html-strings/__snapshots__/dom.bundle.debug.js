@@ -10,7 +10,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<div><!>\` ${_w0}</div>`)($template$1
 const $walks = /*@__PURE__*/ ((_w0) => `D%c/${_w0}&l`)("c");
 const count = 1;
 function $setup($scope) {
-	_text($scope["#text/0"], count);
+	_text($scope, "#text/0", count);
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

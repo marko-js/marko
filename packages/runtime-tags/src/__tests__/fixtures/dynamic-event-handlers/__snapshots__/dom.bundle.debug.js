@@ -5,7 +5,7 @@ const $clickCount__script = _script("__tests__/template.marko_0_clickCount#2", (
 	$clickCount($scope, +$scope.clickCount + 1);
 } : false));
 const $clickCount = /*@__PURE__*/ _let("clickCount/2", ($scope) => {
-	_text($scope["#text/1"], $scope.clickCount);
+	_text($scope, "#text/1", $scope.clickCount);
 	$clickCount__script($scope);
 });
 function $setup($scope) {

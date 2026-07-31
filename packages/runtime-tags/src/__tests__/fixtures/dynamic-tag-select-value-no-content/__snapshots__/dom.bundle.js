@@ -6,7 +6,7 @@ const $tag__OR__v = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.
 	valueChange: $valueChange($scope)
 })));
 const $v = /*@__PURE__*/ _let(6, ($scope) => {
-	_text($scope.b, $scope.g);
+	_text($scope, "b", $scope.g);
 	$tag__OR__v($scope);
 });
 const $valueChange = ($scope) => (_new_v) => {

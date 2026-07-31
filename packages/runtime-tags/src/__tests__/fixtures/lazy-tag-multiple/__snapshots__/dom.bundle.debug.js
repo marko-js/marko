@@ -1,7 +1,7 @@
 // child-a.marko
 const $template = "<span class=a> </span>";
 const $walks = "D l";
-const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
+const $input_value = ($scope, input_value) => _text($scope, "#text/0", input_value);
 const $setup__script = _script("__tests__/child-a.marko_0", ($scope) => console.log("loaded a"));
 const $setup = $setup__script;
 const $input = ($scope, input) => $input_value($scope, input.value);
@@ -10,7 +10,7 @@ var child_a_default = /*@__PURE__*/ _template("__tests__/child-a.marko", $templa
 // child-b.marko
 const $template = "<span class=b> </span>";
 const $walks = "D l";
-const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value * 2);
+const $input_value = ($scope, input_value) => _text($scope, "#text/0", input_value * 2);
 const $setup__script = _script("__tests__/child-b.marko_0", ($scope) => console.log("loaded b"));
 const $setup = $setup__script;
 const $input = ($scope, input) => $input_value($scope, input.value);

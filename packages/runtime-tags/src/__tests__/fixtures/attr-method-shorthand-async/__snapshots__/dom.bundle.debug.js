@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $loaded = /*@__PURE__*/ _let("loaded/2", ($scope) => _text($scope["#text/1"], $scope.loaded));
+const $loaded = /*@__PURE__*/ _let("loaded/2", ($scope) => _text($scope, "#text/1", $scope.loaded));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", async function() {
 	$loaded($scope, await Promise.resolve("yes"));
 }));

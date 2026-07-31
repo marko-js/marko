@@ -1,8 +1,8 @@
 // template.marko
-const $MyTag_content__c = ($scope, c) => _text($scope.c, c);
+const $MyTag_content__c = ($scope, c) => _text($scope, "c", c);
 const $x = /*@__PURE__*/ _let(3, ($scope) => {
 	$MyTag_content__c($scope.a, $scope.d);
-	_text($scope.c, $scope.d);
+	_text($scope, "c", $scope.d);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$x($scope, +$scope.d + 1);

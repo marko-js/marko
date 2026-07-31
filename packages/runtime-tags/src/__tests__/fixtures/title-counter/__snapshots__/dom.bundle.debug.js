@@ -6,7 +6,7 @@ const $count__script = _script("__tests__/template.marko_0_count#3", ($scope) =>
 	_el_read($scope["#div/2"]).textContent = document.title;
 });
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
-	_text_content($scope["#title/0"], `Count is ${_to_text($scope.count)}`);
+	_text_content($scope, "#title/0", `Count is ${_to_text($scope.count)}`);
 	$count__script($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

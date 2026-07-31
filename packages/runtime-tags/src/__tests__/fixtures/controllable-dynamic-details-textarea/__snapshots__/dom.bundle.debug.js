@@ -20,12 +20,12 @@ const $open__OR__detailsTag = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scop
 	openChange: $openChange($scope)
 })));
 const $open = /*@__PURE__*/ _let("open/3", ($scope) => {
-	_text($scope["#text/1"], $scope.open ? "open" : "closed");
+	_text($scope, "#text/1", $scope.open ? "open" : "closed");
 	$open__OR__detailsTag($scope);
 });
 const $text__closure = /*@__PURE__*/ _closure($detailsTag_content__text);
 const $text = /*@__PURE__*/ _let("text/4", ($scope) => {
-	_text($scope["#text/2"], $scope.text);
+	_text($scope, "#text/2", $scope.text);
 	$text__closure($scope);
 });
 const $detailsTag = /*@__PURE__*/ _const("detailsTag", $open__OR__detailsTag);

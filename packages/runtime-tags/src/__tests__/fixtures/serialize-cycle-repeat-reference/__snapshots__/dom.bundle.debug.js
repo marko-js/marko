@@ -29,7 +29,7 @@ const $graph_byId__OR__graph_current__OR__graph_all = /*@__PURE__*/ _or(6, $grap
 const $graph_byId = /*@__PURE__*/ _const("graph_byId", $graph_byId__OR__graph_current__OR__graph_all);
 const $graph_current = /*@__PURE__*/ _const("graph_current", $graph_byId__OR__graph_current__OR__graph_all);
 const $graph_all = /*@__PURE__*/ _const("graph_all", $graph_byId__OR__graph_current__OR__graph_all);
-const $result = /*@__PURE__*/ _let("result/7", ($scope) => _text($scope["#text/1"], $scope.result));
+const $result = /*@__PURE__*/ _let("result/7", ($scope) => _text($scope, "#text/1", $scope.result));
 function $setup($scope) {
 	$graph($scope, buildGraph());
 	$result($scope, "pending");

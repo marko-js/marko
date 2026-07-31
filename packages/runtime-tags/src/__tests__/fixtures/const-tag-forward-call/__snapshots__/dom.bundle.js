@@ -3,7 +3,7 @@ const $second_getter = /*@__PURE__*/ _hoist(7);
 const $third_getter = _hoist_resume("a8", 9);
 const $nullary_getter = /*@__PURE__*/ _hoist(11);
 const $defaulted_getter = /*@__PURE__*/ _hoist(13);
-const $result = /*@__PURE__*/ _let(5, ($scope) => _text($scope.e, $scope.f));
+const $result = /*@__PURE__*/ _let(5, ($scope) => _text($scope, "e", $scope.f));
 const $setup__script = _script("a9", ($scope) => {
 	_on($scope.a, "click", function() {
 		$scope.g();

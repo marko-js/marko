@@ -27,19 +27,11 @@ import { rendererKey, setConditionalRenderer } from "./control-flow";
 import { type ControllableAttrs, controllableScripts } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
+import type { held } from "./queue";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { _id, subscribeToScopeSet } from "./signals";
 
-export function _to_text(value: unknown) {
-  if (MARKO_DEBUG) {
-    assertValidTextValue(value);
-  }
-  // Numeric 0 is special-cased so it still renders; bigint `0n` deliberately is
-  // not (not worth the DOM-runtime size).
-  return value || value === 0 ? value + "" : "";
-}
-
-export function _attr(element: Element, name: string, value: unknown) {
+export function setAttr(element: Element, name: string, value: unknown) {
   if (MARKO_DEBUG) {
     assertValidAttrValue(name, value);
   }
@@ -61,7 +53,7 @@ function setAttribute(
   }
 }
 
-export function _attr_class(element: Element, value: unknown) {
+function setClass(element: Element, value: unknown) {
   setAttribute(
     element,
     "class",
@@ -69,24 +61,11 @@ export function _attr_class(element: Element, value: unknown) {
   );
 }
 
-export function _attr_class_items(
-  element: Element,
-  items: Record<string, unknown>,
-) {
-  for (const key in items) {
-    _attr_class_item(element, key, items[key]);
-  }
-}
-
-export function _attr_class_item(
-  element: Element,
-  name: string,
-  value: unknown,
-) {
+function setClassItem(element: Element, name: string, value: unknown) {
   element.classList.toggle(name, !!value);
 }
 
-export function _attr_style(element: Element, value: unknown) {
+function setStyle(element: Element, value: unknown) {
   setAttribute(
     element,
     "style",
@@ -94,54 +73,123 @@ export function _attr_style(element: Element, value: unknown) {
   );
 }
 
-export function _attr_style_items(
-  element: HTMLElement,
-  items: Record<string, unknown>,
-) {
-  for (const key in items) {
-    _attr_style_item(element, key, items[key]);
-  }
-}
-
-export function _attr_style_item(
-  element: HTMLElement,
-  name: string,
-  value: unknown,
-) {
+function setStyleItem(element: HTMLElement, name: string, value: unknown) {
   element.style.setProperty(name, _to_text(value));
 }
 
-export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
-  const element = scope[nodeAccessor] as Element;
-  const id = _id(scope);
-  _attr_nonce(scope, nodeAccessor);
-  _attr(element, "class", id);
-  _text_content(element, "." + id + "~*{}");
+export function _to_text(value: unknown) {
+  if (MARKO_DEBUG) {
+    assertValidTextValue(value);
+  }
+  // Numeric 0 is special-cased so it still renders; bigint `0n` deliberately is
+  // not (not worth the DOM-runtime size).
+  return value || value === 0 ? value + "" : "";
 }
 
-export function _style_rule_item(
-  element: HTMLStyleElement,
+export let _attr = attr;
+function attr(
+  scope: Scope,
+  nodeAccessor: Accessor,
   name: string,
   value: unknown,
 ) {
-  const text = element.textContent!;
+  setAttr(scope[nodeAccessor] as Element, name, value);
+}
+
+export let _attr_class = attrClass;
+function attrClass(scope: Scope, nodeAccessor: Accessor, value: unknown) {
+  setClass(scope[nodeAccessor] as Element, value);
+}
+
+export let _attr_class_items = attrClassItems;
+function attrClassItems(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  items: Record<string, unknown>,
+) {
+  const el = scope[nodeAccessor] as Element;
+  for (const key in items) {
+    setClassItem(el, key, items[key]);
+  }
+}
+
+export let _attr_class_item = attrClassItem;
+function attrClassItem(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  name: string,
+  value: unknown,
+) {
+  setClassItem(scope[nodeAccessor] as Element, name, value);
+}
+
+export let _attr_style = attrStyle;
+function attrStyle(scope: Scope, nodeAccessor: Accessor, value: unknown) {
+  setStyle(scope[nodeAccessor] as Element, value);
+}
+
+export let _attr_style_items = attrStyleItems;
+function attrStyleItems(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  items: Record<string, unknown>,
+) {
+  const el = scope[nodeAccessor] as HTMLElement;
+  for (const key in items) {
+    setStyleItem(el, key, items[key]);
+  }
+}
+
+export let _attr_style_item = attrStyleItem;
+function attrStyleItem(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  name: string,
+  value: unknown,
+) {
+  setStyleItem(scope[nodeAccessor] as HTMLElement, name, value);
+}
+
+export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
+  const id = _id(scope);
+  _attr_nonce(scope, nodeAccessor);
+  _attr(scope, nodeAccessor, "class", id);
+  _text_content(scope, nodeAccessor, "." + id + "~*{}");
+}
+
+export let _style_rule_item = styleRuleItem;
+function styleRuleItem(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  name: string,
+  value: unknown,
+) {
+  const element = scope[nodeAccessor] as HTMLStyleElement;
+  const styleText = element.textContent!;
   const decl = name + ":" + escapeStyleValue(_to_text(value)) + ";";
-  let start = text.indexOf("{" + name + ":");
-  if (!~start) start = text.indexOf(";" + name + ":");
-  _text_content(
-    element,
+  let start = styleText.indexOf("{" + name + ":");
+  if (!~start) start = styleText.indexOf(";" + name + ":");
+  // The eager implementation directly: this body is itself patched, so its
+  // inner write applies as part of the same record.
+  textContent(
+    scope,
+    nodeAccessor,
     ~start
       ? // `escapeStyleValue` never emits a raw `;`, so the next one ends the declaration.
-        text.slice(0, ++start) + decl + text.slice(text.indexOf(";", start) + 1)
-      : text.slice(0, -1) + decl + "}",
+        styleText.slice(0, ++start) +
+          decl +
+          styleText.slice(styleText.indexOf(";", start) + 1)
+      : styleText.slice(0, -1) + decl + "}",
   );
 }
 
 export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
-  _attr(scope[nodeAccessor], "nonce", scope[AccessorProp.Global].cspNonce);
+  _attr(scope, nodeAccessor, "nonce", scope[AccessorProp.Global].cspNonce);
 }
 
-export function _text(node: Text | Comment, value: unknown) {
+export let _text = text;
+function text(scope: Scope, nodeAccessor: Accessor, value: unknown) {
+  const node = scope[nodeAccessor] as Text | Comment;
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.data !== normalizedValue) {
@@ -149,7 +197,9 @@ export function _text(node: Text | Comment, value: unknown) {
   }
 }
 
-export function _text_content(node: ParentNode, value: unknown) {
+export let _text_content = textContent;
+function textContent(scope: Scope, nodeAccessor: Accessor, value: unknown) {
+  const node = scope[nodeAccessor] as ParentNode;
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.textContent !== normalizedValue) {
@@ -157,7 +207,8 @@ export function _text_content(node: ParentNode, value: unknown) {
   }
 }
 
-export function _attrs(
+export let _attrs = attrs;
+function attrs(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
@@ -180,13 +231,17 @@ export function _attrs(
   attrsInternal(scope, nodeAccessor, nextAttrs, controllable);
 }
 
-export function _attrs_content(
+// Patched composites call the eager implementations of their parts, so one
+// update queues one record; `_attr_content` is never patched (its branch
+// creation must stay eager) and its structural half defers internally.
+export let _attrs_content = attrsContent;
+function attrsContent(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   controllable?: ControllableAttrs,
 ) {
-  _attrs(scope, nodeAccessor, nextAttrs, controllable);
+  attrs(scope, nodeAccessor, nextAttrs, controllable);
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
@@ -202,7 +257,8 @@ function hasAttrAlias(
   );
 }
 
-export function _attrs_partial(
+export let _attrs_partial = attrsPartial;
+function attrsPartial(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
@@ -234,14 +290,15 @@ export function _attrs_partial(
   attrsInternal(scope, nodeAccessor, partial, controllable);
 }
 
-export function _attrs_partial_content(
+export let _attrs_partial_content = attrsPartialContent;
+function attrsPartialContent(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
   controllable?: ControllableAttrs,
 ) {
-  _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable);
+  attrsPartial(scope, nodeAccessor, nextAttrs, skip, controllable);
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
@@ -272,10 +329,10 @@ function attrsInternal(
     const value = nextAttrs[name];
     switch (name) {
       case "class":
-        _attr_class(el, value);
+        setClass(el, value);
         break;
       case "style":
-        _attr_style(el, value);
+        setStyle(el, value);
         break;
       default: {
         if (MARKO_DEBUG) {
@@ -288,7 +345,7 @@ function attrsInternal(
         } else if (
           !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
         ) {
-          _attr(el, name, value);
+          setAttr(el, name, value);
         }
         break;
       }
@@ -309,7 +366,13 @@ export function _attr_content(
     (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] =
       rendererKey(content))
   ) {
-    setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
+    setConditionalRenderer(
+      scope,
+      nodeAccessor,
+      content,
+      createAndSetupBranch,
+      1,
+    );
     if (content?.[RendererProp.Accessor]) {
       subscribeToScopeSet(
         content[RendererProp.Owner]!,
@@ -345,7 +408,8 @@ export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
   }
 }
 
-export function _html(scope: Scope, value: unknown, accessor: Accessor) {
+export let _html = html;
+function html(scope: Scope, accessor: Accessor, value: unknown) {
   const firstChild = scope[accessor] as ChildNode;
   const parentNode = firstChild.parentNode!;
   const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
@@ -452,4 +516,26 @@ export function toInsertNode(startNode: Node, endNode: Node) {
   return startNode === endNode
     ? startNode
     : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
+}
+
+// Patches the write helpers for queueing variants (`render-effects.feat`).
+// Assignment-only references keep each helper tree-shakable: an unused
+// helper's patch line is a dead store the minifier removes along with the
+// helper itself.
+export function enable(patch: typeof held) {
+  _attr = /* @__PURE__ */ patch(attr);
+  _attr_class = /* @__PURE__ */ patch(attrClass);
+  _attr_class_items = /* @__PURE__ */ patch(attrClassItems);
+  _attr_class_item = /* @__PURE__ */ patch(attrClassItem);
+  _attr_style = /* @__PURE__ */ patch(attrStyle);
+  _attr_style_items = /* @__PURE__ */ patch(attrStyleItems);
+  _attr_style_item = /* @__PURE__ */ patch(attrStyleItem);
+  _style_rule_item = /* @__PURE__ */ patch(styleRuleItem);
+  _text = /* @__PURE__ */ patch(text);
+  _text_content = /* @__PURE__ */ patch(textContent);
+  _attrs = /* @__PURE__ */ patch(attrs);
+  _attrs_content = /* @__PURE__ */ patch(attrsContent);
+  _attrs_partial = /* @__PURE__ */ patch(attrsPartial);
+  _attrs_partial_content = /* @__PURE__ */ patch(attrsPartialContent);
+  _html = /* @__PURE__ */ patch(html);
 }

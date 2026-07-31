@@ -34,7 +34,7 @@ _resume("__tests__/components/class-inner.marko", _marko_template$1);
 const $classinner_content = _content_resume("__tests__/components/tags-mid.marko_1*content", "<span>deep body</span>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $classinner_content);
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	_text($scope, "#text/1", $scope.count);
 	$dynamicTag($scope, _marko_template$1, () => ({ onChange: $onChange($scope) }));
 });
 const $setup__script = _script("__tests__/components/tags-mid.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

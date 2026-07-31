@@ -8,7 +8,7 @@ const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 	$for_content__option__script($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
-const $input_class = ($scope, input_class) => _attr_class($scope["#select/0"], input_class);
+const $input_class = ($scope, input_class) => _attr_class($scope, "#select/0", input_class);
 const $for = /*@__PURE__*/ _for_of("#select/0", "<option></option>", " ", 0, $for_content__$params);
 const $input_option = ($scope, input_option) => $for($scope, [input_option]);
 const $input$1 = ($scope, input) => {

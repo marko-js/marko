@@ -37,7 +37,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $classlayout_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
+const $classlayout_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope, "#text/1", $scope._.count));
 const $classlayout_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));

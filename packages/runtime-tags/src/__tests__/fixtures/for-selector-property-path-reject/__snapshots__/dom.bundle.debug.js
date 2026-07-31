@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<table><tbody></tbody></table>";
 const $walks = "D l";
-const $for_content__selected__OR__row_id = /*@__PURE__*/ _or(6, ($scope) => _attr_class($scope["#tr/0"], ($scope._.selected?.id === $scope.row_id || $scope._.selected === $scope.row_id) && "danger"));
+const $for_content__selected__OR__row_id = /*@__PURE__*/ _or(6, ($scope) => _attr_class($scope, "#tr/0", ($scope._.selected?.id === $scope.row_id || $scope._.selected === $scope.row_id) && "danger"));
 const $for_content__selected = /*@__PURE__*/ _for_closure("#tbody/0", $for_content__selected__OR__row_id);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$selected($scope._, { id: $scope.row_id });
@@ -11,7 +11,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__row_id = /*@__PURE__*/ _const("row_id", $for_content__selected__OR__row_id);
-const $for_content__row_label = ($scope, row_label) => _text($scope["#text/2"], row_label);
+const $for_content__row_label = ($scope, row_label) => _text($scope, "#text/2", row_label);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);

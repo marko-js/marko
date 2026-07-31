@@ -12,7 +12,7 @@ const $walks = "b%c";
 const $await_content__value = /*@__PURE__*/ _const("value", ($scope) => {
 	$input_x($scope["#childScope/0"], $scope.value);
 	_attr_input_value_default($scope, "#input/1", $scope.value);
-	_text($scope["#text/2"], $scope.value);
+	_text($scope, "#text/2", $scope.value);
 });
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<input><span>got: <!></span>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}& bDb%l`)(" b"));

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button id=a>A</button><!><!>";
 const $walks = " b%c";
-const $await_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope["#text/0"], $scope._.n));
+const $await_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope, "#text/0", $scope._.n));
 const $await_content__setup = $await_content__n;
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<div id=out>done <!></div>", "Db%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1");

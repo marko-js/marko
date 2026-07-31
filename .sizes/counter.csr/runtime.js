@@ -1,10 +1,11 @@
-// size: 3876 (min) 1732 (brotli)
+// size: 3905 (min) 1750 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
+  pendingRenderEffects = 0,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -67,7 +68,8 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
-  cloneCache = {};
+  cloneCache = {},
+  _text = text;
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
@@ -109,12 +111,17 @@ function run() {
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
     prevEffects = pendingEffects,
+    prevRenderEffects = pendingRenderEffects,
     preparedEffects = (pendingEffects = []);
-  pendingRenders = [];
+  ((pendingRenders = []), (pendingRenderEffects = 0));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
-    (runId++, (rendering = 0), (pendingRenders = prevRenders), (pendingEffects = prevEffects));
+    (runId++,
+      (rendering = 0),
+      (pendingRenders = prevRenders),
+      (pendingEffects = prevEffects),
+      (pendingRenderEffects = prevRenderEffects));
   }
   return preparedEffects;
 }
@@ -272,8 +279,9 @@ function createCloneableHTML(html, ns) {
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
 }
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
+function text(scope, nodeAccessor, value) {
+  let node = scope[nodeAccessor],
+    normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function removeChildNodes(startNode, endNode) {

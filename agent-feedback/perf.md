@@ -322,3 +322,45 @@ A monotonically increasing list of distinct scope ids is the least compressible 
 `packages/runtime-tags/src/dom/renderer.ts` › `_content` | 2026-07-30 | impact:low | effort:med
 
 `_content` decides at runtime between three shapes the compiler already knows — no template (walk a fresh `Text`), template with empty walks (clone, no walk), and template with walks (clone and walk) — and its `clone` closure hard-references `walk`, `parseHTML` and `cloneCache` in all three, so `dom/walker.ts` and `dom/parse-html.ts` are retained even when every branch body is static. For `<if=(x>1)>yes</if>` the translator already emits `_if(2, "yes")` with the walks argument omitted, yet ablating the walker interpreter from that bundle measures -674 min / -270 brotli, parse-html + cloneCache + createCloneableHTML -426/-152, and both -1073/-417 (6647/3010 → 5574/2593). Emitting a distinct walk-free constructor (and a plain `new Text(str)` form for a branch whose static content is a single text literal) removes those references per call site, so the modules drop only when _every_ client-created branch in the app qualifies — be honest about reach, since a corpus scan of `_if(...)` calls in the fixture snapshots shows most branch bodies do carry a non-empty walks string. Two pieces are unconditional wins worth taking regardless: pre-trimming the trailing exit codes at compile time removes `walks.replace(/[^\0-1]+$/, "")` from `_content` (-26 min / -11 brotli plus one regex execution per branch renderer at module init), and a text-literal branch skips an `innerHTML` parse on first construction.
+
+## Dedupe held DOM writes when transitions let a batch span render drains
+
+`packages/runtime-tags/src/dom/queue.ts` › `enableHeldQueue` | 2026-07-28 | impact:med | effort:med
+
+`commitHeld` applies every parked record, which is correct only because a batch
+is committed at the end of the drain that filled it and `queueRender` already
+collapses repeat fires of one signal within a drain (measured: suppressing
+duplicates changed 4 writes across the whole suite, and applying all of them
+makes the held sequence byte-identical to the eager path). Once transitions hold
+a batch across several drains a site can be written once per drain, so dedup
+becomes necessary — and it is also a latency win at that point, since collapsing
+five writes to one removes more work from the commit than the pass costs.
+Suggested shape: gate the pass on the batch having spanned more than one drain
+(the transition knows this by construction, so no generation counter is needed);
+key a site on `(scope, helper, accessor, name-for-keyed-helpers)` via a scope
+property `AccessorPrefix.PendingWrite + fn.k + accessor` holding the record
+index, validated by probing `writes[i] === fn && writes[i+1] === scope &&
+writes[i+2] === accessor` so stamps left by an earlier batch are harmless without
+generation tagging; tombstone the superseded record's fn slot so the apply loop
+skips it with a truthiness check instead of recomputing keys. The helper must be
+part of the key: `_attr_class` and `_attr(…, "class")` are distinct sites that
+both write `class` (see the `spread-to-known-multiple-spread-exprs` fixture), and
+eager runs both in order, so collapsing across helpers would drop a write. Assign
+`fn.k` lazily inside the dedup pass (`fn.k ??= String.fromCharCode(++counter)`)
+rather than in `held()` — stamping in `held()` makes the enable-time wrap calls
+impure and cost +5.6 KB min across 40 async fixture bundles by defeating dead-store
+elimination, which is why the `/* @__PURE__ */` annotations on those calls exist.
+Concurrent transitions need no per-batch keying: dedup is one synchronous pass per
+commit so passes cannot interleave, and the probe rejects another batch's indexes,
+degrading to a missed dedup rather than a wrong overwrite. Fold the doomed-branch
+check into the same walk — drop records whose `scope[AccessorProp.Gen] === 0`, so
+a held batch does not write into branches destroyed while it waited; writes skip
+that check today only because nothing is destroyed mid-drain. Alternatives measured
+and rejected: a per-flush `Map` keyed on `scope[AccessorProp.Id]` (slower than the
+scope property in every size class, and ids are unique only per render — resumed
+scopes take server ids from a per-render `scopeLookup` in `resume.ts`, so two
+resumed roots collide), and a `next`-chain per accessor (fastest overall but needs
+a generation base to invalidate stale heads, and it front-loads cost onto park,
+which under transitions is the synchronous interactive path while commit is not).
+Re-verify the premise with `pnpm run test:update` after making `replayHeld` skip
+superseded records: only the four `lazy-tag-*-attrs-update` fixtures should change.

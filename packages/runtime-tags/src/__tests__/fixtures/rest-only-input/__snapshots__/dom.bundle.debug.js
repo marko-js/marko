@@ -2,7 +2,7 @@
 const $template$1 = "<em> </em>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $input_label = ($scope, rest_label) => _text($scope["#text/0"], rest_label);
+const $input_label = ($scope, rest_label) => _text($scope, "#text/0", rest_label);
 const $input2 = ($scope, input) => $input_label($scope, input?.label);
 const $input = $input2;
 var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $template$1, "D l", 0, $input);

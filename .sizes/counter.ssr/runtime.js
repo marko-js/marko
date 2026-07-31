@@ -1,4 +1,4 @@
-// size: 2650 (min) 1302 (brotli)
+// size: 2663 (min) 1316 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -18,7 +18,8 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   channel,
   registeredValues = {},
   curRenders,
-  readyIds;
+  readyIds,
+  _text = text;
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
@@ -247,8 +248,9 @@ function _resume(id, obj) {
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";
 }
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
+function text(scope, nodeAccessor, value) {
+  let node = scope[nodeAccessor],
+    normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {

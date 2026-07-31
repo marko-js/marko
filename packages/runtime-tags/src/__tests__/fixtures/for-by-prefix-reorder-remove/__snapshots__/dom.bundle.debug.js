@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<ul></ul><button class=reorder>stable prefix, drop tail, swap</button><button class=front>reorder from front and shrink</button><button class=append>append</button>";
 const $walks = " b b b b";
-const $for_content__row_id = ($scope, row_id) => _text($scope["#text/0"], row_id);
+const $for_content__row_id = ($scope, row_id) => _text($scope, "#text/0", row_id);
 const $for_content__$params = ($scope, $params2) => $for_content__row_id($scope, $params2[0]?.id);
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D ", 0, $for_content__$params);
 const $rows_0__OR__rows_1__OR__rows_3__OR__rows___script = _script("__tests__/template.marko_0_rows_0#5_rows_1#6_rows_3#7_rows_2#8", ($scope) => _on($scope["#button/1"], "click", function() {

@@ -54,7 +54,7 @@ const $item_content2 = _content_resume("__tests__/template.marko_2*content", "<e
 const $item_content = _content_resume("__tests__/template.marko_1*content", "<em>first</em>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	_text($scope, "#text/1", $scope.count);
 	$dynamicTag($scope, _marko_template, () => ({
 		onSelect: $onSelect($scope),
 		item: attrTags(attrTag({

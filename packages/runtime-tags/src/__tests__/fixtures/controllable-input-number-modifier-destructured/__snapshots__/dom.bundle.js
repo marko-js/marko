@@ -13,8 +13,8 @@ _resume("b0", $valueChange);
 // template.marko
 const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	$count($scope.a, $scope.d);
-	_text($scope.b, $scope.d);
-	_text($scope.c, typeof $scope.d);
+	_text($scope, "b", $scope.d);
+	_text($scope, "c", typeof $scope.d);
 });
 const $countChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);

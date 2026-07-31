@@ -7,7 +7,7 @@ function shout(message) {
 const whisper = (message) => message.toLowerCase();
 const $loud = /*@__PURE__*/ _let("loud/3");
 const $quiet = /*@__PURE__*/ _let("quiet/4");
-const $message = /*@__PURE__*/ _let("message/5", ($scope) => _text($scope["#text/2"], $scope.message));
+const $message = /*@__PURE__*/ _let("message/5", ($scope) => _text($scope, "#text/2", $scope.message));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$message($scope, $scope.loud($scope.message));

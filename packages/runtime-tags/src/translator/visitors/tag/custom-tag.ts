@@ -251,6 +251,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           ]),
         );
         importRuntimeFeature("catch");
+        importRuntimeFeature("render-effects");
         getProgram().node.body.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(

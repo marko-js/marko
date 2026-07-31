@@ -12,11 +12,11 @@ const $open__OR__n = /*@__PURE__*/ _or(6, ($scope) => $attrs2($scope, {
 	"data-n": $scope.n
 }));
 const $open = /*@__PURE__*/ _let("open/4", ($scope) => {
-	_text($scope["#text/2"], $scope.open ? "open" : "closed");
+	_text($scope, "#text/2", $scope.open ? "open" : "closed");
 	$open__OR__n($scope);
 });
 const $n = /*@__PURE__*/ _let("n/5", ($scope) => {
-	_text($scope["#text/3"], $scope.n);
+	_text($scope, "#text/3", $scope.n);
 	$open__OR__n($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

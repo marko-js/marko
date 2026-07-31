@@ -17,7 +17,7 @@ const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $sc
 	valueChange: $valueChange($scope)
 })));
 const $value = /*@__PURE__*/ _let(2, ($scope) => {
-	_text($scope.b, $scope.c);
+	_text($scope, "b", $scope.c);
 	$value__OR__tag($scope);
 });
 const $valueChange = ($scope) => function(v) {

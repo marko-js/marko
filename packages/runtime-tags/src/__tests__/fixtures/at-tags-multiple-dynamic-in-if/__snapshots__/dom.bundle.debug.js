@@ -2,8 +2,8 @@
 const $template$1 = "<div>x: <!> y: <!></div>";
 const $walks$1 = "Db%c%l";
 const $setup$1 = () => {};
-const $x_value = ($scope, x_value) => _text($scope["#text/0"], x_value);
-const $y_value = ($scope, y_value) => _text($scope["#text/1"], y_value);
+const $x_value = ($scope, x_value) => _text($scope, "#text/0", x_value);
+const $y_value = ($scope, y_value) => _text($scope, "#text/1", y_value);
 const $input$1 = ($scope, input) => {
 	$x($scope, input.x);
 	$y($scope, input.y);

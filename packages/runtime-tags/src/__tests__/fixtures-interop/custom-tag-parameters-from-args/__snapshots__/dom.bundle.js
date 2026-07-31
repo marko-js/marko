@@ -5,11 +5,11 @@ const $walks = " D%c%l%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(3, 0, 0, 1);
 const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.g, () => [$scope.h, $scope.i]), 2);
 const $x = /*@__PURE__*/ _let(7, ($scope) => {
-	_text($scope.b, $scope.h);
+	_text($scope, "b", $scope.h);
 	$input_content__OR__x__OR__y($scope);
 });
 const $y = /*@__PURE__*/ _let(8, ($scope) => {
-	_text($scope.c, $scope.i);
+	_text($scope, "c", $scope.i);
 	$input_content__OR__x__OR__y($scope);
 });
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {

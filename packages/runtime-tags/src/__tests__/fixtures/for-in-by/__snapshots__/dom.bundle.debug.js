@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<div><!><button>Change</button></div>";
 const $walks = "D%b l";
-const $for_content__key = ($scope, key) => _text($scope["#text/0"], key);
-const $for_content__value = ($scope, value) => _text($scope["#text/1"], value);
+const $for_content__key = ($scope, key) => _text($scope, "#text/0", key);
+const $for_content__value = ($scope, value) => _text($scope, "#text/1", value);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__key($scope, $params2[0]);
 	$for_content__value($scope, $params2[1]);

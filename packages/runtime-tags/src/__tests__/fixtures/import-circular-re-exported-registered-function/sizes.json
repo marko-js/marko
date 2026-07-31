@@ -2,15 +2,15 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 2653,
-        "brotli": 1349
+        "min": 2672,
+        "brotli": 1360
       },
       "files": {
         "tags/chain-b.marko": 92,
         "tags/chain-a.marko": 92,
         "tags/v:chain-b.marko.register-bFn.js": 80,
         "tags/v:chain-a.marko.register-aFn.js": 80,
-        "template.marko": 256
+        "template.marko": 259
       }
     }
   },

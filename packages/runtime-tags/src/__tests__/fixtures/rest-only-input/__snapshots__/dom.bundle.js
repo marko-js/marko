@@ -1,5 +1,5 @@
 // tags/echo/index.marko
-const $input_label = ($scope, rest_label) => _text($scope.a, rest_label);
+const $input_label = ($scope, rest_label) => _text($scope, "a", rest_label);
 const $input2 = ($scope, input) => $input_label($scope, input?.label);
 const $input = $input2;
 

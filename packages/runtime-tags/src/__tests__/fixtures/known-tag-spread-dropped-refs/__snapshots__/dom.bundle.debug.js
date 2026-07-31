@@ -2,7 +2,7 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $input_a = ($scope, input_a) => _text($scope["#text/0"], input_a);
+const $input_a = ($scope, input_a) => _text($scope, "#text/0", input_a);
 const $input = ($scope, input) => $input_a($scope, input.a);
 var child_b_default = /*@__PURE__*/ _template("__tests__/tags/child-b/index.marko", $template$1, "D l", 0, $input);
 
@@ -10,7 +10,7 @@ var child_b_default = /*@__PURE__*/ _template("__tests__/tags/child-b/index.mark
 const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)("D l");
 const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
+	_text($scope, "#text/1", $scope.n);
 	$input_a($scope["#childScope/2"], $scope.n);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

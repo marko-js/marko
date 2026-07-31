@@ -22,7 +22,7 @@ const $input_tag__OR__n = /*@__PURE__*/ _or(8, ($scope) => $dynamicTag2($scope, 
 	id: "inline"
 })));
 const $n = /*@__PURE__*/ _let(7, ($scope) => {
-	_text($scope.d, $scope.h);
+	_text($scope, "d", $scope.h);
 	$attrs2($scope, { onClick: $attrs($scope) });
 	$input_tag__OR__n($scope);
 });

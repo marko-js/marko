@@ -22,7 +22,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $if_content__count = /*@__PURE__*/ _if_closure(3, 0, ($scope) => $if_content__dynamicTag($scope, _marko_template, () => ({ value: $scope._.e })));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _let(4, ($scope) => {
-	_text($scope.b, $scope.e);
+	_text($scope, "b", $scope.e);
 	$if_content__count($scope);
 });
 const $if = /*@__PURE__*/ _if(3, "<!><!><!>", "b%", $if_content__setup);

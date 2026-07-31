@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content4__value = ($scope, value) => _attr_class($scope["#div/0"], value);
+const $await_content4__value = ($scope, value) => _attr_class($scope, "#div/0", value);
 const $await_content4__$params = ($scope, $params5) => $await_content4__value($scope, $params5[0]);
 const $placeholder_content4 = _content_resume("__tests__/template.marko_11*content", "LOADING B2");
 const $placeholder_content3 = _content_resume("__tests__/template.marko_10*content", "LOADING B1");
@@ -12,7 +12,7 @@ const $try_content4__setup = ($scope) => {
 	$try_content4__promiseB($scope);
 	$await_content4($scope);
 };
-const $await_content3__value = ($scope, value) => _attr_class($scope["#div/0"], value);
+const $await_content3__value = ($scope, value) => _attr_class($scope, "#div/0", value);
 const $await_content3__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content4__setup);
 const $await_content3__setup = ($scope) => $await_content3__try($scope, { placeholder: attrTag({ content: $placeholder_content4($scope) }) });
 const $await_content3__$params = ($scope, $params4) => $await_content3__value($scope, $params4[0]);
@@ -23,7 +23,7 @@ const $try_content3__setup = ($scope) => {
 	$try_content3__promiseB($scope);
 	$await_content3($scope);
 };
-const $await_content2__value = ($scope, value) => _attr_class($scope["#div/0"], value);
+const $await_content2__value = ($scope, value) => _attr_class($scope, "#div/0", value);
 const $await_content2__promiseB = /*@__PURE__*/ _const("promiseB");
 const $await_content2__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content3__setup);
 const $await_content2__setup = ($scope) => {
@@ -40,7 +40,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__promiseA($scope);
 	$await_content2($scope);
 };
-const $await_content__value = ($scope, value) => _attr_class($scope["#div/0"], value);
+const $await_content__value = ($scope, value) => _attr_class($scope, "#div/0", value);
 const $await_content__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content2__setup);
 const $await_content__setup = ($scope) => $await_content__try($scope, { placeholder: attrTag({ content: $placeholder_content2($scope) }) });
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);

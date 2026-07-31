@@ -1,0 +1,56 @@
+<let/n=0/>
+<let/txt="hi"/>
+<let/pick="a"/>
+<let/sel="one"/>
+<let/opened=false/>
+<const/on=n % 2 === 0/>
+<define/Chunk>chunk ${n}</define>
+<button onClick() { n++ }>step</button>
+
+<div data-n=n class=on && "active">n=${n}</div>
+<div class=["base", { odd: !on }]/>
+<div class={ a: on, b: !on }/>
+<div style=`width:${n}px`/>
+<div style={ color: on ? "red" : "blue" }/>
+<div style={ color: on ? "red" : "blue", opacity: n }/>
+<html-script type="importmap" onClick() {}>
+  { "imports": { "${n}": "https://markojs.com" } }
+</html-script>
+<div>$!{`<b>html ${n}</b>`}</div>
+<const/spread={ "data-a": n, title: `t${n}` }/>
+<div ...spread/>
+<div ...spread data-fixed="x"/>
+<img src="x.png" ...spread/>
+<img ...spread alt="y"/>
+<div content=on && Chunk/>
+
+<input type="checkbox" checked=on checkedChange(v) { n = n + 0 }/>
+<input type="checkbox" checked=on/>
+<input type="radio" value="a" checkedValue=pick checkedValueChange(v) { pick = v }/>
+<input type="radio" value="b" checkedValue=on ? "a" : "b"/>
+<input value=txt valueChange(v) { txt = v }/>
+<input value=`v${n}`/>
+<input type=on ? "text" : "hidden" value=`d${n}`/>
+<let/hidden=`h${n}`/>
+<input type="search" value=hidden valueChange(v) { hidden = v }/>
+<select value=sel valueChange(v) { sel = v }>
+  <option value="one">one</option>
+  <option value="two">two</option>
+</select>
+<select value=on ? "one" : "two">
+  <option value="one">one</option>
+  <option value="two">two</option>
+</select>
+<details open=opened openChange(v) { opened = v }>
+  <summary>s</summary>
+  body
+</details>
+<details open=on>
+  <summary>s2</summary>
+  b2
+</details>
+<dialog open=opened openChange(v) { opened = v }>d</dialog>
+<dialog open=on>d2</dialog>
+<style>
+  .kitchen { color: ${on ? "green" : "purple"}; }
+</style>

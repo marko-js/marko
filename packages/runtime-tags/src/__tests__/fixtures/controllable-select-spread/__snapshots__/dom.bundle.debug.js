@@ -19,7 +19,7 @@ const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 		valueChange: $valueChange($scope),
 		content: $myselect_content($scope)
 	});
-	_text($scope["#text/1"], $scope.value);
+	_text($scope, "#text/1", $scope.value);
 });
 function $setup($scope) {
 	$value($scope, "b");

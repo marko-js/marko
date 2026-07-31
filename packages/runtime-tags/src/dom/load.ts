@@ -110,16 +110,20 @@ function insertLoaded(
   marker: ChildNode,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
 ) {
-  const parent = marker.parentNode as Element,
-    values = branch[AccessorProp.Load] as LoadValues,
+  const values = branch[AccessorProp.Load] as LoadValues,
+    // The marker can move between now and the insert (a held branch swap
+    // commits it into the document), so its parent is read when inserting.
     insert = () => {
-      insertBranchBefore(branch, parent, marker);
+      insertBranchBefore(branch, marker.parentNode!, marker);
       marker.remove();
       awaitCounter?.c();
     };
   let remaining: number;
   syncGen(branch);
-  renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
+  renderer[RendererProp.Clone]!(
+    branch,
+    (marker.parentNode as Element).namespaceURI!,
+  );
   branch[AccessorProp.Load] = 0;
   if ((remaining = values?.size as number)) {
     const fail = loadFailed(branch, awaitCounter);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div><input>";
 const $walks = " b b";
-const $if_content__value = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.value));
+const $if_content__value = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope, "#text/0", $scope._.value));
 const $if_content__setup = $if_content__value;
 const $if = /*@__PURE__*/ _if("#div/0", "<span> </span>", "D ", $if_content__setup);
 const $value = /*@__PURE__*/ _let("value/5", ($scope) => {

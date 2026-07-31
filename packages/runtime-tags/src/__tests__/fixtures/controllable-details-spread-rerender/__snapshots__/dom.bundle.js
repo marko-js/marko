@@ -10,11 +10,11 @@ const $open__OR__n = /*@__PURE__*/ _or(6, ($scope) => $attrs2($scope, {
 	"data-n": $scope.f
 }));
 const $open = /*@__PURE__*/ _let(4, ($scope) => {
-	_text($scope.c, $scope.e ? "open" : "closed");
+	_text($scope, "c", $scope.e ? "open" : "closed");
 	$open__OR__n($scope);
 });
 const $n = /*@__PURE__*/ _let(5, ($scope) => {
-	_text($scope.d, $scope.f);
+	_text($scope, "d", $scope.f);
 	$open__OR__n($scope);
 });
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {

@@ -7,7 +7,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<section>${_w0}</section><div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&lD l`)("b");
-const $count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope, "#text/1", $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

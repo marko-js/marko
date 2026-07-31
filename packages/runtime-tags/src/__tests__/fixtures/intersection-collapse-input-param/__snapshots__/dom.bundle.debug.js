@@ -3,7 +3,7 @@ const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $doubled__OR__tripled = ($scope) => {
-	_text($scope["#text/0"], $scope.input_n * 2 + $scope.input_n * 3);
+	_text($scope, "#text/0", $scope.input_n * 2 + $scope.input_n * 3);
 };
 const $input_n = /*@__PURE__*/ _const("input_n", $doubled__OR__tripled);
 const $input = ($scope, input) => $input_n($scope, input.n);

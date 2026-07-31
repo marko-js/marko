@@ -3,7 +3,7 @@ const $template = "<div>Hello</div>";
 const $walks = " b";
 const { content } = v_template_marko_module_exports;
 function $setup($scope) {
-	_attr_class($scope["#div/0"], content);
+	_attr_class($scope, "#div/0", content);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);
 

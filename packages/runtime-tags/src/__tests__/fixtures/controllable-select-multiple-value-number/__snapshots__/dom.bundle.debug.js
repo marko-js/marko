@@ -3,7 +3,7 @@ const $template = "<select multiple><option value=0></option><option value=1></o
 const $walks = " bD l b";
 const $selected = /*@__PURE__*/ _let("selected/3", ($scope) => {
 	_attr_select_value($scope, "#select/0", $scope.selected, $valueChange($scope));
-	_text($scope["#text/1"], $scope.selected);
+	_text($scope, "#text/1", $scope.selected);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_select_value_script($scope, "#select/0");

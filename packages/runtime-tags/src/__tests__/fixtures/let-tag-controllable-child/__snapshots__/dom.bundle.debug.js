@@ -1,16 +1,16 @@
 // tags/child.marko
 const $template$1 = "<button><!>|<!></button><button><!>|<!></button><button><!>|<!></button>";
 const $walks$1 = " D%c%l D%c%l D%c%l";
-const $state = /*@__PURE__*/ _let_change("state/14", ($scope) => _text($scope["#text/2"], $scope.state));
-const $thirdState = /*@__PURE__*/ _let_change("thirdState/18", ($scope) => _text($scope["#text/8"], $scope.thirdState));
+const $state = /*@__PURE__*/ _let_change("state/14", ($scope) => _text($scope, "#text/2", $scope.state));
+const $thirdState = /*@__PURE__*/ _let_change("thirdState/18", ($scope) => _text($scope, "#text/8", $scope.thirdState));
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(13, ($scope) => {
 	$state($scope, $scope.input_value, $scope.input_valueChange);
 	$thirdState($scope, $scope.input_value, $scope.input_valueChange);
 });
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
-	_text($scope["#text/1"], $scope.input_value);
-	_text($scope["#text/4"], $scope.input_value);
-	_text($scope["#text/7"], $scope.input_value);
+	_text($scope, "#text/1", $scope.input_value);
+	_text($scope, "#text/4", $scope.input_value);
+	_text($scope, "#text/7", $scope.input_value);
 	$input_value__OR__input_valueChange($scope);
 });
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);
@@ -26,7 +26,7 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => {
 	});
 });
 const $setup$1 = $setup__script;
-const $otherState = /*@__PURE__*/ _let_change("otherState/16", ($scope) => _text($scope["#text/5"], $scope.otherState));
+const $otherState = /*@__PURE__*/ _let_change("otherState/16", ($scope) => _text($scope, "#text/5", $scope.otherState));
 const $input = ($scope, input) => {
 	$input_value($scope, input.value);
 	$input_valueChange($scope, input.valueChange);
@@ -42,7 +42,7 @@ const $source = /*@__PURE__*/ _let("source/2", ($scope) => {
 		value: $scope.source,
 		valueChange: $valueChange($scope)
 	});
-	_text($scope["#text/1"], $scope.source);
+	_text($scope, "#text/1", $scope.source);
 });
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

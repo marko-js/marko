@@ -2,9 +2,9 @@
 const $template = "<div></div>";
 const $walks = " b";
 const $setup = () => {};
-const $if_content3__input_value = /*@__PURE__*/ _closure_get("value2", ($scope) => _text($scope["#text/0"], $scope._._.value2), ($scope) => $scope._._);
+const $if_content3__input_value = /*@__PURE__*/ _closure_get("value2", ($scope) => _text($scope, "#text/0", $scope._._.value2), ($scope) => $scope._._);
 const $if_content3__setup = $if_content3__input_value;
-const $if_content2__input_value = /*@__PURE__*/ _closure_get("value1", ($scope) => _text($scope["#text/0"], $scope._._.value1), ($scope) => $scope._._);
+const $if_content2__input_value = /*@__PURE__*/ _closure_get("value1", ($scope) => _text($scope, "#text/0", $scope._._.value1), ($scope) => $scope._._);
 const $if_content2__setup = $if_content2__input_value;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content2__setup);
 const $if_content__input_value = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => $if_content__if($scope, $scope._.value1 ? 0 : 1));

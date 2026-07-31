@@ -1,5 +1,5 @@
 // template.marko
-const $liveCount = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $liveCount = /*@__PURE__*/ _let(2, ($scope) => _text($scope, "b", $scope.c));
 const $count = /*@__PURE__*/ _let_change(3);
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function(_, el) {
 	el.textContent = "" + $count($scope, 1);

@@ -10,8 +10,8 @@ const $value__OR__$valueChange2 = /*@__PURE__*/ _or(8, ($scope) => {
 	_attr_input_value($scope, "#input/3", $scope.value, $scope.$valueChange2);
 });
 const $value = /*@__PURE__*/ _let("value/6", ($scope) => {
-	_text($scope["#text/4"], typeof $scope.value);
-	_text($scope["#text/5"], $scope.value);
+	_text($scope, "#text/4", typeof $scope.value);
+	_text($scope, "#text/5", $scope.value);
 	$value__OR__$valueChange($scope);
 	$value__OR__$valueChange2($scope);
 });

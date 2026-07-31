@@ -8,11 +8,11 @@ const $enabled__script = _script("__tests__/template.marko_0_enabled#7", ($scope
 const $enabled = /*@__PURE__*/ _let("enabled/7", ($scope) => {
 	_attrs_partial($scope, "#button/2", { onClick: $scope.enabled && $anonymous($scope) }, { class: 1 });
 	_attrs_partial($scope, "#button/3", $scope.enabled && { onClick: $onClick($scope) }, { class: 1 });
-	_text($scope["#text/4"], $scope.enabled);
+	_text($scope, "#text/4", $scope.enabled);
 	$enabled__script($scope);
 });
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/5"], $scope.count));
-const $log = /*@__PURE__*/ _let("log/9", ($scope) => _text($scope["#text/6"], $scope.log));
+const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope, "#text/5", $scope.count));
+const $log = /*@__PURE__*/ _let("log/9", ($scope) => _text($scope, "#text/6", $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$enabled($scope, !$scope.enabled);

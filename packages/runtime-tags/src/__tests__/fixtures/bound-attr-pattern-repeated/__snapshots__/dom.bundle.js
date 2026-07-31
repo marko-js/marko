@@ -16,7 +16,7 @@ const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__a($scope, $temp.a);
 };
 const $n = /*@__PURE__*/ _let(3, ($scope) => {
-	_text($scope.b, $scope.d);
+	_text($scope, "b", $scope.d);
 	$Wrap_content__tag_param_($scope.c, { a: "z" + $scope.d });
 });
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {

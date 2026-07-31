@@ -120,6 +120,4 @@ REMOVE: .inc + div
 ## Change
 ```
 INSERT: .inc + div
-UPDATE: div::text@0 "" => "x"
-UPDATE: div::text@3 "" => "2"
 ```

@@ -1,5 +1,5 @@
 // tags/show-result/index.marko
-const $input = ($scope, input) => _text($scope.a, input.get());
+const $input = ($scope, input) => _text($scope, "a", input.get());
 
 // template.marko
 const $count = /*@__PURE__*/ _let(2, ($scope) => $input($scope.b, { get: function() {

@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template = "<div>Id is <!></div>";
 const $walks = "Db%l";
-const $id = ($scope, id) => _text($scope.a, id);
+const $id = ($scope, id) => _text($scope, "a", id);
 const $input = ($scope, input) => $id($scope, input.id);
 var child_default = /*@__PURE__*/ _template("b", $template, $walks, 0, $input);
 

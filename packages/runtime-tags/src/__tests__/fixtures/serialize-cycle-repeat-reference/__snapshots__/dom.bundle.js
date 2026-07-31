@@ -7,4 +7,4 @@ const $graph_byId__OR__graph_current__OR__graph_all = /*@__PURE__*/ _or(6, _scri
 		$scope.e.next.prev === $scope.e
 	].join(","));
 })), 2);
-const $result = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $result = /*@__PURE__*/ _let(7, ($scope) => _text($scope, "b", $scope.h));

@@ -3,7 +3,7 @@ const $template = "<button>drop</button><!><!>";
 const $walks = " b%c";
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "never");
 const $for_content__i = ($scope, i) => {
-	_text($scope["#text/0"], i);
+	_text($scope, "#text/0", i);
 	$for_content__if($scope, i > 9 ? 0 : 1);
 };
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);

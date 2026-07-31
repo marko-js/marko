@@ -10,7 +10,7 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
 const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a1", "Click <!>", "b%"), { 4($scope) {
-	_text($scope.a, $scope.e);
+	_text($scope, "a", $scope.e);
 } });
 const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
@@ -24,7 +24,7 @@ const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 		});
 	});
 	$input_item($scope.a, $item);
-	_text($scope.b, $scope.c);
+	_text($scope, "b", $scope.c);
 });
 const $onClick = ($locals) => function() {
 	const $scope = $locals._;

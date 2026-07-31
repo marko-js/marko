@@ -34,7 +34,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 _resume("b", _marko_template);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(3);
 const $n = /*@__PURE__*/ _let(4, ($scope) => {
-	_text($scope.b, $scope.e);
+	_text($scope, "b", $scope.e);
 	$dynamicTag2($scope, _marko_template, () => ({ count: $scope.e }));
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {

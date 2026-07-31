@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $if_content__value = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.value));
+const $if_content__value = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope, "#text/0", $scope._.value));
 const $if_content__setup = $if_content__value;
 const $await_content__if = /*@__PURE__*/ _if("#text/2", "<span> </span>", "D ", $if_content__setup);
 const $await_content__value = /*@__PURE__*/ _let("value/3", ($scope) => {
-	_text($scope["#text/1"], $scope.value);
+	_text($scope, "#text/1", $scope.value);
 	$await_content__if($scope, $scope.value > 0 ? 0 : 1);
 	$if_content__value($scope);
 });

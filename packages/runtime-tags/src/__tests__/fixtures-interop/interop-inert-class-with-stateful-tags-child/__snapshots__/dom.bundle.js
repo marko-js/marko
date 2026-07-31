@@ -2,7 +2,7 @@
 var import_vdom = require_vdom();
 const $template = "<button id=counter> </button>";
 const $walks = " D l";
-const $n = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $n = /*@__PURE__*/ _let(2, ($scope) => _text($scope, "b", $scope.c));
 const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.c + 1);
 }));

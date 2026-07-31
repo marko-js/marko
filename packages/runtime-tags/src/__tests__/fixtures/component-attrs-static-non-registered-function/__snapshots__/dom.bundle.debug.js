@@ -2,7 +2,7 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $input = ($scope, input) => _text($scope["#text/0"], input.format(input.value));
+const $input = ($scope, input) => _text($scope, "#text/0", input.format(input.value));
 var price_default = /*@__PURE__*/ _template("__tests__/tags/price.marko", $template$1, "D l", 0, $input);
 
 // template.marko

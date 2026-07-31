@@ -6,7 +6,7 @@ const $for_content__setup__script = _script("__tests__/tags/child.marko_1", ($sc
 	document.getElementById("ref").textContent = "item destroyed";
 } }));
 const $for_content__setup = ($scope) => {
-	_text($scope["#text/0"], $scope["#LoopKey"]);
+	_text($scope, "#text/0", $scope["#LoopKey"]);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to("#text/0", "<p>item <!></p>", "Db%", $for_content__setup);

@@ -1,7 +1,7 @@
 // template.marko
-const $for_content__selected__OR__row_id__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _text($scope.b, $scope._.c === $scope.f && $scope.h), 2);
+const $for_content__selected__OR__row_id__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _text($scope, "b", $scope._.c === $scope.f && $scope.h), 2);
 const $for_content__selected = /*@__PURE__*/ _for_selector(0, 2, 5, ($scope) => {
-	_attr_class($scope.a, $scope._.c === $scope.f && "danger");
+	_attr_class($scope, "a", $scope._.c === $scope.f && "danger");
 	$for_content__selected__OR__row_id__OR__row_label($scope);
 });
 const $for_content__setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {

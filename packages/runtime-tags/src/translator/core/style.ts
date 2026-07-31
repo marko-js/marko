@@ -29,7 +29,6 @@ import {
   mergeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
-import { createScopeReadExpression } from "../util/scope-read";
 import {
   getNodeContentType,
   getOrCreateSection,
@@ -238,7 +237,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   if (dynamic) {
     const { names, binding } = dynamic;
     const section = getSection(tag);
-    const readEl = () => createScopeReadExpression(binding);
 
     addStatement(
       "render",
@@ -263,7 +261,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         t.expressionStatement(
           callRuntime(
             "_style_rule_item",
-            readEl(),
+            scopeIdentifier,
+            getScopeAccessorLiteral(binding),
             t.stringLiteral(names[i]),
             value,
           ),

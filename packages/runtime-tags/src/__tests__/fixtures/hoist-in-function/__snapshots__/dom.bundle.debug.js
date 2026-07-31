@@ -2,7 +2,7 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $input_fn = ($scope, input_fn) => _text($scope["#text/0"], typeof input_fn);
+const $input_fn = ($scope, input_fn) => _text($scope, "#text/0", typeof input_fn);
 const $input = ($scope, input) => $input_fn($scope, input.fn);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input);
 

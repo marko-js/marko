@@ -1,7 +1,7 @@
 // template.marko
 const $pos = ($scope, pos) => $pos_x($scope, pos.x);
 const $pos_x__OR__scale = ($scope) => {
-	_text($scope.b, $scope.e + $scope.c * 10);
+	_text($scope, "b", $scope.e + $scope.c * 10);
 };
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	$pos($scope, {

@@ -3,7 +3,7 @@ const $template = "<select><option>-- choose --</option><option value=a>A</optio
 const $walks = " D lD l";
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 	_attr_select_value($scope, "#select/0", $scope.value, $valueChange($scope));
-	_text($scope["#text/2"], $scope.value === undefined ? "undefined" : "value=" + $scope.value);
+	_text($scope, "#text/2", $scope.value === undefined ? "undefined" : "value=" + $scope.value);
 });
 const $placeholder__script = _script("__tests__/template.marko_0_placeholder#4", ($scope) => _attrs_script($scope, "#option/1"));
 const $placeholder = /*@__PURE__*/ _const("placeholder", ($scope) => {

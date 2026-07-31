@@ -29,13 +29,13 @@ var let_global_default = /*@__PURE__*/ _template("__tests__/tags/let-global.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div><div> </div><button> </button>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D lD l D l`)("");
-const $a__OR__b = /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/5"], `${$scope.a},${$scope.b}`), 1, "#scopeOffset/1");
+const $a__OR__b = /*@__PURE__*/ _or(8, ($scope) => _text($scope, "#text/5", `${$scope.a},${$scope.b}`), 1, "#scopeOffset/1");
 const $b = /*@__PURE__*/ _let("b/7", ($scope) => {
-	_text($scope["#text/3"], $scope.b);
+	_text($scope, "#text/3", $scope.b);
 	$a__OR__b($scope);
 });
 const $a = _var_resume("__tests__/template.marko_0_a#6/var", /*@__PURE__*/ _const("a", ($scope) => {
-	_text($scope["#text/2"], $scope.a);
+	_text($scope, "#text/2", $scope.a);
 	$b($scope, $scope.a + 1);
 	$a__OR__b($scope);
 }));

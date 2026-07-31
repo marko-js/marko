@@ -185,6 +185,7 @@ export default {
 
         signal.build = () => {
           importRuntimeFeature("catch");
+          importRuntimeFeature("render-effects");
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),

@@ -5,7 +5,7 @@ const $second_getter = /*@__PURE__*/ _hoist("second");
 const $third_getter = _hoist_resume("__tests__/template.marko_0_third#9/hoist", "third");
 const $nullary_getter = /*@__PURE__*/ _hoist("nullary");
 const $defaulted_getter = /*@__PURE__*/ _hoist("defaulted");
-const $result = /*@__PURE__*/ _let("result/5", ($scope) => _text($scope["#text/4"], $scope.result));
+const $result = /*@__PURE__*/ _let("result/5", ($scope) => _text($scope, "#text/4", $scope.result));
 const $first2 = /*@__PURE__*/ _const("first");
 const $second2 = /*@__PURE__*/ _const("second", ($scope) => _assert_hoist($scope.second));
 const $viaAlias2 = /*@__PURE__*/ _const("viaAlias");

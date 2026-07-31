@@ -5,7 +5,7 @@ const $count$1 = /*@__PURE__*/ _let(1, ($scope) => {
 		inc: $_return($scope),
 		countChange: $_return2($scope)
 	});
-	_text($scope.a, $scope.b);
+	_text($scope, "a", $scope.b);
 });
 const $_return2 = ($scope) => function(value) {
 	$count$1($scope, value);
@@ -27,12 +27,12 @@ const $count__OR__$countChange = /*@__PURE__*/ _or(9, _script("a1", ($scope) => 
 	$scope.i($scope.h + 10);
 })), 1, 1);
 const $count = /*@__PURE__*/ _const(7, ($scope) => {
-	_text($scope.e, $scope.h);
+	_text($scope, "e", $scope.h);
 	$count__OR__$countChange($scope);
 });
 const $countChange2 = /*@__PURE__*/ _const(8, $count__OR__$countChange);
 const $inc = /*@__PURE__*/ _const(10, _script("a2", ($scope) => _on($scope.c, "click", function() {
 	$scope.k();
 })));
-const $missing3 = ($scope, missing) => _text($scope.f, missing);
+const $missing3 = ($scope, missing) => _text($scope, "f", missing);
 const $missing2 = ($scope, $missing) => $missing3($scope, void 0 !== $missing ? $missing : "fallback");

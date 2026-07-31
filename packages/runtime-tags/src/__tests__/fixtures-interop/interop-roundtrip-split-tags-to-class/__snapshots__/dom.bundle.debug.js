@@ -40,7 +40,7 @@ const $walks = "b%bD l";
 _resume("__tests__/components/split-counter/index.marko", _marko_template);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	_text($scope, "#text/1", $scope.count);
 	$dynamicTag($scope, _marko_template, () => ({
 		value: $scope.count,
 		onIncrement: $onIncrement($scope)

@@ -9,11 +9,11 @@ const $phase__OR__log = /*@__PURE__*/ _or(5, ($scope) => $attrs4($scope, $scope.
 	onMouseOver: $attrs2($scope)
 } : { onClick: $attrs3($scope) }));
 const $phase = /*@__PURE__*/ _let(3, ($scope) => {
-	_text($scope.b, $scope.d);
+	_text($scope, "b", $scope.d);
 	$phase__OR__log($scope);
 });
 const $log = /*@__PURE__*/ _let(4, ($scope) => {
-	_text($scope.c, $scope.e);
+	_text($scope, "c", $scope.e);
 	$phase__OR__log($scope);
 });
 const $attrs3 = ($scope) => function() {

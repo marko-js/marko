@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div>x</div><button>b</button>";
 const $walks = " b b";
-const $count = /*@__PURE__*/ _let("count/2", ($scope) => _attr_class($scope["#div/0"], {
+const $count = /*@__PURE__*/ _let("count/2", ($scope) => _attr_class($scope, "#div/0", {
 	"": $scope.count % 2,
 	odd: $scope.count % 2
 }));

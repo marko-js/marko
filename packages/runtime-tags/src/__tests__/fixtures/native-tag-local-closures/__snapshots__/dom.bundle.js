@@ -1,6 +1,6 @@
 // template.marko
 const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a2", " ", " "), { 4($scope) {
-	_text($scope.a, $scope.e);
+	_text($scope, "a", $scope.e);
 } });
 const $for_content__item__script = _script("a0", ($scope) => _attrs_script($scope, "a"));
 const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {

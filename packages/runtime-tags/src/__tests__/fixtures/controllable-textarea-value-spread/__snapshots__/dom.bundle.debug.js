@@ -17,7 +17,7 @@ const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 		value: $scope.value,
 		valueChange: $valueChange($scope)
 	});
-	_text($scope["#text/1"], $scope.value);
+	_text($scope, "#text/1", $scope.value);
 });
 function $setup($scope) {
 	$value($scope, "hello");

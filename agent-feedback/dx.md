@@ -99,3 +99,21 @@ Inside a native-tag handler or `<const/fn=() => {…}>`, an expression like `pen
 When `<try>` has `@placeholder` around `<await>`, a single `curl` of the response shows the placeholder still inside `<main>` even after the promise has resolved — the real branch is appended as out-of-order markers (`<t hidden M_=…>…</t>` + small runtime scripts) later in the body. Agents debugging "SSR didn't render X" often stop at the placeholder in `<main>` and miss that the streamed branch (or a `@catch` error string) is further down.
 
 Direction: in the streaming doc (or cheatsheet SSR section), show a minimal response sketch: placeholder in-tree → later hidden replacement fragment; note that `@catch` errors surface the same way (`<p>…is not a function</p>` inside a hidden `t`). Re-verify: stream a page with slow `<await>` + placeholder; `curl -N` and observe placeholder first, then hidden content blocks before `</body>`.
+
+## lint-staged is OOM-killed on large snapshot-regeneration commits
+
+`.lintstagedrc.json` runs `oxfmt --with-node-modules` and `oxlint --fix` over
+every staged file. A commit that regenerates fixture snapshots stages 1300-1600
+files, lint-staged chunks them into parallel invocations, and the oxfmt/oxlint
+processes are repeatedly `SIGKILL`ed (observed on a 16GB machine), failing the
+`husky` pre-commit hook and reverting the staging. Some chunks also end up with
+zero lintable files and `oxlint --fix` then _errors_ with "No files found to
+lint", which fails the hook even when nothing was killed. Snapshot files under
+`__tests__/**/__snapshots__/` and generated `sizes.json` are exactly the files
+that need no lint/format pass (they are generated, and `test:update` +
+`build:sizes` own their content). Excluding `**/__snapshots__/**` and
+`**/sizes.json` from the lint-staged globs would make snapshot-heavy commits
+pass the hook; until then contributors must run `oxlint`, `oxfmt --check`,
+`pnpm run build`, and `pnpm run build:sizes` by hand and commit with
+`--no-verify`, which silently skips the size-diff staging the hook exists for.
+Verify: stage any >1000-file snapshot regeneration and `git commit`.

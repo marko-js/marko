@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $else_content__count = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/1"], $scope._.count));
+const $else_content__count = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope, "#text/1", $scope._.count));
 const $else_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
 	$for_content__editing($scope._, true);
 }));
@@ -9,7 +9,7 @@ const $else_content__setup = ($scope) => {
 	$else_content__count._($scope);
 	$else_content__setup__script($scope);
 };
-const $if_content__count = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.count + 1));
+const $if_content__count = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope, "#text/1", $scope._.count + 1));
 const $if_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$counts($scope._._, [
 		...$scope._._.counts.slice(0, $scope._["#LoopKey"]),

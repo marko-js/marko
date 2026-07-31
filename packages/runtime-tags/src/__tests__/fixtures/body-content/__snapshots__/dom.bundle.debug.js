@@ -19,7 +19,7 @@ var FancyButton_default = /*@__PURE__*/ _template("__tests__/tags/FancyButton.ma
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $FancyButton_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope["#text/0"], $scope._.clickCount));
+const $FancyButton_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope, "#text/0", $scope._.clickCount));
 const $FancyButton_content__setup = $FancyButton_content__clickCount;
 const $FancyButton_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $FancyButton_content__setup);
 const $clickCount__closure = /*@__PURE__*/ _closure($FancyButton_content__clickCount);

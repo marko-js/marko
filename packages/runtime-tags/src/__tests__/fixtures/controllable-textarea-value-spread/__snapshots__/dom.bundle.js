@@ -11,7 +11,7 @@ const $value = /*@__PURE__*/ _let(2, ($scope) => {
 		value: $scope.c,
 		valueChange: $valueChange($scope)
 	});
-	_text($scope.b, $scope.c);
+	_text($scope, "b", $scope.c);
 });
 const $valueChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);

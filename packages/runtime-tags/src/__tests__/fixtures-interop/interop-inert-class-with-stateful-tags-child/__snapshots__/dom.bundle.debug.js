@@ -8,7 +8,7 @@ var v_template_marko_hydrate_5_default = () => {};
 var import_vdom = require_vdom();
 const $template$1 = "<button id=counter> </button>";
 const $walks$1 = " D l";
-const $n = /*@__PURE__*/ _let("n/2", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = /*@__PURE__*/ _let("n/2", ($scope) => _text($scope, "#text/1", $scope.n));
 const $setup__script = _script("__tests__/tags/tags-counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

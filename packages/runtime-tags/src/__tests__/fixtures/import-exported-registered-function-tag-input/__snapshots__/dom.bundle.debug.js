@@ -10,7 +10,7 @@ var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", 
 // tags/press.marko
 const $template$1 = "<button>press</button><div> </div>";
 const $walks$1 = " bD l";
-const $label = /*@__PURE__*/ _let("label/4", ($scope) => _text($scope["#text/1"], $scope.label));
+const $label = /*@__PURE__*/ _let("label/4", ($scope) => _text($scope, "#text/1", $scope.label));
 const $setup__script = _script("__tests__/tags/press.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$label($scope, $scope.input.format($scope.label));
 }));

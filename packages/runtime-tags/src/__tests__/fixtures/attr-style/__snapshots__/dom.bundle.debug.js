@@ -2,14 +2,14 @@
 const $template$1 = "<div></div><!><!>";
 const $walks$1 = " b%c";
 const $setup$1 = () => {};
-const $if_content__input_test_style = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr_style($scope["#div/0"], $scope._.input_test_style));
+const $if_content__input_test_style = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr_style($scope, "#div/0", $scope._.input_test_style));
 const $if_content__setup = ($scope) => {
 	$if_content__input_test_style._($scope);
 	$if_content__input_test_content._($scope);
 };
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $if_content__input_test_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_test_content));
-const $input_style = ($scope, input_style) => _attr_style($scope["#div/0"], input_style);
+const $input_style = ($scope, input_style) => _attr_style($scope, "#div/0", input_style);
 const $if = /*@__PURE__*/ _if("#text/1", "<div id=test><!></div>", " D%", $if_content__setup);
 const $input_test = ($scope, input_test) => {
 	$input_test_style($scope, input_test?.style);
@@ -30,8 +30,8 @@ const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => ` d b/${_w0}&/${_w1}&/${_w2}&%c
 const TestTag = custom_tag_default;
 const $test_content = _content_resume("__tests__/template.marko_1*content", "Hello");
 const $input_color = ($scope, input_color) => {
-	_attr_style_item($scope["#div/0"], "color", input_color);
-	_attr_style($scope["#div/1"], input_color && "color:red");
+	_attr_style_item($scope, "#div/0", "color", input_color);
+	_attr_style($scope, "#div/1", input_color && "color:red");
 	$input_style($scope["#childScope/2"], { color: input_color });
 };
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5");

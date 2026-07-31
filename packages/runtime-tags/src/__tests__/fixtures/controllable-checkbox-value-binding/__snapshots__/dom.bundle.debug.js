@@ -12,8 +12,8 @@ function $setup($scope) {
 	$h($scope, "b");
 	$setup__script($scope);
 }
-const $input_checkboxType = ($scope, input_checkboxType) => _attr($scope["#input/0"], "type", input_checkboxType);
-const $input_hiddenType = ($scope, input_hiddenType) => _attr($scope["#input/1"], "type", input_hiddenType);
+const $input_checkboxType = ($scope, input_checkboxType) => _attr($scope, "#input/0", "type", input_checkboxType);
+const $input_hiddenType = ($scope, input_hiddenType) => _attr($scope, "#input/1", "type", input_hiddenType);
 const $input = ($scope, input) => {
 	$input_checkboxType($scope, input.checkboxType);
 	$input_hiddenType($scope, input.hiddenType);

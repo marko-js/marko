@@ -6,8 +6,8 @@ const $nullish = ($scope, nullish) => {
 	$nullish_label($scope, nullish.label);
 	$nullish_size($scope, nullish.size);
 };
-const $nullish_label = ($scope, nullish_label) => _text($scope["#text/0"], nullish_label);
-const $nullish_size = ($scope, nullish_size) => _text($scope["#text/1"], nullish_size);
+const $nullish_label = ($scope, nullish_label) => _text($scope, "#text/0", nullish_label);
+const $nullish_size = ($scope, nullish_size) => _text($scope, "#text/1", nullish_size);
 const $falsy = ($scope, falsy) => {
 	$falsy_label($scope, falsy.label);
 	$falsy_size($scope, falsy.size);
@@ -27,8 +27,8 @@ const $input_opts = ($scope, input_opts) => {
 		size: 3
 	});
 };
-const $falsy_label = ($scope, falsy_label) => _text($scope["#text/2"], falsy_label);
-const $falsy_size = ($scope, falsy_size) => _text($scope["#text/3"], falsy_size);
-const $guarded_label = ($scope, guarded_label) => _text($scope["#text/4"], guarded_label);
+const $falsy_label = ($scope, falsy_label) => _text($scope, "#text/2", falsy_label);
+const $falsy_size = ($scope, falsy_size) => _text($scope, "#text/3", falsy_size);
+const $guarded_label = ($scope, guarded_label) => _text($scope, "#text/4", guarded_label);
 const $input = ($scope, input) => $input_opts($scope, input.opts);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

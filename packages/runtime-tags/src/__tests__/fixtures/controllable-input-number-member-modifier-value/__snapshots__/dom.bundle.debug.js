@@ -21,8 +21,8 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<span><!> <!></span>`)($templat
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D%c%l`)(" b");
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 	$input_value($scope["#childScope/0"], $scope.value);
-	_text($scope["#text/1"], $scope.value);
-	_text($scope["#text/2"], typeof $scope.value);
+	_text($scope, "#text/1", $scope.value);
+	_text($scope, "#text/2", typeof $scope.value);
 });
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

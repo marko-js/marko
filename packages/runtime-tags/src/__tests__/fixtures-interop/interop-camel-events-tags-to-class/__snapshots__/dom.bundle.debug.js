@@ -28,7 +28,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><div id=tags-api> </div>";
 const $walks = "b%bD l";
-const $received = /*@__PURE__*/ _let("received/2", ($scope) => _text($scope["#text/1"], $scope.received));
+const $received = /*@__PURE__*/ _let("received/2", ($scope) => _text($scope, "#text/1", $scope.received));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 function $setup($scope) {
 	$received($scope, "none");

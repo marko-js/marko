@@ -4,11 +4,11 @@ const $walks$1 = " D%c%l%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/3", 0, 0, 1);
 const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_content, () => [$scope.x, $scope.y]), 2);
 const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+	_text($scope, "#text/1", $scope.x);
 	$input_content__OR__x__OR__y($scope);
 });
 const $y = /*@__PURE__*/ _let("y/8", ($scope) => {
-	_text($scope["#text/2"], $scope.y);
+	_text($scope, "#text/2", $scope.y);
 	$input_content__OR__x__OR__y($scope);
 });
 const $setup__script = _script("__tests__/tags/custom-tag.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -27,8 +27,8 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
-const $customtag_content__count = ($scope, count) => _text($scope["#text/0"], count);
-const $customtag_content__count2 = ($scope, count2) => _text($scope["#text/1"], count2);
+const $customtag_content__count = ($scope, count) => _text($scope, "#text/0", count);
+const $customtag_content__count2 = ($scope, count2) => _text($scope, "#text/1", count2);
 const $customtag_content__$params = ($scope, $params2) => {
 	$customtag_content__count($scope, $params2[0]);
 	$customtag_content__count2($scope, $params2[1]);

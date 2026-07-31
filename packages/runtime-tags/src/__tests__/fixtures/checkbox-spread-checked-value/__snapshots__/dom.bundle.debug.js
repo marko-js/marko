@@ -7,7 +7,7 @@ const $sel = /*@__PURE__*/ _let("sel/3", ($scope) => {
 		checkedValue: $scope.sel,
 		value: "a"
 	}, { type: 1 }, _controllable_input);
-	_text($scope["#text/2"], $scope.sel.join(","));
+	_text($scope, "#text/2", $scope.sel.join(","));
 	$sel__script($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

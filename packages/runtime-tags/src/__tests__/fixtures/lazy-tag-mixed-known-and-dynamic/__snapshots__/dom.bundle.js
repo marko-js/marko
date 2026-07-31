@@ -20,6 +20,6 @@ const $setup__script = _script("b0", ($scope) => {
 // child.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = ($scope, input_value) => _text($scope, "a", input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("a", $template, "D l", 0, $input);

@@ -2,27 +2,27 @@
   "dom": {
     "child.marko.load.mjs": {
       "min": 79,
-      "brotli": 83
+      "brotli": 70
     },
     "grand-child.marko.load.mjs": {
       "min": 85,
       "brotli": 89
     },
     "template.marko.page.mjs": {
-      "min": 92,
-      "brotli": 77
+      "min": 101,
+      "brotli": 80
     },
     "child.mjs": {
-      "min": 436,
-      "brotli": 290
+      "min": 457,
+      "brotli": 294
     },
     "grand-child.mjs": {
-      "min": 235,
-      "brotli": 160
+      "min": 253,
+      "brotli": 171
     },
     "shared": {
-      "min": 6044,
-      "brotli": 2893
+      "min": 8565,
+      "brotli": 3893
     }
   },
   "html": {

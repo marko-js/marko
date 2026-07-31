@@ -1,7 +1,7 @@
 // template.marko
 const $checked = /*@__PURE__*/ _let(2, ($scope) => {
 	_attr_input_checked($scope, "a", $scope.c, $checkedChange($scope));
-	_text($scope.b, String($scope.c));
+	_text($scope, "b", String($scope.c));
 });
 const $setup__script = _script("a1", ($scope) => _attr_input_checked_script($scope, "a"));
 const $checkedChange = ($scope) => (_new_checked) => {

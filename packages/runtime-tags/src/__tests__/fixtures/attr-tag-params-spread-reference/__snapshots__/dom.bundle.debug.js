@@ -2,7 +2,7 @@
 const $template$1 = "<!>";
 const $walks$1 = "%b";
 const $setup$1 = () => {};
-const $input$1 = ($scope, input) => _text($scope["#text/0"], JSON.stringify(input));
+const $input$1 = ($scope, input) => _text($scope, "#text/0", JSON.stringify(input));
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "<!>", "%b", 0, $input$1);
 
 // template.marko

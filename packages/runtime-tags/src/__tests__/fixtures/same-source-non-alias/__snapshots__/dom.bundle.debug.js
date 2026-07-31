@@ -14,8 +14,8 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $a = ($scope, a) => {
-	_text($scope["#text/1"], a);
+	_text($scope, "#text/1", a);
 	$b($scope, a);
 };
-const $b = ($scope, a) => _text($scope["#text/2"], a);
+const $b = ($scope, a) => _text($scope, "#text/2", a);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

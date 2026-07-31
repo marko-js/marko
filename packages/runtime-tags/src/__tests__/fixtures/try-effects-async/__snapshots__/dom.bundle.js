@@ -1,9 +1,9 @@
 // template.marko
-const $await_content__value = ($scope, value) => _text($scope.a, value > 1 ? (() => {
+const $await_content__value = ($scope, value) => _text($scope, "a", value > 1 ? (() => {
 	throw new Error("ERROR!");
 })() : value);
 const $await_content__$params = ($scope, $params3) => $await_content__value($scope, $params3[0]);
-const $catch_content__err = ($scope, err) => _text($scope.a, err);
+const $catch_content__err = ($scope, err) => _text($scope, "a", err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _content_resume("a1", " ", " ", 0, $catch_content__$params);
 const $placeholder_content = _content_resume("a0", "LOADING...");
