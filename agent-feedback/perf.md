@@ -373,3 +373,46 @@ A monotonically increasing list of distinct scope ids is the least compressible 
 `packages/runtime-tags/src/dom/controllable.ts` › `syncControllableFormInput` | 2026-07-30 | impact:low | effort:low
 
 `syncControllableFormInput(el, hasChanged, onChange)` already receives the element's own change detector and stores `onChange` on the element as `el._`, but `handleFormReset` discards it and calls `hasFormElementChanged(el)`, which branches on `el.options` into `hasSelectChanged` / `hasValueChanged` / `hasCheckboxChanged` — so a page whose only controllable is `value:=` on a text input still ships every kind's detector (~300 of that page's 2355 raw bytes of `controllable.ts`, ≈115 min / ≈40 brotli). Stash the detector alongside the handler (`el._c = hasChanged`) and have `handleFormReset` call `el._c(el)`; `hasFormElementChanged` and the two foreign detectors then disappear from single-kind pages. This is also the concrete blocker for the per-kind `controllable.ts` split proposed in "Split rarely-used dom machinery out of the eager runtime chunks": with `hasFormElementChanged` in the shared core, per-kind modules would still cross-reference every kind's detector, so that split alone would not stop a value-only page pulling select and checkbox code. Re-verify: build `<let/x=""/><input value:=x>` and grep the entry chunk for `hasCheckboxChanged` and `hasSelectChanged`.
+`knownTagTranslateDOM` sets `source.register = !!getSerializeReason(tagSection, childScopeBinding) || !signalHasStatements(source)`, but it runs at the tag's translate exit — before the placeholders and scripts that read the tag variable have pushed their render statements onto that signal — so the `!signalHasStatements(source)` escape hatch (added in e917c2d to keep an empty signal's declaration from being elided, where the commit message calls the case "empty/unread") fires on signals that are non-empty by the time `writeSignals` builds them. That wraps the signal in an impure `_var_resume("…/var", …)` whose id the HTML output never writes, shipping a dead registry entry and pinning the declaration in the bundle: `pnpm run compile -o dom template.marko` on `<child/data/><div>${data}</div>` emits `const $data = _var_resume("…_0_data/var", ($scope, data) => _text($scope.c, data))` while `-o html` on the same template contains no `/var` id, and forcing `register` to the serialize reason alone drops the helper import plus call (and restores a top-level `const $get = /*@__PURE__*/_const(…)` in `return-value-registered`, which `_var_resume` currently makes unshakeable). Deleting the disjunct outright is wrong — a genuinely unread tag variable then loses its declaration while `_var($scope, 0, $data)` still references it — so move the emptiness half into `writeSignals`, where `signalHasStatements` is final, giving "keep the declaration" its own flag distinct from `register`; `visitors/tag/dynamic-tag.ts` still sets `tagVarSignal.register = true` unconditionally and needs the same gate (`dynamic-tag-var`'s `data1`). Re-verify from the repo root: `for d in packages/runtime-tags/src/__tests__/fixtures/*/__snapshots__; do a=$(grep -oh '"[^"]*/var"' "$d/dom.bundle.debug.js" 2>/dev/null | sort -u); b=$(grep -oh '"[^"]*/var"' "$d/html.bundle.debug.js" 2>/dev/null | sort -u); if [ "$a" != "$b" ]; then echo "$d"; fi; done` prints `custom-tag-var-expression`, `custom-tag-var-multiple`, `dynamic-tag-var`, `return-tag-no-state` and `return-value-registered` today, and should print nothing — every `/var` id registered in a DOM bundle must also be written by its sibling HTML bundle.
+
+## Dedupe held DOM writes when transitions let a batch span render drains
+
+`packages/runtime-tags/src/dom/queue.ts` › `enableHeldQueue` | 2026-07-28 | impact:med | effort:med
+
+`commitHeld` applies every parked record, which is correct only because a batch
+is committed at the end of the drain that filled it and `queueRender` already
+collapses repeat fires of one signal within a drain (measured: suppressing
+duplicates changed 4 writes across the whole suite, and applying all of them
+makes the held sequence byte-identical to the eager path). Once transitions hold
+a batch across several drains a site can be written once per drain, so dedup
+becomes necessary — and it is also a latency win at that point, since collapsing
+five writes to one removes more work from the commit than the pass costs.
+Suggested shape: gate the pass on the batch having spanned more than one drain
+(the transition knows this by construction, so no generation counter is needed);
+key a site on `(scope, helper, accessor, name-for-keyed-helpers)` via a scope
+property `AccessorPrefix.PendingWrite + fn.k + accessor` holding the record
+index, validated by probing `writes[i] === fn && writes[i+1] === scope &&
+writes[i+2] === accessor` so stamps left by an earlier batch are harmless without
+generation tagging; tombstone the superseded record's fn slot so the apply loop
+skips it with a truthiness check instead of recomputing keys. The helper must be
+part of the key: `_attr_class` and `_attr(…, "class")` are distinct sites that
+both write `class` (see the `spread-to-known-multiple-spread-exprs` fixture), and
+eager runs both in order, so collapsing across helpers would drop a write. Assign
+`fn.k` lazily inside the dedup pass (`fn.k ??= String.fromCharCode(++counter)`)
+rather than in `held()` — stamping in `held()` makes the enable-time wrap calls
+impure and cost +5.6 KB min across 40 async fixture bundles by defeating dead-store
+elimination, which is why the `/* @__PURE__ */` annotations on those calls exist.
+Concurrent transitions need no per-batch keying: dedup is one synchronous pass per
+commit so passes cannot interleave, and the probe rejects another batch's indexes,
+degrading to a missed dedup rather than a wrong overwrite. Fold the doomed-branch
+check into the same walk — drop records whose `scope[AccessorProp.Gen] === 0`, so
+a held batch does not write into branches destroyed while it waited; writes skip
+that check today only because nothing is destroyed mid-drain. Alternatives measured
+and rejected: a per-flush `Map` keyed on `scope[AccessorProp.Id]` (slower than the
+scope property in every size class, and ids are unique only per render — resumed
+scopes take server ids from a per-render `scopeLookup` in `resume.ts`, so two
+resumed roots collide), and a `next`-chain per accessor (fastest overall but needs
+a generation base to invalidate stale heads, and it front-loads cost onto park,
+which under transitions is the synchronous interactive path while commit is not).
+Re-verify the premise with `pnpm run test:update` after making `replayHeld` skip
+superseded records: only the four `lazy-tag-*-attrs-update` fixtures should change.

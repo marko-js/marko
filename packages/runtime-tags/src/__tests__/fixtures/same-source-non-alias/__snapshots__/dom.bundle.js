@@ -8,7 +8,7 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 	$count($scope, $scope.d + 1);
 }));
 const $a = ($scope, a) => {
-	_text($scope.b, a);
+	_text($scope, "b", a);
 	$b($scope, a);
 };
-const $b = ($scope, a) => _text($scope.c, a);
+const $b = ($scope, a) => _text($scope, "c", a);

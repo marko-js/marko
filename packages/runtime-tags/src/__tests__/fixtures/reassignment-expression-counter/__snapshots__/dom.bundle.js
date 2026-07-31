@@ -1,8 +1,8 @@
 // template.marko
 const $count = /*@__PURE__*/ _let(6, ($scope) => {
-	_text($scope.b, $scope.g);
-	_text($scope.d, $scope.g);
-	_text($scope.f, $scope.g);
+	_text($scope, "b", $scope.g);
+	_text($scope, "d", $scope.g);
+	_text($scope, "f", $scope.g);
 });
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.a, "click", function() {

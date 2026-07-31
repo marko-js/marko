@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 function shout(message) {
 	return message.toUpperCase() + "!";
 }
-const $input_message = ($scope, input_message) => _text($scope["#text/0"], input_message);
+const $input_message = ($scope, input_message) => _text($scope, "#text/0", input_message);
 const $input = ($scope, input) => $input_message($scope, input.message);
 var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", $template$1, "D l", $setup$1, $input);
 

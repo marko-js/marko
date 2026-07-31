@@ -12,22 +12,22 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.mark
 const $template = /*@__PURE__*/ ((_w0) => `<button></button>${_w0}<div></div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}& b`)("D%l");
 const a = 1;
-const $if_content2__b = /*@__PURE__*/ _closure_get("b", ($scope) => _text($scope["#text/1"], $scope._._.b), ($scope) => $scope._._);
+const $if_content2__b = /*@__PURE__*/ _closure_get("b", ($scope) => _text($scope, "#text/1", $scope._._.b), ($scope) => $scope._._);
 const $if_content2__setup = ($scope) => {
 	$if_content2__b($scope);
 	$if_content2__c($scope);
-	_text($scope["#text/0"], a);
+	_text($scope, "#text/0", a);
 };
-const $if_content2__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope["#text/2"], $scope._._.c), ($scope) => $scope._._);
+const $if_content2__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope, "#text/2", $scope._._.c), ($scope) => $scope._._);
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!> <!> <!>", "%c%c%", $if_content2__setup);
 const $if_content__setup = ($scope) => $if_content__if($scope, Math.random() ? 0 : 1);
-const $customtag_content__b = /*@__PURE__*/ _closure_get("b", ($scope) => _text($scope["#text/1"], $scope._.b));
+const $customtag_content__b = /*@__PURE__*/ _closure_get("b", ($scope) => _text($scope, "#text/1", $scope._.b));
 const $customtag_content__setup = ($scope) => {
 	$customtag_content__b($scope);
 	$customtag_content__c($scope);
-	_text($scope["#text/0"], a);
+	_text($scope, "#text/0", a);
 };
-const $customtag_content__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope["#text/2"], $scope._.c));
+const $customtag_content__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope, "#text/2", $scope._.c));
 const $customtag_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<!> <!> <!>", "%c%c%", $customtag_content__setup);
 const $b = /*@__PURE__*/ _const("b");
 const $c__closure = /*@__PURE__*/ _closure($customtag_content__c, $if_content2__c);

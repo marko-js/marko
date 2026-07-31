@@ -2,7 +2,7 @@
 const $template$1 = "<button class=inc> </button>";
 const $walks$1 = " D l";
 const $x = /*@__PURE__*/ _let("x/2", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+	_text($scope, "#text/1", $scope.x);
 	_return($scope, $scope.x);
 });
 const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

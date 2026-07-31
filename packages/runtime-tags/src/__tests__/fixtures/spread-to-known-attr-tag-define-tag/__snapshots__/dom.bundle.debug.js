@@ -19,7 +19,7 @@ const $Wrap_content__$temp = ($scope, $temp) => {
 	$Wrap_content___class($scope, $temp.class);
 };
 const $Wrap_content__rest = ($scope, rest) => $Wrap_content__rest_option($scope, rest.option);
-const $Child_content__input_class = ($scope, input_class) => _attr_class($scope["#select/0"], input_class);
+const $Child_content__input_class = ($scope, input_class) => _attr_class($scope, "#select/0", input_class);
 const $Child_content__for = /*@__PURE__*/ _for_of("#select/0", "<option></option>", " ", 0, $for_content__$params);
 const $Child_content__input_option = ($scope, input_option) => $Child_content__for($scope, [input_option]);
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);

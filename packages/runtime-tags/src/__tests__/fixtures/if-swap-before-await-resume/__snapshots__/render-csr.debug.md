@@ -35,8 +35,8 @@
 ```
 ## Change
 ```
+REMOVE: header > div > a
 INSERT: header > div::text + button
-REMOVE: header > div > button + a
 ```
 
 # Update

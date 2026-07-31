@@ -54,7 +54,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
 const $row_content2 = _content_resume("__tests__/template.marko_4_content", "Outside");
 const $row_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_3_content", " ", " "), { row($scope) {
-	_text($scope["#text/0"], $scope.row);
+	_text($scope, "#text/0", $scope.row);
 } });
 const $item_content2 = _content_resume("__tests__/template.marko_2_content", "bar");
 const $item_content = _content_resume("__tests__/template.marko_1_content", "foo");

@@ -2,11 +2,11 @@
 const $x = /*@__PURE__*/ _let_change(8);
 const $changes__OR__value = /*@__PURE__*/ _or(7, ($scope) => $x($scope, $scope.g, $valueChange($scope)));
 const $changes = /*@__PURE__*/ _let(5, ($scope) => {
-	_text($scope.e, $scope.f);
+	_text($scope, "e", $scope.f);
 	$changes__OR__value($scope);
 });
 const $value = /*@__PURE__*/ _let(6, ($scope) => {
-	_text($scope.d, $scope.g);
+	_text($scope, "d", $scope.g);
 	$changes__OR__value($scope);
 });
 const $setup__script = _script("a1", ($scope) => {

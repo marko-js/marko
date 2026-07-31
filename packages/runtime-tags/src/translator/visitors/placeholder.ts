@@ -15,7 +15,6 @@ import {
   getScopeAccessorLiteral,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
-import { createScopeReadExpression } from "../util/scope-read";
 import {
   ContentType,
   getNodeContentType,
@@ -158,18 +157,12 @@ export default {
             section,
             valueExtra.referencedBindings,
             t.expressionStatement(
-              method === "_text"
-                ? callRuntime(
-                    "_text",
-                    createScopeReadExpression(nodeBinding!),
-                    value,
-                  )
-                : callRuntime(
-                    "_html",
-                    scopeIdentifier,
-                    value,
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
+              callRuntime(
+                method === "_text" ? "_text" : "_html",
+                scopeIdentifier,
+                getScopeAccessorLiteral(nodeBinding!),
+                value,
+              ),
             ),
             undefined,
             true,

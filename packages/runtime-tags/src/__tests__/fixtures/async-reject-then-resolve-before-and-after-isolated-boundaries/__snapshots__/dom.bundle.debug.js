@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!><!><!>";
 const $walks = "b%b%b%c";
-const $await_content3__v = ($scope, v) => _text($scope["#text/0"], v);
+const $await_content3__v = ($scope, v) => _text($scope, "#text/0", v);
 const $await_content3__setup__script = _script("__tests__/template.marko_9", ($scope) => _on($scope["#button/1"], "click", function() {
 	document.querySelector("button").textContent = "After";
 }));
@@ -14,7 +14,7 @@ const $try_content3__setup = ($scope) => {
 	$await_content3($scope);
 	$try_content3__await_promise($scope, resolveAfter("C Value", 2));
 };
-const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
+const $await_content2__v = ($scope, v) => _text($scope, "#text/0", v);
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $catch_content2 = _content_resume("__tests__/template.marko_5_content", "Rejected B");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<div>Resolved B: <!></div>", "Db%");
@@ -23,7 +23,7 @@ const $try_content2__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content2__await_promise($scope, rejectAfter(new Error("rejected b"), 1));
 };
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
+const $await_content__v = ($scope, v) => _text($scope, "#text/0", v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $catch_content = _content_resume("__tests__/template.marko_2_content", "Rejected A");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div>Resolved A: <!></div>", "Db%");

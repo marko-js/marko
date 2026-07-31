@@ -2,11 +2,11 @@
 const $template$1 = "<button><!></button>";
 const $walks$1 = " D%l";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $x$1 = /*@__PURE__*/ _let_change("x/9", ($scope) => _attr($scope["#button/0"], "data-internal", $scope.x));
+const $x$1 = /*@__PURE__*/ _let_change("x/9", ($scope) => _attr($scope, "#button/0", "data-internal", $scope.x));
 const $input_countChange__OR__input_count = /*@__PURE__*/ _or(8, ($scope) => $x$1($scope, $scope.count, $scope.$countChange));
 const $countChange2 = /*@__PURE__*/ _const("$countChange", $input_countChange__OR__input_count);
 const $count = /*@__PURE__*/ _const("count", $input_countChange__OR__input_count);
-const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
+const $input_id = ($scope, input_id) => _attr($scope, "#button/0", "id", input_id);
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$x$1($scope, $scope.x + 1);
 }));
@@ -24,10 +24,10 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1);
-const $counter_content2__x = /*@__PURE__*/ _closure_get("x", ($scope) => _text($scope["#text/0"], $scope._.x));
+const $counter_content2__x = /*@__PURE__*/ _closure_get("x", ($scope) => _text($scope, "#text/0", $scope._.x));
 const $counter_content2__setup = $counter_content2__x;
 const $counter_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2_content", " ", " ", $counter_content2__setup);
-const $counter_content__x = /*@__PURE__*/ _closure_get("x", ($scope) => _text($scope["#text/0"], $scope._.x));
+const $counter_content__x = /*@__PURE__*/ _closure_get("x", ($scope) => _text($scope, "#text/0", $scope._.x));
 const $counter_content__setup = $counter_content__x;
 const $counter_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " ", $counter_content__setup);
 const $x__closure = /*@__PURE__*/ _closure($counter_content__x, $counter_content2__x);

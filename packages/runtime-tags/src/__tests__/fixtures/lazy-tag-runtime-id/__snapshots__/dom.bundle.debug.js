@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<button>count: <!></button>";
 const $walks = " Db%l";
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope, "#text/1", $scope.count));
 const $input_value = $count;
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);

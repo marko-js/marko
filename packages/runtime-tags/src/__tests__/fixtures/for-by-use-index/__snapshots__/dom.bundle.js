@@ -1,11 +1,11 @@
 // template.marko
-const $if_content__last = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.d));
+const $if_content__last = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope, "a", $scope._.d));
 const $if_content__setup = $if_content__last;
 const $for_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$messages($scope._, $scope._.c.toSpliced($scope.e, 1));
 	$last($scope._, $scope.e);
 }));
-const $for_content__message = ($scope, message) => _html($scope, message, "b");
+const $for_content__message = ($scope, message) => _html($scope, "b", message);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__message($scope, $params2[0]);
 	$for_content__index($scope, $params2[1]);

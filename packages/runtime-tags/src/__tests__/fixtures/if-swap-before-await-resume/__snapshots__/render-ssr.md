@@ -49,6 +49,6 @@ INSERT: header > div > a:nth-of-type(4)::text("Something")
 INSERT: header > div > a:nth-of-type(4) + ::text(" Test ")
 INSERT: header > div::text + a
 INSERT: a::text("Go")
+REMOVE: header > div > a
 INSERT: header > div::text + button
-REMOVE: header > div > button + a
 ```

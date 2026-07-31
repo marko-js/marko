@@ -1,9 +1,9 @@
 // template.marko
 const $template = "a<!>f<!>h";
 const $walks = "b%c%c";
-const $await_content2__data = ($scope, data) => _text($scope["#text/0"], data);
+const $await_content2__data = ($scope, data) => _text($scope, "#text/0", data);
 const $await_content2__$params = ($scope, $params4) => $await_content2__data($scope, $params4[0]);
-const $await_content__data = ($scope, data) => _text($scope["#text/0"], data);
+const $await_content__data = ($scope, data) => _text($scope, "#text/0", data);
 const $await_content__$params = ($scope, $params3) => $await_content__data($scope, $params3[0]);
 const $catch_content = _content_resume("__tests__/template.marko_2_content", "ERROR!");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");

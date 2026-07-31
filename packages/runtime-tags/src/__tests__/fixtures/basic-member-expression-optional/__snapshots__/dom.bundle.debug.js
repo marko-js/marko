@@ -24,6 +24,6 @@ function $setup($scope) {
 	$user($scope, undefined);
 	$setup__script($scope);
 }
-const $user_id = /*@__PURE__*/ _const("user_id", ($scope) => _text($scope["#text/0"], $scope.user_id));
-const $user_name = /*@__PURE__*/ _const("user_name", ($scope) => _text($scope["#text/1"], $scope.user_name));
+const $user_id = /*@__PURE__*/ _const("user_id", ($scope) => _text($scope, "#text/0", $scope.user_id));
+const $user_name = /*@__PURE__*/ _const("user_name", ($scope) => _text($scope, "#text/1", $scope.user_name));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

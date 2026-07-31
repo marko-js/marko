@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $try_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope["#text/0"], $scope._.value));
+const $try_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope, "#text/0", $scope._.value));
 const $try_content__setup = $try_content__value;
 const $value = /*@__PURE__*/ _const("value");
 const $try = /*@__PURE__*/ _try("#text/0", " ", " ", $try_content__setup);

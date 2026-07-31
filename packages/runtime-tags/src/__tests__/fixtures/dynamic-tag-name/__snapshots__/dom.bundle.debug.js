@@ -3,8 +3,8 @@ const $template$2 = "<div>A <!></div>";
 const $walks$2 = " Db%l";
 const $setup$2 = () => {};
 const $content_direct$1 = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $className$1 = ($scope, className) => _attr_class($scope["#div/0"], className);
-const $other$2 = ($scope, other) => _attr($scope["#div/0"], "data-other", other);
+const $className$1 = ($scope, className) => _attr_class($scope, "#div/0", className);
+const $other$2 = ($scope, other) => _attr($scope, "#div/0", "data-other", other);
 const $dynamicTag$2 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $content$2 = $dynamicTag$2;
 const $input$2 = ($scope, input) => {
@@ -19,8 +19,8 @@ const $template$1 = "<div>B <!></div>";
 const $walks$1 = " Db%l";
 const $setup$1 = () => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $className = ($scope, className) => _attr_class($scope["#div/0"], className);
-const $other$1 = ($scope, other) => _attr($scope["#div/0"], "data-other", other);
+const $className = ($scope, className) => _attr_class($scope, "#div/0", className);
+const $other$1 = ($scope, other) => _attr($scope, "#div/0", "data-other", other);
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $content$1 = $dynamicTag$1;
 const $input$1 = ($scope, input) => {

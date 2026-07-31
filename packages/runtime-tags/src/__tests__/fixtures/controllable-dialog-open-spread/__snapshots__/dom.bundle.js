@@ -11,7 +11,7 @@ const $open = /*@__PURE__*/ _let(2, ($scope) => {
 		open: $scope.c,
 		openChange: $openChange($scope)
 	});
-	_text($scope.b, String($scope.c));
+	_text($scope, "b", String($scope.c));
 });
 function $openChange($scope) {
 	return (_new_open) => {

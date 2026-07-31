@@ -13,9 +13,9 @@ const $input_name__OR__input_write = /*@__PURE__*/ _or(7, ($scope) => {
 	$input_name__OR__input_write__script($scope);
 });
 const $name = /*@__PURE__*/ _const("name", ($scope) => {
-	_text($scope["#text/0"], $scope.name);
-	_text($scope["#text/1"], $scope.name);
-	_text($scope["#text/2"], $scope.name);
+	_text($scope, "#text/0", $scope.name);
+	_text($scope, "#text/1", $scope.name);
+	_text($scope, "#text/2", $scope.name);
 	$input_name__OR__input_write($scope);
 });
 const $write$1 = /*@__PURE__*/ _const("write", $input_name__OR__input_write);

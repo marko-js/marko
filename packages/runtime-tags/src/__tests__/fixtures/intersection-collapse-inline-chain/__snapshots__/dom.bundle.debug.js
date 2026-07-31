@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc</button><div> </div>";
 const $walks = " bD l";
-const $sum = ($scope, sum) => _text($scope["#text/1"], sum);
+const $sum = ($scope, sum) => _text($scope, "#text/1", sum);
 const $y__OR__z = ($scope) => {
 	$sum($scope, $scope.count + 1 + ($scope.count + 2));
 };

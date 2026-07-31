@@ -15,7 +15,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $child_content__x = ($scope, x) => _text($scope["#text/0"], x);
+const $child_content__x = ($scope, x) => _text($scope, "#text/0", x);
 const $child_content__$params = ($scope, $params2) => $child_content__x($scope, $params2[0]);
 const $child_content = _content_resume("__tests__/template.marko_1_content", " ", " ", 0, $child_content__$params);
 function $setup($scope) {

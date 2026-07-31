@@ -1,7 +1,7 @@
 // template.marko
 const $template = "a<!>d";
 const $walks = "b%c";
-const $await_content__data = ($scope, data) => _text($scope["#text/0"], data);
+const $await_content__data = ($scope, data) => _text($scope, "#text/0", data);
 const $await_content__$params = ($scope, $params2) => $await_content__data($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

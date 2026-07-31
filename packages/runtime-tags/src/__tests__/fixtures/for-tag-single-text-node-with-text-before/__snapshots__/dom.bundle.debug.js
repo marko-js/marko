@@ -12,7 +12,7 @@ const $children = /*@__PURE__*/ _let("children/2", ($scope) => {
 	$for($scope, [$scope.children]);
 	$children__script($scope);
 });
-const $children_length = /*@__PURE__*/ _const("children_length", ($scope) => _attr($scope["#div/0"], "data-children", $scope.children_length));
+const $children_length = /*@__PURE__*/ _const("children_length", ($scope) => _attr($scope, "#div/0", "data-children", $scope.children_length));
 function $setup($scope) {
 	$children($scope, [1]);
 }

@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<div class=list></div><button class=rotate>Rotate</button><button class=toggle>Toggle</button><button class=drop>Drop</button>";
 const $walks = " b b b b";
-const $else_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], $scope._.item_id));
+const $else_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope, "#text/0", $scope._.item_id));
 const $else_content__setup = $else_content__item_id;
-const $if_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.item_id));
+const $if_content__item_id = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope, "#text/0", $scope._.item_id));
 const $if_content__setup = $if_content__item_id;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<pre>code <!></pre>", "Db%", $if_content__setup, "<p>text <!></p>", "Db%", $else_content__setup);
 const $for_content__item_code = ($scope, item_code) => $for_content__if($scope, item_code ? 0 : 1);

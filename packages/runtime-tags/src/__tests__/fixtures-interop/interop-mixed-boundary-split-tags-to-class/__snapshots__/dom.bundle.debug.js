@@ -46,7 +46,7 @@ const $walks = " D l%b%c";
 _resume("__tests__/components/split-counter/index.marko", _marko_template);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3");
 const $n = /*@__PURE__*/ _let("n/4", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
+	_text($scope, "#text/1", $scope.n);
 	$dynamicTag2($scope, _marko_template, () => ({ count: $scope.n }));
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");

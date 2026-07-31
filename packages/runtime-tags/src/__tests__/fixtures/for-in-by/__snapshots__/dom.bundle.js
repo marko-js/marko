@@ -1,6 +1,6 @@
 // template.marko
-const $for_content__key = ($scope, key) => _text($scope.a, key);
-const $for_content__value = ($scope, value) => _text($scope.b, value);
+const $for_content__key = ($scope, key) => _text($scope, "a", key);
+const $for_content__value = ($scope, value) => _text($scope, "b", value);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__key($scope, $params2[0]);
 	$for_content__value($scope, $params2[1]);

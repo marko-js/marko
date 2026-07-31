@@ -5,8 +5,8 @@ const $list = /*@__PURE__*/ _let("list/3", ($scope) => {
 	$first($scope, $scope.list[0]);
 	$second($scope, $scope.list[1]);
 });
-const $first = /*@__PURE__*/ _const("first", ($scope) => _text($scope["#text/0"], $scope.first));
-const $second = /*@__PURE__*/ _const("second", ($scope) => _text($scope["#text/1"], $scope.second));
+const $first = /*@__PURE__*/ _const("first", ($scope) => _text($scope, "#text/0", $scope.first));
+const $second = /*@__PURE__*/ _const("second", ($scope) => _text($scope, "#text/1", $scope.second));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$list($scope, [4]);
 }));

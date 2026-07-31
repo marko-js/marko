@@ -1,6 +1,6 @@
 // tags/counter.marko
 const $x = /*@__PURE__*/ _let(2, ($scope) => {
-	_text($scope.b, $scope.c);
+	_text($scope, "b", $scope.c);
 	_return($scope, $scope.c);
 });
 const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", function() {

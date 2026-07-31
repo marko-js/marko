@@ -3,7 +3,7 @@ const $template$2 = "<p><!></p>";
 const $walks$2 = " D%l";
 const $setup$2 = () => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $input_class = ($scope, input_class) => _attr_class($scope["#p/0"], input_class);
+const $input_class = ($scope, input_class) => _attr_class($scope, "#p/0", input_class);
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag$1;
 const $input$1 = ($scope, input) => {

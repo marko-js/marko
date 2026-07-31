@@ -5,7 +5,7 @@ const $x__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
 	_attr_input_value($scope, "e", $scope.f, $scope.g);
 });
 const $x = /*@__PURE__*/ _let(5, ($scope) => {
-	_text($scope.b, $scope.f);
+	_text($scope, "b", $scope.f);
 	$x__OR__$valueChange($scope);
 });
 const $setup__script = _script("a1", ($scope) => {

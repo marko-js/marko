@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<button><!> <!></button>";
 const $walks = " D%c%l";
-const $n__OR__money = /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/1"], $scope.money.format($scope.n)));
-const $n__OR__day = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/2"], $scope.day.format(new Date($scope.n))));
+const $n__OR__money = /*@__PURE__*/ _or(5, ($scope) => _text($scope, "#text/1", $scope.money.format($scope.n)));
+const $n__OR__day = /*@__PURE__*/ _or(7, ($scope) => _text($scope, "#text/2", $scope.day.format(new Date($scope.n))));
 const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
 	$n__OR__money($scope);
 	$n__OR__day($scope);

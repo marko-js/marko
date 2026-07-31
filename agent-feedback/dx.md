@@ -265,3 +265,22 @@ Boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) have no case in th
 `packages/runtime-class/package.json` › `files` | 2026-07-24 | impact:low | effort:high
 
 `packages/runtime-class` declares no `"type"`, and 79 ESM-syntax `.js` files sit under `src` alongside 137 CommonJS ones, so Node parses each ESM file as CommonJS, fails, and reparses it as ESM. It is not silent: `pnpm run compile -t class` — the `-t class` form root `AGENTS.md` documents — prints `[MODULE_TYPELESS_PACKAGE_JSON] ... packages/runtime-class/src/translator/index.js ... incurs a performance overhead`. It is harder than `packages/compiler` was: that package fixed it with a `src/package.json` `{"type":"module"}` marker it never publishes, whereas `runtime-class` lists `src` in `files`, so the marker would ship and all 137 CJS files would have to convert. Marko 5 is in maintenance, so weigh the churn before starting. Re-verify: `pnpm run compile -t class -o dom -d /tmp/x.marko` and observe the warning.
+When a scriptlet's `target` does not match the output, `translate.exit` replaces it with bare `var` declarations of its outer binding identifiers, so every cross-environment read compiles clean and silently evaluates to `undefined` — no compile error, no MARKO_DEBUG warning. A template with `server function fmt(n) { return n + "!" }` and `<p>${fmt(input.n)}</p>` renders `<p>a!</p>` on the server but emits `var fmt;` plus `_text($scope["#text/0"], fmt(input_n))` for DOM, which throws `TypeError: fmt is not a function` as soon as the browser renders or updates; the mirror case, `client const only = "browser";` read from the template body, renders `<p></p>` on the server and `<p>browser</p>` on the client. The translator already has the exact binding names it is stubbing and the reference paths are available at analyze, so it can raise a code frame on the offending reference naming the binding and its declaring environment ("`fmt` is declared in a `server` statement and is not available on the client — use `static`, or move the use into a `server` statement"). Any diagnostic must exempt the deliberately guarded form: `src/__tests__/fixtures/server-client/template.marko` reads both `server_x` and `client_x` from a `static` statement behind `typeof server_x === "undefined"` and must keep compiling. Re-verify: `printf 'server function fmt(n) { return n + "!" }\n<p>${fmt(input.n)}</p>\n' > /tmp/t.marko && pnpm run compile -o dom -d /tmp/t.marko` exits 0 with no diagnostic and writes a module containing `var fmt;` next to `fmt(input_n)`.
+
+## lint-staged is OOM-killed on large snapshot-regeneration commits
+
+`.lintstagedrc.json` runs `oxfmt --with-node-modules` and `oxlint --fix` over
+every staged file. A commit that regenerates fixture snapshots stages 1300-1600
+files, lint-staged chunks them into parallel invocations, and the oxfmt/oxlint
+processes are repeatedly `SIGKILL`ed (observed on a 16GB machine), failing the
+`husky` pre-commit hook and reverting the staging. Some chunks also end up with
+zero lintable files and `oxlint --fix` then _errors_ with "No files found to
+lint", which fails the hook even when nothing was killed. Snapshot files under
+`__tests__/**/__snapshots__/` and generated `sizes.json` are exactly the files
+that need no lint/format pass (they are generated, and `test:update` +
+`build:sizes` own their content). Excluding `**/__snapshots__/**` and
+`**/sizes.json` from the lint-staged globs would make snapshot-heavy commits
+pass the hook; until then contributors must run `oxlint`, `oxfmt --check`,
+`pnpm run build`, and `pnpm run build:sizes` by hand and commit with
+`--no-verify`, which silently skips the size-diff staging the hook exists for.
+Verify: stage any >1000-file snapshot regeneration and `git commit`.

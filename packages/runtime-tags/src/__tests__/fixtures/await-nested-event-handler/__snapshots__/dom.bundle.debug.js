@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $placeholder_content2 = _content_resume("__tests__/template.marko_6_content", "loading inner...");
 const $placeholder_content = _content_resume("__tests__/template.marko_5_content", "loading outer...");
-const $await_content2__changes = /*@__PURE__*/ _closure_get("changes", ($scope) => _text($scope["#text/1"], $scope._._._._.changes), ($scope) => $scope._._._._, "__tests__/template.marko_4_changes/pending");
+const $await_content2__changes = /*@__PURE__*/ _closure_get("changes", ($scope) => _text($scope, "#text/1", $scope._._._._.changes), ($scope) => $scope._._._._, "__tests__/template.marko_4_changes/pending");
 const $await_content2__setup__script = _script("__tests__/template.marko_4", ($scope) => _on($scope["#div/0"], "change", function() {
 	$changes($scope._._._._, $scope._._._._.changes + 1);
 }));

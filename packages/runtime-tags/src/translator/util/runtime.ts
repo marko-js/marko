@@ -92,6 +92,7 @@ export function callRuntime(
 // cannot keep alive under tree shaking (eg catch enablement).
 export type DOMRuntimeFeature =
   | "catch"
+  | "render-effects"
   | "controllable"
   | "controllable-input"
   | "controllable-open"

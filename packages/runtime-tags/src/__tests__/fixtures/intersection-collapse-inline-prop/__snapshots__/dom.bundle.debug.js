@@ -3,7 +3,7 @@ const $template = "<button>inc</button><div> </div>";
 const $walks = " bD l";
 const $pos = ($scope, pos) => $pos_x($scope, pos.x);
 const $pos_x__OR__scale = ($scope) => {
-	_text($scope["#text/1"], $scope.pos_x + $scope.count * 10);
+	_text($scope, "#text/1", $scope.pos_x + $scope.count * 10);
 };
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	$pos($scope, {

@@ -18,7 +18,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $child_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope["#text/0"], $scope._.value));
+const $child_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope, "#text/0", $scope._.value));
 const $child_content__setup = $child_content__value;
 const $child_content = _content_resume("__tests__/template.marko_1_content", " ", " ", $child_content__setup);
 const $value__closure = /*@__PURE__*/ _closure($child_content__value);

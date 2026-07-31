@@ -4,11 +4,11 @@ const $walks = " b b bDb%c%l";
 const $x = /*@__PURE__*/ _let_change("x/8");
 const $changes__OR__value = /*@__PURE__*/ _or(7, ($scope) => $x($scope, $scope.value, $valueChange($scope)));
 const $changes = /*@__PURE__*/ _let("changes/5", ($scope) => {
-	_text($scope["#text/4"], $scope.changes);
+	_text($scope, "#text/4", $scope.changes);
 	$changes__OR__value($scope);
 });
 const $value = /*@__PURE__*/ _let("value/6", ($scope) => {
-	_text($scope["#text/3"], $scope.value);
+	_text($scope, "#text/3", $scope.value);
 	$changes__OR__value($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

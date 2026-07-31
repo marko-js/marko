@@ -20,6 +20,7 @@ export interface BranchScope extends Scope {
   [AccessorProp.PendingRenders]: PendingRender[] | 0 | undefined;
   [AccessorProp.DetachedAwait]: Renderer | 0 | undefined;
   [AccessorProp.PendingScopes]: Scope[] | void;
+  [AccessorProp.Doomed]?: number;
 }
 export interface Scope {
   [AccessorProp.Owner]: Scope | undefined;

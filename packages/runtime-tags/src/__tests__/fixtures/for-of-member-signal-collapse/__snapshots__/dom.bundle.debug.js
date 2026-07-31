@@ -2,8 +2,8 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = () => {};
-const $for_content__user_name = ($scope, user_name) => _text($scope["#text/0"], user_name);
-const $for_content__user_role = ($scope, user_role) => _text($scope["#text/1"], user_role);
+const $for_content__user_name = ($scope, user_name) => _text($scope, "#text/0", user_name);
+const $for_content__user_role = ($scope, user_role) => _text($scope, "#text/1", user_role);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__user_name($scope, $params2[0]?.name);
 	$for_content__user_role($scope, $params2[0]?.role);

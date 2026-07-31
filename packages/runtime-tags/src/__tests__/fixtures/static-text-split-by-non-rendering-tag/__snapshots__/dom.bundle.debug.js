@@ -3,7 +3,7 @@ const $template = "<div>Hello  World <button>click</button><span> </span></div>"
 const $walks = "Db bD m";
 const $m = /*@__PURE__*/ _const("m");
 const $n = /*@__PURE__*/ _let("n/2", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
+	_text($scope, "#text/1", $scope.n);
 	$m($scope, $scope.n * 2);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

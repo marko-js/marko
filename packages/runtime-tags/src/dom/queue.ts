@@ -1,5 +1,10 @@
 import { branchesEnabled, withBranches } from "../common/helpers";
-import { AccessorProp, PendingRenderProp, type Scope } from "../common/types";
+import {
+  type Accessor,
+  AccessorProp,
+  PendingRenderProp,
+  type Scope,
+} from "../common/types";
 import type { Signal } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -88,6 +93,78 @@ export function run() {
   runEffects(effects);
 }
 
+// A patched render-effect helper queues its call instead of touching the DOM,
+// so the write can be applied later at a defined commit point. The patching
+// lives in `render-effects.feat`: it hands each module's `enable` the `held`
+// factory below, so apps that never render a client `<await>` keep direct,
+// branch-free helpers and none of this is retained.
+export let runRenderEffects: undefined | (() => void);
+let pendingRenderEffects: 0 | unknown[] = 0;
+let useRenderEffectQueue: 0 | 1 = 1;
+
+// Returns the queueing variant of a `(scope, accessor, ...args)` helper. The
+// target node decides: only a connected node's write is observable and
+// queues; a write into detached content applies eagerly, keeping it always
+// current so its eventual attach -- held or not -- shows finished content.
+// `isConnected` is transitive and, unlike any flag we could maintain, sees
+// detaches done directly on the DOM (the SSR reorder runtime, the placeholder
+// machinery). `always` is for structural records whose call site already
+// decided the site is observable (branch retires/inserts, loop holds).
+export function held<F extends (...args: any[]) => void>(fn: F, always?: 1): F {
+  return ((
+    scope: Scope,
+    accessor: Accessor,
+    a3?: unknown,
+    a4?: unknown,
+    a5?: unknown,
+  ) => {
+    if (
+      useRenderEffectQueue &&
+      (always || (scope[accessor] as ChildNode).isConnected)
+    ) {
+      (pendingRenderEffects ||= []).push(fn, scope, accessor, a3, a4, a5);
+    } else {
+      fn(scope, accessor, a3, a4, a5);
+    }
+  }) as F;
+}
+
+export function enableRenderEffectQueue() {
+  runRenderEffects ||= () => {
+    if (pendingRenderEffects) {
+      const renderEffects = pendingRenderEffects;
+      // Nested calls during replay (a composite reaching another helper, a
+      // deferring control-flow site reached from a queued record) apply
+      // immediately instead of re-queueing.
+      pendingRenderEffects = useRenderEffectQueue = 0;
+      try {
+        // A single pass in queue order reproduces the eager sequence: records
+        // exist only for connected targets, and a branch shown by a held
+        // insert was populated eagerly while detached (or by records queued
+        // before it). A batch only needs dedup once transitions let it span
+        // drains, which is where it lands.
+        for (let i = 0; i < renderEffects.length;) {
+          (renderEffects[i++] as (...args: any[]) => void)(
+            renderEffects[i++],
+            renderEffects[i++],
+            renderEffects[i++],
+            renderEffects[i++],
+            renderEffects[i++],
+          );
+        }
+      } finally {
+        useRenderEffectQueue = 1;
+      }
+      // Replaying can queue renders (a held content swap creates its branch at
+      // commit, whose setup renders through `queueRender`); re-enter the drain,
+      // which lands back here so their own held writes replay too.
+      if (pendingRenders.length) {
+        runRenders();
+      }
+    }
+  };
+}
+
 export function queueAsyncRender<T, U extends Scope = Scope>(
   scope: U,
   signal: Signal<T, U>,
@@ -100,8 +177,10 @@ export function queueAsyncRender<T, U extends Scope = Scope>(
 export function prepareEffects(fn: () => void): unknown[] {
   const prevRenders = pendingRenders;
   const prevEffects = pendingEffects;
+  const prevRenderEffects = pendingRenderEffects;
   const preparedEffects = (pendingEffects = []);
   pendingRenders = [];
+  pendingRenderEffects = 0;
 
   try {
     rendering = 1;
@@ -112,6 +191,7 @@ export function prepareEffects(fn: () => void): unknown[] {
     rendering = 0;
     pendingRenders = prevRenders;
     pendingEffects = prevEffects;
+    pendingRenderEffects = prevRenderEffects;
   }
   return preparedEffects;
 }
@@ -187,4 +267,5 @@ function runRenders() {
 
     runRender(render);
   }
+  runRenderEffects?.();
 }

@@ -1,5 +1,5 @@
-// size: 26012 (min) 9658 (brotli)
-//#region packages/runtime-tags/dist/dom-Cj4HQ7T_.mjs
+// size: 26612 (min) 9903 (brotli)
+//#region packages/runtime-tags/dist/dom-tN-buEmI.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
   toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
@@ -25,6 +25,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   placeholderShown = /* @__PURE__ */ new WeakSet(),
   pendingEffects = [],
   pendingRenders = [],
+  pendingRenderEffects = 0,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -95,10 +96,37 @@ let unsafeStyleAttrReg = /[\\;]/g,
   readyIds,
   isResuming,
   cloneCache = {},
+  _attr = attr,
+  _attr_class = attrClass,
+  _attr_class_items = attrClassItems,
+  _attr_class_item = attrClassItem,
+  _attr_style = attrStyle,
+  _attr_style_items = attrStyleItems,
+  _attr_style_item = attrStyleItem,
+  _style_rule_item = styleRuleItem,
+  _text = text,
+  _text_content = textContent,
+  _attrs = attrs,
+  _attrs_content = attrsContent,
+  _attrs_partial = attrsPartial,
+  _attrs_partial_content = attrsPartialContent,
+  _html = html,
   R = /[^\p{L}\p{N}]/gu,
   inputType = "",
+  _attr_input_checked_default = attrInputCheckedDefault,
   controllableScripts = {},
   controllableRenders = {},
+  _attr_input_checked = attrInputChecked,
+  _attr_input_checkedValue_default = attrInputCheckedvalueDefault,
+  _attr_input_checkedValue = attrInputCheckedvalue,
+  _attr_input_value_default = attrInputValueDefault,
+  _attr_input_value_dynamic_default = attrInputValueDynamicDefault,
+  _attr_input_value = attrInputValue,
+  _attr_input_value_attribute_default = attrInputValueAttributeDefault,
+  _attr_select_value_default = attrSelectValueDefault,
+  _attr_select_value = attrSelectValue,
+  _attr_details_or_dialog_open_default = attrDetailsOrDialogOpenDefault,
+  _attr_details_or_dialog_open = attrDetailsOrDialogOpen,
   _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let branchAccessor = "D" + nodeAccessor,
@@ -113,6 +141,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
           nodeAccessor,
           branches[(scope[branchAccessor] = newBranch)],
           createAndSetupBranch,
+          1,
         );
     };
   }),
@@ -122,35 +151,21 @@ let unsafeStyleAttrReg = /[\\;]/g,
       endNodeAccessor !== void 0 && (endNodeAccessor = decodeAccessor(endNodeAccessor)));
     let rangeAccessor = "A" + nodeAccessor;
     return (scope, display) => {
-      let referenceNode = scope[nodeAccessor],
-        onlyChild = referenceNode.nodeType === 1,
-        parentNode = onlyChild ? referenceNode : referenceNode.parentNode,
-        range = scope[rangeAccessor];
-      range ||
-        ((range = scope[rangeAccessor] = {}),
-        (range.S = onlyChild ? parentNode.firstChild : scope[startNodeAccessor]),
-        (range.K = onlyChild
-          ? parentNode.lastChild
-          : endNodeAccessor === void 0
-            ? referenceNode.previousSibling
-            : scope[endNodeAccessor]));
-      let startNode = range.S;
-      if (range.L && startNode === range.K && startNode.tagName === "T") {
-        let wrapper = startNode;
-        (wrapper.firstChild || wrapper.appendChild(new Text()),
-          (range = scope[rangeAccessor] = {}),
-          (range.S = startNode = wrapper.firstChild),
-          (range.K = wrapper.lastChild),
-          wrapper.replaceWith(...wrapper.childNodes));
+      if (!scope[rangeAccessor]) {
+        let referenceNode = scope[nodeAccessor],
+          onlyChild = referenceNode.nodeType === 1,
+          range = (scope[rangeAccessor] = {});
+        ((range.S = onlyChild ? referenceNode.firstChild : scope[startNodeAccessor]),
+          (range.K = onlyChild
+            ? referenceNode.lastChild
+            : endNodeAccessor === void 0
+              ? referenceNode.previousSibling
+              : scope[endNodeAccessor]));
       }
-      let inDom = onlyChild ? !!parentNode.firstChild : startNode.parentNode === parentNode;
-      display
-        ? inDom || insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode)
-        : inDom &&
-          (onlyChild && ((range.S = parentNode.firstChild), (range.K = parentNode.lastChild)),
-          tempDetachBranch(range));
+      applyShow(scope, nodeAccessor, display);
     };
   }),
+  applyShow = eagerShow,
   _dynamic_tag = /*@__PURE__*/ withBranches((nodeAccessor, getContent, getTagVar, inputIsArgs) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
@@ -168,13 +183,20 @@ let unsafeStyleAttrReg = /[\\;]/g,
             nodeAccessor,
             normalizedRenderer || (getContent ? getContent(scope) : void 0),
             createBranchWithTagNameOrRenderer,
+            1,
           ),
           getTagVar && (scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
           typeof normalizedRenderer == "string")
         ) {
           if (getContent) {
             let content = getContent(scope);
-            (setConditionalRenderer(scope[childScopeAccessor], "a", content, createAndSetupBranch),
+            (setConditionalRenderer(
+              scope[childScopeAccessor],
+              "a",
+              content,
+              createAndSetupBranch,
+              1,
+            ),
               content.f && subscribeToScopeSet(content.e, content.f, scope[childScopeAccessor].Aa));
           }
         } else
@@ -224,7 +246,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     return (scope, renderer) => {
       if (
         (scope[rendererAccessor] !== (scope[rendererAccessor] = renderer?.a || renderer) &&
-          (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch),
+          (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch, 1),
           renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor])),
         renderer)
       )
@@ -238,19 +260,15 @@ let unsafeStyleAttrReg = /[\\;]/g,
       keyedScopesAccessor = "O" + nodeAccessor,
       renderer = _content("", template, walks, setup)();
     return (scope, value) => {
-      let referenceNode = scope[nodeAccessor],
-        oldScopes = toArray(scope[scopesAccessor]),
+      let oldScopes = toArray(scope[scopesAccessor]),
         newScopes = (scope[scopesAccessor] = []);
       scope[keyedScopesAccessor] = null;
       let oldLen = oldScopes.length,
-        parentNode =
-          referenceNode.nodeType > 1
-            ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
-            : referenceNode,
+        parentNode = getParentNode(scope[nodeAccessor], oldScopes[0]),
         oldScopesByKey,
         hasPotentialMoves,
         start = 0;
-      forEach(value, (key, args) => {
+      (forEach(value, (key, args) => {
         let i = newScopes.length,
           oldScope = oldScopes[i],
           branch =
@@ -267,64 +285,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
           (branch.M = key),
           newScopes.push(branch),
           params?.(branch, args));
-      });
-      let newLen = newScopes.length,
-        hasSiblings = referenceNode !== parentNode,
-        afterReference = null,
-        oldEnd = oldLen - 1,
-        newEnd = newLen - 1;
-      if (
-        (hasSiblings &&
-          (oldLen
-            ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
-              newLen || parentNode.insertBefore(referenceNode, afterReference))
-            : newLen && ((afterReference = referenceNode.nextSibling), referenceNode.remove())),
-        !hasPotentialMoves)
-      ) {
-        oldLen &&
-          (oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
-          hasSiblings || (parentNode.textContent = ""));
-        for (let newScope of newScopes) insertBranchBefore(newScope, parentNode, afterReference);
-        return;
-      }
-      if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
-      else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
-      for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
-        (oldEnd--, newEnd--);
-      if (
-        (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
-        start > oldEnd || start > newEnd)
-      ) {
-        for (let i = start; i <= newEnd; i++)
-          insertBranchBefore(newScopes[i], parentNode, afterReference);
-        return;
-      }
-      let diffLen = newEnd - start + 1,
-        sources = Array(diffLen),
-        pred = Array(diffLen),
-        tails = [],
-        tail = -1,
-        lo,
-        hi,
-        mid;
-      for (let i = diffLen; i--;) sources[i] = newScopes[start + i].I ?? -1;
-      for (let i = 0; i < diffLen; i++)
-        if (~sources[i])
-          if (tail < 0 || sources[tails[tail]] < sources[i])
-            (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
-          else {
-            for (lo = 0, hi = tail; lo < hi;)
-              ((mid = ((lo + hi) / 2) | 0),
-                sources[tails[mid]] < sources[i] ? (lo = mid + 1) : (hi = mid));
-            sources[i] < sources[tails[lo]] &&
-              (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
-          }
-      for (hi = tails[tail], lo = tail + 1; lo-- > 0;) ((tails[lo] = hi), (hi = pred[hi]));
-      for (let i = diffLen; i--;)
-        (~tail && i === tails[tail]
-          ? tail--
-          : insertBranchBefore(newScopes[start + i], parentNode, afterReference),
-          (afterReference = newScopes[start + i].S));
+      }),
+        applyLoopChanges(scope, nodeAccessor, oldScopes, oldScopesByKey, hasPotentialMoves, start));
     };
   }),
   _for_of = /*@__PURE__*/ loop(([all, by = bySecondArg], cb) => {
@@ -340,7 +302,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
   ),
   _for_until = /*@__PURE__*/ loop(([until, from, step, by = byFirstArg], cb) =>
     forUntil(until, from, step, (v) => cb(by(v), [v])),
-  );
+  ),
+  applyLoopChanges = finishLoop;
 function _call(fn, v) {
   return (fn(v), v);
 }
@@ -454,12 +417,17 @@ function queueAsyncRender(scope, signal, value) {
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
     prevEffects = pendingEffects,
+    prevRenderEffects = pendingRenderEffects,
     preparedEffects = (pendingEffects = []);
-  pendingRenders = [];
+  ((pendingRenders = []), (pendingRenderEffects = 0));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
-    (runId++, (rendering = 0), (pendingRenders = prevRenders), (pendingEffects = prevEffects));
+    (runId++,
+      (rendering = 0),
+      (pendingRenders = prevRenders),
+      (pendingEffects = prevEffects),
+      (pendingRenderEffects = prevRenderEffects));
   }
   return preparedEffects;
 }
@@ -1141,65 +1109,85 @@ function createCloneableHTML(html, ns) {
         }
   );
 }
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
-}
-function _attr(element, name, value) {
+function setAttr(element, name, value) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
     (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
-function _attr_class(element, value) {
+function setClass(element, value) {
   setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassObject) || void 0);
 }
-function _attr_class_items(element, items) {
-  for (let key in items) _attr_class_item(element, key, items[key]);
-}
-function _attr_class_item(element, name, value) {
+function setClassItem(element, name, value) {
   element.classList.toggle(name, !!value);
 }
-function _attr_style(element, value) {
+function setStyle(element, value) {
   setAttribute(element, "style", toDelimitedString(value, ";", stringifyStyleObject) || void 0);
 }
-function _attr_style_items(element, items) {
-  for (let key in items) _attr_style_item(element, key, items[key]);
-}
-function _attr_style_item(element, name, value) {
+function setStyleItem(element, name, value) {
   element.style.setProperty(name, _to_text(value));
+}
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
+}
+function attr(scope, nodeAccessor, name, value) {
+  setAttr(scope[nodeAccessor], name, value);
+}
+function attrClass(scope, nodeAccessor, value) {
+  setClass(scope[nodeAccessor], value);
+}
+function attrClassItems(scope, nodeAccessor, items) {
+  let el = scope[nodeAccessor];
+  for (let key in items) setClassItem(el, key, items[key]);
+}
+function attrClassItem(scope, nodeAccessor, name, value) {
+  setClassItem(scope[nodeAccessor], name, value);
+}
+function attrStyle(scope, nodeAccessor, value) {
+  setStyle(scope[nodeAccessor], value);
+}
+function attrStyleItems(scope, nodeAccessor, items) {
+  let el = scope[nodeAccessor];
+  for (let key in items) setStyleItem(el, key, items[key]);
+}
+function attrStyleItem(scope, nodeAccessor, name, value) {
+  setStyleItem(scope[nodeAccessor], name, value);
 }
 function _style_shell(scope, nodeAccessor) {
   let element = scope[nodeAccessor],
     id = _id(scope);
   (_attr_nonce(scope, nodeAccessor),
     (element.className = id),
-    _text_content(element, "." + id + "~*{}"));
+    _text_content(scope, nodeAccessor, "." + id + "~*{}"));
 }
-function _style_rule_item(element, name, value) {
-  let text = element.textContent,
+function styleRuleItem(scope, nodeAccessor, name, value) {
+  let styleText = scope[nodeAccessor].textContent,
     decl = name + ":" + escapeStyleValue(_to_text(value)) + ";",
-    start = text.indexOf("{" + name + ":");
-  (~start || (start = text.indexOf(";" + name + ":")),
-    _text_content(
-      element,
+    start = styleText.indexOf("{" + name + ":");
+  (~start || (start = styleText.indexOf(";" + name + ":")),
+    textContent(
+      scope,
+      nodeAccessor,
       ~start
-        ? text.slice(0, ++start) + decl + text.slice(text.indexOf(";", start) + 1)
-        : text.slice(0, -1) + decl + "}",
+        ? styleText.slice(0, ++start) + decl + styleText.slice(styleText.indexOf(";", start) + 1)
+        : styleText.slice(0, -1) + decl + "}",
     ));
 }
 function _attr_nonce(scope, nodeAccessor) {
-  _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
+  _attr(scope, nodeAccessor, "nonce", scope.$.cspNonce);
 }
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
+function text(scope, nodeAccessor, value) {
+  let node = scope[nodeAccessor],
+    normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
-function _text_content(node, value) {
-  let normalizedValue = _to_text(value);
+function textContent(scope, nodeAccessor, value) {
+  let node = scope[nodeAccessor],
+    normalizedValue = _to_text(value);
   node.textContent !== normalizedValue && (node.textContent = normalizedValue);
 }
-function _attrs(scope, nodeAccessor, nextAttrs, controllable) {
+function attrs(scope, nodeAccessor, nextAttrs, controllable) {
   let el = scope[nodeAccessor];
   for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
@@ -1208,14 +1196,14 @@ function _attrs(scope, nodeAccessor, nextAttrs, controllable) {
   }
   attrsInternal(scope, nodeAccessor, nextAttrs, controllable);
 }
-function _attrs_content(scope, nodeAccessor, nextAttrs, controllable) {
-  (_attrs(scope, nodeAccessor, nextAttrs, controllable),
+function attrsContent(scope, nodeAccessor, nextAttrs, controllable) {
+  (attrs(scope, nodeAccessor, nextAttrs, controllable),
     _attr_content(scope, nodeAccessor, nextAttrs?.content));
 }
 function hasAttrAlias(element, attr, nextAttrs) {
   return attr === "checked" && element.tagName === "INPUT" && "checkedValue" in nextAttrs;
 }
-function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
+function attrsPartial(scope, nodeAccessor, nextAttrs, skip, controllable) {
   let el = scope[nodeAccessor],
     partial = {};
   for (let i = el.attributes.length; i--;) {
@@ -1228,8 +1216,8 @@ function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
   }
   attrsInternal(scope, nodeAccessor, partial, controllable);
 }
-function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip, controllable) {
-  (_attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable),
+function attrsPartialContent(scope, nodeAccessor, nextAttrs, skip, controllable) {
+  (attrsPartial(scope, nodeAccessor, nextAttrs, skip, controllable),
     _attr_content(scope, nodeAccessor, nextAttrs?.content));
 }
 function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
@@ -1245,17 +1233,17 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
     let value = nextAttrs[name];
     switch (name) {
       case "class":
-        _attr_class(el, value);
+        setClass(el, value);
         break;
       case "style":
-        _attr_style(el, value);
+        setStyle(el, value);
         break;
       default:
         isEventHandler(name)
           ? ((events ||= scope["I" + nodeAccessor] = {})[getEventHandlerName(name)] = value)
           : skip?.test(name) ||
             (name === "content" && el.tagName !== "META") ||
-            _attr(el, name, value);
+            setAttr(el, name, value);
         break;
     }
   }
@@ -1263,7 +1251,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
 function _attr_content(scope, nodeAccessor, value) {
   let content = normalizeClientRender(value);
   scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
-    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
+    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch, 1),
     content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
   for (let accessor in content?.g)
     content.g[accessor](scope["A" + nodeAccessor], content.h[accessor]);
@@ -1274,7 +1262,7 @@ function _attrs_script(scope, nodeAccessor) {
   controllableScripts[scope["F" + nodeAccessor]]?.(scope, nodeAccessor);
   for (let name in events) _on(el, name, events[name]);
 }
-function _html(scope, value, accessor) {
+function html(scope, accessor, value) {
   let firstChild = scope[accessor],
     parentNode = firstChild.parentNode,
     lastChild = scope["H" + accessor] || firstChild,
@@ -1343,7 +1331,7 @@ function resolveCursorPosition(inputType, initialPosition, initialValue, updated
   }
   return -1;
 }
-function _attr_input_checked_default(scope, nodeAccessor, checked) {
+function attrInputCheckedDefault(scope, nodeAccessor, checked) {
   let el = scope[nodeAccessor],
     normalizedChecked = isNotVoid(checked);
   if (el.defaultChecked !== normalizedChecked) {
@@ -1352,19 +1340,17 @@ function _attr_input_checked_default(scope, nodeAccessor, checked) {
       restoreValue !== normalizedChecked && (el.checked = restoreValue));
   }
 }
-/** Filled by the `controllable-*.feat` modules a compiled page imports, so a
- * page carries only the control kinds its tags can be (`_attrs_script`
- * resolves the kind at run time). */
+/** Filled by the latches a compiled page emits, so a page carries only the
+ * control kinds its tags can be (`_attrs_script` resolves the kind at run time). */
 /** The render pass equivalent, for a tag whose name is only known at run time;
  * a statically named tag passes its claim to `_attrs` instead. */
-function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
-  let el = scope[nodeAccessor],
-    normalizedChecked = isNotVoid(checked);
+function attrInputChecked(scope, nodeAccessor, checked, checkedChange) {
+  let normalizedChecked = isNotVoid(checked);
   ((scope["E" + nodeAccessor] = checkedChange),
     (scope["F" + nodeAccessor] = checkedChange ? 0 : 5),
     checkedChange && scope.H < runId
-      ? (el.checked = normalizedChecked)
-      : _attr_input_checked_default(scope, nodeAccessor, normalizedChecked));
+      ? (scope[nodeAccessor].checked = normalizedChecked)
+      : attrInputCheckedDefault(scope, nodeAccessor, normalizedChecked));
 }
 function _attr_input_checked_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -1376,14 +1362,14 @@ function _attr_input_checked_script(scope, nodeAccessor) {
     }
   });
 }
-function _attr_input_checkedValue_default(scope, nodeAccessor, checkedValue, value) {
+function attrInputCheckedvalueDefault(scope, nodeAccessor, checkedValue, value) {
   let multiple = Array.isArray(checkedValue),
     normalizedValue = normalizeStrProp(value),
     normalizedCheckedValue = multiple
       ? checkedValue.map(normalizeStrProp)
       : normalizeStrProp(checkedValue);
-  (_attr(scope[nodeAccessor], "value", value),
-    _attr_input_checked_default(
+  (setAttr(scope[nodeAccessor], "value", value),
+    attrInputCheckedDefault(
       scope,
       nodeAccessor,
       multiple
@@ -1391,7 +1377,7 @@ function _attr_input_checkedValue_default(scope, nodeAccessor, checkedValue, val
         : normalizedValue === normalizedCheckedValue,
     ));
 }
-function _attr_input_checkedValue(scope, nodeAccessor, checkedValue, checkedValueChange, value) {
+function attrInputCheckedvalue(scope, nodeAccessor, checkedValue, checkedValueChange, value) {
   let el = scope[nodeAccessor],
     multiple = Array.isArray(checkedValue),
     normalizedCheckedValue = (scope["G" + nodeAccessor] = multiple
@@ -1403,8 +1389,8 @@ function _attr_input_checkedValue(scope, nodeAccessor, checkedValue, checkedValu
       ? ((el.checked = multiple
           ? normalizedCheckedValue.includes(normalizeStrProp(value))
           : normalizeStrProp(value) === normalizedCheckedValue),
-        _attr(el, "value", value))
-      : _attr_input_checkedValue_default(scope, nodeAccessor, checkedValue, value));
+        setAttr(el, "value", value))
+      : attrInputCheckedvalueDefault(scope, nodeAccessor, checkedValue, value));
 }
 function _attr_input_checkedValue_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -1437,7 +1423,7 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
       }
     }));
 }
-function _attr_input_value_default(scope, nodeAccessor, value) {
+function attrInputValueDefault(scope, nodeAccessor, value) {
   let el = scope[nodeAccessor],
     normalizedValue = normalizeAttrValue(value) || "";
   if (el.defaultValue !== normalizedValue) {
@@ -1445,30 +1431,29 @@ function _attr_input_value_default(scope, nodeAccessor, value) {
     ((el.defaultValue = normalizedValue), setInputValue(el, restoreValue));
   }
 }
-function _attr_input_value_dynamic_default(scope, nodeAccessor, value) {
+function attrInputValueDynamicDefault(scope, nodeAccessor, value) {
   let el = scope[nodeAccessor];
   /i[ot]|e[cns]|^[bi]/.test(el.type)
-    ? _attr(el, "value", value)
-    : _attr_input_value_default(scope, nodeAccessor, value);
+    ? setAttr(el, "value", value)
+    : attrInputValueDefault(scope, nodeAccessor, value);
 }
-function _attr_input_value(
+function attrInputValue(
   scope,
   nodeAccessor,
   value,
   valueChange,
   setDefault = _attr_input_value_default,
 ) {
-  let el = scope[nodeAccessor],
-    normalizedValue = normalizeAttrValue(value) || "";
+  let normalizedValue = normalizeAttrValue(value) || "";
   ((scope["E" + nodeAccessor] = valueChange),
     (scope["G" + nodeAccessor] = normalizedValue),
     (scope["F" + nodeAccessor] = valueChange ? 2 : 5),
     valueChange && scope.H < runId
-      ? setInputValue(el, normalizedValue)
+      ? setInputValue(scope[nodeAccessor], normalizedValue)
       : setDefault(scope, nodeAccessor, normalizedValue));
 }
-function _attr_input_value_attribute_default(scope, nodeAccessor, value) {
-  _attr(scope[nodeAccessor], "value", value);
+function attrInputValueAttributeDefault(scope, nodeAccessor, value) {
+  setAttr(scope[nodeAccessor], "value", value);
 }
 function _attr_input_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -1494,7 +1479,7 @@ function setInputValue(el, value) {
     ~updatedPosition && el.setSelectionRange(updatedPosition, updatedPosition);
   }
 }
-function _attr_select_value_default(scope, nodeAccessor, value) {
+function attrSelectValueDefault(scope, nodeAccessor, value) {
   let restoreValue,
     el = scope[nodeAccessor],
     live = scope.H < runId,
@@ -1509,7 +1494,7 @@ function _attr_select_value_default(scope, nodeAccessor, value) {
     restoreValue !== void 0 && setSelectValue(el, restoreValue, multiple);
   }, scope);
 }
-function _attr_select_value(scope, nodeAccessor, value, valueChange) {
+function attrSelectValue(scope, nodeAccessor, value, valueChange) {
   let el = scope[nodeAccessor],
     existing = scope.H < runId,
     multiple = Array.isArray(value),
@@ -1520,7 +1505,7 @@ function _attr_select_value(scope, nodeAccessor, value, valueChange) {
     (scope["F" + nodeAccessor] = valueChange ? 3 : 5),
     valueChange && existing
       ? pendingEffects.unshift(() => setSelectValue(el, normalizedValue, multiple), scope)
-      : _attr_select_value_default(scope, nodeAccessor, normalizedValue));
+      : attrSelectValueDefault(scope, nodeAccessor, normalizedValue));
 }
 function _attr_select_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
@@ -1569,16 +1554,16 @@ function setSelectValue(el, value, multiple) {
 function getSelectValue(el, multiple) {
   return multiple ? Array.from(el.selectedOptions, (opt) => opt.value) : el.value;
 }
-function _attr_details_or_dialog_open_default(scope, nodeAccessor, open) {
+function attrDetailsOrDialogOpenDefault(scope, nodeAccessor, open) {
   scope.H === runId && (scope[nodeAccessor].open = isNotVoid(open));
 }
-function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
+function attrDetailsOrDialogOpen(scope, nodeAccessor, open, openChange) {
   let normalizedOpen = (scope["G" + nodeAccessor] = isNotVoid(open));
   ((scope["E" + nodeAccessor] = openChange),
     (scope["F" + nodeAccessor] = openChange ? 4 : 5),
     openChange && scope.H < runId
       ? (scope[nodeAccessor].open = normalizedOpen)
-      : _attr_details_or_dialog_open_default(scope, nodeAccessor, normalizedOpen));
+      : attrDetailsOrDialogOpenDefault(scope, nodeAccessor, normalizedOpen));
 }
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -1902,6 +1887,27 @@ function renderCatch(scope, error) {
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
 }
+function eagerShow(scope, nodeAccessor, display) {
+  let referenceNode = scope[nodeAccessor],
+    parentNode = getParentNode(referenceNode),
+    onlyChild = referenceNode === parentNode,
+    range = scope["A" + nodeAccessor],
+    startNode = range.S;
+  if (range.L && startNode === range.K && startNode.tagName === "T") {
+    let wrapper = startNode;
+    (wrapper.firstChild || wrapper.appendChild(new Text()),
+      (range = scope["A" + nodeAccessor] = {}),
+      (range.S = startNode = wrapper.firstChild),
+      (range.K = wrapper.lastChild),
+      wrapper.replaceWith(...wrapper.childNodes));
+  }
+  let inDom = onlyChild ? !!parentNode.firstChild : startNode.parentNode === parentNode;
+  display
+    ? inDom || insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode)
+    : inDom &&
+      (onlyChild && ((range.S = parentNode.firstChild), (range.K = parentNode.lastChild)),
+      tempDetachBranch(range));
+}
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
 }
@@ -1911,13 +1917,22 @@ function _resume_dynamic_tag() {
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
 }
-function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
+function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch, defer) {
   let referenceNode = scope[nodeAccessor],
     prevBranch = scope["A" + nodeAccessor],
-    parentNode =
-      referenceNode.nodeType > 1 ? (prevBranch?.S || referenceNode).parentNode : referenceNode,
-    newBranch = (scope["A" + nodeAccessor] =
-      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+    parentNode = getParentNode(referenceNode, prevBranch);
+  swapBranches(
+    scope,
+    nodeAccessor,
+    prevBranch,
+    (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode)),
+  );
+}
+function swapBranches(scope, nodeAccessor, prevBranch, newBranch) {
+  if (prevBranch && !prevBranch.H) return;
+  let referenceNode = scope[nodeAccessor],
+    parentNode = getParentNode(referenceNode, prevBranch);
   referenceNode === parentNode
     ? (prevBranch && (destroyBranch(prevBranch), (referenceNode.textContent = "")),
       newBranch && insertBranchBefore(newBranch, parentNode, null))
@@ -1928,6 +1943,71 @@ function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) 
         removeAndDestroyBranch(prevBranch))
       : newBranch &&
         (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
+}
+function getParentNode(referenceNode, branch) {
+  return referenceNode.nodeType > 1 ? (branch?.S || referenceNode).parentNode : referenceNode;
+}
+function finishLoop(scope, nodeAccessor, oldScopes, removed, hasPotentialMoves, start) {
+  let referenceNode = scope[nodeAccessor],
+    newScopes = scope["A" + nodeAccessor],
+    oldLen = oldScopes.length,
+    newLen = newScopes.length,
+    parentNode = getParentNode(referenceNode, oldScopes[0]),
+    hasSiblings = referenceNode !== parentNode,
+    afterReference = null,
+    oldEnd = oldLen - 1,
+    newEnd = newLen - 1;
+  if (
+    (hasSiblings &&
+      (oldLen
+        ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
+          newLen || parentNode.insertBefore(referenceNode, afterReference))
+        : newLen && ((afterReference = referenceNode.nextSibling), referenceNode.remove())),
+    !hasPotentialMoves)
+  ) {
+    oldLen &&
+      (oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
+      hasSiblings || (parentNode.textContent = ""));
+    for (let newScope of newScopes) insertBranchBefore(newScope, parentNode, afterReference);
+    return;
+  }
+  if (removed) removed.forEach(removeAndDestroyBranch);
+  else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
+  for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
+    (oldEnd--, newEnd--);
+  if (
+    (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
+    start > oldEnd || start > newEnd)
+  ) {
+    for (let i = start; i <= newEnd; i++)
+      insertBranchBefore(newScopes[i], parentNode, afterReference);
+    return;
+  }
+  let diffLen = newEnd - start + 1,
+    sources = Array(diffLen),
+    pred = Array(diffLen),
+    tails = [],
+    tail = -1,
+    lo,
+    hi,
+    mid;
+  for (let i = diffLen; i--;) sources[i] = newScopes[start + i].I ?? -1;
+  for (let i = 0; i < diffLen; i++)
+    if (~sources[i])
+      if (tail < 0 || sources[tails[tail]] < sources[i])
+        (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
+      else {
+        for (lo = 0, hi = tail; lo < hi;)
+          ((mid = ((lo + hi) / 2) | 0),
+            sources[tails[mid]] < sources[i] ? (lo = mid + 1) : (hi = mid));
+        sources[i] < sources[tails[lo]] && (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
+      }
+  for (hi = tails[tail], lo = tail + 1; lo-- > 0;) ((tails[lo] = hi), (hi = pred[hi]));
+  for (let i = diffLen; i--;)
+    (~tail && i === tails[tail]
+      ? tail--
+      : insertBranchBefore(newScopes[start + i], parentNode, afterReference),
+      (afterReference = newScopes[start + i].S));
 }
 function createBranchWithTagNameOrRenderer($global, tagNameOrRenderer, parentScope, parentNode) {
   let branch = createBranch($global, tagNameOrRenderer, parentScope, parentNode);
@@ -2180,15 +2260,14 @@ function _load_setup(nodeAccessor, childScopeAccessor, load) {
   };
 }
 function insertLoaded(renderer, branch, marker, awaitCounter) {
-  let parent = marker.parentNode,
-    values = branch.X,
+  let values = branch.X,
     insert = () => {
-      (insertBranchBefore(branch, parent, marker), marker.remove(), awaitCounter?.c());
+      (insertBranchBefore(branch, marker.parentNode, marker), marker.remove(), awaitCounter?.c());
     },
     remaining;
   if (
     (syncGen(branch),
-    renderer.b(branch, parent.namespaceURI),
+    renderer.b(branch, marker.parentNode.namespaceURI),
     (branch.X = 0),
     (remaining = values?.size))
   ) {

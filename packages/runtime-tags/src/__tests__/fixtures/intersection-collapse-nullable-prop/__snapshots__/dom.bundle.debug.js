@@ -3,7 +3,7 @@ const $template = "<button>toggle</button><div> </div>";
 const $walks = " bD l";
 const $obj = ($scope, obj) => $obj_label($scope, obj?.label);
 const $obj_label__OR__n = ($scope) => {
-	_text($scope["#text/1"], ($scope.obj_label ?? "none") + ($scope.show ? 1 : 2));
+	_text($scope, "#text/1", ($scope.obj_label ?? "none") + ($scope.show ? 1 : 2));
 };
 const $show = /*@__PURE__*/ _let("show/2", ($scope) => {
 	$obj($scope, $scope.show && { label: "hi" });

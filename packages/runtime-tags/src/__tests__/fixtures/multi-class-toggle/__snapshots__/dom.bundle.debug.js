@@ -2,11 +2,11 @@
 const $template = "<button> </button>";
 const $walks = " D l";
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
-	_attr_class($scope["#button/0"], {
+	_attr_class($scope, "#button/0", {
 		"a b c": true,
 		"d e f": $scope.count % 2
 	});
-	_text($scope["#text/1"], $scope.count);
+	_text($scope, "#text/1", $scope.count);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);

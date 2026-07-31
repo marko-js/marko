@@ -13,7 +13,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l0${_w0}&b`)("b%c");
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
+	_text($scope, "#text/1", $scope.count);
 	$input_value($scope["#childScope/2"], $scope.count);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

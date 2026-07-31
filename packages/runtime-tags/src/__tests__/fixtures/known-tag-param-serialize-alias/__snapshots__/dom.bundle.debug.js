@@ -7,10 +7,10 @@ const $Child_content__a__script = _script("__tests__/template.marko_1_a", ($scop
 	if ($scope.input_a !== "a") throw new Error("did not serialize a");
 });
 const $Child_content__a = ($scope) => {
-	_text($scope["#text/0"], $scope.input_a);
+	_text($scope, "#text/0", $scope.input_a);
 	$Child_content__a__script($scope);
 };
-const $Child_content__b = ($scope, b) => _text($scope["#text/1"], b);
+const $Child_content__b = ($scope, b) => _text($scope, "#text/1", b);
 const $Child_content__input_a__script = _script("__tests__/template.marko_1_input_a", ($scope) => {
 	if ($scope.input_a !== "a") throw new Error("did not serialize input.a");
 });

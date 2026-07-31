@@ -3,7 +3,7 @@ const $template = "<div id=outside> </div><!><!>";
 const $walks = "D l%c";
 const $await_content__value__script = _script("__tests__/template.marko_3_value", ($scope) => console.log(`effect ran value=${$scope.value}`));
 const $await_content__value = /*@__PURE__*/ _const("value", ($scope) => {
-	_text($scope["#text/0"], $scope.value);
+	_text($scope, "#text/0", $scope.value);
 	$await_content__value__script($scope);
 });
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => console.log(`setup effect ran`));
@@ -19,7 +19,7 @@ const $try_content__setup = ($scope) => {
 };
 const $value__closure = /*@__PURE__*/ _closure($try_content__value);
 const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
-	_text($scope["#text/0"], $scope.value);
+	_text($scope, "#text/0", $scope.value);
 	$value__closure($scope);
 });
 const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);

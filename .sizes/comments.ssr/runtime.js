@@ -1,5 +1,5 @@
-// size: 2888 (min) 1400 (brotli)
-//#region packages/runtime-tags/dist/dom-Cj4HQ7T_.mjs
+// size: 2937 (min) 1419 (brotli)
+//#region packages/runtime-tags/dist/dom-tN-buEmI.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
   runId = 2,
@@ -18,7 +18,9 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   channel,
   registeredValues = {},
   curRenders,
-  readyIds;
+  readyIds,
+  _attr = attr,
+  _text = text;
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -247,18 +249,22 @@ function runResumeEffects(render) {
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
 }
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
-}
-function _attr(element, name, value) {
+function setAttr(element, name, value) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
     (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
+}
+function attr(scope, nodeAccessor, name, value) {
+  setAttr(scope[nodeAccessor], name, value);
+}
+function text(scope, nodeAccessor, value) {
+  let node = scope[nodeAccessor],
+    normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function normalizeAttrValue(value) {

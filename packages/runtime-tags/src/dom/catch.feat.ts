@@ -10,6 +10,7 @@ import {
   installCatch,
   type PendingRender,
   placeholderShown,
+  runId,
 } from "./queue";
 import type { SignalFn } from "./signals";
 
@@ -41,9 +42,12 @@ installCatch(
         for (; i < effects.length;) {
           fn = effects[i++] as SignalFn;
           scope = effects[i++] as Scope;
+          // Doomed matches destroyed here: a replayed effect must not
+          // observe a branch its own batch already retired.
           if (
             (branch = scope[AccessorProp.ClosestBranch])?.[AccessorProp.Gen] !==
               0 &&
+            branch?.[AccessorProp.Doomed] !== runId &&
             !(checkPending && handlePendingTry(fn, scope, branch))
           ) {
             fn(scope);
@@ -56,6 +60,12 @@ installCatch(
   (runRender) => (render: PendingRender) => {
     try {
       let branch = render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
+      // A render whose target sits inside a branch this same batch retired
+      // is skipped outright: the batch's state must not be observable in the
+      // outgoing branch, only via the committed swap. Dooming is recursive,
+      // so one hop suffices. (Doomed branches stay fully viable for any
+      // *other* batch until the retire applies.)
+      if (branch?.[AccessorProp.Doomed] === runId) return;
       while (branch) {
         if (branch[AccessorProp.PendingRenders]) {
           render[PendingRenderProp.Pending] = 1;

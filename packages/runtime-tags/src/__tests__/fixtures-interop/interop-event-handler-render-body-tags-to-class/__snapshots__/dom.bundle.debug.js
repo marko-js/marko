@@ -29,7 +29,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _resume("__tests__/components/my-button.marko", _marko_template);
-const $mybutton_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $mybutton_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope, "#text/0", $scope._.count));
 const $mybutton_content__setup = $mybutton_content__count;
 const $mybutton_content = _content_resume("__tests__/template.marko_1_content", " ", " ", $mybutton_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $mybutton_content);

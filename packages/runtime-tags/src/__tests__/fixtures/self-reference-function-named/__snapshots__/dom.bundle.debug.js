@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button></button><div> </div>";
 const $walks = " bD l";
-const $sum = ($scope, sum) => _text($scope["#text/1"], sum());
+const $sum = ($scope, sum) => _text($scope, "#text/1", sum());
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $sum($scope, function sum(i = 0) {
 	return i >= $scope.items?.length ? 0 : $scope.items[i] + sum(i + 1);
 }));

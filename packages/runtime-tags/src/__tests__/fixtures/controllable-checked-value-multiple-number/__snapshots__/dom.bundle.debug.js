@@ -5,7 +5,7 @@ const $checked = /*@__PURE__*/ _let("checked/5", ($scope) => {
 	_attr_input_checkedValue($scope, "#input/0", $scope.checked, $checkedValueChange($scope), 0);
 	_attr_input_checkedValue($scope, "#input/1", $scope.checked, $checkedValueChange2($scope), "1");
 	_attr_input_checkedValue($scope, "#input/2", $scope.checked, $checkedValueChange3($scope), 2);
-	_text($scope["#text/3"], $scope.checked);
+	_text($scope, "#text/3", $scope.checked);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_input_checkedValue_script($scope, "#input/0");

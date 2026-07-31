@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<style></style>";
 const $walks = " b";
-const $count = /*@__PURE__*/ _let("count/1", ($scope) => _text_content($scope["#style/0"], `
+const $count = /*@__PURE__*/ _let("count/1", ($scope) => _text_content($scope, "#style/0", `
   .test {
     content: ${_to_text($scope.count)}
   }

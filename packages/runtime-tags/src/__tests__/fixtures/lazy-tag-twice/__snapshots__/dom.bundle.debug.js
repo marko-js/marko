@@ -1,9 +1,9 @@
 // child.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope, "#text/1", $scope.count));
 const $input_value = $count;
-const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
+const $input_id = ($scope, input_id) => _attr($scope, "#button/0", "id", input_id);
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

@@ -2,7 +2,7 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = () => {};
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
+const $await_content__v = ($scope, v) => _text($scope, "#text/0", v);
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $for_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

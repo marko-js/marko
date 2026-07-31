@@ -21,6 +21,6 @@ const $setup__script = _script("b0", ($scope) => {
 const $template = "<span> </span>";
 const $walks = "D l";
 const $setup = () => {};
-const $input_value = ($scope, input_value) => _text($scope.a, input_value);
+const $input_value = ($scope, input_value) => _text($scope, "a", input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("a", $template, "D l", $setup, $input);

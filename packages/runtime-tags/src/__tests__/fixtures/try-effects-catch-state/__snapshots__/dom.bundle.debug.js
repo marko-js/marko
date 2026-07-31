@@ -1,12 +1,12 @@
 // template.marko
 const $template = "<div></div><!><!>";
 const $walks = " b%c";
-const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err);
+const $catch_content__err = ($scope, err) => _text($scope, "#text/0", err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _content_resume("__tests__/template.marko_2_content", " ", " ", 0, $catch_content__$params);
 const $try_content__clickCount__script = _script("__tests__/template.marko_1_clickCount", ($scope) => _el_read($scope._["#div/0"]).textContent = $scope._.clickCount);
 const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => {
-	_text($scope["#text/1"], (() => {
+	_text($scope, "#text/1", (() => {
 		if ($scope._.clickCount > 1) throw new Error("ERROR!");
 	})());
 	$try_content__clickCount__script($scope);

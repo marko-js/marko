@@ -6,7 +6,7 @@ const $count$1 = /*@__PURE__*/ _let("count/1", ($scope) => {
 		count: $scope.count,
 		inc: $_return($scope)
 	});
-	_text($scope["#text/0"], $scope.count);
+	_text($scope, "#text/0", $scope.count);
 });
 function $setup$1($scope) {
 	$count$1($scope, 1);
@@ -26,7 +26,7 @@ const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern/var", ($scope
 	$count($scope, $pattern.count);
 	$inc($scope, $pattern.inc);
 });
-const $count = ($scope, count) => _text($scope["#text/3"], count);
+const $count = ($scope, count) => _text($scope, "#text/3", count);
 const $inc__script = _script("__tests__/template.marko_0_inc", ($scope) => _on($scope["#button/2"], "click", function() {
 	$scope.inc();
 }));

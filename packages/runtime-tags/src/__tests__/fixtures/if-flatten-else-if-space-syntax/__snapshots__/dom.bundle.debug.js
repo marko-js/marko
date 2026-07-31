@@ -2,7 +2,7 @@
 const $template = "<div> </div>";
 const $walks = "D l";
 const $setup = () => {};
-const $input_a__OR__input_b = /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/0"], $scope.input_a ? "A" : $scope.input_b ? "B" : "C"));
+const $input_a__OR__input_b = /*@__PURE__*/ _or(5, ($scope) => _text($scope, "#text/0", $scope.input_a ? "A" : $scope.input_b ? "B" : "C"));
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b);
 const $input = ($scope, input) => {

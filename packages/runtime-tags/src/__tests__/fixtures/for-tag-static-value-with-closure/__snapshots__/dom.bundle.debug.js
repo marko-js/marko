@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<!><!><button> </button>";
 const $walks = "b%b D l";
-const $for_content__count = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/1"], $scope._.count));
+const $for_content__count = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope, "#text/1", $scope._.count));
 const $for_content__setup = ($scope) => {
 	$for_content__count._($scope);
-	_text($scope["#text/0"], $scope["#LoopKey"]);
+	_text($scope, "#text/0", $scope["#LoopKey"]);
 };
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
-	_text($scope["#text/2"], $scope.count);
+	_text($scope, "#text/2", $scope.count);
 	$for_content__count($scope);
 });
 const $for = /*@__PURE__*/ _for_to("#text/0", "<!>-<!>", "%c%", $for_content__setup);

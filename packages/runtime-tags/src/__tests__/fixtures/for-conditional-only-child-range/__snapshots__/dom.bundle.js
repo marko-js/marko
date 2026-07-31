@@ -1,7 +1,7 @@
 // template.marko
-const $else_content__item_id = /*@__PURE__*/ _if_closure(0, 1, ($scope) => _text($scope.a, $scope._.e));
+const $else_content__item_id = /*@__PURE__*/ _if_closure(0, 1, ($scope) => _text($scope, "a", $scope._.e));
 const $else_content__setup = $else_content__item_id;
-const $if_content__item_id = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e));
+const $if_content__item_id = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope, "a", $scope._.e));
 const $for_content__if = /*@__PURE__*/ _if(0, "<pre>code <!></pre>", "Db%", $if_content__item_id, "<p>text <!></p>", "Db%", $else_content__setup);
 const $for_content__item_code = ($scope, item_code) => $for_content__if($scope, item_code ? 0 : 1);
 const $for_content__$params = ($scope, $params2) => {

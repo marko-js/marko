@@ -14,10 +14,10 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b%c");
-const $child_content__first = ($scope, first) => _text($scope["#text/0"], first);
-const $child_content__$params3_ = ($scope, $params3_1) => _text($scope["#text/1"], $params3_1);
-const $child_content__$params3_2 = ($scope, $params3_2) => _text($scope["#text/2"], $params3_2);
-const $child_content__others_length = ($scope, others_length) => _text($scope["#text/3"], others_length);
+const $child_content__first = ($scope, first) => _text($scope, "#text/0", first);
+const $child_content__$params3_ = ($scope, $params3_1) => _text($scope, "#text/1", $params3_1);
+const $child_content__$params3_2 = ($scope, $params3_2) => _text($scope, "#text/2", $params3_2);
+const $child_content__others_length = ($scope, others_length) => _text($scope, "#text/3", others_length);
 const $child_content__$params = ($scope, $params3) => {
 	(([, ...others]) => $child_content__others($scope, others))($params3);
 	$child_content__first($scope, $params3[0]);
@@ -26,9 +26,9 @@ const $child_content__$params = ($scope, $params3) => {
 };
 const $child_content__others = ($scope, others) => $child_content__others_length($scope, others.length);
 const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<div><!>|<!>|<!>|<!></div>", "D%c%c%c%", 0, $child_content__$params);
-const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
-const $for_content__setup = ($scope) => _text($scope["#text/1"], $scope["#LoopKey"]);
-const $for_content__meta_length = ($scope, meta_length) => _text($scope["#text/2"], meta_length);
+const $for_content__item = ($scope, item) => _text($scope, "#text/0", item);
+const $for_content__setup = ($scope) => _text($scope, "#text/1", $scope["#LoopKey"]);
+const $for_content__meta_length = ($scope, meta_length) => _text($scope, "#text/2", meta_length);
 const $for_content__$params = ($scope, $params2) => {
 	(([, ...meta]) => $for_content__meta($scope, meta))($params2);
 	$for_content__item($scope, $params2[0]);
