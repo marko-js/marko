@@ -1,4 +1,4 @@
-// size: 26464 (min) 9800 (brotli)
+// size: 26580 (min) 9845 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -879,6 +879,11 @@ function init(runtimeId = "M") {
                 for (let i = 1; i < partials.length; i++) {
                   let partial = partials[i];
                   if (typeof partial == "number") scopeId += partial;
+                  else if (typeof partial == "string")
+                    for (lastTokenIndex = 0, visitText = partial; nextToken();)
+                      /\D/.test(lastToken)
+                        ? (lastEffect = registeredValues[lastToken])
+                        : curEffects.push(lastEffect, getScope(lastToken));
                   else {
                     let scope = scopeLookup[scopeId];
                     for (let key in partial) patchers[key[0]](scope, key, partial[key]);
@@ -995,7 +1000,7 @@ function init(runtimeId = "M") {
               )),
             processResumes = (resumes = [], effects) => {
               let i = 0;
-              for (; i < resumes.length; i++) {
+              for (patching && (curEffects = effects); i < resumes.length; i++) {
                 let serialized = resumes[i];
                 if (typeof serialized == "string")
                   for (lastTokenIndex = 0, visitText = serialized; nextToken();)
@@ -1019,6 +1024,7 @@ function init(runtimeId = "M") {
               return (resumes.splice(0, i), i);
             },
             lastEffect,
+            curEffects,
             visits,
             visit,
             visitText,
@@ -2104,7 +2110,9 @@ function applyPatch(frame, renderId = "_", runtimeId = "M") {
   init(runtimeId);
   let render = beginPatch(renderId);
   try {
-    return (Function(frame)(), render.m([]).length || !finishPatch() ? !1 : (run(), !0));
+    render.r = [Function("_", "$", "return " + frame)];
+    let effects = render.m([]);
+    return finishPatch() ? (runEffects(effects, 1), run(), !0) : !1;
   } finally {
     abortPatch();
   }
