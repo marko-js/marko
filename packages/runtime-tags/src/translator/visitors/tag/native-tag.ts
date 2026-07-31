@@ -409,6 +409,7 @@ export default {
         }
 
         write`<${tagName}`;
+        writer.recordOpenTag(tag);
 
         if (injectNonce) {
           write`${callRuntime("_attr_nonce")}`;
@@ -750,6 +751,7 @@ export default {
         }
 
         write`<${tagName}`;
+        writer.recordOpenTag(tag);
 
         const {
           staticAttrs,

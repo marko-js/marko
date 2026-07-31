@@ -2,7 +2,7 @@
 var checkbox_default = _template("__tests__/tags/checkbox.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attrs({
+	_html_opens("__tests__/tags/checkbox.marko:1:1"), _html(`<input${_attrs({
 		type: "checkbox",
 		...input
 	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			checked = _new_checked;
 		}, "__tests__/template.marko_0/checkedChange", $scope0_id)
 	});
-	_html(`<span>${_escape(String(checked))}${_el_resume($scope0_id, "#text/1")}</span>`);
+	_html_opens("__tests__/template.marko:3:1"), _html(`<span>${_escape(String(checked))}${_el_resume($scope0_id, "#text/1")}</span>`);
 	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

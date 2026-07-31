@@ -7,7 +7,7 @@ var sections_default = _template("__tests__/tags/sections.marko", (input) => {
 		_if(() => {
 			if (content) {
 				const $scope2_id = _scope_id();
-				_dynamic_tag($scope2_id, "#text/0", content, {}, 0, 0, $sg__input_section);
+				_dynamic_tag($scope2_id, "#text/0", content, {}, 0, 0, $sg__input_section, "__tests__/tags/sections.marko:3:5");
 				$si__input_section && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/sections.marko", "2:4");
 				return 0;
 			}

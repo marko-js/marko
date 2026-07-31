@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let changes = 0;
 	let value = 1;
 	let x = value;
-	_html(`<button id=or>or</button>${_el_resume($scope0_id, "#button/0")}<button id=and>and</button>${_el_resume($scope0_id, "#button/1")}<button id=nullish>nullish</button>${_el_resume($scope0_id, "#button/2")}<div>value=<!>${_escape(value)}${_el_resume($scope0_id, "#text/3")} changes=<!>${_escape(changes)}${_el_resume($scope0_id, "#text/4")}</div>`);
+	_html_opens("__tests__/template.marko:7:1", "__tests__/template.marko:8:1", "__tests__/template.marko:9:1", "__tests__/template.marko:10:1"), _html(`<button id=or>or</button>${_el_resume($scope0_id, "#button/0")}<button id=and>and</button>${_el_resume($scope0_id, "#button/1")}<button id=nullish>nullish</button>${_el_resume($scope0_id, "#button/2")}<div>value=<!>${_escape(value)}${_el_resume($scope0_id, "#text/3")} changes=<!>${_escape(changes)}${_el_resume($scope0_id, "#text/4")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		changes,

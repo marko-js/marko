@@ -5,14 +5,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $value__closures = new Set();
 	const $value2__closures = new Set();
 	const { show, value1, value2 } = input;
-	_html("<div>");
+	_html_opens("__tests__/template.marko:2:1"), _html("<div>");
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_if(() => {
 				if (value1) {
 					const $scope2_id = _scope_id();
-					_html(`<span>${_escape(value1)}${_el_resume($scope2_id, "#text/0", $sg__input_value)}</span>`);
+					_html_opens("__tests__/template.marko:4:16"), _html(`<span>${_escape(value1)}${_el_resume($scope2_id, "#text/0", $sg__input_value)}</span>`);
 					$si__input_show__OR__input_value && _subscribe($si__input_value && $value__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
 					return 0;
 				}
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (value2) {
 					const $scope3_id = _scope_id();
-					_html(`<span>${_escape(value2)}${_el_resume($scope3_id, "#text/0", $sg__input_value2)}</span>`);
+					_html_opens("__tests__/template.marko:5:16"), _html(`<span>${_escape(value2)}${_el_resume($scope3_id, "#text/0", $sg__input_value2)}</span>`);
 					$si__input_show__OR__input_value2 && _subscribe($si__input_value2 && $value2__closures, writeScope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"));
 					return 0;
 				}

@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $show__closures = new Set();
 	let show = true;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:3:1"), _html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0");
-		_html("<div>settled</div>");
+		_html_opens("__tests__/template.marko:10:3"), _html("<div>settled</div>");
 		_subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {

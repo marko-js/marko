@@ -6,13 +6,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const MyTag = { content: _content("__tests__/template.marko_1_content", ({ number }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<div>${_escape(number)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 0))}</div>`);
+		_html_opens("__tests__/template.marko:3:3"), _html(`<div>${_escape(number)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 0))}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}) };
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	MyTag.content({ number: x });
-	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:7:1"), _html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		x,

@@ -27,6 +27,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Say Hi");
-	}, $scope0_id), 0, 0);
-	_html("<span id=display></span>");
+	}, $scope0_id), 0, 0, "__tests__/template.marko:2:1");
+	_html_opens("__tests__/template.marko:5:1"), _html("<span id=display></span>");
 }, 1);

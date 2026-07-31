@@ -2,7 +2,7 @@
 var list_default = _template("__tests__/tags/list.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html_opens("__tests__/tags/list.marko:8:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/list.marko_0_input_item");
 	writeScope($scope0_id, { input_item: input.item }, "__tests__/tags/list.marko", 0, { input_item: ["input.item"] });
 });

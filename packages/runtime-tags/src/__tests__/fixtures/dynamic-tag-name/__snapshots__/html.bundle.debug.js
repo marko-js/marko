@@ -3,8 +3,8 @@ var tag_a_default = _template("__tests__/tags/tag-a/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: className, other, content } = input;
-	_html(`<div${_attr_class(className)}${_attr("data-other", other)}>A `);
-	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
+	_html_opens("__tests__/tags/tag-a/index.marko:2:1"), _html(`<div${_attr_class(className)}${_attr("data-other", other)}>A `);
+	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 2), "__tests__/tags/tag-a/index.marko:4:3");
 	_html(`</div>${_el_resume($scope0_id, "#div/0", _serialize_guard($scope0_reason, 0))}`);
 	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, {}, "__tests__/tags/tag-a/index.marko", 0);
 });
@@ -14,8 +14,8 @@ var tag_b_default = _template("__tests__/tags/tag-b/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: className, other, content } = input;
-	_html(`<div${_attr_class(className)}${_attr("data-other", other)}>B `);
-	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
+	_html_opens("__tests__/tags/tag-b/index.marko:2:1"), _html(`<div${_attr_class(className)}${_attr("data-other", other)}>B `);
+	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 2), "__tests__/tags/tag-b/index.marko:4:3");
 	_html(`</div>${_el_resume($scope0_id, "#div/0", _serialize_guard($scope0_reason, 0))}`);
 	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, {}, "__tests__/tags/tag-b/index.marko", 0);
 });
@@ -29,31 +29,31 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", content, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, _serialize_guard($scope0_reason, 0));
+	}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/template.marko:7:1");
 	_dynamic_tag($scope0_id, "#text/1", x, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, _serialize_guard($scope0_reason, 1));
+	}, 0, 0, _serialize_guard($scope0_reason, 1), "__tests__/template.marko:8:1");
 	_dynamic_tag($scope0_id, "#text/2", show ? "div" : null, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_show__OR__input_other);
+	}, 0, 0, $sg__input_show__OR__input_other, "__tests__/template.marko:10:1");
 	_dynamic_tag($scope0_id, "#text/3", show && "div", {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_show__OR__input_other);
+	}, 0, 0, $sg__input_show__OR__input_other, "__tests__/template.marko:11:1");
 	_dynamic_tag($scope0_id, "#text/4", isLarge ? "h1" : "h2", {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_isLarge__OR__input_other);
+	}, 0, 0, $sg__input_isLarge__OR__input_other, "__tests__/template.marko:13:1");
 	_dynamic_tag($scope0_id, "#text/5", showTagA ? tag_a_default : tag_b_default, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_showTagA__OR__input_other);
+	}, 0, 0, $sg__input_showTagA__OR__input_other, "__tests__/template.marko:15:1");
 	_dynamic_tag($scope0_id, "#text/6", showTagA && tag_a_default, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_showTagA__OR__input_other);
+	}, 0, 0, $sg__input_showTagA__OR__input_other, "__tests__/template.marko:16:1");
 	_dynamic_tag($scope0_id, "#text/7", showTagA && tag_a_default, {
 		class: ["a", "b"],
 		other
@@ -61,51 +61,51 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Body content");
-	}, $scope0_id), 0, $sg__input_showTagA__OR__input_other);
+	}, $scope0_id), 0, $sg__input_showTagA__OR__input_other, "__tests__/template.marko:17:1");
 	_dynamic_tag($scope0_id, "#text/8", tag || tag_a_default, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_tag__OR__input_other);
+	}, 0, 0, $sg__input_tag__OR__input_other, "__tests__/template.marko:21:1");
 	_dynamic_tag($scope0_id, "#text/9", tag ?? tag_a_default, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_tag__OR__input_other);
+	}, 0, 0, $sg__input_tag__OR__input_other, "__tests__/template.marko:22:1");
 	const largeHeading = isLarge && "h1";
 	_dynamic_tag($scope0_id, "#text/10", largeHeading || "h2", {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_isLarge__OR__input_other);
+	}, 0, 0, $sg__input_isLarge__OR__input_other, "__tests__/template.marko:25:1");
 	_dynamic_tag($scope0_id, "#text/11", globalThis.x = "a" + "b", {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_other);
+	}, 0, 0, $sg__input_other, "__tests__/template.marko:27:1");
 	_dynamic_tag($scope0_id, "#text/12", "h" + level, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_level__OR__input_other);
+	}, 0, 0, $sg__input_level__OR__input_other, "__tests__/template.marko:28:1");
 	_dynamic_tag($scope0_id, "#text/13", `h${level}`, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_level__OR__input_other);
+	}, 0, 0, $sg__input_level__OR__input_other, "__tests__/template.marko:29:1");
 	const tagConstA = "a";
 	_dynamic_tag($scope0_id, "#text/14", tagConstA, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_other);
+	}, 0, 0, $sg__input_other, "__tests__/template.marko:32:1");
 	const tagConstB = show ? "div" : null;
 	_dynamic_tag($scope0_id, "#text/15", tagConstB, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_show__OR__input_other);
+	}, 0, 0, $sg__input_show__OR__input_other, "__tests__/template.marko:35:1");
 	const tagConstC = tag ?? tag_a_default;
 	_dynamic_tag($scope0_id, "#text/16", tagConstC, {
 		class: ["a", "b"],
 		other
-	}, 0, 0, $sg__input_tag__OR__input_other);
-	_dynamic_tag($scope0_id, "#text/17", `h${1}`, {}, 0, 0, 0);
-	_dynamic_tag($scope0_id, "#text/18", foo || "div", {}, 0, 0, 0);
-	_dynamic_tag($scope0_id, "#text/19", foo + "div", {}, 0, 0, 0);
-	_dynamic_tag($scope0_id, "#text/20", "d" + "iv", {}, 0, 0, 0);
+	}, 0, 0, $sg__input_tag__OR__input_other, "__tests__/template.marko:38:1");
+	_dynamic_tag($scope0_id, "#text/17", `h${1}`, {}, 0, 0, 0, "__tests__/template.marko:40:1");
+	_dynamic_tag($scope0_id, "#text/18", foo || "div", {}, 0, 0, 0, "__tests__/template.marko:41:1");
+	_dynamic_tag($scope0_id, "#text/19", foo + "div", {}, 0, 0, 0, "__tests__/template.marko:42:1");
+	_dynamic_tag($scope0_id, "#text/20", "d" + "iv", {}, 0, 0, 0, "__tests__/template.marko:43:1");
 	_serialize_if($scope0_reason, 8) && writeScope($scope0_id, {
 		content: $si__input_other && content,
 		x: $si__input_other && x,

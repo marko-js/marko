@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<script${_attr_nonce()} type=importmap>${_escape_script(`
+	_html_opens("__tests__/template.marko:2:1", "__tests__/template.marko:9:1"), _html(`<script${_attr_nonce()} type=importmap>${_escape_script(`
   {
     "imports": {
       "${_to_text(count)}": "https://markojs.com",

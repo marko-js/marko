@@ -20,9 +20,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button id=bump>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_dynamic_tag($scope0_id, "#text/2", _marko_template, {}, 0, 0, 0);
-	_dynamic_tag($scope0_id, "#text/3", _marko_template, { count: n });
+	_html_opens("__tests__/template.marko:3:1"), _html(`<button id=bump>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_dynamic_tag($scope0_id, "#text/2", _marko_template, {}, 0, 0, 0, "__tests__/template.marko:4:1");
+	_dynamic_tag($scope0_id, "#text/3", _marko_template, { count: n }, void 0, void 0, void 0, "__tests__/template.marko:5:1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "2:6" });
 	_resume_branch($scope0_id);

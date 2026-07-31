@@ -13,7 +13,7 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 		...htmlInput,
 		class: ["foo", inputClass],
 		content
-	});
+	}, void 0, void 0, void 0, "__tests__/tags/my-tag.marko:8:1");
 	_script($scope0_id, "__tests__/tags/my-tag.marko_0_inputContent");
 	writeScope($scope0_id, {
 		inputAs,

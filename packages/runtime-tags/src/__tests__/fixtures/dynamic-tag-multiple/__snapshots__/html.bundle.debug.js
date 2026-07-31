@@ -7,7 +7,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("hi");
-	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
+	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/wrapper.marko:3:1");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
 		inputAs: _serialize_if($scope0_reason, 2) && inputAs,
 		htmlInput: _serialize_if($scope0_reason, 1) && htmlInput
@@ -21,13 +21,13 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div>");
+	_html_opens("__tests__/template.marko:1:1"), _html("<div>");
 	wrapper_default({});
-	_html("</div><div>");
+	_html_opens("__tests__/template.marko:4:1"), _html("</div><div>");
 	wrapper_default({});
-	_html("</div><div>");
+	_html_opens("__tests__/template.marko:7:1"), _html("</div><div>");
 	wrapper_default({});
-	_html("</div><div>");
+	_html_opens("__tests__/template.marko:10:1"), _html("</div><div>");
 	wrapper_default({});
 	_html("</div>");
 }, 1);

@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	};
 	const { n } = state;
 	let log = "";
-	_html(`<button class=bump>bump</button>${_el_resume($scope0_id, "#button/0")}<button class=show>show</button>${_el_resume($scope0_id, "#button/1")}<div class=n>${_escape(n)}${_el_resume($scope0_id, "#text/2")}</div><div class=log>${_escape(log)}${_el_resume($scope0_id, "#text/3")}</div>`);
+	_html_opens("__tests__/template.marko:6:1", "__tests__/template.marko:7:1", "__tests__/template.marko:9:1", "__tests__/template.marko:10:1"), _html(`<button class=bump>bump</button>${_el_resume($scope0_id, "#button/0")}<button class=show>show</button>${_el_resume($scope0_id, "#button/1")}<div class=n>${_escape(n)}${_el_resume($scope0_id, "#text/2")}</div><div class=log>${_escape(log)}${_el_resume($scope0_id, "#text/3")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_state_tag_n");
 	_script($scope0_id, "__tests__/template.marko_0_state_n_state_tag");
 	writeScope($scope0_id, {

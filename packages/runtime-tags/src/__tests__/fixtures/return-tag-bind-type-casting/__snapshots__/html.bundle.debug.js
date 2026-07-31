@@ -15,7 +15,7 @@ var my_let_default = _template("__tests__/tags/my-let.marko", (input) => {
 var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/my-tag.marko:1:1");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/my-tag.marko", 0);
 });
 
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	my_tag_default({ content: _content("__tests__/template.marko_1_content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<button>${_escape(count)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html_opens("__tests__/template.marko:3:3"), _html(`<button>${_escape(count)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:1"));
 		_resume_branch($scope1_id);

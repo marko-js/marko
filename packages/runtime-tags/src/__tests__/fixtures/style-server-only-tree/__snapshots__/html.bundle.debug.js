@@ -11,7 +11,7 @@ var v_child_marko_default = "\n  .child {\n    color: blue;\n  }\n";
 var child_default = _template("__tests__/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div class=child>Child</div>");
+	_html_opens("__tests__/child.marko:9:1"), _html("<div class=child>Child</div>");
 });
 
 // v:template.marko.css
@@ -22,5 +22,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	child_default({});
-	_html("<div class=page>Page</div>");
+	_html_opens("__tests__/template.marko:11:1"), _html("<div class=page>Page</div>");
 }, 1);

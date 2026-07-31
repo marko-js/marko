@@ -10,5 +10,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	};
 	const { b, ...rest2 } = rest;
 	const { c, ...rest3 } = rest2;
-	_html(`<div class=abc>${_escape(a)} ${_escape(b)} ${_escape(c)}</div><div class=rest>${_escape(JSON.stringify(rest))}</div><div class=rest2>${_escape(JSON.stringify(rest2))}</div><div class=rest3>${_escape(JSON.stringify(rest3))}</div>`);
+	_html_opens("__tests__/template.marko:4:1", "__tests__/template.marko:5:1", "__tests__/template.marko:6:1", "__tests__/template.marko:7:1"), _html(`<div class=abc>${_escape(a)} ${_escape(b)} ${_escape(c)}</div><div class=rest>${_escape(JSON.stringify(rest))}</div><div class=rest2>${_escape(JSON.stringify(rest2))}</div><div class=rest3>${_escape(JSON.stringify(rest3))}</div>`);
 }, 1);

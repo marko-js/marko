@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let { cart } = cart_state_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_$pattern/var");
 	const hasHydrate = cart !== null;
-	_html("<header><div>");
+	_html_opens("__tests__/template.marko:4:1", "__tests__/template.marko:5:3"), _html("<header><div>");
 	_await($scope0_id, "#text/2", resolveAfter([
 		1,
 		2,
@@ -32,19 +32,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		forOf(collections, (collection) => {
 			const $scope2_id = _scope_id();
-			_html(`<a${_attr("href", `/something/${collection}`)}>${_escape(collection)}</a>`);
+			_html_opens("__tests__/template.marko:8:9"), _html(`<a${_attr("href", `/something/${collection}`)}>${_escape(collection)}</a>`);
 		});
 	}, 0);
-	_html("<a href=/something>Something</a> Test ");
+	_html_opens("__tests__/template.marko:11:5"), _html("<a href=/something>Something</a> Test ");
 	_if(() => {
 		if (!hasHydrate) {
 			const $scope3_id = _scope_id();
-			_html("<a href=/go-to>Go</a>");
+			_html_opens("__tests__/template.marko:13:21"), _html("<a href=/go-to>Go</a>");
 			writeScope($scope3_id, {}, "__tests__/template.marko", "13:6");
 			return 0;
 		} else {
 			const $scope4_id = _scope_id();
-			_html("<button>Go to</button>");
+			_html_opens("__tests__/template.marko:15:7"), _html("<button>Go to</button>");
 			writeScope($scope4_id, {}, "__tests__/template.marko", "14:6");
 			return 1;
 		}

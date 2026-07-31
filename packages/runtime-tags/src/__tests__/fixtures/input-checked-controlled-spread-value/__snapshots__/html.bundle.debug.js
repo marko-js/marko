@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let checked = false;
-	_html(`<input${_attrs({
+	_html_opens("__tests__/template.marko:2:1"), _html(`<input${_attrs({
 		type: "radio",
 		checked,
 		checkedChange: _resume((_new_checked) => {

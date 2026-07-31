@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: _class, ...rest } = input;
-	_html("<p");
+	_html_opens("__tests__/tags/child.marko:2:1"), _html("<p");
 	_attrs_content({
 		class: input.class,
 		...rest
@@ -31,14 +31,14 @@ const Wrap = wrap_default;
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div id=content-missing>");
+	_html_opens("__tests__/template.marko:4:1"), _html("<div id=content-missing>");
 	wrap_default({ class: "foo" });
-	_html("</div><div id=content-undefined>");
+	_html_opens("__tests__/template.marko:8:1"), _html("</div><div id=content-undefined>");
 	wrap_default({
 		class: "foo",
 		content: undefined
 	});
-	_html("</div><div id=content-set>");
+	_html_opens("__tests__/template.marko:12:1"), _html("</div><div id=content-set>");
 	wrap_default({
 		class: "foo",
 		content: _content_resume("__tests__/template.marko_1_content", () => {
@@ -47,11 +47,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html("Hello World");
 		}, $scope0_id)
 	});
-	_html("</div><div id=dynamic>");
+	_html_opens("__tests__/template.marko:16:1"), _html("</div><div id=dynamic>");
 	_dynamic_tag($scope0_id, "#text/3", Wrap, { class: "bar" }, _content_resume("__tests__/template.marko_2_content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("Hello World");
-	}, $scope0_id), 0, 0);
+	}, $scope0_id), 0, 0, "__tests__/template.marko:17:3");
 	_html("</div>");
 }, 1);

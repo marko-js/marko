@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		12
 	], (num) => {
 		const $scope1_id = _scope_id();
-		_html(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escape(num)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html_opens("__tests__/template.marko:4:3"), _html(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escape(num)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			num,

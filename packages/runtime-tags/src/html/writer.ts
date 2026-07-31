@@ -20,6 +20,7 @@ import { attrAssignment } from "./attrs";
 import * as FlushStatus from "./constants/flush-status";
 import * as Mark from "./constants/mark";
 import * as RuntimeKey from "./constants/runtime-key";
+import * as SegmentKind from "./constants/segment-kind";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -36,6 +37,10 @@ import {
   toObjectKey,
 } from "./serializer";
 import type { ServerRenderer } from "./template";
+import {
+  createStructureValidator,
+  type StructureSegment,
+} from "./validate-structure";
 
 export type PartialScope = Record<Accessor, unknown>;
 
@@ -145,6 +150,23 @@ function withIsAsync<T, U>(cb: (value: U) => T, value: U): T {
 
 export function _html(html: string) {
   $chunk.writeHTML(html);
+}
+
+// Only emitted by an unoptimized compile, so the debug check is the call site.
+// Assumes every `<` start tag in the paired `_html` was recorded via
+// `recordOpenTag` — escaped interpolations cannot emit `<`, so this holds for
+// every static write. A new static-write path emitting an unrecorded tag would
+// silently shift these sources onto the wrong tags.
+export function _html_opens(...sources: (string | 0)[]) {
+  $chunk.structurePending = {
+    kind: SegmentKind.Sourced,
+    opens: sources.map((source) => source || undefined),
+  };
+}
+
+// Next `_html` is unescaped raw markup from this template site.
+export function _html_raw(source?: string) {
+  $chunk.structurePending = { kind: SegmentKind.Raw, source };
 }
 
 export function writeScript(script: string) {
@@ -295,7 +317,8 @@ function writeScopePassive(scopeId: number, partialScope: PartialScope) {
 }
 
 // `<show>` always renders; hidden ranges use `<t>` so the walker reaches them.
-export function _show_start(display: unknown, mark?: unknown) {
+// `source` is debug-only and names the `<show>` site when the wrapper is invalid.
+export function _show_start(display: unknown, mark?: unknown, source?: string) {
   if (display) {
     // The wrapper itself is the range's single node.
     if (mark) {
@@ -304,6 +327,9 @@ export function _show_start(display: unknown, mark?: unknown) {
       );
     }
   } else {
+    if (MARKO_DEBUG && source) {
+      $chunk.structurePending = { kind: SegmentKind.Runtime, source };
+    }
     $chunk.writeHTML("<t hidden>");
   }
 }
@@ -958,6 +984,12 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
             cur.html = endMarker;
             cur.scripts = cur.effects = cur.lastEffect = "";
             cur.placeholder = cur.reorderId = cur.deferredReady = null;
+            if (MARKO_DEBUG) {
+              cur.structurePending = undefined;
+              cur.structureSegments = [
+                { kind: SegmentKind.Runtime, html: endMarker },
+              ];
+            }
           }
 
           cur = next;
@@ -996,6 +1028,7 @@ export class State implements SerializeState {
   public hasWrittenResume = false;
   public walkOnNextFlush = false;
   public trailerHTML = "";
+  declare validateStructure?: (segments: StructureSegment[]) => void;
   public resumes = "";
   public nonceAttr = "";
   public serializer = new Serializer();
@@ -1150,6 +1183,14 @@ export class Chunk {
   public next: Chunk | null;
   public context: Record<string | symbol, unknown> | null;
   public serializeState: SerializeState;
+  // Pending meta for the next writeHTML; consumed into structureSegments.
+  declare structurePending?:
+    | { kind: typeof SegmentKind.Sourced; opens: (string | undefined)[] }
+    | { kind: typeof SegmentKind.Raw; source?: string }
+    | { kind: typeof SegmentKind.Runtime; source?: string };
+  // Mirrors `html`: anything that rewrites `html` (tryCatch, reorder, flush)
+  // must make the matching edit here or reports point at the wrong source.
+  declare structureSegments?: StructureSegment[];
   constructor(
     boundary: Boundary,
     next: Chunk | null,
@@ -1167,6 +1208,24 @@ export class Chunk {
   }
 
   writeHTML(html: string) {
+    if (MARKO_DEBUG) {
+      const pending = this.structurePending;
+      this.structurePending = undefined;
+      (this.structureSegments ||= []).push(
+        pending?.kind === SegmentKind.Sourced
+          ? { kind: SegmentKind.Sourced, html, opens: pending.opens }
+          : pending?.kind === SegmentKind.Raw
+            ? { kind: SegmentKind.Raw, html, source: pending.source }
+            : {
+                kind: SegmentKind.Runtime,
+                html,
+                source:
+                  pending?.kind === SegmentKind.Runtime
+                    ? pending.source
+                    : undefined,
+              },
+      );
+    }
     this.html += html;
   }
 
@@ -1184,6 +1243,9 @@ export class Chunk {
   }
 
   append(chunk: Chunk) {
+    if (MARKO_DEBUG && chunk.structureSegments) {
+      (this.structureSegments ||= []).push(...chunk.structureSegments);
+    }
     this.html += chunk.html;
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
@@ -1248,10 +1310,14 @@ export class Chunk {
     let lastEffect = "";
     let needsWalk = false;
     let deferredReady: Opt<Chunk>;
+    let structureSegments: StructureSegment[] | undefined;
 
     while (cur.next && !cur.async) {
       cur.flushPlaceholder();
       needsWalk ||= cur.needsWalk;
+      if (MARKO_DEBUG && cur.structureSegments) {
+        (structureSegments ||= []).push(...cur.structureSegments);
+      }
       html += cur.html;
       if (cur.serializeState.readyId) {
         deferredReady = push(deferredReady, cur);
@@ -1268,6 +1334,13 @@ export class Chunk {
     cur.deferOwnReady();
     cur.deferredReady = concat(deferredReady, cur.deferredReady);
     cur.needsWalk ||= needsWalk;
+    if (MARKO_DEBUG) {
+      if (structureSegments) {
+        cur.structureSegments = cur.structureSegments
+          ? structureSegments.concat(cur.structureSegments)
+          : structureSegments;
+      }
+    }
     cur.html = html + cur.html;
     cur.effects = concatEffects(effects, cur.effects);
     cur.scripts = concatScripts(scripts, cur.scripts);
@@ -1439,6 +1512,7 @@ export class Chunk {
         const { reorderId } = reorderedChunk;
         const readyReservations: string[] = [];
         let reorderHTML = "";
+        let reorderSegments: StructureSegment[] | undefined;
         let reorderEffects = "";
         let reorderScripts = "";
         let cur = reorderedChunk;
@@ -1452,6 +1526,10 @@ export class Chunk {
           const readyResumeScripts = cur.flushReadyScripts(readyReservations);
           cur.consumed = true;
           reorderHTML += cur.html;
+          if (MARKO_DEBUG && cur.structureSegments) {
+            (reorderSegments ||= []).push(...cur.structureSegments);
+            cur.structureSegments = undefined;
+          }
           reorderEffects = concatEffects(reorderEffects, cur.effects);
           reorderScripts = concatScripts(
             reorderScripts,
@@ -1466,6 +1544,10 @@ export class Chunk {
             state.reorder(cur);
             cur.html = cur.effects = cur.scripts = cur.lastEffect = "";
             cur.next = null;
+            if (MARKO_DEBUG) {
+              cur.structurePending = undefined;
+              cur.structureSegments = undefined;
+            }
           }
 
           if (next) {
@@ -1505,14 +1587,18 @@ export class Chunk {
               "}",
         );
 
-        html +=
-          "<t hidden " +
-          state.commentPrefix +
-          "=" +
-          reorderId +
-          ">" +
-          reorderHTML +
-          "</t>";
+        const openWrapper =
+          "<t hidden " + state.commentPrefix + "=" + reorderId + ">";
+        html += openWrapper + reorderHTML + "</t>";
+        if (MARKO_DEBUG) {
+          (this.structureSegments ||= []).push(
+            { kind: SegmentKind.Runtime, html: openWrapper },
+            ...(reorderSegments || [
+              { kind: SegmentKind.Runtime, html: reorderHTML },
+            ]),
+            { kind: SegmentKind.Runtime, html: "</t>" },
+          );
+        }
       }
 
       state.writeReorders = carried;
@@ -1542,19 +1628,56 @@ export class Chunk {
     const { $global, nonceAttr } = state;
     const { __flush__ } = $global;
     let { html } = this;
+    const structureSegments = MARKO_DEBUG ? this.structureSegments : undefined;
     this.html = this.scripts = "";
-
-    if (scripts) {
-      html += "<script" + nonceAttr + ">" + scripts + "</script>";
+    if (MARKO_DEBUG) {
+      this.structurePending = undefined;
+      this.structureSegments = undefined;
     }
 
+    const scriptHTML = scripts
+      ? "<script" + nonceAttr + ">" + scripts + "</script>"
+      : "";
+    if (scriptHTML) html += scriptHTML;
+
+    // Page asset flush normally only prepends; a true rewrite is rare.
+    let flushPrefix = "";
+    let flushRewrote = false;
     if (__flush__) {
       $global.__flush__ = undefined;
-      html = __flush__($global, html);
+      const beforeFlush = html;
+      html = __flush__($global, beforeFlush);
+      if (html.length >= beforeFlush.length && html.endsWith(beforeFlush)) {
+        flushPrefix = html.slice(0, html.length - beforeFlush.length);
+      } else {
+        flushRewrote = true;
+      }
     }
 
-    if (!boundary.count) {
-      html += state.trailerHTML;
+    const trailerHTML = boundary.count ? "" : state.trailerHTML;
+    if (trailerHTML) html += trailerHTML;
+
+    if (MARKO_DEBUG) {
+      // Fed in flush order so the element stack matches the byte stream the
+      // browser parses, which is what decides how the markup is restructured.
+      if (flushRewrote) {
+        // A full rewrite discards per-tag segments; scan the final document.
+        (state.validateStructure ||= createStructureValidator())([
+          { kind: SegmentKind.Runtime, html },
+        ]);
+      } else {
+        const segments = structureSegments ? structureSegments.slice() : [];
+        if (flushPrefix) {
+          segments.unshift({ kind: SegmentKind.Runtime, html: flushPrefix });
+        }
+        if (scriptHTML)
+          segments.push({ kind: SegmentKind.Runtime, html: scriptHTML });
+        if (trailerHTML)
+          segments.push({ kind: SegmentKind.Runtime, html: trailerHTML });
+        if (segments.length) {
+          (state.validateStructure ||= createStructureValidator())(segments);
+        }
+      }
     }
 
     return html;

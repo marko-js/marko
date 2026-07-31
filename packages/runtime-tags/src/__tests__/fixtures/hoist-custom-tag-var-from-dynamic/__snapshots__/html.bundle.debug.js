@@ -2,8 +2,8 @@
 var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $sg__input_content);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content, "__tests__/tags/thing.marko:1:1");
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $sg__input_content, "__tests__/tags/thing.marko:2:1");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/thing.marko", 0);
 });
 
@@ -11,7 +11,7 @@ var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html_opens("__tests__/tags/child.marko:1:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	const $return = _resume(() => (html) => ((el) => el())(_el_read_error).innerHTML = html, "__tests__/tags/child.marko_0/_return", $scope0_id);
 	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 	return $return;
@@ -44,14 +44,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist(setHtml2);
 		}) });
 		_subscribe($inputshowThingnull_content__subscribers, writeScope($scope2_id, { "ClosureScopes:3": $thing_content2__subscribers }, "__tests__/template.marko", "15:4"));
-	}, $scope0_id), 0, $sg__input_show);
+	}, $scope0_id), 0, $sg__input_show, "__tests__/template.marko:15:1");
 	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content_resume("__tests__/template.marko_4_content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		let setHtml3 = child_default({});
 		_subscribe($inputshowsectionnull_content__subscribers, writeScope($scope4_id, { setHtml3 }, "__tests__/template.marko", "26:4", { setHtml3: "27:10" }));
 		_assert_hoist(setHtml3);
-	}, $scope0_id), 0, $sg__input_show);
+	}, $scope0_id), 0, $sg__input_show, "__tests__/template.marko:26:1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		"ClosureScopes:1": $thing_content__subscribers,

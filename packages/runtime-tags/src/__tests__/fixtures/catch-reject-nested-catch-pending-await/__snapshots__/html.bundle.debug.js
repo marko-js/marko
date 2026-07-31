@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`caught: ${_sep($sg__err_message)}${_escape(err.message)}${_el_resume($scope5_id, "#text/0", $sg__err_message)}`);
 				_serialize_if($scope5_reason, 0) && writeScope($scope5_id, {}, "__tests__/template.marko", "21:8");
 			}, $scope2_id) }) });
-			_html(`<div>changes: <!>${_escape(changes)}${_el_resume($scope2_id, "#text/2")}</div>${_el_resume($scope2_id, "#div/1")}`);
+			_html_opens("__tests__/template.marko:23:5"), _html(`<div>changes: <!>${_escape(changes)}${_el_resume($scope2_id, "#text/2")}</div>${_el_resume($scope2_id, "#div/1")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4");
 			_resume_branch($scope2_id);

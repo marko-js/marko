@@ -8,5 +8,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		lastName: "Martin"
 	};
 	const fullName = user.fullName = `${user.firstName} ${user.middleName} ${user.lastName}`;
-	_html(`<p>${_escape(fullName)}</p>`);
+	_html_opens("__tests__/template.marko:7:1"), _html(`<p>${_escape(fullName)}</p>`);
 }, 1);

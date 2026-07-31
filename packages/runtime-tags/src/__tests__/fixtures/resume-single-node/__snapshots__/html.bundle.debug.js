@@ -6,18 +6,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let items = [0];
 	_for_of(items, () => {
 		const $scope1_id = _scope_id();
-		_html("<div>a</div>");
+		_html_opens("__tests__/template.marko:5:3"), _html("<div>a</div>");
 		_if(() => {
 			if (items.length > 1) {
 				const $scope2_id = _scope_id();
-				_html("<div>b</div>");
+				_html_opens("__tests__/template.marko:7:5"), _html("<div>b</div>");
 				writeScope($scope2_id, {}, "__tests__/template.marko", "6:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "4:2");
 	}, 0, $scope0_id, "#text/0");
-	_html(`<button>More</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:11:1"), _html(`<button>More</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		itemId,

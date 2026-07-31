@@ -4,7 +4,7 @@ var my_menu_default = _template("__tests__/tags/my-menu/index.marko", (input) =>
 	const $scope0_id = _scope_id();
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
-		_html("<button");
+		_html_opens("__tests__/tags/my-menu/index.marko:2:3"), _html("<button");
 		_attrs_content(item, "#button/0", $scope1_id, "button");
 		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/my-menu/index.marko_1_item");
@@ -33,6 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	});
 	my_menu_default({ item: $item });
-	_html(`<div>${_escape(foo)}</div>`);
+	_html_opens("__tests__/template.marko:7:1"), _html(`<div>${_escape(foo)}</div>`);
 	_resume_branch($scope0_id);
 }, 1);

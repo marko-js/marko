@@ -2,8 +2,8 @@
 var echo_default = _template("__tests__/tags/echo.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div class=echo>");
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_html_opens("__tests__/tags/echo.marko:1:1"), _html("<div class=echo>");
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/echo.marko:1:11");
 	_html("</div>");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/echo.marko", 0);
 });
@@ -12,7 +12,7 @@ var echo_default = _template("__tests__/tags/echo.marko", (input) => {
 var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div");
+	_html_opens("__tests__/tags/my-box.marko:1:1"), _html("<div");
 	_attrs_content(input.head, "#div/0", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));

@@ -3,7 +3,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	_html(`<button>${_escape(((() => {
+	_html_opens("__tests__/tags/counter.marko:2:1"), _html(`<button>${_escape(((() => {
 		if (clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
 	})(), clickCount))}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
@@ -25,11 +25,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const onCount = _resume(function(count) {
 		show = count < 1;
 	}, "__tests__/template.marko_0/onCount", $scope0_id);
-	_html("<div>");
+	_html_opens("__tests__/template.marko:5:1"), _html("<div>");
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_html("<div>");
+			_html_opens("__tests__/template.marko:7:5"), _html("<div>");
 			counter_default({ onCount });
 			_html("</div>");
 			writeScope($scope1_id, {}, "__tests__/template.marko", "6:4");

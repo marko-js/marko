@@ -29,8 +29,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_dynamic_tag($scope0_id, "#text/0", _marko_template, { onCount: _resume(function(newCount) {
 		count = newCount;
-	}, "__tests__/template.marko_0/onCount", $scope0_id) }, 0, 0, 0);
-	_html(`<div id=tags-api>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	}, "__tests__/template.marko_0/onCount", $scope0_id) }, 0, 0, 0, "__tests__/template.marko:2:1");
+	_html_opens("__tests__/template.marko:6:1"), _html(`<div id=tags-api>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</div>`);
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (input.b) {
 					const $scope2_id = _scope_id();
-					_html(`<div>${_escape(bar(foo))}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope0_reason, 3))}</div>`);
+					_html_opens("__tests__/template.marko:7:5"), _html(`<div>${_escape(bar(foo))}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope0_reason, 3))}</div>`);
 					$si__input_c__OR__input_a__OR__input_b && _subscribe($si__input_c && $bar2__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3"));
 					return 0;
 				}

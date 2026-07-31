@@ -440,6 +440,10 @@ export default {
           serializeReason,
           true,
         );
+        const dynamicSourceStr = !isOptimize() && writer.formatNodeSource(tag);
+        const dynamicSource = dynamicSourceStr
+          ? t.stringLiteral(dynamicSourceStr)
+          : undefined;
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -452,6 +456,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              dynamicSource,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -462,6 +467,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              dynamicSource,
             );
 
         if (node.var) {

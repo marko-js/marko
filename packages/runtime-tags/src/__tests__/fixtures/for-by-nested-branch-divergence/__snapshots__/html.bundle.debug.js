@@ -16,25 +16,25 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			on: true
 		}
 	];
-	_html("<div>");
+	_html_opens("__tests__/template.marko:4:1"), _html("<div>");
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (item.on) {
 				const $scope2_id = _scope_id();
-				_html(`<span>A<!>${_escape(item.id)}${_el_resume($scope2_id, "#text/0")}</span>`);
+				_html_opens("__tests__/template.marko:7:7"), _html(`<span>A<!>${_escape(item.id)}${_el_resume($scope2_id, "#text/0")}</span>`);
 				writeScope($scope2_id, {}, "__tests__/template.marko", "6:6");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(`<b>B<!>${_escape(item.id)}${_el_resume($scope3_id, "#text/0")}</b>`);
+				_html_opens("__tests__/template.marko:10:7"), _html(`<b>B<!>${_escape(item.id)}${_el_resume($scope3_id, "#text/0")}</b>`);
 				writeScope($scope3_id, {}, "__tests__/template.marko", "9:6");
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
 		writeScope($scope1_id, { item_id: item?.id }, "__tests__/template.marko", "5:4", { item_id: ["item.id", "5:8"] });
 	}, "id", $scope0_id, "#div/0", 1, 1, 1, "</div>");
-	_html(`<button>rot</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:14:1"), _html(`<button>rot</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0_list_2_list_0_list_1");
 	writeScope($scope0_id, {
 		list_2: list?.[2],

@@ -3,11 +3,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let visible = true;
-	_html(`<button id=t>t</button>${_el_resume($scope0_id, "#button/0")}<div id=c>x `);
-	_show_start(visible, 1);
+	_html_opens("__tests__/template.marko:2:1", "__tests__/template.marko:3:1"), _html(`<button id=t>t</button>${_el_resume($scope0_id, "#button/0")}<div id=c>x `);
+	_show_start(visible, 1, "__tests__/template.marko:3:15");
 	if (true) {
 		const $scope1_id = _scope_id();
-		_html("<b>B</b>");
+		_html_opens("__tests__/template.marko:3:38"), _html("<b>B</b>");
 	}
 	_show_end($scope0_id, "#text/4", visible);
 	_html(" y</div>");

@@ -4,11 +4,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $clickCount__closures = new Set();
 	let clickCount = 0;
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html_opens("__tests__/template.marko:3:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<button>inc</button>${_el_resume($scope1_id, "#button/0")} -- <!>${_escape((() => {
+		_html_opens("__tests__/template.marko:5:3"), _html(`<button>inc</button>${_el_resume($scope1_id, "#button/0")} -- <!>${_escape((() => {
 			if (clickCount > 1) throw new Error("ERROR!");
 		})())}${_el_resume($scope1_id, "#text/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1_clickCount");

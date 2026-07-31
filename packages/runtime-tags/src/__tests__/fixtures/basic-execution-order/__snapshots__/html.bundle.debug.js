@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let message = { text: "hi" };
 	let show = true;
-	_html(`<button>hide</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:4:1"), _html(`<button>hide</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();

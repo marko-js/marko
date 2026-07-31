@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_scope_reason();
 		_script($scope1_id, "__tests__/tags/child.marko_1");
 		_resume_branch($scope1_id);
-	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
+	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/child.marko:2:1");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let show = false;
-	_html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=s>S</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1", "__tests__/template.marko:5:1"), _html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=s>S</button>${_el_resume($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();

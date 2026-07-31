@@ -5,8 +5,8 @@ var tags_layout_default = _template("__tests__/components/tags-layout.marko", (i
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button id=tags>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<div>`);
-	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_html_opens("__tests__/components/tags-layout.marko:2:1", "__tests__/components/tags-layout.marko:5:1"), _html(`<button id=tags>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<div>`);
+	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/components/tags-layout.marko:6:3");
 	_html("</div>");
 	_script($scope0_id, "__tests__/components/tags-layout.marko_0");
 	writeScope($scope0_id, { count }, "__tests__/components/tags-layout.marko", 0, { count: "1:6" });

@@ -26,8 +26,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onValueChanged: _resume(function(value) {
 			received = value;
 		}, "__tests__/template.marko_0/onValueChanged", $scope0_id)
-	}, 0, 0, 0);
-	_html(`<div id=tags-api>${_escape(received)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	}, 0, 0, 0, "__tests__/template.marko:2:1");
+	_html_opens("__tests__/template.marko:6:1"), _html(`<div id=tags-api>${_escape(received)}${_el_resume($scope0_id, "#text/1")}</div>`);
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

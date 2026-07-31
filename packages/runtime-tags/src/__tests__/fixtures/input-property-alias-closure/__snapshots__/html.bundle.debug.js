@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`${_escape(input.text)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))} and `);
-		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope1_reason, 2));
+		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope1_reason, 2), "__tests__/template.marko:4:3");
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:1");
 	}) };
 	const { text } = input;

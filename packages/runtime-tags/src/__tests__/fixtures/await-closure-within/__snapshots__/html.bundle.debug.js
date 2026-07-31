@@ -8,11 +8,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", resolveAfter(0, 1), () => {
 			const $scope3_id = _scope_id();
 			let value = 1;
-			_html(`<button>${_escape(value)}${_el_resume($scope3_id, "#text/1")}</button>${_el_resume($scope3_id, "#button/0")}`);
+			_html_opens("__tests__/template.marko:6:5"), _html(`<button>${_escape(value)}${_el_resume($scope3_id, "#text/1")}</button>${_el_resume($scope3_id, "#button/0")}`);
 			_if(() => {
 				if (value > 0) {
 					const $scope4_id = _scope_id();
-					_html(`<span>${_escape(value)}${_el_resume($scope4_id, "#text/0")}</span>`);
+					_html_opens("__tests__/template.marko:8:7"), _html(`<span>${_escape(value)}${_el_resume($scope4_id, "#text/0")}</span>`);
 					writeScope($scope4_id, {}, "__tests__/template.marko", "7:5");
 					return 0;
 				}

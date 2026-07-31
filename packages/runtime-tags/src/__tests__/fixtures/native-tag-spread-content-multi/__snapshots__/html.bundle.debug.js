@@ -3,7 +3,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const extra = { id: "x" };
-	_html("<div");
+	_html_opens("__tests__/tags/my-box.marko:2:1"), _html("<div");
 	_attrs_content({
 		...input,
 		...extra

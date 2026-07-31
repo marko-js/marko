@@ -59,6 +59,7 @@ import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
+import withPreviousLocation from "../util/with-previous-location";
 import * as writer from "../util/writer";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
@@ -485,7 +486,10 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   for (let i = branches.length; i-- > 1;) {
     branches[i].remove();
   }
-  const placeholder = t.markoPlaceholder(expr, true);
+  const placeholder = withPreviousLocation(
+    t.markoPlaceholder(expr, true),
+    rootTag.node,
+  );
   if (rawText) {
     (placeholder.extra ??= {})[kRawText] = true;
   }

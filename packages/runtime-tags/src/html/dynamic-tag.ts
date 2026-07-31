@@ -10,8 +10,10 @@ import {
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
+import { voidElementsReg } from "./void-elements";
 import {
   _html,
+  _html_opens,
   _peek_scope_id,
   _resume,
   _scope,
@@ -23,8 +25,6 @@ import {
   withBranchId,
 } from "./writer";
 
-const voidElementsReg =
-  /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
 interface BodyContentObject {
   [x: PropertyKey]: unknown;
   content: ServerRenderer;
@@ -40,6 +40,8 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  // Debug-only open-tag source; declared only when this path actually writes a name.
+  source?: string,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
@@ -61,6 +63,9 @@ export let _dynamic_tag = (
     rendered = true;
     const renderNative = () => {
       _scope_id();
+      if (MARKO_DEBUG && source) {
+        _html_opens(source);
+      }
       _html(
         `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
       );
@@ -231,6 +236,7 @@ export const patchDynamicTag = (
       content,
       inputIsArgs,
       resume,
+      source,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -243,6 +249,7 @@ export const patchDynamicTag = (
         content,
         inputIsArgs,
         resume,
+        source,
       );
     };
   }

@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
-	_html(`<div id=ref></div><button id=increment>Increment</button>${_el_resume($scope0_id, "#button/1")}<button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html_opens("__tests__/template.marko:10:1", "__tests__/template.marko:11:1", "__tests__/template.marko:12:1"), _html(`<div id=ref></div><button id=increment>Increment</button>${_el_resume($scope0_id, "#button/1")}<button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		x,

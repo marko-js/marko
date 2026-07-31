@@ -24,10 +24,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let store = store_default({ value: ["Learn Marko", "Make a Website"] });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store/var");
 	const { list, clear } = store;
-	_html(`<button>Clear</button>${_el_resume($scope0_id, "#button/2")}<ul>`);
+	_html_opens("__tests__/template.marko:8:1", "__tests__/template.marko:9:1"), _html(`<button>Clear</button>${_el_resume($scope0_id, "#button/2")}<ul>`);
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(item)}${_el_resume($scope1_id, "#text/0")}</li>`);
+		_html_opens("__tests__/template.marko:11:5"), _html(`<li>${_escape(item)}${_el_resume($scope1_id, "#text/0")}</li>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "10:4");
 	}, 0, $scope0_id, "#ul/3", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/template.marko_0_clear");

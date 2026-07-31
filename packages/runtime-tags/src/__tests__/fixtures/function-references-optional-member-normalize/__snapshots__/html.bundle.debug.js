@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		foo: foo?.bar,
 		baz: _resume(() => foo?.bar.baz, "__tests__/template.marko_0/c", $scope0_id)
 	};
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}<div></div>${_el_resume($scope0_id, "#div/1")}<div></div>${_el_resume($scope0_id, "#div/2")}`);
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:8:1", "__tests__/template.marko:13:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/0")}<div></div>${_el_resume($scope0_id, "#div/1")}<div></div>${_el_resume($scope0_id, "#div/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_c");
 	_script($scope0_id, "__tests__/template.marko_0_b");
 	_script($scope0_id, "__tests__/template.marko_0_a");

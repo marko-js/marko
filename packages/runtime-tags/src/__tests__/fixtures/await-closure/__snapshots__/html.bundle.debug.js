@@ -4,14 +4,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $value__closures = new Set();
 	let value = 1;
-	_html(`<button>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:3:1"), _html(`<button>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/2", _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter(0, 4), () => {
 			const $scope2_id = _scope_id();
 			_script($scope2_id, "__tests__/template.marko_2_value/pending");
-			_html(`<span>${_escape(value)}${_el_resume($scope2_id, "#text/0")}</span>`);
+			_html_opens("__tests__/template.marko:7:5"), _html(`<span>${_escape(value)}${_el_resume($scope2_id, "#text/0")}</span>`);
 			writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3");
 			_resume_branch($scope2_id);
 		});

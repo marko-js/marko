@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Tag = { content: _content("__tests__/template.marko_1_content", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
+		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope1_reason, 0), "__tests__/template.marko:2:3");
 		const $return = "A";
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
 		return $return;

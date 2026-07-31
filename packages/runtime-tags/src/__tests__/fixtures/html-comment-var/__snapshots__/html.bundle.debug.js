@@ -15,11 +15,11 @@ var parent_el_default = _template("__tests__/tags/parent-el.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div>");
+	_html_opens("__tests__/template.marko:1:1"), _html("<div>");
 	const $childScope = _peek_scope_id();
 	let divName = parent_el_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_divName/var");
-	_html(`<!>${_escape(divName)}${_el_resume($scope0_id, "#text/2")}</div><span>`);
+	_html_opens("__tests__/template.marko:6:1"), _html(`<!>${_escape(divName)}${_el_resume($scope0_id, "#text/2")}</div><span>`);
 	const $childScope2 = _peek_scope_id();
 	let spanName = parent_el_default({});
 	_var($scope0_id, "#scopeOffset/4", $childScope2, "__tests__/template.marko_0_spanName/var");

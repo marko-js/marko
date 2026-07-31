@@ -6,7 +6,7 @@ function shout(message) {
 var greeting_default = _template("__tests__/tags/greeting.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.message)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
+	_html_opens("__tests__/tags/greeting.marko:9:1"), _html(`<div>${_escape(input.message)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/greeting.marko", 0);
 });
 
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let loud = shout;
 	let quiet = whisper;
 	let message = "Hello";
-	_html(`<button>shout</button>${_el_resume($scope0_id, "#button/0")}<button>whisper</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:6:1", "__tests__/template.marko:7:1"), _html(`<button>shout</button>${_el_resume($scope0_id, "#button/0")}<button>whisper</button>${_el_resume($scope0_id, "#button/1")}`);
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });

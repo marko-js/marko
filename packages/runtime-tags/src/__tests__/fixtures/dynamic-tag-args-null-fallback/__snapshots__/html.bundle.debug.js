@@ -2,7 +2,7 @@
 var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_ = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>tag ${_sep($sg__input_)}${_escape(input[0])}${_el_resume($scope0_id, "#text/0", $sg__input_)}</div>`);
+	_html_opens("__tests__/tags/custom-tag.marko:1:1"), _html(`<div>tag ${_sep($sg__input_)}${_escape(input[0])}${_el_resume($scope0_id, "#text/0", $sg__input_)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
 });
 
@@ -23,8 +23,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Fallback Body");
-	}, $scope0_id), 1);
-	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
+	}, $scope0_id), 1, void 0, "__tests__/template.marko:3:1");
+	_html_opens("__tests__/template.marko:4:1"), _html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "2:6" });
 	_resume_branch($scope0_id);

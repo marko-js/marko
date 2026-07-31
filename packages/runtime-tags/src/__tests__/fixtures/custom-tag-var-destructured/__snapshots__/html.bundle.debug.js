@@ -12,7 +12,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			count = value;
 		}, "__tests__/tags/child.marko_0/_return2", $scope0_id)
 	};
-	_html(`<span>child:<!>${_escape(count)}${_el_resume($scope0_id, "#text/0")}</span>`);
+	_html_opens("__tests__/tags/child.marko:11:1"), _html(`<span>child:<!>${_escape(count)}${_el_resume($scope0_id, "#text/0")}</span>`);
 	writeScope($scope0_id, { count }, "__tests__/tags/child.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 	return $return;
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let { countChange: $countChange, count, inc, missing: $missing } = child_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_$pattern/var");
 	const missing = void 0 !== $missing ? $missing : "fallback";
-	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/2")}<button class=assign>assign</button>${_el_resume($scope0_id, "#button/3")}<div>${_escape(count)}${_el_resume($scope0_id, "#text/4")}:<!>${_escape(missing)}${_el_resume($scope0_id, "#text/5")}</div>`);
+	_html_opens("__tests__/template.marko:2:1", "__tests__/template.marko:3:1", "__tests__/template.marko:4:1"), _html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/2")}<button class=assign>assign</button>${_el_resume($scope0_id, "#button/3")}<div>${_escape(count)}${_el_resume($scope0_id, "#text/4")}:<!>${_escape(missing)}${_el_resume($scope0_id, "#text/5")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_count_$countChange");
 	_script($scope0_id, "__tests__/template.marko_0_inc");
 	writeScope($scope0_id, {

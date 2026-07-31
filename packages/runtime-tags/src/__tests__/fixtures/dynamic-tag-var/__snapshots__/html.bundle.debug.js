@@ -12,13 +12,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let data1 = child_default({});
 	const $inputshowchild_scope = _peek_scope_id();
-	let data2 = _dynamic_tag($scope0_id, "#text/2", input.show && child_default, {});
+	let data2 = _dynamic_tag($scope0_id, "#text/2", input.show && child_default, {}, void 0, void 0, void 0, "__tests__/template.marko:4:1");
 	_var($scope0_id, "#scopeOffset/3", $inputshowchild_scope, "__tests__/template.marko_0_data2/var");
 	const $inputdynamic_scope = _peek_scope_id();
-	let data3 = _dynamic_tag($scope0_id, "#text/4", input.dynamic, {});
+	let data3 = _dynamic_tag($scope0_id, "#text/4", input.dynamic, {}, void 0, void 0, void 0, "__tests__/template.marko:5:1");
 	_var($scope0_id, "#scopeOffset/5", $inputdynamic_scope, "__tests__/template.marko_0_data3/var");
 	const $inputshowdiv_scope = _peek_scope_id();
-	let el1 = _dynamic_tag($scope0_id, "#text/6", input.show && "div", {});
+	let el1 = _dynamic_tag($scope0_id, "#text/6", input.show && "div", {}, void 0, void 0, void 0, "__tests__/template.marko:6:1");
 	_var($scope0_id, "#scopeOffset/7", $inputshowdiv_scope, "__tests__/template.marko_0_el1/var");
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

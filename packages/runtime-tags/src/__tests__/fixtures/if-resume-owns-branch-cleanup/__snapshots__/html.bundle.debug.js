@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_html("<p>inner</p>");
+			_html_opens("__tests__/tags/child.marko:3:3"), _html("<p>inner</p>");
 			_script($scope1_id, "__tests__/tags/child.marko_1");
 			$si__input_show && writeScope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
 			return 0;
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let show = false;
-	_html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=s>S</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1", "__tests__/template.marko:5:1"), _html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=s>S</button>${_el_resume($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();

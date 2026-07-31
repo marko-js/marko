@@ -6,7 +6,7 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 	_if(() => {
 		if (n) {
 			const $scope1_id = _scope_id();
-			_html(`<div>n is ${_sep($sg__input_n)}${_escape(n)}${_el_resume($scope1_id, "#text/0", $sg__input_n)}</div>`);
+			_html_opens("__tests__/tags/leaf.marko:3:3"), _html(`<div>n is ${_sep($sg__input_n)}${_escape(n)}${_el_resume($scope1_id, "#text/0", $sg__input_n)}</div>`);
 			$si__input_n && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/leaf.marko", "2:2");
 			return 0;
 		}
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let n = 0;
-	_html(`<button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=n>N</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1"), _html(`<button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=n>N</button>${_el_resume($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();

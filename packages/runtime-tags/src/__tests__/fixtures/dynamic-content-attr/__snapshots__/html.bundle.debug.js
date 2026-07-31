@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:1"));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
-	_html("<button>");
+	_html_opens("__tests__/template.marko:8:1"), _html("<button>");
 	_attr_content("#button/0", $scope0_id, (count, MyThing));
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

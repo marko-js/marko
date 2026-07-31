@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		foo,
 		bar: _resume(() => foo.bar, "__tests__/template.marko_0/baz", $scope0_id)
 	};
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html_opens("__tests__/template.marko:3:1"), _html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_baz");
 	writeScope($scope0_id, {
 		foo,

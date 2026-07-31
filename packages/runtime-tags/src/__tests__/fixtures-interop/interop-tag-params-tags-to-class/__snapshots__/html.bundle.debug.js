@@ -34,14 +34,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, _content_resume("__tests__/template.marko_1_content", (baseCount, message) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__baseCount = _serialize_guard($scope1_reason, 0);
-		_html(`<h1>${_escape(message)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))}</h1><button id=tags>${_escape(multiplier)}${_el_resume($scope1_id, "#text/2")} * ${_sep($sg__baseCount)}${_escape(baseCount)}${_el_resume($scope1_id, "#text/3", $sg__baseCount)} = <!>${_escape(multiplier * baseCount)}${_el_resume($scope1_id, "#text/4")}</button>${_el_resume($scope1_id, "#button/1")}`);
+		_html_opens("__tests__/template.marko:3:3", "__tests__/template.marko:4:3"), _html(`<h1>${_escape(message)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))}</h1><button id=tags>${_escape(multiplier)}${_el_resume($scope1_id, "#text/2")} * ${_sep($sg__baseCount)}${_escape(baseCount)}${_el_resume($scope1_id, "#text/3", $sg__baseCount)} = <!>${_escape(multiplier * baseCount)}${_el_resume($scope1_id, "#text/4")}</button>${_el_resume($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($multiplier__closures, writeScope($scope1_id, {
 			baseCount,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { baseCount: "2:15" }));
 		_resume_branch($scope1_id);
-	}, $scope0_id), 0, 0);
+	}, $scope0_id), 0, 0, "__tests__/template.marko:2:1");
 	writeScope($scope0_id, {
 		multiplier,
 		"ClosureScopes:multiplier": $multiplier__closures

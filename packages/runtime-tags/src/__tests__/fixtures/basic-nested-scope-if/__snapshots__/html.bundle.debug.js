@@ -3,17 +3,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	_html("<div>");
+	_html_opens("__tests__/template.marko:1:1"), _html("<div>");
 	_if(() => {
 		if (clickCount < 3) {
 			const $scope1_id = _scope_id();
-			_html(`<button>${_escape(clickCount)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
+			_html_opens("__tests__/template.marko:4:5"), _html(`<button>${_escape(clickCount)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
-			_html(`<span>The button was clicked <!>${_escape(clickCount)}${_el_resume($scope2_id, "#text/0")} times.</span>`);
+			_html_opens("__tests__/template.marko:9:5"), _html(`<span>The button was clicked <!>${_escape(clickCount)}${_el_resume($scope2_id, "#text/0")} times.</span>`);
 			writeScope($scope2_id, {}, "__tests__/template.marko", "8:4");
 			return 1;
 		}

@@ -3,7 +3,7 @@ var import_html = require_html();
 var hello_tags_default = _template("__tests__/tags/hello-tags.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<h1>Hello tags</h1>");
+	_html_opens("__tests__/tags/hello-tags.marko:1:1"), _html("<h1>Hello tags</h1>");
 });
 
 // components/hello-components.marko

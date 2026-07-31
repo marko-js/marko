@@ -2,7 +2,7 @@
 var reveal_default = _template("__tests__/tags/reveal/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.value)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
+	_html_opens("__tests__/tags/reveal/index.marko:1:1"), _html(`<div>${_escape(input.value)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/reveal/index.marko", 0);
 });
 
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		bChange(v) {}
 	};
 	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:4:1"), _html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	reveal_default({ value: a });
 	reveal_default({ value: b });
 	_script($scope0_id, "__tests__/template.marko_0");

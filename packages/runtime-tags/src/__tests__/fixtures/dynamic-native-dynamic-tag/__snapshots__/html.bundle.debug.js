@@ -8,8 +8,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("body content");
-	}, $scope0_id));
-	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
+	}, $scope0_id), void 0, void 0, "__tests__/template.marko:4:1");
+	_html_opens("__tests__/template.marko:6:1"), _html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		tagName,

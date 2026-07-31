@@ -2,5 +2,5 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<span></span><div></div><div></div>");
+	_html_opens("__tests__/template.marko:1:1", "__tests__/template.marko:2:1", "__tests__/template.marko:3:1"), _html("<span></span><div></div><div></div>");
 }, 1);

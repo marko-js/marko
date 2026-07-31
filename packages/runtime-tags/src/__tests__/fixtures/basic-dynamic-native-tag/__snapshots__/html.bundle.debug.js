@@ -7,6 +7,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Hello World");
-	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
+	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0), "__tests__/template.marko:2:1");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<div id=tags-api>${_escape(n)}</div>`);
-	_dynamic_tag($scope0_id, "#text/1", _marko_template, {}, 0, 0, 0);
+	_html_opens("__tests__/template.marko:2:1"), _html(`<div id=tags-api>${_escape(n)}</div>`);
+	_dynamic_tag($scope0_id, "#text/1", _marko_template, {}, 0, 0, 0, "__tests__/template.marko:3:1");
 	_resume_branch($scope0_id);
 }, 1);

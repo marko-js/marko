@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			(($btn) => $btn())(_el_read_error).textContent = v;
 		}, "__tests__/template.marko_0/fooBar", $scope0_id)
 	};
-	_html(`<button>Before</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:8:1"), _html(`<button>Before</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_$fooChange");
 	writeScope($scope0_id, { $fooChange }, "__tests__/template.marko", 0, { $fooChange: "9:3" });
 }, 1);

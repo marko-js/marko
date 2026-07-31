@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Child = { content: _content("__tests__/template.marko_3_content", (input) => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
-		_html("<div");
+		_html_opens("__tests__/template.marko:3:5"), _html("<div");
 		_attrs_content(input, "#div/0", $scope3_id, "div");
 		_html(`</div>${_el_resume($scope3_id, "#div/0")}`);
 		_script($scope3_id, "__tests__/template.marko_3_input");
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (value) {
 			const $scope2_id = _scope_id();
 			const { text } = value;
-			_html(`<span${_attr_class(value.class)}>${_escape(text)}</span>`);
+			_html_opens("__tests__/template.marko:9:7"), _html(`<span${_attr_class(value.class)}>${_escape(text)}</span>`);
 			writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
 		}
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");

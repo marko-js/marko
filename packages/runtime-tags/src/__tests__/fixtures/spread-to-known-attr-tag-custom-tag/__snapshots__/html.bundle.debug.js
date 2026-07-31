@@ -2,10 +2,10 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_option = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<select${_attr_class(input.class)}>`);
+	_html_opens("__tests__/tags/child.marko:1:1"), _html(`<select${_attr_class(input.class)}>`);
 	_for_of(input.option, (option) => {
 		const $scope1_id = _scope_id();
-		_html("<option");
+		_html_opens("__tests__/tags/child.marko:3:5"), _html("<option");
 		_attrs_content(option, "#option/0", $scope1_id, "option");
 		_html(`</option>${_el_resume($scope1_id, "#option/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_option");

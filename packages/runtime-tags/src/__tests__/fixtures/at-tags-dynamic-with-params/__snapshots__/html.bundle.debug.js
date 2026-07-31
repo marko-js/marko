@@ -2,7 +2,7 @@
 var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.item, [1], 0, 1, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "#text/0", input.item, [1], 0, 1, _serialize_guard($scope0_reason, 0), "__tests__/tags/hello/index.marko:1:1");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });
 
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}
 	const $childScope = _peek_scope_id();
 	hello_default({ item: $item });
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:10:1"), _html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		x,

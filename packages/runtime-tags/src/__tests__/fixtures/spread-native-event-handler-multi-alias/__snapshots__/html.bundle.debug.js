@@ -2,11 +2,11 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div id=el></div>");
+	_html_opens("__tests__/template.marko:1:1"), _html("<div id=el></div>");
 	const MyButton = { content: _content("__tests__/template.marko_1_content", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html("<button");
+		_html_opens("__tests__/template.marko:3:3"), _html("<button");
 		_attrs_partial_content(input, { "on-click": 1 }, "#button/0", $scope1_id, "button");
 		_html(`</button>${_el_resume($scope1_id, "#button/0")} `);
 		_script($scope1_id, "__tests__/template.marko_1_input");

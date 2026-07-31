@@ -3,13 +3,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_button = _serialize_guard($scope0_reason, 0), $si__input_button = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { button: buttons, ...htmlInput } = input;
-	_html(`<div${_attrs(htmlInput, "#div/0", $scope0_id, "div")}>`);
+	_html_opens("__tests__/tags/child.marko:2:1"), _html(`<div${_attrs(htmlInput, "#div/0", $scope0_id, "div")}>`);
 	_for_of(buttons, (button) => {
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (button) {
 				const $scope2_id = _scope_id();
-				_dynamic_tag($scope2_id, "#text/0", button, {}, 0, 0, $sg__input_button);
+				_dynamic_tag($scope2_id, "#text/0", button, {}, 0, 0, $sg__input_button, "__tests__/tags/child.marko:5:9");
 				$si__input_button && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:8");
 				return 0;
 			}

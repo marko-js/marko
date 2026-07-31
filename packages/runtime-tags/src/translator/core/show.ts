@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoParams,
   assertNoVar,
+  isTransparentTag,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -17,6 +18,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isOptimize, isOutputHTML } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
@@ -144,6 +146,8 @@ export default {
         if (staticDisplay === true) return;
 
         if (staticDisplay === false) {
+          // Attribute the injected wrapper to this `<show>` if it is discarded.
+          writer.recordOpenTag(tag);
           writer.writeTo(tag)`<t hidden>`;
           return;
         }
@@ -222,12 +226,27 @@ export default {
           }
         }
 
+        const showSource =
+          isOutputHTML() && !isOptimize()
+            ? writer.formatNodeSource(tag)
+            : undefined;
+
         // The runtime calls bracket the body's statements (rather than taking a
         // callback) so declarations in them stay readable by later statements.
+        // Source is only emitted in debug HTML so discarded `<t hidden>` wrappers
+        // still point at this `<show>`; omit unused trailing args when clean.
+        const showStartArgs: Array<t.Expression | undefined> = [
+          t.cloneNode(display, true),
+        ];
+        if (startMark || showSource) {
+          showStartArgs.push(startMark || t.numericLiteral(0));
+        }
+        if (showSource) {
+          showStartArgs.push(t.stringLiteral(showSource));
+        }
+
         for (const replacement of tag.replaceWithMultiple([
-          t.expressionStatement(
-            callRuntime("_show_start", t.cloneNode(display, true), startMark),
-          ),
+          t.expressionStatement(callRuntime("_show_start", ...showStartArgs)),
           ...bodyStatements,
           t.expressionStatement(
             callRuntime(
@@ -348,7 +367,13 @@ function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function assertLegalHiddenContext(tag: t.NodePath<t.MarkoTag>) {
-  const parentName = getParentTag(tag)?.node.name;
+  // Walk past transparent control flow (`if`/`for`/…) so
+  // `<tbody><if=x><show=y>…` is rejected the same as a direct child.
+  let parent = getParentTag(tag);
+  while (parent && isTransparentTag(parent)) {
+    parent = getParentTag(parent);
+  }
+  const parentName = parent?.node.name;
   if (
     t.isStringLiteral(parentName) &&
     discardsWrapperChildren(parentName.value)
@@ -356,7 +381,7 @@ function assertLegalHiddenContext(tag: t.NodePath<t.MarkoTag>) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `A [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) cannot be a direct child of \`<${parentName.value}>\`: hidden content is wrapped in an element that \`<${parentName.value}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
+        `A [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) cannot be used inside \`<${parentName.value}>\`: hidden content is wrapped in an element that \`<${parentName.value}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
       );
   }
 }

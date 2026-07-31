@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const moreStyles = ["display:block"];
 	const obj = { o: true };
 	const k = "computed";
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div${_attr_class([
+	_html_opens("__tests__/template.marko:6:1", "__tests__/template.marko:7:1", "__tests__/template.marko:8:1"), _html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div${_attr_class([
 		"a",
 		["b", d],
 		...more,

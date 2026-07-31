@@ -2,7 +2,7 @@
 var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<p>leaf</p>");
+	_html_opens("__tests__/tags/leaf.marko:1:1"), _html("<p>leaf</p>");
 	_script($scope0_id, "__tests__/tags/leaf.marko_0");
 	_resume_branch($scope0_id);
 });
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let show = false;
-	_html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=s>S</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1", "__tests__/template.marko:5:1"), _html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=s>S</button>${_el_resume($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();

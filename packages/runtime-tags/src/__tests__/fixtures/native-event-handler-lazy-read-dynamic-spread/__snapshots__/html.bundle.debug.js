@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let enabled = true;
 	let count = 0;
 	let log = "";
-	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}<button class=bump>bump</button>${_el_resume($scope0_id, "#button/1")}<button class=a${_attrs_partial({ onClick: enabled && _resume(() => {
+	_html_opens("__tests__/template.marko:7:1", "__tests__/template.marko:8:1", "__tests__/template.marko:9:1", "__tests__/template.marko:10:1", "__tests__/template.marko:12:1", "__tests__/template.marko:13:1"), _html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}<button class=bump>bump</button>${_el_resume($scope0_id, "#button/1")}<button class=a${_attrs_partial({ onClick: enabled && _resume(() => {
 		log = `${log}a(${count})`;
 	}, "__tests__/template.marko_0/anonymous", $scope0_id) }, { class: 1 }, "#button/2", $scope0_id, "button")}>a</button>${_el_resume($scope0_id, "#button/2")}<button class=b${_attrs_partial(enabled && { onClick: _resume(function() {
 		log = `${log}b(${count})`;

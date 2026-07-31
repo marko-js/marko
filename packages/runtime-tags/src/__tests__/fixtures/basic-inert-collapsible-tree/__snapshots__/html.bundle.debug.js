@@ -2,12 +2,12 @@
 const $content = (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_comments = _serialize_guard($scope0_reason, 1), $sg__input_comments__OR__input_path = _serialize_guard($scope0_reason, 0), $si__input_comments = _serialize_if($scope0_reason, 1), $si__input_comments__OR__input_path = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html("<ul>");
+	_html_opens("__tests__/tags/comments.marko:1:1"), _html("<ul>");
 	_for_of(input.comments, (comment, i) => {
 		const $scope1_id = _scope_id();
 		const id = `${input.path || "c"}-${i}`;
 		let open = true;
-		_html(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escape(comment.text)}${_el_resume($scope1_id, "#text/1", $sg__input_comments)}</span><button>${open ? "[-]" : "[+]"}${_el_resume($scope1_id, "#text/3")}</button>${_el_resume($scope1_id, "#button/2")}`);
+		_html_opens("__tests__/tags/comments.marko:5:5", "__tests__/tags/comments.marko:6:7", "__tests__/tags/comments.marko:7:7"), _html(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escape(comment.text)}${_el_resume($scope1_id, "#text/1", $sg__input_comments)}</span><button>${open ? "[-]" : "[+]"}${_el_resume($scope1_id, "#text/3")}</button>${_el_resume($scope1_id, "#button/2")}`);
 		_if(() => {
 			if (comment.comments) {
 				const $scope2_id = _scope_id();

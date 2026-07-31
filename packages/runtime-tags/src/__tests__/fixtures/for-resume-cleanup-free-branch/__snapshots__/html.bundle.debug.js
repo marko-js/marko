@@ -5,7 +5,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	const { count } = input;
 	_for_to(count, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>item ${_escape(i)}</li>`);
+		_html_opens("__tests__/tags/list.marko:3:3"), _html(`<li>item ${_escape(i)}</li>`);
 		$si__input_count && writeScope($scope1_id, {}, "__tests__/tags/list.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_count, $sg__input_count, $sg__input_count, 0, 1);
 	$si__input_count && writeScope($scope0_id, {}, "__tests__/tags/list.marko", 0);
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let count = 2;
-	_html(`<button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=c>C</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html_opens("__tests__/template.marko:3:1", "__tests__/template.marko:4:1"), _html(`<button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=c>C</button>${_el_resume($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();

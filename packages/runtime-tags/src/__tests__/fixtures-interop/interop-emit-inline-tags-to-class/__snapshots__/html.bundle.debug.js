@@ -27,8 +27,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Reset");
-	}, $scope0_id), 0, 0);
-	_html(`<div id=tags-api>${_escape(msg)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	}, $scope0_id), 0, 0, "__tests__/template.marko:2:1");
+	_html_opens("__tests__/template.marko:5:1"), _html(`<div id=tags-api>${_escape(msg)}${_el_resume($scope0_id, "#text/1")}</div>`);
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

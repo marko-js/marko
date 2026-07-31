@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let state = input.value;
 	let otherState = input["value"];
 	let thirdState = input.value;
-	_html(`<button>${_escape(input.value)}${_el_resume($scope0_id, "#text/1", $sg__input_value)}|<!>${_escape(state)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}<button>${_escape(input.value)}${_el_resume($scope0_id, "#text/4", $sg__input_value)}|<!>${_escape(otherState)}${_el_resume($scope0_id, "#text/5")}</button>${_el_resume($scope0_id, "#button/3")}<button>${_escape(input.value)}${_el_resume($scope0_id, "#text/7", $sg__input_value)}|<!>${_escape(thirdState)}${_el_resume($scope0_id, "#text/8")}</button>${_el_resume($scope0_id, "#button/6")}`);
+	_html_opens("__tests__/tags/child.marko:2:1", "__tests__/tags/child.marko:7:1", "__tests__/tags/child.marko:12:1"), _html(`<button>${_escape(input.value)}${_el_resume($scope0_id, "#text/1", $sg__input_value)}|<!>${_escape(state)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}<button>${_escape(input.value)}${_el_resume($scope0_id, "#text/4", $sg__input_value)}|<!>${_escape(otherState)}${_el_resume($scope0_id, "#text/5")}</button>${_el_resume($scope0_id, "#button/3")}<button>${_escape(input.value)}${_el_resume($scope0_id, "#text/7", $sg__input_value)}|<!>${_escape(thirdState)}${_el_resume($scope0_id, "#text/8")}</button>${_el_resume($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	writeScope($scope0_id, {
 		input_value: _serialize_if($scope0_reason, 1) && input.value,

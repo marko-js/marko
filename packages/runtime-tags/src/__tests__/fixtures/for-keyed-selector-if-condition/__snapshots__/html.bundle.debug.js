@@ -17,19 +17,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: "c"
 		}
 	];
-	_html("<ul>");
+	_html_opens("__tests__/template.marko:3:1"), _html("<ul>");
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html("<li>");
+		_html_opens("__tests__/template.marko:5:5"), _html("<li>");
 		_if(() => {
 			if (selected === row.id) {
 				const $scope2_id = _scope_id();
-				_html("<strong>*</strong>");
+				_html_opens("__tests__/template.marko:7:9"), _html("<strong>*</strong>");
 				writeScope($scope2_id, {}, "__tests__/template.marko", "6:8");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
-		_html(`<button class=select>${_escape(row.label)}</button>${_el_resume($scope1_id, "#button/1")}</li>`);
+		_html_opens("__tests__/template.marko:9:7"), _html(`<button class=select>${_escape(row.label)}</button>${_el_resume($scope1_id, "#button/1")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			row_id: row?.id,

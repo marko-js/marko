@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { name, write } = input;
-	_html(`<div>${_escape(name)}${_el_resume($scope0_id, "#text/0", $sg__input_name)}</div><span>${_escape(name)}${_el_resume($scope0_id, "#text/1", $sg__input_name)}</span><p>${_escape(name)}${_el_resume($scope0_id, "#text/2", $sg__input_name)}</p>`);
+	_html_opens("__tests__/tags/child.marko:2:1", "__tests__/tags/child.marko:3:1", "__tests__/tags/child.marko:4:1"), _html(`<div>${_escape(name)}${_el_resume($scope0_id, "#text/0", $sg__input_name)}</div><span>${_escape(name)}${_el_resume($scope0_id, "#text/1", $sg__input_name)}</span><p>${_escape(name)}${_el_resume($scope0_id, "#text/2", $sg__input_name)}</p>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_name_write");
 	writeScope($scope0_id, {
 		name,
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const write = _resume(function(msg) {
 		((el) => el())(_el_read_error).innerHTML += "\n" + msg;
 	}, "__tests__/template.marko_0/write", $scope0_id);
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/0")}<div></div>${_el_resume($scope0_id, "#div/1")}`);
+	_html_opens("__tests__/template.marko:2:1", "__tests__/template.marko:4:1"), _html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/0")}<div></div>${_el_resume($scope0_id, "#div/1")}`);
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_set_serialize_reason(1);

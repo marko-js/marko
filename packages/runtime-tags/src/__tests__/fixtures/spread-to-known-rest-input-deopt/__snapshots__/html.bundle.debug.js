@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: _class, ...rest } = input;
-	_html(" <span");
+	_html_opens("__tests__/tags/child.marko:2:1"), _html(" <span");
 	_attrs_content({
 		class: _class,
 		...rest

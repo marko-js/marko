@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const { onClick, ...rest } = input;
-	_html("<button");
+	_html_opens("__tests__/template.marko:2:1"), _html("<button");
 	_attrs_content({
 		onClick: _resume(function(_, el) {
 			el.textContent = "clicked";

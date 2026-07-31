@@ -2,8 +2,8 @@
 var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html("<div>");
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_html_opens("__tests__/tags/custom-tag.marko:1:1"), _html("<div>");
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0), "__tests__/tags/custom-tag.marko:1:6");
 	_html("</div>");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
 });
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $c__closures = new Set();
 	const b = 2;
 	let c = 3;
-	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html_opens("__tests__/template.marko:5:1"), _html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
 	custom_tag_default({ content: _content("__tests__/template.marko_1_content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($c__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
 		_resume_branch($scope1_id);
 	}) });
-	_html("<div>");
+	_html_opens("__tests__/template.marko:9:1"), _html("<div>");
 	if (Math.random()) {
 		const $scope2_id = _scope_id();
 		if (Math.random()) {
