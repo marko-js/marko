@@ -1,5 +1,4 @@
 // template.marko
-_enable_controllable_input();
 const $v = /*@__PURE__*/ _let(3, ($scope) => {
 	_attr_input_value($scope, "b", $scope.d, $valueChange($scope));
 	_text($scope.c, $scope.d);

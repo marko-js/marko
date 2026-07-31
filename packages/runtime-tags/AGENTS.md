@@ -64,8 +64,12 @@ export default {
 - **`_name` exports** are runtime API called by generated code — public to codegen, not to app authors. Renames must update `callRuntime` call sites and `pureDOMFunctions`.
 - **`MARKO_DEBUG`** gates all validation, descriptive names, and detailed error messages (`if (MARKO_DEBUG) { ... }`); builds strip these. It is `true` in tests via the `~ts` register hook. Runtime error helpers live in `common/errors.ts`.
 - **`.debug.ts` pairs**: source imports the `.debug` module (e.g. `common/types.ts` imports `./accessor.debug`); the production build remaps `X.debug` → `X.ts`. Both files must export identical member names — mirror any accessor enum change in `accessor.ts` **and** `accessor.debug.ts` (the other pair is `html/inlined-runtimes[.debug].ts`).
-- **Self-modifying functions**: features like `_enable_catch` or `enableBranches` reassign module-level bindings on first call so unused features cost nothing. Preserve this pattern; don't "simplify" it away.
-- Named/top-level functions use `function` declarations; arrows only for closures that must capture. Extract non-capturing closures into named file-level functions.
+- **Optional feature enablement** (tree-shakable runtime API) has two patterns:
+  - **`src/{dom,html}/**/*.feat.ts`** are compiler-injected side-effect modules for behavior a referenced import cannot keep alive (catch handling, controllable registration). The build emits them as extra entries of their runtime's bundle — a shared chunk keeps one state instance, so they import runtime internals directly. A feature body is direct registry/property assignments (plus at most one installer call, e.g. `installCatch`); the compiler emits it once per program via `importRuntimeFeature` (typed by `DOMRuntimeFeature`).
+  - **Definition-site wrappers** gate behavior on a helper's own retention: `export const _if = /*@__PURE__*/ withBranches(...)`.
+  - Latches are `let`s written only by their enabler (`branchesEnabled`, `catchEnabled`) so bundlers fold latch and guarded code away together; object-property flags defeat that analysis and re-inflate resume bundles.
+  - Never statically import control-flow or a `.feat` module from a main-graph module (queue, resume, load) — it fuses the feature into every bundle.
+- Named/top-level functions use `function` declarations; arrows only for closures that must capture or for wrapped feature helpers (smaller output). Extract non-capturing closures into named file-level functions.
 
 ## Testing
 

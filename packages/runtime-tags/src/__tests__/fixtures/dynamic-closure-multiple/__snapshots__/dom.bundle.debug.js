@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<button></button><!><!>";
 const $walks = " b%c";
-_enable_catch();
 const $if_content__a = /*@__PURE__*/ _closure_get("a", ($scope) => _text($scope["#text/0"], $scope._._.a), ($scope) => $scope._._);
 const $if_content__setup = ($scope) => {
 	$if_content__a($scope);

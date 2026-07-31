@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<button>inc</button><input><input><input>";
 const $walks = " b b b b";
-_enable_controllable_input();
 const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scope) => {
 	_attrs_script($scope, "#input/1");
 	_attrs_script($scope, "#input/2");

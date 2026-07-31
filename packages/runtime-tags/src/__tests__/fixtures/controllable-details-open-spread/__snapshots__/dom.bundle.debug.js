@@ -2,7 +2,6 @@
 const $template$1 = "<details><summary>s</summary></details>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-_enable_controllable_open();
 const $input__script = _script("__tests__/tags/my-details.marko_0_input", ($scope) => _attrs_script($scope, "#details/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs($scope, "#details/0", $scope.input, _controllable_open);

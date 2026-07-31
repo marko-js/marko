@@ -2,6 +2,7 @@ import { assertValidLoopKey, assertValidTagName } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import {
   decodeAccessor,
+  withBranches,
   isPromise,
   normalizeDynamicRenderer,
 } from "../common/helpers";
@@ -21,8 +22,8 @@ import {
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
-  _enable_catch,
   caughtError,
+  runEffects,
   pendingEffects,
   type PendingRender,
   placeholderShown,
@@ -32,7 +33,6 @@ import {
   queuePendingRender,
   queueRender,
   run,
-  runEffects,
 } from "./queue";
 import {
   _content,
@@ -42,7 +42,7 @@ import {
   setupBranch,
   type SetupFn,
 } from "./renderer";
-import { _resume, enableBranches } from "./resume";
+import { _resume } from "./resume";
 import {
   collectScopes,
   destroyBranch,
@@ -61,7 +61,6 @@ export function _await_promise(
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  _enable_catch();
   const resolveAwait = (
     scope: Scope,
     referenceNode: ChildNode,
@@ -409,121 +408,127 @@ export function renderCatch(scope: Scope, error: unknown) {
   }
 }
 
-export function _if(
-  nodeAccessor: EncodedAccessor,
-  ...branchesArgs: (string | SetupFn | 0)[]
-) {
-  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
-  const branchAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
-  const branches: Renderer[] = [];
-  let i = 0;
-  while (i < branchesArgs.length) {
-    branches.push(
-      _content(
-        "",
-        branchesArgs[i++] as string | 0 | undefined,
-        branchesArgs[i++] as string | 0 | undefined,
-        branchesArgs[i++] as SetupFn | 0 | undefined,
-      )(),
-    );
-  }
-  enableBranches();
-  return (scope: Scope, newBranch: number) => {
-    // Resume elides a renderer index of 0, so a resumed scope's absent index
-    // means 0 -- gated on having branch scopes so a fresh scope still renders.
-    if (
-      newBranch !==
-      ((scope[branchAccessor] as number) ??
-        (scope[AccessorPrefix.BranchScopes + nodeAccessor] && 0))
-    ) {
-      setConditionalRenderer(
-        scope,
-        nodeAccessor as string,
-        branches[(scope[branchAccessor] = newBranch)],
-        createAndSetupBranch,
+export const _if = /*@__PURE__*/ withBranches(
+  (
+    nodeAccessor: EncodedAccessor,
+    ...branchesArgs: (string | SetupFn | 0)[]
+  ) => {
+    if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+    const branchAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+    const branches: Renderer[] = [];
+    let i = 0;
+    while (i < branchesArgs.length) {
+      branches.push(
+        _content(
+          "",
+          branchesArgs[i++] as string | 0 | undefined,
+          branchesArgs[i++] as string | 0 | undefined,
+          branchesArgs[i++] as SetupFn | 0 | undefined,
+        )(),
       );
     }
-  };
-}
+    return (scope: Scope, newBranch: number) => {
+      // Resume elides a renderer index of 0, so a resumed scope's absent index
+      // means 0 -- gated on having branch scopes so a fresh scope still renders.
+      if (
+        newBranch !==
+        ((scope[branchAccessor] as number) ??
+          (scope[AccessorPrefix.BranchScopes + nodeAccessor] && 0))
+      ) {
+        setConditionalRenderer(
+          scope,
+          nodeAccessor as string,
+          branches[(scope[branchAccessor] = newBranch)],
+          createAndSetupBranch,
+        );
+      }
+    };
+  },
+);
 
 // The `<show>` body always exists, so this signal never renders; it only moves
 // the body's range in/out of a detached fragment (SSR hides it in a `<t hidden>` wrapper).
-export function _show(
-  nodeAccessor: EncodedAccessor,
-  startNodeAccessor?: EncodedAccessor,
-  endNodeAccessor?: EncodedAccessor,
-) {
-  if (!MARKO_DEBUG) {
-    nodeAccessor = decodeAccessor(nodeAccessor as number);
-    if (startNodeAccessor !== undefined) {
-      startNodeAccessor = decodeAccessor(startNodeAccessor as number);
-    }
-    if (endNodeAccessor !== undefined) {
-      endNodeAccessor = decodeAccessor(endNodeAccessor as number);
-    }
-  }
-  const rangeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  enableBranches();
-  return (scope: Scope, display: unknown) => {
-    // The reference node is the parent element when the `<show>` is its only
-    // child, otherwise a marker node just after the body.
-    const referenceNode = scope[nodeAccessor] as ChildNode;
-    const onlyChild = referenceNode.nodeType === NodeType.Element;
-    const parentNode = onlyChild
-      ? (referenceNode as unknown as ParentNode & Element)
-      : referenceNode.parentNode!;
-    let range = scope[rangeAccessor] as BranchScope | undefined;
-
-    if (!range) {
-      // Client render: derive the range from the template's static shape.
-      range = scope[rangeAccessor] = {} as BranchScope;
-      range[AccessorProp.StartNode] = onlyChild
-        ? parentNode.firstChild!
-        : (scope[startNodeAccessor as Accessor] as ChildNode);
-      range[AccessorProp.EndNode] = onlyChild
-        ? parentNode.lastChild!
-        : endNodeAccessor === undefined
-          ? // A single static node body bounds itself.
-            referenceNode.previousSibling!
-          : (scope[endNodeAccessor as Accessor] as ChildNode);
-    }
-
-    let startNode = range[AccessorProp.StartNode];
-    if (
-      range[AccessorProp.Id] &&
-      startNode === range[AccessorProp.EndNode] &&
-      (startNode as Partial<Element>).tagName === "T"
-    ) {
-      // First update after resuming hidden: dissolve the `<t>` wrapper, leaving its
-      // children. Replacing it with a plain holder ensures a body `<t>` is never mistaken for it.
-      const wrapper = startNode as Element;
-      if (!wrapper.firstChild) wrapper.appendChild(new Text());
-      range = scope[rangeAccessor] = {} as BranchScope;
-      range[AccessorProp.StartNode] = startNode = wrapper.firstChild!;
-      range[AccessorProp.EndNode] = wrapper.lastChild!;
-      wrapper.replaceWith(...wrapper.childNodes);
-    }
-
-    // An only child owns every node in the parent, so the parent being empty is
-    // what says it is hidden; its cached marker may have been replaced by the body.
-    const inDom = onlyChild
-      ? !!parentNode.firstChild
-      : startNode.parentNode === parentNode;
-    if (display) {
-      if (!inDom) {
-        insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode);
+export const _show = /*@__PURE__*/ withBranches(
+  (
+    nodeAccessor: EncodedAccessor,
+    startNodeAccessor?: EncodedAccessor,
+    endNodeAccessor?: EncodedAccessor,
+  ) => {
+    if (!MARKO_DEBUG) {
+      nodeAccessor = decodeAccessor(nodeAccessor as number);
+      if (startNodeAccessor !== undefined) {
+        startNodeAccessor = decodeAccessor(startNodeAccessor as number);
       }
-    } else if (inDom) {
-      if (onlyChild) {
-        // An only child has no markers; body control flow can replace the
-        // parent's first and last child, so read them at each hide.
-        range[AccessorProp.StartNode] = parentNode.firstChild!;
-        range[AccessorProp.EndNode] = parentNode.lastChild!;
+      if (endNodeAccessor !== undefined) {
+        endNodeAccessor = decodeAccessor(endNodeAccessor as number);
       }
-      tempDetachBranch(range);
     }
-  };
-}
+    const rangeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+    return (scope: Scope, display: unknown) => {
+      // The reference node is the parent element when the `<show>` is its only
+      // child, otherwise a marker node just after the body.
+      const referenceNode = scope[nodeAccessor] as ChildNode;
+      const onlyChild = referenceNode.nodeType === NodeType.Element;
+      const parentNode = onlyChild
+        ? (referenceNode as unknown as ParentNode & Element)
+        : referenceNode.parentNode!;
+      let range = scope[rangeAccessor] as BranchScope | undefined;
+
+      if (!range) {
+        // Client render: derive the range from the template's static shape.
+        range = scope[rangeAccessor] = {} as BranchScope;
+        range[AccessorProp.StartNode] = onlyChild
+          ? parentNode.firstChild!
+          : (scope[startNodeAccessor as Accessor] as ChildNode);
+        range[AccessorProp.EndNode] = onlyChild
+          ? parentNode.lastChild!
+          : endNodeAccessor === undefined
+            ? // A single static node body bounds itself.
+              referenceNode.previousSibling!
+            : (scope[endNodeAccessor as Accessor] as ChildNode);
+      }
+
+      let startNode = range[AccessorProp.StartNode];
+      if (
+        range[AccessorProp.Id] &&
+        startNode === range[AccessorProp.EndNode] &&
+        (startNode as Partial<Element>).tagName === "T"
+      ) {
+        // First update after resuming hidden: dissolve the `<t>` wrapper, leaving its
+        // children. Replacing it with a plain holder ensures a body `<t>` is never mistaken for it.
+        const wrapper = startNode as Element;
+        if (!wrapper.firstChild) wrapper.appendChild(new Text());
+        range = scope[rangeAccessor] = {} as BranchScope;
+        range[AccessorProp.StartNode] = startNode = wrapper.firstChild!;
+        range[AccessorProp.EndNode] = wrapper.lastChild!;
+        wrapper.replaceWith(...wrapper.childNodes);
+      }
+
+      // An only child owns every node in the parent, so the parent being empty is
+      // what says it is hidden; its cached marker may have been replaced by the body.
+      const inDom = onlyChild
+        ? !!parentNode.firstChild
+        : startNode.parentNode === parentNode;
+      if (display) {
+        if (!inDom) {
+          insertBranchBefore(
+            range,
+            parentNode,
+            onlyChild ? null : referenceNode,
+          );
+        }
+      } else if (inDom) {
+        if (onlyChild) {
+          // An only child has no markers; body control flow can replace the
+          // parent's first and last child, so read them at each hide.
+          range[AccessorProp.StartNode] = parentNode.firstChild!;
+          range[AccessorProp.EndNode] = parentNode.lastChild!;
+        }
+        tempDetachBranch(range);
+      }
+    };
+  },
+);
 
 export function patchDynamicTag(
   fn: <T extends typeof _dynamic_tag>(cond: T) => T,
@@ -531,156 +536,159 @@ export function patchDynamicTag(
   // Injection point for compat layer.
   _dynamic_tag = fn(_dynamic_tag);
 }
-export let _dynamic_tag = function dynamicTag(
-  nodeAccessor: EncodedAccessor,
-  getContent?: ((scope: Scope) => Renderer) | 0,
-  getTagVar?: (() => Signal<unknown>) | 0,
-  inputIsArgs?: 1,
-): Signal<Renderer | string | undefined> {
-  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
-  const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
-  enableBranches();
-  return (scope, newRenderer, getInput?: () => any) => {
-    const normalizedRenderer = normalizeDynamicRenderer<Renderer>(newRenderer);
-    if (
-      scope[rendererAccessor] !==
-        (scope[rendererAccessor] =
-          (normalizedRenderer as Renderer | undefined)?.[RendererProp.Id] ||
-          normalizedRenderer) ||
-      (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
-    ) {
-      setConditionalRenderer(
-        scope,
-        nodeAccessor as string,
-        normalizedRenderer || (getContent ? getContent(scope) : undefined),
-        createBranchWithTagNameOrRenderer,
-      );
+export let _dynamic_tag = /*@__PURE__*/ withBranches(
+  (
+    nodeAccessor: EncodedAccessor,
+    getContent?: ((scope: Scope) => Renderer) | 0,
+    getTagVar?: (() => Signal<unknown>) | 0,
+    inputIsArgs?: 1,
+  ): Signal<Renderer | string | undefined> => {
+    if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+    const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+    const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+    return (scope, newRenderer, getInput?: () => any) => {
+      const normalizedRenderer =
+        normalizeDynamicRenderer<Renderer>(newRenderer);
+      if (
+        scope[rendererAccessor] !==
+          (scope[rendererAccessor] =
+            (normalizedRenderer as Renderer | undefined)?.[RendererProp.Id] ||
+            normalizedRenderer) ||
+        (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
+      ) {
+        setConditionalRenderer(
+          scope,
+          nodeAccessor as string,
+          normalizedRenderer || (getContent ? getContent(scope) : undefined),
+          createBranchWithTagNameOrRenderer,
+        );
 
-      if (getTagVar) {
-        scope[childScopeAccessor][AccessorProp.TagVariable] = (
-          value: unknown,
-        ) => getTagVar()(scope, value);
-      }
+        if (getTagVar) {
+          scope[childScopeAccessor][AccessorProp.TagVariable] = (
+            value: unknown,
+          ) => getTagVar()(scope, value);
+        }
 
-      if (typeof normalizedRenderer === "string") {
-        if (getContent) {
-          const content = getContent(scope);
-          setConditionalRenderer(
+        if (typeof normalizedRenderer === "string") {
+          if (getContent) {
+            const content = getContent(scope);
+            setConditionalRenderer(
+              scope[childScopeAccessor],
+              MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a",
+              content,
+              createAndSetupBranch,
+            );
+            if (content[RendererProp.Accessor]) {
+              subscribeToScopeSet(
+                content[RendererProp.Owner]!,
+                content[RendererProp.Accessor],
+                scope[childScopeAccessor][
+                  AccessorPrefix.BranchScopes +
+                    (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
+                ],
+              );
+            }
+          }
+        } else if (normalizedRenderer?.[RendererProp.Accessor]) {
+          subscribeToScopeSet(
+            normalizedRenderer[RendererProp.Owner]!,
+            normalizedRenderer[RendererProp.Accessor],
             scope[childScopeAccessor],
-            MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a",
-            content,
-            createAndSetupBranch,
           );
-          if (content[RendererProp.Accessor]) {
-            subscribeToScopeSet(
-              content[RendererProp.Owner]!,
-              content[RendererProp.Accessor],
-              scope[childScopeAccessor][
-                AccessorPrefix.BranchScopes +
-                  (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
-              ],
-            );
-          }
         }
-      } else if (normalizedRenderer?.[RendererProp.Accessor]) {
-        subscribeToScopeSet(
-          normalizedRenderer[RendererProp.Owner]!,
-          normalizedRenderer[RendererProp.Accessor],
-          scope[childScopeAccessor],
-        );
       }
-    }
 
-    if (normalizedRenderer) {
-      const childScope = scope[childScopeAccessor] as Scope;
-      const args = getInput?.();
-      if (typeof normalizedRenderer === "string") {
-        const nodeAccessor = MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a";
-        (getContent ? _attrs : _attrs_content)(
-          childScope,
-          nodeAccessor,
-          (inputIsArgs ? args[0] : args) || {},
-          controllableRenders[(childScope[nodeAccessor] as Element).tagName],
-        );
-
-        if (
-          childScope[AccessorPrefix.EventAttributes + nodeAccessor] ||
-          childScope[AccessorPrefix.ControlledHandler + nodeAccessor]
-        ) {
-          queueEffect(childScope, dynamicTagScript);
-        }
-      } else {
-        for (const accessor in normalizedRenderer[RendererProp.LocalClosures]) {
-          normalizedRenderer[RendererProp.LocalClosures]![accessor](
+      if (normalizedRenderer) {
+        const childScope = scope[childScopeAccessor] as Scope;
+        const args = getInput?.();
+        if (typeof normalizedRenderer === "string") {
+          const nodeAccessor = MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a";
+          (getContent ? _attrs : _attrs_content)(
             childScope,
-            normalizedRenderer[RendererProp.LocalClosureValues]![accessor],
+            nodeAccessor,
+            (inputIsArgs ? args[0] : args) || {},
+            controllableRenders[(childScope[nodeAccessor] as Element).tagName],
           );
-        }
 
-        if (normalizedRenderer[RendererProp.Params]) {
-          if (inputIsArgs) {
-            normalizedRenderer[RendererProp.Params]!(
+          if (
+            childScope[AccessorPrefix.EventAttributes + nodeAccessor] ||
+            childScope[AccessorPrefix.ControlledHandler + nodeAccessor]
+          ) {
+            queueEffect(childScope, dynamicTagScript);
+          }
+        } else {
+          for (const accessor in normalizedRenderer[
+            RendererProp.LocalClosures
+          ]) {
+            normalizedRenderer[RendererProp.LocalClosures]![accessor](
               childScope,
-              (normalizedRenderer as any)._ ? args[0] : args,
+              normalizedRenderer[RendererProp.LocalClosureValues]![accessor],
             );
-          } else {
-            const inputWithContent = getContent
-              ? { ...args, content: getContent(scope) }
-              : args || {};
-            normalizedRenderer[RendererProp.Params]!(
-              childScope,
-              (normalizedRenderer as any)._
-                ? inputWithContent
-                : [inputWithContent],
-            );
+          }
+
+          if (normalizedRenderer[RendererProp.Params]) {
+            if (inputIsArgs) {
+              normalizedRenderer[RendererProp.Params]!(
+                childScope,
+                (normalizedRenderer as any)._ ? args[0] : args,
+              );
+            } else {
+              const inputWithContent = getContent
+                ? { ...args, content: getContent(scope) }
+                : args || {};
+              normalizedRenderer[RendererProp.Params]!(
+                childScope,
+                (normalizedRenderer as any)._
+                  ? inputWithContent
+                  : [inputWithContent],
+              );
+            }
           }
         }
       }
-    }
-  };
-};
+    };
+  },
+);
 
 // Specialized `_dynamic_tag` for a content passthrough: the caller guarantees a
 // normalized content `Renderer` (or undefined) rendered with no input or parameters.
-export function _dynamic_tag_content(
-  nodeAccessor: EncodedAccessor,
-): Signal<Renderer | undefined> {
-  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
-  const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
-  enableBranches();
-  return (scope, renderer) => {
-    if (
-      scope[rendererAccessor] !==
-      (scope[rendererAccessor] = renderer?.[RendererProp.Id] || renderer)
-    ) {
-      setConditionalRenderer(
-        scope,
-        nodeAccessor as string,
-        renderer,
-        createAndSetupBranch,
-      );
-
-      if (renderer?.[RendererProp.Accessor]) {
-        subscribeToScopeSet(
-          renderer[RendererProp.Owner]!,
-          renderer[RendererProp.Accessor],
-          scope[childScopeAccessor],
+export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
+  (nodeAccessor: EncodedAccessor): Signal<Renderer | undefined> => {
+    if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+    const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+    const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+    return (scope, renderer) => {
+      if (
+        scope[rendererAccessor] !==
+        (scope[rendererAccessor] = renderer?.[RendererProp.Id] || renderer)
+      ) {
+        setConditionalRenderer(
+          scope,
+          nodeAccessor as string,
+          renderer,
+          createAndSetupBranch,
         );
-      }
-    }
 
-    if (renderer) {
-      for (const accessor in renderer[RendererProp.LocalClosures]) {
-        renderer[RendererProp.LocalClosures]![accessor](
-          scope[childScopeAccessor] as Scope,
-          renderer[RendererProp.LocalClosureValues]![accessor],
-        );
+        if (renderer?.[RendererProp.Accessor]) {
+          subscribeToScopeSet(
+            renderer[RendererProp.Owner]!,
+            renderer[RendererProp.Accessor],
+            scope[childScopeAccessor],
+          );
+        }
       }
-    }
-  };
-}
+
+      if (renderer) {
+        for (const accessor in renderer[RendererProp.LocalClosures]) {
+          renderer[RendererProp.LocalClosures]![accessor](
+            scope[childScopeAccessor] as Scope,
+            renderer[RendererProp.LocalClosureValues]![accessor],
+          );
+        }
+      }
+    };
+  },
+);
 
 export function _resume_dynamic_tag() {
   _resume(DYNAMIC_TAG_SCRIPT_REGISTER_ID, dynamicTagScript);
@@ -745,7 +753,205 @@ export function setConditionalRenderer<T>(
   }
 }
 
-export const _for_of = loop<
+const loop = /*@__PURE__*/ withBranches(
+  <T extends unknown[] = unknown[]>(
+    forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
+  ) =>
+    (
+      nodeAccessor: EncodedAccessor,
+      template?: string | 0,
+      walks?: string | 0,
+      setup?: SetupFn | 0,
+      params?: Signal<unknown>,
+    ) => {
+      if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+      const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+      const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
+      const renderer = _content("", template, walks, setup)();
+      return (scope: Scope, value: T) => {
+        const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+        const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
+        const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
+        scope[keyedScopesAccessor] = null;
+        const oldLen = oldScopes.length;
+        const parentNode = (
+          referenceNode.nodeType > NodeType.Element
+            ? referenceNode.parentNode ||
+              oldScopes[0]?.[AccessorProp.StartNode].parentNode
+            : referenceNode
+        ) as Element;
+        let oldScopesByKey: Map<unknown, BranchScope> | undefined;
+        let hasPotentialMoves: boolean | undefined;
+        let start = 0;
+
+        if (MARKO_DEBUG) {
+          // eslint-disable-next-line no-var
+          var seenKeys = new Set<unknown>();
+        }
+
+        forEach(value, (key, args) => {
+          if (MARKO_DEBUG) {
+            assertValidLoopKey(key, seenKeys);
+          }
+
+          const i = newScopes.length;
+          const oldScope = oldScopes[i];
+          let branch =
+            oldLen &&
+            (oldScopesByKey || key !== (oldScope?.[AccessorProp.LoopKey] ?? i)
+              ? (oldScopesByKey ||= oldScopes.reduce(
+                  (map, scope, j) =>
+                    j < i
+                      ? map
+                      : ((scope[AccessorProp.LoopIndex] = j),
+                        map.set(scope[AccessorProp.LoopKey] ?? j, scope)),
+                  new Map<unknown, BranchScope>(),
+                )).get(key)
+              : oldScope && (start++, oldScope));
+          if (branch) {
+            hasPotentialMoves = true;
+            oldScopesByKey?.delete(key);
+          } else {
+            branch = createAndSetupBranch(
+              scope[AccessorProp.Global],
+              renderer,
+              scope,
+              parentNode,
+            );
+          }
+          branch[AccessorProp.LoopKey] = key;
+          newScopes.push(branch);
+          params?.(branch, args);
+        });
+
+        const newLen = newScopes.length;
+        const hasSiblings = referenceNode !== parentNode;
+        let afterReference: null | Node = null;
+        let oldEnd = oldLen - 1;
+        let newEnd = newLen - 1;
+
+        if (hasSiblings) {
+          if (oldLen) {
+            afterReference =
+              oldScopes[oldEnd][AccessorProp.EndNode].nextSibling;
+            if (!newLen) {
+              parentNode.insertBefore(referenceNode, afterReference);
+            }
+          } else if (newLen) {
+            afterReference = referenceNode.nextSibling;
+            referenceNode.remove();
+          }
+        }
+
+        if (!hasPotentialMoves) {
+          // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
+          if (oldLen) {
+            oldScopes.forEach(
+              hasSiblings ? removeAndDestroyBranch : destroyBranch,
+            );
+            if (!hasSiblings) {
+              parentNode.textContent = "";
+            }
+          }
+
+          for (const newScope of newScopes) {
+            insertBranchBefore(newScope, parentNode, afterReference);
+          }
+
+          return;
+        }
+
+        if (oldScopesByKey) {
+          oldScopesByKey.forEach(removeAndDestroyBranch);
+        } else {
+          for (let i = newLen; i < oldLen; i++) {
+            removeAndDestroyBranch(oldScopes[i]);
+          }
+        }
+
+        // Skip common suffix
+        while (
+          oldEnd >= start &&
+          newEnd >= start &&
+          oldScopes[oldEnd] === newScopes[newEnd]
+        ) {
+          oldEnd--;
+          newEnd--;
+        }
+
+        // Update afterReference to account for common suffix
+        if (oldEnd + 1 < oldLen) {
+          afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
+        }
+
+        if (start > oldEnd || start > newEnd) {
+          for (let i = start; i <= newEnd; i++) {
+            insertBranchBefore(newScopes[i], parentNode, afterReference);
+          }
+          return;
+        }
+
+        // Handle mixed new/moves
+        const diffLen = newEnd - start + 1;
+        const sources = new Array<number>(diffLen);
+        const pred = new Array<number>(diffLen);
+        const tails: number[] = [];
+        let tail: number = -1;
+        let lo: number;
+        let hi: number;
+        let mid: number;
+
+        for (let i = diffLen; i--;) {
+          sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
+        }
+
+        for (let i = 0; i < diffLen; i++) {
+          if (~sources[i]) {
+            if (tail < 0 || sources[tails[tail]] < sources[i]) {
+              if (~tail) pred[i] = tails[tail];
+              tails[++tail] = i;
+            } else {
+              lo = 0;
+              hi = tail;
+              while (lo < hi) {
+                mid = ((lo + hi) / 2) | 0;
+                if (sources[tails[mid]] < sources[i]) lo = mid + 1;
+                else hi = mid;
+              }
+              if (sources[i] < sources[tails[lo]]) {
+                if (lo > 0) pred[i] = tails[lo - 1];
+                tails[lo] = i;
+              }
+            }
+          }
+        }
+
+        // Backtrack to build LIS indices (reuse tails array)
+        hi = tails[tail];
+        lo = tail + 1;
+        while (lo-- > 0) {
+          tails[lo] = hi;
+          hi = pred[hi];
+        }
+
+        for (let i = diffLen; i--;) {
+          if (~tail && i === tails[tail]) {
+            tail--;
+          } else {
+            insertBranchBefore(
+              newScopes[start + i],
+              parentNode,
+              afterReference,
+            );
+          }
+
+          afterReference = newScopes[start + i][AccessorProp.StartNode];
+        }
+      };
+    },
+);
+
+export const _for_of = /*@__PURE__*/ loop<
   [all: unknown[], by?: (item: unknown, index: number) => unknown]
 >(([all, by = bySecondArg], cb) => {
   if (typeof by === "string") {
@@ -757,217 +963,23 @@ export const _for_of = loop<
   }
 });
 
-export const _for_in = loop<
+export const _for_in = /*@__PURE__*/ loop<
   [obj: {}, by?: (key: string, v: unknown) => unknown]
 >(([obj, by = byFirstArg], cb) =>
   forIn(obj, (key, value) => cb(by(key, value), [key, value])),
 );
 
-export const _for_to = loop<
+export const _for_to = /*@__PURE__*/ loop<
   [to: number, from: number, step: number, by?: (v: number) => unknown]
 >(([to, from, step, by = byFirstArg], cb) =>
   forTo(to, from, step, (v) => cb(by(v), [v])),
 );
 
-export const _for_until = loop<
+export const _for_until = /*@__PURE__*/ loop<
   [until: number, from: number, step: number, by?: (v: number) => unknown]
 >(([until, from, step, by = byFirstArg], cb) =>
   forUntil(until, from, step, (v) => cb(by(v), [v])),
 );
-
-/* @__NO_SIDE_EFFECTS__ */
-function loop<T extends unknown[] = unknown[]>(
-  forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
-) {
-  return (
-    nodeAccessor: EncodedAccessor,
-    template?: string | 0,
-    walks?: string | 0,
-    setup?: SetupFn | 0,
-    params?: Signal<unknown>,
-  ) => {
-    if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
-    const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-    const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
-    const renderer = _content("", template, walks, setup)();
-    enableBranches();
-    return (scope: Scope, value: T) => {
-      const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
-      const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
-      const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
-      scope[keyedScopesAccessor] = null;
-      const oldLen = oldScopes.length;
-      const parentNode = (
-        referenceNode.nodeType > NodeType.Element
-          ? referenceNode.parentNode ||
-            oldScopes[0]?.[AccessorProp.StartNode].parentNode
-          : referenceNode
-      ) as Element;
-      let oldScopesByKey: Map<unknown, BranchScope> | undefined;
-      let hasPotentialMoves: boolean | undefined;
-      let start = 0;
-
-      if (MARKO_DEBUG) {
-        // eslint-disable-next-line no-var
-        var seenKeys = new Set<unknown>();
-      }
-
-      forEach(value, (key, args) => {
-        if (MARKO_DEBUG) {
-          assertValidLoopKey(key, seenKeys);
-        }
-
-        const i = newScopes.length;
-        const oldScope = oldScopes[i];
-        let branch =
-          oldLen &&
-          (oldScopesByKey || key !== (oldScope?.[AccessorProp.LoopKey] ?? i)
-            ? (oldScopesByKey ||= oldScopes.reduce(
-                (map, scope, j) =>
-                  j < i
-                    ? map
-                    : ((scope[AccessorProp.LoopIndex] = j),
-                      map.set(scope[AccessorProp.LoopKey] ?? j, scope)),
-                new Map<unknown, BranchScope>(),
-              )).get(key)
-            : oldScope && (start++, oldScope));
-        if (branch) {
-          hasPotentialMoves = true;
-          oldScopesByKey?.delete(key);
-        } else {
-          branch = createAndSetupBranch(
-            scope[AccessorProp.Global],
-            renderer,
-            scope,
-            parentNode,
-          );
-        }
-        branch[AccessorProp.LoopKey] = key;
-        newScopes.push(branch);
-        params?.(branch, args);
-      });
-
-      const newLen = newScopes.length;
-      const hasSiblings = referenceNode !== parentNode;
-      let afterReference: null | Node = null;
-      let oldEnd = oldLen - 1;
-      let newEnd = newLen - 1;
-
-      if (hasSiblings) {
-        if (oldLen) {
-          afterReference = oldScopes[oldEnd][AccessorProp.EndNode].nextSibling;
-          if (!newLen) {
-            parentNode.insertBefore(referenceNode, afterReference);
-          }
-        } else if (newLen) {
-          afterReference = referenceNode.nextSibling;
-          referenceNode.remove();
-        }
-      }
-
-      if (!hasPotentialMoves) {
-        // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
-        if (oldLen) {
-          oldScopes.forEach(
-            hasSiblings ? removeAndDestroyBranch : destroyBranch,
-          );
-          if (!hasSiblings) {
-            parentNode.textContent = "";
-          }
-        }
-
-        for (const newScope of newScopes) {
-          insertBranchBefore(newScope, parentNode, afterReference);
-        }
-
-        return;
-      }
-
-      if (oldScopesByKey) {
-        oldScopesByKey.forEach(removeAndDestroyBranch);
-      } else {
-        for (let i = newLen; i < oldLen; i++) {
-          removeAndDestroyBranch(oldScopes[i]);
-        }
-      }
-
-      // Skip common suffix
-      while (
-        oldEnd >= start &&
-        newEnd >= start &&
-        oldScopes[oldEnd] === newScopes[newEnd]
-      ) {
-        oldEnd--;
-        newEnd--;
-      }
-
-      // Update afterReference to account for common suffix
-      if (oldEnd + 1 < oldLen) {
-        afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
-      }
-
-      if (start > oldEnd || start > newEnd) {
-        for (let i = start; i <= newEnd; i++) {
-          insertBranchBefore(newScopes[i], parentNode, afterReference);
-        }
-        return;
-      }
-
-      // Handle mixed new/moves
-      const diffLen = newEnd - start + 1;
-      const sources = new Array<number>(diffLen);
-      const pred = new Array<number>(diffLen);
-      const tails: number[] = [];
-      let tail: number = -1;
-      let lo: number;
-      let hi: number;
-      let mid: number;
-
-      for (let i = diffLen; i--;) {
-        sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
-      }
-
-      for (let i = 0; i < diffLen; i++) {
-        if (~sources[i]) {
-          if (tail < 0 || sources[tails[tail]] < sources[i]) {
-            if (~tail) pred[i] = tails[tail];
-            tails[++tail] = i;
-          } else {
-            lo = 0;
-            hi = tail;
-            while (lo < hi) {
-              mid = ((lo + hi) / 2) | 0;
-              if (sources[tails[mid]] < sources[i]) lo = mid + 1;
-              else hi = mid;
-            }
-            if (sources[i] < sources[tails[lo]]) {
-              if (lo > 0) pred[i] = tails[lo - 1];
-              tails[lo] = i;
-            }
-          }
-        }
-      }
-
-      // Backtrack to build LIS indices (reuse tails array)
-      hi = tails[tail];
-      lo = tail + 1;
-      while (lo-- > 0) {
-        tails[lo] = hi;
-        hi = pred[hi];
-      }
-
-      for (let i = diffLen; i--;) {
-        if (~tail && i === tails[tail]) {
-          tail--;
-        } else {
-          insertBranchBefore(newScopes[start + i], parentNode, afterReference);
-        }
-
-        afterReference = newScopes[start + i][AccessorProp.StartNode];
-      }
-    };
-  };
-}
 
 function createBranchWithTagNameOrRenderer(
   $global: Scope[typeof AccessorProp.Global],

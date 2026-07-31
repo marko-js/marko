@@ -1,28 +1,28 @@
 {
   "dom": {
     "child-b.marko.load.mjs": {
-      "min": 74,
-      "brotli": 78
+      "min": 81,
+      "brotli": 71
     },
     "child-s.marko.load.mjs": {
-      "min": 74,
-      "brotli": 78
+      "min": 81,
+      "brotli": 71
     },
     "template.marko.page.mjs": {
-      "min": 324,
-      "brotli": 194
+      "min": 663,
+      "brotli": 376
     },
     "child-b.mjs": {
-      "min": 140,
-      "brotli": 108
+      "min": 147,
+      "brotli": 111
     },
     "child-s.mjs": {
-      "min": 140,
-      "brotli": 108
+      "min": 147,
+      "brotli": 111
     },
     "shared": {
-      "min": 2791,
-      "brotli": 1398
+      "min": 5174,
+      "brotli": 2415
     }
   },
   "html": {

@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-_enable_catch();
 const $await_content__data = ($scope, data) => _text($scope["#text/0"], data);
 const $await_content__$params = ($scope, $params3) => $await_content__data($scope, $params3[0]);
 const $catch_content__error_message__OR__message__OR__clicked = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/1"], $scope.clicked ? $scope.message : $scope.error_message), 2);

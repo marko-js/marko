@@ -11,7 +11,6 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<button>Toggle</button><!><!>";
 const $walks = " b%c";
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", () => import("./child.mjs").then((mod) => mod.default));
-_enable_catch();
 const $placeholder_content = _content_resume("__tests__/template.marko_3_content", "Loading...");
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $await_content__dynamicTag($scope, $scope._._.show ? Child : null, () => ({ value: 1 })), ($scope) => $scope._._, "__tests__/template.marko_2_show/pending");

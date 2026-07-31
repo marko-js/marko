@@ -31,8 +31,9 @@ export function _attr_input_checked_default(
     }
   }
 }
-/** Filled by the latches a compiled page emits, so a page carries only the
- * control kinds its tags can be (`_attrs_script` resolves the kind at run time). */
+/** Filled by the `controllable-*.feat` modules a compiled page imports, so a
+ * page carries only the control kinds its tags can be (`_attrs_script`
+ * resolves the kind at run time). */
 export const controllableScripts: {
   [T in ControlledType]?: (scope: Scope, nodeAccessor: Accessor) => void;
 } = {};
@@ -48,37 +49,6 @@ export type ControllableAttrs = (
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) => RegExp | void;
-
-export function _enable_controllable_input() {
-  controllableScripts[ControlledType.InputChecked] = _attr_input_checked_script;
-  controllableScripts[ControlledType.InputCheckedValue] =
-    _attr_input_checkedValue_script;
-  controllableScripts[ControlledType.InputValue] = _attr_input_value_script;
-}
-
-export function _enable_controllable_textarea() {
-  controllableScripts[ControlledType.InputValue] = _attr_input_value_script;
-}
-
-export function _enable_controllable_select() {
-  controllableScripts[ControlledType.SelectValue] = _attr_select_value_script;
-}
-
-export function _enable_controllable_open() {
-  controllableScripts[ControlledType.DetailsOrDialogOpen] =
-    _attr_details_or_dialog_open_script;
-}
-
-/** A run-time tag name can be any controllable, so its page enables them all. */
-export function _enable_controllable() {
-  _enable_controllable_input();
-  _enable_controllable_select();
-  _enable_controllable_open();
-  controllableRenders.INPUT = _controllable_input;
-  controllableRenders.TEXTAREA = _controllable_textarea;
-  controllableRenders.SELECT = _controllable_select;
-  controllableRenders.DETAILS = controllableRenders.DIALOG = _controllable_open;
-}
 
 export function _attr_input_checked(
   scope: Scope,

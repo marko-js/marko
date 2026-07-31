@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $await_content__value__script = _script("a0", ($scope) => console.log(`effect ran value=${$scope.c}`));
 const $await_content__value = /*@__PURE__*/ _const(2, ($scope) => {
 	_text($scope.a, $scope.c);

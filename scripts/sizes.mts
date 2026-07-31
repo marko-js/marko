@@ -324,7 +324,9 @@ function isRuntimeChunk(
 }
 
 function manualChunks(id: string) {
-  if (id === runtimePath) {
+  // The runtime is code-split across dist/dom.mjs and its shared chunk that
+  // feature entries also import, so match the whole dist directory.
+  if (id.startsWith(path.dirname(runtimePath) + path.sep)) {
     return "runtime";
   }
 }

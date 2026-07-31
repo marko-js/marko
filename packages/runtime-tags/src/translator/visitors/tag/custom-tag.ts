@@ -31,7 +31,7 @@ import {
   createBinding,
   getScopeAccessorLiteral,
 } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
@@ -237,6 +237,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             ),
           ]),
         );
+        importRuntimeFeature("catch");
         getProgram().node.body.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(

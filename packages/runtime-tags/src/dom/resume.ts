@@ -1,4 +1,4 @@
-import { decodeAccessor } from "../common/helpers";
+import { branchesEnabled, decodeAccessor } from "../common/helpers";
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { forEach, type Opt, push } from "../common/opt";
 import {
@@ -10,7 +10,7 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { runEffects, skipDestroyedRenders } from "./queue";
+import { runEffects } from "./queue";
 import { setParentBranch } from "./renderer";
 import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
@@ -56,20 +56,12 @@ type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
 let curRenders: Renders;
-let branchesEnabled: undefined | 1;
 let embedRenders:
   | undefined
   | Map<Text, [renderId: string, scopes: Record<string | number, Scope>]>;
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
-
-export function enableBranches() {
-  if (!branchesEnabled) {
-    branchesEnabled = 1;
-    skipDestroyedRenders();
-  }
-}
 
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);

@@ -1,5 +1,4 @@
 // template.marko
-_enable_controllable_input();
 const $v__OR__rest__script = _script("a2", ($scope) => {
 	_attrs_script($scope, "b");
 	_attrs_script($scope, "c");

@@ -17,7 +17,7 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -206,6 +206,7 @@ export default {
               ),
             ]),
           );
+          importRuntimeFeature("catch");
           return callRuntime(
             "_await_promise",
             getScopeAccessorLiteral(nodeRef, true),

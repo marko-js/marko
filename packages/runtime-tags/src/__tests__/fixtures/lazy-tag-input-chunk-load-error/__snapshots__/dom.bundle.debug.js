@@ -11,7 +11,6 @@ const $template = "<button id=toggle>toggle</button><!><!>";
 const $walks = " b%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
-_enable_catch();
 const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_value($scope["#childScope/1"], 1);

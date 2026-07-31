@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<div id=outside>Pass</div><!><!>";
 const $walks = "b%c";
-_enable_catch();
 const $await_content__setup__script = _script("__tests__/template.marko_4", ($scope) => document.querySelector("#outside").textContent = "Fail");
 const $await_content__setup = $await_content__setup__script;
 const $placeholder_content = _content_resume("__tests__/template.marko_3_content", "loading...");

@@ -1,6 +1,5 @@
 // template.marko
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
-_enable_catch();
 const $placeholder_content = _content_resume("b0", "loading...");
 const $try_content__count = /*@__PURE__*/ _closure_get(6, ($scope) => $load_Child_tag_input_value($scope.b, $scope._.f));
 const $count = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($try_content__count));

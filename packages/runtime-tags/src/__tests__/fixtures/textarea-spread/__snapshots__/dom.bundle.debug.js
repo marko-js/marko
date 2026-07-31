@@ -2,7 +2,6 @@
 const $template = "<textarea></textarea>";
 const $walks = " b";
 const $setup = () => {};
-_enable_controllable_textarea();
 const $input__script = _script("__tests__/template.marko_0_input", ($scope) => _attrs_script($scope, "#textarea/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs($scope, "#textarea/0", $scope.input, _controllable_textarea);

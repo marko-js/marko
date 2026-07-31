@@ -2,7 +2,6 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
-_enable_catch();
 const $placeholder_content = _content_resume("__tests__/tags/recurse.marko_4_content", "LOADING...");
 const $await_content__input_level = /*@__PURE__*/ _closure_get("input_level", ($scope) => $input_level($scope["#childScope/0"], $scope._._._.input_level - 1), ($scope) => $scope._._._, "__tests__/tags/recurse.marko_3_input_level/pending");
 const $await_content__setup = $await_content__input_level;

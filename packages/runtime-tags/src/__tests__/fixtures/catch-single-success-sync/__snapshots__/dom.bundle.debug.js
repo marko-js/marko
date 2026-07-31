@@ -1,7 +1,6 @@
 // template.marko
 const $template = "a<!>c";
 const $walks = "b%c";
-_enable_catch();
 const $catch_content = _content_resume("__tests__/template.marko_2_content", "ERROR!");
 const $try = /*@__PURE__*/ _try("#text/0", "b");
 function $setup($scope) {

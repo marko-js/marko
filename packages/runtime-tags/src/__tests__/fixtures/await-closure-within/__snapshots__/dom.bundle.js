@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $if_content__value = /*@__PURE__*/ _if_closure(2, 0, ($scope) => _text($scope.a, $scope._.d));
 const $await_content__if = /*@__PURE__*/ _if(2, "<span> </span>", "D ", $if_content__value);
 const $await_content__value = /*@__PURE__*/ _let(3, ($scope) => {

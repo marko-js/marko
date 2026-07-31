@@ -83,7 +83,7 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath } from "./custom-tag";
-import { controllableScriptLatchFor, enableControllable } from "./native-tag";
+import { controllableFeatureFor, enableControllable } from "./native-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
@@ -618,7 +618,7 @@ function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
       attr.type === "MarkoSpreadAttribute" ||
       (attr.type === "MarkoAttribute" && controlledAttrs.test(attr.name))
     ) {
-      enableControllable(controllableScriptLatchFor(undefined));
+      enableControllable(controllableFeatureFor(undefined));
       return;
     }
   }

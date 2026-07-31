@@ -1,6 +1,5 @@
 // template.marko
 _resume_dynamic_tag();
-_enable_controllable();
 const $tagselect_content__setup__script = _script("a2", ($scope) => {
 	_attrs_script($scope, "a");
 	_attrs_script($scope, "b");

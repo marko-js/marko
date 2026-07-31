@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><!><!><!>";
 const $walks = "b%b%b%c";
-_enable_catch();
 const $await_content3__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content3__setup__script = _script("__tests__/template.marko_9", ($scope) => _on($scope["#button/1"], "click", function() {
 	document.querySelector("button").textContent = "After";

@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<button>respread</button><input><div> </div>";
 const $walks = " b bD l";
-_enable_controllable_input();
 const $v = /*@__PURE__*/ _let("v/3", ($scope) => {
 	_attr_input_value($scope, "#input/1", $scope.v, $valueChange($scope));
 	_text($scope["#text/2"], $scope.v);

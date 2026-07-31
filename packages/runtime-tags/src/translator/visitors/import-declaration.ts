@@ -11,7 +11,7 @@ import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
 import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
 import type { TemplateVisitor } from "../util/visitors";
@@ -151,6 +151,7 @@ export default {
                 file,
                 loadFile.opts.filename,
               );
+              importRuntimeFeature("catch");
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(

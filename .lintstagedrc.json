@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/lintstagedrc.schema.json",
   "*.{ts,js}": [
-    "oxlint --fix",
+    "oxlint --fix --no-error-on-unmatched-pattern",
     "oxfmt --with-node-modules --no-error-on-unmatched-pattern"
   ],
   "*.{json,md,css}": [

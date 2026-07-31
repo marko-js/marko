@@ -2,7 +2,6 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const never = new Promise(() => {});
-_enable_catch();
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("__tests__/template.marko_5_content", "caught: <!>", "b%", 0, $catch_content__$params);

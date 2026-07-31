@@ -1,6 +1,5 @@
 // template.marko
 const Child = /*@__PURE__*/ _load_template("a", () => import("./child.mjs").then((mod) => mod.default));
-_enable_catch();
 const $placeholder_content = _content_resume("b0", "loading...");
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $try_content__show__OR__value = /*@__PURE__*/ _or(1, ($scope) => $try_content__dynamicTag($scope, $scope._.d ? Child : null, () => ({
