@@ -64,6 +64,7 @@ export {
   _html,
   _id,
   _if,
+  _patch_attr,
   _patch_text,
   _peek_scope_id,
   _resume,

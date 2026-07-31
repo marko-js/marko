@@ -1,5 +1,5 @@
 // size: 4038 (min) 1804 (brotli)
-//#region packages/runtime-tags/dist/dom-T0gUuD2H.mjs
+//#region packages/runtime-tags/dist/dom-BYuonLyu.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
   runId = 2,
