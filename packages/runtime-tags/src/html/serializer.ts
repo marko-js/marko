@@ -453,6 +453,10 @@ export function getRegistered(val: WeakKey) {
 // applies a payload's return value when it is an array.
 function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
+  // A patch frame is one flat entry array (the line owns its brackets), so
+  // the scope run serializes with no fn wrapper or list brackets; an
+  // assigned-reference flush wraps itself as a `(_([...]),...,0)` entry.
+  const bare = state.boundary?.state?.writesPatches;
   let nextSlotId = -1;
   let fillIndex = -1;
 
@@ -469,7 +473,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
       // steps the cursor back rather than landing in the wrong one.
       buf[openIndex] =
         nextSlotId === -1
-          ? "[" + scopeId + ",{"
+          ? scopeId + ",{"
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
@@ -479,16 +483,12 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     }
   }
 
-  if (nextSlotId !== -1) {
-    buf.push("]");
-  }
-
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
     if (fillIndex !== -1) {
-      buf[fillIndex] = "_(" + buf[fillIndex];
-      buf.push(")");
+      buf[fillIndex] = "_([" + buf[fillIndex];
+      buf.push("])");
     }
     writeAssigned(state);
   }
@@ -502,12 +502,9 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   // Everything elided and nothing else to flush.
   if (!result) return "";
 
-  if (state.wroteUndefined) {
-    state.wroteUndefined = false;
-    return "(_,$)=>" + result;
-  } else {
-    return "_=>" + result;
-  }
+  const arrow = state.wroteUndefined ? "(_,$)=>" : "_=>";
+  state.wroteUndefined = false;
+  return bare ? result : extras ? arrow + result : arrow + "[" + result + "]";
 }
 
 function writeAssigned(state: State) {

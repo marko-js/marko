@@ -185,6 +185,16 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               const partial = partials[i];
               if (typeof partial === "number") {
                 scopeId += partial;
+              } else if (typeof partial === "string") {
+                lastTokenIndex = 0;
+                visitText = partial;
+                while (nextToken()) {
+                  if (/\D/.test(lastToken)) {
+                    lastEffect = registeredValues[lastToken];
+                  } else {
+                    curEffects.push(lastEffect, getScope(lastToken));
+                  }
+                }
               } else {
                 const scope = scopeLookup[scopeId]!;
                 for (const key in partial) {
@@ -367,6 +377,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           effects: unknown[],
         ) => {
           let i = 0;
+          // Folds away without `applyPatch`: only the patch path reads it.
+          patching && (curEffects = effects);
           for (; i < resumes.length; i++) {
             const serialized = resumes[i];
             if (typeof serialized === "string") {
@@ -408,6 +420,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           return i;
         };
         let lastEffect: unknown;
+        let curEffects: unknown[];
         let visits: RenderData["v"];
         let visit: Comment;
         let visitText: string;
