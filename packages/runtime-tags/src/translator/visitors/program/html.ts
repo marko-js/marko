@@ -14,6 +14,7 @@ import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
+import { scopeReasonRuntime } from "../../util/persisted";
 import {
   BindingType,
   getReadReplacement,
@@ -155,7 +156,9 @@ export default {
       if (dynamicSerializeReason) {
         renderContent.push(getScopeReasonDeclaration(section));
       } else {
-        renderContent.push(t.expressionStatement(callRuntime("_scope_reason")));
+        renderContent.push(
+          t.expressionStatement(callRuntime(scopeReasonRuntime())),
+        );
       }
 
       for (const child of program.get("body")) {
@@ -220,6 +223,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         return t.traverseFast.stop;
       case "MarkoTag": {
         const tagName = t.isStringLiteral(node.name) && node.name.value;
+        // Conditional branches participate in patching: the client verifies
+        // the live branch still matches and fails the patch otherwise.
+        if (tagName === "if" || tagName === "else") break;
         const tagDef =
           tagName && getTagDefForTagName(program.hub.file, tagName);
         if (

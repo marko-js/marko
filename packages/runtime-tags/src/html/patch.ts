@@ -23,11 +23,18 @@ export function renderPatch(
   return startRender(this, input, PatchState);
 }
 
+// Serialize guards stay unset so the compiled resume payload drops at the
+// source: a frame carries only patch fills and branch identity.
 class PatchState extends State {
   constructor($global: State["$global"]) {
     super($global);
     this.hasMainRuntime = true;
-    this.serializeReason = 1;
+  }
+
+  // A frame only ever applies to the render that produced the page, so it
+  // is one flush's resume entry array without the runtime/render prefix.
+  override resumeScript(resumes: string) {
+    return "[" + resumes + "]";
   }
 
   override flushChunk(_html: string, scripts: string) {
@@ -36,12 +43,6 @@ class PatchState extends State {
 
   override walkScript() {
     return "";
-  }
-
-  // A frame only ever applies to the render that produced the page: one
-  // flat entry array (number = scope id, object = partial, string = effects).
-  override resumeScript(resumes: string) {
-    return "[" + resumes + "]";
   }
 
   override get writesPatches() {

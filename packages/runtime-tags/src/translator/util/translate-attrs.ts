@@ -19,6 +19,7 @@ import {
   getAttrTagPaths,
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
+import { scopeReasonRuntime } from "./persisted";
 import { getScopeAccessor } from "./references";
 import { callRuntime } from "./runtime";
 import {
@@ -427,7 +428,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         body.node.body.unshift(getScopeReasonDeclaration(bodySection) as any);
       } else {
         body.node.body.unshift(
-          t.expressionStatement(callRuntime("_scope_reason")) as any,
+          t.expressionStatement(callRuntime(scopeReasonRuntime())) as any,
         );
       }
 

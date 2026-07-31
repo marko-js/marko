@@ -57,6 +57,12 @@ type Patcher = (scope: Scope, key: string, value: unknown) => void;
 
 const registeredValues: Record<string, unknown> = {};
 export const patchers: Record<string, Patcher> = {};
+// Pairs patch scope ids (response local) with live scopes during a patch.
+export let patchPairs: Record<number, Scope>;
+
+export function failPatch() {
+  patchFailed = 1;
+}
 let curRenders: Renders;
 let embedRenders:
   | undefined
@@ -157,30 +163,47 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         };
         const applyScopes = (partials: (Scope | number)[]) => {
           if (patching && patchRender === render) {
+            // Patch scope ids are response local: a child applies only through
+            // the live scope its parent's `BranchScopes` fill paired
+            // (`patch-branch.feat`), outward from the root.
+            patchPairs = {
+              [partials[0] as number]: scopeLookup[partials[0] as number]!,
+            };
             let scopeId = partials[0] as number;
             for (let i = 1; i < partials.length; i++) {
+              // A failed verification stops before unverified fills mutate
+              // anything; the caller falls back to document navigation.
+              if (patchFailed) return;
               const partial = partials[i];
               if (typeof partial === "number") {
                 scopeId += partial;
               } else if (typeof partial === "string") {
+                // Effect scopes resolve through the same live pairing.
                 lastTokenIndex = 0;
                 visitText = partial;
                 while (nextToken()) {
                   if (/\D/.test(lastToken)) {
                     lastEffect = registeredValues[lastToken];
+                  } else if (patchPairs[+lastToken]) {
+                    curEffects.push(lastEffect, patchPairs[+lastToken]);
                   } else {
-                    curEffects.push(lastEffect, getScope(lastToken));
+                    failPatch();
+                    return;
                   }
                 }
               } else {
-                const scope = scopeLookup[scopeId]!;
+                const scope = patchPairs[scopeId++];
+                if (!scope) {
+                  // An unpaired partial means the live structure diverged.
+                  failPatch();
+                  return;
+                }
                 for (const key in partial) {
                   patchers[
                     // Debug accessor prefixes are multi-character, ending ":".
                     MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
                   ](scope, key, partial[key]);
                 }
-                scopeId++;
               }
             }
             return;
@@ -193,7 +216,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               scopeId += partial;
             } else {
               if (scopeId) {
-                // Adopt the partial as the scope when new, else merge into
+                // A scope may already be in the lookup from a visit before
                 // the existing one; re-init so a closest branch id applies.
                 initScope(
                   Object.assign(
@@ -214,7 +237,10 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           registryId?: string,
         ) =>
           patching && patchRender === render && typeof data === "number"
-            ? ((patchFailed = 1), undefined)
+            ? registryId
+              ? ((patchFailed = 1), undefined)
+              : // A scope reference stays a bare id for structural pairing.
+                data
             : typeof data === "number"
               ? registryId
                 ? (registeredValues[registryId] as RegisteredFn)(getScope(data))

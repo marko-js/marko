@@ -622,10 +622,31 @@ export function _if(
     $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
   }
 
+  // Ordering the parent partial before its branch children lets the client
+  // pair patch scopes in a single forward pass.
+  if (state.writesPatches) writeScope(scopeId, {});
   const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
   const shouldWriteBranch = resumeBranch && branchIndex !== undefined;
 
-  if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
+  if (state.writesPatches) {
+    // The selected branch (`-1` for none, `0` not elided) and child scope
+    // let the client verify live structure and pair the branch's fills.
+    writeScope(scopeId, {
+      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
+      [AccessorPrefix.BranchScopes + accessor]:
+        branchIndex === undefined ? undefined : writeScope(branchId, {}),
+    });
+  } else if (state.persisted) {
+    // Patch verification must work without the client branch machinery (a
+    // patch-only page bundles none), so the fills serialize explicitly.
+    if (shouldWriteBranch) {
+      writeScope(scopeId, {
+        [AccessorPrefix.ConditionalRenderer + accessor]:
+          branchIndex || undefined,
+        [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
+      });
+    }
+  } else if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
     writeScope(scopeId, {
       // TODO: Write the renderer only for stateful conditions or direct closures.
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex || undefined, // we convert 0 to undefined since the runtime defaults branch to 0.
@@ -767,6 +788,16 @@ export type SerializeReasonValue =
 
 export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
+}
+
+// Compiled into persisted templates in place of `_scope_reason`: marks the
+// render and serializes everything for pages while patches serialize nothing
+// beyond their own fills.
+export function _persisted_reason() {
+  const { state } = $chunk.boundary;
+  state.persisted = 1;
+  state.serializeReason = undefined;
+  return state.writesPatches ? undefined : 1;
 }
 
 export function _scope_reason() {
@@ -1048,6 +1079,7 @@ export class State implements SerializeState {
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
   public serializeReason: SerializeReasonValue;
+  public persisted: undefined | 1;
   public $global: $Global & { renderId: string; runtimeId: string };
   constructor($global: $Global & { renderId: string; runtimeId: string }) {
     this.$global = $global;

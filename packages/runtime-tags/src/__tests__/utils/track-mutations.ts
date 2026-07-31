@@ -74,6 +74,9 @@ export default function createMutationTracker(browser: {
       throwErrors();
       logRecords(update);
     },
+    log(entry: string) {
+      logs.push(entry);
+    },
     getLogs() {
       return logs.length ? logs.join("\n\n") + "\n" : "";
     },

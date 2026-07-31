@@ -72,6 +72,7 @@ export {
   _resume_locals,
   _scope,
   _scope_id,
+  _persisted_reason,
   _scope_reason,
   _scope_with_id,
   _script,

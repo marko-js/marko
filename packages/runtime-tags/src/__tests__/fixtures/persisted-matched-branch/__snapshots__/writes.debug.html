@@ -1,0 +1,15 @@
+<div><!--M_[-->
+  <h1 title=a>First<!--M_*2 #text/1--></h1><!--M_*2 #h1/0--><!--M_]1 #div/0 2-->
+</div><!--M_*1 #div/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    "ConditionalRenderer:#div/0": 1,
+    "BranchScopes:#div/0": _(2),
+    input_variant: "a",
+    input_title: "First"
+  }, {
+    _: _(1)
+  }]];
+  M._.w()
+</script>

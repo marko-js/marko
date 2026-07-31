@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
 import { type OneMany, type Opt, some, Sorted } from "./optional";
+import { scopeReasonRuntime } from "./persisted";
 import {
   compareSources,
   getDebugNames,
@@ -53,7 +54,7 @@ const [getSectionReasonState] = createSectionState<SectionReasonState>(
     declarators: [
       t.variableDeclarator(
         t.identifier(getSharedUid(`scope${section.id}_reason`, section)),
-        callRuntime("_scope_reason"),
+        callRuntime(scopeReasonRuntime()),
       ),
     ],
   }),

@@ -379,6 +379,11 @@ function testFixtures(interop?: true) {
                     }
                     patches.push(frames.join(""));
                     tracker.logUpdate(input);
+                    if (!applied) {
+                      tracker.log(
+                        "*patch rejected: falling back to document navigation*",
+                      );
+                    }
                     return applied;
                   }
                 : undefined,

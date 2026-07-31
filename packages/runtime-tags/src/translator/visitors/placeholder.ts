@@ -9,6 +9,7 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import { isPatchableSection } from "../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -94,7 +95,7 @@ export default {
       analyzeSiblingText(placeholder);
       addSetupExpr(section, node.value);
       addSerializeExpr(section, valueExtra, nodeBinding);
-      if (isPersisted() && node.escape && !section.parent) {
+      if (isPersisted() && node.escape && isPatchableSection(section)) {
         addSerializeReason(section, true, nodeBinding);
         addAssetImport(
           placeholder.hub.file,
@@ -142,7 +143,10 @@ export default {
         const markerSerializeReason =
           nodeBinding && getSerializeReason(section, nodeBinding);
         const isPatch =
-          isPersisted() && node.escape && !section.parent && !!nodeBinding;
+          isPersisted() &&
+          node.escape &&
+          isPatchableSection(section) &&
+          !!nodeBinding;
         const isPatchText = isHTML && isPatch;
         // An interactive page receives assets transitively through its dom
         // program, so the feature import rides both outputs.

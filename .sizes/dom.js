@@ -1,5 +1,5 @@
-// size: 26580 (min) 9845 (brotli)
-//#region packages/runtime-tags/dist/dom-CK9oKl_1.mjs
+// size: 26693 (min) 9907 (brotli)
+//#region packages/runtime-tags/dist/dom-CGt_qHdD.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
   toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
@@ -91,6 +91,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
   patchers = {},
+  patchPairs,
   curRenders,
   embedRenders,
   readyIds,
@@ -819,6 +820,9 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
+function failPatch() {
+  patchFailed = 1;
+}
 function beginPatch(renderId) {
   let render = (patchRender = curRenders[renderId]);
   return ((patchFailed = 0), (patching = 1), render);
@@ -875,19 +879,28 @@ function init(runtimeId = "M") {
             ),
             applyScopes = (partials) => {
               if (patching && patchRender === render) {
+                patchPairs = { [partials[0]]: scopeLookup[partials[0]] };
                 let scopeId = partials[0];
                 for (let i = 1; i < partials.length; i++) {
+                  if (patchFailed) return;
                   let partial = partials[i];
                   if (typeof partial == "number") scopeId += partial;
                   else if (typeof partial == "string")
                     for (lastTokenIndex = 0, visitText = partial; nextToken();)
-                      /\D/.test(lastToken)
-                        ? (lastEffect = registeredValues[lastToken])
-                        : curEffects.push(lastEffect, getScope(lastToken));
+                      if (/\D/.test(lastToken)) lastEffect = registeredValues[lastToken];
+                      else if (patchPairs[+lastToken])
+                        curEffects.push(lastEffect, patchPairs[+lastToken]);
+                      else {
+                        failPatch();
+                        return;
+                      }
                   else {
-                    let scope = scopeLookup[scopeId];
+                    let scope = patchPairs[scopeId++];
+                    if (!scope) {
+                      failPatch();
+                      return;
+                    }
                     for (let key in partial) patchers[key[0]](scope, key, partial[key]);
-                    scopeId++;
                   }
                 }
                 return;
@@ -910,7 +923,9 @@ function init(runtimeId = "M") {
             },
             serializeContext = (data, registryId) =>
               patching && patchRender === render && typeof data == "number"
-                ? ((patchFailed = 1), void 0)
+                ? registryId
+                  ? ((patchFailed = 1), void 0)
+                  : data
                 : typeof data == "number"
                   ? registryId
                     ? registeredValues[registryId](getScope(data))

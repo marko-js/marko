@@ -34,6 +34,7 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
+import { isPatchableSection } from "../../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -273,7 +274,11 @@ export default {
           getProgram().node.extra.isInteractive = true;
         }
 
-        if (isPersisted() && hasDynamicAttributes && !tagSection.parent) {
+        if (
+          isPersisted() &&
+          hasDynamicAttributes &&
+          isPatchableSection(tagSection)
+        ) {
           addSerializeReason(tagSection, true, nodeBinding);
           addAssetImport(
             tag.hub.file,
@@ -553,7 +558,7 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                if (isPersisted() && !tagSection.parent) {
+                if (isPersisted() && isPatchableSection(tagSection)) {
                   write`${callRuntime(
                     "_patch_attr",
                     getScopeIdIdentifier(tagSection),
@@ -948,7 +953,7 @@ export default {
                   ),
                 );
               } else {
-                if (isPersisted() && !tagSection.parent) {
+                if (isPersisted() && isPatchableSection(tagSection)) {
                   // An interactive page receives assets transitively through
                   // its dom program, so the feature import rides both outputs.
                   importRuntimeFeature("patch-attr");

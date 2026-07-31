@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { addAssetImport } from "../util/asset-imports";
 import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
@@ -17,14 +18,21 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
+import { isPatchableSection } from "../util/persisted";
 import {
   compareSources,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import {
+  callRuntime,
+  getHTMLRuntime,
+  getRuntimePath,
+  importRuntimeFeature,
+} from "../util/runtime";
 import {
   ContentType,
   getBranchRendererArgs,
@@ -42,6 +50,7 @@ import {
 } from "../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
@@ -104,6 +113,19 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
+      if (isPersisted() && isPatchableSection(ifTagSection)) {
+        // A persisted patch always serializes and verifies branch identity.
+        addSerializeReason(ifTagSection, true, nodeBinding);
+        for (const [, branchBodySection] of branches) {
+          if (branchBodySection) {
+            addSerializeReason(branchBodySection, true, kBranchSerializeReason);
+          }
+        }
+        addAssetImport(
+          ifTag.hub.file,
+          `${getRuntimePath("dom")}/patch-branch.feat`,
+        );
+      }
     }
   },
   translate: translateByTarget({
@@ -174,15 +196,23 @@ export const IfTag = {
           let statement: t.Statement | undefined;
           let singleChild = true;
 
-          for (const [, branchBody] of branches) {
-            if (
-              !(
-                branchBody?.content?.singleChild &&
-                branchBody.content.startType !== ContentType.Text
-              )
-            ) {
-              singleChild = false;
-              break;
+          // The single-node and parent-end-tag optimizations resolve nodes
+          // through branch machinery a patch-only page does not bundle.
+          const persistedPatch =
+            isPersisted() && isPatchableSection(ifTagSection);
+          if (persistedPatch) {
+            singleChild = false;
+          } else {
+            for (const [, branchBody] of branches) {
+              if (
+                !(
+                  branchBody?.content?.singleChild &&
+                  branchBody.content.startType !== ContentType.Text
+                )
+              ) {
+                singleChild = false;
+                break;
+              }
             }
           }
 
@@ -235,7 +265,9 @@ export const IfTag = {
 
           if (branchSerializeReasons) {
             const skipParentEnd =
-              onlyChildParentTagName && markerSerializeReason;
+              !persistedPatch &&
+              onlyChildParentTagName &&
+              markerSerializeReason;
             if (skipParentEnd) {
               getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
             }
@@ -306,6 +338,11 @@ export const IfTag = {
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
           const ifTagExtra = branches[0][0].node.extra!;
+          if (isPersisted() && isPatchableSection(ifTagSection)) {
+            // An interactive page receives assets transitively through its
+            // dom program, so the feature import rides both outputs.
+            importRuntimeFeature("patch-branch");
+          }
           const nodeRef = getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection);
 
           let expr: t.Expression = t.numericLiteral(branches.length);
