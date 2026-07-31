@@ -1003,6 +1003,11 @@ export default {
                   ),
                 );
               } else {
+                if (isPersisted() && !tagSection.parent) {
+                  // An interactive page receives assets transitively through
+                  // its dom program, so the feature import rides both outputs.
+                  importRuntimeFeature("patch-attr");
+                }
                 addStatement(
                   "render",
                   tagSection,
