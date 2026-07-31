@@ -1,5 +1,5 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import { run } from "./queue";
+import { run, runEffects } from "./queue";
 import { abortPatch, beginPatch, finishPatch, init } from "./resume";
 
 export function applyPatch(
@@ -10,13 +10,14 @@ export function applyPatch(
   init(runtimeId);
   const render = beginPatch(renderId);
   try {
-    // Patch frames are trusted executable resume data from the same server
-    // that produced the document.
+    // A frame is trusted executable resume data (one flat entry array) from
+    // the same server that produced the document.
     // eslint-disable-next-line no-new-func
-    new Function(frame)();
+    render.r = [new Function("_", "$", "return " + frame)] as typeof render.r;
+    const effects = render.m!([]);
+    if (!finishPatch()) return false;
 
-    if (render.m!([]).length || !finishPatch()) return false;
-
+    runEffects(effects, 1);
     run();
     return true;
   } finally {
