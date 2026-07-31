@@ -38,6 +38,12 @@ class PatchState extends State {
     return "";
   }
 
+  // A frame only ever applies to the render that produced the page: one
+  // flat entry array (number = scope id, object = partial, string = effects).
+  override resumeScript(resumes: string) {
+    return "[" + resumes + "]";
+  }
+
   override get writesPatches() {
     return true;
   }
