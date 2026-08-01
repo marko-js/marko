@@ -120,7 +120,9 @@ export function getExprIfSerialized<
     if (!reason) return undefined as R;
     // A patch serializes no ordinary resume payload, so a statically
     // serialized value rides the scope reason (`1` page, `undefined` patch).
-    if (isPersisted()) {
+    // Child sections gate through their cross-section guards; only the
+    // root declares the reason identifier.
+    if (isPersisted() && !section.parent) {
       return t.logicalExpression(
         "&&",
         scopeReasonIdentifier(section),

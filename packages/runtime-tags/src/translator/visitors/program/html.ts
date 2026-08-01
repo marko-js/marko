@@ -9,6 +9,7 @@ import {
   usedSharedUid,
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
+import { isConditionTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
@@ -34,6 +35,7 @@ import {
   getSerializeSourcesForExpr,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
+import { getDroppedShellIds } from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -181,6 +183,23 @@ export default {
 
       writeModuleRegistrations(program);
 
+      const shells = program.hub.file.metadata.marko.persistedShells;
+      if (persisted && shells) {
+        // Branch shells, derived during analyze, register at server module
+        // load so patches can ship constructible shells without the client
+        // bundling conditional content. Translate may have dropped some
+        // (state-fed holes construct unfaithfully).
+        const active = { ...shells };
+        for (const id of getDroppedShellIds()) delete active[id];
+        if (Object.keys(active).length) {
+          program.node.body.push(
+            t.expressionStatement(
+              callRuntime("_renderer_shells", t.valueToNode(active)),
+            ),
+          );
+        }
+      }
+
       const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(
         [t.identifier("input")],
@@ -230,10 +249,35 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     MarkoTag(tag) {
       const { node } = tag;
       const tagName = t.isStringLiteral(node.name) && node.name.value;
+      const tagDef = getTagDef(tag);
+      // A server-driven conditional's patches ship the selected branch's
+      // rendered html wholesale, so the branch must be inert: a state-fed
+      // test is client-owned, and state or handlers inside would not survive
+      // (or hydrate within) a shipped swap.
+      if (isConditionTag(tag)) {
+        for (const attr of node.attributes) {
+          if (
+            attr.type === "MarkoSpreadAttribute" ||
+            getSerializeSourcesForExpr(attr.value.extra || {})?.state
+          ) {
+            unsupported(attr);
+          }
+        }
+        return;
+      }
+      if (
+        (tagName === "let" ||
+          tagName === "const" ||
+          hasEventHandlerAttr(node)) &&
+        tag.findParent(
+          (parent) => parent.isMarkoTag() && isConditionTag(parent),
+        )
+      ) {
+        unsupported(node);
+      }
       // Client state participates through value fills: patches never carry
       // state, and holes it feeds recompute through the signal graph.
       if (tagName === "let" || tagName === "const") return;
-      const tagDef = getTagDef(tag);
       // A templated custom tag re-renders during a patch; a state-fed
       // attribute would resolve from the server's stale state, so those
       // fail closed until per-instance classification exists.
@@ -429,4 +473,13 @@ function getRegisteredFnExpression(
         getScopeIdIdentifier(extra.section),
     );
   }
+}
+
+function hasEventHandlerAttr(node: t.MarkoTag) {
+  for (const attr of node.attributes) {
+    if (attr.type === "MarkoAttribute" && isEventHandler(attr.name)) {
+      return true;
+    }
+  }
+  return false;
 }
