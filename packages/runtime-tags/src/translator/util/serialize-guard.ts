@@ -1,7 +1,9 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
-import { type Opt, some } from "./optional";
+import { isPersisted } from "./marko-config";
+import { type Opt, some, Sorted } from "./optional";
+import { scopeReasonRuntime } from "./persisted";
 import {
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -46,7 +48,7 @@ const [getSectionReasonState] = createSectionState<SectionReasonState>(
     declarators: [
       t.variableDeclarator(
         t.identifier(getSharedUid(`scope${section.id}_reason`, section)),
-        callRuntime("_scope_reason"),
+        callRuntime(scopeReasonRuntime()),
       ),
     ],
   }),
@@ -77,7 +79,7 @@ export function getSerializeGuard(
         );
   }
 
-  return getOrHoist(reason, true);
+  return getDynamicGuard(section, reason, true);
 }
 
 export function getSerializeGuardForAny(
@@ -109,18 +111,47 @@ export function getExprIfSerialized<
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
-    return (reason && expr) as R;
+    if (!reason) return undefined as R;
+    // A patch serializes no ordinary resume payload, so a statically
+    // serialized value rides the scope reason (`1` page, `undefined` patch).
+    if (isPersisted()) {
+      return t.logicalExpression(
+        "&&",
+        scopeReasonIdentifier(section),
+        expr,
+      ) as R;
+    }
+    return expr as R;
   }
 
-  const guard = getOrHoist(reason, false);
+  const guard = getDynamicGuard(section, reason, false);
   return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
+}
+
+// The global dimension has no param slots: it is persisted-only, where the
+// scope reason itself is `1` for a page render and `undefined` for a patch.
+function getDynamicGuard(
+  section: Section,
+  reason: DynamicSerializeReason,
+  isGuard: boolean,
+) {
+  const paramGuard = reason.param ? getOrHoist(reason, isGuard) : undefined;
+  if (!reason.global) return paramGuard;
+  const globalGuard = scopeReasonIdentifier(section);
+  return paramGuard
+    ? t.logicalExpression("||", globalGuard, paramGuard)
+    : globalGuard;
+}
+
+export function scopeReasonIdentifier(section: Section) {
+  return t.identifier(getSharedUid(`scope${section.id}_reason`, section));
 }
 
 function getOrHoist(
   reason: DynamicSerializeReason,
   isGuard: boolean,
 ): t.Expression | undefined {
-  const onlySection = getOnlySection(reason.param);
+  const onlySection = getOnlySection(reason.param!);
 
   if (onlySection) {
     const state = getSectionReasonState(onlySection);

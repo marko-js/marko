@@ -24,6 +24,7 @@ import {
   isReferencedExtra,
   type KnownExprs,
   mapParamBindingToExpr,
+  globalSources,
   mergeSources,
   type ReferencedBindings,
   type Sources,
@@ -205,9 +206,10 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  if (isReferencedExtra(expr)) {
-    return getSerializeSourcesForRef(expr.referencedBindings);
-  }
+  const sources = isReferencedExtra(expr)
+    ? getSerializeSourcesForRef(expr.referencedBindings)
+    : undefined;
+  return expr.readsGlobal ? mergeSources(sources, globalSources) : sources;
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

@@ -13,8 +13,13 @@ import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML } from "./marko-config";
-import { find, forEach, type Opt, push } from "./optional";
+import { isOptimize, isOutputHTML, isPersisted } from "./marko-config";
+import { find, forEach, type Opt, push, toArray } from "./optional";
+import {
+  getPatchFillBindings,
+  getPatchFillKey,
+  isPatchFillBinding,
+} from "./persisted";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -50,10 +55,7 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import {
-  getExprIfSerialized,
-  getSerializeGuardForAny,
-} from "./serialize-guard";
+import { getExprIfSerialized, scopeReasonIdentifier } from "./serialize-guard";
 import {
   getSerializeReason,
   isReasonDynamic,
@@ -1031,6 +1033,21 @@ export function writeSignals(section: Section) {
         replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);
       }
 
+      // Fill registration rides the intersection's own declaration, so
+      // tree-shaking keeps it exactly when the intersection is retained.
+      if (isPersisted() && Array.isArray(signal.referencedBindings)) {
+        for (const member of signal.referencedBindings) {
+          if (isPatchFillBinding(member)) {
+            value = callRuntime(
+              "_fillable",
+              t.stringLiteral(getPatchFillKey(member)),
+              getScopeAccessorLiteral(member, true),
+              value,
+            );
+          }
+        }
+      }
+
       if (signal.register) {
         value = callRuntime(
           "_var_resume",
@@ -1231,6 +1248,10 @@ export function addHTMLEffectCall(
   signal.hasHTMLEffect = signal.hasSideEffect = true;
 }
 
+function toSequenceExpression(exprs: t.Expression[]) {
+  return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
+}
+
 export function writeHTMLResumeStatements(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
 ) {
@@ -1355,8 +1376,12 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
+  // Under persisted the reason is binary (`1` page render, `undefined`
+  // patch) and the whole scope write rides it below, so per-property guards
+  // are redundant inside it.
+  const persisted = isPersisted();
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
-    if (isSameReason(sectionSerializeReason, reason)) return expr;
+    if (persisted || isSameReason(sectionSerializeReason, reason)) return expr;
     return getExprIfSerialized(section, reason, expr);
   };
 
@@ -1410,6 +1435,19 @@ export function writeHTMLResumeStatements(
       writeSerializedBinding(binding);
     }
   });
+
+  // Fills are the scope write's complement under `_persisted_reason`: the
+  // reason picks serialization on a page render, fills on a patch (emitted
+  // as the write's else branch below); the client applies those whose
+  // intersections survived tree-shaking.
+  const fillCalls = toArray(getPatchFillBindings(section), (binding) =>
+    callRuntime(
+      "_patch_value",
+      scopeIdIdentifier,
+      t.stringLiteral(getPatchFillKey(binding)),
+      getDeclaredBindingExpression(binding),
+    ),
+  );
 
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
@@ -1478,14 +1516,33 @@ export function writeHTMLResumeStatements(
       }
     }
 
+    const writeCall = writeScopeBuilder
+      ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
+      : callRuntime("_scope", ...writeScopeArgs);
     body.push(
       t.expressionStatement(
-        getExprIfSerialized(
-          section,
-          sectionSerializeReason,
-          writeScopeBuilder
-            ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
-            : callRuntime("_scope", ...writeScopeArgs),
+        persisted
+          ? fillCalls.length
+            ? t.conditionalExpression(
+                scopeReasonIdentifier(section),
+                writeCall,
+                toSequenceExpression(fillCalls),
+              )
+            : t.logicalExpression(
+                "&&",
+                scopeReasonIdentifier(section),
+                writeCall,
+              )
+          : getExprIfSerialized(section, sectionSerializeReason, writeCall),
+      ),
+    );
+  } else if (fillCalls.length) {
+    body.push(
+      t.expressionStatement(
+        t.logicalExpression(
+          "||",
+          scopeReasonIdentifier(section),
+          toSequenceExpression(fillCalls),
         ),
       ),
     );

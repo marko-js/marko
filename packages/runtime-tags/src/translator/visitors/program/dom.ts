@@ -5,12 +5,13 @@ import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
+import { getPatchFillBindings } from "../../util/persisted";
 import {
   BindingType,
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
 } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSectionForBody,
@@ -166,6 +167,12 @@ export default {
           }
         }
       });
+
+      // Patches deliver server contributions to registered fill signals, so
+      // a template with fills ships the patcher.
+      if (getPatchFillBindings(section)) {
+        importRuntimeFeature("patch-value");
+      }
 
       const written = writeSignals(section);
       writeRegisteredFns();

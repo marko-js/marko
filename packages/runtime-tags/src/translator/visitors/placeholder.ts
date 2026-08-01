@@ -33,6 +33,7 @@ import {
   addSerializeReason,
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
@@ -181,8 +182,23 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const siblingText = extra[kSiblingText]!;
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
+    const holeSources =
+      isPersisted() && node.escape && !section.parent
+        ? getSerializeSourcesForExpr(valueExtra)
+        : undefined;
+    if (holeSources?.state && holeSources.global) {
+      throw placeholder.buildCodeFrameError(
+        "Persisted templates do not yet support `$global` contributions to stateful expressions.",
+      );
+    }
+    // A hole fed by client state never captures directly: the client owns
+    // part of its value, and it recomputes through the signal graph instead.
     const isPatch =
-      isPersisted() && node.escape && !section.parent && !!nodeBinding;
+      isPersisted() &&
+      node.escape &&
+      !section.parent &&
+      !!nodeBinding &&
+      !holeSources?.state;
     const isPatchText = isHTML && isPatch;
     // An interactive page receives assets transitively through its dom
     // program, so the feature import rides both outputs.
