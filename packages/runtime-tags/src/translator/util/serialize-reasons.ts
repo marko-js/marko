@@ -11,10 +11,9 @@ import {
   type Binding,
   compareSources,
   getCanonicalBinding,
-  type InputBinding,
   isReferencedExtra,
+  globalSources,
   mergeSources,
-  type ParamBinding,
   type ReferencedBindings,
   type Sources,
 } from "./references";
@@ -151,7 +150,7 @@ export function addOwnerSerializeReason(
 
 export function isReasonDynamic(
   reason: undefined | SerializeReason,
-): reason is { state: undefined; param: OneMany<InputBinding | ParamBinding> } {
+): reason is Sources & { state: undefined } {
   return !!reason && reason !== true && !reason.state;
 }
 
@@ -184,9 +183,10 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  if (isReferencedExtra(expr)) {
-    return getSerializeSourcesForRef(expr.referencedBindings);
-  }
+  const sources = isReferencedExtra(expr)
+    ? getSerializeSourcesForRef(expr.referencedBindings)
+    : undefined;
+  return expr.readsGlobal ? mergeSources(sources, globalSources) : sources;
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

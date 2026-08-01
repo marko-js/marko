@@ -66,6 +66,7 @@ import {
   addSerializeExpr,
   addSerializeReason,
   getSerializeReason,
+  getSerializeSourcesForExpr,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
@@ -620,7 +621,22 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                if (isPersisted() && !tagSection.parent) {
+                const attrSources =
+                  isPersisted() && !tagSection.parent
+                    ? getSerializeSourcesForExpr(value.extra || {})
+                    : undefined;
+                if (attrSources?.state && attrSources.global) {
+                  throw tag.buildCodeFrameError(
+                    `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
+                  );
+                }
+                // An attribute fed by client state never captures directly: the
+                // client owns part of its value and recomputes it instead.
+                if (
+                  isPersisted() &&
+                  !tagSection.parent &&
+                  !attrSources?.state
+                ) {
                   write`${callRuntime(
                     "_patch_attr",
                     getScopeIdIdentifier(tagSection),
@@ -1003,7 +1019,20 @@ export default {
                   ),
                 );
               } else {
-                if (isPersisted() && !tagSection.parent) {
+                const attrSources =
+                  isPersisted() && !tagSection.parent
+                    ? getSerializeSourcesForExpr(value.extra || {})
+                    : undefined;
+                if (attrSources?.state && attrSources.global) {
+                  throw tag.buildCodeFrameError(
+                    `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
+                  );
+                }
+                if (
+                  isPersisted() &&
+                  !tagSection.parent &&
+                  !attrSources?.state
+                ) {
                   // An interactive page receives assets transitively through
                   // its dom program, so the feature import rides both outputs.
                   importRuntimeFeature("patch-attr");
