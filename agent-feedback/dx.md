@@ -265,3 +265,16 @@ Boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) have no case in th
 `packages/runtime-class/package.json` › `files` | 2026-07-24 | impact:low | effort:high
 
 `packages/runtime-class` declares no `"type"`, and 79 ESM-syntax `.js` files sit under `src` alongside 137 CommonJS ones, so Node parses each ESM file as CommonJS, fails, and reparses it as ESM. It is not silent: `pnpm run compile -t class` — the `-t class` form root `AGENTS.md` documents — prints `[MODULE_TYPELESS_PACKAGE_JSON] ... packages/runtime-class/src/translator/index.js ... incurs a performance overhead`. It is harder than `packages/compiler` was: that package fixed it with a `src/package.json` `{"type":"module"}` marker it never publishes, whereas `runtime-class` lists `src` in `files`, so the marker would ship and all 137 CJS files would have to convert. Marko 5 is in maintenance, so weigh the churn before starting. Re-verify: `pnpm run compile -t class -o dom -d /tmp/x.marko` and observe the warning.
+
+## Debug and optimize render snapshots can silently diverge
+
+The fixture harness snapshots `render.debug.md` and `render.md` independently
+and nothing asserts they describe the same behavior. A translator bug that
+only manifests in optimize mode (eg an accessor emitted unencoded where the
+runtime decodes under `!MARKO_DEBUG` — see `getScopeAccessorLiteral`'s
+`encoded` flag) regenerates an optimize snapshot with a missing/blank update
+step and every test stays green; it was caught only by human snapshot review.
+A cheap guard: after both modes run, `main.test.ts` could compare the two
+render logs' step/mutation structure (not exact html, which legitimately
+differs in whitespace) and fail on a step present in one but empty in the
+other.
