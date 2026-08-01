@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { addAssetImport } from "../util/asset-imports";
 import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
@@ -17,6 +18,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import {
   compareSources,
@@ -24,7 +26,12 @@ import {
   kBranchSerializeReason,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import {
+  callRuntime,
+  getHTMLRuntime,
+  getRuntimePath,
+  importRuntimeFeature,
+} from "../util/runtime";
 import {
   ContentType,
   getBranchRendererArgs,
@@ -47,6 +54,7 @@ import {
   isStaticSerializeReason,
   type SerializeReasons,
 } from "../util/serialize-reasons";
+import { getShellId, isShellDropped, recordShellRoot } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -110,6 +118,19 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
+      if (isPersisted() && !ifTagSection.parent) {
+        addAssetImport(
+          ifTag.hub.file,
+          `${getRuntimePath("dom")}/patch-branch.feat`,
+        );
+        // Branch shells build at program analyze exit, once child bindings
+        // exist; record the roots here.
+        for (const [, branchBody] of branches) {
+          if (branchBody) {
+            recordShellRoot(branchBody);
+          }
+        }
+      }
     }
   },
   translate: translateByTarget({
@@ -175,15 +196,22 @@ export const IfTag = {
           let statement: t.Statement | undefined;
           let singleChild = true;
 
-          for (const [, branchBody] of branches) {
-            if (
-              !(
-                branchBody?.content?.singleChild &&
-                branchBody.content.startType !== ContentType.Text
-              )
-            ) {
-              singleChild = false;
-              break;
+          // A patchable conditional keeps its markers: the shipped-branch
+          // swap anchors at the marker node, which elision would remove.
+          const persistedPatch = isPersisted() && !ifTagSection.parent;
+          if (persistedPatch) {
+            singleChild = false;
+          } else {
+            for (const [, branchBody] of branches) {
+              if (
+                !(
+                  branchBody?.content?.singleChild &&
+                  branchBody.content.startType !== ContentType.Text
+                )
+              ) {
+                singleChild = false;
+                break;
+              }
             }
           }
 
@@ -236,7 +264,9 @@ export const IfTag = {
 
           if (branchSerializeReasons) {
             const skipParentEnd =
-              onlyChildParentTagName && markerSerializeReason;
+              !persistedPatch &&
+              onlyChildParentTagName &&
+              markerSerializeReason;
             if (skipParentEnd) {
               getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
             }
@@ -275,6 +305,26 @@ export const IfTag = {
                     ? t.numericLiteral(0)
                     : undefined,
                 singleChild ? t.numericLiteral(1) : undefined,
+                // Shell ids per branch index: a patch ships the shell so the
+                // client constructs diverged branches without bundling them.
+                persistedPatch
+                  ? t.arrayExpression(
+                      branches.map(([branchTag, branchBody]) => {
+                        // Only ids with a built shell ship; a bare `0` makes
+                        // divergence to the branch reject the patch.
+                        const id =
+                          branchBody &&
+                          !isShellDropped(branchBody) &&
+                          getShellId(branchBody);
+                        return id &&
+                          branchTag.hub.file.metadata.marko.persistedShells?.[
+                            id
+                          ]
+                          ? t.stringLiteral(id)
+                          : t.numericLiteral(0);
+                      }),
+                    )
+                  : undefined,
               ),
             );
           }
@@ -301,6 +351,11 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
+          if (isPersisted() && !ifTagSection.parent) {
+            // An interactive page receives assets transitively through its
+            // dom program, so the feature import rides both outputs.
+            importRuntimeFeature("patch-branch");
+          }
           const ifTagExtra = branches[0][0].node.extra!;
           const nodeRef = getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection);
 

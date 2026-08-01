@@ -1479,7 +1479,9 @@ export function writeHTMLResumeStatements(
       : callRuntime("_scope", ...writeScopeArgs);
     body.push(
       t.expressionStatement(
-        persisted
+        // Child sections gate through their cross-section guards (derived
+        // from the root reason, so still binary under persisted).
+        persisted && !section.parent
           ? fillCalls.length
             ? t.conditionalExpression(
                 scopeReasonIdentifier(section),
