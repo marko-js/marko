@@ -60,6 +60,20 @@ type ScopeInternals = PartialScope & {
 
 let $chunk: Chunk;
 
+// Patch rendering (persisted pages) intercepts branch writes; registered by
+// the patch entry so normal SSR bundles carry none of it.
+export let onWriteBranch:
+  | ((
+      scopeId: number,
+      accessor: Accessor,
+      cb: () => number | undefined | void,
+      shellIds?: string[],
+    ) => 1 | void)
+  | undefined;
+export const _patch_branch_writes = (
+  handler: NonNullable<typeof onWriteBranch>,
+) => (onWriteBranch = handler);
+
 export function getChunk(): Chunk | undefined {
   return $chunk;
 }
@@ -362,7 +376,7 @@ export function _var(
 
 function writeScopePassive(scopeId: number, partialScope: PartialScope) {
   const target = $chunk.serializeState;
-  const scope = _scope_with_id(scopeId);
+  const scope = scopeWithId($chunk.boundary.state, scopeId);
   const passive = (target.passiveScopes ||= {});
   Object.assign(scope, partialScope);
   passive[scopeId] = Object.assign(passive[scopeId] || {}, partialScope);
@@ -644,7 +658,9 @@ export function _if(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellIds?: string[],
 ) {
+  if (onWriteBranch?.(scopeId, accessor, cb, shellIds)) return;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
@@ -789,7 +805,7 @@ export function _existing_scope(scopeId: number) {
 }
 
 export function _scope_with_id(scopeId: number) {
-  return scopeWithId($chunk.boundary.state, scopeId);
+  return $chunk.boundary.state.scopeRef(scopeId);
 }
 
 function scopeWithId(state: State, scopeId: number) {
@@ -1135,6 +1151,7 @@ export class State implements SerializeState {
   public resumes = "";
   public nonceAttr = "";
   public serializer = new Serializer();
+  declare writesPatches?: boolean;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   public flushScopes = false;
@@ -1177,8 +1194,8 @@ export class State implements SerializeState {
     return this.runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]";
   }
 
-  get writesPatches() {
-    return false;
+  scopeRef(scopeId: number): ScopeInternals | undefined {
+    return scopeWithId(this, scopeId);
   }
 
   get runtimePrefix() {
