@@ -54,9 +54,9 @@ import {
   setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
@@ -186,6 +186,11 @@ export default {
 
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;
+
+    if (!isAttrTag && !getOnlyChildParentTagName(tag)) {
+      structure.visit(tag, WalkCode.Replace);
+      structure.enterShallow(tag);
+    }
   },
   translate: translateByTarget({
     html: {
@@ -201,11 +206,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-
-        if (!getOnlyChildParentTagName(tag)) {
-          walks.visit(tag, WalkCode.Replace);
-          walks.enterShallow(tag);
-        }
 
         writer.flushBefore(tag);
       },
@@ -326,11 +326,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-
-        if (!getOnlyChildParentTagName(tag)) {
-          walks.visit(tag, WalkCode.Replace);
-          walks.enterShallow(tag);
-        }
       },
       exit(tag) {
         if (tag.node.body.attributeTags) return;

@@ -1,35 +1,31 @@
 import { types as t } from "@marko/compiler";
 
 import { isNonHTMLText } from "../util/is-non-html-text";
+import { isOutputHTML } from "../util/marko-config";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
+import * as structure from "../util/structure";
 import type { TemplateVisitor } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 
-const kSharedText = Symbol("text merges its walk step with a sibling node");
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    [kSharedText]?: true;
-  }
-}
-
 export default {
-  analyze(text) {
-    if (isNonHTMLText(text)) return;
+  analyze: {
+    exit(text) {
+      if (isNonHTMLText(text)) return;
 
-    // Adjacent static text merges into one DOM text node, so only the run's first node emits
-    // its walk step; defer when the previous sibling is static text so a run doesn't over-count.
-    if (isStaticText(getPrevStaticSibling(text))) {
-      (text.node.extra ??= {})[kSharedText] = true;
-    }
+      structure.writeTo(text)`${text.node.value}`;
+      // Adjacent static text merges into one DOM text node, so only the run's
+      // first node emits its walk step; later nodes defer to it.
+      if (!isStaticText(getPrevStaticSibling(text))) {
+        structure.enterShallow(text);
+      }
+    },
   },
   translate: {
     exit(text) {
       if (isNonHTMLText(text)) return;
 
-      writer.writeTo(text)`${text.node.value}`;
-      if (!text.node.extra?.[kSharedText]) {
-        walks.enterShallow(text);
+      if (isOutputHTML()) {
+        writer.writeTo(text)`${text.node.value}`;
       }
       text.remove();
     },

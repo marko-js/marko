@@ -55,10 +55,10 @@ import {
   setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
@@ -79,6 +79,12 @@ export const IfTag = {
       const ifTagSection = getOrCreateSection(ifTag);
       const ifTagExtra = (ifTag.node.extra ??= {});
       const mergeReferenceNodes: t.Node[] = [];
+      // Recorded at the last branch so the only-child check sees the full
+      // branch count; nothing records to this section between the branches.
+      if (!getOnlyChildParentTagName(ifTag, branches.length)) {
+        structure.visit(ifTag, WalkCode.Replace);
+        structure.enterShallow(ifTag);
+      }
       const nodeBinding = getOptimizedOnlyChildNodeBinding(
         ifTag,
         ifTagSection,
@@ -113,11 +119,6 @@ export const IfTag = {
 
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
-
-        if (isRoot(tag) && !getOnlyChildParentTagName(tag)) {
-          walks.visit(tag, WalkCode.Replace);
-          walks.enterShallow(tag);
-        }
 
         writer.flushBefore(tag);
 
@@ -291,11 +292,6 @@ export const IfTag = {
 
         if (bodySection) {
           setSectionParentIsOwner(bodySection, true);
-        }
-
-        if (isRoot(tag) && !getOnlyChildParentTagName(tag)) {
-          walks.visit(tag, WalkCode.Replace);
-          walks.enterShallow(tag);
         }
       },
       exit(tag) {
@@ -620,8 +616,4 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
 function isLastBranch(tag: t.NodePath<t.MarkoTag>) {
   const branches = getBranches(tag);
   return branches[branches.length - 1][0] === tag;
-}
-
-function isRoot(tag: t.NodePath<t.MarkoTag>) {
-  return isCoreTagName(tag, "if");
 }

@@ -18,6 +18,7 @@ import {
   getAccessorPrefix,
   getAccessorProp,
 } from "../../util/get-accessor-char";
+import { getStaticTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import {
   knownTagAnalyze,
@@ -53,6 +54,7 @@ import {
   getSectionForBody,
   type Section,
   startSection,
+  StructureKind,
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
@@ -71,6 +73,7 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { createProgramState } from "../../util/state";
+import * as structure from "../../util/structure";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import { toMemberExpression } from "../../util/to-property-name";
 import {
@@ -79,7 +82,6 @@ import {
   translateAttrs,
 } from "../../util/translate-attrs";
 import type { TemplateVisitor } from "../../util/visitors";
-import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath } from "./custom-tag";
@@ -139,6 +141,11 @@ export default {
             getBindingPropTree(definedBodySection.params),
         );
 
+        structure.child(tag, getStaticTagName(tag.node), {
+          kind: StructureKind.SectionRef,
+          section: definedBodySection,
+        });
+
         return;
       }
 
@@ -174,7 +181,7 @@ export default {
         ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
       }
 
-      startSection(tagBody);
+      const bodySection = startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
       addSerializeExpr(tagSection, hasVar || tagExtra, nodeBinding);
 
@@ -185,6 +192,18 @@ export default {
         !node.body.body.length
       ) {
         tagExtra[kDirectContent] = true;
+      }
+
+      // A class API tag without a tags template renders only through the
+      // interop: dom output removes it, so it and its body record nothing.
+      if (tagExtra.featureType !== "class" || getTagTemplate(tag)) {
+        structure.visit(
+          tag,
+          hasVar ? WalkCode.DynamicTagWithVar : WalkCode.Replace,
+        );
+        structure.enterShallow(tag);
+      } else if (bodySection) {
+        bodySection.structure = null;
       }
     },
   },
@@ -199,19 +218,6 @@ export default {
         tag.remove();
         return;
       }
-
-      if (tagExtra?.defineBodySection) {
-        if (isOutputHTML()) {
-          writer.flushBefore(tag);
-        }
-        return;
-      }
-
-      walks.visit(
-        tag,
-        tag.node.var ? WalkCode.DynamicTagWithVar : WalkCode.Replace,
-      );
-      walks.enterShallow(tag);
 
       if (isOutputHTML()) {
         writer.flushBefore(tag);
@@ -233,8 +239,6 @@ export default {
             propTree,
           );
         } else {
-          const write = writer.writeTo(tag);
-
           knownTagTranslateDOM(
             tag,
             propTree,
@@ -278,13 +282,6 @@ export default {
                 );
               }
             },
-          );
-
-          write`${() => writer.getSectionMetaIdentifiers(definedBodySection).writes || ""}`;
-          walks.injectWalks(
-            tag,
-            tag.get("name").toString(),
-            () => writer.getSectionMetaIdentifiers(definedBodySection).walks,
           );
 
           tag.remove();
@@ -514,6 +511,8 @@ export default {
         }
       } else {
         const section = getSection(tag);
+        // The body recorded its structure at analyze, but its children never
+        // translate in this output; resolve it to nothing.
         const bodySection = getSectionForBody(tag.get("body"));
         const signal = getSignal(section, nodeBinding, "dynamicTag");
         let tagVarSignal: Signal | undefined;

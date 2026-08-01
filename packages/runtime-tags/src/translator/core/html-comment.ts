@@ -7,7 +7,10 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
-import { bodyToTextLiteral } from "../util/body-to-text-literal";
+import {
+  bodyToRawTextLiteral,
+  bodyToTextLiteral,
+} from "../util/body-to-text-literal";
 import { isOutputHTML } from "../util/marko-config";
 import {
   type Binding,
@@ -25,7 +28,7 @@ import {
   getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
-import * as walks from "../util/walks";
+import * as structure from "../util/structure";
 import * as writer from "../util/writer";
 
 const kNodeBinding = Symbol("comment tag binding");
@@ -58,6 +61,7 @@ export default {
       needsBinding = true;
     }
 
+    let nodeBinding: Binding | undefined;
     const referenceNodes: t.Node[] = [];
     for (const child of tag.get("body").get("body")) {
       if (child.isMarkoPlaceholder()) {
@@ -72,7 +76,7 @@ export default {
     if (needsBinding) {
       const tagSection = getOrCreateSection(tag);
       const tagExtra = mergeReferences(tagSection, tag.node, referenceNodes);
-      const nodeBinding = (tagExtra[kNodeBinding] = createBinding(
+      nodeBinding = tagExtra[kNodeBinding] = createBinding(
         "#comment",
         BindingType.dom,
         tagSection,
@@ -81,26 +85,33 @@ export default {
         undefined,
         undefined,
         !!tagVar,
-      ));
+      );
 
       trackDomVarReferences(tag, nodeBinding);
 
       addSerializeExpr(tagSection, !!tagVar || tagExtra, nodeBinding);
     }
+
+    // The whole client template records here (children are skipped); the html
+    // output stream writes its own markers during translate.
+    const write = structure.writeTo(tag);
+    if (nodeBinding) {
+      structure.visit(tag, WalkCode.Get);
+    }
+    structure.enter(tag);
+    write`<!--`;
+    const textLiteral = bodyToRawTextLiteral(tag.node.body);
+    if (t.isStringLiteral(textLiteral)) {
+      // Written into parsed markup, so it gets `_escape_comment`'s
+      // transform at compile time.
+      write`${escapeCommentText(textLiteral.value)}`;
+    }
+    structure.exit(tag);
+    write`-->`;
+
     tag.skip();
   },
   translate: {
-    enter(tag) {
-      const tagExtra = tag.node.extra!;
-      const nodeBinding = tagExtra[kNodeBinding];
-
-      if (nodeBinding) {
-        walks.visit(tag, WalkCode.Get);
-      }
-
-      walks.enter(tag);
-      writer.writeTo(tag)`<!--`;
-    },
     exit(tag) {
       const tagSection = getSection(tag);
       const tagExtra = tag.node.extra!;
@@ -109,6 +120,7 @@ export default {
 
       if (isOutputHTML()) {
         const { body } = tag.node.body;
+        write`<!--`;
         if (nodeBinding && isEmptiableCommentBody(body)) {
           // A resumable comment must serialize with content, else its trailing
           // resume marker claims a stray text node; pad an empty body with a space.
@@ -130,14 +142,11 @@ export default {
             }
           }
         }
+        write`-->`;
       } else {
         const textLiteral = bodyToTextLiteral(tag.node.body);
 
-        if (t.isStringLiteral(textLiteral)) {
-          // Written into parsed markup, so it gets `_escape_comment`'s
-          // transform at compile time.
-          write`${escapeCommentText(textLiteral.value)}`;
-        } else {
+        if (!t.isStringLiteral(textLiteral)) {
           addStatement(
             "render",
             tagSection,
@@ -152,9 +161,6 @@ export default {
           );
         }
       }
-
-      walks.exit(tag);
-      write`-->`;
 
       if (nodeBinding) {
         writer.markNode(

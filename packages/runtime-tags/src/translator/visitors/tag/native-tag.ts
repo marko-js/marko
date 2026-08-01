@@ -19,7 +19,10 @@ import {
 } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { addAssetImport } from "../../util/asset-imports";
-import { bodyToTextLiteral } from "../../util/body-to-text-literal";
+import {
+  bodyToRawTextLiteral,
+  bodyToTextLiteral,
+} from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorProp } from "../../util/get-accessor-char";
@@ -56,6 +59,7 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  type StructureVisit,
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
@@ -66,6 +70,7 @@ import {
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
+import * as structure from "../../util/structure";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import {
   toMemberExpression,
@@ -74,13 +79,13 @@ import {
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
-import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSkipEndTag = Symbol("skip native tag mark");
 const kTagContentAttr = Symbol("tag could have dynamic content attribute");
+const kVisitOp = Symbol("native tag structure visit");
 
 const htmlSelectArgs = new WeakMap<
   t.MarkoTag,
@@ -98,6 +103,7 @@ declare module "@marko/compiler/dist/types" {
     [kNativeTagBinding]?: Binding;
     [kSkipEndTag]?: true;
     [kTagContentAttr]?: true;
+    [kVisitOp]?: StructureVisit;
   }
 }
 
@@ -395,6 +401,67 @@ export default {
 
         addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
       }
+
+      const write = structure.writeTo(tag);
+      // Unclaimed until exit: a child control flow tag may still bind this tag
+      // through the only-child optimization.
+      (node.extra ??= {})[kVisitOp] = structure.visit(tag, WalkCode.Get, false);
+
+      write`<${tagName}`;
+
+      for (const attr of getUsedAttrs(tagName, tag.node, true).staticAttrs) {
+        const { name, value } = attr;
+        const { confident, computed } = value.extra || {};
+
+        switch (name) {
+          case "class":
+          case "style": {
+            const helper = `_attr_${name}` as const;
+            if (confident) {
+              write`${getHTMLRuntime()[helper](computed)}`;
+            } else {
+              const meta: DelimitedAttrMeta = {
+                staticItems: undefined,
+                dynamicItems: undefined,
+                dynamicValues: undefined,
+              };
+              trackDelimitedAttrValue(value, meta);
+              if (!meta.dynamicItems && meta.staticItems) {
+                write`${getHTMLRuntime()[helper](meta.staticItems)}`;
+              }
+            }
+            break;
+          }
+          default:
+            if (confident) {
+              write`${getHTMLRuntime()._attr(name, computed)}`;
+            }
+            break;
+        }
+      }
+
+      write`>`;
+      structure.enter(tag);
+    },
+    exit(tag) {
+      const tagName = getCanonicalTagName(tag);
+      const tagExtra = tag.node.extra!;
+      const visitOp = tagExtra[kVisitOp];
+      if (visitOp) visitOp.claimed = !!tagExtra[kNativeTagBinding];
+
+      if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
+        const write = structure.writeTo(tag);
+        if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
+          const textLiteral = bodyToRawTextLiteral(tag.node.body);
+          if (t.isStringLiteral(textLiteral)) {
+            write`${textLiteral.value}`;
+          }
+        }
+
+        write`</${tagName}>`;
+      }
+
+      structure.exit(tag);
     },
   },
   translate: translateByTarget({
@@ -781,16 +848,9 @@ export default {
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra[kNativeTagBinding];
         const tagDef = getTagDef(tag);
-        const write = writer.writeTo(tag);
         const tagSection = getSection(tag);
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
-
-        if (nodeBinding) {
-          walks.visit(tag, WalkCode.Get);
-        }
-
-        write`<${tagName}`;
 
         const {
           staticAttrs,
@@ -871,16 +931,14 @@ export default {
 
         for (const attr of staticAttrs) {
           const { name, value } = attr;
-          const { confident, computed } = value.extra || {};
+          const { confident } = value.extra || {};
           const valueReferences = value.extra?.referencedBindings;
 
           switch (name) {
             case "class":
             case "style": {
               const helper = `_attr_${name}` as const;
-              if (confident) {
-                write`${getHTMLRuntime()[helper](computed)}`;
-              } else {
+              if (!confident) {
                 const nodeExpr = createScopeReadExpression(nodeBinding!);
                 const meta: DelimitedAttrMeta = {
                   staticItems: undefined,
@@ -895,10 +953,6 @@ export default {
                     callRuntime(helper, nodeExpr, value),
                   );
                 } else {
-                  if (meta.staticItems) {
-                    write`${getHTMLRuntime()[helper](meta.staticItems)}`;
-                  }
-
                   if (meta.dynamicValues) {
                     const keys = Object.keys(meta.dynamicValues);
 
@@ -947,8 +1001,9 @@ export default {
               break;
             }
             default:
+              // Confident values are recorded into the template at analyze.
               if (confident) {
-                write`${getHTMLRuntime()._attr(name, computed)}`;
+                break;
               } else if (isEventHandler(name)) {
                 addStatement(
                   "effect",
@@ -1080,10 +1135,6 @@ export default {
             true,
           );
         }
-
-        write`>`;
-
-        walks.enter(tag);
       },
       exit(tag) {
         const tagExtra = tag.node.extra!;
@@ -1092,12 +1143,9 @@ export default {
         const tagName = getCanonicalTagName(tag);
 
         if (!openTagOnly) {
-          const write = writer.writeTo(tag);
           if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
             const textLiteral = bodyToTextLiteral(tag.node.body);
-            if (t.isStringLiteral(textLiteral)) {
-              write`${textLiteral}`;
-            } else {
+            if (!t.isStringLiteral(textLiteral)) {
               addStatement(
                 "render",
                 getSection(tag),
@@ -1118,11 +1166,8 @@ export default {
               .insertBefore(tag.node.body.body)
               .forEach((child) => child.skip());
           }
-
-          write`</${tagName}>`;
         }
 
-        walks.exit(tag);
         tag.remove();
       },
     },
@@ -1242,7 +1287,9 @@ function getDOMControllableDefaultHelper(
     : (`${controllable.helper}_default` as const);
 }
 
-function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
+// `staticOnly` skips building the spread expression (analyze records only the
+// static attrs, and the nonce prop reads translate-phase identifiers).
+function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
   const seen: Record<string, t.MarkoAttribute> = Object.create(null);
   const { attributes } = tag;
   const maybeStaticAttrs = new Set<t.MarkoAttribute>();
@@ -1307,6 +1354,18 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   }
 
   const staticAttrs = [...maybeStaticAttrs].reverse();
+
+  if (staticOnly) {
+    // Analyze reads only the static attrs; skip building the spread AST.
+    return {
+      injectNonce,
+      staticAttrs,
+      staticContentAttr,
+      staticControllable,
+      spreadExpression,
+      skipExpression,
+    };
+  }
 
   if (spreadProps) {
     if (staticControllable) {
