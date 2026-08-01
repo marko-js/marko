@@ -37,6 +37,7 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
+import { isPatchCaptureSection } from "../../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -69,6 +70,7 @@ import {
   getSerializeSourcesForExpr,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
+import { dropSectionShell } from "../../util/shell";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import * as structure from "../../util/structure";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -280,7 +282,11 @@ export default {
           getProgram().node.extra.isInteractive = true;
         }
 
-        if (isPersisted() && hasDynamicAttributes && !tagSection.parent) {
+        if (
+          isPersisted() &&
+          hasDynamicAttributes &&
+          isPatchCaptureSection(tagSection)
+        ) {
           addSerializeReason(tagSection, true, nodeBinding);
           addAssetImport(
             tag.hub.file,
@@ -622,7 +628,7 @@ export default {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
                 const attrSources =
-                  isPersisted() && !tagSection.parent
+                  isPersisted() && isPatchCaptureSection(tagSection)
                     ? getSerializeSourcesForExpr(value.extra || {})
                     : undefined;
                 if (attrSources?.state && attrSources.global) {
@@ -630,11 +636,15 @@ export default {
                     `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
                   );
                 }
+                if (attrSources?.state && tagSection.isBranch) {
+                  // A state-fed attribute never captures; see placeholder.
+                  dropSectionShell(tagSection);
+                }
                 // An attribute fed by client state never captures directly: the
                 // client owns part of its value and recomputes it instead.
                 if (
                   isPersisted() &&
-                  !tagSection.parent &&
+                  isPatchCaptureSection(tagSection) &&
                   !attrSources?.state
                 ) {
                   write`${callRuntime(
@@ -1018,7 +1028,7 @@ export default {
                 );
               } else {
                 const attrSources =
-                  isPersisted() && !tagSection.parent
+                  isPersisted() && isPatchCaptureSection(tagSection)
                     ? getSerializeSourcesForExpr(value.extra || {})
                     : undefined;
                 if (attrSources?.state && attrSources.global) {
@@ -1026,9 +1036,13 @@ export default {
                     `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
                   );
                 }
+                if (attrSources?.state && tagSection.isBranch) {
+                  // A state-fed attribute never captures; see placeholder.
+                  dropSectionShell(tagSection);
+                }
                 if (
                   isPersisted() &&
-                  !tagSection.parent &&
+                  isPatchCaptureSection(tagSection) &&
                   !attrSources?.state
                 ) {
                   // An interactive page receives assets transitively through

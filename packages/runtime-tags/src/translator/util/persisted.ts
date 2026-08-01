@@ -4,6 +4,7 @@ import * as BindingType from "./constants/binding-type";
 import { isPersisted } from "./marko-config";
 import { filter, indexOf, type Opt } from "./optional";
 import type { Binding } from "./references";
+import type { Section } from "./sections";
 import { getSerializeSourcesForRef } from "./serialize-reasons";
 
 export function scopeReasonRuntime() {
@@ -53,4 +54,11 @@ export function isPatchFillBinding(binding: Binding) {
   }
 
   return false;
+}
+
+// Sections whose text/attr holes emit direct patch captures: the root, and
+// patchable branch bodies (their captures ride the branch scope, which the
+// client pairs to the live branch or adopts into a constructed one).
+export function isPatchCaptureSection(section: Section) {
+  return !section.parent || (!!section.isBranch && !section.parent.parent);
 }
