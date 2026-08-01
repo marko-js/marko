@@ -84,7 +84,16 @@ export { BindingType };
 export interface Sources {
   state: Opt<Binding>;
   param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
 }
+
+// `$global` is request identity, not a binding: one bit covers every read
+// (per-property precision never affects guards or invalidation).
+export const globalSources: Sources = {
+  state: undefined,
+  param: undefined,
+  global: true,
+};
 
 export interface Binding {
   id: number;
@@ -814,6 +823,15 @@ function trackReference(
   addReadToExpression(root, reference, undefined);
 }
 
+// Stamps a persisted `$global` read on its (function-root aware) expression
+// so serialize sources see the request-derived dimension.
+export function trackGlobalReference(path: t.NodePath<t.Node>) {
+  const exprRoot = getExprRoot(getFnRoot(path) || path);
+  const section = getOrCreateSection(exprRoot);
+  const extra = (exprRoot.node.extra ??= { section });
+  extra.readsGlobal = true;
+}
+
 export function mergeReferences<T extends t.Node>(
   section: Section,
   target: T,
@@ -833,6 +851,7 @@ export function mergeReferences<T extends t.Node>(
     // create a `merged` cycle and double its reads.
     if (extra === targetExtra) continue;
     extra.merged = targetExtra;
+    if (extra.readsGlobal) targetExtra.readsGlobal = true;
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
@@ -1551,6 +1570,9 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     const seen = new Set<Binding>();
     forEach(exprs, (expr) => {
+      if (expr.readsGlobal) {
+        binding.sources = mergeSources(binding.sources, globalSources);
+      }
       if (isReferencedExtra(expr)) {
         forEach(expr.referencedBindings, (ref) => {
           if (!seen.has(ref)) {
@@ -1567,18 +1589,21 @@ function resolveDerivedSources(binding: Binding) {
 export function createSources(
   state: Sources["state"],
   param: Sources["param"],
+  global?: Sources["global"],
 ): Sources {
-  if (!(state || param)) {
+  if (!(state || param || global)) {
     throw new Error(
-      "Cannot create a serialize reason that does not reference state or a param.",
+      "Cannot create a serialize reason that does not reference state, a param, or $global.",
     );
   }
 
-  return { state, param };
+  return { state, param, global };
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
+
+  if (a.global !== b.global) return a.global ? 1 : -1;
 
   if (a.param) {
     if (!b.param) return 1;
@@ -1600,10 +1625,13 @@ export function compareSources(a: Sources, b: Sources) {
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
-  if (a.state === b.state && a.param === b.param) return a;
+  if (a.state === b.state && a.param === b.param && a.global === b.global) {
+    return a;
+  }
   return createSources(
     bindingUtil.union(a.state, b.state),
     unionParamSources(a.param, b.param),
+    a.global || b.global,
   );
 }
 

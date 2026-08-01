@@ -2,8 +2,8 @@ import { types as t } from "@marko/compiler";
 
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
-import { isOutputHTML } from "../util/marko-config";
-import { setReferencesScope } from "../util/references";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { setReferencesScope, trackGlobalReference } from "../util/references";
 import { importRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
@@ -16,6 +16,9 @@ declare module "@marko/compiler/dist/types" {
     /** `$signal` abort id for this expression root, allocated in analyze
      * (see below) so every translate reads the same id. */
     abortId?: number;
+    /** A persisted `$global` read: the expression's serialize sources gain
+     * the request-derived global dimension. */
+    readsGlobal?: boolean;
   }
 }
 
@@ -57,6 +60,7 @@ export default {
     if (identifier.scope.hasBinding(name)) return;
     if (name === "$global") {
       setReferencesScope(identifier);
+      if (isPersisted()) trackGlobalReference(identifier);
     } else if (name === "$signal") {
       const section = getOrCreateSection(identifier);
       section.hasAbortSignal = true;
