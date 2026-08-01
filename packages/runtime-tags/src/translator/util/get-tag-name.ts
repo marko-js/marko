@@ -1,4 +1,4 @@
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 export function getTagName<T extends t.MarkoTag>(
   tag: t.NodePath<T>,
 ): T["name"] extends t.StringLiteral ? string : string | undefined {
@@ -13,4 +13,14 @@ export function getTagName<T extends t.MarkoTag>(
   }
 
   return undefined as any;
+}
+
+// The best static name for identifier or literal tag names; used where a
+// name is needed unconditionally (uid hints), unlike \`getTagName\`.
+export function getStaticTagName(node: t.MarkoTag) {
+  return t.isIdentifier(node.name)
+    ? node.name.name
+    : t.isStringLiteral(node.name)
+      ? node.name.value
+      : "tag";
 }

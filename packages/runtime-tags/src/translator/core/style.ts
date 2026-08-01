@@ -41,12 +41,12 @@ import {
 } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
+import * as structure from "../util/structure";
 import {
   checkStyleInterpolations,
   htmlStyleTagAlternateMsg,
 } from "../util/style-interpolation";
 import { translateByTarget } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
@@ -102,6 +102,8 @@ export default {
       analyzeDynamicStyle(tag, names);
       // Dynamic styles write their shell statement in setup.
       addSetupStatement(getOrCreateSection(tag));
+      structure.visit(tag, WalkCode.Get);
+      structure.writeTo(tag)`<style></style>`;
     }
   },
   translate: translateByTarget({
@@ -236,11 +238,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   if (dynamic) {
     const { names, binding } = dynamic;
     const section = getSection(tag);
-    const write = writer.writeTo(tag);
     const readEl = () => createScopeReadExpression(binding);
-
-    walks.visit(tag, WalkCode.Get);
-    write`<style>`;
 
     addStatement(
       "render",
@@ -275,8 +273,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         !valueRef,
       );
     });
-
-    write`</style>`;
   }
 
   emitStyleImport(tag);

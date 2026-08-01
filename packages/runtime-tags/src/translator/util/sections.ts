@@ -7,7 +7,10 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
+import type { WalkCode } from "../../common/types";
 import * as ContentType from "./constants/content-type";
+import type * as Step from "./constants/step";
+import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import {
@@ -44,7 +47,53 @@ export type ParamSerializeReasonGroups = [
 ];
 
 type ContentType = ContentType.Value;
-export { ContentType };
+export { ContentType, StructureKind };
+
+// Babel nodes and functions never enter the structure stream; a child's
+// renderer is a plain descriptor resolution interprets per compile, deriving
+// its template and walks identifiers.
+export type StructureRef = StructureSectionRef | StructureExportRef;
+
+// A sibling section's hoisted template/walks constants.
+export interface StructureSectionRef {
+  kind: typeof StructureKind.SectionRef;
+  section: Section;
+}
+
+// A child template's exports, imported unless the child is this program.
+export interface StructureExportRef {
+  kind: typeof StructureKind.ExportRef;
+  program: t.ProgramExtra;
+  path: string;
+  hint: string;
+}
+
+// One ordered stream of client structure ops per section, recorded in analyze
+// traversal order; each output resolves what it needs from it.
+export type StructureOp =
+  | string // static markup
+  | Step.Value // walk enter/exit step
+  | StructureVisit
+  | StructureChild;
+
+export interface StructureVisit {
+  kind: typeof StructureKind.Visit;
+  // A non-`Get` visit implies a `<!>` marker node in the markup.
+  code:
+    | typeof WalkCode.Get
+    | typeof WalkCode.Replace
+    | typeof WalkCode.DynamicTagWithVar;
+  // A visit may start unclaimed until its tag's analyze exit settles the
+  // only-child decision; unclaimed visits drop, letting steps collapse.
+  claimed: boolean;
+}
+
+export interface StructureChild {
+  kind: typeof StructureKind.Child;
+  name: string;
+  hasVar: boolean;
+  renderer?: StructureRef;
+}
 
 export interface Section {
   id: number;
@@ -82,6 +131,9 @@ export interface Section {
     endType: ContentType;
     singleChild: boolean;
   };
+  // Null for a section compiled output never renders (class-API interop
+  // bodies); recorders skip it and descendants inherit it.
+  structure: StructureOp[] | null;
 }
 
 declare module "@marko/compiler/dist/types" {
@@ -152,6 +204,7 @@ export function startSection(
       abortSignalExprs: 0,
       readsOwner: false,
       isBranch: false,
+      structure: parentSection && !parentSection.structure ? null : [],
     };
     sections.push(section);
   }

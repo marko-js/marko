@@ -37,9 +37,9 @@ import {
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import * as structure from "../util/structure";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
 import { translateByTarget } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
@@ -122,6 +122,9 @@ export default {
 
     // The content renderer is initialized unconditionally in setup.
     addSetupStatement(section);
+
+    structure.visit(tag, WalkCode.Replace);
+    structure.enterShallow(tag);
   },
   translate: translateByTarget({
     html: {
@@ -178,9 +181,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-
-        walks.visit(tag, WalkCode.Replace);
-        walks.enterShallow(tag);
       },
       exit(tag) {
         const { node } = tag;
