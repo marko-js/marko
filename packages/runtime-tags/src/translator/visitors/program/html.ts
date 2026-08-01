@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getTagDefForTagName } from "@marko/compiler/babel-utils";
+import { getTagDef } from "@marko/compiler/babel-utils";
 
 import { isEventHandler } from "../../../common/helpers";
 import evaluate from "../../util/evaluate";
@@ -14,6 +14,7 @@ import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
+import { scopeReasonRuntime } from "../../util/persisted";
 import {
   BindingType,
   getReadReplacement,
@@ -29,7 +30,10 @@ import {
   type Section,
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
-import { isReasonDynamic } from "../../util/serialize-reasons";
+import {
+  getSerializeSourcesForExpr,
+  isReasonDynamic,
+} from "../../util/serialize-reasons";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -165,10 +169,14 @@ export default {
         }
       }
 
-      if (dynamicSerializeReason) {
+      if (dynamicSerializeReason || persisted) {
+        // Persisted output always declares the reason: statically serialized
+        // values ride it so patch renders drop them.
         renderContent.push(getScopeReasonDeclaration(section));
       } else {
-        renderContent.push(t.expressionStatement(callRuntime("_scope_reason")));
+        renderContent.push(
+          t.expressionStatement(callRuntime(scopeReasonRuntime())),
+        );
       }
 
       for (const child of program.get("body")) {
@@ -219,62 +227,70 @@ export default {
 } satisfies TemplateVisitor<t.Program>;
 
 export function assertSupportedPatch(program: t.NodePath<t.Program>) {
-  let unsupported: t.Node | undefined;
-  t.traverseFast(program.node, (node) => {
-    switch (node.type) {
-      case "MarkoPlaceholder":
-        if (!node.escape) {
-          unsupported = node;
-          return t.traverseFast.stop;
-        }
-        break;
-      case "MarkoScriptlet":
-        unsupported = node;
-        return t.traverseFast.stop;
-      case "MarkoTag": {
-        const tagName = t.isStringLiteral(node.name) && node.name.value;
-        const tagDef =
-          tagName && getTagDefForTagName(program.hub.file, tagName);
-        if (
-          !(
-            tagDef &&
-            tagDef.html &&
-            ((tagDef.htmlType as string) === "custom-element" ||
-              (!tagDef.template && !tagDef.renderer))
-          )
-        ) {
-          unsupported = node;
-          return t.traverseFast.stop;
-        }
-        // A tag that may become controllable keeps all of its dynamic
-        // attributes unsupported until patching understands controlled state.
-        const controllable = !!controllableFeatureFor(tagName as string);
-        for (const attr of node.attributes) {
-          if (
-            attr.type === "MarkoSpreadAttribute"
-              ? !evaluate(attr.value).confident
-              : !evaluate(attr.value).confident &&
-                (controllable ||
-                  (isEventOrChangeHandler(attr.name) &&
-                    !isEventHandler(attr.name)) ||
-                  attr.name === "class" ||
-                  attr.name === "style" ||
-                  (tagName === "option" && attr.name === "value"))
-          ) {
-            unsupported = attr;
-            return t.traverseFast.stop;
-          }
-        }
-        break;
-      }
-    }
-  });
-  if (unsupported) {
+  const unsupported = (node: t.Node) => {
     throw program.hub.buildError(
-      unsupported,
+      node,
       "Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.",
     );
-  }
+  };
+  program.traverse({
+    MarkoPlaceholder({ node }) {
+      if (!node.escape) unsupported(node);
+    },
+    MarkoScriptlet({ node }) {
+      unsupported(node);
+    },
+    MarkoTag(tag) {
+      const { node } = tag;
+      const tagName = t.isStringLiteral(node.name) && node.name.value;
+      // Client state participates through value fills: patches never carry
+      // state, and holes it feeds recompute through the signal graph.
+      if (tagName === "let" || tagName === "const") return;
+      const tagDef = getTagDef(tag);
+      // A templated custom tag re-renders during a patch; a state-fed
+      // attribute would resolve from the server's stale state, so those
+      // fail closed until per-instance classification exists.
+      if (tagDef?.template) {
+        for (const attr of node.attributes) {
+          if (
+            attr.type === "MarkoSpreadAttribute" ||
+            getSerializeSourcesForExpr(attr.value.extra || {})?.state
+          ) {
+            unsupported(attr);
+          }
+        }
+        return;
+      }
+      if (
+        !(
+          tagDef &&
+          tagDef.html &&
+          ((tagDef.htmlType as string) === "custom-element" ||
+            (!tagDef.template && !tagDef.renderer))
+        )
+      ) {
+        unsupported(node);
+      }
+      // A tag that may become controllable keeps all of its dynamic
+      // attributes unsupported until patching understands controlled state.
+      const controllable = !!controllableFeatureFor(tagName as string);
+      for (const attr of node.attributes) {
+        if (
+          attr.type === "MarkoSpreadAttribute"
+            ? !evaluate(attr.value).confident
+            : !evaluate(attr.value).confident &&
+              (controllable ||
+                (isEventOrChangeHandler(attr.name) &&
+                  !isEventHandler(attr.name)) ||
+                attr.name === "class" ||
+                attr.name === "style" ||
+                (tagName === "option" && attr.name === "value"))
+        ) {
+          unsupported(attr);
+        }
+      }
+    },
+  });
 }
 
 function replaceNode(node: t.Node) {

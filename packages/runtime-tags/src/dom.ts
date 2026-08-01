@@ -99,6 +99,7 @@ export {
   _closure_get,
   _const,
   _el_read,
+  _fillable,
   _for_closure,
   _for_selector,
   _hoist,
