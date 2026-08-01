@@ -258,6 +258,16 @@ export function _patch_attr(
   return "";
 }
 
+// Emitted as the scope reason's complement (`$reason || _patch_value(...)`):
+// a page render serializes the value through the reason-gated scope write, a
+// patch delivers it as a fill.
+export function _patch_value(scopeId: number, key: string, value: unknown) {
+  writeScope(scopeId, {
+    [AccessorPrefix.PatchValue + key]: value,
+  });
+  return "";
+}
+
 export function _patch_text(
   scopeId: number,
   accessor: Accessor,
@@ -815,6 +825,15 @@ export type SerializeReasonValue =
 
 export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
+}
+
+// Compiled into persisted templates in place of `_scope_reason`: a page
+// render serializes everything while a patch serializes nothing beyond its
+// own fills.
+export function _persisted_reason() {
+  const { state } = $chunk.boundary;
+  state.serializeReason = undefined;
+  return state.writesPatches ? undefined : 1;
 }
 
 export function _scope_reason() {

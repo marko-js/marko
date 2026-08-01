@@ -1,0 +1,2 @@
+[1,{"PatchText:#text/0":"Store!","PatchAttr:#p/1 title":"fr","PatchText:#text/2":"Acme Co"},{"PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-client-intersections/tags/price-card.marko0":"Gadget"},{"PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-client-intersections/tags/promo-tag.marko0":"Sale"},{"PatchText:#text/0":"2027"},"packages/runtime-tags/src/__tests__/fixtures/persisted-client-intersections/tags/price-card.marko_0 2 packages/runtime-tags/src/__tests__/fixtures/persisted-client-intersections/tags/promo-tag.marko_0 3"]
+

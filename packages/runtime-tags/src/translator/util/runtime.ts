@@ -28,6 +28,7 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 //
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
+  "_fillable",
   "_await_content",
   "_child_setup",
   "_if",
@@ -110,7 +111,8 @@ export type DOMRuntimeFeature =
   | "controllable-textarea"
   | "dynamic-tag-var"
   | "patch-attr"
-  | "patch-text";
+  | "patch-text"
+  | "patch-value";
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!isTranslate()) {
