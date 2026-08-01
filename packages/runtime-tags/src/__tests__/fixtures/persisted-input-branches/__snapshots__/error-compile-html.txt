@@ -1,9 +1,9 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-input-branches/template.marko:3:3
-      1 | <div class="wrap">
-      2 |   <h1>Hello ${input.name}</h1>
-    > 3 |   <if=input.show>
-        |   ^ Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-input-branches/template.marko:6:3
       4 |     <p>shown</p>
       5 |   </if>
-      6 |   <for|item| of=input.items>
+    > 6 |   <for|item| of=input.items>
+        |   ^ Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.
+      7 |     <li>${item}</li>
+      8 |   </for>
+      9 | </div>
