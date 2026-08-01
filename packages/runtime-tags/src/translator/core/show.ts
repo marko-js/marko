@@ -37,9 +37,9 @@ import {
 } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
 import { addValue, getSignal } from "../util/signals";
+import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
@@ -100,6 +100,8 @@ export default {
           BindingType.dom,
           tagSection,
         );
+        structure.visit(tag, WalkCode.Replace);
+        structure.enterShallow(tag);
       }
 
       if (tagExtra[kStaticDisplay] === undefined) {
@@ -116,15 +118,23 @@ export default {
 
       const tagSection = getSection(tag);
 
-      // Control flow in the body owns the nodes at the end of the range, so a
-      // multi-node body needs an end marker of its own that travels with it
-      // when hidden. Created before the reference node to keep walk order.
-      if (tagExtra[kStartBinding] && !tagExtra[kSingleNodeBody]) {
-        tagExtra[kEndBinding] = createBinding(
-          "#text",
-          BindingType.dom,
-          tagSection,
-        );
+      if (tagExtra[kStartBinding]) {
+        // Control flow in the body owns the nodes at the end of the range, so
+        // a multi-node body gets an end marker that travels with it when hidden.
+        if (!tagExtra[kSingleNodeBody]) {
+          tagExtra[kEndBinding] = createBinding(
+            "#text",
+            BindingType.dom,
+            tagSection,
+          );
+          structure.visit(tag, WalkCode.Replace);
+          structure.enterShallow(tag);
+        }
+
+        // The reference node the display signal anchors to; its binding is
+        // created below, after the markers, keeping bindings in walk order.
+        structure.visit(tag, WalkCode.Replace);
+        structure.enterShallow(tag);
       }
 
       const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
@@ -251,13 +261,6 @@ export default {
       },
     },
     dom: {
-      enter(tag) {
-        const tagExtra = tag.node.extra!;
-        if (tagExtra[kStartBinding]) {
-          walks.visit(tag, WalkCode.Replace);
-          walks.enterShallow(tag);
-        }
-      },
       exit(tag) {
         const tagExtra = tag.node.extra!;
 
@@ -274,16 +277,6 @@ export default {
           tagExtra[kStaticDisplay] === false
             ? t.booleanLiteral(false)
             : tag.node.attributes[0].value;
-
-        if (endBinding) {
-          walks.visit(tag, WalkCode.Replace);
-          walks.enterShallow(tag);
-        }
-
-        if (startBinding) {
-          walks.visit(tag, WalkCode.Replace);
-          walks.enterShallow(tag);
-        }
 
         const signal = getSignal(tagSection, nodeBinding, "show");
         signal.build = () => {

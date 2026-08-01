@@ -62,6 +62,10 @@ export default {
           hooks.exit(hook, tag);
           return;
         }
+
+        if (analyzeTagNameType(tag) === TagNameType.NativeTag) {
+          NativeTag.analyze.exit(tag);
+        }
       } catch (err) {
         (tag.node.extra ??= {}).analyzeFailed = true;
         reportAnalyzeError(tag, err);

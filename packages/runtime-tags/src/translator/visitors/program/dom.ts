@@ -31,10 +31,9 @@ import {
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
+import { getSectionMeta, trimTrailingExits } from "../../util/structure";
 import { toPropertyName } from "../../util/to-property-name";
 import type { TemplateVisitor } from "../../util/visitors";
-import { trimTrailingExits } from "../../util/walks";
-import * as writer from "../../util/writer";
 
 export default {
   translate: {
@@ -65,10 +64,10 @@ export default {
       });
     },
     exit(program) {
-      forEachSectionReverse(writer.getSectionMeta);
+      forEachSectionReverse(getSectionMeta);
 
       const section = getSectionForBody(program)!;
-      const { walks, writes, decls } = writer.getSectionMeta(section);
+      const { walks, writes, decls } = getSectionMeta(section);
       const domExports = program.node.extra.domExports!;
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
@@ -92,11 +91,9 @@ export default {
             tagParamsSignal && signalHasStatements(tagParamsSignal)
               ? tagParamsSignal.identifier
               : undefined;
-          const { writes, decls } = writer.getSectionMeta(childSection);
+          const { writes, decls } = getSectionMeta(childSection);
           // Reaches the runtime through `_content`, which strips these.
-          const walks = trimTrailingExits(
-            writer.getSectionMeta(childSection).walks,
-          );
+          const walks = trimTrailingExits(getSectionMeta(childSection).walks);
           const setup = getSetup(childSection);
           const written = writeSignals(childSection);
           const setupIdentifier =

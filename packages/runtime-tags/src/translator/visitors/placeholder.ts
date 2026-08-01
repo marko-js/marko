@@ -31,23 +31,19 @@ import {
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
+import * as structure from "../util/structure";
 import type { TemplateVisitor } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
 import { scopeIdentifier } from "./program";
 
 const kNodeBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
-const kSharedText = Symbol(
-  "placeholder will merge its visitor with a another node",
-);
 type SiblingText = SiblingText.Value;
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
     [kNodeBinding]?: Binding;
     [kSiblingText]?: SiblingText;
-    [kSharedText]?: true;
   }
 }
 
@@ -55,135 +51,153 @@ type HTMLMethod = "_escape" | "_unescaped";
 type DOMMethod = "_html" | "_text";
 
 export default {
-  analyze(placeholder) {
-    if (isNonHTMLText(placeholder)) return;
+  analyze: {
+    enter(placeholder) {
+      if (isNonHTMLText(placeholder)) return;
 
-    const { node } = placeholder;
-    const valueExtra = evaluate(node.value);
-    const { confident, computed } = valueExtra;
-    if (confident && isVoid(computed)) return;
+      const { node } = placeholder;
+      const valueExtra = evaluate(node.value);
+      const { confident, computed } = valueExtra;
+      if (confident && isVoid(computed)) return;
 
-    if (isStaticText(node)) {
-      // Only the run's first node emits the walk step; defer to a previous static sibling that owns it.
-      // Deferring to a following sibling instead would drop the step entirely for an all-static run.
-      if (isStaticText(getPrevStaticSibling(placeholder))) {
-        (node.extra ??= {})[kSharedText] = true;
+      if (!isStaticText(node)) {
+        const section = getOrCreateSection(placeholder);
+        const nodeBinding = ((node.extra ??= {})[kNodeBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          section,
+        ));
+        analyzeSiblingText(placeholder);
+        addSetupExpr(section, node.value);
+        addSerializeExpr(section, valueExtra, nodeBinding);
       }
-    } else {
-      const section = getOrCreateSection(placeholder);
-      const nodeBinding = ((node.extra ??= {})[kNodeBinding] = createBinding(
-        "#text",
-        BindingType.dom,
-        section,
-      ));
-      analyzeSiblingText(placeholder);
-      addSetupExpr(section, node.value);
-      addSerializeExpr(section, valueExtra, nodeBinding);
-    }
-  },
-  translate: {
+    },
     exit(placeholder) {
       if (isNonHTMLText(placeholder)) return;
 
       const { node } = placeholder;
-      const { value } = node;
-      // Restore `_to_text` on a flattened `<if>` now that the output is known.
-      if (node.extra?.[kRawText]) {
-        injectTextCoercion(value);
-      }
-      const valueExtra = evaluate(value);
-      const { confident, computed } = valueExtra;
+      const { confident, computed } = evaluate(node.value);
+      if (confident && isVoid(computed)) return;
 
-      if (confident && isVoid(computed)) {
-        placeholder.remove();
-        return;
-      }
-
-      const isHTML = isOutputHTML();
-      const write = writer.writeTo(placeholder);
       const extra = node.extra || {};
-      const nodeBinding = extra[kNodeBinding];
-      const canWriteHTML = isHTML || (confident && node.escape);
-      const method = canWriteHTML
-        ? node.escape
-          ? "_escape"
-          : "_unescaped"
-        : node.escape
-          ? "_text"
-          : "_html";
-
-      if (confident && canWriteHTML) {
-        write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
+      if (confident && node.escape) {
+        structure.writeTo(placeholder)`${getHTMLRuntime()._escape(computed)}`;
       } else {
-        const section = getSection(placeholder);
         const siblingText = extra[kSiblingText]!;
-        const markerSerializeReason =
-          nodeBinding && getSerializeReason(section, nodeBinding);
-
-        if (siblingText === SiblingText.Before) {
-          if (isHTML && markerSerializeReason) {
-            writeSeparator(write, section, markerSerializeReason);
-          }
-          walks.visit(placeholder, WalkCode.Replace);
-        } else if (siblingText === SiblingText.After) {
-          walks.visit(placeholder, WalkCode.Replace);
+        if (
+          siblingText === SiblingText.Before ||
+          siblingText === SiblingText.After
+        ) {
+          structure.visit(placeholder, WalkCode.Replace);
         } else {
-          if (isHTML) {
-            // A preceding element/comment would be claimed as the text node when
-            // the value serializes empty, so it gets the same protective separator.
-            if (
-              siblingText === SiblingText.NodeBefore &&
-              markerSerializeReason
-            ) {
-              writeSeparator(write, section, markerSerializeReason);
-            }
-          } else {
-            write` `;
-          }
-          walks.visit(placeholder, WalkCode.Get);
-        }
-
-        if (isHTML) {
-          write`${
-            method === "_escape"
-              ? buildEscapedTextExpression(value)
-              : callRuntime(method as HTMLMethod | DOMMethod, value)
-          }`;
-          if (nodeBinding) {
-            writer.markNode(placeholder, nodeBinding, markerSerializeReason);
-          }
-        } else {
-          addStatement(
-            "render",
-            section,
-            valueExtra.referencedBindings,
-            t.expressionStatement(
-              method === "_text"
-                ? callRuntime(
-                    "_text",
-                    createScopeReadExpression(nodeBinding!),
-                    value,
-                  )
-                : callRuntime(
-                    "_html",
-                    scopeIdentifier,
-                    value,
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
-            ),
-            undefined,
-            true,
-          );
+          structure.writeTo(placeholder)` `;
+          structure.visit(placeholder, WalkCode.Get);
         }
       }
 
-      if (!extra[kSharedText]) {
-        walks.enterShallow(placeholder);
+      // Adjacent static text merges into one DOM text node, so only the run's
+      // first node emits its walk step; later nodes defer to it.
+      if (
+        !isStaticText(node) ||
+        !isStaticText(getPrevStaticSibling(placeholder))
+      ) {
+        structure.enterShallow(placeholder);
       }
-      placeholder.remove();
+    },
+  },
+  translate: {
+    exit(placeholder) {
+      translateExit(placeholder);
     },
   },
 } satisfies TemplateVisitor<t.MarkoPlaceholder>;
+
+function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+  if (isNonHTMLText(placeholder)) return;
+
+  const { node } = placeholder;
+  const { value } = node;
+  // Restore `_to_text` on a flattened `<if>` now that the output is known.
+  if (node.extra?.[kRawText]) {
+    injectTextCoercion(value);
+  }
+  const valueExtra = evaluate(value);
+  const { confident, computed } = valueExtra;
+
+  if (confident && isVoid(computed)) {
+    placeholder.remove();
+    return;
+  }
+
+  const isHTML = isOutputHTML();
+  const write = writer.writeTo(placeholder);
+  const extra = node.extra || {};
+  const nodeBinding = extra[kNodeBinding];
+  const canWriteHTML = isHTML || (confident && node.escape);
+  const method = canWriteHTML
+    ? node.escape
+      ? "_escape"
+      : "_unescaped"
+    : node.escape
+      ? "_text"
+      : "_html";
+
+  if (confident && canWriteHTML) {
+    if (isHTML) {
+      write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
+    }
+  } else {
+    const section = getSection(placeholder);
+    const siblingText = extra[kSiblingText]!;
+    const markerSerializeReason =
+      nodeBinding && getSerializeReason(section, nodeBinding);
+
+    if (isHTML && markerSerializeReason) {
+      if (siblingText === SiblingText.Before) {
+        writeSeparator(write, section, markerSerializeReason);
+      } else if (siblingText === SiblingText.NodeBefore) {
+        // A preceding element/comment would be claimed as the text node when
+        // the value serializes empty, so it gets the same protective separator.
+        writeSeparator(write, section, markerSerializeReason);
+      }
+    }
+
+    if (isHTML) {
+      write`${
+        method === "_escape"
+          ? buildEscapedTextExpression(value)
+          : callRuntime(method as HTMLMethod | DOMMethod, value)
+      }`;
+      if (nodeBinding) {
+        writer.markNode(placeholder, nodeBinding, markerSerializeReason);
+      }
+    } else {
+      addStatement(
+        "render",
+        section,
+        valueExtra.referencedBindings,
+        t.expressionStatement(
+          method === "_text"
+            ? callRuntime(
+                "_text",
+                createScopeReadExpression(nodeBinding!),
+                value,
+              )
+            : callRuntime(
+                "_html",
+                scopeIdentifier,
+                value,
+                getScopeAccessorLiteral(nodeBinding!),
+              ),
+        ),
+        undefined,
+        true,
+      );
+    }
+  }
+
+  placeholder.remove();
+}
 
 // Produces an expression equivalent to `_escape(value)` that escapes as little as
 // possible: static strings at compile time, dynamic leaves wrapped individually.

@@ -36,13 +36,13 @@ import {
   setTryHasPlaceholder,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import * as structure from "../util/structure";
 import {
   getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
 } from "../util/translate-attrs";
 import { translateByTarget } from "../util/visitors";
-import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 
 const kDOMBinding = Symbol("try tag dom binding");
@@ -80,6 +80,8 @@ export default {
 
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;
+      structure.visit(tag, WalkCode.Replace);
+      structure.enterShallow(tag);
     }
   },
   translate: translateByTarget({
@@ -146,9 +148,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-
-        walks.visit(tag, WalkCode.Replace);
-        walks.enterShallow(tag);
       },
       exit(tag) {
         const { node } = tag;

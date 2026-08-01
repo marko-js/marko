@@ -18,7 +18,11 @@ import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getTagName } from "../../util/get-tag-name";
+import { getStaticTagName, getTagName } from "../../util/get-tag-name";
+import {
+  importOrSelfReferenceName,
+  isCircularRequest,
+} from "../../util/import-reference";
 import {
   knownTagAnalyze,
   knownTagTranslateDOM,
@@ -33,12 +37,12 @@ import {
 } from "../../util/references";
 import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
-import { getOrCreateSection } from "../../util/sections";
+import { getOrCreateSection, StructureKind } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
+import * as structure from "../../util/structure";
 import type { TemplateVisitor } from "../../util/visitors";
-import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import type { LoadImportConfig } from "../import-declaration";
 import { scopeIdentifier } from "../program";
@@ -107,6 +111,20 @@ export default {
           ? programSection.params && getBindingPropTree(programSection.params)
           : childExtra.domExports?.params,
       );
+
+      const tagName = getStaticTagName(tag.node);
+      if (tagExtra.tagNameLoad) {
+        structure.visit(tag, WalkCode.Replace);
+        structure.child(tag, tagName);
+        structure.enterShallow(tag);
+      } else {
+        structure.child(tag, tagName, {
+          kind: StructureKind.ExportRef,
+          program: childExtra,
+          path: getTagRelativePath(tag),
+          hint: tagName,
+        });
+      }
     },
   },
   translate: {
@@ -151,7 +169,6 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const { file } = tag.hub;
-  const write = writer.writeTo(tag);
   const relativePath = getTagRelativePath(tag);
   const programSection = getProgram().node.extra.section!;
   const childFile = loadFileForTag(tag)!;
@@ -160,11 +177,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childSection = childExtra.section!;
   const loadConfig = node.extra?.tagNameLoad;
   const isLoad = !!loadConfig;
-  const tagName = t.isIdentifier(node.name)
-    ? node.name.name
-    : t.isStringLiteral(node.name)
-      ? node.name.value
-      : "tag";
+  const tagName = getStaticTagName(node);
 
   if (isLoad) {
     const childFileName = childFile.opts.filename;
@@ -267,10 +280,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         );
       },
     );
-
-    walks.visit(tag, WalkCode.Replace);
-    walks.injectWalks(tag, tagName);
-    walks.enterShallow(tag);
   } else if (programSection === childSection) {
     knownTagTranslateDOM(
       tag,
@@ -292,9 +301,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             );
           },
     );
-
-    write`${t.identifier(childExports.template)}`;
-    walks.injectWalks(tag, tagName, t.identifier(childExports.walks));
   } else {
     knownTagTranslateDOM(
       tag,
@@ -328,12 +334,15 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           },
     );
 
-    write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
-    walks.injectWalks(
-      tag,
-      tagName,
-      importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+    // Registered here only so imports land in document order; structure
+    // resolution re-resolves them by name from the import cache.
+    importNamed(
+      file,
+      relativePath,
+      childExports.template,
+      `${tagName}_template`,
     );
+    importNamed(file, relativePath, childExports.walks, `${tagName}_walks`);
   }
 
   tag.remove();
@@ -458,27 +467,6 @@ function collectProseWords(node: t.MarkoTag, tagName: string) {
     text += " " + attr.name;
   }
   return text;
-}
-
-function importOrSelfReferenceName(
-  file: t.BabelFile,
-  request: string,
-  name: string,
-  nameHint?: string,
-): t.Identifier {
-  if (isCircularRequest(file, request)) {
-    return t.identifier(name);
-  }
-
-  return importNamed(file, request, name, nameHint);
-}
-
-function isCircularRequest(file: t.BabelFile, request: string) {
-  const { filename } = file.opts;
-  return (
-    request === filename ||
-    (request[0] === "." && path.resolve(filename, "..", request) === filename)
-  );
 }
 
 function buildLoadSetupVirtualModule(
