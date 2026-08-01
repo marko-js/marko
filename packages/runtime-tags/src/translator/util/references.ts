@@ -14,7 +14,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -643,9 +643,15 @@ const [getGlobalBinding] = createProgramState(() =>
 );
 
 // `$global` reads route through the reference graph, so property
-// aliases record the keys read.
+// aliases record the keys read. Persisted compiles additionally stamp
+// the expression so serialize sources see the request-derived dimension.
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   trackReference(path, getGlobalBinding());
+  if (isPersisted()) {
+    const exprRoot = getExprRoot(getFnRoot(path) || path);
+    const section = getOrCreateSection(exprRoot);
+    (exprRoot.node.extra ??= { section }).readsGlobal = true;
+  }
 }
 
 function createBindingsAndTrackReferences(
@@ -860,6 +866,7 @@ export function mergeReferences<T extends t.Node>(
     // create a `merged` cycle and double its reads.
     if (extra === targetExtra) continue;
     extra.merged = targetExtra;
+    if (extra.readsGlobal) targetExtra.readsGlobal = true;
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
@@ -1589,6 +1596,9 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     const seen = new Set<Binding>();
     forEach(exprs, (expr) => {
+      if (expr.readsGlobal) {
+        binding.sources = mergeSources(binding.sources, globalSources);
+      }
       if (isReferencedExtra(expr)) {
         forEach(expr.referencedBindings, (ref) => {
           if (!seen.has(ref)) {
