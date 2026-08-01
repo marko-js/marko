@@ -301,3 +301,16 @@ After resume `$global` holds only `{runtimeId, renderId}` unless a key is enable
 `packages/runtime-tags/cheatsheet.md` › `TypeScript` | 2026-08-03 | impact:high | effort:low
 
 `export interface Input` is optional in Marko, but `@marko/language-tools`' script extractor (v2.6.7) writes `export interface Input {}` for a TS-mode template that declares none, while the JS-mode branch three lines down writes `/** @typedef {Record<string, unknown>} Input */`. So every `input.foo` read in an untyped-but-valid template is an error: `mtc` on a one-line `<div>${input.title}</div>` reports TS2339 "Property 'title' does not exist on type 'Input'" even with `strict:false` and `noImplicitAny:false`. Type-checking an existing untyped project is therefore all noise, which is the single thing stopping "run `mtc` in the edit loop" from being a default recommendation — and this repo's `cheatsheet.md` already tells readers `tsc` skips `.marko` and to reach for `mtc` instead. The fix belongs in `marko-js/language-tools` (make the TS branch match the JS one); the action here is to say in the TypeScript section that `mtc` requires a declared `Input` until it does. Re-verify: `mtc` that one-line template under a `{ strict: false, noImplicitAny: false }` tsconfig.
+||||||| parent of f82966a301 (feat(runtime-tags): persisted server value updates for client intersections)
+## Debug and optimize render snapshots can silently diverge
+
+The fixture harness snapshots `render.debug.md` and `render.md` independently
+and nothing asserts they describe the same behavior. A translator bug that
+only manifests in optimize mode (eg an accessor emitted unencoded where the
+runtime decodes under `!MARKO_DEBUG` — see `getScopeAccessorLiteral`'s
+`encoded` flag) regenerates an optimize snapshot with a missing/blank update
+step and every test stays green; it was caught only by human snapshot review.
+A cheap guard: after both modes run, `main.test.ts` could compare the two
+render logs' step/mutation structure (not exact html, which legitimately
+differs in whitespace) and fail on a step present in one but empty in the
+other.

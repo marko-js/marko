@@ -12,13 +12,14 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPersisted } from "./marko-config";
 import {
   type AttrTagLookup,
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
+import { scopeReasonRuntime } from "./persisted";
 import { getScopeAccessor } from "./references";
 import { callRuntime } from "./runtime";
 import {
@@ -423,11 +424,13 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         }
       }
 
-      if (dynamicSerializeReason) {
+      if (dynamicSerializeReason || isPersisted()) {
+        // Persisted output always declares the reason: statically serialized
+        // values ride it so patch renders drop them.
         body.node.body.unshift(getScopeReasonDeclaration(bodySection) as any);
       } else {
         body.node.body.unshift(
-          t.expressionStatement(callRuntime("_scope_reason")) as any,
+          t.expressionStatement(callRuntime(scopeReasonRuntime())) as any,
         );
       }
 
