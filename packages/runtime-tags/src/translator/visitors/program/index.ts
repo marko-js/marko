@@ -34,6 +34,7 @@ import {
   startSection,
 } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { buildRecordedShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML, { assertSupportedPatch } from "./html";
@@ -122,6 +123,9 @@ export default {
         );
       });
 
+      if (isPersisted()) {
+        buildRecordedShells(program.hub.file);
+      }
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
         // importing and calling it (checked when this template translates).

@@ -61,6 +61,23 @@ type Patcher = (scope: Scope, key: string, value: unknown) => void;
 
 export const registeredValues: Record<string, unknown> = {};
 export const patchers: Record<string, Patcher> = {};
+// Array frame entries ([id, template, walks] shells), registered by the
+// patch feature that understands them.
+export let onPatchArrayEntry: ((entry: unknown[]) => void) | undefined;
+export const _patch_array_entries = (
+  handler: NonNullable<typeof onPatchArrayEntry>,
+) => (onPatchArrayEntry = handler);
+// End-of-patch hook (`1` = finishing, else aborting) for patch features
+// holding per-frame state.
+export let onPatchEnd: ((finishing?: 1) => void) | undefined;
+export const _patch_end = (handler: NonNullable<typeof onPatchEnd>) =>
+  (onPatchEnd = handler);
+// Rejects the applying patch (the caller falls back to a full document
+// navigation) when a frame cannot be applied faithfully.
+export const failPatch = () => (patchFailed = 1);
+// The scope lookup for the patch currently applying, so patchers can pair
+// or register constructed branch scopes by wire id.
+export let patchScopeLookup: Record<number, Scope>;
 let curRenders: Renders;
 let embedRenders:
   | undefined
@@ -84,12 +101,14 @@ export function beginPatch(renderId: string) {
 }
 
 export function finishPatch() {
+  onPatchEnd?.(1);
   const applied = !patchFailed;
   abortPatch();
   return applied;
 }
 
 export function abortPatch() {
+  onPatchEnd?.();
   patchRender = patchFailed = patching = 0;
 }
 
@@ -189,6 +208,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         const applyScopes = (partials: (Scope | number)[]) => {
           if (patching && patchRender === render) {
             let scopeId = partials[0] as number;
+            patchScopeLookup = scopeLookup;
             for (let i = 1; i < partials.length; i++) {
               const partial = partials[i];
               if (typeof partial === "number") {
@@ -203,13 +223,19 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     curEffects.push(lastEffect, getScope(lastToken));
                   }
                 }
+              } else if (Array.isArray(partial)) {
+                onPatchArrayEntry?.(partial);
               } else {
-                const scope = scopeLookup[scopeId]!;
-                for (const key in partial) {
-                  patchers[
-                    // Debug accessor prefixes are multi-character, ending ":".
-                    MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
-                  ](scope, key, partial[key]);
+                // Adopts the fragment when its scope is not live yet (a shell
+                // branch mid-construction); the construct replays it after.
+                const scope = (scopeLookup[scopeId] ??= partial as Scope);
+                if (scope !== partial) {
+                  for (const key in partial) {
+                    patchers[
+                      // Debug accessor prefixes are multi-character, ending ":".
+                      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+                    ](scope, key, partial[key]);
+                  }
                 }
                 scopeId++;
               }

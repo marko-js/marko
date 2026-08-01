@@ -8,6 +8,7 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import { isPatchCaptureSection } from "../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -36,6 +37,7 @@ import {
   getSerializeSourcesForExpr,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
+import { dropSectionShell } from "../util/shell";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
@@ -88,7 +90,7 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
-        if (isPersisted() && node.escape && !section.parent) {
+        if (isPersisted() && node.escape && isPatchCaptureSection(section)) {
           addSerializeReason(section, true, nodeBinding);
           addAssetImport(
             placeholder.hub.file,
@@ -183,7 +185,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
     const holeSources =
-      isPersisted() && node.escape && !section.parent
+      isPersisted() && node.escape && isPatchCaptureSection(section)
         ? getSerializeSourcesForExpr(valueExtra)
         : undefined;
     if (holeSources?.state && holeSources.global) {
@@ -191,12 +193,17 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         "Persisted templates do not yet support `$global` contributions to stateful expressions.",
       );
     }
+    if (holeSources?.state && section.isBranch) {
+      // A state-fed hole never captures, so a constructed shell would show it
+      // stale; the branch ships shell-less and divergence rejects the patch.
+      dropSectionShell(section);
+    }
     // A hole fed by client state never captures directly: the client owns
     // part of its value, and it recomputes through the signal graph instead.
     const isPatch =
       isPersisted() &&
       node.escape &&
-      !section.parent &&
+      isPatchCaptureSection(section) &&
       !!nodeBinding &&
       !holeSources?.state;
     const isPatchText = isHTML && isPatch;
