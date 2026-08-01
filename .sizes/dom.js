@@ -1,5 +1,5 @@
-// size: 26580 (min) 9845 (brotli)
-//#region packages/runtime-tags/dist/dom-CK9oKl_1.mjs
+// size: 26668 (min) 9893 (brotli)
+//#region packages/runtime-tags/dist/dom-D8z15v1i.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
   toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
@@ -42,6 +42,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   isScheduled,
   channel,
+  patchFills = {},
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -641,6 +642,15 @@ function _const(valueAccessor, fn) {
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
+}
+function _fillable(key, valueAccessor, join) {
+  let prev = patchFills[key]?._,
+    fn = prev
+      ? (scope) => {
+          (prev(scope), join(scope));
+        }
+      : join;
+  return (((patchFills[key] = _const(valueAccessor, fn))._ = fn), join);
 }
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
   return (

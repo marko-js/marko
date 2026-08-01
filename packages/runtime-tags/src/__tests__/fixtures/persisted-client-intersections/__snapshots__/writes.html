@@ -1,0 +1,26 @@
+<main>
+  <h1>Store<!--M_*1 a--></h1>
+  <p title=en>Acme<!--M_*1 c--></p><!--M_*1 b-->
+  <section>
+    <h2>Widget x1<!--M_*2 a--></h2><button>+</button><!--M_*2 b-->
+  </section>
+  <aside>Sale (0)<!--M_*3 a--></aside><button
+    class=promo>seen</button><!--M_*3 b-->
+  <footer>2026<!--M_*4 a--></footer>
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    d: _(2),
+    f: _(4)
+  }, {
+    e: "Widget",
+    f: 1
+  }, {
+    e: "Sale",
+    f: 0
+  }, {
+    e: 0
+  }], "b0 2 c0 3"];
+  M._.w()
+</script>
