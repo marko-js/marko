@@ -1,4 +1,4 @@
-// size: 26668 (min) 9893 (brotli)
+// size: 26703 (min) 9926 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -894,9 +894,11 @@ function init(runtimeId = "M") {
                       /\D/.test(lastToken)
                         ? (lastEffect = registeredValues[lastToken])
                         : curEffects.push(lastEffect, getScope(lastToken));
+                  else if (Array.isArray(partial));
                   else {
-                    let scope = scopeLookup[scopeId];
-                    for (let key in partial) patchers[key[0]](scope, key, partial[key]);
+                    let scope = (scopeLookup[scopeId] ??= partial);
+                    if (scope !== partial)
+                      for (let key in partial) patchers[key[0]](scope, key, partial[key]);
                     scopeId++;
                   }
                 }
