@@ -13,6 +13,7 @@ export const KeyedScopes = "O";
 export const Lifecycle = "K";
 export const PatchAttr = "Q";
 export const PatchText = "P";
+export const PatchValue = "R";
 export const Promise = "L";
 export const TagVariableChange = "M";
 

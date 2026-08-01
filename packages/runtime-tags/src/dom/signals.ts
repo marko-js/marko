@@ -98,6 +98,30 @@ export function _const<T>(
   }) as Signal<T>;
 }
 
+// Value signals for the page's live server/client intersections, keyed by
+// `templateId:ordinal`. `_fillable` rides each intersection's declaration, so
+// tree-shaking keeps a registration exactly when a consuming join is
+// retained; re-registration composes every live join behind one guard.
+export const patchFills: Record<string, Signal<unknown> & { _?: SignalFn }> =
+  {};
+export function _fillable<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+): T {
+  const prev = patchFills[key]?._;
+  const fn: SignalFn = prev
+    ? (scope) => {
+        prev(scope);
+        join(scope);
+      }
+    : join;
+  (patchFills[key] = _const(valueAccessor, fn) as Signal<unknown> & {
+    _?: SignalFn;
+  })._ = fn;
+  return join;
+}
+
 export function _or(
   id: number,
   fn: SignalFn,
