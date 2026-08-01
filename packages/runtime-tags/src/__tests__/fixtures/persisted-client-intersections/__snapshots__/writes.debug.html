@@ -1,0 +1,28 @@
+<main>
+  <h1>Store<!--M_*1 #text/0--></h1>
+  <p title=en>Acme<!--M_*1 #text/2--></p><!--M_*1 #p/1-->
+  <section>
+    <h2>Widget x1<!--M_*2 #text/0--></h2><button>+</button><!--M_*2 #button/1-->
+  </section>
+  <aside>Sale (0)<!--M_*3 #text/0--></aside><button
+    class=promo>seen</button><!--M_*3 #button/1-->
+  <footer>2026<!--M_*4 #text/0--></footer>
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "#childScope/3": _(2),
+      "#childScope/5": _(4)
+    }, {
+      input_label: "Widget",
+      qty: 1
+    }, {
+      input_text: "Sale",
+      seen: 0
+    }, {
+      frozen: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-client-intersections/tags/price-card.marko_0 2 packages/runtime-tags/src/__tests__/fixtures/persisted-client-intersections/tags/promo-tag.marko_0 3"
+  ];
+  M._.w()
+</script>

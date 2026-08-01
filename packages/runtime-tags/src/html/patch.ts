@@ -23,11 +23,12 @@ export function renderPatch(
   return startRender(this, input, PatchState);
 }
 
+// Serialize guards stay unset so the compiled resume payload drops at the
+// source: a frame carries only patch fills.
 class PatchState extends State {
   constructor($global: State["$global"]) {
     super($global);
     this.hasMainRuntime = true;
-    this.serializeReason = 1;
   }
 
   override flushChunk(_html: string, scripts: string) {
