@@ -12,6 +12,7 @@ export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
 export const PatchAttr = "PatchAttr:";
 export const PatchText = "PatchText:";
+export const PatchBranch = "PatchBranch:";
 export const PatchValue = "PatchValue:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";

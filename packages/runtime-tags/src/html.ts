@@ -48,6 +48,7 @@ export {
   forTo,
   forUntil,
 } from "./html/for";
+export { _renderer_shells } from "./html/renderer-shells";
 export { _template } from "./html/template";
 export { _template_persisted, renderPatch } from "./html/patch";
 export {
