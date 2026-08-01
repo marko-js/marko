@@ -1,0 +1,15 @@
+// template.marko
+var template_default = _template_persisted("a", (input) => {
+	const $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	let other = 10;
+	_html(`<div><h1>${_escape(input.title + " #0")}${_el_resume($scope0_id, "a")}</h1><h2>${_escape(input.title + " / 10")}${_el_resume($scope0_id, "b")}</h2><button>+</button>${_el_resume($scope0_id, "c")}</div>`);
+	_script($scope0_id, "a0");
+	$scope0_reason ? writeScope($scope0_id, {
+		f: input.title,
+		g: count,
+		i: other
+	}) : _patch_value($scope0_id, "a0", input.title);
+	_resume_branch($scope0_id);
+}, 1);
