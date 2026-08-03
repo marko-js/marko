@@ -20,6 +20,7 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
+import { isPatchCaptureSection } from "../util/persisted";
 import {
   compareSources,
   getScopeAccessorLiteral,
@@ -118,7 +119,7 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
-      if (isPersisted() && !ifTagSection.parent) {
+      if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
         addAssetImport(
           ifTag.hub.file,
           `${getRuntimePath("dom")}/patch-branch.feat`,
@@ -198,7 +199,8 @@ export const IfTag = {
 
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
-          const persistedPatch = isPersisted() && !ifTagSection.parent;
+          const persistedPatch =
+            isPersisted() && isPatchCaptureSection(ifTagSection);
           if (persistedPatch) {
             singleChild = false;
           } else {
@@ -351,7 +353,7 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          if (isPersisted() && !ifTagSection.parent) {
+          if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
             // An interactive page receives assets transitively through its
             // dom program, so the feature import rides both outputs.
             importRuntimeFeature("patch-branch");

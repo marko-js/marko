@@ -72,6 +72,22 @@ export let onWriteBranch:
 export const _patch_branch_writes = (
   handler: NonNullable<typeof onWriteBranch>,
 ) => (onWriteBranch = handler);
+export let onWriteLoop:
+  | ((
+      iterate: (
+        each: (
+          itemKey: unknown,
+          sameAsIndex: boolean,
+          render: () => void,
+        ) => void,
+      ) => void,
+      scopeId: number,
+      accessor: Accessor,
+      shellId?: string | 0,
+    ) => 1 | void)
+  | undefined;
+export const _patch_loop_writes = (handler: NonNullable<typeof onWriteLoop>) =>
+  (onWriteLoop = handler);
 
 export function getChunk(): Chunk | undefined {
   return $chunk;
@@ -251,6 +267,20 @@ export function _patch_attr(
   return "";
 }
 
+// A patch names each child scope on its parent: frame ids are local labels,
+// so only structural entries relate a child's fills to a live scope.
+export function _patch_child(
+  scopeId: number,
+  accessor: Accessor,
+  childScopeId: number,
+) {
+  if ($chunk.boundary.state.writesPatches) {
+    writeScope(scopeId, {
+      [AccessorPrefix.PatchBranch + accessor]: childScopeId,
+    });
+  }
+}
+
 // Emitted as the scope reason's complement (`$reason || _patch_value(...)`):
 // a page render serializes the value through the reason-gated scope write, a
 // patch delivers it as a fill.
@@ -412,6 +442,7 @@ export function _for_of(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -429,6 +460,7 @@ export function _for_of(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -443,6 +475,7 @@ export function _for_in(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -461,6 +494,7 @@ export function _for_in(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -477,6 +511,7 @@ export function _for_to(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -496,6 +531,7 @@ export function _for_to(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -512,6 +548,7 @@ export function _for_until(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -531,6 +568,7 @@ export function _for_until(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -549,7 +587,17 @@ function forBranches(
   serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ) {
+  if (
+    onWriteLoop?.(
+      iterate as Parameters<typeof onWriteLoop>[0],
+      scopeId,
+      accessor,
+      shellId,
+    )
+  )
+    return;
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
     var seenKeys = new Set<unknown>();
@@ -801,7 +849,13 @@ export function _set_serialize_reason(reason: SerializeReasonValue) {
 export function _persisted_reason() {
   const { state } = $chunk.boundary;
   state.serializeReason = undefined;
-  return state.writesPatches ? undefined : 1;
+  if (state.writesPatches) {
+    // The first persisted template of the render is the page root, about to
+    // allocate the next id — the frame names it as the walk's entry pair.
+    state.rootScopeId ||= _peek_scope_id();
+    return undefined;
+  }
+  return 1;
 }
 
 export function _scope_reason() {
@@ -1078,6 +1132,7 @@ export class State implements SerializeState {
   public nonceAttr = "";
   public serializer = new Serializer();
   declare writesPatches?: boolean;
+  declare rootScopeId?: number;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   public flushScopes = false;

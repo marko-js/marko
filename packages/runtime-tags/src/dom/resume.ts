@@ -53,27 +53,55 @@ export interface RenderData {
   p?: Record<string | number, AwaitCounter>;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
-type Patcher = (scope: Scope, key: string, value: unknown) => void;
+type Patcher = (
+  scope: Scope,
+  key: string,
+  value: unknown,
+  partial: Scope,
+) => void;
 
 const registeredValues: Record<string, unknown> = {};
 export const patchers: Record<string, Patcher> = {};
-// Array frame entries ([id, template, walks] shells), registered by the
-// patch feature that understands them.
-export let onPatchArrayEntry: ((entry: unknown[]) => void) | undefined;
-export const _patch_array_entries = (
-  handler: NonNullable<typeof onPatchArrayEntry>,
-) => (onPatchArrayEntry = handler);
-// End-of-patch hook (`1` = finishing, else aborting) for patch features
-// holding per-frame state.
-export let onPatchEnd: ((finishing?: 1) => void) | undefined;
-export const _patch_end = (handler: NonNullable<typeof onPatchEnd>) =>
-  (onPatchEnd = handler);
+// Typed frame records after the scope run ([0, id, template, walks]
+// shells), registered by the patch feature that understands them.
+export let onPatchRecord: ((entry: unknown[]) => void) | undefined;
+export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
+  (onPatchRecord = handler);
 // Rejects the applying patch (the caller falls back to a full document
 // navigation) when a frame cannot be applied faithfully.
 export const failPatch = () => (patchFailed = 1);
-// The scope lookup for the patch currently applying, so patchers can pair
-// or register constructed branch scopes by wire id.
-export let patchScopeLookup: Record<number, Scope>;
+// Patchers bail once a frame fails: a failed structural change leaves the
+// walk below it unpaired, so applying more could corrupt.
+export const didPatchFail = () => patchFailed;
+// The staged frame: patch-local scope partials by wire id. Ids are labels
+// scoped to one frame — never document scope ids.
+export let patchScopes: Record<number, Scope>;
+// Wire id -> live scope pairings established by the structural walk; the
+// root is the only pair not derived from structure.
+export let patchPairs: Record<number, Scope>;
+// Effect runs staged during decode; they resolve through the pairings, so
+// they apply only after the walk.
+const patchEffects: string[] = [];
+
+// Pairs a patch scope to its live counterpart and applies its entries.
+// Structural entries recurse back through here, so pairing is top-down:
+// every scope is reached from an already-paired parent (or constructed,
+// pairing to the fresh branch).
+export const walkScope = (patchId: number, live: Scope) => {
+  const partial = patchScopes[patchId];
+  patchPairs[patchId] = live;
+  if (partial) {
+    for (const key in partial) {
+      if (patchFailed) return;
+      (
+        patchers[
+          // Debug accessor prefixes are multi-character, ending ":".
+          MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+        ] || failPatch
+      )(live, key, partial[key as keyof Scope], partial);
+    }
+  }
+};
 let curRenders: Renders;
 let embedRenders:
   | undefined
@@ -89,18 +117,19 @@ export function beginPatch(renderId: string) {
   const render = (patchRender = curRenders[renderId]);
   patchFailed = 0;
   patching = 1;
+  patchScopes = {};
+  patchPairs = {};
+  patchEffects.length = 0;
   return render;
 }
 
 export function finishPatch() {
-  onPatchEnd?.(1);
   const applied = !patchFailed;
   abortPatch();
   return applied;
 }
 
 export function abortPatch() {
-  onPatchEnd?.();
   patchRender = patchFailed = patching = 0;
 }
 
@@ -174,40 +203,68 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
           return scope;
         };
+        // Stages a patch run: the cursor's first number is absolute, later
+        // numbers are signed deltas, strings are effect runs, and revisited
+        // slots merge (a deferred flush can retouch a scope).
+        const decodePatchRun = (run: (Scope | number | string)[]) => {
+          let scopeId: number | undefined;
+          for (const partial of run) {
+            if (typeof partial === "number") {
+              scopeId = scopeId === undefined ? partial : scopeId + partial;
+            } else if (typeof partial === "string") {
+              patchEffects.push(partial);
+            } else if (Array.isArray(partial)) {
+              failPatch();
+            } else if (partial) {
+              patchScopes[scopeId!] = patchScopes[scopeId!]
+                ? Object.assign(patchScopes[scopeId!], partial)
+                : (partial as Scope);
+              scopeId!++;
+            }
+          }
+        };
         const applyScopes = (partials: (Scope | number)[]) => {
           if (patching && patchRender === render) {
-            let scopeId = partials[0] as number;
-            patchScopeLookup = scopeLookup;
-            for (let i = 1; i < partials.length; i++) {
-              const partial = partials[i];
-              if (typeof partial === "number") {
-                scopeId += partial;
-              } else if (typeof partial === "string") {
+            if (partials[0] === 1 && Array.isArray(partials[2])) {
+              // The frame envelope: stage everything (shell records and the
+              // whole run) before touching anything, so structure resolves
+              // with no ordering machinery and ids stay frame-local labels.
+              const rootId = partials[1] as number;
+              for (let i = 3; i < partials.length; i++) {
+                (onPatchRecord || failPatch)(
+                  partials[i] as unknown as unknown[],
+                );
+              }
+              decodePatchRun(
+                partials[2] as unknown as (Scope | number | string)[],
+              );
+              // The named root is the walk's only id-established pair;
+              // everything below it pairs structurally.
+              if (scopeLookup[rootId]) {
+                walkScope(rootId, scopeLookup[rootId]);
+              } else {
+                failPatch();
+              }
+              // Effects resolve through the walk's pairings, so they always
+              // target the structurally matched (or constructed) live scope.
+              for (const effectRun of patchEffects) {
                 lastTokenIndex = 0;
-                visitText = partial;
+                visitText = effectRun;
                 while (nextToken()) {
                   if (/\D/.test(lastToken)) {
                     lastEffect = registeredValues[lastToken];
+                  } else if (patchPairs[+lastToken]) {
+                    curEffects.push(lastEffect, patchPairs[+lastToken]);
                   } else {
-                    curEffects.push(lastEffect, getScope(lastToken));
+                    failPatch();
                   }
                 }
-              } else if (Array.isArray(partial)) {
-                onPatchArrayEntry?.(partial);
-              } else {
-                // Adopts the fragment when its scope is not live yet (a shell
-                // branch mid-construction); the construct replays it after.
-                const scope = (scopeLookup[scopeId] ??= partial as Scope);
-                if (scope !== partial) {
-                  for (const key in partial) {
-                    patchers[
-                      // Debug accessor prefixes are multi-character, ending ":".
-                      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
-                    ](scope, key, partial[key]);
-                  }
-                }
-                scopeId++;
               }
+              patchEffects.length = 0;
+            } else {
+              // A deferred serializer flush (assigned references) delivers a
+              // plain run mid-frame; it stages and the envelope walks.
+              decodePatchRun(partials as (Scope | number | string)[]);
             }
             return;
           }

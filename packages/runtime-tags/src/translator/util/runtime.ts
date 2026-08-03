@@ -100,6 +100,8 @@ export type DOMRuntimeFeature =
   | "controllable-textarea"
   | "patch-attr"
   | "patch-branch"
+  | "patch-child"
+  | "patch-loop"
   | "patch-text"
   | "patch-value";
 const importedFeatures = new WeakMap<t.Program, Set<string>>();

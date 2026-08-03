@@ -1,2 +1,2 @@
-[1,{Pa:"Cart!"},{Rb0:"Gadget"},"b0 2"]
+[1,1,[1,{Pa:"Cart!",Sb:2},{Rb0:"Gadget"},"b0 2"]]
 

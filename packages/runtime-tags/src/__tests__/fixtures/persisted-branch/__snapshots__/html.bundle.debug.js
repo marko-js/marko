@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({ "__tests__/template.marko_1_shell": ",[\"__tests__/template.marko_1_shell\",\"<aside> </aside>\",\"D \"]" });
+_renderer_shells({ "__tests__/template.marko_1_shell": ",[0,\"__tests__/template.marko_1_shell\",\"<aside> </aside>\",\"D \"]" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_promo = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();

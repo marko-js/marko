@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({ a0: ",[\"a0\",\"<aside> </aside>\",\"D \"]" });
+_renderer_shells({ a0: ",[0,\"a0\",\"<aside> </aside>\",\"D \"]" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_promo = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
