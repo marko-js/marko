@@ -307,9 +307,15 @@ function brotli(src: string): Promise<Buffer> {
 }
 
 function stripModuleCode(code: string) {
-  return code.replace(
-    /\s*(?:export\s*\{[^}]+\}|import\s*.*\s*from\s*['"][^'"]+['"]);?\s*/gm,
-    "",
+  return (
+    code
+      // Drop content hashes from dist chunk names in region banners so runtime
+      // edits don't churn every snapshot.
+      .replace(/^(\/\/#region .*?)-[\w-]{8}(\.[cm]?js)$/gm, "$1$2")
+      .replace(
+        /\s*(?:export\s*\{[^}]+\}|import\s*.*\s*from\s*['"][^'"]+['"]);?\s*/gm,
+        "",
+      )
   );
 }
 
