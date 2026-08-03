@@ -1,5 +1,5 @@
 // size: 26012 (min) 9658 (brotli)
-//#region packages/runtime-tags/dist/dom-Cj4HQ7T_.mjs
+//#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
   toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
