@@ -1,0 +1,10 @@
+<ul>
+  <for|item| of=input.items by="id">
+    <li>
+      ${item.label}
+      <let/votes=item.start/>
+      <span>${votes}</span>
+      <button onClick() { votes++ }>+</button>
+    </li>
+  </for>
+</ul>
