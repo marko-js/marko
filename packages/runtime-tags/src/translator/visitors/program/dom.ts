@@ -13,6 +13,7 @@ import {
 } from "../../util/references";
 import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import {
+  forEachSection,
   forEachSectionReverse,
   getSectionForBody,
   getSectionParentIsOwner,
@@ -169,10 +170,12 @@ export default {
       });
 
       // Patches deliver server contributions to registered fill signals, so
-      // a template with fills ships the patcher.
-      if (getPatchFillBindings(section)) {
-        importRuntimeFeature("patch-value");
-      }
+      // a template with fills in any section ships the patcher.
+      forEachSection((fillSection) => {
+        if (getPatchFillBindings(fillSection)) {
+          importRuntimeFeature("patch-value");
+        }
+      });
 
       const written = writeSignals(section);
       writeRegisteredFns();
