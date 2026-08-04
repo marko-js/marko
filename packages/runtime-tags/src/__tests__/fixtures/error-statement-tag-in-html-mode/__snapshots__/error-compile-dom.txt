@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-statement-tag-in-html-mode/template.marko:1:2
+    > 1 | <static const answer = 42>
+        |  ^^^^^^ `static` is a statement, not an html tag: write it at the root of the template without angle brackets, eg `static const value = …`.
+      2 | <div>${answer}</div>
+      3 |

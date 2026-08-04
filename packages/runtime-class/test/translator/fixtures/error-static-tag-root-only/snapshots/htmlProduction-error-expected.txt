@@ -2,5 +2,5 @@ CompileError:
     at __tests__/template.marko:2:4
       1 | <div>
     > 2 |   <static { console.log(x) }/>
-        |    ^^^^^^ The "static" tag is reserved and cannot be used as an HTML tag.
+        |    ^^^^^^ `static` is a statement, not an html tag: write it at the root of the template without angle brackets, eg `static const value = …`.
       3 | </div>
