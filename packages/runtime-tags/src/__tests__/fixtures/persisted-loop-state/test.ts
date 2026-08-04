@@ -4,9 +4,10 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// Item bodies reading client state ship no shell: patches still pair, update,
-// remove, and reorder existing items, but an addition cannot construct
-// faithfully, so it rejects the patch (a document navigation, ending the run).
+// Item bodies closing over parent-scope state ship no shell (a construct
+// cannot wire the closure): patches still pair, update, remove, and reorder
+// existing items, but an addition rejects the patch (a document navigation,
+// ending the run). Item-local state constructs fine — see persisted-loop-let.
 export const config: TestConfig = {
   persisted: true,
   steps: [
