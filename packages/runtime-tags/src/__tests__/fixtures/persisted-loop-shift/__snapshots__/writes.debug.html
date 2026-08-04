@@ -1,0 +1,25 @@
+<main>
+  <ul><!--M_[-->
+    <li>Apples<!--M_*2 #text/0--></li><!--M_[2-->
+    <li>Bread<!--M_*3 #text/0--></li><!--M_]1 #ul/0 3-->
+  </ul><!--M_*1 #ul/0--><!--M_[-->
+  <aside>Sale<!--M_*4 #text/0--></aside><!--M_]1 #text/1 4-->
+  <p>hi<!--M_*1 #text/2--></p><button>Count <!>
+      0<!--M_*1 #text/4--></button><!--M_*1 #button/3-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      input_promo: "Sale",
+      count: 0
+    }, {
+      "#LoopKey": 1
+    }, {
+      "#LoopKey": 2
+    }, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-shift/template.marko_0 1"
+  ];
+  M._.w()
+</script>

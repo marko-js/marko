@@ -3,16 +3,18 @@ import type {
   Template,
   TemplateInput,
 } from "../common/types";
-import { AccessorPrefix } from "../common/types";
+import { PatchKey } from "../common/types";
 import { serverRenderers } from "./renderer-shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _patch_branch_writes,
+  _patch_loop_writes,
   _peek_scope_id,
-  _scope as writeScope,
   getChunk,
+  patchPartial,
   State,
   withBranchId,
+  writePatch,
 } from "./writer";
 
 export function _template_persisted(
@@ -43,6 +45,8 @@ class PatchState extends State {
   constructor($global: State["$global"]) {
     super($global);
     this.hasMainRuntime = true;
+    // The live page owns its serialized globals; a frame never re-ships them.
+    this.hasGlobals = true;
   }
 
   // A patch never references scopes by object: the client owns branch owner
@@ -55,14 +59,17 @@ class PatchState extends State {
     return scripts ? scripts + "\n" : "";
   }
 
-  // A frame only ever applies to the render that produced the page: one
-  // flat entry array (number = scope id, object = partial, string = effects,
-  // array = shell). Shells append; the client defers constructs until they
-  // register.
+  // `[...shells, tree]` — only a deferred run (its inner `_()` walks
+  // mid-expression) hoists shells into a preceding `_()` call.
   override resumeScript(resumes: string) {
-    const shells = this.shellFrames;
+    if (MARKO_DEBUG) this.patchFlushed = 1;
+    const shells = this.shellFrames && this.shellFrames.slice(1);
     this.shellFrames = "";
-    return "[" + resumes + shells + "]";
+    if (this.patchDeferred) {
+      this.patchDeferred = undefined;
+      return shells ? "(_([" + shells + "])," + resumes + ")" : resumes;
+    }
+    return shells ? "[" + shells + "," + resumes + "]" : resumes;
   }
 
   override walkScript() {
@@ -82,33 +89,90 @@ let enabled: 1 | undefined;
 function enablePatchWrites() {
   if (enabled) return;
   enabled = 1;
-  // A patch ships the selection, the branch scope (whose captures carry the
-  // values), and — once per response — the branch's shell so the client can
-  // construct on divergence without bundling the content.
+  // Ships the selection, branch partial, and (once per response) the shell
+  // so the client can construct on divergence without bundling content.
   _patch_branch_writes((scopeId, accessor, cb, shellIds) => {
     const state = getChunk()!.boundary.state as PatchState;
     if (!state.writesPatches) return;
     const branchId = _peek_scope_id();
     const branchIndex = withBranchId(branchId, cb);
-    // Only a shell the server can ship rides the entry: a missing one makes
-    // a divergence unapplyable and the client rejects the patch.
-    let shellId =
-      branchIndex === undefined ? undefined : shellIds?.[branchIndex];
-    if (shellId) {
-      if (!serverRenderers[shellId]) {
-        shellId = undefined;
-      } else if (!(state.sentShells ??= new Set()).has(shellId)) {
-        state.sentShells.add(shellId);
-        state.shellFrames += serverRenderers[shellId];
-      }
-    }
-    writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
-      [AccessorPrefix.BranchScopes + accessor]:
+    const shellId =
+      branchIndex === undefined
+        ? undefined
+        : shipShell(state, shellIds?.[branchIndex]);
+    // Shape-typed entry, densest form first: a bare number is the
+    // selection + 1 (`0` hides), and empty/zero members drop.
+    const branchPartial =
+      branchIndex === undefined ? undefined : state.patchPartials?.[branchId];
+    writePatch(scopeId, {
+      [PatchKey.Branch + accessor]:
         branchIndex === undefined
-          ? undefined
-          : (writeScope(branchId, {}), [branchId, shellId]),
+          ? 0
+          : branchIndex
+            ? branchPartial || shellId
+              ? shellId
+                ? [branchIndex, branchPartial || {}, shellId]
+                : [branchIndex, branchPartial || {}]
+              : branchIndex + 1
+            : branchPartial
+              ? shellId
+                ? [branchPartial, shellId]
+                : [branchPartial]
+              : shellId || 1,
     });
     return 1;
   });
+
+  // Ships ordered item partials and keys: existing keys pair, new keys
+  // construct from the shell, absent keys destroy.
+  _patch_loop_writes((iterate, scopeId, accessor, shellId) => {
+    const state = getChunk()!.boundary.state as PatchState;
+    if (!state.writesPatches) return;
+    const partials: object[] = [];
+    const keys: unknown[] = [];
+    const seen = new Set<unknown>();
+    let indexKeys = true;
+    iterate((itemKey, sameAsIndex, render) => {
+      // Client pairing needs serializable, unique keys; failing the render
+      // here (falling back to a navigation) beats corrupting the pairing.
+      if (
+        (typeof itemKey !== "string" && typeof itemKey !== "number") ||
+        seen.has(itemKey)
+      ) {
+        throw new Error(
+          `Persisted loop patches require unique string or number keys (got ${String(itemKey)}).`,
+        );
+      }
+      seen.add(itemKey);
+      indexKeys &&= sameAsIndex;
+      const branchId = _peek_scope_id();
+      keys.push(itemKey);
+      withBranchId(branchId, render);
+      partials.push(patchPartial(state, branchId));
+    });
+    const sentShellId = partials.length ? shipShell(state, shellId) : undefined;
+    // Interleaved `[key, partial, …, shellId?]`: keys drop when every key
+    // is its index, and the shell rides as a trailing string.
+    const entry: unknown[] = [];
+    for (let i = 0; i < partials.length; i++) {
+      if (!indexKeys) entry.push(keys[i]);
+      entry.push(partials[i]);
+    }
+    if (sentShellId) entry.push(sentShellId);
+    writePatch(scopeId, {
+      [PatchKey.Loop + accessor]: entry,
+    });
+    return 1;
+  });
+}
+
+// Only a shell the server can ship rides an entry: a missing one makes a
+// divergence unapplyable and the client rejects the patch.
+function shipShell(state: PatchState, shellId: string | 0 | undefined) {
+  if (!shellId || !serverRenderers[shellId]) return undefined;
+  if (!(state.sentShells ??= new Set()).has(shellId)) {
+    state.sentShells.add(shellId);
+    state.shellFrames += serverRenderers[shellId];
+  }
+  return shellId;
 }
