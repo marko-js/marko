@@ -1,0 +1,2 @@
+{ta:"Store!",we:"Store!"}
+
