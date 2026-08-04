@@ -58,6 +58,7 @@ export {
   _id,
   _if,
   _patch_attr,
+  _patch_child,
   _patch_text,
   _patch_value,
   _peek_scope_id,

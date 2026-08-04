@@ -2259,7 +2259,7 @@ describe("serializer", () => {
           [[1, {}, { value: 1 }]],
           patchBoundary(),
         ),
-        `1,{value:1}`,
+        `{value:1}`,
       );
     });
 
@@ -2272,7 +2272,7 @@ describe("serializer", () => {
           [[1, {}, { value: { wrapper } }]],
           patchBoundary(),
         ),
-        `(_([1,{value:{wrapper:_.a={err:_.b=new Error("boom")}}}]),_.b.cause=_.a,0)`,
+        `(_([{value:{wrapper:_.a={err:_.b=new Error("boom")}}}]),_.b.cause=_.a,0)`,
       );
     });
   });
