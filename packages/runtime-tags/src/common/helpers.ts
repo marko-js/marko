@@ -218,6 +218,11 @@ export function normalizeDynamicRenderer<Renderer>(
 export const decodeAccessor = (num: number): string =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 
+export const encodeAccessor = (accessor: string) => {
+  const encoded = parseInt(accessor, 36);
+  return encoded - (encoded < 36 ? 10 : encoded < 1296 ? 334 : 11998);
+};
+
 export function normalizeAttrValue(value: unknown) {
   if (isNotVoid(value)) {
     return value === true ? "" : value + "";
