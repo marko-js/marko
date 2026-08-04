@@ -2,5 +2,5 @@ CompileError:
     at __tests__/template.marko:2:4
       1 | <div>
     > 2 |   <import x from "y"/>
-        |    ^^^^^^ The "import" tag is reserved and cannot be used as an HTML tag.
+        |    ^^^^^^ `import` is a statement, not an html tag: write it at the root of the template without angle brackets, eg `import Tag from "<tag>"`.
       3 | </div>

@@ -350,6 +350,15 @@ export function parseMarko(file) {
             parseType = TagType.text;
           }
         }
+
+        // Otherwise this reaches htmljs-parser's "reserved and cannot be used
+        // as an HTML tag", which names neither the concise form nor `<return>`.
+        if (parseType === TagType.statement && code[part.start - 1] === "<") {
+          throw file.buildCodeFrameError(
+            tagName,
+            statementTagInHTMLModeError(literalTagName, code, part.end),
+          );
+        }
       }
 
       enterTag(node);
@@ -705,4 +714,28 @@ function templateElement(value, tail) {
     raw: value,
     cooked: value,
   });
+}
+
+const tagVarAfterNameReg = /^\/([A-Za-z_$][\w$]*)/;
+const statementTagExample = {
+  class: "class { … }",
+  client: 'client console.log("…")',
+  export: "export const value = …",
+  import: 'import Tag from "<tag>"',
+  server: 'server console.log("…")',
+  static: "static const value = …",
+};
+function statementTagInHTMLModeError(tagName, code, nameEnd) {
+  // `<export/value>` is what an author reaches for to publish a value to the
+  // parent, and `<export>` is not that feature at all.
+  if (tagName === "export") {
+    const tagVar = tagVarAfterNameReg.exec(code.slice(nameEnd))?.[1];
+    if (tagVar) {
+      return `The \`export\` statement does not support a tag variable. To publish a value to the parent template, use a \`<return>\` tag instead — \`<return=${tagVar}>\` — and the parent names it with its own tag variable on this template's tag.`;
+    }
+  }
+
+  return `\`${tagName}\` is a statement, not an html tag: write it at the root of the template without angle brackets, eg \`${
+    statementTagExample[tagName] || `${tagName} …`
+  }\`.`;
 }

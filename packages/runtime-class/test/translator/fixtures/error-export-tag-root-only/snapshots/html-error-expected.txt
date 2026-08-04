@@ -2,5 +2,5 @@ CompileError:
     at __tests__/template.marko:2:4
       1 | <div>
     > 2 |   <export x from "y"/>
-        |    ^^^^^^ The "export" tag is reserved and cannot be used as an HTML tag.
+        |    ^^^^^^ `export` is a statement, not an html tag: write it at the root of the template without angle brackets, eg `export const value = …`.
       3 | </div>

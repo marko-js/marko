@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-export-tag-var/template.marko:2:2
+      1 | <let/expanded=false>
+    > 2 | <export/expanded>
+        |  ^^^^^^ The `export` statement does not support a tag variable. To publish a value to the parent template, use a `<return>` tag instead — `<return=expanded>` — and the parent names it with its own tag variable on this template's tag.
+      3 |
