@@ -104,6 +104,7 @@ export type DOMRuntimeFeature =
   | "patch-attr"
   | "patch-branch"
   | "patch-child"
+  | "patch-effect"
   | "patch-loop"
   | "patch-text"
   | "patch-value";
