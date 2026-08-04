@@ -1,0 +1,9 @@
+<main>
+  <h1>${input.title}</h1>
+  <if=input.show>
+    <span/label>${input.label}</span>
+    <script>
+      label().dataset.seen = label().textContent!;
+    </script>
+  </if>
+</main>

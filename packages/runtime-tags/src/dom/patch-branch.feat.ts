@@ -4,91 +4,97 @@ import {
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  NodeType,
+  PatchKey,
   type Scope,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
-import { _content as content, createBranch } from "./renderer";
+import { queueEffect } from "./queue";
+import { _content as content, createAndSetupBranch } from "./renderer";
 import {
-  _patch_array_entries,
-  _patch_end,
+  _patch_records,
   failPatch,
+  getRegisteredWithScope,
   patchers,
-  patchScopeLookup,
+  walkScope,
 } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 
-// Wrapping enables branch resume handling (marker claims, branch scope
-// records): a page swapping shipped branches needs it even when no client
-// control flow does.
+// Enables branch resume handling: a page swapping shipped branches needs
+// it even when no client control flow does.
 const _content = /*@__PURE__*/ withBranches(content);
 
-// Session registry of server-shipped shells; a shell ships once per response
-// and constructs every later divergence to its branch from the cache.
-const shells: Record<string, ReturnType<ReturnType<typeof _content>>> = {};
+// Server-shipped shells, cached per session; mount effects become the
+// content's setup, so whatever constructs from a shell attaches them.
+type Shell = [
+  template: string,
+  walks: string,
+  setup?: ((branch: Scope) => void) | 0,
+  content?: ReturnType<typeof _content>,
+];
+export const shells: Record<string, Shell> = {};
 
-_patch_array_entries((entry) => {
-  const [id, template, walks] = entry as string[];
-  const renderer = (shells[id] = _content(id, template, walks, 0)());
-  const pending = pendingConstructs[id];
-  if (pending) {
-    delete pendingConstructs[id];
-    for (const [scope, key, branchId] of pending) {
-      construct(scope, key, branchId, renderer);
-    }
-  }
+// `"id effects…;walks;template"` (`,` in place of `;walks;` when walk-less):
+// the header excludes both separators, so the first one is authoritative.
+_patch_records((record) => {
+  const first = record.search(/[;,]/);
+  const second = record[first] === ";" ? record.indexOf(";", first + 1) : first;
+  const idToken = record.slice(0, first);
+  const sep = (idToken + " ").indexOf(" ");
+  const effects = idToken.slice(sep + 1);
+  const fns =
+    effects && effects.split(" ").map((id) => getRegisteredWithScope(id));
+  shells[idToken.slice(0, sep)] = [
+    record.slice(second + 1),
+    record.slice(first + 1, second),
+    fns
+      ? (branch: Scope) => {
+          for (const fn of fns) {
+            queueEffect(branch, fn as (scope: Scope) => void);
+          }
+        }
+      : 0,
+  ];
 });
 
-// Set by the selection entry for the branch entry that follows it in the
-// same partial.
-let swapping: boolean;
-// Constructs deferred until their shell registers (shells append after the
-// frame's scope run), keyed so a shell wakes only its own waiters.
-let pendingConstructs: Record<string, [Scope, string, number][]> = {};
-
-// A frame ending with waiters never delivered their shells: it cannot have
-// applied faithfully. Aborts also clear so no stale construct survives.
-_patch_end((finishing) => {
-  const pending = pendingConstructs;
-  pendingConstructs = {};
-  if (finishing) {
-    for (const id in pending) {
-      if (id) return failPatch();
-    }
-  }
-});
-
-// Applies the selection. Hiding destroys the live branch here (no shell
-// needed); divergence to a branch defers destruction until its shell is in
-// hand, so a rejected patch leaves the page intact.
-patchers[AccessorPrefix.ConditionalRenderer] = (scope, key, value) => {
-  const accessor = key.slice(
-    AccessorPrefix.ConditionalRenderer.length,
-  ) as Accessor;
-  const branchKey = (AccessorPrefix.BranchScopes + accessor) as Accessor;
+// Shape-typed conditional entry: bare number = selection + 1 (`0` hides),
+// bare string = a static branch's shell id, else `[index?, partial, shellId?]`.
+patchers[PatchKey.Branch] = (scope, key, value) => {
+  const entry = value as number | string | [number | Scope, ...unknown[]];
+  const suffix = key.slice(PatchKey.Branch.length);
+  const branchKey = (AccessorPrefix.BranchScopes + suffix) as Accessor;
   const liveBranch = scope[branchKey] as BranchScope | undefined;
-  const current = liveBranch ? ((scope[key] as number) ?? 0) : -1;
-  swapping = value !== current;
-  scope[key] = value as never;
-  if (swapping && liveBranch && value === -1) {
-    scope[branchKey] = undefined;
-    removeAndDestroyBranch(liveBranch);
-  }
-};
-
-// Pairs the patch's branch scope id to the live branch when the selection is
-// unchanged (its captures then apply surgically), else constructs the newly
-// selected branch from its shell (deferred until the shell registers).
-patchers[AccessorPrefix.BranchScopes] = (scope, key, value) => {
-  const [branchId, shellId] = value as [number, string?];
-  if (!swapping) {
-    patchScopeLookup[branchId] = scope[key] as Scope;
-  } else if (shellId) {
-    const renderer = shells[shellId];
-    if (renderer) {
-      construct(scope, key, branchId, renderer);
-    } else {
-      (pendingConstructs[shellId] ||= []).push([scope, key, branchId]);
+  const rendererKey = (AccessorPrefix.ConditionalRenderer + suffix) as Accessor;
+  let selection = 0;
+  let branchPartial: Scope | number | undefined;
+  let shellId: string | undefined;
+  if (typeof entry === "object") {
+    [branchPartial, shellId] = entry as [Scope, string?];
+    if (typeof branchPartial === "number") {
+      selection = branchPartial;
+      branchPartial = (entry as unknown[])[1] as Scope;
+      shellId = (entry as unknown[])[2] as string | undefined;
     }
+  } else if (typeof entry === "number") {
+    selection = entry - 1;
+  } else {
+    shellId = entry;
+  }
+  if (selection === -1) {
+    if (liveBranch) {
+      scope[branchKey] = undefined;
+      removeAndDestroyBranch(liveBranch);
+    }
+    scope[rendererKey] = -1 as never;
+    return;
+  }
+  branchPartial ||= {} as Scope;
+  const current = liveBranch ? ((scope[rendererKey] as number) ?? 0) : -1;
+  scope[rendererKey] = selection as never;
+  if (selection === current) {
+    walkScope(branchPartial as Scope, liveBranch as Scope);
+  } else if (shellId) {
+    construct(scope, branchKey, branchPartial as Scope, shells[shellId]);
   } else {
     // The server could not ship a shell for the newly selected branch, so
     // this divergence cannot apply faithfully.
@@ -98,41 +104,35 @@ patchers[AccessorPrefix.BranchScopes] = (scope, key, value) => {
 
 function construct(
   scope: Scope,
-  key: string,
-  branchId: number,
-  renderer: (typeof shells)[string],
+  branchKey: Accessor,
+  branchPartial: Scope,
+  shell: Shell,
 ) {
-  const liveBranch = scope[key as Accessor] as BranchScope | undefined;
+  const liveBranch = scope[branchKey] as BranchScope | undefined;
   if (liveBranch) {
     removeAndDestroyBranch(liveBranch);
   }
+  // An only-child conditional's accessor holds its container element rather
+  // than a marker (mirrors `setConditionalRenderer`'s anchoring).
   const marker = scope[
-    key.slice(AccessorPrefix.BranchScopes.length) as Accessor
-  ] as ChildNode;
-  const branch = createBranch(
+    branchKey.slice(AccessorPrefix.BranchScopes.length) as Accessor
+  ] as Comment | Element;
+  const inside = marker.nodeType === NodeType.Element;
+  const parentNode = inside ? (marker as Element) : marker.parentNode!;
+  const branch = createAndSetupBranch(
     scope[AccessorProp.Global],
-    renderer,
+    (shell[3] ??= _content("", shell[0], shell[1], shell[2]))(),
     scope,
-    marker.parentNode!,
+    parentNode,
   );
   insertChildNodes(
-    marker.parentNode!,
-    marker,
+    parentNode,
+    inside ? null : marker,
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
-  scope[key as Accessor] = branch;
-  // Captures for the branch land before its shell: they were adopted as
-  // a raw patch scope, so replay them onto the constructed branch.
-  const adopted = patchScopeLookup[branchId];
-  patchScopeLookup[branchId] = branch as Scope;
-  if (adopted && adopted !== (branch as Scope)) {
-    for (const adoptedKey in adopted) {
-      patchers[
-        MARKO_DEBUG
-          ? adoptedKey.slice(0, adoptedKey.indexOf(":") + 1)
-          : adoptedKey[0]
-      ]?.(branch as Scope, adoptedKey, adopted[adoptedKey as Accessor]);
-    }
-  }
+  scope[branchKey] = branch as never;
+  // The fresh branch has no live children, so nested structural entries in
+  // the walked scope mismatch and construct recursively through this path.
+  walkScope(branchPartial, branch as Scope);
 }

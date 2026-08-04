@@ -4,7 +4,9 @@
   <h1>
     Store
   </h1>
-  <aside>
+  <aside
+    class="promo banner"
+  >
     Sale
   </aside>
   <button>
@@ -22,7 +24,9 @@ document.querySelector("button").click();
   <h1>
     Store
   </h1>
-  <aside>
+  <aside
+    class="promo banner"
+  >
     Sale
   </aside>
   <button>
@@ -41,7 +45,9 @@ UPDATE: main > button::text@6 "0" => "1"
   <h1>
     Store
   </h1>
-  <aside>
+  <aside
+    class="promo banner"
+  >
     Big Sale
   </aside>
   <button>
@@ -52,7 +58,7 @@ UPDATE: main > button::text@6 "0" => "1"
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store"
-UPDATE: main > aside::text "Sale" => "Big Sale"
+UPDATE: .promo.banner::text "Sale" => "Big Sale"
 ```
 
 # Update `{"title":"Store!","promo":""}`
@@ -97,7 +103,9 @@ UPDATE: main > button::text@6 "1" => "2"
   <h1>
     Store!
   </h1>
-  <aside>
+  <aside
+    class="promo banner"
+  >
     Back
   </aside>
   <button>
@@ -108,8 +116,8 @@ UPDATE: main > button::text@6 "1" => "2"
 ## Change
 ```
 UPDATE: main > h1::text "Store!" => "Store!"
-INSERT: main > h1 + aside
-UPDATE: main > aside::text " " => "Back"
+INSERT: main > h1 + .promo.banner
+UPDATE: .promo.banner::text " " => "Back"
 ```
 
 # Update
@@ -121,7 +129,9 @@ document.querySelector("button").click();
   <h1>
     Store!
   </h1>
-  <aside>
+  <aside
+    class="promo banner"
+  >
     Back
   </aside>
   <button>
