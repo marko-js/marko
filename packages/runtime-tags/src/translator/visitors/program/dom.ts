@@ -4,8 +4,11 @@ import { importDefault } from "@marko/compiler/babel-utils";
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
-import { getPatchFillBindings } from "../../util/persisted";
+import { find, forEach } from "../../util/optional";
+import {
+  getPatchFillBindings,
+  isPatchEffectBinding,
+} from "../../util/persisted";
 import {
   BindingType,
   getScopeAccessor,
@@ -174,6 +177,9 @@ export default {
       forEachSection((fillSection) => {
         if (getPatchFillBindings(fillSection)) {
           importRuntimeFeature("patch-value");
+        }
+        if (find(fillSection.bindings, isPatchEffectBinding)) {
+          importRuntimeFeature("patch-effect");
         }
       });
 
