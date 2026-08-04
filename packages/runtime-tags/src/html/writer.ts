@@ -340,10 +340,31 @@ export function _patch_child(
 // Emitted as the scope reason's complement (`$reason || _patch_value(...)`):
 // a page render serializes the value through the reason-gated scope write,
 // so only a patch (the falsy persisted reason) ever reaches here.
-export function _patch_value(scopeId: number, key: string, value: unknown) {
-  writePatch(scopeId, {
-    [PatchKey.Value + key]: value,
-  });
+export function _patch_value(
+  scopeId: number,
+  key: string,
+  value: unknown,
+  fresh?: 1,
+) {
+  if ($chunk.boundary.state.writesPatches) {
+    if (fresh) {
+      if (MARKO_DEBUG && $chunk.boundary.state.patchFlushed) {
+        throw new Error(
+          "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
+        );
+      }
+      // Fresh entries nest under `f`: the client applies them only to
+      // freshly constructed scopes, via the shell content's setup.
+      const partial = patchPartial($chunk.boundary.state, scopeId);
+      ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
+        PatchKey.Value + key
+      ] = value;
+    } else {
+      writePatch(scopeId, {
+        [PatchKey.Value + key]: value,
+      });
+    }
+  }
   return "";
 }
 
