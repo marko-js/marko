@@ -120,9 +120,9 @@ export function _fill_join<T extends SignalFn>(
   return join;
 }
 
-// A binding's own signal already writes + queues its downstream, so it
-// registers as the fill directly (no join composition). Fused declaration
-// forms so compiled templates spend one call, not two.
+// A binding's declaration signal already writes + queues its downstream
+// (closures included), so it registers as the fill directly, fused so
+// compiled templates spend one call, not two.
 function fill<T>(key: string, signal: Signal<unknown>) {
   patchFills[key] = signal;
   return signal as Signal<T>;
