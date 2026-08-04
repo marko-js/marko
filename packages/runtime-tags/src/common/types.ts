@@ -50,6 +50,7 @@ export interface AwaitCounter {
 export {
   AccessorPrefix,
   AccessorProp,
+  PatchKey,
   ClosureSignalProp,
   KeyedScopesProp,
   PendingRenderProp,
