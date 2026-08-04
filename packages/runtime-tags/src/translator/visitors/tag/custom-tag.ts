@@ -129,6 +129,15 @@ export default {
   },
   translate: {
     enter(tag) {
+      // A recursive child is loaded mid-analyze, so "this template has no
+      // `<return>`" is only a settled fact once every analyze has finished.
+      if (tag.node.var) {
+        const childFile = loadFileForTag(tag)!;
+        if (!childFile.ast.program.extra.section!.returnValueExpr) {
+          throw missingReturnValueError(tag, childFile);
+        }
+      }
+
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
@@ -417,6 +426,49 @@ function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
     .get("name")
     .buildCodeFrameError(
       `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.${didYouMean}`,
+    );
+}
+
+// A tag variable is filled in by the child template's `<return>` tag and by
+// nothing else, so a child with no `<return>` leaves it `undefined` at every
+// render. That compiles clean today and only shows up as `undefined is not a
+// function` (or a value that never updates) once the page renders, so name both
+// halves of the fix: add the `<return>`, and stop calling the tag variable.
+// Reading it as a function is the common wrong guess because native tag
+// variables (`<div/el>`), and hoisted reads, really are getter functions.
+function missingReturnValueError(
+  tag: t.NodePath<t.MarkoTag>,
+  childFile: t.BabelFile,
+) {
+  const tagVar = tag.node.var!;
+  const { name } = tag.node;
+  const tagName =
+    getTagName(tag) ?? (name.type === "Identifier" ? name.name : undefined);
+  const childRequest = resolveRelativePath(
+    tag.hub.file,
+    childFile.opts.filename!,
+  );
+  // A computed tag name has nothing readable to quote, so the resolved template
+  // is the clearer subject.
+  const subject = tagName ? `\`<${tagName}>\`` : `\`${childRequest}\``;
+  const where = tagName
+    ? `the top level of \`${childRequest}\``
+    : "its top level";
+  const readIt =
+    tagVar.type === "Identifier"
+      ? `read it as \`${tagVar.name}\`, not \`${tagVar.name}()\``
+      : "read it directly, without calling it";
+  const dropIt =
+    tagVar.type === "Identifier"
+      ? `remove the \`/${tagVar.name}\` tag variable`
+      : "remove the tag variable";
+  return tag
+    .get("var")
+    .buildCodeFrameError(
+      `${subject} never returns a value, so this [tag variable](https://markojs.com/docs/reference/language#tag-variables) is always \`undefined\`. ` +
+        `Add a [\`<return>\` tag](https://markojs.com/docs/reference/core-tag#return) at ${where} (eg \`<return=value>\`) to publish one, ` +
+        `then ${readIt} — read at or below its own tag, a custom tag's tag variable IS the returned value, not a getter; [native tag](https://markojs.com/docs/reference/native-tag) variables like \`<div/el>\` are. ` +
+        `If ${subject} has no value to publish, ${dropIt} instead.`,
     );
 }
 

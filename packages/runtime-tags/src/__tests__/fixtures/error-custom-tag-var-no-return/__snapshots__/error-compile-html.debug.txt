@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-custom-tag-var-no-return/template.marko:1:17
+    > 1 | <toggle-section/notifications title="Notifications"/>
+        |                 ^^^^^^^^^^^^^ `<toggle-section>` never returns a value, so this [tag variable](https://markojs.com/docs/reference/language#tag-variables) is always `undefined`. Add a [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) at the top level of `./tags/toggle-section.marko` (eg `<return=value>`) to publish one, then read it as `notifications`, not `notifications()` — read at or below its own tag, a custom tag's tag variable IS the returned value, not a getter; [native tag](https://markojs.com/docs/reference/native-tag) variables like `<div/el>` are. If `<toggle-section>` has no value to publish, remove the `/notifications` tag variable instead.
+      2 | <div>${notifications().expanded}</div>
+      3 |

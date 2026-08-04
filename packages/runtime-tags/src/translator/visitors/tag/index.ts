@@ -4,6 +4,7 @@ import { getTagDef, type Plugin } from "@marko/compiler/babel-utils";
 import { reportAnalyzeError } from "../../util/analyze-errors";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
+import { warnOnTruncatedAttrValue } from "../../util/truncated-attr-value";
 import type { TemplateVisitor } from "../../util/visitors";
 import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
@@ -19,6 +20,8 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze: {
     enter(tag) {
+      warnOnTruncatedAttrValue(tag);
+
       // Collect analyze failures as diagnostics instead of aborting on the first,
       // so all mistakes report together; skip the subtree to limit cascading errors.
       try {
