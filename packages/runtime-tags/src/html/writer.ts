@@ -17,6 +17,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   type Falsy,
+  PatchKey,
   ResumeSymbol,
 } from "../common/types";
 import { RendererProp } from "../common/types";
@@ -72,6 +73,22 @@ export let onWriteBranch:
 export const _patch_branch_writes = (
   handler: NonNullable<typeof onWriteBranch>,
 ) => (onWriteBranch = handler);
+export let onWriteLoop:
+  | ((
+      iterate: (
+        each: (
+          itemKey: unknown,
+          sameAsIndex: boolean,
+          render: () => void,
+        ) => void,
+      ) => void,
+      scopeId: number,
+      accessor: Accessor,
+      shellId?: string | 0,
+    ) => 1 | void)
+  | undefined;
+export const _patch_loop_writes = (handler: NonNullable<typeof onWriteLoop>) =>
+  (onWriteLoop = handler);
 
 export function getChunk(): Chunk | undefined {
   return $chunk;
@@ -230,6 +247,43 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
+// Structural patch entries hold their child partial objects, so the root
+// partial IS the frame tree and one ordinary serializer flush emits it.
+export function writePatch(scopeId: number, entries: Record<string, unknown>) {
+  if (MARKO_DEBUG && $chunk.boundary.state.patchFlushed) {
+    throw new Error(
+      "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
+    );
+  }
+  const partial = patchPartial($chunk.boundary.state, scopeId);
+  for (const key in entries) {
+    // `undefined` survives to the wire (`$`): it overwrites, never elides.
+    partial[key] = entries[key];
+  }
+}
+
+export function patchPartial(state: State, scopeId: number) {
+  const partials = (state.patchPartials ??= {});
+  let partial = partials[scopeId];
+  if (!partial) {
+    partial = partials[scopeId] = {};
+    const pending = state.patchPending?.[scopeId];
+    if (pending) {
+      // A child scope links into its parent's entry only on its first
+      // write, so an untouched child subtree never reaches the wire.
+      writePatch(pending[0], { [pending[1]]: partial });
+    } else if (scopeId === state.rootScopeId) {
+      // Every other partial reaches the wire nested inside a structural
+      // entry of an ancestor, rooted here (`writeScope` is patch-inert, so
+      // the root also registers with the serialize state directly).
+      writeScope(scopeId, partial);
+      $chunk.serializeState.writeScopes[scopeId] = partial;
+      $chunk.serializeState.flushScopes = true;
+    }
+  }
+  return partial;
+}
+
 export function _patch_attr(
   scopeId: number,
   accessor: Accessor,
@@ -238,11 +292,10 @@ export function _patch_attr(
 ) {
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
-    writeScope(scopeId, {
-      // `0` is the removal sentinel: normalized values are always strings and
-      // the serializer drops `undefined` members entirely.
-      [AccessorPrefix.PatchAttr + accessor + " " + name]:
-        normalizeAttrValue(value) ?? 0,
+    // `0` is the removal sentinel: normalized values are always strings and
+    // `undefined` entries are dropped entirely.
+    writePatch(scopeId, {
+      [PatchKey.Attr + accessor + " " + name]: normalizeAttrValue(value) ?? 0,
     });
   } else {
     $chunk.needsWalk = true;
@@ -251,12 +304,35 @@ export function _patch_attr(
   return "";
 }
 
+// Links a child scope into its parent's entry: immediately when already
+// written (tag-variable children render first), else on its first write.
+export function _patch_child(
+  scopeId: number,
+  accessor: Accessor,
+  childScopeId: number,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatches) {
+    const partial = state.patchPartials?.[childScopeId];
+    if (partial) {
+      writePatch(scopeId, {
+        [PatchKey.Child + accessor]: partial,
+      });
+    } else {
+      (state.patchPending ??= {})[childScopeId] = [
+        scopeId,
+        PatchKey.Child + accessor,
+      ];
+    }
+  }
+}
+
 // Emitted as the scope reason's complement (`$reason || _patch_value(...)`):
-// a page render serializes the value through the reason-gated scope write, a
-// patch delivers it as a fill.
+// a page render serializes the value through the reason-gated scope write,
+// so only a patch (the falsy persisted reason) ever reaches here.
 export function _patch_value(scopeId: number, key: string, value: unknown) {
-  writeScope(scopeId, {
-    [AccessorPrefix.PatchValue + key]: value,
+  writePatch(scopeId, {
+    [PatchKey.Value + key]: value,
   });
   return "";
 }
@@ -268,8 +344,8 @@ export function _patch_text(
 ) {
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
-    writeScope(scopeId, {
-      [AccessorPrefix.PatchText + accessor]: _to_text(value),
+    writePatch(scopeId, {
+      [PatchKey.Text + accessor]: _to_text(value),
     });
   } else {
     $chunk.needsWalk = true;
@@ -355,8 +431,10 @@ export function _var(
 function writeScopePassive(scopeId: number, partialScope: PartialScope) {
   const target = $chunk.serializeState;
   const scope = scopeWithId($chunk.boundary.state, scopeId);
-  const passive = (target.passiveScopes ||= {});
   Object.assign(scope, partialScope);
+  // Passive resume props never ride a patch (see `writeScope`).
+  if ($chunk.boundary.state.writesPatches) return scope;
+  const passive = (target.passiveScopes ||= {});
   passive[scopeId] = Object.assign(passive[scopeId] || {}, partialScope);
   return scope;
 }
@@ -412,6 +490,7 @@ export function _for_of(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -429,6 +508,7 @@ export function _for_of(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -443,6 +523,7 @@ export function _for_in(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -461,6 +542,7 @@ export function _for_in(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -477,6 +559,7 @@ export function _for_to(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -496,6 +579,7 @@ export function _for_to(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -512,6 +596,7 @@ export function _for_until(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -531,6 +616,7 @@ export function _for_until(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -549,7 +635,17 @@ function forBranches(
   serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ) {
+  if (
+    onWriteLoop?.(
+      iterate as Parameters<typeof onWriteLoop>[0],
+      scopeId,
+      accessor,
+      shellId,
+    )
+  )
+    return;
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
     var seenKeys = new Set<unknown>();
@@ -715,6 +811,10 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   state.needsMainRuntime = true;
   Object.assign(scope, partialScope);
 
+  // Nothing ever resumes a patch's output, so resume writes stop at the
+  // canonical scope (server reads); patch data flows through `writePatch`.
+  if (state.writesPatches) return scope;
+
   // Each serialize state only flushes the props it wrote itself; the
   // canonical scope (above) accumulates everything for server side reads.
   if (pending && pending !== partialScope) {
@@ -801,7 +901,21 @@ export function _set_serialize_reason(reason: SerializeReasonValue) {
 export function _persisted_reason() {
   const { state } = $chunk.boundary;
   state.serializeReason = undefined;
-  return state.writesPatches ? undefined : 1;
+  if (state.writesPatches) {
+    // The first persisted template of the render is the page root, about to
+    // allocate the next id — the frame names it as the walk's entry pair.
+    if (!state.rootScopeId) {
+      state.rootScopeId = _peek_scope_id();
+      // Globals re-ship with every frame (undefined included) so the live
+      // page's global object never reads stale.
+      const globals = getFilteredGlobals(state.$global, 1);
+      if (globals) {
+        patchPartial(state, state.rootScopeId)[PatchKey.Globals] = globals;
+      }
+    }
+    return undefined;
+  }
+  return 1;
 }
 
 export function _scope_reason() {
@@ -1078,6 +1192,11 @@ export class State implements SerializeState {
   public nonceAttr = "";
   public serializer = new Serializer();
   declare writesPatches?: boolean;
+  declare rootScopeId?: number;
+  declare patchPartials?: Record<number, Record<string, unknown>>;
+  declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
+  declare patchFlushed?: 1;
+  declare patchDeferred?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   public flushScopes = false;
@@ -1282,6 +1401,9 @@ export class Chunk {
   }
 
   writeEffect(scopeId: number, registryId: string) {
+    // A patch never ships effects: paired scopes attached theirs when the
+    // page resumed, and a fresh construct attaches its shell's.
+    if (this.boundary.state.writesPatches) return;
     if (this.lastEffect === registryId) {
       this.effects += " " + scopeId;
     } else {
@@ -1726,7 +1848,9 @@ function depsMarker(deps: Set<string> | null) {
   return marker;
 }
 
-function getFilteredGlobals($global: Record<string, unknown>) {
+// `all` keeps undefined-valued keys: a patch must overwrite them, where a
+// resume elides.
+function getFilteredGlobals($global: Record<string, unknown>, all?: 1) {
   if (!$global) return 0;
 
   const serializedGlobals = $global.serializedGlobals as
@@ -1741,7 +1865,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
   if (Array.isArray(serializedGlobals)) {
     for (const key of serializedGlobals) {
       const value = $global[key];
-      if (value !== undefined) {
+      if (all || value !== undefined) {
         if (filtered) {
           filtered[key] = value;
         } else {
@@ -1753,7 +1877,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
     for (const key in serializedGlobals) {
       if (serializedGlobals[key]) {
         const value = $global[key];
-        if (value !== undefined) {
+        if (all || value !== undefined) {
           if (filtered) {
             filtered[key] = value;
           } else {
