@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A handler capturing server input would read it stale after any patch
-// (captures never re-ship as fills), so it is rejected.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A handler capturing server input reads the filled value at call time, so
+// it stays current across patches.
 export const config: TestConfig = {
   persisted: true,
-  error_compiler: true,
+  steps: [{ title: "Store" }, click, { title: "Store!" }, click],
 };

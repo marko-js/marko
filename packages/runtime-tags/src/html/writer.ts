@@ -380,6 +380,34 @@ export function _patch_value(
   return "";
 }
 
+// A patched scope write for effect-read values: no client registration —
+// the wire drives the accessor, and `_patch_effect` entries re-run readers.
+export function _patch_write(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+) {
+  if ($chunk.boundary.state.writesPatches) {
+    writePatch(scopeId, {
+      [PatchKey.Write + accessor]: value,
+    });
+  }
+  return "";
+}
+
+export function _patch_effect(
+  scopeId: number,
+  registerId: string,
+  accessors: string,
+) {
+  if ($chunk.boundary.state.writesPatches) {
+    writePatch(scopeId, {
+      [PatchKey.Effect + registerId]: accessors,
+    });
+  }
+  return "";
+}
+
 export function _patch_text(
   scopeId: number,
   accessor: Accessor,
