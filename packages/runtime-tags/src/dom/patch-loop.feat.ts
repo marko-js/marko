@@ -31,7 +31,7 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
   const suffix = key.slice(PatchKey.Loop.length) as Accessor;
   if (!shellId) {
     // Additions need the item shell; a section that cannot ship one (eg
-    // state-fed holes, until stateful construction) rejects to navigation.
+    // holes reading parent-scope state) rejects to navigation.
     const liveKeys = new Set<unknown>();
     let index = 0;
     forEach(
