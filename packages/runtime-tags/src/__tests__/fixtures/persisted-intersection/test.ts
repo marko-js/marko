@@ -6,5 +6,7 @@ const click = (document: Document) => {
 
 export const config: TestConfig = {
   persisted: true,
-  steps: [{ title: "First" }, click, { title: "Second" }, click],
+  // The final step drops `title`: an intersection fill changing to
+  // undefined must overwrite the live value, not be elided.
+  steps: [{ title: "First" }, click, { title: "Second" }, click, {}, click],
 };

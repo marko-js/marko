@@ -1,4 +1,4 @@
-// size: 26703 (min) 9926 (brotli)
+// size: 26530 (min) 9850 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -92,10 +92,13 @@ let unsafeStyleAttrReg = /[\\;]/g,
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
   patchers = {},
+  onPatchRecord,
+  walkScope = (partial, live) => {
+    for (let key in partial) patchers[key[0]](live, key, partial[key]);
+  },
   curRenders,
   embedRenders,
   readyIds,
-  patchFailed = 0,
   patchRender = 0,
   patching = 0,
   isResuming,
@@ -831,14 +834,10 @@ function walk(startNode, walkCodes, branch) {
 }
 function beginPatch(renderId) {
   let render = (patchRender = curRenders[renderId]);
-  return ((patchFailed = 0), (patching = 1), render);
-}
-function finishPatch() {
-  let applied = !patchFailed;
-  return (abortPatch(), applied);
+  return ((patching = 1), render);
 }
 function abortPatch() {
-  patchRender = patchFailed = patching = 0;
+  patchRender = patching = 0;
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
@@ -885,23 +884,9 @@ function init(runtimeId = "M") {
             ),
             applyScopes = (partials) => {
               if (patching && patchRender === render) {
-                let scopeId = partials[0];
-                for (let i = 1; i < partials.length; i++) {
-                  let partial = partials[i];
-                  if (typeof partial == "number") scopeId += partial;
-                  else if (typeof partial == "string")
-                    for (lastTokenIndex = 0, visitText = partial; nextToken();)
-                      /\D/.test(lastToken)
-                        ? (lastEffect = registeredValues[lastToken])
-                        : curEffects.push(lastEffect, getScope(lastToken));
-                  else if (Array.isArray(partial));
-                  else {
-                    let scope = (scopeLookup[scopeId] ??= partial);
-                    if (scope !== partial)
-                      for (let key in partial) patchers[key[0]](scope, key, partial[key]);
-                    scopeId++;
-                  }
-                }
+                let i = 0;
+                for (; typeof partials[i] == "string";) onPatchRecord(partials[i++]);
+                partials[i] && walkScope(partials[i], getScope(1));
                 return;
               }
               let scopeId = partials[0];
@@ -921,13 +906,11 @@ function init(runtimeId = "M") {
               }
             },
             serializeContext = (data, registryId) =>
-              patching && patchRender === render && typeof data == "number"
-                ? ((patchFailed = 1), void 0)
-                : typeof data == "number"
-                  ? registryId
-                    ? registeredValues[registryId](getScope(data))
-                    : getScope(data)
-                  : applyScopes(data),
+              typeof data == "number"
+                ? registryId
+                  ? registeredValues[registryId](getScope(data))
+                  : getScope(data)
+                : applyScopes(data),
             createVisitBranches =
               (
                 branchScopesStack = [],
@@ -1012,7 +995,7 @@ function init(runtimeId = "M") {
               )),
             processResumes = (resumes = [], effects) => {
               let i = 0;
-              for (patching && (curEffects = effects); i < resumes.length; i++) {
+              for (; i < resumes.length; i++) {
                 let serialized = resumes[i];
                 if (typeof serialized == "string")
                   for (lastTokenIndex = 0, visitText = serialized; nextToken();)
@@ -1030,13 +1013,14 @@ function init(runtimeId = "M") {
                 } else if (readyIds && typeof serialized == "number") break;
                 else {
                   let scopes = serialized(serializeContext);
-                  Array.isArray(scopes) && applyScopes(scopes);
+                  Array.isArray(scopes)
+                    ? applyScopes(scopes)
+                    : patching && patchRender === render && scopes && applyScopes([scopes]);
                 }
               }
               return (resumes.splice(0, i), i);
             },
             lastEffect,
-            curEffects,
             visits,
             visit,
             visitText,
@@ -2103,6 +2087,9 @@ let empty = [],
         return toInsertNode(branch.S, branch.K);
     },
   },
+  patchGlobalsEntry = (live, _key, value) => {
+    Object.assign(live.$, value);
+  },
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
@@ -2119,12 +2106,14 @@ function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
 function applyPatch(frame, renderId = "_", runtimeId = "M") {
-  init(runtimeId);
+  (init(runtimeId), (patchers.$ = patchGlobalsEntry));
   let render = beginPatch(renderId);
   try {
-    render.r = [Function("_", "$", "return " + frame)];
-    let effects = render.m([]);
-    return finishPatch() ? (runEffects(effects, 1), run(), !0) : !1;
+    return (
+      (render.r = [Function("_", "$", "return " + frame)]), runEffects(render.m([]), 1), run(), !0
+    );
+  } catch {
+    return !1;
   } finally {
     abortPatch();
   }

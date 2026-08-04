@@ -58,6 +58,7 @@ import {
 import { getExprIfSerialized, scopeReasonIdentifier } from "./serialize-guard";
 import {
   getSerializeReason,
+  getSerializeSourcesForRef,
   isReasonDynamic,
   isSameReason,
   type SerializeReason,
@@ -1185,6 +1186,35 @@ export function addHTMLEffectCall(
 
 function toSequenceExpression(exprs: t.Expression[]) {
   return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
+}
+
+// An effect reading server-derived values cannot run faithfully on a
+// constructed scope (nothing seeds those reads); its section drops its shell.
+export function sectionHasServerEffect(section: Section) {
+  for (const signal of getSignals(section).values()) {
+    if (signal.hasHTMLEffect) {
+      const sources = getSerializeSourcesForRef(signal.referencedBindings);
+      if (sources?.param || sources?.global) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// The section's mount effects as space-joined register ids, in hydration
+// replay order, for its shell to ship.
+export function getSectionEffectRegisterIds(section: Section) {
+  let ids = "";
+  const allSignals = Array.from(getSignals(section).values());
+  for (let i = allSignals.length; i--;) {
+    if (allSignals[i].hasHTMLEffect) {
+      ids +=
+        (ids && " ") +
+        getResumeRegisterId(section, allSignals[i].referencedBindings);
+    }
+  }
+  return ids;
 }
 
 export function writeHTMLResumeStatements(
