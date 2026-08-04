@@ -17,6 +17,7 @@ import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
   getPatchFillBindings,
+  hasUnfillablePatchReads,
   isPatchCaptureSection,
   scopeReasonRuntime,
 } from "../../util/persisted";
@@ -37,7 +38,6 @@ import {
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import {
   getSerializeSourcesForExpr,
-  getSerializeSourcesForRef,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
 import { getDroppedShellIds, getShellId } from "../../util/shell";
@@ -300,13 +300,16 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         return;
       }
-      // A `<script>`'s server-derived reads would be stale by its next run
-      // (they never re-ship as fills); state-only reads re-run it instead.
+      // A `<script>`'s server-derived reads stay current over the wire
+      // (fills or effect refresh); globals never re-queue, so those stay
+      // stale and reject.
       if (tagName === "script") {
         for (const attr of node.attributes) {
           if (attr.type === "MarkoAttribute" && attr.name === "value") {
-            const sources = getSerializeSourcesForExpr(attr.value.extra || {});
-            if (sources?.param || sources?.global) {
+            if (
+              getSerializeSourcesForExpr(attr.value.extra || {})?.global ||
+              hasUnfillablePatchReads(attr.value.extra?.referencedBindings)
+            ) {
               unsupported(attr);
             }
           }
@@ -369,13 +372,14 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               (controllable ||
                 (isEventOrChangeHandler(attr.name) &&
                   !isEventHandler(attr.name)) ||
-                // A handler capturing server input reads it stale after any
-                // patch (captures never re-ship as fills).
+                // A handler reads captured server input from the scope at
+                // call time, so fills keep it current; anything unfillable
+                // would read stale.
                 (isEventHandler(attr.name) &&
-                  !!getSerializeSourcesForRef(
+                  hasUnfillablePatchReads(
                     (attr.value.extra as t.FunctionExtra | undefined)
                       ?.referencedBindingsInFunction,
-                  )?.param) ||
+                  )) ||
                 // `content=` mounts structural content the patch wire has no
                 // entry for, so a dynamic one cannot apply faithfully.
                 attr.name === "content" ||
