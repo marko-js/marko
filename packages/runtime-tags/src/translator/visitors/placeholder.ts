@@ -8,7 +8,8 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
-import { isPatchCaptureSection } from "../util/persisted";
+import { forEach } from "../util/optional";
+import { isPatchCaptureSection, isPatchFillBinding } from "../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -195,13 +196,18 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         "Persisted templates do not yet support `$global` contributions to stateful expressions.",
       );
     }
-    if (holeSources?.state && section.isBranch) {
-      // A state-fed hole never captures, so a constructed shell would show it
-      // stale; the branch ships shell-less and divergence rejects the patch.
+    // Section-local SEEDABLE state constructs faithfully (its value ships
+    // as a fresh fill); anything else state-fed still drops the shell.
+    let localState = !!holeSources?.state;
+    forEach(holeSources?.state, (binding) => {
+      localState &&= binding.section === section && isPatchFillBinding(binding);
+    });
+    if (holeSources?.state && !localState && section.isBranch) {
       dropSectionShell(section);
     }
     // A hole fed by client state never captures directly: the client owns
-    // part of its value, and it recomputes through the signal graph instead.
+    // part of its value, and it recomputes through the signal graph (a
+    // fresh construct renders it through the state's seed fill).
     const isPatch =
       isPersisted() &&
       node.escape &&

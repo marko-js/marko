@@ -99,12 +99,12 @@ export function _const<T>(
 }
 
 // Value signals for the page's live server/client intersections, keyed by
-// `templateId:ordinal`. `_fillable` rides each intersection's declaration, so
+// `templateId:ordinal`. `_fill_join` rides each intersection's declaration, so
 // tree-shaking keeps a registration exactly when a consuming join is
 // retained; re-registration composes every live join behind one guard.
 export const patchFills: Record<string, Signal<unknown> & { _?: SignalFn }> =
   {};
-export function _fillable<T extends SignalFn>(
+export function _fill_join<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   join: T,
@@ -120,6 +120,24 @@ export function _fillable<T extends SignalFn>(
     _?: SignalFn;
   })._ = fn;
   return join;
+}
+
+// A binding's own signal already writes + queues its downstream, so it
+// registers as the fill directly (no join composition). Fused declaration
+// forms so compiled templates spend one call, not two.
+function fill<T>(key: string, signal: Signal<unknown>) {
+  patchFills[key] = signal;
+  return signal as Signal<T>;
+}
+export function _fill_let<T>(key: string, id: EncodedAccessor, fn?: SignalFn) {
+  return fill<T>(key, _let<T>(id, fn) as Signal<unknown>);
+}
+export function _fill_const<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+) {
+  return fill<T>(key, _const<T>(id, fn) as Signal<unknown>);
 }
 
 export function _or(

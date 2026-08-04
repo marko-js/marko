@@ -24,8 +24,18 @@ import { removeAndDestroyBranch } from "./scope";
 // it even when no client control flow does.
 const _content = /*@__PURE__*/ withBranches(content);
 
-// Server-shipped shells, cached per session; mount effects become the
-// content's setup, so whatever constructs from a shell attaches them.
+// Server-shipped shells, cached per session; the content's setup applies
+// stashed fresh entries (seeds) and attaches mount effects on construct.
+// Fresh sub-partials stash here and only the shell content's setup — run
+// solely for freshly created branches, inside `run()` where `_let` treats
+// the scope as first-render — applies them; a walk-time apply would take
+// the value-change path and clobber paired state.
+const kFresh = Symbol();
+
+patchers[PatchKey.Fresh] = (scope, _key, value) => {
+  (scope as Scope & { [kFresh]?: Scope })[kFresh] = value as Scope;
+};
+
 type Shell = [
   template: string,
   walks: string,
@@ -43,14 +53,22 @@ _patch_records((record) => {
   const sep = (idToken + " ").indexOf(" ");
   const effects = idToken.slice(sep + 1);
   const fns =
-    effects && effects.split(" ").map((id) => getRegisteredWithScope(id));
+    effects &&
+    effects !== "!" &&
+    effects.split(" ").map((id) => getRegisteredWithScope(id));
   shells[idToken.slice(0, sep)] = [
     record.slice(second + 1),
     record.slice(first + 1, second),
-    fns
-      ? (branch: Scope) => {
-          for (const fn of fns) {
-            queueEffect(branch, fn as (scope: Scope) => void);
+    effects
+      ? (branch: Scope & { [kFresh]?: Scope | 0 }) => {
+          if (branch[kFresh]) {
+            walkScope(branch[kFresh] as Scope, branch);
+            branch[kFresh] = 0;
+          }
+          if (fns) {
+            for (const fn of fns) {
+              queueEffect(branch, fn as (scope: Scope) => void);
+            }
           }
         }
       : 0,
