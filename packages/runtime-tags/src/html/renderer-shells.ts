@@ -1,7 +1,5 @@
-// Branch shells, pre-serialized at compile time as complete frame chunks
-// (",[0,id,template,walks]") and registered at server module load; a patch
-// ships each at most once per response so the client can construct branches
-// without bundling conditional content.
+// Branch shells, pre-encoded at compile time as quoted frame chunks and
+// shipped at most once per response for construct-on-divergence.
 export const serverRenderers: Record<string, string> = {};
 
 export function _renderer_shells(shells: typeof serverRenderers) {

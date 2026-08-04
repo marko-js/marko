@@ -10,7 +10,7 @@ import {
 } from "./binding-prop-tree";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
-import { isOptimize } from "./marko-config";
+import { isOptimize, isPersisted } from "./marko-config";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -46,7 +46,12 @@ import {
   trackParamsReferences,
   trackVarReferences,
 } from "./references";
-import { callRuntime, importRuntime } from "./runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntime,
+  importRuntimeFeature,
+} from "./runtime";
 import { createScopeReadExpression } from "./scope-read";
 import {
   getOrCreateSection,
@@ -128,6 +133,13 @@ export function knownTagAnalyze(
     section,
   ));
   const attrExprs = new Set([tagExtra]);
+  if (isPersisted()) {
+    // Frame ids are local labels: a patch pairs the child scope through a
+    // parent entry, so the ref must serialize (a scriptless child could
+    // otherwise skip it, leaving its fills and effects unreachable).
+    addSerializeReason(section, true, childScopeBinding);
+    addRuntimeFeatureAsset(tag.hub.file, "patch-child");
+  }
   startSection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
@@ -222,6 +234,19 @@ export function knownTagTranslateHTML(
       childScopeBinding,
       callRuntime("_existing_scope", peekScopeId),
     );
+
+    if (isPersisted()) {
+      statements.push(
+        t.expressionStatement(
+          callRuntime(
+            "_patch_child",
+            getScopeIdIdentifier(section),
+            getScopeAccessorLiteral(childScopeBinding),
+            peekScopeId,
+          ),
+        ),
+      );
+    }
 
     if (tagVar) {
       // Deferred below the render call: `_var` mints the post-render scope id
@@ -356,6 +381,10 @@ export function knownTagTranslateDOM(
   const { node } = tag;
   const extra = node.extra!;
   const childScopeBinding = extra[kChildScopeBinding]!;
+
+  // An interactive page receives assets transitively through its dom
+  // program, so the feature import rides both outputs.
+  if (isPersisted()) importRuntimeFeature("patch-child");
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
