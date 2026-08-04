@@ -3,7 +3,7 @@ import { getFile } from "@marko/compiler/babel-utils";
 import * as BindingType from "./constants/binding-type";
 import { isPersisted } from "./marko-config";
 import { filter, forEach, type Opt } from "./optional";
-import type { Binding } from "./references";
+import { type Binding, getCanonicalBinding } from "./references";
 import type { Section } from "./sections";
 import { getSerializeSourcesForRef } from "./serialize-reasons";
 import { createProgramState } from "./state";
@@ -30,12 +30,32 @@ export function getPatchFillKey(binding: Binding) {
       });
     }
   }
-  return getFile().metadata.marko.id + ordinals.m.get(binding);
+  const ordinal = ordinals.m.get(binding);
+  if (ordinal === undefined) {
+    throw new Error("Marko: a patch fill binding is missing its ordinal.");
+  }
+  return getFile().metadata.marko.id + ordinal;
 }
 
 // The template's fill bindings.
 export function getPatchFillBindings(section: { bindings: Opt<Binding> }) {
   return filter(section.bindings as Opt<Binding>, isPatchFillBinding);
+}
+
+// The shape a patch can keep current: a canonical root server value (only
+// canonical bindings get ordinals and server writes — an alias never
+// qualifies, so its reads reject rather than going silently stale).
+function isPatchRefreshableBinding(binding: Binding) {
+  return (
+    isPersisted() &&
+    getCanonicalBinding(binding) === binding &&
+    !binding.section.parent &&
+    !!binding.sources?.param &&
+    !binding.sources.state &&
+    (binding.type === BindingType.input ||
+      binding.type === BindingType.param ||
+      binding.type === BindingType.derived)
+  );
 }
 
 // A potential fill: a server-sourced value whose reads intersect client
@@ -50,21 +70,12 @@ export function isPatchFillBinding(binding: Binding) {
     isPersisted() &&
     binding.type === BindingType.let &&
     binding.section.isBranch &&
-    isPatchCaptureSection(binding.section)
+    isPatchCaptureSection(binding.section) &&
+    getCanonicalBinding(binding) === binding
   ) {
     return !!binding.assignmentSections;
   }
-  if (
-    !isPersisted() ||
-    binding.section.parent ||
-    !binding.sources?.param ||
-    binding.sources.state ||
-    (binding.type !== BindingType.input &&
-      binding.type !== BindingType.param &&
-      binding.type !== BindingType.derived)
-  ) {
-    return false;
-  }
+  if (!isPatchRefreshableBinding(binding)) return false;
 
   for (const read of binding.reads) {
     if (
@@ -76,6 +87,32 @@ export function isPatchFillBinding(binding: Binding) {
   }
 
   return false;
+}
+
+// An effect-read value with no client-state intersection: nothing in the
+// signal graph consumes it, so no fill registers — the wire writes the
+// accessor (`w`) and re-runs readers by register id (`e`) instead.
+export function isPatchEffectBinding(binding: Binding) {
+  if (!isPatchRefreshableBinding(binding) || isPatchFillBinding(binding)) {
+    return false;
+  }
+  for (const read of binding.reads) {
+    if (read.isEffect) return true;
+  }
+  return false;
+}
+
+// Server-sourced reads a patch cannot keep current: param-sourced bindings
+// that neither fill nor refresh over the wire read stale after any patch.
+export function hasUnfillablePatchReads(refs: Opt<Binding>) {
+  let unfillable = false;
+  forEach(refs, (binding) => {
+    unfillable ||=
+      !!getSerializeSourcesForRef(binding)?.param &&
+      !isPatchFillBinding(binding) &&
+      !isPatchEffectBinding(binding);
+  });
+  return unfillable;
 }
 
 // Sections whose text/attr holes emit direct patch captures: the root and
