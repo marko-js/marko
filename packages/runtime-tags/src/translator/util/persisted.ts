@@ -56,9 +56,13 @@ export function isPatchFillBinding(binding: Binding) {
   return false;
 }
 
-// Sections whose text/attr holes emit direct patch captures: the root, and
-// patchable branch bodies (their captures ride the branch scope, which the
-// client pairs to the live branch or adopts into a constructed one).
+// Sections whose text/attr holes emit direct patch captures: the root and
+// any branch body reachable through branches alone — the walk pairs (or
+// constructs) every level structurally, so depth does not matter.
 export function isPatchCaptureSection(section: Section) {
-  return !section.parent || (!!section.isBranch && !section.parent.parent);
+  while (section.parent) {
+    if (!section.isBranch) return false;
+    section = section.parent;
+  }
+  return true;
 }

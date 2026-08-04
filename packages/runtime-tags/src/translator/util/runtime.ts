@@ -12,6 +12,7 @@ import {
   _escape_style,
   _unescaped,
 } from "../../html";
+import { addAssetImport } from "./asset-imports";
 import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
@@ -112,8 +113,19 @@ export type DOMRuntimeFeature =
   | "dynamic-tag-var"
   | "patch-attr"
   | "patch-branch"
+  | "patch-child"
+  | "patch-loop"
   | "patch-text"
   | "patch-value";
+// The analyze-phase half of `importRuntimeFeature`: the page entry links
+// client assets from analyze metadata.
+export function addRuntimeFeatureAsset(
+  file: t.BabelFile,
+  feature: DOMRuntimeFeature,
+) {
+  addAssetImport(file, `${getRuntimePath("dom")}/${feature}.feat`);
+}
+
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!isTranslate()) {
