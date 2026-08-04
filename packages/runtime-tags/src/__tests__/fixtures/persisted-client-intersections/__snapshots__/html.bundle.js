@@ -42,14 +42,19 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "a")}</h1><p${_patch_attr($scope0_id, "b", "title", $global().locale)}${_attr("title", $global().locale)}>${_patch_text($scope0_id, "c", $global().brand)}${_escape($global().brand)}${_el_resume($scope0_id, "c")}</p>${_el_resume($scope0_id, "b")}`);
 	const $childScope = _peek_scope_id();
+	_patch_child($scope0_id, "d", $childScope);
 	price_card_default({ label: input.label });
-	promo_tag_default({ text: "Sale" });
-	_set_serialize_reason(_serialize_guard($scope0_reason, 1));
 	const $childScope2 = _peek_scope_id();
+	_patch_child($scope0_id, "e", $childScope2);
+	promo_tag_default({ text: "Sale" });
+	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	const $childScope3 = _peek_scope_id();
+	_patch_child($scope0_id, "f", $childScope3);
 	site_footer_default({ year: input.year });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {
 		d: _existing_scope($childScope),
-		f: _existing_scope($childScope2)
+		e: _existing_scope($childScope2),
+		f: _existing_scope($childScope3)
 	});
 }, 1);

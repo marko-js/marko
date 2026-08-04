@@ -1,0 +1,2 @@
+Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-input/template.marko

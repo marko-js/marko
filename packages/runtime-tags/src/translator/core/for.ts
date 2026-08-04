@@ -21,6 +21,8 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted } from "../util/marko-config";
+import { isPatchCaptureSection } from "../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -33,7 +35,11 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import {
   ContentType,
   getBranchRendererArgs,
@@ -49,6 +55,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
+import { getShellId, isShellDropped, recordShellRoot } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -189,6 +196,13 @@ export default {
       getBranchSectionAccessor(nodeBinding),
     );
 
+    if (isPersisted() && isPatchCaptureSection(tagSection)) {
+      addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
+      // The item body's shell builds at program analyze exit, once child
+      // bindings exist; record the root here.
+      recordShellRoot(bodySection);
+    }
+
     if (!isAttrTag && !getOnlyChildParentTagName(tag)) {
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
@@ -225,7 +239,12 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
+        // A patchable loop keeps its markers: item pairing and insertion
+        // anchor at branch marks, which elision would remove.
+        const persistedPatch =
+          isPersisted() && isPatchCaptureSection(tagSection);
         const singleChild =
+          !persistedPatch &&
           bodySection.content?.singleChild &&
           bodySection.content.startType !== ContentType.Text;
 
@@ -260,7 +279,8 @@ export default {
         );
 
         if (branchSerializeReason) {
-          const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
+          const skipParentEnd =
+            !persistedPatch && onlyChildParentTagName && markerSerializeReason;
           const statefulSerializeArg = getSerializeGuard(
             tagSection,
             getSerializeReason(tagSection, kStatefulReason),
@@ -297,6 +317,21 @@ export default {
 
             forTagArgs.push(t.numericLiteral(1));
           }
+
+          if (persistedPatch) {
+            // The item body's shell id, so patches can construct additions;
+            // a bare `0` makes any addition reject the patch. (`singleChild`
+            // and `skipParentEnd` are forced off above, so the two optional
+            // marker args are always the unset placeholders here.)
+            const id = !isShellDropped(bodySection) && getShellId(bodySection);
+            forTagArgs.push(
+              undefined,
+              undefined,
+              id && tag.hub.file.metadata.marko.persistedShells?.[id]
+                ? t.stringLiteral(id)
+                : t.numericLiteral(0),
+            );
+          }
         }
 
         statements.push(
@@ -318,6 +353,12 @@ export default {
         if (!bodySection) {
           tag.remove();
           return;
+        }
+
+        if (isPersisted() && isPatchCaptureSection(getSection(tag))) {
+          // An interactive page receives assets transitively through its
+          // dom program, so the feature import rides both outputs.
+          importRuntimeFeature("patch-loop");
         }
 
         setSectionParentIsOwner(bodySection, true);
