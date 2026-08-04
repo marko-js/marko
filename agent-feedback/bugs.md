@@ -544,3 +544,9 @@ fields whose resolved form is lossy. Re-verify by server-rendering
 `<const/fmt=new Intl.DateTimeFormat("ja", { month: "long", weekday: "long" })/>`
 reached from browser-updating content, then comparing `fmt.format(date)` before
 and after resume.
+
+## Type `<try>`'s `@catch` body parameter the way TypeScript types a `catch` binding
+
+`packages/runtime-tags/tags/try.d.marko` › `Input` | 2026-08-03 | impact:med | effort:low
+
+`catch?: Marko.AttrTag<{ content?: Marko.Body<[unknown]> }>` hardcodes `unknown`, so `<@catch|err|>${err.message}</@catch>` — the shape `packages/runtime-tags/cheatsheet.md`'s own Async section teaches — fails type-check in every otherwise-correct `<try>` template. Because that `unknown` is written down rather than inferred, `useUnknownInCatchVariables` cannot move it either way, and the tag diverges from the language in both directions: under `strict:false` a plain `catch (e) { e.message }` is clean while the template reports TS2339, and under `{ strict: true, useUnknownInCatchVariables: false }` the plain `catch` is clean while the template still reports TS18046. Either declare the parameter `any`, so `<@catch>` tracks a project's own `catch` blocks, or keep `unknown` deliberately and put the narrowing idiom (`err instanceof Error ? err.message : String(err)`) in the cheatsheet, since nothing in-repo currently shows it. Re-verify: run `mtc` over a `<try>` whose `<@catch|err|>` body reads `err.message`, under each of those two tsconfigs.
