@@ -12,7 +12,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
-const $if = /*@__PURE__*/ _if("#text/1", "<aside> </aside>", "D ", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", "<aside class=\"promo banner\"> </aside>", "D ", $if_content__setup);
 const $input_promo = /*@__PURE__*/ _const("input_promo", ($scope) => {
 	$if($scope, $scope.input_promo ? 0 : 1);
 	$if_content__input_promo($scope);
