@@ -453,10 +453,13 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
       // The skip is a SIGNED delta, so a flush that revisits a lower slot
-      // steps the cursor back rather than landing in the wrong one.
+      // steps the cursor back rather than landing in the wrong one. A bare
+      // patch run has no cursor at all: its single flush is the page root.
       buf[openIndex] =
         nextSlotId === -1
-          ? scopeId + ",{"
+          ? bare
+            ? "{"
+            : scopeId + ",{"
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
@@ -469,6 +472,9 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
+    // A deferred bare run applies through `_()` mid-expression, so a patch
+    // frame must evaluate its shell records first (see `resumeScript`).
+    if (bare) state.boundary!.state.patchDeferred = 1;
     if (fillIndex !== -1) {
       buf[fillIndex] = "_([" + buf[fillIndex];
       buf.push("])");
@@ -1861,18 +1867,20 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
   for (const key in val) {
     if (hasOwnProperty.call(val, key)) {
       const escapedKey = toObjectKey(key);
-      state.buf.push(sep + escapedKey + ":");
-      if (
-        writeProp(
-          state,
-          (val as Record<PropertyKey, unknown>)[key],
-          ref,
-          escapedKey,
-        )
-      ) {
+      const member = (val as Record<PropertyKey, unknown>)[key];
+      if (member === undefined && state.boundary?.state?.writesPatches) {
+        // A patch member set to undefined must overwrite the live value, so
+        // it survives as `$` where a resume would elide it.
+        state.wroteUndefined = true;
+        state.buf.push(sep + escapedKey + ":$");
         sep = ",";
       } else {
-        state.buf.pop();
+        state.buf.push(sep + escapedKey + ":");
+        if (writeProp(state, member, ref, escapedKey)) {
+          sep = ",";
+        } else {
+          state.buf.pop();
+        }
       }
     }
   }
