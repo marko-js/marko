@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-handler-input/template.marko:3:11
+      1 | <main>
+      2 |   <h1>${input.title}</h1>
+    > 3 |   <button onClick(ev) { (ev.target as HTMLElement).dataset.seen = input.title }>read</button>
+        |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.
+      4 | </main>
+      5 |
