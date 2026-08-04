@@ -18,7 +18,9 @@ import { find, forEach, type Opt, push, toArray } from "./optional";
 import {
   getPatchFillBindings,
   getPatchFillKey,
+  hasUnfillablePatchReads,
   isPatchCaptureSection,
+  isPatchEffectBinding,
   isPatchFillBinding,
 } from "./persisted";
 import {
@@ -1045,10 +1047,12 @@ export function writeSignals(section: Section) {
           }
         } else if (
           signal.referencedBindings &&
-          isPatchFillBinding(signal.referencedBindings)
+          isPatchFillBinding(signal.referencedBindings) &&
+          signal.section === signal.referencedBindings.section
         ) {
-          // The binding's own signal registers as the fill directly, fused
-          // into its declaration call (every fill declares via _let/_const).
+          // Only the binding's own declaration registers as the fill (its
+          // downstream reaches closures in child sections), fused into the
+          // `_let`/`_const` call every fill declares with.
           if (
             !t.isCallExpression(value) ||
             !t.isIdentifier(value.callee) ||
@@ -1270,13 +1274,16 @@ function toSequenceExpression(exprs: t.Expression[]) {
   return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
 }
 
-// An effect reading server-derived values cannot run faithfully on a
-// constructed scope (nothing seeds those reads); its section drops its shell.
+// An effect whose server-derived reads fills cannot keep current (globals
+// never re-queue effects) cannot run faithfully on a constructed scope;
+// its section drops its shell.
 export function sectionHasServerEffect(section: Section) {
   for (const signal of getSignals(section).values()) {
     if (signal.hasHTMLEffect) {
-      const sources = getSerializeSourcesForRef(signal.referencedBindings);
-      if (sources?.param || sources?.global) {
+      if (
+        getSerializeSourcesForRef(signal.referencedBindings)?.global ||
+        hasUnfillablePatchReads(signal.referencedBindings)
+      ) {
         return true;
       }
     }
@@ -1486,6 +1493,57 @@ export function writeHTMLResumeStatements(
       getDeclaredBindingExpression(binding),
     ),
   );
+
+  // Effect-read values need no client registration: the wire writes the
+  // accessor here, and each reading effect's section re-runs it by register
+  // id when the value it saw changed.
+  if (isPersisted()) {
+    forEach(section.bindings, (binding) => {
+      if (isPatchEffectBinding(binding)) {
+        fillCalls.push(
+          callRuntime(
+            "_patch_write",
+            scopeIdIdentifier,
+            t.stringLiteral(getScopeAccessor(binding)),
+            getDeclaredBindingExpression(binding),
+          ),
+        );
+      }
+    });
+    // One entry per effect (keyed by its register id), listing every
+    // effect-read accessor it observes: a patch changing several of them
+    // re-runs the effect ONCE, matching the client `_or` coalescing.
+    // Entries self-gate on patch renders (and the check defers to the
+    // effect queue), so they emit plainly in any section's body. Effect
+    // bindings are root values, so one owner-hop count suffixes the
+    // accessors (accessors never parse as pure numbers).
+    for (const signal of allSignals) {
+      if (signal.hasHTMLEffect) {
+        let accessors = "";
+        forEach(signal.referencedBindings, (binding) => {
+          if (isPatchEffectBinding(binding)) {
+            accessors += (accessors && " ") + getScopeAccessor(binding);
+          }
+        });
+        if (accessors) {
+          body.push(
+            t.expressionStatement(
+              callRuntime(
+                "_patch_effect",
+                scopeIdIdentifier,
+                t.stringLiteral(
+                  getResumeRegisterId(section, signal.referencedBindings),
+                ),
+                t.stringLiteral(
+                  section.depth ? accessors + " " + section.depth : accessors,
+                ),
+              ),
+            ),
+          );
+        }
+      }
+    }
+  }
 
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
