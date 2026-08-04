@@ -1,4 +1,4 @@
-// size: 26530 (min) 9850 (brotli)
+// size: 26643 (min) 9909 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -646,7 +646,7 @@ function _const(valueAccessor, fn) {
     }
   );
 }
-function _fillable(key, valueAccessor, join) {
+function _fill_join(key, valueAccessor, join) {
   let prev = patchFills[key]?._,
     fn = prev
       ? (scope) => {
@@ -654,6 +654,15 @@ function _fillable(key, valueAccessor, join) {
         }
       : join;
   return (((patchFills[key] = _const(valueAccessor, fn))._ = fn), join);
+}
+function fill(key, signal) {
+  return ((patchFills[key] = signal), signal);
+}
+function _fill_let(key, id, fn) {
+  return fill(key, _let(id, fn));
+}
+function _fill_const(key, id, fn) {
+  return fill(key, _const(id, fn));
 }
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
   return (

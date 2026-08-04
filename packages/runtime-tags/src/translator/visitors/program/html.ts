@@ -16,6 +16,7 @@ import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
+  getPatchFillBindings,
   isPatchCaptureSection,
   scopeReasonRuntime,
 } from "../../util/persisted";
@@ -205,9 +206,13 @@ export default {
             if (sectionHasServerEffect(section)) {
               delete active[id];
             } else {
-              const effects = getSectionEffectRegisterIds(section);
-              if (effects) {
-                active[id] = id + " " + effects + active[id].slice(id.length);
+              // `!` marks a shell needing setup for seeds alone, so purely
+              // static shells skip the setup queue entirely.
+              const marker =
+                getSectionEffectRegisterIds(section) ||
+                (getPatchFillBindings(section) ? "!" : "");
+              if (marker) {
+                active[id] = id + " " + marker + active[id].slice(id.length);
               }
             }
           }
@@ -308,10 +313,16 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         return;
       }
+      // A seeded `<const>` equality-elides the initial write a values-free
+      // shell needs, and a `<let>`'s change handler has no construct-time
+      // wiring yet, so both stay unsupported inside branches.
       if (
-        (tagName === "let" ||
-          tagName === "const" ||
-          hasEventHandlerAttr(node)) &&
+        (tagName === "const" ||
+          (tagName === "let" &&
+            node.attributes.some(
+              (attr) =>
+                attr.type === "MarkoAttribute" && attr.name === "valueChange",
+            ))) &&
         tag.findParent(
           (parent) =>
             parent.isMarkoTag() &&
@@ -528,13 +539,4 @@ function getRegisteredFnExpression(
         getScopeIdIdentifier(extra.section),
     );
   }
-}
-
-function hasEventHandlerAttr(node: t.MarkoTag) {
-  for (const attr of node.attributes) {
-    if (attr.type === "MarkoAttribute" && isEventHandler(attr.name)) {
-      return true;
-    }
-  }
-  return false;
 }
