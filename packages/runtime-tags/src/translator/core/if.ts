@@ -8,7 +8,6 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
-import { addAssetImport } from "../util/asset-imports";
 import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
@@ -20,6 +19,7 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
+import { isPatchCaptureSection } from "../util/persisted";
 import {
   compareSources,
   getScopeAccessorLiteral,
@@ -27,9 +27,9 @@ import {
   mergeReferences,
 } from "../util/references";
 import {
+  addRuntimeFeatureAsset,
   callRuntime,
   getHTMLRuntime,
-  getRuntimePath,
   importRuntimeFeature,
 } from "../util/runtime";
 import {
@@ -118,11 +118,8 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
-      if (isPersisted() && !ifTagSection.parent) {
-        addAssetImport(
-          ifTag.hub.file,
-          `${getRuntimePath("dom")}/patch-branch.feat`,
-        );
+      if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
+        addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
         // Branch shells build at program analyze exit, once child bindings
         // exist; record the roots here.
         for (const [, branchBody] of branches) {
@@ -198,7 +195,8 @@ export const IfTag = {
 
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
-          const persistedPatch = isPersisted() && !ifTagSection.parent;
+          const persistedPatch =
+            isPersisted() && isPatchCaptureSection(ifTagSection);
           if (persistedPatch) {
             singleChild = false;
           } else {
@@ -351,7 +349,7 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          if (isPersisted() && !ifTagSection.parent) {
+          if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
             // An interactive page receives assets transitively through its
             // dom program, so the feature import rides both outputs.
             importRuntimeFeature("patch-branch");
