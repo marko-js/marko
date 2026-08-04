@@ -1,12 +1,12 @@
-[1,{"PatchText:#text/0":"Store","ConditionalRenderer:#text/1":0,"BranchScopes:#text/1":[2,"packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell"]},{"PatchText:#text/0":"Big Sale"},"packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_0 1",["packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell","<aside> </aside>","D "]]
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell;D ;<aside class="promo banner"> </aside>`,{"PatchText:#text/0":"Store","PatchBranch:#text/1":[{"PatchText:#text/0":"Big Sale"},"packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell"]}]
 
 
 // PATCH
 
-[1,{"PatchText:#text/0":"Store!","ConditionalRenderer:#text/1":-1},"packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_0 1"]
+{"PatchText:#text/0":"Store!","PatchBranch:#text/1":0}
 
 
 // PATCH
 
-[1,{"PatchText:#text/0":"Store!","ConditionalRenderer:#text/1":0,"BranchScopes:#text/1":[2,"packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell"]},{"PatchText:#text/0":"Back"},"packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_0 1",["packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell","<aside> </aside>","D "]]
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell;D ;<aside class="promo banner"> </aside>`,{"PatchText:#text/0":"Store!","PatchBranch:#text/1":[{"PatchText:#text/0":"Back"},"packages/runtime-tags/src/__tests__/fixtures/persisted-branch/template.marko_1_shell"]}]
 

@@ -9,13 +9,16 @@ import {
   usedSharedUid,
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
-import { isConditionTag } from "../../util/is-core-tag";
+import { isConditionTag, isCoreTagName } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
-import { scopeReasonRuntime } from "../../util/persisted";
+import {
+  isPatchCaptureSection,
+  scopeReasonRuntime,
+} from "../../util/persisted";
 import {
   BindingType,
   getReadReplacement,
@@ -33,14 +36,17 @@ import {
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import {
   getSerializeSourcesForExpr,
+  getSerializeSourcesForRef,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
-import { getDroppedShellIds } from "../../util/shell";
+import { getDroppedShellIds, getShellId } from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegisterId,
+  getSectionEffectRegisterIds,
+  sectionHasServerEffect,
   setSerializedValue,
   writeHTMLResumeStatements,
 } from "../../util/signals";
@@ -191,6 +197,27 @@ export default {
         // (state-fed holes construct unfaithfully).
         const active = { ...shells };
         for (const id of getDroppedShellIds()) delete active[id];
+        // Mount-effect register ids ride the shell's id token (entries
+        // reference the bare id); a server-reading effect drops the shell.
+        forEachSection((section) => {
+          const id = getShellId(section);
+          if (active[id]) {
+            if (sectionHasServerEffect(section)) {
+              delete active[id];
+            } else {
+              const effects = getSectionEffectRegisterIds(section);
+              if (effects) {
+                active[id] = id + " " + effects + active[id].slice(id.length);
+              }
+            }
+          }
+        });
+        // Pre-quoted as frame chunks here (template literals, so attribute
+        // quotes ride unescaped); the runtime registry just stores them.
+        for (const id in active) {
+          active[id] =
+            ",`" + active[id].replace(/[\\`]|\$\{/g, (m) => "\\" + m) + "`";
+        }
         if (Object.keys(active).length) {
           program.node.body.push(
             t.expressionStatement(
@@ -254,7 +281,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // rendered html wholesale, so the branch must be inert: a state-fed
       // test is client-owned, and state or handlers inside would not survive
       // (or hydrate within) a shipped swap.
-      if (isConditionTag(tag)) {
+      if (isConditionTag(tag) || isCoreTagName(tag, "for")) {
+        // The walk pairs branches structurally at any depth, but only when
+        // every enclosing section is itself a branch.
+        if (!isPatchCaptureSection(getSection(tag))) unsupported(node);
         for (const attr of node.attributes) {
           if (
             attr.type === "MarkoSpreadAttribute" ||
@@ -265,12 +295,27 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         return;
       }
+      // A `<script>`'s server-derived reads would be stale by its next run
+      // (they never re-ship as fills); state-only reads re-run it instead.
+      if (tagName === "script") {
+        for (const attr of node.attributes) {
+          if (attr.type === "MarkoAttribute" && attr.name === "value") {
+            const sources = getSerializeSourcesForExpr(attr.value.extra || {});
+            if (sources?.param || sources?.global) {
+              unsupported(attr);
+            }
+          }
+        }
+        return;
+      }
       if (
         (tagName === "let" ||
           tagName === "const" ||
           hasEventHandlerAttr(node)) &&
         tag.findParent(
-          (parent) => parent.isMarkoTag() && isConditionTag(parent),
+          (parent) =>
+            parent.isMarkoTag() &&
+            (isConditionTag(parent) || isCoreTagName(parent, "for")),
         )
       ) {
         unsupported(node);
@@ -313,6 +358,16 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               (controllable ||
                 (isEventOrChangeHandler(attr.name) &&
                   !isEventHandler(attr.name)) ||
+                // A handler capturing server input reads it stale after any
+                // patch (captures never re-ship as fills).
+                (isEventHandler(attr.name) &&
+                  !!getSerializeSourcesForRef(
+                    (attr.value.extra as t.FunctionExtra | undefined)
+                      ?.referencedBindingsInFunction,
+                  )?.param) ||
+                // `content=` mounts structural content the patch wire has no
+                // entry for, so a dynamic one cannot apply faithfully.
+                attr.name === "content" ||
                 attr.name === "class" ||
                 attr.name === "style" ||
                 (tagName === "option" && attr.name === "value"))

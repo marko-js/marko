@@ -1,0 +1,13 @@
+<let/count=0/>
+<main>
+  <ul>
+    <for|item| of=input.items by="id">
+      <li>${item.label}</li>
+    </for>
+  </ul>
+  <if=input.promo>
+    <aside>${input.promo}</aside>
+  </if>
+  <p>${input.note}</p>
+  <button onClick() { count++ }>Count ${count}</button>
+</main>
