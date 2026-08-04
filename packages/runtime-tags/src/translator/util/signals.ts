@@ -18,6 +18,7 @@ import { find, forEach, type Opt, push, toArray } from "./optional";
 import {
   getPatchFillBindings,
   getPatchFillKey,
+  isPatchCaptureSection,
   isPatchFillBinding,
 } from "./persisted";
 import {
@@ -991,16 +992,38 @@ export function writeSignals(section: Section) {
 
       // Fill registration rides the intersection's own declaration, so
       // tree-shaking keeps it exactly when the intersection is retained.
-      if (isPersisted() && Array.isArray(signal.referencedBindings)) {
-        for (const member of signal.referencedBindings) {
-          if (isPatchFillBinding(member)) {
-            value = callRuntime(
-              "_fillable",
-              t.stringLiteral(getPatchFillKey(member)),
-              getScopeAccessorLiteral(member, true),
-              value,
+      if (isPersisted()) {
+        if (Array.isArray(signal.referencedBindings)) {
+          for (const member of signal.referencedBindings) {
+            if (isPatchFillBinding(member)) {
+              value = callRuntime(
+                "_fill_join",
+                t.stringLiteral(getPatchFillKey(member)),
+                getScopeAccessorLiteral(member, true),
+                value,
+              );
+            }
+          }
+        } else if (
+          signal.referencedBindings &&
+          isPatchFillBinding(signal.referencedBindings)
+        ) {
+          // The binding's own signal registers as the fill directly, fused
+          // into its declaration call (every fill declares via _let/_const).
+          if (
+            !t.isCallExpression(value) ||
+            !t.isIdentifier(value.callee) ||
+            (value.callee.name !== "_let" && value.callee.name !== "_const")
+          ) {
+            throw new Error(
+              "Marko: expected a _let or _const declaration for a patch fill binding.",
             );
           }
+          value = callRuntime(
+            ("_fill" + value.callee.name) as "_fill_let" | "_fill_const",
+            t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
+            ...(value.arguments as t.Expression[]),
+          );
         }
       }
 
@@ -1417,6 +1440,24 @@ export function writeHTMLResumeStatements(
   );
 
   forEach(section.referencedLocalClosures, writeSerializedBinding);
+
+  // A constructible branch seeds its state onto freshly constructed scopes
+  // as FRESH fills: the fill signal's joins render all downstream content.
+  if (persisted && section.isBranch && isPatchCaptureSection(section)) {
+    forEach(getPatchFillBindings(section), (binding) => {
+      body.push(
+        t.expressionStatement(
+          callRuntime(
+            "_patch_value",
+            scopeIdIdentifier,
+            t.stringLiteral(getPatchFillKey(binding)),
+            getDeclaredBindingExpression(binding),
+            t.numericLiteral(1),
+          ),
+        ),
+      );
+    });
+  }
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;
