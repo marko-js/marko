@@ -1,7 +1,11 @@
-{ta:"Second",tb:"two"}
-
+// PATCH
+{
+  ta: "Second",
+  tb: "two"
+}
 
 // PATCH
-
-{ta:"0",tb:""}
-
+{
+  ta: "0",
+  tb: ""
+}
