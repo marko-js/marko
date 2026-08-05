@@ -25,6 +25,8 @@ export interface Scope {
   [AccessorProp.Owner]: Scope | undefined;
   [AccessorProp.Global]: Record<string, unknown>;
   [AccessorProp.Id]: number;
+  // Generation: 0 destroyed, 1 resumed from SSR, `runId` created this run,
+  // else live from an earlier run. See CONTEXT.md › Generation.
   [AccessorProp.Gen]: number;
   [AccessorProp.AbortControllers]:
     | Record<string | number, AbortController | void>

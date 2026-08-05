@@ -1,3 +1,5 @@
+// Inside the walker, `doc` is rebound from the document to the runtime object,
+// so every later `doc.x(...)` is a late-bound call the reorder runtime replaces.
 export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||= (
   renderId,
   prefix = runtimeId + renderId,

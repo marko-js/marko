@@ -78,8 +78,18 @@ _Avoid_: component state, context
 **Accessor**:
 A scope property's key; the property itself is a _scope slot_. Debug builds use
 readable strings and optimized builds use compact encodings from the lockstep
-`accessor.ts` / `accessor.debug.ts` pair.
+`src/common/constants/*[.debug].ts` pairs.
 _Avoid_: slot, value
+
+**Generation**:
+`Scope[AccessorProp.Gen]`, the run a scope belongs to, compared against the
+`runId` counter in `dom/queue.ts` (which starts at 2). Four states: `0`
+destroyed, `1` resumed from SSR, `=== runId` created during this run, and
+`> 0 && < runId` live from an earlier run. The distinction decides whether a
+write lands in place or queues a render — a `<let>` write into a same-run scope
+is applied directly, while an earlier-run scope schedules one — and destroyed
+scopes are skipped entirely.
+_Avoid_: version, revision
 
 **Owner**:
 The scope reached through the owner accessor for values captured from enclosing
