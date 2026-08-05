@@ -4,6 +4,7 @@ export const Attr = "a";
 export const Bind = "d";
 export const Branch = "b";
 export const Child = "c";
+export const Control = "n";
 export const Effect = "e";
 export const Fresh = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
