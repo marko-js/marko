@@ -67,17 +67,17 @@ export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
 export const failPatch = () => {
   throw 0;
 };
-// Construct application dispatch: everything in a fresh envelope is
+// Construct application dispatch: everything in a setup envelope is
 // REQUIRED, so misses fail (paired refresh via `patchers` stays soft —
 // a shaken fill is a correct no-op).
 export const constructPatchers: typeof patchers = {};
-export const walkConstruct = (fresh: Scope, live: Scope) => {
-  for (const key in fresh) {
+export const walkConstruct = (setup: Scope, live: Scope) => {
+  for (const key in setup) {
     (
       constructPatchers[
         MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
       ] || failPatch()
-    )(live, key, fresh[key as keyof Scope]);
+    )(live, key, setup[key as keyof Scope]);
   }
 };
 // Applies a patch partial to its live counterpart; structural patchers
