@@ -43,6 +43,7 @@ import {
 import {
   ContentType,
   getBranchRendererArgs,
+  getDirectClosures,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -53,7 +54,9 @@ import {
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
+  getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
 import { getShellId, isShellDropped, recordShellRoot } from "../util/shell";
 import {
@@ -198,6 +201,17 @@ export default {
 
     if (isPersisted() && isPatchCaptureSection(tagSection)) {
       addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
+      // A patch can target the loop's CONTENT even when the list itself is
+      // static, so whatever could update the items (their closure sources)
+      // is a marker resume reason: the entry anchors there.
+      onFinalizeReferences(() => {
+        addSerializeReason(
+          tagSection,
+          !!(bodySection.isHoistThrough || bodySection.hoisted) ||
+            getSerializeSourcesForRef(getDirectClosures(bodySection)),
+          nodeBinding,
+        );
+      });
       // The item body's shell builds at program analyze exit, once child
       // bindings exist; record the root here.
       recordShellRoot(bodySection);
