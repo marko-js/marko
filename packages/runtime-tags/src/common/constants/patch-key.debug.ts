@@ -2,6 +2,7 @@ export const Attr = "PatchAttr:";
 export const Bind = "PatchBind:";
 export const Branch = "PatchBranch:";
 export const Child = "PatchChild:";
+export const Control = "PatchControl:";
 export const Effect = "PatchEffect:";
 export const Fresh = "PatchFresh:";
 export const Globals = "$global:";
