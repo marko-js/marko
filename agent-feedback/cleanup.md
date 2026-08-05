@@ -8,12 +8,6 @@ Duplication, dead code, inconsistencies, refactor opportunities. Format and rule
 
 After `host = rootNode.startNode`, `renderAndMorph` calls `domCompat.setScopeNodes(host, rootNode.startNode, rootNode.endNode)`, writing `#StartNode`/`#EndNode` onto the fragment's DOM marker (a self-assign plus an unused end ref) instead of onto the tags branch `scope`. Since `scope[#StartNode]` never becomes the fragment marker, the `rootNode = host.fragment` fast path can never fire for a resumed child and every re-render falls back to the `___componentLookup` / `___marko5Component.___rootNode` lookup. Correctness is unaffected, so this is a dead optimization plus a misleading invariant; passing `scope` restores it, but check destroy/move first, since the fragment markers sit inside the scope's original start/end range. Re-verify: on a second re-render of a server-rendered class child, `domCompat.getStartNode(scope).fragment` should be set.
 
-## Delete the unreachable non-identifier tag-var guard in `trackDomVarReferences`
-
-`packages/runtime-tags/src/translator/util/references.ts` › `trackDomVarReferences` | 2026-07-23 | impact:low | effort:low
-
-`trackDomVarReferences` opens by throwing "Tag variables on native elements cannot be destructured." for a non-identifier `tag.node.var`, but both call sites already reject one with a better, docs-linked message: `visitors/tag/native-tag.ts` throws at the top of the same `analyze.enter` that later calls it, and `core/html-comment.ts` throws its `<html-comment>` variant before its call. The branch is dead, and it is the only place in the package that says "native elements" instead of CONTEXT.md's "native tag". Drop it, keeping the non-null cast, so the one live message is the linked one. Re-verify: compiling `<div/{a}/>` reports the native-tag.ts wording with the docs link, and `rg -n "cannot be destructured" packages/runtime-tags/src --glob '!**/__snapshots__/**'` shows one message per owner.
-
 ## Retitle the `_attrs` test or give its event-handler routing real coverage
 
 `packages/runtime-tags/src/__tests__/html-attrs.test.ts` › `it("should strip event handlers, invalid attribute names and content")` | 2026-07-23 | impact:low | effort:low
