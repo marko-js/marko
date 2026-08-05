@@ -44,20 +44,33 @@ export function getShellId(section: Section) {
   return getResumeRegisterId(section, "shell");
 }
 
-// A branch with a state-fed hole cannot construct faithfully from an inert
-// shell (nothing re-renders the hole until its state next changes).
-const [getDroppedShells] = createProgramState(() => new Set<Section>());
+// A construct blocker drops the section's shell: patches diverging to it
+// fail closed to a document navigation. Reasons accumulate for the shell
+// decision (and future diagnostics), never re-derived at use sites.
+const [getShellBlockers] = createProgramState(
+  () => new Map<Section, string[]>(),
+);
 
-export function dropSectionShell(section: Section) {
-  getDroppedShells().add(section);
+export function recordConstructBlocker(section: Section, reason: string) {
+  const blockers = getShellBlockers();
+  const reasons = blockers.get(section);
+  if (reasons) {
+    reasons.push(reason);
+  } else {
+    blockers.set(section, [reason]);
+  }
+}
+
+export function getConstructBlockers(section: Section) {
+  return getShellBlockers().get(section);
 }
 
 export function isShellDropped(section: Section) {
-  return getDroppedShells().has(section);
+  return getShellBlockers().has(section);
 }
 
 export function getDroppedShellIds() {
-  return [...getDroppedShells()].map(getShellId);
+  return [...getShellBlockers().keys()].map(getShellId);
 }
 
 // A branch's shell is its resolved structure — the same inert template and

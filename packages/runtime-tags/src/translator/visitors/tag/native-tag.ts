@@ -73,7 +73,7 @@ import {
   getSerializeSourcesForExpr,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
-import { dropSectionShell } from "../../util/shell";
+import { recordConstructBlocker } from "../../util/shell";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import * as structure from "../../util/structure";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -648,7 +648,7 @@ export default {
                   )
                 ) {
                   // A state-fed attribute never captures; see placeholder.
-                  dropSectionShell(tagSection);
+                  recordConstructBlocker(tagSection, "state-fed attribute");
                 }
                 // An attribute fed by client state never captures directly: the
                 // client owns part of its value and recomputes it instead.
@@ -1055,7 +1055,7 @@ export default {
                   )
                 ) {
                   // A state-fed attribute never captures; see placeholder.
-                  dropSectionShell(tagSection);
+                  recordConstructBlocker(tagSection, "state-fed attribute");
                 }
                 if (
                   isPersisted() &&
