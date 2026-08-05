@@ -66,6 +66,7 @@ import {
   isSameReason,
   type SerializeReason,
 } from "./serialize-reasons";
+import { dropSectionShell } from "./shell";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
@@ -1528,14 +1529,25 @@ export function writeHTMLResumeStatements(
       );
       const change = getSerializedAccessors(section).get(changeAccessor);
       if (change) {
+        // A handler read from another section's binding would bind its
+        // factory to the wrong scope on construct, so the shell drops.
+        const changeFn =
+          change.expression.type === "LogicalExpression"
+            ? change.expression.left
+            : change.expression;
+        const changeRead = changeFn.extra?.read;
+        if (changeRead && changeRead.binding.section !== section) {
+          dropSectionShell(section);
+        }
+        // The runtime decides bind-vs-write on the rendered value, so any
+        // section-local handler expression shape wires.
         body.push(
           t.expressionStatement(
             callRuntime(
-              "_patch_write",
+              "_patch_bind",
               scopeIdIdentifier,
               t.stringLiteral(changeAccessor),
               t.cloneNode(change.expression, true),
-              t.numericLiteral(1),
             ),
           ),
         );

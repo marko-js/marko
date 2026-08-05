@@ -1,6 +1,7 @@
 // Patch wire entry kinds — a namespace of their own: `patchers` dispatch is
 // patch-only, so these never meet live scope accessor prefixes.
 export const Attr = "a";
+export const Bind = "d";
 export const Branch = "b";
 export const Child = "c";
 export const Effect = "e";
