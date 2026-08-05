@@ -20,6 +20,7 @@ export function scopeReasonRuntime() {
 const [getFillOrdinals] = createProgramState<{ m?: Map<Binding, number> }>(
   () => ({}),
 );
+
 export function getPatchFillKey(binding: Binding) {
   const ordinals = getFillOrdinals();
   if (!ordinals.m) {
