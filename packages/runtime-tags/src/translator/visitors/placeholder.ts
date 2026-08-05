@@ -190,7 +190,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
                 getScopeAccessorLiteral(nodeBinding!),
               ),
         ),
-        undefined,
         true,
       );
     }

@@ -836,7 +836,6 @@ export default {
                 getScopeAccessorLiteral(nodeBinding!),
               ),
             ),
-            undefined,
             true,
           );
         }
@@ -953,7 +952,6 @@ export default {
                     tagSection,
                     valueReferences,
                     stmt,
-                    undefined,
                     !!meta.dynamicItems,
                   );
                 }
@@ -991,7 +989,6 @@ export default {
                       value,
                     ),
                   ),
-                  undefined,
                   true,
                 );
               }
@@ -1056,7 +1053,6 @@ export default {
             t.expressionStatement(
               callRuntime("_attrs_script", scopeIdentifier, visitAccessor),
             ),
-            false,
           );
         }
 
@@ -1073,7 +1069,6 @@ export default {
                 staticContentAttr.value,
               ),
             ),
-            undefined,
             true,
           );
         }
@@ -1099,7 +1094,6 @@ export default {
                     textLiteral,
                   ),
                 ),
-                undefined,
                 true,
               );
             }
