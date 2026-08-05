@@ -16,6 +16,7 @@ import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
+  getConstructInitClosures,
   getPatchFillBindings,
   hasUnfillablePatchReads,
   isPatchCaptureSection,
@@ -207,10 +208,16 @@ export default {
               delete active[id];
             } else {
               // `!` marks a shell needing setup for seeds alone, so purely
-              // static shells skip the setup queue entirely.
-              const marker =
-                getSectionEffectRegisterIds(section) ||
-                (getPatchFillBindings(section) ? "!" : "");
+              // static shells skip the setup queue entirely. The INIT id
+              // leads: a construct paints state-fed holes before mount
+              // effects can read them.
+              let marker = getSectionEffectRegisterIds(section);
+              if (getConstructInitClosures(section)) {
+                marker =
+                  getResumeRegisterId(section, "init") +
+                  (marker && " " + marker);
+              }
+              marker ||= getPatchFillBindings(section) ? "!" : "";
               if (marker) {
                 active[id] = id + " " + marker + active[id].slice(id.length);
               }

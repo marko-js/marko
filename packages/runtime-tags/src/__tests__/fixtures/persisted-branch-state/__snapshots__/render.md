@@ -35,6 +35,9 @@ UPDATE: main > button::text@6 "0" => "1"
   <h1>
     Store
   </h1>
+  <p>
+    Seen 1 times
+  </p>
   <button>
     Count 1
   </button>
@@ -43,4 +46,6 @@ UPDATE: main > button::text@6 "0" => "1"
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store"
+INSERT: main > h1 + p
+UPDATE: main > p::text@5 "" => "1"
 ```
