@@ -2,7 +2,7 @@
 [`a1 a2;Db%l ;<p>Seen <!></p><button>+</button>`, {
   ta: "Store!",
   bb: [{
-    f: {
+    s: {
       va0: 0,
       wd: _._.a0
     },
@@ -20,7 +20,7 @@
 [`a1 a2;Db%l ;<p>Seen <!></p><button>+</button>`, {
   ta: "Store!",
   bb: [{
-    f: {
+    s: {
       va0: 0,
       wd: _._.a0
     },
