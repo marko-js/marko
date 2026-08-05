@@ -268,7 +268,7 @@ importers:
   packages/runtime-tags:
     dependencies:
       '@marko/compiler':
-        specifier: ^5.41.12
+        specifier: ^5.41.16
         version: link:../compiler
       csstype:
         specifier: ^3.2.3

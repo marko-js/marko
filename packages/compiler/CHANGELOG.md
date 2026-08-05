@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.16
+
+### Patch Changes
+
+- [#3728](https://github.com/marko-js/marko/pull/3728) [`34d8679`](https://github.com/marko-js/marko/commit/34d8679a780635abb3439777e591d28dad36c0ad) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Replace the parser's "reserved and cannot be used as an HTML tag" error for a statement tag written in html mode with one that names the concise form, and point `<export/value>` at `<return>`.
+
 ## 5.41.15
 
 ### Patch Changes
