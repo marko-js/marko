@@ -102,6 +102,8 @@ export {
   _el_read,
   _fill_const,
   _fill_join,
+  _fill_join_for,
+  _fill_join_if,
   _fill_let,
   _fill_let_change,
   _for_closure,
