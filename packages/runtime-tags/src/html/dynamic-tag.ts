@@ -18,6 +18,9 @@ import {
   _scope_id,
   _script,
   _set_serialize_reason,
+  applyBranchStart,
+  deferBranchStart,
+  getChunk,
   getScopeById,
   getState,
   withBranchId,
@@ -155,9 +158,8 @@ export let _dynamic_tag = (
 
     // TODO: this needs to set result the element getter
   } else {
-    if (shouldResume) {
-      _html(state.mark(ResumeSymbol.BranchStart, ""));
-    }
+    const chunk = getChunk()!;
+    const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
 
     const render = () => {
       if (renderer) {
@@ -182,7 +184,8 @@ export let _dynamic_tag = (
     result = shouldResume ? withBranchId(branchId, render) : render();
     rendered = _peek_scope_id() !== branchId;
 
-    if (shouldResume) {
+    if (beforeBranch !== undefined) {
+      applyBranchStart(chunk, beforeBranch, rendered);
       _html(
         state.mark(
           ResumeSymbol.BranchEnd,
