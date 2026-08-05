@@ -41,7 +41,11 @@ import {
   getSerializeSourcesForExpr,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
-import { getDroppedShellIds, getShellId } from "../../util/shell";
+import {
+  getDroppedShellIds,
+  getShellId,
+  recordConstructBlocker,
+} from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -198,25 +202,30 @@ export default {
         // bundling conditional content. Translate may have dropped some
         // (state-fed holes construct unfaithfully).
         const active = { ...shells };
+        // Every blocker funnels through the recorded shell decision; the
+        // packaging below only reads it.
+        forEachSection((section) => {
+          if (shells[getShellId(section)] && sectionHasServerEffect(section)) {
+            recordConstructBlocker(section, "effect reads the server");
+          }
+        });
         for (const id of getDroppedShellIds()) delete active[id];
         // Mount-effect register ids ride the shell's id token (entries
-        // reference the bare id); a server-reading effect drops the shell.
+        // reference the bare id).
         forEachSection((section) => {
           const id = getShellId(section);
           if (active[id]) {
-            if (sectionHasServerEffect(section)) {
-              delete active[id];
-            } else {
+            {
               // `!` marks a shell needing setup for seeds alone, so purely
-              // static shells skip the setup queue entirely. The INIT id
-              // leads: a construct paints state-fed holes before mount
+              // static shells skip the setup queue entirely. Closure render
+              // ids lead: a construct paints state-fed holes before mount
               // effects can read them.
               let marker = getSectionEffectRegisterIds(section);
-              if (getConstructInitClosures(section)) {
+              forEach(getConstructInitClosures(section), (closure) => {
                 marker =
-                  getResumeRegisterId(section, "init") +
+                  getResumeRegisterId(section, closure, "init") +
                   (marker && " " + marker);
-              }
+              });
               marker ||= getPatchFillBindings(section) ? "!" : "";
               if (marker) {
                 active[id] = id + " " + marker + active[id].slice(id.length);

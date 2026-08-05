@@ -741,7 +741,10 @@ function writeRegistered(
   registered: Registered,
 ) {
   const { scope } = registered;
-  if (scope) {
+  // Patch-render scope ids have no client-side map, so a bound
+  // registration never serializes its scope: `_patch_bind` expresses the
+  // binding structurally instead, and anything else gets the raw access.
+  if (scope && !state.boundary?.state?.writesPatches) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(parent, accessor, state.flush, state.buf.length);
     ref.channel = state.channel;

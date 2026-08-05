@@ -3,7 +3,7 @@ import type {
   Template,
   TemplateInput,
 } from "../common/types";
-import { PatchKey } from "../common/types";
+import { AccessorPrefix, PatchKey } from "../common/types";
 import { serverRenderers } from "./renderer-shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
@@ -49,12 +49,6 @@ class PatchState extends State {
     this.hasGlobals = true;
   }
 
-  // A patch never references scopes by object: the client owns branch owner
-  // links (set at pairing/construction), so the member drops.
-  override scopeRef() {
-    return undefined;
-  }
-
   override flushChunk(_html: string, scripts: string) {
     return scripts ? scripts + "\n" : "";
   }
@@ -95,6 +89,10 @@ function enablePatchWrites() {
     const state = getChunk()!.boundary.state as PatchState;
     if (!state.writesPatches) return;
     const branchId = _peek_scope_id();
+    (state.patchParents ??= {})[branchId] = [
+      scopeId,
+      AccessorPrefix.BranchScopes + accessor,
+    ];
     const branchIndex = withBranchId(branchId, cb);
     const shellId =
       branchIndex === undefined
@@ -145,7 +143,10 @@ function enablePatchWrites() {
       }
       seen.add(itemKey);
       indexKeys &&= sameAsIndex;
+      // Loop items pair by key, which a bind path cannot express yet: an
+      // empty link makes any bind crossing this boundary poison.
       const branchId = _peek_scope_id();
+      (state.patchParents ??= {})[branchId] = [scopeId, ""];
       keys.push(itemKey);
       withBranchId(branchId, render);
       partials.push(patchPartial(state, branchId));
