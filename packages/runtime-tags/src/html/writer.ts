@@ -408,19 +408,19 @@ export function _patch_value(
   scopeId: number,
   key: string,
   value: unknown,
-  fresh?: 1,
+  setup?: 1,
 ) {
   if ($chunk.boundary.state.writesPatches) {
-    if (fresh) {
+    if (setup) {
       if (MARKO_DEBUG && $chunk.boundary.state.patchFlushed) {
         throw new Error(
           "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
         );
       }
-      // Fresh entries nest under `f`: the client applies them only to
+      // Setup entries nest under `s`: the client applies them only to
       // freshly constructed scopes, via the shell content's setup.
       const partial = patchPartial($chunk.boundary.state, scopeId);
-      ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
+      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
         PatchKey.Value + key
       ] = value;
     } else {
@@ -497,13 +497,13 @@ export function _patch_bind(
     } else {
       // Both forms where a construct is possible: the plain write reaches
       // PAIRED scopes (a handler removed between frames clears its live
-      // slot), while the fresh entry lands after a construct's seeds — a
+      // slot), while the setup entry lands after a construct's seeds — a
       // seed's first-render write resets the change slot, so walk-time
       // installs cannot last.
       const partial = patchPartial(state, scopeId);
       partial[PatchKey.Write + accessor] = value;
       if (isInResumedBranch()) {
-        ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
+        ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
           PatchKey.Write + accessor
         ] = value;
       }
@@ -512,18 +512,18 @@ export function _patch_bind(
   return "";
 }
 
-// A patched scope write: fresh entries nest under `f` AFTER the seeds, so
+// A patched scope write: setup entries nest under `s` AFTER the seeds, so
 // a controllable seed cannot clobber its handler.
 export function _patch_write(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
-  fresh?: 1,
+  setup?: 1,
 ) {
   if ($chunk.boundary.state.writesPatches) {
-    if (fresh) {
+    if (setup) {
       const partial = patchPartial($chunk.boundary.state, scopeId);
-      ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
+      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
         PatchKey.Write + accessor
       ] = value;
     } else {
