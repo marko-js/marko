@@ -1,4 +1,4 @@
-// size: 26643 (min) 9909 (brotli)
+// size: 26683 (min) 9883 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -660,6 +660,9 @@ function fill(key, signal) {
 }
 function _fill_let(key, id, fn) {
   return fill(key, _let(id, fn));
+}
+function _fill_let_change(key, id, fn) {
+  return fill(key, _let_change(id, fn));
 }
 function _fill_const(key, id, fn) {
   return fill(key, _const(id, fn));
