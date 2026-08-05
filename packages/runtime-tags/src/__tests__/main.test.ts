@@ -59,6 +59,9 @@ export type TestConfig = {
   skip_optimize?: boolean;
   /** Debug intentionally logs a dev-only diagnostic the optimized build cannot. */
   skip_parity?: boolean;
+  // A fixture whose patches are MEANT to reject declares it; anything else
+  // rejecting fails the test rather than snapshotting the navigation.
+  expect_rejection?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -402,8 +405,14 @@ function testFixtures(interop?: true) {
                     }
                     patches.push(frames.join(""));
                     tracker.logUpdate(input);
-                    if (!applied)
+                    if (!applied) {
+                      if (!config.expect_rejection) {
+                        throw new Error(
+                          "A persisted patch unexpectedly rejected (set `expect_rejection` if intended).",
+                        );
+                      }
                       tracker.logStatus("## Patch rejected (navigate)");
+                    }
                     return applied;
                   }
                 : undefined,
