@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 6.3.32
+
+### Patch Changes
+
+- [#3722](https://github.com/marko-js/marko/pull/3722) [`f9d8c86`](https://github.com/marko-js/marko/commit/f9d8c8603279f39f9036423fcfcf010e31fee182) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor the translator to record the client template and walk data during analysis as a per-section stream that each output resolves. Compiled output is unchanged.
+
+- [#3727](https://github.com/marko-js/marko/pull/3727) [`3ed22ad`](https://github.com/marko-js/marko/commit/3ed22ad9a70002933149664c4667bc5ca58236f1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Cheat sheet: correct the `$global` note (a non-allow-listed read after resume is `undefined`, it does not throw), document `<return>` as the child-to-parent value channel, and promote the tag-closing `>` in an attribute value to its own rule.
+
+- [#3713](https://github.com/marko-js/marko/pull/3713) [`057b043`](https://github.com/marko-js/marko/commit/057b043e7bdba9a7383cbac3030638c4248683d2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add tree-shakable runtime feature modules (`*.feat.ts`) built as extra entries of the dom/html runtime bundles, and move catch and controllable enablement into them.
+
+- Updated dependencies [[`34d8679`](https://github.com/marko-js/marko/commit/34d8679a780635abb3439777e591d28dad36c0ad)]:
+  - @marko/compiler@5.41.16
+
 ## 6.3.31
 
 ### Patch Changes
