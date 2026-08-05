@@ -1,7 +1,9 @@
-{va0:"Second"}
-
+// PATCH
+{
+  va0: "Second"
+}
 
 // PATCH
-
-{va0:$}
-
+{
+  va0: $
+}
