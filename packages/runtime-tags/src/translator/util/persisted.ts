@@ -4,7 +4,7 @@ import * as BindingType from "./constants/binding-type";
 import { isPersisted } from "./marko-config";
 import { filter, forEach, type Opt } from "./optional";
 import { type Binding, getCanonicalBinding } from "./references";
-import type { Section } from "./sections";
+import { isDirectClosure, type Section } from "./sections";
 import { getSerializeSourcesForRef } from "./serialize-reasons";
 import { createProgramState } from "./state";
 
@@ -100,6 +100,32 @@ export function isPatchEffectBinding(binding: Binding) {
     if (read.isEffect) return true;
   }
   return false;
+}
+
+// Direct (scan-based) closures over client state: their per-branch render
+// fns compose the section's registered construct INIT, so a freshly
+// constructed scope renders state-fed holes from the owner's live values.
+export function getConstructInitClosures(section: Section) {
+  return filter(
+    section.referencedClosures as Opt<Binding>,
+    (closure) => !!closure.sources?.state && isDirectClosure(section, closure),
+  );
+}
+
+// A state-fed hole (or attribute) constructs faithfully when every read is
+// available at construct time: section-local seedable state, parent state
+// reached through a direct closure the INIT renders, and owner values the
+// walk keeps current. Section-local params (loop items) are never seeded.
+export function constructRendersReads(section: Section, refs: Opt<Binding>) {
+  let ok = true;
+  forEach(refs, (binding) => {
+    ok &&= binding.sources?.state
+      ? binding.section === section
+        ? isPatchFillBinding(binding)
+        : isDirectClosure(section, binding)
+      : !(binding.section === section && binding.type === BindingType.param);
+  });
+  return ok;
 }
 
 // Server-sourced reads a patch cannot keep current: param-sourced bindings

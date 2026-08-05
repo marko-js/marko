@@ -8,8 +8,11 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
-import { forEach } from "../util/optional";
-import { isPatchCaptureSection, isPatchFillBinding } from "../util/persisted";
+import { type Opt } from "../util/optional";
+import {
+  constructRendersReads,
+  isPatchCaptureSection,
+} from "../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -196,13 +199,17 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         "Persisted templates do not yet support `$global` contributions to stateful expressions.",
       );
     }
-    // Section-local SEEDABLE state constructs faithfully (its value ships
-    // as a fresh fill); anything else state-fed still drops the shell.
-    let localState = !!holeSources?.state;
-    forEach(holeSources?.state, (binding) => {
-      localState &&= binding.section === section && isPatchFillBinding(binding);
-    });
-    if (holeSources?.state && !localState && section.isBranch) {
+    // Seedable local state and direct parent-state closures both construct
+    // faithfully (seed fills + the registered INIT render every read);
+    // anything else state-fed still drops the shell.
+    if (
+      holeSources?.state &&
+      section.isBranch &&
+      !constructRendersReads(
+        section,
+        valueExtra.referencedBindings as Opt<Binding>,
+      )
+    ) {
       dropSectionShell(section);
     }
     // A hole fed by client state never captures directly: the client owns
