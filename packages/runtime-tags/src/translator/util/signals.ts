@@ -1045,11 +1045,40 @@ export function writeSignals(section: Section) {
         if (Array.isArray(signal.referencedBindings)) {
           for (const member of signal.referencedBindings) {
             if (isPatchFillBinding(member)) {
+              let helper: "_fill_join" | "_fill_join_if" | "_fill_join_for" =
+                "_fill_join";
+              let hopAccessor: t.Expression | undefined;
+              let hopIndex: t.Expression | undefined;
+              if (member.section !== signal.section) {
+                // The branch's closure builder is the source of truth for
+                // the hop; the runtime rebuilds its dispatch over this join.
+                const hop = getClosureSignalBuilder(signal.section)?.(
+                  member,
+                  t.numericLiteral(0),
+                );
+                if (!hop || !t.isCallExpression(hop)) {
+                  throw new Error(
+                    "Marko: expected a branch closure builder for a patch fill read.",
+                  );
+                }
+                const args = hop.arguments as t.Expression[];
+                hopAccessor = args[0];
+                // 3 args is `_if_closure(accessor, index, render)`; loop
+                // forms rebuild as `_for_closure` (a fill reaches every item).
+                if (args.length === 3) {
+                  helper = "_fill_join_if";
+                  hopIndex = args[1];
+                } else {
+                  helper = "_fill_join_for";
+                }
+              }
               value = callRuntime(
-                "_fill_join",
+                helper,
                 t.stringLiteral(getPatchFillKey(member)),
                 getScopeAccessorLiteral(member, true),
                 value,
+                hopAccessor,
+                hopIndex,
               );
             }
           }
