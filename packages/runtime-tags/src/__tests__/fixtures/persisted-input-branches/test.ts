@@ -1,8 +1,9 @@
 import type { TestConfig } from "../../main.test";
 
 // Server-driven `<if>` and unkeyed `<for>` in one persisted template: items
-// pair positionally; the static branch has no walks, so it ships shell-less
-// and diverging back to it rejects the patch (a document navigation).
+// pair positionally, and the walk-less static branch round-trips through
+// its bare shell id (staying shown pairs by selection; a re-show after
+// hiding constructs it).
 export const config: TestConfig = {
   persisted: true,
   steps: [
