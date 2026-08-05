@@ -61,7 +61,7 @@ import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
-import { controllableFeatureFor } from "../tag/native-tag";
+import { getRelatedControllable } from "../tag/native-tag";
 
 export function getTemplateContentName() {
   return getSharedUid("content");
@@ -294,10 +294,12 @@ export default {
 } satisfies TemplateVisitor<t.Program>;
 
 export function assertSupportedPatch(program: t.NodePath<t.Program>) {
-  const unsupported = (node: t.Node) => {
+  const unsupported = (node: t.Node, detail?: string) => {
     throw program.hub.buildError(
       node,
-      "Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.",
+      detail
+        ? `Persisted templates cannot patch this faithfully yet: ${detail}.`
+        : "Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.",
     );
   };
   program.traverse({
@@ -384,17 +386,34 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       ) {
         unsupported(node);
       }
-      // A tag that may become controllable keeps all of its dynamic
-      // attributes unsupported until patching understands controlled state.
-      const controllable = !!controllableFeatureFor(tagName as string);
+      // A control patches through its registered helper (value entry +
+      // handler bind), so its own attrs lift; kinds the wire cannot yet
+      // express faithfully stay closed: checkedValue groups, mode-shifting
+      // input types (the select's mode rides the VALUE's shape, so a
+      // dynamic `multiple=` is just an attribute).
+      const seen: Record<string, t.MarkoAttribute> = Object.create(null);
       for (const attr of node.attributes) {
+        if (attr.type === "MarkoAttribute") seen[attr.name] = attr;
+      }
+      const related = getRelatedControllable(tagName as string, seen);
+      if (related) {
+        if (related.helper === "_attr_input_checkedValue") {
+          unsupported(node, "`checkedValue` groups are not patchable");
+        } else if ("valueMode" in related && related.valueMode) {
+          unsupported(node, "a dynamic `type=` can change the control kind");
+        }
+      }
+      const controlled = new Set<t.Node>(
+        related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
+      );
+      for (const attr of node.attributes) {
+        if (attr.type === "MarkoAttribute" && controlled.has(attr)) continue;
         if (
           attr.type === "MarkoSpreadAttribute"
             ? !evaluate(attr.value).confident
             : !evaluate(attr.value).confident &&
-              (controllable ||
-                (isEventOrChangeHandler(attr.name) &&
-                  !isEventHandler(attr.name)) ||
+              ((isEventOrChangeHandler(attr.name) &&
+                !isEventHandler(attr.name)) ||
                 // A handler reads captured server input from the scope at
                 // call time, so fills keep it current; anything unfillable
                 // would read stale.
@@ -408,7 +427,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                 attr.name === "content" ||
                 attr.name === "class" ||
                 attr.name === "style" ||
-                (tagName === "option" && attr.name === "value"))
+                // Option state couples to the parent select's selection;
+                // a lone attribute write cannot re-sync it.
+                (tagName === "option" &&
+                  (attr.name === "value" || attr.name === "selected")))
         ) {
           unsupported(attr);
         }
