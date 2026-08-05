@@ -8,8 +8,13 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import {
+  getBranchSectionAccessor,
+  initBranchSection,
+  resumeOwnerByMarkerWhenStatic,
+} from "../util/branch-tag";
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
-import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
+import { getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import {
@@ -43,15 +48,12 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
-  isStateSerializeReason,
-  isStaticSerializeReason,
 } from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
-  setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
@@ -179,13 +181,11 @@ export default {
         onFinalizeReferences(() => detectForSelector(bodySection, keyBinding));
       }
     }
-    bodySection.sectionAccessor = {
-      binding: nodeBinding,
-      prefix: getAccessorPrefix().BranchScopes,
-    };
-
-    bodySection.upstreamExpression = tagExtra;
-    bodySection.isBranch = true;
+    initBranchSection(
+      bodySection,
+      tagExtra,
+      getBranchSectionAccessor(nodeBinding),
+    );
 
     if (!isAttrTag && !getOnlyChildParentTagName(tag)) {
       structure.visit(tag, WalkCode.Replace);
@@ -236,19 +236,12 @@ export default {
           nodeBinding,
         );
 
-        const statefulSerializeReason = getSerializeReason(
+        resumeOwnerByMarkerWhenStatic(
           tagSection,
+          bodySection,
+          nodeBinding,
           kStatefulReason,
         );
-        if (
-          isStateSerializeReason(statefulSerializeReason) &&
-          isStaticSerializeReason(branchSerializeReason) &&
-          isStaticSerializeReason(markerSerializeReason)
-        ) {
-          // Each branch id rides a resume marker with the parent scope id, and the
-          // stateful loop keeps the branch-visiting signal, so link owner at resume.
-          setSectionOwnerResumedByMarker(bodySection);
-        }
 
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
