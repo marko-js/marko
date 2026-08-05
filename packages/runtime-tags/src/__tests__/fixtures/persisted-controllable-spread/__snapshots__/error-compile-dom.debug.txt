@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-controllable-spread/template.marko:1:8
+    > 1 | <input ...input.attrs>
+        |        ^^^^^^^^^^^^^^ Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.
+      2 |

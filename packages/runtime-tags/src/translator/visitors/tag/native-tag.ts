@@ -17,7 +17,7 @@ import {
   stringifyClassObject,
   toDelimitedString,
 } from "../../../common/helpers";
-import { WalkCode } from "../../../common/types";
+import { ControlledType, WalkCode } from "../../../common/types";
 import { addAssetImport } from "../../util/asset-imports";
 import {
   bodyToRawTextLiteral,
@@ -25,8 +25,10 @@ import {
 } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorProp } from "../../util/get-accessor-enums";
-import { getAccessorPrefix } from "../../util/get-accessor-enums";
+import {
+  getAccessorPrefix,
+  getAccessorProp,
+} from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
@@ -59,6 +61,7 @@ import {
   getHTMLRuntime,
   getRuntimePath,
   importRuntime,
+  addRuntimeFeatureAsset,
   importRuntimeFeature,
 } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
@@ -283,6 +286,22 @@ export default {
       }
       if (relatedControllable && relatedControllable.attrs[1]) {
         hasEventHandlers = true;
+      }
+      // A patched control's entry needs the control patcher plus its
+      // kind's helper table on the page — linked as assets, so the
+      // template module itself stays unloaded when nothing else needs it.
+      if (
+        relatedControllable &&
+        isPersisted() &&
+        isPatchCaptureSection(getOrCreateSection(tag))
+      ) {
+        // Handler writes/binds ride the value feat's patchers.
+        addRuntimeFeatureAsset(tag.hub.file, "patch-value");
+        addRuntimeFeatureAsset(tag.hub.file, "patch-control");
+        addRuntimeFeatureAsset(
+          tag.hub.file,
+          getPatchControlFeature(relatedControllable),
+        );
       }
 
       if (
@@ -599,6 +618,34 @@ export default {
 
           if (hasChangeHandler) {
             addHTMLEffectCall(tagSection, undefined);
+          }
+
+          // A patched control wires like a fill: the handler installs first
+          // (binds queue ahead of the control's apply), then the value entry
+          // makes the server's value authoritative through the registered
+          // controlled helper — paired refresh and construct alike.
+          if (isPersisted() && isPatchCaptureSection(tagSection)) {
+            const [valueAttr, changeAttr] = staticControllable.attrs;
+            if (changeAttr) {
+              write`${callRuntime(
+                "_patch_bind",
+                getScopeIdIdentifier(tagSection),
+                t.stringLiteral(
+                  getPrefixedScopeAccessor(
+                    nodeBinding!,
+                    getAccessorPrefix().ControlledHandler,
+                  ),
+                ),
+                t.cloneNode(changeAttr.value, true),
+              )}`;
+            }
+            write`${callRuntime(
+              "_patch_control",
+              getScopeIdIdentifier(tagSection),
+              t.cloneNode(visitAccessor!, true),
+              t.numericLiteral(getControlledType(staticControllable)),
+              valueAttr ? t.cloneNode(valueAttr.value, true) : buildUndefined(),
+            )}`;
           }
         }
 
@@ -1040,6 +1087,14 @@ export default {
               ),
             );
           }
+
+          // An interactive page receives features through its dom module,
+          // so the imports ride here beside the analyze-phase assets.
+          if (isPersisted() && isPatchCaptureSection(tagSection)) {
+            importRuntimeFeature("patch-value");
+            importRuntimeFeature("patch-control");
+            importRuntimeFeature(getPatchControlFeature(staticControllable));
+          }
         }
 
         for (const attr of staticAttrs) {
@@ -1307,7 +1362,7 @@ function getSpreadControllableValueProps(tagName: string) {
 }
 
 type RelatedControllable = ReturnType<typeof getRelatedControllable>;
-function getRelatedControllable(
+export function getRelatedControllable(
   tagName: string,
   attrs: Record<string, t.MarkoAttribute | undefined>,
 ) {
@@ -1397,6 +1452,31 @@ function getInputValueMode(typeAttr: t.MarkoAttribute | undefined) {
       case "submit":
         return "attribute" as const;
     }
+  }
+}
+
+function getPatchControlFeature(
+  controllable: NonNullable<RelatedControllable>,
+) {
+  return controllable.helper === "_attr_select_value"
+    ? ("patch-control-select" as const)
+    : controllable.helper.endsWith("_open")
+      ? ("patch-control-open" as const)
+      : ("patch-control-input" as const);
+}
+
+// The wire's control kind ids mirror `ControlledType`.
+function getControlledType(controllable: NonNullable<RelatedControllable>) {
+  switch (controllable.helper) {
+    case "_attr_input_checked":
+      return ControlledType.InputChecked;
+    case "_attr_select_value":
+      return ControlledType.SelectValue;
+    case "_attr_input_value":
+    case "_attr_textarea_value":
+      return ControlledType.InputValue;
+    default:
+      return ControlledType.DetailsOrDialogOpen;
   }
 }
 
