@@ -4,10 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// Item bodies closing over parent-scope state ship no shell (a construct
-// cannot wire the closure): patches still pair, update, remove, and reorder
-// existing items, but an addition rejects the patch (a document navigation,
-// ending the run). Item-local state constructs fine — see persisted-loop-let.
+// Item holes closing over root state construct faithfully: an addition
+// paints the live count through the item section's registered INIT.
 export const config: TestConfig = {
   persisted: true,
   steps: [
