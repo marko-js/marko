@@ -35,6 +35,7 @@ import {
 import {
   K_SCOPE_ID,
   quote,
+  getRegistered,
   register as serializerRegister,
   type ScopeFlush,
   Serializer,
@@ -226,6 +227,11 @@ export function _resume<T extends WeakKey>(
   id: string,
   scopeId?: number,
 ): T {
+  // Patch renders drop scope refs, so boundness is remembered separately:
+  // `_patch_bind` re-binds SAME-scope registrations against the live scope.
+  if (scopeId !== undefined && $chunk.boundary.state.writesPatches) {
+    ($chunk.boundary.state.patchBoundIds ??= new Map()).set(id, scopeId);
+  }
   return serializerRegister(
     id,
     val,
@@ -380,10 +386,29 @@ export function _patch_value(
   return "";
 }
 
-// A patched scope write for effect-read values: no client registration —
-// the wire drives the accessor, and `_patch_effect` entries re-run readers.
-// Fresh writes nest under `f` for freshly constructed scopes only; they
-// apply AFTER the seeds, so a controllable seed cannot clobber its handler.
+// Fresh construct wiring: a value registered against THIS scope ships its
+// id to bind against the constructed live scope; anything else writes.
+export function _patch_bind(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatches) {
+    const registered = !!value && getRegistered(value as WeakKey);
+    const partial = patchPartial(state, scopeId);
+    const fresh = (partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>;
+    if (registered && state.patchBoundIds?.get(registered.id) === scopeId) {
+      fresh[PatchKey.Bind + accessor] = registered.id;
+    } else {
+      fresh[PatchKey.Write + accessor] = value;
+    }
+  }
+  return "";
+}
+
+// A patched scope write: fresh entries nest under `f` AFTER the seeds, so
+// a controllable seed cannot clobber its handler.
 export function _patch_write(
   scopeId: number,
   accessor: Accessor,
@@ -1325,6 +1350,7 @@ export class State implements SerializeState {
   declare writesPatches?: boolean;
   declare rootScopeId?: number;
   declare patchPartials?: Record<number, Record<string, unknown>>;
+  declare patchBoundIds?: Map<string, number>;
   declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
   declare patchFlushed?: 1;
   declare patchDeferred?: 1;
