@@ -102,6 +102,7 @@ export {
   _fill_const,
   _fill_join,
   _fill_let,
+  _fill_let_change,
   _for_closure,
   _for_selector,
   _hoist,
