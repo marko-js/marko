@@ -4,9 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A branch reading client state ships no shell: it could not construct
-// faithfully, so diverging to it rejects the patch (a document navigation,
-// which ends the run).
+// A branch whose hole reads client state constructs faithfully: the
+// section's registered INIT paints the hole from the live value.
 export const config: TestConfig = {
   persisted: true,
   steps: [{ title: "Store", show: "" }, click, { title: "Store", show: "yes" }],
