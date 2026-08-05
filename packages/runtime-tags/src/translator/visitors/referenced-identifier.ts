@@ -123,7 +123,6 @@ export default {
                   t.numericLiteral(exprId),
                 ]),
               ),
-              false,
             );
           }
 

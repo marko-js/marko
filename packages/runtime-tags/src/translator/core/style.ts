@@ -251,7 +251,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           getScopeAccessorLiteral(binding),
         ),
       ),
-      undefined,
       true,
     );
 
@@ -269,7 +268,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             value,
           ),
         ),
-        undefined,
         !valueRef,
       );
     });

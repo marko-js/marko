@@ -879,7 +879,6 @@ function writeParamsToSignals(
               arg,
             ]),
           ),
-          undefined,
           true,
         );
       }
@@ -966,7 +965,6 @@ function applyAttrObject(
         translatedProps,
       ]),
     ),
-    undefined,
     true,
   );
 }
@@ -1256,7 +1254,6 @@ function writeAttrsToSignals(
               ],
             ),
           ),
-          undefined,
           true,
         );
       }
@@ -1318,7 +1315,6 @@ function writeAttrsToSignals(
           attr.value, // TODO: use spreadBinding property alias after we optimize `in`
         ]),
       ),
-      undefined,
       true,
     );
   }
@@ -1344,7 +1340,6 @@ function writeAttrsToSignals(
             createScopeReadExpression(propBinding, info.tagSection),
           ]),
         ),
-        undefined,
         true,
       );
     }
@@ -1426,7 +1421,6 @@ function writeAttrsToSignals(
             ],
           ),
         ),
-        undefined,
         true,
       );
     }
@@ -1472,7 +1466,6 @@ function writeAttrsToSignals(
             ],
           ),
         ),
-        undefined,
         true,
       );
     }

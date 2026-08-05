@@ -19,7 +19,6 @@ import {
   type AssignedBindingExtra,
   type Binding,
   BindingType,
-  bindingUtil,
   collapsedIntersectionSource,
   getCanonicalBinding,
   getClosureAccessorId,
@@ -81,9 +80,7 @@ export interface Signal {
   }>;
   intersection: Opt<Signal>;
   render: t.Statement[];
-  renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
-  effectReferencedBindings: ReferencedBindings;
   hasHTMLEffect: boolean;
   hasSideEffect: boolean;
   forcePersist: boolean;
@@ -262,9 +259,7 @@ export function getSignal(
         values: [],
         intersection: undefined,
         render: [],
-        renderReferencedBindings: undefined,
         effect: [],
-        effectReferencedBindings: undefined,
         hasHTMLEffect: false,
         build: undefined,
         export: !!exportName,
@@ -850,12 +845,10 @@ export function addStatement(
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
-  usedReferences?: ReferencedBindings[] | false,
   isPure?: boolean,
 ): void {
   const signal = getSignal(targetSection, referencedBindings);
   const statements = (signal[type] ??= []);
-  const add = type === "effect" ? addEffectReferences : addRenderReferences;
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
@@ -863,39 +856,9 @@ export function addStatement(
     statements.push(statement);
   }
 
-  if (usedReferences !== false) {
-    if (usedReferences) {
-      for (const ref of usedReferences) {
-        add(signal, ref);
-      }
-    } else {
-      add(signal, referencedBindings);
-    }
-  }
-
   if (!isPure || type === "effect") {
     signal.hasSideEffect = true;
   }
-}
-
-function addEffectReferences(
-  signal: Signal,
-  referencedBindings: ReferencedBindings,
-) {
-  signal.effectReferencedBindings = bindingUtil.union(
-    signal.effectReferencedBindings,
-    referencedBindings,
-  );
-}
-
-function addRenderReferences(
-  signal: Signal,
-  referencedBindings: ReferencedBindings,
-) {
-  signal.renderReferencedBindings = bindingUtil.union(
-    signal.renderReferencedBindings,
-    referencedBindings,
-  );
 }
 
 export function addValue(
@@ -905,7 +868,6 @@ export function addValue(
   value: t.Expression,
 ) {
   const parentSignal = getSignal(targetSection, referencedBindings);
-  addRenderReferences(parentSignal, referencedBindings);
   parentSignal.values.push({
     signal,
     value,

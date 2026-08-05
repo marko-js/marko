@@ -14,12 +14,6 @@ After `host = rootNode.startNode`, `renderAndMorph` calls `domCompat.setScopeNod
 
 `trackDomVarReferences` opens by throwing "Tag variables on native elements cannot be destructured." for a non-identifier `tag.node.var`, but both call sites already reject one with a better, docs-linked message: `visitors/tag/native-tag.ts` throws at the top of the same `analyze.enter` that later calls it, and `core/html-comment.ts` throws its `<html-comment>` variant before its call. The branch is dead, and it is the only place in the package that says "native elements" instead of CONTEXT.md's "native tag". Drop it, keeping the non-null cast, so the one live message is the linked one. Re-verify: compiling `<div/{a}/>` reports the native-tag.ts wording with the docs link, and `rg -n "cannot be destructured" packages/runtime-tags/src --glob '!**/__snapshots__/**'` shows one message per owner.
 
-## Drop the write-only `renderReferencedBindings`/`effectReferencedBindings` signal fields
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `addRenderReferences` | 2026-07-23 | impact:low | effort:low
-
-`Signal.renderReferencedBindings` and `Signal.effectReferencedBindings` are declared, initialized in `getSignal`, and written by `addRenderReferences`/`addEffectReferences`, but nothing in the workspace reads them. Every `addStatement` and `addValue` therefore pays a `bindingUtil.union` — `unionSortedRepeatable` in `util/optional.ts`, which allocates a fresh array per call — to build state that is discarded. Deleting the two fields also makes `addStatement`'s `usedReferences` parameter dead, so its call sites can drop it. Re-verify: `rg -n "renderReferencedBindings|effectReferencedBindings" packages/` returns only the declaration, the two `getSignal` initializers, and the two assignment helpers in `signals.ts`, with no reader.
-
 ## Stop re-exporting `forOfBy`/`forInBy`/`forStepBy` from the html runtime entry
 
 `packages/runtime-tags/src/html.ts` › `export { … } from "./html/for"` | 2026-07-23 | impact:low | effort:low
