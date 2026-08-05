@@ -1,4 +1,5 @@
 export const Attr = "PatchAttr:";
+export const Bind = "PatchBind:";
 export const Branch = "PatchBranch:";
 export const Child = "PatchChild:";
 export const Effect = "PatchEffect:";

@@ -11,9 +11,9 @@ var template_default = _template_persisted("a", (input) => {
 			_html(`<p>Seen <!>${_escape(count)}${_el_resume($scope1_id, "a")}</p><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a2");
 			_patch_value($scope1_id, "a0", count, 1);
-			_patch_write($scope1_id, "d", _resume(function(next) {
+			_patch_bind($scope1_id, "d", _resume(function(next) {
 				document.querySelector("main").dataset.attempt = String(next);
-			}, "a0") || void 0, 1);
+			}, "a0") || void 0);
 			writeScope($scope1_id, {
 				c: count,
 				d: _resume(function(next) {
