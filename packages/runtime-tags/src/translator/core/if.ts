@@ -9,7 +9,11 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
-import { getAccessorPrefix } from "../util/get-accessor-char";
+import {
+  getBranchSectionAccessor,
+  initBranchSection,
+  resumeOwnerByMarkerWhenStatic,
+} from "../util/branch-tag";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
@@ -43,8 +47,6 @@ import {
 import {
   addSerializeExpr,
   getSerializeReason,
-  isStateSerializeReason,
-  isStaticSerializeReason,
   type SerializeReasons,
 } from "../util/serialize-reasons";
 import {
@@ -52,7 +54,6 @@ import {
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
-  setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
@@ -90,17 +91,12 @@ export const IfTag = {
         ifTagSection,
         branches.length,
       );
-      const sectionAccessor: Section["sectionAccessor"] = {
-        binding: nodeBinding,
-        prefix: getAccessorPrefix().BranchScopes,
-      };
+      const sectionAccessor = getBranchSectionAccessor(nodeBinding);
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
         if (branchBodySection) {
-          branchBodySection.isBranch = true;
-          branchBodySection.upstreamExpression = ifTagExtra;
-          branchBodySection.sectionAccessor = sectionAccessor;
+          initBranchSection(branchBodySection, ifTagExtra, sectionAccessor);
         }
 
         if (branchTag.node.attributes.length) {
@@ -135,24 +131,12 @@ export const IfTag = {
         if (bodySection) {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
-          if (
-            isStateSerializeReason(
-              getSerializeReason(ifTagSection, kStatefulReason),
-            ) &&
-            isStaticSerializeReason(
-              getSerializeReason(bodySection, kBranchSerializeReason),
-            ) &&
-            isStaticSerializeReason(
-              getSerializeReason(
-                ifTagSection,
-                getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection),
-              ),
-            )
-          ) {
-            // The branch id rides the always-rendered resume marker and the
-            // state driven condition keeps the signal, so the owner resumes.
-            setSectionOwnerResumedByMarker(bodySection);
-          }
+          resumeOwnerByMarkerWhenStatic(
+            ifTagSection,
+            bodySection,
+            getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection),
+            kStatefulReason,
+          );
           writer.flushInto(tag);
           writeHTMLResumeStatements(tagBody);
         }
