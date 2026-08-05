@@ -3,13 +3,10 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
-import { isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { find, forEach, toArray } from "../../util/optional";
+import { find, forEach } from "../../util/optional";
 import {
-  getConstructInitClosures,
   getPatchFillBindings,
-  isPatchCaptureSection,
   isPatchEffectBinding,
 } from "../../util/persisted";
 import {
@@ -27,7 +24,6 @@ import {
   isDynamicClosure,
   setBranchRendererArgs,
 } from "../../util/sections";
-import { isShellDropped } from "../../util/shell";
 import {
   addStatement,
   getResumeRegisterId,
@@ -107,45 +103,6 @@ export default {
           const written = writeSignals(childSection);
           const setupIdentifier =
             setup && written.has(setup) ? setup.identifier : undefined;
-
-          // A constructible branch's INIT: its direct state closures'
-          // render fns, registered for shell setup to apply so a fresh
-          // scope paints state-fed holes from the owner's live values.
-          if (
-            isPersisted() &&
-            childSection.isBranch &&
-            isPatchCaptureSection(childSection) &&
-            !isShellDropped(childSection)
-          ) {
-            const closures = getConstructInitClosures(childSection);
-            if (closures) {
-              const scopeParam = t.identifier("scope");
-              program.node.body.push(
-                t.expressionStatement(
-                  callRuntime(
-                    "_resume",
-                    t.stringLiteral(getResumeRegisterId(childSection, "init")),
-                    t.arrowFunctionExpression(
-                      [scopeParam],
-                      t.blockStatement(
-                        toArray(closures, (closure) =>
-                          t.expressionStatement(
-                            t.callExpression(
-                              t.memberExpression(
-                                getSignal(childSection, closure).identifier,
-                                t.identifier("_"),
-                              ),
-                              [scopeParam],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }
-          }
 
           if (!isSectionRendererElided(childSection)) {
             if (getSectionParentIsOwner(childSection)) {

@@ -30,6 +30,7 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_fill_join",
+  "_resume_init",
   "_fill_const",
   "_fill_let",
   "_fill_let_change",
