@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/x=0/>
+<button onClick() { x++ }>${x}</button>
+<if=(x % 2 === 0)>
+  <b>before</b>
+  <await|v|=resolveAfter("A", 1)>
+    <i>${v}</i>
+  </await>
+  <if=(x > 9)>never</if>
+</if>

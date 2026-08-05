@@ -1,0 +1,6 @@
+<let/items=[1, 2]/>
+<button onClick() { items = [1] }>drop</button>
+<for|i| of=items>
+  <div>item ${i}</div>
+  <if=(i > 9)>never</if>
+</for>

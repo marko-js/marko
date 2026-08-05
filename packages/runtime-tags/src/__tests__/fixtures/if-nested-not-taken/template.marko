@@ -1,0 +1,6 @@
+<let/x=0/>
+<button onClick() { x++ }>${x}</button>
+<if=(x % 2 === 0)>
+  <b>outer</b>
+  <if=(x > 9)>inner</if>
+</if>

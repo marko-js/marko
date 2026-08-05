@@ -570,17 +570,22 @@ export function _if(
   parentEndTag?: string | 0,
   singleNode?: 1,
 ) {
-  const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   const branchId = _peek_scope_id();
-  if (resumeMarker && resumeBranch && !singleNode) {
-    $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
-  }
+  const chunk = $chunk;
+  const beforeBranch =
+    resumeMarker && resumeBranch && !singleNode
+      ? deferBranchStart(chunk)
+      : undefined;
 
   const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
   const shouldWriteBranch = resumeBranch && branchIndex !== undefined;
+
+  if (beforeBranch !== undefined) {
+    applyBranchStart(chunk, beforeBranch, shouldWriteBranch);
+  }
 
   if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
     writeScope(scopeId, {
@@ -601,6 +606,28 @@ export function _if(
     singleNode,
     shouldWriteBranch ? " " + branchId : "",
   );
+}
+
+// A branch start mark precedes its content but is only decided once that
+// content has rendered, so the branch accumulates alone until `applyBranchStart`
+// rejoins it. Resume pops a start only for an end carrying branch ids, so an
+// unpaired one is consumed by the enclosing branch instead.
+export function deferBranchStart(chunk: Chunk) {
+  const beforeBranch = chunk.html;
+  chunk.html = "";
+  return beforeBranch;
+}
+
+// Splicing the mark in at a recorded offset would flatten `html` every time.
+export function applyBranchStart(
+  chunk: Chunk,
+  beforeBranch: string,
+  rendered: boolean,
+) {
+  chunk.html =
+    beforeBranch +
+    (rendered ? chunk.boundary.state.mark(ResumeSymbol.BranchStart, "") : "") +
+    chunk.html;
 }
 
 function writeBranchEnd(
