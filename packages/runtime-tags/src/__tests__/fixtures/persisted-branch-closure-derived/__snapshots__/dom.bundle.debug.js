@@ -1,11 +1,8 @@
 // template.marko
 const $template = "<main><h1> </h1><!><button>+</button></main>";
 const $walks = "E l%b l";
-const $if_content__double = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.double));
+const $if_content__double = /*@__PURE__*/ _resume("__tests__/template.marko_1_double/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.double)));
 const $if_content__setup = $if_content__double;
-_resume("__tests__/template.marko_1_init", (scope) => {
-	$if_content__double._(scope);
-});
 const $double = /*@__PURE__*/ _const("double", $if_content__double);
 const $count = /*@__PURE__*/ _let("count/7", ($scope) => $double($scope, $scope.count * 2));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
