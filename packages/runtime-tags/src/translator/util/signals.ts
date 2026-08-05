@@ -1056,14 +1056,19 @@ export function writeSignals(section: Section) {
           if (
             !t.isCallExpression(value) ||
             !t.isIdentifier(value.callee) ||
-            (value.callee.name !== "_let" && value.callee.name !== "_const")
+            (value.callee.name !== "_let" &&
+              value.callee.name !== "_let_change" &&
+              value.callee.name !== "_const")
           ) {
             throw new Error(
               "Marko: expected a _let or _const declaration for a patch fill binding.",
             );
           }
           value = callRuntime(
-            ("_fill" + value.callee.name) as "_fill_let" | "_fill_const",
+            ("_fill" + value.callee.name) as
+              | "_fill_let"
+              | "_fill_let_change"
+              | "_fill_const",
             t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
             ...(value.arguments as t.Expression[]),
           );
@@ -1562,6 +1567,27 @@ export function writeHTMLResumeStatements(
           ),
         ),
       );
+      // A controllable let's registered change handler rides the seed as a
+      // fresh write (the serializer ships fns by reference), emitted after
+      // the value so the seed's application cannot clobber it.
+      const changeAccessor = getPrefixedScopeAccessor(
+        binding,
+        getAccessorPrefix().TagVariableChange,
+      );
+      const change = getSerializedAccessors(section).get(changeAccessor);
+      if (change) {
+        body.push(
+          t.expressionStatement(
+            callRuntime(
+              "_patch_write",
+              scopeIdIdentifier,
+              t.stringLiteral(changeAccessor),
+              t.cloneNode(change.expression, true),
+              t.numericLiteral(1),
+            ),
+          ),
+        );
+      }
     });
   }
 
