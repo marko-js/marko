@@ -87,6 +87,7 @@ export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
   _resume,
+  _resume_init,
   _var_resume,
   init,
   initEmbedded,

@@ -71,6 +71,19 @@ export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
 export const failPatch = () => {
   throw 0;
 };
+// Construct application dispatch: everything in a fresh envelope is
+// REQUIRED, so misses fail (paired refresh via `patchers` stays soft —
+// a shaken fill is a correct no-op).
+export const constructPatchers: typeof patchers = {};
+export const walkConstruct = (fresh: Scope, live: Scope) => {
+  for (const key in fresh) {
+    (
+      constructPatchers[
+        MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+      ] || failPatch()
+    )(live, key, fresh[key as keyof Scope]);
+  }
+};
 // Applies a patch partial to its live counterpart; structural patchers
 // recurse back through here, so no scope is ever addressed by id.
 export const walkScope = (partial: Scope, live: Scope) => {
@@ -555,6 +568,12 @@ export function getRegisteredWithScope(id: string, scope?: Scope) {
 export function _resume<T>(id: string, obj: T): T {
   return (registeredValues[id] = obj);
 }
+
+// Registers a branch's construct-init closure. Same behavior as `_resume`
+// but every call site is `@__PURE__`, so the registration rides its
+// signal's liveness: tree shaking drops both together and a construct
+// needing the init fails closed instead of half-wiring.
+export { _resume as _resume_init };
 
 export function _var_resume<T extends Signal<unknown>>(
   id: string,

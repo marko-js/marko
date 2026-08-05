@@ -53,6 +53,7 @@ import {
   getDynamicClosureIndex,
   getScopeIdIdentifier,
   getSectionForBody,
+  isDirectClosure,
   isDynamicClosure,
   isImmediateOwner,
   type Section,
@@ -66,7 +67,7 @@ import {
   isSameReason,
   type SerializeReason,
 } from "./serialize-reasons";
-import { dropSectionShell } from "./shell";
+import { isShellDropped } from "./shell";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
@@ -1079,6 +1080,29 @@ export function writeSignals(section: Section) {
             t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
             ...(value.arguments as t.Expression[]),
           );
+        } else if (
+          signal.referencedBindings &&
+          !Array.isArray(signal.referencedBindings) &&
+          !!signal.referencedBindings.sources?.state &&
+          signal.section.isBranch &&
+          isPatchCaptureSection(signal.section) &&
+          isDirectClosure(signal.section, signal.referencedBindings) &&
+          !isShellDropped(signal.section) &&
+          !sectionHasServerEffect(signal.section)
+        ) {
+          // A direct state closure anchors its construct render on itself:
+          // shaken with the signal, and a construct then fails closed.
+          value = callRuntime(
+            "_resume_init",
+            t.stringLiteral(
+              getResumeRegisterId(
+                signal.section,
+                signal.referencedBindings,
+                "init",
+              ),
+            ),
+            value,
+          );
         }
       }
 
@@ -1574,27 +1598,18 @@ export function writeHTMLResumeStatements(
           ),
         ),
       );
-      // A controllable let's registered change handler rides the seed as a
-      // fresh write (the serializer ships fns by reference), emitted after
-      // the value so the seed's application cannot clobber it.
+      // A controllable let's change handler wires through `_patch_bind`,
+      // emitted after the value so a seed cannot clobber an installed
+      // handler.
       const changeAccessor = getPrefixedScopeAccessor(
         binding,
         getAccessorPrefix().TagVariableChange,
       );
       const change = getSerializedAccessors(section).get(changeAccessor);
       if (change) {
-        // A handler read from another section's binding would bind its
-        // factory to the wrong scope on construct, so the shell drops.
-        const changeFn =
-          change.expression.type === "LogicalExpression"
-            ? change.expression.left
-            : change.expression;
-        const changeRead = changeFn.extra?.read;
-        if (changeRead && changeRead.binding.section !== section) {
-          dropSectionShell(section);
-        }
-        // The runtime decides bind-vs-write on the rendered value, so any
-        // section-local handler expression shape wires.
+        // The runtime decides how the handler wires from the rendered
+        // value alone (bind by owner-hop distance, or plain write), so any
+        // handler expression shape compiles the same way.
         body.push(
           t.expressionStatement(
             callRuntime(

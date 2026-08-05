@@ -41,7 +41,7 @@ import {
   getSerializeSourcesForExpr,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
-import { dropSectionShell } from "../util/shell";
+import { recordConstructBlocker } from "../util/shell";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
@@ -208,7 +208,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         valueExtra.referencedBindings as Opt<Binding>,
       )
     ) {
-      dropSectionShell(section);
+      recordConstructBlocker(section, "state-fed hole");
     }
     // A hole fed by client state never captures directly: the client owns
     // part of its value, and it recomputes through the signal graph (a
