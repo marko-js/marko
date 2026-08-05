@@ -1,4 +1,5 @@
 // template.marko
+_renderer_shells({ a0: ",`a0 a3;Db%;<p>Seen <!> times</p>`" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -11,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
+	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
 	_html(`<button>Count <!>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && writeScope($scope0_id, { i: count });
