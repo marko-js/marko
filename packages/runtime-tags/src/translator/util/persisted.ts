@@ -129,6 +129,22 @@ export function constructRendersReads(section: Section, refs: Opt<Binding>) {
   return ok;
 }
 
+// Fill reads deliverable today: same-section joins and one-hop branch reads
+// (owner-side dispatch); deeper reads fail closed until composed dispatch.
+export function hasUndeliverableFillReads(
+  section: Section,
+  refs: Opt<Binding>,
+) {
+  let undeliverable = false;
+  forEach(refs, (binding) => {
+    undeliverable ||=
+      isPatchFillBinding(binding) &&
+      binding.section !== section &&
+      !isDirectClosure(section, binding);
+  });
+  return undeliverable;
+}
+
 // Server-sourced reads a patch cannot keep current: param-sourced bindings
 // that neither fill nor refresh over the wire read stale after any patch.
 export function hasUnfillablePatchReads(refs: Opt<Binding>) {
