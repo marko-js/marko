@@ -1519,7 +1519,7 @@ export function writeHTMLResumeStatements(
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
   // A constructible branch seeds its state onto freshly constructed scopes
-  // as FRESH fills: the fill signal's joins render all downstream content.
+  // as SETUP fills: the fill signal's joins render all downstream content.
   if (persisted && section.isBranch && isPatchCaptureSection(section)) {
     forEach(getPatchFillBindings(section), (binding) => {
       body.push(

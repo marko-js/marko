@@ -6,10 +6,10 @@ export const Branch = "b";
 export const Child = "c";
 export const Control = "n";
 export const Effect = "e";
-export const Fresh = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
 export const Globals = "$";
 export const Loop = "l";
+export const Setup = "s";
 export const Text = "t";
 export const Value = "v";
 export const Write = "w";
