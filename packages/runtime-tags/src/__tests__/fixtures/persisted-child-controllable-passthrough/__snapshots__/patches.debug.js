@@ -15,7 +15,7 @@
   "PatchChild:#childScope/2": {
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/0": [{
-        "PatchFresh:": {
+        "PatchSetup:": {
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-passthrough/tags/counter/index.marko0": 0
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-passthrough/tags/counter/index.marko_1_shell"]
