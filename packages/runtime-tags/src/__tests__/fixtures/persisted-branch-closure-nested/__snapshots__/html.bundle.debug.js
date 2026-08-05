@@ -1,0 +1,34 @@
+// template.marko
+_renderer_shells({
+	"__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell __tests__/template.marko_1; b%;<button>+</button><!><!>`",
+	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell __tests__/template.marko_2_init;Db%;<p>Seen <!></p>`"
+});
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_reason = _persisted_reason(), $sg__input_inner = _serialize_guard($scope0_reason, 2), $sg__input_outer = _serialize_guard($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "#text/0")}</h1>`);
+	_if(() => {
+		if (input.outer) {
+			const $scope1_id = _scope_id();
+			let count = 0;
+			_html(`<button>+</button>${_el_resume($scope1_id, "#button/0")}`);
+			_if(() => {
+				if (input.inner) {
+					const $scope2_id = _scope_id();
+					_html(`<p>Seen <!>${_escape(count)}${_el_resume($scope2_id, "#text/0")}</p>`);
+					writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6");
+					return 0;
+				}
+			}, $scope1_id, "#text/1", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2_shell"]);
+			_script($scope1_id, "__tests__/template.marko_1");
+			_patch_value($scope1_id, "__tests__/template.marko0", count, 1);
+			writeScope($scope1_id, {
+				count,
+				_: _scope_with_id($scope0_id)
+			}, "__tests__/template.marko", "3:4", { count: "4:10" });
+			return 0;
+		}
+	}, $scope0_id, "#text/1", _serialize_guard($scope0_reason, 0), $sg__input_outer, $sg__input_outer, void 0, void 0, ["__tests__/template.marko_1_shell"]);
+	_html("</main>");
+	$scope0_reason && writeScope($scope0_id, { input_inner: input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] });
+}, 1);
