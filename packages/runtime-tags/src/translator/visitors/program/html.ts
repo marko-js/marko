@@ -18,6 +18,7 @@ import { forEach } from "../../util/optional";
 import {
   getConstructInitClosures,
   getPatchFillBindings,
+  hasUndeliverableFillReads,
   hasUnfillablePatchReads,
   isPatchCaptureSection,
   scopeReasonRuntime,
@@ -290,8 +291,20 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     );
   };
   program.traverse({
-    MarkoPlaceholder({ node }) {
+    MarkoPlaceholder(placeholder) {
+      const { node } = placeholder;
       if (!node.escape) unsupported(node);
+      if (
+        hasUndeliverableFillReads(
+          getSection(placeholder),
+          node.value.extra?.referencedBindings,
+        )
+      ) {
+        unsupported(
+          node,
+          "a server value read beyond a direct branch closure is not yet patchable",
+        );
+      }
     },
     MarkoScriptlet({ node }) {
       unsupported(node);
@@ -394,6 +407,22 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
       );
       for (const attr of node.attributes) {
+        // Handlers read fills from the scope at call time (the owner slot
+        // write alone keeps them current), so only rendered values gate.
+        if (
+          !(
+            attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name)
+          ) &&
+          hasUndeliverableFillReads(
+            getSection(tag),
+            attr.value.extra?.referencedBindings,
+          )
+        ) {
+          unsupported(
+            attr,
+            "a server value read beyond a direct branch closure is not yet patchable",
+          );
+        }
         if (attr.type === "MarkoAttribute" && controlled.has(attr)) continue;
         if (
           attr.type === "MarkoSpreadAttribute"
