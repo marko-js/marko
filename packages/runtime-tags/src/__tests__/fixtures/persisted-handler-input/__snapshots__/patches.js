@@ -1,2 +1,5 @@
-{ta:"Store!",we:"Store!"}
-
+// PATCH
+{
+  ta: "Store!",
+  we: "Store!"
+}

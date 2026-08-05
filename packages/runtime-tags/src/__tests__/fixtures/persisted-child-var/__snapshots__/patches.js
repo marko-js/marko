@@ -1,2 +1,7 @@
-{ca:{vb0:"Widget"},tc:"Cart!"}
-
+// PATCH
+{
+  ca: {
+    vb0: "Widget"
+  },
+  tc: "Cart!"
+}
