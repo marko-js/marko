@@ -451,6 +451,21 @@ export function _patch_value(
   return "";
 }
 
+// A control entry: the kind (a `ControlledType` digit) rides the key
+// ahead of the node accessor, and the kind's registered helper applies
+// the value against the frame's final handler slot.
+export function _patch_control(
+  scopeId: number,
+  accessor: Accessor,
+  type: number,
+  value: unknown,
+) {
+  if ($chunk.boundary.state.writesPatches) {
+    writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
+  }
+  return "";
+}
+
 // Handler wiring: a scope-bound registration ships as a bind entry, any
 // other value rides the construct seeds as a plain write.
 export function _patch_bind(
@@ -499,10 +514,18 @@ export function _patch_bind(
           entry,
       });
     } else {
+      // Both forms where a construct is possible: the plain write reaches
+      // PAIRED scopes (a handler removed between frames clears its live
+      // slot), while the fresh entry lands after a construct's seeds — a
+      // seed's first-render write resets the change slot, so walk-time
+      // installs cannot last.
       const partial = patchPartial(state, scopeId);
-      ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
-        PatchKey.Write + accessor
-      ] = value;
+      partial[PatchKey.Write + accessor] = value;
+      if (isInResumedBranch()) {
+        ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
+          PatchKey.Write + accessor
+        ] = value;
+      }
     }
   }
   return "";
