@@ -18,7 +18,7 @@
   "PatchLoop:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/0": [{
-        "PatchFresh:": {
+        "PatchSetup:": {
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-poison/tags/counter/index.marko0": 0
         },
         "PatchBind:1": 0
@@ -27,7 +27,7 @@
   }, {
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/0": [{
-        "PatchFresh:": {
+        "PatchSetup:": {
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-poison/tags/counter/index.marko0": 0
         },
         "PatchBind:2": 0
