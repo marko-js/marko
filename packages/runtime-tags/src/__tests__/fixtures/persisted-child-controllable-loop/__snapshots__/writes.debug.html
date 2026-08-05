@@ -1,0 +1,38 @@
+<main>
+  <h1>Store<!--M_*1 #text/0--></h1><!--M_[-->
+  <p>a<!--M_*2 #text/0--> hit <!>0<!--M_*2 #text/1--></p><!--M_[--><span>Seen
+    <!>
+      0<!--M_*4 #text/0--></span><button>+</button><!--M_*4 #button/1--><!--M_]3 #text/0 4--><!--M_[2-->
+  <p>b<!--M_*5 #text/0--> hit <!>0<!--M_*5 #text/1--></p><!--M_[--><span>Seen
+    <!>
+      0<!--M_*7 #text/0--></span><button>+</button><!--M_*7 #button/1--><!--M_]6 #text/0 7--><!--M_]1 #text/1 5-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      _: _(1),
+      "#childScope/2": _(3)
+    }, {
+      input_onCount: _.a = _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/template.marko_1/onCount"
+        )
+    }, {
+      count: 0,
+      _: _(3),
+      "TagVariableChange:count": _.a
+    }, {
+      _: _(1),
+      "#childScope/2": _(6)
+    }, {
+      input_onCount: _.b = _(5,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/template.marko_1/onCount"
+        )
+    }, {
+      count: 0,
+      _: _(6),
+      "TagVariableChange:count": _.b
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1 4 7"
+  ];
+  M._.w()
+</script>
