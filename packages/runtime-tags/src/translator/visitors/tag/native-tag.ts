@@ -39,7 +39,10 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
-import { isPatchCaptureSection } from "../../util/persisted";
+import {
+  constructRendersReads,
+  isPatchCaptureSection,
+} from "../../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -730,7 +733,14 @@ export default {
                     `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
                   );
                 }
-                if (attrSources?.state && tagSection.isBranch) {
+                if (
+                  attrSources?.state &&
+                  tagSection.isBranch &&
+                  !constructRendersReads(
+                    tagSection,
+                    value.extra?.referencedBindings as Opt<Binding>,
+                  )
+                ) {
                   // A state-fed attribute never captures; see placeholder.
                   dropSectionShell(tagSection);
                 }
@@ -1130,7 +1140,14 @@ export default {
                     `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
                   );
                 }
-                if (attrSources?.state && tagSection.isBranch) {
+                if (
+                  attrSources?.state &&
+                  tagSection.isBranch &&
+                  !constructRendersReads(
+                    tagSection,
+                    value.extra?.referencedBindings as Opt<Binding>,
+                  )
+                ) {
                   // A state-fed attribute never captures; see placeholder.
                   dropSectionShell(tagSection);
                 }
