@@ -330,15 +330,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         return;
       }
       // A seeded `<const>` equality-elides the initial write a values-free
-      // shell needs, and a `<let>`'s change handler has no construct-time
-      // wiring yet, so both stay unsupported inside branches.
+      // shell needs, so it stays unsupported inside branches.
       if (
-        (tagName === "const" ||
-          (tagName === "let" &&
-            node.attributes.some(
-              (attr) =>
-                attr.type === "MarkoAttribute" && attr.name === "valueChange",
-            ))) &&
+        tagName === "const" &&
         tag.findParent(
           (parent) =>
             parent.isMarkoTag() &&
