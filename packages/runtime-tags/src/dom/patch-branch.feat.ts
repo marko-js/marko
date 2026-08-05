@@ -16,6 +16,7 @@ import {
   failPatch,
   getRegisteredWithScope,
   patchers,
+  walkConstruct,
   walkScope,
 } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
@@ -62,12 +63,20 @@ _patch_records((record) => {
     effects
       ? (branch: Scope & { [kFresh]?: Scope | 0 }) => {
           if (branch[kFresh]) {
-            walkScope(branch[kFresh] as Scope, branch);
+            walkConstruct(branch[kFresh] as Scope, branch);
             branch[kFresh] = 0;
           }
           if (fns) {
+            // A missing registration means required client code was
+            // tree-shaken: constructing would silently misrender. Closure
+            // signals expose their per-branch render as `._`.
             for (const fn of fns) {
-              queueEffect(branch, fn as (scope: Scope) => void);
+              queueEffect(
+                branch,
+                ((fn && ((fn as { _?: unknown })._ || fn)) || failPatch()) as (
+                  s: Scope,
+                ) => void,
+              );
             }
           }
         }

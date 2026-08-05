@@ -205,11 +205,6 @@ export function _resume<T extends WeakKey>(
   id: string,
   scopeId?: number,
 ): T {
-  // Patch renders drop scope refs, so boundness is remembered separately:
-  // `_patch_bind` re-binds SAME-scope registrations against the live scope.
-  if (scopeId !== undefined && $chunk.boundary.state.writesPatches) {
-    ($chunk.boundary.state.patchBoundIds ??= new Map()).set(id, scopeId);
-  }
   return serializerRegister(
     id,
     val,
@@ -319,6 +314,7 @@ export function _patch_child(
 ) {
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
+    (state.patchParents ??= {})[childScopeId] = [scopeId, accessor];
     const partial = state.patchPartials?.[childScopeId];
     if (partial) {
       writePatch(scopeId, {
@@ -364,8 +360,8 @@ export function _patch_value(
   return "";
 }
 
-// Fresh construct wiring: a value registered against THIS scope ships its
-// id to bind against the constructed live scope; anything else writes.
+// Handler wiring: a scope-bound registration ships as a bind entry, any
+// other value rides the construct seeds as a plain write.
 export function _patch_bind(
   scopeId: number,
   accessor: Accessor,
@@ -374,12 +370,48 @@ export function _patch_bind(
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
     const registered = !!value && getRegistered(value as WeakKey);
-    const partial = patchPartial(state, scopeId);
-    const fresh = (partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>;
-    if (registered && state.patchBoundIds?.get(registered.id) === scopeId) {
-      fresh[PatchKey.Bind + accessor] = registered.id;
+    const bound =
+      registered && (registered.scope as ScopeInternals | undefined);
+    if (bound) {
+      // A scope-bound registration installs the way CSR setup does: the
+      // entry anchors at the scope this instance was registered against
+      // and names the child-link path down to the slot, so the factory
+      // receives its own live scope. A target the bound scope cannot
+      // reach through recorded links poisons (`0`): reject, never
+      // install a silently broken handler.
+      const boundId = bound[K_SCOPE_ID]!;
+      let depth = 0;
+      let cur: number | undefined = scopeId;
+      let link;
+      while (cur !== undefined && cur !== boundId) {
+        link = state.patchParents?.[cur];
+        if (!link?.[1]) {
+          cur = undefined;
+        } else {
+          depth++;
+          cur = link[0];
+        }
+      }
+      let entry: 0 | unknown[] = 0;
+      if (cur !== undefined) {
+        entry = new Array(depth + 2);
+        entry[0] = registered.id;
+        entry[depth + 1] = accessor;
+        for (let i = depth, scope = scopeId; i; i--) {
+          link = state.patchParents![scope]!;
+          entry[i] = link[1];
+          scope = link[0];
+        }
+      }
+      writePatch(cur ?? scopeId, {
+        [PatchKey.Bind + (state.patchBinds = (state.patchBinds || 0) + 1)]:
+          entry,
+      });
     } else {
-      fresh[PatchKey.Write + accessor] = value;
+      const partial = patchPartial(state, scopeId);
+      ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
+        PatchKey.Write + accessor
+      ] = value;
     }
   }
   return "";
@@ -1278,7 +1310,8 @@ export class State implements SerializeState {
   declare writesPatches?: boolean;
   declare rootScopeId?: number;
   declare patchPartials?: Record<number, Record<string, unknown>>;
-  declare patchBoundIds?: Map<string, number>;
+  declare patchBinds?: number;
+  declare patchParents?: Record<number, [parentScopeId: number, link: string]>;
   declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
   declare patchFlushed?: 1;
   declare patchDeferred?: 1;
