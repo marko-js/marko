@@ -14,12 +14,6 @@ After `host = rootNode.startNode`, `renderAndMorph` calls `domCompat.setScopeNod
 
 The test's only two event-handler assertions are commented out (and call a long-gone `helpers.attrs`), and the title is wrong: `_attrs` (`src/html/attrs.ts`) does not strip `on*` names, it collects them into `events` and registers them via `_scope(scopeId, { [AccessorPrefix.EventAttributes + nodeAccessor]: events })`. They cannot simply be uncommented — outside a render `_scope` reads `$chunk.boundary` and throws. Either delete the dead comments and retitle to what the test actually checks (invalid attribute names, and `content` on a non-`<meta>` tag), or drive `_attrs` inside an active writer boundary and assert the handler lands on the scope. Re-verify: `node -r ~ts -e 'require("./packages/runtime-tags/src/html/attrs.ts")._attrs({onClick(){}},"a",0,"")'` throws `TypeError: Cannot read properties of undefined (reading 'boundary')`.
 
-## Drop the ignored `state` argument from the two `htmlCompat.toJSON` call sites
-
-`packages/runtime-tags/src/html/compat.ts` › `compat.toJSON` | 2026-07-23 | impact:low | effort:low
-
-`compat.toJSON()` takes no parameters, yet both call sites in `packages/runtime-class/src/runtime/helpers/tags-compat/runtime-html.js` still pass a `State`: `htmlCompat.toJSON(htmlCompat.ensureState(out.global))` and `htmlCompat.toJSON(state)`. The parameter disappeared in 9e043c0724 ("refactor: unify scope serialization and concurrent resume") but the untyped JS callers were never updated, so the code reads as though the returned `toJSON` were bound to one render's `State` when it is not. Keep the `ensureState` calls — they seed `$global.runtimeId`/`renderId` and memoise the `State` — as standalone statements, call `toJSON()` with no argument, and drop the then-unused `const state` local. Re-verify: `rg -n "htmlCompat\.toJSON\(" packages/runtime-class` shows two callers passing an argument while `compat.toJSON` is declared `toJSON()`.
-
 ## Extract one helper for the `attrTag`/`attrTags` merge duplicated in `known-tag.ts`
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `translateAttrTag` | 2026-07-23 | impact:low | effort:low
