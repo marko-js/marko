@@ -1,0 +1,14 @@
+// template.marko
+_renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell;Db%;<p>item <!></p>`" });
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "#text/0")}</h1>`);
+	forOf(["a", "b"], (name) => {
+		const $scope1_id = _scope_id();
+		_html(`<p>item <!>${_patch_text($scope1_id, "#text/0", name)}${_escape(name)}${_el_resume($scope1_id, "#text/0")}</p>`);
+		writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
+	});
+	_html("</main>");
+	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+}, 1);
