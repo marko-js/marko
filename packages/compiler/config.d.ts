@@ -13,7 +13,9 @@ declare const Config: {
   runtimeId?: string | null;
   ast?: boolean;
   code?: boolean;
+  /** Implemented by the Marko 5 (class API) translator only; currently inert under the Marko 6 translator. */
   writeVersionComment?: boolean;
+  /** Implemented by the Marko 5 (class API) translator only; currently inert under the Marko 6 translator. */
   ignoreUnrecognizedTags?: boolean;
   sourceMaps?: boolean | "inline" | "both";
   translator?: any;
@@ -29,12 +31,13 @@ declare const Config: {
       ) => string | undefined | null)
     | null;
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
+  /** Implemented by the Marko 5 (class API) translator only; currently inert under the Marko 6 translator. */
   hydrateInit?: boolean;
   optimize?: boolean;
   optimizeKnownTemplates?: string[];
   cache?: Map<unknown, unknown>;
   hot?: boolean;
-  /** @deprecated */
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
   meta?: boolean;
   babelConfig?: {
     ast?: boolean | null;

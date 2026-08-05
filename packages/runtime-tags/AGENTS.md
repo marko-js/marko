@@ -55,15 +55,15 @@ export default {
 ```
 
 - `callRuntime("_name", ...args)` (`util/runtime.ts`) references runtime helpers with automatic imports; DOM helpers listed in `pureDOMFunctions` get `/*@__PURE__*/`.
-- Validate early with `assertNoArgs` / `assertNoParams` / `assertNoSpreadAttrs` (`util/assert.ts`). Compile errors use `path.buildCodeFrameError` with backticked names and a markojs.com docs link — `core/if.ts` is the canonical style.
+- Validate early: `assertNoSpreadAttrs` / `assertNoTagVarMutation` / `assertNoBodyContent` are local (`util/assert.ts`), while `assertNoArgs` / `assertNoParams` / `assertNoVar` / `assertAllowedAttributes` come from `@marko/compiler/babel-utils`. Compile errors use `path.buildCodeFrameError` with backticked names and a markojs.com docs link — `core/if.ts` is the canonical style.
 - `util/marko-config.ts` provides `isOutputHTML` / `isOutputDOM` / `isOptimize`.
-- `util/optional.ts` (`Opt`/`Sorted` list algebra) underpins reference tracking; `util/known-tag.ts` holds native HTML tag/attribute metadata.
+- `util/optional.ts` (`Opt`/`Sorted` list algebra) underpins reference tracking; `util/known-tag.ts` holds the custom/dynamic tag input contracts. Native element work lives in `visitors/tag/native-tag.ts` (with `common/helpers.ts` and `util/is-non-html-text.ts`).
 
 ## Runtime conventions
 
 - **`_name` exports** are runtime API called by generated code — public to codegen, not to app authors. Renames must update `callRuntime` call sites and `pureDOMFunctions`.
 - **`MARKO_DEBUG`** gates all validation, descriptive names, and detailed error messages (`if (MARKO_DEBUG) { ... }`); builds strip these. It is `true` in tests via the `~ts` register hook. Runtime error helpers live in `common/errors.ts`.
-- **`.debug.ts` pairs**: source imports the `.debug` module (e.g. `common/types.ts` imports `./accessor.debug`); the production build remaps `X.debug` → `X.ts`. Both files must export identical member names — mirror any accessor enum change in `accessor.ts` **and** `accessor.debug.ts` (the other pair is `html/inlined-runtimes[.debug].ts`).
+- **`.debug.ts` pairs**: source imports the `.debug` module (e.g. `common/types.ts` imports `./constants/accessor-prop.debug`); the production build remaps `X.debug` → `X.ts`. Both files must export identical member names. There are nine pairs: seven accessor/enum modules under `src/common/constants/`, plus `common/accessor[.debug].ts` and `html/inlined-runtimes[.debug].ts`. Nothing enforces parity — each module's `Value` is `typeof import("./<itself>")` and `translator/util/get-accessor-char.ts` casts `as any` — so a member added to only one half type-checks and shows up as `undefined` in an optimize build.
 - **Optional feature enablement** (tree-shakable runtime API) has two patterns:
   - **`src/{dom,html}/**/*.feat.ts`** are compiler-injected side-effect modules for behavior a referenced import cannot keep alive (catch handling, controllable registration). The build emits them as extra entries of their runtime's bundle — a shared chunk keeps one state instance, so they import runtime internals directly. A feature body is direct registry/property assignments (plus at most one installer call, e.g. `installCatch`); the compiler emits it once per program via `importRuntimeFeature` (typed by `DOMRuntimeFeature`).
   - **Definition-site wrappers** gate behavior on a helper's own retention: `export const _if = /*@__PURE__*/ withBranches(...)`.
@@ -73,7 +73,7 @@ export default {
 
 ## Testing
 
-Fixture-based snapshot tests driven by `src/__tests__/main.test.ts`. ~800 fixtures in `src/__tests__/fixtures/`, plus `fixtures-interop/` (Marko 5 ↔ 6 mixing, suite name `translator-interop`). A dir suffixed `.skip` is ignored.
+Fixture-based snapshot tests driven by `src/__tests__/main.test.ts`. Fixtures live in `src/__tests__/fixtures/`, plus `fixtures-interop/` (Marko 5 ↔ 6 mixing, suite name `translator-interop`). A dir suffixed `.skip` is ignored.
 
 ```sh
 npm test -- --grep "runtime-tags/translator <fixture> "  # one fixture (note trailing space)
@@ -95,9 +95,14 @@ fixtures/<name>/
     html.bundle[.debug].js      # compiled SSR output
     render[.debug].md           # per-step rendered HTML + granular mutation log
     writes[.debug].html         # SSR stream chunks (joined by <!-- FLUSH -->)
+    diagnostics[.debug].md      # debug-only meta.diagnostics (warnings/deprecations)
+    error-compile-{html,dom}[.debug].txt   # expected compile failure (error_compiler)
+    {ssr,csr}.error[.debug].txt            # expected render failure (error_html/error_dom)
 ```
 
-`TestConfig` (see `main.test.ts`): `steps` (`[initialInput, ...]` where later steps are input updates, `(container) => {}` interactions, or async `Wait`/`Flush`/`Throws` controls), `error_compiler` (expect compile failure), `equivalent: false` (separate `render-ssr`/`render-csr` snapshots), `skip_optimize` / `skip_dom` / `skip_html` / `skip_csr` / `skip_ssr`, `runtime_id`. Each fixture runs in `debug` and `optimize` modes; CSR only runs in `debug`.
+Adding or removing a recoverable diagnostic or deprecation therefore fails a `diagnostics.md` snapshot in every fixture that carries one.
+
+`TestConfig` (see `main.test.ts`): `steps` (`[initialInput, ...]` where later steps are input updates, `(container) => {}` interactions, or async `Wait`/`Flush`/`Throws` controls), `error_compiler` (expect compile failure), `error_html` / `error_dom` (expect a render failure), `equivalent: false` (separate `render-ssr`/`render-csr` snapshots), `embedded`, `load_order` / `reject_load` (lazy-chunk ordering and failure), `fix_guide`, `skip_optimize` / `skip_dom` / `skip_html` / `skip_csr` / `skip_ssr`, `runtime_id`. Each fixture runs in `debug` and `optimize` modes; CSR only runs in `debug`.
 
 To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exercising the behavior), run `test:update` scoped to it, then **read the generated snapshots as part of your change** — the mutation log in `render.md` shows update granularity (an unexpected extra `UPDATE:`/re-render is a regression), and the `.bundle.js` diff shows generated-code cost.
 
@@ -119,6 +124,6 @@ To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exer
 ## Gotchas
 
 - `translator/util/references.ts` imports `toAccess` from `html/serializer.ts` — serializer key encoding changes affect the translator.
-- Adding an accessor enum member: keep `accessor.ts` / `accessor.debug.ts` in lockstep (same members, char vs. readable string values).
+- Adding an accessor enum member: keep the `src/common/constants/*[.debug].ts` pair in lockstep (same members, char vs. readable string values).
 - Size regressions count as review findings: check the fixture `sizes.json` diffs and root `.sizes.json` (updated by the pre-commit hook).
 - Language semantics questions (what a tag/attribute should do) are answered by the docs, not inferred: <https://markojs.com/llms.txt>.

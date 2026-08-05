@@ -33,12 +33,18 @@ const config = {
   /**
    * Whether the version should be written to the template as a comment e.g.
    * // Compiled using marko@x.x.x - DO NOT EDIT
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
    */
   writeVersionComment: true,
 
   /**
    * Whether unrecognized tags should be ignored or not. This flag will
    * be enabled by default when compiling XML.
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
    */
   ignoreUnrecognizedTags: false,
 
@@ -54,6 +60,9 @@ const config = {
    * This option inlines all of the meta data in the template.
    * You can also access this metadata via `compile(...).meta`.
    * This API is sticking around for compatibility purposes.
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
    */
   meta: false,
 
@@ -157,6 +166,9 @@ const config = {
   /**
    * When compiling in hydrate mode, this option will cause the compiler to
    * call the `marko/components.init` function to begin hydrating components.
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
    */
   hydrateInit: true,
 

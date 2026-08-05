@@ -11,7 +11,25 @@ declare global {
   }
 
   namespace Marko {
-    /** A mutable global object for the current render. */
+    /**
+     * A mutable global object for the current render.
+     *
+     * The open index signature means an unaugmented `$global` is unchecked. To
+     * type your own keys, merge into this interface:
+     *
+     * ```ts
+     * declare global {
+     *   namespace Marko {
+     *     interface Global {
+     *       data?: MyRouteContext;
+     *     }
+     *   }
+     * }
+     * ```
+     *
+     * Declare merged members OPTIONAL — a required one makes every
+     * `render({ $global: {} })` call fail with TS2741.
+     */
     export interface Global {
       [x: PropertyKey]: unknown;
       /** An AbortSignal instance that, when aborted, stops further streamed content. */

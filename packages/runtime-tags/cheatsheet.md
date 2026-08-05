@@ -7,7 +7,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
 1. Text interpolation: `${expr}` inside tag bodies. A bare line at the template root parses as a TAG (concise mode): `Welcome aboard` fails to compile, but `p is a tag` compiles SILENTLY to `<p is a tag></p>` — any line starting with a real tag name loses its words to attributes. Wrap text in an element (`<p>Welcome aboard</p>`) or prefix the line with `--` and a space (`-- Welcome ${name}`). Attributes take raw JS after `=` with NO braces/quotes: `<div title=user.name data-n=1 + 1>`.
 2. A top-level `>` in an attribute value **ENDS THE TAG**: the value truncates there, the rest of the line becomes body text, and it usually still compiles clean. `<button disabled=count>=8 onClick() {…}>More</button>` is `disabled=count` plus the TEXT `=8 onClick() {…}>`, so the handler never binds; spaces don't help (`disabled=a > b` closes too). Parenthesize the value — `disabled=(count >= 8)`, `hidden=(a > b)`, and for a TS type argument `<let/s=(new Set<string>())>`. Do NOT move the type onto the tag variable instead: `<let/s:Set<string>=new Set()>` compiles but fails type-check with TS2322 (the annotation does not flow into the initializer). A `>` nested inside `(…)`/`{…}`/`[…]` is safe (`class={ big: n > 1 }`, `of=list.filter(x => x > 1)`), but an arrow BODY is not nested: `<const/f=(a, b) => a > b>` truncates to `(a, b) => a`. `<` never closes a tag (`disabled=count<=1` is fine).
 3. State: `<let/name=initial>` (slash then var name!). Update by plain assignment in an event handler: `count++`, `text = "hi"`. No setState, no hooks.
-4. Derived values: `<const/total=items.length * price>` — auto-recomputes. Never use an effect to derive state. Updates batch: mid-handler a reassigned `<let>` reads current but its derived `<const>` reads stale — recompute from the `<let>`.
+4. Derived values: `<const/total=items.length * price>` — auto-recomputes. Never use an effect to derive state. `<let>` is deliberately different: its value is an INITIAL value, so `<let/draft=input.text>` seeds from a reactive value and then de-syncs — that de-sync is the point of an editable copy. So pick by intent: recomputes → `<const>`, seeds then diverges → `<let>`. A `<let>` you never assign is just a frozen `<const>`. Updates batch: mid-handler a reassigned `<let>` reads current but its derived `<const>` reads stale — recompute from the `<let>`.
 5. NEVER mutate state in place. `items.push(x)` will NOT update the UI. Always reassign:
    - add: `items = items.concat(x)`
    - remove: `items = items.toSpliced(i, 1)`
@@ -17,6 +17,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
 7. Native inputs are UNCONTROLLED by default: `value=` only sets the initial value. Adding the matching `*Change` handler is what makes them controlled — `valueChange` on `<input>`/`<textarea>`/`<select>`, `checkedChange` on checkboxes/radios, `openChange` on `<details>`/`<dialog>`. `value:=text` is the shorthand for `value=text valueChange(v) { text = v }`. (`<textarea value:=text/>` — value attribute, not body.)
 8. Transform in the handler when needed — number inputs give STRINGS: `<input type="number" value=n valueChange(v) { n = +v }>`, or `value:parseFloat:=n`.
 9. Radio/checkbox groups: `checkedValue:=picked` on each input (shared var, distinct `value=`) — the match is checked; array var for multi-checkbox. Dropdown: `<select value:=picked>`.
+10. Module-level values and helpers need `static`: `static const LIMIT = 10`, `static function fmt(n) {…}`. Without it `function fmt(n) {` parses as a TAG — ``Unable to find entry point for custom tag `<function>` ``, an error that never says `static`. Prefer it to `<const>` for anything that never changes: `<const/LIMIT=10>` emits a per-instance signal plus a `$setup` call.
 
 ## Canonical component (copy this shape)
 
@@ -195,6 +196,8 @@ export interface Input<T> {
 | `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                                  |
 | `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                                             |
 | `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                                    |
+| `<let/n=a + b>` when you want it to recompute               | `<const/n=a + b>` — `<let>` seeds an initial value, then de-syncs by design          |
+| `function fmt(n) {…}` / `const LIMIT = 10` at module level  | `static function fmt(n) {…}` / `static const LIMIT = 10`                             |
 | `<let x=0>`                                                 | `<let/x=0>`                                                                          |
 | `<if(cond)>`                                                | `<if=cond>`                                                                          |
 | `items.push(x)`                                             | `items = items.concat(x)`                                                            |
