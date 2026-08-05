@@ -440,12 +440,6 @@ The guard is `byAttr?.type === "Identifier" && !tag.scope.getBinding(...)`, so i
 
 `shallowClone` copies `metadata.marko` from the cached analyze file into each output's translate metadata by dispatching on `v.constructor`, but the `case null:` arm beside `case Object:` is dead — a prototype-less object has `constructor === undefined`. An `Object.create(null)` metadata value therefore hits `default` and aborts the compile with `TypeError: Cannot read properties of undefined (reading 'name')` out of `Ctor.name` instead of being spread-cloned. Fix: `case undefined:` plus `Ctor?.name ?? "null prototype object"` in the default message, and keep the `for (const key in data)` loop string-keyed — symbol metadata such as `IMPORTS_KEY` must not cross analyze→translate. Re-verify: `compileSync` any template with a translator whose analyze visitor sets `file.metadata.marko.custom = Object.create(null)`; it throws today, while `{}` clones fine.
 
-## Report a `pipe()` abort without relying on `emit("error")` returning false, and close the target
-
-`packages/runtime-tags/src/html/template.ts` › `pipe` | 2026-07-29 | impact:high | effort:low
-
-`pipe`'s abort callback ends with `if (!stream.emit?.("error", err)) throw err;`, but `EventEmitter#emit("error")` throws when no `error` listener exists, and `#read` runs that callback from a tick — the throw escapes as an uncaught exception, so `render().pipe(res)` kills the process on any mid-stream abort (client hangup, aborted `$global.signal`). `end()` is only called from the completion callback, so an aborted render never closes the target and a transform sink (gzip) strands the response. Direction: check `stream.listenerCount?.("error")` before emitting, keep the synchronous `throw` for plain non-emitter sinks, and close after reporting (`stream.destroy?.(err) ?? stream.end()`); `__tests__/render-result.test.ts` asserts `ended === false` after abort, so that expectation moves with the fix. Re-verify: pipe an aborted async render into an `EventEmitter` sink — with an `error` listener `end()` never fires, without one the process dies with an uncaught error from `pipe`.
-
 ## Rewrite the `<tag-name>` shorthand in `export ... from` position, or reject it
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `default` | 2026-07-30 | impact:med | effort:low

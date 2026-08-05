@@ -192,6 +192,7 @@ class ServerRendered implements RenderedTemplate {
     write: (chunk: string) => void;
     end: () => void;
     flush?: () => void;
+    destroy?: () => void;
     emit?: (eventName: PropertyKey, ...args: any[]) => any;
   }) {
     this.#read(
@@ -205,8 +206,14 @@ class ServerRendered implements RenderedTemplate {
           | Record<PropertyKey, unknown>
           | undefined
           | false;
+        // Close before reporting: an unlistened `emit("error")` throws, which
+        // is node's contract for an unhandled stream error, not a bug here.
         if (socket && typeof socket.destroySoon === "function") {
           socket.destroySoon();
+        } else if (stream.destroy) {
+          stream.destroy();
+        } else {
+          stream.end();
         }
 
         if (!stream.emit?.("error", err)) {
