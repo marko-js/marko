@@ -1,11 +1,10 @@
 name: CI
 
 on:
+  # No paths filter: `@ci:lint` formats markdown too, so a docs-only PR can
+  # still fail the build that `push` runs after merge.
   pull_request:
     types: [opened, synchronize]
-    paths-ignore:
-      - "**/*.md"
-      - "LICENSE"
   push:
     branches: [main, v3, v4]
 
