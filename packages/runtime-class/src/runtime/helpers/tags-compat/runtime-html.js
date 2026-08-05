@@ -93,9 +93,8 @@ exports.p = function (htmlCompat) {
 
     return (input, out) => {
       if (!tagsRenderer && renderBody) {
-        renderBody.toJSON = htmlCompat.toJSON(
-          htmlCompat.ensureState(out.global),
-        );
+        htmlCompat.ensureState(out.global);
+        renderBody.toJSON = htmlCompat.toJSON();
       }
       TagsCompat(
         args
@@ -173,7 +172,7 @@ exports.p = function (htmlCompat) {
     return (input, ...args) => {
       // tags to class
       const $global = htmlCompat.$global();
-      const state = htmlCompat.ensureState($global);
+      htmlCompat.ensureState($global);
       const out = defaultCreateOut($global);
       const branchId = htmlCompat.nextScopeId();
       let forceBoundary = boundaryModeByRenderer.get(tag);
@@ -192,7 +191,7 @@ exports.p = function (htmlCompat) {
               value,
             ]);
             forceBoundary = true;
-            value.toJSON = htmlCompat.toJSON(state);
+            value.toJSON = htmlCompat.toJSON();
           } else {
             input[key === "content" ? "renderBody" : key] = value;
           }
