@@ -432,15 +432,25 @@ export function _patch_value(
 
 // A patched scope write for effect-read values: no client registration —
 // the wire drives the accessor, and `_patch_effect` entries re-run readers.
+// Fresh writes nest under `f` for freshly constructed scopes only; they
+// apply AFTER the seeds, so a controllable seed cannot clobber its handler.
 export function _patch_write(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
+  fresh?: 1,
 ) {
   if ($chunk.boundary.state.writesPatches) {
-    writePatch(scopeId, {
-      [PatchKey.Write + accessor]: value,
-    });
+    if (fresh) {
+      const partial = patchPartial($chunk.boundary.state, scopeId);
+      ((partial[PatchKey.Fresh] ??= {}) as Record<string, unknown>)[
+        PatchKey.Write + accessor
+      ] = value;
+    } else {
+      writePatch(scopeId, {
+        [PatchKey.Write + accessor]: value,
+      });
+    }
   }
   return "";
 }
