@@ -6,6 +6,7 @@ import type { TestConfig } from "../../main.test";
 // document navigation) instead of installing a silently broken handler.
 export const config: TestConfig = {
   persisted: true,
+  expect_rejection: true,
   steps: [
     { title: "Store", show: true },
     { title: "Store!", show: false },
