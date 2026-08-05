@@ -129,6 +129,10 @@ describe("runtime-tags/html render result", () => {
     const mockStream = () => {
       const written: string[] = [];
       const events: [PropertyKey, unknown][] = [];
+      const listeners = new Map<
+        PropertyKey,
+        ((...args: unknown[]) => void)[]
+      >();
       let onEvent: (() => void) | undefined;
       // Resolved by the first `emit`, so the abort assertion never races a timer.
       const nextEvent = new Promise<void>((resolve) => (onEvent = resolve));
@@ -147,9 +151,20 @@ describe("runtime-tags/html render result", () => {
         flush() {
           this.flushes++;
         },
+        on(name: PropertyKey, fn: (...args: unknown[]) => void) {
+          listeners.set(name, (listeners.get(name) || []).concat(fn));
+          return this;
+        },
+        // Mirrors `EventEmitter#emit`: an unlistened `"error"` throws.
         emit(name: PropertyKey, ...args: unknown[]) {
           events.push([name, args[0]]);
           onEvent?.();
+          const fns = listeners.get(name);
+          if (!fns) {
+            if (name === "error") throw args[0];
+            return false;
+          }
+          for (const fn of fns) fn(...args);
           return true;
         },
       };
@@ -168,19 +183,37 @@ describe("runtime-tags/html render result", () => {
       assert.ok(stream.flushes > 0);
     });
 
-    it("emits an error rather than throwing when the render aborts", async () => {
+    it("emits an error and closes the target when the render aborts", async () => {
       const reason = new Error("boom");
       const stream = mockStream();
+      stream.on("error", () => {});
       renderAsync(Promise.reject(reason)).pipe(stream);
       await stream.nextEvent;
       assert.deepEqual(stream.events, [["error", reason]]);
-      assert.equal(stream.ended, false);
+      assert.equal(stream.ended, true);
+    });
+
+    it("closes the target before an unreportable error propagates", () => {
+      const result = renderSync();
+      result.toString();
+      const stream = mockStream();
+      assert.throws(() => result.pipe(stream), CONSUMED);
+      assert.equal(stream.ended, true);
+    });
+
+    it("throws on a sink that cannot emit", () => {
+      const result = renderSync();
+      result.toString();
+      const { emit: _emit, ...stream } = mockStream();
+      assert.throws(() => result.pipe(stream), CONSUMED);
+      assert.equal(stream.ended, true);
     });
 
     it("reports a consumed result through the error path", () => {
       const result = renderSync();
       result.toString();
       const stream = mockStream();
+      stream.on("error", () => {});
       result.pipe(stream);
       assert.equal(stream.events.length, 1);
       assert.match(String((stream.events[0][1] as Error).message), CONSUMED);
