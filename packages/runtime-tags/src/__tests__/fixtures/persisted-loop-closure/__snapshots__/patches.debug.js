@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_shell packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_init;D bD ;<li> <span> </span></li>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_shell packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_boost/init;D bD ;<li> <span> </span></li>`, {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples"
   }, {
@@ -8,7 +8,7 @@
 }]
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_shell packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_init;D bD ;<li> <span> </span></li>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_shell packages/runtime-tags/src/__tests__/fixtures/persisted-loop-closure/template.marko_1_boost/init;D bD ;<li> <span> </span></li>`, {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples"
   }, {

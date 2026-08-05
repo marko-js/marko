@@ -1,0 +1,6 @@
+<let/last=0/>
+<main>
+  <h1>${input.title}</h1>
+  <p>Last ${last}</p>
+  <counter show=input.show onCount(next: number) { last = next }/>
+</main>
