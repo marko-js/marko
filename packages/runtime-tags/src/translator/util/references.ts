@@ -280,16 +280,10 @@ export function trackDomVarReferences(
   tag: t.NodePath<t.MarkoTag>,
   binding: Binding,
 ) {
-  const tagVar = tag.node.var;
+  // Callers reject a destructured tag variable before reaching this.
+  const tagVar = tag.node.var as t.Identifier | undefined;
   if (!tagVar) {
     return;
-  }
-  if (!t.isIdentifier(tagVar)) {
-    throw tag
-      .get("var")
-      .buildCodeFrameError(
-        "Tag variables on native elements cannot be destructured.",
-      );
   }
 
   const babelBinding = tag.scope.getBinding(tagVar.name)!;
