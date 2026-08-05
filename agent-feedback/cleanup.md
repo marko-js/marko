@@ -14,12 +14,6 @@ After `host = rootNode.startNode`, `renderAndMorph` calls `domCompat.setScopeNod
 
 `trackDomVarReferences` opens by throwing "Tag variables on native elements cannot be destructured." for a non-identifier `tag.node.var`, but both call sites already reject one with a better, docs-linked message: `visitors/tag/native-tag.ts` throws at the top of the same `analyze.enter` that later calls it, and `core/html-comment.ts` throws its `<html-comment>` variant before its call. The branch is dead, and it is the only place in the package that says "native elements" instead of CONTEXT.md's "native tag". Drop it, keeping the non-null cast, so the one live message is the linked one. Re-verify: compiling `<div/{a}/>` reports the native-tag.ts wording with the docs link, and `rg -n "cannot be destructured" packages/runtime-tags/src --glob '!**/__snapshots__/**'` shows one message per owner.
 
-## Stop re-exporting `forOfBy`/`forInBy`/`forStepBy` from the html runtime entry
-
-`packages/runtime-tags/src/html.ts` › `export { … } from "./html/for"` | 2026-07-23 | impact:low | effort:low
-
-`src/html.ts` re-exports seven names from `./html/for`, but codegen emits only four — `translator/core/for.ts` › `forTypeToRuntime` maps the `<for>` kinds to `forOf`/`forIn`/`forTo`/`forUntil`, which is also all `dom.ts` re-exports from `./common/for`. `forOfBy`, `forInBy` and `forStepBy` are internal helpers that `html/writer.ts` imports straight from `./for`; no `callRuntime`/`importRuntime` call site names them. Since `HTMLRuntimeHelpers = keyof typeof import("../../html")` (`translator/util/runtime.ts`), exporting them makes `callRuntime("forOfBy", …)` type-check even though codegen never emits it. Drop the three names from the export block. Re-verify: `rg -n "forOfBy|forInBy|forStepBy" packages/` hits only `src/html/for.ts` and `src/html/writer.ts`, and a `<for by=…>` fixture still renders.
-
 ## Retitle the `_attrs` test or give its event-handler routing real coverage
 
 `packages/runtime-tags/src/__tests__/html-attrs.test.ts` › `it("should strip event handlers, invalid attribute names and content")` | 2026-07-23 | impact:low | effort:low
