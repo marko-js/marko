@@ -1,5 +1,6 @@
 import type { Accessor, Scope } from "../common/types";
 import { AccessorProp, PatchKey } from "../common/types";
+import { kStamps } from "./patch-value.feat";
 import { queueEffect, runId } from "./queue";
 import { getRegisteredWithScope, patchers } from "./resume";
 
@@ -8,19 +9,9 @@ type Stamped = Scope & {
   [kSeen]?: Record<string, number>;
 };
 
-// Change stamps bump per accessor on write; each effect scope remembers the
-// last stamp it acted on, so effects re-run exactly when their read changed
-// (the hydrated value is stamp 0).
-const kStamps = Symbol();
+// Each effect scope remembers the last stamp it acted on, so effects
+// re-run exactly when their read changed (the hydrated value is stamp 0).
 const kSeen = Symbol();
-
-patchers[PatchKey.Write] = (scope: Stamped, key, value) => {
-  const accessor = key.slice(PatchKey.Write.length) as Accessor;
-  if (scope[accessor] !== value || !(accessor in scope)) {
-    scope[accessor] = value;
-    (scope[kStamps] ??= {})[accessor] = -~scope[kStamps]![accessor];
-  }
-};
 
 // Key: the effect's register id. Entry: its space-joined read accessors,
 // with an owner-hop count suffixed when the values live up the scope chain

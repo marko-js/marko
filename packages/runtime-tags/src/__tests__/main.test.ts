@@ -57,6 +57,8 @@ export type TestConfig = {
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
+  /** Debug intentionally logs a dev-only diagnostic the optimized build cannot. */
+  skip_parity?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -394,10 +396,14 @@ function testFixtures(interop?: true) {
                     const frames: string[] = [];
                     for await (const frame of template.renderPatch(input)) {
                       frames.push(frame);
-                      applied = applyPatch(frame) && applied;
+                      // A production caller navigates on the first failed
+                      // frame; later frames must not mutate further.
+                      if (!(applied = applyPatch(frame))) break;
                     }
                     patches.push(frames.join(""));
                     tracker.logUpdate(input);
+                    if (!applied)
+                      tracker.logStatus("## Patch rejected (navigate)");
                     return applied;
                   }
                 : undefined,
@@ -522,6 +528,30 @@ function testFixtures(interop?: true) {
                 config.error_dom,
                 "csr",
               ));
+        });
+      }
+
+      // A diverging render log means tree shaking or debug-only assertions
+      // changed behavior (silently, since each mode snapshots separately).
+      // An `after` hook: it must observe the snapshots THIS run wrote.
+      if (!config.skip_optimize && !config.skip_parity) {
+        after(function parity() {
+          const snapshotsDir = resolve("__snapshots__");
+          for (const name of fs.existsSync(snapshotsDir)
+            ? fs.readdirSync(snapshotsDir)
+            : []) {
+            if (name.startsWith("render") && !name.includes(".debug.")) {
+              const debugName = name.replace(/\.md$/, ".debug.md");
+              const debugFile = path.join(snapshotsDir, debugName);
+              if (fs.existsSync(debugFile)) {
+                assert.strictEqual(
+                  fs.readFileSync(path.join(snapshotsDir, name), "utf8"),
+                  fs.readFileSync(debugFile, "utf8"),
+                  `${name} diverges from ${debugName}`,
+                );
+              }
+            }
+          }
         });
       }
     });
