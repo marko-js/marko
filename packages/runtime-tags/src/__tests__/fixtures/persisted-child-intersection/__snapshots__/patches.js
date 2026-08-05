@@ -1,2 +1,7 @@
-{ta:"Cart!",cb:{vb0:"Gadget"}}
-
+// PATCH
+{
+  ta: "Cart!",
+  cb: {
+    vb0: "Gadget"
+  }
+}
