@@ -1,5 +1,11 @@
 import assert from "assert/strict";
+import { once } from "events";
+import http from "http";
+import type { AddressInfo } from "net";
 import path from "path";
+import { PassThrough } from "stream";
+import { text } from "stream/consumers";
+import zlib from "zlib";
 
 import type {
   RenderedTemplate,
@@ -13,6 +19,7 @@ type PipeTarget = {
   write(chunk: string): void;
   end(): void;
   flush?(): void;
+  destroy?(): void;
   emit?(name: PropertyKey, ...args: unknown[]): unknown;
 };
 
@@ -126,97 +133,82 @@ describe("runtime-tags/html render result", () => {
   });
 
   describe("pipe", () => {
-    const mockStream = () => {
-      const written: string[] = [];
-      const events: [PropertyKey, unknown][] = [];
-      const listeners = new Map<
-        PropertyKey,
-        ((...args: unknown[]) => void)[]
-      >();
-      let onEvent: (() => void) | undefined;
-      // Resolved by the first `emit`, so the abort assertion never races a timer.
-      const nextEvent = new Promise<void>((resolve) => (onEvent = resolve));
-      return {
-        written,
-        events,
-        nextEvent,
-        ended: false,
-        flushes: 0,
-        write(chunk: string) {
-          written.push(chunk);
-        },
-        end() {
-          this.ended = true;
-        },
-        flush() {
-          this.flushes++;
-        },
-        on(name: PropertyKey, fn: (...args: unknown[]) => void) {
-          listeners.set(name, (listeners.get(name) || []).concat(fn));
-          return this;
-        },
-        // Mirrors `EventEmitter#emit`: an unlistened `"error"` throws.
-        emit(name: PropertyKey, ...args: unknown[]) {
-          events.push([name, args[0]]);
-          onEvent?.();
-          const fns = listeners.get(name);
-          if (!fns) {
-            if (name === "error") throw args[0];
-            return false;
-          }
-          for (const fn of fns) fn(...args);
-          return true;
-        },
-      };
-    };
-
-    it("writes the html and ends the stream", () => {
-      const stream = mockStream();
+    it("writes the html and ends the stream", async () => {
+      const stream = new PassThrough();
+      const read = text(stream);
       renderSync().pipe(stream);
-      assertBody(stream.written.join(""));
-      assert.equal(stream.ended, true);
+      assertBody(await read);
     });
 
-    it("flushes after each chunk so buffering transforms stream", () => {
-      const stream = mockStream();
-      renderSync().pipe(stream);
-      assert.ok(stream.flushes > 0);
+    it("flushes each chunk so a buffering transform streams", async () => {
+      // Only a flushed deflate block decompresses, so without the per-chunk
+      // flush nothing readable arrives until the pending render settles.
+      let settle!: (value: string) => void;
+      const gzip = zlib.createGzip();
+      const decoded = gzip.pipe(zlib.createGunzip());
+      const firstChunk = once(decoded, "data");
+      renderAsync(new Promise<string>((resolve) => (settle = resolve))).pipe(
+        gzip,
+      );
+      assert.match(String((await firstChunk)[0]), /<script\b/);
+      settle("a");
     });
 
-    it("emits an error and closes the target when the render aborts", async () => {
+    it("reports the error and destroys the target when the render aborts", async () => {
       const reason = new Error("boom");
-      const stream = mockStream();
-      stream.on("error", () => {});
+      const stream = new PassThrough();
+      const errored = once(stream, "error");
       renderAsync(Promise.reject(reason)).pipe(stream);
-      await stream.nextEvent;
-      assert.deepEqual(stream.events, [["error", reason]]);
-      assert.equal(stream.ended, true);
+      assert.deepEqual(await errored, [reason]);
+      assert.equal(stream.destroyed, true);
+    });
+
+    it("tears down the response socket when an http render aborts", async () => {
+      const server = http.createServer((_req, res) => {
+        // An unlistened `error` is fatal, so a real handler has to take it.
+        res.on("error", () => {});
+        renderAsync(Promise.reject(new Error("boom"))).pipe(res);
+      });
+      await once(server.listen(0, "127.0.0.1"), "listening");
+      try {
+        const { port } = server.address() as AddressInfo;
+        await assert.rejects(
+          fetch(`http://127.0.0.1:${port}/`).then((res) => res.text()),
+        );
+      } finally {
+        server.close();
+      }
     });
 
     it("closes the target before an unreportable error propagates", () => {
       const result = renderSync();
       result.toString();
-      const stream = mockStream();
+      // Nothing listens for "error", so `emit` throws the way node defines it.
+      const stream = new PassThrough();
       assert.throws(() => result.pipe(stream), CONSUMED);
-      assert.equal(stream.ended, true);
+      assert.equal(stream.destroyed, true);
     });
 
-    it("throws on a sink that cannot emit", () => {
+    it("throws on a sink that cannot report an error", () => {
       const result = renderSync();
       result.toString();
-      const { emit: _emit, ...stream } = mockStream();
+      let ended = false;
+      const stream = {
+        write() {},
+        end: () => (ended = true),
+      };
       assert.throws(() => result.pipe(stream), CONSUMED);
-      assert.equal(stream.ended, true);
+      assert.equal(ended, true);
     });
 
-    it("reports a consumed result through the error path", () => {
+    it("reports a consumed result through the error path", async () => {
       const result = renderSync();
       result.toString();
-      const stream = mockStream();
-      stream.on("error", () => {});
+      const stream = new PassThrough();
+      const errored = once(stream, "error");
       result.pipe(stream);
-      assert.equal(stream.events.length, 1);
-      assert.match(String((stream.events[0][1] as Error).message), CONSUMED);
+      const [err] = await errored;
+      assert.match(String((err as Error).message), CONSUMED);
     });
   });
 
