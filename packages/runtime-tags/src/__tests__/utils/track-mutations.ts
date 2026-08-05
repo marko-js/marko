@@ -63,6 +63,9 @@ export default function createMutationTracker(browser: {
       this.logUpdate(input);
       hasRendered = true;
     },
+    logStatus(status: string) {
+      logs.push(status);
+    },
     logUpdate(update?: unknown) {
       const pending = observer.takeRecords();
       if (pending.length) {

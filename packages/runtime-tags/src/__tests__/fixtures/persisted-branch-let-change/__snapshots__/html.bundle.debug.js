@@ -11,9 +11,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_html(`<p>Seen <!>${_escape(count)}${_el_resume($scope1_id, "#text/0")}</p><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_value($scope1_id, "__tests__/template.marko0", count, 1);
-			_patch_write($scope1_id, "TagVariableChange:count", _resume(function(next) {
+			_patch_bind($scope1_id, "TagVariableChange:count", _resume(function(next) {
 				document.querySelector("main").dataset.attempt = String(next);
-			}, "__tests__/template.marko_1/valueChange") || void 0, 1);
+			}, "__tests__/template.marko_1/valueChange") || void 0);
 			writeScope($scope1_id, {
 				count,
 				"TagVariableChange:count": _resume(function(next) {
