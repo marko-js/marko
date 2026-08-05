@@ -5,6 +5,7 @@ import type { TestConfig } from "../../main.test";
 // diverging to the inner branch rejects the patch (a document navigation).
 export const config: TestConfig = {
   persisted: true,
+  expect_rejection: true,
   steps: [
     { title: "Store", outer: true, inner: false },
     { title: "Store!", outer: true, inner: false },

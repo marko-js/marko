@@ -67,6 +67,7 @@ export {
   _if,
   _patch_attr,
   _patch_bind,
+  _patch_control,
   _patch_child,
   _patch_effect,
   _patch_text,
