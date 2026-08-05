@@ -97,27 +97,64 @@ export function _const<T>(
 }
 
 // Value signals for the page's live server/client intersections, keyed by
-// `templateId:ordinal`. `_fill_join` rides each intersection's declaration, so
-// tree-shaking keeps a registration exactly when a consuming join is
-// retained; re-registration composes every live join behind one guard.
+// `templateId:ordinal`. `_fill_join` rides each intersection, so tree-shaking
+// keeps a registration exactly when a consuming join is retained; joins
+// compose behind one guard and never displace a declaration-owned key.
 export const patchFills: Record<string, Signal<unknown> & { _?: SignalFn }> =
   {};
+function fillJoin<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  dispatch: SignalFn,
+): T {
+  const prev = patchFills[key];
+  const prevFn = prev?._;
+  // Never replace a fill-registered declaration: its downstream already
+  // reaches every consumer a join could.
+  if (!prev || prevFn) {
+    const fn: SignalFn = prevFn
+      ? (scope) => {
+          prevFn(scope);
+          dispatch(scope);
+        }
+      : dispatch;
+    (patchFills[key] = _const(valueAccessor, fn) as Signal<unknown> & {
+      _?: SignalFn;
+    })._ = fn;
+  }
+  return join;
+}
 export function _fill_join<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   join: T,
 ): T {
-  const prev = patchFills[key]?._;
-  const fn: SignalFn = prev
-    ? (scope) => {
-        prev(scope);
-        join(scope);
-      }
-    : join;
-  (patchFills[key] = _const(valueAccessor, fn) as Signal<unknown> & {
-    _?: SignalFn;
-  })._ = fn;
-  return join;
+  return fillJoin(key, valueAccessor, join, join);
+}
+// A cross-section join runs against a branch scope, so these register the
+// owner-side dispatch; per-kind helpers keep branch-free bundles free of it.
+export function _fill_join_if<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  branchAccessor: EncodedAccessor,
+  branchIndex: number,
+): T {
+  return fillJoin(
+    key,
+    valueAccessor,
+    join,
+    _if_closure(branchAccessor, branchIndex, join),
+  );
+}
+export function _fill_join_for<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  branchAccessor: EncodedAccessor,
+): T {
+  return fillJoin(key, valueAccessor, join, _for_closure(branchAccessor, join));
 }
 
 // A binding's declaration signal already writes + queues its downstream

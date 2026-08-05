@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-intersection-deep/template.marko:5:10
+      3 |   <if=input.show>
+      4 |     <if=input.inner>
+    > 5 |       <p>${input.title + " #" + count}</p>
+        |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value read beyond a direct branch closure is not yet patchable.
+      6 |     </if>
+      7 |   </if>
+      8 |   <button onClick() { count++ }>+</button>
