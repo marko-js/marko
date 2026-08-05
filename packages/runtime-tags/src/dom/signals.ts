@@ -130,6 +130,13 @@ function fill<T>(key: string, signal: Signal<unknown>) {
 export function _fill_let<T>(key: string, id: EncodedAccessor, fn?: SignalFn) {
   return fill<T>(key, _let<T>(id, fn) as Signal<unknown>);
 }
+export function _fill_let_change<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+) {
+  return fill<T>(key, _let_change<T>(id, fn) as Signal<unknown>);
+}
 export function _fill_const<T>(
   key: string,
   id: EncodedAccessor,
