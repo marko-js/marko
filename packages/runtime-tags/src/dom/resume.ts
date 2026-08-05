@@ -81,13 +81,17 @@ export const walkConstruct = (fresh: Scope, live: Scope) => {
   }
 };
 // Applies a patch partial to its live counterpart; structural patchers
-// recurse back through here, so no scope is ever addressed by id.
+// recurse back through here, so no scope is ever addressed by id. An
+// entry kind this bundle has no patcher for rejects: skew, never a
+// silently unapplied frame.
 export const walkScope = (partial: Scope, live: Scope) => {
   for (const key in partial) {
-    patchers[
-      // Debug accessor prefixes are multi-character, ending ":".
-      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
-    ](live, key, partial[key as keyof Scope]);
+    (
+      patchers[
+        // Debug accessor prefixes are multi-character, ending ":".
+        MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+      ] || failPatch()
+    )(live, key, partial[key as keyof Scope]);
   }
 };
 let curRenders: Renders;

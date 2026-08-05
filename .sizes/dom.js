@@ -1,4 +1,4 @@
-// size: 26683 (min) 9883 (brotli)
+// size: 26708 (min) 9898 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -93,8 +93,11 @@ let unsafeStyleAttrReg = /[\\;]/g,
   registeredValues = {},
   patchers = {},
   onPatchRecord,
+  failPatch = () => {
+    throw 0;
+  },
   walkScope = (partial, live) => {
-    for (let key in partial) patchers[key[0]](live, key, partial[key]);
+    for (let key in partial) (patchers[key[0]] || failPatch())(live, key, partial[key]);
   },
   curRenders,
   embedRenders,
