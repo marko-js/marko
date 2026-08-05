@@ -1,4 +1,5 @@
 // template.marko
+_renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell __tests__/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -21,7 +22,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			}, "__tests__/template.marko", "6:4", { count: "7:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/2", $sg__input_show, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
+	}, $scope0_id, "#text/2", $sg__input_show, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1_shell"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { handler }, "__tests__/template.marko", 0, { handler: "2:6" });
 	_resume_branch($scope0_id);
