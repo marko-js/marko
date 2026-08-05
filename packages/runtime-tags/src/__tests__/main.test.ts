@@ -6,7 +6,7 @@ import path from "path";
 import * as compiler from "@marko/compiler";
 import jsBeautify from "js-beautify";
 
-const { html_beautify } = jsBeautify;
+const { html_beautify, js_beautify } = jsBeautify;
 
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
@@ -478,6 +478,9 @@ function testFixtures(interop?: true) {
               // scoped or failed run both the assert and the rewrite would use
               // partial numbers.
               if (!allTestsPassed(this.test!.parent!)) return;
+              // A grep that skips the dom/html tests collects no stats;
+              // nothing ran, so there is nothing to compare.
+              if (!Object.keys(stats).length) return;
               const sizesFile = path.join(fixtureDir, "sizes.json");
               const actual = JSON.stringify(stats, null, 2) + "\n";
               // Assert instead of rewriting: a --grep test:update refreshes only
@@ -502,8 +505,18 @@ function testFixtures(interop?: true) {
                 async () => {
                   const { tracker, chunks, patches } = await ssr();
                   if (persisted) {
+                    // Formatted frames diff line-by-line under review; an
+                    // empty frame stays a lone marker (a no-op patch).
                     await snapMode(
-                      () => `${patches.join("\n\n// PATCH\n\n")}\n`,
+                      () =>
+                        patches
+                          .map(
+                            (frame) =>
+                              "// PATCH\n" +
+                              js_beautify(frame, { indent_size: 2 }).trimEnd(),
+                          )
+                          .join("\n\n")
+                          .trimEnd() + "\n",
                       "patches.js",
                     );
                   }

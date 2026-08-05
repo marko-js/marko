@@ -1,7 +1,16 @@
-{ta:"Store!",bc:0}
-
+// PATCH
+{
+  ta: "Store!",
+  bc: 0
+}
 
 // PATCH
-
-[`a1 a2;Db%l ;<span>Seen <!></span><button>+</button>`,{ta:"Store!",bc:[{f:{va0:0,de:"a0"}},"a1"]}]
-
+[`a1 a2;Db%l ;<span>Seen <!></span><button>+</button>`, {
+  ta: "Store!",
+  bc: [{
+    f: {
+      va0: 0,
+      de: "a0"
+    }
+  }, "a1"]
+}]
