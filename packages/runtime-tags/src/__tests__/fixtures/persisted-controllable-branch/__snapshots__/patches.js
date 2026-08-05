@@ -3,7 +3,7 @@
   ta: "Store!",
   bb: [{
     wEa: _._.a0,
-    f: {
+    s: {
       wEa: _._.a0
     },
     n2a: "second"

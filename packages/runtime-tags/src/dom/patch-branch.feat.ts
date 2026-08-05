@@ -26,15 +26,15 @@ import { removeAndDestroyBranch } from "./scope";
 const _content = /*@__PURE__*/ withBranches(content);
 
 // Server-shipped shells, cached per session; the content's setup applies
-// stashed fresh entries (seeds) and attaches mount effects on construct.
-// Fresh sub-partials stash here and only the shell content's setup — run
+// stashed setup entries (seeds) and attaches mount effects on construct.
+// Setup sub-partials stash here and only the shell content's setup — run
 // solely for freshly created branches, inside `run()` where `_let` treats
 // the scope as first-render — applies them; a walk-time apply would take
 // the value-change path and clobber paired state.
-const kFresh = Symbol();
+const kSetup = Symbol();
 
-patchers[PatchKey.Fresh] = (scope, _key, value) => {
-  (scope as Scope & { [kFresh]?: Scope })[kFresh] = value as Scope;
+patchers[PatchKey.Setup] = (scope, _key, value) => {
+  (scope as Scope & { [kSetup]?: Scope })[kSetup] = value as Scope;
 };
 
 type Shell = [
@@ -61,10 +61,10 @@ _patch_records((record) => {
     record.slice(second + 1),
     record.slice(first + 1, second),
     effects
-      ? (branch: Scope & { [kFresh]?: Scope | 0 }) => {
-          if (branch[kFresh]) {
-            walkConstruct(branch[kFresh] as Scope, branch);
-            branch[kFresh] = 0;
+      ? (branch: Scope & { [kSetup]?: Scope | 0 }) => {
+          if (branch[kSetup]) {
+            walkConstruct(branch[kSetup] as Scope, branch);
+            branch[kSetup] = 0;
           }
           if (fns) {
             // A missing registration means required client code was
