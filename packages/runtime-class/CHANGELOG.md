@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.39.31
+
+### Patch Changes
+
+- [#3759](https://github.com/marko-js/marko/pull/3759) [`42c88b0`](https://github.com/marko-js/marko/commit/42c88b034244feed3b4220a63937fd2a62c67c9b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow a Class-API parent to pass an inline function prop (`<tags-child onChange() {...}/>`) to a Tags-API child: it previously failed to serialize, breaking hydration for the whole page.
+
+- [#3759](https://github.com/marko-js/marko/pull/3759) [`42c88b0`](https://github.com/marko-js/marko/commit/42c88b034244feed3b4220a63937fd2a62c67c9b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `Cannot read properties of undefined (reading 'serializeState')` crash when a Class-API page serializes a component whose event handler was bridged from a Tags-API ancestor.
+
+- Updated dependencies [[`f8b0a57`](https://github.com/marko-js/marko/commit/f8b0a574da56aced8c4683eae27cc6154e2f3356), [`42c88b0`](https://github.com/marko-js/marko/commit/42c88b034244feed3b4220a63937fd2a62c67c9b), [`42c88b0`](https://github.com/marko-js/marko/commit/42c88b034244feed3b4220a63937fd2a62c67c9b), [`91f8fe7`](https://github.com/marko-js/marko/commit/91f8fe777716d96e9314fe8afb0d8971936a75a0), [`1b22357`](https://github.com/marko-js/marko/commit/1b22357f1e2024a21e91379494bd958eb2748fac), [`69fe794`](https://github.com/marko-js/marko/commit/69fe7940bf12f70175d22a209b75ccb4c88924ca)]:
+  - @marko/runtime-tags@6.3.33
+  - @marko/compiler@5.41.17
+
 ## 5.39.30
 
 ### Patch Changes

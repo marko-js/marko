@@ -1,5 +1,24 @@
 # @marko/runtime-tags
 
+## 6.3.33
+
+### Patch Changes
+
+- [#3748](https://github.com/marko-js/marko/pull/3748) [`f8b0a57`](https://github.com/marko-js/marko/commit/f8b0a574da56aced8c4683eae27cc6154e2f3356) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop exporting the internal `forOfBy`, `forInBy` and `forStepBy` loop-key helpers from the html runtime entry. Generated code has not referenced them since loop keying moved into the runtime.
+
+- [#3759](https://github.com/marko-js/marko/pull/3759) [`42c88b0`](https://github.com/marko-js/marko/commit/42c88b034244feed3b4220a63937fd2a62c67c9b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow a Class-API parent to pass an inline function prop (`<tags-child onChange() {...}/>`) to a Tags-API child: it previously failed to serialize, breaking hydration for the whole page.
+
+- [#3759](https://github.com/marko-js/marko/pull/3759) [`42c88b0`](https://github.com/marko-js/marko/commit/42c88b034244feed3b4220a63937fd2a62c67c9b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `Cannot read properties of undefined (reading 'serializeState')` crash when a Class-API page serializes a component whose event handler was bridged from a Tags-API ancestor.
+
+- [#3743](https://github.com/marko-js/marko/pull/3743) [`91f8fe7`](https://github.com/marko-js/marko/commit/91f8fe777716d96e9314fe8afb0d8971936a75a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop emitting a resume branch start marker for an `<if>` that renders no branch, or a dynamic tag that resolves to nothing. The stray marker shifted an enclosing branch's range, so after resume that branch's content was left in the DOM instead of being removed or was duplicated when re-rendered.
+
+- [#3745](https://github.com/marko-js/marko/pull/3745) [`1b22357`](https://github.com/marko-js/marko/commit/1b22357f1e2024a21e91379494bd958eb2748fac) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Clarify the dynamic `<style>` placement warning, document the `Marko.Global` augmentation path for typing `$global`, cover `static` and the `<let>`-as-a-formula pitfall in the cheat sheet, and mark the four compiler options that only the Marko 5 translator implements.
+
+- [#3738](https://github.com/marko-js/marko/pull/3738) [`69fe794`](https://github.com/marko-js/marko/commit/69fe7940bf12f70175d22a209b75ccb4c88924ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Close the target stream when a render piped with `pipe()` aborts, so an aborted render no longer strands a transform sink such as gzip.
+
+- Updated dependencies [[`1b22357`](https://github.com/marko-js/marko/commit/1b22357f1e2024a21e91379494bd958eb2748fac)]:
+  - @marko/compiler@5.41.17
+
 ## 6.3.32
 
 ### Patch Changes

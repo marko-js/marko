@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.17
+
+### Patch Changes
+
+- [#3745](https://github.com/marko-js/marko/pull/3745) [`1b22357`](https://github.com/marko-js/marko/commit/1b22357f1e2024a21e91379494bd958eb2748fac) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Clarify the dynamic `<style>` placement warning, document the `Marko.Global` augmentation path for typing `$global`, cover `static` and the `<let>`-as-a-formula pitfall in the cheat sheet, and mark the four compiler options that only the Marko 5 translator implements.
+
 ## 5.41.16
 
 ### Patch Changes
