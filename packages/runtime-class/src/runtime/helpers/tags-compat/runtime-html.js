@@ -55,18 +55,23 @@ exports.p = function (htmlCompat) {
     }
 
     if (componentDefs?.length) {
-      const initComponents = () =>
-        ___getInitComponentsCodeForDefs($global, componentDefs);
-      // Serializing a bridged handler registers the tags scope it closes over,
-      // so it must run against the chunk carrying this flush's resume scripts.
-      scripts = chunk
-        ? htmlCompat.withChunk(chunk, initComponents)
-        : initComponents();
+      // Serializing a bridged handler registers a tags scope, so it needs a chunk:
+      // this flush's, else the one rendering, else a new one for a direct render.
+      const live = chunk || htmlCompat.getChunk();
+      const target = live || htmlCompat.createChunk($global);
+      scripts = htmlCompat.withChunk(target, () =>
+        ___getInitComponentsCodeForDefs($global, componentDefs),
+      );
       if (scripts) {
         htmlCompat.ensureState($global).walkOnNextFlush = true;
 
         if (!chunk) {
-          scripts = concatScripts(htmlCompat.flushScript($global), scripts);
+          scripts = concatScripts(
+            live
+              ? htmlCompat.flushScript($global)
+              : htmlCompat.flushScript($global, target),
+            scripts,
+          );
         }
       }
     }

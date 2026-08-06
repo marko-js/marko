@@ -41,6 +41,7 @@ export const compat = {
   peekNextScopeId: _peek_scope_id,
   isInResumedBranch,
   withChunk,
+  getChunk,
   ensureState($global: any) {
     let state: State | undefined = ($global[K_TAGS_API_STATE] ||=
       getChunk()?.boundary.state);
@@ -92,11 +93,12 @@ export const compat = {
       return compatRegistered;
     };
   },
+  createChunk($global: any) {
+    const state = this.ensureState($global);
+    return new Chunk(new Boundary(state), null, null, state);
+  },
   flushScript($global: any, chunk?: Chunk) {
-    if (!chunk) {
-      const state = this.ensureState($global);
-      chunk = new Chunk(new Boundary(state), null, null, state);
-    }
+    chunk ||= this.createChunk($global);
 
     const { boundary } = chunk;
     switch (boundary.flush()) {
