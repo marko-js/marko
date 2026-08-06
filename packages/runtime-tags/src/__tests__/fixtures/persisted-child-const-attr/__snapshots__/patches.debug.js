@@ -1,0 +1,7 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-child-const-attr/tags/badge/index.marko_1_shell;D ;<b> </b>`, {
+  "PatchChild:#childScope/0": {
+    "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-child-const-attr/tags/badge/index.marko_1_shell",
+    "PatchText:#text/1": "b"
+  }
+}]

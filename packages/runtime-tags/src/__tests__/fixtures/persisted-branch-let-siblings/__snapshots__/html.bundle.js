@@ -4,7 +4,7 @@ _renderer_shells({
 	a1: ",`a1 a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a = _serialize_guard($scope0_reason, 2), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $sg__input_b = _serialize_guard($scope0_reason, 3);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a__OR__input_b = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "a")}</h1>`);
 	_if(() => {
@@ -17,7 +17,7 @@ var template_default = _template_persisted("a", (input) => {
 			writeScope($scope1_id, { c: x });
 			return 0;
 		}
-	}, $scope0_id, "b", $sg__input_a, $sg__input_a, $sg__input_a__OR__input_b, void 0, void 0, ["a0"]);
+	}, $scope0_id, "b", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["a0"]);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template_persisted("a", (input) => {
 			writeScope($scope2_id, { c: y });
 			return 0;
 		}
-	}, $scope0_id, "c", $sg__input_b, $sg__input_b, $sg__input_a__OR__input_b, void 0, void 0, ["a1"]);
+	}, $scope0_id, "c", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["a1"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {});
 }, 1);
