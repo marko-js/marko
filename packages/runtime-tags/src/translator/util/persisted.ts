@@ -220,18 +220,25 @@ export function constructRendersReads(section: Section, refs: Opt<Binding>) {
   return ok;
 }
 
-// Fill reads deliverable today: same-section joins and one-hop branch reads
-// (owner-side dispatch); deeper reads fail closed until composed dispatch.
+// Composed dispatch delivers fills down any branch chain; a non-branch on
+// the owner-to-reader path is the (defensive) undeliverable case.
 export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
   let undeliverable = false;
   forEach(refs, (binding) => {
-    undeliverable ||=
-      isPatchFillBinding(binding) &&
-      binding.section !== section &&
-      !isDirectClosure(section, binding);
+    if (isPatchFillBinding(binding) && binding.section !== section) {
+      let cur: Section | undefined = section;
+      while (cur && cur !== binding.section) {
+        if (!cur.isBranch) {
+          undeliverable = true;
+          break;
+        }
+        cur = cur.parent;
+      }
+      undeliverable ||= !cur;
+    }
   });
   return undeliverable;
 }
