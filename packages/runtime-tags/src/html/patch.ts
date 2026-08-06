@@ -143,10 +143,13 @@ function enablePatchWrites() {
       }
       seen.add(itemKey);
       indexKeys &&= sameAsIndex;
-      // Loop items pair by key, which a bind path cannot express yet: an
-      // empty link makes any bind crossing this boundary poison.
+      // Loop items pair by key: the link is a keyed hop the bind walk
+      // resolves against the live scopes' loop keys.
       const branchId = _peek_scope_id();
-      (state.patchParents ??= {})[branchId] = [scopeId, ""];
+      (state.patchParents ??= {})[branchId] = [
+        scopeId,
+        [AccessorPrefix.BranchScopes + accessor, itemKey],
+      ];
       keys.push(itemKey);
       withBranchId(branchId, render);
       partials.push(patchPartial(state, branchId));

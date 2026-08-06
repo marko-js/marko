@@ -1,0 +1,8 @@
+<main>
+  <h1>${$global.other}</h1>
+  <script>
+    const el = document.querySelector("main")!;
+    el.dataset.log =
+      (el.dataset.log || "") + "[" + $global.brand + ":" + $global.locale + "]";
+  </script>
+</main>
