@@ -13,6 +13,24 @@ const dynamicTag = require("../dynamic-tag");
 const Component = require("../../components/Component");
 const noopRenderer = require("../serialize-noop").___noop;
 
+// Rebuilds a hoisted class handler against whichever component the resumed
+// scope names, so a nested one resolves without the parent having to rerender.
+exports.f = (domCompat, id, factory) => {
+  domCompat.resumeClassFunction(
+    id,
+    (scope) =>
+      function () {
+        // Resolved on call: the tags resume runs before `$MC` creates the class
+        // component this handler belongs to.
+        return factory(
+          ___componentLookup[scope.m5h] ||
+            ___componentLookup[scope.m5c] ||
+            scope.___marko5Component,
+        ).apply(this, arguments);
+      },
+  );
+};
+
 exports.p = function (domCompat) {
   dynamicTag.___runtimeCompat = function tagsToVdom(
     renderer,

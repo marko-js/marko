@@ -140,6 +140,16 @@ export const compat = {
     }
 
     head.render(() => {
+      // Handlers bind to a scope of their own: sharing the boundary scope would
+      // pull whatever input the child was given through the serializer with them.
+      if (pendingClassFunctions.length) {
+        const fnScopeId = _scope_id();
+        drainClassFunctions(
+          _scope(fnScopeId, { m5c: component.id, m5h: takeClassHostId() }),
+        );
+        _script(fnScopeId, SET_SCOPE_REGISTER_ID);
+      }
+
       if (willRerender || registerChildScope) {
         const scopeId = _peek_scope_id();
         _scope(scopeId, { m5c: component.id });
@@ -178,7 +188,8 @@ export const compat = {
     register(RENDER_BODY_ID, fn);
   },
   // A class closure has no browser identity, so it resumes as a noop; a parent
-  // that rerenders replaces it with the live handler as it hydrates.
+  // that rerenders replaces it with the live handler as it hydrates. Only the
+  // top level is scanned: crawling every input would cost more than it serializes.
   registerClassFunctions(input: any) {
     for (const key in input) {
       const value = input[key];
@@ -187,6 +198,37 @@ export const compat = {
       }
     }
   },
+  // Emitted around a function nested in a class-to-tags attribute. The scope it
+  // resumes through is only created once the render below starts, so it is held
+  // until then rather than registered against nothing.
+  registerClassFunction<T extends WeakKey>(id: string, fn: T, hostId: string) {
+    pendingClassFunctions.push(id, fn);
+    pendingClassHostId = hostId;
+    return fn;
+  },
+  hasPendingClassFunctions() {
+    return pendingClassFunctions.length !== 0;
+  },
 };
+
+const pendingClassFunctions: unknown[] = [];
+let pendingClassHostId: string | undefined;
+
+function takeClassHostId() {
+  const id = pendingClassHostId;
+  pendingClassHostId = undefined;
+  return id;
+}
+
+function drainClassFunctions(scope: unknown) {
+  for (let i = 0; i < pendingClassFunctions.length; i += 2) {
+    register(
+      pendingClassFunctions[i] as string,
+      pendingClassFunctions[i + 1] as WeakKey,
+      scope,
+    );
+  }
+  pendingClassFunctions.length = 0;
+}
 
 function NOOP() {}

@@ -144,7 +144,9 @@ exports.p = function (htmlCompat) {
         component,
         input,
         writers.tagsAPI,
-        !willRerender && hasBridgedClassEvent(input),
+        !willRerender &&
+          (hasBridgedClassEvent(input) ||
+            htmlCompat.hasPendingClassFunctions()),
       );
       out.ef();
     },
