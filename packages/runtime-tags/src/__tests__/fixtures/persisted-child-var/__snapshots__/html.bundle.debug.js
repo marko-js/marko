@@ -13,7 +13,7 @@ var price_card_default = _template_persisted("__tests__/tags/price-card.marko", 
 		qty: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
@@ -30,4 +30,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		card,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { card: "1:13" });
-}, 1);
+}, 1, () => [price_card_default]);

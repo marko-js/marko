@@ -24,4 +24,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		double: "2:8"
 	});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, 0);

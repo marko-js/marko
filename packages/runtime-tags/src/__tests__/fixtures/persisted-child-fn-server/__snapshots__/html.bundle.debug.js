@@ -4,7 +4,7 @@ var dump_default = _template_persisted("__tests__/tags/dump/index.marko", (input
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.format(input.value), $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</p>`);
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/dump/index.marko", 0);
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
@@ -30,4 +30,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		count: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.suffix);
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [dump_default]);

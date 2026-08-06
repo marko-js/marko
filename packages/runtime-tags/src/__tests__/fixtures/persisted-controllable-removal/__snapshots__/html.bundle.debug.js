@@ -16,4 +16,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_wire: ["input.wire"],
 		handler: "1:8"
 	});
-}, 1);
+}, 1, 0);
