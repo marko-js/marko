@@ -1,0 +1,1 @@
+Unable to serialize "input.data" in packages/runtime-tags/src/__tests__/fixtures-interop/error-unserializable-class-to-tags/components/tags-child.marko (reading nested.fn). Values referenced in the browser must be serializable.
