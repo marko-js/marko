@@ -1,7 +1,7 @@
 // template.marko
 _renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell; ;<em>note</em>`" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 2);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><button${_attr_class([
@@ -12,7 +12,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em${_patch_attr_class($scope1_id, "#em/0", input.tone)}>note</em>${_el_resume($scope1_id, "#em/0")}`);
+			_html(`<em${_patch_attr_class($scope1_id, "#em/0", input.tone, $scope0_owned, 1)}>note</em>${_el_resume($scope1_id, "#em/0")}`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 			return 0;
 		}
@@ -25,6 +25,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_tone: ["input.tone"],
 		count: "1:6"
-	}) : _patch_value($scope0_id, "__tests__/template.marko0", input.tone);
+	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.tone);
 	_resume_branch($scope0_id);
 }, 1);
