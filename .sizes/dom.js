@@ -1,4 +1,4 @@
-// size: 26965 (min) 9982 (brotli)
+// size: 27074 (min) 10016 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -92,6 +92,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
   patchers = {},
+  kChanged = Symbol(),
   onPatchRecord,
   failPatch = () => {
     throw 0;
@@ -461,6 +462,9 @@ function run() {
     (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
   runEffects(effects);
+}
+function abortRun() {
+  (runId++, (pendingRenders = []), (pendingEffects = []));
 }
 function queueAsyncRender(scope, signal, value) {
   (queueRender(scope, signal, -1, value), queueMicrotask(run));
@@ -2121,7 +2125,13 @@ let empty = [],
     },
   },
   patchGlobalsEntry = (live, _key, value) => {
-    Object.assign(live.$, value);
+    let globals = live.$;
+    for (let key in value)
+      if (globals[key] !== value[key]) {
+        globals[key] = value[key];
+        let marks = (globals[kChanged] ??= {});
+        marks["." + key] = marks.$ = runId;
+      }
   },
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
@@ -2146,7 +2156,7 @@ function applyPatch(frame, renderId = "_", runtimeId = "M") {
       (render.r = [Function("_", "$", "return " + frame)]), runEffects(render.m([]), 1), run(), !0
     );
   } catch {
-    return !1;
+    return (abortRun(), !1);
   } finally {
     abortPatch();
   }

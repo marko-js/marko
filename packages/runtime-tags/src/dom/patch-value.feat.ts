@@ -1,5 +1,7 @@
+import "./patch-write";
+import { type Opt, toArray } from "../common/opt";
 import type { Accessor, Scope } from "../common/types";
-import { PatchKey } from "../common/types";
+import { AccessorProp, PatchKey } from "../common/types";
 import { queueEffect } from "./queue";
 import {
   constructPatchers,
@@ -16,24 +18,6 @@ patchers[PatchKey.Value] = (scope, key, value) =>
 constructPatchers[PatchKey.Value] = (scope, key, value) =>
   (patchFills[key.slice(PatchKey.Value.length)] || failPatch())(scope, value);
 
-// Plain patched writes; change stamps bump per accessor so `patch-effect`
-// re-runs readers exactly when their read changed.
-export const kStamps = Symbol();
-
-type Stamped = Scope & { [kStamps]?: Record<Accessor, number> };
-
-constructPatchers[PatchKey.Write] = patchers[PatchKey.Write] = (
-  scope: Stamped,
-  key,
-  value,
-) => {
-  const accessor = key.slice(PatchKey.Write.length) as Accessor;
-  if (scope[accessor] !== value || !(accessor in scope)) {
-    scope[accessor] = value;
-    (scope[kStamps] ??= {})[accessor] = -~scope[kStamps]![accessor];
-  }
-};
-
 // A bind installs a handler the way CSR setup does: anchored at the scope
 // its factory was registered against, writing down the child-link path
 // (`[registerId, ...links, slot]`) after the walk so freshly constructed
@@ -42,11 +26,23 @@ constructPatchers[PatchKey.Write] = patchers[PatchKey.Write] = (
 patchers[PatchKey.Bind] = (scope, _key, entry) => {
   if (!entry) failPatch();
   queueEffect(scope, (scope) => {
-    const [registerId, ...path] = entry as [string, ...string[]];
+    const [registerId, ...path] = entry as [
+      string,
+      ...(string | [string, unknown])[],
+    ];
     const slot = path.pop() as Accessor;
     let target = scope;
     for (const link of path) {
-      target = (target[link as Accessor] || failPatch()) as Scope;
+      // A keyed hop selects among loop scopes by their loop key.
+      target = (
+        Array.isArray(link)
+          ? toArray(target[link[0] as Accessor] as Opt<Scope>).find(
+              (branch, i) =>
+                ((branch as Scope)[AccessorProp.LoopKey] ?? i) === link[1],
+            )
+          : target[link as Accessor]
+      ) as Scope;
+      if (!target) failPatch();
     }
     target[slot] = (
       (getRegisteredWithScope(registerId) || failPatch()) as (
