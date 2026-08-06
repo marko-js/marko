@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { getAccessorProp } from "../util/get-accessor-char";
+import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
 import { isOutputHTML } from "../util/marko-config";
 import { setReferencesScope } from "../util/references";

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { scopeIdentifier } from "../visitors/program";
-import { getAccessorProp } from "./get-accessor-char";
+import { getAccessorProp } from "./get-accessor-enums";
 import {
   type Binding,
   BindingType,

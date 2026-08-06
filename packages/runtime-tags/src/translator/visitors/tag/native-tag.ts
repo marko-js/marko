@@ -24,7 +24,7 @@ import {
 } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorProp } from "../../util/get-accessor-char";
+import { getAccessorProp } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";

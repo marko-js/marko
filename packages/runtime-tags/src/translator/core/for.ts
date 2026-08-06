@@ -14,7 +14,7 @@ import {
   resumeOwnerByMarkerWhenStatic,
 } from "../util/branch-tag";
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
-import { getAccessorProp } from "../util/get-accessor-char";
+import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import {

@@ -11,7 +11,7 @@ import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
-import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
+import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { find, forEach, type Opt, push } from "./optional";
