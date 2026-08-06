@@ -18,4 +18,4 @@ var template_default = _template_persisted("a", (input) => {
 		h: input.hidden,
 		i: input.label
 	});
-}, 1);
+}, 1, 0);

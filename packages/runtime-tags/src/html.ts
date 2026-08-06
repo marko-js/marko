@@ -42,7 +42,7 @@ export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
 export { forIn, forOf, forTo, forUntil } from "./html/for";
 export { _renderer_shells } from "./html/renderer-shells";
 export { _template } from "./html/template";
-export { _template_persisted, renderPatch } from "./html/patch";
+export { _must_render, _template_persisted, renderPatch } from "./html/patch";
 export {
   _attr_content,
   _await,

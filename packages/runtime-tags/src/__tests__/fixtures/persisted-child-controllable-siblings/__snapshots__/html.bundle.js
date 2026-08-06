@@ -20,7 +20,7 @@ var counter_default = _template_persisted("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
 	$scope0_reason && writeScope($scope0_id, { e: input.onCount });
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -59,4 +59,4 @@ var template_default = _template_persisted("a", (input) => {
 		e: _existing_scope($childScope2)
 	});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [counter_default]);

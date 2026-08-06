@@ -22,4 +22,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_hidden: ["input.hidden"],
 		input_label: ["input.label"]
 	});
-}, 1);
+}, 1, 0);

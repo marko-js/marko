@@ -23,6 +23,7 @@ import { forEach } from "../../util/optional";
 import {
   getConstructInitClosures,
   getPatchFillBindings,
+  getPersistedIntrinsics,
   hasUndeliverableFillReads,
   hasUnfillablePatchReads,
   isPatchCaptureSection,
@@ -274,16 +275,23 @@ export default {
         [t.identifier("input")],
         t.blockStatement(renderContent),
       );
+      // A non-page template gets a randomized render id ("embed") so several
+      // can share a document without colliding; without linkAssets, use a fixed page id.
+      const pageArg =
+        program.node.extra!.page || !getMarkoOpts().linkAssets
+          ? t.numericLiteral(1)
+          : undefined;
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
           persisted ? "_template_persisted" : "_template",
           t.stringLiteral(program.hub.file.metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
-          // A non-page template gets a randomized render id ("embed") so several
-          // can share a document without colliding; without linkAssets, use a fixed page id.
-          program.node.extra!.page || !getMarkoOpts().linkAssets
-            ? t.numericLiteral(1)
-            : undefined,
+          // Persisted templates always carry their intrinsics (absent =
+          // FOREIGN renderer, which parents must render through): the local
+          // globals/opaque bit plus lazily-referenced child renderers.
+          ...(persisted
+            ? buildIntrinsicsArgs(program, pageArg ?? t.numericLiteral(0))
+            : [pageArg]),
         ),
       );
 
@@ -300,6 +308,28 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+// The intrinsics trailing arg, one self-resolving value: `1` = reads
+// globals or opaque (children irrelevant once true), a lazy child list
+// (an arrow: module cycles must not evaluate eagerly) = locally clean
+// but transitively unresolved, `0` = proven clean.
+function buildIntrinsicsArgs(
+  program: t.NodePath<t.Program>,
+  pageArg: t.Expression,
+) {
+  const { names, opaque } = getPersistedIntrinsics();
+  return [
+    pageArg,
+    opaque || program.node.extra!.readsGlobals
+      ? t.numericLiteral(1)
+      : names.size
+        ? t.arrowFunctionExpression(
+            [],
+            t.arrayExpression([...names].map((name) => t.identifier(name))),
+          )
+        : t.numericLiteral(0),
+  ];
+}
 
 export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   const unsupported = (node: t.Node, detail?: string) => {
@@ -514,12 +544,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             for (const child of tag.get("body").get("body")) {
               skips &&= isStatic(child);
             }
-            const childFile = loadFileForTag(tag);
-            if (
-              skips &&
-              childFile &&
-              !childFile.path.node.extra?.persistedGlobals
-            ) {
+            // Transitive global knowledge is a RENDER-time question (the
+            // child's exported intrinsics); classification only needs a
+            // resolvable child whose groups analyzed above.
+            if (skips && loadFileForTag(tag)) {
               (node.extra ??= {})[kPatchClientOwned] = true;
             }
           }
