@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 _renderer_shells({ "__tests__/tags/counter/index.marko_1_shell": ",`__tests__/tags/counter/index.marko_1_shell __tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
 var counter_default = _template_persisted("__tests__/tags/counter/index.marko", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1);
+	const $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -18,13 +18,13 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 			}, "__tests__/tags/counter/index.marko", "1:2", { count: "2:8" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/counter/index.marko_1_shell"]);
+	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/counter/index.marko_1_shell"]);
 	$scope0_reason && writeScope($scope0_id, { input_onCount: input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] });
 });
 
 // template.marko
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</h1>`);
 	_for_of(["a", "b"], (name) => {
@@ -48,7 +48,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_: _scope_with_id($scope0_id),
 			"#childScope/2": _existing_scope($childScope)
 		}, "__tests__/template.marko", "3:4");
-	}, 0, $scope0_id, "#text/1", $sg__input_show, $sg__input_show, 0, void 0, void 0, 0);
+	}, 0, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, 0);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);
