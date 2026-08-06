@@ -6,7 +6,7 @@ var badge_default = _template_persisted("b", (input) => {
 	_script($scope0_id, "b0");
 	_patch_effect($scope0_id, "b0", "! brand", 1);
 	$scope0_reason && writeScope($scope0_id, {});
-});
+}, 0, 1);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -18,4 +18,4 @@ var template_default = _template_persisted("a", (input) => {
 	badge_default({});
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
-}, 1);
+}, 1, () => [badge_default]);

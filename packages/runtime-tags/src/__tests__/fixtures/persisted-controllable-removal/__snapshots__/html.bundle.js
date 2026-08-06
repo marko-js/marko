@@ -12,4 +12,4 @@ var template_default = _template_persisted("a", (input) => {
 		g: input.wire,
 		h: handler
 	});
-}, 1);
+}, 1, 0);

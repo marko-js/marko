@@ -20,7 +20,7 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/counter/index.marko_1_shell"]);
 	$scope0_reason && writeScope($scope0_id, { input_onCount: input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] });
-});
+}, 0, 0);
 
 // tags/middle/index.marko
 var middle_default = _template_persisted("__tests__/tags/middle/index.marko", (input) => {
@@ -38,7 +38,7 @@ var middle_default = _template_persisted("__tests__/tags/middle/index.marko", (i
 		onCount: input.onCount
 	});
 	$scope0_reason && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/middle/index.marko", 0);
-});
+}, 0, () => [counter_default]);
 
 // template.marko
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
@@ -61,4 +61,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [middle_default]);

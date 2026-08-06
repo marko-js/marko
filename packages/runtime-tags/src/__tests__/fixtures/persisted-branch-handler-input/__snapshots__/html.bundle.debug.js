@@ -15,4 +15,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1_shell"]);
 	_html("</main>");
 	$scope0_reason ? writeScope($scope0_id, { input_tag: input.tag }, "__tests__/template.marko", 0, { input_tag: ["input.tag"] }) : _owned_guard($scope0_owned, 2) && _patch_write($scope0_id, "input_tag", input.tag);
-}, 1);
+}, 1, 0);
