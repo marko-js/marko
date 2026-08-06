@@ -51,6 +51,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/3", $childScope);
 	price_card_default({ label: input.label });
+	_set_serialize_reason(0);
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/4", $childScope2);
 	promo_tag_default({ text: "Sale" });

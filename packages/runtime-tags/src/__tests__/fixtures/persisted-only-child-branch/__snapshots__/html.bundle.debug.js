@@ -1,7 +1,7 @@
 // template.marko
 _renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell;Db%;<span>hi <!></span>`" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main><div>");
@@ -12,7 +12,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1_shell"]);
+	}, $scope0_id, "#div/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1_shell"]);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_show)}<button>c <!>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && writeScope($scope0_id, {
