@@ -25,10 +25,11 @@ declare module "@marko/compiler/dist/types" {
     [kPatchClientOwned]?: true;
   }
 }
-declare module "@marko/compiler" {
-  export interface MarkoMeta {
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
     /** This template (or one it renders) reads `$global`: skipping its
-     * render in a patch could hide a global change. */
+     * render in a patch could hide a global change. Analyze-internal,
+     * read cross-file off the cached child program. */
     persistedGlobals?: true;
   }
 }
