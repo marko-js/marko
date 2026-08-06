@@ -4,6 +4,7 @@ export const Branch = "PatchBranch:";
 export const Child = "PatchChild:";
 export const Control = "PatchControl:";
 export const Effect = "PatchEffect:";
+export const GlobalEffect = "PatchGlobalEffect:";
 export const Globals = "$global:";
 export const Loop = "PatchLoop:";
 export const Setup = "PatchSetup:";

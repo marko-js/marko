@@ -1,3 +1,4 @@
+import "./patch-write";
 import {
   type Accessor,
   AccessorPrefix,
