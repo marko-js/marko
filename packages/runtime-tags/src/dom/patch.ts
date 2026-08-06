@@ -1,12 +1,29 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import { AccessorProp, PatchKey, type Scope } from "../common/types";
-import { run, runEffects } from "./queue";
-import { abortPatch, beginPatch, init, patchers } from "./resume";
+import { type Accessor, AccessorProp, PatchKey } from "../common/types";
+import { abortRun, run, runEffects, runId } from "./queue";
+import {
+  abortPatch,
+  beginPatch,
+  type Changed,
+  init,
+  kChanged,
+  patchers,
+} from "./resume";
 
 // Applies re-shipped globals so event-time `$global` reads never go stale;
-// registered inside `applyPatch` to keep this module tree-shakable.
-const patchGlobalsEntry = (live: Scope, _key: string, value: unknown) => {
-  Object.assign(live[AccessorProp.Global], value);
+// a changed value marks the globals object itself with the frame's epoch
+// (every scope shares it, so readers at any composition depth re-run).
+// Marks land per key (`.`-prefixed: never collides with the whole-bag
+// slot or `__proto__`) plus the whole-bag slot for opaque readers.
+const patchGlobalsEntry = (live: Changed, _key: string, value: unknown) => {
+  const globals = live[AccessorProp.Global];
+  for (const key in value as Record<string, unknown>) {
+    if (globals[key] !== (value as Record<string, unknown>)[key]) {
+      globals[key] = (value as Record<string, unknown>)[key];
+      const marks = ((globals as unknown as Changed)[kChanged] ??= {});
+      marks[("." + key) as Accessor] = marks[AccessorProp.Global] = runId;
+    }
+  }
 };
 
 export function applyPatch(
@@ -15,6 +32,7 @@ export function applyPatch(
   runtimeId = DEFAULT_RUNTIME_ID,
 ) {
   init(runtimeId);
+  // Registered here so this module stays tree-shakable.
   patchers[PatchKey.Globals] = patchGlobalsEntry;
   const render = beginPatch(renderId);
   try {
@@ -29,6 +47,7 @@ export function applyPatch(
     // The frame did not apply faithfully, so the caller navigates; only an
     // intentional rejection (`failPatch`) throws 0.
     if (MARKO_DEBUG && error) console.error(error);
+    abortRun();
     return false;
   } finally {
     abortPatch();
