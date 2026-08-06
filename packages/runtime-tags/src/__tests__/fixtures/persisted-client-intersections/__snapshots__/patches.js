@@ -6,9 +6,6 @@
   cd: {
     vb0: "Gadget"
   },
-  ce: {
-    vc0: "Sale"
-  },
   cf: {
     ta: "2027"
   }
