@@ -20,12 +20,6 @@ The test's only two event-handler assertions are commented out (and call a long-
 
 The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repeated one becomes `attrTag(props)`" is implemented four times. `translateAttrTag` and the `isAttributeTag(tag)` branch of `applyAttrObject` are near-verbatim ~35-line copies, including the `t.parenthesizedExpression` mutation trick, differing only in where `repeated` comes from and whether the result is returned or handed to `addStatement`. `translate-attrs.ts` › `translateAttrs` and `addDynamicAttrTagStatements` encode the same rule over `contentProperties` and over an attr-tag identifier assignment. One helper would collapse the two `known-tag.ts` copies and let the other two share the `repeated ? attrTags : attrTag` decision, so a future change cannot land on three of four sites. Re-verify: `rg -n '"attrTags"' packages/runtime-tags/src/translator` lists exactly those four sites.
 
-## Delete or resurrect the dead `test/markoc` suite
-
-`packages/runtime-class/test/markoc/index.test.js` | 2026-07-24 | impact:low | effort:low
-
-The mocha spec glob (`packages/*/@(src|test)/**/*.test.@(js|ts)`) matches this file, yet it declares no `describe`/`it`: the whole `mocha-autotest` body has been commented out for years, leaving five live lines that only `require` `../__util__/test-init`, `chai`, and `../../compiler`. The commented body resolves `./babel-register`, deleted in `3867db2ca8` (native type stripping), so it cannot be uncommented as written, seven `fixtures/` directories are unused, and `markoc` is still a published bin with no coverage. Delete `test/markoc/`, or resurrect it by spawning `bin/markoc` with `-r ~ts` instead of the babel hook. Re-verify: `rg -n "describe\(|it\(" packages/runtime-class/test/markoc/index.test.js` matches nothing outside comments.
-
 ## Normalize the local naming flagged by the terminology audit
 
 `packages/runtime-tags/src/html/serializer.ts` › `State` | 2026-07-20 | impact:low | effort:low
