@@ -24,12 +24,12 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 
 // tags/middle/index.marko
 var middle_default = _template_persisted("__tests__/tags/middle/index.marko", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_set_serialize_reason({
-		0: _serialize_guard($scope0_reason, 0),
-		1: _serialize_guard($scope0_reason, 1),
-		2: _serialize_guard($scope0_reason, 2)
+		0: _mask_group($scope0_owned, 0),
+		1: _mask_group($scope0_owned, 1),
+		2: _mask_group($scope0_owned, 2)
 	});
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
@@ -42,13 +42,13 @@ var middle_default = _template_persisted("__tests__/tags/middle/index.marko", (i
 
 // template.marko
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_el_resume($scope0_id, "#text/0")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "#text/1")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "#text/1")}</p>`);
 	_set_serialize_reason({
-		0: $sg__input_show,
-		1: $sg__input_show
+		0: _mask_group($scope0_owned, 1),
+		1: _mask_group($scope0_owned, 1)
 	});
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/2", $childScope);

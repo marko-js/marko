@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let other = 10;
@@ -10,6 +10,6 @@ var template_default = _template_persisted("a", (input) => {
 		f: input.title,
 		g: count,
 		i: other
-	}) : _patch_value($scope0_id, "a0", input.title);
+	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
 	_resume_branch($scope0_id);
 }, 1);

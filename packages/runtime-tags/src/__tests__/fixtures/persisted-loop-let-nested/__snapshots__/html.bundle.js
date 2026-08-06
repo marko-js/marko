@@ -4,12 +4,12 @@ _renderer_shells({
 	a1: ",`a1 a2;D l ;<span> </span><button>note</button>`"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_items = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "a", item.label)}${_el_resume($scope1_id, "a")}`);
+		_html(`<li>${_patch_text($scope1_id, "a", item.label, $scope0_owned, 0)}${_el_resume($scope1_id, "a")}`);
 		_if(() => {
 			if (item.detailed) {
 				const $scope2_id = _scope_id();
