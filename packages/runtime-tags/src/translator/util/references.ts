@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile, getProgram, isNativeTag } from "@marko/compiler/babel-utils";
+import { getProgram, isNativeTag } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { decodeAccessor, isEventHandler } from "../../common/helpers";
@@ -668,36 +668,25 @@ const [getGlobalBinding] = createProgramState(() =>
 );
 
 // `$global` reads route through the reference graph, so property
-// aliases record the keys read. Persisted compiles additionally stamp
-// the expression so serialize sources see the request-derived dimension.
+// aliases record the keys read.
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   trackReference(path, getGlobalBinding());
-  if (isPersisted()) {
-    const exprRoot = getExprRoot(getFnRoot(path) || path);
-    const section = getOrCreateSection(exprRoot);
-    const extra = (exprRoot.node.extra ??= { section });
-    // A direct static member read records its key; anything else (aliased,
-    // dynamic, escaping) is opaque and guards on the whole bag.
-    const { parent } = path;
-    const key =
-      (t.isMemberExpression(parent) || t.isOptionalMemberExpression(parent)) &&
-      parent.object === path.node
-        ? parent.computed
-          ? t.isStringLiteral(parent.property)
-            ? parent.property.value
-            : undefined
-          : t.isIdentifier(parent.property)
-            ? parent.property.name
-            : undefined
-        : undefined;
-    extra.readsGlobal =
-      key === undefined || extra.readsGlobal === true
-        ? true
-        : (extra.readsGlobal ?? new Set()).add(key);
-    // Rolls up through custom-tag analyze so a call site can classify
-    // whether skipping this template's render could hide a global change.
-    getFile().metadata.marko.persistedGlobals = true;
-  }
+}
+
+// The persisted guard grain for an expression's global reads: first-hop
+// property keys, or `true` when the bag itself was read (opaque).
+export function getGlobalReadKeys(globalBindings: ReferencedBindings) {
+  let keys: true | Set<string> | undefined;
+  forEach(globalBindings, (binding) => {
+    if (keys === true) return;
+    let hop: Binding | undefined;
+    for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
+      if (cur.upstreamAlias) hop = cur;
+    }
+    const key = hop?.property;
+    keys = key === undefined ? true : (keys ?? new Set()).add(key);
+  });
+  return keys;
 }
 
 function createBindingsAndTrackReferences(
@@ -925,12 +914,6 @@ export function mergeReferences<T extends t.Node>(
     // create a `merged` cycle and double its reads.
     if (extra === targetExtra) continue;
     extra.merged = targetExtra;
-    if (extra.readsGlobal) {
-      targetExtra.readsGlobal = mergeGlobalReads(
-        targetExtra.readsGlobal,
-        extra.readsGlobal,
-      );
-    }
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
@@ -1124,6 +1107,10 @@ export function finalizeReferences() {
     // membership, no closures — reads compile verbatim.
     if (binding.type === BindingType.global) {
       resolveBindingSources(binding);
+      // Derived cross-file bit: custom-tag analyze rolls it up so a call
+      // site can classify whether skipping this render could hide a
+      // global change.
+      if (isPersisted()) getProgram().node.extra!.persistedGlobals = true;
       continue;
     }
     if (binding.type !== BindingType.dom) {
@@ -1703,7 +1690,7 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     const seen = new Set<Binding>();
     forEach(exprs, (expr) => {
-      if (expr.readsGlobal) {
+      if (isPersisted() && expr.globalBindings) {
         binding.sources = mergeSources(binding.sources, globalSources);
       }
       if (isReferencedExtra(expr)) {
