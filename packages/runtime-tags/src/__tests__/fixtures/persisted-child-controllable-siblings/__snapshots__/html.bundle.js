@@ -24,14 +24,14 @@ var counter_default = _template_persisted("b", (input) => {
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let first = 0;
 	let second = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1><p>First <!>${_escape(first)}${_el_resume($scope0_id, "b")} Second <!>${_escape(second)}${_el_resume($scope0_id, "c")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1><p>First <!>${_escape(first)}${_el_resume($scope0_id, "b")} Second <!>${_escape(second)}${_el_resume($scope0_id, "c")}</p>`);
 	_set_serialize_reason({
-		0: $sg__input_show,
-		1: $sg__input_show
+		0: _mask_group($scope0_owned, 1),
+		1: _mask_group($scope0_owned, 1)
 	});
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "d", $childScope);
@@ -42,8 +42,8 @@ var template_default = _template_persisted("a", (input) => {
 		}, "a0", $scope0_id)
 	});
 	_set_serialize_reason({
-		0: $sg__input_show,
-		1: $sg__input_show
+		0: _mask_group($scope0_owned, 1),
+		1: _mask_group($scope0_owned, 1)
 	});
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "e", $childScope2);

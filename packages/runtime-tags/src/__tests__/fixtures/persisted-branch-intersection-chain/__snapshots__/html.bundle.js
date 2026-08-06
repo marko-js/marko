@@ -5,7 +5,7 @@ _renderer_shells({
 	a2: ",`a2 a7;Db%;<p>None <!></p>`"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_kind = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_kind = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main><div>");
@@ -36,6 +36,6 @@ var template_default = _template_persisted("a", (input) => {
 	$scope0_reason ? writeScope($scope0_id, {
 		g: input.title,
 		h: count
-	}) : _patch_value($scope0_id, "a0", input.title);
+	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title);
 	_resume_branch($scope0_id);
 }, 1);

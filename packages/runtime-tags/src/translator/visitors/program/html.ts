@@ -1,5 +1,9 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef } from "@marko/compiler/babel-utils";
+import {
+  getTagDef,
+  isAttributeTag,
+  loadFileForTag,
+} from "@marko/compiler/babel-utils";
 
 import { isEventHandler } from "../../../common/helpers";
 import evaluate from "../../util/evaluate";
@@ -12,6 +16,7 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import { isConditionTag, isCoreTagName } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
+import { getPersistedGroupOwnership } from "../../util/known-tag";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
@@ -21,6 +26,7 @@ import {
   hasUndeliverableFillReads,
   hasUnfillablePatchReads,
   isPatchCaptureSection,
+  kPatchClientOwned,
   scopeReasonRuntime,
 } from "../../util/persisted";
 import {
@@ -40,6 +46,7 @@ import {
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import {
   getSerializeSourcesForExpr,
+  getSerializeSourcesForRef,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
 import {
@@ -362,16 +369,158 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // Client state participates through value fills: patches never carry
       // state, and holes it feeds recompute through the signal graph.
       if (tagName === "let" || tagName === "const") return;
-      // A templated custom tag re-renders during a patch; a state-fed
-      // attribute would resolve from the server's stale state, so those
-      // fail closed until per-instance classification exists.
+      // Templated instances classify per child param group: the ownership
+      // mask withholds server writes for client-fed groups.
       if (tagDef?.template) {
-        for (const attr of node.attributes) {
+        // A sourceless call bakes a value no client signal recomputes, so
+        // its opacity counts as server-fed.
+        let anyOpaque = false;
+        const checkOpaque = (
+          extra: t.NodeExtra | undefined,
+          value: t.Expression,
+        ) => {
           if (
-            attr.type === "MarkoSpreadAttribute" ||
-            getSerializeSourcesForExpr(attr.value.extra || {})?.state
+            !getSerializeSourcesForExpr(extra || {}) &&
+            !evaluate(value).confident
           ) {
+            t.traverseFast(value, (n) => {
+              anyOpaque ||=
+                t.isCallExpression(n) ||
+                t.isOptionalCallExpression(n) ||
+                t.isNewExpression(n) ||
+                t.isTaggedTemplateExpression(n);
+            });
+          }
+        };
+        const hasStateFeed = (extra: t.NodeExtra | undefined) => {
+          let state = !!getSerializeSourcesForExpr(extra || {})?.state;
+          forEach(
+            (extra as t.FunctionExtra | undefined)
+              ?.referencedBindingsInFunction,
+            (binding) => {
+              state ||= !!getSerializeSourcesForRef(binding)?.state;
+            },
+          );
+          return state;
+        };
+        let anyState = false;
+        for (const attr of node.attributes) {
+          if (attr.type === "MarkoSpreadAttribute") {
             unsupported(attr);
+          } else {
+            checkOpaque(attr.value.extra, attr.value);
+          }
+          anyState ||= hasStateFeed(attr.value.extra);
+        }
+        // Arguments and rest-consumed children (a whole-`input` read, rest
+        // props) merge their reads into the tag's own extra, not per-expr.
+        anyState ||= hasStateFeed(node.extra);
+        for (const arg of node.arguments || []) {
+          if (t.isSpreadElement(arg)) {
+            unsupported(arg);
+          } else {
+            checkOpaque(arg.extra, arg);
+            anyState ||= hasStateFeed(arg.extra);
+          }
+        }
+        // Attribute tags feed params too; opacity must see their values.
+        const checkAttrTags = (body: t.NodePath<t.MarkoTagBody>) => {
+          for (const child of body.get("body")) {
+            if (child.isMarkoTag() && isAttributeTag(child)) {
+              for (const attr of child.node.attributes) {
+                if (attr.type === "MarkoAttribute") {
+                  checkOpaque(attr.value.extra, attr.value);
+                }
+              }
+              checkAttrTags(child.get("body"));
+            }
+          }
+        };
+        checkAttrTags(tag.get("body"));
+        const ownership = node.extra && getPersistedGroupOwnership(node.extra);
+        if (!ownership) {
+          // No per-group analysis means no mask: an all-server child would
+          // overwrite live client values.
+          if (anyState) {
+            unsupported(
+              node,
+              "client state cannot feed a tag without analyzable input",
+            );
+          }
+          return;
+        }
+        let anyServerable = false;
+        for (const group of ownership) {
+          anyServerable ||= group.serverable;
+          // Groups see feeds the attr walk cannot (attribute tags).
+          anyState ||= group.stateFed;
+          if (!group.stateFed) continue;
+          if (group.globalMixed) {
+            unsupported(
+              node,
+              "client state and `$global` cannot mix in one input group",
+            );
+          }
+          if (group.serverRequired) {
+            unsupported(
+              node,
+              "client state cannot feed an input the child needs server-owned (it drives structure or mixes with `$global`)",
+            );
+          }
+          // A server value sharing a client-fed group updates through its
+          // fill; without one its changes could never reach the child.
+          if (
+            group.parentParams &&
+            hasUnfillablePatchReads(group.parentParams)
+          ) {
+            unsupported(
+              node,
+              "a server value mixed into a client-fed input group must be patchable through a fill",
+            );
+          }
+        }
+        // An untracked call can change server-side, but a withheld capture
+        // has no other way to deliver it.
+        if (anyState && anyOpaque) {
+          unsupported(
+            node,
+            "an untracked call cannot mix with client state across one tag's input",
+          );
+        }
+        // Body-only state is invisible to classification, so a tag variable
+        // cannot yet coexist with dynamic body content.
+        if (node.var) {
+          for (const child of tag.get("body").get("body")) {
+            if (!isStatic(child)) {
+              unsupported(
+                node,
+                "a tag variable with dynamic body content is not yet patchable",
+              );
+            }
+          }
+        }
+        if (anyState) {
+          if (node.var) {
+            unsupported(
+              node,
+              "a tag variable cannot return through a client-owned instance yet",
+            );
+          }
+          // Skip only when nothing could change server-side: any other
+          // vector (globals, body content) keeps the guarded render.
+          if (!anyServerable) {
+            let skips = true;
+            for (const child of tag.get("body").get("body")) {
+              skips &&= isStatic(child);
+            }
+            const childFile = loadFileForTag(tag);
+            if (
+              skips &&
+              childFile &&
+              !childFile.metadata.marko.persistedGlobals
+            ) {
+              (node.extra ??= {})[kPatchClientOwned] = true;
+            }
           }
         }
         return;

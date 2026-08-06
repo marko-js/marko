@@ -4,9 +4,9 @@ _renderer_shells({
 	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell __tests__/template.marko_2_count/init;Db%;<p>Seen <!></p>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_inner = _serialize_guard($scope0_reason, 2), $sg__input_outer = _serialize_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _serialize_guard($scope0_reason, 3), $sg__input_outer = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_el_resume($scope0_id, "#text/0")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "#text/0")}</h1>`);
 	_if(() => {
 		if (input.outer) {
 			const $scope1_id = _scope_id();

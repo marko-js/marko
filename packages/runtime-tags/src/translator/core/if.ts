@@ -23,7 +23,10 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
-import { isPatchCaptureSection } from "../util/persisted";
+import {
+  isPatchCaptureSection,
+  recordPersistedServerRequiredExpr,
+} from "../util/persisted";
 import {
   compareSources,
   getScopeAccessorLiteral,
@@ -116,6 +119,9 @@ export const IfTag = {
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
         addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
+        // Branch tests drive structure: call sites reject feeding them
+        // from client-owned values.
+        recordPersistedServerRequiredExpr(ifTagSection, ifTagExtra);
         // Branch shells build at program analyze exit, once child bindings
         // exist; record the roots here.
         for (const [, branchBody] of branches) {
