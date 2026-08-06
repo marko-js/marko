@@ -74,6 +74,19 @@ describe("compiler/error recovery", () => {
     assert.equal(typeof compile("$ const x = ;").code, "string");
   });
 
+  it("aggregates expression errors with an unclosed tag error", () => {
+    // The unclosed tag error is recorded against the open tag but must not
+    // preempt diagnostics for expressions later in its body.
+    assert.throws(
+      () => compile("<div>${x..y}"),
+      (err) => {
+        assert.match(String(err.message), /Unexpected token/);
+        assert.match(String(err.message), /Missing ending "div" tag/);
+        return true;
+      },
+    );
+  });
+
   it("aggregates the recorded errors when one still escapes", () => {
     // The attribute value fails to parse and is recorded, then the tag itself
     // cannot be built, so both come back together rather than only the last.
