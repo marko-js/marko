@@ -1225,10 +1225,11 @@ export function _set_serialize_reason(reason: SerializeReasonValue) {
 }
 
 // Compiled into persisted templates in place of `_scope_reason`: a page
-// render serializes everything while a patch serializes nothing beyond its
-// own fills.
+// render serializes by the instance's sources mask (any contribution can
+// change) while a patch serializes nothing beyond its own fills.
 export function _persisted_reason() {
   const { state } = $chunk.boundary;
+  const reason = state.serializeReason;
   state.serializeReason = undefined;
   if (state.writesPatches) {
     // The first persisted template of the render is the page root, about to
@@ -1244,7 +1245,7 @@ export function _persisted_reason() {
     }
     return undefined;
   }
-  return 1;
+  return reason ?? 1;
 }
 
 // The instance's sources mask (2 bits per group: client/server contribute;
@@ -1262,13 +1263,24 @@ function maskGroup(mask: SerializeReasonValue, group: number) {
       : ((mask as Partial<Record<number, number>>)[group] ?? 0);
 }
 
-// A patch writer with no trailing ownership args is server-owned.
+// A patch write needs exclusive server ownership: a client contribution
+// means the live value wins, and a contribution-less group cannot change.
 function serverOwned(owned?: SerializeReasonValue, group?: number) {
-  return owned === undefined || !(maskGroup(owned, group!) & 1);
+  return owned === undefined || maskGroup(owned, group!) === 2;
 }
 
 export function _owned_guard(mask: SerializeReasonValue, group: number) {
-  return maskGroup(mask, group) & 1 ? 0 : 1;
+  return maskGroup(mask, group) === 2 ? 1 : 0;
+}
+
+// Page-side group guards (patch renders have no reason): any contribution,
+// client or server, can change — the group's resume data serializes.
+export function _source_if(mask: SerializeReasonValue, group: number) {
+  return mask && maskGroup(mask, group) ? 1 : undefined;
+}
+
+export function _source_guard(mask: SerializeReasonValue, group: number) {
+  return mask && maskGroup(mask, group) ? 1 : 0;
 }
 
 // A group's 2-bit value, composed into a child mask by pass-through.

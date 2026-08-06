@@ -4,7 +4,7 @@ _renderer_shells({
 	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell __tests__/template.marko_2;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a = _serialize_guard($scope0_reason, 2), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $sg__input_b = _serialize_guard($scope0_reason, 3);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a__OR__input_b = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "#text/0")}</h1>`);
 	_if(() => {
@@ -17,7 +17,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			writeScope($scope1_id, { x }, "__tests__/template.marko", "3:4", { x: "4:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", $sg__input_a, $sg__input_a, $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_1_shell"]);
+	}, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_1_shell"]);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			writeScope($scope2_id, { y }, "__tests__/template.marko", "8:4", { y: "9:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/2", $sg__input_b, $sg__input_b, $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_2_shell"]);
+	}, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_2_shell"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

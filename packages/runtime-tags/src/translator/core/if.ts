@@ -283,11 +283,15 @@ export const IfTag = {
                 cbNode,
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
-                getSerializeGuardForAny(
-                  ifTagSection,
-                  branchSerializeReasons,
-                  !markerSerializeArg,
-                ),
+                // Pairing stays statically on under persisted: the patch
+                // intercept preempts, and interior writes anchor through it.
+                persistedPatch
+                  ? t.numericLiteral(1)
+                  : getSerializeGuardForAny(
+                      ifTagSection,
+                      branchSerializeReasons,
+                      !markerSerializeArg,
+                    ),
                 markerSerializeArg,
                 statefulSerializeArg,
                 skipParentEnd

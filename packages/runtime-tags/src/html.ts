@@ -84,6 +84,8 @@ export {
   _serialize_guard,
   _serialize_if,
   _set_serialize_reason,
+  _source_guard,
+  _source_if,
   _show_end,
   _show_start,
   _text_resume,

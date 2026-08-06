@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import { generateUid, getSharedUid } from "./generate-uid";
 import { isPersisted } from "./marko-config";
 import { type Opt, some, Sorted } from "./optional";
-import { scopeReasonRuntime } from "./persisted";
+import { isPatchCaptureSection, scopeReasonRuntime } from "./persisted";
 import {
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -125,6 +125,18 @@ export function getExprIfSerialized<
       ) as R;
     }
     return expr as R;
+  }
+
+  // Capture-branch pairing never prunes with a value group: interior patch
+  // writes anchor through it, so it rides the root page/patch reason.
+  if (isPersisted() && isPatchCaptureSection(section) && section.parent) {
+    let rootSection = section;
+    while (rootSection.parent) rootSection = rootSection.parent;
+    return t.logicalExpression(
+      "&&",
+      scopeReasonIdentifier(rootSection),
+      expr,
+    ) as R;
   }
 
   const guard = getDynamicGuard(section, reason, false);
@@ -272,9 +284,13 @@ function buildGuardExpr(
   );
   return paramsSection.paramReasonGroups
     ? callRuntime(
-        (isGuard
-          ? "_serialize_guard"
-          : "_serialize_if") satisfies HTMLRuntimeHelpers,
+        (isPersisted()
+          ? isGuard
+            ? "_source_guard"
+            : "_source_if"
+          : isGuard
+            ? "_serialize_guard"
+            : "_serialize_if") satisfies HTMLRuntimeHelpers,
         serializeIdentifier,
         withLeadingComment(
           t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),
