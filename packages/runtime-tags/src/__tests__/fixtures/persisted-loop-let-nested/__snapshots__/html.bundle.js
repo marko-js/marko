@@ -9,7 +9,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "a", item.label)}${_escape(item.label)}${_el_resume($scope1_id, "a")}`);
+		_html(`<li>${_patch_text($scope1_id, "a", item.label)}${_el_resume($scope1_id, "a")}`);
 		_if(() => {
 			if (item.detailed) {
 				const $scope2_id = _scope_id();

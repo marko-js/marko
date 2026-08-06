@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em${_patch_attr_class($scope1_id, "a", input.tone)}${_attr_class(input.tone)}>note</em>${_el_resume($scope1_id, "a")}`);
+			_html(`<em${_patch_attr_class($scope1_id, "a", input.tone)}>note</em>${_el_resume($scope1_id, "a")}`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
