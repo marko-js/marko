@@ -7,7 +7,7 @@ var template_default = _template_persisted("a", (input) => {
 	let handler = _resume((next) => {
 		last = next;
 	}, "a0", $scope0_id);
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

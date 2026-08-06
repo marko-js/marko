@@ -7,7 +7,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	let handler = _resume((next) => {
 		last = next;
 	}, "__tests__/template.marko_0/handler", $scope0_id);
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "#text/0")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "#text/1")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_el_resume($scope0_id, "#text/0")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "#text/1")}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

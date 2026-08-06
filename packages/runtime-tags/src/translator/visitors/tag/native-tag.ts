@@ -774,6 +774,8 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
+                // The capture renders the attribute itself, so the
+                // expression appears (and normalizes) once.
                 if (capturesPatchAttr(name, value)) {
                   write`${callRuntime(
                     `_patch_attr_${name as "class" | "style"}`,
@@ -781,6 +783,7 @@ export default {
                     getScopeAccessorLiteral(nodeBinding!),
                     value,
                   )}`;
+                  break;
                 }
                 write`${factorAttrConditional(
                   buildAttrExpression(
@@ -806,6 +809,8 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
+                // The capture renders the attribute itself, so the
+                // expression appears (and evaluates) once.
                 if (capturesPatchAttr(name, value)) {
                   write`${callRuntime(
                     "_patch_attr",
@@ -814,6 +819,7 @@ export default {
                     t.stringLiteral(name),
                     value,
                   )}`;
+                  break;
                 }
                 write`${factorAttrConditional(
                   buildAttrExpression(

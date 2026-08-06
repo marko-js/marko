@@ -12,7 +12,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em${_patch_attr_class($scope1_id, "#em/0", input.tone)}${_attr_class(input.tone)}>note</em>${_el_resume($scope1_id, "#em/0")}`);
+			_html(`<em${_patch_attr_class($scope1_id, "#em/0", input.tone)}>note</em>${_el_resume($scope1_id, "#em/0")}`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 			return 0;
 		}
