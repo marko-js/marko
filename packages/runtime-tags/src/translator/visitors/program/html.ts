@@ -300,7 +300,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       node,
       detail
         ? `Persisted templates cannot patch this faithfully yet: ${detail}.`
-        : "Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.",
+        : "Persisted templates currently support only escaped dynamic text and dynamic attributes in native HTML.",
     );
   };
   program.traverse({
@@ -454,8 +454,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                 // `content=` mounts structural content the patch wire has no
                 // entry for, so a dynamic one cannot apply faithfully.
                 attr.name === "content" ||
-                attr.name === "class" ||
-                attr.name === "style" ||
                 // Option state couples to the parent select's selection;
                 // a lone attribute write cannot re-sync it.
                 (tagName === "option" &&
