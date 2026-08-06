@@ -84,7 +84,16 @@ export { BindingType };
 export interface Sources {
   state: Opt<Binding>;
   param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
 }
+
+// `$global` is request identity: sources carry one bit (granularity lives
+// in the global bindings' property aliases, not in invalidation).
+export const globalSources: Sources = {
+  state: undefined,
+  param: undefined,
+  global: true,
+};
 
 export interface Binding {
   id: number;
@@ -169,6 +178,9 @@ declare module "@marko/compiler/dist/types" {
     isEffect?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
+    /** `$global` bindings this expression reads: the root means an opaque
+     * (dynamic/aliased) read, a property alias names the key. */
+    globalBindings?: ReferencedBindings;
     spreadFrom?: Binding;
     nativeTagSpread?: true;
     nativeTagSpreadMerged?: true;
@@ -621,6 +633,21 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
+// One signal-inert root binding per template, minted on first access.
+const [getGlobalBinding] = createProgramState(() =>
+  createBinding(
+    "$global",
+    BindingType.global,
+    getOrCreateSection(getProgram()),
+  ),
+);
+
+// `$global` reads route through the reference graph, so property
+// aliases record the keys read.
+export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
+  trackReference(path, getGlobalBinding());
+}
+
 function createBindingsAndTrackReferences(
   lVal: t.LVal,
   type: BindingType,
@@ -928,6 +955,7 @@ export function finalizeReferences() {
       );
       expr.referencedBindings = exprBindings.referencedBindings;
       expr.lazyBindings = exprBindings.lazyBindings;
+      expr.globalBindings = exprBindings.globalBindings;
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
         // lands in its section's setup signal.
@@ -1013,6 +1041,13 @@ export function finalizeReferences() {
 
   for (const binding of bindings) {
     const { name, section } = binding;
+    // `$global` bindings resolve sources only: no collision rename (it
+    // would burn a UID and shift later generated names), no section
+    // membership, no closures — reads compile verbatim.
+    if (binding.type === BindingType.global) {
+      resolveBindingSources(binding);
+      continue;
+    }
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
 
@@ -1516,6 +1551,9 @@ function resolveBindingSources(binding: Binding) {
         getCanonicalBinding(binding) as ParamBinding,
       );
       return;
+    case BindingType.global:
+      binding.sources = globalSources;
+      return;
   }
 
   const aliasRoot = getAliasRoot(binding);
@@ -1567,18 +1605,21 @@ function resolveDerivedSources(binding: Binding) {
 export function createSources(
   state: Sources["state"],
   param: Sources["param"],
+  global?: Sources["global"],
 ): Sources {
-  if (!(state || param)) {
+  if (!(state || param || global)) {
     throw new Error(
-      "Cannot create a serialize reason that does not reference state or a param.",
+      "Cannot create a serialize reason that does not reference state, a param, or $global.",
     );
   }
 
-  return { state, param };
+  return { state, param, global };
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
+
+  if (a.global !== b.global) return a.global ? 1 : -1;
 
   if (a.param) {
     if (!b.param) return 1;
@@ -1600,10 +1641,13 @@ export function compareSources(a: Sources, b: Sources) {
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
-  if (a.state === b.state && a.param === b.param) return a;
+  if (a.state === b.state && a.param === b.param && a.global === b.global) {
+    return a;
+  }
   return createSources(
     bindingUtil.union(a.state, b.state),
     unionParamSources(a.param, b.param),
+    a.global || b.global,
   );
 }
 
@@ -2233,7 +2277,10 @@ function resolveReferencedBindingsInFunction(
           if (bindingUtil.find(refs, binding)) {
             constantBindings = bindingUtil.add(constantBindings, binding);
           }
-        } else if (binding.type !== BindingType.dom) {
+        } else if (
+          binding.type !== BindingType.dom &&
+          binding.type !== BindingType.global
+        ) {
           referencedBindings = bindingUtil.add(
             referencedBindings,
             findClosestReference(read.binding, refs)!,
@@ -2248,7 +2295,10 @@ function resolveReferencedBindingsInFunction(
         if (bindingUtil.find(refs, binding)) {
           constantBindings = binding;
         }
-      } else if (binding.type !== BindingType.dom) {
+      } else if (
+        binding.type !== BindingType.dom &&
+        binding.type !== BindingType.global
+      ) {
         referencedBindings = findClosestReference(binding, refs);
       }
     }
@@ -2356,6 +2406,7 @@ function resolveReferencedBindings(
   let hoistedBindings: ReferencedBindings;
   let allBindings: ReferencedBindings;
   let lazyBindings: ReferencedBindings;
+  let globalBindings: ReferencedBindings;
 
   if (Array.isArray(reads)) {
     const rootBindings = getRootBindings(reads);
@@ -2380,14 +2431,18 @@ function resolveReferencedBindings(
           if (upstreamRoot) {
             binding = upstreamRoot;
           }
-        } else {
+        } else if (binding.type !== BindingType.global) {
           extra.section = expr.section;
           ({ binding } = extra.read ??= resolveExpressionReference(
             rootBindings,
             binding,
           ));
         }
-        if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
+        if (binding.type === BindingType.global) {
+          // `$global` reads stay verbatim member chains: no read slot,
+          // no signal, no register-id participation.
+          globalBindings = bindingUtil.add(globalBindings, binding);
+        } else if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
           lazyBindings = bindingUtil.add(lazyBindings, binding);
         } else if (binding.type === BindingType.constant) {
           constantBindings = bindingUtil.add(constantBindings, binding);
@@ -2407,6 +2462,10 @@ function resolveReferencedBindings(
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
         hoistedBindings = bindingUtil.add(hoistedBindings, binding);
       }
+    } else if (binding.type === BindingType.global) {
+      // `$global` reads stay verbatim member chains: no read slot,
+      // no signal, no register-id participation.
+      globalBindings = binding;
     } else {
       extra.read = createRead(binding, undefined, ownVar);
       if (isLazyRead(expr, reads, binding, extra.assignmentTo === binding)) {
@@ -2479,6 +2538,7 @@ function resolveReferencedBindings(
     hoistedBindings,
     allBindings,
     lazyBindings,
+    globalBindings,
   };
 }
 

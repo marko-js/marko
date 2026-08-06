@@ -11,10 +11,8 @@ import {
   type Binding,
   compareSources,
   getCanonicalBinding,
-  type InputBinding,
   isReferencedExtra,
   mergeSources,
-  type ParamBinding,
   type ReferencedBindings,
   type Sources,
 } from "./references";
@@ -160,7 +158,7 @@ export function addOwnerSerializeReason(
 
 export function isReasonDynamic(
   reason: undefined | SerializeReason,
-): reason is { state: undefined; param: OneMany<InputBinding | ParamBinding> } {
+): reason is Sources & { state: undefined } {
   return !!reason && reason !== true && !reason.state;
 }
 
