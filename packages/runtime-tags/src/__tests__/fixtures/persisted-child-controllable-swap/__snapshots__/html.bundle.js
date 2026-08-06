@@ -24,7 +24,7 @@ var counter_default = _template_persisted("b", (input) => {
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const plain = _resume((next) => {
@@ -33,11 +33,11 @@ var template_default = _template_persisted("a", (input) => {
 	const tenfold = _resume((next) => {
 		last = next * 10;
 	}, "a1", $scope0_id);
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
 	_set_serialize_reason({
-		0: _serialize_guard($scope0_reason, 0),
-		1: _serialize_guard($scope0_reason, 1),
-		2: _serialize_guard($scope0_reason, 2)
+		0: _mask_group($scope0_owned, 0),
+		1: _mask_group($scope0_owned, 2),
+		2: _mask_group($scope0_owned, 3)
 	});
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "c", $childScope);

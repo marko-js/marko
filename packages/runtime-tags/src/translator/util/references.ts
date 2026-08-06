@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getProgram, isNativeTag } from "@marko/compiler/babel-utils";
+import { getFile, getProgram, isNativeTag } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { decodeAccessor, isEventHandler } from "../../common/helpers";
@@ -29,9 +29,15 @@ import {
   push,
   Sorted,
 } from "./optional";
+import {
+  finalizePersisted,
+  isPatchEffectBinding,
+  isPatchFillBinding,
+} from "./persisted";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
+  ensureReasonGroups,
   finalizeParamSerializeReasonGroups,
   forEachSection,
   forEachSectionReverse,
@@ -670,6 +676,9 @@ export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
     const exprRoot = getExprRoot(getFnRoot(path) || path);
     const section = getOrCreateSection(exprRoot);
     (exprRoot.node.extra ??= { section }).readsGlobal = true;
+    // Rolls up through custom-tag analyze so a call site can classify
+    // whether skipping this template's render could hide a global change.
+    getFile().metadata.marko.persistedGlobals = true;
   }
 }
 
@@ -1365,6 +1374,21 @@ export function finalizeReferences() {
         }
       }
     }
+  }
+
+  // Ownership gates query fill/effect groups at translate time; group order
+  // freezes during analyze, so ensure them alongside the resume groups.
+  if (isPersisted()) {
+    finalizePersisted();
+    forEachSection((section) => {
+      if (!section.parent) {
+        forEach(section.bindings, (binding) => {
+          if (isPatchFillBinding(binding) || isPatchEffectBinding(binding)) {
+            ensureReasonGroups(getSerializeSourcesForRef(binding));
+          }
+        });
+      }
+    });
   }
 
   forEachSection(finalizeParamSerializeReasonGroups);
