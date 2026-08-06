@@ -31,4 +31,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/1", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["__tests__/template.marko_1_shell"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { input_inner: input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] });
-}, 1);
+}, 1, 0);

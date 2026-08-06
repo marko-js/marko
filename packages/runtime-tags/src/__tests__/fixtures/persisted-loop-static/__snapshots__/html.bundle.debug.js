@@ -11,4 +11,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, 0, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "__tests__/template.marko_1_shell");
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
-}, 1);
+}, 1, 0);

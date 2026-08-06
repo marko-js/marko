@@ -17,16 +17,70 @@ import {
   writePatch,
 } from "./writer";
 
+// Intrinsic render summary: what a template's render could depend on
+// beyond its inputs, as ONE self-resolving value. `1` = must render
+// (reads globals / opaque); `0` = whole subtree proven clean; a lazy
+// child-renderer thunk = locally clean, resolved to 0/1 on first query
+// (lazy: module cycles must not evaluate eagerly). An ABSENT summary
+// means unknown (foreign renderer) — never clean.
+type Intrinsics = 0 | 1 | (() => unknown[]);
+const kIntrinsics = Symbol();
+type WithIntrinsics = { [kIntrinsics]?: Intrinsics };
+
 export function _template_persisted(
   templateId: string,
   renderer: ServerRenderer,
-  page?: 1,
+  page?: 0 | 1,
+  intrinsics?: Intrinsics,
 ) {
   enablePatchWrites();
-  const template = _template(templateId, renderer, page);
+  const template = _template(templateId, renderer, page as 1) as Template &
+    ServerRenderer &
+    WithIntrinsics;
   template.renderPatch = renderPatch;
+  if (intrinsics !== undefined) template[kIntrinsics] = intrinsics;
   return template;
 }
+
+// A patch must render a child unless its summary proves the whole subtree
+// clean; steady state is one property read (the walk overwrites the thunk
+// with its answer). `1` resolves always; `0` only when the walk closed
+// without an unresolved cycle back-edge (a tainted answer may depend on
+// an in-progress ancestor).
+export function _must_render(child: unknown) {
+  const intrinsics = (child as WithIntrinsics | undefined)?.[kIntrinsics];
+  if (intrinsics === undefined) return true;
+  if (typeof intrinsics !== "function") return !!intrinsics;
+  return mustRenderWalk(child as WithIntrinsics, new Set(), { t: false });
+}
+
+const mustRenderWalk = (
+  holder: WithIntrinsics,
+  visiting: Set<() => unknown[]>,
+  taint: { t: boolean },
+): boolean => {
+  const intrinsics = holder?.[kIntrinsics];
+  if (intrinsics === undefined) return true;
+  if (typeof intrinsics !== "function") return !!intrinsics;
+  if (visiting.has(intrinsics)) {
+    taint.t = true;
+    return false;
+  }
+  visiting.add(intrinsics);
+  const outerTaint = taint.t;
+  taint.t = false;
+  let result = false;
+  for (const nested of intrinsics()) {
+    if (mustRenderWalk(nested as WithIntrinsics, visiting, taint)) {
+      result = true;
+      break;
+    }
+  }
+  visiting.delete(intrinsics);
+  if (result || !taint.t) holder[kIntrinsics] = result ? 1 : 0;
+  taint.t ||= outerTaint;
+  return result;
+};
 
 export function renderPatch(
   this: Template & ServerRenderer,

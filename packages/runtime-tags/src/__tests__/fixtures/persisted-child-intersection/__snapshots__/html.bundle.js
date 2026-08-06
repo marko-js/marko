@@ -10,7 +10,7 @@ var price_card_default = _template_persisted("b", (input) => {
 		f: qty
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "b0", input.label);
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -23,4 +23,4 @@ var template_default = _template_persisted("a", (input) => {
 	price_card_default({ label: input.label });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { b: _existing_scope($childScope) });
-}, 1);
+}, 1, () => [price_card_default]);
