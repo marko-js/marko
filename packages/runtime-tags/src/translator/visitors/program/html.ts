@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef } from "@marko/compiler/babel-utils";
+import { getTagDef, loadFileForTag } from "@marko/compiler/babel-utils";
 
 import { isEventHandler } from "../../../common/helpers";
 import evaluate from "../../util/evaluate";
@@ -21,6 +21,7 @@ import {
   hasUndeliverableFillReads,
   hasUnfillablePatchReads,
   isPatchCaptureSection,
+  kPatchClientOwned,
   scopeReasonRuntime,
 } from "../../util/persisted";
 import {
@@ -40,6 +41,7 @@ import {
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import {
   getSerializeSourcesForExpr,
+  getSerializeSourcesForRef,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
 import {
@@ -362,17 +364,87 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // Client state participates through value fills: patches never carry
       // state, and holes it feeds recompute through the signal graph.
       if (tagName === "let" || tagName === "const") return;
-      // A templated custom tag re-renders during a patch; a state-fed
-      // attribute would resolve from the server's stale state, so those
-      // fail closed until per-instance classification exists.
+      // A templated custom tag re-renders during a patch, resolving state
+      // from the server's stale defaults. Per-instance classification: an
+      // instance fed ONLY client state and constants is client-owned (the
+      // patch skips its render — nothing inside can change server-side);
+      // mixing state with server-fed attrs stays closed until a per-param
+      // withhold channel exists.
       if (tagDef?.template) {
+        let hasState = false;
+        let hasServer = false;
+        const classify = (
+          extra: t.NodeExtra | undefined,
+          value?: t.Expression,
+        ) => {
+          const sources = getSerializeSourcesForExpr(extra || {});
+          hasState ||= !!sources?.state;
+          hasServer ||= !!(sources?.param || sources?.global);
+          // Capture polarity: a sourceless call bakes a value no client
+          // signal recomputes, so its opacity counts as server-fed. (A
+          // sourced call re-evaluates client-side when its reads change.)
+          if (!sources && value && !evaluate(value).confident) {
+            t.traverseFast(value, (n) => {
+              hasServer ||=
+                t.isCallExpression(n) ||
+                t.isOptionalCallExpression(n) ||
+                t.isNewExpression(n) ||
+                t.isTaggedTemplateExpression(n);
+            });
+          }
+          // Reads inside function values count too: a child may invoke the
+          // fn at render time, so the skip could hide them.
+          const fnRefs = (extra as t.FunctionExtra | undefined)
+            ?.referencedBindingsInFunction;
+          forEach(fnRefs, (binding) => {
+            const fnSources = getSerializeSourcesForRef(binding);
+            hasState ||= !!fnSources?.state;
+            hasServer ||= !!(fnSources?.param || fnSources?.global);
+          });
+        };
         for (const attr of node.attributes) {
-          if (
-            attr.type === "MarkoSpreadAttribute" ||
-            getSerializeSourcesForExpr(attr.value.extra || {})?.state
-          ) {
+          if (attr.type === "MarkoSpreadAttribute") {
             unsupported(attr);
           }
+          classify(attr.value.extra, attr.value);
+        }
+        // Arguments and rest-consumed children (a whole-`input` read, rest
+        // props) merge their reads into the tag's own extra, not per-expr.
+        classify(node.extra);
+        for (const arg of node.arguments || []) {
+          if (!t.isSpreadElement(arg)) classify(arg.extra, arg);
+        }
+        if (hasState) {
+          if (hasServer) {
+            unsupported(
+              node,
+              "client state and server values cannot mix across one tag's input",
+            );
+          }
+          // The skipped render must not hide other change vectors: a tag
+          // variable reads during patch renders, and body content re-renders.
+          if (node.var) {
+            unsupported(
+              node,
+              "a tag variable needs the child render a client-owned tag skips",
+            );
+          }
+          for (const child of tag.get("body").get("body")) {
+            if (!isStatic(child)) {
+              unsupported(
+                child.node,
+                "body content needs the child render a client-owned tag skips",
+              );
+            }
+          }
+          const childFile = loadFileForTag(tag);
+          if (!childFile || childFile.metadata.marko.persistedGlobals) {
+            unsupported(
+              node,
+              "the tag's template reads `$global`, which the skipped render could not keep current",
+            );
+          }
+          (node.extra ??= {})[kPatchClientOwned] = true;
         }
         return;
       }

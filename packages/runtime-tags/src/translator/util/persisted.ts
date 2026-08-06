@@ -8,6 +8,22 @@ import { isDirectClosure, type Section } from "./sections";
 import { getSerializeSourcesForRef } from "./serialize-reasons";
 import { createProgramState } from "./state";
 
+// A custom tag instance whose attrs carry only client state and constants
+// is client-owned: patches skip its render, so nothing inside goes stale.
+export const kPatchClientOwned = Symbol("patch client owned");
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    [kPatchClientOwned]?: true;
+  }
+}
+declare module "@marko/compiler" {
+  export interface MarkoMeta {
+    /** This template (or one it renders) reads `$global`: skipping its
+     * render in a patch could hide a global change. */
+    persistedGlobals?: true;
+  }
+}
+
 export function scopeReasonRuntime() {
   return isPersisted()
     ? ("_persisted_reason" as const)

@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-global-owned/template.marko:3:3
+      1 | <let/count=0/>
+      2 | <main>
+    > 3 |   <g-badge value=count/>
+        |   ^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: the tag's template reads `$global`, which the skipped render could not keep current.
+      4 |   <button onClick() { count++ }>+</button>
+      5 | </main>
+      6 |

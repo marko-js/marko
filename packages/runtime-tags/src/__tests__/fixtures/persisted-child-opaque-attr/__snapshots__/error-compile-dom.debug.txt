@@ -1,0 +1,2 @@
+Persisted templates currently support only escaped dynamic text and dynamic attributes in native HTML.
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-opaque-attr/template.marko

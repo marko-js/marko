@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
+import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
@@ -836,6 +836,9 @@ export function trackGlobalReference(path: t.NodePath<t.Node>) {
   const section = getOrCreateSection(exprRoot);
   const extra = (exprRoot.node.extra ??= { section });
   extra.readsGlobal = true;
+  // Rolls up through custom-tag analyze so a call site can classify
+  // whether skipping this template's render could hide a global change.
+  getFile().metadata.marko.persistedGlobals = true;
 }
 
 export function mergeReferences<T extends t.Node>(

@@ -26,6 +26,7 @@ import {
   type Opt,
   toIter,
 } from "./optional";
+import { kPatchClientOwned } from "./persisted";
 import {
   addRead,
   type Binding,
@@ -61,7 +62,7 @@ import {
   type Section,
   startSection,
 } from "./sections";
-import { getSerializeGuard } from "./serialize-guard";
+import { getSerializeGuard, scopeReasonIdentifier } from "./serialize-guard";
 import {
   addSerializeExpr,
   addSerializeReason,
@@ -216,6 +217,10 @@ export function knownTagTranslateHTML(
     section,
     childScopeBinding,
   );
+  // A client-owned instance renders nothing into a patch: the link and the
+  // child render skip together, and the absent entry keeps the live child.
+  let clientOwnedStatements: t.Statement[] | undefined =
+    isPersisted() && tagExtra[kPatchClientOwned] ? [] : undefined;
 
   if (childScopeSerializeReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
@@ -239,16 +244,19 @@ export function knownTagTranslateHTML(
     );
 
     if (isPersisted()) {
-      statements.push(
-        t.expressionStatement(
-          callRuntime(
-            "_patch_child",
-            getScopeIdIdentifier(section),
-            getScopeAccessorLiteral(childScopeBinding),
-            peekScopeId,
-          ),
+      const patchChildStatement = t.expressionStatement(
+        callRuntime(
+          "_patch_child",
+          getScopeIdIdentifier(section),
+          getScopeAccessorLiteral(childScopeBinding),
+          peekScopeId,
         ),
       );
+      if (tagExtra[kPatchClientOwned]) {
+        clientOwnedStatements = [patchChildStatement];
+      } else {
+        statements.push(patchChildStatement);
+      }
     }
 
     if (tagVar) {
@@ -331,11 +339,16 @@ export function knownTagTranslateHTML(
     }
 
     if (childSerializeReasonExpr) {
-      tag.insertBefore(
-        t.expressionStatement(
-          callRuntime("_set_serialize_reason", childSerializeReasonExpr),
-        ),
+      const setter = t.expressionStatement(
+        callRuntime("_set_serialize_reason", childSerializeReasonExpr),
       );
+      if (clientOwnedStatements) {
+        // Inside the guard: a skipped child never runs `_scope_reason`, so
+        // an ambient reason set outside it would leak to the next consumer.
+        clientOwnedStatements.push(setter);
+      } else {
+        tag.insertBefore(setter);
+      }
     }
   }
 
@@ -353,6 +366,18 @@ export function knownTagTranslateHTML(
 
   if (tagVar) {
     translateVar(tag, callExpression(tagIdentifier, ...getArgs()), "let");
+  } else if (clientOwnedStatements) {
+    // The render-wide persisted reason is the page-vs-patch bit: truthy on
+    // a page render (serialize + render the child), falsy on a patch.
+    let rootSection = section;
+    while (rootSection.parent) rootSection = rootSection.parent;
+    clientOwnedStatements.push(callStatement(tagIdentifier, ...getArgs()));
+    statements.push(
+      t.ifStatement(
+        scopeReasonIdentifier(rootSection),
+        t.blockStatement(clientOwnedStatements),
+      ),
+    );
   } else {
     statements.push(callStatement(tagIdentifier, ...getArgs()));
   }

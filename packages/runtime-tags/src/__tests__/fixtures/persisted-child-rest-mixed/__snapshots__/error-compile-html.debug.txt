@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-rest-mixed/template.marko:3:3
+      1 | <let/count=0/>
+      2 | <main>
+    > 3 |   <dump value=count label=input.title/>
+        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: client state and server values cannot mix across one tag's input.
+      4 |   <button onClick() { count++ }>+</button>
+      5 | </main>
+      6 |

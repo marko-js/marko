@@ -1,0 +1,8 @@
+static function getStamp() {
+  return Date.now();
+}
+<let/count=0/>
+<main>
+  <dump value=count stamp=getStamp()/>
+  <button onClick() { count++ }>+</button>
+</main>
