@@ -615,7 +615,9 @@ function buildOwnershipMaskExpr(
       ? t.binaryExpression("|", t.numericLiteral(2), composed)
       : composed;
   });
-  if (!values.some((value) => typeof value !== "number" || value & 1)) return;
+  if (!values.some((value) => typeof value !== "number" || value !== 2)) {
+    return;
+  }
 
   let mask = 0;
   let maskNames = "";
