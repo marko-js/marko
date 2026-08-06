@@ -9,4 +9,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko_0/openChange"))}${_patch_control($scope0_id, "#details/1", 4, input.show, $scope0_owned, 1)}><summary>More</summary><p>Body</p></details>${_el_resume($scope0_id, "#details/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
-}, 1);
+}, 1, 0);

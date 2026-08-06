@@ -64,3 +64,17 @@ A _split_ Class component (one with a `component-browser.js`, so `FLAG_WILL_RERE
 `packages/runtime-tags/src/translator` › `<lifecycle>` / tags typecheck | 2026-08-13 | impact:med | effort:med
 
 Returning `{ wasActive: !!this.active, … }` from `onMount` while `active=…` is also a lifecycle attr collapses the whole tag's `ThisType` to `object`: every attr (`active`, `load`, …) and every `this.*` access then fails with TS2353/TS2339, even though the same `this.active` read is legal inside `start()` / `onUpdate`. Assigning after construction works: `const self = { wasActive: false, … }; self.wasActive = !!this.active; return self`. Re-verify with a fixture that sets `active=true` on `<lifecycle>`, returns `{ wasActive: !!this.active }` from `onMount`, and runs `mtc` / the tags typecheck — expect green after the post-construction assign form and red on the inline form.
+## Circular custom tags TDZ at module evaluation in DOM output
+
+Mutually recursive custom tags (`tags/a-tag` renders `b-tag`, which
+renders `a-tag`) compile per-template but the DOM output's static
+template-string composition (`const $template$1 = ((_w0) =>
+`...${_w0}...`)($template$2)`) references the sibling's module-level
+const across the import cycle; the bundler's concatenation order then
+hits `Cannot access '$template$1' before initialization`at module
+evaluation, before any render. The composition would need to be lazy (or
+bail to a runtime reference) when the child resolves through a cycle.
+Found while building a persisted fixture; reproduces with`persisted:
+false` (the inlining is mode-agnostic). Re-verify: two tags rendering
+each other behind a depth guard, bundle the page, import the dom bundle
+— eval throws.
