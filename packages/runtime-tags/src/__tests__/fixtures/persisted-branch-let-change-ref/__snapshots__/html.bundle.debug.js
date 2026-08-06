@@ -27,4 +27,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, 0);

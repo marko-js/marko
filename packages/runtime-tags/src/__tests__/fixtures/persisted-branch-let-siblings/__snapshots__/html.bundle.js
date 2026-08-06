@@ -31,4 +31,4 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "c", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["a1"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {});
-}, 1);
+}, 1, 0);

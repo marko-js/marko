@@ -10,7 +10,7 @@ var price_card_default = _template_persisted("b", (input) => {
 		f: qty
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "b0", input.label);
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // tags/promo-tag.marko
 var promo_tag_default = _template_persisted("c", (input) => {
@@ -24,7 +24,7 @@ var promo_tag_default = _template_persisted("c", (input) => {
 		f: seen
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "c0", input.text);
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // tags/site-footer.marko
 var site_footer_default = _template_persisted("d", (input) => {
@@ -34,7 +34,7 @@ var site_footer_default = _template_persisted("d", (input) => {
 	_html(`<footer>${_patch_text($scope0_id, "a", input.year + frozen, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</footer>`);
 	$scope0_reason && writeScope($scope0_id, { e: frozen });
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -59,4 +59,4 @@ var template_default = _template_persisted("a", (input) => {
 		e: _existing_scope($childScope2),
 		f: _existing_scope($childScope3)
 	});
-}, 1);
+}, 1, 1);

@@ -29,11 +29,7 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import {
-  getMarkoOpts,
-  isOutputHTML,
-  isPersisted,
-} from "../../util/marko-config";
+import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -82,12 +78,6 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError("Unable to resolve file for tag.");
-      }
-
-      // Global reads roll up the load chain so any ancestor call site can
-      // classify whether skipping this subtree could hide a global change.
-      if (isPersisted() && childFile.path.node.extra?.persistedGlobals) {
-        getProgram().node.extra!.persistedGlobals = true;
       }
 
       const tagExtra = (tag.node.extra ??= {});
