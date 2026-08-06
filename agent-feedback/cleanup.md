@@ -20,12 +20,6 @@ The test's only two event-handler assertions are commented out (and call a long-
 
 The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repeated one becomes `attrTag(props)`" is implemented four times. `translateAttrTag` and the `isAttributeTag(tag)` branch of `applyAttrObject` are near-verbatim ~35-line copies, including the `t.parenthesizedExpression` mutation trick, differing only in where `repeated` comes from and whether the result is returned or handed to `addStatement`. `translate-attrs.ts` › `translateAttrs` and `addDynamicAttrTagStatements` encode the same rule over `contentProperties` and over an attr-tag identifier assignment. One helper would collapse the two `known-tag.ts` copies and let the other two share the `repeated ? attrTags : attrTag` decision, so a future change cannot land on three of four sites. Re-verify: `rg -n '"attrTags"' packages/runtime-tags/src/translator` lists exactly those four sites.
 
-## Collapse copy-pasted sibling implementations in the `<for>` and scriptlet core tags
-
-`packages/runtime-tags/src/translator/core/for.ts` › `forTypeToDOMRuntime` | 2026-07-23 | impact:low | effort:low
-
-`forTypeToHTMLResumeRuntime` and `forTypeToDOMRuntime` are byte-identical `ForType` switches returning `_for_of|_for_in|_for_to|_for_until`, and both `dom` and `html` export those names, so delete one and point both call sites at the survivor; `forTypeToRuntime` stays as the only distinct mapping. Separately, `translator/core/{client,server,static}.ts` are three 31-line files differing only in the stripped keyword, the third `t.markoScriptlet(body, true, …)` argument, and their autocomplete text — a `createScriptletTag(keyword, target?)` factory would cut ~60 lines and leave the `core/index.ts` registrations untouched. Both edits are output-identical, so no snapshot or `sizes.json` churn. Re-verify: normalize the two function names and `diff` their bodies; `diff core/client.ts core/server.ts` shows only keyword/description lines.
-
 ## Delete or resurrect the dead `test/markoc` suite
 
 `packages/runtime-class/test/markoc/index.test.js` | 2026-07-24 | impact:low | effort:low

@@ -251,7 +251,7 @@ export default {
           | undefined
         )[];
         const forTagHTMLRuntime = branchSerializeReason
-          ? forTypeToHTMLResumeRuntime(forType)
+          ? forTypeToBranchRuntime(forType)
           : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
@@ -352,7 +352,7 @@ export default {
         const signal = getSignal(tagSection, nodeRef, "for");
         signal.build = () => {
           return callRuntime(
-            forTypeToDOMRuntime(forType),
+            forTypeToBranchRuntime(forType),
             getScopeAccessorLiteral(nodeRef, true),
             ...replaceNullishAndEmptyFunctionsWith0(
               getBranchRendererArgs(bodySection),
@@ -556,20 +556,7 @@ function forTypeToRuntime(type: ForType) {
   }
 }
 
-function forTypeToHTMLResumeRuntime(type: ForType) {
-  switch (type) {
-    case "of":
-      return "_for_of";
-    case "in":
-      return "_for_in";
-    case "to":
-      return "_for_to";
-    case "until":
-      return "_for_until";
-  }
-}
-
-function forTypeToDOMRuntime(type: ForType) {
+function forTypeToBranchRuntime(type: ForType) {
   switch (type) {
     case "of":
       return "_for_of";
