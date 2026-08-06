@@ -730,25 +730,22 @@ describe("serializer", () => {
       );
     });
 
-    // it.skip("Symbol.iterator registered", () => {
-    //   // Unsupported for now since we share the reference for iterators on attribute tags.
-    //   const obj = {
-    //     y: 2,
-    //     [Symbol.iterator]: iterate,
-    //   };
+    it("Symbol.iterator registered", () => {
+      // Attribute tags share one iterator reference, so a registered iterator
+      // serializes by value like any other: the items are materialized.
+      function* iterate() {
+        yield 1;
+        yield 2;
+        yield 3;
+      }
 
-    //   function* iterate() {
-    //     yield 1;
-    //     yield 2;
-    //     yield 3;
-    //   }
+      register("iterate", iterate);
 
-    //   register("iterate", iterate);
-
-    //   assertStringify(obj, `{y:2,[Symbol.iterator]:_._.iterate}`, {
-    //     _: { iterate },
-    //   });
-    // });
+      assertStringify(
+        { y: 2, [Symbol.iterator]: iterate },
+        `{y:2,*[(_.a=[1,2,3],Symbol.iterator)](){yield*_.a}}`,
+      );
+    });
   });
 
   describe("typed arrays", () => {
