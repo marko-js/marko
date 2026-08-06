@@ -13,6 +13,7 @@ import { isOutputDOM, isPersisted } from "../util/marko-config";
 import {
   dropNodes,
   getAllTagReferenceNodes,
+  getGlobalReadKeys,
   mergeGlobalReads,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -112,7 +113,9 @@ export default {
       const referencedBindings = value.extra?.referencedBindings;
       // A persisted script's DIRECT `$global` reads re-queue when a frame's
       // globals change; global-derived binding reads reject instead.
-      const globalReads = isPersisted() ? value.extra?.readsGlobal : undefined;
+      const globalReads = isPersisted()
+        ? getGlobalReadKeys(value.extra?.globalBindings)
+        : undefined;
       if (isOutputDOM()) {
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
