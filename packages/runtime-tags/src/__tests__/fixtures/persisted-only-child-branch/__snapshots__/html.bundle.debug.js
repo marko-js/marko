@@ -1,14 +1,14 @@
 // template.marko
 _renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell;Db%;<span>hi <!></span>`" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main><div>");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>hi <!>${_patch_text($scope1_id, "#text/0", input.msg)}${_el_resume($scope1_id, "#text/0")}</span>`);
+			_html(`<span>hi <!>${_patch_text($scope1_id, "#text/0", input.msg, $scope0_owned, 2)}${_el_resume($scope1_id, "#text/0")}</span>`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6");
 			return 0;
 		}

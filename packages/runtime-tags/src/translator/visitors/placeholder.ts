@@ -11,6 +11,7 @@ import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt } from "../util/optional";
 import {
   constructRendersReads,
+  ensurePersistedCaptureGroups,
   isPatchCaptureSection,
 } from "../util/persisted";
 import {
@@ -34,7 +35,10 @@ import {
   getSection,
   type Section,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
+import {
+  getPatchWriteOwnership,
+  getSerializeGuard,
+} from "../util/serialize-guard";
 import {
   addSerializeReason,
   addSerializeExpr,
@@ -102,6 +106,7 @@ export default {
             placeholder.hub.file,
             `${getRuntimePath("dom")}/patch-text.feat`,
           );
+          ensurePersistedCaptureGroups(section, () => valueExtra);
         }
       }
     },
@@ -238,7 +243,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
     if (isHTML) {
       // The capture writes the escaped text itself, so the expression
-      // appears (and evaluates) once.
+      // appears (and evaluates) once; a param-fed capture's ownership
+      // bit rides as trailing args.
       write`${
         isPatchText
           ? callRuntime(
@@ -246,6 +252,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
               getScopeIdIdentifier(section),
               getScopeAccessorLiteral(nodeBinding),
               value,
+              ...getPatchWriteOwnership(holeSources),
             )
           : method === "_escape"
             ? buildEscapedTextExpression(value)
