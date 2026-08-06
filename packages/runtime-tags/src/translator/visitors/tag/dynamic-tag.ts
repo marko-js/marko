@@ -183,7 +183,9 @@ export default {
 
       const bodySection = startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
-      addSerializeExpr(tagSection, hasVar || tagExtra, nodeBinding);
+      // Split so the force cannot swallow the exprs' provenance.
+      if (hasVar) addSerializeExpr(tagSection, true, nodeBinding);
+      addSerializeExpr(tagSection, tagExtra, nodeBinding);
 
       if (
         !hasVar &&

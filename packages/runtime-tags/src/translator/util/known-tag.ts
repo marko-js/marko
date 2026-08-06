@@ -168,7 +168,9 @@ export function knownTagAnalyze(
       section,
     );
     setBindingDownstream(varBinding, varExpr);
-    addSerializeExpr(section, mutatesTagVar || varExpr, childScopeBinding);
+    // Split so the force cannot swallow the exprs' provenance.
+    if (mutatesTagVar) addSerializeExpr(section, true, childScopeBinding);
+    addSerializeExpr(section, varExpr, childScopeBinding);
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
