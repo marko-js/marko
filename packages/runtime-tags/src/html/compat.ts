@@ -92,16 +92,23 @@ export const compat = {
       return compatRegistered;
     };
   },
-  flushScript($global: any) {
-    const state = this.ensureState($global);
-    const boundary = new Boundary(state);
-    if (boundary.flush() === FlushStatus.continue) {
-      throw new Error(
-        "Cannot serialize promise across tags/class compat layer.",
-      );
+  flushScript($global: any, chunk?: Chunk) {
+    if (!chunk) {
+      const state = this.ensureState($global);
+      chunk = new Chunk(new Boundary(state), null, null, state);
     }
 
-    return new Chunk(boundary, null, null, state).flushScript().scripts;
+    const { boundary } = chunk;
+    switch (boundary.flush()) {
+      case FlushStatus.aborted:
+        throw boundary.signal.reason;
+      case FlushStatus.continue:
+        throw new Error(
+          "Cannot serialize promise across tags/class compat layer.",
+        );
+    }
+
+    return chunk.flushScript().scripts;
   },
   render(
     renderer: ServerRenderer,

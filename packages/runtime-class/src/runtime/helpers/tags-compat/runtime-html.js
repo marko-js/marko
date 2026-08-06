@@ -72,14 +72,7 @@ exports.p = function (htmlCompat) {
     }
 
     if (chunk) {
-      chunk.boundary.flush();
-      if (chunk.boundary.count) {
-        throw new Error(
-          "Cannot serialize promise across tags/class compat layer.",
-        );
-      }
-
-      scripts = concatScripts(chunk.flushScript().scripts, scripts);
+      scripts = concatScripts(htmlCompat.flushScript($global, chunk), scripts);
     }
 
     return scripts;
