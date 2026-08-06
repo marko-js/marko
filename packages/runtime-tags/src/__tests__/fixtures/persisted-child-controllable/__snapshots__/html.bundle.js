@@ -27,7 +27,7 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let last = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
 	_set_serialize_reason({
 		0: $sg__input_show,
 		1: $sg__input_show

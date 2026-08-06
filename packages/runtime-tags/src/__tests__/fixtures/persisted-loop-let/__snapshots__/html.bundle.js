@@ -7,7 +7,7 @@ var template_default = _template_persisted("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		let votes = item.start;
-		_html(`<li>${_patch_text($scope1_id, "a", item.label)}${_escape(item.label)}${_el_resume($scope1_id, "a")}<span>${_escape(votes)}${_el_resume($scope1_id, "b")}</span><button>+</button>${_el_resume($scope1_id, "c")}</li>`);
+		_html(`<li>${_patch_text($scope1_id, "a", item.label)}${_el_resume($scope1_id, "a")}<span>${_escape(votes)}${_el_resume($scope1_id, "b")}</span><button>+</button>${_el_resume($scope1_id, "c")}</li>`);
 		_script($scope1_id, "a1");
 		_patch_value($scope1_id, "a0", votes, 1);
 		writeScope($scope1_id, { h: votes });

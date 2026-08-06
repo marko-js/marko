@@ -6,7 +6,7 @@ _renderer_shells({
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_a = _serialize_guard($scope0_reason, 1), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $sg__input_b = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "#text/0")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_el_resume($scope0_id, "#text/0")}</h1>`);
 	_if(() => {
 		if (input.a) {
 			const $scope1_id = _scope_id();
