@@ -59,7 +59,11 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { getExprIfSerialized, scopeReasonIdentifier } from "./serialize-guard";
+import {
+  getExprIfSerialized,
+  getOwnershipGuard,
+  scopeReasonIdentifier,
+} from "./serialize-guard";
 import {
   getSerializeReason,
   getSerializeSourcesForRef,
@@ -1544,12 +1548,21 @@ export function writeHTMLResumeStatements(
   // reason picks serialization on a page render, fills on a patch (emitted
   // as the write's else branch below); the client applies those whose
   // intersections survived tree-shaking.
+  // A param-fed write runs only when the instance's ownership mask marks
+  // its group server-owned (state-fed seeds have no param gate).
+  const gatePatchWrite = (binding: Binding, write: t.Expression) => {
+    const owned = getOwnershipGuard(getSerializeSourcesForRef(binding));
+    return owned ? t.logicalExpression("&&", owned, write) : write;
+  };
   const fillCalls = toArray(getPatchFillBindings(section), (binding) =>
-    callRuntime(
-      "_patch_value",
-      scopeIdIdentifier,
-      t.stringLiteral(getPatchFillKey(binding)),
-      getDeclaredBindingExpression(binding),
+    gatePatchWrite(
+      binding,
+      callRuntime(
+        "_patch_value",
+        scopeIdIdentifier,
+        t.stringLiteral(getPatchFillKey(binding)),
+        getDeclaredBindingExpression(binding),
+      ),
     ),
   );
 
@@ -1560,11 +1573,14 @@ export function writeHTMLResumeStatements(
     forEach(section.bindings, (binding) => {
       if (isPatchEffectBinding(binding)) {
         fillCalls.push(
-          callRuntime(
-            "_patch_write",
-            scopeIdIdentifier,
-            t.stringLiteral(getScopeAccessor(binding)),
-            getDeclaredBindingExpression(binding),
+          gatePatchWrite(
+            binding,
+            callRuntime(
+              "_patch_write",
+              scopeIdIdentifier,
+              t.stringLiteral(getScopeAccessor(binding)),
+              getDeclaredBindingExpression(binding),
+            ),
           ),
         );
       }
@@ -1632,15 +1648,21 @@ export function writeHTMLResumeStatements(
       if (change) {
         // The runtime decides how the handler wires from the rendered
         // value alone (bind by owner-hop distance, or plain write), so any
-        // handler expression shape compiles the same way.
+        // handler expression shape compiles the same way. A param-fed
+        // handler binds only under server ownership.
+        const bindOwned =
+          change.reason !== true ? getOwnershipGuard(change.reason) : undefined;
+        const bindCall = callRuntime(
+          "_patch_bind",
+          scopeIdIdentifier,
+          t.stringLiteral(changeAccessor),
+          t.cloneNode(change.expression, true),
+        );
         body.push(
           t.expressionStatement(
-            callRuntime(
-              "_patch_bind",
-              scopeIdIdentifier,
-              t.stringLiteral(changeAccessor),
-              t.cloneNode(change.expression, true),
-            ),
+            bindOwned
+              ? t.logicalExpression("&&", bindOwned, bindCall)
+              : bindCall,
           ),
         );
       }

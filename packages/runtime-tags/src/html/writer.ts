@@ -316,14 +316,18 @@ export function _patch_attr(
   accessor: Accessor,
   name: string,
   value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
     // `0` is the removal sentinel: normalized values are always strings and
     // `undefined` entries are dropped entirely.
-    writePatch(scopeId, {
-      [PatchKey.Attr + accessor + " " + name]: normalizeAttrValue(value) ?? 0,
-    });
+    if (serverOwned(owned, group)) {
+      writePatch(scopeId, {
+        [PatchKey.Attr + accessor + " " + name]: normalizeAttrValue(value) ?? 0,
+      });
+    }
   } else {
     $chunk.needsWalk = true;
   }
@@ -337,12 +341,16 @@ export function _patch_attr_class(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
   return patchStringAttr(
     scopeId,
     accessor,
     "class",
     toDelimitedString(value, " ", stringifyClassObject),
+    owned,
+    group,
   );
 }
 
@@ -350,12 +358,16 @@ export function _patch_attr_style(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
   return patchStringAttr(
     scopeId,
     accessor,
     "style",
     toDelimitedString(value, ";", stringifyStyleObject),
+    owned,
+    group,
   );
 }
 
@@ -364,12 +376,16 @@ function patchStringAttr(
   accessor: Accessor,
   name: string,
   value: string,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
-    writePatch(scopeId, {
-      [PatchKey.Attr + accessor + " " + name]: value || 0,
-    });
+    if (serverOwned(owned, group)) {
+      writePatch(scopeId, {
+        [PatchKey.Attr + accessor + " " + name]: value || 0,
+      });
+    }
   } else {
     $chunk.needsWalk = true;
   }
@@ -440,8 +456,10 @@ export function _patch_control(
   accessor: Accessor,
   type: number,
   value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
-  if ($chunk.boundary.state.writesPatches) {
+  if ($chunk.boundary.state.writesPatches && serverOwned(owned, group)) {
     writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
   }
   return "";
@@ -453,9 +471,11 @@ export function _patch_bind(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
   const { state } = $chunk.boundary;
-  if (state.writesPatches) {
+  if (state.writesPatches && serverOwned(owned, group)) {
     const registered = !!value && getRegistered(value as WeakKey);
     const bound =
       registered && (registered.scope as ScopeInternals | undefined);
@@ -552,12 +572,16 @@ export function _patch_text(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
-    writePatch(scopeId, {
-      [PatchKey.Text + accessor]: _to_text(value),
-    });
+    if (serverOwned(owned, group)) {
+      writePatch(scopeId, {
+        [PatchKey.Text + accessor]: _to_text(value),
+      });
+    }
   } else {
     $chunk.needsWalk = true;
   }
@@ -1123,11 +1147,11 @@ export function _subscribe(
   return scope;
 }
 
-// A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
+// A reason is 1, empty, an offset group bitmask, or keyed group values.
 export type SerializeReasonValue =
   | undefined
   | number
-  | Partial<Record<string, 0 | 1>>;
+  | Partial<Record<string, number>>;
 
 export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
@@ -1154,6 +1178,35 @@ export function _persisted_reason() {
     return undefined;
   }
   return 1;
+}
+
+// The instance's sources mask (2 bits per group: client/server contribute;
+// `1` = all-server root default), read before `_persisted_reason` clears it.
+export function _persisted_ownership() {
+  const { state } = $chunk.boundary;
+  return state.writesPatches ? (state.serializeReason ?? 1) : 1;
+}
+
+function maskGroup(mask: SerializeReasonValue, group: number) {
+  return mask === 1
+    ? 2
+    : typeof mask === "number"
+      ? (mask >>> (1 + 2 * group)) & 3
+      : ((mask as Partial<Record<number, number>>)[group] ?? 0);
+}
+
+// A patch writer with no trailing ownership args is server-owned.
+function serverOwned(owned?: SerializeReasonValue, group?: number) {
+  return owned === undefined || !(maskGroup(owned, group!) & 1);
+}
+
+export function _owned_guard(mask: SerializeReasonValue, group: number) {
+  return maskGroup(mask, group) & 1 ? 0 : 1;
+}
+
+// A group's 2-bit value, composed into a child mask by pass-through.
+export function _mask_group(mask: SerializeReasonValue, group: number) {
+  return maskGroup(mask, group);
 }
 
 export function _scope_reason() {

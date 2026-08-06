@@ -4,9 +4,9 @@ _renderer_shells({
 	a1: ",`a1 a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_a = _serialize_guard($scope0_reason, 1), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $sg__input_b = _serialize_guard($scope0_reason, 2);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a = _serialize_guard($scope0_reason, 2), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $sg__input_b = _serialize_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "a")}</h1>`);
 	_if(() => {
 		if (input.a) {
 			const $scope1_id = _scope_id();
