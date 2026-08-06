@@ -22,7 +22,10 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
-import { isPatchCaptureSection } from "../util/persisted";
+import {
+  isPatchCaptureSection,
+  recordPersistedServerRequiredExpr,
+} from "../util/persisted";
 import {
   type Binding,
   BindingType,
@@ -206,6 +209,9 @@ export default {
 
     if (isPersisted() && isPatchCaptureSection(tagSection)) {
       addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
+      // The loop's inputs drive structure: call sites reject feeding them
+      // from client-owned values.
+      recordPersistedServerRequiredExpr(tagSection, tagExtra);
       // A patch can target the loop's CONTENT even when the list itself is
       // static, so whatever could update the items (their closure sources)
       // is a marker resume reason: the entry anchors there.

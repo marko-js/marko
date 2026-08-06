@@ -1,7 +1,7 @@
 // template.marko
 _renderer_shells({ a0: ",`a0 a3;D ;<p> </p>`" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -18,6 +18,6 @@ var template_default = _template_persisted("a", (input) => {
 	$scope0_reason ? writeScope($scope0_id, {
 		f: input.title,
 		g: count
-	}) : _patch_value($scope0_id, "a0", input.title);
+	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title);
 	_resume_branch($scope0_id);
 }, 1);
