@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-state-structure/template.marko:3:3
+      1 | <let/count=0/>
+      2 | <main>
+    > 3 |   <toggle-panel show=(count % 2 === 0)/>
+        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: client state cannot feed an input the child needs server-owned (it drives structure or mixes with `$global`).
+      4 |   <button onClick() { count++ }>+</button>
+      5 | </main>
+      6 |
