@@ -314,11 +314,15 @@ export default {
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            getSerializeGuard(
-              tagSection,
-              branchSerializeReason,
-              !markerSerializeArg,
-            ),
+            // Pairing stays statically on under persisted: the patch
+            // intercept preempts, and interior writes anchor through it.
+            persistedPatch
+              ? t.numericLiteral(1)
+              : getSerializeGuard(
+                  tagSection,
+                  branchSerializeReason,
+                  !markerSerializeArg,
+                ),
             markerSerializeArg,
             statefulSerializeArg,
           );
