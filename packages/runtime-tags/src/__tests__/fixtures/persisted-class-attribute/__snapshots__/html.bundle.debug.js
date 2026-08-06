@@ -7,4 +7,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		compact: input.on
 	}, $scope0_owned, 2)}${_patch_attr_style($scope0_id, "#span/2", [input.accent, { margin: 0 }], $scope0_owned, 1)}>badge</span>${_el_resume($scope0_id, "#span/2")}</div>${_el_resume($scope0_id, "#div/0")}`);
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
-}, 1);
+}, 1, 0);

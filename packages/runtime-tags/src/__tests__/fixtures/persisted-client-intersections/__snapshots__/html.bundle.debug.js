@@ -13,7 +13,7 @@ var price_card_default = _template_persisted("__tests__/tags/price-card.marko", 
 		qty: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // tags/promo-tag.marko
 var promo_tag_default = _template_persisted("__tests__/tags/promo-tag.marko", (input) => {
@@ -30,7 +30,7 @@ var promo_tag_default = _template_persisted("__tests__/tags/promo-tag.marko", (i
 		seen: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/promo-tag.marko0", input.text);
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // tags/site-footer.marko
 var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko", (input) => {
@@ -40,7 +40,7 @@ var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko"
 	_html(`<footer>${_patch_text($scope0_id, "#text/0", input.year + frozen, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</footer>`);
 	$scope0_reason && writeScope($scope0_id, { frozen }, "__tests__/tags/site-footer.marko", 0, { frozen: "1:6" });
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
@@ -65,4 +65,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		"#childScope/4": _existing_scope($childScope2),
 		"#childScope/5": _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0);
-}, 1);
+}, 1, 1);
