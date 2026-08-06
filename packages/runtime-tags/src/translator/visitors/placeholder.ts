@@ -227,18 +227,19 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
 
     if (isHTML) {
-      if (isPatchText) {
-        write`${callRuntime(
-          "_patch_text",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(nodeBinding),
-          value,
-        )}`;
-      }
+      // The capture writes the escaped text itself, so the expression
+      // appears (and evaluates) once.
       write`${
-        method === "_escape"
-          ? buildEscapedTextExpression(value)
-          : callRuntime(method as HTMLMethod | DOMMethod, value)
+        isPatchText
+          ? callRuntime(
+              "_patch_text",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeBinding),
+              value,
+            )
+          : method === "_escape"
+            ? buildEscapedTextExpression(value)
+            : callRuntime(method as HTMLMethod | DOMMethod, value)
       }`;
       if (nodeBinding) {
         writer.markNode(placeholder, nodeBinding, markerSerializeReason);

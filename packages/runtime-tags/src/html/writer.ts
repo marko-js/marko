@@ -24,11 +24,11 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { RendererProp } from "../common/types";
-import { attrAssignment } from "./attrs";
+import { _attr, attrAssignment, stringAttr } from "./attrs";
 import * as FlushStatus from "./constants/flush-status";
 import * as Mark from "./constants/mark";
 import * as RuntimeKey from "./constants/runtime-key";
-import { _to_text } from "./content";
+import { _escape, _to_text } from "./content";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -288,6 +288,8 @@ export function patchPartial(state: State, scopeId: number) {
   return partial;
 }
 
+// Patch writers double as the output writers so the compiled template
+// evaluates each captured expression once.
 export function _patch_attr(
   scopeId: number,
   accessor: Accessor,
@@ -305,7 +307,7 @@ export function _patch_attr(
     $chunk.needsWalk = true;
   }
 
-  return "";
+  return _attr(name, value);
 }
 
 // Class/style normalize on the server into the same string the dom helper
@@ -315,11 +317,11 @@ export function _patch_attr_class(
   accessor: Accessor,
   value: unknown,
 ) {
-  return _patch_attr(
+  return patchStringAttr(
     scopeId,
     accessor,
     "class",
-    toDelimitedString(value, " ", stringifyClassObject) || undefined,
+    toDelimitedString(value, " ", stringifyClassObject),
   );
 }
 
@@ -328,12 +330,30 @@ export function _patch_attr_style(
   accessor: Accessor,
   value: unknown,
 ) {
-  return _patch_attr(
+  return patchStringAttr(
     scopeId,
     accessor,
     "style",
-    toDelimitedString(value, ";", stringifyStyleObject) || undefined,
+    toDelimitedString(value, ";", stringifyStyleObject),
   );
+}
+
+function patchStringAttr(
+  scopeId: number,
+  accessor: Accessor,
+  name: string,
+  value: string,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatches) {
+    writePatch(scopeId, {
+      [PatchKey.Attr + accessor + " " + name]: value || 0,
+    });
+  } else {
+    $chunk.needsWalk = true;
+  }
+
+  return stringAttr(name, value);
 }
 
 // Links a child scope into its parent's entry: immediately when already
@@ -521,7 +541,7 @@ export function _patch_text(
     $chunk.needsWalk = true;
   }
 
-  return "";
+  return _escape(value);
 }
 
 export function _sep(shouldResume: number) {
