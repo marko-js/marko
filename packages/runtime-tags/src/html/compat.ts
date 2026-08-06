@@ -20,6 +20,7 @@ import {
   getScopeId,
   isInResumedBranch,
   State,
+  withChunk,
   writeScript,
 } from "./writer";
 
@@ -39,6 +40,7 @@ export const compat = {
   nextScopeId: _scope_id,
   peekNextScopeId: _peek_scope_id,
   isInResumedBranch,
+  withChunk,
   ensureState($global: any) {
     let state: State | undefined = ($global[K_TAGS_API_STATE] ||=
       getChunk()?.boundary.state);
@@ -165,6 +167,16 @@ export const compat = {
   register,
   registerRenderBody(fn: any) {
     register(RENDER_BODY_ID, fn);
+  },
+  // A class closure has no browser identity, so it resumes as a noop; a parent
+  // that rerenders replaces it with the live handler as it hydrates.
+  registerClassFunctions(input: any) {
+    for (const key in input) {
+      const value = input[key];
+      if (typeof value === "function" && !getRegistered(value)) {
+        register(RENDER_BODY_ID, value);
+      }
+    }
   },
 };
 

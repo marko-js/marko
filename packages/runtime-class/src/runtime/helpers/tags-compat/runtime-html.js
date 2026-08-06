@@ -39,29 +39,39 @@ exports.p = function (htmlCompat) {
     const { classAPI, tagsAPI } = writers;
     let scripts = "";
     let componentDefs = flushDefs;
+    let chunk;
 
     if (classAPI.length) {
       componentDefs = flushDefs ? flushDefs.concat(classAPI) : classAPI;
       writers.classAPI = [];
     }
 
+    if (tagsAPI.length) {
+      chunk = tagsAPI[0];
+      for (let i = 1; i < tagsAPI.length; i++) {
+        chunk.append(tagsAPI[i]);
+      }
+      writers.tagsAPI = [];
+    }
+
     if (componentDefs?.length) {
-      scripts = ___getInitComponentsCodeForDefs($global, componentDefs);
+      const initComponents = () =>
+        ___getInitComponentsCodeForDefs($global, componentDefs);
+      // Serializing a bridged handler registers the tags scope it closes over,
+      // so it must run against the chunk carrying this flush's resume scripts.
+      scripts = chunk
+        ? htmlCompat.withChunk(chunk, initComponents)
+        : initComponents();
       if (scripts) {
         htmlCompat.ensureState($global).walkOnNextFlush = true;
 
-        if (!tagsAPI.length) {
+        if (!chunk) {
           scripts = concatScripts(htmlCompat.flushScript($global), scripts);
         }
       }
     }
 
-    if (tagsAPI.length) {
-      const [chunk] = tagsAPI;
-      for (let i = 1; i < tagsAPI.length; i++) {
-        chunk.append(tagsAPI[i]);
-      }
-
+    if (chunk) {
       chunk.boundary.flush();
       if (chunk.boundary.count) {
         throw new Error(
@@ -70,7 +80,6 @@ exports.p = function (htmlCompat) {
       }
 
       scripts = concatScripts(chunk.flushScript().scripts, scripts);
-      writers.tagsAPI = [];
     }
 
     return scripts;
@@ -127,6 +136,7 @@ exports.p = function (htmlCompat) {
       const tagsRenderer = _.r;
       const willRerender = componentDef._wrr || htmlCompat.isInResumedBranch();
       out.bf("1", component, willRerender);
+      htmlCompat.registerClassFunctions(input);
       // A split parent won't re-feed the child a live handler at hydration, so
       // register the child scope to let the resolver revive a bridged marker.
       htmlCompat.render(

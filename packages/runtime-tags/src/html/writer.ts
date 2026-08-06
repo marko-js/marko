@@ -58,6 +58,16 @@ export function getChunk(): Chunk | undefined {
   return $chunk;
 }
 
+export function withChunk<T>(chunk: Chunk, cb: () => T): T {
+  const prev = $chunk;
+  $chunk = chunk;
+  try {
+    return cb();
+  } finally {
+    $chunk = prev;
+  }
+}
+
 export function getContext(key: keyof NonNullable<Chunk["context"]>) {
   return $chunk.context?.[key];
 }

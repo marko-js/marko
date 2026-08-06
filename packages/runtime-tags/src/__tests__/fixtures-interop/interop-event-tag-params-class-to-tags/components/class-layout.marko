@@ -1,0 +1,12 @@
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  increment() {
+    this.state.count++;
+  }
+}
+<div id="class">${state.count}</div>
+<div>
+  <${input.renderBody}(state.count, () => component.increment())/>
+</div>
