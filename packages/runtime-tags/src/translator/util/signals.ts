@@ -1029,9 +1029,10 @@ export function writeSignals(section: Section) {
                 if (
                   hopArgs.every((args) => (args.length === 2) === conditional)
                 ) {
-                  // Homogeneous chains flatten onto the per-kind helper.
+                  // Homogeneous chains flatten onto the per-kind helper,
+                  // owner-first: the runtime folds trailing hops outward.
                   helper = conditional ? "_fill_join_if" : "_fill_join_for";
-                  hopExprs = hopArgs.flat();
+                  hopExprs = hopArgs.reverse().flat();
                 } else {
                   // Mixed chains compile a dispatch builder: the arrow
                   // pulls in only the closure kinds its chain uses.
