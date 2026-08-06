@@ -20,12 +20,6 @@ The test's only two event-handler assertions are commented out (and call a long-
 
 The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repeated one becomes `attrTag(props)`" is implemented four times. `translateAttrTag` and the `isAttributeTag(tag)` branch of `applyAttrObject` are near-verbatim ~35-line copies, including the `t.parenthesizedExpression` mutation trick, differing only in where `repeated` comes from and whether the result is returned or handed to `addStatement`. `translate-attrs.ts` › `translateAttrs` and `addDynamicAttrTagStatements` encode the same rule over `contentProperties` and over an attr-tag identifier assignment. One helper would collapse the two `known-tag.ts` copies and let the other two share the `repeated ? attrTags : attrTag` decision, so a future change cannot land on three of four sites. Re-verify: `rg -n '"attrTags"' packages/runtime-tags/src/translator` lists exactly those four sites.
 
-## Drop the write-only `tagNameNullable` tag extra and its nullability tracking
-
-`packages/runtime-tags/src/translator/util/tag-name-type.ts` › `analyzeExpressionTagName` | 2026-07-23 | impact:low | effort:low
-
-`MarkoTagExtra.tagNameNullable` is declared in the module augmentation and assigned three times — twice in `analyzeTagNameType`, once in `analyzeExpressionTagName` — but never read, and it is wrong anyway: the `while ((path = pending.pop()) && type !== TagNameType.DynamicTag)` loop stops as soon as the type resolves, leaving pending nullable operands unvisited. Delete the field and the `nullable` local, but keep the traversal's `&&`, `NullLiteral` and `undefined`-identifier branches: they classify the tag name, so `&&` must still skip pushing `left` and the null/`undefined` cases must stay no-op `continue`s. Folding them into the final `else` forces `TagNameType.DynamicTag` and flips `<${cond ? null : "div"}/>` from NativeTag to DynamicTag. Re-verify: `rg -n "tagNameNullable" .` returns only the declaration and the three assignments in `tag-name-type.ts`.
-
 ## Delete translator/runtime residue left behind by completed refactors
 
 `packages/runtime-tags/src/translator/visitors/program/index.ts` › `isScopeIdentifier` | 2026-07-23 | impact:low | effort:low
