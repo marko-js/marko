@@ -309,6 +309,17 @@ export function finalizeSerializeReason(section: Section) {
   }
 }
 
+// Records provenance without touching the reason: for feeds that inform
+// ownership but must never cause serialization (function-body reads).
+export function addSerializeProvenance(
+  section: Section,
+  sources: Sources | undefined,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+) {
+  addProvenance(section, sources, prop && getPropKey(section, prop, prefix));
+}
+
 // What feeds a serialization decision, complete after reference finalize;
 // EMPTY under a forced reason means unrecorded, never "sourceless".
 export function getSerializeProvenance(

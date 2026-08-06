@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
+import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
@@ -14,7 +14,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -30,9 +30,15 @@ import {
   push,
   Sorted,
 } from "./optional";
+import {
+  finalizePersisted,
+  isPatchEffectBinding,
+  isPatchFillBinding,
+} from "./persisted";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
+  ensureReasonGroups,
   finalizeParamSerializeReasonGroups,
   forEachSection,
   forEachSectionReverse,
@@ -830,6 +836,9 @@ export function trackGlobalReference(path: t.NodePath<t.Node>) {
   const section = getOrCreateSection(exprRoot);
   const extra = (exprRoot.node.extra ??= { section });
   extra.readsGlobal = true;
+  // Rolls up through custom-tag analyze so a call site can classify
+  // whether skipping this template's render could hide a global change.
+  getFile().metadata.marko.persistedGlobals = true;
 }
 
 export function mergeReferences<T extends t.Node>(
@@ -1310,6 +1319,21 @@ export function finalizeReferences() {
         }
       }
     }
+  }
+
+  // Ownership gates query fill/effect groups at translate time; group order
+  // freezes during analyze, so ensure them alongside the resume groups.
+  if (isPersisted()) {
+    finalizePersisted();
+    forEachSection((section) => {
+      if (!section.parent) {
+        forEach(section.bindings, (binding) => {
+          if (isPatchFillBinding(binding) || isPatchEffectBinding(binding)) {
+            ensureReasonGroups(getSerializeSourcesForRef(binding));
+          }
+        });
+      }
+    });
   }
 
   forEachSection(finalizeParamSerializeReasonGroups);
