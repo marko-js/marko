@@ -213,7 +213,11 @@ export function constructRendersReads(section: Section, refs: Opt<Binding>) {
   forEach(refs, (binding) => {
     ok &&= binding.sources?.state
       ? binding.section === section
-        ? isPatchFillBinding(binding)
+        ? binding.type === BindingType.derived && !binding.sources.param
+          ? // A param mix compiles to a join whose param side has no construct
+            // delivery, so only pure state derivations construct with their feeds.
+            constructRendersReads(section, binding.sources.state)
+          : isPatchFillBinding(binding)
         : isDirectClosure(section, binding)
       : !(binding.section === section && binding.type === BindingType.param);
   });
