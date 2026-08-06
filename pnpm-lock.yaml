@@ -10,7 +10,7 @@ patchedDependencies:
   '@babel/traverse@7.29.7': 831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c
   '@babel/types@7.29.7': 600297d6e82d0bae1c281caf15e85f8012e0c4faf86de92b0e2fe0de8652104e
   mocha-autotest@1.1.3: 8ed132c3bc8563849f2fc1a6d4b83cc2d73b9e5c2b6b59ddb9957fd11e23078f
-  mocha@11.7.6: b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f
+  mocha@11.7.6: f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600
 
 importers:
 
@@ -126,10 +126,10 @@ importers:
         version: 17.0.8
       mocha:
         specifier: ^11.7.6
-        version: 11.7.6(patch_hash=b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f)
+        version: 11.7.6(patch_hash=f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600)
       mocha-autotest:
         specifier: ^1.1.3
-        version: 1.1.3(patch_hash=8ed132c3bc8563849f2fc1a6d4b83cc2d73b9e5c2b6b59ddb9957fd11e23078f)(mocha@11.7.6(patch_hash=b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f))
+        version: 1.1.3(patch_hash=8ed132c3bc8563849f2fc1a6d4b83cc2d73b9e5c2b6b59ddb9957fd11e23078f)(mocha@11.7.6(patch_hash=f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600))
       oxfmt:
         specifier: 0.60.0
         version: 0.60.0
@@ -5130,10 +5130,10 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  it-fails@1.0.9(mocha@11.7.6(patch_hash=b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f)):
+  it-fails@1.0.9(mocha@11.7.6(patch_hash=f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600)):
     dependencies:
       diff: 3.5.1
-      mocha: 11.7.6(patch_hash=b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f)
+      mocha: 11.7.6(patch_hash=f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600)
       ms: 2.1.3
 
   jackspeak@3.4.3:
@@ -5313,15 +5313,15 @@ snapshots:
 
   minipass@7.1.3: {}
 
-  mocha-autotest@1.1.3(patch_hash=8ed132c3bc8563849f2fc1a6d4b83cc2d73b9e5c2b6b59ddb9957fd11e23078f)(mocha@11.7.6(patch_hash=b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f)):
+  mocha-autotest@1.1.3(patch_hash=8ed132c3bc8563849f2fc1a6d4b83cc2d73b9e5c2b6b59ddb9957fd11e23078f)(mocha@11.7.6(patch_hash=f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600)):
     dependencies:
       '@babel/runtime': 7.29.7
       callsites: 3.1.0
-      it-fails: 1.0.9(mocha@11.7.6(patch_hash=b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f))
+      it-fails: 1.0.9(mocha@11.7.6(patch_hash=f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600))
     transitivePeerDependencies:
       - mocha
 
-  mocha@11.7.6(patch_hash=b3e4f15f12d97a08baa2e50a623ac88abeaa4b6b7d24e12a874f43a9d66a7e4f):
+  mocha@11.7.6(patch_hash=f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600):
     dependencies:
       browser-stdout: 1.3.1
       chokidar: 4.0.3

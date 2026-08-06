@@ -1,11 +1,13 @@
 diff --git a/lib/nodejs/esm-utils.js b/lib/nodejs/esm-utils.js
-index d1bbb95..ec68e36 100644
+index d1bbb95f06689e16a866bdb304cad55b9f3b99a0..c4de4e616a09bcfd128d16f8a3e4676990a38fe4 100644
 --- a/lib/nodejs/esm-utils.js
 +++ b/lib/nodejs/esm-utils.js
-@@ -99,6 +99,7 @@ const requireModule = async (file, esmDecorator) => {
+@@ -99,6 +99,9 @@ const requireModule = async (file, esmDecorator) => {
    } catch (requireErr) {
      debug("requireModule caught err: %O", requireErr.message);
      try {
++      // A require() failure that import() then rescues would otherwise vanish,
++      // hiding module-scope compile and syntax errors. Keep this print.
 +      console.error(requireErr);
        return dealWithExports(await formattedImport(file, esmDecorator));
      } catch (importErr) {
