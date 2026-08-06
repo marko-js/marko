@@ -338,33 +338,21 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         return;
       }
-      // A `<script>`'s server-derived reads stay current over the wire
-      // (fills or effect refresh); globals never re-queue, so those stay
-      // stale and reject.
+      // Fills and direct `$global` reads stay current over the wire; a
+      // global-DERIVED binding never re-ships, so its reads reject as stale.
       if (tagName === "script") {
         for (const attr of node.attributes) {
-          if (attr.type === "MarkoAttribute" && attr.name === "value") {
-            if (
-              getSerializeSourcesForExpr(attr.value.extra || {})?.global ||
-              hasUnfillablePatchReads(attr.value.extra?.referencedBindings)
-            ) {
-              unsupported(attr);
-            }
+          if (
+            attr.type === "MarkoAttribute" &&
+            attr.name === "value" &&
+            (getSerializeSourcesForRef(attr.value.extra?.referencedBindings)
+              ?.global ||
+              hasUnfillablePatchReads(attr.value.extra?.referencedBindings))
+          ) {
+            unsupported(attr);
           }
         }
         return;
-      }
-      // A seeded `<const>` equality-elides the initial write a values-free
-      // shell needs, so it stays unsupported inside branches.
-      if (
-        tagName === "const" &&
-        tag.findParent(
-          (parent) =>
-            parent.isMarkoTag() &&
-            (isConditionTag(parent) || isCoreTagName(parent, "for")),
-        )
-      ) {
-        unsupported(node);
       }
       // Client state participates through value fills: patches never carry
       // state, and holes it feeds recompute through the signal graph.
