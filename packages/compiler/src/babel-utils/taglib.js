@@ -14,7 +14,7 @@ export function getTagDefForTagName(file, tagName) {
     }
 
     if (!seen.has(tagDef)) {
-      seen.add(tagName);
+      seen.add(tagDef);
       const { filePath } = tagDef;
       const len = filePath.length;
 
