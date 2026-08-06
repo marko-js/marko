@@ -7,7 +7,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_for_of(input.labels, (label) => {
 		const $scope1_id = _scope_id();
 		let picks = 0;
-		_html(`<li>${_patch_text($scope1_id, "#text/0", label)}${_escape(label)}${_el_resume($scope1_id, "#text/0")}<span>${_escape(picks)}${_el_resume($scope1_id, "#text/1")}</span><button>+</button>${_el_resume($scope1_id, "#button/2")}</li>`);
+		_html(`<li>${_patch_text($scope1_id, "#text/0", label)}${_el_resume($scope1_id, "#text/0")}<span>${_escape(picks)}${_el_resume($scope1_id, "#text/1")}</span><button>+</button>${_el_resume($scope1_id, "#button/2")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_value($scope1_id, "__tests__/template.marko0", picks, 1);
 		writeScope($scope1_id, { picks }, "__tests__/template.marko", "2:4", { picks: "5:12" });
