@@ -15,13 +15,14 @@
 // PATCH
 [`b0 b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   ta: "Store!",
+  d1: ["a0", ["Ac", 0], "a", "Aa", "d"],
+  d2: ["a0", ["Ac", 1], "a", "Aa", "d"],
   lc: [{
     ca: {
       ba: [{
         s: {
           vb0: 0
-        },
-        d1: 0
+        }
       }, "b0"]
     }
   }, {
@@ -29,8 +30,7 @@
       ba: [{
         s: {
           vb0: 0
-        },
-        d2: 0
+        }
       }, "b0"]
     }
   }]

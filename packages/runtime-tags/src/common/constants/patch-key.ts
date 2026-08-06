@@ -6,6 +6,7 @@ export const Branch = "b";
 export const Child = "c";
 export const Control = "n";
 export const Effect = "e";
+export const GlobalEffect = "g";
 // Mirrors `AccessorProp.Global` on live scopes.
 export const Globals = "$";
 export const Loop = "l";
