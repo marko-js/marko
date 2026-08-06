@@ -3,7 +3,7 @@ var badge_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let seen = 0;
-	_html(`<footer><span>${_patch_text($scope0_id, "a", input.label)}${_escape(input.label)}${_el_resume($scope0_id, "a")} (<!>${_escape(seen)}${_el_resume($scope0_id, "b")})</span><button>ack</button>${_el_resume($scope0_id, "c")}</footer>`);
+	_html(`<footer><span>${_patch_text($scope0_id, "a", input.label)}${_el_resume($scope0_id, "a")} (<!>${_escape(seen)}${_el_resume($scope0_id, "b")})</span><button>ack</button>${_el_resume($scope0_id, "c")}</footer>`);
 	_script($scope0_id, "b0");
 	$scope0_reason && writeScope($scope0_id, { g: seen });
 	_resume_branch($scope0_id);
@@ -23,7 +23,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<main><ul>");
 	_for_of(input.items, (item) => {
 		const $scope3_id = _scope_id();
-		_html(`<li>${_patch_text($scope3_id, "a", item.label)}${_escape(item.label)}${_el_resume($scope3_id, "a")}`);
+		_html(`<li>${_patch_text($scope3_id, "a", item.label)}${_el_resume($scope3_id, "a")}`);
 		_if(() => {
 			if (item.sale) {
 				const $scope4_id = _scope_id();
@@ -39,11 +39,11 @@ var template_default = _template_persisted("a", (input) => {
 	_if(() => {
 		if (input.summary) {
 			const $scope1_id = _scope_id();
-			_html(`<section>${_patch_text($scope1_id, "a", input.summary)}${_escape(input.summary)}${_el_resume($scope1_id, "a")}`);
+			_html(`<section>${_patch_text($scope1_id, "a", input.summary)}${_el_resume($scope1_id, "a")}`);
 			_if(() => {
 				if (input.detail) {
 					const $scope2_id = _scope_id();
-					_html(`<small>${_patch_text($scope2_id, "a", input.detail)}${_escape(input.detail)}${_el_resume($scope2_id, "a")}</small>`);
+					_html(`<small>${_patch_text($scope2_id, "a", input.detail)}${_el_resume($scope2_id, "a")}</small>`);
 					_subscribe(_serialize_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}

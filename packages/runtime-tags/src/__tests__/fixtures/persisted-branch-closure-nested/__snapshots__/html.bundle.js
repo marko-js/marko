@@ -6,7 +6,7 @@ _renderer_shells({
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_inner = _serialize_guard($scope0_reason, 2), $sg__input_outer = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1>`);
 	_if(() => {
 		if (input.outer) {
 			const $scope1_id = _scope_id();

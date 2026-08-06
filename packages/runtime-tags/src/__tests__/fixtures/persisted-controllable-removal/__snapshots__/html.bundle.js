@@ -5,7 +5,7 @@ var template_default = _template_persisted("a", (input) => {
 	const handler = _resume((next) => {
 		document.querySelector("main").dataset.got = next;
 	}, "a0");
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "a")}</h1><input${_attr_input_value($scope0_id, "b", input.value, input.wire ? handler : void 0)}${_patch_bind($scope0_id, "Eb", input.wire ? handler : void 0)}${_patch_control($scope0_id, "b", 2, input.value)}>${_el_resume($scope0_id, "b")}</main>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1><input${_attr_input_value($scope0_id, "b", input.value, input.wire ? handler : void 0)}${_patch_bind($scope0_id, "Eb", input.wire ? handler : void 0)}${_patch_control($scope0_id, "b", 2, input.value)}>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && writeScope($scope0_id, {
 		f: input.value,
