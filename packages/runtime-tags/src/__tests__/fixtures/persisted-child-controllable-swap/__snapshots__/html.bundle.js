@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 _renderer_shells({ b0: ",`b0 b1;Db%l ;<span>Seen <!></span><button>+</button>`" });
 var counter_default = _template_persisted("b", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1);
+	const $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -18,7 +18,7 @@ var counter_default = _template_persisted("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
 	$scope0_reason && writeScope($scope0_id, { e: input.onCount });
 });
 
