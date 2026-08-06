@@ -17,7 +17,7 @@ _renderer_shells({
 	a3: ",`a3;D ;<small> </small>`"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _serialize_guard($scope0_reason, 1), $sg__input_detail = _serialize_guard($scope0_reason, 3), $sg__input_summary = _serialize_guard($scope0_reason, 2);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 1), $sg__input_detail = _source_guard($scope0_reason, 3), $sg__input_summary = _source_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = /* @__PURE__ */ new Set();
 	_html("<main><ul>");
@@ -28,13 +28,13 @@ var template_default = _template_persisted("a", (input) => {
 			if (item.sale) {
 				const $scope4_id = _scope_id();
 				_html("<em>on sale</em>");
-				_serialize_if($scope0_reason, 1) && writeScope($scope4_id, {});
+				$scope0_reason && writeScope($scope4_id, {});
 				return 0;
 			}
-		}, $scope3_id, "b", $sg__input_items, $sg__input_items, $sg__input_items, void 0, void 0, ["a1"]);
+		}, $scope3_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a1"]);
 		_html("</li>");
 		writeScope($scope3_id, {});
-	}, "id", $scope0_id, "a", $sg__input_items, $sg__input_items, $sg__input_items, void 0, void 0, "a0");
+	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0");
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	_if(() => {
 		if (input.summary) {
@@ -44,15 +44,15 @@ var template_default = _template_persisted("a", (input) => {
 				if (input.detail) {
 					const $scope2_id = _scope_id();
 					_html(`<small>${_patch_text($scope2_id, "a", input.detail, $scope0_owned, 3)}${_el_resume($scope2_id, "a")}</small>`);
-					_subscribe(_serialize_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
-			}, $scope1_id, "b", $sg__input_detail, $sg__input_detail, $sg__input_detail, void 0, void 0, ["a3"]);
+			}, $scope1_id, "b", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["a3"]);
 			_html("</section>");
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", _serialize_guard($scope0_reason, 0), $sg__input_summary, $sg__input_summary, void 0, void 0, ["a2"]);
+	}, $scope0_id, "b", 1, $sg__input_summary, $sg__input_summary, void 0, void 0, ["a2"]);
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 4) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "c", $childScope);

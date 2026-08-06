@@ -1,0 +1,19 @@
+<main>
+  <div><b>hi<!--M_*3 #text/0--></b><i>a<!--M_*2 #text/1--></i></div>
+  <button>0<!--M_*1 #text/2--></button><!--M_*1 #button/1-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "#childScope/0": _(2)
+    }, {
+      "BranchScopes:#text/0": _(3),
+      input_label: "hi"
+    }, {
+      _: _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-child-const-attr/template.marko_0 1"
+  ];
+  M._.w()
+</script>
