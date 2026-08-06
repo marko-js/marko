@@ -681,7 +681,25 @@ export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   if (isPersisted()) {
     const exprRoot = getExprRoot(getFnRoot(path) || path);
     const section = getOrCreateSection(exprRoot);
-    (exprRoot.node.extra ??= { section }).readsGlobal = true;
+    const extra = (exprRoot.node.extra ??= { section });
+    // A direct static member read records its key; anything else (aliased,
+    // dynamic, escaping) is opaque and guards on the whole bag.
+    const { parent } = path;
+    const key =
+      (t.isMemberExpression(parent) || t.isOptionalMemberExpression(parent)) &&
+      parent.object === path.node
+        ? parent.computed
+          ? t.isStringLiteral(parent.property)
+            ? parent.property.value
+            : undefined
+          : t.isIdentifier(parent.property)
+            ? parent.property.name
+            : undefined
+        : undefined;
+    extra.readsGlobal =
+      key === undefined || extra.readsGlobal === true
+        ? true
+        : (extra.readsGlobal ?? new Set()).add(key);
     // Rolls up through custom-tag analyze so a call site can classify
     // whether skipping this template's render could hide a global change.
     getFile().metadata.marko.persistedGlobals = true;
@@ -883,6 +901,17 @@ function trackReference(
   addReadToExpression(root, reference, undefined);
 }
 
+// Unions two global-read records; an opaque read poisons the pair. Reuse of
+// a side's set only ever ADDS keys, which over-guards — never under-guards.
+export function mergeGlobalReads(
+  a: true | Set<string> | undefined,
+  b: true | Set<string> | undefined,
+) {
+  if (a === true || b === true) return true;
+  if (a && b) for (const key of b) a.add(key);
+  return a || b;
+}
+
 export function mergeReferences<T extends t.Node>(
   section: Section,
   target: T,
@@ -902,7 +931,12 @@ export function mergeReferences<T extends t.Node>(
     // create a `merged` cycle and double its reads.
     if (extra === targetExtra) continue;
     extra.merged = targetExtra;
-    if (extra.readsGlobal) targetExtra.readsGlobal = true;
+    if (extra.readsGlobal) {
+      targetExtra.readsGlobal = mergeGlobalReads(
+        targetExtra.readsGlobal,
+        extra.readsGlobal,
+      );
+    }
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);

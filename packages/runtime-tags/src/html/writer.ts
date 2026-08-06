@@ -560,10 +560,12 @@ export function _patch_effect(
   scopeId: number,
   registerId: string,
   accessors: string,
+  globals?: 1,
 ) {
   if ($chunk.boundary.state.writesPatches) {
     writePatch(scopeId, {
-      [PatchKey.Effect + registerId]: accessors,
+      [(globals ? PatchKey.GlobalEffect : PatchKey.Effect) + registerId]:
+        accessors,
     });
   }
   return "";
@@ -1522,7 +1524,10 @@ export class State implements SerializeState {
   declare rootScopeId?: number;
   declare patchPartials?: Record<number, Record<string, unknown>>;
   declare patchBinds?: number;
-  declare patchParents?: Record<number, [parentScopeId: number, link: string]>;
+  declare patchParents?: Record<
+    number,
+    [parentScopeId: number, link: string | [accessor: string, key: unknown]]
+  >;
   declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
   declare patchFlushed?: 1;
   declare patchDeferred?: 1;

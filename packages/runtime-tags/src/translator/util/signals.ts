@@ -45,6 +45,7 @@ import {
   intersectionMeta,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
+  mergeGlobalReads,
   type ReferencedBindings,
 } from "./references";
 import { callRuntime } from "./runtime";
@@ -103,6 +104,7 @@ export interface Signal {
   render: t.Statement[];
   effect: t.Statement[];
   hasHTMLEffect: boolean;
+  globalEffectReads: true | Set<string> | undefined;
   hasSideEffect: boolean;
   forcePersist: boolean;
   inline: { value: t.Expression } | undefined;
@@ -316,6 +318,7 @@ export function getSignal(
         render: [],
         effect: [],
         hasHTMLEffect: false,
+        globalEffectReads: undefined,
         build: undefined,
         export: !!exportName,
         hasSideEffect: !!(
@@ -1349,18 +1352,33 @@ function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
 export function addHTMLEffectCall(
   section: Section,
   referencedBindings?: ReferencedBindings,
+  globalReads?: true | Set<string>,
 ) {
   const signal = getSignal(section, referencedBindings);
   signal.hasHTMLEffect = signal.hasSideEffect = true;
+  if (globalReads) {
+    signal.globalEffectReads = mergeGlobalReads(
+      signal.globalEffectReads,
+      globalReads,
+    );
+  }
 }
 
 function toSequenceExpression(exprs: t.Expression[]) {
   return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
 }
 
-// An effect whose server-derived reads fills cannot keep current (globals
-// never re-queue effects) cannot run faithfully on a constructed scope;
-// its section drops its shell.
+// A global-reading effect observes the reserved root globals stamp, so
+// its section ships the effect patcher even without effect-read bindings.
+export function sectionHasGlobalEffect(section: Section) {
+  for (const signal of getSignals(section).values()) {
+    if (signal.globalEffectReads) return true;
+  }
+  return false;
+}
+
+// An effect read the wire cannot keep current (unfillable params, global-
+// derived bindings) blocks constructs; direct `$global` reads re-queue.
 export function sectionHasServerEffect(section: Section) {
   for (const signal of getSignals(section).values()) {
     if (signal.hasHTMLEffect) {
@@ -1621,6 +1639,25 @@ export function writeHTMLResumeStatements(
             accessors += (accessors && " ") + getScopeAccessor(binding);
           }
         });
+        if (accessors && section.depth) accessors += " " + section.depth;
+        // Global reads ride a trailing `!` segment naming the static keys
+        // read (bare `!` = whole bag; `!` cannot be an accessor in either
+        // mode), on the GlobalEffect entry kind so a runtime that cannot
+        // parse the segment rejects instead of missing.
+        const globalReads = signal.globalEffectReads;
+        if (globalReads) {
+          let keys = "";
+          if (globalReads !== true) {
+            for (const key of [...globalReads].sort()) {
+              if (!key || key.includes(" ")) {
+                keys = "";
+                break;
+              }
+              keys += " " + key;
+            }
+          }
+          accessors += (accessors && " ") + "!" + keys;
+        }
         if (accessors) {
           body.push(
             t.expressionStatement(
@@ -1630,9 +1667,8 @@ export function writeHTMLResumeStatements(
                 t.stringLiteral(
                   getResumeRegisterId(section, signal.referencedBindings),
                 ),
-                t.stringLiteral(
-                  section.depth ? accessors + " " + section.depth : accessors,
-                ),
+                t.stringLiteral(accessors),
+                ...(globalReads ? [t.numericLiteral(1)] : []),
               ),
             ),
           );
