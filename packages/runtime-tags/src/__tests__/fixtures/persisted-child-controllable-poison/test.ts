@@ -1,15 +1,22 @@
 import type { TestConfig } from "../../main.test";
 
-// A ROOT-registered handler feeding a construct inside a loop: the bind
-// path would have to cross the loop boundary (items pair by key, links by
-// accessor — not expressible yet), so it poisons and the patch rejects (a
-// document navigation) instead of installing a silently broken handler.
+const clickFirst = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+const clickSecond = (document: Document) => {
+  document.querySelectorAll<HTMLButtonElement>("button")[1]!.click();
+};
+
+// A ROOT-registered handler feeding constructs inside a loop binds
+// through keyed hops: the reconstructed second item's control reports its
+// own step through the live handler, proving per-key selection.
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [
     { title: "Store", show: true },
+    clickFirst,
     { title: "Store!", show: false },
     { title: "Store!", show: true },
+    clickSecond,
   ],
 };
