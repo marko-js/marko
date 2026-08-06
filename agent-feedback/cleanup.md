@@ -8,12 +8,6 @@ Duplication, dead code, inconsistencies, refactor opportunities. Format and rule
 
 After `host = rootNode.startNode`, `renderAndMorph` calls `domCompat.setScopeNodes(host, rootNode.startNode, rootNode.endNode)`, writing `#StartNode`/`#EndNode` onto the fragment's DOM marker (a self-assign plus an unused end ref) instead of onto the tags branch `scope`. Since `scope[#StartNode]` never becomes the fragment marker, the `rootNode = host.fragment` fast path can never fire for a resumed child and every re-render falls back to the `___componentLookup` / `___marko5Component.___rootNode` lookup. Correctness is unaffected, so this is a dead optimization plus a misleading invariant; passing `scope` restores it, but check destroy/move first, since the fragment markers sit inside the scope's original start/end range. Re-verify: on a second re-render of a server-rendered class child, `domCompat.getStartNode(scope).fragment` should be set.
 
-## Retitle the `_attrs` test or give its event-handler routing real coverage
-
-`packages/runtime-tags/src/__tests__/html-attrs.test.ts` › `it("should strip event handlers, invalid attribute names and content")` | 2026-07-23 | impact:low | effort:low
-
-The test's only two event-handler assertions are commented out (and call a long-gone `helpers.attrs`), and the title is wrong: `_attrs` (`src/html/attrs.ts`) does not strip `on*` names, it collects them into `events` and registers them via `_scope(scopeId, { [AccessorPrefix.EventAttributes + nodeAccessor]: events })`. They cannot simply be uncommented — outside a render `_scope` reads `$chunk.boundary` and throws. Either delete the dead comments and retitle to what the test actually checks (invalid attribute names, and `content` on a non-`<meta>` tag), or drive `_attrs` inside an active writer boundary and assert the handler lands on the scope. Re-verify: `node -r ~ts -e 'require("./packages/runtime-tags/src/html/attrs.ts")._attrs({onClick(){}},"a",0,"")'` throws `TypeError: Cannot read properties of undefined (reading 'boundary')`.
-
 ## Extract one helper for the `attrTag`/`attrTags` merge duplicated in `known-tag.ts`
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `translateAttrTag` | 2026-07-23 | impact:low | effort:low
