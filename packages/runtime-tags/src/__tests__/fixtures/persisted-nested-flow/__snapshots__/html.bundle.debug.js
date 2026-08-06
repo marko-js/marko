@@ -17,7 +17,7 @@ _renderer_shells({
 	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell;D ;<small> </small>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _serialize_guard($scope0_reason, 1), $sg__input_detail = _serialize_guard($scope0_reason, 3), $sg__input_summary = _serialize_guard($scope0_reason, 2);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 1), $sg__input_detail = _source_guard($scope0_reason, 3), $sg__input_summary = _source_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = new Set();
 	_html("<main><ul>");
@@ -28,13 +28,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			if (item.sale) {
 				const $scope4_id = _scope_id();
 				_html("<em>on sale</em>");
-				_serialize_if($scope0_reason, 1) && writeScope($scope4_id, {}, "__tests__/template.marko", "6:10");
+				$scope0_reason && writeScope($scope4_id, {}, "__tests__/template.marko", "6:10");
 				return 0;
 			}
-		}, $scope3_id, "#text/1", $sg__input_items, $sg__input_items, $sg__input_items, void 0, void 0, ["__tests__/template.marko_4_shell"]);
+		}, $scope3_id, "#text/1", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["__tests__/template.marko_4_shell"]);
 		_html("</li>");
 		writeScope($scope3_id, {}, "__tests__/template.marko", "3:6");
-	}, "id", $scope0_id, "#ul/0", $sg__input_items, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3_shell");
+	}, "id", $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3_shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
 	_if(() => {
 		if (input.summary) {
@@ -44,15 +44,15 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				if (input.detail) {
 					const $scope2_id = _scope_id();
 					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail, $scope0_owned, 3)}${_el_resume($scope2_id, "#text/0")}</small>`);
-					_subscribe(_serialize_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"));
+					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"));
 					return 0;
 				}
-			}, $scope1_id, "#text/1", $sg__input_detail, $sg__input_detail, $sg__input_detail, void 0, void 0, ["__tests__/template.marko_2_shell"]);
+			}, $scope1_id, "#text/1", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["__tests__/template.marko_2_shell"]);
 			_html("</section>");
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", _serialize_guard($scope0_reason, 0), $sg__input_summary, $sg__input_summary, void 0, void 0, ["__tests__/template.marko_1_shell"]);
+	}, $scope0_id, "#text/1", 1, $sg__input_summary, $sg__input_summary, void 0, void 0, ["__tests__/template.marko_1_shell"]);
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 4) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/2", $childScope);
