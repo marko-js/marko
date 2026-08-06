@@ -119,7 +119,9 @@ _Avoid_: fragment, component instance, renderer
 
 **Controllable**:
 A native element whose value, checked, or open state Marko synchronizes with
-bound state (`dom/controllable.ts`).
+bound state (`dom/controllable.ts`). Controllable is the capability; the
+`Controlled*` accessors and `ControlledType` are the per-element state, which
+is `ControlledType.None` until a change handler binds it.
 _Avoid_: controlled component
 
 **Walk string**:
