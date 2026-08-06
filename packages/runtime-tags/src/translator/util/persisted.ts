@@ -1,17 +1,108 @@
+import type { types as t } from "@marko/compiler";
 import { getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "./constants/binding-type";
 import { isPersisted } from "./marko-config";
 import { filter, forEach, type Opt } from "./optional";
-import { type Binding, getCanonicalBinding } from "./references";
-import { isDirectClosure, type Section } from "./sections";
-import { getSerializeSourcesForRef } from "./serialize-reasons";
+import {
+  type Binding,
+  bindingUtil,
+  getCanonicalBinding,
+  type Sources,
+} from "./references";
+import { ensureReasonGroups, isDirectClosure, type Section } from "./sections";
+import {
+  getSerializeSourcesForExpr,
+  getSerializeSourcesForRef,
+} from "./serialize-reasons";
 import { createProgramState } from "./state";
+
+// A custom tag instance whose attrs carry only client state and constants
+// is client-owned: patches skip its render, so nothing inside goes stale.
+export const kPatchClientOwned = Symbol("patch client owned");
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    [kPatchClientOwned]?: true;
+  }
+}
+declare module "@marko/compiler" {
+  export interface MarkoMeta {
+    /** This template (or one it renders) reads `$global`: skipping its
+     * render in a patch could hide a global change. */
+    persistedGlobals?: true;
+  }
+}
 
 export function scopeReasonRuntime() {
   return isPersisted()
     ? ("_persisted_reason" as const)
     : ("_scope_reason" as const);
+}
+
+// Persisted analyze work needing resolved sources: runs inside reference
+// finalization but BEFORE reason groups freeze and call sites classify.
+const [getPersistedFinalizers] = createProgramState<(() => void)[]>(() => []);
+export function onFinalizePersisted(finalize: () => void) {
+  getPersistedFinalizers().push(finalize);
+}
+export function finalizePersisted() {
+  for (const finalize of getPersistedFinalizers()) finalize();
+}
+
+// Params that must stay server-owned (structural tests, `$global` mixes):
+// no client delivery path exists, so call sites reject state feeds.
+const serverRequiredParamsBySection = new WeakMap<Section, Opt<Binding>>();
+
+// Recorded from resolved sources (analyze-time callers defer through
+// `onFinalizePersisted`), filtered to the template's own root params.
+export function recordPersistedServerRequired(
+  section: Section,
+  sources: Sources | undefined,
+) {
+  while (section.parent) section = section.parent;
+  const rootSection = section;
+  forEach(sources?.param, (binding) => {
+    if (binding.section === rootSection) {
+      serverRequiredParamsBySection.set(
+        rootSection,
+        bindingUtil.add(
+          serverRequiredParamsBySection.get(rootSection),
+          binding,
+        ),
+      );
+    }
+  });
+}
+
+export function getPersistedServerRequiredParams(rootSection: Section) {
+  return serverRequiredParamsBySection.get(rootSection);
+}
+
+// Analyze-time recording defers until sources resolve.
+export function recordPersistedServerRequiredExpr(
+  section: Section,
+  extra: t.NodeExtra,
+) {
+  onFinalizePersisted(() => {
+    recordPersistedServerRequired(section, getSerializeSourcesForExpr(extra));
+  });
+}
+
+// Shared per-capture analyze hook: freezes the value's reason groups for
+// translate-time ownership gates and records `$global`-mixed params.
+export function ensurePersistedCaptureGroups(
+  section: Section,
+  getExtra: () => t.NodeExtra,
+) {
+  onFinalizePersisted(() => {
+    const sources = getSerializeSourcesForExpr(getExtra());
+    ensureReasonGroups(sources);
+    // A `$global` mixed into a param-fed value cannot survive a withheld
+    // capture: the params must stay server-owned.
+    if (sources?.param && sources.global) {
+      recordPersistedServerRequired(section, sources);
+    }
+  });
 }
 
 // The stable wire/registry key for a fill: template id plus a program-wide
