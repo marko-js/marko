@@ -6,4 +6,4 @@ var template_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a0");
 	$scope0_reason && writeScope($scope0_id, {});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, 1);

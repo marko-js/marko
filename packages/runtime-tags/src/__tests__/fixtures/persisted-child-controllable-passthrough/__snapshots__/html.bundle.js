@@ -20,7 +20,7 @@ var counter_default = _template_persisted("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
 	$scope0_reason && writeScope($scope0_id, { e: input.onCount });
-});
+}, 0, 0);
 
 // tags/middle/index.marko
 var middle_default = _template_persisted("c", (input) => {
@@ -38,7 +38,7 @@ var middle_default = _template_persisted("c", (input) => {
 		onCount: input.onCount
 	});
 	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
-});
+}, 0, () => [counter_default]);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -61,4 +61,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { c: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [middle_default]);

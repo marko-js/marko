@@ -4,7 +4,7 @@ var leaf_default = _template_persisted("__tests__/tags/relay/tags/leaf/index.mar
 	const $scope0_id = _scope_id();
 	_html(`<b>${_patch_text($scope0_id, "#text/0", input.text, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</b>`);
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/relay/tags/leaf/index.marko", 0);
-});
+}, 0, 0);
 
 // tags/relay/index.marko
 var relay_default = _template_persisted("__tests__/tags/relay/index.marko", (input) => {
@@ -17,7 +17,7 @@ var relay_default = _template_persisted("__tests__/tags/relay/index.marko", (inp
 	leaf_default({ text: input.val });
 	_html("</section>");
 	$scope0_reason && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/relay/index.marko", 0);
-});
+}, 0, () => [leaf_default]);
 
 // template.marko
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
@@ -40,4 +40,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		count: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.base);
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [relay_default]);

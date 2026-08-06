@@ -544,3 +544,18 @@ and after resume.
 `packages/runtime-class/src/runtime/helpers/dynamic-tag.js` › `addTagsEvents` | 2026-08-05 | impact:med | effort:high
 
 A _split_ Class component (one with a `component-browser.js`, so `FLAG_WILL_RERENDER_IN_BROWSER` is unset) that passes an inline function to a Tags child — `<tags-pinger onPing(count) { component.handlePing(count) }/>` — resumes with a permanently dead handler: `registerClassFunctions` serializes it as the compat noop, and unlike a rerendering parent the split parent never re-feeds a live one. The string form `onPing("handlePing")` works, because `addTagsEvents` serializes `[CLASS_EVENT_MARKER, componentId, method]` and `runtime-dom.js`'s `setClassEventResolver` revives it by name; an inline closure has no name to bridge, so nothing can revive it. A real fix needs the Marko 5 translator to give each inline handler an id reachable from the browser bundle so it can serialize a marker like the named form; failing that, a compile-time or `MARKO_DEBUG` error on this exact shape beats silently dropping events. Re-verify: copy `interop-event-split-class-to-tags` and replace `onPing("handlePing")` in `components/class-host/index.marko` with an inline body calling `component.handlePing(count)` — the fixture harness reports `Snapshot conflict: "render.debug.md" was written with different content by two tests`, because CSR updates `#class` and resumed SSR does not.
+
+## Circular custom tags TDZ at module evaluation in DOM output
+
+Mutually recursive custom tags (`tags/a-tag` renders `b-tag`, which
+renders `a-tag`) compile per-template but the DOM output's static
+template-string composition (`const $template$1 = ((_w0) =>
+`...${_w0}...`)($template$2)`) references the sibling's module-level
+const across the import cycle; the bundler's concatenation order then
+hits `Cannot access '$template$1' before initialization`at module
+evaluation, before any render. The composition would need to be lazy (or
+bail to a runtime reference) when the child resolves through a cycle.
+Found while building a persisted fixture; reproduces with`persisted:
+false` (the inlining is mode-agnostic). Re-verify: two tags rendering
+each other behind a depth guard, bundle the page, import the dom bundle
+— eval throws.

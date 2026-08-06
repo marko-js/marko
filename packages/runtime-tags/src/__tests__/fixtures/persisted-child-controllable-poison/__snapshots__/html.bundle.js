@@ -23,7 +23,7 @@ var counter_default = _template_persisted("b", (input) => {
 		e: input.onCount,
 		f: input.step
 	}) : _owned_guard($scope0_owned, 2) && _patch_write($scope0_id, "f", input.step);
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -55,4 +55,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [counter_default]);

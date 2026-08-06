@@ -21,4 +21,4 @@ var template_default = _template_persisted("a", (input) => {
 		i: double
 	});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, 0);

@@ -7,7 +7,7 @@ var badge_default = _template_persisted("__tests__/tags/badge.marko", (input) =>
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
 	$scope0_reason && writeScope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // template.marko
 _renderer_shells({
@@ -67,4 +67,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_summary: ["input.summary"],
 		input_detail: ["input.detail"]
 	});
-}, 1);
+}, 1, () => [badge_default]);

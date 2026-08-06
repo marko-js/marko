@@ -7,7 +7,7 @@ var badge_default = _template_persisted("b", (input) => {
 	_script($scope0_id, "b0");
 	$scope0_reason && writeScope($scope0_id, { g: seen });
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // template.marko
 _renderer_shells({
@@ -64,4 +64,4 @@ var template_default = _template_persisted("a", (input) => {
 		k: $input_detail__closures,
 		c: _existing_scope($childScope)
 	});
-}, 1);
+}, 1, () => [badge_default]);

@@ -14,4 +14,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, 0, $scope0_id, "#ul/0", 1, $sg__input_labels, $sg__input_labels, void 0, void 0, "__tests__/template.marko_1_shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_labels)}`);
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
-}, 1);
+}, 1, 0);
