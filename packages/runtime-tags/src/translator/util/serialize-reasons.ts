@@ -20,6 +20,10 @@ import {
 } from "./references";
 import type { Section } from "./sections";
 
+// Keys a binding value that must serialize despite `noSerialize` because an
+// intersection reads it from scope and nothing client side recomputes it.
+export const kSerializedValueReason = Symbol("serializedValue");
+
 export type SerializeReasons = true | [Sources, ...Sources[]];
 export type SerializeReason = true | Sources;
 type SerializeKey = symbol & { __serialize_key__: 1 };

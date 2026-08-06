@@ -57,6 +57,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
   isForceSerialized,
+  kSerializedValueReason,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -1156,32 +1157,57 @@ export function finalizeReferences() {
           for (let j = i + 1; j < numReferences; j++) {
             const binding1 = intersection[i];
             const binding2 = intersection[j];
-            if (
-              !isForceSerialized(section, binding1) &&
-              !isSupersetSources(binding1, binding2)
-            ) {
-              if (!isSameOrChildSection(section, binding1.section)) {
-                addOwnerSerializeReason(
-                  section,
+            if (!isSupersetSources(binding1, binding2)) {
+              // A sourceless binding has no client signal to recompute it, so
+              // once the intersection re-runs its value must resume from scope
+              // even when a spread otherwise skips serializing it.
+              if (!binding1.sources && binding1.noSerialize) {
+                addSerializeReason(
                   binding1.section,
-                  mergeSources(binding1.sources, binding2.sources),
+                  binding2.sources,
+                  binding1,
+                  kSerializedValueReason,
                 );
               }
+              if (!isForceSerialized(section, binding1)) {
+                if (!isSameOrChildSection(section, binding1.section)) {
+                  addOwnerSerializeReason(
+                    section,
+                    binding1.section,
+                    mergeSources(binding1.sources, binding2.sources),
+                  );
+                }
 
-              addSerializeReason(binding1.section, binding2.sources, binding1);
-            }
-            if (
-              !isForceSerialized(section, binding2) &&
-              !isSupersetSources(binding2, binding1)
-            ) {
-              if (!isSameOrChildSection(section, binding2.section)) {
-                addOwnerSerializeReason(
-                  section,
-                  binding2.section,
-                  mergeSources(binding1.sources, binding2.sources),
+                addSerializeReason(
+                  binding1.section,
+                  binding2.sources,
+                  binding1,
                 );
               }
-              addSerializeReason(binding2.section, binding1.sources, binding2);
+            }
+            if (!isSupersetSources(binding2, binding1)) {
+              if (!binding2.sources && binding2.noSerialize) {
+                addSerializeReason(
+                  binding2.section,
+                  binding1.sources,
+                  binding2,
+                  kSerializedValueReason,
+                );
+              }
+              if (!isForceSerialized(section, binding2)) {
+                if (!isSameOrChildSection(section, binding2.section)) {
+                  addOwnerSerializeReason(
+                    section,
+                    binding2.section,
+                    mergeSources(binding1.sources, binding2.sources),
+                  );
+                }
+                addSerializeReason(
+                  binding2.section,
+                  binding1.sources,
+                  binding2,
+                );
+              }
             }
           }
         }

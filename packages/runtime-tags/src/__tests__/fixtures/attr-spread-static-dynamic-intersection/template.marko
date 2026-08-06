@@ -1,0 +1,23 @@
+<define/Stat>
+  <return={
+    class: "foo",
+  }>
+</define>
+
+<define/Dyn>
+  <let/count=0/>
+
+  <return={
+    "data-count": count,
+    onClick() {
+      count++;
+    },
+  }>
+</define>
+
+<Stat/staticAttrs/>
+<Dyn/dynamicAttrs/>
+
+<button ...staticAttrs ...dynamicAttrs>
+  Click
+</button>
