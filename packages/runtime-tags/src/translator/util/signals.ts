@@ -1006,29 +1006,51 @@ export function writeSignals(section: Section) {
             if (isPatchFillBinding(member)) {
               let helper: "_fill_join" | "_fill_join_if" | "_fill_join_for" =
                 "_fill_join";
-              let hopAccessor: t.Expression | undefined;
-              let hopIndex: t.Expression | undefined;
+              let hopExprs: t.Expression[] = [];
               if (member.section !== signal.section) {
-                // The branch's closure builder is the source of truth for
-                // the hop; the runtime rebuilds its dispatch over this join.
-                const hop = getClosureSignalBuilder(signal.section)?.(
-                  member,
-                  t.numericLiteral(0),
-                );
-                if (!hop || !t.isCallExpression(hop)) {
-                  throw new Error(
-                    "Marko: expected a branch closure builder for a patch fill read.",
+                // Each branch's closure builder is the source of truth
+                // for its hop; deeper reads compose the chain.
+                const hopArgs: t.Expression[][] = [];
+                for (
+                  let hopSection: Section | undefined = signal.section;
+                  hopSection && hopSection !== member.section;
+                  hopSection = hopSection.parent
+                ) {
+                  const hop = getClosureSignalBuilder(hopSection)?.(
+                    member,
+                    t.numericLiteral(0),
+                  );
+                  if (!hop || !t.isCallExpression(hop)) {
+                    throw new Error(
+                      "Marko: expected a branch closure builder for a patch fill read.",
+                    );
+                  }
+                  // 3 args is `_if_closure(accessor, index, render)`;
+                  // loop forms redispatch as `_for_closure` (all items).
+                  const args = hop.arguments as t.Expression[];
+                  hopArgs.push(
+                    args.length === 3 ? [args[0], args[1]] : [args[0]],
                   );
                 }
-                const args = hop.arguments as t.Expression[];
-                hopAccessor = args[0];
-                // 3 args is `_if_closure(accessor, index, render)`; loop
-                // forms rebuild as `_for_closure` (a fill reaches every item).
-                if (args.length === 3) {
-                  helper = "_fill_join_if";
-                  hopIndex = args[1];
+                const conditional = hopArgs[0].length === 2;
+                if (
+                  hopArgs.every((args) => (args.length === 2) === conditional)
+                ) {
+                  // Homogeneous chains flatten onto the per-kind helper.
+                  helper = conditional ? "_fill_join_if" : "_fill_join_for";
+                  hopExprs = hopArgs.flat();
                 } else {
-                  helper = "_fill_join_for";
+                  // Mixed chains compile a dispatch builder: the arrow
+                  // pulls in only the closure kinds its chain uses.
+                  const joinId = generateUidIdentifier("join");
+                  let dispatch: t.Expression = joinId;
+                  for (const args of hopArgs) {
+                    dispatch =
+                      args.length === 2
+                        ? callRuntime("_if_closure", args[0], args[1], dispatch)
+                        : callRuntime("_for_closure", args[0], dispatch);
+                  }
+                  hopExprs = [t.arrowFunctionExpression([joinId], dispatch)];
                 }
               }
               value = callRuntime(
@@ -1036,8 +1058,7 @@ export function writeSignals(section: Section) {
                 t.stringLiteral(getPatchFillKey(member)),
                 getScopeAccessorLiteral(member, true),
                 value,
-                hopAccessor,
-                hopIndex,
+                ...hopExprs,
               );
             }
           }

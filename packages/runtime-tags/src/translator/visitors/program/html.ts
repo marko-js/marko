@@ -309,7 +309,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       ) {
         unsupported(
           node,
-          "a server value read beyond a direct branch closure is not yet patchable",
+          "a server value's fill delivery path leaves the branch chain",
         );
       }
     },
@@ -569,7 +569,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         ) {
           unsupported(
             attr,
-            "a server value read beyond a direct branch closure is not yet patchable",
+            "a server value's fill delivery path leaves the branch chain",
           );
         }
         if (attr.type === "MarkoAttribute" && controlled.has(attr)) continue;
