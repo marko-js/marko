@@ -5,7 +5,7 @@ _renderer_shells({
 	a2: ",`a2 a7;Db%;<p>None <!></p>`"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_kind = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_kind = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main><div>");
