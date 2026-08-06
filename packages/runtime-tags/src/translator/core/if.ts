@@ -159,11 +159,11 @@ export const IfTag = {
           let statement: t.Statement | undefined;
           let singleChild = true;
 
-          for (const [, branchBody] of branches) {
+          for (const [, branchBodySection] of branches) {
             if (
               !(
-                branchBody?.content?.singleChild &&
-                branchBody.content.startType !== ContentType.Text
+                branchBodySection?.content?.singleChild &&
+                branchBodySection.content.startType !== ContentType.Text
               )
             ) {
               singleChild = false;
@@ -172,11 +172,11 @@ export const IfTag = {
           }
 
           for (let i = branches.length; i--;) {
-            const [branchTag, branchBody] = branches[i];
+            const [branchTag, branchBodySection] = branches[i];
             const bodyStatements = branchTag.node.body.body;
-            if (branchBody) {
+            if (branchBodySection) {
               const branchSerializeReason = getSerializeReason(
-                branchBody,
+                branchBodySection,
                 kBranchSerializeReason,
               );
               if (branchSerializeReason) {

@@ -14,12 +14,6 @@ After `host = rootNode.startNode`, `renderAndMorph` calls `domCompat.setScopeNod
 
 The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repeated one becomes `attrTag(props)`" is implemented four times. `translateAttrTag` and the `isAttributeTag(tag)` branch of `applyAttrObject` are near-verbatim ~35-line copies, including the `t.parenthesizedExpression` mutation trick, differing only in where `repeated` comes from and whether the result is returned or handed to `addStatement`. `translate-attrs.ts` › `translateAttrs` and `addDynamicAttrTagStatements` encode the same rule over `contentProperties` and over an attr-tag identifier assignment. One helper would collapse the two `known-tag.ts` copies and let the other two share the `repeated ? attrTags : attrTag` decision, so a future change cannot land on three of four sites. Re-verify: `rg -n '"attrTags"' packages/runtime-tags/src/translator` lists exactly those four sites.
 
-## Normalize the local naming flagged by the terminology audit
-
-`packages/runtime-tags/src/html/serializer.ts` › `State` | 2026-07-20 | impact:low | effort:low
-
-Three rename-in-place inconsistencies remain. `html/serializer.ts` spreads one mechanism over `assigns`/`assigned`/`addAssignment` and calls its generation counter `flush` though it is only compared (`parent.flush === state.flush`); `translator/core/if.ts` destructures the same branches entry as `branchBodySection` and as `branchBody`; `dom/controllable.ts` mixes `syncControllableFormInput` with `Controlled*` accessor/type prefixes while CONTEXT.md canonicalizes "controllable". The `startBinding`/`startMark` near-homophones live in `translator/core/show.ts`, not `core/await.ts`. While in `dom/controllable.ts`, drop the truncated first line of the three-line comment above `observeOnce` — an editing leftover that half-restates the next sentence and pushes the block past the two-line cap. Re-verify by grepping those symbols and `grep -n -B3 "^function observeOnce" packages/runtime-tags/src/dom/controllable.ts`.
-
 ## Make a params binding identifiable from `binding.type`
 
 `packages/runtime-tags/src/translator/util/references.ts` › `trackParamsReferences` | 2026-07-22 | impact:med | effort:high

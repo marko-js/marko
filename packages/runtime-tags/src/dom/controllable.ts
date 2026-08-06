@@ -511,7 +511,6 @@ export function _attr_details_or_dialog_open_script(
   );
 }
 
-// A spread re-render re-runs the setup script against the same element, so
 // A spread re-render re-runs the setup script; re-observing with the scope's
 // observer updates that registration instead of adding one.
 function observeOnce(

@@ -297,12 +297,12 @@ const KNOWN_OBJECTS = new Map<object, string>([
 
 class State {
   ids = 0;
-  flush = 0;
+  flushId = 0;
   wroteUndefined = false;
   buf = [] as string[];
   strs = new Map<string, Reference>();
   refs = new WeakMap<WeakKey, Reference>();
-  assigned = new Set<Reference>();
+  pendingAssignments = new Set<Reference>();
   boundary: Boundary | undefined = undefined;
   channel: SerializeChannel | undefined = undefined;
   channelDeps: Set<string> | null = null;
@@ -311,7 +311,7 @@ class State {
 
 // A `Map`/`Set` member that references an ancestor cannot be built into the
 // constructor (the ancestor's id isn't assigned yet), so it rides the
-// collection's reference in `assigned` and emits a post-construction call
+// collection's reference in `pendingAssignments` and emits a post-construction call
 // (`.add(v)` / `.set(k, v)`) once every id exists.
 interface DeferredCall {
   method: string;
@@ -320,25 +320,25 @@ interface DeferredCall {
 
 class Reference {
   declare debug?: Debug;
-  public assigns: null | string[] = null;
+  public assignments: null | string[] = null;
   public calls: null | DeferredCall[] = null;
   public scopeId: number | undefined = undefined;
   public channel: SerializeChannel | undefined = undefined;
   public parent: Reference | null;
   public accessor: string | null;
-  public flush: number;
+  public flushId: number;
   public pos: number | null;
   public id: string | null;
   constructor(
     parent: Reference | null,
     accessor: string | null,
-    flush: number,
+    flushId: number,
     pos: number | null = null,
     id: string | null = null,
   ) {
     this.parent = parent;
     this.accessor = accessor;
-    this.flush = flush;
+    this.flushId = flushId;
     this.pos = pos;
     this.id = id;
   }
@@ -380,7 +380,7 @@ export class Serializer {
       this.#state.channel = channel;
       return writeScopesRoot(this.#state, flushes);
     } finally {
-      this.#state.flush++;
+      this.#state.flushId++;
       this.#state.buf = [];
     }
   }
@@ -429,7 +429,7 @@ export function getRegistered(val: WeakKey) {
 
 // A payload with only scope data returns the fill array directly
 // (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
-// assigns/mutations, which may reference bindings created inside the fill
+// assignments/mutations, which may reference bindings created inside the fill
 // and so must evaluate after it) the fill is applied through the serialize
 // context instead and the payload ends in `,0` so an arbitrary value from
 // its last expression can never be misread as a fill — the browser only
@@ -467,7 +467,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   }
 
   let extras = "";
-  if (state.assigned.size || hasChannelMutations(state)) {
+  if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
     if (fillIndex !== -1) {
       buf[fillIndex] = "_(" + buf[fillIndex];
@@ -496,15 +496,15 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
 function writeAssigned(state: State) {
   let sep = state.buf.length ? "," : "";
 
-  if (state.assigned.size) {
-    const assigned = state.assigned;
-    state.assigned = new Set();
+  if (state.pendingAssignments.size) {
+    const pending = state.pendingAssignments;
+    state.pendingAssignments = new Set();
     let buf = "";
     let hasCalls = false;
-    for (const ref of assigned) {
-      if (ref.assigns) {
-        buf += sep + assignsToString(ref.assigns, ref.id!);
-        ref.assigns = null;
+    for (const ref of pending) {
+      if (ref.assignments) {
+        buf += sep + assignmentsToString(ref.assignments, ref.id!);
+        ref.assignments = null;
         sep = ",";
       }
       hasCalls ||= ref.calls !== null;
@@ -514,7 +514,7 @@ function writeAssigned(state: State) {
     // Batched assignments land in one entry above, so calls — which push
     // their args directly — walk the same set afterwards.
     if (hasCalls) {
-      for (const ref of assigned) {
+      for (const ref of pending) {
         if (!ref.calls) continue;
         for (const { method, args } of ref.calls) {
           state.buf.push(
@@ -591,7 +591,7 @@ function writeAssigned(state: State) {
 
   // Serializing call args or channel-mutation values can surface fresh
   // circular assignments/calls; drain them into this same payload.
-  if (state.assigned.size) {
+  if (state.pendingAssignments.size) {
     writeAssigned(state);
   }
 }
@@ -679,7 +679,7 @@ function writeReferenceOr(
 
     if (parent && isCircular(parent, ref)) {
       ensureId(state, ref);
-      state.assigned.add(ref);
+      state.pendingAssignments.add(ref);
       addAssignment(ref, accessId(state, parent) + toAccess(accessor));
       return false;
     }
@@ -694,7 +694,7 @@ function writeReferenceOr(
 
   state.refs.set(
     val,
-    (ref = new Reference(parent, accessor, state.flush, state.buf.length)),
+    (ref = new Reference(parent, accessor, state.flushId, state.buf.length)),
   );
   ref.channel = state.channel;
 
@@ -720,7 +720,7 @@ function trackScope(state: State, val: WeakKey, scopeId: number) {
 }
 
 function newScopeReference(state: State, val: WeakKey, scopeId: number) {
-  const ref = new Reference(null, null, state.flush);
+  const ref = new Reference(null, null, state.flushId);
   ref.scopeId = scopeId;
   ref.channel = state.channel;
   state.refs.set(val, ref);
@@ -740,7 +740,12 @@ function writeRegistered(
   const { scope } = registered;
   if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
-    const ref = new Reference(parent, accessor, state.flush, state.buf.length);
+    const ref = new Reference(
+      parent,
+      accessor,
+      state.flushId,
+      state.buf.length,
+    );
     ref.channel = state.channel;
     state.refs.set(val, ref);
     if (MARKO_DEBUG) {
@@ -777,7 +782,7 @@ function writeString(
       const ref = new Reference(
         parent,
         accessor,
-        state.flush,
+        state.flushId,
         state.buf.length,
       );
       ref.channel = state.channel;
@@ -1088,7 +1093,7 @@ function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
 
 function newAsyncHandle(state: State, parent: Reference, id: string) {
   const handle = {};
-  const handleRef = new Reference(parent, null, state.flush, null, id);
+  const handleRef = new Reference(parent, null, state.flushId, null, id);
   handleRef.channel = state.channel;
   state.refs.set(handle, handleRef);
   return handle;
@@ -1101,7 +1106,7 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
   }
 
   const items: unknown[] = [];
-  let assigns: undefined | string[];
+  let assignments: undefined | string[];
   let needsId: undefined | boolean;
   // Once an entry must defer, every later entry defers too so insertion order
   // is preserved.
@@ -1125,12 +1130,12 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
 
       if (itemKey === val) {
         itemKey = undefined;
-        (assigns ||= []).push("a[" + i + "][0]");
+        (assignments ||= []).push("a[" + i + "][0]");
       }
 
       if (itemValue === val) {
         itemValue = undefined;
-        (assigns ||= []).push("a[" + i + "][1]");
+        (assignments ||= []).push("a[" + i + "][1]");
       }
 
       needsId ||= isDedupedMember(itemKey) || isDedupedMember(itemValue);
@@ -1148,9 +1153,9 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
       state,
       ref,
       items,
-      assigns &&
+      assignments &&
         "((m,a)=>(" +
-          assignsToString(assigns, "m") +
+          assignmentsToString(assignments, "m") +
           ",a.forEach(i=>m.set(i[0],i[1])),m))(new Map,",
       "new Map(",
       needsId,
@@ -1171,12 +1176,12 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
 
       if (itemKey === val) {
         itemKey = 0;
-        (assigns ||= []).push("a[" + i + "]");
+        (assignments ||= []).push("a[" + i + "]");
       }
 
       if (itemValue === val) {
         itemValue = 0;
-        (assigns ||= []).push("a[" + (i + 1) + "]");
+        (assignments ||= []).push("a[" + (i + 1) + "]");
       }
 
       needsId ||= isDedupedMember(itemKey) || isDedupedMember(itemValue);
@@ -1188,9 +1193,9 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
       state,
       ref,
       items,
-      assigns &&
+      assignments &&
         "(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1])," +
-          assignsToString(assigns, "new Map") +
+          assignmentsToString(assignments, "new Map") +
           "))(",
       "(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(",
       needsId,
@@ -1207,7 +1212,7 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
   }
 
   const items: (unknown | undefined)[] = [];
-  let assigns: undefined | string[];
+  let assignments: undefined | string[];
   let needsId: undefined | boolean;
   let deferring = false;
   let i = 0;
@@ -1224,7 +1229,7 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
 
     if (item === val) {
       item = 0;
-      (assigns ||= []).push("i[" + i + "]");
+      (assignments ||= []).push("i[" + i + "]");
     } else {
       needsId ||= isDedupedMember(item);
     }
@@ -1236,9 +1241,9 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
     state,
     ref,
     items,
-    assigns &&
+    assignments &&
       "((s,i)=>(" +
-        assignsToString(assigns, "s") +
+        assignmentsToString(assignments, "s") +
         ",i.forEach(i=>s.add(i)),s))(new Set,",
     "new Set(",
     needsId,
@@ -1268,7 +1273,7 @@ function deferCall(
 ) {
   ensureId(state, ref);
   (ref.calls ||= []).push({ method, args });
-  state.assigned.add(ref);
+  state.pendingAssignments.add(ref);
 }
 
 // Reusable Map/Set members bind through their otherwise unreachable backing
@@ -1285,7 +1290,7 @@ function writeArrayArg(
     const arrayRef = new Reference(
       ref,
       null,
-      state.flush,
+      state.flushId,
       null,
       nextRefAccess(state),
     );
@@ -1296,7 +1301,7 @@ function writeArrayArg(
     writeArray(
       state,
       items,
-      new Reference(ref, null, state.flush, state.buf.length),
+      new Reference(ref, null, state.flushId, state.buf.length),
     );
   }
   state.buf.push(")");
@@ -1377,7 +1382,10 @@ function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
         : "") + ")",
     );
   } else {
-    state.refs.set(val.buffer, new Reference(ref, "buffer", state.flush, null));
+    state.refs.set(
+      val.buffer,
+      new Reference(ref, "buffer", state.flushId, null),
+    );
     state.buf.push(
       "new " +
         val.constructor.name +
@@ -1443,7 +1451,7 @@ function writeAggregateError(
     // so relink a shared/fill-deferred array through it to keep identity and fills.
     const errorsRef = state.refs.get(val.errors as object);
     if (errorsRef?.id) {
-      state.assigned.add(errorsRef);
+      state.pendingAssignments.add(errorsRef);
       addAssignment(errorsRef, accessId(state, ref) + toAccess("errors"));
     }
   }
@@ -1535,7 +1543,7 @@ function writeRequest(state: State, val: Request, ref: Reference) {
   } else {
     state.refs.set(
       val.headers,
-      new Reference(ref, "headers", state.flush, null),
+      new Reference(ref, "headers", state.flushId, null),
     );
     const headers = stringEntriesToHeadersInit(val.headers as any);
     if (headers) {
@@ -1607,7 +1615,7 @@ function writeResponse(state: State, val: Response, ref: Reference) {
   } else {
     state.refs.set(
       val.headers,
-      new Reference(ref, "headers", state.flush, null),
+      new Reference(ref, "headers", state.flushId, null),
     );
     const headers = stringEntriesToHeadersInit(val.headers as any);
     if (headers) {
@@ -1650,13 +1658,13 @@ function writeIntl(state: State, val: object, name: string, ref: Reference) {
     optionsRef = new Reference(
       ref,
       null,
-      state.flush,
+      state.flushId,
       null,
       nextRefAccess(state),
     );
     state.buf.push(optionsRef.id + "={");
   } else {
-    optionsRef = new Reference(ref, null, state.flush, state.buf.length);
+    optionsRef = new Reference(ref, null, state.flushId, state.buf.length);
     state.buf.push("{");
   }
   writeObjectProps(state, options, optionsRef);
@@ -1758,7 +1766,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     const arrayRef = new Reference(
       ref,
       null,
-      state.flush,
+      state.flushId,
       null,
       nextRefAccess(state),
     );
@@ -1768,7 +1776,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     writeArray(
       state,
       yields,
-      new Reference(ref, null, state.flush, state.buf.length),
+      new Reference(ref, null, state.flushId, state.buf.length),
     );
   }
 
@@ -1776,7 +1784,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     const holder = new Reference(
       ref,
       null,
-      state.flush,
+      state.flushId,
       null,
       nextRefAccess(state),
     );
@@ -1896,7 +1904,7 @@ function writeMaybeIterableProps(state: State, val: object, ref: Reference) {
       const iterRef = new Reference(
         ref,
         null,
-        state.flush,
+        state.flushId,
         null,
         nextRefAccess(state),
       );
@@ -2178,7 +2186,7 @@ function assignId(state: State, ref: Reference) {
   const { pos } = ref;
   ref.id = nextRefAccess(state);
 
-  if (pos !== null && ref.flush === state.flush) {
+  if (pos !== null && ref.flushId === state.flushId) {
     if (pos === 0) {
       state.buf[0] = ref.id + "=" + state.buf[0];
     } else {
@@ -2204,7 +2212,7 @@ function assignId(state: State, ref: Reference) {
       }
     }
 
-    if (parent.flush === state.flush || parent.scopeId !== undefined) {
+    if (parent.flushId === state.flushId || parent.scopeId !== undefined) {
       accessPrevValue = accessId(state, parent) + accessPrevValue;
       break;
     }
@@ -2215,19 +2223,19 @@ function assignId(state: State, ref: Reference) {
   return ref.id + "=" + accessPrevValue;
 }
 
-function assignsToString(assigns: string[], value: string) {
-  if (assigns.length > 100) {
-    return "($=>(" + assigns.join("=$,") + "=$))(" + value + ")";
+function assignmentsToString(assignments: string[], value: string) {
+  if (assignments.length > 100) {
+    return "($=>(" + assignments.join("=$,") + "=$))(" + value + ")";
   }
 
-  return assigns.join("=") + "=" + value;
+  return assignments.join("=") + "=" + value;
 }
 
 function addAssignment(ref: Reference, assign: string) {
-  if (ref.assigns) {
-    ref.assigns.push(assign);
+  if (ref.assignments) {
+    ref.assignments.push(assign);
   } else {
-    ref.assigns = [assign];
+    ref.assignments = [assign];
   }
 }
 
