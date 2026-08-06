@@ -730,6 +730,32 @@ export default {
           }
         }
 
+        // An attribute fed by client state never captures directly: the
+        // client owns part of its value and recomputes it instead.
+        const capturesPatchAttr = (name: string, value: t.Expression) => {
+          if (!(isPersisted() && isPatchCaptureSection(tagSection))) {
+            return false;
+          }
+          const attrSources = getSerializeSourcesForExpr(value.extra || {});
+          if (!attrSources?.state) return true;
+          if (attrSources.global) {
+            throw tag.buildCodeFrameError(
+              `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
+            );
+          }
+          if (
+            tagSection.isBranch &&
+            !constructRendersReads(
+              tagSection,
+              value.extra?.referencedBindings as Opt<Binding>,
+            )
+          ) {
+            // A state-fed attribute never captures; see placeholder.
+            recordConstructBlocker(tagSection, "state-fed attribute");
+          }
+          return false;
+        };
+
         for (const attr of staticAttrs) {
           const { name, value } = attr;
           const { confident, computed } = value.extra || {};
@@ -747,6 +773,14 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
+                if (capturesPatchAttr(name, value)) {
+                  write`${callRuntime(
+                    `_patch_attr_${name as "class" | "style"}`,
+                    getScopeIdIdentifier(tagSection),
+                    getScopeAccessorLiteral(nodeBinding!),
+                    value,
+                  )}`;
+                }
                 write`${factorAttrConditional(
                   buildAttrExpression(
                     value,
@@ -771,33 +805,7 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                const attrSources =
-                  isPersisted() && isPatchCaptureSection(tagSection)
-                    ? getSerializeSourcesForExpr(value.extra || {})
-                    : undefined;
-                if (attrSources?.state && attrSources.global) {
-                  throw tag.buildCodeFrameError(
-                    `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
-                  );
-                }
-                if (
-                  attrSources?.state &&
-                  tagSection.isBranch &&
-                  !constructRendersReads(
-                    tagSection,
-                    value.extra?.referencedBindings as Opt<Binding>,
-                  )
-                ) {
-                  // A state-fed attribute never captures; see placeholder.
-                  recordConstructBlocker(tagSection, "state-fed attribute");
-                }
-                // An attribute fed by client state never captures directly: the
-                // client owns part of its value and recomputes it instead.
-                if (
-                  isPersisted() &&
-                  isPatchCaptureSection(tagSection) &&
-                  !attrSources?.state
-                ) {
+                if (capturesPatchAttr(name, value)) {
                   write`${callRuntime(
                     "_patch_attr",
                     getScopeIdIdentifier(tagSection),
@@ -1097,6 +1105,37 @@ export default {
           }
         }
 
+        // The dom compile shares the capture gating (errors and construct
+        // blockers must match the html output) and imports the feature:
+        // an interactive page receives assets transitively through its dom
+        // program, so the analyze-phase asset import alone cannot load it.
+        const capturesPatchAttr = (name: string, value: t.Expression) => {
+          if (!(isPersisted() && isPatchCaptureSection(tagSection))) {
+            return false;
+          }
+          const attrSources = getSerializeSourcesForExpr(value.extra || {});
+          if (!attrSources?.state) {
+            importRuntimeFeature("patch-attr");
+            return true;
+          }
+          if (attrSources.global) {
+            throw tag.buildCodeFrameError(
+              `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
+            );
+          }
+          if (
+            tagSection.isBranch &&
+            !constructRendersReads(
+              tagSection,
+              value.extra?.referencedBindings as Opt<Binding>,
+            )
+          ) {
+            // A state-fed attribute never captures; see placeholder.
+            recordConstructBlocker(tagSection, "state-fed attribute");
+          }
+          return false;
+        };
+
         for (const attr of staticAttrs) {
           const { name, value } = attr;
           const { confident } = value.extra || {};
@@ -1107,6 +1146,7 @@ export default {
             case "style": {
               const helper = `_attr_${name}` as const;
               if (!confident) {
+                capturesPatchAttr(name, value);
                 const nodeExpr = createScopeReadExpression(nodeBinding!);
                 const meta: DelimitedAttrMeta = {
                   staticItems: undefined,
@@ -1186,35 +1226,7 @@ export default {
                   ),
                 );
               } else {
-                const attrSources =
-                  isPersisted() && isPatchCaptureSection(tagSection)
-                    ? getSerializeSourcesForExpr(value.extra || {})
-                    : undefined;
-                if (attrSources?.state && attrSources.global) {
-                  throw tag.buildCodeFrameError(
-                    `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
-                  );
-                }
-                if (
-                  attrSources?.state &&
-                  tagSection.isBranch &&
-                  !constructRendersReads(
-                    tagSection,
-                    value.extra?.referencedBindings as Opt<Binding>,
-                  )
-                ) {
-                  // A state-fed attribute never captures; see placeholder.
-                  recordConstructBlocker(tagSection, "state-fed attribute");
-                }
-                if (
-                  isPersisted() &&
-                  isPatchCaptureSection(tagSection) &&
-                  !attrSources?.state
-                ) {
-                  // An interactive page receives assets transitively through
-                  // its dom program, so the feature import rides both outputs.
-                  importRuntimeFeature("patch-attr");
-                }
+                capturesPatchAttr(name, value);
                 addStatement(
                   "render",
                   tagSection,
