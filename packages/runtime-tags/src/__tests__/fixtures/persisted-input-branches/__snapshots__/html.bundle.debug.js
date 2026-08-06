@@ -22,4 +22,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, 0, $scope0_id, "#text/2", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_2_shell");
 	_html("</div>");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
-}, 1);
+}, 1, 0);

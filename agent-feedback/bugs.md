@@ -70,3 +70,17 @@ Returning `{ wasActive: !!this.active, … }` from `onMount` while `active=…` 
 `packages/runtime-tags/src/html/serializer.ts` › `writeFunction` / `writeNever` | 2026-08-13 | impact:high | effort:low
 
 Unregistered functions on a resume scope hit `writeNever`, which throws only under `MARKO_DEBUG` and in production returns false so the property is omitted; after resume the binding is `undefined` and the first call throws a bare `TypeError: … is not a function` (minified e.g. `e.br is not a function`) with no link to serialize. Derived `<const>` values that are closures (`makeFileFilter(q)`, inline predicates stored then passed to `.filter`) are the usual source — event handlers already go through `_resume`/`register`, this gap is derived const values. `<show>` amplifies it because its body always SSRs into `<t hidden>` (by design in `translator/core/show.ts` / `_show_start`) so keep-alive trees that used to be CSR-only enter the serializer; do not change that show behavior. Fix: always throw from failed `writeFunction`, or emit a sentinel callable that names the scope accessor; optionally later have the compiler re-derive function consts client-side or auto-register stable module fns. Re-verify: SSR `<show=false><const/match=makeFilter("")/><const/n=items.filter(match)/></show>`, resume, set show true — today a cryptic TypeError; after the fix a named serialize-time or first-call error (or a working filter if re-derive lands).
+## Circular custom tags TDZ at module evaluation in DOM output
+
+Mutually recursive custom tags (`tags/a-tag` renders `b-tag`, which
+renders `a-tag`) compile per-template but the DOM output's static
+template-string composition (`const $template$1 = ((_w0) =>
+`...${_w0}...`)($template$2)`) references the sibling's module-level
+const across the import cycle; the bundler's concatenation order then
+hits `Cannot access '$template$1' before initialization`at module
+evaluation, before any render. The composition would need to be lazy (or
+bail to a runtime reference) when the child resolves through a cycle.
+Found while building a persisted fixture; reproduces with`persisted:
+false` (the inlining is mode-agnostic). Re-verify: two tags rendering
+each other behind a depth guard, bundle the page, import the dom bundle
+— eval throws.

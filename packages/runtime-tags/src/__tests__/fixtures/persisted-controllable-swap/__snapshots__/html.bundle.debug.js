@@ -21,4 +21,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		plain: "1:8",
 		loud: "2:8"
 	});
-}, 1);
+}, 1, 0);

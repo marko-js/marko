@@ -27,6 +27,7 @@ import {
   toIter,
 } from "./optional";
 import {
+  addPersistedChildRenderer,
   getPersistedServerRequiredParams,
   kPatchClientOwned,
   recordPersistedServerRequired,
@@ -234,6 +235,9 @@ export function knownTagTranslateHTML(
     section,
     childScopeBinding,
   );
+  // Every child renderer joins this template's intrinsics union, so a
+  // parent's patch-skip decision sees the whole subtree at render time.
+  if (isPersisted()) addPersistedChildRenderer(tagIdentifier);
   // A client-owned instance renders nothing into a patch: the link and the
   // child render skip together, and the absent entry keeps the live child.
   let clientOwnedStatements: t.Statement[] | undefined =
@@ -293,12 +297,13 @@ export function knownTagTranslateHTML(
     let childSerializeReasonExpr: t.Expression | undefined;
     if (isPersisted()) {
       // Pages serialize fully, so the ambient slot carries the ownership
-      // mask instead; a skipped instance leaves the all-server default.
-      if (!clientOwnedStatements) {
-        const ownership = getPersistedGroupOwnership(tagExtra);
-        if (ownership) {
-          childSerializeReasonExpr = buildOwnershipMaskExpr(section, ownership);
-        }
+      // mask instead. A client-owned candidate needs it exactly when it
+      // RENDERS (`_must_render` can render it on a patch, and all-server
+      // ambient would ship its client-owned values); a skipped instance
+      // leaves the all-server default.
+      const ownership = getPersistedGroupOwnership(tagExtra);
+      if (ownership) {
+        childSerializeReasonExpr = buildOwnershipMaskExpr(section, ownership);
       }
     } else if (contentSection.paramReasonGroups.length === 1) {
       // Special case single reason to pass either 1 or undefined.
@@ -361,11 +366,14 @@ export function knownTagTranslateHTML(
     }
 
     if (childSerializeReasonExpr) {
-      tag.insertBefore(
-        t.expressionStatement(
-          callRuntime("_set_serialize_reason", childSerializeReasonExpr),
-        ),
+      const setReason = t.expressionStatement(
+        callRuntime("_set_serialize_reason", childSerializeReasonExpr),
       );
+      if (clientOwnedStatements) {
+        clientOwnedStatements.unshift(setReason);
+      } else {
+        tag.insertBefore(setReason);
+      }
     }
   }
 
@@ -393,13 +401,19 @@ export function knownTagTranslateHTML(
     if (varStatement) statements.push(varStatement);
   } else if (clientOwnedStatements) {
     // The render-wide persisted reason is the page-vs-patch bit: truthy on
-    // a page render (serialize + render the child), falsy on a patch.
+    // a page render (serialize + render the child), falsy on a patch. A
+    // patch still renders when the child's intrinsics demand it (global
+    // reads anywhere in its subtree, or an unknown renderer).
     let rootSection = section;
     while (rootSection.parent) rootSection = rootSection.parent;
     clientOwnedStatements.push(callStatement(tagIdentifier, ...getArgs()));
     statements.push(
       t.ifStatement(
-        scopeReasonIdentifier(rootSection),
+        t.logicalExpression(
+          "||",
+          scopeReasonIdentifier(rootSection),
+          callRuntime("_must_render", t.cloneNode(tagIdentifier)),
+        ),
         t.blockStatement(clientOwnedStatements),
       ),
     );

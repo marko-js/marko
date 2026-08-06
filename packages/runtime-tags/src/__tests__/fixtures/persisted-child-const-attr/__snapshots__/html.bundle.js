@@ -14,7 +14,7 @@ var badge_default = _template_persisted("b", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["b0"]);
 	_html(`<i>${_patch_text($scope0_id, "b", input.note, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</i></div>`);
 	$scope0_reason && writeScope($scope0_id, { e: input.label });
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -36,4 +36,4 @@ var template_default = _template_persisted("a", (input) => {
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [badge_default]);

@@ -6,4 +6,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_script($scope0_id, "__tests__/template.marko_0_input_announce");
 	_patch_effect($scope0_id, "__tests__/template.marko_0_input_announce", "input_announce");
 	$scope0_reason ? writeScope($scope0_id, { input_announce: input.announce }, "__tests__/template.marko", 0, { input_announce: ["input.announce"] }) : _owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_announce", input.announce);
-}, 1);
+}, 1, 0);

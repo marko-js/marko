@@ -7,7 +7,7 @@ var counter_default = _template_persisted("b", (input) => {
 	_script($scope0_id, "b0");
 	$scope0_reason && writeScope($scope0_id, { g: spins });
 	_resume_branch($scope0_id);
-});
+}, 0, 0);
 
 // template.marko
 var template_default = _template_persisted("a", (input) => {
@@ -16,7 +16,8 @@ var template_default = _template_persisted("a", (input) => {
 	let count = 0;
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1>`);
 	const $childScope = _peek_scope_id();
-	if ($scope0_reason) {
+	if ($scope0_reason || _must_render(counter_default)) {
+		_set_serialize_reason(2);
 		_patch_child($scope0_id, "b", $childScope);
 		counter_default({ value: count });
 	}
@@ -27,4 +28,4 @@ var template_default = _template_persisted("a", (input) => {
 		b: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, () => [counter_default]);
