@@ -16,10 +16,6 @@ declare module "@marko/compiler/dist/types" {
     /** `$signal` abort id for this expression root, allocated in analyze
      * (see below) so every translate reads the same id. */
     abortId?: number;
-    /** A persisted `$global` read: the expression's serialize sources gain
-     * the request-derived global dimension. A set holds the static member
-     * keys read; `true` means an opaque (dynamic/aliased/escaping) read. */
-    readsGlobal?: true | Set<string>;
   }
 }
 
