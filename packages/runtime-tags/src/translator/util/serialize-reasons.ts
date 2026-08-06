@@ -5,7 +5,7 @@ import {
   AccessorPrefix,
   AccessorProp,
 } from "../../common/types";
-import { getAccessorProp } from "./get-accessor-char";
+import { getAccessorProp } from "./get-accessor-enums";
 import { concat, type OneMany, type Opt } from "./optional";
 import {
   type Binding,

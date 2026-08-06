@@ -20,12 +20,6 @@ The test's only two event-handler assertions are commented out (and call a long-
 
 The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repeated one becomes `attrTag(props)`" is implemented four times. `translateAttrTag` and the `isAttributeTag(tag)` branch of `applyAttrObject` are near-verbatim ~35-line copies, including the `t.parenthesizedExpression` mutation trick, differing only in where `repeated` comes from and whether the result is returned or handed to `addStatement`. `translate-attrs.ts` › `translateAttrs` and `addDynamicAttrTagStatements` encode the same rule over `contentProperties` and over an attr-tag identifier assignment. One helper would collapse the two `known-tag.ts` copies and let the other two share the `repeated ? attrTags : attrTag` decision, so a future change cannot land on three of four sites. Re-verify: `rg -n '"attrTags"' packages/runtime-tags/src/translator` lists exactly those four sites.
 
-## Delete translator/runtime residue left behind by completed refactors
-
-`packages/runtime-tags/src/translator/visitors/program/index.ts` › `isScopeIdentifier` | 2026-07-23 | impact:low | effort:low
-
-Three pure deletes with no behavior change. `isScopeIdentifier` has no callers left after `0a654cda92`, though the `scopeIdentifier` it wraps is used throughout the visitors. `html/dynamic-tag.ts` still carries `// TODO: refactor dynamicTagInput and dynamicTagArgs …`, but neither symbol exists and `_dynamic_tag` already takes one `inputOrArgs` plus an `inputIsArgs` flag, so the comment describes removed code (AGENTS.md forbids that). `translator/util/get-accessor-char.ts` now exports only `getAccessorPrefix`/`getAccessorProp`, so rename it (e.g. `get-accessor-enums.ts`) and update the import specifiers. Re-verify: `rg -n "isScopeIdentifier|dynamicTagInput|dynamicTagArgs" packages/runtime-tags` matches only the dead export and the stale TODO, and `rg -n "get-accessor-char" packages/runtime-tags` lists the 11 import specifiers the rename has to follow.
-
 ## Collapse copy-pasted sibling implementations in the `<for>` and scriptlet core tags
 
 `packages/runtime-tags/src/translator/core/for.ts` › `forTypeToDOMRuntime` | 2026-07-23 | impact:low | effort:low

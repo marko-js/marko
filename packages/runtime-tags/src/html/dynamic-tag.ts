@@ -33,8 +33,6 @@ interface BodyContentObject {
   content: ServerRenderer;
 }
 
-// TODO: refactor dynamicTagInput and dynamicTagArgs to be the same impl with a flag for input vs args.
-
 export let _dynamic_tag = (
   scopeId: number,
   accessor: Accessor,

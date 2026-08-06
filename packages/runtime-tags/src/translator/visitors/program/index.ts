@@ -36,9 +36,6 @@ import { preAnalyze } from "./pre-analyze";
 
 export let scopeIdentifier: t.Identifier;
 export let localsIdentifier: t.Identifier;
-export function isScopeIdentifier(node: t.Node): node is t.Identifier {
-  return node === scopeIdentifier;
-}
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {

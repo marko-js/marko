@@ -17,7 +17,7 @@ import { generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
   getAccessorProp,
-} from "../../util/get-accessor-char";
+} from "../../util/get-accessor-enums";
 import { getStaticTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import {

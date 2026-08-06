@@ -1,4 +1,4 @@
-import { getAccessorPrefix } from "./get-accessor-char";
+import { getAccessorPrefix } from "./get-accessor-enums";
 import { type Binding, kBranchSerializeReason } from "./references";
 import type { Section } from "./sections";
 import {

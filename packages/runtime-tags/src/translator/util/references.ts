@@ -9,7 +9,7 @@ import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import * as BindingType from "./constants/binding-type";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
-import { getAccessorPrefix } from "./get-accessor-char";
+import { getAccessorPrefix } from "./get-accessor-enums";
 import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";

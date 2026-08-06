@@ -10,7 +10,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { generateUidIdentifier } from "../util/generate-uid";
-import { getAccessorProp } from "../util/get-accessor-char";
+import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
