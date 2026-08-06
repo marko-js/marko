@@ -32,12 +32,6 @@ Three pure deletes with no behavior change. `isScopeIdentifier` has no callers l
 
 `forTypeToHTMLResumeRuntime` and `forTypeToDOMRuntime` are byte-identical `ForType` switches returning `_for_of|_for_in|_for_to|_for_until`, and both `dom` and `html` export those names, so delete one and point both call sites at the survivor; `forTypeToRuntime` stays as the only distinct mapping. Separately, `translator/core/{client,server,static}.ts` are three 31-line files differing only in the stripped keyword, the third `t.markoScriptlet(body, true, …)` argument, and their autocomplete text — a `createScriptletTag(keyword, target?)` factory would cut ~60 lines and leave the `core/index.ts` registrations untouched. Both edits are output-identical, so no snapshot or `sizes.json` churn. Re-verify: normalize the two function names and `diff` their bodies; `diff core/client.ts core/server.ts` shows only keyword/description lines.
 
-## Stray debug `console.error` in the mocha patch
-
-`patches/mocha@11.7.6.patch` › `requireModule` | 2026-07-23 | impact:low | effort:low
-
-The patch's only change adds `console.error(requireErr)` to `lib/nodejs/esm-utils.js`'s `requireModule` catch block, so any spec that fails plain `require()` and then loads fine via mocha's `import()` fallback prints a full stack trace for a passing file. Upstream already rethrows `requireErr` for the cases where it is the informative error, so the line adds nothing but noise, and it arrived with the npm→pnpm conversion (`0187289c71`) rather than as intentional patching. Fix: delete the patch file and its `pnpm-workspace.yaml` `patchedDependencies` entry, then `pnpm install`. Re-verify: `cat patches/mocha@11.7.6.patch` — the one-line hunk is the entire patch.
-
 ## Delete or resurrect the dead `test/markoc` suite
 
 `packages/runtime-class/test/markoc/index.test.js` | 2026-07-24 | impact:low | effort:low
