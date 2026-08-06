@@ -16,6 +16,8 @@ declare module "@marko/compiler/dist/types" {
   }
   export interface MarkoTagExtra {
     tagNameType?: TagNameType;
+    // Kept unread for a planned nullable tag name optimization; incomplete when
+    // `tagNameType` is `DynamicTag`, since that ends the analysis early.
     tagNameNullable?: boolean;
     tagNameDynamic?: boolean;
     tagNameImported?: string;
