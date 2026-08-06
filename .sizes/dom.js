@@ -1,4 +1,4 @@
-// size: 26863 (min) 9950 (brotli)
+// size: 26898 (min) 9945 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1129,6 +1129,9 @@ function getRegisteredWithScope(id, scope) {
 }
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
+}
+function _resume_init(id, signal) {
+  return ((registeredValues[id] = signal._), signal);
 }
 function _var_resume(id, signal) {
   return (_resume(id, (scope) => (value) => signal(scope, value)), signal);

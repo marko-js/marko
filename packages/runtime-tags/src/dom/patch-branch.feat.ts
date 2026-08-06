@@ -68,15 +68,9 @@ _patch_records((record) => {
           }
           if (fns) {
             // A missing registration means required client code was
-            // tree-shaken: constructing would silently misrender. Closure
-            // signals expose their per-branch render as `._`.
+            // tree-shaken: constructing would silently misrender.
             for (const fn of fns) {
-              queueEffect(
-                branch,
-                ((fn && ((fn as { _?: unknown })._ || fn)) || failPatch()) as (
-                  s: Scope,
-                ) => void,
-              );
+              queueEffect(branch, (fn || failPatch()) as (s: Scope) => void);
             }
           }
         }

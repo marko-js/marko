@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<ul></ul><button>+</button>";
 const $walks = " b b";
-const $for_content__boost = /*@__PURE__*/ _resume("__tests__/template.marko_1_boost/init", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => _text($scope["#text/1"], $scope._.boost)));
+const $for_content__boost = /*@__PURE__*/ _resume_init("__tests__/template.marko_1_boost/init", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => _text($scope["#text/1"], $scope._.boost)));
 const $for_content__setup = $for_content__boost;
 const $for_content__label = ($scope, label) => _text($scope["#text/0"], label);
 const $for_content__$params = ($scope, $params2) => $for_content__label($scope, $params2[0]);

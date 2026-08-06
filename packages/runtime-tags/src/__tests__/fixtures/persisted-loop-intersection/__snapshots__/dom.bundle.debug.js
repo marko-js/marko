@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__input_title._($scope);
 	$for_content__count._($scope);
 };
-const $for_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count/init", /*@__PURE__*/ _for_closure("#text/0", $for_content__input_title__OR__count__OR__item));
+const $for_content__count = /*@__PURE__*/ _resume_init("__tests__/template.marko_1_count/init", /*@__PURE__*/ _for_closure("#text/0", $for_content__input_title__OR__count__OR__item));
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_title__OR__count__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $count = /*@__PURE__*/ _let("count/6", $for_content__count);

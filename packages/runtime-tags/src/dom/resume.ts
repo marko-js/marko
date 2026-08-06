@@ -528,11 +528,15 @@ export function _resume<T>(id: string, obj: T): T {
   return (registeredValues[id] = obj);
 }
 
-// Registers a branch's construct-init closure. Same behavior as `_resume`
-// but every call site is `@__PURE__`, so the registration rides its
-// signal's liveness: tree shaking drops both together and a construct
-// needing the init fails closed instead of half-wiring.
-export { _resume as _resume_init };
+// Registers a branch construct-init render (the closure's per-branch `_`),
+// fused `@__PURE__` onto its declaration: shaken together, fail closed.
+export function _resume_init<T extends { _?: unknown }>(
+  id: string,
+  signal: T,
+): T {
+  registeredValues[id] = signal._;
+  return signal;
+}
 
 export function _var_resume<T extends Signal<unknown>>(
   id: string,
