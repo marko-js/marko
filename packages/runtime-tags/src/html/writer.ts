@@ -8,6 +8,9 @@ import {
   isPromise,
   normalizeAttrValue,
   normalizeDynamicRenderer,
+  stringifyClassObject,
+  stringifyStyleObject,
+  toDelimitedString,
 } from "../common/helpers";
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { concat, forEach, type Opt, push } from "../common/opt";
@@ -303,6 +306,34 @@ export function _patch_attr(
   }
 
   return "";
+}
+
+// Class/style normalize on the server into the same string the dom helper
+// writes, so the client applies them as plain attr entries.
+export function _patch_attr_class(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+) {
+  return _patch_attr(
+    scopeId,
+    accessor,
+    "class",
+    toDelimitedString(value, " ", stringifyClassObject) || undefined,
+  );
+}
+
+export function _patch_attr_style(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+) {
+  return _patch_attr(
+    scopeId,
+    accessor,
+    "style",
+    toDelimitedString(value, ";", stringifyStyleObject) || undefined,
+  );
 }
 
 // Links a child scope into its parent's entry: immediately when already
