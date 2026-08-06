@@ -103,9 +103,9 @@ describe("runtime-tags/html/attrs", () => {
       );
     });
 
-    it("should strip event handlers, invalid attribute names and content", () => {
-      // assert.equal(helpers.attrs({ onClick() {} }, "a", 0, ""), "");
-      // assert.equal(helpers.attrs({ "on-click"() {}, "a", 0, "" }), "");
+    // `_attrs` routes `on*` names to the scope rather than dropping them; the
+    // `body-content` fixture covers that end to end.
+    it("omits content on a non-meta tag and names with invalid characters", () => {
       assert.equal(helpers._attrs({ content() {} }, "a", 0, ""), "");
       assert.equal(helpers._attrs({ "foo bar": "baz" }, "a", 0, ""), "");
       assert.equal(helpers._attrs({ "foo\tbar": "baz" }, "a", 0, ""), "");
