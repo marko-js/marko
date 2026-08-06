@@ -518,7 +518,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             if (
               skips &&
               childFile &&
-              !childFile.metadata.marko.persistedGlobals
+              !childFile.path.node.extra?.persistedGlobals
             ) {
               (node.extra ??= {})[kPatchClientOwned] = true;
             }
