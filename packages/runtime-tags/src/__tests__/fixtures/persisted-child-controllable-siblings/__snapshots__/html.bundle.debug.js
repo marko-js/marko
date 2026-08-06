@@ -28,7 +28,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_id = _scope_id();
 	let first = 0;
 	let second = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "#text/0")}</h1><p>First <!>${_escape(first)}${_el_resume($scope0_id, "#text/1")} Second <!>${_escape(second)}${_el_resume($scope0_id, "#text/2")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_el_resume($scope0_id, "#text/0")}</h1><p>First <!>${_escape(first)}${_el_resume($scope0_id, "#text/1")} Second <!>${_escape(second)}${_el_resume($scope0_id, "#text/2")}</p>`);
 	_set_serialize_reason({
 		0: $sg__input_show,
 		1: $sg__input_show

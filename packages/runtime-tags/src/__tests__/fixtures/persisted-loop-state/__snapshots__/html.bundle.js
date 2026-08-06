@@ -7,7 +7,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<main><ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "a", item.label)}${_escape(item.label)}${_el_resume($scope1_id, "a")} (<!>${_escape(count)}${_el_resume($scope1_id, "b")})</li>`);
+		_html(`<li>${_patch_text($scope1_id, "a", item.label)}${_el_resume($scope1_id, "a")} (<!>${_escape(count)}${_el_resume($scope1_id, "b")})</li>`);
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, "id", $scope0_id, "a", 1, 1, _serialize_guard($scope0_reason, 0), void 0, void 0, "a0");
 	_html(`</ul>${_el_resume($scope0_id, "a")}<button>Count <!>${_escape(count)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}</main>`);

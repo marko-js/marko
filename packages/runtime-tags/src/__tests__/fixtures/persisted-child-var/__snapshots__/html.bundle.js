@@ -20,7 +20,7 @@ var template_default = _template_persisted("a", (input) => {
 	let card = price_card_default({ label: input.label });
 	_patch_child($scope0_id, "a", $childScope);
 	_var($scope0_id, "b", $childScope, "a0");
-	_html(`<main><h1>${_patch_text($scope0_id, "c", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "c")}</h1><button class=read>read</button>${_el_resume($scope0_id, "d")}</main>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "c", input.title)}${_el_resume($scope0_id, "c")}</h1><button class=read>read</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && writeScope($scope0_id, {
 		i: card,
