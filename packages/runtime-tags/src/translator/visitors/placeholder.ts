@@ -225,14 +225,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     if (isPatch && !isHTML) importRuntimeFeature("patch-text");
 
     if (isHTML) {
-      if (isPatchText) {
-        write`${callRuntime(
-          "_patch_text",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(nodeBinding),
-          value,
-        )}`;
-      }
       if (markerSerializeReason) {
         // `2` (or a guard scaled to 0/2) also asks the runtime to write a
         // `<!>` between non-empty text and the mergeable text before it.
@@ -249,10 +241,19 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
             : guard,
         )}`;
       } else {
+        // The capture writes the escaped text itself, so the expression
+        // appears (and evaluates) once.
         write`${
-          method === "_escape"
-            ? buildEscapedTextExpression(value)
-            : callRuntime(method as HTMLMethod, value)
+          isPatchText
+            ? callRuntime(
+                "_patch_text",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(nodeBinding),
+                value,
+              )
+            : method === "_escape"
+              ? buildEscapedTextExpression(value)
+              : callRuntime(method as HTMLMethod, value)
         }`;
       }
     } else {

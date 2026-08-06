@@ -37,7 +37,7 @@ var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko"
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let frozen = 0;
-	_html(`<footer>${_patch_text($scope0_id, "#text/0", input.year + frozen)}${_escape(input.year + frozen)}${_el_resume($scope0_id, "#text/0")}</footer>`);
+	_html(`<footer>${_patch_text($scope0_id, "#text/0", input.year + frozen)}${_el_resume($scope0_id, "#text/0")}</footer>`);
 	$scope0_reason && writeScope($scope0_id, { frozen }, "__tests__/tags/site-footer.marko", 0, { frozen: "1:6" });
 	_resume_branch($scope0_id);
 });
@@ -46,7 +46,7 @@ var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko"
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "#text/0")}</h1><p${_patch_attr($scope0_id, "#p/1", "title", $global().locale)}${_attr("title", $global().locale)}>${_patch_text($scope0_id, "#text/2", $global().brand)}${_escape($global().brand)}${_el_resume($scope0_id, "#text/2")}</p>${_el_resume($scope0_id, "#p/1")}`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title)}${_el_resume($scope0_id, "#text/0")}</h1><p${_patch_attr($scope0_id, "#p/1", "title", $global().locale)}>${_patch_text($scope0_id, "#text/2", $global().brand)}${_el_resume($scope0_id, "#text/2")}</p>${_el_resume($scope0_id, "#p/1")}`);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/3", $childScope);
 	price_card_default({ label: input.label });
