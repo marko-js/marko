@@ -25,12 +25,34 @@ declare module "@marko/compiler/dist/types" {
     [kPatchClientOwned]?: true;
   }
 }
+// The template's child renderers, collected at translate for the runtime
+// intrinsics export: transitive global knowledge composes at RENDER time
+// (exact under module cycles and dynamic dispatch), never at compile.
+const [getPersistedChildRenderers] = createProgramState(() => ({
+  names: new Set<string>(),
+  opaque: false,
+}));
+
+export function addPersistedChildRenderer(expr: t.Node) {
+  const state = getPersistedChildRenderers();
+  if (expr.type === "Identifier") {
+    state.names.add(expr.name);
+  } else {
+    // An unaddressable renderer cannot join the union: the template goes
+    // opaque so parents always render through it.
+    state.opaque = true;
+  }
+}
+
+export function getPersistedIntrinsics() {
+  return getPersistedChildRenderers();
+}
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    /** This template (or one it renders) reads `$global`: skipping its
-     * render in a patch could hide a global change. Analyze-internal,
-     * read cross-file off the cached child program. */
-    persistedGlobals?: true;
+    /** This template ITSELF reads `$global` (local, no roll-up): exported
+     * as the html template's intrinsics for render-time composition. */
+    readsGlobals?: true;
   }
 }
 
