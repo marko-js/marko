@@ -22,4 +22,4 @@ var template_default = _template_persisted("a", (input) => {
 		g: count
 	});
 	_resume_branch($scope0_id);
-}, 1);
+}, 1, 0);

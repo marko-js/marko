@@ -1107,10 +1107,9 @@ export function finalizeReferences() {
     // membership, no closures — reads compile verbatim.
     if (binding.type === BindingType.global) {
       resolveBindingSources(binding);
-      // Derived cross-file bit: custom-tag analyze rolls it up so a call
-      // site can classify whether skipping this render could hide a
-      // global change.
-      if (isPersisted()) getProgram().node.extra!.persistedGlobals = true;
+      // LOCAL-only bit (no cross-file roll-up): the html output exports it
+      // as the template's intrinsics, composed across templates at render.
+      if (isPersisted()) getProgram().node.extra!.readsGlobals = true;
       continue;
     }
     if (binding.type !== BindingType.dom) {

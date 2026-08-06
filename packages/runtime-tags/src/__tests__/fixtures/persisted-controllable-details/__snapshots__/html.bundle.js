@@ -9,4 +9,4 @@ var template_default = _template_persisted("a", (input) => {
 	}, "a0"))}${_patch_control($scope0_id, "b", 4, input.show, $scope0_owned, 1)}><summary>More</summary><p>Body</p></details>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && writeScope($scope0_id, {});
-}, 1);
+}, 1, 0);
