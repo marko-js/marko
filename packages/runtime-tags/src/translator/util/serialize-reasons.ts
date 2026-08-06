@@ -6,7 +6,7 @@ import {
   AccessorProp,
 } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import { concat, type OneMany, type Opt } from "./optional";
+import { concat, forEach, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
   compareSources,
@@ -28,6 +28,13 @@ const scopeExprsBySection = new WeakMap<Section, OneMany<t.NodeExtra>>();
 const propExprsBySection = new WeakMap<
   Section,
   Map<SerializeKey, OneMany<t.NodeExtra>>
+>();
+// Provenance answers "whose values feed this" where the reason answers
+// "serialize?": it survives force-`true` and counts function-body reads.
+const scopeProvenanceBySection = new WeakMap<Section, Sources>();
+const propProvenanceBySection = new WeakMap<
+  Section,
+  Map<SerializeKey, Sources>
 >();
 const serializePropsByBinding = new WeakMap<Binding, SerializeKey>();
 // Param reason groups key this with a per-compile symbol, which the compile
@@ -67,6 +74,9 @@ export function addSerializeReason(
   prefix?: AccessorPrefix | symbol,
 ) {
   if (reason) {
+    if (reason !== true) {
+      addProvenance(section, reason, prop && getPropKey(section, prop, prefix));
+    }
     if (prop) {
       const key = getPropKey(section, prop, prefix);
       const curReason = section.serializeReasons.get(key);
@@ -103,34 +113,33 @@ export function addSerializeExpr(
   prefix?: AccessorPrefix | symbol,
 ) {
   if (expr) {
+    // Exprs accumulate even once forced: resolving into a `true` reason is
+    // a no-op, and provenance still needs them.
     if (prop) {
       const key = getPropKey(section, prop, prefix);
-      if (section.serializeReasons.get(key) !== true) {
-        if (expr === true) {
-          forcePropSerialize(section, key);
-        } else {
-          let curExpr: Opt<t.NodeExtra>;
-          let curExprs = propExprsBySection.get(section);
-          if (curExprs) {
-            curExpr = curExprs.get(key);
-          } else {
-            curExprs = new Map();
-            propExprsBySection.set(section, curExprs);
-          }
-
-          curExprs.set(key, curExpr ? concat(curExpr, expr)! : expr);
-        }
-      }
-    } else if (section.serializeReason !== true) {
       if (expr === true) {
-        forceSerialize(section);
+        if (section.serializeReasons.get(key) !== true) {
+          forcePropSerialize(section, key);
+        }
       } else {
-        const curExpr = scopeExprsBySection.get(section);
-        scopeExprsBySection.set(
-          section,
-          curExpr ? concat(curExpr, expr)! : expr,
-        );
+        let curExpr: Opt<t.NodeExtra>;
+        let curExprs = propExprsBySection.get(section);
+        if (curExprs) {
+          curExpr = curExprs.get(key);
+        } else {
+          curExprs = new Map();
+          propExprsBySection.set(section, curExprs);
+        }
+
+        curExprs.set(key, curExpr ? concat(curExpr, expr)! : expr);
       }
+    } else if (expr === true) {
+      if (section.serializeReason !== true) {
+        forceSerialize(section);
+      }
+    } else {
+      const curExpr = scopeExprsBySection.get(section);
+      scopeExprsBySection.set(section, curExpr ? concat(curExpr, expr)! : expr);
     }
   }
 }
@@ -245,6 +254,7 @@ export function applySerializeExprs(section: Section) {
   if (propExprs) {
     propExprsBySection.delete(section);
     for (const [key, exprs] of propExprs) {
+      addProvenance(section, getProvenanceForExprs(exprs), key);
       const exprReason = getSerializeSourcesForExprs(exprs);
       if (exprReason) {
         const curReason = section.serializeReasons.get(key);
@@ -258,8 +268,9 @@ export function applySerializeExprs(section: Section) {
 
   const scopeExprs = scopeExprsBySection.get(section);
   if (scopeExprs) {
-    const exprReason = getSerializeSourcesForExprs(scopeExprs);
     scopeExprsBySection.delete(section);
+    addProvenance(section, getProvenanceForExprs(scopeExprs));
+    const exprReason = getSerializeSourcesForExprs(scopeExprs);
     if (exprReason) {
       const curReason = section.serializeReason;
       const newReason = mergeSerializeReasons(curReason, exprReason);
@@ -288,6 +299,64 @@ export function finalizeSerializeReason(section: Section) {
       setSerializeReason(section, newReason);
     }
   }
+
+  // Prop provenance folds into the scope's, mirroring the reason merge.
+  const propProvenance = propProvenanceBySection.get(section);
+  if (propProvenance) {
+    for (const provenance of propProvenance.values()) {
+      addProvenance(section, provenance);
+    }
+  }
+}
+
+// What feeds a serialization decision, complete after reference finalize;
+// EMPTY under a forced reason means unrecorded, never "sourceless".
+export function getSerializeProvenance(
+  section: Section,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+): Sources | undefined {
+  return prop
+    ? propProvenanceBySection
+        .get(section)
+        ?.get(getPropKey(section, prop, prefix))
+    : scopeProvenanceBySection.get(section);
+}
+
+function addProvenance(
+  section: Section,
+  sources: Sources | undefined,
+  key?: SerializeKey,
+) {
+  if (!sources) return;
+  if (key) {
+    let provenance = propProvenanceBySection.get(section);
+    if (!provenance) {
+      propProvenanceBySection.set(section, (provenance = new Map()));
+    }
+    provenance.set(key, mergeSources(provenance.get(key), sources)!);
+  } else {
+    scopeProvenanceBySection.set(
+      section,
+      mergeSources(scopeProvenanceBySection.get(section), sources)!,
+    );
+  }
+}
+
+// Unlike the reason resolution, provenance counts reads inside function
+// values: a consumer may invoke them at render time.
+function getProvenanceForExprs(exprs: Opt<t.NodeExtra>) {
+  let sources: Sources | undefined;
+  forEach(exprs, (expr) => {
+    sources = mergeSources(sources, getSerializeSourcesForExpr(expr));
+    forEach(
+      (expr as t.FunctionExtra).referencedBindingsInFunction,
+      (binding) => {
+        sources = mergeSources(sources, getSerializeSourcesForRef(binding));
+      },
+    );
+  });
+  return sources;
 }
 
 function getPropKey(
@@ -337,13 +406,11 @@ function getPropKey(
 }
 
 function forceSerialize(section: Section) {
-  scopeExprsBySection.delete(section);
   setSerializeReason(section, true);
 }
 
 function forcePropSerialize(section: Section, key: SerializeKey) {
   setPropSerializeReason(section, key, true);
-  propExprsBySection.get(section)?.delete(key);
 }
 
 function isStrOrSym(v: unknown): v is string | symbol {

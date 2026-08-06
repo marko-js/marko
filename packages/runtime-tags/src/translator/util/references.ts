@@ -1086,10 +1086,18 @@ export function finalizeReferences() {
           }
 
           setReadsOwner(section, canonicalUpstreamAlias.section);
+          // Split so the force cannot swallow the sources' provenance.
+          if (isEffect) {
+            addOwnerSerializeReason(
+              section,
+              canonicalUpstreamAlias.section,
+              true,
+            );
+          }
           addOwnerSerializeReason(
             section,
             canonicalUpstreamAlias.section,
-            !!isEffect || canonicalUpstreamAlias.sources,
+            canonicalUpstreamAlias.sources,
           );
         }
       }
@@ -1112,10 +1120,13 @@ export function finalizeReferences() {
       section.sectionAccessor &&
       section.upstreamExpression
     ) {
+      // Split so the force cannot swallow the sources' provenance.
+      if (section.isHoistThrough || section.hoisted) {
+        addSerializeReason(section, true, kBranchSerializeReason);
+      }
       addSerializeReason(
         section,
-        !!(section.isHoistThrough || section.hoisted) ||
-          getSerializeSourcesForRef(getDirectClosures(section)),
+        getSerializeSourcesForRef(getDirectClosures(section)),
         kBranchSerializeReason,
       );
       addSerializeExpr(
@@ -1192,22 +1203,28 @@ export function finalizeReferences() {
       // mark bindings that need to be serialized due to being closed over by stateful sections
       const sourceSection = closure.section;
       let currentSection = section;
-      let branchesReason: undefined | SerializeReason;
+      let branchesForced = false;
+      let branchesSources: undefined | Sources;
 
+      // The walk keeps merging through a forced hop: the force decides the
+      // reason, but later hops' sources still feed provenance.
       while (currentSection !== sourceSection) {
         const upstreamReason = currentSection.downstreamBinding
           ? getSectionRegisterReasons(currentSection) || undefined
           : !currentSection.upstreamExpression ||
             getSerializeSourcesForExpr(currentSection.upstreamExpression);
         if (upstreamReason === true) {
-          branchesReason = true;
-          break;
+          branchesForced = true;
+        } else if (upstreamReason) {
+          branchesSources = mergeSources(branchesSources, upstreamReason);
         }
-
-        branchesReason = mergeSerializeReasons(branchesReason, upstreamReason);
         currentSection = currentSection.parent!;
       }
 
+      const branchesReason = branchesForced || branchesSources;
+      if (branchesForced) {
+        addSerializeReason(sourceSection, branchesSources, closure);
+      }
       addSerializeReason(sourceSection, branchesReason, closure);
       addSerializeReason(
         sourceSection,

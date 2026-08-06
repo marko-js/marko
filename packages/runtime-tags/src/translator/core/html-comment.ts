@@ -89,7 +89,9 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      addSerializeExpr(tagSection, !!tagVar || tagExtra, nodeBinding);
+      // Split so the force cannot swallow the exprs' provenance.
+      if (tagVar) addSerializeExpr(tagSection, true, nodeBinding);
+      addSerializeExpr(tagSection, tagExtra, nodeBinding);
     }
 
     // The whole client template records here (children are skipped); the html
