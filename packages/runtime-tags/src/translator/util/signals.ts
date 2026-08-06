@@ -55,6 +55,7 @@ import {
   getSerializeReason,
   isReasonDynamic,
   isSameReason,
+  kSerializedValueReason,
   type SerializeReason,
 } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
@@ -1285,11 +1286,21 @@ export function writeHTMLResumeStatements(
 
   let debugVars: t.ObjectProperty[] | undefined;
   const writeSerializedBinding = (binding: Binding) => {
-    const reason = getSerializeReason(section, binding);
+    let reason = getSerializeReason(section, binding);
     if (!reason) return;
     if (binding.noSerialize) {
-      serializedLookup.delete(getScopeAccessor(binding));
-      return;
+      // An intersection needing the value from scope overrides the spread's
+      // value skip, guarded by the sources that re-run the intersection.
+      const valueReason = getSerializeReason(
+        section,
+        binding,
+        kSerializedValueReason,
+      );
+      if (!valueReason) {
+        serializedLookup.delete(getScopeAccessor(binding));
+        return;
+      }
+      reason = valueReason;
     }
     const accessor = getScopeAccessor(binding);
     serializedLookup.delete(accessor);
