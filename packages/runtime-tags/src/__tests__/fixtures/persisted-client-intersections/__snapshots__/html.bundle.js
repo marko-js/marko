@@ -45,6 +45,7 @@ var template_default = _template_persisted("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "d", $childScope);
 	price_card_default({ label: input.label });
+	_set_serialize_reason(0);
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "e", $childScope2);
 	promo_tag_default({ text: "Sale" });

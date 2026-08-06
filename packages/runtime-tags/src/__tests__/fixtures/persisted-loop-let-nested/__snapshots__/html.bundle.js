@@ -4,7 +4,7 @@ _renderer_shells({
 	a1: ",`a1 a2;D l ;<span> </span><button>note</button>`"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -20,10 +20,10 @@ var template_default = _template_persisted("a", (input) => {
 				writeScope($scope2_id, { c: notes });
 				return 0;
 			}
-		}, $scope1_id, "b", $sg__input_items, $sg__input_items, $sg__input_items, void 0, void 0, ["a1"]);
+		}, $scope1_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a1"]);
 		_html("</li>");
 		writeScope($scope1_id, {});
-	}, "id", $scope0_id, "a", $sg__input_items, $sg__input_items, $sg__input_items, void 0, void 0, "a0");
+	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0");
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	$scope0_reason && writeScope($scope0_id, {});
 }, 1);
