@@ -33,7 +33,7 @@ var template_default = _template_persisted("a", (input) => {
 	const tenfold = _resume((next) => {
 		last = next * 10;
 	}, "a1", $scope0_id);
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
 	_set_serialize_reason({
 		0: _serialize_guard($scope0_reason, 0),
 		1: _serialize_guard($scope0_reason, 1),
