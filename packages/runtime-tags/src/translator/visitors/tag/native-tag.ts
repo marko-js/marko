@@ -44,6 +44,7 @@ import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
   constructRendersReads,
+  ensurePersistedCaptureGroups,
   isPatchCaptureSection,
 } from "../../util/persisted";
 import {
@@ -72,7 +73,10 @@ import {
   getSection,
   type StructureVisit,
 } from "../../util/sections";
-import { getSerializeGuard } from "../../util/serialize-guard";
+import {
+  getPatchWriteOwnership,
+  getSerializeGuard,
+} from "../../util/serialize-guard";
 import {
   addSerializeExpr,
   addSerializeReason,
@@ -303,6 +307,13 @@ export default {
           tag.hub.file,
           getPatchControlFeature(relatedControllable),
         );
+        const controlValue = relatedControllable.attrs[0]?.value;
+        if (controlValue) {
+          ensurePersistedCaptureGroups(
+            getOrCreateSection(tag),
+            () => controlValue.extra || {},
+          );
+        }
       }
 
       if (
@@ -342,6 +353,12 @@ export default {
             tag.hub.file,
             `${getRuntimePath("dom")}/patch-attr.feat`,
           );
+          for (const attr of node.attributes) {
+            if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
+              const { value } = attr;
+              ensurePersistedCaptureGroups(tagSection, () => value.extra || {});
+            }
+          }
         }
 
         if (spreadReferenceNodes) {
@@ -628,6 +645,8 @@ export default {
           if (isPersisted() && isPatchCaptureSection(tagSection)) {
             const [valueAttr, changeAttr] = staticControllable.attrs;
             if (changeAttr) {
+              // A param-fed handler binds only under server ownership, so
+              // a client-owned control never rebinds a stale handler.
               write`${callRuntime(
                 "_patch_bind",
                 getScopeIdIdentifier(tagSection),
@@ -638,14 +657,23 @@ export default {
                   ),
                 ),
                 t.cloneNode(changeAttr.value, true),
+                ...getPatchWriteOwnership(
+                  getSerializeSourcesForExpr(changeAttr.value.extra || {}),
+                ),
               )}`;
             }
+            // A param-fed control value writes only under server ownership.
             write`${callRuntime(
               "_patch_control",
               getScopeIdIdentifier(tagSection),
               t.cloneNode(visitAccessor!, true),
               t.numericLiteral(getControlledType(staticControllable)),
               valueAttr ? t.cloneNode(valueAttr.value, true) : buildUndefined(),
+              ...(valueAttr
+                ? getPatchWriteOwnership(
+                    getSerializeSourcesForExpr(valueAttr.value.extra || {}),
+                  )
+                : []),
             )}`;
           }
         }
@@ -774,14 +802,17 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
-                // The capture renders the attribute itself, so the
-                // expression appears (and normalizes) once.
+                // The capture renders the attribute itself (expression
+                // appears once); ownership rides as trailing args.
                 if (capturesPatchAttr(name, value)) {
                   write`${callRuntime(
                     `_patch_attr_${name as "class" | "style"}`,
                     getScopeIdIdentifier(tagSection),
                     getScopeAccessorLiteral(nodeBinding!),
                     value,
+                    ...getPatchWriteOwnership(
+                      getSerializeSourcesForExpr(value.extra || {}),
+                    ),
                   )}`;
                   break;
                 }
@@ -809,8 +840,8 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                // The capture renders the attribute itself, so the
-                // expression appears (and evaluates) once.
+                // The capture renders the attribute itself (expression
+                // appears once); ownership rides as trailing args.
                 if (capturesPatchAttr(name, value)) {
                   write`${callRuntime(
                     "_patch_attr",
@@ -818,6 +849,9 @@ export default {
                     getScopeAccessorLiteral(nodeBinding!),
                     t.stringLiteral(name),
                     value,
+                    ...getPatchWriteOwnership(
+                      getSerializeSourcesForExpr(value.extra || {}),
+                    ),
                   )}`;
                   break;
                 }

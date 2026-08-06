@@ -508,7 +508,7 @@ export function finalizeParamSerializeReasonGroups(section: Section) {
   }
 }
 
-function ensureReasonGroups(reason: Section["serializeReason"]) {
+export function ensureReasonGroups(reason: Section["serializeReason"]) {
   if (isReasonDynamic(reason)) {
     for (const [paramSection, params] of groupParamsBySection(reason.param)) {
       ensureParamReasonGroup(paramSection, params);

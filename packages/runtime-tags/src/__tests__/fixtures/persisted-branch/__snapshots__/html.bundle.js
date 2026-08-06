@@ -1,14 +1,14 @@
 // template.marko
 _renderer_shells({ a0: ",`a0;D ;<aside class=\"promo banner\"> </aside>`" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_promo = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_promo = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1>`);
 	_if(() => {
 		if (input.promo) {
 			const $scope1_id = _scope_id();
-			_html(`<aside class="promo banner">${_patch_text($scope1_id, "a", input.promo)}${_el_resume($scope1_id, "a")}</aside>`);
+			_html(`<aside class="promo banner">${_patch_text($scope1_id, "a", input.promo, $scope0_owned, 1)}${_el_resume($scope1_id, "a")}</aside>`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

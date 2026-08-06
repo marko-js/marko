@@ -1,9 +1,9 @@
 // template.marko
 _renderer_shells({ a0: ",`a0;Db%;<p>Value <!></p>`" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

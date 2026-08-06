@@ -31,6 +31,7 @@ interface SectionReasonState {
   if: TypeState;
   guard: TypeState;
   declarators: t.VariableDeclarator[];
+  owned?: true;
 }
 
 interface TypeState {
@@ -147,6 +148,69 @@ function getDynamicGuard(
 
 export function scopeReasonIdentifier(section: Section) {
   return t.identifier(getSharedUid(`scope${section.id}_reason`, section));
+}
+
+export function scopeOwnedIdentifier(section: Section) {
+  return t.identifier(getSharedUid(`scope${section.id}_owned`, section));
+}
+
+// The ownership mask local reads the ambient slot the parent set, so its
+// declarator leads the reason's (which clears that slot).
+function ensureScopeOwned(section: Section) {
+  const state = getSectionReasonState(section);
+  if (!state.owned) {
+    state.owned = true;
+    state.declarators.unshift(
+      t.variableDeclarator(
+        scopeOwnedIdentifier(section),
+        callRuntime("_persisted_ownership"),
+      ),
+    );
+  }
+}
+
+// The per-group ownership bit as `[mask, groupIdx]` trailing args for a
+// patch writer, or `[]` when statically server-owned; only root params
+// gate (locals ride structure whose ownership the call site required).
+export function getPatchWriteOwnership(
+  sources: Sources | undefined,
+): [t.Expression, t.Expression] | [] {
+  for (const [paramsSection, params] of groupParamsBySection(sources?.param)) {
+    if (!paramsSection.parent) {
+      ensureScopeOwned(paramsSection);
+      return [
+        scopeOwnedIdentifier(paramsSection),
+        withLeadingComment(
+          t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),
+          getDebugNames(params),
+        ),
+      ];
+    }
+  }
+  return [];
+}
+
+// The same test as a statement-position guard expression (fills and
+// effect writes), or undefined when statically server-owned.
+export function getOwnershipGuard(sources: Sources | undefined) {
+  const args = getPatchWriteOwnership(sources);
+  return args.length ? callRuntime("_owned_guard", ...args) : undefined;
+}
+
+// A root group's 2-bit sources value, composed into child masks.
+export function getOwnershipGroupValue(
+  section: Section,
+  params: NonNullable<Sources["param"]>,
+) {
+  ensureScopeOwned(section);
+  return callRuntime(
+    "_mask_group",
+    scopeOwnedIdentifier(section),
+    withLeadingComment(
+      t.numericLiteral(getParamReasonGroupIndex(section, params)),
+      getDebugNames(params),
+    ),
+  );
 }
 
 function getOrHoist(
