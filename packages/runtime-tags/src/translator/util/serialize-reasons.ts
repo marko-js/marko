@@ -6,14 +6,8 @@ import {
   AccessorProp,
 } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import {
-  concat,
-  forEach,
-  type OneMany,
-  type Opt,
-  some,
-  Sorted,
-} from "./optional";
+import { isPersisted } from "./marko-config";
+import { concat, forEach, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -209,7 +203,10 @@ export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
   const sources = isReferencedExtra(expr)
     ? getSerializeSourcesForRef(expr.referencedBindings)
     : undefined;
-  return expr.readsGlobal ? mergeSources(sources, globalSources) : sources;
+  // Gated: the global dimension only exists for persisted classification.
+  return isPersisted() && expr.globalBindings
+    ? mergeSources(sources, globalSources)
+    : sources;
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

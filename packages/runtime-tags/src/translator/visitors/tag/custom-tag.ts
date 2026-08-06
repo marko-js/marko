@@ -86,8 +86,8 @@ export default {
 
       // Global reads roll up the load chain so any ancestor call site can
       // classify whether skipping this subtree could hide a global change.
-      if (isPersisted() && childFile.metadata.marko.persistedGlobals) {
-        tag.hub.file.metadata.marko.persistedGlobals = true;
+      if (isPersisted() && childFile.path.node.extra?.persistedGlobals) {
+        getProgram().node.extra!.persistedGlobals = true;
       }
 
       const tagExtra = (tag.node.extra ??= {});
