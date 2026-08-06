@@ -1,13 +1,11 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
-import { type OneMany, type Opt, some, Sorted } from "./optional";
+import { type Opt, some, Sorted } from "./optional";
 import {
   compareSources,
   getDebugNames,
   getDebugNamesAsIdentifier,
-  type InputBinding,
-  type ParamBinding,
   type Sources,
 } from "./references";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
@@ -27,10 +25,7 @@ import { withLeadingComment } from "./with-comment";
 
 const sourcesUtil = new Sorted(compareSources);
 
-type DynamicSerializeReason = {
-  state: undefined;
-  param: OneMany<InputBinding | ParamBinding>;
-};
+type DynamicSerializeReason = Sources & { state: undefined };
 
 interface SectionReasonState {
   if: TypeState;
@@ -142,7 +137,7 @@ function getOrHoist(
       return t.identifier(tracking.names.get(existingFound)!);
     }
 
-    const guard = buildGuardExpr(onlySection, reason.param, isGuard);
+    const guard = buildGuardExpr(onlySection, reason.param!, isGuard);
     const seenFound = sourcesUtil.find(tracking.seenReasons, reason);
     if (!seenFound) {
       const expr = t.parenthesizedExpression(guard);
@@ -178,7 +173,7 @@ function getOrHoist(
 
 function buildGuardExpr(
   paramsSection: Section,
-  params: DynamicSerializeReason["param"],
+  params: NonNullable<Sources["param"]>,
   isGuard: boolean,
 ) {
   const serializeIdentifier = t.identifier(
