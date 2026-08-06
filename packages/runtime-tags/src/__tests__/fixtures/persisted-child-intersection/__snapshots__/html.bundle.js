@@ -16,7 +16,7 @@ var price_card_default = _template_persisted("b", (input) => {
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_escape(input.title)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title)}${_el_resume($scope0_id, "a")}</h1>`);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "b", $childScope);
 	price_card_default({ label: input.label });

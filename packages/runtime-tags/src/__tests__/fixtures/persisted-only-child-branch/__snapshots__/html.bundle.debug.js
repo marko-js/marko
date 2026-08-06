@@ -8,7 +8,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>hi <!>${_patch_text($scope1_id, "#text/0", input.msg)}${_escape(input.msg)}${_el_resume($scope1_id, "#text/0")}</span>`);
+			_html(`<span>hi <!>${_patch_text($scope1_id, "#text/0", input.msg)}${_el_resume($scope1_id, "#text/0")}</span>`);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6");
 			return 0;
 		}

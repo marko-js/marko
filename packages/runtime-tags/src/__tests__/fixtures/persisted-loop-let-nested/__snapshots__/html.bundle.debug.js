@@ -9,7 +9,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "#text/0", item.label)}${_escape(item.label)}${_el_resume($scope1_id, "#text/0")}`);
+		_html(`<li>${_patch_text($scope1_id, "#text/0", item.label)}${_el_resume($scope1_id, "#text/0")}`);
 		_if(() => {
 			if (item.detailed) {
 				const $scope2_id = _scope_id();
