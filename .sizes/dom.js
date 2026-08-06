@@ -1,4 +1,4 @@
-// size: 26863 (min) 9950 (brotli)
+// size: 26965 (min) 9982 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -662,14 +662,19 @@ function fillJoin(key, valueAccessor, join, dispatch) {
   }
   return join;
 }
-function _fill_join(key, valueAccessor, join) {
-  return fillJoin(key, valueAccessor, join, join);
+function _fill_join(key, valueAccessor, join, buildDispatch) {
+  return fillJoin(key, valueAccessor, join, buildDispatch ? buildDispatch(join) : join);
 }
-function _fill_join_if(key, valueAccessor, join, branchAccessor, branchIndex) {
-  return fillJoin(key, valueAccessor, join, _if_closure(branchAccessor, branchIndex, join));
+function _fill_join_if(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i > 0; i -= 2)
+    dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
 }
-function _fill_join_for(key, valueAccessor, join, branchAccessor) {
-  return fillJoin(key, valueAccessor, join, _for_closure(branchAccessor, join));
+function _fill_join_for(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
 }
 function fill(key, signal) {
   return ((patchFills[key] = signal), signal);
