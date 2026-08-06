@@ -1,0 +1,28 @@
+<main><!--M_[--><!--M_[-->
+  <p>a:x@0<!--M_*3 #text/0--></p><!--M_[3-->
+  <p>b:x@0<!--M_*4 #text/0--></p>
+  <!--M_]2 #text/0 4--><!--M_]1 #text/0 2--><button>+</button><!--M_*1 #button/1-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      input_items: ["a", "b"],
+      input_suffix: "x",
+      count: 0,
+      "ClosureScopes:input_suffix": new Set([_(3), _(4)]),
+      "ClosureScopes:count": new Set([_(3), _(4)])
+    }, {
+      _: _(1)
+    }, {
+      item: "a",
+      _: _(2),
+      "#LoopKey": "a"
+    }, {
+      item: "b",
+      _: _(2),
+      "#LoopKey": "b"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-intersection-deep/template.marko_0 1"
+  ];
+  M._.w()
+</script>

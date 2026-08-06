@@ -131,32 +131,65 @@ export function _fill_join<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   join: T,
-): T {
-  return fillJoin(key, valueAccessor, join, join);
-}
-// A cross-section join runs against a branch scope, so these register the
-// owner-side dispatch; per-kind helpers keep branch-free bundles free of it.
-export function _fill_join_if<T extends SignalFn>(
-  key: string,
-  valueAccessor: EncodedAccessor,
-  join: T,
-  branchAccessor: EncodedAccessor,
-  branchIndex: number,
+  buildDispatch?: (join: SignalFn) => SignalFn,
 ): T {
   return fillJoin(
     key,
     valueAccessor,
     join,
-    _if_closure(branchAccessor, branchIndex, join),
+    buildDispatch ? buildDispatch(join) : join,
   );
+}
+// Cross-section joins run against branch scopes: these register the
+// owner-side dispatch, composed inward over trailing hop args (owner
+// first); per-kind helpers keep branch-free bundles free of the other
+// kind, and mixed chains ride `_fill_join`'s dispatch builder instead.
+export function _fill_join_if<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  ...hops: (EncodedAccessor | number)[]
+): T {
+  let dispatch: SignalFn = join;
+  for (let i = hops.length; i > 0; i -= 2) {
+    dispatch = _if_closure(
+      hops[i - 2] as EncodedAccessor,
+      hops[i - 1] as number,
+      dispatch,
+    );
+  }
+  return fillJoin(key, valueAccessor, join, dispatch);
 }
 export function _fill_join_for<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   join: T,
-  branchAccessor: EncodedAccessor,
+  ...hops: EncodedAccessor[]
 ): T {
-  return fillJoin(key, valueAccessor, join, _for_closure(branchAccessor, join));
+  let dispatch: SignalFn = join;
+  for (let i = hops.length; i--;) {
+    dispatch = _for_closure(hops[i], dispatch);
+  }
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+
+// A read below one hop composes the owner-side dispatch down the branch
+// chain: `[accessor, index]` conditional hops, `[accessor]` loop hops.
+export function _fill_join_deep<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  hops: [EncodedAccessor, number?][],
+): T {
+  let dispatch: SignalFn = join;
+  for (let i = hops.length; i--;) {
+    const hop = hops[i];
+    dispatch =
+      hop.length > 1
+        ? _if_closure(hop[0], hop[1]!, dispatch)
+        : _for_closure(hop[0], dispatch);
+  }
+  return fillJoin(key, valueAccessor, join, dispatch);
 }
 
 // A binding's declaration signal already writes + queues its downstream
