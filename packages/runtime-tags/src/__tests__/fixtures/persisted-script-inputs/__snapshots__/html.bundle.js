@@ -9,4 +9,4 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.a,
 		f: input.b
 	}) : (_owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "e", input.a), _owned_guard($scope0_owned, 2) && _patch_write($scope0_id, "f", input.b));
-}, 1);
+}, 1, 0);

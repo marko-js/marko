@@ -16,4 +16,4 @@ var template_default = _template_persisted("a", (input) => {
 		h: plain,
 		i: loud
 	});
-}, 1);
+}, 1, 0);

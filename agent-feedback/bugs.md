@@ -118,3 +118,18 @@ A _split_ Class component (one with a `component-browser.js`, so `FLAG_WILL_RERE
 `packages/compiler/src/babel-plugin/parser.js` › `onAttrMethod` | 2026-08-11 | impact:med | effort:low
 
 `parseStatements` parses a shorthand method body as a standalone program and the compiler's `parserOpts` allow top-level `await`, so `<button onClick() { await save() }>` parses without complaint and `onAttrMethod` builds a `t.functionExpression` with `async: false`. The output is then literally `function () { await save(); }`, which surfaces as the bundler's locationless "`await` is only allowed within async functions" rather than a Marko diagnostic pointing at the template. Now that `<button async onClick() {}>` exists the mistake is a forgotten keyword, so `onAttrMethod` should traverse the parsed body for a top-level `AwaitExpression` when `part.async` is false and name the fix ("add `async` before the method name"). Re-verify with `pnpm run compile -- -o dom -d` on that template and grep the output for `function ()` preceding an `await`.
+
+## Circular custom tags TDZ at module evaluation in DOM output
+
+Mutually recursive custom tags (`tags/a-tag` renders `b-tag`, which
+renders `a-tag`) compile per-template but the DOM output's static
+template-string composition (`const $template$1 = ((_w0) =>
+`...${_w0}...`)($template$2)`) references the sibling's module-level
+const across the import cycle; the bundler's concatenation order then
+hits `Cannot access '$template$1' before initialization`at module
+evaluation, before any render. The composition would need to be lazy (or
+bail to a runtime reference) when the child resolves through a cycle.
+Found while building a persisted fixture; reproduces with`persisted:
+false` (the inlining is mode-agnostic). Re-verify: two tags rendering
+each other behind a depth guard, bundle the page, import the dom bundle
+— eval throws.

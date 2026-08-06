@@ -17,4 +17,4 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {});
-}, 1);
+}, 1, 0);
