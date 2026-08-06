@@ -26,12 +26,6 @@ The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repe
 
 The mocha spec glob (`packages/*/@(src|test)/**/*.test.@(js|ts)`) matches this file, yet it declares no `describe`/`it`: the whole `mocha-autotest` body has been commented out for years, leaving five live lines that only `require` `../__util__/test-init`, `chai`, and `../../compiler`. The commented body resolves `./babel-register`, deleted in `3867db2ca8` (native type stripping), so it cannot be uncommented as written, seven `fixtures/` directories are unused, and `markoc` is still a published bin with no coverage. Delete `test/markoc/`, or resurrect it by spawning `bin/markoc` with `-r ~ts` instead of the babel hook. Re-verify: `rg -n "describe\(|it\(" packages/runtime-class/test/markoc/index.test.js` matches nothing outside comments.
 
-## Delete or restore the commented-out `Symbol.iterator` serializer test
-
-`packages/runtime-tags/src/__tests__/serializer.test.ts` | 2026-07-18 | impact:low | effort:low
-
-One commented-out test survives at `serializer.test.ts:733-751`: an `it.skip("Symbol.iterator registered", …)` case whose inner note reads "Unsupported for now since we share the reference for iterators on attribute tags." Either restore it as a live `it.skip` so the runner reports it, or delete it — commented-out code hides whether the limitation still holds. Decide it alongside "Remove the dead `_attrs` event-handler assertions in html-attrs.test.ts or give the routing real coverage", the other commented-out-assertion site in the same test suite. Re-verify: `rg -n "^\s*// *it\.skip" packages/runtime-tags/src/__tests__/serializer.test.ts` prints exactly that one block, and no other commented-out `it`/`describe` remains in the file.
-
 ## Normalize the local naming flagged by the terminology audit
 
 `packages/runtime-tags/src/html/serializer.ts` › `State` | 2026-07-20 | impact:low | effort:low
