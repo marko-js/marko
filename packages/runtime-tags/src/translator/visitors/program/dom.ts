@@ -32,6 +32,7 @@ import {
   getSignalFn,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
+  sectionHasGlobalEffect,
   signalHasStatements,
   writeRegisteredFns,
   writeSignals,
@@ -178,7 +179,10 @@ export default {
         if (getPatchFillBindings(fillSection)) {
           importRuntimeFeature("patch-value");
         }
-        if (find(fillSection.bindings, isPatchEffectBinding)) {
+        if (
+          find(fillSection.bindings, isPatchEffectBinding) ||
+          sectionHasGlobalEffect(fillSection)
+        ) {
           importRuntimeFeature("patch-effect");
         }
       });

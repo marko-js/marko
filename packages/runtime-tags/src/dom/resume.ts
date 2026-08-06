@@ -6,6 +6,7 @@ import {
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { forEach, type Opt, push } from "../common/opt";
 import {
+  type Accessor,
   AccessorPrefix,
   AccessorProp,
   type AwaitCounter,
@@ -61,6 +62,10 @@ type Patcher = (scope: Scope, key: string, value: unknown) => void;
 
 export const registeredValues: Record<string, unknown> = {};
 export const patchers: Record<string, Patcher> = {};
+// A patched write that changed a value marks it with the frame's run id,
+// so `patch-effect` re-runs readers exactly when a read changed this frame.
+export const kChanged = Symbol();
+export type Changed = Scope & { [kChanged]?: Record<Accessor, number> };
 // Frame records ahead of the scope tree (`id;walks;template` shell
 // strings), registered by the patch feature that understands them.
 export let onPatchRecord: ((entry: string) => void) | undefined;
