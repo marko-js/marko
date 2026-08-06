@@ -1,0 +1,15 @@
+class {
+  onCreate() {
+    this.state = { changed: 0 };
+  }
+  handleChange() {
+    this.state.changed++;
+  }
+}
+
+<div id="class-parent">${state.changed}</div>
+<tags-child onChange() {
+  component.handleChange();
+}/>
+
+<init-components/>
