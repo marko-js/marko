@@ -3,7 +3,7 @@ var badge_default = _template_persisted("__tests__/tags/badge.marko", (input) =>
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let seen = 0;
-	_html(`<footer><span>${_patch_text($scope0_id, "#text/0", input.label)}${_escape(input.label)}${_el_resume($scope0_id, "#text/0")} (<!>${_escape(seen)}${_el_resume($scope0_id, "#text/1")})</span><button>ack</button>${_el_resume($scope0_id, "#button/2")}</footer>`);
+	_html(`<footer><span>${_patch_text($scope0_id, "#text/0", input.label)}${_el_resume($scope0_id, "#text/0")} (<!>${_escape(seen)}${_el_resume($scope0_id, "#text/1")})</span><button>ack</button>${_el_resume($scope0_id, "#button/2")}</footer>`);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
 	$scope0_reason && writeScope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
 	_resume_branch($scope0_id);
@@ -23,7 +23,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main><ul>");
 	_for_of(input.items, (item) => {
 		const $scope3_id = _scope_id();
-		_html(`<li>${_patch_text($scope3_id, "#text/0", item.label)}${_escape(item.label)}${_el_resume($scope3_id, "#text/0")}`);
+		_html(`<li>${_patch_text($scope3_id, "#text/0", item.label)}${_el_resume($scope3_id, "#text/0")}`);
 		_if(() => {
 			if (item.sale) {
 				const $scope4_id = _scope_id();
@@ -39,11 +39,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_if(() => {
 		if (input.summary) {
 			const $scope1_id = _scope_id();
-			_html(`<section>${_patch_text($scope1_id, "#text/0", input.summary)}${_escape(input.summary)}${_el_resume($scope1_id, "#text/0")}`);
+			_html(`<section>${_patch_text($scope1_id, "#text/0", input.summary)}${_el_resume($scope1_id, "#text/0")}`);
 			_if(() => {
 				if (input.detail) {
 					const $scope2_id = _scope_id();
-					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail)}${_escape(input.detail)}${_el_resume($scope2_id, "#text/0")}</small>`);
+					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail)}${_el_resume($scope2_id, "#text/0")}</small>`);
 					_subscribe(_serialize_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"));
 					return 0;
 				}
