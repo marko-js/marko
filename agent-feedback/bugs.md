@@ -2,12 +2,6 @@
 
 Out-of-scope defects noticed while working on something else. Format and rules: [README.md](README.md).
 
-## Fix `Sorted.isSuperset` arithmetic together with a proper-superset test in `isSupersetSources`
-
-`packages/runtime-tags/src/translator/util/optional.ts` › `Sorted.isSuperset` | 2026-07-03 | impact:med | effort:med
-
-The loop rejects with `supLen - found <= i`, comparing remaining superset slots against the count of _smaller_ elements instead of `subLen - i`, the count still to place; `isSuperset([1,2,3],[1,2,3])` is `false`. Its only caller, `isSupersetSources` in `translator/util/references.ts`, gates the symmetric `addSerializeReason` pair for intersections, so today's false negatives over-serialize — and that over-serialization is load-bearing: correcting the arithmetic alone makes equal-source bindings prune each other and the `bound-attr-shapes` fixture fails to resume with `Unable to serialize "ControlledHandler:#input/2"`. A real fix needs `isSupersetSources` to use a strict/proper-superset test _and_ the corrected comparison, followed by a snapshot audit. Re-verify: run the loop standalone under `node -e` and confirm `isSuperset([1,2,3],[1,2,3])` returns `true`.
-
 ## Resume a stateful Tags-API descendant rendered through an inert Class-API parent
 
 `packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts` › `translate.exit` | 2026-07-13 | impact:high | effort:high

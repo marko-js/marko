@@ -1,0 +1,21 @@
+<input value=a1><!--M_'1 a 2--><input value=b1><!--M_'1 b 3-->
+<div>a1<!--M_*1 c-->|<!>b1<!--M_*1 d--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    Da: "input",
+    Db: "input",
+    e: "a1",
+    f: "b1",
+    j: _.a = _(1, "a0"),
+    l: _.b = _(1, "a1"),
+    m: "input"
+  }, {
+    Fa: 2,
+    Ea: _.a
+  }, {
+    Fa: 2,
+    Ea: _.b
+  }], "d 2 3"];
+  M._.w()
+</script>

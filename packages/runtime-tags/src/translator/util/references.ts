@@ -1,8 +1,8 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
+import { getProgram, isNativeTag } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
-import { decodeAccessor } from "../../common/helpers";
+import { decodeAccessor, isEventHandler } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
@@ -154,6 +154,7 @@ interface Read {
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
   deferred: boolean;
+  serializedValue?: true;
 }
 
 interface ExtraRead {
@@ -981,6 +982,12 @@ export function finalizeReferences() {
         forEach(exprBindings.lazyBindings, (binding) => {
           addSerializeReason(binding.section, true, binding);
         });
+      } else {
+        forEach(reads, (read) => {
+          if (read.serializedValue) {
+            addSerializeExpr(read.binding.section, expr, read.binding);
+          }
+        });
       }
 
       if (exprBindings.allBindings) {
@@ -1757,6 +1764,28 @@ function dropExtra(exprExtra: ReferencedExtra) {
   }
 }
 
+// A controllable change handler on a native tag (or a dynamic tag, which can
+// resolve to one at runtime) that is not an inline function captures a foreign
+// value into the scope's ControlledHandler slot, so reads inside it must
+// serialize alongside it.
+function isSerializedChangeHandlerRead(exprRoot: t.NodePath) {
+  const markoRoot = getMarkoRoot(exprRoot);
+  if (!markoRoot?.isMarkoAttribute()) return false;
+  const attr = markoRoot.node;
+  if (
+    !isEventOrChangeHandler(attr.name) ||
+    isEventHandler(attr.name) ||
+    t.isFunction(attr.value)
+  ) {
+    return false;
+  }
+  const tag = markoRoot.parentPath;
+  return (
+    tag.isMarkoTag() &&
+    (tag.node.name.type !== "StringLiteral" || isNativeTag(tag))
+  );
+}
+
 function addReadToExpression(
   root:
     | t.NodePath<t.Identifier>
@@ -1781,6 +1810,10 @@ function addReadToExpression(
     section,
     getter,
   );
+
+  if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
+    read.serializedValue = true;
+  }
 
   const { parent } = root;
   if (
