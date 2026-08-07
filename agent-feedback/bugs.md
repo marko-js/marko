@@ -200,12 +200,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `_style_shell` tags the generated stylesheet with `element.className = id`, but `SVGElement.className` is a readonly `SVGAnimatedString`, so in the runtime's strict-mode ESM that assignment throws `TypeError: Cannot set property className of #<SVGElement> which has only a getter`. `<let/c="red"/><svg><style>circle { fill: ${c}; }</style><circle cx=5 cy=5 r=4/></svg>` compiles to `_style_shell($scope, "#style/0")`, so every client-created render of such a template (a `mount`, or an `<if>`/`<for>` branch) dies before anything is inserted; SSR and resume survive because `html/attrs.ts` › `_style_html` emits `<style class=ID>` as markup and `_style_rule_item` only rewrites `textContent`. Write the marker with `element.setAttribute("class", id)` so both outputs set the same attribute regardless of namespace. Re-verify: mount that template in jsdom — it throws, while the identical `<style>` outside `<svg>` mounts as `<style class="cM_0">`.
 
-## Guard the empty class-object key: `class={ "": v }` renders nothing on the server and throws on the client
-
-`packages/runtime-tags/src/dom/dom.ts` › `_attr_class_item` | 2026-07-27 | impact:low | effort:low
-
-`_attr_class_item` lowers a class-object entry to `element.classList.toggle(name, !!value)`, which throws `SyntaxError: The token provided must not be empty` for an empty token. `trackDelimitedAttrObjectProperties` in `packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` only diverts whitespace-bearing keys (`!/\s/.test(keyEval.computed)`), so `<div class={ "": count % 2 }>` still lowers to `_attr_class_item($scope["#div/0"], "", …)` and the first CSR render takes the whole mount down, while SSR's `_attr_class` drops the key and renders cleanly. Widen the guard to `!/^$|\s/.test(...)` so the empty key falls to the whole-object `_attr_class`, which already ignores it (`_attr_class({ "": true, foo: true })` → `" class=foo"`); the style side needs nothing, since `style.setProperty("", v)` is a no-op. Re-verify: compile that template with `-o dom` and mount it in jsdom — it throws before any DOM is inserted.
-
 ## Re-check serialized `$global` values after the first flush; `flushSerializer` latches `hasGlobals` even when it emitted nothing
 
 `packages/runtime-tags/src/html/writer.ts` › `flushSerializer` | 2026-07-27 | impact:med | effort:low
