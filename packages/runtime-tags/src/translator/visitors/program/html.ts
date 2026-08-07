@@ -428,21 +428,40 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     assertNoServerFnCalls(node, value);
   };
+  // Every server-sourced read in an expression: direct reads, member
+  // reads, and reads captured inside any nested function.
+  const exprHasServerSources = (value: t.Node) => {
+    let server = false;
+    t.traverseFast(value, (n) => {
+      const extra = n.extra;
+      server ||= !!extra?.globalBindings;
+      const ref = extra?.read?.binding ?? extra?.referencedBindings;
+      if (ref) {
+        const sources = getSerializeSourcesForRef(ref);
+        server ||= !!(sources?.param || sources?.global);
+      }
+      forEach(
+        (extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction,
+        (binding) => {
+          const sources = getSerializeSourcesForRef(binding);
+          server ||= !!(sources?.param || sources?.global);
+        },
+      );
+    });
+    return server;
+  };
   // A server-derived function re-binds to the live scope on patch, so
   // server values its body captures read stale slots forever: fail closed.
   const assertNoServerFnCalls = (node: t.Node, value: t.Node) => {
     t.traverseFast(value, (n) => {
-      if (t.isCallExpression(n) || t.isOptionalCallExpression(n)) {
-        const calleeExtra = (n.callee as t.Expression).extra;
-        const sources = getSerializeSourcesForRef(
-          calleeExtra?.read?.binding ?? calleeExtra?.referencedBindings,
+      if (
+        (t.isCallExpression(n) || t.isOptionalCallExpression(n)) &&
+        exprHasServerSources(n.callee)
+      ) {
+        unsupported(
+          node,
+          "calling a server-derived function inside client-owned structure is not supported yet",
         );
-        if (sources?.param || sources?.global) {
-          unsupported(
-            node,
-            "calling a server-derived function inside client-owned structure is not supported yet",
-          );
-        }
       }
     });
   };
@@ -483,32 +502,40 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // every enclosing section is itself a branch.
         if (!isPatchCaptureSection(section)) unsupported(node);
         if (getSectionForBody(tag.get("body"))?.isClientOwnedStructure) {
-          // A mixed selector re-evaluates on every fill write, so a call in
-          // the test has no stable client value (pure-state stays policy).
-          const [testAttr] = node.attributes;
-          if (
-            testAttr?.type === "MarkoAttribute" &&
-            getSerializeSourcesForExpr(
-              getCanonicalExtra(testAttr.value.extra || {}),
-            )?.param
-          ) {
-            t.traverseFast(testAttr.value, (n) => {
-              if (
-                t.isCallExpression(n) ||
-                t.isOptionalCallExpression(n) ||
-                t.isNewExpression(n) ||
-                t.isTaggedTemplateExpression(n)
-              ) {
+          for (const attr of node.attributes) {
+            if (attr.type !== "MarkoAttribute") continue;
+            // A local `by` invokes client-side per re-list; any server
+            // source anywhere in the keyer would read stale.
+            if (attr.name === "by") {
+              if (exprHasServerSources(attr.value)) {
                 unsupported(
-                  testAttr,
-                  "a call inside a test mixing client state with server values has no stable delivery",
+                  attr,
+                  "a server-derived `by` key inside a client-owned loop would read stale",
                 );
               }
-            });
+              continue;
+            }
+            // A mixed input re-evaluates on every fill write, so a call in
+            // it has no stable value; a pure-state sibling attr may call.
+            if (exprHasServerSources(attr.value)) {
+              t.traverseFast(attr.value, (n) => {
+                if (
+                  t.isCallExpression(n) ||
+                  t.isOptionalCallExpression(n) ||
+                  t.isNewExpression(n) ||
+                  t.isTaggedTemplateExpression(n)
+                ) {
+                  unsupported(
+                    attr,
+                    "a call mixing client state with server values has no stable delivery",
+                  );
+                }
+              });
+            }
           }
           // Enclosing server branches cannot construct around a client-owned
-          // selection: shells drop and divergence falls back to navigation.
-          if (isCoreTagName(tag, "if")) {
+          // selection: shells drop (recorded once, at the chain head).
+          if (isCoreTagName(tag, "if") || isCoreTagName(tag, "for")) {
             for (let cur = section; cur.parent; cur = cur.parent) {
               if (cur.isBranch) {
                 recordConstructBlocker(cur, "client-owned structure");
@@ -520,9 +547,15 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // Server-owned structure nested under client-owned structure has
         // no frame channel to speak through.
         if (inClientOwnedStructure(section)) {
+          const attrExtra = node.attributes[0]?.value.extra;
+          const sources =
+            attrExtra &&
+            getSerializeSourcesForExpr(getCanonicalExtra(attrExtra));
           unsupported(
             node,
-            "server-owned structure cannot nest inside client-owned structure",
+            sources?.param || sources?.global
+              ? "server-owned structure cannot nest inside client-owned structure"
+              : "structure inside client-owned structure must be client-driven (an unassigned `<let>` is not client state)",
           );
         }
         for (const attr of node.attributes) {
@@ -536,9 +569,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           ) {
             unsupported(
               attr,
-              attr.type === "MarkoAttribute" && isConditionTag(tag)
-                ? "a server value in a test mixing client state must be a directly read, named `input` property (so it can deliver as a fill)"
-                : undefined,
+              attr.type !== "MarkoAttribute"
+                ? undefined
+                : isConditionTag(tag)
+                  ? "a server value in a test mixing client state must be a directly read, named `input` property (so it can deliver as a fill)"
+                  : "a server value in loop inputs mixing client state must be a directly read, named `input` property (so it can deliver as a fill)",
             );
           }
         }
