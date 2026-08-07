@@ -153,7 +153,10 @@ export function isTextAreaElement(node: Element): node is HTMLTextAreaElement {
 function isMarkoComment(node: Node): node is Comment {
   if (!isComment(node)) return false;
   const { data } = node;
-  return !data || /^[a-zA-Z$_]\w*[^\w\s]/.test(data);
+  // Match the marker grammars: `commentPrefix` + a sigil from
+  // `common/constants/resume-symbol.ts` / `html/constants/mark.ts`, or a
+  // Marko 5 (runtime-class) `runtimeId` + `^`/`#`/`/` component boundary.
+  return !data || /^[a-zA-Z$_]\w*[*[\]'|)}!#^/]/.test(data);
 }
 
 function isIgnoredTag(
