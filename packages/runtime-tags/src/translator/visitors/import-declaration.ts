@@ -136,6 +136,9 @@ export default {
             }
 
             node.source.value = tagImport;
+            // The `load` attribute must not reach the emitted server module;
+            // Node rejects unknown import attributes at import time.
+            node.attributes = undefined;
             return;
           } else {
             const allKnownTagReferences = binding.referencePaths.every(
