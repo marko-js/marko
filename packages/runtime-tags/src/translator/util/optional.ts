@@ -102,8 +102,9 @@ export class Sorted<T> {
     }
 
     for (let i = subLen; i--;) {
+      // The i smaller subset items each need a distinct slot below `found`.
       const found = findIndexSorted(this.compare, superset, subset[i]);
-      if (found === -1 || supLen - found <= i) return false;
+      if (found < i) return false;
     }
 
     return true;

@@ -1,16 +1,10 @@
 import type { TestConfig } from "../../main.test";
 
 // `value:=state[key]` binds the change handler to `state[key + "Change"]`
-// (here `state.vChange`), so typing updates `v`, not `wrong`.
-//
-// CSR-only: the change handler is selected dynamically (`state[key +
-// "Change"]`), so the translator cannot statically register the resolved
-// method for resume the way it does for a static `state.aChange` (see
-// `bound-attr-shapes`). SSR therefore cannot serialize the controllable
-// handler — debug throws "Unable to serialize ControlledHandler", optimize
-// diverges from CSR.
+// (here `state.vChange`), so typing updates `v`, not `wrong`. The change
+// handler is selected dynamically, so every method the expression can reach
+// is registered and the reactive graph serializes for resume.
 export const config: TestConfig = {
-  skip_ssr: true,
   steps: [{}, type("z")],
 };
 

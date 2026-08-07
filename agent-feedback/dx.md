@@ -44,12 +44,6 @@ Positional file args are unioned with the configured `spec` glob rather than rep
 
 Neither type has a case in `writeUnknownObject`, and `writeFormData` aborts on any non-string entry ("`File`/`Blob` entries aren't serializable yet"), so a resumed form carrying an upload cannot be represented at all. Both hold binary content the existing `writeArrayBuffer`/`writeTypedArray` path already encodes and both rebuild from a constructor call (`new File([bytes], name, { type, lastModified })`); the work is reading the bytes and threading the async read through the boundary the way `writeReadableStream` does. Verify: `serializer.test.ts`'s "aborts on File/Blob values instead of dropping them" pins today's behavior, and a bare `new Blob(["hi"])` hits `throwUnserializable`.
 
-## Unit-test the pure `Opt`/`Sorted` helpers in `translator/util/optional.ts`
-
-`packages/runtime-tags/src/translator/util/optional.ts` › `Sorted` | 2026-07-23 | impact:med | effort:low
-
-`util/optional.ts` is the sorted-list algebra `packages/runtime-tags/AGENTS.md` calls the basis of reference tracking, yet it has no direct test — coverage is only indirect, through fixture snapshots. The module is pure and dependency-free, and `.mocharc.json`'s `packages/*/@(src|test)/**/*.test.@(js|ts)` spec already picks up `src/__tests__/common-helpers.test.ts`, so a sibling `optional.test.ts` needs no config change. Pin `Sorted.add/union/find/has/findIndex/groupBy`, `addSorted`/`findSorted`/`findIndexSorted`, `filter`, `concat`, `push`, `fromIter`/`toIter` and `mapToString` against naive array references over randomized sorted input. `Sorted.isSuperset` must instead be pinned to its current behavior — `isSuperset([1,2,3],[1,2,3])` is `false` — because the entry "Fix `Sorted.isSuperset` arithmetic together with a proper-superset test in `isSupersetSources`" records that the wrong arithmetic is depended on; this test is the safety net that fix needs, so it should land first. Re-verify: `rg -l "util/optional" packages/runtime-tags/src/__tests__` returns nothing.
-
 ## Record `<style>`/`<title>`/`<link>` mutations in the render log; a dynamic `<style>` update snapshots as an empty step
 
 `packages/runtime-tags/src/__tests__/utils/get-node-info.ts` › `isIgnoredTag` | 2026-07-23 | impact:med | effort:med
