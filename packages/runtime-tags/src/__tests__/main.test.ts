@@ -29,7 +29,7 @@ import {
   type Throws,
   type Wait,
 } from "./utils/resolve";
-import { snap } from "./utils/snap";
+import { allTestsPassed, snap } from "./utils/snap";
 import {
   stripDebugRuntime,
   stripOptimizeRuntime,
@@ -399,7 +399,11 @@ function testFixtures(interop?: true) {
 
           optimize &&
             !hasCompilerError &&
-            after(() => {
+            after(function sizesGate() {
+              // `stats` is complete only when the whole mode ran green; on a
+              // scoped or failed run both the assert and the rewrite would use
+              // partial numbers.
+              if (!allTestsPassed(this.test!.parent!)) return;
               const sizesFile = path.join(fixtureDir, "sizes.json");
               const actual = JSON.stringify(stats, null, 2) + "\n";
               // Assert instead of rewriting: a --grep test:update refreshes only

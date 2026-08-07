@@ -114,11 +114,11 @@ if (UPDATE) {
       }
     }
   });
+}
 
-  function allTestsPassed(suite: Mocha.Suite): boolean {
-    return (
-      suite.tests.every((test) => test.pending || test.state === "passed") &&
-      suite.suites.every(allTestsPassed)
-    );
-  }
+export function allTestsPassed(suite: Mocha.Suite): boolean {
+  return (
+    suite.tests.every((test) => test.pending || test.state === "passed") &&
+    suite.suites.every(allTestsPassed)
+  );
 }
