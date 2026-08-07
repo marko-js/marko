@@ -138,30 +138,16 @@ export function _await_promise(
       }
       if (tryPlaceholder) {
         awaitCounter = addAwaitCounter(scope, tryPlaceholder)!;
-      } else if (!awaitCounter!.i++) {
-        requestAnimationFrame(
-          () =>
-            awaitCounter!.i &&
-            runEffects(
-              prepareEffects(() =>
-                queueRender(
-                  scope,
-                  () => {
-                    if (!awaitBranch[AccessorProp.DetachedAwait]) {
-                      awaitBranch[
-                        AccessorProp.StartNode
-                      ].parentNode!.insertBefore(
-                        scope[nodeAccessor] as Node,
-                        awaitBranch[AccessorProp.StartNode],
-                      );
-                      tempDetachBranch(tryBranch);
-                    }
-                  },
-                  -1,
-                ),
-              ),
-            ),
-        );
+      } else {
+        scheduleAwaitFrame(awaitCounter!, scope, () => {
+          if (!awaitBranch[AccessorProp.DetachedAwait]) {
+            awaitBranch[AccessorProp.StartNode].parentNode!.insertBefore(
+              scope[nodeAccessor] as Node,
+              awaitBranch[AccessorProp.StartNode],
+            );
+            tempDetachBranch(tryBranch);
+          }
+        });
       }
     }
 
@@ -276,35 +262,34 @@ export function addAwaitCounter(
     );
   }
   placeholderShown.add(pendingEffects);
+  scheduleAwaitFrame(awaitCounter, tryBranch, () => {
+    insertBranchBefore(
+      (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
+        tryBranch[AccessorProp.Global],
+        tryBranch[AccessorProp.PlaceholderContent] as Renderer,
+        tryBranch[AccessorProp.Owner]!,
+        tryBranch[AccessorProp.StartNode].parentNode!,
+      )),
+      tryBranch[AccessorProp.StartNode].parentNode!,
+      tryBranch[AccessorProp.StartNode],
+    );
+    tempDetachBranch(tryBranch);
+  });
+  return awaitCounter;
+}
+
+function scheduleAwaitFrame(
+  awaitCounter: AwaitCounter,
+  scope: Scope,
+  render: () => void,
+) {
   if (!awaitCounter.i++) {
     requestAnimationFrame(
       () =>
-        awaitCounter!.i &&
-        runEffects(
-          prepareEffects(() =>
-            queueRender(
-              tryBranch,
-              () => {
-                insertBranchBefore(
-                  (tryBranch[AccessorProp.PlaceholderBranch] =
-                    createAndSetupBranch(
-                      tryBranch[AccessorProp.Global],
-                      tryBranch[AccessorProp.PlaceholderContent] as Renderer,
-                      tryBranch[AccessorProp.Owner]!,
-                      tryBranch[AccessorProp.StartNode].parentNode!,
-                    )),
-                  tryBranch[AccessorProp.StartNode].parentNode!,
-                  tryBranch[AccessorProp.StartNode],
-                );
-                tempDetachBranch(tryBranch);
-              },
-              -1,
-            ),
-          ),
-        ),
+        awaitCounter.i &&
+        runEffects(prepareEffects(() => queueRender(scope, render, -1))),
     );
   }
-  return awaitCounter;
 }
 
 function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
