@@ -309,10 +309,10 @@ export function trackDomVarReferences(
         ? ref
             .get("var")
             .buildCodeFrameError(
-              `Duplicate declaration ${JSON.stringify(binding.originalName)}`,
+              `Duplicate declaration of \`${binding.originalName}\`.`,
             )
         : ref.buildCodeFrameError(
-            "Tag variables on native elements cannot be assigned to.",
+            `\`${binding.originalName}\` is a [tag variable](https://markojs.com/docs/reference/language#tag-variables) on a native element (an element reference) and cannot be assigned to.`,
           );
     }
   }
@@ -498,7 +498,7 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
       markoRoot.parentPath === babelBinding.path
     ) {
       throw ref.buildCodeFrameError(
-        `Tag variable circular references are not supported.`,
+        `\`${ref.node.name}\` is the [tag variable](https://markojs.com/docs/reference/language#tag-variables) this tag declares, so its own attributes cannot read it.`,
       );
     } else if (isReferenceHoisted(babelBinding.path, ref)) {
       const invoked = isInvokedFunction(ref);
@@ -536,13 +536,13 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
     if (ref.type === "MarkoTag") {
       throw ref
         .get("var")
-        .buildCodeFrameError(
-          `Duplicate declaration ${JSON.stringify(binding.name)}`,
-        );
+        .buildCodeFrameError(`Duplicate declaration of \`${binding.name}\`.`);
     }
 
     if (isReferenceHoisted(babelBinding.path, ref)) {
-      throw ref.buildCodeFrameError("Cannot assign to hoisted tag variable.");
+      throw ref.buildCodeFrameError(
+        `\`${binding.name}\` is declared by a tag below this assignment; a [tag variable](https://markojs.com/docs/reference/language#tag-variables) can only be assigned below its declaration. Move the declaring tag above this code.`,
+      );
     }
 
     if (ref.isUpdateExpression()) {
@@ -573,7 +573,7 @@ function trackAssignment(
   const fnParent = getFnParent(assignment);
   if (!fnParent) {
     throw assignment.buildCodeFrameError(
-      `Assignments to a tag ${binding.type === BindingType.param ? "parameter" : "variable"} must be within a script or function.`,
+      `\`${binding.name}\` is a tag ${binding.type === BindingType.param ? "parameter" : "variable"} and can only be assigned within a script or function.`,
     );
   }
 

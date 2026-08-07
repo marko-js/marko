@@ -3,7 +3,7 @@
       1 | <button onClick() {
       2 |   lastClickCount = clickCount;
     > 3 |   clickCount++;
-        |   ^^^^^^^^^^^^ Cannot assign to hoisted tag variable.
+        |   ^^^^^^^^^^^^ `clickCount` is declared by a tag below this assignment; a [tag variable](https://markojs.com/docs/reference/language#tag-variables) can only be assigned below its declaration. Move the declaring tag above this code.
       4 | }>+</button>
       5 |
       6 | <let/clickCount = 0/>
@@ -11,7 +11,7 @@
     at packages/runtime-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko:2:3
       1 | <button onClick() {
     > 2 |   lastClickCount = clickCount;
-        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot assign to hoisted tag variable.
+        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^ `lastClickCount` is declared by a tag below this assignment; a [tag variable](https://markojs.com/docs/reference/language#tag-variables) can only be assigned below its declaration. Move the declaring tag above this code.
       3 |   clickCount++;
       4 | }>+</button>
       5 |

@@ -44,12 +44,6 @@ Positional file args are unioned with the configured `spec` glob rather than rep
 
 Neither type has a case in `writeUnknownObject`, and `writeFormData` aborts on any non-string entry ("`File`/`Blob` entries aren't serializable yet"), so a resumed form carrying an upload cannot be represented at all. Both hold binary content the existing `writeArrayBuffer`/`writeTypedArray` path already encodes and both rebuild from a constructor call (`new File([bytes], name, { type, lastModified })`); the work is reading the bytes and threading the async read through the boundary the way `writeReadableStream` does. Verify: `serializer.test.ts`'s "aborts on File/Blob values instead of dropping them" pins today's behavior, and a bare `new Blob(["hi"])` hits `throwUnserializable`.
 
-## Name the variable and the positional rule in `Cannot assign to hoisted tag variable.`
-
-`packages/runtime-tags/src/translator/util/references.ts` › `trackReferencesForBinding` | 2026-07-23 | impact:med | effort:low
-
-Assigning a `<let>` from a handler that sits _above_ the `<let>` fails with that bare message: "hoisted" is compiler jargon and it names neither the variable nor the fix, which is simply to move the declaration above the assignment. It is one of nine user-facing errors in `references.ts`, none of which follow the backticked-name-plus-markojs.com-link convention `packages/runtime-tags/AGENTS.md` documents and `core/if.ts` demonstrates; `Duplicate declaration "x"` even uses `JSON.stringify` quotes where house style is backticks. Reword to name the variable and the positional rule and link `https://markojs.com/docs/reference/language#tag-variables`. Verify: compile `<button onClick() { x = 2 }>b</button>` above `<let/x=1/>` for the jargon-only message; swapping the two lines compiles cleanly.
-
 ## Unit-test the pure `Opt`/`Sorted` helpers in `translator/util/optional.ts`
 
 `packages/runtime-tags/src/translator/util/optional.ts` › `Sorted` | 2026-07-23 | impact:med | effort:low
