@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-fn-fill/template.marko:5:8
+      3 | <main>
+      4 |   <if=show>
+    > 5 |     <p>${getTitle()}</p>
+        |        ^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: calling a server-derived function inside client-owned structure is not supported yet.
+      6 |   </if>
+      7 |   <button onClick() { show = true }>show</button>
+      8 | </main>

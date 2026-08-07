@@ -28,10 +28,11 @@ import {
 } from "./optional";
 import {
   addPersistedChildRenderer,
-  getPersistedServerRequiredParams,
+  hasServerRequiredParam,
   kPatchClientOwned,
   kPersistedAssignedVar,
-  recordPersistedServerRequired,
+  recordGlobalMixedParams,
+  recordStructuralParams,
 } from "./persisted";
 import {
   addRead,
@@ -537,16 +538,21 @@ export function finalizeKnownTags(section: Section) {
           ensureReasonGroups(
             getSerializeProvenance(section, scopeBinding, group.id),
           );
-          // Server-required-ness rolls up: feeding a param the child needs
-          // server-owned makes this template's feeders server-required too.
-          if (
-            groupIntersects(
-              group.reason,
-              getPersistedServerRequiredParams(contentSection),
-            )
-          ) {
-            recordPersistedServerRequired(
-              section,
+          // The facts roll up: feeding a param the child uses structurally
+          // (or global-mixed) makes this template's feeders so too.
+          let selectsStructure = false;
+          let globalMixed = false;
+          forEach(group.reason, (binding) => {
+            selectsStructure ||= binding.selectsStructure;
+            globalMixed ||= binding.globalMixed;
+          });
+          if (selectsStructure) {
+            recordStructuralParams(
+              getSerializeProvenance(section, scopeBinding, group.id),
+            );
+          }
+          if (globalMixed) {
+            recordGlobalMixedParams(
               getSerializeProvenance(section, scopeBinding, group.id),
             );
           }
@@ -554,14 +560,6 @@ export function finalizeKnownTags(section: Section) {
       }
     }
   }
-}
-
-function groupIntersects(params: Opt<Binding>, other: Opt<Binding>): boolean {
-  let intersects = false;
-  forEach(params, (binding) => {
-    intersects ||= includes(other, binding);
-  });
-  return intersects;
 }
 
 export interface PersistedGroupOwnership {
@@ -593,7 +591,6 @@ export function getPersistedGroupOwnership(
   // Groups born after the record (circular same-file tags) have no
   // provenance: fail closed as unanalyzable input.
   if (groups.length !== tagExtra[kOwnershipRecordedGroups]) return;
-  const serverRequired = getPersistedServerRequiredParams(contentSection);
   return groups.map((group) => {
     // The group's recorded provenance is the feed classification: it
     // includes fn-body reads and survives any force on the key.
@@ -609,7 +606,7 @@ export function getPersistedGroupOwnership(
       globalMixed: !!(sources?.state && sources.global),
       globalFed: !!sources?.global,
       parentParams: sources?.param,
-      serverRequired: groupIntersects(group.reason, serverRequired),
+      serverRequired: hasServerRequiredParam(group.reason),
     };
   });
 }

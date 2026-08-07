@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-lazy-dual/template.marko:9:13
+       7 |     </if>
+       8 |     <if=b>
+    >  9 |       <span>${"s:" + input.title}</span>
+         |             ^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value cannot yet fill more than one deep position inside client-owned structure.
+      10 |     </if>
+      11 |   </if>
+      12 |   <button onClick() { a = !a; b = !b }>+</button>
