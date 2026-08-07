@@ -294,7 +294,10 @@ function testFixtures(interop?: true) {
             const { document } = browser.window;
             const { input, steps } = await getSteps(config);
             const tracker = createMutationTracker(browser);
-            const { template, run } = await runClient(browser.ctx);
+            const { template, run } = await runClient(
+              browser.ctx,
+              rejectLoad || undefined,
+            );
             const instance = template.mount(input, document.body, "afterbegin");
             tracker.logRender(input);
 

@@ -74,12 +74,6 @@ Neither type has a case in `writeUnknownObject`, and `writeFormData` aborts on a
 
 `mergeTagDef` special-cases only the hook keys and falls through to `value5 ?? value6`, so the Marko 5 `types` stub wins wherever both core taglibs declare one — today exactly `<await>` and `<script>`. Because `marko/translator` is the interop translator and `@marko/compiler`'s default, `@marko/language-tools` resolves those two to `marko/src/core-tags/core/await/index.d.marko` and `.../script.d.marko` even inside a Tags-API `tags/*.marko` file, so editors offer and silently accept `<@then>`/`<@catch>`/`client-reorder`/`timeout` and every html `<script>` attribute — all of which the Marko 6 translator rejects with a hard compile error — precisely in mid-migration projects. Direction: interop-specific stubs whose `Input` unions both APIs, selected when both sides declare `types`. Re-verify: `taglib.buildLookup(".../fixtures-interop/interop-basic-tags-to-class", "marko/translator").getTag("await").types` prints the Marko 5 path instead of `@marko/runtime-tags/tags/await.d.marko`.
 
-## Forward `rejectLoad` from `csr()` into `clientRunner` — `reject_load` is inert in CSR mode
-
-`packages/runtime-tags/src/__tests__/main.test.ts` › `csr` | 2026-07-27 | impact:med | effort:low
-
-`ssr()` builds its jsdom with `createBrowser(runner.assets, config.load_order, rejectLoad)`, but `csr()` calls the bare `createBrowser()` and reaches the client entry through `createServerRunner`'s `clientRunner` (`__tests__/utils/bundle.ts`), which calls `importWithContext(csrFile, { browser: true }, ctx)` with no `rejectLoad` — so `reject_load` never fails the `import("./v:child.marko.input_value.mjs")` the CSR bundle actually performs. A fixture with `reject_load` and no `skip_csr` therefore snapshots a successful lazy load and a `@catch` that never fires; only `fixtures/lazy-tag-input-chunk-load-error`'s easy-to-forget `skip_csr: true` hides that today, and the client-only chunk-failure path has no coverage at all. Thread `rejectLoad` through `clientRunner` into `importWithContext`, or throw at fixture setup when `reject_load` is set without `skip_csr`. Re-verify: drop `skip_csr` from that fixture and read the written CSR snapshot — it ends with `<span id="child">1</span>`, never the `#error` div its `render-ssr.debug.md` records for the same input.
-
 ## Default and validate `translator.tagDiscoveryDirs` in `buildLookup`
 
 `packages/compiler/src/taglib/index.js` › `buildLookup` | 2026-07-27 | impact:low | effort:low

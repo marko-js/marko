@@ -7,7 +7,6 @@ export const config: TestConfig = {
   steps: [{}, wait, toggle, wait],
   reject_load: ["input_value"],
   equivalent: false,
-  skip_csr: true,
 };
 
 function toggle(document: Document) {
