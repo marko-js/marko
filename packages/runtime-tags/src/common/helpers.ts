@@ -145,6 +145,8 @@ export const toDelimitedString = function toDelimitedString(
   return str;
 };
 
+// The runtime lowercases event names, but the types accept only the exact DOM
+// camelCase spelling (eg `onKeyDown`) — deliberate; type-check flags the rest.
 export function isEventHandler(name: string): name is `on${string}` {
   return /^on[A-Z-]/.test(name);
 }
