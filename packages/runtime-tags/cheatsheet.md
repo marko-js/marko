@@ -13,7 +13,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
    - remove: `items = items.toSpliced(i, 1)`
    - update: `items = items.toSpliced(i, 1, { ...item, done: true })`
    - object: `user = { ...user, name }`
-6. Events: method shorthand `onClick() { ... }` or `onClick=fn`. Handler gets the DOM event: `onSubmit(e) { e.preventDefault(); save() }`. Don't sync input values through `onInput`/`onChange` — that's what the change handlers below are for.
+6. Events: method shorthand `onClick() { ... }` or `onClick=fn`. Handlers receive `(event, element)`; delegation means the element is the second parameter, not `event.currentTarget`: `onSubmit(e) { e.preventDefault(); save() }`, `onClick(e, el) { el.focus() }`. Don't sync input values through `onInput`/`onChange` — that's what the change handlers below are for.
 7. Native inputs are UNCONTROLLED by default: `value=` only sets the initial value. Adding the matching `*Change` handler is what makes them controlled — `valueChange` on `<input>`/`<textarea>`/`<select>`, `checkedChange` on checkboxes/radios, `openChange` on `<details>`/`<dialog>`. `value:=text` is the shorthand for `value=text valueChange(v) { text = v }`. (`<textarea value:=text/>` — value attribute, not body.)
 8. Transform in the handler when needed — number inputs give STRINGS: `<input type="number" value=n valueChange(v) { n = +v }>`, or `value:parseFloat:=n`.
 9. Radio/checkbox groups: `checkedValue:=picked` on each input (shared var, distinct `value=`) — the match is checked; array var for multi-checkbox. Dropdown: `<select value:=picked>`.

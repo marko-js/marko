@@ -5936,7 +5936,12 @@ type AttrStyle = AttrMissing | string | Marko.CSS.Properties | AttrStyle[];
 type AttrCrossOrigin = AttrBoolean | "anonymous" | "use-credentials";
 type AttrEventHandler<Event, Target> =
   | AttrMissing
-  | ((event: Event, target: Target) => unknown);
+  | ((
+      event: Event & {
+        currentTarget: "Marko delegates events, so `event.currentTarget` is not this element — use the handler's second parameter: (event, target) => ...";
+      },
+      target: Target,
+    ) => unknown);
 type AttrTarget =
   | AttrMissing
   | "_blank"
