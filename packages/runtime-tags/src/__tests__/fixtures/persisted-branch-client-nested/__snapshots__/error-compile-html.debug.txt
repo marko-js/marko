@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-nested/template.marko:4:5
+      2 | <main>
+      3 |   <if=(count > 1)>
+    > 4 |     <if=input.show>
+        |     ^ Persisted templates cannot patch this faithfully yet: server-owned structure cannot nest inside client-owned structure.
+      5 |       <p>promo</p>
+      6 |     </if>
+      7 |   </if>

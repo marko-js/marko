@@ -64,6 +64,7 @@ import {
   getSerializeSourcesForRef,
   isForceSerialized,
   mergeSerializeReasons,
+  type SerializeKey,
   type SerializeReason,
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
@@ -134,6 +135,17 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
+  /** A root param whose value selects rendered structure (branch tests,
+   * loop inputs) — transitively through child templates. */
+  selectsStructure: boolean;
+  /** A root param feeding an expression that also reads `$global` —
+   * transitively through child templates. */
+  globalMixed: boolean;
+  /** Interned per-prop serialize reason keys, keyed by accessor prefix
+   * (`undefined` is the plain binding key). */
+  serializePropKeys:
+    | Map<AccessorPrefix | symbol | undefined, SerializeKey>
+    | undefined;
   // Extra ids reserved after `id` for derived accessors (eg TagVariableChange).
   reserveSize: number;
 }
@@ -262,6 +274,9 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
+    selectsStructure: false,
+    globalMixed: false,
+    serializePropKeys: undefined,
     reserveSize: 0,
   };
 
