@@ -2,12 +2,6 @@
 
 Things that were hard to understand, and what would have clarified them. Format and rules: [README.md](README.md).
 
-## Make the `getOnlyChildParentTagName` memo order-independent — `branchSize` is ignored after the first call
-
-`packages/runtime-tags/src/translator/util/is-only-child-in-parent.ts` › `getOnlyChildParentTagName` | 2026-07-23 | impact:low | effort:low
-
-The cached `tag.node.extra[kOnlyChildInParent]` is returned before `branchSize` is read, so only the first call per node decides the answer — in practice `IfTag.analyze`, the sole caller passing `branches.length`, since `core/if.ts` translate, `core/for.ts` and `core/show.ts` pass the default `1` and ride the cache across the analyze→translate clone. Any new pass touching an `<if>` before `IfTag.analyze` poisons the memo with `1`, silently costing every multi-branch chain its parent-element marker (an extra `<!>`, walk char and `#text` binding). Nothing catches that: every multi-branch fixture snapshot uses `_if("#text/…")`. Pass the real branch count at the `core/if.ts` translate sites too — keying the memo on `branchSize` alone would break them, since they pass `1` — and add a chain-as-only-child fixture. Distinct from the won't-fix entry "Extend only-child marker elision to `<await>`/`<try>`", which spreads the optimization to more tags rather than fixing this memo's key. Re-verify: compile `<div><if=input.x><p>a</p></if><else-if=input.y><i>c</i></else-if><else><b>b</b></else></div>` with `-o dom -d`; today it yields `_if("#div/0", …)` with `$template === "<div></div>"`.
-
 ## Warn under `MARKO_DEBUG` when `NaN`/`0n` vanish from text and style values
 
 `packages/runtime-tags/src/html/content.ts` › `_to_text` | 2026-07-18 | impact:low | effort:low

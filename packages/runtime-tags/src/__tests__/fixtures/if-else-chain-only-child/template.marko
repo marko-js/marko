@@ -1,0 +1,16 @@
+<let/count=0>
+<button onClick() { count++ }>
+  ${count}
+</button>
+
+<div>
+  <if=count % 3 === 0>
+    <p>a</p>
+  </if>
+  <else-if=count % 3 === 1>
+    <i>b</i>
+  </else-if>
+  <else>
+    <b>c</b>
+  </else>
+</div>
