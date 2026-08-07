@@ -42,7 +42,10 @@ export async function createServerRunner<T extends Record<string, string>>(
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
   disposeServer(): void;
-  clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
+  clientRunner?: (
+    ctx: any,
+    rejectLoad?: (id: string) => boolean,
+  ) => Promise<{ template: Template; run: RunDOM }>;
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
   diagnostics: { id: string; items: Diagnostic[] }[];
@@ -75,11 +78,15 @@ export async function createServerRunner<T extends Record<string, string>>(
     domResult.output.find((c) => c.type === "chunk" && c.name === "csr")
       ?.fileName;
   const clientRunner = csrFileName
-    ? (ctx: any): Promise<{ template: Template; run: RunDOM }> =>
+    ? (
+        ctx: any,
+        rejectLoad?: (id: string) => boolean,
+      ): Promise<{ template: Template; run: RunDOM }> =>
         importWithContext(
           path.join(domOut, csrFileName),
           { browser: true },
           ctx,
+          rejectLoad,
         )
     : undefined;
 
