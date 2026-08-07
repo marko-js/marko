@@ -943,7 +943,8 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
       return writeTypedArray(state, val as TypedArray, ref);
     case DataView:
       return writeDataView(state, val as DataView, ref);
-    // Boxed primitives (`Object(1)`) are deliberately unsupported.
+    // Boxed primitives (`Object(1)`) are deliberately unsupported (wont-fix:
+    // an antipattern with no template use case; write the primitive instead).
     case WeakSet:
       return writeWeakSet(state);
     case WeakMap:
