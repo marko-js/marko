@@ -20,17 +20,20 @@ export default function appendAgentFixGuide(error, translator) {
   return error;
 }
 
-// Env markers terminal coding agents set.
+// Env markers terminal coding agents set. `MARKO_AGENT_FIX_GUIDE` overrides
+// the sniff in either direction (`0` suppresses, anything else forces on).
 function isCodingAgent() {
-  return (
-    typeof process === "object" &&
-    (process.env.CLAUDECODE ||
-      process.env.CLAUDE_CODE ||
-      process.env.CURSOR_AGENT ||
-      process.env.GEMINI_CLI ||
-      process.env.CODEX_SANDBOX ||
-      process.env.CODEX_THREAD_ID ||
-      process.env.AI_AGENT)
+  if (typeof process !== "object") return false;
+  const override = process.env.MARKO_AGENT_FIX_GUIDE;
+  if (override) return override !== "0";
+  return !!(
+    process.env.CLAUDECODE ||
+    process.env.CLAUDE_CODE ||
+    process.env.CURSOR_AGENT ||
+    process.env.GEMINI_CLI ||
+    process.env.CODEX_SANDBOX ||
+    process.env.CODEX_THREAD_ID ||
+    process.env.AI_AGENT
   );
 }
 
