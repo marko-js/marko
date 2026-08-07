@@ -359,9 +359,8 @@ export function _return_change(
   scope: Scope,
   changeHandler?: ((value: unknown) => void) | null | false,
 ) {
-  if (changeHandler) {
-    scope[AccessorProp.TagVariableChange] = changeHandler;
-  }
+  // Falsy stores `undefined` (not eg `false`) so `?.()` reads stay a no-op.
+  scope[AccessorProp.TagVariableChange] = changeHandler || undefined;
 }
 export const _var_change = MARKO_DEBUG
   ? (scope: Scope, value: unknown, name: string = "This") => {
