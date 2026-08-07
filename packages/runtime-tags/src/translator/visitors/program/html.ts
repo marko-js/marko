@@ -22,7 +22,7 @@ import {
 } from "../../util/known-tag";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { forEach, some } from "../../util/optional";
 import {
   getConstructInitClosures,
   getPatchFillBindings,
@@ -470,6 +470,29 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // every enclosing section is itself a branch.
         if (!isPatchCaptureSection(section)) unsupported(node);
         if (getSectionForBody(tag.get("body"))?.isClientOwnedStructure) {
+          // A mixed selector re-evaluates on every fill write, so a call in
+          // the test has no stable client value (pure-state stays policy).
+          const [testAttr] = node.attributes;
+          if (
+            testAttr?.type === "MarkoAttribute" &&
+            getSerializeSourcesForExpr(
+              getCanonicalExtra(testAttr.value.extra || {}),
+            )?.param
+          ) {
+            t.traverseFast(testAttr.value, (n) => {
+              if (
+                t.isCallExpression(n) ||
+                t.isOptionalCallExpression(n) ||
+                t.isNewExpression(n) ||
+                t.isTaggedTemplateExpression(n)
+              ) {
+                unsupported(
+                  testAttr,
+                  "a call inside a test mixing client state with server values has no stable delivery",
+                );
+              }
+            });
+          }
           // Enclosing server branches cannot construct around a client-owned
           // selection: shells drop and divergence falls back to navigation.
           if (isCoreTagName(tag, "if")) {
@@ -501,7 +524,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             unsupported(
               attr,
               attr.type === "MarkoAttribute" && isConditionTag(tag)
-                ? "a test mixing client state with server values may not drive a selection either side owns"
+                ? "a server value in a test mixing client state must be a directly read, named `input` property (so it can deliver as a fill)"
                 : undefined,
             );
           }
@@ -617,17 +640,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             });
           }
         };
-        const hasStateFeed = (extra: t.NodeExtra | undefined) => {
-          let state = !!getSerializeSourcesForExpr(extra || {})?.state;
-          forEach(
+        const hasStateFeed = (extra: t.NodeExtra | undefined) =>
+          !!getSerializeSourcesForExpr(extra || {})?.state ||
+          some(
             (extra as t.FunctionExtra | undefined)
               ?.referencedBindingsInFunction,
-            (binding) => {
-              state ||= !!getSerializeSourcesForRef(binding)?.state;
-            },
+            (binding) => !!getSerializeSourcesForRef(binding)?.state,
           );
-          return state;
-        };
         let anyState = false;
         for (const attr of node.attributes) {
           if (attr.type === "MarkoSpreadAttribute") {
