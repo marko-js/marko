@@ -105,18 +105,25 @@ describe("runtime-tags/html/attrs", () => {
 
     // `_attrs` routes `on*` names to the scope rather than dropping them; the
     // `body-content` fixture covers that end to end.
-    it("omits content on a non-meta tag and names with invalid characters", () => {
+    it("omits content on a non-meta tag and rejects names with invalid characters", () => {
       assert.equal(helpers._attrs({ content() {} }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "foo bar": "baz" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\tbar": "baz" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\nbar": "baz" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\rbar": "baz" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\fbar": "baz" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "=foo": "bar" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "'foo": "bar" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ '"foo': "bar" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ "/foo": "bar" }, "a", 0, ""), "");
-      assert.equal(helpers._attrs({ ">foo": "bar" }, "a", 0, ""), "");
+      for (const name of [
+        "foo bar",
+        "foo\tbar",
+        "foo\nbar",
+        "foo\rbar",
+        "foo\fbar",
+        "=foo",
+        "'foo",
+        '"foo',
+        "/foo",
+        ">foo",
+      ]) {
+        assert.throws(
+          () => helpers._attrs({ [name]: "baz" }, "a", 0, ""),
+          /Invalid attribute name/,
+        );
+      }
     });
   });
 
