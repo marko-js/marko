@@ -46,6 +46,8 @@ export function buildLookup(dirname, requestedTranslator, onError) {
   }
 
   runAndCatchErrors(() => {
+    // tagDiscoveryDirs must be an array (eg `["tags"]`); it is deliberately
+    // unvalidated since every real translator sets it.
     const foundMeta = finder.find._withMeta(
       dirname,
       taglibsForDir,
