@@ -1,4 +1,4 @@
-// size: 27054 (min) 10033 (brotli)
+// size: 27071 (min) 10044 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -33,7 +33,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   catchEnabled,
   delegate = (type, handler) =>
-    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
+    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
   nextScopeId = 1e6,
   collectingScopes,
@@ -244,6 +244,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
           renderer.g[accessor](scope[childScopeAccessor], renderer.h[accessor]);
     };
   }),
+  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => _resume("d", dynamicTagScript)),
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
@@ -339,20 +340,21 @@ let unsafeStyleAttrReg = /[\\;]/g,
           (afterReference = newScopes[start + i].S));
     };
   }),
-  _for_of = /*@__PURE__*/ loop(([all, by = bySecondArg], cb) => {
-    typeof by == "string"
-      ? forOf(all, (item, i) => cb(item[by], [item, i]))
-      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
+  _for_of = /*@__PURE__*/ loop(([all, by], cb) => {
+    ((by ||= bySecondArg),
+      typeof by == "string"
+        ? forOf(all, (item, i) => cb(item[by], [item, i]))
+        : forOf(all, (item, i) => cb(by(item, i), [item, i])));
   }),
-  _for_in = /*@__PURE__*/ loop(([obj, by = byFirstArg], cb) =>
-    forIn(obj, (key, value) => cb(by(key, value), [key, value])),
-  ),
-  _for_to = /*@__PURE__*/ loop(([to, from, step, by = byFirstArg], cb) =>
-    forTo(to, from, step, (v) => cb(by(v), [v])),
-  ),
-  _for_until = /*@__PURE__*/ loop(([until, from, step, by = byFirstArg], cb) =>
-    forUntil(until, from, step, (v) => cb(by(v), [v])),
-  );
+  _for_in = /*@__PURE__*/ loop(([obj, by], cb) => {
+    ((by ||= byFirstArg), forIn(obj, (key, value) => cb(by(key, value), [key, value])));
+  }),
+  _for_to = /*@__PURE__*/ loop(([to, from, step, by], cb) => {
+    ((by ||= byFirstArg), forTo(to, from, step, (v) => cb(by(v), [v])));
+  }),
+  _for_until = /*@__PURE__*/ loop(([until, from, step, by], cb) => {
+    ((by ||= byFirstArg), forUntil(until, from, step, (v) => cb(by(v), [v])));
+  });
 function _call(fn, v) {
   return (fn(v), v);
 }
@@ -534,13 +536,13 @@ function push(opt, item) {
   return opt ? (Array.isArray(opt) ? (opt.push(item), opt) : [opt, item]) : item;
 }
 function _on(element, type, handler) {
-  (element["$" + type] === void 0 && delegate(type, handleDelegated),
-    (element["$" + type] = handler || null));
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
   for (; target;)
-    (target["$" + ev.type]?.(ev, target),
+    (target[1 + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function parseHTML(html, ns) {
@@ -824,7 +826,7 @@ function _var(scope, childAccessor, signal) {
   scope[decodeAccessor(childAccessor)].T = (value) => signal(scope, value);
 }
 function _return_change(scope, changeHandler) {
-  changeHandler && (scope.U = changeHandler);
+  scope.U = changeHandler || void 0;
 }
 function _id({ $: $global }) {
   let id = tagIdsByGlobal.get($global) || 0;
@@ -1950,9 +1952,6 @@ function renderCatch(scope, error) {
 }
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
-}
-function _resume_dynamic_tag() {
-  _resume("d", dynamicTagScript);
 }
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
