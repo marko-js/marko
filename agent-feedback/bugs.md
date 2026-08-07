@@ -100,3 +100,15 @@ client readers/writers should skip the passive write entirely.
 Re-verify: a template rendering only `<doubler/double value=input.n/>`
 into a second tag's attr, no other client code — the page bundle
 imports only feat modules.
+
+## Pure-rest child input emits its applier alias before the declaration (TDZ)
+
+`packages/runtime-tags/src/translator/visitors/program/dom.ts` › input applier exports | 2026-08-07 | impact:med | effort:low
+
+A child template whose only input consumption is `<const/{ ...rest }=input/>` (no named props) compiles its dom output with `export const $input = $input2;` ABOVE `const $input2 = ...`, a temporal-dead-zone `ReferenceError` at module evaluation — the whole page bundle dies on load (surfaces in the fixture harness as `applyPatch is not a function`). Reproduces on the current base branch with a plain non-persisted compile; latent because no existing fixture loads such a child client-side. Re-verify: `pnpm run compile -- -o dom -d` a two-line child `<const/{ ...rest }=input/><em>${rest.label}</em>` and evaluate the module.
+
+## Rest-grain child input groups mask to `0`, producing empty patches
+
+`packages/runtime-tags/src/translator/util/known-tag.ts` › `getPersistedGroupOwnership` | 2026-08-07 | impact:med | effort:med
+
+On a persisted page, a child consuming input only through a rest grain gets an ownership mask of literal `0` for that group (`_set_serialize_reason(0)`), so a patch that changes the fed values skips the child re-render entirely and no client channel exists — the DOM silently keeps the old value (verified: `<widget label="l1"/>` → patch `label:"l2"` leaves `l1`, empty patch stream). Pre-existing on the base branch, outside client-owned structure. Blocked from the client-owned admission path only by the pure-rest TDZ bug above, so fixing that one exposes this one. Re-verify: rest-consuming child fed a named attr, persisted page, patch the attr; the patch stream carries no re-render.
