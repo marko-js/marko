@@ -56,12 +56,6 @@ The `renderer === "select" && ("value" in input || "valueChange" in input)` case
 
 `delegate` memoizes its one-time `document.addEventListener` as `(handler as any)[type] ||= (…, 1)`, keyed on the raw event type. Any type colliding with a `Function` property — `name`, `length`, `constructor`, `toString`, `bind`, `call`, `apply`, `prototype` — already reads truthy, so the listener is never installed and the handler silently never fires; `caller`/`arguments` instead throw a `TypeError` out of `_on`, since the runtime is strict-mode ESM. The names come from user markup: `<div on-name(){}>` compiles to `_on($scope["#div/0"], "name", fn)`. `_on` already namespaces its own slot as `"$" + type`; use that key in `delegate` too. If "Delegate events from the element's root node again; nothing inside a ShadowRoot receives events or controlled-input updates" is taken, its per-root type-keyed map deletes this keyspace outright and supersedes the `"$" + type` patch, so the two must not land separately. Re-verify: `<div on-name(){ console.log("hi") }>x</div>`, then dispatch `new CustomEvent("name", { bubbles: true })` on it — nothing logs today while `on-click` works.
 
-## Treat a falsy-but-defined `<for by>` value as "no key" in the DOM runtime, matching SSR
-
-`packages/runtime-tags/src/dom/control-flow.ts` › `_for_of` | 2026-07-23 | impact:med | effort:low
-
-`_for_of` destructures `([all, by = bySecondArg], cb)` and `_for_in`/`_for_to`/`_for_until` use `by = byFirstArg`, so the default substitutes only for `undefined`, while `html/for.ts`'s `forOfBy`/`forInBy`/`forStepBy` fall back on truthiness. A `by` evaluating to `false`, `null`, or `0` therefore renders on the server and throws `TypeError: by is not a function` on the client. The translator gates on the attribute's presence (`if (forAttrs.by) loopArgs.push(forAttrs.by)` in `translator/core/for.ts`), so `by=input.useKey && "id"` compiles to `$for($scope, [$scope.input_items, $scope.input_useKey && "id"])`. Use `by ||= bySecondArg` / `byFirstArg` in the four `loop` wrappers; that also fixes `by=""`, which today takes the string branch and reads `item[""]`. Re-verify with `<for|item| of=input.items by=input.useKey && "id">` and steps `[{useKey:true},{useKey:false}]` — the second CSR step throws while SSR renders both.
-
 ## Guard the tag-variable assignment in `_dynamic_tag` when the dynamic tag becomes falsy
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `_dynamic_tag` | 2026-07-23 | impact:med | effort:low

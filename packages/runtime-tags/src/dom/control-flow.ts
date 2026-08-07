@@ -938,7 +938,8 @@ const loop = /*@__PURE__*/ withBranches(
 
 export const _for_of = /*@__PURE__*/ loop<
   [all: unknown[], by?: (item: unknown, index: number) => unknown]
->(([all, by = bySecondArg], cb) => {
+>(([all, by], cb) => {
+  by ||= bySecondArg;
   if (typeof by === "string") {
     forOf(all, (item, i) =>
       cb((item as Record<string, unknown>)[by], [item, i]),
@@ -950,21 +951,24 @@ export const _for_of = /*@__PURE__*/ loop<
 
 export const _for_in = /*@__PURE__*/ loop<
   [obj: {}, by?: (key: string, v: unknown) => unknown]
->(([obj, by = byFirstArg], cb) =>
-  forIn(obj, (key, value) => cb(by(key, value), [key, value])),
-);
+>(([obj, by], cb) => {
+  by ||= byFirstArg;
+  forIn(obj, (key, value) => cb(by(key, value), [key, value]));
+});
 
 export const _for_to = /*@__PURE__*/ loop<
   [to: number, from: number, step: number, by?: (v: number) => unknown]
->(([to, from, step, by = byFirstArg], cb) =>
-  forTo(to, from, step, (v) => cb(by(v), [v])),
-);
+>(([to, from, step, by], cb) => {
+  by ||= byFirstArg;
+  forTo(to, from, step, (v) => cb(by(v), [v]));
+});
 
 export const _for_until = /*@__PURE__*/ loop<
   [until: number, from: number, step: number, by?: (v: number) => unknown]
->(([until, from, step, by = byFirstArg], cb) =>
-  forUntil(until, from, step, (v) => cb(by(v), [v])),
-);
+>(([until, from, step, by], cb) => {
+  by ||= byFirstArg;
+  forUntil(until, from, step, (v) => cb(by(v), [v]));
+});
 
 function createBranchWithTagNameOrRenderer(
   $global: Scope[typeof AccessorProp.Global],

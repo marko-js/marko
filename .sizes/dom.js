@@ -1,4 +1,4 @@
-// size: 25992 (min) 9678 (brotli)
+// size: 26014 (min) 9653 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -327,20 +327,21 @@ let unsafeStyleAttrReg = /[\\;]/g,
           (afterReference = newScopes[start + i].S));
     };
   }),
-  _for_of = /*@__PURE__*/ loop(([all, by = bySecondArg], cb) => {
-    typeof by == "string"
-      ? forOf(all, (item, i) => cb(item[by], [item, i]))
-      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
+  _for_of = /*@__PURE__*/ loop(([all, by], cb) => {
+    ((by ||= bySecondArg),
+      typeof by == "string"
+        ? forOf(all, (item, i) => cb(item[by], [item, i]))
+        : forOf(all, (item, i) => cb(by(item, i), [item, i])));
   }),
-  _for_in = /*@__PURE__*/ loop(([obj, by = byFirstArg], cb) =>
-    forIn(obj, (key, value) => cb(by(key, value), [key, value])),
-  ),
-  _for_to = /*@__PURE__*/ loop(([to, from, step, by = byFirstArg], cb) =>
-    forTo(to, from, step, (v) => cb(by(v), [v])),
-  ),
-  _for_until = /*@__PURE__*/ loop(([until, from, step, by = byFirstArg], cb) =>
-    forUntil(until, from, step, (v) => cb(by(v), [v])),
-  );
+  _for_in = /*@__PURE__*/ loop(([obj, by], cb) => {
+    ((by ||= byFirstArg), forIn(obj, (key, value) => cb(by(key, value), [key, value])));
+  }),
+  _for_to = /*@__PURE__*/ loop(([to, from, step, by], cb) => {
+    ((by ||= byFirstArg), forTo(to, from, step, (v) => cb(by(v), [v])));
+  }),
+  _for_until = /*@__PURE__*/ loop(([until, from, step, by], cb) => {
+    ((by ||= byFirstArg), forUntil(until, from, step, (v) => cb(by(v), [v])));
+  });
 function _call(fn, v) {
   return (fn(v), v);
 }
