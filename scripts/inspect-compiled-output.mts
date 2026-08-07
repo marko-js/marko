@@ -11,7 +11,12 @@ const TRANSLATORS: Record<string, string> = {
   class: "marko/translator",
 };
 
+// pnpm forwards a literal `--` (the AGENTS.md invocation), which parseArgs
+// would treat as end-of-options, turning `-o` into an input path.
+const argv = process.argv.slice(2).filter((arg, i) => i > 0 || arg !== "--");
+
 const args = parseArgs({
+  args: argv,
   allowPositionals: true,
   options: {
     dev: {
