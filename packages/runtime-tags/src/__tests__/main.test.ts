@@ -133,6 +133,22 @@ function testFixtures(interop?: true) {
       const stripFixtureDir = async (str: string | Promise<string>) =>
         (await str).replaceAll(relativeFixtureDir, "__tests__");
 
+      // The optimize sizes gate never runs for these fixtures, so a leftover
+      // `sizes.json` would otherwise go stale silently.
+      if (hasCompilerError || config.skip_optimize) {
+        const sizesFile = resolve("sizes.json");
+        after(function noSizesFile() {
+          if (process.env.UPDATE_EXPECTATIONS) {
+            fs.rmSync(sizesFile, { force: true });
+          } else {
+            assert(
+              !fs.existsSync(sizesFile),
+              `unexpected sizes.json for "${entry}" — run \`pnpm run test:update\``,
+            );
+          }
+        });
+      }
+
       if (!fs.existsSync(templateFile)) {
         console.warn(
           `Template missing for fixture: ${path.relative(process.cwd(), templateFile)}`,

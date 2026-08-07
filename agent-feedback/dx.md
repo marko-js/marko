@@ -128,12 +128,6 @@ A `<script>` effect that writes a `<let>` it transitively reads re-renders forev
 
 `modules.js` decides once, at first require, whether it is in a browser via `typeof document === "object"`, so a script that installs jsdom globals before requiring the compiler takes the browser branch and gets `exports.resolve`/`tryResolve`/`require === null` with `cwd === "/"` (verified with `node -e 'globalThis.document={}; require("packages/compiler/modules.js")'`). The next translator load then dies in `try-load-translator.js` as `TypeError: markoModules.resolve is not a function`, which names nothing about the DOM global, and the branch is cached for the module's lifetime. Throw a message naming the cause when `markoModules.resolve` is null, or document the compile-then-shim-then-import order for headless self-checks. Re-verify with that two-line node snippet.
 
-## Delete or assert the absence of `sizes.json` for `error_compiler` fixtures
-
-`packages/runtime-tags/src/__tests__/main.test.ts` › `hasCompilerError` sizes gate | 2026-07-20 | impact:low | effort:low
-
-The optimize `after()` that asserts or rewrites `sizes.json` is gated on `optimize && !hasCompilerError`, and `utils/snap.ts`'s stale-file sweep only cleans `__snapshots__/`, so a fixture that later gains `error_compiler: true` (or `skip_optimize`) keeps its last `sizes.json` forever, never asserted and never rewritten by `test:update`. No fixture is affected today. Have the harness delete the file (or assert its absence) for those fixtures, but outside the mode loop: `skip_optimize` skips the whole `optimize` describe (`main.test.ts:143-145`), so an `after()` registered inside it never runs. The entry "Make the fixture `sizes.json` gate inert when the run is `--grep`-scoped" reworks the same hook, so fix both in one pass. Verify: drop a `sizes.json` into any `error_compiler` fixture and watch `pnpm run test:update` leave it untouched.
-
 ## Detect mutually-referential `<const>` cycles, not just self-references
 
 `packages/runtime-tags/src/translator/util/references.ts` › `trackReferencesForBinding` | 2026-07-20 | impact:low | effort:med
