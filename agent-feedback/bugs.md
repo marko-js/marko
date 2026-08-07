@@ -110,12 +110,6 @@ The key is `${section.id}` plus `_${name}` per referenced binding — no separat
 
 The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix subtracting 1 from the result), i.e. `x = x + 1` rather than JS's `x = ToNumeric(x) + 1`. With `<let/x="5"/>`, `x++` sets `x` to `"51"` and yields `50` instead of `6` and `5`; a `<let>` holding a bigint throws `Cannot mix BigInt and other types`. Wrapping the read in unary `+` fixes the string case but breaks bigint, so the lowering needs a real `ToNumeric` coercion — or `++`/`--` must be rejected on a tag variable whose type is not known numeric. Re-verify: compile `<let/x="5"/><button onClick(){ const v = x++ }>${x}</button>` with `-o dom`; the handler emits `const v = $x($scope, $scope.x + 1) - 1`.
 
-## Clear the tag-variable change handler when `<return valueChange>` goes falsy
-
-`packages/runtime-tags/src/dom/signals.ts` › `_return_change` | 2026-07-23 | impact:med | effort:low
-
-`_return_change` writes `scope[AccessorProp.TagVariableChange]` only when the handler is truthy, but `core/return.ts` › `translate.dom.exit` emits it as a render statement keyed on `valueChange.extra.referencedBindings`. `<return=x valueChange=input.canEdit && ((v)=>{x=v})/>` compiles to `_const("input_canEdit", $scope => _return_change($scope, $scope.input_canEdit && $valueChange($scope)))`, so once `canEdit` flips false the stale closure stays installed and the parent's `v = 42` silently mutates instead of throwing `v is a readonly tag variable.` SSR disagrees — `translate.html.exit` serializes `valueChange || void 0`, so a resumed render is readonly. Assign unconditionally like `_let_change`, normalizing falsy to `undefined` so the production `scope[...]?.(value)` read stays a no-op. Re-verify: toggle `canEdit` false, then assign the tag variable from the parent; it must throw the readonly error.
-
 ## Key the renderer clone cache with a null-prototype map
 
 `packages/runtime-tags/src/dom/renderer.ts` › `_content` | 2026-07-23 | impact:low | effort:low
