@@ -16,7 +16,10 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import { isConditionTag, isCoreTagName } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
-import { getPersistedGroupOwnership } from "../../util/known-tag";
+import {
+  getKnownTagReturnReason,
+  getPersistedGroupOwnership,
+} from "../../util/known-tag";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
@@ -28,10 +31,12 @@ import {
   hasUnfillablePatchReads,
   isPatchCaptureSection,
   kPatchClientOwned,
+  kPersistedAssignedVar,
   scopeReasonRuntime,
 } from "../../util/persisted";
 import {
   BindingType,
+  getCanonicalExtra,
   getReadReplacement,
   getLocalsScopeAccessor,
   getSectionInstancesAccessor,
@@ -359,9 +364,14 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // every enclosing section is itself a branch.
         if (!isPatchCaptureSection(getSection(tag))) unsupported(node);
         for (const attr of node.attributes) {
+          // Core tags merge attr reads into the tag extra, so the state
+          // check must resolve the canonical extra or expression-valued
+          // tests read as refless and slip through.
           if (
             attr.type === "MarkoSpreadAttribute" ||
-            getSerializeSourcesForExpr(attr.value.extra || {})?.state
+            getSerializeSourcesForExpr(
+              getCanonicalExtra(attr.value.extra || {}),
+            )?.state
           ) {
             unsupported(attr);
           }
@@ -387,6 +397,25 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // Client state participates through value fills: patches never carry
       // state, and holes it feeds recompute through the signal graph.
       if (tagName === "let" || tagName === "const") return;
+      // A `<return>` flows to the parent tag variable like a hole flows to
+      // output: reads stay current over the wire, so only deliverability
+      // gates it (the call site classifies the return's ownership).
+      if (tagName === "return") {
+        const [attr] = node.attributes;
+        if (
+          attr?.type === "MarkoAttribute" &&
+          hasUndeliverableFillReads(
+            getSection(tag),
+            attr.value.extra?.referencedBindings,
+          )
+        ) {
+          unsupported(
+            attr,
+            "a server value's fill delivery path leaves the branch chain",
+          );
+        }
+        return;
+      }
       // Templated instances classify per child param group: the ownership
       // mask withholds server writes for client-fed groups.
       if (tagDef?.template) {
@@ -455,6 +484,44 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
         };
         checkAttrTags(tag.get("body"));
+        // Body-only state is invisible to classification, so a tag variable
+        // cannot yet coexist with dynamic body content.
+        if (node.var) {
+          for (const child of tag.get("body").get("body")) {
+            if (!isStatic(child)) {
+              unsupported(
+                node,
+                "a tag variable with dynamic body content is not yet patchable",
+              );
+            }
+          }
+          // The change-binding chain for assigned returns is not wired
+          // into persisted serialization yet.
+          if (node.extra?.[kPersistedAssignedVar]) {
+            unsupported(
+              node,
+              "assigning a persisted child's tag variable is not supported yet",
+            );
+          }
+          const returnReason =
+            node.extra && getKnownTagReturnReason(node.extra);
+          if (returnReason && returnReason !== true) {
+            // Mixed provenance collapses to state downstream (the server
+            // half would never refresh), and global-derived returns never
+            // re-ship for the client recompute: both fail closed.
+            if (returnReason.state && returnReason.param) {
+              unsupported(
+                node,
+                "a return mixing client state with server params is not supported yet",
+              );
+            } else if (returnReason.global) {
+              unsupported(
+                node,
+                "a return derived from $global is not supported yet",
+              );
+            }
+          }
+        }
         const ownership = node.extra && getPersistedGroupOwnership(node.extra);
         if (!ownership) {
           // No per-group analysis means no mask: an all-server child would
@@ -505,25 +572,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             "an untracked call cannot mix with client state across one tag's input",
           );
         }
-        // Body-only state is invisible to classification, so a tag variable
-        // cannot yet coexist with dynamic body content.
-        if (node.var) {
-          for (const child of tag.get("body").get("body")) {
-            if (!isStatic(child)) {
-              unsupported(
-                node,
-                "a tag variable with dynamic body content is not yet patchable",
-              );
-            }
-          }
-        }
         if (anyState) {
-          if (node.var) {
-            unsupported(
-              node,
-              "a tag variable cannot return through a client-owned instance yet",
-            );
-          }
           // Skip only when nothing could change server-side: any other
           // vector (globals, body content) keeps the guarded render.
           if (!anyServerable) {
@@ -533,8 +582,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
             // Transitive global knowledge is a RENDER-time question (the
             // child's exported intrinsics); classification only needs a
-            // resolvable child whose groups analyzed above.
-            if (skips && loadFileForTag(tag)) {
+            // resolvable child whose groups analyzed above. A tag VARIABLE
+            // is never a candidate: the call must render for its return,
+            // and the var emission path carries no skip gate.
+            if (skips && !node.var && loadFileForTag(tag)) {
               (node.extra ??= {})[kPatchClientOwned] = true;
             }
           }
