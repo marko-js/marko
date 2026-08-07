@@ -1474,14 +1474,21 @@ function mapParamBindingToExpr(
   exprs: KnownExprs,
   binding: InputBinding | ParamBinding,
 ): Opt<t.NodeExtra> {
-  const isRest =
-    binding.property === undefined && binding.excludeProperties !== undefined;
+  // Property-less with an upstream covers every whole-value link: pure
+  // rests (which carry no excludeProperties), rest grains, and aliases.
+  const isWholeAlias =
+    binding.property === undefined && binding.upstreamAlias !== undefined;
   const props: string[] = [];
-  let curBinding: Binding | undefined = isRest
+  let curBinding: Binding | undefined = isWholeAlias
     ? binding.upstreamAlias
     : binding;
-  while (curBinding && curBinding.property !== undefined) {
-    props.push(curBinding.property);
+  // Property-less links (rest grains, direct aliases) sit between real
+  // property hops: pass through them rather than stopping the walk.
+  while (
+    curBinding &&
+    (curBinding.property !== undefined || curBinding.upstreamAlias)
+  ) {
+    if (curBinding.property !== undefined) props.push(curBinding.property);
     curBinding = curBinding.upstreamAlias;
   }
 
@@ -1494,7 +1501,7 @@ function mapParamBindingToExpr(
     curExpr = nestedExpr;
   }
 
-  if (isRest) {
+  if (isWholeAlias) {
     let result: Opt<t.NodeExtra> = curExpr.value;
     if (curExpr.known) {
       for (const key in curExpr.known) {
