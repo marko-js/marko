@@ -63,7 +63,7 @@ export let _dynamic_tag = (
     const renderNative = () => {
       _scope_id();
       _html(
-        `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
+        `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a", branchId, renderer)}>`,
       );
 
       if (!voidElementsReg.test(renderer)) {
@@ -78,7 +78,7 @@ export let _dynamic_tag = (
           _html(
             _attr_textarea_value(
               branchId,
-              MARKO_DEBUG ? `#${renderer}/0` : "a",
+              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               input.value,
               input.valueChange,
               1,
@@ -96,7 +96,7 @@ export let _dynamic_tag = (
           ) {
             _attr_select_value(
               branchId,
-              MARKO_DEBUG ? `#${renderer}/0` : "a",
+              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               input.value,
               input.valueChange,
               renderContent,
@@ -105,7 +105,7 @@ export let _dynamic_tag = (
           } else {
             _dynamic_tag(
               branchId,
-              MARKO_DEBUG ? `#${renderer}/0` : "a",
+              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               renderContent,
               undefined,
               0,
@@ -127,11 +127,11 @@ export let _dynamic_tag = (
         childScope &&
         (childScope[
           AccessorPrefix.EventAttributes +
-            (MARKO_DEBUG ? `#${renderer}/0` : "a")
+            (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
         ] ||
           childScope[
             AccessorPrefix.ControlledHandler +
-              (MARKO_DEBUG ? `#${renderer}/0` : "a")
+              (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
           ]);
 
       if (needsScript) {
