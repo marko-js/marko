@@ -1116,15 +1116,8 @@ export function writeSignals(section: Section) {
           isBranchChainTo(signal.section, signal.referencedBindings.section) &&
           hasDirectRenderedRead(signal.referencedBindings, signal.section)
         ) {
-          // Inside client-owned structure the closure IS the delivery
-          // channel (no capture renders there), so a lone closure over a
-          // server fill registers itself as the join, riding its own
-          // retention (the owner-side declaration is shaken from page
-          // bundles, where nothing re-applies input): a scan closure
-          // already dispatches from the owner, while a lazy closure's
-          // owner-side dispatch composes through `_closure`. Closures that
-          // only fan out to intersections skip this — every intersection
-          // registers its own join above.
+          // Inside client-owned structure a lone closure over a server
+          // fill IS the delivery channel: it registers the join itself.
           const closureShape =
             t.isCallExpression(value) &&
             t.isIdentifier(value.callee) &&
@@ -1139,9 +1132,7 @@ export function writeSignals(section: Section) {
           }
           if (closureShape === "_closure_get") {
             // Independent lazy joins for one key would each dispatch to
-            // EVERY subscribed scope (`_closure` over a single signal loses
-            // the per-subscriber index), cross-rendering values; until a
-            // shared indexed composite exists this fails closed.
+            // every subscribed scope, cross-rendering values: fail closed.
             const lazyJoins = getLazyFillJoins();
             if (lazyJoins.has(signal.referencedBindings)) {
               throw new Error(
@@ -1273,11 +1264,8 @@ function isBranchChainTo(section: Section, owner: Section) {
   return true;
 }
 
-// A hole or attribute consuming the binding alone renders through its
-// closure directly; intersection-shaped reads render through their own
-// (self-registering) intersection signal instead. Anything non-array
-// counts as direct: a redundant registration costs bytes, a missed one
-// goes silently stale.
+// A lone read renders through the closure itself; intersections render
+// through their own self-registering signals (over-counting is safe).
 function hasDirectRenderedRead(binding: Binding, section: Section) {
   for (const read of binding.reads) {
     if (

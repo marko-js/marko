@@ -294,10 +294,15 @@ function resolveMarkoFile(file, filename) {
 
 const idCache = new WeakMap();
 const templateIdHashOpts = { outputLength: 5 };
+// Template ids ride wire formats that reserve whitespace and separators,
+// so every source (including a custom `getTemplateId`) normalizes.
+const normalizeTemplateId = (id) => id.replace(/[^a-zA-Z0-9_$./-]/g, "/");
 export function getTemplateId(opts, request, child) {
-  if (!child && opts.getTemplateId) return opts.getTemplateId(request);
+  if (!child && opts.getTemplateId) {
+    return normalizeTemplateId(opts.getTemplateId(request));
+  }
 
-  const id = relative(root, request).replace(/[^a-zA-Z0-9_$./-]/g, "/");
+  const id = normalizeTemplateId(relative(root, request));
 
   if (opts.optimize) {
     const optimizeKnownTemplates =

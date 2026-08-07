@@ -4,10 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A client-owned chain inside a server loop body: existing items patch
-// (the note delivers as a fill into every live item), but the loop's
-// shell drops, so growing the list rejects to navigation instead of
-// constructing an item whose interior selection the server cannot know.
+// A client-owned chain inside a server loop body: live items patch via
+// fills, but the loop shell drops, so growing the list navigates.
 export const config: TestConfig = {
   persisted: true,
   expect_rejection: true,
