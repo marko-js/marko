@@ -1875,7 +1875,9 @@ function trackDelimitedAttrObjectProperties(
       if (
         keyEval.confident &&
         typeof keyEval.computed === "string" &&
-        !/\s/.test(keyEval.computed)
+        // An empty key falls through to the whole-object helper, which drops
+        // it; `classList.toggle("")` would throw.
+        !/^$|\s/.test(keyEval.computed)
       ) {
         key = keyEval.computed + "";
       } else {
