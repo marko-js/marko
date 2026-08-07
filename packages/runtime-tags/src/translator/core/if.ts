@@ -25,7 +25,8 @@ import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import {
   isPatchCaptureSection,
-  recordPersistedServerRequiredExpr,
+  onFinalizePersisted,
+  recordStructuralParams,
 } from "../util/persisted";
 import {
   getScopeAccessorLiteral,
@@ -52,10 +53,12 @@ import {
 import {
   getSerializeGuard,
   getSerializeGuardForAny,
+  scopeReasonIdentifier,
 } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
   type SerializeReasons,
   sourcesUtil,
 } from "../util/serialize-reasons";
@@ -118,17 +121,32 @@ export const IfTag = {
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
-        addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
-        // Branch tests drive structure: call sites reject feeding them
-        // from client-owned values.
-        recordPersistedServerRequiredExpr(ifTagSection, ifTagExtra);
-        // Branch shells build at program analyze exit, once child bindings
-        // exist; record the roots here.
-        for (const [, branchBody] of branches) {
-          if (branchBody) {
-            recordShellRoot(branchBody);
+        // Ownership classifies once the merged test sources resolve.
+        onFinalizePersisted(() => {
+          const sources = getSerializeSourcesForExpr(ifTagExtra);
+          if (sources?.state && !sources.param && !sources.global) {
+            // A pure-state chain is client-owned structure: the frame never
+            // speaks its selection, so no shells or branch patcher ship and
+            // patch renders skip the whole chain.
+            for (const [, branchBody] of branches) {
+              if (branchBody) {
+                branchBody.isClientOwnedStructure = true;
+              }
+            }
+          } else {
+            addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
+            // Branch tests drive structure: call sites reject feeding them
+            // from client-owned values.
+            recordStructuralParams(sources);
+            // Branch shells build after reference finalization, once child
+            // bindings exist; record the roots here.
+            for (const [, branchBody] of branches) {
+              if (branchBody) {
+                recordShellRoot(branchBody);
+              }
+            }
           }
-        }
+        });
       }
     }
   },
@@ -192,10 +210,18 @@ export const IfTag = {
           let statement: t.Statement | undefined;
           let singleChild = true;
 
+          // A client-owned chain compiles like a stateful conditional on a
+          // plain page: patch renders skip it wholesale below, so it needs
+          // no marker retention, shells, or branch entry.
+          const clientOwned = branches.some(
+            ([, branchBody]) => branchBody?.isClientOwnedStructure,
+          );
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
           const persistedPatch =
-            isPersisted() && isPatchCaptureSection(ifTagSection);
+            isPersisted() &&
+            !clientOwned &&
+            isPatchCaptureSection(ifTagSection);
           if (persistedPatch) {
             singleChild = false;
           } else {
@@ -324,6 +350,18 @@ export const IfTag = {
             );
           }
 
+          if (clientOwned) {
+            // A patch render must not evaluate the tests (their state reads
+            // are server-stale) or render a branch: the frame never speaks
+            // a client-owned selection.
+            let rootSection = ifTagSection;
+            while (rootSection.parent) rootSection = rootSection.parent;
+            statement = t.ifStatement(
+              scopeReasonIdentifier(rootSection),
+              statement!,
+            );
+          }
+
           nextTag.insertBefore(statement!);
         }
       },
@@ -346,7 +384,13 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
+          if (
+            isPersisted() &&
+            isPatchCaptureSection(ifTagSection) &&
+            !branches.some(
+              ([, branchBody]) => branchBody?.isClientOwnedStructure,
+            )
+          ) {
             // An interactive page receives assets transitively through its
             // dom program, so the feature import rides both outputs.
             importRuntimeFeature("patch-branch");

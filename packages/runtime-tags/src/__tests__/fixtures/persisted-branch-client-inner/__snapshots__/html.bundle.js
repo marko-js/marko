@@ -1,0 +1,24 @@
+// template.marko
+var template_default = _template_persisted("a", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const $input_title__closures = /* @__PURE__ */ new Set();
+	let count = 0;
+	_html("<main>");
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			if ($scope0_reason) _if(() => {}, $scope1_id, "a", 1, 1, 1, 0, 1);
+			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			return 0;
+		}
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
+	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a1");
+	$scope0_reason ? writeScope($scope0_id, {
+		f: input.title,
+		g: count,
+		h: $input_title__closures
+	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title);
+	_resume_branch($scope0_id);
+}, 1, 0);

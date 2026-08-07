@@ -29,12 +29,15 @@ import {
   getPersistedIntrinsics,
   hasUndeliverableFillReads,
   hasUnfillablePatchReads,
+  inClientOwnedStructure,
   isPatchCaptureSection,
+  isPatchFillBinding,
   kPatchClientOwned,
   kPersistedAssignedVar,
   scopeReasonRuntime,
 } from "../../util/persisted";
 import {
+  type Binding,
   BindingType,
   getCanonicalExtra,
   getReadReplacement,
@@ -47,6 +50,8 @@ import {
   forEachSection,
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
+  isDirectClosure,
   type Section,
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
@@ -345,19 +350,126 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         : "Persisted templates currently support only escaped dynamic text and dynamic attributes in native HTML.",
     );
   };
+  // Inside client-owned structure the only delivery channel is an owner
+  // fill (patch renders skip the body): reads that neither recompute
+  // client-side nor promote fail closed. Local derivations recompute
+  // through the fill dispatch; their own feeds check where they are read.
+  // Lone deep (non-direct-closure) fill positions per server binding: a
+  // second one would need the shared indexed `_closure` composite that
+  // does not exist yet, so it fails closed here in BOTH outputs (the
+  // dom-side join arm backstops with a throw).
+  const lazyFillSections = new Map<Binding, Section>();
+  const assertDeliverableInClientOwned = (
+    node: t.Node,
+    section: Section,
+    value: t.Expression,
+    extra: t.NodeExtra | undefined,
+  ) => {
+    const lone =
+      !Array.isArray(extra?.referencedBindings) && extra?.referencedBindings;
+    if (extra?.globalBindings) {
+      unsupported(
+        node,
+        "`$global` cannot be read inside client-owned structure",
+      );
+    }
+    // A source-free untracked call would render once and never again:
+    // nothing recomputes it client-side and nothing ships it.
+    if (
+      !getSerializeSourcesForExpr(extra || {}) &&
+      !evaluate(value).confident
+    ) {
+      let opaque = false;
+      t.traverseFast(value, (n) => {
+        opaque ||=
+          t.isCallExpression(n) ||
+          t.isOptionalCallExpression(n) ||
+          t.isNewExpression(n) ||
+          t.isTaggedTemplateExpression(n);
+      });
+      if (opaque) {
+        unsupported(
+          node,
+          "an untracked call inside client-owned structure has no delivery channel",
+        );
+      }
+    }
+    forEach(extra?.referencedBindings, (binding) => {
+      const sources = getSerializeSourcesForRef(binding);
+      if (sources?.global) {
+        unsupported(
+          node,
+          "`$global` cannot be read inside client-owned structure",
+        );
+      }
+      if (
+        sources?.param &&
+        !sources.state &&
+        !isPatchFillBinding(binding) &&
+        !inClientOwnedStructure(binding.section)
+      ) {
+        unsupported(
+          node,
+          "a server value read inside client-owned structure must deliver as a fill",
+        );
+      }
+      if (
+        binding === lone &&
+        sources?.param &&
+        isPatchFillBinding(binding) &&
+        binding.section !== section &&
+        !isDirectClosure(section, binding)
+      ) {
+        const prev = lazyFillSections.get(binding);
+        if (prev && prev !== section) {
+          unsupported(
+            node,
+            "a server value cannot yet fill more than one deep position inside client-owned structure",
+          );
+        }
+        lazyFillSections.set(binding, section);
+      }
+    });
+    assertNoServerFnCalls(node, value);
+  };
+  // A server-derived function fill re-binds to the live scope, so server
+  // values its BODY captures would read stale slots forever: calling one
+  // inside client-owned structure fails closed.
+  const assertNoServerFnCalls = (node: t.Node, value: t.Node) => {
+    t.traverseFast(value, (n) => {
+      if (t.isCallExpression(n) || t.isOptionalCallExpression(n)) {
+        const calleeExtra = (n.callee as t.Expression).extra;
+        const sources = getSerializeSourcesForRef(
+          calleeExtra?.read?.binding ?? calleeExtra?.referencedBindings,
+        );
+        if (sources?.param || sources?.global) {
+          unsupported(
+            node,
+            "calling a server-derived function inside client-owned structure is not supported yet",
+          );
+        }
+      }
+    });
+  };
   program.traverse({
     MarkoPlaceholder(placeholder) {
       const { node } = placeholder;
       if (!node.escape) unsupported(node);
+      const section = getSection(placeholder);
       if (
-        hasUndeliverableFillReads(
-          getSection(placeholder),
-          node.value.extra?.referencedBindings,
-        )
+        hasUndeliverableFillReads(section, node.value.extra?.referencedBindings)
       ) {
         unsupported(
           node,
           "a server value's fill delivery path leaves the branch chain",
+        );
+      }
+      if (inClientOwnedStructure(section)) {
+        assertDeliverableInClientOwned(
+          node,
+          section,
+          node.value,
+          node.value.extra,
         );
       }
     },
@@ -369,24 +481,55 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const tagName = t.isStringLiteral(node.name) && node.name.value;
       const tagDef = getTagDef(tag);
       // A server-driven conditional's patches ship the selected branch's
-      // rendered html wholesale, so the branch must be inert: a state-fed
-      // test is client-owned, and state or handlers inside would not survive
-      // (or hydrate within) a shipped swap.
+      // rendered html wholesale, so the branch must be inert: a mixed test
+      // corrupts structure either way it is owned, and state or handlers
+      // inside would not survive (or hydrate within) a shipped swap. A
+      // PURE-state chain is client-owned instead (recorded at finalize):
+      // the frame omits its entry and interiors deliver as fills.
       if (isConditionTag(tag) || isCoreTagName(tag, "for")) {
+        const section = getSection(tag);
         // The walk pairs branches structurally at any depth, but only when
         // every enclosing section is itself a branch.
-        if (!isPatchCaptureSection(getSection(tag))) unsupported(node);
+        if (!isPatchCaptureSection(section)) unsupported(node);
+        if (getSectionForBody(tag.get("body"))?.isClientOwnedStructure) {
+          // Enclosing server branches cannot construct faithfully around a
+          // client-owned selection (it has no partial channel): their
+          // shells drop, so divergence falls back to navigation.
+          if (isCoreTagName(tag, "if")) {
+            for (let cur = section; cur.parent; cur = cur.parent) {
+              if (cur.isBranch) {
+                recordConstructBlocker(cur, "client-owned structure");
+              }
+            }
+          }
+          return;
+        }
+        // Server-owned structure nested under client-owned structure has
+        // no frame channel to speak through.
+        if (inClientOwnedStructure(section)) {
+          unsupported(
+            node,
+            "server-owned structure cannot nest inside client-owned structure",
+          );
+        }
         for (const attr of node.attributes) {
           // Core tags merge attr reads into the tag extra, so the state
           // check must resolve the canonical extra or expression-valued
-          // tests read as refless and slip through.
+          // tests read as refless and slip through. A PURE-state chain
+          // never reaches here (client-owned above), so state means a mix
+          // with server values.
           if (
             attr.type === "MarkoSpreadAttribute" ||
             getSerializeSourcesForExpr(
               getCanonicalExtra(attr.value.extra || {}),
             )?.state
           ) {
-            unsupported(attr);
+            unsupported(
+              attr,
+              attr.type === "MarkoAttribute" && isConditionTag(tag)
+                ? "a test mixing client state with server values may not drive a selection either side owns"
+                : undefined,
+            );
           }
         }
         return;
@@ -395,25 +538,65 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // global-DERIVED binding never re-ships, so its reads reject as stale.
       if (tagName === "script") {
         for (const attr of node.attributes) {
-          if (
-            attr.type === "MarkoAttribute" &&
-            attr.name === "value" &&
-            (getSerializeSourcesForRef(attr.value.extra?.referencedBindings)
-              ?.global ||
-              hasUnfillablePatchReads(attr.value.extra?.referencedBindings))
-          ) {
-            unsupported(attr);
+          if (attr.type === "MarkoAttribute" && attr.name === "value") {
+            if (
+              getSerializeSourcesForRef(attr.value.extra?.referencedBindings)
+                ?.global ||
+              hasUnfillablePatchReads(attr.value.extra?.referencedBindings)
+            ) {
+              unsupported(attr);
+            }
+            // A script's re-run entry rides the branch partial the frame no
+            // longer carries, so only pure-client scripts run inside.
+            if (inClientOwnedStructure(getSection(tag))) {
+              if (attr.value.extra?.globalBindings) {
+                unsupported(
+                  attr,
+                  "a script reading server values inside client-owned structure is not supported yet",
+                );
+              }
+              forEach(attr.value.extra?.referencedBindings, (binding) => {
+                const sources = getSerializeSourcesForRef(binding);
+                if (sources?.param || sources?.global) {
+                  unsupported(
+                    attr,
+                    "a script reading server values inside client-owned structure is not supported yet",
+                  );
+                }
+              });
+            }
           }
         }
         return;
       }
       // Client state participates through value fills: patches never carry
       // state, and holes it feeds recompute through the signal graph.
-      if (tagName === "let" || tagName === "const") return;
+      if (tagName === "let" || tagName === "const") {
+        const section = getSection(tag);
+        if (inClientOwnedStructure(section)) {
+          for (const attr of node.attributes) {
+            if (attr.type === "MarkoAttribute") {
+              assertDeliverableInClientOwned(
+                attr,
+                section,
+                attr.value,
+                attr.value.extra,
+              );
+            }
+          }
+        }
+        return;
+      }
       // A `<return>` flows to the parent tag variable like a hole flows to
       // output: reads stay current over the wire, so only deliverability
       // gates it (the call site classifies the return's ownership).
       if (tagName === "return") {
+        if (inClientOwnedStructure(getSection(tag))) {
+          unsupported(
+            node,
+            "a `<return>` inside client-owned structure is not supported yet",
+          );
+        }
         const [attr] = node.attributes;
         if (
           attr?.type === "MarkoAttribute" &&
@@ -432,6 +615,14 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // Templated instances classify per child param group: the ownership
       // mask withholds server writes for client-fed groups.
       if (tagDef?.template) {
+        // A child's server writes would ride the branch partial the frame
+        // no longer carries.
+        if (inClientOwnedStructure(getSection(tag))) {
+          unsupported(
+            node,
+            "a custom tag inside client-owned structure is not supported yet",
+          );
+        }
         // A sourceless call bakes a value no client signal recomputes, so
         // its opacity counts as server-fed.
         let anyOpaque = false;
@@ -635,22 +826,56 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const controlled = new Set<t.Node>(
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
       );
+      const clientOwnedStructure = inClientOwnedStructure(getSection(tag));
       for (const attr of node.attributes) {
         // Handlers read fills from the scope at call time (the owner slot
-        // write alone keeps them current), so only rendered values gate.
+        // write alone keeps them current), so only rendered values gate —
+        // except values no write keeps current: `$global`-derived slots
+        // (frames refresh the bag, never derived slots) and server-derived
+        // function calls (their captures re-bind stale).
         if (
-          !(
-            attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name)
-          ) &&
-          hasUndeliverableFillReads(
-            getSection(tag),
-            attr.value.extra?.referencedBindings,
-          )
+          attr.type === "MarkoAttribute" &&
+          isEventOrChangeHandler(attr.name)
         ) {
-          unsupported(
-            attr,
-            "a server value's fill delivery path leaves the branch chain",
-          );
+          if (clientOwnedStructure) {
+            forEach(
+              (attr.value.extra as t.FunctionExtra | undefined)
+                ?.referencedBindingsInFunction,
+              (binding) => {
+                // Direct reads (BindingType.global) see the live bag.
+                if (
+                  binding.type !== BindingType.global &&
+                  getSerializeSourcesForRef(binding)?.global
+                ) {
+                  unsupported(
+                    attr,
+                    "a handler reading a `$global`-derived value inside client-owned structure would go stale",
+                  );
+                }
+              },
+            );
+            assertNoServerFnCalls(attr, attr.value);
+          }
+        } else {
+          if (
+            hasUndeliverableFillReads(
+              getSection(tag),
+              attr.value.extra?.referencedBindings,
+            )
+          ) {
+            unsupported(
+              attr,
+              "a server value's fill delivery path leaves the branch chain",
+            );
+          }
+          if (clientOwnedStructure) {
+            assertDeliverableInClientOwned(
+              attr,
+              getSection(tag),
+              attr.value,
+              attr.value.extra,
+            );
+          }
         }
         if (attr.type === "MarkoAttribute" && controlled.has(attr)) continue;
         if (
