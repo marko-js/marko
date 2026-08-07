@@ -80,12 +80,6 @@ The `after(cleanupSnapshots)` hook `fs.rmSync`s every entry of any `__snapshots_
 
 `stats.dom` is filled only by the `dom` test and `stats.html` only by the `ssr` test, yet the optimize `after()` hook always compares the whole `stats` object — so a run scoped to one mode asserts `{}` against a populated file and reports `sizes.json out of date for "attr-class" — run pnpm run test:update`. Following that advice with the same grep writes `{}\n` over a file AGENTS.md marks generated and never hand-editable. Skip the gate when mocha's options carry `--grep`/`--fgrep`, and say the numbers are incomplete because the run was scoped. The matching snapshot-prune defect is the entry "Prune only snapshots whose tests actually ran; `test:update` deletes snapshots for skipped or bailed tests", which owns the `utils/snap.ts` anchor; fix both together. The same hook's `!hasCompilerError` gate is a separate defect — see "Delete or assert the absence of `sizes.json` for `error_compiler` fixtures" — whose fix must sit outside the mode loop. Re-verify: `pnpm test -- --grep "runtime-tags/translator attr-class optimize html"` → false "out of date" failure.
 
-## Warn when a `<script>` body returns a cleanup function — the value is discarded
-
-`packages/runtime-tags/src/translator/core/script.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low
-
-The React `useEffect` habit compiles clean and leaks: `<script>const id = setInterval(() => n++, 1000); return () => clearInterval(id);</script>` becomes `_script(..., $scope => (() => { ... return () => clearInterval(id); })())` — the top-level `return` blocks inlining, so the IIFE fallback drops the cleanup and the interval outlives the component with no error, warning or `meta.diagnostics` entry. Marko's cleanup channel is `$signal.onabort` (`cheatsheet.md`, "Client-side effects") or `<lifecycle onDestroy>`, and nothing in the output points there. `translate.exit` already runs `traverseContains(value.body, isReturnStatement)`; narrow a variant of it to a `return` whose argument is a function or arrow — a bare `return;` must stay silent — and `diagnosticWarn` naming both APIs. Re-verify: `pnpm run compile -o dom -d file.marko` on that template and observe the returned arrow inside the emitted IIFE with empty diagnostics.
-
 ## Reject unknown attribute tags on `<try>` — a `<@placholder>`/`<@cath>` typo compiles clean and silently drops the pending/error UI
 
 `packages/runtime-tags/src/translator/core/try.ts` › `analyze` | 2026-07-27 | impact:med | effort:low
