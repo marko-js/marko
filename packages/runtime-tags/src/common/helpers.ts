@@ -72,6 +72,16 @@ export function stringifyStyleObject(name: string, value: unknown) {
         .replace(/^ms-/, "-ms-")}\`.`,
     );
   }
+  // `NaN`/`0n` fail the falsiness check below (only numeric 0 is
+  // special-cased), silently dropping the whole declaration.
+  if (
+    MARKO_DEBUG &&
+    (value !== value || (typeof value === "bigint" && !value))
+  ) {
+    console.warn(
+      `The \`${name}\` style value \`${value !== value ? "NaN" : "0n"}\` drops the declaration; convert it to a string or number to render it.`,
+    );
+  }
   // Escape `;`/`\` in name and value so neither can inject another declaration
   // (SSR); other chars aren't structural in a style attribute. `width:0` renders.
   return value || value === 0

@@ -156,4 +156,45 @@ describe("runtime-tags/html/content", () => {
       );
     });
   });
+
+  describe("silently dropped text values", () => {
+    const captureWarns = (fn: () => void) => {
+      const calls: string[] = [];
+      const original = console.warn;
+      console.warn = (msg: string) => calls.push(msg);
+      try {
+        fn();
+      } finally {
+        console.warn = original;
+      }
+      return calls;
+    };
+
+    it("warns when NaN renders as nothing", () => {
+      const calls = captureWarns(() => {
+        assert.equal(helpers._to_text(NaN), "");
+        assert.equal(helpers._escape(NaN), "");
+      });
+      assert.equal(calls.length, 2);
+      assert.match(calls[0], /`NaN` renders as nothing/);
+    });
+
+    it("warns when 0n renders as nothing", () => {
+      const calls = captureWarns(() => {
+        assert.equal(helpers._to_text(0n), "");
+      });
+      assert.equal(calls.length, 1);
+      assert.match(calls[0], /`0n` renders as nothing/);
+    });
+
+    it("does not warn for values that render", () => {
+      const calls = captureWarns(() => {
+        assert.equal(helpers._to_text(0), "0");
+        assert.equal(helpers._to_text(1n), "1");
+        assert.equal(helpers._to_text(""), "");
+        assert.equal(helpers._to_text(null), "");
+      });
+      assert.equal(calls.length, 0);
+    });
+  });
 });

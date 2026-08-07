@@ -2,12 +2,6 @@
 
 Things that were hard to understand, and what would have clarified them. Format and rules: [README.md](README.md).
 
-## Warn under `MARKO_DEBUG` when `NaN`/`0n` vanish from text and style values
-
-`packages/runtime-tags/src/html/content.ts` › `_to_text` | 2026-07-18 | impact:low | effort:low
-
-Text and style-object values use `val || val === 0`, so `NaN` and `0n` render as nothing (`_to_text`/`_escape` in `html/content.ts`, `_to_text` in `dom/dom.ts`, `stringifyStyleObject` in `common/helpers.ts`), while attributes skip only `null`/`undefined`/`false` (`isVoid` → `nonVoidAttr`) and write `data-a=NaN`, `data-b=0`. A stray `NaN` therefore blanks a text node or drops an entire `width:` declaration with no signal: `assertValidTextValue` rejects only symbols and objects, so `MARKO_DEBUG` is silent too. Direction: warn in `MARKO_DEBUG` when `NaN` reaches a text or style value, alongside the existing camelCase-key warn in `stringifyStyleObject`. Distinct from the controlled-value selection path, where `normalizeStrAttrValue` (`html/attrs.ts`) already mirrors the DOM for `NaN`/`0n` — the drop survives only in text and style positions. The coercion-table half of this entry has been ported to the markojs.com website repo, which documents the drop rules for text and `style=`. Re-verify: `rg -n "val \|\| val === 0|value \|\| value === 0" packages/runtime-tags/src` beside `isVoid` in `common/helpers.ts`.
-
 ## Add a head-contribution primitive, or state that nested `<title>`/`<meta>`/`<link>` never hoist
 
 `packages/runtime-tags/src/html/assets.ts` › `_flush_head` | 2026-07-19 | impact:med | effort:med
