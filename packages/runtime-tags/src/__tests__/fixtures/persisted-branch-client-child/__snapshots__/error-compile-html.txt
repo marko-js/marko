@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-child/template.marko:4:5
+      2 | <main>
+      3 |   <if=(count > 1)>
+    > 4 |     <widget label=input.label/>
+        |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a custom tag inside client-owned structure is not supported yet.
+      5 |   </if>
+      6 |   <button onClick() { count++ }>+</button>
+      7 | </main>

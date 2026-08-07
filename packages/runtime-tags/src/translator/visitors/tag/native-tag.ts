@@ -44,6 +44,7 @@ import { includes, type Opt, push } from "../../util/optional";
 import {
   constructRendersReads,
   ensurePersistedCaptureGroups,
+  inClientOwnedStructure,
   isPatchCaptureSection,
 } from "../../util/persisted";
 import {
@@ -308,10 +309,7 @@ export default {
         );
         const controlValue = relatedControllable.attrs[0]?.value;
         if (controlValue) {
-          ensurePersistedCaptureGroups(
-            getOrCreateSection(tag),
-            () => controlValue.extra || {},
-          );
+          ensurePersistedCaptureGroups(() => controlValue.extra || {});
         }
       }
 
@@ -355,7 +353,7 @@ export default {
           for (const attr of node.attributes) {
             if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
               const { value } = attr;
-              ensurePersistedCaptureGroups(tagSection, () => value.extra || {});
+              ensurePersistedCaptureGroups(() => value.extra || {});
             }
           }
         }
@@ -759,9 +757,14 @@ export default {
         }
 
         // An attribute fed by client state never captures directly: the
-        // client owns part of its value and recomputes it instead.
+        // client owns part of its value and recomputes it instead. Inside
+        // client-owned structure nothing captures: patch renders skip the
+        // body and server values deliver as owner fills instead.
         const capturesPatchAttr = (name: string, value: t.Expression) => {
-          if (!(isPersisted() && isPatchCaptureSection(tagSection))) {
+          if (
+            !(isPersisted() && isPatchCaptureSection(tagSection)) ||
+            inClientOwnedStructure(tagSection)
+          ) {
             return false;
           }
           const attrSources = getSerializeSourcesForExpr(value.extra || {});
