@@ -116,12 +116,6 @@ The React `useEffect` habit compiles clean and leaks: `<script>const id = setInt
 
 `parseVar` parses a tag variable as `(${str})=>{}` to reuse Babel's binding-pattern grammar and relays Babel's raw message, so `<div/my-el>hi</div>` and `<input/card-input>` compile-fail with `Binding invalid left-hand side in function parameter list.` — naming a parameter list the author never wrote and never mentioning tag variables. That is below the repo's own standard (`packages/runtime-tags/AGENTS.md`: backticked names plus a markojs.com docs link); `<let x=0>` gets a fully tailored message. Detect the parameter-list family of parse errors in `parseVar` and rethrow as e.g. "`my-el` is not a valid [tag variable](https://markojs.com/docs/reference/language#tag-variables); use a JavaScript identifier or destructuring pattern". Distinct from the `parser.js` › `onError`/`onText` entries, which cover htmljs-parser messages. Re-verify: `pnpm run compile -o dom -d file.marko` on `<div/my-el>hi</div>` and observe the Babel message.
 
-## Make `pnpm run compile` tolerate the `--` that AGENTS.md documents
-
-`scripts/inspect-compiled-output.mts` › `parseArgs` | 2026-07-23 | impact:med | effort:low
-
-Root `AGENTS.md` (line 21; `CLAUDE.md` symlinks to it) calls `pnpm run compile -- -o dom -d foo.marko` the fastest way to inspect translator output, but pnpm forwards the literal `--` and Node's `parseArgs({allowPositionals:true})` treats everything after a bare `--` as positionals, so `-o` becomes an input path and the script dies with `ENOENT ... open '<repo>/-o'`. Every contributor or agent following the docs hits this on the first inspect. `packages/runtime-tags/AGENTS.md` :115 documents the same command under `npm`, which strips the first `--` and therefore works, so the defect is confined to the root file — whose surrounding block is otherwise all pnpm, which is why the broken spelling is the one people run. Drop a leading `--` from the argv slice before `parseArgs`, or correct the root invocation. Re-verify from the repo root: `pnpm run compile -- -o dom -d /tmp/x.marko` → ENOENT on `-o`, while `pnpm run compile -o dom -d /tmp/x.marko` writes `/tmp/x.marko.js`.
-
 ## Name the actual handler attribute in SSR's controllable assertion instead of hardcoding `valueChange`
 
 `packages/runtime-tags/src/html/attrs.ts` › `writeControlledScope` | 2026-07-27 | impact:low | effort:low
