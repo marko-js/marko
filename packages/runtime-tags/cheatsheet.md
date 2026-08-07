@@ -184,7 +184,7 @@ export interface Input<T> {
 <${input.then}(input.value)/>
 ```
 
-`tsc` silently SKIPS `.marko` — a type-broken template still exits 0. Check with `mtc` (`@marko/type-check`).
+`tsc` silently SKIPS `.marko` — a type-broken template still exits 0. Check with `mtc` (`@marko/type-check`); in TS mode an undeclared `Input` is `{}` by design, so declare one before reading `input`.
 
 ## DON'T (these are errors or silently wrong)
 
