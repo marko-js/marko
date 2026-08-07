@@ -20,12 +20,6 @@ htmljs-parser treats the first unenclosed `>` as the tag close, so `<if=input.n 
 
 `fixGuide(translator)` interpolates only the resolved cheatsheet path, so every thrown compile error gets the identical `Fix guide: READ <path> before writing a fix.` — verified: `<div` (EOF in open tag) and bare text at root produce byte-identical hints. `packages/runtime-tags/cheatsheet.md` is ~200 lines over 11 sections, and one label spans several causes (`Invalid attribute name.` covers both a bad attribute and unwrapped concise text), so a whole-file pointer cannot disambiguate. Pass the diagnostic (label/loc, or a hint the emitter attaches from its AST context) into `appendAgentFixGuide` and append a section anchor, e.g. `see 'Golden rules' #1 in <path>`. See also "Attach the agent fix-guide to `errorRecovery` diagnostics, not just thrown errors" — a separate coverage defect that wants the same diagnostic-keyed guide helper, so build it once. Re-verify: compile two differently-broken templates with `CLAUDECODE=1` and confirm the appended lines differ.
 
-## Honor a documented `MARKO_AGENT_FIX_GUIDE` override for the agent fix-guide
-
-`packages/compiler/src/util/agent-fix-guide.js` › `isCodingAgent` | 2026-07-19 | impact:med | effort:low
-
-`isCodingAgent()` gates the guide on a fixed env allowlist (`CLAUDECODE`, `CLAUDE_CODE`, `CURSOR_AGENT`, `GEMINI_CLI`, `CODEX_SANDBOX`, `CODEX_THREAD_ID`, `AI_AGENT`) with no explicit override, and the feature is documented only in `packages/compiler/AGENTS.md` and a one-line changelog — nothing user-facing. A harness not on the list, or one that compiles in a subprocess that drops the inherited marker, silently never sees the guide and has no documented way to force it on or off. Check `process.env.MARKO_AGENT_FIX_GUIDE` (`1`/`0`) before the marker sniff, and document it plus the `AI_AGENT` opt-in. Re-verify: with no agent markers set, `MARKO_AGENT_FIX_GUIDE=1` appends the pointer and `=0` suppresses it.
-
 ## Make `event.currentTarget` a type-level error that names the handler's second parameter
 
 `packages/runtime-tags/tags-html.d.ts` › `AttrEventHandler` | 2026-07-19 | impact:med | effort:low
