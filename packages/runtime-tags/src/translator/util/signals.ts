@@ -1085,6 +1085,7 @@ export function writeSignals(section: Section) {
             value.callee.name;
           if (
             closureShape !== "_if_closure" &&
+            closureShape !== "_for_closure" &&
             closureShape !== "_closure_get"
           ) {
             throw new Error(

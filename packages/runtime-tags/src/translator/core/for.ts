@@ -24,7 +24,9 @@ import {
 import { isPersisted } from "../util/marko-config";
 import {
   isPatchCaptureSection,
-  recordStructuralParamsExpr,
+  classifiesClientOwned,
+  onFinalizePersisted,
+  recordStructuralParams,
 } from "../util/persisted";
 import {
   type Binding,
@@ -54,11 +56,15 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
+import {
+  getSerializeGuard,
+  scopeReasonIdentifier,
+} from "../util/serialize-guard";
 import {
   addSerializeExpr,
   addSerializeReason,
   getSerializeReason,
+  getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
 import { getShellId, getShells, isShellDropped } from "../util/shell";
@@ -203,18 +209,29 @@ export default {
     );
 
     if (isPersisted() && isPatchCaptureSection(tagSection)) {
-      addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
-      // The loop's inputs drive structure: call sites reject feeding them
-      // from client-owned values.
-      recordStructuralParamsExpr(tagExtra);
+      // Ownership classifies once the merged input sources resolve.
+      onFinalizePersisted(() => {
+        const sources = getSerializeSourcesForExpr(tagExtra);
+        if (classifiesClientOwned(sources)) {
+          // A client-evaluable loop is client-owned structure (state
+          // re-lists directly; param feeds fill their slots).
+          bodySection.isClientOwnedStructure = true;
+        } else {
+          addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
+          // The loop's inputs drive structure: call sites reject feeding
+          // them from client-owned values.
+          recordStructuralParams(sources);
+        }
+      });
       // A patch can target the loop's CONTENT even when the list itself is
       // static, so whatever could update the items (their closure sources)
       // is a marker resume reason: the entry anchors there.
       onFinalizeReferences(() => {
         addSerializeReason(
           tagSection,
-          !!(bodySection.isHoistThrough || bodySection.hoisted) ||
-            getSerializeSourcesForRef(getDirectClosures(bodySection)),
+          !bodySection.isClientOwnedStructure &&
+            (!!(bodySection.isHoistThrough || bodySection.hoisted) ||
+              getSerializeSourcesForRef(getDirectClosures(bodySection))),
           nodeBinding,
         );
       });
@@ -256,10 +273,13 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
+        // A client-owned loop compiles like a stateful loop on a plain
+        // page: no marker retention, shells, or loop entry.
+        const clientOwned = !!bodySection.isClientOwnedStructure;
         // A patchable loop keeps its markers: item pairing and insertion
         // anchor at branch marks, which elision would remove.
         const persistedPatch =
-          isPersisted() && isPatchCaptureSection(tagSection);
+          isPersisted() && !clientOwned && isPatchCaptureSection(tagSection);
         const singleChild =
           !persistedPatch &&
           bodySection.content?.singleChild &&
@@ -355,9 +375,20 @@ export default {
           }
         }
 
-        statements.push(
-          t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
+        let statement: t.Statement = t.expressionStatement(
+          callRuntime(forTagHTMLRuntime, ...forTagArgs),
         );
+        if (clientOwned) {
+          // Patch renders skip the loop: its state reads are server-stale
+          // and the frame never speaks the listing.
+          let rootSection = tagSection;
+          while (rootSection.parent) rootSection = rootSection.parent;
+          statement = t.ifStatement(
+            scopeReasonIdentifier(rootSection),
+            statement,
+          );
+        }
+        statements.push(statement);
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();
@@ -376,7 +407,11 @@ export default {
           return;
         }
 
-        if (isPersisted() && isPatchCaptureSection(getSection(tag))) {
+        if (
+          isPersisted() &&
+          isPatchCaptureSection(getSection(tag)) &&
+          !bodySection.isClientOwnedStructure
+        ) {
           // An interactive page receives assets transitively through its
           // dom program, so the feature import rides both outputs.
           importRuntimeFeature("patch-loop");
