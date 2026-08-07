@@ -100,13 +100,6 @@ export function hasServerRequiredParam(params: Opt<Binding>) {
   );
 }
 
-// Analyze-time recording defers until sources resolve.
-export function recordStructuralParamsExpr(extra: t.NodeExtra) {
-  onFinalizePersisted(() => {
-    recordStructuralParams(getSerializeSourcesForExpr(extra));
-  });
-}
-
 // Shared per-capture analyze hook: freezes the value's reason groups for
 // translate-time ownership gates and records `$global`-mixed params.
 export function ensurePersistedCaptureGroups(getExtra: () => t.NodeExtra) {
@@ -153,14 +146,23 @@ export function getPatchFillBindings(section: { bindings: Opt<Binding> }) {
 // Whether every param source promotes to a fill: the client can then
 // re-evaluate an expression mixing them with state at any time.
 export function paramsDeliverAsFills(params: Sources["param"]) {
-  // Only a named property delivers: the whole bag (a positional program
-  // param) and rest grains carry shapes the wire cannot write faithfully.
-  return every(
-    params,
-    (binding) =>
-      binding.upstreamAlias !== binding.section.params &&
-      binding.excludeProperties === undefined &&
-      isPatchFillBinding(binding),
+  return every(params, isPatchFillBinding);
+}
+
+// Client-evaluable sources classify structure client-owned: state
+// re-renders directly, and every param feed fills its slot.
+export function classifiesClientOwned(sources: Sources | undefined) {
+  return (
+    !!sources?.state && !sources.global && paramsDeliverAsFills(sources.param)
+  );
+}
+
+// Only a named property delivers as a fill: the whole bag (a positional
+// program param) and rest grains carry shapes the wire cannot write.
+function isFillableGrain(binding: Binding) {
+  return (
+    binding.upstreamAlias !== binding.section.params &&
+    binding.excludeProperties === undefined
   );
 }
 
@@ -200,7 +202,9 @@ export function isPatchFillBinding(binding: Binding) {
   ) {
     return !!binding.assignmentSections;
   }
-  if (!isPatchRefreshableBinding(binding)) return false;
+  if (!isFillableGrain(binding) || !isPatchRefreshableBinding(binding)) {
+    return false;
+  }
 
   for (const read of binding.reads) {
     if (read.isEffect) continue;
