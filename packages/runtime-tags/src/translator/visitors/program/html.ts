@@ -33,7 +33,6 @@ import {
   isPatchCaptureSection,
   isPatchFillBinding,
   kPatchClientOwned,
-  kPersistedAssignedVar,
   scopeReasonRuntime,
 } from "../../util/persisted";
 import {
@@ -63,6 +62,7 @@ import {
 import {
   getDroppedShellIds,
   getShellId,
+  getShells,
   recordConstructBlocker,
 } from "../../util/shell";
 import {
@@ -214,7 +214,7 @@ export default {
 
       writeModuleRegistrations(program);
 
-      const shells = program.hub.file.metadata.marko.persistedShells;
+      const shells = getShells();
       if (persisted && shells) {
         // Branch shells, derived during analyze, register at server module
         // load so patches can ship constructible shells without the client
@@ -337,15 +337,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         : "Persisted templates currently support only escaped dynamic text and dynamic attributes in native HTML.",
     );
   };
-  // Inside client-owned structure the only delivery channel is an owner
-  // fill (patch renders skip the body): reads that neither recompute
-  // client-side nor promote fail closed. Local derivations recompute
-  // through the fill dispatch; their own feeds check where they are read.
-  // Lone deep (non-direct-closure) fill positions per server binding: a
-  // second one would need the shared indexed `_closure` composite that
-  // does not exist yet, so it fails closed here in BOTH outputs (the
-  // dom-side join arm backstops with a throw).
+  // A second deep fill position per server value would need the shared
+  // indexed `_closure` composite that does not exist yet: fail closed.
   const lazyFillSections = new Map<Binding, Section>();
+  // Inside client-owned structure the only delivery channel is an owner
+  // fill: reads that neither recompute client-side nor promote fail closed.
   const assertDeliverableInClientOwned = (
     node: t.Node,
     section: Section,
@@ -419,9 +415,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     assertNoServerFnCalls(node, value);
   };
-  // A server-derived function fill re-binds to the live scope, so server
-  // values its BODY captures would read stale slots forever: calling one
-  // inside client-owned structure fails closed.
+  // A server-derived function re-binds to the live scope on patch, so
+  // server values its body captures read stale slots forever: fail closed.
   const assertNoServerFnCalls = (node: t.Node, value: t.Node) => {
     t.traverseFast(value, (n) => {
       if (t.isCallExpression(n) || t.isOptionalCallExpression(n)) {
@@ -467,21 +462,16 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const { node } = tag;
       const tagName = t.isStringLiteral(node.name) && node.name.value;
       const tagDef = getTagDef(tag);
-      // A server-driven conditional's patches ship the selected branch's
-      // rendered html wholesale, so the branch must be inert: a mixed test
-      // corrupts structure either way it is owned, and state or handlers
-      // inside would not survive (or hydrate within) a shipped swap. A
-      // PURE-state chain is client-owned instead (recorded at finalize):
-      // the frame omits its entry and interiors deliver as fills.
+      // A server-driven conditional's patches swap in rendered html, so
+      // branches must be inert; a pure-state chain is client-owned instead.
       if (isConditionTag(tag) || isCoreTagName(tag, "for")) {
         const section = getSection(tag);
         // The walk pairs branches structurally at any depth, but only when
         // every enclosing section is itself a branch.
         if (!isPatchCaptureSection(section)) unsupported(node);
         if (getSectionForBody(tag.get("body"))?.isClientOwnedStructure) {
-          // Enclosing server branches cannot construct faithfully around a
-          // client-owned selection (it has no partial channel): their
-          // shells drop, so divergence falls back to navigation.
+          // Enclosing server branches cannot construct around a client-owned
+          // selection: shells drop and divergence falls back to navigation.
           if (isCoreTagName(tag, "if")) {
             for (let cur = section; cur.parent; cur = cur.parent) {
               if (cur.isBranch) {
@@ -500,11 +490,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           );
         }
         for (const attr of node.attributes) {
-          // Core tags merge attr reads into the tag extra, so the state
-          // check must resolve the canonical extra or expression-valued
-          // tests read as refless and slip through. A PURE-state chain
-          // never reaches here (client-owned above), so state means a mix
-          // with server values.
+          // The canonical extra sees reads merged into the tag extra; state
+          // here means a mix (a pure-state chain returned client-owned above).
           if (
             attr.type === "MarkoSpreadAttribute" ||
             getSerializeSourcesForExpr(
@@ -688,7 +675,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           // The change-binding chain for assigned returns is not wired
           // into persisted serialization yet.
-          if (node.extra?.[kPersistedAssignedVar]) {
+          if (
+            node.var?.type === "Identifier" &&
+            node.var.extra?.binding?.assignmentSections
+          ) {
             unsupported(
               node,
               "assigning a persisted child's tag variable is not supported yet",
@@ -815,11 +805,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       );
       const clientOwnedStructure = inClientOwnedStructure(getSection(tag));
       for (const attr of node.attributes) {
-        // Handlers read fills from the scope at call time (the owner slot
-        // write alone keeps them current), so only rendered values gate —
-        // except values no write keeps current: `$global`-derived slots
-        // (frames refresh the bag, never derived slots) and server-derived
-        // function calls (their captures re-bind stale).
+        // Handlers read the scope at call time, so only values no write
+        // keeps current gate: `$global`-derived slots and function calls.
         if (
           attr.type === "MarkoAttribute" &&
           isEventOrChangeHandler(attr.name)

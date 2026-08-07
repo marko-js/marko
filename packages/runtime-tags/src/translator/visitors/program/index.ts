@@ -30,7 +30,7 @@ import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
-import { buildRecordedShells } from "../../util/shell";
+import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML, { assertSupportedPatch } from "./html";
@@ -105,7 +105,7 @@ export default {
 
       const section = programExtra.section!;
       if (isPersisted()) {
-        buildRecordedShells(program.hub.file);
+        buildShells();
       }
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
