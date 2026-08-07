@@ -23,7 +23,9 @@ import { forEach, fromIter, includes, type Opt, toIter } from "./optional";
 import {
   addPersistedChildRenderer,
   hasServerRequiredParam,
+  inClientOwnedStructure,
   kPatchClientOwned,
+  onFinalizePersisted,
   recordGlobalMixedParams,
   recordStructuralParams,
 } from "./persisted";
@@ -148,7 +150,12 @@ export function knownTagAnalyze(
     // parent entry, so the ref must serialize (a scriptless child could
     // otherwise skip it, leaving its fills and effects unreachable).
     addSerializeReason(section, true, childScopeBinding);
-    addRuntimeFeatureAsset(tag.hub.file, "patch-child");
+    // Children inside client-owned structure never pair from a patch.
+    onFinalizePersisted(() => {
+      if (!inClientOwnedStructure(section)) {
+        addRuntimeFeatureAsset(tag.hub.file, "patch-child");
+      }
+    });
   }
   startSection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
@@ -252,7 +259,7 @@ export function knownTagTranslateHTML(
       callRuntime("_existing_scope", peekScopeId),
     );
 
-    if (isPersisted()) {
+    if (isPersisted() && !inClientOwnedStructure(section)) {
       const patchChildStatement = t.expressionStatement(
         callRuntime(
           "_patch_child",
@@ -288,14 +295,17 @@ export function knownTagTranslateHTML(
   if (contentSection.paramReasonGroups) {
     let childSerializeReasonExpr: t.Expression | undefined;
     if (isPersisted()) {
-      // Pages serialize fully, so the ambient slot carries the ownership
-      // mask instead. A client-owned candidate needs it exactly when it
-      // RENDERS (`_must_render` can render it on a patch, and all-server
-      // ambient would ship its client-owned values); a skipped instance
-      // leaves the all-server default.
-      const ownership = getPersistedGroupOwnership(tagExtra);
-      if (ownership) {
-        childSerializeReasonExpr = buildOwnershipMaskExpr(section, ownership);
+      if (inClientOwnedStructure(section)) {
+        // The client owns this instance after the page render (patches
+        // skip the region), so it serializes fully like a page.
+        childSerializeReasonExpr = t.numericLiteral(1);
+      } else {
+        // Pages serialize fully, so the ambient slot carries the ownership
+        // mask (needed exactly when a `_must_render` patch renders it).
+        const ownership = getPersistedGroupOwnership(tagExtra);
+        if (ownership) {
+          childSerializeReasonExpr = buildOwnershipMaskExpr(section, ownership);
+        }
       }
     } else if (contentSection.paramReasonGroups.length === 1) {
       // Special case single reason to pass either 1 or undefined.
@@ -435,7 +445,9 @@ export function knownTagTranslateDOM(
 
   // An interactive page receives assets transitively through its dom
   // program, so the feature import rides both outputs.
-  if (isPersisted()) importRuntimeFeature("patch-child");
+  if (isPersisted() && !inClientOwnedStructure(getSection(tag))) {
+    importRuntimeFeature("patch-child");
+  }
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
