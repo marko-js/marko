@@ -2,12 +2,6 @@
 
 Duplication, dead code, inconsistencies, refactor opportunities. Format and rules: [README.md](README.md).
 
-## Extract one helper for the `attrTag`/`attrTags` merge duplicated in `known-tag.ts`
-
-`packages/runtime-tags/src/translator/util/known-tag.ts` › `translateAttrTag` | 2026-07-23 | impact:low | effort:low
-
-The rule "a repeated attribute tag folds into `attrTags(prev, next)`, a non-repeated one becomes `attrTag(props)`" is implemented four times. `translateAttrTag` and the `isAttributeTag(tag)` branch of `applyAttrObject` are near-verbatim ~35-line copies, including the `t.parenthesizedExpression` mutation trick, differing only in where `repeated` comes from and whether the result is returned or handed to `addStatement`. `translate-attrs.ts` › `translateAttrs` and `addDynamicAttrTagStatements` encode the same rule over `contentProperties` and over an attr-tag identifier assignment. One helper would collapse the two `known-tag.ts` copies and let the other two share the `repeated ? attrTags : attrTag` decision, so a future change cannot land on three of four sites. Re-verify: `rg -n '"attrTags"' packages/runtime-tags/src/translator` lists exactly those four sites.
-
 ## Make a params binding identifiable from `binding.type`
 
 `packages/runtime-tags/src/translator/util/references.ts` › `trackParamsReferences` | 2026-07-22 | impact:med | effort:high
