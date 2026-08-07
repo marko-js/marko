@@ -36,6 +36,21 @@ export function assertValidTextValue(value: unknown) {
   if (unrenderable) {
     throw new Error(`Text content cannot be ${unrenderable}.`);
   }
+  if (isSilentlyDropped(value)) {
+    console.warn(
+      `Text content of \`${describeDropped(value)}\` renders as nothing; convert it to a string or number to render it.`,
+    );
+  }
+}
+
+// `NaN` and bigint `0n` are dropped by the falsiness checks in the writers
+// (only numeric 0 is special-cased there), so surface the drop in debug.
+function isSilentlyDropped(value: unknown) {
+  return value !== value || (typeof value === "bigint" && !value);
+}
+
+function describeDropped(value: unknown) {
+  return value !== value ? "NaN" : "0n";
 }
 
 function describeUnrenderable(value: unknown) {

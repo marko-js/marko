@@ -153,5 +153,16 @@ describe("runtime-tags/common/helpers", () => {
       });
       assert.equal(calls.length, 0);
     });
+
+    it("warns when NaN or 0n drops a declaration", () => {
+      const calls = captureWarns(() => {
+        assert.equal(styleValue({ width: NaN }), "");
+        assert.equal(styleValue({ width: 0n }), "");
+        assert.equal(styleValue({ width: 0 }), "width:0");
+      });
+      assert.equal(calls.length, 2);
+      assert.match(calls[0], /`width` style value `NaN` drops the declaration/);
+      assert.match(calls[1], /`width` style value `0n` drops the declaration/);
+    });
   });
 });
