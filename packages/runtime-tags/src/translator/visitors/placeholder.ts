@@ -208,11 +208,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     ) {
       recordConstructBlocker(section, "state-fed hole");
     }
-    // A hole fed by client state never captures directly: the client owns
-    // part of its value, and it recomputes through the signal graph (a
-    // fresh construct renders it through the state's seed fill). Inside
-    // client-owned structure nothing captures: patch renders skip the body
-    // and server values deliver as owner fills instead.
+    // A state-fed hole recomputes through the signal graph, and inside
+    // client-owned structure delivery is owner fills: neither captures.
     const isPatch =
       isPersisted() &&
       node.escape &&

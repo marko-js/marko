@@ -4,9 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A client-owned chain nested inside another, with a fill at each depth:
-// both selections are the client's, frames stay structure-silent, and
-// both server values stay fresh through the owner-side dispatches.
+// Nested client-owned chains with a fill at each depth: both selections
+// are the client's and both server values render fresh where revealed.
 export const config: TestConfig = {
   persisted: true,
   steps: [
