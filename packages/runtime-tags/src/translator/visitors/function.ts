@@ -102,10 +102,39 @@ export default {
     } else if (shouldAlwaysRegister(markoRoot)) {
       registerFunction(fnExtra, true);
     } else {
-      getReferencesByFn().set(fnExtra, new Set([(exprRoot.node.extra ??= {})]));
+      const refs = new Set([(exprRoot.node.extra ??= {})]);
+      // A `<const>` can carry this function (eg an attrs object) into an
+      // always-register position such as a dynamic tag spread, so its tag
+      // variable's references decide registration like static declarations do.
+      if (getConstTagVarRefs(markoRoot, refs) === true) {
+        registerFunction(fnExtra, true);
+      } else {
+        getReferencesByFn().set(fnExtra, refs);
+      }
     }
   },
 } satisfies TemplateVisitor<t.Function>;
+
+function getConstTagVarRefs(
+  markoRoot: MarkoExprRootPath,
+  refs: Set<t.NodeExtra>,
+  seen = new Set<t.Node>(),
+): Set<t.NodeExtra> | true {
+  const tag = getTagFromMarkoRoot(markoRoot);
+  if (!tag?.node.var || !isCoreTagName(tag, "const") || seen.has(tag.node)) {
+    return refs;
+  }
+  seen.add(tag.node);
+  const ids = tag.get("var").getOuterBindingIdentifiers();
+  for (const name in ids) {
+    const binding = tag.scope.getBinding(name);
+    if (binding && addBindingRefs(binding, refs, seen) === true) {
+      return true;
+    }
+  }
+
+  return refs;
+}
 
 export function finalizeFunctionRegistry() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
@@ -379,6 +408,11 @@ function addBindingRefs(
       return true;
     } else {
       refs.add((exprRoot.node.extra ??= {}));
+      // Follow `<const>` aliases (eg `<const/b=a/>` spread onto a dynamic
+      // tag) the same way the walk entered through the declaring `<const>`.
+      if (getConstTagVarRefs(markoRoot, refs, seen) === true) {
+        return true;
+      }
     }
   }
 }
