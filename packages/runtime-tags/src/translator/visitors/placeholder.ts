@@ -13,6 +13,7 @@ import { type Opt } from "../util/optional";
 import {
   constructRendersReads,
   ensurePersistedCaptureGroups,
+  inClientOwnedStructure,
   isPatchCaptureSection,
 } from "../util/persisted";
 import {
@@ -102,7 +103,7 @@ export default {
             placeholder.hub.file,
             `${getRuntimePath("dom")}/patch-text.feat`,
           );
-          ensurePersistedCaptureGroups(section, () => valueExtra);
+          ensurePersistedCaptureGroups(() => valueExtra);
         }
       }
     },
@@ -209,11 +210,14 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
     // A hole fed by client state never captures directly: the client owns
     // part of its value, and it recomputes through the signal graph (a
-    // fresh construct renders it through the state's seed fill).
+    // fresh construct renders it through the state's seed fill). Inside
+    // client-owned structure nothing captures: patch renders skip the body
+    // and server values deliver as owner fills instead.
     const isPatch =
       isPersisted() &&
       node.escape &&
       isPatchCaptureSection(section) &&
+      !inClientOwnedStructure(section) &&
       !!nodeBinding &&
       !holeSources?.state;
     const isPatchText = isHTML && isPatch;
