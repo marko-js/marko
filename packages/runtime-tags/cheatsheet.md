@@ -58,7 +58,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
 ## Control flow
 
 ```marko
-<if=cond> A </if>
+<if=(count > 10)> A </if>   // parenthesize comparisons — a bare `>` ends the tag (rule 2)
 <else if=other> B </else>
 <else> C </else>
 
