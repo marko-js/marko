@@ -107,6 +107,7 @@ UPDATE: main > section > h2::text "Widget x1" => "Widget x2"
 ```
 UPDATE: main > h1::text "Store" => "Store!"
 UPDATE: main > p[title] "en" => "fr"
+UPDATE: main > p::text "Acme" => "Acme Co"
 UPDATE: main > footer::text "2026" => "2027"
 UPDATE: main > section > h2::text "Widget x2" => "Gadget x2"
 ```
