@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-server-required/template.marko:4:5
+      2 | <main>
+      3 |   <if=show>
+    > 4 |     <widget open=input.o/>
+        |     ^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: an input the child needs server-owned cannot feed from client-owned structure.
+      5 |   </if>
+      6 |   <button onClick() { show = !show }>t</button>
+      7 | </main>

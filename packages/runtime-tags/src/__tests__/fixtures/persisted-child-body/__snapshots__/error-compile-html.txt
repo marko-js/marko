@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-body/template.marko:4:5
+      2 | <main>
+      3 |   <if=show>
+    > 4 |     <widget label="a">text</widget>
+        |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: body content for a child inside client-owned structure is not supported yet.
+      5 |   </if>
+      6 |   <button onClick() { show = !show }>t</button>
+      7 | </main>
