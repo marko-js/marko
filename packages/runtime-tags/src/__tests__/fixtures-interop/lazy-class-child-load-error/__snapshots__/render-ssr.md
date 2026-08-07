@@ -11,8 +11,6 @@
 ```js
 document.querySelector("#toggle").click();
 ```
-
-# Update
 ```html
 <button
   id="toggle"

@@ -679,9 +679,11 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
   },
 );
 
-export function _resume_dynamic_tag() {
-  _resume(DYNAMIC_TAG_SCRIPT_REGISTER_ID, dynamicTagScript);
-}
+// `dynamicTagScript` runs on a branch scope, so resume-only bundles (where
+// `_dynamic_tag` itself is tree-shaken) still need branch visits processed.
+export const _resume_dynamic_tag = /*@__PURE__*/ withBranches(() =>
+  _resume(DYNAMIC_TAG_SCRIPT_REGISTER_ID, dynamicTagScript),
+);
 
 function dynamicTagScript(branch: Scope) {
   _attrs_script(

@@ -165,18 +165,24 @@ export default function createBrowser(
           pending.sort((a, b) => orderOf(a) - orderOf(b));
         }
 
+        const imports: Promise<unknown>[] = [];
         for (const src of pending) {
-          importWithContext(
-            path.join(dir, src),
-            { browser: true },
-            ctx,
-            rejectLoad,
+          imports.push(
+            importWithContext(
+              path.join(dir, src),
+              { browser: true },
+              ctx,
+              rejectLoad,
+            ),
           );
           // With an explicit order each script is fully evaluated before
           // the next starts so that the arrival order is deterministic.
           if (loadOrder) await waitForPendingModules(ctx);
         }
         await waitForPendingModules(ctx);
+        // Surface page-module evaluation failures instead of leaving the
+        // context half-initialized (which reads as `run is not a function`).
+        await Promise.all(imports);
 
         window.queueMicrotask = qmt;
         beforeEffects?.();
