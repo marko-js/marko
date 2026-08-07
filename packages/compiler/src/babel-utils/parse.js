@@ -65,7 +65,14 @@ export function parseVar(file, str, sourceStart, sourceEnd) {
     return parsed.params[0];
   }
 
-  return ensureParseError(file, parsed, sourceStart, sourceEnd);
+  const parseError = ensureParseError(file, parsed, sourceStart, sourceEnd);
+  // Babel reports the borrowed parameter-list grammar ("invalid left-hand
+  // side in function parameter list"), naming syntax the author never wrote.
+  if (/function parameter list/.test(parseError.label)) {
+    parseError.label = `\`${str}\` is not a valid [tag variable](https://markojs.com/docs/reference/language#tag-variables); use a JavaScript identifier or destructuring pattern.`;
+  }
+
+  return parseError;
 }
 
 export function parseTemplateLiteral(file, str, sourceStart, sourceEnd) {

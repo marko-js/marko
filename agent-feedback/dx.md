@@ -86,12 +86,6 @@ The `after(cleanupSnapshots)` hook `fs.rmSync`s every entry of any `__snapshots_
 
 The React `useEffect` habit compiles clean and leaks: `<script>const id = setInterval(() => n++, 1000); return () => clearInterval(id);</script>` becomes `_script(..., $scope => (() => { ... return () => clearInterval(id); })())` — the top-level `return` blocks inlining, so the IIFE fallback drops the cleanup and the interval outlives the component with no error, warning or `meta.diagnostics` entry. Marko's cleanup channel is `$signal.onabort` (`cheatsheet.md`, "Client-side effects") or `<lifecycle onDestroy>`, and nothing in the output points there. `translate.exit` already runs `traverseContains(value.body, isReturnStatement)`; narrow a variant of it to a `return` whose argument is a function or arrow — a bare `return;` must stay silent — and `diagnosticWarn` naming both APIs. Re-verify: `pnpm run compile -o dom -d file.marko` on that template and observe the returned arrow inside the emitted IIFE with empty diagnostics.
 
-## Replace Babel's "invalid left-hand side in function parameter list" for bad tag variables
-
-`packages/compiler/src/babel-utils/parse.js` › `parseVar` | 2026-07-23 | impact:low | effort:low
-
-`parseVar` parses a tag variable as `(${str})=>{}` to reuse Babel's binding-pattern grammar and relays Babel's raw message, so `<div/my-el>hi</div>` and `<input/card-input>` compile-fail with `Binding invalid left-hand side in function parameter list.` — naming a parameter list the author never wrote and never mentioning tag variables. That is below the repo's own standard (`packages/runtime-tags/AGENTS.md`: backticked names plus a markojs.com docs link); `<let x=0>` gets a fully tailored message. Detect the parameter-list family of parse errors in `parseVar` and rethrow as e.g. "`my-el` is not a valid [tag variable](https://markojs.com/docs/reference/language#tag-variables); use a JavaScript identifier or destructuring pattern". Distinct from the `parser.js` › `onError`/`onText` entries, which cover htmljs-parser messages. Re-verify: `pnpm run compile -o dom -d file.marko` on `<div/my-el>hi</div>` and observe the Babel message.
-
 ## Reject unknown attribute tags on `<try>` — a `<@placholder>`/`<@cath>` typo compiles clean and silently drops the pending/error UI
 
 `packages/runtime-tags/src/translator/core/try.ts` › `analyze` | 2026-07-27 | impact:med | effort:low
