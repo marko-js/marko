@@ -30,7 +30,6 @@ import {
   addPersistedChildRenderer,
   hasServerRequiredParam,
   kPatchClientOwned,
-  kPersistedAssignedVar,
   recordGlobalMixedParams,
   recordStructuralParams,
 } from "./persisted";
@@ -184,9 +183,6 @@ export function knownTagAnalyze(
       tag.node.var!.type === "Identifier" &&
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
     );
-    if (mutatesTagVar && isPersisted()) {
-      tagExtra[kPersistedAssignedVar] = true;
-    }
     const varExpr = tagExtra.defineBodySection
       ? contentSection.returnValueExpr
       : mapParamReasonToExpr(

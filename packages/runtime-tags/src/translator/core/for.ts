@@ -24,7 +24,6 @@ import {
 import { isPersisted } from "../util/marko-config";
 import {
   isPatchCaptureSection,
-  onFinalizePersisted,
   recordStructuralParamsExpr,
 } from "../util/persisted";
 import {
@@ -62,7 +61,7 @@ import {
   getSerializeReason,
   getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
-import { getShellId, isShellDropped, recordShellRoot } from "../util/shell";
+import { getShellId, getShells, isShellDropped } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -202,14 +201,7 @@ export default {
     );
 
     if (isPersisted() && isPatchCaptureSection(tagSection)) {
-      // Needs nothing from finalize itself: deferring keeps assets and
-      // shell roots in tag order with the conditional's classified ones.
-      onFinalizePersisted(() => {
-        addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
-        // The item body's shell builds after reference finalization, once
-        // child bindings exist; record the root here.
-        recordShellRoot(bodySection);
-      });
+      addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
       // The loop's inputs drive structure: call sites reject feeding them
       // from client-owned values.
       recordStructuralParamsExpr(tagExtra);
@@ -354,7 +346,7 @@ export default {
             forTagArgs.push(
               undefined,
               undefined,
-              id && tag.hub.file.metadata.marko.persistedShells?.[id]
+              id && getShells()?.[id]
                 ? t.stringLiteral(id)
                 : t.numericLiteral(0),
             );

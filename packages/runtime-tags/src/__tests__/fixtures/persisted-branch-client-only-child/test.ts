@@ -4,9 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A client-owned chain as an element's only child, followed by a sibling
-// server capture: skipping the chain on patch renders must leave the
-// sibling's entry (and the frame shape) intact.
+// A client-owned chain as an element's only child: skipping it on patch
+// renders must leave the sibling capture (and frame shape) intact.
 export const config: TestConfig = {
   persisted: true,
   steps: [
