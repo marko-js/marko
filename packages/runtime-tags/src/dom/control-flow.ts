@@ -559,7 +559,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             const content = getContent(scope);
             setConditionalRenderer(
               scope[childScopeAccessor],
-              MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a",
+              MARKO_DEBUG ? `#${normalizedRenderer.toLowerCase()}/0` : "a",
               content,
               createAndSetupBranch,
             );
@@ -569,7 +569,9 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
                 content[RendererProp.Accessor],
                 scope[childScopeAccessor][
                   AccessorPrefix.BranchScopes +
-                    (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
+                    (MARKO_DEBUG
+                      ? `#${normalizedRenderer.toLowerCase()}/0`
+                      : "a")
                 ],
               );
             }
@@ -587,7 +589,9 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
         const childScope = scope[childScopeAccessor] as Scope;
         const args = getInput?.();
         if (typeof normalizedRenderer === "string") {
-          const nodeAccessor = MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a";
+          const nodeAccessor = MARKO_DEBUG
+            ? `#${normalizedRenderer.toLowerCase()}/0`
+            : "a";
           (getContent ? _attrs : _attrs_content)(
             childScope,
             nodeAccessor,
@@ -682,7 +686,9 @@ export function _resume_dynamic_tag() {
 function dynamicTagScript(branch: Scope) {
   _attrs_script(
     branch,
-    MARKO_DEBUG ? `#${branch[AccessorProp.Renderer]}/0` : "a",
+    MARKO_DEBUG
+      ? `#${(branch[AccessorProp.Renderer] as string).toLowerCase()}/0`
+      : "a",
   );
 }
 
@@ -987,7 +993,7 @@ function createBranchWithTagNameOrRenderer(
     parentNode,
   );
   if (typeof tagNameOrRenderer === "string") {
-    branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : "a"] =
+    branch[MARKO_DEBUG ? `#${tagNameOrRenderer.toLowerCase()}/0` : "a"] =
       branch[AccessorProp.StartNode] =
       branch[AccessorProp.EndNode] =
         document.createElementNS(
