@@ -26,6 +26,7 @@ import { addSorted } from "../util/optional";
 import {
   isPatchCaptureSection,
   onFinalizePersisted,
+  paramsDeliverAsFills,
   recordStructuralParams,
 } from "../util/persisted";
 import {
@@ -124,9 +125,13 @@ export const IfTag = {
         // Ownership classifies once the merged test sources resolve.
         onFinalizePersisted(() => {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
-          if (sources?.state && !sources.param && !sources.global) {
-            // A pure-state chain is client-owned structure: the frame never
-            // speaks its selection, so no shells or branch patcher ship.
+          if (
+            sources?.state &&
+            !sources.global &&
+            paramsDeliverAsFills(sources.param)
+          ) {
+            // A client-evaluable chain is client-owned structure (state
+            // re-selects directly; param feeds fill their slots).
             for (const [, branchBody] of branches) {
               if (branchBody) {
                 branchBody.isClientOwnedStructure = true;

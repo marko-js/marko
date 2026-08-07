@@ -3,6 +3,7 @@ import * as assert from "assert/strict";
 import {
   addSorted,
   concat,
+  every,
   filter,
   findIndexSorted,
   findSorted,
@@ -10,6 +11,7 @@ import {
   mapToString,
   type Opt,
   push,
+  some,
   Sorted,
   toIter,
 } from "../translator/util/optional";
@@ -197,6 +199,24 @@ describe("runtime-tags/translator/util/optional", () => {
         mapToString([1, 2, 3] as Opt<number>, ",", toStr),
         "0:1,1:2,2:3",
       );
+    });
+
+    it("some finds a match across every Opt shape", () => {
+      const isEven = (n: number) => n % 2 === 0;
+      assert.equal(some(undefined, isEven), false);
+      assert.equal(some(1, isEven), false);
+      assert.equal(some(2, isEven), true);
+      assert.equal(some([1, 3, 4] as Opt<number>, isEven), true);
+      assert.equal(some([1, 3, 5] as Opt<number>, isEven), false);
+    });
+
+    it("every is vacuously true and checks all Opt shapes", () => {
+      const isEven = (n: number) => n % 2 === 0;
+      assert.equal(every(undefined, isEven), true);
+      assert.equal(every(1, isEven), false);
+      assert.equal(every(2, isEven), true);
+      assert.equal(every([2, 4, 6] as Opt<number>, isEven), true);
+      assert.equal(every([2, 3, 4] as Opt<number>, isEven), false);
     });
   });
 });
