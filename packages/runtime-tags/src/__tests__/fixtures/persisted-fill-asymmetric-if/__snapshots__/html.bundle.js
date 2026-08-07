@@ -1,7 +1,7 @@
 // template.marko
 _renderer_shells({
-	a0: ",`a0,<p>shown</p>`",
-	a1: ",`a1;b%;<!><!><!>`"
+	a0: ",`a0;b%;<!><!><!>`",
+	a2: ",`a2,<p>shown</p>`"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);
@@ -29,7 +29,7 @@ var template_default = _template_persisted("a", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0", "a1"]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2", "a0"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason ? writeScope($scope0_id, {
