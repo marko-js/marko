@@ -1,4 +1,4 @@
-// size: 26013 (min) 9678 (brotli)
+// size: 26009 (min) 9653 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -232,6 +232,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
           renderer.g[accessor](scope[childScopeAccessor], renderer.h[accessor]);
     };
   }),
+  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => _resume("d", dynamicTagScript)),
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
@@ -1882,9 +1883,6 @@ function renderCatch(scope, error) {
 }
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
-}
-function _resume_dynamic_tag() {
-  _resume("d", dynamicTagScript);
 }
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
