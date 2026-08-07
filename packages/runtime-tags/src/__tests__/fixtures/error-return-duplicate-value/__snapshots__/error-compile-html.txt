@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-return-duplicate-value/template.marko:1:17
+    > 1 | <return=input.a value=input.b/>
+        |                 ^^^^^^^^^^^^^ Invalid duplicate value attribute.
+      2 |
