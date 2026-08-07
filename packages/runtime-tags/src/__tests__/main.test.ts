@@ -228,6 +228,9 @@ function testFixtures(interop?: true) {
           const getModeOpts = once(
             (): compiler.Config => ({
               translator,
+              // A compile cache is scoped to one configuration, and the
+              // per-fixture `optimizeKnownTemplates` are part of it.
+              cache: new Map(),
               runtimeId: config.runtime_id,
               writeVersionComment: false,
               babelConfig: {

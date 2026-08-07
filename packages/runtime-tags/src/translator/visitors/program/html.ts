@@ -22,7 +22,7 @@ import {
 } from "../../util/known-tag";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach, some } from "../../util/optional";
+import { every, forEach, some } from "../../util/optional";
 import {
   getConstructInitClosures,
   getPatchFillBindings,
@@ -660,13 +660,137 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // Templated instances classify per child param group: the ownership
       // mask withholds server writes for client-fed groups.
       if (tagDef?.template) {
-        // A child's server writes would ride the branch partial the frame
-        // no longer carries.
+        // Inside client-owned structure a child is a pure client instance
+        // (input re-applies via tag-args signals; server values fill).
         if (inClientOwnedStructure(getSection(tag))) {
-          unsupported(
-            node,
-            "a custom tag inside client-owned structure is not supported yet",
-          );
+          const section = getSection(tag);
+          if (node.var) {
+            unsupported(
+              node,
+              "a tag variable on a child inside client-owned structure is not supported yet",
+            );
+          }
+          if (node.body.body.length || node.attributeTags?.length) {
+            unsupported(
+              node,
+              "body content for a child inside client-owned structure is not supported yet",
+            );
+          }
+          // Arguments have no per-group channel: only named attrs deliver.
+          if (node.arguments?.length) {
+            unsupported(
+              node,
+              "arguments for a child inside client-owned structure are not supported yet",
+            );
+          }
+          const childFile = loadFileForTag(tag);
+          if (!childFile) {
+            unsupported(
+              node,
+              "a child inside client-owned structure must be analyzable",
+            );
+          }
+          // Transitive knowledge is render-time only, so leaf, clean
+          // children admit — judged from the child's own AST alone.
+          let readsGlobal = false;
+          let grandchild = false;
+          let patchEra: string | false = false;
+          let importedRef = false;
+          childFile!.path.traverse({
+            // Imported code can carry untracked server knowledge, and
+            // aliasing hides call shapes: any module binding fails closed.
+            Identifier(id) {
+              if (!id.isReferencedIdentifier()) return;
+              readsGlobal ||= id.node.name === "$global";
+              importedRef ||=
+                id.scope.getBinding(id.node.name)?.kind === "module";
+            },
+            MarkoTag(childTag) {
+              const name =
+                t.isStringLiteral(childTag.node.name) &&
+                childTag.node.name.value;
+              grandchild ||= !name || !!getTagDef(childTag)?.template;
+              // Boundaries and controllables lean on patch-era machinery
+              // this instance never receives.
+              if (name === "try" || name === "await" || name === "lifecycle") {
+                patchEra = `\`<${name}>\``;
+              }
+              for (const childAttr of childTag.node.attributes) {
+                if (
+                  childAttr.type === "MarkoAttribute" &&
+                  (childAttr.bound || /Change$/.test(childAttr.name))
+                ) {
+                  patchEra = "a controllable binding";
+                }
+              }
+            },
+          });
+          if (readsGlobal) {
+            unsupported(
+              node,
+              "a child reading `$global` inside client-owned structure would go stale",
+            );
+          }
+          if (grandchild) {
+            unsupported(
+              node,
+              "a child rendering other custom tags inside client-owned structure is not supported yet",
+            );
+          }
+          if (patchEra) {
+            unsupported(
+              node,
+              `a child using ${patchEra} inside client-owned structure is not supported yet`,
+            );
+          }
+          if (importedRef) {
+            unsupported(
+              node,
+              "a child referencing imported code inside client-owned structure is not supported yet",
+            );
+          }
+          for (const attr of node.attributes) {
+            if (attr.type !== "MarkoAttribute") {
+              unsupported(attr);
+            } else {
+              assertDeliverableInClientOwned(
+                attr,
+                section,
+                attr.value,
+                attr.value.extra,
+              );
+            }
+          }
+          // An inputless child has no groups to classify; anything fed
+          // must analyze so each group's channel can be checked.
+          const ownership =
+            node.extra && getPersistedGroupOwnership(node.extra);
+          if (
+            !ownership &&
+            (node.attributes.length || node.arguments?.length)
+          ) {
+            unsupported(
+              node,
+              "a child inside client-owned structure must have analyzable input",
+            );
+          }
+          for (const group of ownership || []) {
+            // A structural or `$global`-mixed child param needs server
+            // ownership, which a skipped region cannot provide.
+            if (group.serverRequired || group.globalFed) {
+              unsupported(
+                node,
+                "an input the child needs server-owned cannot feed from client-owned structure",
+              );
+            }
+            if (!every(group.parentParams, isPatchFillBinding)) {
+              unsupported(
+                node,
+                "a server value feeding a child inside client-owned structure must deliver as a fill",
+              );
+            }
+          }
+          return;
         }
         // A sourceless call bakes a value no client signal recomputes, so
         // its opacity counts as server-fed.
