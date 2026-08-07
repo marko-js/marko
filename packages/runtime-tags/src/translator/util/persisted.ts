@@ -4,12 +4,7 @@ import { getFile } from "@marko/compiler/babel-utils";
 import * as BindingType from "./constants/binding-type";
 import { isPersisted } from "./marko-config";
 import { filter, forEach, type Opt } from "./optional";
-import {
-  type Binding,
-  bindingUtil,
-  getCanonicalBinding,
-  type Sources,
-} from "./references";
+import { type Binding, getCanonicalBinding, type Sources } from "./references";
 import { ensureReasonGroups, isDirectClosure, type Section } from "./sections";
 import {
   getSerializeSourcesForExpr,
@@ -28,6 +23,17 @@ declare module "@marko/compiler/dist/types" {
     [kPatchClientOwned]?: true;
     [kPersistedAssignedVar]?: true;
   }
+}
+
+// Whether the section renders inside client-owned structure (inclusive):
+// nothing inside may rely on a capture channel, since patch renders skip
+// the bodies and frames omit their entries.
+export function inClientOwnedStructure(section: Section | undefined) {
+  while (section) {
+    if (section.isClientOwnedStructure) return true;
+    section = section.parent;
+  }
+  return false;
 }
 // The template's child renderers, collected at translate for the runtime
 // intrinsics export: transitive global knowledge composes at RENDER time
@@ -76,58 +82,49 @@ export function finalizePersisted() {
   for (const finalize of getPersistedFinalizers()) finalize();
 }
 
-// Params that must stay server-owned (structural tests, `$global` mixes):
-// no client delivery path exists, so call sites reject state feeds.
-const serverRequiredParamsBySection = new WeakMap<Section, Opt<Binding>>();
-
-// Recorded from resolved sources (analyze-time callers defer through
-// `onFinalizePersisted`), filtered to the template's own root params.
-export function recordPersistedServerRequired(
-  section: Section,
-  sources: Sources | undefined,
-) {
-  while (section.parent) section = section.parent;
-  const rootSection = section;
+// Root-param facts recorded from resolved sources for call sites to
+// consume (a param's flags describe its downstream uses, so a child's
+// flagged param marks the parent params feeding it in turn).
+export function recordStructuralParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
-    if (binding.section === rootSection) {
-      serverRequiredParamsBySection.set(
-        rootSection,
-        bindingUtil.add(
-          serverRequiredParamsBySection.get(rootSection),
-          binding,
-        ),
-      );
-    }
+    if (!binding.section.parent) binding.selectsStructure = true;
   });
 }
 
-export function getPersistedServerRequiredParams(rootSection: Section) {
-  return serverRequiredParamsBySection.get(rootSection);
+export function recordGlobalMixedParams(sources: Sources | undefined) {
+  forEach(sources?.param, (binding) => {
+    if (!binding.section.parent) binding.globalMixed = true;
+  });
+}
+
+// The persisted policy over those facts: neither leaves a client channel
+// (structure only the server renders; a `$global` mix cannot survive a
+// withheld capture), so such a param must stay server-owned.
+export function hasServerRequiredParam(params: Opt<Binding>) {
+  let required = false;
+  forEach(params, (binding) => {
+    required ||= binding.selectsStructure || binding.globalMixed;
+  });
+  return required;
 }
 
 // Analyze-time recording defers until sources resolve.
-export function recordPersistedServerRequiredExpr(
-  section: Section,
-  extra: t.NodeExtra,
-) {
+export function recordStructuralParamsExpr(extra: t.NodeExtra) {
   onFinalizePersisted(() => {
-    recordPersistedServerRequired(section, getSerializeSourcesForExpr(extra));
+    recordStructuralParams(getSerializeSourcesForExpr(extra));
   });
 }
 
 // Shared per-capture analyze hook: freezes the value's reason groups for
 // translate-time ownership gates and records `$global`-mixed params.
-export function ensurePersistedCaptureGroups(
-  section: Section,
-  getExtra: () => t.NodeExtra,
-) {
+export function ensurePersistedCaptureGroups(getExtra: () => t.NodeExtra) {
   onFinalizePersisted(() => {
     const sources = getSerializeSourcesForExpr(getExtra());
     ensureReasonGroups(sources);
     // A `$global` mixed into a param-fed value cannot survive a withheld
-    // capture: the params must stay server-owned.
+    // capture: call sites derive server-required-ness from the fact.
     if (sources?.param && sources.global) {
-      recordPersistedServerRequired(section, sources);
+      recordGlobalMixedParams(sources);
     }
   });
 }
@@ -190,6 +187,9 @@ export function isPatchFillBinding(binding: Binding) {
     binding.type === BindingType.let &&
     binding.section.isBranch &&
     isPatchCaptureSection(binding.section) &&
+    // Client-owned branches never construct from frames, so their state
+    // needs no seed fill.
+    !binding.section.isClientOwnedStructure &&
     getCanonicalBinding(binding) === binding
   ) {
     return !!binding.assignmentSections;
@@ -197,11 +197,17 @@ export function isPatchFillBinding(binding: Binding) {
   if (!isPatchRefreshableBinding(binding)) return false;
 
   for (const read of binding.reads) {
-    if (
-      !read.isEffect &&
-      getSerializeSourcesForRef(read.referencedBindings)?.state
-    ) {
+    if (read.isEffect) continue;
+    if (getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
+    }
+    // A rendered read inside client-owned structure has no capture channel
+    // (patch renders skip the body), so the value promotes to an owner
+    // fill; effect-only reads stay current through the owner slot write.
+    let readSection: Section | undefined = read.section;
+    while (readSection && readSection !== binding.section) {
+      if (readSection.isClientOwnedStructure) return true;
+      readSection = readSection.parent;
     }
   }
 

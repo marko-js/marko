@@ -1,9 +1,13 @@
 import type { TestConfig } from "../../main.test";
 
-// A client-fed return feeding a structural test: the branch selection
-// would diverge between client recompute and server frames, so the
-// call site must fail closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A client-fed return driving a structural test is client-owned structure:
+// the selection recomputes client-side through the return signal and frames
+// never speak it, so patches can no longer diverge from the live branch.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, click, {}, click],
 };
