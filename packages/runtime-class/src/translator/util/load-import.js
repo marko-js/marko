@@ -22,24 +22,7 @@ export function analyzeLoadImport(importDecl, tagEntry) {
 
   if (!loadAttrPath) return;
 
-  // Under hot reload every module is already eagerly loaded, so the lazy facade
-  // buys nothing and its HMR-cached template collides with the real template's
-  // `_` slot, recursing on render (see load-tag-browser.js). Without `linkAssets`
-  // there is no asset orchestration for lazy loading either. Both cases drop the
-  // attribute so the import compiles as a normal eager tag import.
-  const { markoOpts } = importDecl.hub.file;
-  if (markoOpts.hot || !markoOpts.linkAssets) {
-    loadAttrPath.remove();
-    return;
-  }
-
-  const loadAttrValuePath = loadAttrPath.get("value");
-
-  if (!tagEntry) {
-    throw importDecl.buildCodeFrameError(
-      "Unable to resolve marko file for load import.",
-    );
-  }
+  const loadImport = getLoadImportConfig(loadAttrPath.get("value"));
 
   if ((importDecl.node.importKind || "value") !== "value") {
     throw importDecl.buildCodeFrameError("Invalid load import.");
@@ -53,8 +36,30 @@ export function analyzeLoadImport(importDecl, tagEntry) {
     }
   }
 
-  (importDecl.node.extra ??= {}).loadImport =
-    getLoadImportConfig(loadAttrValuePath);
+  if (!importDecl.node.specifiers.some(t.isImportDefaultSpecifier)) {
+    throw importDecl.buildCodeFrameError(
+      "Invalid load import, a default specifier is required.",
+    );
+  }
+
+  // Under hot reload every module is already eagerly loaded, so the lazy facade
+  // buys nothing and its HMR-cached template collides with the real template's
+  // `_` slot, recursing on render (see load-tag-browser.js). Without `linkAssets`
+  // there is no asset orchestration for lazy loading either. Both cases drop the
+  // attribute so the import compiles as a normal eager tag import.
+  const { markoOpts } = importDecl.hub.file;
+  if (markoOpts.hot || !markoOpts.linkAssets) {
+    loadAttrPath.remove();
+    return;
+  }
+
+  if (!tagEntry) {
+    throw importDecl.buildCodeFrameError(
+      "Unable to resolve marko file for load import.",
+    );
+  }
+
+  (importDecl.node.extra ??= {}).loadImport = loadImport;
 }
 
 export function translateLoadTag(path, tagName, relativePath) {
