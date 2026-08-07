@@ -3,7 +3,7 @@
       1 | <let/count=0/>
       2 | <main>
     > 3 |   <if=($global.enabled && count > 1)>
-        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a test mixing client state with server values may not drive a selection either side owns.
+        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value in a test mixing client state must be a directly read, named `input` property (so it can deliver as a fill).
       4 |     <p>big</p>
       5 |   </if>
       6 |   <button onClick() { count++ }>+</button>
