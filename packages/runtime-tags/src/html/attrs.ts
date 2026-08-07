@@ -349,6 +349,10 @@ export function _attrs(
         result += _attr_style(value);
         break;
       default:
+        if (MARKO_DEBUG && name) {
+          assertValidAttrName(name);
+        }
+
         if (
           name &&
           !(
@@ -357,10 +361,6 @@ export function _attrs(
             (name === "content" && tagName !== "meta")
           )
         ) {
-          if (MARKO_DEBUG) {
-            assertValidAttrName(name);
-          }
-
           if (isEventHandler(name)) {
             if (!events) {
               events = {};
@@ -402,6 +402,10 @@ export function _attrs_partial(
   for (const name in data) {
     const key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
     if (!skip[key]) partial[key] = data[name];
+  }
+
+  if (MARKO_DEBUG) {
+    assertExclusiveAttrs({ ...data, ...skip });
   }
 
   return _attrs(partial, nodeAccessor, scopeId, tagName);
