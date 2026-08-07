@@ -72,24 +72,7 @@ export default {
         )
       : undefined;
     if (loadAttrPath) {
-      // Without `linkAssets` there is no asset orchestration to drive lazy
-      // loading (eg `linked: false`); fall back to an eager tag import.
-      if (!getMarkoOpts().linkAssets) {
-        loadAttrPath.remove();
-        return;
-      }
-
-      (node.extra ??= {}).loadImport = getLoadImportConfig(
-        loadAttrPath.get("value"),
-      );
-      const { file } = importDecl.hub;
-
-      const loadFile = tagImport && loadFileForImport(file, value);
-      if (!loadFile) {
-        throw importDecl.buildCodeFrameError(
-          "Unable to resolve marko file for load import.",
-        );
-      }
+      const loadImport = getLoadImportConfig(loadAttrPath.get("value"));
 
       if ((node.importKind || "value") !== "value") {
         throw importDecl.buildCodeFrameError("Invalid load import.");
@@ -106,6 +89,23 @@ export default {
       if (!node.specifiers.some(t.isImportDefaultSpecifier)) {
         throw importDecl.buildCodeFrameError(
           "Invalid load import, a default specifier is required.",
+        );
+      }
+
+      // Without `linkAssets` there is no asset orchestration to drive lazy
+      // loading (eg `linked: false`); fall back to an eager tag import.
+      if (!getMarkoOpts().linkAssets) {
+        loadAttrPath.remove();
+        return;
+      }
+
+      (node.extra ??= {}).loadImport = loadImport;
+      const { file } = importDecl.hub;
+
+      const loadFile = tagImport && loadFileForImport(file, value);
+      if (!loadFile) {
+        throw importDecl.buildCodeFrameError(
+          "Unable to resolve marko file for load import.",
         );
       }
     }
