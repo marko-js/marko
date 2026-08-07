@@ -24,7 +24,8 @@ import {
 import { isPersisted } from "../util/marko-config";
 import {
   isPatchCaptureSection,
-  recordPersistedServerRequiredExpr,
+  onFinalizePersisted,
+  recordStructuralParamsExpr,
 } from "../util/persisted";
 import {
   type Binding,
@@ -201,10 +202,17 @@ export default {
     );
 
     if (isPersisted() && isPatchCaptureSection(tagSection)) {
-      addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
+      // Needs nothing from finalize itself: deferring keeps assets and
+      // shell roots in tag order with the conditional's classified ones.
+      onFinalizePersisted(() => {
+        addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
+        // The item body's shell builds after reference finalization, once
+        // child bindings exist; record the root here.
+        recordShellRoot(bodySection);
+      });
       // The loop's inputs drive structure: call sites reject feeding them
       // from client-owned values.
-      recordPersistedServerRequiredExpr(tagSection, tagExtra);
+      recordStructuralParamsExpr(tagExtra);
       // A patch can target the loop's CONTENT even when the list itself is
       // static, so whatever could update the items (their closure sources)
       // is a marker resume reason: the entry anchors there.
@@ -216,9 +224,6 @@ export default {
           nodeBinding,
         );
       });
-      // The item body's shell builds at program analyze exit, once child
-      // bindings exist; record the root here.
-      recordShellRoot(bodySection);
     }
 
     if (!isAttrTag && !getOnlyChildParentTagName(tag)) {
