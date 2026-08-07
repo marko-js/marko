@@ -3,6 +3,6 @@
       2 | <button onClick() { items = [...items, items.length] }/>
       3 |
     > 4 | <const/sum = (i = 0) => (i >= items.length ? 0 : items[i] + sum(i + 1))>
-        |                                                             ^^^ Tag variable circular references are not supported.
+        |                                                             ^^^ `sum` is the [tag variable](https://markojs.com/docs/reference/language#tag-variables) this tag declares, so its own attributes cannot read it.
       5 | <div>${sum()}</div>
       6 |

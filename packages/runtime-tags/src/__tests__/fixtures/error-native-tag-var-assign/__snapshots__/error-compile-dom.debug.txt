@@ -3,6 +3,6 @@
       1 | <div/el/>
       2 | <script>
     > 3 |   el = 1;
-        |   ^^^^^^ Tag variables on native elements cannot be assigned to.
+        |   ^^^^^^ `el` is a [tag variable](https://markojs.com/docs/reference/language#tag-variables) on a native element (an element reference) and cannot be assigned to.
       4 | </script>
       5 |

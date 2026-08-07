@@ -3,5 +3,5 @@
       4 | </define>
       5 |
     > 6 | <Child/foo onClick() { foo().innerHTML = 'clicked' } />
-        |                        ^^^ Tag variable circular references are not supported.
+        |                        ^^^ `foo` is the [tag variable](https://markojs.com/docs/reference/language#tag-variables) this tag declares, so its own attributes cannot read it.
       7 |
