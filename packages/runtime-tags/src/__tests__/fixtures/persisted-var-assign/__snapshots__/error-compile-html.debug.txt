@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-var-assign/template.marko:2:3
+      1 | <main>
+    > 2 |   <counter-box/count start=1/>
+        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: assigning a persisted child's tag variable is not supported yet.
+      3 |   <p>${count}</p>
+      4 |   <button onClick() { count++ }>+</button>
+      5 | </main>
