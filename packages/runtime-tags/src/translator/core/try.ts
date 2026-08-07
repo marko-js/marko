@@ -59,7 +59,20 @@ export default {
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoAttributes(tag);
-    analyzeAttributeTags(tag);
+    const attrTags = analyzeAttributeTags(tag);
+    // The runtime reads only `placeholder` and `catch`, so any other attribute
+    // tag (usually a typo) would silently drop its pending/error UI.
+    if (attrTags) {
+      for (const name in attrTags) {
+        if (name !== "@placeholder" && name !== "@catch") {
+          const suggestion =
+            name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
+          throw tag.buildCodeFrameError(
+            `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
+          );
+        }
+      }
+    }
     const section = getOrCreateSection(tag);
     const tagExtra = mergeReferences(
       section,
