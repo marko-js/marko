@@ -178,7 +178,7 @@ exports.p = function (domCompat) {
         );
       }
       host = rootNode.startNode;
-      domCompat.setScopeNodes(host, rootNode.startNode, rootNode.endNode);
+      domCompat.setScopeNodes(scope, rootNode.startNode, rootNode.endNode);
     }
     const existingComponent = scope.___marko5Component;
     const componentsContext = ___getComponentsContext(out);
