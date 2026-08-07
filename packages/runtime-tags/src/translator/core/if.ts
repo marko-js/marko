@@ -25,8 +25,8 @@ import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import {
   isPatchCaptureSection,
+  classifiesClientOwned,
   onFinalizePersisted,
-  paramsDeliverAsFills,
   recordStructuralParams,
 } from "../util/persisted";
 import {
@@ -125,11 +125,7 @@ export const IfTag = {
         // Ownership classifies once the merged test sources resolve.
         onFinalizePersisted(() => {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
-          if (
-            sources?.state &&
-            !sources.global &&
-            paramsDeliverAsFills(sources.param)
-          ) {
+          if (classifiesClientOwned(sources)) {
             // A client-evaluable chain is client-owned structure (state
             // re-selects directly; param feeds fill their slots).
             for (const [, branchBody] of branches) {

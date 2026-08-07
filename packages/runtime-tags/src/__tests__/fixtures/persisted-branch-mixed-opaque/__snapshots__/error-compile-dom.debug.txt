@@ -3,7 +3,7 @@
       1 | <let/count=0/>
       2 | <main>
     > 3 |   <if=(count > input.min && Math.random() > 0.5)>
-        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a call inside a test mixing client state with server values has no stable delivery.
+        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a call mixing client state with server values has no stable delivery.
       4 |     <p>win</p>
       5 |   </if>
       6 |   <button onClick() { count = count + 1 }>+</button>
