@@ -108,19 +108,13 @@ A `<script>` effect that writes a `<let>` it transitively reads re-renders forev
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeUnknownObject` | 2026-07-23 | impact:low | effort:low
 
-All three fall past the constructor `switch` to `throwUnserializable`, so a resumed value holding one is dropped even though they reach templates through request handling. Each has a constructor form that round-trips its observable state (`new DOMException(message, name)`, `AbortSignal.abort(reason)`, `new Event(type, { bubbles, cancelable, composed })`), but a not-yet-aborted `AbortSignal` has no faithful representation — resume would have to wire it to a fresh controller, so settle that semantics before adding it. Worth the runtime bytes only if a real template needs them. See also the entry "Serialize boxed primitives" — the same `proto?.constructor` switch and the same re-verify recipe, so the two are worth batching into one PR, though these need `case globalThis.X:` guards. Verify: pass each through `Serializer#stringifyScopes` and watch it drop, against `new URL("https://a.b")` as a supported control.
+All three fall past the constructor `switch` to `throwUnserializable`, so a resumed value holding one is dropped even though they reach templates through request handling. Each has a constructor form that round-trips its observable state (`new DOMException(message, name)`, `AbortSignal.abort(reason)`, `new Event(type, { bubbles, cancelable, composed })`), but a not-yet-aborted `AbortSignal` has no faithful representation — resume would have to wire it to a fresh controller, so settle that semantics before adding it. Worth the runtime bytes only if a real template needs them. These need `case globalThis.X:` guards in the `proto?.constructor` switch (boxed primitives were ruled wont-fix there; see the comment in `writeUnknownObject`). Verify: pass each through `Serializer#stringifyScopes` and watch it drop, against `new URL("https://a.b")` as a supported control.
 
 ## Add a `Destroy` step to the CSR fixture harness
 
 `packages/runtime-tags/src/__tests__/main.test.ts` › `csr` | 2026-07-23 | impact:low | effort:low
 
 The CSR harness mounts a template and only ever calls `instance.update(input)`, so fixture snapshots never exercise teardown; `cleanup-*` fixtures only cover destroys driven from inside a render by `<if>`/`<for>`. `mounted-template.test.ts` now covers `destroy()`, `<lifecycle>` onDestroy, `$signal` abort, and the `value` getter/setter directly (4499fbaa3e), so what remains is snapshot breadth over nested-branch teardown. Add a `Destroy` step alongside `Wait`/`Flush`/`Throws` in `TestConfig.steps`, have `runSteps` call `instance.destroy()`, and let the mutation tracker snapshot the resulting removal. Verify: `rg -n "instance\." packages/runtime-tags/src/__tests__/main.test.ts` returns only `instance.update(input)`.
-
-## Serialize boxed primitives
-
-`packages/runtime-tags/src/html/serializer.ts` › `writeUnknownObject` | 2026-07-24 | impact:low | effort:low
-
-Boxed primitives (`Object(1)`, `Object("x")`, `Object(true)`) have no case in the `proto?.constructor` dispatch, so they fall through to `throwUnserializable` and resume as nothing. Adding them is a one-case change with an obvious emitted form (`Object(value)`); `DataView`, previously recorded alongside them, is done. Note the switch now carries the comment `// Boxed primitives (Object(1)) are deliberately unsupported.` (added with DataView support in ee882c82bb), so this needs a maintainer ruling before it is worth doing. See also the entry "Serialize `DOMException`, `AbortSignal`, and `Event`" — the same dispatch switch and the same re-verify recipe, so batch them, but that gap is gated only on demand and has no recorded stance to overturn. Re-verify: pass `Object(1)` through `Serializer#stringifyScopes` and observe the value omitted from the payload, against `new URL("https://a.b")` as a supported control.
 
 ## Unify `packages/runtime-class/src` on ESM so its module type can be declared
 
