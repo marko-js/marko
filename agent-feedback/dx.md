@@ -92,12 +92,6 @@ A `<script>` effect that writes a `<let>` it transitively reads re-renders forev
 
 `appendAgentFixGuide` runs only in the `compile`/`compileSync` catch blocks, and with `errorRecovery: true` — the mode editors and LSPs compile with — `buildResult` returns `meta.diagnostics` without throwing, so recovery-mode consumers only ever see the raw `diag.label`. Verified with `CLAUDECODE=1`: `compileSync("$ const x = ;", f, { errorRecovery: true })` yields diagnostics `["Unexpected token", "Scriptlets are not supported when using the tags api."]` with no `Fix guide:` anywhere in `meta`, while the same source thrown (recovery off) gets the pointer. Thread the guide onto the diagnostic label/meta in `buildResult`, behind the same `isCodingAgent()` gate so human editor UIs stay clean. See also "Key the agent fix-guide to the specific error instead of one generic cheatsheet pointer" — a separate message-quality defect on the same helper; neither fix implies the other. Re-verify with that `compileSync` call.
 
-## Fail loudly when a `document` global makes `@marko/compiler` disable module resolution
-
-`packages/compiler/modules.js` › `exports.resolve` | 2026-07-19 | impact:low | effort:low
-
-`modules.js` decides once, at first require, whether it is in a browser via `typeof document === "object"`, so a script that installs jsdom globals before requiring the compiler takes the browser branch and gets `exports.resolve`/`tryResolve`/`require === null` with `cwd === "/"` (verified with `node -e 'globalThis.document={}; require("packages/compiler/modules.js")'`). The next translator load then dies in `try-load-translator.js` as `TypeError: markoModules.resolve is not a function`, which names nothing about the DOM global, and the branch is cached for the module's lifetime. Throw a message naming the cause when `markoModules.resolve` is null, or document the compile-then-shim-then-import order for headless self-checks. Re-verify with that two-line node snippet.
-
 ## Detect mutually-referential `<const>` cycles, not just self-references
 
 `packages/runtime-tags/src/translator/util/references.ts` › `trackReferencesForBinding` | 2026-07-20 | impact:low | effort:med

@@ -1,5 +1,7 @@
 "use strict";
 
+// Wont-fix: these nulls mean cryptic errors when a DOM global (eg jsdom) exists
+// at first require — browser mode mainly serves the marko website; acceptable.
 if (process.env.BUNDLE || typeof document === "object") {
   exports.cwd = "/";
   exports.root = "/";
