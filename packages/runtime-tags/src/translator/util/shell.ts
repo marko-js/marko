@@ -1,43 +1,48 @@
 import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import normalizeStringExpression from "./normalize-string-expression";
-import { type Section, StructureKind } from "./sections";
+import { isPatchCaptureSection } from "./persisted";
+import { forEachSection, type Section, StructureKind } from "./sections";
 import { getResumeRegisterId } from "./signals";
 import { createProgramState } from "./state";
 import { resolveStructure, trimTrailingExits } from "./structure";
 
-declare module "@marko/compiler" {
-  export interface MarkoMeta {
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
     /** Patchable branch shells, pre-serialized as frame records during
      * analyze so the html output registers them without a dom compile. */
     persistedShells?: Record<string, string>;
   }
 }
 
-// Deferred until program analyze exit: branch child bindings do not exist
-// yet when the conditional's own analyze runs.
-const [getShellRoots] = createProgramState<Section[]>(() => []);
-
-export function recordShellRoot(section: Section) {
-  getShellRoots().push(section);
+export function getShells() {
+  return getProgram().node.extra.persistedShells;
 }
 
-// Builds every recorded branch shell into `metadata.marko.persistedShells`
-// (pre-serialized frame chunks the html output registers as data).
-export function buildRecordedShells(file: t.BabelFile) {
-  const sections = file.path.node.extra?.sections;
-  for (const section of getShellRoots()) {
-    const shell = buildSectionShell(section, sections);
-    // Header segments must exclude the separator (the trailing template is
-    // free to contain it); a violating shell is dropped, so divergence
-    // falls back to navigation.
-    if (shell && !/[;,]/.test(getShellId(section)) && !shell[1].includes(";")) {
+// Builds every branch shell as pre-serialized frame chunks the html
+// output registers as data.
+export function buildShells() {
+  forEachSection((section) => {
+    // Every capture-position branch body ships a shell, except
+    // client-owned bodies: they never construct from a frame.
+    if (
+      !section.isBranch ||
+      !isPatchCaptureSection(section) ||
+      section.isClientOwnedStructure
+    ) {
+      return;
+    }
+    const shell = buildSectionShell(section);
+    // Frame headers reserve `;`/`,`/space, which neither ids (normalized
+    // at the source) nor walk codes can carry; the template part is free.
+    if (shell) {
       const id = getShellId(section);
-      (file.metadata.marko.persistedShells ??= {})[id] = shell[1]
+      (getProgram().node.extra.persistedShells ??= {})[id] = shell[1]
         ? `${id};${shell[1]};${shell[0]}`
         : `${id},${shell[0]}`;
     }
-  }
+  });
 }
 
 export function getShellId(section: Section) {
@@ -77,7 +82,7 @@ export function getDroppedShellIds() {
 // walk string its renderer would ship. Anything resolution cannot reduce to
 // plain strings (child renderers, unresolved refs) leaves the branch
 // shell-less: patches diverging to it fail closed to a document navigation.
-function buildSectionShell(section: Section, sections?: Section[]) {
+function buildSectionShell(section: Section) {
   if (!section.structure) return;
   for (const op of section.structure) {
     if (typeof op === "object" && op.kind !== StructureKind.Visit) return;
@@ -85,9 +90,11 @@ function buildSectionShell(section: Section, sections?: Section[]) {
   // A nested branch leaves only its marker in this shell (it constructs
   // from its own shell during the walk); any other child section carries
   // content the shell cannot express.
-  if (sections?.some((child) => child.parent === section && !child.isBranch)) {
-    return;
-  }
+  let contentChild = false;
+  forEachSection((child) => {
+    contentChild ||= child.parent === section && !child.isBranch;
+  });
+  if (contentChild) return;
 
   // Every op is a string, step, or visit, so both projections are strings.
   const { writes, walks } = resolveStructure(section);

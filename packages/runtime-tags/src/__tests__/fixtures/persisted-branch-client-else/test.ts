@@ -4,10 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// Both arms of a client-owned chain read server values: each arm's fill
-// dispatches only into the live selection, the hidden arm's value stays
-// fresh for the next client flip, and the root read of the same value
-// keeps its direct capture channel.
+// Both arms fill server values: dispatch reaches only the live arm, the
+// hidden arm renders fresh on flip, and the root capture stays direct.
 export const config: TestConfig = {
   persisted: true,
   steps: [
