@@ -30,7 +30,7 @@ export function createStatementTag(keyword: "client" | "server" | "static") {
       {
         displayText: `${keyword} <statement>`,
         description: `A JavaScript statement which is only evaluated once your template is loaded${target ? ` on the ${target}` : ""}.`,
-        descriptionMoreURL: `https://markojs.com/docs/syntax/#${keyword}-javascript`,
+        descriptionMoreURL: `https://markojs.com/docs/reference/language#${keyword === "static" ? "static" : "server-and-client"}`,
       },
     ],
   } as Tag;
