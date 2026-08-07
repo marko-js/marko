@@ -36,6 +36,30 @@ export default {
     assertNoBodyContent(tag);
     assertAllowedAttributes(tag, ["value", "valueChange"]);
 
+    let valueAttr: t.MarkoAttribute | undefined;
+    let valueChangeAttr: t.MarkoAttribute | undefined;
+    for (const attr of tag.node.attributes) {
+      if (t.isMarkoAttribute(attr)) {
+        if (attr.name === "value") {
+          if (valueAttr) {
+            throw tag.hub.buildError(
+              attr,
+              "Invalid duplicate value attribute.",
+            );
+          }
+          valueAttr = attr;
+        } else if (attr.name === "valueChange") {
+          if (valueChangeAttr) {
+            throw tag.hub.buildError(
+              attr,
+              "Invalid duplicate valueChange attribute.",
+            );
+          }
+          valueChangeAttr = attr;
+        }
+      }
+    }
+
     const parentTag = getParentTag(tag);
     if (parentTag) {
       if (isNativeTag(parentTag)) {
