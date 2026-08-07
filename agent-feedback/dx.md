@@ -68,12 +68,6 @@ Neither type has a case in `writeUnknownObject`, and `writeFormData` aborts on a
 
 `mergeTagDef` special-cases only the hook keys and falls through to `value5 ?? value6`, so the Marko 5 `types` stub wins wherever both core taglibs declare one — today exactly `<await>` and `<script>`. Because `marko/translator` is the interop translator and `@marko/compiler`'s default, `@marko/language-tools` resolves those two to `marko/src/core-tags/core/await/index.d.marko` and `.../script.d.marko` even inside a Tags-API `tags/*.marko` file, so editors offer and silently accept `<@then>`/`<@catch>`/`client-reorder`/`timeout` and every html `<script>` attribute — all of which the Marko 6 translator rejects with a hard compile error — precisely in mid-migration projects. Direction: interop-specific stubs whose `Input` unions both APIs, selected when both sides declare `types`. Re-verify: `taglib.buildLookup(".../fixtures-interop/interop-basic-tags-to-class", "marko/translator").getTag("await").types` prints the Marko 5 path instead of `@marko/runtime-tags/tags/await.d.marko`.
 
-## Default and validate `translator.tagDiscoveryDirs` in `buildLookup`
-
-`packages/compiler/src/taglib/index.js` › `buildLookup` | 2026-07-27 | impact:low | effort:low
-
-`buildLookup` validates `translator.taglibs` and defaults `translator.optionalTaglibs || []`, but hands `translator.tagDiscoveryDirs` straight to `finder.find`, whose `for (const tagDiscoveryDir of tagDiscoveryDirs)` is the only guard. Omitting the key throws an unprefixed `TypeError: tagDiscoveryDirs is not iterable` from inside the finder, and the natural typo `tagDiscoveryDirs: "tags"` is worse — a string iterates its characters, discovers nothing, and surfaces much later as a misdirecting `Unable to find entry point for custom tag <child>`. Nothing type-checks it (`config.d.ts` declares `translator?: any`) yet both shipped translators set it, so it is required in practice while `packages/compiler/AGENTS.md` lists it among the optional exports. Default it to `[]` beside the `optionalTaglibs` default, reject non-arrays with the existing `@marko/compiler:`-prefixed error, and mark it required in AGENTS.md. Re-verify: call `buildLookup` on `fixtures/assign-destructured-reduced` with `tagDiscoveryDirs` of `["tags"]`, `"tags"`, `undefined` — it prints `<child>: true`, `<child>: false`, then the TypeError.
-
 ## Diagnose cross-environment reads of a `server`/`client` scriptlet binding
 
 `packages/runtime-tags/src/translator/visitors/scriptlet.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med
