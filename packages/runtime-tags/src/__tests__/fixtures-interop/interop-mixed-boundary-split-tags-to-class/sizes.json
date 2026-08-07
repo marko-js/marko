@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 63975,
-        "brotli": 19948
+        "brotli": 19924
       },
       "files": {
         "components/split-counter/component-browser.js": 317,
