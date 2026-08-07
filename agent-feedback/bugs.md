@@ -140,12 +140,6 @@ The `isOutputHTML()` branch calls `tag.insertBefore(statement)` without first ca
 
 `isStaticText` accepts a confident escaped placeholder when `isNotVoid(computed)` — the attribute void rule — but the emitted text is `_escape(computed)`, which is `""` for `""`, `NaN` and `0n`; `placeholder.ts` (`analyze`, `translate.exit`) drops on the matching `isVoid`. Such a placeholder writes nothing yet still calls `walks.enterShallow`, so every later walk step in the section is off by one: `<div>${""}${input.x}<b/><i/></div>` compiles to `next(1), over(1), replace, out(1)` and the `replace` destroys `<b>`, while `<div>${""}<b/><i>${input.x}</i><u/></div>` walks off the end and throws `reading 'data'` from `_text`. SSR is marker-driven and unaffected. Switch `isStaticText`, `isEmptyPlaceholder` and both `placeholder.ts` checks to the text rule `computed || computed === 0`. Re-verify: `pnpm run compile -o dom -d` that template with and without the `${""}`; the walk comments differ for the same DOM shape.
 
-## Strip the `load` import attribute from HTML output — it is emitted verbatim and Node rejects it
-
-`packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low
-
-In the `tagImport && loadImport` branch, the HTML path rewrites `node.source.value = tagImport` and returns without clearing `node.attributes`, so the server module keeps `import Child from "./child.marko" with { load: "render" };`. Node rejects that at import time with `TypeError [ERR_IMPORT_ATTRIBUTE_UNSUPPORTED]: Import attribute "load" ... is not supported`, an error naming nothing Marko-related. The DOM path never leaks it, and bundled server pipelines strip the `.marko` import first, so only externalized or unbundled output fails. Fix: clear the attributes in the HTML branch, mirroring the `loadAttrPath.remove()` that `analyze` already does when `linkAssets` is unset. Re-verify: compile `__tests__/fixtures/lazy-tag/template.marko` with `linkAssets` configured and `output: "html"`, then grep the emitted code for `with {`.
-
 ## Error when one program lazily imports the same template with two different `load` triggers
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `getOrCreateHtmlLoadWrapped` | 2026-07-23 | impact:low | effort:low
