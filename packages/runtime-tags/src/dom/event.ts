@@ -18,15 +18,17 @@ export function _on<
     );
   }
 
-  if ((element as any)["$" + type] === undefined) {
+  if ((element as any)[1 + type] === undefined) {
     delegate(type, handleDelegated);
   }
 
-  (element as any)["$" + type] = handler || null;
+  (element as any)[1 + type] = handler || null;
 }
 
 export const delegate = (type: string, handler: EventListener) =>
-  ((handler as any)[type] ||=
+  // The digit prefix keeps event types named after `Function` properties
+  // (`name`, `length`, …) from reading truthy and skipping registration.
+  ((handler as any)[1 + type] ||=
     (document.addEventListener(type, handler, true), 1));
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
@@ -44,7 +46,7 @@ function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
   }
 
   while (target) {
-    (target as any)["$" + ev.type]?.(ev, target);
+    (target as any)[1 + ev.type]?.(ev, target);
     target = ev.bubbles && !ev.cancelBubble && target.parentNode;
   }
 

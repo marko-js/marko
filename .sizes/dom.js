@@ -1,4 +1,4 @@
-// size: 26014 (min) 9653 (brotli)
+// size: 26010 (min) 9689 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -33,7 +33,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   catchEnabled,
   delegate = (type, handler) =>
-    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
+    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
   nextScopeId = 1e6,
   collectingScopes,
@@ -517,13 +517,13 @@ function push(opt, item) {
   return opt ? (Array.isArray(opt) ? (opt.push(item), opt) : [opt, item]) : item;
 }
 function _on(element, type, handler) {
-  (element["$" + type] === void 0 && delegate(type, handleDelegated),
-    (element["$" + type] = handler || null));
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
   for (; target;)
-    (target["$" + ev.type]?.(ev, target),
+    (target[1 + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function parseHTML(html, ns) {

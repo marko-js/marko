@@ -1,4 +1,4 @@
-// size: 2683 (min) 1319 (brotli)
+// size: 2679 (min) 1318 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -13,7 +13,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   },
   catchEnabled,
   delegate = (type, handler) =>
-    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
+    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   isScheduled,
   channel,
   registeredValues = {},
@@ -83,13 +83,13 @@ function runRenders() {
   }
 }
 function _on(element, type, handler) {
-  (element["$" + type] === void 0 && delegate(type, handleDelegated),
-    (element["$" + type] = handler || null));
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
   for (; target;)
-    (target["$" + ev.type]?.(ev, target),
+    (target[1 + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function schedule() {

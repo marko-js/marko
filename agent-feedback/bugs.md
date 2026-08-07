@@ -44,12 +44,6 @@ The `renderer === "select" && ("value" in input || "valueChange" in input)` case
 
 `_attrs` guards its stale-attribute removal with `hasAttrAlias`, keeping `checked` on an `<input>` whose next attrs carry `checkedValue`; `_attrs_partial`'s loop tests only `!skip[name] && !(nextAttrs && name in nextAttrs)`, so it removes `checked`, clearing `defaultChecked` and — dirty flag unset — `el.checked`. `_attr_input_checked_default` then reads that cleared `el.checked` as `restoreValue` on the `scope[AccessorProp.Gen] < runId` branch and writes it back, unchecking a box whose bound value still selects it; the controlled variant keeps `checked` but is left `defaultChecked === false`, corrupting `hasCheckboxChanged`/`handleFormReset`. Reuse `hasAttrAlias` in `_attrs_partial`'s loop. Re-verify: `<let/sel=["a"]/><input ...{ checkedValue: sel, value: "a" } type="checkbox"><button onClick(){ sel = sel.slice() }>t</button>` compiles to `_attrs_partial(…, { type: 1 }, _controllable_input)`; one click unchecks the box.
 
-## Prefix `delegate`'s registration flag so event types named after `Function` properties register
-
-`packages/runtime-tags/src/dom/event.ts` › `delegate` | 2026-07-23 | impact:low | effort:low
-
-`delegate` memoizes its one-time `document.addEventListener` as `(handler as any)[type] ||= (…, 1)`, keyed on the raw event type. Any type colliding with a `Function` property — `name`, `length`, `constructor`, `toString`, `bind`, `call`, `apply`, `prototype` — already reads truthy, so the listener is never installed and the handler silently never fires; `caller`/`arguments` instead throw a `TypeError` out of `_on`, since the runtime is strict-mode ESM. The names come from user markup: `<div on-name(){}>` compiles to `_on($scope["#div/0"], "name", fn)`. `_on` already namespaces its own slot as `"$" + type`; use that key in `delegate` too. If "Delegate events from the element's root node again; nothing inside a ShadowRoot receives events or controlled-input updates" is taken, its per-root type-keyed map deletes this keyspace outright and supersedes the `"$" + type` patch, so the two must not land separately. Re-verify: `<div on-name(){ console.log("hi") }>x</div>`, then dispatch `new CustomEvent("name", { bubbles: true })` on it — nothing logs today while `on-click` works.
-
 ## Guard the tag-variable assignment in `_dynamic_tag` when the dynamic tag becomes falsy
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `_dynamic_tag` | 2026-07-23 | impact:med | effort:low
