@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
+  diagnosticWarn,
   getProgram,
   parseStatements,
   type Tag,
@@ -106,6 +107,19 @@ export default {
       const section = getSection(tag);
       const { value } = valueAttr;
       const referencedBindings = value.extra?.referencedBindings;
+
+      // The React `useEffect` habit: a returned cleanup function is discarded,
+      // so the effect leaks with no signal at compile or run time.
+      if (
+        (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value)) &&
+        t.isBlockStatement(value.body) &&
+        traverseContains(value.body, isReturnedFunction)
+      ) {
+        diagnosticWarn(tag, {
+          label:
+            "The value returned from a [`<script>`](https://markojs.com/docs/reference/core-tag#script) body is discarded, so this cleanup function will never run. Register it with [`$signal.onabort`](https://markojs.com/docs/reference/language#signal) or use [`<lifecycle onDestroy>`](https://markojs.com/docs/reference/core-tag#lifecycle) instead.",
+        });
+      }
       if (isOutputDOM()) {
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
@@ -173,6 +187,25 @@ function isAwaitExpression(node: t.Node) {
       return skip;
     case "AwaitExpression":
       return true;
+    default:
+      return false;
+  }
+}
+
+function isReturnedFunction(node: t.Node) {
+  switch (node.type) {
+    case "FunctionDeclaration":
+    case "FunctionExpression":
+    case "ArrowFunctionExpression":
+    case "ClassMethod":
+    case "ObjectMethod":
+    case "ClassPrivateMethod":
+      return skip;
+    case "ReturnStatement":
+      return (
+        t.isFunctionExpression(node.argument) ||
+        t.isArrowFunctionExpression(node.argument)
+      );
     default:
       return false;
   }
