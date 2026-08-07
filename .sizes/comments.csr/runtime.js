@@ -1,4 +1,4 @@
-// size: 6509 (min) 2885 (brotli)
+// size: 6513 (min) 2878 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -183,10 +183,11 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
             (afterReference = newScopes[start + i].S));
       };
     },
-  )(([all, by = bySecondArg], cb) => {
-    typeof by == "string"
-      ? forOf(all, (item, i) => cb(item[by], [item, i]))
-      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
+  )(([all, by], cb) => {
+    ((by ||= bySecondArg),
+      typeof by == "string"
+        ? forOf(all, (item, i) => cb(item[by], [item, i]))
+        : forOf(all, (item, i) => cb(by(item, i), [item, i])));
   });
 function isNotVoid(value) {
   return value != null && value !== !1;
