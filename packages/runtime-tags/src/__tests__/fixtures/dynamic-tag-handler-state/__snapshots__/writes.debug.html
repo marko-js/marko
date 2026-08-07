@@ -1,0 +1,38 @@
+<button
+  id=spread><!--M_[-->spread<!--M_]2 #button/0 3--></button><!--M_'1 #text/0 2--><button
+  id=inline><!--M_[-->inline<!--M_]4 #button/0 5--></button><!--M_'1 #text/1 4--><button
+  id=aliased><!--M_[-->aliased<!--M_]6 #button/0 7--></button><!--M_'1 #text/2 6-->
+<div>0<!--M_*1 #text/3--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    "ConditionalRenderer:#text/0": "button",
+    "ConditionalRenderer:#text/1": "button",
+    "ConditionalRenderer:#text/2": "button",
+    input_tag: "button",
+    n: 0
+  }, {
+    "EventAttributes:#button/0": {
+      click: _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-handler-state/template.marko_0/attrs"
+        )
+    },
+    "ConditionalRenderer:#button/0": "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-handler-state/template.marko_1_content",
+    "#Renderer": "button"
+  }, 1, {
+    "EventAttributes:#button/0": {
+      click: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-handler-state/template.marko_0/onClick"
+        )
+    },
+    "ConditionalRenderer:#button/0": "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-handler-state/template.marko_2_content",
+    "#Renderer": "button"
+  }, 1, {
+    "EventAttributes:#button/0": {
+      click: _.a
+    },
+    "ConditionalRenderer:#button/0": "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-handler-state/template.marko_3_content",
+    "#Renderer": "button"
+  }], "_dynamicTagScript 2 4 6"];
+  M._.w()
+</script>

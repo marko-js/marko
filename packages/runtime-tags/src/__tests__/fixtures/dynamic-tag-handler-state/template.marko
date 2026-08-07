@@ -1,0 +1,7 @@
+<let/n=0/>
+<const/attrs={ onClick() { n++ } }/>
+<const/aliased=attrs/>
+<${input.tag} ...attrs id="spread">spread</>
+<${input.tag} onClick() { n += 10 } id="inline">inline</>
+<${input.tag} ...aliased id="aliased">aliased</>
+<div>${n}</div>
