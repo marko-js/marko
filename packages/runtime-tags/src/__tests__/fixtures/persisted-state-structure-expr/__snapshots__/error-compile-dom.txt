@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-state-structure-expr/template.marko:3:6
-      1 | <let/count=1/>
-      2 | <main>
-    > 3 |   <if=(count > input.min)>
-        |      ^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a test mixing client state with server values may not drive a selection either side owns.
-      4 |     <p>big</p>
-      5 |   </if>
-      6 |   <button onClick() { count++ }>+</button>

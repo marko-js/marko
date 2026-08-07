@@ -24,6 +24,7 @@ import {
   fromIter,
   includes,
   type Opt,
+  some,
   toIter,
 } from "./optional";
 import {
@@ -534,18 +535,12 @@ export function finalizeKnownTags(section: Section) {
           );
           // The facts roll up: feeding a param the child uses structurally
           // (or global-mixed) makes this template's feeders so too.
-          let selectsStructure = false;
-          let globalMixed = false;
-          forEach(group.reason, (binding) => {
-            selectsStructure ||= binding.selectsStructure;
-            globalMixed ||= binding.globalMixed;
-          });
-          if (selectsStructure) {
+          if (some(group.reason, (binding) => binding.selectsStructure)) {
             recordStructuralParams(
               getSerializeProvenance(section, scopeBinding, group.id),
             );
           }
-          if (globalMixed) {
+          if (some(group.reason, (binding) => binding.globalMixed)) {
             recordGlobalMixedParams(
               getSerializeProvenance(section, scopeBinding, group.id),
             );

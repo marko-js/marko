@@ -3,7 +3,7 @@ import { getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "./constants/binding-type";
 import { isPersisted } from "./marko-config";
-import { filter, forEach, type Opt } from "./optional";
+import { every, filter, forEach, type Opt, some } from "./optional";
 import { type Binding, getCanonicalBinding, type Sources } from "./references";
 import { ensureReasonGroups, isDirectClosure, type Section } from "./sections";
 import {
@@ -94,11 +94,10 @@ export function recordGlobalMixedParams(sources: Sources | undefined) {
 // The persisted policy over those facts: neither leaves a client
 // channel, so the param must stay server-owned.
 export function hasServerRequiredParam(params: Opt<Binding>) {
-  let required = false;
-  forEach(params, (binding) => {
-    required ||= binding.selectsStructure || binding.globalMixed;
-  });
-  return required;
+  return some(
+    params,
+    (binding) => binding.selectsStructure || binding.globalMixed,
+  );
 }
 
 // Analyze-time recording defers until sources resolve.
@@ -149,6 +148,20 @@ export function getPatchFillKey(binding: Binding) {
 // The template's fill bindings.
 export function getPatchFillBindings(section: { bindings: Opt<Binding> }) {
   return filter(section.bindings as Opt<Binding>, isPatchFillBinding);
+}
+
+// Whether every param source promotes to a fill: the client can then
+// re-evaluate an expression mixing them with state at any time.
+export function paramsDeliverAsFills(params: Sources["param"]) {
+  // Only a named property delivers: the whole bag (a positional program
+  // param) and rest grains carry shapes the wire cannot write faithfully.
+  return every(
+    params,
+    (binding) =>
+      binding.upstreamAlias !== binding.section.params &&
+      binding.excludeProperties === undefined &&
+      isPatchFillBinding(binding),
+  );
 }
 
 // The shape a patch can keep current: a canonical root server value (only
@@ -233,10 +246,12 @@ export function getConstructInitClosures(section: Section) {
 // available at construct time: section-local seedable state, parent state
 // reached through a direct closure the INIT renders, and owner values the
 // walk keeps current. Section-local params (loop items) are never seeded.
-export function constructRendersReads(section: Section, refs: Opt<Binding>) {
-  let ok = true;
-  forEach(refs, (binding) => {
-    ok &&= binding.sources?.state
+export function constructRendersReads(
+  section: Section,
+  refs: Opt<Binding>,
+): boolean {
+  return every(refs, (binding) =>
+    binding.sources?.state
       ? binding.section === section
         ? binding.type === BindingType.derived && !binding.sources.param
           ? // A param mix compiles to a join whose param side has no construct
@@ -244,9 +259,8 @@ export function constructRendersReads(section: Section, refs: Opt<Binding>) {
             constructRendersReads(section, binding.sources.state)
           : isPatchFillBinding(binding)
         : isDirectClosure(section, binding)
-      : !(binding.section === section && binding.type === BindingType.param);
-  });
-  return ok;
+      : !(binding.section === section && binding.type === BindingType.param),
+  );
 }
 
 // Composed dispatch delivers fills down any branch chain; a non-branch on
@@ -255,34 +269,29 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
-  let undeliverable = false;
-  forEach(refs, (binding) => {
+  return some(refs, (binding) => {
     if (isPatchFillBinding(binding) && binding.section !== section) {
       let cur: Section | undefined = section;
       while (cur && cur !== binding.section) {
-        if (!cur.isBranch) {
-          undeliverable = true;
-          break;
-        }
+        if (!cur.isBranch) return true;
         cur = cur.parent;
       }
-      undeliverable ||= !cur;
+      return !cur;
     }
+    return false;
   });
-  return undeliverable;
 }
 
 // Server-sourced reads a patch cannot keep current: param-sourced bindings
 // that neither fill nor refresh over the wire read stale after any patch.
 export function hasUnfillablePatchReads(refs: Opt<Binding>) {
-  let unfillable = false;
-  forEach(refs, (binding) => {
-    unfillable ||=
+  return some(
+    refs,
+    (binding) =>
       !!getSerializeSourcesForRef(binding)?.param &&
       !isPatchFillBinding(binding) &&
-      !isPatchEffectBinding(binding);
-  });
-  return unfillable;
+      !isPatchEffectBinding(binding),
+  );
 }
 
 // Sections whose text/attr holes emit direct patch captures: the root and
