@@ -30,6 +30,7 @@ import {
   addPersistedChildRenderer,
   getPersistedServerRequiredParams,
   kPatchClientOwned,
+  kPersistedAssignedVar,
   recordPersistedServerRequired,
 } from "./persisted";
 import {
@@ -182,6 +183,9 @@ export function knownTagAnalyze(
       tag.node.var!.type === "Identifier" &&
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
     );
+    if (mutatesTagVar && isPersisted()) {
+      tagExtra[kPersistedAssignedVar] = true;
+    }
     const varExpr = tagExtra.defineBodySection
       ? contentSection.returnValueExpr
       : mapParamReasonToExpr(
@@ -484,6 +488,12 @@ export function knownTagTranslateDOM(
       attrTagCallsByTag: undefined,
     });
   }
+}
+
+// The child's return reason for call-site classification (persisted
+// rejects returns whose provenance cannot map through ownership).
+export function getKnownTagReturnReason(tagExtra: t.MarkoTagExtra) {
+  return tagExtra[kContentSection]?.returnSerializeReason;
 }
 
 export function finalizeKnownTags(section: Section) {
