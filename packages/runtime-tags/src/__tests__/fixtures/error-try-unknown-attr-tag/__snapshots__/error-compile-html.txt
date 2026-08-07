@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-try-unknown-attr-tag/template.marko:1:1
+    > 1 | <try>
+        | ^ The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) only supports the `<@placeholder>` and `<@catch>` attribute tags, but received `<@cath>`. Did you mean `<@catch>`?
+      2 |   <await=input.p>ok</await>
+      3 |   <@cath|e|>bad</@cath>
+      4 | </try>
