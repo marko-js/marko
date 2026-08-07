@@ -340,6 +340,8 @@ function getStyleImportPath(
 ): string | null | undefined {
   const { resolveVirtualDependency, sourceMaps } = file.markoOpts;
   if (!resolveVirtualDependency) {
+    // No hook means no bundler to receive the css, so the block is deliberately
+    // discarded without a diagnostic (unlike `output: "hydrate"`, which errors).
     return undefined;
   }
 

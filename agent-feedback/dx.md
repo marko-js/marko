@@ -86,12 +86,6 @@ The `after(cleanupSnapshots)` hook `fs.rmSync`s every entry of any `__snapshots_
 
 The React `useEffect` habit compiles clean and leaks: `<script>const id = setInterval(() => n++, 1000); return () => clearInterval(id);</script>` becomes `_script(..., $scope => (() => { ... return () => clearInterval(id); })())` — the top-level `return` blocks inlining, so the IIFE fallback drops the cleanup and the interval outlives the component with no error, warning or `meta.diagnostics` entry. Marko's cleanup channel is `$signal.onabort` (`cheatsheet.md`, "Client-side effects") or `<lifecycle onDestroy>`, and nothing in the output points there. `translate.exit` already runs `traverseContains(value.body, isReturnStatement)`; narrow a variant of it to a `return` whose argument is a function or arrow — a bare `return;` must stay silent — and `diagnosticWarn` naming both APIs. Re-verify: `pnpm run compile -o dom -d file.marko` on that template and observe the returned arrow inside the emitted IIFE with empty diagnostics.
 
-## Warn when a `<style>` block is dropped because `resolveVirtualDependency` is unset
-
-`packages/runtime-tags/src/translator/core/style.ts` › `getStyleImportPath` | 2026-07-23 | impact:low | effort:low
-
-`getStyleImportPath` returns `undefined` as soon as `file.markoOpts.resolveVirtualDependency` is missing, so `node.extra.styleImportPath` stays falsy, `emitStyleImport` returns early, and `translateHTML`/`translateDOM` just `tag.remove()` — the whole `<style>` block vanishes from both targets with no error, warning or `meta.diagnostics` entry, so any hand-rolled `@marko/compiler` integration silently loses its CSS. The compiler already hard-errors on the same missing option for `output: "hydrate"` (`packages/compiler/src/babel-plugin/index.js`), so a `diagnosticWarn` when a non-empty `<style>` body is discarded is consistent with existing behavior. (`scripts/inspect-compiled-output.mts` now supplies the hook, so `pnpm run compile` no longer hides the loss.) Re-verify: `compileFileSync` that template with no `resolveVirtualDependency` and observe output with no style import and `meta.diagnostics` `[]`.
-
 ## Replace Babel's "invalid left-hand side in function parameter list" for bad tag variables
 
 `packages/compiler/src/babel-utils/parse.js` › `parseVar` | 2026-07-23 | impact:low | effort:low
