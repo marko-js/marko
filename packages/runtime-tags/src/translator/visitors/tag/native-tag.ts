@@ -757,10 +757,8 @@ export default {
           }
         }
 
-        // An attribute fed by client state never captures directly: the
-        // client owns part of its value and recomputes it instead. Inside
-        // client-owned structure nothing captures: patch renders skip the
-        // body and server values deliver as owner fills instead.
+        // A state-fed attribute recomputes client-side, and inside
+        // client-owned structure delivery is owner fills: neither captures.
         const capturesPatchAttr = (name: string, value: t.Expression) => {
           if (
             !(isPersisted() && isPatchCaptureSection(tagSection)) ||
