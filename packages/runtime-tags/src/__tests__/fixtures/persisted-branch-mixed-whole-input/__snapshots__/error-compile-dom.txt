@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-mixed-whole-input/template.marko:3:6
+      1 | <let/count=0/>
+      2 | <main>
+    > 3 |   <if=(input && count > 1)>
+        |      ^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value in a test mixing client state must be a directly read, named `input` property (so it can deliver as a fill).
+      4 |     <p>ok</p>
+      5 |   </if>
+      6 |   <button onClick() { count = count + 1 }>+</button>
