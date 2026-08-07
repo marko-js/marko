@@ -102,6 +102,9 @@ export async function snap(
 
 if (UPDATE) {
   after(function cleanupSnapshots() {
+    // Pruning is only sound after a complete, green run: a `--grep`-scoped or
+    // bailed update never wrote the snapshots the unrun tests own.
+    if (!allTestsPassed(this.test!.parent!)) return;
     for (const snapdir of writtenDirs) {
       for (const entry of fs.readdirSync(snapdir)) {
         const filePath = path.join(snapdir, entry);
@@ -111,4 +114,11 @@ if (UPDATE) {
       }
     }
   });
+
+  function allTestsPassed(suite: Mocha.Suite): boolean {
+    return (
+      suite.tests.every((test) => test.pending || test.state === "passed") &&
+      suite.suites.every(allTestsPassed)
+    );
+  }
 }
