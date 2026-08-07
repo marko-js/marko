@@ -1,0 +1,12 @@
+<let/show=true/>
+<let/items=["a", "b"]/>
+<div>
+  <if=show>
+    <section>
+      <child name="outer"/>
+      <for|item| of=items>
+        <child name=item/>
+      </for>
+    </section>
+  </if>
+</div>

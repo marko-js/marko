@@ -70,6 +70,11 @@ export const flushMedia = Object.assign(() => {}, {
   flushType: "media" as const,
 });
 
+export type Destroy = typeof destroy;
+export const destroy = Object.assign(() => {}, {
+  destroy: true,
+});
+
 export type Throws = ReturnType<typeof throws>;
 export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
@@ -81,6 +86,10 @@ export function isWait(value: any): value is Wait {
 
 export function isFlush(value: any): value is Flush {
   return typeof value === "function" && value.flushType !== undefined;
+}
+
+export function isDestroy(value: any): value is Destroy {
+  return typeof value === "function" && value.destroy;
 }
 
 export function isThrows(value: any): value is Throws {

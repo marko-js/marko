@@ -104,12 +104,6 @@ A `<script>` effect that writes a `<let>` it transitively reads re-renders forev
 
 All three fall past the constructor `switch` to `throwUnserializable`, so a resumed value holding one is dropped even though they reach templates through request handling. Each has a constructor form that round-trips its observable state (`new DOMException(message, name)`, `AbortSignal.abort(reason)`, `new Event(type, { bubbles, cancelable, composed })`), but a not-yet-aborted `AbortSignal` has no faithful representation — resume would have to wire it to a fresh controller, so settle that semantics before adding it. Worth the runtime bytes only if a real template needs them. These need `case globalThis.X:` guards in the `proto?.constructor` switch (boxed primitives were ruled wont-fix there; see the comment in `writeUnknownObject`). Verify: pass each through `Serializer#stringifyScopes` and watch it drop, against `new URL("https://a.b")` as a supported control.
 
-## Add a `Destroy` step to the CSR fixture harness
-
-`packages/runtime-tags/src/__tests__/main.test.ts` › `csr` | 2026-07-23 | impact:low | effort:low
-
-The CSR harness mounts a template and only ever calls `instance.update(input)`, so fixture snapshots never exercise teardown; `cleanup-*` fixtures only cover destroys driven from inside a render by `<if>`/`<for>`. `mounted-template.test.ts` now covers `destroy()`, `<lifecycle>` onDestroy, `$signal` abort, and the `value` getter/setter directly (4499fbaa3e), so what remains is snapshot breadth over nested-branch teardown. Add a `Destroy` step alongside `Wait`/`Flush`/`Throws` in `TestConfig.steps`, have `runSteps` call `instance.destroy()`, and let the mutation tracker snapshot the resulting removal. Verify: `rg -n "instance\." packages/runtime-tags/src/__tests__/main.test.ts` returns only `instance.update(input)`.
-
 ## Unify `packages/runtime-class/src` on ESM so its module type can be declared
 
 `packages/runtime-class/package.json` › `files` | 2026-07-24 | impact:low | effort:high
