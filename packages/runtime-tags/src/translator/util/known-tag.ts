@@ -919,42 +919,17 @@ function applyAttrObject(
   }
 
   if (isAttributeTag(tag)) {
-    translatedProps = t.objectExpression(translatedAttrs.properties);
-    const attrTagName = getTagName(tag);
-    const parentTag = tag.parentPath as t.NodePath<t.MarkoTag>;
-    const repeated = analyzeAttributeTags(parentTag)?.[attrTagName]?.repeated;
-
-    if (repeated) {
-      let attrTagCallsForTag = (info.attrTagCallsByTag ||= new Map()).get(
-        parentTag,
-      );
-      if (!attrTagCallsForTag) {
-        info.attrTagCallsByTag.set(parentTag, (attrTagCallsForTag = new Map()));
-      }
-
-      const attrTagCall = attrTagCallsForTag.get(attrTagName);
-      if (attrTagCall) {
-        attrTagCall.expression = callRuntime(
-          "attrTags",
-          attrTagCall.expression,
-          translatedProps,
-        );
-        return;
-      } else {
-        // Uses parenthesized expressions since they are simple to mutate after the fact
-        // and do not impact the output.
-        attrTagCallsForTag.set(
-          attrTagName,
-          (translatedProps = t.parenthesizedExpression(
-            callRuntime("attrTag", translatedProps),
-          ) as t.ParenthesizedExpression & {
-            expression: t.CallExpression;
-          }),
-        );
-      }
-    } else {
-      translatedProps = callRuntime("attrTag", translatedProps);
-    }
+    const repeated = analyzeAttributeTags(
+      tag.parentPath as t.NodePath<t.MarkoTag>,
+    )?.[getTagName(tag)]?.repeated;
+    const mergedProps = getAttrTagProps(
+      tag,
+      repeated,
+      t.objectExpression(translatedAttrs.properties),
+      info,
+    );
+    if (!mergedProps) return;
+    translatedProps = mergedProps;
   }
 
   addStatement(
@@ -978,45 +953,50 @@ function translateAttrTag(
   statements: t.Statement[],
 ) {
   const translatedAttrs = translateAttrs(tag, true, undefined, statements);
-  let translatedProps: t.Expression = t.objectExpression(
-    translatedAttrs.properties,
+  return getAttrTagProps(
+    tag,
+    attrTagMeta.repeated,
+    t.objectExpression(translatedAttrs.properties),
+    info,
   );
+}
+
+function getAttrTagProps(
+  tag: t.NodePath<t.MarkoTag>,
+  repeated: boolean | undefined,
+  translatedProps: t.ObjectExpression,
+  info: TranslateDOMInfo,
+) {
+  if (!repeated) return callRuntime("attrTag", translatedProps);
+
   const attrTagName = getTagName(tag);
   const parentTag = tag.parentPath as t.NodePath<t.MarkoTag>;
-
-  if (attrTagMeta.repeated) {
-    let attrTagCallsForTag = (info.attrTagCallsByTag ||= new Map()).get(
-      parentTag,
-    );
-    if (!attrTagCallsForTag) {
-      info.attrTagCallsByTag.set(parentTag, (attrTagCallsForTag = new Map()));
-    }
-
-    const attrTagCall = attrTagCallsForTag.get(attrTagName);
-    if (attrTagCall) {
-      attrTagCall.expression = callRuntime(
-        "attrTags",
-        attrTagCall.expression,
-        translatedProps,
-      );
-      return;
-    } else {
-      // Uses parenthesized expressions since they are simple to mutate after the fact
-      // and do not impact the output.
-      attrTagCallsForTag.set(
-        attrTagName,
-        (translatedProps = t.parenthesizedExpression(
-          callRuntime("attrTag", translatedProps),
-        ) as t.ParenthesizedExpression & {
-          expression: t.CallExpression;
-        }),
-      );
-    }
-  } else {
-    translatedProps = callRuntime("attrTag", translatedProps);
+  let attrTagCallsForTag = (info.attrTagCallsByTag ||= new Map()).get(
+    parentTag,
+  );
+  if (!attrTagCallsForTag) {
+    info.attrTagCallsByTag.set(parentTag, (attrTagCallsForTag = new Map()));
   }
 
-  return translatedProps;
+  const attrTagCall = attrTagCallsForTag.get(attrTagName);
+  if (attrTagCall) {
+    attrTagCall.expression = callRuntime(
+      "attrTags",
+      attrTagCall.expression,
+      translatedProps,
+    );
+    return;
+  }
+
+  // Uses parenthesized expressions since they are simple to mutate after the fact
+  // and do not impact the output.
+  const wrappedProps = t.parenthesizedExpression(
+    callRuntime("attrTag", translatedProps),
+  ) as t.ParenthesizedExpression & {
+    expression: t.CallExpression;
+  };
+  attrTagCallsForTag.set(attrTagName, wrappedProps);
+  return wrappedProps;
 }
 
 function writeAttrsToSignals(
