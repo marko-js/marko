@@ -4,11 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A client-owned chain nested inside a server-owned branch: patch renders
-// still render the outer body but skip the inner chain, the interior
-// server value delivers through the lazy closure's owner-side dispatch,
-// and flipping the server selection (client-owned content drops the
-// outer shell) rejects to navigation rather than a wrong construct.
+// A client-owned chain inside a server-owned branch: patches still reach
+// it, but the outer shell drops, so revealing it rejects to navigation.
 export const config: TestConfig = {
   persisted: true,
   expect_rejection: true,

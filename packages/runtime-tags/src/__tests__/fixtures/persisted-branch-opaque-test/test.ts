@@ -5,8 +5,7 @@ const click = (document: Document) => {
 };
 
 // POLICY PIN: an opaque contribution to an otherwise pure-state test
-// still classifies client-owned — the client re-evaluates the whole
-// test on state changes, exactly like a non-persisted stateful chain.
+// still classifies client-owned, like a non-persisted stateful chain.
 export const config: TestConfig = {
   persisted: true,
   steps: [{}, click, {}, click],
