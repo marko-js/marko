@@ -25,6 +25,7 @@ import {
   mergeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
+import runtimeInfo from "../util/runtime-info";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -304,6 +305,7 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#show",
     },
   ],
+  types: runtimeInfo.name + "/tags/show.d.marko",
 } as Tag;
 
 // True when the body renders exactly one static node, so the single-node
