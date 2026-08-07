@@ -280,4 +280,27 @@ describe("runtime-tags/html/attrs", () => {
       );
     });
   });
+
+  describe("controlled handler assertions", () => {
+    it("names the handler attribute the author wrote", () => {
+      assert.throws(
+        () => helpers._attr_input_checked(0, "#input/0", true, "oops"),
+        /`checkedChange`/,
+      );
+      assert.throws(
+        () =>
+          helpers._attr_input_checkedValue(0, "#input/0", true, "oops", "x"),
+        /`checkedValueChange`/,
+      );
+      assert.throws(
+        () =>
+          helpers._attr_details_or_dialog_open(0, "#details/0", true, "oops"),
+        /`openChange`/,
+      );
+      assert.throws(
+        () => helpers._attr_input_value(0, "#input/0", "x", "oops"),
+        /`valueChange`/,
+      );
+    });
+  });
 });
