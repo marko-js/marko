@@ -20,9 +20,13 @@ import { createProgramState } from "./state";
 // A custom tag instance whose attrs carry only client state and constants
 // is client-owned: patches skip its render, so nothing inside goes stale.
 export const kPatchClientOwned = Symbol("patch client owned");
+// The call site assigns the child's returned tag variable (stamped at
+// analyze, where the babel scope still resolves the var binding).
+export const kPersistedAssignedVar = Symbol("persisted assigned var");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kPatchClientOwned]?: true;
+    [kPersistedAssignedVar]?: true;
   }
 }
 // The template's child renderers, collected at translate for the runtime
