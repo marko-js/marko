@@ -74,12 +74,6 @@ The `after(cleanupSnapshots)` hook `fs.rmSync`s every entry of any `__snapshots_
 
 When `startSection(tagBody)` returns undefined, `analyze` calls `dropNodes(getAllTagReferenceNodes(tag.node))` and returns, so `<div><for|x| of=input.list/></div>` compiles to `_html("<div></div>")` — the `of=` expression is never evaluated — with no diagnostic in any mode. Every other body-requiring core tag raises a code frame for the same mistake: `core/if.ts` › `assertHasBody`, `core/show.ts` › `assertHasBody`, `core/try.ts` › `analyze`, `core/await.ts` › `analyze`. A `<for>` body is the tag's only output, so an empty one is always an authoring mistake, and today it costs a debugging cycle where `<if>` gives an immediate caret. Add the same check before the `dropNodes` fast path plus an `error-for-empty-body` fixture — the `error-for-*` family has ten cases and none is an empty body. Re-verify: `pnpm run compile -o html -d` that template succeeds, while `<div><if=input.list/></div>` fails.
 
-## Fix the dead markojs.com links core tags hand to users: `/docs/syntax/` and synthesized `core-tag#<tagName>` anchors
-
-`packages/runtime-tags/src/translator/core/import.ts` › `autocomplete` | 2026-07-23 | impact:low | effort:low
-
-`import.ts` (both its error message and `descriptionMoreURL`), `static.ts`, `server.ts` and `client.ts` point at `https://markojs.com/docs/syntax/#…`, which now returns 404; the live targets are `docs/reference/language#import`, `#static` and `#server-and-client`. The same breakage lives in `packages/runtime-tags/src/translator/util/assert.ts` › `assertNoSpreadAttrs` and `assertNoBodyContent`, which build the anchor as `core-tag#${tagName}` — only correct when a tag's docs heading is its bare name. Compiling `<if=input.x ...input.attrs>a</if>` emits `core-tag#if` when the real anchor is `#if--else`, and `<else>`, `<else-if>`, `<effect>` and `<attrs>` (all callers of these helpers) have no anchor at all. Replace the `/docs/syntax/` URLs and give the assert helpers an explicit anchor argument or tag-name→anchor map instead of interpolating the tag name. Re-verify: `rg -n "docs/syntax" packages/runtime-tags/src` lists the call sites, and the `<if>` spread compile prints `core-tag#if`.
-
 ## Raise the unresolvable-tag-name error during analyze; at translate its `<let>`/`<const>` hint is lost and only the first bad tag reports
 
 `packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts` › `tagNotFoundError` | 2026-07-23 | impact:med | effort:med

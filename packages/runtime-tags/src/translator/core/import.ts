@@ -13,7 +13,7 @@ export default {
     if (statements.length > 1) {
       throw tag.hub.buildError(
         statements[1],
-        "The [`<import>` tag](https://markojs.com/docs/syntax/#importing-external-files) takes a single import statement.",
+        "The [`<import>` tag](https://markojs.com/docs/reference/language#import) takes a single import statement.",
       );
     }
 
@@ -29,8 +29,7 @@ export default {
       description:
         "Use to import external modules, follows the same syntax as JavaScript imports.",
       snippet: 'import ${2} from "${1:path}"',
-      descriptionMoreURL:
-        "https://markojs.com/docs/syntax/#importing-external-files",
+      descriptionMoreURL: "https://markojs.com/docs/reference/language#import",
     },
   ],
 } as Tag;

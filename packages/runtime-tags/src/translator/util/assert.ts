@@ -1,11 +1,26 @@
 import type { types as t } from "@marko/compiler";
 
+// Tags whose docs heading is not their bare name; "" links the page root
+// for tags with no heading of their own.
+const docsAnchors: Record<string, string | undefined> = {
+  if: "if--else",
+  "else-if": "if--else",
+  else: "if--else",
+  effect: "",
+  attrs: "",
+};
+
+function coreTagDocsURL(tagName: string) {
+  const anchor = docsAnchors[tagName] ?? tagName;
+  return `https://markojs.com/docs/reference/core-tag${anchor && "#" + anchor}`;
+}
+
 export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
   for (const attr of tag.get("attributes")) {
     if (attr.isMarkoSpreadAttribute()) {
       const tagName = (tag.get("name").node as t.StringLiteral).value;
       throw attr.buildCodeFrameError(
-        `The [\`<${tagName}>\`](https://markojs.com/docs/reference/core-tag#${tagName}) tag does not support \`...spread\` attributes.`,
+        `The [\`<${tagName}>\`](${coreTagDocsURL(tagName)}) tag does not support \`...spread\` attributes.`,
       );
     }
   }
@@ -35,7 +50,7 @@ export function assertNoBodyContent(tag: t.NodePath<t.MarkoTag>) {
     const tagName = tag.get("name");
     const tagNameLiteral = (tagName.node as t.StringLiteral).value;
     throw tagName.buildCodeFrameError(
-      `The [\`<${tagNameLiteral}>\`](https://markojs.com/docs/reference/core-tag#${tagNameLiteral}) tag does not support body content.`,
+      `The [\`<${tagNameLiteral}>\`](${coreTagDocsURL(tagNameLiteral)}) tag does not support body content.`,
     );
   }
 }

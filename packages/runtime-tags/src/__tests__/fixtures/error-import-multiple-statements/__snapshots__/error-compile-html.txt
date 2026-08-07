@@ -1,6 +1,6 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-import-multiple-statements/template.marko:1:29
     > 1 | import { a } from "./a.js"; import { b } from "./b.js"
-        |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^ The [`<import>` tag](https://markojs.com/docs/syntax/#importing-external-files) takes a single import statement.
+        |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^ The [`<import>` tag](https://markojs.com/docs/reference/language#import) takes a single import statement.
       2 | <div>${a}${b}</div>
       3 |
