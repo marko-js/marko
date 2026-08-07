@@ -19,8 +19,10 @@ import {
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
+  type Destroy,
   type Flush,
   type FlushType,
+  isDestroy,
   isFlush,
   isThrows,
   isWait,
@@ -38,7 +40,13 @@ import createMutationTracker from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
-type Step = Input | Wait | Flush | Throws | ((document: Document) => unknown);
+type Step =
+  | Input
+  | Wait
+  | Flush
+  | Destroy
+  | Throws
+  | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
@@ -306,6 +314,9 @@ function testFixtures(interop?: true) {
                 instance.update(input);
                 tracker.logUpdate(input);
               },
+              onDestroy() {
+                instance.destroy();
+              },
             });
 
             tracker.cleanup();
@@ -498,10 +509,18 @@ async function runSteps(
   opts: {
     onInput?: (input: Input) => void;
     onFlush?: () => Promise<void>;
+    onDestroy?: () => void;
   },
 ) {
   for (const update of steps) {
-    if (isWait(update)) {
+    if (isDestroy(update)) {
+      // only the client tests have an instance to destroy
+      if (!opts.onDestroy) break;
+      tracker.beginUpdate();
+      opts.onDestroy();
+      run();
+      tracker.logUpdate("Destroy");
+    } else if (isWait(update)) {
       await update();
       await browser.runAsyncScripts();
       run();

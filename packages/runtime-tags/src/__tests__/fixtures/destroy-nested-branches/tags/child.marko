@@ -1,0 +1,6 @@
+<const/{name}=input/>
+<p>${name}</p>
+<lifecycle onDestroy() { console.log(`lifecycle ${name} destroyed`) }/>
+<script>
+  $signal.onabort = () => console.log(`effect ${name} destroyed`);
+</script>
