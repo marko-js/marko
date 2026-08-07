@@ -79,6 +79,9 @@ export interface Signal {
     value: t.Expression;
   }>;
   intersection: Opt<Signal>;
+  /** Signals this one forwards into: they must declare first when the
+   * forward simplifies to a bare, eagerly evaluated reference. */
+  forwards: Opt<Signal>;
   render: t.Statement[];
   effect: t.Statement[];
   hasHTMLEffect: boolean;
@@ -258,6 +261,7 @@ export function getSignal(
         section,
         values: [],
         intersection: undefined,
+        forwards: undefined,
         render: [],
         effect: [],
         hasHTMLEffect: false,
@@ -467,7 +471,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
 }
 
 function pushMemberForwards(
-  renderStatements: t.Statement[],
+  signal: Signal,
   value: t.Expression,
   alias: Binding,
 ) {
@@ -475,7 +479,7 @@ function pushMemberForwards(
     for (const [key, child] of alias.propertyAliases) {
       if (child.type !== BindingType.constant) {
         pushMemberForwards(
-          renderStatements,
+          signal,
           toMemberExpression(t.cloneNode(value, true), key, alias.nullable),
           child,
         );
@@ -483,7 +487,8 @@ function pushMemberForwards(
     }
   } else {
     const aliasSignal = getSignal(alias.section, alias);
-    renderStatements.push(
+    signal.forwards = push(signal.forwards, aliasSignal);
+    signal.render.push(
       t.expressionStatement(
         t.callExpression(aliasSignal.identifier, [
           scopeIdentifier,
@@ -507,6 +512,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
       if (signalHasStatements(aliasSignal)) {
+        signal.forwards = push(signal.forwards, aliasSignal);
         if (alias.excludeProperties !== undefined) {
           const aliasId = t.identifier(alias.name);
           let pattern: t.ArrayPattern | t.ObjectPattern;
@@ -580,7 +586,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     for (const [key, alias] of binding.propertyAliases) {
       if (alias.type !== BindingType.constant) {
         pushMemberForwards(
-          signal.render,
+          signal,
           toMemberExpression(
             createScopeReadExpression(binding),
             key,
@@ -958,6 +964,10 @@ export function writeSignals(section: Section) {
     let signalDeclaration: t.Statement | undefined;
     if (signal.build) {
       let value = signal.build();
+      // Eagerness is judged BEFORE wrappers (`_var_resume`/fill wraps keep
+      // their argument eager): a built bare identifier references its
+      // forward target at module evaluation.
+      const buildsEagerForward = t.isIdentifier(value);
 
       if (
         !value ||
@@ -983,6 +993,7 @@ export function writeSignals(section: Section) {
         );
       }
 
+      if (buildsEagerForward) forEach(signal.forwards, writeSignal);
       const signalDeclarator = t.variableDeclarator(signal.identifier, value);
       signalDeclaration =
         !section.parent &&
