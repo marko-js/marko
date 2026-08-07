@@ -1441,6 +1441,19 @@ export function finalizeReferences() {
     });
   }
 
+  // The RETURN classifies like a capture: its reason (and, persisted, its
+  // param groups) must exist BEFORE group finalize and known-tag stamping,
+  // or same-file call sites fail closed on a group-count mismatch.
+  const programSection = getProgram().node.extra.section!;
+  if (programSection.returnValueExpr) {
+    programSection.returnSerializeReason = getSerializeSourcesForExpr(
+      programSection.returnValueExpr,
+    );
+    if (isPersisted()) {
+      ensureReasonGroups(programSection.returnSerializeReason);
+    }
+  }
+
   forEachSection(finalizeParamSerializeReasonGroups);
   forEachSectionReverse((section) => {
     finalizeKnownTags(section);
@@ -1544,13 +1557,6 @@ export function finalizeReferences() {
       }
     });
   });
-
-  const programSection = getProgram().node.extra.section!;
-  if (programSection.returnValueExpr) {
-    programSection.returnSerializeReason = getSerializeSourcesForExpr(
-      programSection.returnValueExpr,
-    );
-  }
 
   for (const finalize of getReferenceFinalizers()) {
     finalize();

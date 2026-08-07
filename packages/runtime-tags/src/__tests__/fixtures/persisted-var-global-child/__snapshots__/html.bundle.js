@@ -1,0 +1,30 @@
+// tags/greet/index.marko
+var greet_default = _template_persisted("b", (input) => {
+	const $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	const double = input.n * 2;
+	_html(`<span>${_patch_text($scope0_id, "a", $global().locale)}${_el_resume($scope0_id, "a")}</span>`);
+	const $return = double;
+	$scope0_reason && writeScope($scope0_id, {});
+	return $return;
+}, 0, 1);
+
+// template.marko
+var template_default = _template_persisted("a", (input) => {
+	const $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let count = 1;
+	_html("<main>");
+	const $childScope = _peek_scope_id();
+	_set_serialize_reason(2);
+	let d = greet_default({ n: count });
+	_patch_child($scope0_id, "a", $childScope);
+	_var($scope0_id, "b", $childScope, "a0");
+	_html(`<p>${_escape(d)}${_el_resume($scope0_id, "c")}</p><button>+</button>${_el_resume($scope0_id, "d")}</main>`);
+	_script($scope0_id, "a1");
+	$scope0_reason && writeScope($scope0_id, {
+		e: count,
+		a: _existing_scope($childScope)
+	});
+	_resume_branch($scope0_id);
+}, 1, () => [greet_default]);
