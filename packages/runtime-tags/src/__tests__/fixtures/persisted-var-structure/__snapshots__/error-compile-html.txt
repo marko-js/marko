@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-var-structure/template.marko:4:6
-      2 | <main>
-      3 |   <doubler/double value=count/>
-    > 4 |   <if=(double > 2)>
-        |      ^^^^^^^^^^^^^ Persisted templates currently support only escaped dynamic text and dynamic attributes in native HTML.
-      5 |     <p>big</p>
-      6 |   </if>
-      7 |   <button onClick() { count++ }>+</button>

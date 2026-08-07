@@ -19,6 +19,7 @@ import {
   getPatchFillBindings,
   getPatchFillKey,
   hasUnfillablePatchReads,
+  inClientOwnedStructure,
   isPatchCaptureSection,
   isPatchEffectBinding,
   isPatchFillBinding,
@@ -48,7 +49,7 @@ import {
   mergeGlobalReads,
   type ReferencedBindings,
 } from "./references";
-import { callRuntime } from "./runtime";
+import { callRuntime, importRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   getDynamicClosureIndex,
@@ -74,7 +75,7 @@ import {
 } from "./serialize-reasons";
 import { isShellDropped } from "./shell";
 import { simplifyFunction } from "./simplify-fn";
-import { createSectionState } from "./state";
+import { createProgramState, createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
 import {
   toMemberExpression,
@@ -1107,6 +1108,59 @@ export function writeSignals(section: Section) {
           }
         } else if (
           signal.referencedBindings &&
+          !Array.isArray(signal.referencedBindings) &&
+          !signal.referencedBindings.sources?.state &&
+          inClientOwnedStructure(signal.section) &&
+          isPatchFillBinding(signal.referencedBindings) &&
+          signal.section !== signal.referencedBindings.section &&
+          isBranchChainTo(signal.section, signal.referencedBindings.section) &&
+          hasDirectRenderedRead(signal.referencedBindings, signal.section)
+        ) {
+          // Inside client-owned structure the closure IS the delivery
+          // channel (no capture renders there), so a lone closure over a
+          // server fill registers itself as the join, riding its own
+          // retention (the owner-side declaration is shaken from page
+          // bundles, where nothing re-applies input): a scan closure
+          // already dispatches from the owner, while a lazy closure's
+          // owner-side dispatch composes through `_closure`. Closures that
+          // only fan out to intersections skip this — every intersection
+          // registers its own join above.
+          const closureShape =
+            t.isCallExpression(value) &&
+            t.isIdentifier(value.callee) &&
+            value.callee.name;
+          if (
+            closureShape !== "_if_closure" &&
+            closureShape !== "_closure_get"
+          ) {
+            throw new Error(
+              "Marko: expected a branch closure shape for a client-owned fill read.",
+            );
+          }
+          if (closureShape === "_closure_get") {
+            // Independent lazy joins for one key would each dispatch to
+            // EVERY subscribed scope (`_closure` over a single signal loses
+            // the per-subscriber index), cross-rendering values; until a
+            // shared indexed composite exists this fails closed.
+            const lazyJoins = getLazyFillJoins();
+            if (lazyJoins.has(signal.referencedBindings)) {
+              throw new Error(
+                "Marko: a server value cannot yet fill more than one deep position inside client-owned structure.",
+              );
+            }
+            lazyJoins.add(signal.referencedBindings);
+          }
+          value = callRuntime(
+            "_fill_join",
+            t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
+            getScopeAccessorLiteral(signal.referencedBindings, true),
+            value,
+            ...(closureShape === "_closure_get"
+              ? [importRuntime("_closure")]
+              : []),
+          );
+        } else if (
+          signal.referencedBindings &&
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section === signal.referencedBindings.section
         ) {
@@ -1204,6 +1258,37 @@ export function writeSignals(section: Section) {
   }
 
   return written;
+}
+
+// Bindings that already registered a lazy (`_closure_get`) fill join.
+const [getLazyFillJoins] = createProgramState(() => new Set<Binding>());
+
+// Whether every section from `section` up to (excluding) `owner` is a
+// branch: the shape whose closures dispatch from the owner scope.
+function isBranchChainTo(section: Section, owner: Section) {
+  while (section !== owner) {
+    if (!section.isBranch || !section.parent) return false;
+    section = section.parent;
+  }
+  return true;
+}
+
+// A hole or attribute consuming the binding alone renders through its
+// closure directly; intersection-shaped reads render through their own
+// (self-registering) intersection signal instead. Anything non-array
+// counts as direct: a redundant registration costs bytes, a missed one
+// goes silently stale.
+function hasDirectRenderedRead(binding: Binding, section: Section) {
+  for (const read of binding.reads) {
+    if (
+      !read.isEffect &&
+      read.section === section &&
+      !Array.isArray(read.referencedBindings)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function writeGetters(section: Section) {

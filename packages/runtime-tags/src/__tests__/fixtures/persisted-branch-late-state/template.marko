@@ -1,0 +1,14 @@
+<let/mode=0/>
+<main>
+  <if=(mode === 1)>
+    <b>one</b>
+  </if>
+  <!-- a comment between branches must not break the merge -->
+  <else-if=(mode === 2)>
+    <i>${input.title}</i>
+  </else-if>
+  <else>
+    <s>none</s>
+  </else>
+  <button onClick() { mode = (mode + 1) % 3 }>+</button>
+</main>
