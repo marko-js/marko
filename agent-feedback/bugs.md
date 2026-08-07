@@ -133,3 +133,19 @@ Found while building a persisted fixture; reproduces with`persisted:
 false` (the inlining is mode-agnostic). Re-verify: two tags rendering
 each other behind a depth guard, bundle the page, import the dom bundle
 — eval throws.
+
+## Tag-var resume factory can be tree-shaken out of signal-free pages
+
+`_var` serialization always passive-writes `#TagVariable: _resume({},
+registryId, parent)`, but the factory only registers when the DOM
+template module loads. A page whose ONLY client-side signals are tag
+variables (no `<let>`, handlers, or scripts) bundles without
+`template.mjs`, so the first resume/patch hits
+`registeredValues[registryId] is not a function` and (under persisted)
+every frame falls closed to navigation —
+`persisted-var-pure-server` pins the behavior. Either the var resume
+should force template retention the way handlers do, or a var with no
+client readers/writers should skip the passive write entirely.
+Re-verify: a template rendering only `<doubler/double value=input.n/>`
+into a second tag's attr, no other client code — the page bundle
+imports only feat modules.
