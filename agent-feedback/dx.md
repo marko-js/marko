@@ -80,12 +80,6 @@ When a scriptlet's `target` does not match the output, `translate.exit` replaces
 
 The "CPU-bound, so packing and worker count can't help" conclusion rests on a profile that no longer describes the tooling: `@babel/register` is gone (Node strips types natively) and the `c8 report` pass was replaced by zcov in a2ac845475. Nothing has re-profiled a worker since. If a fresh profile still shows significant idle, the one identified win — pipelining the next fixture's `createServerRunner()` build one fixture ahead, gated on `MARKO_TEST_SLOTS` — remains blocked by `packages/runtime-tags/src/__tests__/utils/capture-console.ts`, which patches `globalThis.console` process-wide so a concurrent build's output lands in another test's capture window; scope that capture first. Re-verify by `--cpu-prof`-ing one worker of `node scripts/test-parallel.js`.
 
-## Document the exact-camelCase rule for native element event attributes
-
-`packages/runtime-tags/cheatsheet.md` › `Golden rules` (rule 5, Events) | 2026-07-18 | impact:low | effort:low
-
-`<input onKeydown(e) {}>` binds correctly at runtime — `isEventHandler` matches `/^on[A-Z-]/` and `getEventHandlerName` lowercases everything after "on" (`packages/runtime-tags/src/common/helpers.ts`), so `onKeydown` and `onKeyDown` are the same `keydown` listener — but the types accept only the exact camelCase spelling (`onKeyDown` at `packages/runtime-tags/tags-html.d.ts:5129`, with the `"on-keydown"` alias on :5130), so `@marko/type-check` rejects it with a bare TS2353 excess-property error that names no alternative and makes it look like the element supports no event handlers. The cheatsheet's only camelCase note (`// event attrs: exact camelCase`, :163) sits inside an `export interface Input` example, i.e. it is about declaring your own input, not about native elements, so an author who guesses `onKeydown` (or arrives from a case-insensitive HTML habit) has nothing to consult. Add one clause to rule 5 (Events): native event attrs must match the DOM camelCase name exactly — `onKeyDown`, `onMouseOver`, `onDblClick`, not `onKeydown` — even though the runtime itself is case-insensitive. Re-verify by running `mtc` over a template containing `<input onKeydown(e) {}>`.
-
 ## Give a structural error for a stray close tag / unwrapped text on a concise line
 
 `packages/compiler/src/babel-plugin/parser.js` › `onError` | 2026-07-19 | impact:low | effort:med
