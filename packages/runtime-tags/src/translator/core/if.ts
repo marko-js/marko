@@ -62,7 +62,7 @@ import {
   getSerializeSourcesForExpr,
   type SerializeReasons,
 } from "../util/serialize-reasons";
-import { getShellId, isShellDropped, recordShellRoot } from "../util/shell";
+import { getShellId, getShells, isShellDropped } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -126,8 +126,7 @@ export const IfTag = {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
           if (sources?.state && !sources.param && !sources.global) {
             // A pure-state chain is client-owned structure: the frame never
-            // speaks its selection, so no shells or branch patcher ship and
-            // patch renders skip the whole chain.
+            // speaks its selection, so no shells or branch patcher ship.
             for (const [, branchBody] of branches) {
               if (branchBody) {
                 branchBody.isClientOwnedStructure = true;
@@ -138,13 +137,6 @@ export const IfTag = {
             // Branch tests drive structure: call sites reject feeding them
             // from client-owned values.
             recordStructuralParams(sources);
-            // Branch shells build after reference finalization, once child
-            // bindings exist; record the roots here.
-            for (const [, branchBody] of branches) {
-              if (branchBody) {
-                recordShellRoot(branchBody);
-              }
-            }
           }
         });
       }
@@ -211,8 +203,7 @@ export const IfTag = {
           let singleChild = true;
 
           // A client-owned chain compiles like a stateful conditional on a
-          // plain page: patch renders skip it wholesale below, so it needs
-          // no marker retention, shells, or branch entry.
+          // plain page: no marker retention, shells, or branch entry.
           const clientOwned = branches.some(
             ([, branchBody]) => branchBody?.isClientOwnedStructure,
           );
@@ -336,17 +327,14 @@ export const IfTag = {
                 // client constructs diverged branches without bundling them.
                 persistedPatch
                   ? t.arrayExpression(
-                      branches.map(([branchTag, branchBody]) => {
+                      branches.map(([, branchBody]) => {
                         // Only ids with a built shell ship; a bare `0` makes
                         // divergence to the branch reject the patch.
                         const id =
                           branchBody &&
                           !isShellDropped(branchBody) &&
                           getShellId(branchBody);
-                        return id &&
-                          branchTag.hub.file.metadata.marko.persistedShells?.[
-                            id
-                          ]
+                        return id && getShells()?.[id]
                           ? t.stringLiteral(id)
                           : t.numericLiteral(0);
                       }),
@@ -357,9 +345,8 @@ export const IfTag = {
           }
 
           if (clientOwned) {
-            // A patch render must not evaluate the tests (their state reads
-            // are server-stale) or render a branch: the frame never speaks
-            // a client-owned selection.
+            // Patch renders skip the chain: the tests' state reads are
+            // server-stale and the frame never speaks the selection.
             let rootSection = ifTagSection;
             while (rootSection.parent) rootSection = rootSection.parent;
             statement = t.ifStatement(

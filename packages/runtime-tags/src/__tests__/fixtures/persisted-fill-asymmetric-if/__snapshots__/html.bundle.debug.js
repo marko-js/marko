@@ -1,7 +1,7 @@
 // template.marko
 _renderer_shells({
-	"__tests__/template.marko_3_shell": ",`__tests__/template.marko_3_shell,<p>shown</p>`",
-	"__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell;b%;<!><!><!>`"
+	"__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell;b%;<!><!><!>`",
+	"__tests__/template.marko_3_shell": ",`__tests__/template.marko_3_shell,<p>shown</p>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);

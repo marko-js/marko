@@ -15,19 +15,14 @@ import { createProgramState } from "./state";
 // A custom tag instance whose attrs carry only client state and constants
 // is client-owned: patches skip its render, so nothing inside goes stale.
 export const kPatchClientOwned = Symbol("patch client owned");
-// The call site assigns the child's returned tag variable (stamped at
-// analyze, where the babel scope still resolves the var binding).
-export const kPersistedAssignedVar = Symbol("persisted assigned var");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kPatchClientOwned]?: true;
-    [kPersistedAssignedVar]?: true;
   }
 }
 
 // Whether the section renders inside client-owned structure (inclusive):
-// nothing inside may rely on a capture channel, since patch renders skip
-// the bodies and frames omit their entries.
+// patch renders skip those bodies, so nothing inside may rely on a capture.
 export function inClientOwnedStructure(section: Section | undefined) {
   while (section) {
     if (section.isClientOwnedStructure) return true;
@@ -82,9 +77,8 @@ export function finalizePersisted() {
   for (const finalize of getPersistedFinalizers()) finalize();
 }
 
-// Root-param facts recorded from resolved sources for call sites to
-// consume (a param's flags describe its downstream uses, so a child's
-// flagged param marks the parent params feeding it in turn).
+// Root-param facts for call sites, recorded once sources resolve; a
+// child's flagged param marks the parent params feeding it in turn.
 export function recordStructuralParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
     if (!binding.section.parent) binding.selectsStructure = true;
@@ -97,9 +91,8 @@ export function recordGlobalMixedParams(sources: Sources | undefined) {
   });
 }
 
-// The persisted policy over those facts: neither leaves a client channel
-// (structure only the server renders; a `$global` mix cannot survive a
-// withheld capture), so such a param must stay server-owned.
+// The persisted policy over those facts: neither leaves a client
+// channel, so the param must stay server-owned.
 export function hasServerRequiredParam(params: Opt<Binding>) {
   let required = false;
   forEach(params, (binding) => {
@@ -201,9 +194,8 @@ export function isPatchFillBinding(binding: Binding) {
     if (getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
     }
-    // A rendered read inside client-owned structure has no capture channel
-    // (patch renders skip the body), so the value promotes to an owner
-    // fill; effect-only reads stay current through the owner slot write.
+    // A rendered read inside client-owned structure promotes to an owner
+    // fill (no capture channel); effect reads use the owner slot write.
     let readSection: Section | undefined = read.section;
     while (readSection && readSection !== binding.section) {
       if (readSection.isClientOwnedStructure) return true;
