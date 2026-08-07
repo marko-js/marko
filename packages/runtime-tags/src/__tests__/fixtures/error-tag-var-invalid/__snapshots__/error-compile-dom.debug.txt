@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-var-invalid/template.marko:1:6
+    > 1 | <div/my-el>hi</div>
+        |      ^ `my-el` is not a valid [tag variable](https://markojs.com/docs/reference/language#tag-variables); use a JavaScript identifier or destructuring pattern.
+      2 |
