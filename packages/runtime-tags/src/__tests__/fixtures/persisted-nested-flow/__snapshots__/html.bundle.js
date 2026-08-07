@@ -11,10 +11,10 @@ var badge_default = _template_persisted("b", (input) => {
 
 // template.marko
 _renderer_shells({
-	a0: ",`a0;D%b%;<li><!><!></li>`",
-	a1: ",`a1,<em>on sale</em>`",
-	a2: ",`a2;D%b%;<section><!><!></section>`",
-	a3: ",`a3;D ;<small> </small>`"
+	a0: ",`a0;D%b%;<section><!><!></section>`",
+	a1: ",`a1;D ;<small> </small>`",
+	a2: ",`a2;D%b%;<li><!><!></li>`",
+	a3: ",`a3,<em>on sale</em>`"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 1), $sg__input_detail = _source_guard($scope0_reason, 3), $sg__input_summary = _source_guard($scope0_reason, 2);
@@ -31,10 +31,10 @@ var template_default = _template_persisted("a", (input) => {
 				$scope0_reason && writeScope($scope4_id, {});
 				return 0;
 			}
-		}, $scope3_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a1"]);
+		}, $scope3_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a3"]);
 		_html("</li>");
 		writeScope($scope3_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0");
+	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a2");
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	_if(() => {
 		if (input.summary) {
@@ -47,12 +47,12 @@ var template_default = _template_persisted("a", (input) => {
 					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
-			}, $scope1_id, "b", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["a3"]);
+			}, $scope1_id, "b", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["a1"]);
 			_html("</section>");
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_summary, $sg__input_summary, void 0, void 0, ["a2"]);
+	}, $scope0_id, "b", 1, $sg__input_summary, $sg__input_summary, void 0, void 0, ["a0"]);
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 4) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "c", $childScope);

@@ -11,10 +11,10 @@ var badge_default = _template_persisted("__tests__/tags/badge.marko", (input) =>
 
 // template.marko
 _renderer_shells({
-	"__tests__/template.marko_3_shell": ",`__tests__/template.marko_3_shell;D%b%;<li><!><!></li>`",
-	"__tests__/template.marko_4_shell": ",`__tests__/template.marko_4_shell,<em>on sale</em>`",
 	"__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell;D%b%;<section><!><!></section>`",
-	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell;D ;<small> </small>`"
+	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell;D ;<small> </small>`",
+	"__tests__/template.marko_3_shell": ",`__tests__/template.marko_3_shell;D%b%;<li><!><!></li>`",
+	"__tests__/template.marko_4_shell": ",`__tests__/template.marko_4_shell,<em>on sale</em>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 1), $sg__input_detail = _source_guard($scope0_reason, 3), $sg__input_summary = _source_guard($scope0_reason, 2);
