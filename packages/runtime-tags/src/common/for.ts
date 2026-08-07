@@ -1,4 +1,8 @@
-import { assertValidList, assertValidRangeBound } from "./errors";
+import {
+  assertValidList,
+  assertValidRangeBound,
+  assertValidRangeStart,
+} from "./errors";
 import type { Falsy } from "./types";
 
 export function forIn(
@@ -29,7 +33,11 @@ export function forTo(
   step: number | Falsy,
   cb: (index: number) => void,
 ) {
-  if (MARKO_DEBUG) assertValidRangeBound("to", to);
+  if (MARKO_DEBUG) {
+    assertValidRangeBound("to", to);
+    assertValidRangeStart("from", from);
+    assertValidRangeStart("step", step);
+  }
   const start = from || 0;
   const delta = step || 1;
   for (let steps = (to - start) / delta, i = 0; i <= steps; i++) {
@@ -43,7 +51,11 @@ export function forUntil(
   step: number | Falsy,
   cb: (index: number) => void,
 ) {
-  if (MARKO_DEBUG) assertValidRangeBound("until", until);
+  if (MARKO_DEBUG) {
+    assertValidRangeBound("until", until);
+    assertValidRangeStart("from", from);
+    assertValidRangeStart("step", step);
+  }
   const start = from || 0;
   const delta = step || 1;
   for (let steps = (until - start) / delta, i = 0; i < steps; i++) {

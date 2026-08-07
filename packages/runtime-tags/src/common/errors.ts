@@ -103,6 +103,16 @@ export function assertValidList(value: unknown) {
   }
 }
 
+export function assertValidRangeStart(name: string, value: unknown) {
+  // Unlike `to`, a truthy `from`/`step` reaches `start + i * delta` uncoerced,
+  // where a non-number `from` concatenates, so debug requires a real number.
+  if (value && (typeof value !== "number" || !isFinite(value))) {
+    throw new Error(
+      `A \`<for>\` tag's \`${name}\` attribute must be a finite number, but received ${describeForValue(value)}.`,
+    );
+  }
+}
+
 export function assertValidRangeBound(name: string, value: unknown) {
   // `isFinite` coerces like the range arithmetic, so a debug throw matches production.
   if (!isFinite(value as number)) {

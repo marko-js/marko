@@ -32,12 +32,6 @@ The string-renderer branch never assigns `result` (its inline TODO says so) and 
 
 `/^on[-A-Z][a-zA-Z0-9_$]|[a-zA-Z_$][a-zA-Z0-9_$]*Change$/` demands a character after `[-A-Z]` and leaves the second alternative unanchored, so it disagrees with the runtime's `isEventHandler` (`/^on[A-Z-]/`) at both ends. `<div onX() {}/>` fails `assertNativeAttrValueType` with "The `onX` attribute cannot be a function." though `<div on-x() {}/>` compiles. Conversely any name ending in `Change` counts as a change handler: `<div data-exChange="x"/>` errors, while `<div data-exChange=(() => {})/>` skips the function check and emits `_attr("data-exChange", _resume(() => {}, …))`, which an optimized build stringifies into the markup. Use `/^(?:on[-A-Z]|[a-zA-Z_$][a-zA-Z0-9_$]*Change$)/` and scope `assertNativeHandlerAttr` to the real controllables. Distinct from dx.md's "Surface a near-miss suggestion (or document the casing rule) for miscased event attributes", which is about type-check messaging for `onKeydown` vs `onKeyDown`, not this regex. Re-verify: `node -r ~ts scripts/inspect-compiled-output.mts -o dom -d` on those four templates — today only the hyphenated spellings behave.
 
-## Coerce (or validate) `forTo`/`forUntil`'s `from`; a string `from` concatenates the indices
-
-`packages/runtime-tags/src/common/for.ts` › `forTo` | 2026-07-23 | impact:med | effort:low
-
-Both helpers guard only the upper bound (`assertValidRangeBound`) and then compute `const start = from || 0; cb(start + i * delta)`, so a non-numeric `from` is never coerced: `forTo(5, "2", 1, cb)` yields `"20", "21", "22", "23"` instead of `2, 3, 4, 5` — wrong values and count, silently, even under MARKO_DEBUG. It is reachable from ordinary templates, since `getBaseArgsInForTag` (`translator/core/for.ts`) passes the attribute straight through and the core-tag metadata's `from: { type: "number" }` is LSP data, not a compile check. Either extend the debug guard to `from` (allowing nullish, since it defaults) or write `const start = +from || 0`. Re-verify: `node -r ~ts -e 'globalThis.MARKO_DEBUG=1;const{forTo}=require("./packages/runtime-tags/src/common/for.ts");const o=[];forTo(5,"2",1,v=>o.push(v));console.log(o)'` prints `[ '20', '21', '22', '23' ]`.
-
 ## Give the HTML spread-attrs path the same MARKO_DEBUG validation as the DOM path
 
 `packages/runtime-tags/src/html/attrs.ts` › `_attrs` | 2026-07-23 | impact:med | effort:low
