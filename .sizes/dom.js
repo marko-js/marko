@@ -1,4 +1,4 @@
-// size: 27074 (min) 10016 (brotli)
+// size: 27054 (min) 10033 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1800,27 +1800,11 @@ function _await_promise(nodeAccessor, params) {
           (awaitBranch && (awaitBranch.W ||= []),
           tryPlaceholder
             ? (awaitCounter = addAwaitCounter(scope, tryPlaceholder))
-            : awaitCounter.i++ ||
-              requestAnimationFrame(
-                () =>
-                  awaitCounter.i &&
-                  runEffects(
-                    prepareEffects(() =>
-                      queueRender(
-                        scope,
-                        () => {
-                          awaitBranch.V ||
-                            (awaitBranch.S.parentNode.insertBefore(
-                              scope[nodeAccessor],
-                              awaitBranch.S,
-                            ),
-                            tempDetachBranch(tryBranch));
-                        },
-                        -1,
-                      ),
-                    ),
-                  ),
-              )));
+            : scheduleAwaitFrame(awaitCounter, scope, () => {
+                awaitBranch.V ||
+                  (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
+                  tempDetachBranch(tryBranch));
+              })));
       let thisPromise = (scope[promiseAccessor] = promise.then(
         (data) => {
           if (thisPromise === scope[promiseAccessor]) {
@@ -1893,34 +1877,27 @@ function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
     awaitCounter?.i ||
       (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
     placeholderShown.add(pendingEffects),
-    awaitCounter.i++ ||
-      requestAnimationFrame(
-        () =>
-          awaitCounter.i &&
-          runEffects(
-            prepareEffects(() =>
-              queueRender(
-                tryBranch,
-                () => {
-                  (insertBranchBefore(
-                    (tryBranch.P = createAndSetupBranch(
-                      tryBranch.$,
-                      tryBranch.Q,
-                      tryBranch._,
-                      tryBranch.S.parentNode,
-                    )),
-                    tryBranch.S.parentNode,
-                    tryBranch.S,
-                  ),
-                    tempDetachBranch(tryBranch));
-                },
-                -1,
-              ),
-            ),
-          ),
+    scheduleAwaitFrame(awaitCounter, tryBranch, () => {
+      (insertBranchBefore(
+        (tryBranch.P = createAndSetupBranch(
+          tryBranch.$,
+          tryBranch.Q,
+          tryBranch._,
+          tryBranch.S.parentNode,
+        )),
+        tryBranch.S.parentNode,
+        tryBranch.S,
       ),
+        tempDetachBranch(tryBranch));
+    }),
     awaitCounter
   );
+}
+function scheduleAwaitFrame(awaitCounter, scope, render) {
+  awaitCounter.i++ ||
+    requestAnimationFrame(
+      () => awaitCounter.i && runEffects(prepareEffects(() => queueRender(scope, render, -1))),
+    );
 }
 function createAwaitCounter(tryBranch, done) {
   let awaitCounter = (tryBranch.O = {
