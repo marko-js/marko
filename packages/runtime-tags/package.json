@@ -33,6 +33,7 @@
       "types": "./index.d.ts"
     },
     "./cheatsheet.md": "./cheatsheet.md",
+    "./package.json": "./package.json",
     "./translator": "./src/translator/index.ts",
     "./tags/*": "./tags/*",
     "./debug/*": "./src/*.ts",

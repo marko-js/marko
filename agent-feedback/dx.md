@@ -122,12 +122,6 @@ The React `useEffect` habit compiles clean and leaks: `<script>const id = setInt
 
 All six typed SSR controllable helpers (`_attr_input_checked`, `_attr_input_checkedValue`, `_attr_details_or_dialog_open`, `_attr_select_value`, `_attr_input_value`, `_attr_textarea_value`) funnel into `writeControlledScope`, whose MARKO_DEBUG guard calls `assertHandlerIsFunction("valueChange", valueChange)`, so a non-function `checkedChange`, `checkedValueChange` or `openChange` throws naming an attribute the author never wrote. `dom/controllable.ts` passes the real name at all five of its call sites, so the identical authoring mistake reads correctly on the client and misdirects on the server — the one an SSR-first render surfaces. `writeControlledScope` already receives the `ControlledType`, which maps 1:1 onto the handler name (`common/constants/controlled-type.ts`), so derive it there under debug or thread the name in per call site. Re-verify: `_attr_input_checked(0, "#input/0", true, "oops")` must report `checkedChange`, not `valueChange`.
 
-## Add `"./package.json"` to the source-mode `exports` map so it resolves the way the published map does
-
-`packages/runtime-tags/package.json` › `exports` | 2026-07-27 | impact:low | effort:low
-
-`"./package.json": "./package.json"` is declared only in `exports:override` — the map `scripts/pkg-override.js` swaps in at publish — so in the monorepo, and in any workspace linked against source, the subpath falls through the catch-all `"./*": "./src/*.ts"` to the nonexistent `src/package.json.ts`. Reading a dependency's own `package.json` for its version or root is routine for bundlers and dev tooling, so this breaks in source mode while looking fine from npm; sibling `@marko/compiler` lists both `"./package"` and `"./package.json"` in each of its maps, so the omission reads as an oversight. Add the key to `exports` beside the existing `"./cheatsheet.md"` entry. Re-verify from the repo root: `node -e 'require.resolve("@marko/runtime-tags/package.json")'` throws `Cannot find module '<repo>/node_modules/@marko/runtime-tags/src/package.json.ts'`.
-
 ## Reject unknown attribute tags on `<try>` — a `<@placholder>`/`<@cath>` typo compiles clean and silently drops the pending/error UI
 
 `packages/runtime-tags/src/translator/core/try.ts` › `analyze` | 2026-07-27 | impact:med | effort:low
