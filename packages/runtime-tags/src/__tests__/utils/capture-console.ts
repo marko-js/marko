@@ -1,3 +1,5 @@
+import { inspect } from "node:util";
+
 import type { VirtualConsole } from "jsdom";
 
 export interface ConsoleRecord {
@@ -51,6 +53,24 @@ export function captureConsole(virtualConsole?: VirtualConsole) {
 
 export function formatConsoleRecord(record: ConsoleRecord) {
   return record.args.length
-    ? `${record.type.toUpperCase()} ${record.args.map((arg) => JSON.stringify(arg)).join(" ")}`
+    ? `${record.type.toUpperCase()} ${record.args.map(formatConsoleArg).join(" ")}`
     : "";
+}
+
+function formatConsoleArg(arg: unknown) {
+  switch (typeof arg) {
+    case "string":
+    case "number":
+    case "boolean":
+      return JSON.stringify(arg);
+    default:
+      // `String()` for errors: `inspect` would embed a machine-specific stack.
+      // `inspect` for the rest: it survives circular values and keeps
+      // `undefined`/functions/symbols visible where `JSON.stringify` drops them.
+      return arg === null
+        ? "null"
+        : arg instanceof Error
+          ? String(arg)
+          : inspect(arg);
+  }
 }
