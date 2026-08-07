@@ -275,6 +275,17 @@ export function some<T>(
     : false;
 }
 
+export function every<T>(
+  data: Opt<T>,
+  cb: (item: T, index: number) => boolean,
+): boolean {
+  return data !== undefined
+    ? Array.isArray(data)
+      ? data.every(cb)
+      : !!cb(data, 0)
+    : true;
+}
+
 export function toArray<T, R>(
   data: Opt<T>,
   cb: (item: T, index: number) => R,

@@ -1,0 +1,7 @@
+<let/count=0/>
+<main>
+  <if=(count > input.min && Math.random() > 0.5)>
+    <p>win</p>
+  </if>
+  <button onClick() { count = count + 1 }>+</button>
+</main>
