@@ -129,12 +129,17 @@ export const IfTag = {
         const bodySection = getSectionForBody(tagBody);
 
         if (bodySection) {
-          const [[ifTag]] = getBranches(tag);
+          const branches = getBranches(tag);
+          const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
           resumeOwnerByMarkerWhenStatic(
             ifTagSection,
             bodySection,
-            getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection),
+            getOptimizedOnlyChildNodeBinding(
+              ifTag,
+              ifTagSection,
+              branches.length,
+            ),
             kStatefulReason,
           );
           writer.flushInto(tag);
@@ -148,8 +153,12 @@ export const IfTag = {
           const nodeBinding = getOptimizedOnlyChildNodeBinding(
             ifTag,
             ifTagSection,
+            branches.length,
           );
-          const onlyChildParentTagName = getOnlyChildParentTagName(ifTag);
+          const onlyChildParentTagName = getOnlyChildParentTagName(
+            ifTag,
+            branches.length,
+          );
           const markerSerializeReason = getSerializeReason(
             ifTagSection,
             nodeBinding,
@@ -286,7 +295,11 @@ export const IfTag = {
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
           const ifTagExtra = branches[0][0].node.extra!;
-          const nodeRef = getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection);
+          const nodeRef = getOptimizedOnlyChildNodeBinding(
+            ifTag,
+            ifTagSection,
+            branches.length,
+          );
 
           let expr: t.Expression = t.numericLiteral(branches.length);
 
