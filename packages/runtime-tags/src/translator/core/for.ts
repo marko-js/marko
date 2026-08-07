@@ -156,6 +156,8 @@ export default {
     const bodySection = startSection(tagBody);
 
     if (!bodySection) {
+      // An empty loop body deliberately compiles the whole tag away (not an
+      // error, unlike `<if>`); the `for-empty-bodies` fixture pins this.
       dropNodes(getAllTagReferenceNodes(tag.node));
       return;
     }
