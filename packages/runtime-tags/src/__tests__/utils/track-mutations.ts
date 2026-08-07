@@ -283,20 +283,6 @@ function formatMutationRecord(record: MutationRecord) {
   if (record.type === "characterData") {
     if (nodeInfo.isIgnoredNode(target.parentNode!)) return;
 
-    const newValue = target.nodeValue;
-
-    // if the new value begins with the old value
-    // and whitespace delimits the old value and remaining new value
-    if (
-      newValue?.indexOf(oldValue!) === 0 &&
-      (/\s$/ms.test(oldValue!) || /\s$/ms.test(newValue![oldValue!.length]))
-    ) {
-      // filter out invalid records that jsdom creates
-      // see https://github.com/jsdom/jsdom/issues/3261
-      // TODO: remove if fixed
-      return;
-    }
-
     return `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
       oldValue || "",
     )} => ${JSON.stringify(target.nodeValue || "")}`;
