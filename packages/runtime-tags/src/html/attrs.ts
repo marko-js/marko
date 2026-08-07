@@ -430,7 +430,18 @@ function writeControlledScope(
   serializeType?: 1,
 ) {
   if (MARKO_DEBUG) {
-    assertHandlerIsFunction("valueChange", valueChange);
+    // Indexed by `ControlledType` so the error names the attribute the
+    // author wrote, matching the client-side assertions in dom/controllable.ts.
+    assertHandlerIsFunction(
+      [
+        "checkedChange",
+        "checkedValueChange",
+        "valueChange",
+        "valueChange",
+        "openChange",
+      ][type]!,
+      valueChange,
+    );
   }
 
   _scope(
