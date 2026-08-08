@@ -80,12 +80,6 @@ Two lookups drop translator-emitted debug info. (1) `writeObjectProps` passes th
 
 The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix subtracting 1 from the result), i.e. `x = x + 1` rather than JS's `x = ToNumeric(x) + 1`. With `<let/x="5"/>`, `x++` sets `x` to `"51"` and yields `50` instead of `6` and `5`; a `<let>` holding a bigint throws `Cannot mix BigInt and other types`. Wrapping the read in unary `+` fixes the string case but breaks bigint, so the lowering needs a real `ToNumeric` coercion — or `++`/`--` must be rejected on a tag variable whose type is not known numeric. Re-verify: compile `<let/x="5"/><button onClick(){ const v = x++ }>${x}</button>` with `-o dom`; the handler emits `const v = $x($scope, $scope.x + 1) - 1`.
 
-## Error when one program lazily imports the same template with two different `load` triggers
-
-`packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `getOrCreateHtmlLoadWrapped` | 2026-07-23 | impact:low | effort:low
-
-`getOrCreateHtmlLoadWrapped` caches its wrapper in a per-program map keyed only by `readyId`, so a second lazy import of the same `.marko` silently reuses the first wrapper — including the first import's trigger list — for all its references. The DOM half does not dedupe, so server and client disagree about when the asset loads. `html/assets.ts` › `addAsset` warns about mismatched triggers under MARKO_DEBUG, but the dedupe means the second trigger set never reaches it, so a same-program conflict is silent. Raise a `buildCodeFrameError` when the second import's `LoadImportConfig` differs from the cached one. Re-verify: compile a template importing `./child.marko` with `load: "render"` and with `load: "idle"` — `output: "html"` emits only `$A_withLoadAssets` with no triggers, while `output: "dom"` emits a separate `_load_idle_trigger()`.
-
 ## Align the spread `<input>` controllable ladders in HTML `_attrs` and DOM `_controllable_input`
 
 `packages/runtime-tags/src/html/attrs.ts` › `_attrs` | 2026-07-23 | impact:med | effort:med
