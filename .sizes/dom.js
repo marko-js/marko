@@ -1,4 +1,4 @@
-// size: 27071 (min) 10044 (brotli)
+// size: 27265 (min) 10102 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -43,6 +43,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   isScheduled,
   channel,
   patchFills = {},
+  closureFillJoins = {},
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -681,6 +682,28 @@ function _fill_join_for(key, valueAccessor, join, ...hops) {
   let dispatch = join;
   for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
   return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_closure(key, valueAccessor, join, index) {
+  let signals = (closureFillJoins[key] ??= []),
+    closureJoin = join;
+  return (
+    (signals[index] = join),
+    (closureJoin.c = index),
+    signals.d ||
+      ((signals.d = 1),
+      fillJoin(key, valueAccessor, join, (scope) => {
+        let instances = scope[closureJoin.a];
+        if (instances) {
+          let signalIndex = closureJoin.b;
+          for (let childScope of instances)
+            if (childScope.H > 0 && childScope.H < runId) {
+              let sig = signals[childScope[signalIndex] || 0];
+              sig && queueRender(childScope, sig, -1);
+            }
+        }
+      })),
+    join
+  );
 }
 function fill(key, signal) {
   return ((patchFills[key] = signal), signal);
