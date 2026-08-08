@@ -49,7 +49,7 @@ import {
   mergeGlobalReads,
   type ReferencedBindings,
 } from "./references";
-import { callRuntime, importRuntime } from "./runtime";
+import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   getDynamicClosureIndex,
@@ -75,7 +75,7 @@ import {
 } from "./serialize-reasons";
 import { isShellDropped } from "./shell";
 import { simplifyFunction } from "./simplify-fn";
-import { createProgramState, createSectionState } from "./state";
+import { createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
 import {
   toMemberExpression,
@@ -1092,26 +1092,28 @@ export function writeSignals(section: Section) {
               "Marko: expected a branch closure shape for a client-owned fill read.",
             );
           }
-          if (closureShape === "_closure_get") {
-            // Independent lazy joins for one key would each dispatch to
-            // every subscribed scope, cross-rendering values: fail closed.
-            const lazyJoins = getLazyFillJoins();
-            if (lazyJoins.has(signal.referencedBindings)) {
-              throw new Error(
-                "Marko: a server value cannot yet fill more than one deep position inside client-owned structure.",
-              );
-            }
-            lazyJoins.add(signal.referencedBindings);
-          }
-          value = callRuntime(
-            "_fill_join",
-            t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
-            getScopeAccessorLiteral(signal.referencedBindings, true),
-            value,
-            ...(closureShape === "_closure_get"
-              ? [importRuntime("_closure")]
-              : []),
-          );
+          value =
+            closureShape === "_closure_get"
+              ? // Deep closure positions reassemble the indexed composite via a
+                // shared per-key table, selected by the serialized index.
+                callRuntime(
+                  "_fill_join_closure",
+                  t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
+                  getScopeAccessorLiteral(signal.referencedBindings, true),
+                  value,
+                  t.numericLiteral(
+                    getDynamicClosureIndex(
+                      signal.referencedBindings,
+                      signal.section,
+                    ),
+                  ),
+                )
+              : callRuntime(
+                  "_fill_join",
+                  t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
+                  getScopeAccessorLiteral(signal.referencedBindings, true),
+                  value,
+                );
         } else if (
           signal.referencedBindings &&
           isPatchFillBinding(signal.referencedBindings) &&
@@ -1212,9 +1214,6 @@ export function writeSignals(section: Section) {
 
   return written;
 }
-
-// Bindings that already registered a lazy (`_closure_get`) fill join.
-const [getLazyFillJoins] = createProgramState(() => new Set<Binding>());
 
 // Whether every section from `section` up to (excluding) `owner` is a
 // branch: the shape whose closures dispatch from the owner scope.

@@ -36,7 +36,6 @@ import {
   scopeReasonRuntime,
 } from "../../util/persisted";
 import {
-  type Binding,
   BindingType,
   getCanonicalExtra,
   getReadReplacement,
@@ -50,7 +49,6 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  isDirectClosure,
   type Section,
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
@@ -337,19 +335,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         : "Persisted templates currently support only escaped dynamic text and dynamic attributes in native HTML.",
     );
   };
-  // A second deep fill position per server value would need the shared
-  // indexed `_closure` composite that does not exist yet: fail closed.
-  const lazyFillSections = new Map<Binding, Section>();
   // Inside client-owned structure the only delivery channel is an owner
   // fill: reads that neither recompute client-side nor promote fail closed.
   const assertDeliverableInClientOwned = (
     node: t.Node,
-    section: Section,
     value: t.Expression,
     extra: t.NodeExtra | undefined,
   ) => {
-    const lone =
-      !Array.isArray(extra?.referencedBindings) && extra?.referencedBindings;
     if (extra?.globalBindings) {
       unsupported(
         node,
@@ -395,22 +387,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           node,
           "a server value read inside client-owned structure must deliver as a fill",
         );
-      }
-      if (
-        binding === lone &&
-        sources?.param &&
-        isPatchFillBinding(binding) &&
-        binding.section !== section &&
-        !isDirectClosure(section, binding)
-      ) {
-        const prev = lazyFillSections.get(binding);
-        if (prev && prev !== section) {
-          unsupported(
-            node,
-            "a server value cannot yet fill more than one deep position inside client-owned structure",
-          );
-        }
-        lazyFillSections.set(binding, section);
       }
     });
     assertNoServerFnCalls(node, value);
@@ -584,12 +560,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         );
       }
       if (inClientOwnedStructure(section)) {
-        assertDeliverableInClientOwned(
-          node,
-          section,
-          node.value,
-          node.value.extra,
-        );
+        assertDeliverableInClientOwned(node, node.value, node.value.extra);
       }
     },
     MarkoScriptlet({ node }) {
@@ -728,7 +699,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             if (attr.type === "MarkoAttribute") {
               assertDeliverableInClientOwned(
                 attr,
-                section,
                 attr.value,
                 attr.value.extra,
               );
@@ -768,7 +738,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // Inside client-owned structure a child is a pure client instance
         // (input re-applies via tag-args signals; server values fill).
         if (inClientOwnedStructure(getSection(tag))) {
-          const section = getSection(tag);
           if (node.var) {
             unsupported(
               node,
@@ -810,7 +779,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             } else {
               assertDeliverableInClientOwned(
                 attr,
-                section,
                 attr.value,
                 attr.value.extra,
               );
@@ -1089,12 +1057,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             );
           }
           if (clientOwnedStructure) {
-            assertDeliverableInClientOwned(
-              attr,
-              getSection(tag),
-              attr.value,
-              attr.value.extra,
-            );
+            assertDeliverableInClientOwned(attr, attr.value, attr.value.extra);
           }
         }
         if (attr.type === "MarkoAttribute" && controlled.has(attr)) continue;
