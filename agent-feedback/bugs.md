@@ -362,12 +362,6 @@ For a `computed === true` object-pattern property this appends a synthetic prope
 
 When a property's value is circular, `writeProp` returns false, `writeObjectProps` pops the already-pushed `key:` chunk, and `writeAssigned` re-creates it at the end of the payload, moving it last in key order. Plain objects are the only container that reorders: `writeArray` keeps the slot so the assignment fills the hole in place, and `writeMap`/`writeSet` defer every later entry once one defers. Order is observable through `common/for.ts` › `forIn` (a `for…in`), so `<for|k,v| in=obj>` renders one order on the server and another after resume. Match the array behavior by leaving an `undefined` placeholder (`key:$`, setting `state.wroteUndefined`) when the failed write queued an assignment, which needs `writeProp`'s return to separate "deferred" from "elided". Re-verify: `const o={title:"t",self:null,count:3}; o.self=o;` stringifies to `_=>(_([1,{graph:_.a={title:"t",count:3}}]),_.a.self=_.a,0)`.
 
-## Ignore `MarkoComment` children in `assertNoBodyContent` — a comment-only `<attrs>`/`<effect>` body is a hard compile error
-
-`packages/runtime-tags/src/translator/util/assert.ts` › `assertNoBodyContent` | 2026-07-27 | impact:low | effort:low
-
-`assertNoBodyContent` tests `tag.node.body.body.length` raw, but Marko comments survive in `body.body` until `visitors/comment.ts` › `translate.exit` calls `comment.remove()`, so `<attrs/{ a }><!-- todo --></attrs>` and `<effect() { … }><!-- todo --></effect>` both fail with "does not support body content" even though an empty or whitespace-only body compiles. Those two are the only reachable callers: the other seven (`const`, `let`, `id`, `return`, `log`, `debug`, `lifecycle`) set `parseOptions.openTagOnly` so the parser rejects the close tag first, and `<script>` sets `parseOptions.text`. `translator/util/is-only-child-in-parent.ts` › `getOnlyChildParentTagName` already filters `node.type !== "MarkoComment"` for exactly this kind of body-length test; `tag.node.body.body.some((child) => child.type !== "MarkoComment")` here matches it. Re-verify: `pnpm run compile -o html -d` on `<effect() { console.log(1) }>`, an indented `<!-- todo -->`, then `</effect>` prints "does not support body content", while deleting only the comment line compiles.
-
 ## Fold `analyzedTags` into the compile cache's mtime invalidation
 
 `packages/compiler/src/babel-plugin/index.js` › `getMarkoFile` | 2026-07-27 | impact:low | effort:med

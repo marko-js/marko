@@ -46,6 +46,7 @@ export function assertNoTagVarMutation(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function assertNoBodyContent(tag: t.NodePath<t.MarkoTag>) {
+  // Comments count as body content here (wont-fix): these tags support none.
   if (tag.node.body.body.length) {
     const tagName = tag.get("name");
     const tagNameLiteral = (tagName.node as t.StringLiteral).value;
