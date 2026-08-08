@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 
-import { isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
@@ -58,7 +57,12 @@ export default {
       const { node } = placeholder;
       const valueExtra = evaluate(node.value);
       const { confident, computed } = valueExtra;
-      if (confident && isVoid(computed)) return;
+      if (
+        confident &&
+        getHTMLRuntime()[node.escape ? "_escape" : "_unescaped"](computed) ===
+          ""
+      )
+        return;
 
       if (!isStaticText(node)) {
         const section = getOrCreateSection(placeholder);
@@ -77,11 +81,14 @@ export default {
 
       const { node } = placeholder;
       const { confident, computed } = evaluate(node.value);
-      if (confident && isVoid(computed)) return;
+      const staticText = confident
+        ? getHTMLRuntime()[node.escape ? "_escape" : "_unescaped"](computed)
+        : undefined;
+      if (staticText === "") return;
 
       const extra = node.extra || {};
       if (confident && node.escape) {
-        structure.writeTo(placeholder)`${getHTMLRuntime()._escape(computed)}`;
+        structure.writeTo(placeholder)`${staticText!}`;
       } else {
         const siblingText = extra[kSiblingText]!;
         if (
@@ -124,7 +131,10 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const valueExtra = evaluate(value);
   const { confident, computed } = valueExtra;
 
-  if (confident && isVoid(computed)) {
+  if (
+    confident &&
+    getHTMLRuntime()[node.escape ? "_escape" : "_unescaped"](computed) === ""
+  ) {
     placeholder.remove();
     return;
   }

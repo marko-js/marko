@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
-import { isNotVoid, isVoid } from "../../common/helpers";
 import evaluate from "./evaluate";
+import { getHTMLRuntime } from "./runtime";
 import { getNodeContentType } from "./sections";
 
 // A run of adjacent static text (literal `MarkoText` and confident non-void escaped
@@ -13,7 +13,7 @@ export function isStaticText(node?: t.Node) {
     case "MarkoPlaceholder": {
       if (node.escape) {
         const { confident, computed } = evaluate(node.value);
-        return confident && isNotVoid(computed);
+        return confident && getHTMLRuntime()._escape(computed) !== "";
       }
       return false;
     }
@@ -35,7 +35,14 @@ export function getPrevStaticSibling(path: t.NodePath) {
   return prev.node;
 }
 
+// Asking the runtime's own text writers keeps these checks in lockstep with
+// what would render (`""`, `NaN` and `0n` write nothing).
 function isEmptyPlaceholder(placeholder: t.MarkoPlaceholder) {
   const { confident, computed } = evaluate(placeholder.value);
-  return confident && isVoid(computed);
+  return (
+    confident &&
+    getHTMLRuntime()[placeholder.escape ? "_escape" : "_unescaped"](
+      computed,
+    ) === ""
+  );
 }
