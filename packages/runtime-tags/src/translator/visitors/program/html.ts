@@ -518,7 +518,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               reason = "renders a nested child without analyzable input";
             }
             for (const group of ownership || []) {
-              if (group.serverRequired || group.globalFed) {
+              if (
+                (group.serverRequired &&
+                  (group.stateFed || group.serverable)) ||
+                group.globalFed
+              ) {
                 reason = "feeds a nested child an input it needs server-owned";
                 break;
               }
@@ -799,8 +803,12 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           for (const group of ownership || []) {
             // A structural or `$global`-mixed child param needs server
-            // ownership, which a skipped region cannot provide.
-            if (group.serverRequired || group.globalFed) {
+            // ownership, which a skipped region cannot provide; an unfed
+            // (or constant-fed) group can never change, so it may pass.
+            if (
+              (group.serverRequired && (group.stateFed || group.serverable)) ||
+              group.globalFed
+            ) {
               unsupported(
                 node,
                 "an input the child needs server-owned cannot feed from client-owned structure",
