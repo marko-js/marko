@@ -6,7 +6,7 @@ import lassoPackageRoot from "lasso-package-root";
 import taglibConfig from "../config";
 import * as taglibLoader from "../loader";
 
-var findCache = {};
+var findCache = new Map();
 var excludedDirs = {};
 var excludedPackages = {};
 
@@ -53,9 +53,21 @@ function getAllDependencyNames(pkg) {
 }
 
 function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
-  var cached = findCache[dirname];
+  return findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs).taglibs;
+}
+
+function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
+  // The walk and `exclusiveTagDiscoveryDirs` depend on the translator, so a
+  // mixed Marko 5/6 process must not share entries across translators. The
+  // `registeredTaglibs` array identity is per translator (memoized upstream)
+  // and carries `tagDiscoveryDirs` with it.
+  var cachedByDirname = findCache.get(registeredTaglibs);
+  if (!cachedByDirname) {
+    findCache.set(registeredTaglibs, (cachedByDirname = new Map()));
+  }
+  var cached = cachedByDirname.get(dirname);
   if (cached) {
-    return cached.taglibs;
+    return cached;
   }
 
   var taglibs = [];
@@ -139,8 +151,9 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
     addTaglib(registeredTaglibs[i]);
   }
 
-  findCache[dirname] = { exclusiveTagDiscoveryDirs, taglibs };
-  return taglibs;
+  cached = { exclusiveTagDiscoveryDirs, taglibs };
+  cachedByDirname.set(dirname, cached);
+  return cached;
 
   function addTaglib(taglib) {
     if (!added.has(taglib.id)) {
@@ -150,17 +163,10 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
   }
 }
 
-find._withMeta = function findWithMeta(
-  dirname,
-  registeredTaglibs,
-  tagDiscoveryDirs,
-) {
-  find(dirname, registeredTaglibs, tagDiscoveryDirs);
-  return findCache[dirname];
-};
+find._withMeta = findWithMeta;
 
 function clearCache() {
-  findCache = {};
+  findCache = new Map();
 }
 
 function excludeDir(dir) {
