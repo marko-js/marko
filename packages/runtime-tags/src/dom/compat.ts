@@ -58,6 +58,9 @@ export const compat = {
   setClassEventResolver(fn: (value: unknown, scope: Scope) => unknown) {
     classEventResolver = fn;
   },
+  resumeClassFunction(id: string, build: (scope: Scope) => unknown) {
+    _resume(id, build);
+  },
   getScope($global: Record<string, unknown>, scopeId: unknown) {
     return getRenderScopes($global)?.[scopeId as string];
   },

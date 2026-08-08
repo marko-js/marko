@@ -1,3 +1,5 @@
-exports.s = require("./runtime-html.js").p(
-  require("@marko/runtime-tags/html").compat,
-);
+const htmlCompat = require("@marko/runtime-tags/html").compat;
+
+exports.s = require("./runtime-html.js").p(htmlCompat);
+exports.f = (id, fn, component, out) =>
+  htmlCompat.registerClassFunction(out.global, id, fn, component.id);

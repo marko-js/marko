@@ -24,12 +24,13 @@ const _marko_componentType = "__tests__/template.marko", _marko_template = (0, i
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = { onCreate() {
 	this.state = { n: 0 };
+	this.holder = { fn: () => {} };
 } };
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.be("div", { "id": "class" }, "0", _component, null, 1);
 	out.t(state.n, _component);
 	out.ee();
-	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "data": { nested: { fn() {} } } }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "data": { nested: _component.holder } }), null, null, null, _componentDef, "1");
 }, {
 	t: _marko_componentType,
 	d: true

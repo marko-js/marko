@@ -31,6 +31,9 @@ var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_class_fn = (_component) => function() {
+	_component.handleChange();
+};
 const _marko_component = {
 	onCreate() {
 		this.state = { changed: 0 };
@@ -43,9 +46,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 	out.w("<div id=class-parent>");
 	out.w((0, import_escape_xml.x)(state.changed));
 	out.w("</div>");
-	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "onChange": function() {
-		_component.handleChange();
-	} }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "onChange": f("__tests__/template.marko/h0", _marko_class_fn(_component), _component, out) }), null, null, null, _componentDef, "1");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "2");
 }, {
 	t: _marko_componentType,

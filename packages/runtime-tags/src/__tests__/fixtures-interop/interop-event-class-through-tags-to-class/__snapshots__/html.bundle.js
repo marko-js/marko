@@ -25,11 +25,12 @@ var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 const _marko_componentType = "a", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_class_fn = (_component) => function() {
+	_component.handleChange();
+};
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<div id=class-parent>${(0, import_escape_xml.x)(state.changed)}</div>`);
-	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "onChange": function() {
-		_component.handleChange();
-	} }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "onChange": f("a/h0", _marko_class_fn(_component), _component, out) }), null, null, null, _componentDef, "1");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "2");
 }, { t: _marko_componentType }, {
 	onCreate() {

@@ -1,8 +1,9 @@
 class {
   onCreate() {
     this.state = { n: 0 };
+    this.holder = { fn: () => {} };
   }
 }
 <div id="class">${state.n}</div>
-<tags-child data={ nested: { fn() {} } }/>
+<tags-child data={ nested: component.holder }/>
 <init-components/>

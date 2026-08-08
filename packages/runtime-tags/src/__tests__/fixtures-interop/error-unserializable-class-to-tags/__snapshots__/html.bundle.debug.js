@@ -25,12 +25,13 @@ var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = { onCreate() {
 	this.state = { n: 0 };
+	this.holder = { fn: () => {} };
 } };
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<div id=class>");
 	out.w((0, import_escape_xml.x)(state.n));
 	out.w("</div>");
-	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "data": { nested: { fn() {} } } }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "data": { nested: _component.holder } }), null, null, null, _componentDef, "1");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "2");
 }, {
 	t: _marko_componentType,

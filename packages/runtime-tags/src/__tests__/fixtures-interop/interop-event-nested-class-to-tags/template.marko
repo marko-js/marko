@@ -1,0 +1,20 @@
+class {
+  onCreate() {
+    this.state = { pinged: "none", bumped: "none" };
+  }
+  handlePing(count) {
+    this.state.pinged = count;
+  }
+  handleBump(count) {
+    this.state.bumped = count;
+  }
+}
+<div id="class">${state.pinged}</div>
+<div id="class-bump">${state.bumped}</div>
+<tags-pinger handlers={
+  nested: { ping: (count) => component.handlePing(count) },
+  bump(count) {
+    component.handleBump(count);
+  }
+}/>
+<init-components/>
