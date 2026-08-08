@@ -23,7 +23,11 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   out.w(" Hello");
   out.w("</div>");
   out.w("<pre>");
-  out.w("\n    This should  \n      be preserved\n  ");
+  out.w("\n    This should  \n      be preserved\n    ");
+  out.w("<textarea>");
+  out.w("nested");
+  out.w("</textarea>");
+  out.w("\n    still   preserved\n  ");
   out.w("</pre>");
   out.w("<div>");
   out.w("<div>");

@@ -19,15 +19,19 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.t(" Hello", _component);
   out.ee();
   out.be("pre", null, "4", _component, null, 0);
-  out.t("\n    This should  \n      be preserved\n  ", _component);
+  out.t("\n    This should  \n      be preserved\n    ", _component);
+  out.be("textarea", null, "5", _component, null, 0);
+  out.t("nested", _component);
   out.ee();
-  out.be("div", null, "5", _component, null, 0);
+  out.t("\n    still   preserved\n  ", _component);
+  out.ee();
   out.be("div", null, "6", _component, null, 0);
+  out.be("div", null, "7", _component, null, 0);
   out.t("Hello ", _component);
   out.ee();
   out.ee();
   out.ee();
-  out.be("div", null, "7", _component, null, 0);
+  out.be("div", null, "8", _component, null, 0);
   scriptletA();
   scriptletB();
   out.t("Hello ", _component);
@@ -38,7 +42,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.t(" Hello World! ", _component);
   out.t(a, _component);
   out.t(b, _component);
-  out.e("div", null, "8", _component, 0, 0);
+  out.e("div", null, "9", _component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true,
