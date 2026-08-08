@@ -10,6 +10,8 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 
+// No `types`/`.d.marko` on purpose: a stub could only type the pattern as
+// `any`, and the tag is deprecated — run the `<const>` migration for typing.
 export default {
   migrate: [
     (tag) => {
