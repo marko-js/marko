@@ -103,4 +103,19 @@ describe("resolveCursorPosition", () => {
       `expected position <= 2 (updatedValue length), got ${pos}`,
     );
   });
+  it("counts astral alphanumerics as one unit on both sides", () => {
+    assert.equal(
+      resolveCursorPosition(
+        "",
+        5,
+        "(\u{20BB7}\u{20BB8}\u{20BB9}) x",
+        "(\u{20BB7}) \u{20BB8}\u{20BB9}y",
+      ),
+      7,
+    );
+    assert.equal(
+      resolveCursorPosition("", 5, "(5405) 810-9227", "(540) 581-0922"),
+      7,
+    );
+  });
 });

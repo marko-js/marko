@@ -1,4 +1,4 @@
-const R = /[^\p{L}\p{N}]/gu;
+const R = /[\p{L}\p{N}]/gu;
 
 export function resolveCursorPosition(
   inputType: string,
@@ -18,12 +18,11 @@ export function resolveCursorPosition(
     const after = initialValue.slice(initialPosition);
     if (updatedValue.startsWith(before)) return initialPosition;
     if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
-    let count = before.replace(R, "").length;
-    let pos = 0;
-    while (count && updatedValue[pos]) {
-      if (updatedValue[pos++].replace(R, "")) count--;
-    }
-    return pos;
+    // Whole-code-point matches keep astral letters one unit on both sides;
+    // `match` resets `lastIndex`, and each `test` advances it to the walk pos.
+    let count = before.match(R)?.length;
+    while (count && R.test(updatedValue)) count--;
+    return count ? updatedValue.length : R.lastIndex;
   }
   return -1;
 }
