@@ -17,11 +17,9 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // template.marko
 const $received = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
-function $onValueChanged($scope) {
-	return function(value) {
-		$received($scope, value);
-	};
-}
+const $onValueChanged = ($scope) => function(value) {
+	$received($scope, value);
+};
 _resume("a0", $onValueChanged);
 
 // v:template.marko.hydrate-6.js

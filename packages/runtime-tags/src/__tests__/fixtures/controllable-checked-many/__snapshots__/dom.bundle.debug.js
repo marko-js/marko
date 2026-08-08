@@ -24,21 +24,17 @@ function $setup($scope) {
 		false
 	]);
 }
-function $checkedChange($scope) {
-	return (_new_checked) => {
-		$for_content__checked($scope, _new_checked);
-	};
-}
-function $valueChange($scope) {
-	return function(value) {
-		if ($scope["#LoopKey"] === undefined) {
-			throw new Error("LoopKey is undefined");
-		}
-		const newStates = [...$scope._.states];
-		newStates[$scope["#LoopKey"]] = value;
-		$states($scope._, newStates);
-	};
-}
+const $checkedChange = ($scope) => (_new_checked) => {
+	$for_content__checked($scope, _new_checked);
+};
+const $valueChange = ($scope) => function(value) {
+	if ($scope["#LoopKey"] === undefined) {
+		throw new Error("LoopKey is undefined");
+	}
+	const newStates = [...$scope._.states];
+	newStates[$scope["#LoopKey"]] = value;
+	$states($scope._, newStates);
+};
 _resume("__tests__/template.marko_1/checkedChange", $checkedChange);
 _resume("__tests__/template.marko_1/valueChange", $valueChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

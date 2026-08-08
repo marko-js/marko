@@ -10,21 +10,15 @@ const $setup__script = _script("a3", ($scope) => {
 	_attr_input_checkedValue_script($scope, "b");
 	_attr_input_checkedValue_script($scope, "c");
 });
-function $checkedValueChange3($scope) {
-	return function(v) {
-		$checked($scope, +v);
-	};
-}
-function $checkedValueChange2($scope) {
-	return function(v) {
-		$checked($scope, +v);
-	};
-}
-function $checkedValueChange($scope) {
-	return function(v) {
-		$checked($scope, +v);
-	};
-}
+const $checkedValueChange3 = ($scope) => function(v) {
+	$checked($scope, +v);
+};
+const $checkedValueChange2 = ($scope) => function(v) {
+	$checked($scope, +v);
+};
+const $checkedValueChange = ($scope) => function(v) {
+	$checked($scope, +v);
+};
 _resume("a2", $checkedValueChange3);
 _resume("a1", $checkedValueChange2);
 _resume("a0", $checkedValueChange);

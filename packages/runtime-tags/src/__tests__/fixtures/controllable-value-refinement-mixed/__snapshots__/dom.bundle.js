@@ -19,15 +19,11 @@ const $setup__script = _script("a2", ($scope) => {
 	_attr_input_value_script($scope, "c");
 	_attr_input_value_script($scope, "d");
 });
-function $valueChange3($scope) {
-	return (_new_value) => {
-		$value($scope, _new_value);
-	};
-}
-function $valueChange4($scope) {
-	return (_new_value) => {
-		$value($scope, parseInt(_new_value));
-	};
-}
+const $valueChange3 = ($scope) => (_new_value) => {
+	$value($scope, _new_value);
+};
+const $valueChange4 = ($scope) => (_new_value) => {
+	$value($scope, parseInt(_new_value));
+};
 _resume("a0", $valueChange3);
 _resume("a1", $valueChange4);

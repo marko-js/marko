@@ -16,21 +16,15 @@ function $setup($scope) {
 	$checked($scope, 0);
 	$setup__script($scope);
 }
-function $checkedValueChange3($scope) {
-	return function(v) {
-		$checked($scope, +v);
-	};
-}
-function $checkedValueChange2($scope) {
-	return function(v) {
-		$checked($scope, +v);
-	};
-}
-function $checkedValueChange($scope) {
-	return function(v) {
-		$checked($scope, +v);
-	};
-}
+const $checkedValueChange3 = ($scope) => function(v) {
+	$checked($scope, +v);
+};
+const $checkedValueChange2 = ($scope) => function(v) {
+	$checked($scope, +v);
+};
+const $checkedValueChange = ($scope) => function(v) {
+	$checked($scope, +v);
+};
 _resume("__tests__/template.marko_0/checkedValueChange3", $checkedValueChange3);
 _resume("__tests__/template.marko_0/checkedValueChange2", $checkedValueChange2);
 _resume("__tests__/template.marko_0/checkedValueChange", $checkedValueChange);

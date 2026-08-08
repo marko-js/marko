@@ -27,10 +27,8 @@ function $setup($scope) {
 	});
 	$input_item($scope["#childScope/0"], $item);
 }
-function $onClick($locals) {
-	return function(ev) {
-		ev.target.textContent = $locals["foo/4"];
-	};
-}
+const $onClick = ($locals) => function(ev) {
+	ev.target.textContent = $locals["foo/4"];
+};
 _resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

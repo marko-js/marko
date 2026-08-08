@@ -34,15 +34,11 @@ const $state_a = /*@__PURE__*/ _const(8, $state_a__OR__state_aChange__OR__tag);
 const $state_aChange = /*@__PURE__*/ _const(9, $state_a__OR__state_aChange__OR__tag);
 const $state_b = /*@__PURE__*/ _const(10, $state_b__OR__state_bChange__OR__tag);
 const $state_bChange = /*@__PURE__*/ _const(11, $state_b__OR__state_bChange__OR__tag);
-function $state2($scope) {
-	return function(v) {
-		$b($scope, v);
-	};
-}
-function $state($scope) {
-	return function(v) {
-		$a($scope, v);
-	};
-}
+const $state2 = ($scope) => function(v) {
+	$b($scope, v);
+};
+const $state = ($scope) => function(v) {
+	$a($scope, v);
+};
 _resume("a1", $state2);
 _resume("a0", $state);

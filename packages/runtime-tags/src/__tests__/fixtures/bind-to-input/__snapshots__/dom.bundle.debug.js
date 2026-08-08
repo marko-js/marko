@@ -47,10 +47,8 @@ function $setup($scope) {
 	$countChange2($scope["#childScope/1"]);
 	$x($scope, 0);
 }
-function $countChange($scope) {
-	return (_new_x) => {
-		$x($scope, _new_x);
-	};
-}
+const $countChange = ($scope) => (_new_x) => {
+	$x($scope, _new_x);
+};
 _resume("__tests__/template.marko_0/countChange", $countChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

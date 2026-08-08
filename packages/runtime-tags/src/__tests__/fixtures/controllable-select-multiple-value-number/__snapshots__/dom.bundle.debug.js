@@ -15,10 +15,8 @@ function $setup($scope) {
 	$selected($scope, [1]);
 	$setup__script($scope);
 }
-function $valueChange($scope) {
-	return function(v) {
-		$selected($scope, v.map((it) => Number(it)));
-	};
-}
+const $valueChange = ($scope) => function(v) {
+	$selected($scope, v.map((it) => Number(it)));
+};
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

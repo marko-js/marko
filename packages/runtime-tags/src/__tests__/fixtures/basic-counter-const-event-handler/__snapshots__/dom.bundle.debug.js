@@ -10,10 +10,8 @@ const $clickCount = /*@__PURE__*/ _let("clickCount/2", ($scope) => {
 function $setup($scope) {
 	$clickCount($scope, 0);
 }
-function $increment($scope) {
-	return function() {
-		$clickCount($scope, $scope.clickCount + 1);
-	};
-}
+const $increment = ($scope) => function() {
+	$clickCount($scope, $scope.clickCount + 1);
+};
 _resume("__tests__/template.marko_0/increment", $increment);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

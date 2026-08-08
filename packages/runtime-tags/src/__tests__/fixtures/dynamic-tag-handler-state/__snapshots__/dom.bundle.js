@@ -26,15 +26,11 @@ const $n = /*@__PURE__*/ _let(7, ($scope) => {
 	$attrs2($scope, { onClick: $attrs($scope) });
 	$input_tag__OR__n($scope);
 });
-function $attrs($scope) {
-	return function() {
-		$n($scope, $scope.h + 1);
-	};
-}
-function $onClick($scope) {
-	return function() {
-		$n($scope, $scope.h + 10);
-	};
-}
+const $attrs = ($scope) => function() {
+	$n($scope, $scope.h + 1);
+};
+const $onClick = ($scope) => function() {
+	$n($scope, $scope.h + 10);
+};
 _resume("a0", $attrs);
 _resume("a1", $onClick);

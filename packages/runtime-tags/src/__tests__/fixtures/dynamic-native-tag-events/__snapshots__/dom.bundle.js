@@ -5,9 +5,7 @@ const $tagName = /*@__PURE__*/ _let(1, ($scope) => $dynamicTag($scope, $scope.b,
 	class: "A",
 	onClick: $onClick($scope)
 })));
-function $onClick($scope) {
-	return function() {
-		$tagName($scope, $scope.b === "span" ? "div" : "span");
-	};
-}
+const $onClick = ($scope) => function() {
+	$tagName($scope, $scope.b === "span" ? "div" : "span");
+};
 _resume("a0", $onClick);

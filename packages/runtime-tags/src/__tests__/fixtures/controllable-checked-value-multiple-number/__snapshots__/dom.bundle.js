@@ -13,21 +13,15 @@ const $setup__script = _script("a3", ($scope) => {
 		$checked($scope, [1]);
 	});
 });
-function $checkedValueChange3($scope) {
-	return function(v) {
-		$checked($scope, v.map((it) => Number(it)));
-	};
-}
-function $checkedValueChange2($scope) {
-	return function(v) {
-		$checked($scope, v.map((it) => Number(it)));
-	};
-}
-function $checkedValueChange($scope) {
-	return function(v) {
-		$checked($scope, v.map((it) => Number(it)));
-	};
-}
+const $checkedValueChange3 = ($scope) => function(v) {
+	$checked($scope, v.map((it) => Number(it)));
+};
+const $checkedValueChange2 = ($scope) => function(v) {
+	$checked($scope, v.map((it) => Number(it)));
+};
+const $checkedValueChange = ($scope) => function(v) {
+	$checked($scope, v.map((it) => Number(it)));
+};
 _resume("a2", $checkedValueChange3);
 _resume("a1", $checkedValueChange2);
 _resume("a0", $checkedValueChange);

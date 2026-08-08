@@ -16,10 +16,8 @@ function $setup($scope) {
 	$handler2($scope, $handler($scope));
 	$setup__script($scope);
 }
-function $handler($scope) {
-	return function(newValue) {
-		$x($scope, newValue + 1);
-	};
-}
+const $handler = ($scope) => function(newValue) {
+	$x($scope, newValue + 1);
+};
 _resume("__tests__/template.marko_0/handler", $handler);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

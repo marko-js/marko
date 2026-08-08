@@ -27,11 +27,9 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $splitbutton_content = _content_resume("a1", "Reset");
 const $msg = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
-function $onClick($scope) {
-	return function() {
-		$msg($scope, "");
-	};
-}
+const $onClick = ($scope) => function() {
+	$msg($scope, "");
+};
 _resume("a0", $onClick);
 
 // v:template.marko.hydrate-6.js

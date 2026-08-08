@@ -14,9 +14,7 @@ const $template = "<div></div>";
 function $setup($scope) {
 	_return($scope, $_return($scope));
 }
-function $_return($scope) {
-	return () => (html) => $scope.a.innerHTML = html;
-}
+const $_return = ($scope) => () => (html) => $scope.a.innerHTML = html;
 _resume("b0", $_return);
 
 // template.marko

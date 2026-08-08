@@ -33,11 +33,9 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-function $report($scope) {
-	return function(o) {
-		return o === $scope.shared;
-	};
-}
+const $report = ($scope) => function(o) {
+	return o === $scope.shared;
+};
 _resume("__tests__/template.marko_0/report", $report);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 

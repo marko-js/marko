@@ -18,9 +18,7 @@ const $show = /*@__PURE__*/ _let(3, ($scope) => $if($scope, $scope.d ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.d);
 }));
-function $write($scope) {
-	return function(state) {
-		$scope._.b.innerHTML = state;
-	};
-}
+const $write = ($scope) => function(state) {
+	$scope._.b.innerHTML = state;
+};
 _resume("a0", $write);

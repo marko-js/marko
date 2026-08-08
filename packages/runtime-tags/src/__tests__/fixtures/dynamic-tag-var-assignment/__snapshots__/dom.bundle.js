@@ -6,11 +6,9 @@ const $x = /*@__PURE__*/ _let(2, ($scope) => {
 const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$x($scope, $scope.c + 1);
 }));
-function $valueChange($scope) {
-	return (_new_x) => {
-		$x($scope, _new_x);
-	};
-}
+const $valueChange = ($scope) => (_new_x) => {
+	$x($scope, _new_x);
+};
 _resume("b0", $valueChange);
 
 // template.marko

@@ -27,16 +27,12 @@ function $setup($scope) {
 	$log($scope, "");
 	$setup__script($scope);
 }
-function $onClick($scope) {
-	return function() {
-		$log($scope, `${$scope.log}b(${$scope.count})`);
-	};
-}
-function $anonymous($scope) {
-	return () => {
-		$log($scope, `${$scope.log}a(${$scope.count})`);
-	};
-}
+const $onClick = ($scope) => function() {
+	$log($scope, `${$scope.log}b(${$scope.count})`);
+};
+const $anonymous = ($scope) => () => {
+	$log($scope, `${$scope.log}a(${$scope.count})`);
+};
 _resume("__tests__/template.marko_0/onClick", $onClick);
 _resume("__tests__/template.marko_0/anonymous", $anonymous);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

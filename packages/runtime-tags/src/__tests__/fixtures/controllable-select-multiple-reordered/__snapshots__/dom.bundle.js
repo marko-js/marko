@@ -16,9 +16,7 @@ const $setup__script = _script("a1", ($scope) => {
 		$options($scope, [...$scope.d, "d"]);
 	});
 });
-function $valueChange($scope) {
-	return function(v) {
-		$selected($scope, v);
-	};
-}
+const $valueChange = ($scope) => function(v) {
+	$selected($scope, v);
+};
 _resume("a0", $valueChange);

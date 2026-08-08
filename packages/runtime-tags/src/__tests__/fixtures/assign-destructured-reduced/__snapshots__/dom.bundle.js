@@ -14,9 +14,7 @@ const $count = /*@__PURE__*/ _let(1, ($scope) => $input($scope.a, {
 	value: $scope.b,
 	valueChange: $valueChange($scope)
 }));
-function $valueChange($scope) {
-	return (_new_count) => {
-		$count($scope, _new_count);
-	};
-}
+const $valueChange = ($scope) => (_new_count) => {
+	$count($scope, _new_count);
+};
 _resume("a0", $valueChange);

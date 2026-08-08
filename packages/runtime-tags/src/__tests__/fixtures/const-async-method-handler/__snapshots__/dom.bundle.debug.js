@@ -9,10 +9,8 @@ function $setup($scope) {
 }
 const $handlers_load__script = _script("__tests__/template.marko_0_handlers_load#4", ($scope) => _on($scope["#button/0"], "click", $scope.handlers_load));
 const $handlers_load = /*@__PURE__*/ _const("handlers_load", $handlers_load__script);
-function $handlers($scope) {
-	return async function() {
-		$loaded($scope, await Promise.resolve("yes"));
-	};
-}
+const $handlers = ($scope) => async function() {
+	$loaded($scope, await Promise.resolve("yes"));
+};
 _resume("__tests__/template.marko_0/handlers", $handlers);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

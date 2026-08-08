@@ -22,21 +22,15 @@ function $setup($scope) {
 	$phase($scope, 0);
 	$log($scope, "");
 }
-function $attrs3($scope) {
-	return function() {
-		$phase($scope, 0);
-	};
-}
-function $attrs2($scope) {
-	return function() {
-		$log($scope, `${$scope.log}M`);
-	};
-}
-function $attrs($scope) {
-	return function() {
-		$phase($scope, 1);
-	};
-}
+const $attrs3 = ($scope) => function() {
+	$phase($scope, 0);
+};
+const $attrs2 = ($scope) => function() {
+	$log($scope, `${$scope.log}M`);
+};
+const $attrs = ($scope) => function() {
+	$phase($scope, 1);
+};
 _resume("__tests__/template.marko_0/attrs3", $attrs3);
 _resume("__tests__/template.marko_0/attrs2", $attrs2);
 _resume("__tests__/template.marko_0/attrs", $attrs);

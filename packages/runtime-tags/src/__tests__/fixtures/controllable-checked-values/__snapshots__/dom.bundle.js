@@ -13,9 +13,7 @@ const $setup__script = _script("a1", ($scope) => {
 	_attr_input_checkedValue_script($scope, "b");
 	_attr_input_checkedValue_script($scope, "c");
 });
-function $checkedValueChange2($scope) {
-	return (_new_checkedValue) => {
-		$checkedValue($scope, _new_checkedValue);
-	};
-}
+const $checkedValueChange2 = ($scope) => (_new_checkedValue) => {
+	$checkedValue($scope, _new_checkedValue);
+};
 _resume("a0", $checkedValueChange2);

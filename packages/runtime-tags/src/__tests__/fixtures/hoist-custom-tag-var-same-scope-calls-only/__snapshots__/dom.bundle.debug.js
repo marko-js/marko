@@ -12,16 +12,14 @@ const $walks$1 = " b";
 function $setup$1($scope) {
 	_return($scope, $_return($scope));
 }
-function $_return($scope) {
-	return () => ({
-		setHtml(value) {
-			_el_read($scope["#div/0"]).innerHTML = value;
-		},
-		addClass(value) {
-			_el_read($scope["#div/0"]).classList.add(value);
-		}
-	});
-}
+const $_return = ($scope) => () => ({
+	setHtml(value) {
+		_el_read($scope["#div/0"]).innerHTML = value;
+	},
+	addClass(value) {
+		_el_read($scope["#div/0"]).classList.add(value);
+	}
+});
 _resume("__tests__/tags/source.marko_0/_return", $_return);
 var source_default = /*@__PURE__*/ _template("__tests__/tags/source.marko", $template$1, " b", $setup$1);
 
@@ -37,10 +35,8 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $api = /*@__PURE__*/ _const("api", ($scope) => _assert_hoist($scope.api));
-function $action($scope) {
-	return function() {
-		$api_getter($scope)().addClass("child");
-	};
-}
+const $action = ($scope) => function() {
+	$api_getter($scope)().addClass("child");
+};
 _resume("__tests__/template.marko_0/action", $action);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

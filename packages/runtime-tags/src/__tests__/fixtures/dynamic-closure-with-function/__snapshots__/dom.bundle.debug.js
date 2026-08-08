@@ -27,10 +27,8 @@ const $input = ($scope, input) => {
 	$input_b($scope, input.b);
 };
 const $input_b = /*@__PURE__*/ _const("input_b", $if_content__input_b);
-function $bar($scope) {
-	return function(test) {
-		return $scope.input_c + test;
-	};
-}
+const $bar = ($scope) => function(test) {
+	return $scope.input_c + test;
+};
 _resume("__tests__/template.marko_0/bar", $bar);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

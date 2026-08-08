@@ -9,10 +9,8 @@ const $calls = /*@__PURE__*/ _let(5, ($scope) => {
 	$v__OR__calls($scope);
 });
 const $setup__script = _script("a1", ($scope) => _attr_select_value_script($scope, "a"));
-function $valueChange($scope) {
-	return function(nv) {
-		$calls($scope, $scope.f + 1);
-		$v($scope, nv);
-	};
-}
+const $valueChange = ($scope) => function(nv) {
+	$calls($scope, $scope.f + 1);
+	$v($scope, nv);
+};
 _resume("a0", $valueChange);

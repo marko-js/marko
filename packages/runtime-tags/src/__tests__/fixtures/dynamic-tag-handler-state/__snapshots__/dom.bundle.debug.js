@@ -38,16 +38,12 @@ const $input_tag = /*@__PURE__*/ _const("input_tag", ($scope) => {
 	$input_tag__OR__aliased($scope);
 });
 const $input = ($scope, input) => $input_tag($scope, input.tag);
-function $attrs($scope) {
-	return function() {
-		$n($scope, $scope.n + 1);
-	};
-}
-function $onClick($scope) {
-	return function() {
-		$n($scope, $scope.n + 10);
-	};
-}
+const $attrs = ($scope) => function() {
+	$n($scope, $scope.n + 1);
+};
+const $onClick = ($scope) => function() {
+	$n($scope, $scope.n + 10);
+};
 _resume("__tests__/template.marko_0/attrs", $attrs);
 _resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

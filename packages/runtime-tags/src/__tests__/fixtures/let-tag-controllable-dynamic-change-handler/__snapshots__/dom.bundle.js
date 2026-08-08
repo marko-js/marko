@@ -14,9 +14,7 @@ const $setup__script = _script("a1", ($scope) => {
 		$yChange2($scope, null);
 	});
 });
-function $yChange($scope) {
-	return function(newValue) {
-		$x($scope, newValue + 1);
-	};
-}
+const $yChange = ($scope) => function(newValue) {
+	$x($scope, newValue + 1);
+};
 _resume("a0", $yChange);

@@ -10,8 +10,6 @@ const $foo = /*@__PURE__*/ _let("foo/1", ($scope) => $baz2($scope, {
 function $setup($scope) {
 	$foo($scope, { bar: "bar" });
 }
-function $baz($scope) {
-	return () => $scope.foo?.bar;
-}
+const $baz = ($scope) => () => $scope.foo?.bar;
 _resume("__tests__/template.marko_0/baz", $baz);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

@@ -17,12 +17,10 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-function $resetCount($scope) {
-	return function() {
-		if ($scope.count > 0) {
-			$count($scope, 0);
-		}
-	};
-}
+const $resetCount = ($scope) => function() {
+	if ($scope.count > 0) {
+		$count($scope, 0);
+	}
+};
 _resume("__tests__/template.marko_0/resetCount", $resetCount);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

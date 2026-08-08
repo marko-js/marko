@@ -22,10 +22,8 @@ function $setup($scope) {
 }
 const $foo2 = /*@__PURE__*/ _const("foo", ($scope) => _text($scope["#text/1"], $scope.foo));
 const $fooChange2 = /*@__PURE__*/ _const("$fooChange");
-function $foo($scope) {
-	return function(v) {
-		$bar($scope, v);
-	};
-}
+const $foo = ($scope) => function(v) {
+	$bar($scope, v);
+};
 _resume("__tests__/template.marko_0/foo", $foo);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

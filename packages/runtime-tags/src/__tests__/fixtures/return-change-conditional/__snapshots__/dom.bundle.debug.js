@@ -7,11 +7,9 @@ function $setup$1($scope) {
 }
 const $input_canEdit = /*@__PURE__*/ _const("input_canEdit", ($scope) => _return_change($scope, $scope.input_canEdit && $valueChange($scope)));
 const $input = ($scope, input) => $input_canEdit($scope, input.canEdit);
-function $valueChange($scope) {
-	return (v) => {
-		$x($scope, v);
-	};
-}
+const $valueChange = ($scope) => (v) => {
+	$x($scope, v);
+};
 _resume("__tests__/tags/editable.marko_0/valueChange", $valueChange);
 var editable_default = /*@__PURE__*/ _template("__tests__/tags/editable.marko", "", "", $setup$1, $input);
 

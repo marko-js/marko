@@ -7,9 +7,7 @@ const $setup__script = _script("a1", ($scope) => {
 		$tag($scope, $scope.d === "input" ? "br" : "input");
 	});
 });
-function $valueChange($scope) {
-	return function(next) {
-		$tag($scope, next);
-	};
-}
+const $valueChange = ($scope) => function(next) {
+	$tag($scope, next);
+};
 _resume("a0", $valueChange);

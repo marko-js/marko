@@ -45,16 +45,12 @@ const $state_a = /*@__PURE__*/ _const("state_a", $state_a__OR__state_aChange__OR
 const $state_aChange = /*@__PURE__*/ _const("state_aChange", $state_a__OR__state_aChange__OR__tag);
 const $state_b = /*@__PURE__*/ _const("state_b", $state_b__OR__state_bChange__OR__tag);
 const $state_bChange = /*@__PURE__*/ _const("state_bChange", $state_b__OR__state_bChange__OR__tag);
-function $state2($scope) {
-	return function(v) {
-		$b($scope, v);
-	};
-}
-function $state($scope) {
-	return function(v) {
-		$a($scope, v);
-	};
-}
+const $state2 = ($scope) => function(v) {
+	$b($scope, v);
+};
+const $state = ($scope) => function(v) {
+	$a($scope, v);
+};
 _resume("__tests__/template.marko_0/state2", $state2);
 _resume("__tests__/template.marko_0/state", $state);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

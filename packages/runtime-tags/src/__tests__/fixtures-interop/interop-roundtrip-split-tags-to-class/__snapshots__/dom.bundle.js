@@ -34,11 +34,9 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => {
 		onIncrement: $onIncrement($scope)
 	}));
 });
-function $onIncrement($scope) {
-	return function() {
-		$count($scope, $scope.c + 1);
-	};
-}
+const $onIncrement = ($scope) => function() {
+	$count($scope, $scope.c + 1);
+};
 _resume("a0", $onIncrement);
 
 // v:template.marko.hydrate-6.js

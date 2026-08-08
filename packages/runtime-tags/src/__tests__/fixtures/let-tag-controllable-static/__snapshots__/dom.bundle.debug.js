@@ -13,10 +13,8 @@ function $setup($scope) {
 	$x($scope, 1);
 	$setup__script($scope);
 }
-function $valueChange($scope) {
-	return function(newValue) {
-		$x($scope, newValue + 1);
-	};
-}
+const $valueChange = ($scope) => function(newValue) {
+	$x($scope, newValue + 1);
+};
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

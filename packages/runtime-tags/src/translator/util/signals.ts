@@ -1119,7 +1119,7 @@ export function writeRegisteredFns() {
   const statements: t.Statement[] = [];
   if (registeredFns) {
     for (const registeredFn of registeredFns) {
-      let fn: t.FunctionDeclaration;
+      let fn: t.Statement;
       if (
         registeredFn.referencedBindings ||
         registeredFn.referencesScope ||
@@ -1147,11 +1147,20 @@ export function writeRegisteredFns() {
         } else {
           params = [scopeIdentifier];
         }
-        fn = t.functionDeclaration(
-          t.identifier(registeredFn.id),
-          params,
-          t.blockStatement(toReturnedFunction(registeredFn.node, prologue)),
-        );
+        // A const arrow (unlike a function declaration) lets the minifier fold
+        // the factory into its lone `_resume` call site.
+        const body = toReturnedFunction(registeredFn.node, prologue);
+        fn = t.variableDeclaration("const", [
+          t.variableDeclarator(
+            t.identifier(registeredFn.id),
+            t.arrowFunctionExpression(
+              params,
+              body.length === 1 && body[0].type === "ReturnStatement"
+                ? body[0].argument!
+                : t.blockStatement(body),
+            ),
+          ),
+        ]);
       } else if (
         registeredFn.node.type === "FunctionDeclaration" &&
         registeredFn.node.id?.name === registeredFn.id

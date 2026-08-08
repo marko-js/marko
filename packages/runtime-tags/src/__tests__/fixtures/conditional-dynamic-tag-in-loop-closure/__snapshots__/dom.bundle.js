@@ -21,9 +21,7 @@ const $count = /*@__PURE__*/ _let(1, ($scope) => {
 	}));
 	$count__closure($scope);
 });
-function $onClick($scope) {
-	return function() {
-		$count($scope, $scope.b + 1);
-	};
-}
+const $onClick = ($scope) => function() {
+	$count($scope, $scope.b + 1);
+};
 _resume("a0", $onClick);

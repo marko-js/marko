@@ -20,10 +20,8 @@ const $setup__script = _script("a1", ($scope) => {
 		$scope.i ?? $x($scope, 7);
 	});
 });
-function $valueChange($scope) {
-	return function(v) {
-		$value($scope, v);
-		$changes($scope, $scope.f + 1);
-	};
-}
+const $valueChange = ($scope) => function(v) {
+	$value($scope, v);
+	$changes($scope, $scope.f + 1);
+};
 _resume("a0", $valueChange);

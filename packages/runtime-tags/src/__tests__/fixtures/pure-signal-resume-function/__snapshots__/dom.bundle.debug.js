@@ -20,10 +20,8 @@ const $test = /*@__PURE__*/ _const("test", ($scope) => $input($scope["#childScop
 function $setup($scope) {
 	$test($scope, "foo");
 }
-function $onClick($scope) {
-	return function() {
-		console.log($scope.test);
-	};
-}
+const $onClick = ($scope) => function() {
+	console.log($scope.test);
+};
 _resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

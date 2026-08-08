@@ -26,11 +26,9 @@ _resume("__tests__/components/class-child.marko", _marko_template$1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_onChange = /*@__PURE__*/ _const("input_onChange", ($scope) => $dynamicTag($scope, _marko_template$1, () => ({ "on-change": $onchange($scope) })));
 const $input = ($scope, input) => $input_onChange($scope, input.onChange);
-function $onchange($scope) {
-	return function() {
-		$scope.input_onChange?.();
-	};
-}
+const $onchange = ($scope) => function() {
+	$scope.input_onChange?.();
+};
 _resume("__tests__/components/tags-child.marko_0/onchange", $onchange);
 var tags_child_default = /*@__PURE__*/ _template("__tests__/components/tags-child.marko", $template, "b%c", $setup, $input);
 

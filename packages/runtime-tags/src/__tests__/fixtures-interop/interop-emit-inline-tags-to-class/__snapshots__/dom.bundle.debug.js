@@ -36,10 +36,8 @@ function $setup($scope) {
 	$msg($scope, "hello");
 	$dynamicTag($scope, _marko_template, () => ({ onClick: $onClick($scope) }));
 }
-function $onClick($scope) {
-	return function() {
-		$msg($scope, "");
-	};
-}
+const $onClick = ($scope) => function() {
+	$msg($scope, "");
+};
 _resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

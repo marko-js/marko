@@ -13,11 +13,9 @@ const $input = ($scope, input) => {
 	$countChange2($scope, input.countChange);
 	$count($scope, input.count);
 };
-function $valueChange($scope) {
-	return ($next) => {
-		$scope.$countChange(num($next));
-	};
-}
+const $valueChange = ($scope) => ($next) => {
+	$scope.$countChange(num($next));
+};
 _resume("__tests__/tags/my-input.marko_0/valueChange", $valueChange);
 var my_input_default = /*@__PURE__*/ _template("__tests__/tags/my-input.marko", $template$1, " b", $setup$1, $input);
 
@@ -34,10 +32,8 @@ function $setup($scope) {
 	$countChange2($scope["#childScope/0"], $countChange($scope));
 	$value($scope, 0);
 }
-function $countChange($scope) {
-	return (_new_value) => {
-		$value($scope, _new_value);
-	};
-}
+const $countChange = ($scope) => (_new_value) => {
+	$value($scope, _new_value);
+};
 _resume("__tests__/template.marko_0/countChange", $countChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

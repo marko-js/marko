@@ -49,10 +49,8 @@ function $setup($scope) {
 	$write2($scope, $write($scope));
 	$setup__script($scope);
 }
-function $write($scope) {
-	return function(msg) {
-		_el_read($scope["#div/1"]).innerHTML += "\n" + msg;
-	};
-}
+const $write = ($scope) => function(msg) {
+	_el_read($scope["#div/1"]).innerHTML += "\n" + msg;
+};
 _resume("__tests__/template.marko_0/write", $write);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

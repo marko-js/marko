@@ -22,10 +22,8 @@ const $open = /*@__PURE__*/ _let("open/2", ($scope) => {
 function $setup($scope) {
 	$open($scope, true);
 }
-function $openChange($scope) {
-	return (_new_open) => {
-		$open($scope, _new_open);
-	};
-}
+const $openChange = ($scope) => (_new_open) => {
+	$open($scope, _new_open);
+};
 _resume("__tests__/template.marko_0/openChange", $openChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
