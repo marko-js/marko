@@ -27,7 +27,7 @@ export function isTagsAPI(file = getFile()) {
 
   if (!featureType) {
     const lookup = getTaglibLookup(file);
-    const tagsDir = getTagsDir(file.opts.filename);
+    const tagsDir = getTagsDir(lookup, file.opts.filename);
     const state = {} as FeatureState;
     if (tagsDir && !lookup.manualTagsDirs?.has(tagsDir)) {
       addFeature(
@@ -51,30 +51,24 @@ export function isTagsAPI(file = getFile()) {
   return featureType === FeatureType.Tags;
 }
 
-function getTagsDir(filename: string) {
-  const pathSeparator = /\/|\\/.exec(filename)?.[0];
-  if (pathSeparator) {
-    let previousIndex = filename.length - 1;
-    while (previousIndex > 0) {
-      const index = filename.lastIndexOf(pathSeparator, previousIndex);
-      switch (previousIndex - index) {
-        case 4 /** "tags".length */: {
-          if (filename.startsWith("tags", index + 1)) {
-            return filename.slice(0, index + 5);
-          }
-          break;
-        }
-        case 10 /** "components".length */: {
-          if (filename.startsWith("components", index + 1)) {
-            return false;
-          }
-          break;
-        }
-      }
-      previousIndex = index - 1;
+// The nearest discovery dir containing the file, if it is a `tags` dir. The
+// finder already discovered these bounded at the package root, so a package
+// itself named `tags` doesn't flag every template under it — no fs work here.
+function getTagsDir(
+  lookup: ReturnType<typeof getTaglibLookup>,
+  filename: string,
+) {
+  let nearest: string | undefined;
+  for (const dir of lookup.discoveryDirs || []) {
+    if (
+      filename.startsWith(dir) &&
+      (filename[dir.length] === "/" || filename[dir.length] === "\\") &&
+      (!nearest || dir.length > nearest.length)
+    ) {
+      nearest = dir;
     }
   }
-  return false;
+  return !!nearest && /[/\\]tags$/.test(nearest) && nearest;
 }
 
 function scanBody(

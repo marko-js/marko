@@ -82,6 +82,9 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
   let curDirname = dirname;
   // exclusiveTagDiscoveryDirs is used for the interop to detect if `tags` directories are used exclusively when finding tags
   let exclusiveTagDiscoveryDirs = undefined;
+  // Discovered discovery-dir paths in walk order (nearest first), for the
+  // interop's "is this file within a tags directory" check.
+  let discoveryDirs = undefined;
 
   while (true) {
     if (!excludedDirs[curDirname]) {
@@ -108,6 +111,7 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
               }
             }
 
+            (discoveryDirs ||= []).push(componentsPath);
             addTaglib(
               taglibLoader.loadTaglibFromDir(curDirname, tagDiscoveryDir),
             );
@@ -151,7 +155,7 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
     addTaglib(registeredTaglibs[i]);
   }
 
-  cached = { exclusiveTagDiscoveryDirs, taglibs };
+  cached = { discoveryDirs, exclusiveTagDiscoveryDirs, taglibs };
   cachedByDirname.set(dirname, cached);
   return cached;
 

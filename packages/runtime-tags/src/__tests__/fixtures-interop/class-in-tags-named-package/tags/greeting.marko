@@ -1,0 +1,10 @@
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  inc() {
+    this.state.count++;
+  }
+}
+
+<button on-click("inc")>${state.count}</button>

@@ -53,6 +53,7 @@ class TaglibLookup {
 
     this._sortedTags = undefined;
     this.exclusiveTagDiscoveryDirs = undefined;
+    this.discoveryDirs = undefined;
     this.manualTagsDirs = undefined;
   }
 
