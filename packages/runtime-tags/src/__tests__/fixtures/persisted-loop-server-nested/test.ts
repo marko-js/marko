@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A server-driven loop nested inside a client-owned loop has no frame
-// channel to speak through: fail closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A server list loops inside a client-owned loop: every outer iteration
+// re-lists off the same fill write.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ list: ["x"] }, click, { list: ["x", "y"] }, { list: [] }],
 };
