@@ -16,6 +16,7 @@ import {
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
 import { _escape } from "./content";
+import { setDebugSlotName } from "./serializer";
 import {
   _attr_content,
   _html,
@@ -440,19 +441,17 @@ function writeControlledScope(
   if (MARKO_DEBUG) {
     // Indexed by `ControlledType` so the error names the attribute the
     // author wrote, matching the client-side assertions in dom/controllable.ts.
-    assertHandlerIsFunction(
-      [
-        "checkedChange",
-        "checkedValueChange",
-        "valueChange",
-        "valueChange",
-        "openChange",
-      ][type]!,
-      valueChange,
-    );
+    var handlerName = [
+      "checkedChange",
+      "checkedValueChange",
+      "valueChange",
+      "valueChange",
+      "openChange",
+    ][type]!;
+    assertHandlerIsFunction(handlerName, valueChange);
   }
 
-  _scope(
+  const scope = _scope(
     scopeId,
     serializeType
       ? {
@@ -465,6 +464,14 @@ function writeControlledScope(
           [AccessorPrefix.ControlledHandler + nodeAccessor]: valueChange,
         },
   );
+
+  if (MARKO_DEBUG) {
+    setDebugSlotName(
+      scope,
+      AccessorPrefix.ControlledHandler + nodeAccessor,
+      handlerName!,
+    );
+  }
 }
 
 function stringAttr(name: string, value: string) {

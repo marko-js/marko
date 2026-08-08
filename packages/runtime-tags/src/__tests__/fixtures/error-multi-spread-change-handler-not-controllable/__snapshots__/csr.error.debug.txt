@@ -1,0 +1,1 @@
+The `valueChange` attribute cannot be a function. A change handler is only used when its matching controllable attribute combination applies.

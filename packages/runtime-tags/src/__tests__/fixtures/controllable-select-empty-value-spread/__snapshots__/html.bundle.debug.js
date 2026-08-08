@@ -12,6 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`${_el_resume($scope0_id, "#select/0")}<output>${value === undefined ? "undefined" : _escape("value=" + value)}${_el_resume($scope0_id, "#text/2")}</output>`);
 	_script($scope0_id, "__tests__/template.marko_0_placeholder#4");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0, {
+		"ControlledHandler:#select/0": ["valueChange", "3:21"],
+		"EventAttributes:#option/1": ["...placeholder", "4:14"]
+	});
 	_resume_branch($scope0_id);
 }, 1);

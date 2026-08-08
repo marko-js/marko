@@ -705,7 +705,7 @@ if (MARKO_DEBUG) {
       partialScope: PartialScope,
       file?: string,
       loc?: string | 0,
-      vars?: Record<string, string>,
+      vars?: Parameters<typeof setDebugInfo>[3],
     ) => {
       const scope = writeScope(scopeId, partialScope);
       if (file && loc !== undefined) {

@@ -19,7 +19,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		enabled: "3:6",
 		count: "4:6",
-		log: "5:6"
+		log: "5:6",
+		"EventAttributes:#button/2": ["...{ onClick: enabled && (() => { log = `${log}a(${count})`; }) }", "9:14"],
+		"EventAttributes:#button/3": ["...enabled && { onClick() { log = `${log}b(${count})`; } }", "10:15"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

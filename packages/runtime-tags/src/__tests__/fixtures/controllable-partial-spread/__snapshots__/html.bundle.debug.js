@@ -24,7 +24,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		rest
 	}, "__tests__/template.marko", 0, {
 		v: "1:6",
-		rest: "2:8"
+		rest: "2:8",
+		"ControlledHandler:#input/1": ["...rest", "4:26"],
+		"EventAttributes:#input/1": ["...rest", "4:26"],
+		"ControlledHandler:#input/2": ["...rest", "5:11"],
+		"EventAttributes:#input/2": ["...rest", "5:11"],
+		"ControlledHandler:#input/3": ["valueChange"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

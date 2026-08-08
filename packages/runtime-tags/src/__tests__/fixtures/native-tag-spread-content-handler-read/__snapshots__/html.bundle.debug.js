@@ -13,7 +13,8 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 		input_content: input.content
 	}, "__tests__/tags/my-box.marko", 0, {
 		input: 0,
-		input_content: ["input.content"]
+		input_content: ["input.content"],
+		"EventAttributes:#div/0": ["...input", "3:9"]
 	});
 	_resume_branch($scope0_id);
 });

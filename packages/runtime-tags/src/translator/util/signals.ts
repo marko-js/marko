@@ -148,11 +148,44 @@ export function setBindingSerializedValue(
 ) {
   const reason = getSerializeReason(section, binding, prefix);
   if (reason) {
-    getSerializedAccessors(section).set(
-      prefix === undefined
-        ? getScopeAccessor(binding)
-        : getPrefixedScopeAccessor(binding, prefix),
-      { expression, reason },
+    if (prefix === undefined) {
+      getSerializedAccessors(section).set(getScopeAccessor(binding), {
+        expression,
+        reason,
+      });
+    } else {
+      const accessor = getPrefixedScopeAccessor(binding, prefix);
+      getSerializedAccessors(section).set(accessor, { expression, reason });
+      // Name the change handler slot after the author's binding; structural
+      // prefixed slots are described generically by the serializer instead.
+      if (!isOptimize() && prefix === getAccessorPrefix().TagVariableChange) {
+        const { root, access } = getDebugScopeAccess(binding);
+        setSectionDebugVar(
+          section,
+          accessor,
+          `${root.name + access}Change`,
+          root.loc,
+        );
+      }
+    }
+  }
+}
+
+const [getSectionDebugVars] = createSectionState<
+  Map<string, [name: string, loc?: string]>
+>("sectionDebugVars", () => new Map());
+// Names a runtime-serialized internal slot (eg a controllable's handler) in
+// debug "Unable to serialize" errors; these never pass through `writeScope`.
+export function setSectionDebugVar(
+  section: Section,
+  accessor: string,
+  name: string,
+  loc: t.SourceLocation | null | undefined,
+) {
+  if (!isOptimize()) {
+    getSectionDebugVars(section).set(
+      accessor,
+      loc ? [name, `${loc.start.line}:${loc.start.column + 1}`] : [name],
     );
   }
 }
@@ -1402,6 +1435,12 @@ export function writeHTMLResumeStatements(
             )
           : t.numericLiteral(0),
       );
+
+      for (const [accessor, varLoc] of getSectionDebugVars(section)) {
+        (debugVars ||= []).push(
+          toObjectProperty(accessor, t.valueToNode(varLoc)),
+        );
+      }
 
       if (debugVars) {
         writeScopeArgs.push(t.objectExpression(debugVars));

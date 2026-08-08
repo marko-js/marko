@@ -10,7 +10,10 @@ var my_select_default = _template("__tests__/tags/my-select.marko", (input) => {
 	}, 1);
 	_html(_el_resume($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/tags/my-select.marko_0_input#2");
-	writeScope($scope0_id, {}, "__tests__/tags/my-select.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/tags/my-select.marko", 0, {
+		"ControlledHandler:#select/0": ["...input", "1:12"],
+		"EventAttributes:#select/0": ["...input", "1:12"]
+	});
 });
 
 // template.marko

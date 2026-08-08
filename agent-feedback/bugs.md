@@ -68,12 +68,6 @@ A reorder flush appends `<t hidden {commentPrefix}={reorderId}>reorderHTML</t>`,
 
 The inline trigger script for `with { load: "visible…" | "on-…" }` resolves its target as `document.querySelector(sel) || l()`, and `writeScript` lands it at the end of the current flush chunk, not the document. A flush boundary (`<await>`, `<try>`, lazy content) between the tag and its target means `querySelector` returns null and `l()` fetches the module immediately — the code split degrades to eager loading. The CSR path warns on this miss (`dom/load.ts` › `getSelectorOrResolve`); the emitted SSR string has no `MARKO_DEBUG` branch, so on server-rendered pages it degrades silently. Re-check on `DOMContentLoaded` (or observe until the node appears) before falling back to `l()`, and emit a `MARKO_DEBUG`-gated warn. Re-verify: a `visible #footer` lazy tag placed before an `<await>` whose body holds `<footer id=footer>` — the first chunk already contains `document.querySelector("#footer")||l()`.
 
-## Restore the variable name and source location in `throwUnserializable`
-
-`packages/runtime-tags/src/html/serializer.ts` › `throwUnserializable` | 2026-07-23 | impact:low | effort:low
-
-Two lookups drop translator-emitted debug info. (1) `writeObjectProps` passes the escaped key (`toObjectKey(key)`) as the `Reference` accessor while `debug.vars` is keyed by the raw accessor from `writeHTMLResumeStatements` (`translator/util/signals.ts`), so `#LoopKey` never matches and prints double-quoted. (2) `while (ref?.accessor)` stops at the null-accessor `Reference` that `writeArrayArg`, `writeGenerator`, and `writeMaybeIterableProps` create for a collection's backing array, so anything inside a Map/Set/generator never reaches the scope `Reference` holding `debug`. Carry the raw key alongside the escaped one, and keep walking past null accessors. Re-verify with `node -r ~ts`: after `setDebugInfo(scope, "page.marko", "2:6", { selected: ["selected","2:6"] })`, serializing `{selected: new Set([new Thing()])}` aborts with `Unable to serialize (reading [0])` while the plain-array form reports `"selected" in page.marko:2:6`.
-
 ## Apply `ToNumeric` when lowering `++`/`--` on a tag variable
 
 `packages/runtime-tags/src/translator/util/signals.ts` › `replaceAssignedNode` | 2026-07-27 | impact:med | effort:med

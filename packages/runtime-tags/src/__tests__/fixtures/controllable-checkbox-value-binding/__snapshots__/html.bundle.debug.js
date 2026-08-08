@@ -10,6 +10,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		h = _new_h;
 	}, "__tests__/template.marko_0/valueChange2", $scope0_id))}${_attr("type", input.hiddenType)}>${_el_resume($scope0_id, "#input/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0, {
+		"ControlledHandler:#input/0": ["valueChange"],
+		"ControlledHandler:#input/1": ["valueChange"]
+	});
 	_resume_branch($scope0_id);
 }, 1);

@@ -2,7 +2,12 @@ import assert from "node:assert/strict";
 import { inspect } from "node:util";
 
 import type { ScopeFlush } from "../html/serializer";
-import { K_SCOPE_ID, register, Serializer } from "../html/serializer";
+import {
+  K_SCOPE_ID,
+  register,
+  Serializer,
+  setDebugInfo,
+} from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
 const [major, minor] = process.version
@@ -1295,6 +1300,42 @@ describe("serializer", () => {
         [formData, formData],
         `[_.a=["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(a[i-1],v)||f,new FormData),_.a]`,
       );
+    });
+    it("names an escaped-key variable in the unserializable error", () => {
+      const scope = { "#LoopKey": new File(["x"], "x.txt") };
+      setDebugInfo(scope, "page.marko", "1:1", {
+        "#LoopKey": ["myVar", "2:6"],
+      });
+      assert.match(
+        String(abortedStringifying([[1, scope, scope]])),
+        /"myVar" in page\.marko:2:6/,
+      );
+    });
+    it("names the variable when the unserializable value sits in a Set", () => {
+      const scope = { selected: new Set([new File(["x"], "x.txt")]) };
+      setDebugInfo(scope, "page.marko", "1:1", {
+        selected: ["selected", "2:6"],
+      });
+      assert.match(
+        String(abortedStringifying([[1, scope, scope]])),
+        /"selected" in page\.marko:2:6/,
+      );
+    });
+    it("describes every internal accessor prefix", async () => {
+      const prefixes =
+        await import("../common/constants/accessor-prefix.debug");
+      for (const prefix of Object.values(prefixes)) {
+        if (typeof prefix !== "string") continue;
+        const scope = { [prefix + "#input/0"]: new File(["x"], "x.txt") };
+        setDebugInfo(scope, "page.marko", "1:1");
+        const message = String(abortedStringifying([[1, scope, scope]]));
+        assert.doesNotMatch(message, /ControlledHandler:|#input\/0/, message);
+        assert.match(
+          message,
+          /the [\w ]+( of `<input>`)? in page\.marko/,
+          message,
+        );
+      }
     });
     it("aborts on File/Blob values instead of dropping them", () => {
       const formData = new FormData();
@@ -2657,4 +2698,17 @@ function hasSymbolIterator(
   value: unknown,
 ): value is { [Symbol.iterator](): IterableIterator<unknown> } {
   return Symbol.iterator in (value as any);
+}
+
+function abortedStringifying(scopes: ScopeFlush[]) {
+  const serializer = new Serializer();
+  let aborted: unknown;
+  const boundary = {
+    signal: { aborted: false },
+    abort(err: unknown) {
+      aborted = err;
+    },
+  } as any as Boundary;
+  serializer.stringifyScopes(scopes, boundary);
+  return (aborted as Error)?.message;
 }

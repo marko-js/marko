@@ -7,6 +7,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		value = parseInt(_new_value);
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))} type=number>${_el_resume($scope0_id, "#input/0")}<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")} <!>${_escape(typeof value)}${_el_resume($scope0_id, "#text/2")}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/0": ["valueChange"] });
 	_resume_branch($scope0_id);
 }, 1);

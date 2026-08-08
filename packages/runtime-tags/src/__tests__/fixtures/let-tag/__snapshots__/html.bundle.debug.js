@@ -12,7 +12,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"TagVariableChange:y": false || void 0
 	}, "__tests__/template.marko", 0, {
 		x: "1:6",
-		y: "2:6"
+		y: "2:6",
+		"TagVariableChange:y": ["yChange", "2:6"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

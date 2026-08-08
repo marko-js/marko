@@ -1,0 +1,1 @@
+Unable to serialize "valueChange" in packages/runtime-tags/src/__tests__/fixtures/error-static-change-handler-unserializable/template.marko:1:26. Values referenced in the browser must be serializable.

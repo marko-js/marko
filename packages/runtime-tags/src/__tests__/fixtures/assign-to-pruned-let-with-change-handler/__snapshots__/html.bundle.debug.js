@@ -8,6 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { "TagVariableChange:count": _resume(function(v) {
 		liveCount = v;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/template.marko", 0);
+	}, "__tests__/template.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/template.marko", 0, { "TagVariableChange:count": ["countChange", "2:6"] });
 	_resume_branch($scope0_id);
 }, 1);

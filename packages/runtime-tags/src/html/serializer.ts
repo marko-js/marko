@@ -348,15 +348,32 @@ interface Debug {
   file: string;
   loc: string | 0;
   vars: Record<string, string | [name: string, loc?: string]> | undefined;
+  slots?: Record<string, string>;
 }
 const DEBUG = new WeakMap<WeakKey, Debug>();
 export function setDebugInfo(
   obj: WeakKey,
   file: string,
   loc: string | 0,
-  vars?: Record<string, string>,
+  vars?: Debug["vars"],
 ) {
-  DEBUG.set(obj, { file, loc, vars });
+  DEBUG.set(obj, { file, loc, vars, slots: DEBUG.get(obj)?.slots });
+}
+
+// Names an internal slot with the property the runtime actually read (eg the
+// `valueChange` a spread supplied); the translator only knows the spread.
+export function setDebugSlotName(obj: WeakKey, accessor: string, name: string) {
+  const debug = DEBUG.get(obj);
+  if (debug) {
+    (debug.slots ??= {})[accessor] = name;
+  } else {
+    DEBUG.set(obj, {
+      file: "",
+      loc: 0,
+      vars: undefined,
+      slots: { [accessor]: name },
+    });
+  }
 }
 
 export class Serializer {
@@ -1960,11 +1977,14 @@ function throwUnserializable(
   if (cause !== undefined && state.boundary?.abort) {
     let message = "Unable to serialize";
     let access = "";
-    while (ref?.accessor) {
+    while (ref) {
+      const { accessor } = ref;
       const debug = ref.parent?.debug;
-      if (debug) {
-        const varLoc = debug.vars?.[ref.accessor];
-        let debugAccess = ref.accessor;
+      if (accessor && debug) {
+        const rawAccessor = fromObjectKey(accessor);
+        const varLoc = debug.vars?.[rawAccessor];
+        const slotName = debug.slots?.[rawAccessor];
+        let debugAccess = varLoc ? rawAccessor : undefined;
         let debugLoc = debug.loc;
         if (varLoc) {
           if (Array.isArray(varLoc)) {
@@ -1975,11 +1995,25 @@ function throwUnserializable(
           }
         }
 
-        message += ` ${JSON.stringify(debugAccess)} in ${debug.file}`;
+        let display: string;
+        if (debugAccess !== undefined) {
+          // A `...spread` name composes with the property the runtime read.
+          display =
+            slotName && debugAccess.startsWith("...")
+              ? `\`${slotName}\` from \`${debugAccess}\``
+              : JSON.stringify(debugAccess);
+        } else {
+          display =
+            describeAccessor(rawAccessor, slotName) ??
+            JSON.stringify(rawAccessor);
+        }
+
+        message += ` ${display} in ${debug.file}`;
         if (debugLoc) message += `:${debugLoc}`;
         break;
       }
-      access = toAccess(ref.accessor) + access;
+      // A collection's backing-value link has no accessor; keep walking.
+      if (accessor) access = toAccess(accessor) + access;
       ref = ref.parent;
     }
 
@@ -2001,6 +2035,53 @@ function throwUnserializable(
     err.stack = undefined;
     state.boundary.abort(err);
   }
+}
+
+// Keep in sync with common/constants/accessor-prefix.debug.ts; the serializer
+// parity test walks every prefix.
+const accessorPrefixDescriptions: Record<string, string> = {
+  BranchScopes: "the branch scopes",
+  ClosureScopes: "the closure scopes",
+  ClosureSignalIndex: "the closure signal index",
+  ConditionalRenderer: "the conditional renderer",
+  ControlledObserver: "the controlled observer",
+  ControlledHandler: "the change handler",
+  ControlledType: "the controlled type",
+  ControlledValue: "the controlled value",
+  DynamicHTMLLastChild: "the dynamic html",
+  EventAttributes: "the event handlers",
+  KeyedScopes: "the keyed scopes",
+  Lifecycle: "the lifecycle handlers",
+  Promise: "the pending promise",
+  TagVariableChange: "the tag variable change handler",
+};
+
+// A readable phrase for an internal `<Prefix>:<node accessor>` scope slot.
+function describeAccessor(accessor: string, slotName?: string) {
+  const sep = accessor.indexOf(":");
+  if (~sep) {
+    const description =
+      slotName === undefined
+        ? accessorPrefixDescriptions[accessor.slice(0, sep)]
+        : `the \`${slotName}\` handler`;
+    if (description) {
+      const node = /^#([a-z-]+)\//i.exec(accessor.slice(sep + 1));
+      return node ? `${description} of \`<${node[1]}>\`` : description;
+    }
+  }
+}
+
+// Inverse of `toObjectKey` for error reporting; `quote` emits non-JSON `\x`.
+function fromObjectKey(key: string) {
+  try {
+    if (key[0] === '"') {
+      return JSON.parse(key.replace(/\\x/g, "\\u00")) as string;
+    }
+    if (key[0] === "[") return JSON.parse(key.slice(1, -1)) as string;
+  } catch {
+    /* fall through to the escaped form */
+  }
+  return key;
 }
 
 function trackChannel(state: State, ref: Reference) {

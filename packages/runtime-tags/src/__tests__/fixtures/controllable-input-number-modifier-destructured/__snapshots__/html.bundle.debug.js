@@ -15,7 +15,8 @@ var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 		count: _serialize_if($scope0_reason, 0) && count
 	}, "__tests__/tags/my-input.marko", 0, {
 		$countChange: 0,
-		count: "4:10"
+		count: "4:10",
+		"ControlledHandler:#input/0": ["valueChange"]
 	});
 });
 

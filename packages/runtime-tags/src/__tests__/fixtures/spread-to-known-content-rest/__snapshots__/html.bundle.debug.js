@@ -10,7 +10,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "#p/0", $scope0_id, "p");
 	_html(`</p>${_el_resume($scope0_id, "#p/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_class#3_rest#4");
-	writeScope($scope0_id, { input_class: input.class }, "__tests__/tags/child.marko", 0, { input_class: ["input.class"] });
+	writeScope($scope0_id, { input_class: input.class }, "__tests__/tags/child.marko", 0, {
+		input_class: ["input.class"],
+		"EventAttributes:#p/0": ["...rest", "2:25"]
+	});
 });
 
 // tags/wrap.marko

@@ -31,7 +31,8 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 		show
 	}, "__tests__/tags/my-box.marko", 0, {
 		input: 0,
-		show: "1:6"
+		show: "1:6",
+		"EventAttributes:#div/0": ["...input", "3:9"]
 	});
 	_resume_branch($scope0_id);
 });

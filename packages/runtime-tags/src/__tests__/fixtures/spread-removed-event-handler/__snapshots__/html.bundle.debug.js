@@ -21,7 +21,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		log
 	}, "__tests__/template.marko", 0, {
 		phase: "3:6",
-		log: "4:6"
+		log: "4:6",
+		"EventAttributes:#div/0": ["...attrs", "9:9"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

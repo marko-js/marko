@@ -24,7 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				newStates[i] = value;
 				states = newStates;
 			}, "__tests__/template.marko_1/valueChange", $scope1_id) || void 0
-		}, "__tests__/template.marko", "2:2", { "#LoopKey": "2:13" });
+		}, "__tests__/template.marko", "2:2", {
+			"#LoopKey": "2:13",
+			"TagVariableChange:checked": ["checkedChange", "3:8"],
+			"ControlledHandler:#input/0": ["checkedChange"]
+		});
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
 	_html(`<div>${_escape(states.join(","))}${_el_resume($scope0_id, "#text/1")}</div>`);
 	writeScope($scope0_id, { states }, "__tests__/template.marko", 0, { states: "1:6" });

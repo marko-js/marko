@@ -13,7 +13,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			a: _serialize_if($scope1_reason, 1) && a
 		}, "__tests__/template.marko", "1:2", {
 			$aChange: 0,
-			a: "1:16"
+			a: "1:16",
+			"ControlledHandler:#input/0": ["valueChange"],
+			"ControlledHandler:#input/1": ["valueChange"],
+			"ControlledHandler:#input/2": ["valueChange"]
 		});
 	}) };
 	let n = 1;
