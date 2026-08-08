@@ -6,7 +6,7 @@ import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xm
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
-  out.w("<div><div>Hello <div> </div> World</div><div> Hello</div><pre>\n    This should  \n      be preserved\n  </pre><div><div>Hello </div></div></div><div>");
+  out.w("<div><div>Hello <div> </div> World</div><div> Hello</div><pre>\n    This should  \n      be preserved\n    <textarea>nested</textarea>\n    still   preserved\n  </pre><div><div>Hello </div></div></div><div>");
   scriptletA();
   scriptletB();
   out.w("Hello ");

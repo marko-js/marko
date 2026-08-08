@@ -152,12 +152,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `getTagsDir` scans the whole absolute filename right-to-left for a `tags` segment with no upper bound, while `packages/compiler/src/taglib/finder/index.js` › `find` stops its own walk at the nearest package root (`rootPkg.__dirname`, else `markoModules.cwd`). When they disagree, `isTagsAPI` records the synthetic `Template file within a tags directory` feature and any Class API construct then throws `Cannot mix Tags API and Class API features in the same file`, so a package named `tags` cannot compile one Marko 5 template and the only workaround is renaming the directory. Bound the scan at the same package-root boundary, and give the synthetic feature a real location — today it prints an empty code frame (`fixtures-interop/error-class-tags-dir/__snapshots__/error-compile-html.txt`). Re-verify: `class {}` + `<h1>hi</h1>` at `<tmp>/packages/tags/src/page.marko` beside a `package.json` fails `-t class -o html -d` with the mixing error, while renaming `tags` to `tag` compiles the identical file.
 
-## Restore the enclosing whitespace-preservation state when a preserve-whitespace tag closes
-
-`packages/compiler/src/babel-plugin/parser.js` › `parseMarko` (the `preservingWhitespaceUntil` slot) | 2026-07-27 | impact:low | effort:low
-
-`preservingWhitespaceUntil` is a single slot: `onOpenTagName` overwrites it with the current tag node whenever `parseOptions.preserveWhitespace` is set, and `onCloseTagEnd` clears it to `undefined` instead of restoring what it held before. `<textarea>`, `<script>` and `<style>` all nest legally inside `<pre>`, so `<pre>A   B` / an indented `<textarea>t</textarea>` / `C   D` / `</pre>` collapses everything after the nested tag down to a single space plus `C D` — silent corruption inside a `white-space: pre` element, on `-t class` too since the parser is shared. The slot is also seeded from the file-wide `htmlParseOptions.preserveWhitespace`, so under that option the first such tag disables preservation for the rest of the file. Save the previous value in `onOpenTagName` and restore it in `onCloseTagEnd`. Re-verify: `-o html -d` on that file emits `<textarea>…</textarea> C D</pre>`, while swapping the `<textarea>` for a `<span>` keeps `C   D` intact.
-
 ## Skip the source printer's reindent for whitespace-preserving tags
 
 `patches/@babel__generator@7.29.7.patch` › `MarkoTag` | 2026-07-27 | impact:med | effort:med

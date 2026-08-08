@@ -343,7 +343,9 @@ export function parseMarko(file) {
 
         if (parseOptions) {
           if (parseOptions.preserveWhitespace) {
-            preservingWhitespaceUntil = node;
+            // Keep the outermost owner so a nested preserving tag (eg a
+            // `<textarea>` in `<pre>`) doesn't end preservation when it closes.
+            preservingWhitespaceUntil ||= node;
           }
 
           if (parseOptions.statement) {
