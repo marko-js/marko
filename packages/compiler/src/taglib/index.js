@@ -87,11 +87,15 @@ export function register(id, props) {
     [id, props] = resolveTaglib(id);
   }
   registeredTaglibs.push(loadTaglib(id, props));
+  // Memoized per-translator lists baked the previous registered set; a fresh
+  // array identity also invalidates the finder's identity-keyed cache.
+  loadedTranslatorsTaglibs.clear();
 }
 
 export function clearCaches() {
   loader.clearCache();
   finder.clearCache();
+  loadedTranslatorsTaglibs.clear();
   lookupCache = Object.create(null);
 }
 
