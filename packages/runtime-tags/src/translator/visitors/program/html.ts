@@ -13,6 +13,7 @@ import {
   usedSharedUid,
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
+import { isCallCleanFn } from "../../util/is-call-clean-fn";
 import { isConditionTag, isCoreTagName } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
@@ -419,6 +420,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   const nestedValueUnsafety = (
     value: t.Expression,
     extra: t.NodeExtra | undefined,
+    scope?: t.NodePath["scope"],
   ): string | null => {
     if (
       !getSerializeSourcesForExpr(extra || {}) &&
@@ -438,9 +440,28 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     t.traverseFast(value, (n) => {
       serverFn ||=
         (t.isCallExpression(n) || t.isOptionalCallExpression(n)) &&
+        !isChildClientFnCallee(n.callee, scope) &&
         exprHasServerSources(n.callee);
     });
     return serverFn ? "calls a server-derived function" : null;
+  };
+  // The child is a pure client instance wherever it is admitted, so a
+  // bare reference to its own call-clean `<const>` arrow is fresh.
+  const isChildClientFnCallee = (
+    callee: t.Node,
+    scope: t.NodePath["scope"] | undefined,
+  ) => {
+    if (!t.isIdentifier(callee) || !scope) return false;
+    const bindingPath = scope.getBinding(callee.name)?.path;
+    const tag = bindingPath?.find((p: t.NodePath) => p.isMarkoTag())?.node as
+      | t.MarkoTag
+      | undefined;
+    return (
+      !!tag &&
+      t.isStringLiteral(tag.name, { value: "const" }) &&
+      tag.attributes[0]?.type === "MarkoAttribute" &&
+      isCallCleanFn(tag.attributes[0].value)
+    );
   };
   // Whether a template (and, recursively, everything it renders) is a
   // self-contained client instance: the reason it is not, or null.
@@ -456,7 +477,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     let reason: string | null = null;
     file.path.traverse({
       MarkoPlaceholder(ph) {
-        reason ||= nestedValueUnsafety(ph.node.value, ph.node.value.extra);
+        reason ||= nestedValueUnsafety(
+          ph.node.value,
+          ph.node.value.extra,
+          ph.scope,
+        );
       },
       // Imported code can carry untracked server knowledge, and aliasing
       // hides call shapes: any module binding fails closed.
@@ -497,6 +522,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           reason ||= nestedValueUnsafety(
             innerAttr.value,
             innerAttr.value.extra,
+            inner.scope,
           );
           if (reason) return;
         }
