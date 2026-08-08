@@ -1,4 +1,4 @@
-// size: 26059 (min) 9697 (brotli)
+// size: 26078 (min) 9686 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -169,7 +169,10 @@ let unsafeStyleAttrReg = /[\\;]/g,
             normalizedRenderer || (getContent ? getContent(scope) : void 0),
             createBranchWithTagNameOrRenderer,
           ),
-          getTagVar && (scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
+          getTagVar &&
+            (scope[childScopeAccessor]
+              ? (scope[childScopeAccessor].T = (value) => getTagVar()(scope, value))
+              : getTagVar()(scope, void 0)),
           typeof normalizedRenderer == "string")
         ) {
           if (getContent) {
