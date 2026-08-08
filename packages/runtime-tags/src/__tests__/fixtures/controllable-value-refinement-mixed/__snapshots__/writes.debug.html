@@ -1,0 +1,24 @@
+<input value=0 id=refined><!--M_*1 #input/0--><input value=0
+  id=refined2><!--M_*1 #input/1--><input value=0
+  id=plain><!--M_*1 #input/2--><input value=0 id=plain2><!--M_*1 #input/3-->
+<div>number<!--M_*1 #text/4-->
+  <!>0<!--M_*1 #text/5-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#input/0": _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-value-refinement-mixed/template.marko_0/valueChange4"
+        ),
+      "ControlledHandler:#input/1": _.a,
+      "ControlledHandler:#input/2": _.b = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-value-refinement-mixed/template.marko_0/valueChange3"
+        ),
+      "ControlledHandler:#input/3": _.b,
+      $valueChange2: _.b,
+      $valueChange: _.a
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/controllable-value-refinement-mixed/template.marko_0 1"
+  ];
+  M._.w()
+</script>
