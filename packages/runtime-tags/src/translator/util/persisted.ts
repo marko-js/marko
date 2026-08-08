@@ -176,10 +176,13 @@ export function classifiesClientOwned(
     !sources?.global &&
     every(refs, (binding) => {
       const refSources = getSerializeSourcesForRef(binding);
+      // A state-mixed ref recomputes client-side, so its param ORIGINS
+      // must fill; a pure-param ref ships its own computed value.
       return (
         !refSources?.param ||
-        !!refSources.state ||
-        isPatchFillBinding(binding) ||
+        (refSources.state
+          ? paramsDeliverAsFills(refSources.param)
+          : isPatchFillBinding(binding)) ||
         inClientOwnedStructure(binding.section)
       );
     })

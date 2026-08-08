@@ -418,10 +418,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   // The outer expression matrix, applied inside nested templates so
   // nesting cannot launder shapes the region boundary rejects.
   const nestedValueUnsafety = (
-    value: t.Expression,
-    extra: t.NodeExtra | undefined,
-    scope?: t.NodePath["scope"],
+    valuePath: t.NodePath<t.Expression>,
   ): string | null => {
+    const value = valuePath.node;
+    const extra = value.extra;
     if (
       !getSerializeSourcesForExpr(extra || {}) &&
       !evaluate(value).confident
@@ -436,14 +436,51 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       });
       if (opaque) return "renders an untracked call";
     }
+    // Calls resolve in their own lexical scope so an inner shadow of a
+    // safe arrow is judged as what it actually is.
     let serverFn = false;
-    t.traverseFast(value, (n) => {
+    const checkCall = (
+      n: t.CallExpression | t.OptionalCallExpression,
+      scope: t.NodePath["scope"],
+    ) => {
       serverFn ||=
-        (t.isCallExpression(n) || t.isOptionalCallExpression(n)) &&
         !isChildClientFnCallee(n.callee, scope) &&
-        exprHasServerSources(n.callee);
+        (exprHasServerSources(n.callee) ||
+          localCalleeAliasesServer(n.callee, scope));
+    };
+    if (t.isCallExpression(value) || t.isOptionalCallExpression(value)) {
+      checkCall(value, valuePath.scope);
+    }
+    valuePath.traverse({
+      CallExpression(call) {
+        checkCall(call.node, call.scope);
+      },
+      OptionalCallExpression(call) {
+        checkCall(call.node, call.scope);
+      },
     });
     return serverFn ? "calls a server-derived function" : null;
+  };
+  // A plain local (a declarator or param default) carries no reference
+  // info of its own, so its initializer's server reads decide the call.
+  const localCalleeAliasesServer = (
+    callee: t.Node,
+    scope: t.NodePath["scope"],
+  ) => {
+    if (!t.isIdentifier(callee) || !scope) return false;
+    const bindingPath = scope.getBinding(callee.name)?.path;
+    if (bindingPath?.isVariableDeclarator()) {
+      return (
+        !!bindingPath.node.init && exprHasServerSources(bindingPath.node.init)
+      );
+    }
+    if (
+      bindingPath?.isIdentifier() &&
+      bindingPath.parentPath?.isAssignmentPattern()
+    ) {
+      return exprHasServerSources(bindingPath.parentPath.node.right);
+    }
+    return false;
   };
   // The child is a pure client instance wherever it is admitted, so a
   // bare reference to its own call-clean `<const>` arrow is fresh.
@@ -452,12 +489,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     scope: t.NodePath["scope"] | undefined,
   ) => {
     if (!t.isIdentifier(callee) || !scope) return false;
-    const bindingPath = scope.getBinding(callee.name)?.path;
-    const tag = bindingPath?.find((p: t.NodePath) => p.isMarkoTag())?.node as
+    const binding = scope.getBinding(callee.name);
+    const tag = binding?.path.find((p: t.NodePath) => p.isMarkoTag())?.node as
       | t.MarkoTag
       | undefined;
     return (
       !!tag &&
+      tag.var === binding!.identifier &&
       t.isStringLiteral(tag.name, { value: "const" }) &&
       tag.attributes[0]?.type === "MarkoAttribute" &&
       isCallCleanFn(tag.attributes[0].value)
@@ -478,9 +516,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     file.path.traverse({
       MarkoPlaceholder(ph) {
         reason ||= nestedValueUnsafety(
-          ph.node.value,
-          ph.node.value.extra,
-          ph.scope,
+          ph.get("value") as t.NodePath<t.Expression>,
         );
       },
       // Imported code can carry untracked server knowledge, and aliasing
@@ -507,7 +543,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           reason = `uses \`<${name}>\``;
           return;
         }
-        for (const innerAttr of inner.node.attributes) {
+        for (const attrPath of inner.get("attributes")) {
+          const innerAttr = attrPath.node;
           if (innerAttr.type !== "MarkoAttribute") {
             if (getTagDef(inner)?.template) {
               reason = "renders a nested child with a spread";
@@ -520,9 +557,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             return;
           }
           reason ||= nestedValueUnsafety(
-            innerAttr.value,
-            innerAttr.value.extra,
-            inner.scope,
+            attrPath.get("value") as t.NodePath<t.Expression>,
           );
           if (reason) return;
         }
