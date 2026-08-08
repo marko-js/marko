@@ -320,12 +320,6 @@ The guard is `args.length && (node.attributes.length > 0 || node.body.length)`, 
 
 `_attr_input_value` passes `normalizeAttrValue(value) || ""` to `setDefault`, but the attribute-backed defaults (`_attr_input_value_attribute_default`, and the attribute arm of `_attr_input_value_dynamic_default`) write it through `_attr`, which removes the attribute only for `undefined`. A void `value` therefore renders `value=""` in CSR while `html/attrs.ts` emits no attribute, so a checkbox or radio submits `""` client-side and the spec default `"on"` server-side. The idiomatic `<input type="checkbox" value:=v/>` compiles straight to `_attr_input_value(…, _attr_input_value_attribute_default)`, and no test covers it. Pass `value` rather than `normalizedValue` to `setDefault`; `_attr_input_value_default` re-normalizes anyway. Re-verify: under jsdom call `_attr_input_value({"#i":el},"#i",undefined,()=>{},_attr_input_value_attribute_default)` — the element becomes `<input type="checkbox" value="">` against an empty SSR string.
 
-## Re-apply a controlled `<select>`'s value when its options arrive
-
-`packages/runtime-tags/src/dom/controllable.ts` › `_attr_select_value_script` | 2026-07-27 | impact:high | effort:low
-
-The `observeOnce({ childList: true, subtree: true })` callback treats any divergence between the live select and the controlled value as a user change and reports `getSelectValue(el)` through `valueChange`. When a controlled select's options arrive after mount — fetched data, a `<for>` that resolves later — the browser auto-selects the first option, so the observer silently replaces the value the app asked for, with no error. Inside the callback, capture the fallback first, re-apply the controlled value with `setSelectValue`, and fall through to `onChange` only when it still did not take (`el.selectedIndex < 0`; `el.selectedOptions.length !== value.length` for `multiple`) so fixture `controllable-select-mutated-option` still reports a re-added option. Re-verify under jsdom: `_attr_select_value(scope,"#s","b",fn)` + `_attr_select_value_script(scope,"#s")` on an empty `<select>`, then append options a/b/c — `fn` fires with `"a"`.
-
 ## Mint `<id>`'s fallback once per scope
 
 `packages/runtime-tags/src/translator/core/id.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med

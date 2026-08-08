@@ -398,6 +398,8 @@ export function _attr_select_value_script(
   }
 
   syncControllableFormInput(el, hasSelectChanged, onChange);
+  // Fires only for external mutations (Marko renders reconcile first);
+  // reporting those after `onChange` restores the value is deliberate.
   observeOnce(scope, nodeAccessor, { childList: true, subtree: true }, () => {
     const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
     if (

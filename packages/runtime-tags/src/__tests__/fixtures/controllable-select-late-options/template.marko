@@ -1,0 +1,12 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/v="b"/>
+<let/calls=0/>
+<select value=v valueChange(nv) { calls++; v = nv }>
+  <await|opts|=resolveAfter(["a", "b", "c"])>
+    <for|o| of=opts>
+      <option value=o>${o}</option>
+    </for>
+  </await>
+</select>
+<div>${v}:${calls}</div>

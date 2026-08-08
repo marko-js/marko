@@ -1,0 +1,21 @@
+<select>
+  <script>
+    WALKER_RUNTIME("M")("_");
+    M._.r = [_ => [1, {
+      Ea: _(1, "a0"),
+      e: "b",
+      f: 0
+    }]]
+  </script>
+
+  <!-- FLUSH -->
+
+  <option value=a>a</option>
+  <option value=b selected>b</option>
+  <option value=c>c</option>
+</select><!--M_*1 a-->
+<div>b<!--M_*1 c-->:<!>0<!--M_*1 d--></div>
+<script>
+  M._.r.push("a1 1");
+  M._.w()
+</script>
