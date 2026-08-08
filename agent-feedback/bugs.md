@@ -158,12 +158,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `flushSerializer` sets `state.hasGlobals = true` before calling `getFilteredGlobals`, so a render whose allow-listed `$global` keys are all still `undefined` at the first serializer flush permanently latches "globals already sent" and never re-checks. A value assigned later — e.g. `<const/_=($global.late="LATE")/>` inside `<await>` content — is then dropped from the resume payload, so streaming and non-streaming disagree on identical input. Move the assignment inside an `if (globals)` guard, as the sibling `flushSerializerGlobals` already does; that covers every case where a later flush still has scopes, but a global first defined after the last scope-carrying flush needs an explicit final-flush re-check, since `flushSerializer` returns early when neither `flushScopes` nor `serializer.pending()` holds. Re-verify: render that template with `$global.serializedGlobals=["late"]` and a promise resolving on a later tick — the streamed chunks contain no `[0,{late:…}` entry, while awaiting the same render emits `_=>[0,{late:"LATE"},{n:0},{m:5}]`.
 
-## Isolate `flushTickQueue` callbacks; one render whose sink throws stops progressive streaming for every other concurrent render
-
-`packages/runtime-tags/src/html/writer.ts` › `flushTickQueue` | 2026-07-27 | impact:med | effort:low
-
-One module-level `tickQueue` holds every in-flight render's `onNext`, and `flushTickQueue` runs `cb(true)` in a bare `for…of`, so one sink that throws (`stream.write` in `pipe`, `ctrl.enqueue` in `toReadable`) aborts the loop. The skipped victims stay parked — each set `tick = false` before queueing, `#read` (`html/template.ts`) re-arms only under `else if (tick)`, and `offTick` is a no-op once the queue is cleared — so they lose every later progressive flush and emit one combined chunk at completion, while the error escapes as an uncaught exception. Wrap `cb(true)` in try/catch and rethrow asynchronously, and/or re-arm `tick` from a `finally` in `#read`. Re-verify: `queueTick(() => { throw new Error("boom") })` then `queueTick(() => (ran = true))` leaves `ran` false.
-
 ## Splice page assets after the doctype; a page entry with no literal `<head>` writes assets ahead of `<!doctype html>` and the document parses in quirks mode
 
 `packages/runtime-tags/src/html/assets.ts` › `flush` | 2026-07-27 | impact:med | effort:low
