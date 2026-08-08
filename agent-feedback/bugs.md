@@ -158,12 +158,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `preservingWhitespaceUntil` is a single slot: `onOpenTagName` overwrites it with the current tag node whenever `parseOptions.preserveWhitespace` is set, and `onCloseTagEnd` clears it to `undefined` instead of restoring what it held before. `<textarea>`, `<script>` and `<style>` all nest legally inside `<pre>`, so `<pre>A   B` / an indented `<textarea>t</textarea>` / `C   D` / `</pre>` collapses everything after the nested tag down to a single space plus `C D` — silent corruption inside a `white-space: pre` element, on `-t class` too since the parser is shared. The slot is also seeded from the file-wide `htmlParseOptions.preserveWhitespace`, so under that option the first such tag disables preservation for the rest of the file. Save the previous value in `onOpenTagName` and restore it in `onCloseTagEnd`. Re-verify: `-o html -d` on that file emits `<textarea>…</textarea> C D</pre>`, while swapping the `<textarea>` for a `<span>` keeps `C   D` intact.
 
-## Pass the attribute value's end offset when parsing it — a bad attribute value swallows the rest of the file
-
-`packages/compiler/src/babel-plugin/parser.js` › `onAttrValue` | 2026-07-27 | impact:med | effort:low
-
-`onAttrValue` and `onAttrSpread` call `parseExpression(file, raw, part.value.start)` without the `sourceEnd` every sibling handler passes, so on failure `createParseError` (`babel-utils/parse.js`) sets `source` to the whole remainder of the file and leaves `node.end` undefined. `output:"source"`/`"migrate"` then print `MarkoParseError` as `this.token(node.source)`, re-emitting everything after the bad attribute twice — and `isSource` returns before the parse-error check in `babel-plugin/index.js`, so a formatter or codemod doubles the file even without `errorRecovery`. `getBoundedRange` also drops Babel's real location, so a multi-line attribute value reports "Unexpected token" at its opening paren while the same mistake inside `${…}` points at the offending token. Pass `part.value.end` at both call sites and in `withWrappedAttrValueHint`'s probe. Re-verify: `compileSync("<div foo=(1+)>hi</div>\n<span>tail</span>", "x.marko", { output: "source", translator: … })` prints the template twice; the `${1+}` control round-trips once.
-
 ## Skip the source printer's reindent for whitespace-preserving tags
 
 `patches/@babel__generator@7.29.7.patch` › `MarkoTag` | 2026-07-27 | impact:med | effort:med

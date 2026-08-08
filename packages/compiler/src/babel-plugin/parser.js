@@ -25,8 +25,12 @@ const withWrappedAttrValueHint = (file, part, rawValue, node) => {
   if (
     node.type === "MarkoParseError" &&
     jsxStyleAttrValueReg.test(trimmed) &&
-    parseExpression(file, trimmed.slice(1, -1), part.value.start).type !==
-      "MarkoParseError"
+    parseExpression(
+      file,
+      trimmed.slice(1, -1),
+      part.value.start,
+      part.value.end,
+    ).type !== "MarkoParseError"
   ) {
     node.label += `${node.label.endsWith(".") ? "" : "."} Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping \`{ }\`.`;
   }
@@ -447,7 +451,7 @@ export function parseMarko(file) {
         file,
         part,
         rawAttrValue,
-        parseExpression(file, rawAttrValue, part.value.start),
+        parseExpression(file, rawAttrValue, part.value.start, part.value.end),
       );
     },
 
@@ -480,7 +484,12 @@ export function parseMarko(file) {
       currentTag.node.attributes.push(
         withLoc(
           t.markoSpreadAttribute(
-            parseExpression(file, parser.read(part.value), part.value.start),
+            parseExpression(
+              file,
+              parser.read(part.value),
+              part.value.start,
+              part.value.end,
+            ),
           ),
           part,
         ),
