@@ -600,7 +600,11 @@ function writeCallArg(state: State, val: unknown) {
   if (val === undefined) {
     state.wroteUndefined = true;
     state.buf.push("$");
-  } else if (!writeProp(state, val, null, "")) {
+  } else if (writeProp(state, val, null, "")) {
+    // Args have no parent access path, so a later reuse needs an eager id.
+    const ref = state.refs.get(val as WeakKey) || state.strs.get(val as string);
+    if (ref && ref.id === null) assignId(state, ref);
+  } else {
     state.buf.push("void 0");
   }
 }

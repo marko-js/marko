@@ -280,6 +280,18 @@ describe("serializer", () => {
 
       assertStringify(set, `_.b=new Set(_.a=[1,_.c={}]),_.c.nested=_.b`);
     });
+    it("reuses a deferred call argument in a later flush", () => {
+      const serializer = assertSerializer();
+      const inner = { name: "inner" };
+      const root = {} as Record<string, unknown>;
+      root.k0 = new Set([40, root, inner]);
+      serializer.assertStringify(
+        root,
+        `_.b={k0:_.a=new Set([40])},_.a.add(_.b),_.a.add(_.c={name:"inner"})`,
+      );
+      serializer.assertStringify({ again: inner }, `{again:_.c}`);
+    });
+
     it("dedupe values across flushes", () => {
       const serializer = assertSerializer();
       const objA = { a: 1 };
