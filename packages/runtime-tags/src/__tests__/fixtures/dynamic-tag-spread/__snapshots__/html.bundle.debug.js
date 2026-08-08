@@ -6,7 +6,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", inputAs || "div", {
 		...htmlInput,
 		"data-foo": foo
-	}, _content_resume("__tests__/tags/wrapper.marko_1_content", () => {
+	}, _content_resume("__tests__/tags/wrapper.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("hi");

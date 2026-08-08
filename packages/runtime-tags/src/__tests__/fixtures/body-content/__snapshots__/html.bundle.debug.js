@@ -6,7 +6,7 @@ var FancyButton_default = _template("__tests__/tags/FancyButton.marko", (input) 
 	_html(`<button${_attrs(attrs, "#button/0", $scope0_id, "button")}>`);
 	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/tags/FancyButton.marko_0_attrs");
+	_script($scope0_id, "__tests__/tags/FancyButton.marko_0_attrs#5");
 	writeScope($scope0_id, {}, "__tests__/tags/FancyButton.marko", 0);
 });
 
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onClick: _resume(function() {
 			clickCount++;
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
-		content: _content("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(clickCount)}${_el_resume($scope1_id, "#text/0")}`);

@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		2,
 		3
 	], (zzz) => {
-		$item = attrTags($item, { content: _content("__tests__/template.marko_1_content", () => {
+		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(zzz)}${_el_resume($scope1_id, "#text/0")}`);

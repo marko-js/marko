@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const ChildA = { content: _content("__tests__/template.marko_1_content", ({ foo, foo: $foo }) => {
+	const ChildA = { content: _content("__tests__/template.marko_1*content", ({ foo, foo: $foo }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__foo = _serialize_guard($scope1_reason, 0);
 		const { bar: $bar } = void 0 !== $foo ? $foo : { bar: 2 };
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	ChildA.content({ foo: { bar: 0 } });
 	ChildA.content({ foo: {} });
 	ChildA.content({});
-	const ChildB = { content: _content("__tests__/template.marko_2_content", (input) => {
+	const ChildB = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $sg__foo2 = _serialize_guard($scope2_reason, 0);
 		const { foo, foo: $foo2 } = input;

@@ -11,7 +11,7 @@ const $placeholder_content__setup = ($scope) => {
 	$await_content($scope);
 	$placeholder_content__await_promise($scope, resolveAfter("placeholder", 2));
 };
-const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "<!><!><!>", "b%", $placeholder_content__setup);
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<!><!><!>", "b%", $placeholder_content__setup);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content__setup = ($scope) => {

@@ -10,7 +10,7 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	hello_default({ foo: attrTag({ content: _content("__tests__/template.marko_1_content", () => {
+	hello_default({ foo: attrTag({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("Foo!");

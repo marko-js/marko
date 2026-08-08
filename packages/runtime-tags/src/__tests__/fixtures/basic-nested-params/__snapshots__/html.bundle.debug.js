@@ -26,13 +26,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: x,
-		content: _content_resume("__tests__/template.marko_1_content", (outer) => {
+		content: _content_resume("__tests__/template.marko_1*content", (outer) => {
 			const $scope1_reason = _scope_reason(), $si__outer = _serialize_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $child_content__outer__closures = new Set();
 			child_default({
 				value: y,
-				content: _content_resume("__tests__/template.marko_2_content", (inner) => {
+				content: _content_resume("__tests__/template.marko_2*content", (inner) => {
 					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0);
 					const $scope2_id = _scope_id();
 					_html(`<div>${_escape(outer)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope1_reason, 0))}.${_sep($sg__inner)}${_escape(inner)}${_el_resume($scope2_id, "#text/1", $sg__inner)}</div>`);

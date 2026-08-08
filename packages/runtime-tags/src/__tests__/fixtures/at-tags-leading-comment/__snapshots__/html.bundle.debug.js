@@ -16,11 +16,11 @@ var box_default = _template("__tests__/tags/box/index.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	box_default({ item: attrTags(attrTag({ content: _content("__tests__/template.marko_2_content", () => {
+	box_default({ item: attrTags(attrTag({ content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("one");
-	}) }), { content: _content("__tests__/template.marko_3_content", () => {
+	}) }), { content: _content("__tests__/template.marko_3*content", () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("two");

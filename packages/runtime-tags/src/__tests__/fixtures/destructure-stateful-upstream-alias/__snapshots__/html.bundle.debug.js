@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let store = store_default({ value: ["Learn Marko", "Make a Website"] });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store/var");
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#4/var");
 	const { list, clear } = store;
 	_html(`<button>Clear</button>${_el_resume($scope0_id, "#button/2")}<ul>`);
 	_for_of(list, (item) => {
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<li>${_escape(item)}${_el_resume($scope1_id, "#text/0")}</li>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "10:4");
 	}, 0, $scope0_id, "#ul/3", 1, 1, 1, "</ul>", 1);
-	_script($scope0_id, "__tests__/template.marko_0_clear");
+	_script($scope0_id, "__tests__/template.marko_0_clear#6");
 	writeScope($scope0_id, {
 		clear,
 		"#childScope/0": _existing_scope($childScope)

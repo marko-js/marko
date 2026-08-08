@@ -6,7 +6,7 @@ var radio_default = _template("__tests__/tags/radio.marko", (input) => {
 		type: "radio",
 		...input
 	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
-	_script($scope0_id, "__tests__/tags/radio.marko_0_input");
+	_script($scope0_id, "__tests__/tags/radio.marko_0_input#2");
 	writeScope($scope0_id, {}, "__tests__/tags/radio.marko", 0);
 });
 

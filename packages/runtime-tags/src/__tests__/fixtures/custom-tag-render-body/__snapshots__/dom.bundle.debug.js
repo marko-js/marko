@@ -15,7 +15,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "This is the body content");
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "This is the body content");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$content_direct($scope["#childScope/0"], $child_content($scope));

@@ -21,11 +21,11 @@ var sections_default = _template("__tests__/tags/sections.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	sections_default({ section: attrTags(attrTag({ content: _content("__tests__/template.marko_1_content", () => {
+	sections_default({ section: attrTags(attrTag({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("<div>static content</div>");
-	}) }), { content: _content("__tests__/template.marko_2_content", () => {
+	}) }), { content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<div>that never changes</div>");

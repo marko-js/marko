@@ -26,8 +26,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $count__closures = new Set();
 	const $childScope = _peek_scope_id();
 	let count = my_let_default({ value: 0 });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_count/var");
-	my_tag_default({ content: _content("__tests__/template.marko_1_content", () => {
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_count#3/var");
+	my_tag_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>${_escape(count)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);

@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { show } = input;
-	_dynamic_tag($scope0_id, "#text/0", show ? "div" : null, {}, _content_resume("__tests__/tags/child.marko_1_content", () => {
+	_dynamic_tag($scope0_id, "#text/0", show ? "div" : null, {}, _content_resume("__tests__/tags/child.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_script($scope1_id, "__tests__/tags/child.marko_1");

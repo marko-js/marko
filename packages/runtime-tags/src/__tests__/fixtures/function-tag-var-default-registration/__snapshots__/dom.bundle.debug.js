@@ -3,7 +3,7 @@ const $template = "<button>before</button>";
 const $walks = " b";
 const updateText = $updateText;
 const $pattern2 = ($scope, $pattern) => $onClick2($scope, $pattern.onClick);
-const $onClick3__script = _script("__tests__/template.marko_0_onClick", ($scope) => _on($scope["#button/0"], "click", $scope.onClick));
+const $onClick3__script = _script("__tests__/template.marko_0_onClick#3", ($scope) => _on($scope["#button/0"], "click", $scope.onClick));
 const $onClick3 = /*@__PURE__*/ _const("onClick", $onClick3__script);
 const $onClick2 = ($scope, $onClick) => $onClick3($scope, void 0 !== $onClick ? $onClick : updateText);
 function $setup($scope) {

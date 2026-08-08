@@ -13,7 +13,7 @@ const $detailsTag_content__setup = ($scope) => {
 	$detailsTag_content__textareaTag($scope);
 };
 const $detailsTag_content__textareaTag = /*@__PURE__*/ _closure_get("textareaTag", $detailsTag_content__text__OR__textareaTag);
-const $detailsTag_content = _content_resume("__tests__/template.marko_1_content", "<summary>toggle</summary><!><!>", "b%", $detailsTag_content__setup);
+const $detailsTag_content = _content_resume("__tests__/template.marko_1*content", "<summary>toggle</summary><!><!>", "b%", $detailsTag_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $detailsTag_content);
 const $open__OR__detailsTag = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.detailsTag, () => ({
 	open: $scope.open,

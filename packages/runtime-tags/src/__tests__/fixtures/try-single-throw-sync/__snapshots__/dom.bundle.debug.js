@@ -3,7 +3,7 @@ const $template = "Before<!>After";
 const $walks = "b%c";
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content_resume("__tests__/template.marko_2_content", " ", " ", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", " ", " ", 0, $catch_content__$params);
 const $try_content__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("ERROR!");
 })());

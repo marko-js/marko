@@ -23,7 +23,7 @@ const $Foo_content__input = ($scope, input) => {
 	$Foo_content__input_bar($scope, input?.bar);
 	$Foo_content__tag_input_message($scope, input?.message);
 };
-const $Foo_content = _content_resume("__tests__/template.marko_1_content", $Foo_content__template, $Foo_content__walks, 0, $Foo_content__$params);
+const $Foo_content = _content_resume("__tests__/template.marko_1*content", $Foo_content__template, $Foo_content__walks, 0, $Foo_content__$params);
 const $Foo = /*@__PURE__*/ _const("Foo");
 function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;

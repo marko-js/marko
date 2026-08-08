@@ -21,23 +21,23 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let x = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	_dynamic_tag($scope0_id, "#text/1", x ? "div" : undefined, { id: "d1" }, _content_resume("__tests__/template.marko_1_content", () => {
+	_dynamic_tag($scope0_id, "#text/1", x ? "div" : undefined, { id: "d1" }, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("u");
 	}, $scope0_id));
-	_dynamic_tag($scope0_id, "#text/2", x ? "div" : "span", {}, _content_resume("__tests__/template.marko_2_content", () => {
+	_dynamic_tag($scope0_id, "#text/2", x ? "div" : "span", {}, _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("n");
 	}, $scope0_id));
-	_dynamic_tag($scope0_id, "#text/3", navigator, {}, _content_resume("__tests__/template.marko_3_content", () => {
+	_dynamic_tag($scope0_id, "#text/3", navigator, {}, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
 		_html("g");
 	}, $scope0_id), 0, 0);
 	_dynamic_tag($scope0_id, "#text/4", x ? a_default : b_default, { label: "ab" });
-	_dynamic_tag($scope0_id, "#text/5", x ? "div" : a_default, { label: "ad" }, _content_resume("__tests__/template.marko_4_content", () => {
+	_dynamic_tag($scope0_id, "#text/5", x ? "div" : a_default, { label: "ad" }, _content_resume("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		_html("m");

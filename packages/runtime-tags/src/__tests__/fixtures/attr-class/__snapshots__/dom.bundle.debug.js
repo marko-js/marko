@@ -28,7 +28,7 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.mark
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<div class=a></div><div class="a b"></div><div class="a b c"></div><div></div><div class=base></div>${_w0}${_w1}<!><!>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` d b b/${_w0}&/${_w1}&%c`)($walks$1, $walks$1);
 const TestTag = custom_tag_default;
-const $test_content = _content_resume("__tests__/template.marko_1_content", "Hello");
+const $test_content = _content_resume("__tests__/template.marko_1*content", "Hello");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5");
 const $input_c__OR__input_d = /*@__PURE__*/ _or(10, ($scope) => {
 	_attr_class_items($scope["#div/0"], {

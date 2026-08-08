@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-const $input__script = _script("__tests__/tags/my-box.marko_0_input", ($scope) => _attrs_script($scope, "#div/0"));
+const $input__script = _script("__tests__/tags/my-box.marko_0_input#2", ($scope) => _attrs_script($scope, "#div/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input);
 	$input__script($scope);
@@ -20,7 +20,7 @@ const $mybox_content__setup = ($scope) => {
 	$mybox_content__count($scope, 0);
 	$mybox_content__setup__script($scope);
 };
-const $mybox_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button type=button class=inc>increment</button><span class=count> </span>", " bD ", $mybox_content__setup);
+const $mybox_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button type=button class=inc>increment</button><span class=count> </span>", " bD ", $mybox_content__setup);
 function $setup($scope) {
 	$input($scope["#childScope/0"], {
 		class: "x",

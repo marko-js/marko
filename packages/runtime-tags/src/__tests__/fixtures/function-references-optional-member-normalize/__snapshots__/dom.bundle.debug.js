@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<div></div><div></div><div></div>";
 const $walks = " b b b";
-const $a2__script = _script("__tests__/template.marko_0_a", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.a.bar() || "missing a");
+const $a2__script = _script("__tests__/template.marko_0_a#5", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.a.bar() || "missing a");
 const $a2 = /*@__PURE__*/ _const("a", $a2__script);
-const $b2__script = _script("__tests__/template.marko_0_b", ($scope) => _el_read($scope["#div/1"]).textContent = $scope.b.baz() || "missing b");
+const $b2__script = _script("__tests__/template.marko_0_b#6", ($scope) => _el_read($scope["#div/1"]).textContent = $scope.b.baz() || "missing b");
 const $b2 = /*@__PURE__*/ _const("b", $b2__script);
 const $foo = /*@__PURE__*/ _let("foo/3", ($scope) => {
 	$foo_bar($scope, $scope.foo?.bar);
@@ -16,7 +16,7 @@ const $foo = /*@__PURE__*/ _let("foo/3", ($scope) => {
 		baz: $b($scope)
 	});
 });
-const $c2__script = _script("__tests__/template.marko_0_c", ($scope) => _el_read($scope["#div/2"]).textContent = $scope.c.baz() || "missing c");
+const $c2__script = _script("__tests__/template.marko_0_c#7", ($scope) => _el_read($scope["#div/2"]).textContent = $scope.c.baz() || "missing c");
 const $c2 = /*@__PURE__*/ _const("c", $c2__script);
 const $foo_bar = /*@__PURE__*/ _const("foo_bar", ($scope) => $c2($scope, {
 	foo: $scope.foo_bar,

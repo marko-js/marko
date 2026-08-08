@@ -2,7 +2,7 @@
 const $template$2 = "<p></p>";
 const $walks$2 = " b";
 const $setup$2 = () => {};
-const $input_class__OR__rest__script = _script("__tests__/tags/child.marko_0_input_class_rest", ($scope) => _attrs_script($scope, "#p/0"));
+const $input_class__OR__rest__script = _script("__tests__/tags/child.marko_0_input_class#3_rest#4", ($scope) => _attrs_script($scope, "#p/0"));
 const $input_class__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs_content($scope, "#p/0", {
 		class: $scope.input_class,
@@ -34,8 +34,8 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<div id=content-missing>${_w0}</div><div id=content-undefined>${_w1}</div><div id=content-set>${_w2}</div><div id=dynamic><!></div>`)($template$1, $template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `D/${_w0}&lD/${_w1}&lD/${_w2}&lD%l`)($walks$1, $walks$1, $walks$1);
 const Wrap = wrap_default;
-const $Wrap_content = _content_resume("__tests__/template.marko_2_content", "Hello World");
-const $wrap_content = _content_resume("__tests__/template.marko_1_content", "Hello World");
+const $Wrap_content = _content_resume("__tests__/template.marko_2*content", "Hello World");
+const $wrap_content = _content_resume("__tests__/template.marko_1*content", "Hello World");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/3", $Wrap_content);
 function $setup($scope) {
 	$_class($scope["#childScope/0"], "foo");

@@ -2,7 +2,7 @@
 const $template$2 = "<div></div>";
 const $walks$2 = " b";
 const $setup$2 = () => {};
-const $input_option__script = _script("__tests__/tags/child.marko_0_input_option", ($scope) => _el_read($scope["#div/0"]).innerHTML = Object.keys($scope.input_option).join(","));
+const $input_option__script = _script("__tests__/tags/child.marko_0_input_option#3", ($scope) => _el_read($scope["#div/0"]).innerHTML = Object.keys($scope.input_option).join(","));
 const $input_option$1 = /*@__PURE__*/ _const("input_option", $input_option__script);
 const $input$1 = ($scope, input) => $input_option$1($scope, input.option);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, " b", $setup$2, $input$1);
@@ -18,7 +18,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $option_content = _content_resume("__tests__/template.marko_1_content", "1");
+const $option_content = _content_resume("__tests__/template.marko_1*content", "1");
 function $setup($scope) {
 	$input_option($scope["#childScope/0"], attrTag({ content: $option_content($scope) }));
 }

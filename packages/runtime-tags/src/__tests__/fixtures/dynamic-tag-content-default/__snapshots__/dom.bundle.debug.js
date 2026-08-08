@@ -10,7 +10,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("D%l", "D%l");
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "Hello");
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Hello");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], {});

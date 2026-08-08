@@ -2,7 +2,7 @@
 const $template$1 = " <span></span>";
 const $walks$1 = "b b";
 const $setup$1 = () => {};
-const $input_class__OR__rest__script = _script("__tests__/tags/child.marko_0__class_rest", ($scope) => _attrs_script($scope, "#span/0"));
+const $input_class__OR__rest__script = _script("__tests__/tags/child.marko_0__class#3_rest#4", ($scope) => _attrs_script($scope, "#span/0"));
 const $input_class__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs_content($scope, "#span/0", {
 		class: $scope._class,

@@ -49,14 +49,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/onSelect", $scope0_id),
 		item: attrTags(attrTag({
 			title: "one",
-			renderBody: _content_resume("__tests__/template.marko_1_content", () => {
+			renderBody: _content_resume("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html("<em>first</em>");
 			}, $scope0_id)
 		}), {
 			title: "two",
-			renderBody: _content_resume("__tests__/template.marko_2_content", () => {
+			renderBody: _content_resume("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("<em>second</em>");

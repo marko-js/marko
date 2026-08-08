@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		valueChange: _resume(function(v) {
 			value = v;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
-	}, _content_resume("__tests__/template.marko_1_content", () => {
+	}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);

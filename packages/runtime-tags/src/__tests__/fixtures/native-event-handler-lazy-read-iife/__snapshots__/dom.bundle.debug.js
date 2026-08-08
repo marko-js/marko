@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=bump>bump</button><button class=snap>snap</button><div class=n> </div><div class=log> </div>";
 const $walks = " b bD lD l";
-const $n__OR__log__script = _script("__tests__/template.marko_0_n_log", ($scope) => _on($scope["#button/1"], "click", (() => {
+const $n__OR__log__script = _script("__tests__/template.marko_0_n#4_log#5", ($scope) => _on($scope["#button/1"], "click", (() => {
 	const captured = $scope.n;
 	return () => {
 		$log($scope, `${$scope.log}[${captured}:${$scope.n}]`);

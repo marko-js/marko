@@ -5,7 +5,7 @@ var my_button_default = _template("__tests__/tags/my-button.marko", (input) => {
 	_html("<button");
 	_attrs_content(input, "#button/0", $scope0_id, "button");
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/tags/my-button.marko_0_input");
+	_script($scope0_id, "__tests__/tags/my-button.marko_0_input#2");
 	writeScope($scope0_id, {}, "__tests__/tags/my-button.marko", 0);
 });
 
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onClick: _resume(function() {
 			console.log(test);
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
-		content: _content("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Click");

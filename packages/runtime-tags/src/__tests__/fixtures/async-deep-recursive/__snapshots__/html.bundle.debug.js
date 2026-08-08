@@ -7,12 +7,12 @@ const $content = (input) => {
 		if (input.level) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr("data-level", input.level)}>`);
-			_try($scope1_id, "#text/1", _content_resume("__tests__/tags/recurse.marko_2_content", () => {
+			_try($scope1_id, "#text/1", _content_resume("__tests__/tags/recurse.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
 				_await($scope2_id, "#text/0", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
-					$si__input_level && _script($scope3_id, "__tests__/tags/recurse.marko_3_input_level/pending");
+					$si__input_level && _script($scope3_id, "__tests__/tags/recurse.marko_3_input_level#3/pending");
 					_set_serialize_reason($sg__input_level);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
@@ -23,7 +23,7 @@ const $content = (input) => {
 					_resume_branch($scope3_id);
 				}, $sg__input_level);
 				$si__input_level && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/recurse.marko", "5:5");
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/tags/recurse.marko_4_content", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/tags/recurse.marko_4*content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("LOADING...");

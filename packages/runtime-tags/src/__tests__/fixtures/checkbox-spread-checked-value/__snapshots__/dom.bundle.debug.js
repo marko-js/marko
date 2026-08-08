@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<input type=checkbox><button>t</button><div> </div>";
 const $walks = " b bD l";
-const $sel__script = _script("__tests__/template.marko_0_sel", ($scope) => _attrs_script($scope, "#input/0"));
+const $sel__script = _script("__tests__/template.marko_0_sel#3", ($scope) => _attrs_script($scope, "#input/0"));
 const $sel = /*@__PURE__*/ _let("sel/3", ($scope) => {
 	_attrs_partial($scope, "#input/0", {
 		checkedValue: $scope.sel,

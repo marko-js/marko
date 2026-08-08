@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let msg = "hello";
 	_dynamic_tag($scope0_id, "#text/0", _marko_template, { onClick: _resume(function() {
 		msg = "";
-	}, "__tests__/template.marko_0/onClick", $scope0_id) }, _content_resume("__tests__/template.marko_1_content", () => {
+	}, "__tests__/template.marko_0/onClick", $scope0_id) }, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Reset");

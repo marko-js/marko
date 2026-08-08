@@ -12,7 +12,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Toggle</button>`)($t
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
 const $item_content__y = ($scope, y) => _text($scope["#text/0"], y);
 const $item_content__$params = ($scope, $params2) => $item_content__y($scope, $params2[0]);
-const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "y: <!>", "b%", 0, $item_content__$params);
+const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "y: <!>", "b%", 0, $item_content__$params);
 const $x = /*@__PURE__*/ _let("x/2", ($scope) => {
 	let $item;
 	if ($scope.x) {

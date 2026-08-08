@@ -2,12 +2,12 @@
 const $template$1 = "<section></section><footer></footer>";
 const $walks$1 = " b b";
 const $setup$1 = () => {};
-const $input_head__script = _script("__tests__/tags/my-box.marko_0_input_head", ($scope) => _attrs_script($scope, "#section/0"));
+const $input_head__script = _script("__tests__/tags/my-box.marko_0_input_head#4", ($scope) => _attrs_script($scope, "#section/0"));
 const $input_head = /*@__PURE__*/ _const("input_head", ($scope) => {
 	_attrs_content($scope, "#section/0", $scope.input_head);
 	$input_head__script($scope);
 });
-const $input_foot__script = _script("__tests__/tags/my-box.marko_0_input_foot", ($scope) => _attrs_script($scope, "#footer/1"));
+const $input_foot__script = _script("__tests__/tags/my-box.marko_0_input_foot#5", ($scope) => _attrs_script($scope, "#footer/1"));
 const $input_foot = /*@__PURE__*/ _const("input_foot", ($scope) => {
 	_attrs_content($scope, "#footer/1", $scope.input_foot);
 	$input_foot__script($scope);
@@ -29,7 +29,7 @@ const $head_content__setup = ($scope) => {
 	$head_content__n($scope, 0);
 	$head_content__setup__script($scope);
 };
-const $head_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<button> </button>", " D ", $head_content__setup);
+const $head_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button> </button>", " D ", $head_content__setup);
 function $setup($scope) {
 	$input_head($scope["#childScope/0"], attrTag({
 		id: "h",

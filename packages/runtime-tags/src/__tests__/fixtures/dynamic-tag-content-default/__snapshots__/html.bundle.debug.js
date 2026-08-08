@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	child_default({});
-	child_default({ content: _content("__tests__/template.marko_1_content", () => {
+	child_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("Hello");

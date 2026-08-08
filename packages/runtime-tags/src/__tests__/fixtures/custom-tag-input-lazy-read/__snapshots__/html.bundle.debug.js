@@ -3,7 +3,7 @@ var press_button_default = _template("__tests__/tags/press-button/index.marko", 
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<button class=act>press</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/tags/press-button/index.marko_0_input_onPress");
+	_script($scope0_id, "__tests__/tags/press-button/index.marko_0_input_onPress#3");
 	writeScope($scope0_id, { input_onPress: input.onPress }, "__tests__/tags/press-button/index.marko", 0, { input_onPress: ["input.onPress"] });
 });
 

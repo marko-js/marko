@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const promise = Promise.resolve(getCount);
 	_html(`<button>inc:<!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<div id=ref>0</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_promise");
+	_script($scope0_id, "__tests__/template.marko_0_promise#4");
 	writeScope($scope0_id, {
 		count,
 		promise

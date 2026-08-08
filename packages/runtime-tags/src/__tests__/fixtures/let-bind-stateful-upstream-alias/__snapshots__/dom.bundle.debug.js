@@ -28,7 +28,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Clear</button><ul></ul>
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b b`)("");
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $store = _var_resume("__tests__/template.marko_0_store/var", ($scope, store) => {
+const $store = _var_resume("__tests__/template.marko_0_store#4/var", ($scope, store) => {
 	$store_list($scope, store?.list);
 	$store_listChange($scope, store?.listChange);
 	$store_clear($scope, store?.clear);
@@ -38,7 +38,7 @@ const $list = /*@__PURE__*/ _let_change("list/9", ($scope) => $for($scope, [$sco
 const $store_list__OR__store_listChange = /*@__PURE__*/ _or(7, ($scope) => $list($scope, $scope.store_list, $scope.store_listChange), 1, "#scopeOffset/1");
 const $store_list = /*@__PURE__*/ _const("store_list", $store_list__OR__store_listChange);
 const $store_listChange = /*@__PURE__*/ _const("store_listChange", $store_list__OR__store_listChange);
-const $store_clear__script = _script("__tests__/template.marko_0_store_clear", ($scope) => _on($scope["#button/2"], "click", $scope.store_clear));
+const $store_clear__script = _script("__tests__/template.marko_0_store_clear#8", ($scope) => _on($scope["#button/2"], "click", $scope.store_clear));
 const $store_clear = /*@__PURE__*/ _const("store_clear", $store_clear__script);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $store);

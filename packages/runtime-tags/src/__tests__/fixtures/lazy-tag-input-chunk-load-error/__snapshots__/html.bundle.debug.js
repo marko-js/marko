@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $show__closures = new Set();
 	let show = false;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1_content", () => {
+	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_if(() => {
@@ -28,12 +28,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
-		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
+		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("<div id=loading>loading</div>");
 		}, $scope0_id) }),
-		catch: attrTag({ content: _content_resume("__tests__/template.marko_3_content", (err) => {
+		catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<div id=error>${_escape(err.message)}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope3_reason, 0))}</div>`);

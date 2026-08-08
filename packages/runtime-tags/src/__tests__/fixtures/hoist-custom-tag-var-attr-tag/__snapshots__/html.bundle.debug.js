@@ -20,9 +20,9 @@ var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml/hoist");
+	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml#2/hoist");
 	const $what_content__subscribers = new Set();
-	thing_default({ what: attrTag({ content: _content("__tests__/template.marko_1_content", () => {
+	thing_default({ what: attrTag({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		let setHtml = child_default({});

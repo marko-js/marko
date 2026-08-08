@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $y_getter = _hoist($scope0_id, "__tests__/template.marko_0_y/hoist");
+	const $y_getter = _hoist($scope0_id, "__tests__/template.marko_0_y#4/hoist");
 	const x = 1;
 	const y = _resume(() => 1, "__tests__/template.marko_0/y");
 	_html(`<div>${_escape(x)}${_escape(y())}</div>${_escape(typeof $y_getter)}`);

@@ -12,7 +12,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
-const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "loading...");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading...");
 const $try_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 	$load_Child_tag_input_value($scope["#childScope/1"], "hi");

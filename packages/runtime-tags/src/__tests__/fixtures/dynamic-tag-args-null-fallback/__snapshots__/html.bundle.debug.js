@@ -14,12 +14,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", x, [
 		1,
 		2,
-		{ content: _content_resume("__tests__/template.marko_1_content", () => {
+		{ content: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_id = _scope_id();
 			_scope_reason();
 			_html("Fallback Body");
 		}, $scope0_id) }
-	], _content_resume("__tests__/template.marko_1_content", () => {
+	], _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Fallback Body");

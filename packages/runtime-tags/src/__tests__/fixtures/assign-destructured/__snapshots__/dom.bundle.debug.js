@@ -14,7 +14,7 @@ function $setup($scope) {
 	});
 }
 const $foo2 = ($scope, foo) => _text($scope["#text/1"], foo);
-const $fooChange2__script = _script("__tests__/template.marko_0_$fooChange", ($scope) => _on($scope["#button/0"], "click", function() {
+const $fooChange2__script = _script("__tests__/template.marko_0_$fooChange#6", ($scope) => _on($scope["#button/0"], "click", function() {
 	$scope.$fooChange($scope.bar + 1);
 }));
 const $fooChange2 = /*@__PURE__*/ _const("$fooChange", $fooChange2__script);

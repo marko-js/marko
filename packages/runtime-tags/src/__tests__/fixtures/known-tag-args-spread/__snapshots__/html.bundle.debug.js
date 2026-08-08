@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input__closures = new Set();
 	let x = 1;
 	const args = [x, 2];
-	const MyTag = { content: _content("__tests__/template.marko_1_content", (a, b) => {
+	const MyTag = { content: _content("__tests__/template.marko_1*content", (a, b) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__b = _serialize_guard($scope1_reason, 2);
 		_html(`<div>${_escape(a)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))}|${_sep($sg__b)}${_escape(b)}${_el_resume($scope1_id, "#text/1", $sg__b)}|${_sep($sg__input)}${_escape(JSON.stringify(input))}${_el_resume($scope1_id, "#text/2", $sg__input)}</div>`);

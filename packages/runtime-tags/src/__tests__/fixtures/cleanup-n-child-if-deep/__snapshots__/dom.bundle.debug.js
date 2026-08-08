@@ -2,7 +2,7 @@
 const $template$1 = "<div><!> a</div><span><!> a</span><p><!> a</p>";
 const $walks$1 = "D%lD%lD%l";
 const $setup$1 = () => {};
-const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name_write", ($scope) => {
+const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name#5_write#6", ($scope) => {
 	$scope.write(`${$scope.name} mounted`);
 	$signal($scope, 0).onabort = () => {
 		$scope.write(`${$scope.name} destroyed`);

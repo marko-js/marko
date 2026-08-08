@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let tagName = "div";
-	_dynamic_tag($scope0_id, "#text/0", tagName, {}, _content_resume("__tests__/template.marko_1_content", () => {
+	_dynamic_tag($scope0_id, "#text/0", tagName, {}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		counter_default({});

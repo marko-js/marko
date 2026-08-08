@@ -1,0 +1,18 @@
+<div>first</div><!--M_*1 #div/0-->
+<div>second</div><!--M_*1 #div/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      box: {
+        a: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/tag-var-distinct-refs/template.marko_0_#div#0"
+          ),
+        b: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/tag-var-distinct-refs/template.marko_0_#div#1"
+          )
+      }
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/tag-var-distinct-refs/template.marko_0_box#2 1"
+  ];
+  M._.w()
+</script>

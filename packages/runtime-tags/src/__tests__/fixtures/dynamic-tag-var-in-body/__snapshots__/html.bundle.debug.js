@@ -15,14 +15,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $setHtml__closures = new Set();
 	const $Child_scope = _peek_scope_id();
-	let setHtml = _dynamic_tag($scope0_id, "#text/0", 1 && child_default, {}, _content_resume("__tests__/template.marko_1_content", () => {
+	let setHtml = _dynamic_tag($scope0_id, "#text/0", 1 && child_default, {}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_script($scope1_id, "__tests__/template.marko_1_setHtml");
+		_script($scope1_id, "__tests__/template.marko_1_setHtml#2");
 		_subscribe($setHtml__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		_resume_branch($scope1_id);
 	}, $scope0_id));
-	_var($scope0_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_0_setHtml/var");
+	_var($scope0_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_0_setHtml#2/var");
 	writeScope($scope0_id, {
 		setHtml,
 		"ClosureScopes:setHtml": $setHtml__closures

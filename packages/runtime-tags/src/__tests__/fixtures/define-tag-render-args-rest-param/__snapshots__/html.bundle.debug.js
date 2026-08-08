@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	const MyTag = { content: _content("__tests__/template.marko_1_content", (a, ...rest) => {
+	const MyTag = { content: _content("__tests__/template.marko_1*content", (a, ...rest) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__rest = _serialize_guard($scope1_reason, 2);
 		_html(`<div>${_escape(a)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))}|${_sep($sg__rest)}${_escape(JSON.stringify(rest))}${_el_resume($scope1_id, "#text/1", $sg__rest)}</div>`);

@@ -21,22 +21,22 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml/hoist");
+	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml#2/hoist");
 	const $thing_content__subscribers = new Set();
 	const $inputshowThingnull_content__subscribers = new Set();
 	const $inputshowsectionnull_content__subscribers = new Set();
-	thing_default({ content: _content("__tests__/template.marko_1_content", () => {
+	thing_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		let setHtml = child_default({});
 		_subscribe($thing_content__subscribers, writeScope($scope1_id, { setHtml }, "__tests__/template.marko", "3:2", { setHtml: "4:10" }));
 		_assert_hoist(setHtml);
 	}) });
-	_dynamic_tag($scope0_id, "#text/1", input.show ? thing_default : null, {}, _content_resume("__tests__/template.marko_2_content", () => {
+	_dynamic_tag($scope0_id, "#text/1", input.show ? thing_default : null, {}, _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $thing_content2__subscribers = new Set();
 		_scope_reason();
-		thing_default({ content: _content("__tests__/template.marko_3_content", () => {
+		thing_default({ content: _content("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			let setHtml2 = child_default({});
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}) });
 		_subscribe($inputshowThingnull_content__subscribers, writeScope($scope2_id, { "ClosureScopes:3": $thing_content2__subscribers }, "__tests__/template.marko", "15:4"));
 	}, $scope0_id), 0, $sg__input_show);
-	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content_resume("__tests__/template.marko_4_content", () => {
+	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content_resume("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		let setHtml3 = child_default({});

@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $ul = _el($scope0_id, "__tests__/template.marko_0_#ul");
+	const $ul = _el($scope0_id, "__tests__/template.marko_0_#ul#1");
 	let items = [0, 1];
 	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}<ul>`);
 	_for_of(items, (item) => {

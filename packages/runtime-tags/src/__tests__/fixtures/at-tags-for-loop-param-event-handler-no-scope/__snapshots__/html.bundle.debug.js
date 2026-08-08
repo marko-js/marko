@@ -7,7 +7,7 @@ var my_menu_default = _template("__tests__/tags/my-menu/index.marko", (input) =>
 		_html("<button");
 		_attrs_content(item, "#button/0", $scope1_id, "button");
 		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/tags/my-menu/index.marko_1_item");
+		_script($scope1_id, "__tests__/tags/my-menu/index.marko_1_item#2");
 		writeScope($scope1_id, {}, "__tests__/tags/my-menu/index.marko", "1:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/my-menu/index.marko", 0);
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			onClick: _resume_locals(function(ev) {
 				ev.target.textContent = foo;
 			}, "__tests__/template.marko_0/onClick", { "foo/4": foo }),
-			content: _content_resume("__tests__/template.marko_1_content", () => {
+			content: _content_resume("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html("Click");

@@ -2,7 +2,7 @@
 const $template$1 = "<button class=act>press</button>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-const $input_onPress__script = _script("__tests__/tags/press-button/index.marko_0_input_onPress", ($scope) => _on($scope["#button/0"], "click", $scope.input_onPress));
+const $input_onPress__script = _script("__tests__/tags/press-button/index.marko_0_input_onPress#3", ($scope) => _on($scope["#button/0"], "click", $scope.input_onPress));
 const $input_onPress = /*@__PURE__*/ _const("input_onPress", $input_onPress__script);
 const $input = ($scope, input) => $input_onPress($scope, input.onPress);
 var press_button_default = /*@__PURE__*/ _template("__tests__/tags/press-button/index.marko", $template$1, " b", $setup$1, $input);

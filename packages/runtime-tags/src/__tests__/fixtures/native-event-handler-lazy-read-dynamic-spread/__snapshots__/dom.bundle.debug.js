@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=toggle>toggle</button><button class=bump>bump</button><button class=a>a</button><button class=b>b</button><div class=state><!>:<!></div><div class=log> </div>";
 const $walks = " b b b bD%c%lD l";
-const $enabled__script = _script("__tests__/template.marko_0_enabled", ($scope) => {
+const $enabled__script = _script("__tests__/template.marko_0_enabled#7", ($scope) => {
 	_attrs_script($scope, "#button/2");
 	_attrs_script($scope, "#button/3");
 });

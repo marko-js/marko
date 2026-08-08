@@ -5,7 +5,7 @@ const $pattern2 = ($scope, $pattern) => {
 	$foo2($scope, $pattern.foo);
 	$fooChange2($scope, $pattern.fooChange);
 };
-const $foo__OR__$fooChange__script = _script("__tests__/template.marko_0_foo_$fooChange", ($scope) => _on($scope["#button/0"], "click", function() {
+const $foo__OR__$fooChange__script = _script("__tests__/template.marko_0_foo#5_$fooChange#6", ($scope) => _on($scope["#button/0"], "click", function() {
 	$scope.$fooChange($scope.foo + 1);
 }));
 const $foo__OR__$fooChange = $foo__OR__$fooChange__script;

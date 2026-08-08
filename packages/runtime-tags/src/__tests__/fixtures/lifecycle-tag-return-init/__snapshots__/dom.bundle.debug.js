@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div id=ref></div><button id=increment>Increment</button>";
 const $walks = "b b";
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _lifecycle($scope, {
+const $x__script = _script("__tests__/template.marko_0_x#1", ($scope) => _lifecycle($scope, {
 	x: $scope.x,
 	onMount: function() {
 		this.w = 1;

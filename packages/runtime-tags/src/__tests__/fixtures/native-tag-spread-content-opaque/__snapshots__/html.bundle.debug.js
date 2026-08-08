@@ -25,7 +25,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 		}
 	}, $scope0_id, "#div/2", 1, 1, 1, "</div>");
 	_script($scope0_id, "__tests__/tags/my-box.marko_0");
-	_script($scope0_id, "__tests__/tags/my-box.marko_0_input");
+	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#4");
 	writeScope($scope0_id, {
 		input,
 		show
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	my_box_default({
 		class: "x",
-		content: _content_resume("__tests__/template.marko_1_content", () => {
+		content: _content_resume("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Body Content");

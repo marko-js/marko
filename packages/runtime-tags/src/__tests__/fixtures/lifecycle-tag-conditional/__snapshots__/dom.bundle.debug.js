@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
 const $walks = "b%c b b";
-const $if_content__x__script = _script("__tests__/template.marko_1_x", ($scope) => _lifecycle($scope, {
+const $if_content__x__script = _script("__tests__/template.marko_1_x#3", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		document.getElementById("ref").textContent = "Mount " + $scope._.x;
 	},

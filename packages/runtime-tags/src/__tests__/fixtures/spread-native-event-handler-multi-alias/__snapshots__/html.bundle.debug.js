@@ -3,13 +3,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div id=el></div>");
-	const MyButton = { content: _content("__tests__/template.marko_1_content", (input) => {
+	const MyButton = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("<button");
 		_attrs_partial_content(input, { "on-click": 1 }, "#button/0", $scope1_id, "button");
 		_html(`</button>${_el_resume($scope1_id, "#button/0")} `);
-		_script($scope1_id, "__tests__/template.marko_1_input");
+		_script($scope1_id, "__tests__/template.marko_1_input#2");
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			input: {
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onClick: _resume(function() {
 			document.getElementById("el").textContent += "[onClick(parent)]";
 		}, "__tests__/template.marko_0/onClick"),
-		content: _content("__tests__/template.marko_2_content", () => {
+		content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("Click Me");

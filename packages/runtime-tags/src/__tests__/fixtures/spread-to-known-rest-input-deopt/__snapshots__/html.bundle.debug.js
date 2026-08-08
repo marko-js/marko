@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		...rest
 	}, "#span/0", $scope0_id, "span");
 	_html(`</span>${_el_resume($scope0_id, "#span/0")}`);
-	_script($scope0_id, "__tests__/tags/child.marko_0__class_rest");
+	_script($scope0_id, "__tests__/tags/child.marko_0__class#3_rest#4");
 	writeScope($scope0_id, { _class }, "__tests__/tags/child.marko", 0, { _class: "1:17" });
 });
 

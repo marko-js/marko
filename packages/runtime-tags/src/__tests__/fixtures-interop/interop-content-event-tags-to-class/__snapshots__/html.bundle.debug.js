@@ -33,7 +33,7 @@ var tags_mid_default = _template("__tests__/components/tags-mid.marko", (input) 
 	_html(`<button id=tags>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/2", _marko_template$1, { onChange: _resume(function() {
 		count++;
-	}, "__tests__/components/tags-mid.marko_0/onChange", $scope0_id) }, _content_resume("__tests__/components/tags-mid.marko_1_content", () => {
+	}, "__tests__/components/tags-mid.marko_0/onChange", $scope0_id) }, _content_resume("__tests__/components/tags-mid.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("<span>deep body</span>");

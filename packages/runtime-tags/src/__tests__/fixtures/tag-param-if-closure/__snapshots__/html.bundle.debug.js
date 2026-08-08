@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const a = "abc";
-	const Foo = { content: _content("__tests__/template.marko_3_content", (input) => {
+	const Foo = { content: _content("__tests__/template.marko_3*content", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1, _serialize_guard($scope3_reason, 0));
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	Foo.content({
 		value: count,
-		content: _content_resume("__tests__/template.marko_1_content", (v) => {
+		content: _content_resume("__tests__/template.marko_1*content", (v) => {
 			const $scope1_reason = _scope_reason(), $sg__v = _serialize_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			_if(() => {

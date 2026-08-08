@@ -2,10 +2,10 @@
 const $Child_content__walks = " b", $Child_content__template = "<select></select>", $Wrap_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks), $Wrap_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks);
-const $option_content3 = _content_resume("__tests__/template.marko_6_content", "Three");
-const $option_content2 = _content_resume("__tests__/template.marko_5_content", "Two");
-const $option_content = _content_resume("__tests__/template.marko_4_content", "One");
-const $for_content__option__script = _script("__tests__/template.marko_3_option", ($scope) => _attrs_script($scope, "#option/0"));
+const $option_content3 = _content_resume("__tests__/template.marko_6*content", "Three");
+const $option_content2 = _content_resume("__tests__/template.marko_5*content", "Two");
+const $option_content = _content_resume("__tests__/template.marko_4*content", "One");
+const $for_content__option__script = _script("__tests__/template.marko_3_option#2", ($scope) => _attrs_script($scope, "#option/0"));
 const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 	_attrs_content($scope, "#option/0", $scope.option);
 	$for_content__option__script($scope);

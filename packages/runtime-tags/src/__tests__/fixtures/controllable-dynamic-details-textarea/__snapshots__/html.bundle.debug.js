@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		openChange: _resume(function(next) {
 			open = next;
 		}, "__tests__/template.marko_0/openChange", $scope0_id)
-	}, _content_resume("__tests__/template.marko_1_content", () => {
+	}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("<summary>toggle</summary>");

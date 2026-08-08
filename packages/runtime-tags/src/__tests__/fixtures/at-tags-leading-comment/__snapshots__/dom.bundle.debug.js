@@ -13,8 +13,8 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box/index.marko", $tem
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $item_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3_content", "two");
-const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "one");
+const $item_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "two");
+const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "one");
 function $setup($scope) {
 	$input_item($scope["#childScope/0"], attrTags(attrTag({ content: $item_content($scope) }), { content: $item_content2($scope) }));
 }

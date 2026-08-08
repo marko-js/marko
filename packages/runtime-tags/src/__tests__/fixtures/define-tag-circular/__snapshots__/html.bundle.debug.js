@@ -2,13 +2,13 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Foo = { content: _content("__tests__/template.marko_1_content", ({ show }) => {
+	const Foo = { content: _content("__tests__/template.marko_1*content", ({ show }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__show = _serialize_guard($scope1_reason, 0), $si__show = _serialize_if($scope1_reason, 0);
 		_if(() => {
 			if (show) {
 				const $scope2_id = _scope_id();
-				const Bar = { content: _content("__tests__/template.marko_3_content", () => {
+				const Bar = { content: _content("__tests__/template.marko_3*content", () => {
 					const $scope3_id = _scope_id();
 					_scope_reason();
 					Foo.content({});

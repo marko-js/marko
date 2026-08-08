@@ -2,7 +2,7 @@
 const $template = "<button>Before</button>";
 const $walks = " b";
 const $pattern2 = ($scope, $pattern) => $fooChange2($scope, $pattern.fooChange);
-const $fooChange2__script = _script("__tests__/template.marko_0_$fooChange", ($scope) => _on($scope["#button/0"], "click", function() {
+const $fooChange2__script = _script("__tests__/template.marko_0_$fooChange#2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$scope.$fooChange("After");
 }));
 const $fooChange2 = /*@__PURE__*/ _const("$fooChange", $fooChange2__script);

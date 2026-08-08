@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<span> </span><span> </span>";
 const $walks = "D lD l";
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => {
+const $x__script = _script("__tests__/template.marko_0_x#2", ($scope) => {
 	$y($scope, $scope.x);
 	$x($scope, 2);
 });

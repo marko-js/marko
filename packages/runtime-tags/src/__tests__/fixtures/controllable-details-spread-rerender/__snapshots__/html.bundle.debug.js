@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"data-n": n
 	};
 	_html(`<button>bump</button>${_el_resume($scope0_id, "#button/0")}<details${_attrs(attrs, "#details/1", $scope0_id, "details")}><summary>s</summary>body</details>${_el_resume($scope0_id, "#details/1")}<output>${open ? "open" : "closed"}${_el_resume($scope0_id, "#text/2")}/<!>${_escape(n)}${_el_resume($scope0_id, "#text/3")}</output>`);
-	_script($scope0_id, "__tests__/template.marko_0_attrs");
+	_script($scope0_id, "__tests__/template.marko_0_attrs#7");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		open,

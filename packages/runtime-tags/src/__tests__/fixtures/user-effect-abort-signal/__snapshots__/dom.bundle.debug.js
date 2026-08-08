@@ -7,7 +7,7 @@ function $setup($scope) {
 	$a($scope, 0);
 	$b($scope, 0);
 }
-const $input_value__script = _script("__tests__/template.marko_0_input_value", ($scope) => {
+const $input_value__script = _script("__tests__/template.marko_0_input_value#4", ($scope) => {
 	{
 		const previousValue = $a($scope, $scope.input_value + 1);
 		$signal($scope, 0).onabort = () => $b($scope, previousValue);

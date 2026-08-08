@@ -11,7 +11,7 @@ const $for_content__button = /*@__PURE__*/ _const("button", ($scope) => {
 	$if_content__button($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__button($scope, $params2[0]);
-const $htmlInput__script = _script("__tests__/tags/child.marko_0_htmlInput", ($scope) => _attrs_script($scope, "#div/0"));
+const $htmlInput__script = _script("__tests__/tags/child.marko_0_htmlInput#4", ($scope) => _attrs_script($scope, "#div/0"));
 const $htmlInput = /*@__PURE__*/ _const("htmlInput", ($scope) => {
 	_attrs($scope, "#div/0", $scope.htmlInput);
 	$htmlInput__script($scope);
@@ -27,7 +27,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $button_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "one");
+const $button_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "one");
 function $setup($scope) {
 	$buttons($scope["#childScope/0"], attrTag({
 		onClick: $onClick,

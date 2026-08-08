@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=bump>bump</button><button class=show>show</button><div class=n> </div><div class=log> </div>";
 const $walks = " b bD lD l";
-const $state_n__OR__state_tag__script = _script("__tests__/template.marko_0_state_n_state_tag", ($scope) => _on($scope["#button/0"], "click", function() {
+const $state_n__OR__state_tag__script = _script("__tests__/template.marko_0_state_n#5_state_tag#6", ($scope) => _on($scope["#button/0"], "click", function() {
 	$state($scope, {
 		n: $scope.state_n + 1,
 		tag: $scope.state_tag
@@ -13,7 +13,7 @@ const $state = /*@__PURE__*/ _let("state/4", ($scope) => {
 	$state_tag($scope, $scope.state.tag);
 	$state_n__OR__state_tag($scope);
 });
-const $state_tag__OR__n__script = _script("__tests__/template.marko_0_state_tag_n", ($scope) => _on($scope["#button/1"], "click", function() {
+const $state_tag__OR__n__script = _script("__tests__/template.marko_0_state_tag#6_n#5", ($scope) => _on($scope["#button/1"], "click", function() {
 	$log($scope, `${$scope.log}[${$scope.state_n}:${$scope.state_tag}]`);
 }));
 const $state_tag__OR__n = /*@__PURE__*/ _or(8, $state_tag__OR__n__script);

@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { name, write } = input;
 	_html(`<div>${_escape(name)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_name_write");
+	_script($scope0_id, "__tests__/tags/child.marko_0_name#3_write#4");
 	writeScope($scope0_id, {
 		name,
 		write

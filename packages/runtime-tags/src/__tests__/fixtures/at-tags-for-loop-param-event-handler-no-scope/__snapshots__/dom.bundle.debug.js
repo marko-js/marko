@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
-const $for_content__item__script = _script("__tests__/tags/my-menu/index.marko_1_item", ($scope) => _attrs_script($scope, "#button/0"));
+const $for_content__item__script = _script("__tests__/tags/my-menu/index.marko_1_item#2", ($scope) => _attrs_script($scope, "#button/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	_attrs_content($scope, "#button/0", $scope.item);
 	$for_content__item__script($scope);
@@ -16,7 +16,7 @@ var my_menu_default = /*@__PURE__*/ _template("__tests__/tags/my-menu/index.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $item_content = _content_resume("__tests__/template.marko_1_content", "Click");
+const $item_content = _content_resume("__tests__/template.marko_1*content", "Click");
 function $setup($scope) {
 	let $item;
 	forOf(["a", "b"], (foo) => {

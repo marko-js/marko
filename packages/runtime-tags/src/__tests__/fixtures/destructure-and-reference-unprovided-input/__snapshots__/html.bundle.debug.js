@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<div${_attr_class([input.class, "foo"])}${_attrs_partial(rest, { class: 1 }, "#div/0", $scope0_id, "div")}>`);
 	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_rest");
+	_script($scope0_id, "__tests__/tags/child.marko_0_rest#6");
 	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const value = 1;
-	child_default({ content: _content("__tests__/template.marko_1_content", () => {
+	child_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(_escape(value));

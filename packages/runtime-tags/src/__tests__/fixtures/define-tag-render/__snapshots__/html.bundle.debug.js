@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const MyTag = { content: _content("__tests__/template.marko_1_content", ({ name }) => {
+	const MyTag = { content: _content("__tests__/template.marko_1*content", ({ name }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__name = _serialize_guard($scope1_reason, 0);
 		let y = 1;

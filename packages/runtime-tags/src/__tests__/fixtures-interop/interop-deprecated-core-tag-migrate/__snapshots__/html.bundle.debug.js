@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const { greeting } = input;
 	let count = 0;
 	_html(`<button id=inc>inc</button>${_el_resume($scope0_id, "#button/0")}<div id=out></div>`);
-	_script($scope0_id, "__tests__/template.marko_0_greeting_count");
+	_script($scope0_id, "__tests__/template.marko_0_greeting#3_count#4");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		greeting,

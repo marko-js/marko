@@ -19,7 +19,7 @@ const $falseChild_content__setup = ($scope) => {
 	$falseChild_content__count($scope);
 	$falseChild_content__setup__script($scope);
 };
-const $falseChild_content = _content_resume("__tests__/template.marko_1_content", "<button> </button>", " D ", $falseChild_content__setup);
+const $falseChild_content = _content_resume("__tests__/template.marko_1*content", "<button> </button>", " D ", $falseChild_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($falseChild_content__count);
 const $count = /*@__PURE__*/ _let("count/1", $count__closure);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $falseChild_content);

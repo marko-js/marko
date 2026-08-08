@@ -6,8 +6,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html("<div");
 	_attrs_content(rest, "#div/0", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_rest");
-	_script($scope0_id, "__tests__/tags/child.marko_0_$valueChange");
+	_script($scope0_id, "__tests__/tags/child.marko_0_rest#4");
+	_script($scope0_id, "__tests__/tags/child.marko_0_$valueChange#3");
 	writeScope($scope0_id, { $valueChange }, "__tests__/tags/child.marko", 0, { $valueChange: "3:11" });
 });
 
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		valueChange: _resume((_new_value) => {
 			value = _new_value;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id),
-		content: _content_resume("__tests__/template.marko_1_content", () => {
+		content: _content_resume("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(value)}${_el_resume($scope1_id, "#text/0")}`);

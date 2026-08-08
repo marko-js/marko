@@ -2,7 +2,7 @@
 const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = () => {};
-const $input__script = _script("__tests__/tags/child.marko_0_input", ($scope) => $scope.input.action());
+const $input__script = _script("__tests__/tags/child.marko_0_input#1", ($scope) => $scope.input.action());
 const $input = /*@__PURE__*/ _const("input", $input__script);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1, $input);
 

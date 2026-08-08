@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { value } = {
 		value: 2,
-		content: _content("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_id = _scope_id();
 			_scope_reason();
 			_html("<div>body</div>");

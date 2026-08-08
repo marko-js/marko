@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		value: 1,
 		valueChange: 1
 	}, "#input/3", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/3")}`);
-	_script($scope0_id, "__tests__/template.marko_0_rest");
-	_script($scope0_id, "__tests__/template.marko_0_v_rest");
+	_script($scope0_id, "__tests__/template.marko_0_rest#5");
+	_script($scope0_id, "__tests__/template.marko_0_v#4_rest#5");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		v,

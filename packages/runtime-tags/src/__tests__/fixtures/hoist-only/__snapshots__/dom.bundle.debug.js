@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $if_content2__hoist3_getter = _hoist_resume("__tests__/template.marko_2_hoist3/hoist", "hoist3");
+const $if_content2__hoist3_getter = _hoist_resume("__tests__/template.marko_2_hoist3#0/hoist", "hoist3");
 const $if_content2__hoist = /*@__PURE__*/ _const("hoist3", ($scope) => _assert_hoist($scope.hoist3));
 const $if_content2__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => $if_content2__hoist($scope, $hoist2($scope)), ($scope) => $scope._._);
 const $if_content2__setup = ($scope) => {
@@ -15,7 +15,7 @@ const $if_content__setup = ($scope) => {
 	2;
 	$if_content__if($scope, 1 ? 0 : 1);
 };
-const $hoist1_getter = _hoist_resume("__tests__/template.marko_0_hoist1/hoist", "hoist1");
+const $hoist1_getter = _hoist_resume("__tests__/template.marko_0_hoist1#4/hoist", "hoist1");
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 function $setup($scope) {
 	$hoist1_getter($scope);

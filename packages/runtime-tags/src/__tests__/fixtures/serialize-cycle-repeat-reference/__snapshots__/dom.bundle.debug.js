@@ -17,7 +17,7 @@ const $graph = /*@__PURE__*/ _let("graph/2", ($scope) => {
 	$graph_current($scope, $scope.graph?.current);
 	$graph_all($scope, $scope.graph?.all);
 });
-const $graph_byId__OR__graph_current__OR__graph_all__script = _script("__tests__/template.marko_0_graph_byId_graph_current_graph_all", ($scope) => _on($scope["#button/0"], "click", function() {
+const $graph_byId__OR__graph_current__OR__graph_all__script = _script("__tests__/template.marko_0_graph_byId#3_graph_current#4_graph_all#5", ($scope) => _on($scope["#button/0"], "click", function() {
 	$result($scope, [
 		$scope.graph_byId.get(1) === $scope.graph_current,
 		$scope.graph_byId.get(2) === $scope.graph_current.next,

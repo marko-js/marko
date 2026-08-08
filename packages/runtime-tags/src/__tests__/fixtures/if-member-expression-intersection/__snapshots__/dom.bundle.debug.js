@@ -10,7 +10,7 @@ const $text = /*@__PURE__*/ _let("text/2", ($scope) => {
 	$text_length($scope, $scope.text?.length);
 	$if_content__text($scope);
 });
-const $id__script = _script("__tests__/tags/child.marko_0_id", ($scope) => {
+const $id__script = _script("__tests__/tags/child.marko_0_id#5", ($scope) => {
 	$text($scope, $scope.id);
 	$hide($scope, false);
 });
