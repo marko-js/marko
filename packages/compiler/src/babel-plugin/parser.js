@@ -246,7 +246,7 @@ export function parseMarko(file) {
           const trimmedStart = part.start + rawValue.indexOf(value);
           withLoc(node, {
             start: trimmedStart,
-            end: trimmedStart + rawValue.length,
+            end: trimmedStart + value.length,
           });
         } else {
           body.splice(body.indexOf(node), 1);

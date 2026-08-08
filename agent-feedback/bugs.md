@@ -164,12 +164,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `onAttrValue` and `onAttrSpread` call `parseExpression(file, raw, part.value.start)` without the `sourceEnd` every sibling handler passes, so on failure `createParseError` (`babel-utils/parse.js`) sets `source` to the whole remainder of the file and leaves `node.end` undefined. `output:"source"`/`"migrate"` then print `MarkoParseError` as `this.token(node.source)`, re-emitting everything after the bad attribute twice — and `isSource` returns before the parse-error check in `babel-plugin/index.js`, so a formatter or codemod doubles the file even without `errorRecovery`. `getBoundedRange` also drops Babel's real location, so a multi-line attribute value reports "Unexpected token" at its opening paren while the same mistake inside `${…}` points at the offending token. Pass `part.value.end` at both call sites and in `withWrappedAttrValueHint`'s probe. Re-verify: `compileSync("<div foo=(1+)>hi</div>\n<span>tail</span>", "x.marko", { output: "source", translator: … })` prints the template twice; the `${1+}` control round-trips once.
 
-## Use the trimmed length, not `rawValue.length`, for a text node's end offset in `onText`
-
-`packages/compiler/src/babel-plugin/parser.js` › `onText` | 2026-07-27 | impact:med | effort:low
-
-The deferred `onNext` closure re-locates a trimmed text node with `end: trimmedStart + rawValue.length`, but `trimmedStart = part.start + rawValue.indexOf(value)` already skipped the removed leading whitespace, so the end overshoots by exactly the number of trimmed leading characters. Every text node preceded by a newline plus indentation — normal formatting — is affected, corrupting consumers of text-node ranges: editor tooling, codemods, and the source maps emitted for `output: "source"`/`"migrate"`, where a deeply indented trailing text node pushes the end past EOF. The fix is `end: trimmedStart + value.length`, symmetric with the start. Re-verify: compile `"<div>\n    hello\n</div>"` with `{ output: "source", ast: true }`; the `MarkoText` value is `"hello"` but its `loc` (2:4 → 3:5) spans `"hello\n</div"`.
-
 ## Skip the source printer's reindent for whitespace-preserving tags
 
 `patches/@babel__generator@7.29.7.patch` › `MarkoTag` | 2026-07-27 | impact:med | effort:med
