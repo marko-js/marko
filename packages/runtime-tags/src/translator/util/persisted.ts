@@ -164,14 +164,25 @@ export function paramsDeliverAsFills(params: Sources["param"]) {
 
 // Client-evaluable sources classify structure client-owned; nesting in
 // client-owned structure inherits ownership (its bodies already bundle).
+// Delivery is judged per READ binding (a root derived ships its computed
+// value), mirroring the expression matrix inside client-owned structure.
 export function classifiesClientOwned(
   sources: Sources | undefined,
   section: Section,
+  refs: Opt<Binding>,
 ) {
   return (
     (!!sources?.state || inClientOwnedStructure(section)) &&
     !sources?.global &&
-    paramsDeliverAsFills(sources?.param)
+    every(refs, (binding) => {
+      const refSources = getSerializeSourcesForRef(binding);
+      return (
+        !refSources?.param ||
+        !!refSources.state ||
+        isPatchFillBinding(binding) ||
+        inClientOwnedStructure(binding.section)
+      );
+    })
   );
 }
 

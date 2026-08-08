@@ -125,7 +125,13 @@ export const IfTag = {
         // Ownership classifies once the merged test sources resolve.
         onClassifyOwnership(ifTagSection, () => {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
-          if (classifiesClientOwned(sources, ifTagSection)) {
+          if (
+            classifiesClientOwned(
+              sources,
+              ifTagSection,
+              ifTagExtra.referencedBindings,
+            )
+          ) {
             // A client-evaluable chain is client-owned structure (state
             // re-selects directly; param feeds fill their slots).
             for (const [, branchBody] of branches) {
