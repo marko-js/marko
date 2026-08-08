@@ -4,15 +4,15 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A server list renders a loop nested in client-owned structure: the
-// array delivers as a fill and the client re-lists on every write.
+// Server-selected structure chains inside client-owned structure: each
+// level classifies outer-first and re-selects off its own fill.
 export const config: TestConfig = {
   persisted: true,
   steps: [
-    { items: ["a", "b"] },
+    { a: true, b: true },
     click,
-    click,
-    { items: ["a", "b", "c"] },
-    { items: ["z"] },
+    { a: true, b: false },
+    { a: false, b: true },
+    { a: true, b: true },
   ],
 };

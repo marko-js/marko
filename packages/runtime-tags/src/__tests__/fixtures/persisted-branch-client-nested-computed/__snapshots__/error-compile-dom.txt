@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-nested-computed/template.marko:4:5
+      2 | <main>
+      3 |   <if=open>
+    > 4 |     <if=input[input.key]>
+        |     ^ Persisted templates cannot patch this faithfully yet: a server value selecting structure inside client-owned structure must be a directly read, named `input` property (so it can deliver as a fill).
+      5 |       <p>promo</p>
+      6 |     </if>
+      7 |   </if>

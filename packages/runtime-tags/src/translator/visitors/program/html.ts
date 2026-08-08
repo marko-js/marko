@@ -620,8 +620,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           return;
         }
-        // Server-owned structure nested under client-owned structure has
-        // no frame channel to speak through.
+        // Nested structure inherits client ownership, so reaching here
+        // means its selection has no delivery channel: fail closed.
         if (inClientOwnedStructure(section)) {
           const attrExtra = node.attributes[0]?.value.extra;
           const sources =
@@ -629,9 +629,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             getSerializeSourcesForExpr(getCanonicalExtra(attrExtra));
           unsupported(
             node,
-            sources?.param || sources?.global
-              ? "server-owned structure cannot nest inside client-owned structure"
-              : "structure inside client-owned structure must be client-driven (an unassigned `<let>` is not client state)",
+            sources?.global
+              ? "`$global`-driven structure cannot nest inside client-owned structure"
+              : "a server value selecting structure inside client-owned structure must be a directly read, named `input` property (so it can deliver as a fill)",
           );
         }
         for (const attr of node.attributes) {
