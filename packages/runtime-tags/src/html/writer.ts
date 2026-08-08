@@ -1621,6 +1621,8 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
       }
     }
 
+    // Won't fix: globals snapshot once at the first flush; serialized `$global`
+    // values assigned mid-render are dropped — mutation is unsupported by design.
     if (!isBlockingState && !state.hasGlobals) {
       state.hasGlobals = true;
       const globals = getFilteredGlobals(state.$global);
