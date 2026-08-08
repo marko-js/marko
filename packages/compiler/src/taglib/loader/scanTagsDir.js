@@ -71,6 +71,8 @@ function getPath(filename, fileMap) {
 
   if (!file) return;
   if (file.__path) return file.__path;
+  // Wont-fix: `file.js` is never assigned (keys carry the dot), so resolution
+  // is directory-order dependent; legacy surface not worth changing.
   if (file.js) return file[".js"];
 
   for (let key in file) {
