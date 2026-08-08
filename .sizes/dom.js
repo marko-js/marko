@@ -1,4 +1,4 @@
-// size: 26059 (min) 9690 (brotli)
+// size: 26059 (min) 9697 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1471,7 +1471,7 @@ function _attr_input_value(
     (scope["F" + nodeAccessor] = valueChange ? 2 : 5),
     valueChange && scope.H < runId
       ? setInputValue(el, normalizedValue)
-      : setDefault(scope, nodeAccessor, normalizedValue));
+      : setDefault(scope, nodeAccessor, value));
 }
 function _attr_input_value_attribute_default(scope, nodeAccessor, value) {
   _attr(scope[nodeAccessor], "value", value);

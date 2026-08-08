@@ -152,12 +152,6 @@ The patched `MarkoTag` printer wraps every non-void body in `newline(1)`/`indent
 
 `restOffset` is assigned only in the `Identifier` case, so every path that re-creates a rest's binding drops it — the `ObjectPattern`/`ArrayPattern` cases reuse `upstreamAlias` verbatim when `property === undefined`, and `trackVarReferences` forwards `excludeProperties` but not `restOffset`. `<const/[first, ...[second, third]] = arr/>` then compiles in DOM to `$second` reading `$scope.first` and `$third` reading `$scope.arr[1]` (`1|1|2` vs HTML's `1|2|3`); `<for|a, ...[b, c]|>` maps `c` to `#LoopKey`; `<const/copy = rest/>` takes `getSignalFn`'s object-rest branch, so `copy.length` reads `$scope.arr.length`. All are silent SSR/CSR divergence with no diagnostic. Set `restOffset` in the pattern cases and thread it through `trackVarReferences`. Re-verify: `pnpm run compile -o dom -d` on the nested-rest template emits `_text($scope["#text/1"], $scope.first)` for `$second`.
 
-## Hand the raw `value` to `_attr_input_value`'s default helper
-
-`packages/runtime-tags/src/dom/controllable.ts` › `_attr_input_value` | 2026-07-27 | impact:med | effort:low
-
-`_attr_input_value` passes `normalizeAttrValue(value) || ""` to `setDefault`, but the attribute-backed defaults (`_attr_input_value_attribute_default`, and the attribute arm of `_attr_input_value_dynamic_default`) write it through `_attr`, which removes the attribute only for `undefined`. A void `value` therefore renders `value=""` in CSR while `html/attrs.ts` emits no attribute, so a checkbox or radio submits `""` client-side and the spec default `"on"` server-side. The idiomatic `<input type="checkbox" value:=v/>` compiles straight to `_attr_input_value(…, _attr_input_value_attribute_default)`, and no test covers it. Pass `value` rather than `normalizedValue` to `setDefault`; `_attr_input_value_default` re-normalizes anyway. Re-verify: under jsdom call `_attr_input_value({"#i":el},"#i",undefined,()=>{},_attr_input_value_attribute_default)` — the element becomes `<input type="checkbox" value="">` against an empty SSR string.
-
 ## Mint `<id>`'s fallback once per scope
 
 `packages/runtime-tags/src/translator/core/id.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med

@@ -248,7 +248,9 @@ export function _attr_input_value(
   if (valueChange && scope[AccessorProp.Gen] < runId) {
     setInputValue(el, normalizedValue);
   } else {
-    setDefault(scope, nodeAccessor, normalizedValue);
+    // The raw value, so attribute-backed defaults drop the attribute for void
+    // values like the server does; `_attr_input_value_default` re-normalizes.
+    setDefault(scope, nodeAccessor, value);
   }
 }
 export function _attr_input_value_attribute_default(
