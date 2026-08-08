@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-loop-frozen-inner/template.marko:5:5
-      3 | <main>
-      4 |   <for|o| of=outer>
-    > 5 |     <for|i| of=inner>
-        |     ^ Persisted templates cannot patch this faithfully yet: structure inside client-owned structure must be client-driven (an unassigned `<let>` is not client state).
-      6 |       <div>${o}${i}</div>
-      7 |     </for>
-      8 |   </for>

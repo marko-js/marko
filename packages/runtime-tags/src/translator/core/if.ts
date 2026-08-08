@@ -26,7 +26,7 @@ import { addSorted } from "../util/optional";
 import {
   isPatchCaptureSection,
   classifiesClientOwned,
-  onFinalizePersisted,
+  onClassifyOwnership,
   recordStructuralParams,
 } from "../util/persisted";
 import {
@@ -123,9 +123,9 @@ export const IfTag = {
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
         // Ownership classifies once the merged test sources resolve.
-        onFinalizePersisted(() => {
+        onClassifyOwnership(ifTagSection, () => {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
-          if (classifiesClientOwned(sources)) {
+          if (classifiesClientOwned(sources, ifTagSection)) {
             // A client-evaluable chain is client-owned structure (state
             // re-selects directly; param feeds fill their slots).
             for (const [, branchBody] of branches) {
