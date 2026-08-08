@@ -46,6 +46,9 @@ export default {
       const statement = withPreviousLocation(t.debuggerStatement(), tag.node);
 
       if (isOutputHTML()) {
+        // Buffered markup is deliberately not flushed first (`<log>` matches):
+        // source-order interleaving of a dev statement is not worth splitting
+        // the html write.
         tag.insertBefore(statement);
       } else {
         addStatement("render", section, referencedBindings, statement);
