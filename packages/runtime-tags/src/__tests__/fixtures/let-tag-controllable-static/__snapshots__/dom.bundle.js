@@ -7,9 +7,7 @@ const $x = /*@__PURE__*/ _let(3, ($scope) => {
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$y($scope, $scope.e + 1);
 }));
-function $valueChange($scope) {
-	return function(newValue) {
-		$x($scope, newValue + 1);
-	};
-}
+const $valueChange = ($scope) => function(newValue) {
+	$x($scope, newValue + 1);
+};
 _resume("a0", $valueChange);

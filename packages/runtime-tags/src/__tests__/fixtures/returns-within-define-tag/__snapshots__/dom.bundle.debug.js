@@ -33,32 +33,24 @@ const $onClickOnce2__script = _script("__tests__/template.marko_0_onClickOnce#9"
 const $onClickOnce2 = _var_resume("__tests__/template.marko_0_onClickOnce#9/var", /*@__PURE__*/ _const("onClickOnce", $onClickOnce2__script));
 const $onClickTwice2__script = _script("__tests__/template.marko_0_onClickTwice#11", ($scope) => _on($scope["#button/6"], "click", $scope.onClickTwice));
 const $onClickTwice2 = _var_resume("__tests__/template.marko_0_onClickTwice#11/var", /*@__PURE__*/ _const("onClickTwice", $onClickTwice2__script));
-function $_return2($scope) {
-	return function() {
-		if ($scope.call) {
-			$Twice_content__call($scope, $scope.call - 1);
-			$scope.value();
-		}
-	};
-}
-function $_return($scope) {
-	return function() {
-		if ($scope.call) {
-			$Once_content__call($scope, $scope.call - 1);
-			$scope.value();
-		}
-	};
-}
-function $onClickOnce($scope) {
-	return function() {
-		$clickOnceCount($scope, $scope.clickOnceCount + 1);
-	};
-}
-function $onClickTwice($scope) {
-	return function() {
-		$clickTwiceCount($scope, $scope.clickTwiceCount + 1);
-	};
-}
+const $_return2 = ($scope) => function() {
+	if ($scope.call) {
+		$Twice_content__call($scope, $scope.call - 1);
+		$scope.value();
+	}
+};
+const $_return = ($scope) => function() {
+	if ($scope.call) {
+		$Once_content__call($scope, $scope.call - 1);
+		$scope.value();
+	}
+};
+const $onClickOnce = ($scope) => function() {
+	$clickOnceCount($scope, $scope.clickOnceCount + 1);
+};
+const $onClickTwice = ($scope) => function() {
+	$clickTwiceCount($scope, $scope.clickTwiceCount + 1);
+};
 _resume("__tests__/template.marko_2/_return2", $_return2);
 _resume("__tests__/template.marko_1/_return", $_return);
 _resume("__tests__/template.marko_0/onClickOnce", $onClickOnce);

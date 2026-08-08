@@ -15,18 +15,14 @@ const $states = /*@__PURE__*/ _let(2, ($scope) => {
 	$for($scope, [$scope.c]);
 	$for_content__states($scope);
 });
-function $checkedChange($scope) {
-	return (_new_checked) => {
-		$for_content__checked($scope, _new_checked);
-	};
-}
-function $valueChange($scope) {
-	return function(value) {
-		if ($scope.M === void 0) throw new Error("LoopKey is undefined");
-		const newStates = [...$scope._.c];
-		newStates[$scope.M] = value;
-		$states($scope._, newStates);
-	};
-}
+const $checkedChange = ($scope) => (_new_checked) => {
+	$for_content__checked($scope, _new_checked);
+};
+const $valueChange = ($scope) => function(value) {
+	if ($scope.M === void 0) throw new Error("LoopKey is undefined");
+	const newStates = [...$scope._.c];
+	newStates[$scope.M] = value;
+	$states($scope._, newStates);
+};
 _resume("a1", $checkedChange);
 _resume("a0", $valueChange);

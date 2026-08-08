@@ -20,16 +20,12 @@ function $setup($scope) {
 	$key($scope, "v");
 	$setup__script($scope);
 }
-function $state2($scope) {
-	return function(x) {
-		$wrong($scope, x);
-	};
-}
-function $state($scope) {
-	return function(x) {
-		$v($scope, x);
-	};
-}
+const $state2 = ($scope) => function(x) {
+	$wrong($scope, x);
+};
+const $state = ($scope) => function(x) {
+	$v($scope, x);
+};
 _resume("__tests__/template.marko_0/state2", $state2);
 _resume("__tests__/template.marko_0/state", $state);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

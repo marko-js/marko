@@ -36,16 +36,12 @@ function $setup($scope) {
 	$detailsTag($scope, "details");
 	$textareaTag($scope, "textarea");
 }
-function $valueChange($scope) {
-	return function(next) {
-		$text($scope._, next);
-	};
-}
-function $openChange($scope) {
-	return function(next) {
-		$open($scope, next);
-	};
-}
+const $valueChange = ($scope) => function(next) {
+	$text($scope._, next);
+};
+const $openChange = ($scope) => function(next) {
+	$open($scope, next);
+};
 _resume("__tests__/template.marko_1/valueChange", $valueChange);
 _resume("__tests__/template.marko_0/openChange", $openChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

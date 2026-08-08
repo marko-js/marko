@@ -26,10 +26,8 @@ const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 	$input_item($scope.a, $item);
 	_text($scope.b, $scope.c);
 });
-function $onClick($locals) {
-	return function() {
-		const $scope = $locals._;
-		$clicked($scope, $scope.c + $locals.e);
-	};
-}
+const $onClick = ($locals) => function() {
+	const $scope = $locals._;
+	$clicked($scope, $scope.c + $locals.e);
+};
 _resume("a0", $onClick);

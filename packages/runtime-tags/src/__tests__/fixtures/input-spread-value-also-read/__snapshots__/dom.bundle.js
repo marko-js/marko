@@ -12,9 +12,7 @@ const $value = /*@__PURE__*/ _let(1, ($scope) => $input($scope.a, {
 	value: $scope.b,
 	valueChange: $valueChange($scope)
 }));
-function $valueChange($scope) {
-	return (_new_value) => {
-		$value($scope, _new_value);
-	};
-}
+const $valueChange = ($scope) => (_new_value) => {
+	$value($scope, _new_value);
+};
 _resume("a0", $valueChange);

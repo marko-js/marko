@@ -4,9 +4,7 @@ const $walks$1 = " b";
 function $setup$1($scope) {
 	_return($scope, $_return($scope));
 }
-function $_return($scope) {
-	return () => (html) => $scope.a.innerHTML = html;
-}
+const $_return = ($scope) => () => (html) => $scope.a.innerHTML = html;
 _resume("b0", $_return);
 var child_default = /*@__PURE__*/ _template("b", $template$1, " b", $setup$1);
 

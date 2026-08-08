@@ -15,9 +15,7 @@ const $x = /*@__PURE__*/ _let(2, ($scope) => {
 	$count($scope.b, $scope.c);
 	$x__closure($scope);
 });
-function $countChange($scope) {
-	return (_new_x) => {
-		$x($scope, _new_x);
-	};
-}
+const $countChange = ($scope) => (_new_x) => {
+	$x($scope, _new_x);
+};
 _resume("a0", $countChange);

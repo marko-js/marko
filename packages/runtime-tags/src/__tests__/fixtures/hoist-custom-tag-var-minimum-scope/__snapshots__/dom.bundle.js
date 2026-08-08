@@ -1,7 +1,5 @@
 // tags/child.marko
-function $_return($scope) {
-	return () => $scope.c;
-}
+const $_return = ($scope) => () => $scope.c;
 _resume("b0", $_return);
 
 // template.marko

@@ -11,11 +11,9 @@ function $setup($scope) {
 	$text2($scope, $text);
 	$if($scope, 1 ? 0 : 1);
 }
-function $run($scope) {
-	return function() {
-		_el_read($scope["#div/0"]).innerHTML = $scope._.text();
-	};
-}
+const $run = ($scope) => function() {
+	_el_read($scope["#div/0"]).innerHTML = $scope._.text();
+};
 function $text() {
 	return "HI";
 }

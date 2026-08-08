@@ -47,9 +47,7 @@ const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function
 		3
 	]);
 }));
-function $write($scope) {
-	return function(msg) {
-		$scope.b.innerHTML += "\n" + msg;
-	};
-}
+const $write = ($scope) => function(msg) {
+	$scope.b.innerHTML += "\n" + msg;
+};
 _resume("a0", $write);

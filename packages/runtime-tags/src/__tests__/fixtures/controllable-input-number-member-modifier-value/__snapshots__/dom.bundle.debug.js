@@ -10,11 +10,9 @@ const $input = ($scope, input) => {
 	$input_value($scope, input.value);
 	$input_valueChange($scope, input.valueChange);
 };
-function $valueChange$1($scope) {
-	return ($next) => {
-		$scope.input_valueChange(parseInt($next));
-	};
-}
+const $valueChange$1 = ($scope) => ($next) => {
+	$scope.input_valueChange(parseInt($next));
+};
 _resume("__tests__/tags/custom-input.marko_0/valueChange", $valueChange$1);
 var custom_input_default = /*@__PURE__*/ _template("__tests__/tags/custom-input.marko", $template$1, " b", $setup$1, $input);
 
@@ -31,10 +29,8 @@ function $setup($scope) {
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
 	$value($scope, 0);
 }
-function $valueChange($scope) {
-	return (_new_value) => {
-		$value($scope, _new_value);
-	};
-}
+const $valueChange = ($scope) => (_new_value) => {
+	$value($scope, _new_value);
+};
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

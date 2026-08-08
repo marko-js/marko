@@ -19,16 +19,12 @@ function $setup($scope) {
 	$setter2($scope, $setter($scope));
 	$if($scope, true ? 0 : 1);
 }
-function $valueChange($scope) {
-	return function() {
-		$scope._.setter();
-	};
-}
-function $setter($scope) {
-	return function() {
-		1;
-	};
-}
+const $valueChange = ($scope) => function() {
+	$scope._.setter();
+};
+const $setter = ($scope) => function() {
+	1;
+};
 _resume("__tests__/template.marko_1/valueChange", $valueChange);
 _resume("__tests__/template.marko_0/setter", $setter);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

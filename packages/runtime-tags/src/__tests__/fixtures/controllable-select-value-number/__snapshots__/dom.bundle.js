@@ -9,9 +9,7 @@ const $setup__script = _script("a1", ($scope) => {
 		$selected($scope, 1);
 	});
 });
-function $valueChange($scope) {
-	return function(v) {
-		$selected($scope, +v);
-	};
-}
+const $valueChange = ($scope) => function(v) {
+	$selected($scope, +v);
+};
 _resume("a0", $valueChange);

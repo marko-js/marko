@@ -56,9 +56,7 @@ const $setup__script = _script("a1", ($scope) => {
 		$showInner($scope, !$scope.h);
 	});
 });
-function $write($scope) {
-	return function(msg) {
-		$scope.d.innerHTML += "\n" + msg;
-	};
-}
+const $write = ($scope) => function(msg) {
+	$scope.d.innerHTML += "\n" + msg;
+};
 _resume("a0", $write);

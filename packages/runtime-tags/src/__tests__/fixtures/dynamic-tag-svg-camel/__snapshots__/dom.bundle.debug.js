@@ -16,10 +16,8 @@ function $setup($scope) {
 }
 const $input_tag = /*@__PURE__*/ _const("input_tag", $input_tag__OR__attrs);
 const $input = ($scope, input) => $input_tag($scope, input.tag);
-function $attrs($scope) {
-	return function() {
-		$n($scope, 1);
-	};
-}
+const $attrs = ($scope) => function() {
+	$n($scope, 1);
+};
 _resume("__tests__/template.marko_0/attrs", $attrs);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

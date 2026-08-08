@@ -21,10 +21,8 @@ function $setup($scope) {
 	$log($scope, "");
 	$setup__script($scope);
 }
-function $onPress($scope) {
-	return function() {
-		$log($scope, `${$scope.log}[${$scope.count}]`);
-	};
-}
+const $onPress = ($scope) => function() {
+	$log($scope, `${$scope.log}[${$scope.count}]`);
+};
 _resume("__tests__/template.marko_0/onPress", $onPress);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -4,9 +4,7 @@ const $checked = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, String($scope.c));
 });
 const $setup__script = _script("a1", ($scope) => _attr_input_checked_script($scope, "a"));
-function $checkedChange($scope) {
-	return (_new_checked) => {
-		$checked($scope, _new_checked);
-	};
-}
+const $checkedChange = ($scope) => (_new_checked) => {
+	$checked($scope, _new_checked);
+};
 _resume("a0", $checkedChange);

@@ -40,10 +40,8 @@ function $setup($scope) {
 	$count($scope, 0);
 	$dynamicTag($scope, _marko_template, () => ({ onCount: $onCount($scope) }));
 }
-function $onCount($scope) {
-	return function(newCount) {
-		$count($scope, newCount);
-	};
-}
+const $onCount = ($scope) => function(newCount) {
+	$count($scope, newCount);
+};
 _resume("__tests__/template.marko_0/onCount", $onCount);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

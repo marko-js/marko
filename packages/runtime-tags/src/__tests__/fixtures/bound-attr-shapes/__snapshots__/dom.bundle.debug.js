@@ -36,16 +36,12 @@ const $state_aChange = /*@__PURE__*/ _const("state_aChange", $state_a__OR__state
 const $state_b__OR__state_bChange = /*@__PURE__*/ _or(13, ($scope) => _attr_input_value($scope, "#input/3", $scope.state_b, $scope.state_bChange));
 const $state_b = /*@__PURE__*/ _const("state_b", $state_b__OR__state_bChange);
 const $state_bChange = /*@__PURE__*/ _const("state_bChange", $state_b__OR__state_bChange);
-function $state2($scope) {
-	return function(v) {
-		$b($scope, v);
-	};
-}
-function $state($scope) {
-	return function(v) {
-		$a($scope, v);
-	};
-}
+const $state2 = ($scope) => function(v) {
+	$b($scope, v);
+};
+const $state = ($scope) => function(v) {
+	$a($scope, v);
+};
 _resume("__tests__/template.marko_0/state2", $state2);
 _resume("__tests__/template.marko_0/state", $state);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

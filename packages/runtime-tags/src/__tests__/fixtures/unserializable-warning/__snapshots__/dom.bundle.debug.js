@@ -8,10 +8,8 @@ const $Foo_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Foo_content_
 function $setup($scope) {
 	$Foo_content__setup._($scope["#childScope/0"], $scope);
 }
-function $test($scope) {
-	return function() {
-		return $scope.unserializable;
-	};
-}
+const $test = ($scope) => function() {
+	return $scope.unserializable;
+};
 _resume("__tests__/template.marko_1/test", $test);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

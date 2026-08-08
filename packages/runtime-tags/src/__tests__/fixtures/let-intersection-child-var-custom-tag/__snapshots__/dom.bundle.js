@@ -9,12 +9,10 @@ const $input_value__script = _script("c1", ($scope) => {
 		subs.add(sub);
 	}
 });
-function $valueChange($scope) {
-	return function(next) {
-		$scope.$[$scope.c] = next;
-		subsByKey[$scope.c]?.forEach((cb) => cb());
-	};
-}
+const $valueChange = ($scope) => function(next) {
+	$scope.$[$scope.c] = next;
+	subsByKey[$scope.c]?.forEach((cb) => cb());
+};
 _resume("c0", $valueChange);
 
 // template.marko

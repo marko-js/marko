@@ -11,10 +11,8 @@ const $tagName = /*@__PURE__*/ _let("tagName/1", ($scope) => $dynamicTag($scope,
 function $setup($scope) {
 	$tagName($scope, "span");
 }
-function $onClick($scope) {
-	return function() {
-		$tagName($scope, $scope.tagName === "span" ? "div" : "span");
-	};
-}
+const $onClick = ($scope) => function() {
+	$tagName($scope, $scope.tagName === "span" ? "div" : "span");
+};
 _resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

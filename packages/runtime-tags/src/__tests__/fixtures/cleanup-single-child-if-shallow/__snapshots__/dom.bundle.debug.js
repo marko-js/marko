@@ -27,10 +27,8 @@ function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);
 }
-function $write($scope) {
-	return function(state) {
-		_el_read($scope._["#div/1"]).innerHTML = state;
-	};
-}
+const $write = ($scope) => function(state) {
+	_el_read($scope._["#div/1"]).innerHTML = state;
+};
 _resume("__tests__/template.marko_1/write", $write);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -15,16 +15,12 @@ function $setup($scope) {
 	$input($scope["#childScope/2"], { action: $action2($scope) });
 	$setup__script($scope);
 }
-function $action2($scope) {
-	return function() {
-		_el_read($scope["#div/1"]).classList.add("child2");
-	};
-}
-function $action($scope) {
-	return function() {
-		_el_read($scope["#div/1"]).classList.add("child1");
-	};
-}
+const $action2 = ($scope) => function() {
+	_el_read($scope["#div/1"]).classList.add("child2");
+};
+const $action = ($scope) => function() {
+	_el_read($scope["#div/1"]).classList.add("child1");
+};
 _resume("__tests__/template.marko_0/action2", $action2);
 _resume("__tests__/template.marko_0/action", $action);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -67,16 +67,12 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-function $isInner($scope) {
-	return function(o) {
-		return o === Object.values($scope.shared)[0];
-	};
-}
-function $isShared($scope) {
-	return function(o) {
-		return o === $scope.shared;
-	};
-}
+const $isInner = ($scope) => function(o) {
+	return o === Object.values($scope.shared)[0];
+};
+const $isShared = ($scope) => function(o) {
+	return o === $scope.shared;
+};
 _resume("__tests__/template.marko_0/isInner", $isInner);
 _resume("__tests__/template.marko_0/isShared", $isShared);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

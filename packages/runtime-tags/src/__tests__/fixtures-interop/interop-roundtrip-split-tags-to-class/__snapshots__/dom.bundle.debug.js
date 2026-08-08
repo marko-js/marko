@@ -49,10 +49,8 @@ const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 function $setup($scope) {
 	$count($scope, 0);
 }
-function $onIncrement($scope) {
-	return function() {
-		$count($scope, $scope.count + 1);
-	};
-}
+const $onIncrement = ($scope) => function() {
+	$count($scope, $scope.count + 1);
+};
 _resume("__tests__/template.marko_0/onIncrement", $onIncrement);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

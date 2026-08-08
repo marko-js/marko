@@ -7,9 +7,7 @@ const $log = /*@__PURE__*/ _let(4, ($scope) => _text($scope.c, $scope.e));
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
-function $onPress($scope) {
-	return function() {
-		$log($scope, `${$scope.e}[${$scope.d}]`);
-	};
-}
+const $onPress = ($scope) => function() {
+	$log($scope, `${$scope.e}[${$scope.d}]`);
+};
 _resume("a0", $onPress);

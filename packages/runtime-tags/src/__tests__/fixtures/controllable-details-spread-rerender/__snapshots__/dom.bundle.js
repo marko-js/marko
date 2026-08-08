@@ -20,9 +20,7 @@ const $n = /*@__PURE__*/ _let(5, ($scope) => {
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, $scope.f + 1);
 }));
-function $attrs($scope) {
-	return function(next) {
-		$open($scope, next);
-	};
-}
+const $attrs = ($scope) => function(next) {
+	$open($scope, next);
+};
 _resume("a0", $attrs);

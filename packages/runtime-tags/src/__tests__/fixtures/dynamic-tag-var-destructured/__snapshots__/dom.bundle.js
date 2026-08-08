@@ -6,11 +6,9 @@ const $count$1 = /*@__PURE__*/ _let(1, ($scope) => {
 	});
 	_text($scope.a, $scope.b);
 });
-function $_return($scope) {
-	return function() {
-		$count$1($scope, $scope.b + 1);
-	};
-}
+const $_return = ($scope) => function() {
+	$count$1($scope, $scope.b + 1);
+};
 _resume("b0", $_return);
 
 // template.marko

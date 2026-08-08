@@ -18,10 +18,8 @@ const $fooChange2__script = _script("__tests__/template.marko_0_$fooChange#6", (
 	$scope.$fooChange($scope.bar + 1);
 }));
 const $fooChange2 = /*@__PURE__*/ _const("$fooChange", $fooChange2__script);
-function $foo($scope) {
-	return function(v) {
-		$bar($scope, v);
-	};
-}
+const $foo = ($scope) => function(v) {
+	$bar($scope, v);
+};
 _resume("__tests__/template.marko_0/foo", $foo);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

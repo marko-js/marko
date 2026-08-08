@@ -13,9 +13,7 @@ const $value = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 	_text($scope.b, $scope.c);
 });
-function $valueChange($scope) {
-	return (_new_value) => {
-		$value($scope, _new_value);
-	};
-}
+const $valueChange = ($scope) => (_new_value) => {
+	$value($scope, _new_value);
+};
 _resume("a0", $valueChange);

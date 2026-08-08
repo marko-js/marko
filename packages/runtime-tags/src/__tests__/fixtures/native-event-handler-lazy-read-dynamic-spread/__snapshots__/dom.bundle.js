@@ -19,15 +19,11 @@ const $setup__script = _script("a3", ($scope) => {
 		$count($scope, $scope.i + 1);
 	});
 });
-function $onClick($scope) {
-	return function() {
-		$log($scope, `${$scope.j}b(${$scope.i})`);
-	};
-}
-function $anonymous($scope) {
-	return () => {
-		$log($scope, `${$scope.j}a(${$scope.i})`);
-	};
-}
+const $onClick = ($scope) => function() {
+	$log($scope, `${$scope.j}b(${$scope.i})`);
+};
+const $anonymous = ($scope) => () => {
+	$log($scope, `${$scope.j}a(${$scope.i})`);
+};
 _resume("a1", $onClick);
 _resume("a0", $anonymous);

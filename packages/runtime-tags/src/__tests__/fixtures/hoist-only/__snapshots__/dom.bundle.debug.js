@@ -29,12 +29,8 @@ const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 	$input_value__closure($scope);
 });
 const $input = ($scope, input) => $input_value($scope, input.value);
-function $hoist2($scope) {
-	return () => $scope._._.input_value;
-}
-function $hoist($scope) {
-	return () => $scope.input_value;
-}
+const $hoist2 = ($scope) => () => $scope._._.input_value;
+const $hoist = ($scope) => () => $scope.input_value;
 _resume("__tests__/template.marko_2/hoist2", $hoist2);
 _resume("__tests__/template.marko_0/hoist", $hoist);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

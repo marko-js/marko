@@ -30,10 +30,8 @@ function $setup($scope) {
 	$show($scope, true);
 	$onCount2($scope, $onCount($scope));
 }
-function $onCount($scope) {
-	return function(count) {
-		$show($scope, count < 1);
-	};
-}
+const $onCount = ($scope) => function(count) {
+	$show($scope, count < 1);
+};
 _resume("__tests__/template.marko_0/onCount", $onCount);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

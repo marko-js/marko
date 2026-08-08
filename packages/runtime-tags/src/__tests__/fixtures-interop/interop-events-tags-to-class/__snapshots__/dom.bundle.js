@@ -23,11 +23,9 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // template.marko
 const $count = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
-function $onCount($scope) {
-	return function(newCount) {
-		$count($scope, newCount);
-	};
-}
+const $onCount = ($scope) => function(newCount) {
+	$count($scope, newCount);
+};
 _resume("a0", $onCount);
 
 // v:template.marko.hydrate-6.js

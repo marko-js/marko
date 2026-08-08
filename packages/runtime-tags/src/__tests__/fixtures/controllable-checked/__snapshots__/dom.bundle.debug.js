@@ -10,10 +10,8 @@ function $setup($scope) {
 	$checked($scope, false);
 	$setup__script($scope);
 }
-function $checkedChange($scope) {
-	return (_new_checked) => {
-		$checked($scope, _new_checked);
-	};
-}
+const $checkedChange = ($scope) => (_new_checked) => {
+	$checked($scope, _new_checked);
+};
 _resume("__tests__/template.marko_0/checkedChange", $checkedChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

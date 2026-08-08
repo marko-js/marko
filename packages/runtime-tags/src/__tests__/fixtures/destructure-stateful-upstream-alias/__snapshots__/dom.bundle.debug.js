@@ -9,16 +9,12 @@ const $list$1 = /*@__PURE__*/ _let("list/3", ($scope) => _return($scope, {
 }));
 const $input_value = $list$1;
 const $input = ($scope, input) => $input_value($scope, input.value);
-function $_return2($scope) {
-	return function() {
-		$list$1($scope, []);
-	};
-}
-function $_return($scope) {
-	return function(v) {
-		$list$1($scope, v);
-	};
-}
+const $_return2 = ($scope) => function() {
+	$list$1($scope, []);
+};
+const $_return = ($scope) => function(v) {
+	$list$1($scope, v);
+};
 _resume("__tests__/tags/store.marko_0/_return2", $_return2);
 _resume("__tests__/tags/store.marko_0/_return", $_return);
 var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", "", $setup$1, $input);

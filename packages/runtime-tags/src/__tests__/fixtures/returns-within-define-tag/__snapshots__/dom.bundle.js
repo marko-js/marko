@@ -15,32 +15,24 @@ const $clickTwiceCount = /*@__PURE__*/ _let(10, ($scope) => {
 });
 const $onClickOnce2 = _var_resume("a5", /*@__PURE__*/ _const(9, _script("a9", ($scope) => _on($scope.c, "click", $scope.j))));
 const $onClickTwice2 = _var_resume("a7", /*@__PURE__*/ _const(11, _script("a8", ($scope) => _on($scope.g, "click", $scope.l))));
-function $_return2($scope) {
-	return function() {
-		if ($scope.d) {
-			$Twice_content__call($scope, $scope.d - 1);
-			$scope.c();
-		}
-	};
-}
-function $_return($scope) {
-	return function() {
-		if ($scope.d) {
-			$Once_content__call($scope, $scope.d - 1);
-			$scope.c();
-		}
-	};
-}
-function $onClickOnce($scope) {
-	return function() {
-		$clickOnceCount($scope, $scope.i + 1);
-	};
-}
-function $onClickTwice($scope) {
-	return function() {
-		$clickTwiceCount($scope, $scope.k + 1);
-	};
-}
+const $_return2 = ($scope) => function() {
+	if ($scope.d) {
+		$Twice_content__call($scope, $scope.d - 1);
+		$scope.c();
+	}
+};
+const $_return = ($scope) => function() {
+	if ($scope.d) {
+		$Once_content__call($scope, $scope.d - 1);
+		$scope.c();
+	}
+};
+const $onClickOnce = ($scope) => function() {
+	$clickOnceCount($scope, $scope.i + 1);
+};
+const $onClickTwice = ($scope) => function() {
+	$clickTwiceCount($scope, $scope.k + 1);
+};
 _resume("a2", $_return2);
 _resume("a0", $_return);
 _resume("a1", $onClickOnce);

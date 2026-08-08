@@ -14,9 +14,7 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$attrs2($scope, { type: "text" });
 }));
-function $attrs($scope) {
-	return function(next) {
-		$value($scope, next);
-	};
-}
+const $attrs = ($scope) => function(next) {
+	$value($scope, next);
+};
 _resume("a0", $attrs);

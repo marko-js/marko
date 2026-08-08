@@ -19,12 +19,10 @@ const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 	$input_value__script($scope);
 });
 const $input = ($scope, input) => $input_value($scope, input.value);
-function $valueChange($scope) {
-	return function(next) {
-		$scope.$global[$scope.input_value] = next;
-		subsByKey[$scope.input_value]?.forEach((cb) => cb());
-	};
-}
+const $valueChange = ($scope) => function(next) {
+	$scope.$global[$scope.input_value] = next;
+	subsByKey[$scope.input_value]?.forEach((cb) => cb());
+};
 _resume("__tests__/tags/let-global.marko_0/valueChange", $valueChange);
 var let_global_default = /*@__PURE__*/ _template("__tests__/tags/let-global.marko", "", "", $setup$1, $input);
 

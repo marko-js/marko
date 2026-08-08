@@ -16,21 +16,15 @@ const $log = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.c, $scope.e);
 	$phase__OR__log($scope);
 });
-function $attrs3($scope) {
-	return function() {
-		$phase($scope, 0);
-	};
-}
-function $attrs2($scope) {
-	return function() {
-		$log($scope, `${$scope.e}M`);
-	};
-}
-function $attrs($scope) {
-	return function() {
-		$phase($scope, 1);
-	};
-}
+const $attrs3 = ($scope) => function() {
+	$phase($scope, 0);
+};
+const $attrs2 = ($scope) => function() {
+	$log($scope, `${$scope.e}M`);
+};
+const $attrs = ($scope) => function() {
+	$phase($scope, 1);
+};
 _resume("a2", $attrs3);
 _resume("a1", $attrs2);
 _resume("a0", $attrs);

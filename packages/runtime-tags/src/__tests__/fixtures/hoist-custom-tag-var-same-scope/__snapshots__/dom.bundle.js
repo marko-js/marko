@@ -2,9 +2,7 @@
 const $input_value__script = _script("c0", ($scope) => $scope.c);
 
 // tags/child.marko
-function $_return($scope) {
-	return () => (html) => $scope.a.innerHTML = html;
-}
+const $_return = ($scope) => () => (html) => $scope.a.innerHTML = html;
 _resume("b0", $_return);
 
 // template.marko

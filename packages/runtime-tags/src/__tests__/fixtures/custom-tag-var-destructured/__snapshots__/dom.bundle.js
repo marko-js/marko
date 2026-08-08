@@ -7,16 +7,12 @@ const $count$1 = /*@__PURE__*/ _let(1, ($scope) => {
 	});
 	_text($scope.a, $scope.b);
 });
-function $_return2($scope) {
-	return function(value) {
-		$count$1($scope, value);
-	};
-}
-function $_return($scope) {
-	return function() {
-		$count$1($scope, $scope.b + 1);
-	};
-}
+const $_return2 = ($scope) => function(value) {
+	$count$1($scope, value);
+};
+const $_return = ($scope) => function() {
+	$count$1($scope, $scope.b + 1);
+};
 _resume("b1", $_return2);
 _resume("b0", $_return);
 

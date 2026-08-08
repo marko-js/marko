@@ -44,11 +44,9 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-function $onChange($scope) {
-	return function() {
-		$count($scope, $scope.count + 1);
-	};
-}
+const $onChange = ($scope) => function() {
+	$count($scope, $scope.count + 1);
+};
 _resume("__tests__/components/tags-mid.marko_0/onChange", $onChange);
 var tags_mid_default = /*@__PURE__*/ _template("__tests__/components/tags-mid.marko", $template, $walks, $setup);
 

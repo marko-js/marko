@@ -16,9 +16,7 @@ const $bar = /*@__PURE__*/ _let(3, ($scope) => {
 });
 const $foo2 = /*@__PURE__*/ _const(5, ($scope) => _text($scope.b, $scope.f));
 const $fooChange2 = /*@__PURE__*/ _const(6);
-function $foo($scope) {
-	return function(v) {
-		$bar($scope, v);
-	};
-}
+const $foo = ($scope) => function(v) {
+	$bar($scope, v);
+};
 _resume("a0", $foo);

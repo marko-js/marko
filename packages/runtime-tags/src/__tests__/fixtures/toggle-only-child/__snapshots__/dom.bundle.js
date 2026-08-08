@@ -7,9 +7,7 @@ const $value = /*@__PURE__*/ _let(5, ($scope) => {
 	$if_content__value($scope);
 });
 const $setup__script = _script("a1", ($scope) => _attr_input_value_script($scope, "b"));
-function $valueChange($scope) {
-	return (_new_value) => {
-		$value($scope, _new_value);
-	};
-}
+const $valueChange = ($scope) => (_new_value) => {
+	$value($scope, _new_value);
+};
 _resume("a0", $valueChange);

@@ -25,15 +25,11 @@ const $text = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.c, $scope.e);
 	$text__closure($scope);
 });
-function $valueChange($scope) {
-	return function(next) {
-		$text($scope._, next);
-	};
-}
-function $openChange($scope) {
-	return function(next) {
-		$open($scope, next);
-	};
-}
+const $valueChange = ($scope) => function(next) {
+	$text($scope._, next);
+};
+const $openChange = ($scope) => function(next) {
+	$open($scope, next);
+};
 _resume("a1", $valueChange);
 _resume("a0", $openChange);

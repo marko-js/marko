@@ -8,7 +8,5 @@ const $x = /*@__PURE__*/ _let(6, ($scope) => {
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$x($scope, $scope.g + 1);
 }));
-function $getMessage($scope) {
-	return () => $scope.f;
-}
+const $getMessage = ($scope) => () => $scope.f;
 _resume("a0", $getMessage);

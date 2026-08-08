@@ -27,10 +27,8 @@ function $setup($scope) {
 	$n($scope, 0);
 	$setup__script($scope);
 }
-function $attrs($scope) {
-	return function(next) {
-		$open($scope, next);
-	};
-}
+const $attrs = ($scope) => function(next) {
+	$open($scope, next);
+};
 _resume("__tests__/template.marko_0/attrs", $attrs);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

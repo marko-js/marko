@@ -7,9 +7,7 @@ const $setup__script = _script("a1", ($scope) => {
 	});
 	_attrs_script($scope, "b");
 });
-function $onClick($scope) {
-	return function() {
-		$log($scope, `${$scope.e}[${$scope.d}]`);
-	};
-}
+const $onClick = ($scope) => function() {
+	$log($scope, `${$scope.e}[${$scope.d}]`);
+};
 _resume("a0", $onClick);

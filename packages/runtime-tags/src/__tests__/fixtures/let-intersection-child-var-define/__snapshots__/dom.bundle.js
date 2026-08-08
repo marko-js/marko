@@ -7,9 +7,7 @@ const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function
 	_var_change($scope.a, $scope.e + 1);
 	$b($scope, $scope.f + 1);
 }));
-function $valueChange($scope) {
-	return (_new_internal) => {
-		$Let_content__internal($scope, _new_internal);
-	};
-}
+const $valueChange = ($scope) => (_new_internal) => {
+	$Let_content__internal($scope, _new_internal);
+};
 _resume("a0", $valueChange);

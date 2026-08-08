@@ -4,16 +4,12 @@ const $list$1 = /*@__PURE__*/ _let(3, ($scope) => _return($scope, {
 	listChange: $_return($scope),
 	clear: $_return2($scope)
 }));
-function $_return2($scope) {
-	return function() {
-		$list$1($scope, []);
-	};
-}
-function $_return($scope) {
-	return function(v) {
-		$list$1($scope, v);
-	};
-}
+const $_return2 = ($scope) => function() {
+	$list$1($scope, []);
+};
+const $_return = ($scope) => function(v) {
+	$list$1($scope, v);
+};
 _resume("b1", $_return2);
 _resume("b0", $_return);
 
