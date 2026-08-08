@@ -162,10 +162,8 @@ export function paramsDeliverAsFills(params: Sources["param"]) {
   return every(params, isPatchFillBinding);
 }
 
-// Client-evaluable sources classify structure client-owned: state
-// re-renders directly, and every param feed fills its slot. Nested in
-// client-owned structure ownership is inherited, so no state is needed —
-// the enclosing region already constructs (and bundles) these bodies.
+// Client-evaluable sources classify structure client-owned; nesting in
+// client-owned structure inherits ownership (its bodies already bundle).
 export function classifiesClientOwned(
   sources: Sources | undefined,
   section: Section,

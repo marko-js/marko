@@ -535,13 +535,31 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     childUnsafety.set(file, reason);
     return reason;
   };
-  // A server-derived function re-binds to the live scope on patch, so
-  // server values its body captures read stale slots forever: fail closed.
+  // A server-created function re-binds stale on patch; one DECLARED in
+  // the region is client-created and recomputes off fills, so it's fresh.
+  // Only a bare reference is exempt: a computed callee (`x()()`) could
+  // invoke a server value the declaring arrow merely returned.
+  const calleeIsServerDerived = (callee: t.Node) => {
+    if (t.isIdentifier(callee)) {
+      const extra = callee.extra;
+      let server = !!extra?.globalBindings;
+      forEach(extra?.read?.binding ?? extra?.referencedBindings, (binding) => {
+        const sources = getSerializeSourcesForRef(binding);
+        if (sources?.param || sources?.global) {
+          server ||= !(
+            binding.declaresFunction && inClientOwnedStructure(binding.section)
+          );
+        }
+      });
+      return server;
+    }
+    return exprHasServerSources(callee);
+  };
   const assertNoServerFnCalls = (node: t.Node, value: t.Node) => {
     t.traverseFast(value, (n) => {
       if (
         (t.isCallExpression(n) || t.isOptionalCallExpression(n)) &&
-        exprHasServerSources(n.callee)
+        calleeIsServerDerived(n.callee)
       ) {
         unsupported(
           node,

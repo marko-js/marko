@@ -135,6 +135,9 @@ export interface Binding {
   /** A root param whose value selects rendered structure (branch tests,
    * loop inputs) — transitively through child templates. */
   selectsStructure: boolean;
+  /** Declared as a literal function expression, so the value is created
+   * where the template renders (never a value that crossed the wire). */
+  declaresFunction: boolean;
   /** A root param feeding an expression that also reads `$global` —
    * transitively through child templates. */
   globalMixed: boolean;
@@ -271,6 +274,7 @@ export function createBinding(
     exposed: false,
     forcePersist: false,
     selectsStructure: false,
+    declaresFunction: false,
     globalMixed: false,
     serializePropKeys: undefined,
     reserveSize: 0,

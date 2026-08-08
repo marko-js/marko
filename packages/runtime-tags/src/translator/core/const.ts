@@ -82,6 +82,7 @@ export default {
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
+      if (t.isFunction(valueAttr.value)) binding.declaresFunction = true;
       if (!upstreamAlias) {
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);
