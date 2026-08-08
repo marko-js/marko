@@ -214,7 +214,10 @@ export function _attrs_partial(
 
   for (let i = el.attributes.length; i--;) {
     const { name } = el.attributes.item(i)!;
-    if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
+    if (
+      !skip[name] &&
+      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
+    ) {
       el.removeAttribute(name);
     }
   }

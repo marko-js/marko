@@ -1,0 +1,4 @@
+<let/sel=["a"]/>
+<input ...{ checkedValue: sel, value: "a" } type="checkbox">
+<button onClick() { sel = sel.slice() }>t</button>
+<div>${sel.join(",")}</div>
