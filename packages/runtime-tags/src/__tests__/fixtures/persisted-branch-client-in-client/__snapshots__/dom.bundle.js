@@ -1,5 +1,5 @@
 // template.marko
-const $if_content2__input_inner = /*@__PURE__*/ _fill_join("a1", 5, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._), _closure);
+const $if_content2__input_inner = /*@__PURE__*/ _fill_join_closure("a1", 5, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._), 0);
 const $if_content2__setup = $if_content2__input_inner;
 const $if_content__input_outer = /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e)));
 const $if_content__setup = ($scope) => {
