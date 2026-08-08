@@ -2,6 +2,7 @@
 ```html
 <main>
   <input />
+  <em />
   <button>
     t
   </button>
@@ -14,6 +15,23 @@ const input = document.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", { bubbles: true }));
+```
+```html
+<main>
+  <input
+    value="z"
+  />
+  <em>
+    z
+  </em>
+  <button>
+    t
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > em::text "" => "z"
 ```
 
 # Update
@@ -30,6 +48,7 @@ document.querySelector("button:last-of-type").click();
 ## Change
 ```
 REMOVE: main > input
+REMOVE: main > em
 ```
 
 # Update
@@ -39,6 +58,7 @@ document.querySelector("button:last-of-type").click();
 ```html
 <main>
   <input />
+  <em />
   <button>
     t
   </button>
@@ -46,5 +66,6 @@ document.querySelector("button:last-of-type").click();
 ```
 ## Change
 ```
-INSERT: main > input
+INSERT: main > :is(input, em)
+UPDATE: main > em::text " " => ""
 ```
