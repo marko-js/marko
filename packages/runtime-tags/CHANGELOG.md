@@ -1,5 +1,102 @@
 # @marko/runtime-tags
 
+## 6.3.34
+
+### Patch Changes
+
+- [#3822](https://github.com/marko-js/marko/pull/3822) [`352bca2`](https://github.com/marko-js/marko/commit/352bca22ee2e9312e27d8530ea67fab6c01fc337) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Single-letter camelCase event attributes (`onX`) now compile as event handlers, matching the runtime's event detection.
+
+- [#3866](https://github.com/marko-js/marko/pull/3866) [`0eced38`](https://github.com/marko-js/marko/commit/0eced38e4a50c1ce3923fe43514b8b1931c02dfe) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Page asset tags are now emitted after a leading `<!doctype>`; a page entry without a literal `<head>` previously wrote them ahead of the doctype, silently putting the document in quirks mode.
+
+- [#3858](https://github.com/marko-js/marko/pull/3858) [`7799b0a`](https://github.com/marko-js/marko/commit/7799b0a0f8f749e8f52d7d5d3ee4c6fc25df20ab) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Carriage returns in server-rendered attribute values are now escaped as `&[#13](https://github.com/marko-js/marko/issues/13);`; the HTML parser previously normalized them to line feeds, diverging from client rendering.
+
+- [#3841](https://github.com/marko-js/marko/pull/3841) [`dde49dd`](https://github.com/marko-js/marko/commit/dde49dd37248addc67043aa89ea561dd5db1d308) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A checkbox controlled through a spread `checkedValue` alongside static attributes no longer unchecks when unrelated state updates; the stale-attribute removal now recognizes `checkedValue` as owning `checked`, matching full spreads.
+
+- [#3839](https://github.com/marko-js/marko/pull/3839) [`3cc6b1c`](https://github.com/marko-js/marko/commit/3cc6b1c484efee2916b8d2df2cb82c53ca72b956) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Mixing refined and plain bound attributes on the same variable (`value:parseInt:=x` and `value:=x`) now generates a change handler per refinement instead of reusing the first one for all.
+
+- [#3819](https://github.com/marko-js/marko/pull/3819) [`9cb5d2a`](https://github.com/marko-js/marko/commit/9cb5d2a3af62985da40c7ec82cbb5370de0a6286) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Align cheatsheet.md prose with the documentation style guidelines (sentence-case emphasis, short headings, no em-dashes); content unchanged.
+
+- [#3835](https://github.com/marko-js/marko/pull/3835) [`3e69b12`](https://github.com/marko-js/marko/commit/3e69b1220010e99f496d115e58009073341598e7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An empty key in a class object (`class={ "": cond }`) no longer throws on client render; it is dropped, matching server rendering.
+
+- [#3837](https://github.com/marko-js/marko/pull/3837) [`d13cc15`](https://github.com/marko-js/marko/commit/d13cc1576fb47d6d688873b71868c8c6e4e2baf7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A control-flow branch whose entire markup is an `Object.prototype` member name (e.g. bare text `constructor`) no longer crashes client rendering; the clone cache key is prefixed so inherited properties can't collide.
+
+- [#3860](https://github.com/marko-js/marko/pull/3860) [`ae57723`](https://github.com/marko-js/marko/commit/ae57723363613abd65e1b8873d604875e241ba8b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Caret restoration in controlled inputs now handles astral letters and digits (CJK Extension B, math alphanumerics, ...); previously the cursor jumped to the end of the value on edits near them.
+
+- [#3843](https://github.com/marko-js/marko/pull/3843) [`877f821`](https://github.com/marko-js/marko/commit/877f821dc77d8d841c354687bae49de1b637a221) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A custom tag invoked with arguments and a body (`<my-tag("a")>hi</my-tag>`) is now a compile error instead of silently dropping the body; dynamic tags still allow arguments with fallback content.
+
+- [#3863](https://github.com/marko-js/marko/pull/3863) [`5f8f1b5`](https://github.com/marko-js/marko/commit/5f8f1b5314f5e9e42682d948f472e642afc93a2b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reusing a value that was serialized as a deferred `Map`/`Set` member (e.g. a member of a circular collection) in a later stream flush no longer crashes the serializer.
+
+- [#3825](https://github.com/marko-js/marko/pull/3825) [`f1b18db`](https://github.com/marko-js/marko/commit/f1b18db9598ea21a185b2dc2645dc07462d38c2e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Events whose type collides with a `Function` property (`on-name`, `on-length`, …) now register their delegated listener instead of silently never firing.
+
+- [#3829](https://github.com/marko-js/marko/pull/3829) [`295b86e`](https://github.com/marko-js/marko/commit/295b86e3b5c580800b4c7a167a5169417b42dbce) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Debug builds now resume event handlers on camelCase dynamic native tags (e.g. a dynamic `<linearGradient>` inside `<svg>`); the debug element accessor casing previously disagreed between server and resume, leaving handlers silently dead.
+
+- [#3832](https://github.com/marko-js/marko/pull/3832) [`f1aa0ec`](https://github.com/marko-js/marko/commit/f1aa0ec62126d91f752b47a284894768bb410206) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - State read by event handlers spread onto a dynamic tag from a `<const>` now serializes for resume; previously the handlers were wired after resume but read their state as `undefined`.
+
+- [#3868](https://github.com/marko-js/marko/pull/3868) [`6adab5a`](https://github.com/marko-js/marko/commit/6adab5a8b57d8c8da38350fdaf142a8b00f07542) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a client-side crash or destroyed sibling elements when a template contains a placeholder that statically evaluates to an empty string (e.g. `${""}` or `${NaN}`): it rendered no text but still claimed a walk step, shifting every later step in the section by one.
+
+- [#3817](https://github.com/marko-js/marko/pull/3817) [`647d520`](https://github.com/marko-js/marko/commit/647d5207e69795b13a370ef730c223cd06b40ea8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reading `event.currentTarget` in a native tag event handler is now a type error whose message points at the handler's second parameter (the typed element), since event delegation makes `currentTarget` unusable at runtime.
+
+- [#3791](https://github.com/marko-js/marko/pull/3791) [`de3bb9f`](https://github.com/marko-js/marko/commit/de3bb9f9839aaefce1de840497ee9cf09294e356) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix dead markojs.com links in compile errors and editor autocomplete: `/docs/syntax/` URLs now point at the language reference, and core-tag anchors account for headings that differ from the tag name.
+
+- [#3811](https://github.com/marko-js/marko/pull/3811) [`80edc6a`](https://github.com/marko-js/marko/commit/80edc6a30a892b30ec13c876c90f8905057e15b3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `Sorted.isSuperset` rejecting valid supersets, and give controllable change handlers (including on dynamic tags) their own serialize reasons so their functions stay registered now that intersection pruning is accurate. Bound native inputs serialize slightly less, and computed bound attributes (`value:=state[key]`) now register their handlers.
+
+- [#3823](https://github.com/marko-js/marko/pull/3823) [`0fd5689`](https://github.com/marko-js/marko/commit/0fd568996ecb6887cac4f11a3fd8b49a5ca35d65) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A falsy `<for by>` value (e.g. `by=cond && "id"`) now means "no key" in the browser runtime, matching server rendering, instead of throwing `by is not a function` on update.
+
+- [#3844](https://github.com/marko-js/marko/pull/3844) [`de8fb5f`](https://github.com/marko-js/marko/commit/de8fb5ffdaa06a8c6f409bf958cbe0a26992857f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reading a loop parameter anywhere in a `<for by=...>` expression (e.g. `by=item.id`) is now a compile error with a code frame, instead of compiling clean and throwing a `ReferenceError` at first render.
+
+- [#3820](https://github.com/marko-js/marko/pull/3820) [`9567e06`](https://github.com/marko-js/marko/commit/9567e069d5057b2347da6bef42b560da4efd5e8c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Debug builds now error when a `<for>` tag's `from` or `step` attribute is a non-number, instead of silently concatenating indices.
+
+- [#3824](https://github.com/marko-js/marko/pull/3824) [`90d9630`](https://github.com/marko-js/marko/commit/90d9630b5011ada21760d94298f259bee9c18310) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Debug server rendering now validates spread attributes the same way the browser runtime does: invalid attribute names error even with void values, and mutually exclusive controllable attributes split across a spread and static attributes are reported.
+
+- [#3854](https://github.com/marko-js/marko/pull/3854) [`ede4050`](https://github.com/marko-js/marko/commit/ede405011a12be18810bb2b4b32126ff74f1f8f0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `<if value=cond>`, `<else-if value=cond>` and `<show value=cond>` now compile like the `=` shorthand, matching every other core tag's handling of the written-out attribute.
+
+- [#3865](https://github.com/marko-js/marko/pull/3865) [`1f67f47`](https://github.com/marko-js/marko/commit/1f67f4766cfc1990d1164acf0085d7e748b773ac) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A streaming sink that throws (e.g. a client disconnect mid-write) no longer degrades progressive streaming for other renders in flight on the same server.
+
+- [#3857](https://github.com/marko-js/marko/pull/3857) [`2505756`](https://github.com/marko-js/marko/commit/2505756888a52a781f4dea299db237ef42ec58df) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A native tag whose `content=` attribute evaluates statically (e.g. `<div content=undefined/>`) no longer aborts the browser-output compile with an internal error.
+
+- [#3760](https://github.com/marko-js/marko/pull/3760) [`efe38e8`](https://github.com/marko-js/marko/commit/efe38e8f8a8103341be3d91764582609a0c0a2f6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report the underlying error when serialization fails while flushing a Class-API page that renders Tags-API content, instead of emitting a resume script that fails in the browser as `M is not defined`.
+
+- [#3834](https://github.com/marko-js/marko/pull/3834) [`ae8e0f4`](https://github.com/marko-js/marko/commit/ae8e0f41a00e7eb65f23b8a93739f84318ba8633) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix children consuming input only through a rest pattern or direct alias: their input groups now map their real feeders (restoring resume serialization for fed values), and the generated `$input` alias export no longer references its target before declaration.
+
+- [#3772](https://github.com/marko-js/marko/pull/3772) [`c72635d`](https://github.com/marko-js/marko/commit/c72635d5e53fead2924825397a972059d6c6c94a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `Cannot read properties of undefined (reading 'serializeState')` crash when a Class-API component rendering Tags-API content is rendered directly — through `renderToString` or `@marko/testing-library` — rather than as a page with `<init-components>`.
+
+- [#3838](https://github.com/marko-js/marko/pull/3838) [`ce12ada`](https://github.com/marko-js/marko/commit/ce12ada02d73358f961f117a7ce53ff36870dda7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Registered object/class methods with computed or static keys now keep those flags in browser output; a computed-key handler previously lowered to a literal key and silently wired nothing.
+
+- [#3830](https://github.com/marko-js/marko/pull/3830) [`14f004b`](https://github.com/marko-js/marko/commit/14f004ba8933d0be46b0ede7e2effb7108878534) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resume-only pages containing a dynamic native tag with spread attributes no longer crash during hydration: `_resume_dynamic_tag` now enables branch visit processing, which the bundler could previously tree-shake away along with `_dynamic_tag`.
+
+- [#3859](https://github.com/marko-js/marko/pull/3859) [`1b9348b`](https://github.com/marko-js/marko/commit/1b9348ba0ab7e64cdbcd31899c0a56b69a0f1457) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resume registration ids are now unambiguous; previously two same-named tag variables (e.g. two `<div/x>` element refs) or bindings with `_`-joined names could share one id, silently resolving to the wrong value after resume.
+
+- [#3826](https://github.com/marko-js/marko/pull/3826) [`eab1c0b`](https://github.com/marko-js/marko/commit/eab1c0b9457762ee063150bd6d5ecdc224ca7b19) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `<return valueChange>` that becomes falsy now revokes the tag-variable change handler, so later parent assignments are readonly (debug error / no-op) instead of silently mutating through the stale handler.
+
+- [#3821](https://github.com/marko-js/marko/pull/3821) [`b27066f`](https://github.com/marko-js/marko/commit/b27066f863062c93142813058565535cf8445075) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A duplicate `value`/`valueChange` attribute on `<return>` is now a compile error instead of producing code that throws a `ReferenceError` at render time.
+
+- [#3800](https://github.com/marko-js/marko/pull/3800) [`2a1552e`](https://github.com/marko-js/marko/commit/2a1552e97cc263055b1776cc31dbee5f0b454bb4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reword the tag-variable compile errors in the reference tracker to name the variable and link the docs — including the former "Cannot assign to hoisted tag variable.", which now explains the positional rule.
+
+- [#3813](https://github.com/marko-js/marko/pull/3813) [`45b91f4`](https://github.com/marko-js/marko/commit/45b91f43381789df33fb55ee10803a05f16aac32) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Share the await frame scheduler between `addAwaitCounter` and `_await_promise`, slightly shrinking dom bundles that use `<await>`.
+
+- [#3790](https://github.com/marko-js/marko/pull/3790) [`14475c0`](https://github.com/marko-js/marko/commit/14475c04a82fc8c647c0305921736f3055f61864) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Declare a `types` stub for the `<show>` tag so editors and `mtc` type-check its input like the other core tags.
+
+- [#3850](https://github.com/marko-js/marko/pull/3850) [`6fd0a30`](https://github.com/marko-js/marko/commit/6fd0a30b6405d14a0dbebf5ef9fbfeeeea73b85a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix hydration when the Class runtime initializes before the Tags runtime: a class component rerendering in the browser now forces the tags runtime to resume first, so revived content (`input.renderBody`) and existing tags branches are found instead of crashing with `Invalid dynamic tag value` or discarding server-rendered DOM.
+
+- [#3789](https://github.com/marko-js/marko/pull/3789) [`70b2887`](https://github.com/marko-js/marko/commit/70b28878efe06472f2ec62d8d9e09f6566318512) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Name the actual handler attribute (`checkedChange`, `checkedValueChange`, `openChange`, …) in the server-side controllable debug assertion instead of always reporting `valueChange`.
+
+- [#3828](https://github.com/marko-js/marko/pull/3828) [`d0a2946`](https://github.com/marko-js/marko/commit/d0a29466eabb9964003587202245b3b60ecd2f78) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The `load` import attribute is now stripped from compiled HTML output; unbundled server modules previously kept `with { load: ... }`, which Node rejects at import time.
+
+- [#3852](https://github.com/marko-js/marko/pull/3852) [`014a6ad`](https://github.com/marko-js/marko/commit/014a6add350615fbb3ca948edb7e0b84c3df9cc3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Type stub fixes for editors and `@marko/type-check`: valueless `<let/x/>` type-checks, `<html-comment>`/`<html-script>`/`<html-style>` tag variables type as element getters, and `<try>`'s `@catch` parameter is `any` so reading `err.message` is clean.
+
+- [#3855](https://github.com/marko-js/marko/pull/3855) [`61c333d`](https://github.com/marko-js/marko/commit/61c333db2b31c03278d4629bb5156f63ad47d783) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Escape sequences in a template-literal tag name (e.g. `` <${`h\x31`}> ``) are now decoded instead of reaching the emitted markup verbatim.
+
+- [#3797](https://github.com/marko-js/marko/pull/3797) [`f01d949`](https://github.com/marko-js/marko/commit/f01d949adbb318e6b6a61af0181a547e0833ce32) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error at compile time when a `<try>` receives an attribute tag other than `<@placeholder>`/`<@catch>`, with a near-miss suggestion — a typo previously compiled clean and silently dropped the pending/error UI.
+
+- [#3806](https://github.com/marko-js/marko/pull/3806) [`8398441`](https://github.com/marko-js/marko/commit/8398441c256227c57a0a16e8821b49c5faee0cd0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Validate the `load` import attribute (trigger syntax and import specifiers) even when `linkAssets` is not configured, instead of silently falling back to an eager import.
+
+- [#3782](https://github.com/marko-js/marko/pull/3782) [`b99657e`](https://github.com/marko-js/marko/commit/b99657e47cbeb747ab68795455c84ed110a3bd02) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Warn in debug builds when a `NaN` or bigint `0n` text or style value is silently dropped from the output.
+
+- [#3796](https://github.com/marko-js/marko/pull/3796) [`3ceed71`](https://github.com/marko-js/marko/commit/3ceed719c88f28c3f8354bab9851d8a5badde6b4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Warn at compile time when a `<script>` body returns a cleanup function, which is discarded; point at `$signal.onabort` and `<lifecycle onDestroy>`.
+
+- Updated dependencies [[`4bc0479`](https://github.com/marko-js/marko/commit/4bc0479104006a6d6593a6127d5e9174ece1879c), [`877f821`](https://github.com/marko-js/marko/commit/877f821dc77d8d841c354687bae49de1b637a221), [`1a881a5`](https://github.com/marko-js/marko/commit/1a881a5dbd69c76c4cd1eda0480a16b286931cfc), [`97ab05e`](https://github.com/marko-js/marko/commit/97ab05e39f5cb0010da1591413558d333f27e6a6), [`eb25d4c`](https://github.com/marko-js/marko/commit/eb25d4ce19d698ea22c702b1a20aa4855f7562c8), [`05f3a1a`](https://github.com/marko-js/marko/commit/05f3a1a56af8538d9bb0545452143c8aba19b6e3), [`798521c`](https://github.com/marko-js/marko/commit/798521c3315316214c8cbec0aba40bb6a5f6c6d5)]:
+  - @marko/compiler@5.41.18
+
 ## 6.3.33
 
 ### Patch Changes
