@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-custom-tag-args-and-body/template.marko:1:9
+    > 1 | <my-tag("a")>hi</my-tag>
+        |         ^^^ Tag does not support arguments when attributes or body present.
+      2 |
