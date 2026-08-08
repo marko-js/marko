@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.3.35
+
+### Patch Changes
+
+- [#3875](https://github.com/marko-js/marko/pull/3875) [`c25815c`](https://github.com/marko-js/marko/commit/c25815cf249320318beb9c92eed789d8915cbaa8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support two-way binding a destructured value with a computed string-literal key, and give a real diagnostic when the computed key is dynamic.
+
+- [#3872](https://github.com/marko-js/marko/pull/3872) [`590e117`](https://github.com/marko-js/marko/commit/590e1174be96dba1cc0f7e4632d05b631d8a5159) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error on a `<style>` interpolation inside an unquoted `url()` instead of silently emitting invalid CSS.
+
+- Updated dependencies [[`4adcb25`](https://github.com/marko-js/marko/commit/4adcb25996368d3e456c6ad25d7af7fadbeaa2da), [`e03de1a`](https://github.com/marko-js/marko/commit/e03de1a9d3bb01c2440e19e9be5216fc3097342c), [`3c2b628`](https://github.com/marko-js/marko/commit/3c2b628618bed8aef684913eefaa827e75ad5f3b)]:
+  - @marko/compiler@5.41.19
+
 ## 6.3.34
 
 ### Patch Changes
