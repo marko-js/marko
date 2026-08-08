@@ -1,6 +1,7 @@
 import {
   assertExclusiveAttrs,
   assertHandlerIsFunction,
+  assertNoValueBindingOnCheckable,
   assertValidAttrName,
   assertValidAttrValue,
 } from "../common/errors";
@@ -301,6 +302,9 @@ export function _attrs(
         );
         skip = /^(?:value|checked(?:Value)?)(?:Change)?$|[\s/>"'=]/;
       } else if (data.valueChange) {
+        if (MARKO_DEBUG) {
+          assertNoValueBindingOnCheckable(data.type, data.valueChange);
+        }
         result += _attr_input_value(
           scopeId,
           nodeAccessor,

@@ -243,6 +243,24 @@ export default {
       }
 
       relatedControllable ||= getRelatedControllable(tagName, seen);
+      const valueChangeEval =
+        tagName === "input" && seen.valueChange
+          ? evaluate(seen.valueChange.value)
+          : undefined;
+      if (
+        valueChangeEval &&
+        !(valueChangeEval.confident && valueChangeEval.computed == null) &&
+        getInputValueMode(seen.type) === "attribute"
+      ) {
+        const type = evaluate(seen.type!.value).computed as string;
+        throw tag.hub.buildError(
+          seen.valueChange,
+          `\`valueChange\` cannot be used on a \`type="${type}"\` \`<input>\` — user interaction can never change its \`value\`.` +
+            (/^[cr]/i.test(type)
+              ? " Bind `checked` or `checkedValue` instead."
+              : ""),
+        );
+      }
       if (relatedControllable && relatedControllable.attrs[1]) {
         hasEventHandlers = true;
       }

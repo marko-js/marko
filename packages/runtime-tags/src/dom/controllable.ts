@@ -1,4 +1,7 @@
-import { assertHandlerIsFunction } from "../common/errors";
+import {
+  assertHandlerIsFunction,
+  assertNoValueBindingOnCheckable,
+} from "../common/errors";
 import { isNotVoid } from "../common/helpers";
 import {
   type Accessor,
@@ -238,6 +241,7 @@ export function _attr_input_value(
   const normalizedValue = normalizeAttrValue(value) || "";
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("valueChange", valueChange);
+    assertNoValueBindingOnCheckable(el.type, valueChange);
   }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
   scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
@@ -262,6 +266,12 @@ export function _attr_input_value_attribute_default(
 }
 export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
   const el = scope[nodeAccessor] as HTMLInputElement;
+  if (MARKO_DEBUG) {
+    assertNoValueBindingOnCheckable(
+      el.type,
+      scope[AccessorPrefix.ControlledHandler + nodeAccessor],
+    );
+  }
   if (isResuming) {
     scope[AccessorPrefix.ControlledValue + nodeAccessor] = el.defaultValue;
   }
