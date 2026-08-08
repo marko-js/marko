@@ -105,6 +105,7 @@ export {
   _fill_join,
   _fill_join_for,
   _fill_join_if,
+  _fill_join_closure,
   _fill_let,
   _global_read,
   _fill_let_change,
