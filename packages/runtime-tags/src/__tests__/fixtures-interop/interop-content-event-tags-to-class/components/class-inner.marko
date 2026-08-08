@@ -1,0 +1,10 @@
+class {
+  onCreate() {
+    this.state = { m: 0 };
+  }
+  handleClick() {
+    this.state.m++;
+    this.emit("change");
+  }
+}
+<div id="inner" on-click("handleClick")>${state.m}<${input.renderBody}/></div>

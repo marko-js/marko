@@ -1,4 +1,4 @@
-// size: 26024 (min) 9673 (brotli)
+// size: 26064 (min) 9672 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1943,6 +1943,7 @@ let empty = [],
   classEventResolver,
   scopesByRender = /* @__PURE__ */ new WeakMap(),
   getRenderScopes = ($global) => {
+    init($global.runtimeId);
     let render = self[$global.runtimeId]?.[$global.renderId],
       scopes = render && scopesByRender.get(render);
     return (render && !scopes && scopesByRender.set(render, (scopes = {})), scopes);
@@ -2007,6 +2008,7 @@ let empty = [],
       );
     },
     render(out, component, renderer, args) {
+      init(out.global.runtimeId);
       let branch = component.scope,
         created = 0;
       if (

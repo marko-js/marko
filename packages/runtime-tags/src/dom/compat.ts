@@ -9,7 +9,7 @@ import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
 import { _content, createAndSetupBranch, type Renderer } from "./renderer";
-import { _resume, getRegisteredWithScope } from "./resume";
+import { _resume, getRegisteredWithScope, init } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
 // Injected by the class runtime (runtime-dom.js); revives a serialized
@@ -19,6 +19,9 @@ let classEventResolver: ((value: unknown, scope: Scope) => unknown) | undefined;
 // interop boundary, and released with the render when an embedded render is destroyed.
 const scopesByRender = new WeakMap<object, Record<string, Scope>>();
 const getRenderScopes = ($global: Record<string, unknown>) => {
+  // The class runtime can hydrate before this runtime has resumed (init order
+  // is bundler-controlled); force the resume so its scopes are registered.
+  init($global.runtimeId as string);
   const render = (self as any)[$global.runtimeId as string]?.[
     $global.renderId as string
   ];
@@ -111,6 +114,9 @@ export const compat = {
     return renderer;
   },
   render(out: any, component: any, renderer: Renderer, args: any) {
+    // A rerendering class parent may hydrate before this runtime has resumed;
+    // resume first so the branch this render should adopt is registered.
+    init(out.global.runtimeId);
     let branch: BranchScope | undefined = component.scope;
     let created: 0 | 1 = 0;
 

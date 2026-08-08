@@ -1,0 +1,7 @@
+class {
+  onCreate() {
+    this.state = { n: 0 };
+  }
+  handleClick() { this.state.n++; }
+}
+<div id="outer" on-click("handleClick")>${state.n}<class-inner renderBody=input.renderBody/></div>
