@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// Aliasing does not launder a server-created function: only a function
-// expression declared in the region recomputes client-side.
+// An alias of a root-declared derived arrow: only canonical grains
+// refresh as fills, so the alias read fails closed (call `mk` directly).
 export const config: TestConfig = {
   error_compiler: true,
   persisted: true,
