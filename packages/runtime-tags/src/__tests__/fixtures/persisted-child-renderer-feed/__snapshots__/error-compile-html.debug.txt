@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-renderer-feed/template.marko:4:13
+      2 | <main>
+      3 |   <if=open>
+    > 4 |     <widget renderer=input.renderer/>
+        |             ^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a renderer the child renders cannot feed from a server value.
+      5 |   </if>
+      6 |   <button onClick() { open = !open }>+</button>
+      7 | </main>
