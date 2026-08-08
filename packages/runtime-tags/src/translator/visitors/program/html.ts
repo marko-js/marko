@@ -66,6 +66,7 @@ import {
   recordConstructBlocker,
 } from "../../util/shell";
 import {
+  addOpaqueRenderProp,
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
@@ -1271,7 +1272,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               "a renderer read inside client-owned structure would need to cross the wire as a function",
             );
           }
-          (getSection(tag).opaqueRenders ??= []).push(node.name);
+          addOpaqueRenderProp(
+            getSection(tag),
+            ((node.name as t.MemberExpression).property as t.Identifier).name,
+          );
           return;
         }
         unsupported(node);
