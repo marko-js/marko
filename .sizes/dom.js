@@ -1,4 +1,4 @@
-// size: 26011 (min) 9692 (brotli)
+// size: 26024 (min) 9673 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1225,7 +1225,9 @@ function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
     partial = {};
   for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
-    !skip[name] && !(nextAttrs && name in nextAttrs) && el.removeAttribute(name);
+    !skip[name] &&
+      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) &&
+      el.removeAttribute(name);
   }
   for (let name in nextAttrs) {
     let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
