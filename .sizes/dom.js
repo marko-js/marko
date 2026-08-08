@@ -1,4 +1,4 @@
-// size: 27265 (min) 10102 (brotli)
+// size: 27275 (min) 10111 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -106,6 +106,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   readyIds,
   patchRender = 0,
   patching = 0,
+  patchId = 0,
   isResuming,
   cloneCache = {},
   R = /[^\p{L}\p{N}]/gu,
@@ -896,7 +897,7 @@ function walk(startNode, walkCodes, branch) {
 }
 function beginPatch(renderId) {
   let render = (patchRender = curRenders[renderId]);
-  return ((patching = 1), render);
+  return ((patching = 1), patchId++, render);
 }
 function abortPatch() {
   patchRender = patching = 0;

@@ -111,6 +111,13 @@ class PatchState extends State {
   // mid-expression) hoists shells into a preceding `_()` call.
   override resumeScript(resumes: string) {
     if (MARKO_DEBUG) this.patchFlushed = 1;
+    // A poisoned frame (a bound registration with no rebind entry) is
+    // replaced by a bare poison tree: the client rejects and navigates.
+    if (this.patchPoison) {
+      this.shellFrames = "";
+      this.patchDeferred = undefined;
+      return '[{"' + PatchKey.Poison + '":1}]';
+    }
     const shells = this.shellFrames && this.shellFrames.slice(1);
     this.shellFrames = "";
     if (this.patchDeferred) {

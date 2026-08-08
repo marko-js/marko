@@ -21,6 +21,7 @@ import {
   hasUnfillablePatchReads,
   inClientOwnedStructure,
   isPatchCaptureSection,
+  isPatchCaptureWriteBinding,
   isPatchEffectBinding,
   isPatchFillBinding,
 } from "./persisted";
@@ -1674,7 +1675,10 @@ export function writeHTMLResumeStatements(
   // id when the value it saw changed.
   if (isPersisted()) {
     forEach(section.bindings, (binding) => {
-      if (isPatchEffectBinding(binding)) {
+      if (
+        isPatchEffectBinding(binding) ||
+        isPatchCaptureWriteBinding(binding)
+      ) {
         fillCalls.push(
           gatePatchWrite(
             binding,

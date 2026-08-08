@@ -7,7 +7,6 @@ import {
 
 import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
 import evaluate from "../util/evaluate";
-import { isCallCleanFn } from "../util/is-call-clean-fn";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
@@ -83,7 +82,7 @@ export default {
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
-      if (isCallCleanFn(valueAttr.value)) binding.declaresFunction = true;
+      if (t.isFunction(valueAttr.value)) binding.functionValued = true;
       if (!upstreamAlias) {
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);

@@ -3,11 +3,13 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
+import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { find, forEach } from "../../util/optional";
+import { find, forEach, some } from "../../util/optional";
 import {
   getPatchFillBindings,
   isPatchEffectBinding,
+  isPatchFillBinding,
 } from "../../util/persisted";
 import {
   BindingType,
@@ -175,9 +177,16 @@ export default {
 
       // Patches deliver server contributions to registered fill signals, so
       // a template with fills in any section ships the patcher.
+      let hasFills = false;
+      let boundFills = false;
       forEachSection((fillSection) => {
         if (getPatchFillBindings(fillSection)) {
+          hasFills = true;
           importRuntimeFeature("patch-value");
+          boundFills ||= !!find(
+            fillSection.bindings,
+            (binding) => binding.functionValued && isPatchFillBinding(binding),
+          );
         }
         if (
           find(fillSection.bindings, isPatchEffectBinding) ||
@@ -186,6 +195,30 @@ export default {
           importRuntimeFeature("patch-effect");
         }
       });
+      // Bound-registration fills need the bind patchers: declared function
+      // values, handler-named relays, and called fill reads. A template
+      // whose fills can never carry a callable skips them (an unshipped
+      // patcher rejects the frame into navigation, never a broken bind).
+      if (hasFills && !boundFills) {
+        t.traverseFast(program.node, (n) => {
+          if (boundFills) return;
+          if (t.isCallExpression(n) || t.isOptionalCallExpression(n)) {
+            const extra = n.callee.extra;
+            boundFills = some(
+              extra?.read?.binding ?? extra?.referencedBindings,
+              isPatchFillBinding,
+            );
+          } else if (t.isMarkoAttribute(n) && isEventOrChangeHandler(n.name)) {
+            boundFills = some(
+              n.value.extra?.referencedBindings,
+              isPatchFillBinding,
+            );
+          }
+        });
+      }
+      if (boundFills) {
+        importRuntimeFeature("patch-value-bind");
+      }
 
       const written = writeSignals(section);
       writeRegisteredFns();

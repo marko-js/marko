@@ -135,12 +135,15 @@ export interface Binding {
   /** A root param whose value selects rendered structure (branch tests,
    * loop inputs) — transitively through child templates. */
   selectsStructure: boolean;
-  /** Declared as a literal function expression with no bare-identifier
-   * callees inside, so calling it runs only locally created code. */
-  declaresFunction: boolean;
   /** A root param feeding an expression that also reads `$global` —
    * transitively through child templates. */
   globalMixed: boolean;
+  /** Captured inside a registered function: live-scope reads reach it at
+   * any later invocation. */
+  registeredFnCapture: boolean;
+  /** Declared with a literal function value, so its fill can carry a
+   * bound registration. */
+  functionValued: boolean;
   /** Interned per-prop serialize reason keys, keyed by accessor prefix
    * (`undefined` is the plain binding key). */
   serializePropKeys:
@@ -274,8 +277,9 @@ export function createBinding(
     exposed: false,
     forcePersist: false,
     selectsStructure: false,
-    declaresFunction: false,
     globalMixed: false,
+    registeredFnCapture: false,
+    functionValued: false,
     serializePropKeys: undefined,
     reserveSize: 0,
   };
@@ -1365,6 +1369,9 @@ export function finalizeReferences() {
       for (const fn of exprFnReads.keys()) {
         if (fn.registerReason) {
           forEach(fn.referencedBindingsInFunction, (binding) => {
+            // A registered factory reads this capture from its live scope
+            // whenever it is invoked, so patches must keep the slot fresh.
+            binding.registeredFnCapture = true;
             addSerializeReason(binding.section, fn.registerReason, binding);
             if (binding.section !== fn.section) {
               addOwnerSerializeReason(

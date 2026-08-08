@@ -1,7 +1,8 @@
+<const/mk=() => input.title/>
 <let/open=false/>
 <main>
   <if=open>
-    <const/fn=input.fn/>
+    <const/fn=mk/>
     <p>${fn()}</p>
   </if>
   <button onClick() { open = !open }>+</button>

@@ -255,6 +255,18 @@ export function isPatchFillBinding(binding: Binding) {
   return false;
 }
 
+// A registered-function capture the signal graph never renders: no fill
+// or effect re-runs it, but a re-bound factory reads its live slot at any
+// later call — the wire writes the accessor (`w`) to keep it current.
+export function isPatchCaptureWriteBinding(binding: Binding) {
+  return (
+    binding.registeredFnCapture &&
+    isPatchRefreshableBinding(binding) &&
+    !isPatchFillBinding(binding) &&
+    !isPatchEffectBinding(binding)
+  );
+}
+
 // An effect-read value with no client-state intersection: nothing in the
 // signal graph consumes it, so no fill registers — the wire writes the
 // accessor (`w`) and re-runs readers by register id (`e`) instead.
@@ -330,7 +342,8 @@ export function hasUnfillablePatchReads(refs: Opt<Binding>) {
     (binding) =>
       !!getSerializeSourcesForRef(binding)?.param &&
       !isPatchFillBinding(binding) &&
-      !isPatchEffectBinding(binding),
+      !isPatchEffectBinding(binding) &&
+      !isPatchCaptureWriteBinding(binding),
   );
 }
 
