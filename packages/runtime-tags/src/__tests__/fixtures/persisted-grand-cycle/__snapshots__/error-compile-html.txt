@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-grand-cycle/template.marko:4:5
+      2 | <main>
+      3 |   <if=show>
+    > 4 |     <cyc-a/>
+        |     ^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure renders a template cycle.
+      5 |   </if>
+      6 |   <button onClick() { show = !show }>t</button>
+      7 | </main>
