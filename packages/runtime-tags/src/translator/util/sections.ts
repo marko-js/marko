@@ -144,9 +144,9 @@ export interface Section {
   /** Branch body of a client-owned conditional (recorded at persisted
    * finalize): patch renders skip it and frames omit its entry. */
   isClientOwnedStructure: true | undefined;
-  /** Renders content the compile cannot see into (a fed renderer), so a
-   * patch of this section cannot apply faithfully. */
-  hasOpaqueRender: true | undefined;
+  /** Renderer expressions this section renders (fed content): a patch of
+   * this section only applies faithfully while they are nullish. */
+  opaqueRenders: t.Expression[] | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -231,7 +231,7 @@ export function startSection(
       readsOwner: false,
       isBranch: false,
       isClientOwnedStructure: undefined,
-      hasOpaqueRender: undefined,
+      opaqueRenders: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     sections.push(section);
