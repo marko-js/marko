@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let { cart } = cart_state_default({});
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_$pattern/var");
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_$pattern#4/var");
 	const hasHydrate = cart !== null;
 	_html("<header><div>");
 	_await($scope0_id, "#text/2", resolveAfter([

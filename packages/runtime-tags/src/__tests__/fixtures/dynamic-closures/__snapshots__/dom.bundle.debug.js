@@ -28,7 +28,7 @@ const $customtag_content__setup = ($scope) => {
 	_text($scope["#text/0"], a);
 };
 const $customtag_content__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope["#text/2"], $scope._.c));
-const $customtag_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<!> <!> <!>", "%c%c%", $customtag_content__setup);
+const $customtag_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!> <!> <!>", "%c%c%", $customtag_content__setup);
 const $b = /*@__PURE__*/ _const("b");
 const $c__closure = /*@__PURE__*/ _closure($customtag_content__c, $if_content2__c);
 const $c = /*@__PURE__*/ _let("c/4", $c__closure);

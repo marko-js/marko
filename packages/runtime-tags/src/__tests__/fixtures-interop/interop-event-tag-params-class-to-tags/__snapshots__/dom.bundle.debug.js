@@ -47,7 +47,7 @@ const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__onBump($scope, $params2[1]);
 };
 const $classlayout_content__onBump = /*@__PURE__*/ _const("onBump");
-const $classlayout_content = _content_resume("__tests__/template.marko_1_content", "<button id=tags> </button>", " D ", $classlayout_content__setup, $classlayout_content__$params);
+const $classlayout_content = _content_resume("__tests__/template.marko_1*content", "<button id=tags> </button>", " D ", $classlayout_content__setup, $classlayout_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $classlayout_content);
 function $setup($scope) {
 	$dynamicTag($scope, _marko_template);

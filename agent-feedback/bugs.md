@@ -92,12 +92,6 @@ The inline trigger script for `with { load: "visible…" | "on-…" }` resolves 
 
 Two lookups drop translator-emitted debug info. (1) `writeObjectProps` passes the escaped key (`toObjectKey(key)`) as the `Reference` accessor while `debug.vars` is keyed by the raw accessor from `writeHTMLResumeStatements` (`translator/util/signals.ts`), so `#LoopKey` never matches and prints double-quoted. (2) `while (ref?.accessor)` stops at the null-accessor `Reference` that `writeArrayArg`, `writeGenerator`, and `writeMaybeIterableProps` create for a collection's backing array, so anything inside a Map/Set/generator never reaches the scope `Reference` holding `debug`. Carry the raw key alongside the escaped one, and keep walking past null accessors. Re-verify with `node -r ~ts`: after `setDebugInfo(scope, "page.marko", "2:6", { selected: ["selected","2:6"] })`, serializing `{selected: new Set([new Thing()])}` aborts with `Unable to serialize (reading [0])` while the plain-array form reports `"selected" in page.marko:2:6`.
 
-## Make `buildResumeRegisterKey` unambiguous — `_`-joined binding names collide and break resume
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `buildResumeRegisterKey` | 2026-07-23 | impact:med | effort:med
-
-The key is `${section.id}` plus `_${name}` per referenced binding — no separator a name cannot contain, no namespace per registration kind — so different registrations in one section hash to the same `getResumeRegisterId`. Three collisions compile today: `<div/a/><div/b/>` yields two `_el("…_0_#div", …)`; an intersection `[a, b]` and a binding named `a_b` both yield `…_0_a_b`; and `getResumeRegisterId(section, "content")` collides with the effect id of a binding named `content` (`_script("…_1_content")` beside `_content_resume("…_1_content")`). Since `_resume` is `registeredValues[id] = obj` the later registration wins, so post-resume an effect silently never runs or two element refs resolve to the same node; CSR is unaffected. Key on binding/intersection numeric ids and namespace the string kinds, then regenerate snapshots. Re-verify: compile `<div/a/><div/b/><const/box={a,b}/>` with `-o dom` — two `_el(` calls share one id.
-
 ## Apply `ToNumeric` when lowering `++`/`--` on a tag variable
 
 `packages/runtime-tags/src/translator/util/signals.ts` › `replaceAssignedNode` | 2026-07-27 | impact:med | effort:med

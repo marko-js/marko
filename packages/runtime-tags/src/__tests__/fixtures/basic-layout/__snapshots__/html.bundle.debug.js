@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $name__closures = new Set();
 	const { name } = input;
-	layout_default({ content: _content("__tests__/template.marko_1_content", () => {
+	layout_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<h1>Hello ${_sep($sg__input_name)}${_escape(name)}${_el_resume($scope1_id, "#text/0", $sg__input_name)}</h1>`);

@@ -50,8 +50,8 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $template = "<button id=tags> </button><!><!>";
 const $walks = " D l%c";
 _resume("__tests__/components/class-list.marko", _marko_template);
-const $item_content2 = _content_resume("__tests__/template.marko_2_content", "<em>second</em>");
-const $item_content = _content_resume("__tests__/template.marko_1_content", "<em>first</em>");
+const $item_content2 = _content_resume("__tests__/template.marko_2*content", "<em>second</em>");
+const $item_content = _content_resume("__tests__/template.marko_1*content", "<em>first</em>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

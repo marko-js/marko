@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc <!></button>";
 const $walks = " Db%l";
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => console.log($scope.n));
+const $n__script = _script("__tests__/template.marko_0_n#2", ($scope) => console.log($scope.n));
 const $n = /*@__PURE__*/ _let("n/2", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__script($scope);

@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		...rest
 	}, "#p/0", $scope0_id, "p");
 	_html(`</p>${_el_resume($scope0_id, "#p/0")}`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_class_rest");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_class#3_rest#4");
 	writeScope($scope0_id, { input_class: input.class }, "__tests__/tags/child.marko", 0, { input_class: ["input.class"] });
 });
 
@@ -41,14 +41,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</div><div id=content-set>");
 	wrap_default({
 		class: "foo",
-		content: _content_resume("__tests__/template.marko_1_content", () => {
+		content: _content_resume("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Hello World");
 		}, $scope0_id)
 	});
 	_html("</div><div id=dynamic>");
-	_dynamic_tag($scope0_id, "#text/3", Wrap, { class: "bar" }, _content_resume("__tests__/template.marko_2_content", () => {
+	_dynamic_tag($scope0_id, "#text/3", Wrap, { class: "bar" }, _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("Hello World");

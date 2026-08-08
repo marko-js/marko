@@ -29,7 +29,7 @@ s("__tests__/components/class-layout.marko", _marko_template);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, _content_resume("__tests__/template.marko_1_content", (count, onBump) => {
+	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, _content_resume("__tests__/template.marko_1*content", (count, onBump) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<button id=tags>${_escape(count)}${_el_resume($scope1_id, "#text/1", _serialize_guard($scope1_reason, 0))}</button>${_el_resume($scope1_id, "#button/0")}`);

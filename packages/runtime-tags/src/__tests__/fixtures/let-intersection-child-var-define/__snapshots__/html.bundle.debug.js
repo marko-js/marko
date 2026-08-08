@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Let = { content: _content("__tests__/template.marko_1_content", () => {
+	const Let = { content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		let internal = 0;
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}) };
 	const $childScope = _peek_scope_id();
 	let a = Let.content({});
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_a/var");
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_a#4/var");
 	let b = 0;
 	_html(`<button>${_escape(`${a}`)},${_escape(`${b}`)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

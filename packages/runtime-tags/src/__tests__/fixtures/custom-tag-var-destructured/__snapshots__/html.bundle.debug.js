@@ -24,11 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let { countChange: $countChange, count, inc, missing: $missing } = child_default({});
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_$pattern/var");
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_$pattern#6/var");
 	const missing = void 0 !== $missing ? $missing : "fallback";
 	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/2")}<button class=assign>assign</button>${_el_resume($scope0_id, "#button/3")}<div>${_escape(count)}${_el_resume($scope0_id, "#text/4")}:<!>${_escape(missing)}${_el_resume($scope0_id, "#text/5")}</div>`);
-	_script($scope0_id, "__tests__/template.marko_0_count_$countChange");
-	_script($scope0_id, "__tests__/template.marko_0_inc");
+	_script($scope0_id, "__tests__/template.marko_0_count#7_$countChange#8");
+	_script($scope0_id, "__tests__/template.marko_0_inc#10");
 	writeScope($scope0_id, {
 		count,
 		$countChange,

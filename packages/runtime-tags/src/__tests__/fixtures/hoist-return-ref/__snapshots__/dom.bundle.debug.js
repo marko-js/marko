@@ -2,7 +2,7 @@
 const $template$2 = "<div></div>";
 const $walks$2 = " b";
 const $setup$2 = () => {};
-const $input__script = _script("__tests__/tags/child.marko_0_input", ($scope) => _el_read($scope["#div/0"]).innerHTML = $scope.input.y());
+const $input__script = _script("__tests__/tags/child.marko_0_input#2", ($scope) => _el_read($scope["#div/0"]).innerHTML = $scope.input.y());
 const $input = /*@__PURE__*/ _const("input", $input__script);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, " b", $setup$2, $input);
 
@@ -21,7 +21,7 @@ var source_default = /*@__PURE__*/ _template("__tests__/tags/source.marko", "", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, "");
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&0${_w1}&`)(" b", "");
-const $x_getter = _hoist_resume("__tests__/template.marko_0_x/hoist", "x");
+const $x_getter = _hoist_resume("__tests__/template.marko_0_x#3/hoist", "x");
 function $setup($scope) {
 	$input($scope["#childScope/0"], { y: $x_getter($scope) });
 	_var($scope, "#childScope/1", $x);

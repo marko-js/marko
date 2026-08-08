@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		phase = 0;
 	}, "__tests__/template.marko_0/attrs3", $scope0_id) };
 	_html(`<div${_attrs(attrs, "#div/0", $scope0_id, "div")}>${_escape(phase)}${_el_resume($scope0_id, "#text/1")}:<!>${_escape(log)}${_el_resume($scope0_id, "#text/2")}</div>${_el_resume($scope0_id, "#div/0")}`);
-	_script($scope0_id, "__tests__/template.marko_0_attrs");
+	_script($scope0_id, "__tests__/template.marko_0_attrs#6");
 	writeScope($scope0_id, {
 		phase,
 		log

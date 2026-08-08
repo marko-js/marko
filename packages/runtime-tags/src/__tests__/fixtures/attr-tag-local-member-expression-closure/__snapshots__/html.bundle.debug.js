@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Child = { content: _content("__tests__/template.marko_1_content", ({ item: items }) => {
+	const Child = { content: _content("__tests__/template.marko_1*content", ({ item: items }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__items = _serialize_guard($scope1_reason, 0), $si__items = _serialize_if($scope1_reason, 0);
 		_for_of(items, (item) => {
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		let $item;
 		forOf(texts, (item) => {
-			$item = attrTags($item, { content: _content("__tests__/template.marko_4_content", () => {
+			$item = attrTags($item, { content: _content("__tests__/template.marko_4*content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html(`${_escape(item.text)}${_el_resume($scope4_id, "#text/0")}`);

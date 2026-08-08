@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_html(`<span${_attrs(item, "#span/0", $scope1_id, "span")}>`);
 		_dynamic_tag($scope1_id, "#text/1", desc, {}, 0, 0, $sg__input_foo);
 		_html(`</span>${_el_resume($scope1_id, "#span/0")}`);
-		_script($scope1_id, "__tests__/tags/child.marko_1_item");
+		_script($scope1_id, "__tests__/tags/child.marko_1_item#5");
 		writeScope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_foo, $sg__input_foo, $sg__input_foo, 0, 1);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
@@ -24,7 +24,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", _class ? "span" : "div", {
 		...rest,
 		class: _class
-	}, _content_resume("__tests__/tags/wrap.marko_1_content", () => {
+	}, _content_resume("__tests__/tags/wrap.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_set_serialize_reason(_serialize_guard($scope0_reason, 1));
@@ -64,14 +64,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		...input,
 		foo: attrTags(attrTag({
 			value: 1,
-			desc: attrTag({ content: _content_resume("__tests__/template.marko_1_content", () => {
+			desc: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html("One");
 			}, $scope0_id) })
 		}), {
 			value: 1,
-			desc: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
+			desc: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("Two");

@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Wrap = { content: _content("__tests__/template.marko_1_content", ([$a, b]) => {
+	const Wrap = { content: _content("__tests__/template.marko_1*content", ([$a, b]) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__b = _serialize_guard($scope1_reason, 2);
 		const a = void 0 !== $a ? $a : 1;

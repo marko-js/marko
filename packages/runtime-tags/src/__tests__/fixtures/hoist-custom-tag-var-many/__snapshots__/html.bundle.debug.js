@@ -12,7 +12,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $setHtml3_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml3/hoist");
+	const $setHtml3_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml3#2/hoist");
 	_for_to(5, 0, 1, () => {
 		const $scope1_id = _scope_id();
 		let setHtml = child_default({});

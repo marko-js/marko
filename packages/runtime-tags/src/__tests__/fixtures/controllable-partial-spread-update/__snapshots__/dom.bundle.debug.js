@@ -5,7 +5,7 @@ const $v = /*@__PURE__*/ _let("v/3", ($scope) => {
 	_attr_input_value($scope, "#input/1", $scope.v, $valueChange($scope));
 	_text($scope["#text/2"], $scope.v);
 });
-const $rest__script = _script("__tests__/template.marko_0_rest", ($scope) => _attrs_script($scope, "#input/1"));
+const $rest__script = _script("__tests__/template.marko_0_rest#4", ($scope) => _attrs_script($scope, "#input/1"));
 const $rest = /*@__PURE__*/ _let("rest/4", ($scope) => {
 	_attrs_partial($scope, "#input/1", $scope.rest, {
 		value: 1,

@@ -11,14 +11,14 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $ref_getter = _hoist($scope0_id, "__tests__/template.marko_0_ref/hoist");
+	const $ref_getter = _hoist($scope0_id, "__tests__/template.marko_0_ref#3/hoist");
 	_html(`<pre id=root></pre>${_el_resume($scope0_id, "#pre/0")}<pre id=outer></pre>${_el_resume($scope0_id, "#pre/1")}<pre id=inner></pre>${_el_resume($scope0_id, "#pre/2")}`);
 	_for_to(2, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
-		const $for_content__ref_getter = _hoist($scope1_id, "__tests__/template.marko_1_ref/hoist");
+		const $for_content__ref_getter = _hoist($scope1_id, "__tests__/template.marko_1_ref#3/hoist");
 		_for_to(2, 0, 1, (j) => {
 			const $scope2_id = _scope_id();
-			const $for_content2__ref_getter = _hoist($scope2_id, "__tests__/template.marko_2_ref/hoist");
+			const $for_content2__ref_getter = _hoist($scope2_id, "__tests__/template.marko_2_ref#3/hoist");
 			let ref = child_default({ value: `${i},${j}` });
 			_script($scope2_id, "__tests__/template.marko_2");
 			writeScope($scope2_id, {

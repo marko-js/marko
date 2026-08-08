@@ -17,10 +17,10 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}&`)($walks$1);
-const $child_content__setHtml__script = _script("__tests__/template.marko_1_setHtml", ($scope) => _assert_init($scope._, "setHtml")("Hello world"));
+const $child_content__setHtml__script = _script("__tests__/template.marko_1_setHtml#2", ($scope) => _assert_init($scope._, "setHtml")("Hello world"));
 const $child_content__setHtml = /*@__PURE__*/ _closure_get("setHtml", $child_content__setHtml__script);
 const $child_content__setup = $child_content__setHtml;
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", 0, 0, $child_content__setup);
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", 0, 0, $child_content__setup);
 const $setHtml = /*@__PURE__*/ _const("setHtml");
 function $setup($scope) {
 	_var($scope, "#childScope/0", $setHtml);

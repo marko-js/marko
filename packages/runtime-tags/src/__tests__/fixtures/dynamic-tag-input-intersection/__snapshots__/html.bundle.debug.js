@@ -3,7 +3,7 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { as: inputAs, class: inputClass, content: inputContent, ...htmlInput } = input;
-	const startContent = { content: _content("__tests__/tags/my-tag.marko_1_content", () => {
+	const startContent = { content: _content("__tests__/tags/my-tag.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("default");
@@ -14,7 +14,7 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 		class: ["foo", inputClass],
 		content
 	});
-	_script($scope0_id, "__tests__/tags/my-tag.marko_0_inputContent");
+	_script($scope0_id, "__tests__/tags/my-tag.marko_0_inputContent#5");
 	writeScope($scope0_id, {
 		inputAs,
 		inputClass,
@@ -35,14 +35,14 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	my_tag_default({ content: _content_resume("__tests__/template.marko_1_content", () => {
+	my_tag_default({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("Div");
 	}, $scope0_id) });
 	my_tag_default({
 		as: "span",
-		content: _content_resume("__tests__/template.marko_2_content", () => {
+		content: _content_resume("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("Span");

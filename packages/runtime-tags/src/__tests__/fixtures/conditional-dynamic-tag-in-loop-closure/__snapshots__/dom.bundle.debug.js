@@ -21,7 +21,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $section_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
 const $section_content__setup = $section_content__count;
-const $section_content = _content_resume("__tests__/template.marko_1_content", " ", " ", $section_content__setup);
+const $section_content = _content_resume("__tests__/template.marko_1*content", " ", " ", $section_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($section_content__count);
 const $count = /*@__PURE__*/ _let("count/1", ($scope) => {
 	$input_section($scope["#childScope/0"], attrTag({

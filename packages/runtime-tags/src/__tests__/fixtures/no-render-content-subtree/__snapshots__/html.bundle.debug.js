@@ -12,8 +12,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let x = my_const_default({ value: input.foo });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/child.marko_0_x/var");
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_x");
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/child.marko_0_x#5/var");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input#3_x#5");
 	writeScope($scope0_id, {
 		input,
 		x,
@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const output = _el($scope0_id, "__tests__/template.marko_0_#div");
+	const output = _el($scope0_id, "__tests__/template.marko_0_#div#0");
 	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	_if(() => {
 		if (input.show) {

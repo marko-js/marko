@@ -3,7 +3,7 @@ const $Child_content__walks = "D lD l", $Child_content__template = "<div> </div>
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks);
 const $setup = () => {};
-const $Child_content__a__script = _script("__tests__/template.marko_1_a", ($scope) => {
+const $Child_content__a__script = _script("__tests__/template.marko_1_a#8", ($scope) => {
 	if ($scope.input_a !== "a") throw new Error("did not serialize a");
 });
 const $Child_content__a = ($scope) => {
@@ -11,7 +11,7 @@ const $Child_content__a = ($scope) => {
 	$Child_content__a__script($scope);
 };
 const $Child_content__b = ($scope, b) => _text($scope["#text/1"], b);
-const $Child_content__input_a__script = _script("__tests__/template.marko_1_input_a", ($scope) => {
+const $Child_content__input_a__script = _script("__tests__/template.marko_1_input_a#4", ($scope) => {
 	if ($scope.input_a !== "a") throw new Error("did not serialize input.a");
 });
 const $Child_content__input_a = /*@__PURE__*/ _const("input_a", ($scope) => {

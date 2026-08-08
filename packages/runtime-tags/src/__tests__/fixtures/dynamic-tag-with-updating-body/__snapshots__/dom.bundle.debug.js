@@ -17,7 +17,7 @@ const $walks = "b%b b";
 const $tagName_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
-const $tagName_content = _content_resume("__tests__/template.marko_1_content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $tagName_content__setup);
+const $tagName_content = _content_resume("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $tagName_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagName_content);
 const $tagName = /*@__PURE__*/ _let("tagName/2", ($scope) => $dynamicTag($scope, $scope.tagName));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

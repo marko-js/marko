@@ -8,12 +8,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_try($scope1_id, "#text/0", _content_resume("__tests__/template.marko_2_content", () => {
+			_try($scope1_id, "#text/0", _content_resume("__tests__/template.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_await($scope2_id, "#text/0", resolveAfter(0, 1), () => {
 					const $scope3_id = _scope_id();
-					_script($scope3_id, "__tests__/template.marko_3_show/pending");
+					_script($scope3_id, "__tests__/template.marko_3_show#2/pending");
 					_html(`${_escape(show)}${_el_resume($scope3_id, "#text/0")}`);
 					_script($scope3_id, "__tests__/template.marko_3");
 					writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:5");
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_resume_branch($scope5_id);
 				}, 0);
 				writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:3");
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4_content", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4*content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("loading...");

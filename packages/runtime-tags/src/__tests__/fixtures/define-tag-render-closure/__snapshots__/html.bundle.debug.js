@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $x__closures = new Set();
 	let x = 1;
-	const MyTag = { content: _content("__tests__/template.marko_1_content", () => {
+	const MyTag = { content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<div>${_escape(x)}${_el_resume($scope1_id, "#text/0")}</div>`);

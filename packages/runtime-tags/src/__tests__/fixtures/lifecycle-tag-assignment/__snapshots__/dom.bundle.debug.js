@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div>x=<span> </span>, was=<!></div><button id=increment>Increment</button>";
 const $walks = "DbD lb%l b";
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _lifecycle($scope, {
+const $x__script = _script("__tests__/template.marko_0_x#3", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		this.cur = $scope.x;
 	},

@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = false;
-	const Layout = { content: _content("__tests__/template.marko_1_content", ({ content }) => {
+	const Layout = { content: _content("__tests__/template.marko_1*content", ({ content }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html("<section>");
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope2_id = _scope_id();
-			Layout.content({ content: _content("__tests__/template.marko_3_content", () => {
+			Layout.content({ content: _content("__tests__/template.marko_3*content", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html("shown content");

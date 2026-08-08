@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	let log = "";
 	_html(`<button class=bump>bump</button>${_el_resume($scope0_id, "#button/0")}<button class=snap>snap</button>${_el_resume($scope0_id, "#button/1")}<div class=n>${_escape(n)}${_el_resume($scope0_id, "#text/2")}</div><div class=log>${_escape(log)}${_el_resume($scope0_id, "#text/3")}</div>`);
-	_script($scope0_id, "__tests__/template.marko_0_n_log");
+	_script($scope0_id, "__tests__/template.marko_0_n#4_log#5");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		n,

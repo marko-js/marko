@@ -14,11 +14,11 @@ var list_default = _template("__tests__/tags/list/index.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	list_default({ item: attrTags(attrTag({ content: _content("__tests__/template.marko_1_content", () => {
+	list_default({ item: attrTags(attrTag({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("Hello");
-	}) }), { content: _content("__tests__/template.marko_2_content", () => {
+	}) }), { content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("Again");

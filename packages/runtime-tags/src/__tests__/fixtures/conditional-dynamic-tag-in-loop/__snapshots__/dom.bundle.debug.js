@@ -19,8 +19,8 @@ var sections_default = /*@__PURE__*/ _template("__tests__/tags/sections.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $section_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<div>that never changes</div>");
-const $section_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<div>static content</div>");
+const $section_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<div>that never changes</div>");
+const $section_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<div>static content</div>");
 function $setup($scope) {
 	$input_section($scope["#childScope/0"], attrTags(attrTag({ content: $section_content($scope) }), { content: $section_content2($scope) }));
 }

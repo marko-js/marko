@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div>a</div><span>b</span><p>c</p>");
-	_script($scope0_id, "__tests__/tags/child.marko_0_input");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input#1");
 	writeScope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 });
 	_resume_branch($scope0_id);
 });

@@ -29,5 +29,5 @@ function $setup($scope) {
 	$input_extra($scope["#childScope/0"], 1);
 	$name($scope, "Marko");
 }
-const $data = _var_resume("__tests__/template.marko_0_data/var", /*@__PURE__*/ _const("data", $name__OR__data));
+const $data = _var_resume("__tests__/template.marko_0_data#4/var", /*@__PURE__*/ _const("data", $name__OR__data));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

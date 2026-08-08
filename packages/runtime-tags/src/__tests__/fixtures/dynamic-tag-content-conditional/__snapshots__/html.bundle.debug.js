@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			inner_default({ content: _content("__tests__/template.marko_2_content", () => {
+			inner_default({ content: _content("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("shown content");

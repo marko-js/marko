@@ -16,7 +16,7 @@ const $for_content__item_id = /*@__PURE__*/ _const("item_id", ($scope) => {
 	$else_content__item_id($scope);
 });
 const $for = /*@__PURE__*/ _for_of("#div/0", "<!><!><!>", "b%", 0, $for_content__$params);
-const $list_2__OR__list_0__OR__list___script = _script("__tests__/template.marko_0_list_2_list_0_list_1", ($scope) => _on($scope["#button/1"], "click", function() {
+const $list_2__OR__list_0__OR__list___script = _script("__tests__/template.marko_0_list_2#3_list_0#4_list_1#5", ($scope) => _on($scope["#button/1"], "click", function() {
 	$list($scope, [
 		$scope.list_2,
 		$scope.list_0,

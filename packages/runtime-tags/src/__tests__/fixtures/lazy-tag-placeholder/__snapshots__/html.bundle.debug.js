@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = input.value;
-	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1_content", () => {
+	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_set_serialize_reason(1);
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/template.marko", "4:2"));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading...");

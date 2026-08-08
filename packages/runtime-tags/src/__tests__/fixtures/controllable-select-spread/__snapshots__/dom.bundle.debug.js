@@ -2,7 +2,7 @@
 const $template$1 = "<select></select>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-const $input__script = _script("__tests__/tags/my-select.marko_0_input", ($scope) => _attrs_script($scope, "#select/0"));
+const $input__script = _script("__tests__/tags/my-select.marko_0_input#2", ($scope) => _attrs_script($scope, "#select/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#select/0", $scope.input, _controllable_select);
 	$input__script($scope);
@@ -12,7 +12,7 @@ var my_select_default = /*@__PURE__*/ _template("__tests__/tags/my-select.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<span> </span>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)(" b");
-const $myselect_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>");
+const $myselect_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>");
 const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 	$input($scope["#childScope/0"], {
 		value: $scope.value,

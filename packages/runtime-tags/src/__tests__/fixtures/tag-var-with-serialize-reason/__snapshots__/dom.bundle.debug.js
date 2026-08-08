@@ -25,5 +25,5 @@ function $setup($scope) {
 	$count($scope, 1);
 	$setup__script($scope);
 }
-const $x = _var_resume("__tests__/template.marko_0_x/var", ($scope, x) => {});
+const $x = _var_resume("__tests__/template.marko_0_x#6/var", ($scope, x) => {});
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

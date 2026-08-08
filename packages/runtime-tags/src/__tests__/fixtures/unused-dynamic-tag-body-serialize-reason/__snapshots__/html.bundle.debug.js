@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Wrap = { content: _content("__tests__/template.marko_1_content", ({ as, onClick, content }) => {
+	const Wrap = { content: _content("__tests__/template.marko_1*content", ({ as, onClick, content }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_dynamic_tag($scope1_id, "#text/0", as, {
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: "1:28"
 		});
 	}) };
-	const Message = { content: _content("__tests__/template.marko_2_content", (input) => {
+	const Message = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(`${_escape(input.before + input.after)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope2_reason, 0))}`);
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onClick: _resume(function() {
 			console.log(x++);
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
-		content: _content_resume("__tests__/template.marko_3_content", () => {
+		content: _content_resume("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			Message.content({

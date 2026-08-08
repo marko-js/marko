@@ -3,7 +3,7 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const count = 123;
-	const Tag = { content: _content("__tests__/tags/test.marko_1_content", (input) => {
+	const Tag = { content: _content("__tests__/tags/test.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__input_x = _serialize_guard($scope1_reason, 0), $si__input_x = _serialize_if($scope1_reason, 0);
 		_if(() => {

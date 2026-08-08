@@ -14,7 +14,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = () => {};
-const $input_value__script = _script("__tests__/tags/thing.marko_0_input_value", ($scope) => $scope.input_value);
+const $input_value__script = _script("__tests__/tags/thing.marko_0_input_value#2", ($scope) => $scope.input_value);
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__script);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
 var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", "", "", $setup$1, $input$1);
@@ -36,7 +36,7 @@ const $if_content3__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content3__setHtml);
 	$setup$2($scope["#childScope/0"]);
 };
-const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml/hoist", "setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0");
+const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2/hoist", "setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 const $if_content2__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content2__setHtml);

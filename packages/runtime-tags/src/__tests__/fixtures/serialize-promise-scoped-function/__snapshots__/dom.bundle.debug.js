@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc:<!></button><div id=ref>0</div>";
 const $walks = " Db%lb";
-const $promise__script = _script("__tests__/template.marko_0_promise", ($scope) => (async () => {
+const $promise__script = _script("__tests__/template.marko_0_promise#4", ($scope) => (async () => {
 	document.getElementById("ref").textContent = String((await $scope.promise)());
 })());
 const $promise = /*@__PURE__*/ _const("promise", $promise__script);

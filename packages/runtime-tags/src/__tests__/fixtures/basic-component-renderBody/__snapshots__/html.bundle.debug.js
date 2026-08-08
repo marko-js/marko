@@ -6,7 +6,7 @@ var my_button_default = _template("__tests__/tags/my-button.marko", (input) => {
 	_html("<button>");
 	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/tags/my-button.marko_0_onClick");
+	_script($scope0_id, "__tests__/tags/my-button.marko_0_onClick#4");
 	writeScope($scope0_id, { onClick }, "__tests__/tags/my-button.marko", 0, { onClick: "1:10" });
 });
 
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onClick: _resume(function() {
 			clickCount++;
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
-		content: _content("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(clickCount)}${_el_resume($scope1_id, "#text/0")}`);

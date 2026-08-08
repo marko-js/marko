@@ -27,7 +27,7 @@ var consumer_default = _template("__tests__/tags/consumer.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	consumer_default({ content: _content_resume("__tests__/template.marko_1_content", () => {
+	consumer_default({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("<div>static content</div>");

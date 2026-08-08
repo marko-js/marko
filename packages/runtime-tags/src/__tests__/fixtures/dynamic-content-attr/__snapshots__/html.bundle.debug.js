@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
-	const MyThing = { content: _content_resume("__tests__/template.marko_1_content", () => {
+	const MyThing = { content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`${_escape(count)}${_el_resume($scope1_id, "#text/0")} ${_escape(sideEffect++)}`);

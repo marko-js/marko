@@ -30,8 +30,8 @@ function $setup($scope) {
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
 	$count($scope, 0);
 }
-const $setCount__script = _script("__tests__/template.marko_0_setCount", ($scope) => $scope.setCount());
-const $setCount = _var_resume("__tests__/template.marko_0_setCount/var", /*@__PURE__*/ _const("setCount", $setCount__script));
+const $setCount__script = _script("__tests__/template.marko_0_setCount#4", ($scope) => $scope.setCount());
+const $setCount = _var_resume("__tests__/template.marko_0_setCount#4/var", /*@__PURE__*/ _const("setCount", $setCount__script));
 function $valueChange($scope) {
 	return (_new_count) => {
 		$count($scope, _new_count);

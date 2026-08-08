@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<div><svg><!><!></svg><math><!><!></math><!><button class=toggle-parent>Toggle Parent</button><button class=toggle-child>Toggle Child</button></div>";
 const $walks = " E%b%lD%b%l%b b l";
-const $Child_content2 = _content_resume("__tests__/template.marko_3_content", "Hi");
-const $Child_content = _content_resume("__tests__/template.marko_2_content", "Hi");
+const $Child_content2 = _content_resume("__tests__/template.marko_3*content", "Hi");
+const $Child_content = _content_resume("__tests__/template.marko_2*content", "Hi");
 const $Parent_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => _html($scope, $scope._.input_value, "#text/0"));
 const $Parent_content__setup = $Parent_content__input_value;
-const $Parent_content = _content_resume("__tests__/template.marko_1_content", " ", " ", $Parent_content__setup);
+const $Parent_content = _content_resume("__tests__/template.marko_1*content", " ", " ", $Parent_content__setup);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/5", $Parent_content);
-const $Parent__OR__Child__script = _script("__tests__/template.marko_0_Parent_Child", ($scope) => {
+const $Parent__OR__Child__script = _script("__tests__/template.marko_0_Parent#11_Child#12", ($scope) => {
 	$scope.Parent;
 	$scope.Child;
 	for (const node of _el_read($scope["#div/0"]).querySelectorAll("a")) {

@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	const MyTag = { content: _content("__tests__/template.marko_1_content", ({ number }) => {
+	const MyTag = { content: _content("__tests__/template.marko_1*content", ({ number }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<div>${_escape(number)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 0))}</div>`);

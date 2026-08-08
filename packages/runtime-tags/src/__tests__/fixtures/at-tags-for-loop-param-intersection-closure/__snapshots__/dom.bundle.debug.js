@@ -16,7 +16,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& Db%l`)("b%c");
 const $item_content__mult__OR__item = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope.item * $scope._.mult));
 const $item_content__mult = /*@__PURE__*/ _closure_get("mult", $item_content__mult__OR__item);
 const $item_content__setup = $item_content__mult;
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " ", $item_content__setup), { item: $item_content__mult__OR__item });
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $item_content__setup), { item: $item_content__mult__OR__item });
 const $mult__closure = /*@__PURE__*/ _closure($item_content__mult);
 const $mult = /*@__PURE__*/ _let("mult/3", ($scope) => {
 	_text($scope["#text/2"], $scope.mult);

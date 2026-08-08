@@ -2,8 +2,8 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
-const $placeholder_content = _content_resume("__tests__/tags/recurse.marko_4_content", "LOADING...");
-const $await_content__input_level = /*@__PURE__*/ _closure_get("input_level", ($scope) => $input_level($scope["#childScope/0"], $scope._._._.input_level - 1), ($scope) => $scope._._._, "__tests__/tags/recurse.marko_3_input_level/pending");
+const $placeholder_content = _content_resume("__tests__/tags/recurse.marko_4*content", "LOADING...");
+const $await_content__input_level = /*@__PURE__*/ _closure_get("input_level", ($scope) => $input_level($scope["#childScope/0"], $scope._._._.input_level - 1), ($scope) => $scope._._._, "__tests__/tags/recurse.marko_3_input_level#3/pending");
 const $await_content__setup = $await_content__input_level;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");

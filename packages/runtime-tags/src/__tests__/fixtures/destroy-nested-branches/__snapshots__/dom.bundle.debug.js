@@ -2,7 +2,7 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $name__script = _script("__tests__/tags/child.marko_0_name", ($scope) => {
+const $name__script = _script("__tests__/tags/child.marko_0_name#3", ($scope) => {
 	_lifecycle($scope, { onDestroy: function() {
 		console.log(`lifecycle ${$scope.name} destroyed`);
 	} });

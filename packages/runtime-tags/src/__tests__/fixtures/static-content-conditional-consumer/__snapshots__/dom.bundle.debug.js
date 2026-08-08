@@ -20,7 +20,7 @@ var consumer_default = /*@__PURE__*/ _template("__tests__/tags/consumer.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
-const $consumer_content = _content_resume("__tests__/template.marko_1_content", "<div>static content</div>");
+const $consumer_content = _content_resume("__tests__/template.marko_1*content", "<div>static content</div>");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $consumer_content($scope));

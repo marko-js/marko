@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = () => {};
-const $for_content__item__script = _script("__tests__/tags/child.marko_1_item", ($scope) => _attrs_script($scope, "#span/0"));
+const $for_content__item__script = _script("__tests__/tags/child.marko_1_item#5", ($scope) => _attrs_script($scope, "#span/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	_attrs($scope, "#span/0", $scope.item);
 	$for_content__item__script($scope);
@@ -26,7 +26,7 @@ const $setup$1 = () => {};
 _resume_dynamic_tag();
 const $_classspandiv_content__input_foo = /*@__PURE__*/ _closure_get("input_foo", ($scope) => $foo($scope["#childScope/0"], $scope._.input_foo));
 const $_classspandiv_content__setup = $_classspandiv_content__input_foo;
-const $_classspandiv_content = _content_resume("__tests__/tags/wrap.marko_1_content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__setup);
+const $_classspandiv_content = _content_resume("__tests__/tags/wrap.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $_classspandiv_content);
 const $input_class__OR__rest = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope._class ? "span" : "div", () => ({
 	...$scope.rest,
@@ -46,8 +46,8 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)("b%c");
-const $desc_content2 = _content_resume("__tests__/template.marko_2_content", "Two");
-const $desc_content = _content_resume("__tests__/template.marko_1_content", "One");
+const $desc_content2 = _content_resume("__tests__/template.marko_2*content", "Two");
+const $desc_content = _content_resume("__tests__/template.marko_1*content", "One");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_foo($scope["#childScope/0"], attrTags(attrTag({

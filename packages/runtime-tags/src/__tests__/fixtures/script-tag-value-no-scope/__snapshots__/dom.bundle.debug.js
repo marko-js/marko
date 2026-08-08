@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $setText2__script = _script("__tests__/template.marko_0_setText", ($scope) => $scope.setText());
+const $setText2__script = _script("__tests__/template.marko_0_setText#1", ($scope) => $scope.setText());
 const $setText2 = /*@__PURE__*/ _const("setText", $setText2__script);
 function $setup($scope) {
 	$setText2($scope, $setText($scope));

@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $si__input_value = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $hoist1_getter = _hoist($scope0_id, "__tests__/template.marko_0_hoist1/hoist");
+	const $hoist1_getter = _hoist($scope0_id, "__tests__/template.marko_0_hoist1#4/hoist");
 	const $input_value__closures = new Set();
 	const x = $hoist1_getter;
 	const hoist1 = _resume(() => input.value, "__tests__/template.marko_0/hoist", $scope0_id);
@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (1) {
 					const $scope2_id = _scope_id();
-					const $if_content2__hoist3_getter = _hoist($scope2_id, "__tests__/template.marko_2_hoist3/hoist");
+					const $if_content2__hoist3_getter = _hoist($scope2_id, "__tests__/template.marko_2_hoist3#0/hoist");
 					const z = $if_content2__hoist3_getter;
 					const hoist3 = _resume(() => input.value, "__tests__/template.marko_2/hoist2", $scope2_id);
 					_subscribe($si__input_value && $input_value__closures, writeScope($scope2_id, {

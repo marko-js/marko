@@ -2,9 +2,9 @@
 const $template = "<!><!><!><!><div> </div>";
 const $walks = "b%b%b%bD l";
 _resume_dynamic_tag();
-const $inputtag_content3 = _content_resume("__tests__/template.marko_3_content", "aliased");
-const $inputtag_content2 = _content_resume("__tests__/template.marko_2_content", "inline");
-const $inputtag_content = _content_resume("__tests__/template.marko_1_content", "spread");
+const $inputtag_content3 = _content_resume("__tests__/template.marko_3*content", "aliased");
+const $inputtag_content2 = _content_resume("__tests__/template.marko_2*content", "inline");
+const $inputtag_content = _content_resume("__tests__/template.marko_1*content", "spread");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtag_content);
 const $input_tag__OR__attrs = /*@__PURE__*/ _or(10, ($scope) => $dynamicTag($scope, $scope.input_tag, () => ({
 	...$scope.attrs,

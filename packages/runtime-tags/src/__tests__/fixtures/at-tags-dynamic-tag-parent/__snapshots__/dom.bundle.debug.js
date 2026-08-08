@@ -32,9 +32,9 @@ var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", 
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const x = hello_default;
-const $footer_content = _content_resume("__tests__/template.marko_3_content", "Footer content");
-const $header_content = _content_resume("__tests__/template.marko_2_content", "Header content");
-const $x_content = _content_resume("__tests__/template.marko_1_content", "Body content");
+const $footer_content = _content_resume("__tests__/template.marko_3*content", "Footer content");
+const $header_content = _content_resume("__tests__/template.marko_2*content", "Header content");
+const $x_content = _content_resume("__tests__/template.marko_1*content", "Body content");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $x_content);
 function $setup($scope) {
 	$dynamicTag($scope, x, () => ({

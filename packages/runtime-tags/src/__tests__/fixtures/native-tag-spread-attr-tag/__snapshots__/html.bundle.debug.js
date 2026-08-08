@@ -7,8 +7,8 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_html(`</section>${_el_resume($scope0_id, "#section/0")}<footer`);
 	_attrs_content(input.foot, "#footer/1", $scope0_id, "footer");
 	_html(`</footer>${_el_resume($scope0_id, "#footer/1")}`);
-	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_foot");
-	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_head");
+	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_foot#5");
+	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_head#4");
 	writeScope($scope0_id, {}, "__tests__/tags/my-box.marko", 0);
 });
 
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	my_box_default({
 		head: attrTag({
 			id: "h",
-			content: _content("__tests__/template.marko_1_content", () => {
+			content: _content("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				let n = 0;

@@ -2,7 +2,7 @@
 const $template = "<script type=magic>\n  A\n<\/script><script type=magic nonce=override>\n  B\n<\/script><script>\n  C\n<\/script><!><!>";
 const $walks = " c b%c";
 const $if_content__setup = ($scope) => _attr_nonce($scope, "#script/0");
-const $spreadAttrs__script = _script("__tests__/template.marko_0_spreadAttrs", ($scope) => _attrs_script($scope, "#script/1"));
+const $spreadAttrs__script = _script("__tests__/template.marko_0_spreadAttrs#3", ($scope) => _attrs_script($scope, "#script/1"));
 const $spreadAttrs = /*@__PURE__*/ _const("spreadAttrs", ($scope) => {
 	_attrs($scope, "#script/1", {
 		nonce: $scope.$global.cspNonce,

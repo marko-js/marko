@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const tag = "select";
 	let pick = "b";
-	_dynamic_tag($scope0_id, "#text/0", tag, { value: pick }, _content_resume("__tests__/template.marko_1_content", () => {
+	_dynamic_tag($scope0_id, "#text/0", tag, { value: pick }, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);

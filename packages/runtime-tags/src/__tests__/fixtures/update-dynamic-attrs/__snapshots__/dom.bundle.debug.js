@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div><div></div><div></div>";
 const $walks = " b b b";
-const $input_value__OR__a__script = _script("__tests__/template.marko_0_input_value_a", ($scope) => _attrs_script($scope, "#div/1"));
+const $input_value__OR__a__script = _script("__tests__/template.marko_0_input_value#5_a#6", ($scope) => _attrs_script($scope, "#div/1"));
 const $input_value__OR__a = /*@__PURE__*/ _or(7, ($scope) => {
 	_attrs_content($scope, "#div/1", {
 		a: $scope.a,
@@ -16,7 +16,7 @@ const $a = /*@__PURE__*/ _let("a/6", ($scope) => {
 function $setup($scope) {
 	$a($scope, 0);
 }
-const $input_value__script = _script("__tests__/template.marko_0_input_value", ($scope) => {
+const $input_value__script = _script("__tests__/template.marko_0_input_value#5", ($scope) => {
 	_attrs_script($scope, "#div/0");
 	_attrs_script($scope, "#div/2");
 });

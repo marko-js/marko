@@ -28,13 +28,13 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Clear</button><ul></ul>
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b b`)("");
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $store = _var_resume("__tests__/template.marko_0_store/var", ($scope, store) => {
+const $store = _var_resume("__tests__/template.marko_0_store#4/var", ($scope, store) => {
 	$list($scope, store.list);
 	$clear($scope, store.clear);
 });
 const $for = /*@__PURE__*/ _for_of("#ul/3", "<li> </li>", "D ", 0, $for_content__$params);
 const $list = ($scope, list) => $for($scope, [list]);
-const $clear__script = _script("__tests__/template.marko_0_clear", ($scope) => _on($scope["#button/2"], "click", $scope.clear));
+const $clear__script = _script("__tests__/template.marko_0_clear#6", ($scope) => _on($scope["#button/2"], "click", $scope.clear));
 const $clear = /*@__PURE__*/ _const("clear", $clear__script);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $store);

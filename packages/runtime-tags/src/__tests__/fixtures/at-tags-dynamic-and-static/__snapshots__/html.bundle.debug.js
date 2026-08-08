@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		a: 1,
 		b: 2
 	}, (a, v) => {
-		$item = attrTags($item, { content: _content("__tests__/template.marko_1_content", () => {
+		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(a)}${_el_resume($scope1_id, "#text/0")}:<!>${_escape(v)}${_el_resume($scope1_id, "#text/1")}`);
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	hello_default({
 		item: $item,
-		other: attrTag({ content: _content("__tests__/template.marko_2_content", () => {
+		other: attrTag({ content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("other");

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div><!>:<!></div>";
 const $walks = " D%c%l";
-const $attrs4__script = _script("__tests__/template.marko_0_attrs", ($scope) => _attrs_script($scope, "#div/0"));
+const $attrs4__script = _script("__tests__/template.marko_0_attrs#6", ($scope) => _attrs_script($scope, "#div/0"));
 const $attrs4 = /*@__PURE__*/ _const("attrs", ($scope) => {
 	_attrs($scope, "#div/0", $scope.attrs);
 	$attrs4__script($scope);

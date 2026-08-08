@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>Count: <!>${_escape(x)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $tags0_scope = _peek_scope_id();
 	let y = _dynamic_tag($scope0_id, "#text/2", tags[0], [x], 0, 1);
-	_var($scope0_id, "#scopeOffset/3", $tags0_scope, "__tests__/template.marko_0_y/var");
+	_var($scope0_id, "#scopeOffset/3", $tags0_scope, "__tests__/template.marko_0_y#6/var");
 	_html(`<div>Parent: <!>${_escape(y)}${_el_resume($scope0_id, "#text/4")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "3:6" });

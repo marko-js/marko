@@ -2,13 +2,13 @@
 const $MyButton_content__walks = " c", $MyButton_content__template = "<button></button> ";
 const $template = /*@__PURE__*/ ((_w0) => `<div id=el></div>${_w0}<!>`)($MyButton_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($MyButton_content__walks);
-const $MyButton_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "Click Me");
+const $MyButton_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "Click Me");
 const $MyButton_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	document.getElementById("el").textContent += "[onClick(child)]";
 	$scope.input_onClick();
 }));
 const $MyButton_content__setup = /*@__PURE__*/ _child_setup($MyButton_content__setup__script);
-const $MyButton_content__input__script = _script("__tests__/template.marko_1_input", ($scope) => _attrs_script($scope, "#button/0"));
+const $MyButton_content__input__script = _script("__tests__/template.marko_1_input#2", ($scope) => _attrs_script($scope, "#button/0"));
 const $MyButton_content__input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_partial_content($scope, "#button/0", $scope.input, { "on-click": 1 });
 	$MyButton_content__input_onClick($scope, $scope.input.onClick);

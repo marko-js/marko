@@ -2,7 +2,7 @@
 const $template$1 = "<img>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-const $input__script = _script("__tests__/tags/my-img.marko_0_input", ($scope) => _attrs_script($scope, "#img/0"));
+const $input__script = _script("__tests__/tags/my-img.marko_0_input#2", ($scope) => _attrs_script($scope, "#img/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs($scope, "#img/0", $scope.input);
 	$input__script($scope);

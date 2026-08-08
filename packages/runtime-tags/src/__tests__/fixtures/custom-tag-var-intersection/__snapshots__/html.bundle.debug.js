@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let name = "Marko";
 	const $childScope = _peek_scope_id();
 	let data = child_default({ extra: 1 });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_data/var");
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_data#4/var");
 	const message = `${name} ${data}`;
 	_html(`<div>${_escape(message)}${_el_resume($scope0_id, "#text/2")}</div>`);
 	writeScope($scope0_id, {

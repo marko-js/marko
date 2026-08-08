@@ -2,7 +2,7 @@
 const $template$1 = "<div>a</div><span>b</span><p>c</p>";
 const $walks$1 = "d";
 const $setup$1 = () => {};
-const $input__script = _script("__tests__/tags/child.marko_0_input", ($scope) => {
+const $input__script = _script("__tests__/tags/child.marko_0_input#1", ($scope) => {
 	$scope.input.write("mounted");
 	$signal($scope, 0).onabort = () => {
 		$scope.input.write("destroyed");

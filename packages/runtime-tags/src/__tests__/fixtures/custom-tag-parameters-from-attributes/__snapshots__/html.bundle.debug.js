@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	custom_tag_default({
 		name: "hello",
-		content: _content_resume("__tests__/template.marko_1_content", ({ count, name }) => {
+		content: _content_resume("__tests__/template.marko_1*content", ({ count, name }) => {
 			const $scope1_reason = _scope_reason(), $sg__name = _serialize_guard($scope1_reason, 2), $sg__count = _serialize_guard($scope1_reason, 1);
 			const $scope1_id = _scope_id();
 			_html(`<div>Count (${_sep($sg__name)}${_escape(name)}${_el_resume($scope1_id, "#text/0", $sg__name)}): ${_sep($sg__count)}${_escape(count)}${_el_resume($scope1_id, "#text/1", $sg__count)}</div>`);

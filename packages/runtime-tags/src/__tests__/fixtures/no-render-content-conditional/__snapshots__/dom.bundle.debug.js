@@ -9,12 +9,12 @@ var my_const_default = /*@__PURE__*/ _template("__tests__/tags/my-const.marko", 
 // tags/child.marko
 const $template$1 = "";
 const $walks$1 = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("");
-const $x = _var_resume("__tests__/tags/child.marko_0_x/var", /*@__PURE__*/ _const("x"));
+const $x = _var_resume("__tests__/tags/child.marko_0_x#5/var", /*@__PURE__*/ _const("x"));
 function $setup$1($scope) {
 	_var($scope, "#childScope/0", $x);
 }
 const $input_foo$1 = ($scope, input_foo) => $input_value($scope["#childScope/0"], input_foo);
-const $input__OR__x__script = _script("__tests__/tags/child.marko_0_input_x", ($scope) => $scope.input.output().innerHTML = $scope.x);
+const $input__OR__x__script = _script("__tests__/tags/child.marko_0_input#3_x#5", ($scope) => $scope.input.output().innerHTML = $scope.x);
 const $input__OR__x = $input__OR__x__script;
 const $input$1 = /*@__PURE__*/ _const("input", ($scope) => {
 	$input_foo$1($scope, $scope.input.foo);
@@ -25,7 +25,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($walks$1);
-const $output_getter = _el("__tests__/template.marko_0_#div", "#div/0");
+const $output_getter = _el("__tests__/template.marko_0_#div#0", "#div/0");
 function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
 }

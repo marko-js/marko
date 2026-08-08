@@ -7,11 +7,11 @@ const $await_content__value = ($scope, value) => _text($scope["#text/0"], value 
 const $await_content__$params = ($scope, $params3) => $await_content__value($scope, $params3[0]);
 const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
-const $catch_content = _content_resume("__tests__/template.marko_3_content", " ", " ", 0, $catch_content__$params);
-const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "LOADING...");
+const $catch_content = _content_resume("__tests__/template.marko_3*content", " ", " ", 0, $catch_content__$params);
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "LOADING...");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "Async: <!>", "b%");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__clickCount__script = _script("__tests__/template.marko_1_clickCount", ($scope) => _el_read($scope._["#div/1"]).textContent = $scope._.clickCount);
+const $try_content__clickCount__script = _script("__tests__/template.marko_1_clickCount#3", ($scope) => _el_read($scope._["#div/1"]).textContent = $scope._.clickCount);
 const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => {
 	$try_content__await_promise($scope, resolveAfter($scope._.clickCount));
 	$try_content__clickCount__script($scope);

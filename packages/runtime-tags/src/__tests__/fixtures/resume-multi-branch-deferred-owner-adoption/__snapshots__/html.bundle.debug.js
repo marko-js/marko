@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_escape(input.item)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope0_reason, 2))}</span>`);
-			_script($scope1_id, "__tests__/tags/child.marko_1_input");
+			_script($scope1_id, "__tests__/tags/child.marko_1_input#2");
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}
@@ -24,7 +24,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const log = _el($scope0_id, "__tests__/template.marko_0_#div");
+	const log = _el($scope0_id, "__tests__/template.marko_0_#div#2");
 	let items = ["first", "second"];
 	let show = false;
 	_html(`<button id=show>show</button>${_el_resume($scope0_id, "#button/0")}<button id=clear>clear</button>${_el_resume($scope0_id, "#button/1")}<div></div>${_el_resume($scope0_id, "#div/2")}`);

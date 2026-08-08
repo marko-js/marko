@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>toggle</button><input><output> </output>";
 const $walks = " b bD l";
-const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scope) => _attrs_script($scope, "#input/1"));
+const $v__OR__rest__script = _script("__tests__/template.marko_0_v#3_rest#4", ($scope) => _attrs_script($scope, "#input/1"));
 const $v__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs($scope, "#input/1", {
 		type: "checkbox",

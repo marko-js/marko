@@ -29,13 +29,13 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=inc>inc</button><button class=assign>assign</button><div><!>:<!></div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b bD%c%l`)($walks$1);
-const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern/var", ($scope, $pattern) => {
+const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#6/var", ($scope, $pattern) => {
 	$count($scope, $pattern.count);
 	$countChange2($scope, $pattern.countChange);
 	$inc($scope, $pattern.inc);
 	$missing2($scope, $pattern.missing);
 });
-const $count__OR__$countChange__script = _script("__tests__/template.marko_0_count_$countChange", ($scope) => _on($scope["#button/3"], "click", function() {
+const $count__OR__$countChange__script = _script("__tests__/template.marko_0_count#7_$countChange#8", ($scope) => _on($scope["#button/3"], "click", function() {
 	$scope.$countChange($scope.count + 10);
 }));
 const $count__OR__$countChange = /*@__PURE__*/ _or(9, $count__OR__$countChange__script, 1, "#scopeOffset/1");
@@ -44,7 +44,7 @@ const $count = /*@__PURE__*/ _const("count", ($scope) => {
 	$count__OR__$countChange($scope);
 });
 const $countChange2 = /*@__PURE__*/ _const("$countChange", $count__OR__$countChange);
-const $inc__script = _script("__tests__/template.marko_0_inc", ($scope) => _on($scope["#button/2"], "click", function() {
+const $inc__script = _script("__tests__/template.marko_0_inc#10", ($scope) => _on($scope["#button/2"], "click", function() {
 	$scope.inc();
 }));
 const $inc = /*@__PURE__*/ _const("inc", $inc__script);

@@ -3,7 +3,7 @@ let id = 0;
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/child.marko_0_input");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input#1");
 	writeScope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 });
 });
 
@@ -11,14 +11,14 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#div/hoist");
+	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#div#0/hoist");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					const $el = _el($scope2_id, "__tests__/template.marko_2_#div");
+					const $el = _el($scope2_id, "__tests__/template.marko_2_#div#0");
 					_html(`<div></div>${_el_resume($scope2_id, "#div/0")}`);
 					child_default({ value: $el });
 					writeScope($scope2_id, {}, "__tests__/template.marko", "2:4");

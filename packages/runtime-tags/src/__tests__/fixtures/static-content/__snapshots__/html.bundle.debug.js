@@ -11,7 +11,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $si__input_content = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
-	inner_default({ content: _content("__tests__/tags/outer.marko_1_content", () => {
+	inner_default({ content: _content("__tests__/tags/outer.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>click</button>${_el_resume($scope1_id, "#button/0")}`);
@@ -27,7 +27,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	outer_default({ content: _content("__tests__/template.marko_1_content", () => {
+	outer_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("<span>static</span>");

@@ -13,10 +13,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let setHtml = child_default({ content: _content("__tests__/template.marko_1_content", () => {
+	let setHtml = child_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_script($scope1_id, "__tests__/template.marko_1_setHtml");
+		_script($scope1_id, "__tests__/template.marko_1_setHtml#2");
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 		_resume_branch($scope1_id);
 	}) });

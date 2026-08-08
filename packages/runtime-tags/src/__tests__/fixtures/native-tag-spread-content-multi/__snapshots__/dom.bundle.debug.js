@@ -1,7 +1,7 @@
 // tags/my-box.marko
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
-const $input__OR__extra__script = _script("__tests__/tags/my-box.marko_0_input_extra", ($scope) => _attrs_script($scope, "#div/0"));
+const $input__OR__extra__script = _script("__tests__/tags/my-box.marko_0_input#2_extra#3", ($scope) => _attrs_script($scope, "#div/0"));
 const $input__OR__extra = /*@__PURE__*/ _or(4, ($scope) => {
 	_attrs_content($scope, "#div/0", {
 		...$scope.input,
@@ -19,7 +19,7 @@ var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $mybox_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "Hello");
+const $mybox_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Hello");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], {

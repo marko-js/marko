@@ -5,7 +5,7 @@ const $await_content3__data = ($scope, data) => _text($scope["#text/0"], data);
 const $await_content3__$params = ($scope, $params4) => $await_content3__data($scope, $params4[0]);
 const $await_content2__data = ($scope, data) => _text($scope["#text/0"], data);
 const $await_content2__$params = ($scope, $params3) => $await_content2__data($scope, $params3[0]);
-const $placeholder_content2 = _content_resume("__tests__/template.marko_5_content", "_A_");
+const $placeholder_content2 = _content_resume("__tests__/template.marko_5*content", "_A_");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content2__setup = ($scope) => {
@@ -14,7 +14,7 @@ const $try_content2__setup = ($scope) => {
 };
 const $await_content__data = ($scope, data) => _text($scope["#text/0"], data);
 const $await_content__$params = ($scope, $params2) => $await_content__data($scope, $params2[0]);
-const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "_B_");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "_B_");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__try = /*@__PURE__*/ _try("#text/1", "e<!>g", "b%", $try_content2__setup);

@@ -3,7 +3,7 @@ const $template$1 = "<button><!></button>";
 const $walks$1 = " D%l";
 const $setup$1 = () => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $attrs__script = _script("__tests__/tags/FancyButton.marko_0_attrs", ($scope) => _attrs_script($scope, "#button/0"));
+const $attrs__script = _script("__tests__/tags/FancyButton.marko_0_attrs#5", ($scope) => _attrs_script($scope, "#button/0"));
 const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	_attrs($scope, "#button/0", $scope.attrs);
 	$attrs__script($scope);
@@ -21,7 +21,7 @@ const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $FancyButton_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope["#text/0"], $scope._.clickCount));
 const $FancyButton_content__setup = $FancyButton_content__clickCount;
-const $FancyButton_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", " ", " ", $FancyButton_content__setup);
+const $FancyButton_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $FancyButton_content__setup);
 const $clickCount__closure = /*@__PURE__*/ _closure($FancyButton_content__clickCount);
 const $clickCount = /*@__PURE__*/ _let("clickCount/1", ($scope) => {
 	$attrs($scope["#childScope/0"], { onClick: $onClick($scope) });

@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		n++;
 	}, "__tests__/template.marko_0/handlers", $scope0_id) };
 	_html(`<button>b</button>${_el_resume($scope0_id, "#button/0")}<div>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</div>`);
-	_script($scope0_id, "__tests__/template.marko_0_handlers");
+	_script($scope0_id, "__tests__/template.marko_0_handlers#3");
 	writeScope($scope0_id, {
 		n,
 		handlers

@@ -3,7 +3,7 @@ var my_img_default = _template("__tests__/tags/my-img.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<img${_attrs(input, "#img/0", $scope0_id, "img")}>${_el_resume($scope0_id, "#img/0")}`);
-	_script($scope0_id, "__tests__/tags/my-img.marko_0_input");
+	_script($scope0_id, "__tests__/tags/my-img.marko_0_input#2");
 	writeScope($scope0_id, {}, "__tests__/tags/my-img.marko", 0);
 });
 

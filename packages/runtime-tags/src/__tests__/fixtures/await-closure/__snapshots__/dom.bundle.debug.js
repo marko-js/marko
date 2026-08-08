@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
-const $placeholder_content = _content_resume("__tests__/template.marko_3_content", "loading...");
-const $await_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope["#text/0"], $scope._._.value), ($scope) => $scope._._, "__tests__/template.marko_2_value/pending");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading...");
+const $await_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope["#text/0"], $scope._._.value), ($scope) => $scope._._, "__tests__/template.marko_2_value#3/pending");
 const $await_content__setup = $await_content__value;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", "D ", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");

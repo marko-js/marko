@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if (x) {
 		$thing = attrTag({
 			x: 1,
-			content: _content("__tests__/template.marko_1_content", () => {
+			content: _content("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html("Hello");
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	} else {
 		$thing = attrTag({
 			x: 2,
-			content: _content("__tests__/template.marko_2_content", () => {
+			content: _content("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("Goodbye");

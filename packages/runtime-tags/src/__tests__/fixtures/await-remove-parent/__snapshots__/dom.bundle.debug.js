@@ -3,7 +3,7 @@ const $template = "<div id=outside>Pass</div><!><!>";
 const $walks = "b%c";
 const $await_content__setup__script = _script("__tests__/template.marko_4", ($scope) => document.querySelector("#outside").textContent = "Fail");
 const $await_content__setup = $await_content__setup__script;
-const $placeholder_content = _content_resume("__tests__/template.marko_3_content", "loading...");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading...");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", 0, 0, $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {

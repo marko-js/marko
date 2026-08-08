@@ -4,7 +4,7 @@ const $walks = " D l";
 function identity(fn) {
 	return fn;
 }
-const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/0"], "click", identity(() => {
+const $count__script = _script("__tests__/template.marko_0_count#2", ($scope) => _on($scope["#button/0"], "click", identity(() => {
 	$count($scope, $scope.count + 1);
 })));
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "";
 const $walks = "";
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => {
+const $x__script = _script("__tests__/template.marko_0_x#0", ($scope) => {
 	(() => {
 		if ($scope.x) return;
 		console.log("first: " + $scope.x);

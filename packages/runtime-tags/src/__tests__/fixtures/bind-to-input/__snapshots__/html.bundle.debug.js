@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			x = _new_x;
 		}, "__tests__/template.marko_0/countChange", $scope0_id),
 		id: "controlled",
-		content: _content("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(x)}${_el_resume($scope1_id, "#text/0")}`);
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	counter_default({
 		count: x,
 		id: "uncontrolled",
-		content: _content("__tests__/template.marko_2_content", () => {
+		content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`${_escape(x)}${_el_resume($scope2_id, "#text/0")}`);

@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let size = 1;
-	const Child = { content: _content("__tests__/template.marko_1_content", (input) => {
+	const Child = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope1_reason, 0);
 		_for_of(input.item, (item) => {
@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html("<div");
 			_attrs_content(item, "#div/0", $scope2_id, "div");
 			_html(`</div>${_el_resume($scope2_id, "#div/0")}`);
-			_script($scope2_id, "__tests__/template.marko_2_item");
+			_script($scope2_id, "__tests__/template.marko_2_item#2");
 			writeScope($scope2_id, {}, "__tests__/template.marko", "4:4");
 		}, 0, $scope1_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_3_content", () => {
+		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`${_escape(i)}${_el_resume($scope3_id, "#text/0")}`);

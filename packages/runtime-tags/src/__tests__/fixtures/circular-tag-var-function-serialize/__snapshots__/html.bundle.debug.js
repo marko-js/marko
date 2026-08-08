@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_valueChange");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_valueChange#2");
 	writeScope($scope0_id, { input_valueChange: input.valueChange }, "__tests__/tags/child.marko", 0, { input_valueChange: ["input.valueChange"] });
 });
 

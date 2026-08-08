@@ -6,7 +6,7 @@ const $showdivnull_content__setup__script = _script("__tests__/tags/child.marko_
 	document.getElementById("ref").textContent = "dyn destroyed";
 } }));
 const $showdivnull_content__setup = $showdivnull_content__setup__script;
-const $showdivnull_content = _content_resume("__tests__/tags/child.marko_1_content", 0, 0, $showdivnull_content__setup);
+const $showdivnull_content = _content_resume("__tests__/tags/child.marko_1*content", 0, 0, $showdivnull_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $showdivnull_content);
 const $show$1 = ($scope, show) => $dynamicTag($scope, show ? "div" : null);
 const $input = ($scope, input) => $show$1($scope, input.show);

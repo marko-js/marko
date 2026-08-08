@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let show = true;
 	let value = 1;
 	_html(`<button class=toggle>Toggle</button>${_el_resume($scope0_id, "#button/0")}<button class=inc>Inc</button>${_el_resume($scope0_id, "#button/1")}`);
-	_try($scope0_id, "#text/2", _content_resume("__tests__/template.marko_1_content", () => {
+	_try($scope0_id, "#text/2", _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_dynamic_tag($scope1_id, "#text/0", show ? $Child_withLoadAssets : null, {
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_subscribe($value__closures, _subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2")));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading...");

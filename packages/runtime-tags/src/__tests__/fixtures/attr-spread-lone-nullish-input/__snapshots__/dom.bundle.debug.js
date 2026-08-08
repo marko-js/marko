@@ -2,7 +2,7 @@
 const $template = "<input>";
 const $walks = " b";
 const $setup = () => {};
-const $attrs__script = _script("__tests__/template.marko_0_attrs", ($scope) => _attrs_script($scope, "#input/0"));
+const $attrs__script = _script("__tests__/template.marko_0_attrs#3", ($scope) => _attrs_script($scope, "#input/0"));
 const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	_attrs($scope, "#input/0", $scope.attrs, _controllable_input);
 	$attrs__script($scope);

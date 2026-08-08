@@ -28,7 +28,7 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", ()
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_shared.mjs"));
 let $load_Child_setup2 = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
-const $placeholder_content = _content_resume("__tests__/template.marko_4_content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_4*content", "loading");
 const $await_content2__shared = /*@__PURE__*/ _closure_get("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._.shared));
 const $await_content2__setup = ($scope) => {
 	$await_content2__shared($scope);
@@ -36,7 +36,7 @@ const $await_content2__setup = ($scope) => {
 };
 const $await_content2__label = ($scope, label) => $load_Child_tag_input_label($scope["#childScope/1"], label);
 const $await_content2__$params = ($scope, $params3) => $await_content2__label($scope, $params3[0]);
-const $await_content__shared = /*@__PURE__*/ _closure_get("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._._.shared), ($scope) => $scope._._, "__tests__/template.marko_2_shared/pending");
+const $await_content__shared = /*@__PURE__*/ _closure_get("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._._.shared), ($scope) => $scope._._, "__tests__/template.marko_2_shared#2/pending");
 const $await_content__setup = ($scope) => {
 	$await_content__shared($scope);
 	$load_Child_setup($scope);

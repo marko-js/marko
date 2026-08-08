@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_option");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_option#3");
 	writeScope($scope0_id, { input_option: input.option }, "__tests__/tags/child.marko", 0, { input_option: ["input.option"] });
 });
 
@@ -20,7 +20,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	wrap_default({ option: attrTag({ content: _content_resume("__tests__/template.marko_1_content", () => {
+	wrap_default({ option: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("1");

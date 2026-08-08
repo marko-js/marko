@@ -16,7 +16,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}, $scope1_id, "#text/0", $sg__input_button, $sg__input_button, $sg__input_button);
 		$si__input_button && writeScope($scope1_id, { button }, "__tests__/tags/child.marko", "3:4", { button: "3:8" });
 	}, 0, $scope0_id, "#div/0", $sg__input_button, 1, $sg__input_button, "</div>");
-	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput");
+	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput#4");
 	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	child_default({ button: attrTag({
 		onClick: _resume(function() {}, "__tests__/template.marko_0/onClick"),
-		content: _content("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("one");

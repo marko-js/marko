@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_value_foo._($scope);
 	$if_content__rest._($scope);
 };
-const $if_content__rest__script = _script("__tests__/template.marko_1_rest", ($scope) => _attrs_script($scope, "#span/1"));
+const $if_content__rest__script = _script("__tests__/template.marko_1_rest#5", ($scope) => _attrs_script($scope, "#span/1"));
 const $if_content__rest = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	_attrs_content($scope, "#span/1", $scope._.rest);
 	$if_content__rest__script($scope);

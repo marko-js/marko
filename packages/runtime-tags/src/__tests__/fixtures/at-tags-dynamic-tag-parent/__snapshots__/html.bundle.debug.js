@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", x, {
 		header: attrTag({
 			class: "my-header",
-			content: _content_resume("__tests__/template.marko_2_content", () => {
+			content: _content_resume("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("Header content");
@@ -28,13 +28,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}),
 		footer: attrTag({
 			class: "my-footer",
-			content: _content_resume("__tests__/template.marko_3_content", () => {
+			content: _content_resume("__tests__/template.marko_3*content", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html("Footer content");
 			}, $scope0_id)
 		})
-	}, _content_resume("__tests__/template.marko_1_content", () => {
+	}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Body content");

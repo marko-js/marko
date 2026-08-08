@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let canEdit = true;
 	const $childScope = _peek_scope_id();
 	let val = editable_default({ canEdit });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_val/var");
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_val#6/var");
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/2")}<button id=assign>assign</button>${_el_resume($scope0_id, "#button/3")}<div>${_escape(val)}${_el_resume($scope0_id, "#text/4")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<title></title><button>+</button><div></div>";
 const $walks = " b b b";
-const $count__script = _script("__tests__/template.marko_0_count", ($scope) => {
+const $count__script = _script("__tests__/template.marko_0_count#3", ($scope) => {
 	$scope.count;
 	_el_read($scope["#div/2"]).textContent = document.title;
 });

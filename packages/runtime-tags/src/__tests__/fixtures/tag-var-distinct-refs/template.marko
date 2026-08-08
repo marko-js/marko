@@ -1,0 +1,8 @@
+<div/a>first</div>
+<div/b>second</div>
+<const/box={ a, b }/>
+<script>
+  a().dataset.ref = "a";
+  b().dataset.ref = "b";
+  console.log(box.a() === box.b() ? "SAME" : "distinct");
+</script>

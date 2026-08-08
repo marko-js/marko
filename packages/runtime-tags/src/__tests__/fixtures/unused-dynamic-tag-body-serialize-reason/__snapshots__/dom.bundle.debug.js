@@ -7,7 +7,7 @@ const $Wrap_content2__setup = ($scope) => {
 	$Message_content__input_before($scope["#childScope/0"], "hello");
 	$Message_content__input_after($scope["#childScope/0"], "world");
 };
-const $Wrap_content2 = _content_resume("__tests__/template.marko_3_content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Message_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Message_content__walks), $Wrap_content2__setup);
+const $Wrap_content2 = _content_resume("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Message_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Message_content__walks), $Wrap_content2__setup);
 const $Message_content__input_before__OR__input_after = /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/0"], $scope.input_before + $scope.input_after));
 const $Message_content__input_before = /*@__PURE__*/ _const("input_before", $Message_content__input_before__OR__input_after);
 const $Message_content__input_after = /*@__PURE__*/ _const("input_after", $Message_content__input_before__OR__input_after);

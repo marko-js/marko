@@ -891,16 +891,18 @@ function buildResumeRegisterKey(
   referencedBindings: string | ReferencedBindings,
   type?: string,
 ) {
+  // Every segment is self-delimiting (`#id` per binding, `*` for string
+  // kinds), so same-named bindings and `_`-joined names cannot collide.
   let name = "";
   if (referencedBindings) {
     if (typeof referencedBindings === "string") {
-      name += `_${referencedBindings}`;
+      name += `*${referencedBindings}`;
     } else if (Array.isArray(referencedBindings)) {
       for (const ref of referencedBindings) {
-        name += `_${ref.name}`;
+        name += `_${ref.name}#${ref.id}`;
       }
     } else {
-      name += `_${referencedBindings.name}`;
+      name += `_${referencedBindings.name}#${referencedBindings.id}`;
     }
   }
   return `${section.id}${name}${type ? "/" + type : ""}`;

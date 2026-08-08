@@ -4,7 +4,7 @@ const $walks$1 = "";
 const $setup$1 = () => {};
 const subsByKey = {};
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => _return($scope, $scope.value));
-const $input_value__script = _script("__tests__/tags/let-global.marko_0_input_value", ($scope) => {
+const $input_value__script = _script("__tests__/tags/let-global.marko_0_input_value#2", ($scope) => {
 	{
 		const subs = subsByKey[$scope.input_value] ??= new Set();
 		const sub = () => $value($scope, $scope.$global[$scope.input_value]);
@@ -36,7 +36,7 @@ const $b = /*@__PURE__*/ _let("b/7", ($scope) => {
 	_text($scope["#text/3"], $scope.b);
 	$a__OR__b($scope);
 });
-const $a = _var_resume("__tests__/template.marko_0_a/var", /*@__PURE__*/ _const("a", ($scope) => {
+const $a = _var_resume("__tests__/template.marko_0_a#6/var", /*@__PURE__*/ _const("a", ($scope) => {
 	_text($scope["#text/2"], $scope.a);
 	$b($scope, $scope.a + 1);
 	$a__OR__b($scope);

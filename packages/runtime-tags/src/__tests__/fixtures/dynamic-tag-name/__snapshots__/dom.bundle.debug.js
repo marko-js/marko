@@ -34,7 +34,7 @@ var tag_b_default = /*@__PURE__*/ _template("__tests__/tags/tag-b/index.marko", 
 const $template = "<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";
 const $walks = "b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%c";
 const foo = "";
-const $showTagAtagA_content = _content_resume("__tests__/template.marko_1_content", "Body content");
+const $showTagAtagA_content = _content_resume("__tests__/template.marko_1*content", "Body content");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content__OR__input_other = /*@__PURE__*/ _or(31, ($scope) => $dynamicTag($scope, $scope.content, () => ({
 	class: ["a", "b"],

@@ -33,5 +33,5 @@ function $setup($scope) {
 	$canEdit($scope, true);
 	$setup__script($scope);
 }
-const $val = _var_resume("__tests__/template.marko_0_val/var", /*@__PURE__*/ _const("val", ($scope) => _text($scope["#text/4"], $scope.val)));
+const $val = _var_resume("__tests__/template.marko_0_val#6/var", /*@__PURE__*/ _const("val", ($scope) => _text($scope["#text/4"], $scope.val)));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

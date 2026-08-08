@@ -7,7 +7,7 @@ const $Let_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
 	$Let_content__internal($scope, 0);
 });
 const $a__OR__b = /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/3"], `${$scope.a},${$scope.b}`));
-const $a = _var_resume("__tests__/template.marko_0_a/var", /*@__PURE__*/ _const("a", $a__OR__b));
+const $a = _var_resume("__tests__/template.marko_0_a#4/var", /*@__PURE__*/ _const("a", $a__OR__b));
 const $b = /*@__PURE__*/ _let("b/5", $a__OR__b);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["#childScope/0"], $scope.a + 1, "a");

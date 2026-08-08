@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$await_content($scope);
 	$if_content__await_promise($scope, resolveAfter("loaded", 2));
 };
-const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "LOADING...");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "LOADING...");
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1));
 const $try_content__setup = $try_content__show;

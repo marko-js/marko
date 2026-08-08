@@ -12,7 +12,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/thing.marko_0_input_value");
+	_script($scope0_id, "__tests__/tags/thing.marko_0_input_value#2");
 	writeScope($scope0_id, { input_value: input.value }, "__tests__/tags/thing.marko", 0, { input_value: ["input.value"] });
 });
 
@@ -20,7 +20,7 @@ var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml/hoist");
+	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml#2/hoist");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

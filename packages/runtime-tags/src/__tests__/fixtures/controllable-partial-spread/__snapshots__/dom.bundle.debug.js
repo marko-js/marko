@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc</button><input><input><input>";
 const $walks = " b b b b";
-const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scope) => {
+const $v__OR__rest__script = _script("__tests__/template.marko_0_v#4_rest#5", ($scope) => {
 	_attrs_script($scope, "#input/1");
 	_attrs_script($scope, "#input/2");
 });
@@ -20,7 +20,7 @@ const $v = /*@__PURE__*/ _let("v/4", ($scope) => {
 	_attr_input_value($scope, "#input/3", $scope.v, $valueChange($scope));
 	$v__OR__rest($scope);
 });
-const $rest__script = _script("__tests__/template.marko_0_rest", ($scope) => _attrs_script($scope, "#input/3"));
+const $rest__script = _script("__tests__/template.marko_0_rest#5", ($scope) => _attrs_script($scope, "#input/3"));
 const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	_attrs_partial($scope, "#input/3", $scope.rest, {
 		value: 1,

@@ -29,10 +29,10 @@ function $setup($scope) {
 	$clickOnceCount($scope, 0);
 	$clickTwiceCount($scope, 0);
 }
-const $onClickOnce2__script = _script("__tests__/template.marko_0_onClickOnce", ($scope) => _on($scope["#button/2"], "click", $scope.onClickOnce));
-const $onClickOnce2 = _var_resume("__tests__/template.marko_0_onClickOnce/var", /*@__PURE__*/ _const("onClickOnce", $onClickOnce2__script));
-const $onClickTwice2__script = _script("__tests__/template.marko_0_onClickTwice", ($scope) => _on($scope["#button/6"], "click", $scope.onClickTwice));
-const $onClickTwice2 = _var_resume("__tests__/template.marko_0_onClickTwice/var", /*@__PURE__*/ _const("onClickTwice", $onClickTwice2__script));
+const $onClickOnce2__script = _script("__tests__/template.marko_0_onClickOnce#9", ($scope) => _on($scope["#button/2"], "click", $scope.onClickOnce));
+const $onClickOnce2 = _var_resume("__tests__/template.marko_0_onClickOnce#9/var", /*@__PURE__*/ _const("onClickOnce", $onClickOnce2__script));
+const $onClickTwice2__script = _script("__tests__/template.marko_0_onClickTwice#11", ($scope) => _on($scope["#button/6"], "click", $scope.onClickTwice));
+const $onClickTwice2 = _var_resume("__tests__/template.marko_0_onClickTwice#11/var", /*@__PURE__*/ _const("onClickTwice", $onClickTwice2__script));
 function $_return2($scope) {
 	return function() {
 		if ($scope.call) {
