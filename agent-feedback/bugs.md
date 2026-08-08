@@ -146,12 +146,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `analyzeTagNameType` downgrades a custom tag whose child template is Class API to `TagNameType.DynamicTag` but leaves `extra.tagNameLoad` attached, so `translate.exit`'s DOM branch still sees `allKnownTagReferences` and deletes the whole `import Child … with { load: … }`, while the compat dynamic-tag path never reads `tagNameLoad` and emits a bare `$dynamicTag($scope, Child, …)`. `Child` is left undeclared, so `$setup` throws `ReferenceError` at first render with zero diagnostics, and every `fixtures-interop/lazy-class-child*` fixture uses a Class parent, so this direction is uncovered. Either wire `tagNameLoad` into the compat path or `buildCodeFrameError` in `analyze` when a `load` import resolves to a Class-API template. Re-verify: compile a `<!-- use tags -->` parent holding that import plus `<Child value=1/>` against a `class {}` child with `{ output: "dom", linkAssets, translator: "marko/translator" }`; Babel puts `Child` in the Program scope's `globals`, empty with a Tags-API child.
 
-## Bound `getTagsDir` at the package root — an ancestor directory named `tags` breaks every Class API template under it
-
-`packages/runtime-tags/src/translator/interop/feature-detection.ts` › `getTagsDir` | 2026-07-27 | impact:med | effort:low
-
-`getTagsDir` scans the whole absolute filename right-to-left for a `tags` segment with no upper bound, while `packages/compiler/src/taglib/finder/index.js` › `find` stops its own walk at the nearest package root (`rootPkg.__dirname`, else `markoModules.cwd`). When they disagree, `isTagsAPI` records the synthetic `Template file within a tags directory` feature and any Class API construct then throws `Cannot mix Tags API and Class API features in the same file`, so a package named `tags` cannot compile one Marko 5 template and the only workaround is renaming the directory. Bound the scan at the same package-root boundary, and give the synthetic feature a real location — today it prints an empty code frame (`fixtures-interop/error-class-tags-dir/__snapshots__/error-compile-html.txt`). Re-verify: `class {}` + `<h1>hi</h1>` at `<tmp>/packages/tags/src/page.marko` beside a `package.json` fails `-t class -o html -d` with the mixing error, while renaming `tags` to `tag` compiles the identical file.
-
 ## Skip the source printer's reindent for whitespace-preserving tags
 
 `patches/@babel__generator@7.29.7.patch` › `MarkoTag` | 2026-07-27 | impact:med | effort:med
