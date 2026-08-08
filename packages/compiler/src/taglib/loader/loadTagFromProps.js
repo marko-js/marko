@@ -246,12 +246,18 @@ class TagLoader {
         nestedTag.name = nestedTagName;
         nestedTag.isRepeated = nestedTag.isRepeated || isNestedTagRepeated;
         // Use the name of the attribute as the target property unless
-        // this target property was explicitly provided
+        // this target property was explicitly provided (either spelling,
+        // already normalized onto the loaded nested tag).
         nestedTag.targetProperty =
-          attrProps.targetProperty || nestedTagTargetProperty;
+          nestedTag.targetProperty || nestedTagTargetProperty;
         tag.addNestedTag(nestedTag);
 
-        if (!nestedTag.isRepeated) {
+        // The `@`-half of an `"@x <x>"` shorthand already declared the
+        // attribute with its own props; only synthesize one without it.
+        if (
+          !nestedTag.isRepeated &&
+          !hasOwnProperty.call(tag.attributes, nestedTag.targetProperty)
+        ) {
           let attr = loaders.loadAttributeFromProps(
             nestedTag.targetProperty,
             { type: "object" },

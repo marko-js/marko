@@ -20,6 +20,15 @@ describe("compiler/taglib", () => {
   it("refuses a translator that brings no taglibs", () =>
     assert.match(run({ CASE: "invalid-translator" }), /Invalid translator/));
 
+  it('keeps the @-half\'s attribute props through an "@x <x>" shorthand', () =>
+    assert.deepEqual(run({ CASE: "shorthand-attr-merge" }), {
+      type: "string",
+      defaultValue: "L",
+      required: true,
+      autocomplete: true,
+      target: "label",
+    }));
+
   describe("register", () => {
     it("takes a taglib by relative path", () =>
       assert.equal(run({ CASE: "register-by-path" }), true));
