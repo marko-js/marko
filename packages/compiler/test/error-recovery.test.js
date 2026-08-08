@@ -44,4 +44,14 @@ describe("compiler/error recovery", () => {
   it("throws on the first error without recovery", () => {
     assert.throws(() => compile("$ const x = ;", { errorRecovery: false }));
   });
+
+  it("bounds a bad attribute value to the value, not the rest of the file", () => {
+    for (const src of [
+      "<div foo=(1+)>hi</div>\n<span>tail</span>",
+      "<div ...(1+)>hi</div>\n<span>tail</span>",
+    ]) {
+      const { code } = compile(src, { output: "source" });
+      assert.equal(code.match(/tail/g).length, 1, code);
+    }
+  });
 });
