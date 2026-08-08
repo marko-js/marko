@@ -25,7 +25,7 @@ import { isPersisted } from "../util/marko-config";
 import {
   isPatchCaptureSection,
   classifiesClientOwned,
-  onFinalizePersisted,
+  onClassifyOwnership,
   recordStructuralParams,
 } from "../util/persisted";
 import {
@@ -210,9 +210,9 @@ export default {
 
     if (isPersisted() && isPatchCaptureSection(tagSection)) {
       // Ownership classifies once the merged input sources resolve.
-      onFinalizePersisted(() => {
+      onClassifyOwnership(tagSection, () => {
         const sources = getSerializeSourcesForExpr(tagExtra);
-        if (classifiesClientOwned(sources)) {
+        if (classifiesClientOwned(sources, tagSection)) {
           // A client-evaluable loop is client-owned structure (state
           // re-lists directly; param feeds fill their slots).
           bodySection.isClientOwnedStructure = true;
