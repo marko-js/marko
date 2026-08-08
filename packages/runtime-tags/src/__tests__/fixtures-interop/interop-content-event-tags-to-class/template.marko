@@ -1,0 +1,13 @@
+class {
+  onCreate() {
+    this.state = { n: 0 };
+  }
+  handleClick() { this.state.n++; }
+}
+<div id="outer" on-click("handleClick")>${state.n}</div>
+<tags-mid>
+  <class-inner>
+    <span>deep body</span>
+  </class-inner>
+</tags-mid>
+<init-components/>

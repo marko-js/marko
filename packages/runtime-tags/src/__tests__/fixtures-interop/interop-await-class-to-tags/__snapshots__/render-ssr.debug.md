@@ -24,7 +24,4 @@
 ```
 INSERT: #tags
 INSERT: #tags::text("hi")
-REMOVE: #class + #tags
-INSERT: #class + #tags
-UPDATE: #tags::text " " => "hi"
 ```

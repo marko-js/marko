@@ -1,0 +1,17 @@
+class {
+  onCreate() {
+    this.state = { active: 0 };
+  }
+  handleClick(i) {
+    this.state.active = i;
+    this.emit("select");
+  }
+}
+<ul id="list">
+  <for|item, i| of=(input.item || [])>
+    <li>
+      <button on-click("handleClick", i)>${item.title}${i === state.active ? "*" : ""}</button>
+      <${item.renderBody}/>
+    </li>
+  </for>
+</ul>

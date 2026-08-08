@@ -1,0 +1,51 @@
+<!--M#s0-->
+<div id=outer>0</div><!--F#1--><button
+  id=tags>0<!--Ms*1 #text/1--></button><!--Ms*1 #button/0--><!--Ms[--><!--M#s1-->
+<div id=inner>0<!--F#1--><span>deep body</span><!--F/--></div>
+<!--M/--><!--Ms]1 #text/2 2--><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+      m5c: "s0-1",
+      "ConditionalRenderer:#text/2": _._[
+        "packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-event-tags-to-class/components/class-inner.marko"
+        ],
+      count: 0
+    }, {
+      m5c: "s1",
+      m5i: {
+        renderBody: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-event-tags-to-class/components/tags-mid.marko_1_content"
+          )
+      }
+    }, {
+      m5c: "s1-1"
+    }],
+    "$compat_setScope 3 $compat_setScope 1 2 packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-event-tags-to-class/components/tags-mid.marko_0 1 $compat_setScope 1 1"
+  ];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }],
+      ["s1", 1, 2, {
+        "e": [
+          ["change", [
+            "packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-event-tags-to-class/components/tags-mid.marko_0/onChange",
+            1
+          ]]
+        ],
+        "f": 1,
+        "r": [
+          "packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-event-tags-to-class/components/tags-mid.marko_1_content",
+          1
+        ]
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-event-tags-to-class/template.marko",
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-event-tags-to-class/components/class-inner.marko"
+    ]
+  })
+</script>
