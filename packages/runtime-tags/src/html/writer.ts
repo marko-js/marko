@@ -1761,6 +1761,13 @@ function flushTickQueue() {
   tickQueue = undefined;
 
   for (const cb of queue) {
-    cb(true);
+    try {
+      cb(true);
+    } catch (err) {
+      // One render's throwing sink must not stall the queue's other renders.
+      tick(() => {
+        throw err;
+      });
+    }
   }
 }

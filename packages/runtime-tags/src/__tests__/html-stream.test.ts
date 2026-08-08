@@ -3,6 +3,7 @@ import path from "path";
 
 import type { Template } from "@marko/runtime-tags/common/types";
 
+import { queueTick } from "../html/writer";
 import * as tagsTranslator from "../translator";
 import { createServerRunner } from "./utils/bundle";
 
@@ -65,6 +66,33 @@ describe("runtime-tags/html async iterator", () => {
         slow.join("").includes(`${letter}:${letter}`),
         `slow consumer dropped ${letter}`,
       );
+    }
+  });
+  it("isolates tick callbacks so one throwing sink cannot stall other renders", async () => {
+    const errors: unknown[] = [];
+    const onError = (err: Error) => {
+      errors.push(err.message);
+    };
+    // Mocha's own uncaught handler would fail the test; the rethrow is the point.
+    const prevListeners = process.listeners("uncaughtException");
+    process.removeAllListeners("uncaughtException");
+    process.on("uncaughtException", onError);
+    try {
+      let ran = false;
+      queueTick(() => {
+        throw new Error("boom");
+      });
+      queueTick(() => {
+        ran = true;
+      });
+      await new Promise((resolve) => setTimeout(resolve, 30));
+      assert.equal(ran, true);
+      assert.deepEqual(errors, ["boom"]);
+    } finally {
+      process.off("uncaughtException", onError);
+      for (const listener of prevListeners) {
+        process.on("uncaughtException", listener);
+      }
     }
   });
 });
