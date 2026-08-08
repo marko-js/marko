@@ -27,8 +27,8 @@ const _marko_class_fn3 = (_component) => function(count) {
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<div id=class>${(0, import_escape_xml.x)(state.pinged)}</div><div id=class-bump>${(0, import_escape_xml.x)(state.bumped)}</div>`);
 	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "handlers": {
-		nested: { ping: f("a/h0", _marko_class_fn(_component), _component) },
-		bump: f("a/h1", _marko_class_fn3(_component), _component)
+		nested: { ping: f("a/h0", _marko_class_fn(_component), _component, out) },
+		bump: f("a/h1", _marko_class_fn3(_component), _component, out)
 	} }), null, null, null, _componentDef, "2");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "3");
 }, { t: _marko_componentType }, {

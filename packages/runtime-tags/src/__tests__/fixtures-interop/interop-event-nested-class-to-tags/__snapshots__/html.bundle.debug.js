@@ -49,8 +49,8 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 	out.w((0, import_escape_xml.x)(state.bumped));
 	out.w("</div>");
 	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "handlers": {
-		nested: { ping: f("__tests__/template.marko/h0", _marko_class_fn(_component), _component) },
-		bump: f("__tests__/template.marko/h1", _marko_class_fn3(_component), _component)
+		nested: { ping: f("__tests__/template.marko/h0", _marko_class_fn(_component), _component, out) },
+		bump: f("__tests__/template.marko/h1", _marko_class_fn3(_component), _component, out)
 	} }), null, null, null, _componentDef, "2");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "3");
 }, {

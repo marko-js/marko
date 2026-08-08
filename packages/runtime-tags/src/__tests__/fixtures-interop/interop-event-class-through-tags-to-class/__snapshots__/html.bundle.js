@@ -30,7 +30,7 @@ const _marko_class_fn = (_component) => function() {
 };
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<div id=class-parent>${(0, import_escape_xml.x)(state.changed)}</div>`);
-	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "onChange": f("a/h0", _marko_class_fn(_component), _component) }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_child_default, () => ({ "onChange": f("a/h0", _marko_class_fn(_component), _component, out) }), null, null, null, _componentDef, "1");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "2");
 }, { t: _marko_componentType }, {
 	onCreate() {

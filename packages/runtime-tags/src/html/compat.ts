@@ -142,12 +142,13 @@ export const compat = {
     head.render(() => {
       // Handlers bind to a scope of their own: sharing the boundary scope would
       // pull whatever input the child was given through the serializer with them.
-      if (pendingClassFunctions.length) {
-        const fnScopeId = _scope_id();
-        drainClassFunctions(
-          _scope(fnScopeId, { m5c: component.id, m5h: takeClassHostId() }),
-        );
-        _script(fnScopeId, SET_SCOPE_REGISTER_ID);
+      if (this.hasPendingClassFunctions(classAPIOut.global)) {
+        drainClassFunctions(classAPIOut.global, (hostId) => {
+          const fnScopeId = _scope_id();
+          const scope = _scope(fnScopeId, { m5c: component.id, m5h: hostId });
+          _script(fnScopeId, SET_SCOPE_REGISTER_ID);
+          return scope;
+        });
       }
 
       if (willRerender || registerChildScope) {
@@ -200,35 +201,42 @@ export const compat = {
   },
   // Emitted around a function nested in a class-to-tags attribute. The scope it
   // resumes through is only created once the render below starts, so it is held
-  // until then rather than registered against nothing.
-  registerClassFunction<T extends WeakKey>(id: string, fn: T, hostId: string) {
-    pendingClassFunctions.push(id, fn);
-    pendingClassHostId = hostId;
+  // on the render's $global until then rather than registered against nothing.
+  registerClassFunction<T extends WeakKey>(
+    $global: object,
+    id: string,
+    fn: T,
+    hostId: string,
+  ) {
+    let pending = pendingClassFunctions.get($global);
+    if (!pending) {
+      pendingClassFunctions.set($global, (pending = []));
+    }
+    pending.push([id, fn, hostId]);
     return fn;
   },
-  hasPendingClassFunctions() {
-    return pendingClassFunctions.length !== 0;
+  hasPendingClassFunctions($global: object) {
+    return !!pendingClassFunctions.get($global)?.length;
   },
 };
 
-const pendingClassFunctions: unknown[] = [];
-let pendingClassHostId: string | undefined;
+// Keyed by $global so an aborted render's entries die with it instead of
+// bleeding into whichever class-to-tags render drains next.
+const pendingClassFunctions = new WeakMap<
+  object,
+  [id: string, fn: WeakKey, hostId: string][]
+>();
 
-function takeClassHostId() {
-  const id = pendingClassHostId;
-  pendingClassHostId = undefined;
-  return id;
-}
-
-function drainClassFunctions(scope: unknown) {
-  for (let i = 0; i < pendingClassFunctions.length; i += 2) {
-    register(
-      pendingClassFunctions[i] as string,
-      pendingClassFunctions[i + 1] as WeakKey,
-      scope,
-    );
+function drainClassFunctions(
+  $global: object,
+  writeScope: (hostId: string) => unknown,
+) {
+  const pending = pendingClassFunctions.get($global)!;
+  const scopeByHost: Record<string, unknown> = {};
+  for (const [id, fn, hostId] of pending) {
+    register(id, fn, (scopeByHost[hostId] ||= writeScope(hostId)));
   }
-  pendingClassFunctions.length = 0;
+  pending.length = 0;
 }
 
 function NOOP() {}

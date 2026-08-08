@@ -21,7 +21,7 @@ const _marko_class_fn = (_component) => function(count) {
 };
 _marko_template$1._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<div id=class>none</div>");
-	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "onPing": f("c/h0", _marko_class_fn(_component), _component) }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "onPing": f("c/h0", _marko_class_fn(_component), _component, out) }), null, null, null, _componentDef, "1");
 }, {
 	t: _marko_componentType$1,
 	s: true

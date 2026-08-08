@@ -287,6 +287,7 @@ function replaceWithResumable(fnPath, factoryId, file, markoOpts) {
       id,
       built,
       t.cloneNode(file._componentInstanceIdentifier),
+      t.identifier("out"),
     ]);
   } else {
     // Registered once per module so a resumed reference can rebuild the

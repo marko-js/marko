@@ -146,7 +146,7 @@ exports.p = function (htmlCompat) {
         writers.tagsAPI,
         !willRerender &&
           (hasBridgedClassEvent(input) ||
-            htmlCompat.hasPendingClassFunctions()),
+            htmlCompat.hasPendingClassFunctions(out.global)),
       );
       out.ef();
     },
