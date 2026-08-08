@@ -74,7 +74,9 @@ export function assertNoVar(path) {
 export function assertAttributesOrArgs(path) {
   const { node } = path;
   const args = node.arguments;
-  if (args && args.length && (node.attributes.length > 0 || node.body.length)) {
+  // A body alongside arguments is legal here (dynamic tag fallback content);
+  // `assertAttributesOrSingleArg` rejects it for custom tags.
+  if (args && args.length && node.attributes.length > 0) {
     const start = args[0].loc.start;
     const end = args[args.length - 1].loc.end;
     throw path.hub.buildError(
@@ -87,6 +89,18 @@ export function assertAttributesOrArgs(path) {
 export function assertAttributesOrSingleArg(path) {
   assertAttributesOrArgs(path);
   const args = path.node.arguments;
+  if (
+    args &&
+    args.length &&
+    path.node.body.body.some((child) => child.type !== "MarkoComment")
+  ) {
+    const start = args[0].loc.start;
+    const end = args[args.length - 1].loc.end;
+    throw path.hub.buildError(
+      { loc: { start, end } },
+      "Tag does not support arguments when attributes or body present.",
+    );
+  }
   if (args && args.length > 1) {
     const start = args[1].loc.start;
     const end = args[args.length - 1].loc.end;
