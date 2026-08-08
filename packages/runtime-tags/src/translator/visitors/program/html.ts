@@ -450,6 +450,124 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     return server;
   };
+  // The outer expression matrix, applied inside nested templates so
+  // nesting cannot launder shapes the region boundary rejects.
+  const nestedValueUnsafety = (
+    value: t.Expression,
+    extra: t.NodeExtra | undefined,
+  ): string | null => {
+    if (
+      !getSerializeSourcesForExpr(extra || {}) &&
+      !evaluate(value).confident
+    ) {
+      let opaque = false;
+      t.traverseFast(value, (n) => {
+        opaque ||=
+          t.isCallExpression(n) ||
+          t.isOptionalCallExpression(n) ||
+          t.isNewExpression(n) ||
+          t.isTaggedTemplateExpression(n);
+      });
+      if (opaque) return "renders an untracked call";
+    }
+    let serverFn = false;
+    t.traverseFast(value, (n) => {
+      serverFn ||=
+        (t.isCallExpression(n) || t.isOptionalCallExpression(n)) &&
+        exprHasServerSources(n.callee);
+    });
+    return serverFn ? "calls a server-derived function" : null;
+  };
+  // Whether a template (and, recursively, everything it renders) is a
+  // self-contained client instance: the reason it is not, or null.
+  const childUnsafety = new Map<unknown, string | null>();
+  const getChildUnsafety = (tagPath: t.NodePath<t.MarkoTag>): string | null => {
+    const file = loadFileForTag(tagPath);
+    if (!file) return "must be analyzable";
+    const cached = childUnsafety.get(file);
+    if (cached !== undefined) return cached;
+    // A template cycle can only terminate through data the region cannot
+    // deliver: fail closed while the entry is pending.
+    childUnsafety.set(file, "renders a template cycle");
+    let reason: string | null = null;
+    file.path.traverse({
+      MarkoPlaceholder(ph) {
+        reason ||= nestedValueUnsafety(ph.node.value, ph.node.value.extra);
+      },
+      // Imported code can carry untracked server knowledge, and aliasing
+      // hides call shapes: any module binding fails closed.
+      Identifier(id) {
+        if (reason || !id.isReferencedIdentifier()) return;
+        if (id.node.name === "$global") {
+          reason = "reads `$global` (it would go stale)";
+        } else if (id.scope.getBinding(id.node.name)?.kind === "module") {
+          reason = "references imported code";
+        }
+      },
+      MarkoTag(inner) {
+        if (reason) return;
+        const name =
+          t.isStringLiteral(inner.node.name) && inner.node.name.value;
+        if (!name) {
+          reason = "renders a dynamic tag";
+          return;
+        }
+        // Boundaries and controllables lean on patch-era machinery this
+        // instance never receives.
+        if (name === "try" || name === "await" || name === "lifecycle") {
+          reason = `uses \`<${name}>\``;
+          return;
+        }
+        for (const innerAttr of inner.node.attributes) {
+          if (innerAttr.type !== "MarkoAttribute") {
+            if (getTagDef(inner)?.template) {
+              reason = "renders a nested child with a spread";
+              return;
+            }
+            continue;
+          }
+          if (innerAttr.bound || /Change$/.test(innerAttr.name)) {
+            reason = "uses a controllable binding";
+            return;
+          }
+          reason ||= nestedValueUnsafety(
+            innerAttr.value,
+            innerAttr.value.extra,
+          );
+          if (reason) return;
+        }
+        if (getTagDef(inner)?.template) {
+          if (inner.node.var) {
+            reason = "renders a nested child with a tag variable";
+          } else if (
+            inner.node.body.body.length ||
+            inner.node.attributeTags?.length ||
+            inner.node.arguments?.length
+          ) {
+            reason = "renders a nested child with body content or arguments";
+          } else {
+            const ownership =
+              inner.node.extra && getPersistedGroupOwnership(inner.node.extra);
+            if (
+              !ownership &&
+              (inner.node.attributes.length || inner.node.arguments?.length)
+            ) {
+              reason = "renders a nested child without analyzable input";
+            }
+            for (const group of ownership || []) {
+              if (group.serverRequired || group.globalFed) {
+                reason = "feeds a nested child an input it needs server-owned";
+                break;
+              }
+            }
+            reason ||= getChildUnsafety(inner);
+          }
+        }
+      },
+    });
+    childUnsafety.set(file, reason);
+    return reason;
+  };
   // A server-derived function re-binds to the live scope on patch, so
   // server values its body captures read stale slots forever: fail closed.
   const assertNoServerFnCalls = (node: t.Node, value: t.Node) => {
@@ -690,63 +808,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               "a child inside client-owned structure must be analyzable",
             );
           }
-          // Transitive knowledge is render-time only, so leaf, clean
-          // children admit — judged from the child's own AST alone.
-          let readsGlobal = false;
-          let grandchild = false;
-          let patchEra: string | false = false;
-          let importedRef = false;
-          childFile!.path.traverse({
-            // Imported code can carry untracked server knowledge, and
-            // aliasing hides call shapes: any module binding fails closed.
-            Identifier(id) {
-              if (!id.isReferencedIdentifier()) return;
-              readsGlobal ||= id.node.name === "$global";
-              importedRef ||=
-                id.scope.getBinding(id.node.name)?.kind === "module";
-            },
-            MarkoTag(childTag) {
-              const name =
-                t.isStringLiteral(childTag.node.name) &&
-                childTag.node.name.value;
-              grandchild ||= !name || !!getTagDef(childTag)?.template;
-              // Boundaries and controllables lean on patch-era machinery
-              // this instance never receives.
-              if (name === "try" || name === "await" || name === "lifecycle") {
-                patchEra = `\`<${name}>\``;
-              }
-              for (const childAttr of childTag.node.attributes) {
-                if (
-                  childAttr.type === "MarkoAttribute" &&
-                  (childAttr.bound || /Change$/.test(childAttr.name))
-                ) {
-                  patchEra = "a controllable binding";
-                }
-              }
-            },
-          });
-          if (readsGlobal) {
+          // Transitive safety recurses the rendered tree with a memo:
+          // every template below must be a self-contained client instance.
+          const unsafety = getChildUnsafety(tag);
+          if (unsafety) {
             unsupported(
               node,
-              "a child reading `$global` inside client-owned structure would go stale",
-            );
-          }
-          if (grandchild) {
-            unsupported(
-              node,
-              "a child rendering other custom tags inside client-owned structure is not supported yet",
-            );
-          }
-          if (patchEra) {
-            unsupported(
-              node,
-              `a child using ${patchEra} inside client-owned structure is not supported yet`,
-            );
-          }
-          if (importedRef) {
-            unsupported(
-              node,
-              "a child referencing imported code inside client-owned structure is not supported yet",
+              `a child inside client-owned structure ${unsafety}`,
             );
           }
           for (const attr of node.attributes) {
