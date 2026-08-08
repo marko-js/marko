@@ -86,12 +86,6 @@ A `<script>` effect that writes a `<let>` it transitively reads re-renders forev
 
 `trackReferencesForBinding` throws `Tag variable circular references are not supported.` only when a reference's `MarkoAttribute` root is the binding's own tag, so `<const/a=b/><const/b=a/>` passes and compiles. The output then references an undeclared `$b_getter` (`const a = $b_getter;`) and dies with a ReferenceError at render time instead of a compile error. Detect the cycle through the binding graph and reuse the same diagnostic. Verify: `pnpm run compile -o html -d cycle.marko` on `<const/a=b/><const/b=a/><div>${a}${b}</div>` succeeds and emits `$b_getter`.
 
-## Serialize `DOMException`, `AbortSignal`, and `Event`
-
-`packages/runtime-tags/src/html/serializer.ts` › `writeUnknownObject` | 2026-07-23 | impact:low | effort:low
-
-All three fall past the constructor `switch` to `throwUnserializable`, so a resumed value holding one is dropped even though they reach templates through request handling. Each has a constructor form that round-trips its observable state (`new DOMException(message, name)`, `AbortSignal.abort(reason)`, `new Event(type, { bubbles, cancelable, composed })`), but a not-yet-aborted `AbortSignal` has no faithful representation — resume would have to wire it to a fresh controller, so settle that semantics before adding it. Worth the runtime bytes only if a real template needs them. These need `case globalThis.X:` guards in the `proto?.constructor` switch (boxed primitives were ruled wont-fix there; see the comment in `writeUnknownObject`). Verify: pass each through `Serializer#stringifyScopes` and watch it drop, against `new URL("https://a.b")` as a supported control.
-
 ## Unify `packages/runtime-class/src` on ESM so its module type can be declared
 
 `packages/runtime-class/package.json` › `files` | 2026-07-24 | impact:low | effort:high
