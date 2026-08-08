@@ -15,9 +15,23 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let text = "hi";
-	let open = false;
+	let open = true;
 	_html("<main>");
-	if ($scope0_reason) _if(() => {}, $scope0_id, "a");
+	if ($scope0_reason) _if(() => {
+		{
+			const $scope1_id = _scope_id();
+			_set_serialize_reason(1);
+			const $childScope = _peek_scope_id();
+			field_default({
+				value: text,
+				valueChange: _resume((_new_text) => {
+					text = _new_text;
+				}, "a0", $scope1_id)
+			});
+			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			return 0;
+		}
+	}, $scope0_id, "a");
 	_html(`<p>${_escape(text)}${_el_resume($scope0_id, "b")}</p><button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && writeScope($scope0_id, {
