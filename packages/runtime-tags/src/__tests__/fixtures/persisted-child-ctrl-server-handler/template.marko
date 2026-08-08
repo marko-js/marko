@@ -1,9 +1,7 @@
-<let/text="hi"/>
-<let/open=true/>
+<let/open=false/>
 <main>
   <if=open>
-    <field value:=text/>
+    <field value=input.value valueChange=input.valueChange/>
   </if>
-  <p>${text}</p>
   <button onClick() { open = !open }>+</button>
 </main>
