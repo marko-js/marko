@@ -550,8 +550,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           reason = "renders a dynamic tag";
           return;
         }
-        // Boundaries and controllables lean on patch-era machinery this
-        // instance never receives.
+        // Boundaries lean on patch-era machinery this instance never
+        // receives.
         if (name === "try" || name === "await" || name === "lifecycle") {
           reason = `uses \`<${name}>\``;
           return;
@@ -605,6 +605,21 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     childUnsafety.set(file, reason);
     return reason;
+  };
+  // A server-derived change handler ships as an unbound registry factory
+  // into a skipped region (no `_patch_bind` entry rebinds it), so calls
+  // after a patch die: fail closed until fills learn to rebind.
+  const assertNoServerChangeHandler = (attr: t.MarkoAttribute) => {
+    if (
+      /Change$/.test(attr.name) &&
+      !t.isFunction(attr.value) &&
+      exprHasServerSources(attr.value)
+    ) {
+      unsupported(
+        attr,
+        "a server-derived change handler cannot feed client-owned structure",
+      );
+    }
   };
   // Provenance-free feeds (imports, opaque reads) can still change across
   // patches, so only an absent or constant attr leaves a group inert.
@@ -888,6 +903,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             if (attr.type !== "MarkoAttribute") {
               unsupported(attr);
             } else {
+              assertNoServerChangeHandler(attr);
               assertDeliverableInClientOwned(
                 attr,
                 attr.value,
@@ -1142,6 +1158,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           isEventOrChangeHandler(attr.name)
         ) {
           if (clientOwnedStructure) {
+            assertNoServerChangeHandler(attr);
             forEach(
               (attr.value.extra as t.FunctionExtra | undefined)
                 ?.referencedBindingsInFunction,
@@ -1173,6 +1190,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             );
           }
           if (clientOwnedStructure) {
+            if (attr.type === "MarkoAttribute") {
+              assertNoServerChangeHandler(attr);
+            }
             assertDeliverableInClientOwned(attr, attr.value, attr.value.extra);
           }
         }

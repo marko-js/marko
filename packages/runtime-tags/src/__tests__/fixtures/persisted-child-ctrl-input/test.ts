@@ -13,9 +13,9 @@ function type(value: string) {
   };
 }
 
-// A controllable bound through the child's input writes back to parent
-// state over tag-args: typing updates both sides, patches stay inert.
+// Open on first paint: resume wires the child's controllable, typing
+// writes back to parent state over tag-args, and patches stay inert.
 export const config: TestConfig = {
   persisted: true,
-  steps: [{}, click, type("yo"), {}, click],
+  steps: [{}, type("yo"), {}, click, click],
 };

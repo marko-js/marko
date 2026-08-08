@@ -1,21 +1,6 @@
 # Render
 ```html
 <main>
-  <p>
-    hi
-  </p>
-  <button>
-    +
-  </button>
-</main>
-```
-
-# Update
-```js
-document.querySelector("button").click();
-```
-```html
-<main>
   <input
     value="hi"
   />
@@ -29,12 +14,6 @@ document.querySelector("button").click();
     +
   </button>
 </main>
-```
-## Change
-```
-INSERT: main > :is(input, em)
-UPDATE: main > em::text " " => "hi"
-UPDATE: main > input[value] null => "hi"
 ```
 
 # Update
@@ -85,4 +64,31 @@ document.querySelector("button").click();
 ```
 REMOVE: main > input
 REMOVE: main > em
+```
+
+# Update
+```js
+document.querySelector("button").click();
+```
+```html
+<main>
+  <input
+    value="yo"
+  />
+  <em>
+    yo
+  </em>
+  <p>
+    yo
+  </p>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+INSERT: main > :is(input, em)
+UPDATE: main > em::text " " => "yo"
+UPDATE: main > input[value] null => "yo"
 ```
