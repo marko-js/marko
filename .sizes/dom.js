@@ -1,4 +1,4 @@
-// size: 26064 (min) 9672 (brotli)
+// size: 26059 (min) 9690 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -95,7 +95,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   readyIds,
   isResuming,
   cloneCache = {},
-  R = /[^\p{L}\p{N}]/gu,
+  R = /[\p{L}\p{N}]/gu,
   inputType = "",
   controllableScripts = {},
   controllableRenders = {},
@@ -1343,10 +1343,9 @@ function resolveCursorPosition(inputType, initialPosition, initialValue, updated
       after = initialValue.slice(initialPosition);
     if (updatedValue.startsWith(before)) return initialPosition;
     if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
-    let count = before.replace(R, "").length,
-      pos = 0;
-    for (; count && updatedValue[pos];) updatedValue[pos++].replace(R, "") && count--;
-    return pos;
+    let count = before.match(R)?.length;
+    for (; count && R.test(updatedValue);) count--;
+    return count ? updatedValue.length : R.lastIndex;
   }
   return -1;
 }
