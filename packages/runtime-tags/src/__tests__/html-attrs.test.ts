@@ -40,7 +40,8 @@ describe("runtime-tags/html/attrs", () => {
       assert.equal(helpers._attr("foo", "bar baz"), ' foo="bar baz"');
       assert.equal(helpers._attr("foo", "bar\tbaz"), ' foo="bar\tbaz"');
       assert.equal(helpers._attr("foo", "bar\nbaz"), ' foo="bar\nbaz"');
-      assert.equal(helpers._attr("foo", "bar\rbaz"), ' foo="bar\rbaz"');
+      // A raw CR would parse back as LF; the reference survives normalization.
+      assert.equal(helpers._attr("foo", "bar\rbaz"), ' foo="bar&#13;baz"');
       assert.equal(helpers._attr("foo", "bar\fbaz"), ' foo="bar\fbaz"');
       assert.equal(
         helpers._attr("foo", "bar\"baz'qux"),
@@ -198,7 +199,7 @@ describe("runtime-tags/html/attrs", () => {
       assert.equal(helpers._attr_class("foo bar"), ' class="foo bar"');
       assert.equal(helpers._attr_class("foo\tbar"), ' class="foo\tbar"');
       assert.equal(helpers._attr_class("foo\nbar"), ' class="foo\nbar"');
-      assert.equal(helpers._attr_class("foo\rbar"), ' class="foo\rbar"');
+      assert.equal(helpers._attr_class("foo\rbar"), ' class="foo&#13;bar"');
       assert.equal(helpers._attr_class("foo\fbar"), ' class="foo\fbar"');
       assert.equal(
         helpers._attr_class("foo\"bar'baz"),
@@ -275,7 +276,10 @@ describe("runtime-tags/html/attrs", () => {
       assert.equal(helpers._attr_style("color: red"), ' style="color: red"');
       assert.equal(helpers._attr_style("color:\tred"), ' style="color:\tred"');
       assert.equal(helpers._attr_style("color:\nred"), ' style="color:\nred"');
-      assert.equal(helpers._attr_style("color:\rred"), ' style="color:\rred"');
+      assert.equal(
+        helpers._attr_style("color:\rred"),
+        ' style="color:&#13;red"',
+      );
       assert.equal(helpers._attr_style("color:\fred"), ' style="color:\fred"');
       assert.equal(
         helpers._attr_style('color:"red\'blue"'),

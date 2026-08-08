@@ -194,12 +194,6 @@ One module-level `tickQueue` holds every in-flight render's `onNext`, and `flush
 
 `writeError` emits exactly `new <Ctor>(message[, {cause}])`, so every own enumerable property an application hung on an error — `status`/`code`/`details`, an assigned `name` — is dropped on resume; `writeAggregateError` has the same gap. This is reachable from idiomatic source: `<try><@catch|err|><button onClick() { report(err) }>` compiles to `_scope($scope2_id, { err })`, so the server renders with `err.status === 404` while the resumed handler reads `undefined`, with no diagnostic. Plain objects round-trip all own props and the serializer already preserves `cause` and relinks `AggregateError.errors`, so extend both writers to append the remaining own props, deferring circular ones through `addAssignment` and emitting nothing extra when there are none. Re-verify: `stringifyScopes([[1,{},{value:Object.assign(new Error("boom"),{status:404})}]])` prints `_=>[1,{value:new Error("boom")}]`.
 
-## Escape a carriage return in an attribute value so SSR and CSR agree
-
-`packages/runtime-tags/src/html/attrs.ts` › `attrAssignment` | 2026-07-27 | impact:low | effort:low
-
-`attrAssignment` escapes only `"`, `'` and `&`, but the HTML input-stream preprocessor normalizes every CR and CRLF in an attribute value to a single LF, so `_attr("data-x", "a\rb")` parses back as `"a\nb"` while CSR (`dom/dom.ts` › `_attr` → `setAttribute`) writes the CR verbatim. `_attr`, `_attrs`, `_attr_class` and `_attr_style` all funnel through this escaper, so a controlled `<input value=…>` resumes with a `defaultValue` the server never rendered. Writing `\r` as `&#13;` survives, because character references are decoded after newline normalization. A U+0000 is separately replaced with U+FFFD and cannot be escaped away, leaving only a MARKO_DEBUG warning. This is a different defect from the entry "Escape a carriage return in a `<textarea>` body so SSR and CSR agree", which concerns textarea _text_ content and the `_escape` path rather than this attribute-value escaper — but a complete "CR survives SSR" story needs both landed. Re-verify: parse `"<div" + _attr("data-x", "a\rb") + "></div>"` with jsdom — `getAttribute("data-x")` is `"a\nb"`, while `el.setAttribute("data-x", "a\rb")` keeps `"a\rb"`.
-
 ## Reject a `<style>` interpolation inside an unquoted `url()` — the emitted `url(var(--…))` silently invalidates the declaration
 
 `packages/runtime-tags/src/translator/util/style-interpolation.ts` › `checkStyleInterpolations` | 2026-07-27 | impact:med | effort:low
