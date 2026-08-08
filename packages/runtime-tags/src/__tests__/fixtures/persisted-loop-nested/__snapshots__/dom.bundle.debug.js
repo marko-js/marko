@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button class=o>o</button><button class=i>i</button></main>";
 const $walks = "D%b b l";
-const $for_content2__input_note = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_note", /*@__PURE__*/ _closure_get("input_note", ($scope) => _text($scope["#text/2"], $scope._._.input_note), ($scope) => $scope._._), _closure);
+const $for_content2__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_note", /*@__PURE__*/ _closure_get("input_note", ($scope) => _text($scope["#text/2"], $scope._._.input_note), ($scope) => $scope._._), 0);
 const $for_content2__setup = ($scope) => {
 	$for_content2__input_note($scope);
 	$for_content2__o._($scope);

@@ -192,6 +192,49 @@ export function _fill_join_deep<T extends SignalFn>(
   return fillJoin(key, valueAccessor, join, dispatch);
 }
 
+// Deep closure positions of one key reassemble the indexed composite:
+// each registers at its compile-time index; one dispatcher selects per
+// subscriber, and a shaken position is simply absent (nothing to update).
+const closureFillJoins: Record<string, SignalFn[] & { d?: 1 }> = {};
+export function _fill_join_closure<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  index: number,
+): T {
+  const signals = (closureFillJoins[key] ??= []);
+  const closureJoin = join as T & {
+    [ClosureSignalProp.ScopeInstancesAccessor]: string;
+    [ClosureSignalProp.SignalIndexAccessor]: string;
+    [ClosureSignalProp.Index]: number;
+  };
+  signals[index] = join;
+  // Client-created positions stamp this index into their scope, keeping
+  // it in agreement with what the server serialized.
+  closureJoin[ClosureSignalProp.Index] = index;
+  if (!signals.d) {
+    signals.d = 1;
+    fillJoin(key, valueAccessor, join, (scope) => {
+      const instances = scope[
+        closureJoin[ClosureSignalProp.ScopeInstancesAccessor]
+      ] as Set<Scope> | undefined;
+      if (instances) {
+        const signalIndex = closureJoin[ClosureSignalProp.SignalIndexAccessor];
+        for (const childScope of instances) {
+          if (
+            childScope[AccessorProp.Gen] > 0 &&
+            childScope[AccessorProp.Gen] < runId
+          ) {
+            const sig = signals[(childScope[signalIndex] as number) || 0];
+            if (sig) queueRender(childScope, sig, -1);
+          }
+        }
+      }
+    });
+  }
+  return join;
+}
+
 // A binding's declaration signal already writes + queues its downstream
 // (closures included), so it registers as the fill directly, fused so
 // compiled templates spend one call, not two.
