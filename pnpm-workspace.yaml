@@ -1,6 +1,9 @@
 packages:
   - packages/*
 linkWorkspacePackages: true
+trustPolicy: no-downgrade
+blockExoticSubdeps: true
+minimumReleaseAge: 10080
 # @zcov/* is first-party: the release-age gate guards against a compromised
 # third-party publish, which is not the threat model for what we publish.
 minimumReleaseAgeExclude:
