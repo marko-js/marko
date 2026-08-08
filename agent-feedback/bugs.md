@@ -320,12 +320,6 @@ For each non-repeated nested tag the `<`-branch unconditionally adds `loadAttrib
 
 For DOM, `translate.exit` folds the fallback into the derived signal itself (`value || _id($scope)`) and `_id` bumps a per-`$global` counter, so a nullish `value` mints a new id every time that signal recomputes — unlike valueless `<id/x/>`, which calls `_id` once from `$setup`. `<id/x=input.id>` is what `cheatsheet.md` recommends for reusable tags, so a caller omitting the id gets an identifier that changes on every update, never matches the resumed server id, and leaves outside references (CSS, `aria-*`, focus targets) stale. Mint it at setup and have the signal read that slot, leaving the HTML branch alone; keep `||`, since `tags/id.d.marko` types `value` as `string | null | false`. Fixture `id-tag` covers only the valueless form. Re-verify: mount compiled `<id/x=input.id>` + `<div id=x>` under jsdom and `update({ id: undefined, n })` twice — `id` goes `cM_0`, `cM_1`, `cM_2`.
 
-## Match `undefined`, not `null`, in `shallowClone`'s constructor switch
-
-`packages/compiler/src/babel-plugin/index.js` › `shallowClone` | 2026-07-27 | impact:low | effort:low
-
-`shallowClone` copies `metadata.marko` from the cached analyze file into each output's translate metadata by dispatching on `v.constructor`, but the `case null:` arm beside `case Object:` is dead — a prototype-less object has `constructor === undefined`. An `Object.create(null)` metadata value therefore hits `default` and aborts the compile with `TypeError: Cannot read properties of undefined (reading 'name')` out of `Ctor.name` instead of being spread-cloned. Fix: `case undefined:` plus `Ctor?.name ?? "null prototype object"` in the default message, and keep the `for (const key in data)` loop string-keyed — symbol metadata such as `IMPORTS_KEY` must not cross analyze→translate. Re-verify: `compileSync` any template with a translator whose analyze visitor sets `file.metadata.marko.custom = Object.create(null)`; it throws today, while `{}` clones fine.
-
 ## Rewrite the `<tag-name>` shorthand in `export ... from` position, or reject it
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `default` | 2026-07-30 | impact:med | effort:low

@@ -380,7 +380,8 @@ function shallowClone(data) {
             clone[key] = [...v];
             break;
           case Object:
-          case null:
+          // A prototype-less object's `constructor` is undefined.
+          case undefined:
             clone[key] = { ...v };
             break;
           case Map:
@@ -391,7 +392,9 @@ function shallowClone(data) {
             break;
 
           default:
-            throw new Error(`Unsupported metadata type of ${Ctor.name}`);
+            throw new Error(
+              `Unsupported metadata type of ${Ctor?.name ?? Ctor}`,
+            );
         }
       }
     }
