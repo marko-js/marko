@@ -1,0 +1,8 @@
+<let/open=false/>
+<main>
+  <if=open>
+    <const/label=(fn = input.fn) => fn()/>
+    <p>${label()}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>
