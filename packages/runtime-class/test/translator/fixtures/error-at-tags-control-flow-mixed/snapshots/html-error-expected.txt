@@ -3,7 +3,7 @@ CompileError:
        5 |         </@header>
        6 |
     >  7 |         Body content
-         |         ^ Cannot have attribute tags and body content under a control flow tag.
+         |         ^^^^^^^^^^^^ Cannot have attribute tags and body content under a control flow tag.
        8 |     </>
        9 | </>
       10 |
