@@ -116,12 +116,6 @@ The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix su
 
 `getOrCreateHtmlLoadWrapped` caches its wrapper in a per-program map keyed only by `readyId`, so a second lazy import of the same `.marko` silently reuses the first wrapper — including the first import's trigger list — for all its references. The DOM half does not dedupe, so server and client disagree about when the asset loads. `html/assets.ts` › `addAsset` warns about mismatched triggers under MARKO_DEBUG, but the dedupe means the second trigger set never reaches it, so a same-program conflict is silent. Raise a `buildCodeFrameError` when the second import's `LoadImportConfig` differs from the cached one. Re-verify: compile a template importing `./child.marko` with `load: "render"` and with `load: "idle"` — `output: "html"` emits only `$A_withLoadAssets` with no triggers, while `output: "dom"` emits a separate `_load_idle_trigger()`.
 
-## Declare the element-getter `return=` in the `html-comment` / `html-script` / `html-style` type stubs
-
-`packages/runtime-tags/tags/html-comment.d.marko` › `Input` | 2026-07-23 | impact:med | effort:low
-
-All three tags accept a tag variable that resolves to the DOM node — `<html-comment/c><html-script/s><html-style/y>` compiles to `_el_read($scope["#comment/0"])`, `_el_read($scope["#script/1"])`, `_el_read($scope["#style/2"])`, and `core/html-comment.ts` › `analyze` wires it through `trackDomVarReferences`. But `tags/html-comment.d.marko` is only `export interface Input {}` and the script/style stubs only extend `Marko.HTML.*`; none declares a `return=`. Because each tag def sets `types`, language-tools types the tag variable from the stub's Return — which is void — so the variable resolves to `never` and calling it fails with TS2349; add a `return=` to each the way `tags/id.d.marko` does, e.g. `return=(null! as () => Comment)`, `() => HTMLScriptElement`, `() => HTMLStyleElement`. See also "Make `<let>`'s `value` optional in `tags/let.d.marko`; the valueless `<let/x/>` compiles but fails type-check" — the other broken stub in `tags/`, and its `return=(input.value as T)` is the cast pattern these clauses should follow. Re-verify: type-check `<html-comment/c>hi</html-comment>` followed by `<const/x=c()/>`.
-
 ## Align the spread `<input>` controllable ladders in HTML `_attrs` and DOM `_controllable_input`
 
 `packages/runtime-tags/src/html/attrs.ts` › `_attrs` | 2026-07-23 | impact:med | effort:med
@@ -217,12 +211,6 @@ One module-level `tickQueue` holds every in-flight render's `onNext`, and `flush
 `packages/runtime-tags/src/translator/core/if.ts` › `assertHasValueAttribute` | 2026-07-27 | impact:low | effort:low
 
 `assertHasValueAttribute` and its twin in `core/show.ts` (reached from `assertValidShow`) require `t.isMarkoAttribute(valueAttr) && valueAttr.default`, so `<if value=cond>`, `<else-if value=cond>` and `<show value=cond>` are rejected with "requires a `value=` attribute" while the caret sits on source that has one. The parser emits the identical `name: "value"` attribute for both spellings (`packages/compiler/src/babel-plugin/parser.js` › `onAttrName` sets `default: !name`), and `core/let.ts`, `core/const.ts`, `core/log.ts`, `core/debug.ts`, `core/id.ts` and `core/await.ts` all accept both. Relax both asserts to also allow `attr.name === "value"`, and give `flattenTextOnlyConditional` in the same file the same treatment or the text-only chain optimization silently stops applying to the written-out form. Re-verify: `pnpm run compile -o html -d` on `<div><if value=input.x>a</if></div>` fails today, while the shorthand plus `<const/y value=input.a/>` and `<await|v| value=input.p>${v}</await>` compile.
-
-## Make `<let>`'s `value` optional in `tags/let.d.marko`; the valueless `<let/x/>` compiles but fails type-check
-
-`packages/runtime-tags/tags/let.d.marko` › `Input` | 2026-07-27 | impact:med | effort:low
-
-`Input` declares `value: T` as required, but `src/translator/core/let.ts` › `analyze` only requires the tag variable and `translate.exit` falls back to `t.markoAttribute("value", t.identifier("undefined"))`, so `<let/x/>` compiles to `let x = undefined;`. The valueless form is a first-class idiom — eight in-repo fixtures use it, starting with `let-undefined-until-dom` — yet every editor and `mtc` check hard-fails with TS2345 "Property 'value' is missing…", which reads as tag misuse rather than a stub gap; `<const>`'s `analyze` really does throw on a missing value, so `tags/const.d.marko` is correct as-is. Mark it `value?: T` **and** change the return to `return=(input.value as T)`: adding only the `?` widens the return to `T | undefined` and regresses every valued `<let>` (`<let/n=0/>` then `n.toFixed(2)` reports TS18048), while the cast keeps inference intact. The same idiom sits one line over in `valueChange=(input.valueChange as (newValue: K) => void)`, and is the pattern for "Declare the element-getter `return=` in the `html-comment` / `html-script` / `html-style` type stubs" — the other broken `tags/` stub, worth fixing in the same pass. Re-verify with `node_modules/.bin/tsc --noEmit --strict` against a model of the stub: `declare function f<T, K = T>(input: Directives & Input<T, K>): T`.
 
 ## Create a native-tag binding when `content=` evaluates confidently; today `<div content=undefined/>` aborts the DOM compile with an internal error
 
@@ -388,12 +376,6 @@ fields whose resolved form is lossy. Re-verify by server-rendering
 `<const/fmt=new Intl.DateTimeFormat("ja", { month: "long", weekday: "long" })/>`
 reached from browser-updating content, then comparing `fmt.format(date)` before
 and after resume.
-
-## Type `<try>`'s `@catch` body parameter the way TypeScript types a `catch` binding
-
-`packages/runtime-tags/tags/try.d.marko` › `Input` | 2026-08-03 | impact:med | effort:low
-
-`catch?: Marko.AttrTag<{ content?: Marko.Body<[unknown]> }>` hardcodes `unknown`, so `<@catch|err|>${err.message}</@catch>` — the shape `packages/runtime-tags/cheatsheet.md`'s own Async section teaches — fails type-check in every otherwise-correct `<try>` template. Because that `unknown` is written down rather than inferred, `useUnknownInCatchVariables` cannot move it either way, and the tag diverges from the language in both directions: under `strict:false` a plain `catch (e) { e.message }` is clean while the template reports TS2339, and under `{ strict: true, useUnknownInCatchVariables: false }` the plain `catch` is clean while the template still reports TS18046. Either declare the parameter `any`, so `<@catch>` tracks a project's own `catch` blocks, or keep `unknown` deliberately and put the narrowing idiom (`err instanceof Error ? err.message : String(err)`) in the cheatsheet, since nothing in-repo currently shows it. Re-verify: run `mtc` over a `<try>` whose `<@catch|err|>` body reads `err.message`, under each of those two tsconfigs.
 
 ## Bridge Class-API function props nested below the top level of a Tags-API child's input
 
