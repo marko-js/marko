@@ -218,12 +218,6 @@ One module-level `tickQueue` holds every in-flight render's `onNext`, and `flush
 
 `checkStyleInterpolations` rejects a `${...}` in a selector, at-rule prelude, property name, quoted string and glued to a unit, but not inside an unquoted `url(...)`, where `url(` followed by a non-quote tokenizes as a raw url-token ending at the first `)`, so the substituted `var(--…)` never resolves and the declaration is dropped. `<style>.a { background: url(${x}); }</style>` compiles with no diagnostic and extracts `.a { background: url(var(--M_…)); }`; `image-set(url(${x}) 1x)` behaves the same, and the core-tag docs list only the other illegal positions, so an author cannot discover it. The function already tracks `groupDepth`, so record whether a group was opened by a `url` ident and throw a `styleStringMsg`-family error pointing at moving the whole `url(...)` into the interpolated value or at `html-style`. Re-verify: `pnpm run compile -o html -d` on `<let/x="a.png"/>` plus `<style>.a { background: url(${x}); }</style>` succeeds today, while the same file with `.a::after { content: "${x}"; }` fails with the "is not substituted inside a quoted CSS string" error.
 
-## Use the cooked value, not `raw`, for a single-quasi template-literal tag name
-
-`packages/runtime-tags/src/translator/util/get-tag-name.ts` › `getTagName` | 2026-07-27 | impact:low | effort:low
-
-`analyzeTagNameType` classifies a single-quasi `TemplateLiteral` tag name as `TagNameType.NativeTag` (a supported form, covered by the `native-tag-name` fixture), but `getTagName` returns `quasis[0].value.raw`, so escape sequences in the name are never decoded and reach the emitted markup verbatim with no diagnostic. Reading `quasis[0].value.cooked` is the whole fix: `cooked` is always populated here because an invalid escape in an untagged template literal is already a hard parse error, and the only consumer that emits the value as markup is `visitors/tag/native-tag.ts`. Re-verify: compile a file whose only line is ``<${`h\x31`}>hi</>`` with `-o dom -d` and read `$template` — it says `<h\x31>` where it should say `<h1>`.
-
 ## Route `tagNameLoad` through the compat dynamic-tag path when a Tags-API parent lazily imports a Class-API child
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med
