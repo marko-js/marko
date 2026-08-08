@@ -7,7 +7,8 @@ export function getTagName<T extends t.MarkoTag>(
       return tag.node.name.value;
     case "TemplateLiteral":
       if (tag.node.name.quasis.length === 1) {
-        return tag.node.name.quasis[0].value.raw;
+        // Always populated: an invalid escape in an untagged literal is a parse error.
+        return tag.node.name.quasis[0].value.cooked!;
       }
       break;
   }
