@@ -1,0 +1,8 @@
+// A computed string-literal key is statically known, so `value:=a` finds the
+// existing `["aChange"]` handler and `value:=b` synthesizes a `"bChange"` lookup.
+<const/{ ["a"]: a, ["aChange"]: aChange } = { a: "A", aChange(v) {} }/>
+<const/{ ["b"]: b } = { b: "B", bChange(v) {} }/>
+<let/n = 1/>
+<button onClick() { n++ }>inc ${n}</button>
+<reveal value:=a/>
+<reveal value:=b/>
