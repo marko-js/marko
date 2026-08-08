@@ -502,6 +502,21 @@ export default {
 
         let writeAtStartOfBody: t.Expression | undefined;
 
+        if (
+          tagName === "html" &&
+          getMarkoOpts().linkAssets &&
+          !tag.node.body.body.some(
+            (child) =>
+              child.type === "MarkoTag" &&
+              child.name.type === "StringLiteral" &&
+              child.name.value === "head",
+          )
+        ) {
+          // With no `<head>` child (cross-template layouts are not detected),
+          // assets flush here to land in the implicit head.
+          writeAtStartOfBody = callRuntime("_flush_head");
+        }
+
         if (tagName === "select") {
           if (staticControllable) {
             htmlSelectArgs.set(tag.node, {
