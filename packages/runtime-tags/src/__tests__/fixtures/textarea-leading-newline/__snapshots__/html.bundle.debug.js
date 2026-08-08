@@ -7,6 +7,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		bound = _new_bound;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))}</textarea>${_el_resume($scope0_id, "#textarea/1")}<textarea id=body>${_textarea_value(input.v)}</textarea>${_el_resume($scope0_id, "#textarea/2", $sg__input_v)}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#textarea/1": ["valueChange"] });
 	_resume_branch($scope0_id);
 }, 1);

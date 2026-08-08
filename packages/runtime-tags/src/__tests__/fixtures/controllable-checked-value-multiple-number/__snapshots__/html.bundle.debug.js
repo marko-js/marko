@@ -11,6 +11,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		checked = v.map((it) => Number(it));
 	}, "__tests__/template.marko_0/checkedValueChange3", $scope0_id), 2)} type=checkbox>${_el_resume($scope0_id, "#input/2")}<span>${_escape(checked)}${_el_resume($scope0_id, "#text/3")}</span><button>Reset</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0, {
+		"ControlledHandler:#input/0": ["checkedValueChange", "3:53"],
+		"ControlledHandler:#input/1": ["checkedValueChange", "4:55"],
+		"ControlledHandler:#input/2": ["checkedValueChange", "5:53"]
+	});
 	_resume_branch($scope0_id);
 }, 1);

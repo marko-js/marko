@@ -25,11 +25,16 @@ import {
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorProp } from "../../util/get-accessor-enums";
+import { getAccessorPrefix } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOptimize,
+  isOutputHTML,
+} from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
@@ -37,6 +42,7 @@ import {
   BindingType,
   createBinding,
   dropNodes,
+  getPrefixedScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
@@ -61,7 +67,11 @@ import {
   getSerializeReason,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
-import { addHTMLEffectCall, addStatement } from "../../util/signals";
+import {
+  addHTMLEffectCall,
+  addStatement,
+  setSectionDebugVar,
+} from "../../util/signals";
 import * as structure from "../../util/structure";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import {
@@ -489,6 +499,58 @@ export default {
           injectNonce,
         } = usedAttrs;
         let { spreadExpression } = usedAttrs;
+
+        // Name the change-handler slot after the attribute the author wrote;
+        // other internal slots get generic serializer descriptions instead.
+        if (!isOptimize() && nodeBinding) {
+          const changeAttr = staticControllable?.attrs[1];
+          if (changeAttr) {
+            const handler = evaluate(changeAttr.value);
+            if (!(handler.confident && handler.computed == null)) {
+              setSectionDebugVar(
+                tagSection,
+                getPrefixedScopeAccessor(
+                  nodeBinding,
+                  getAccessorPrefix().ControlledHandler,
+                ),
+                changeAttr.name,
+                changeAttr.loc,
+              );
+            }
+          } else if (spreadExpression) {
+            // A lone spread is unambiguous provenance; with several, a merged
+            // property could come from any, so the serializer's generic
+            // phrasing (plus the runtime-read property name) stays honest.
+            const spreads = tag.node.attributes.filter((attr) =>
+              t.isMarkoSpreadAttribute(attr),
+            );
+            const spreadLoc = spreads.length === 1 && spreads[0].value.loc;
+            if (spreadLoc && spreadLoc.start.index != null) {
+              const name =
+                "..." +
+                tag.hub.file.code.slice(
+                  spreadLoc.start.index,
+                  spreadLoc.end.index,
+                );
+              for (const prefix of [
+                getAccessorPrefix().ControlledHandler,
+                getAccessorPrefix().EventAttributes,
+              ] as const) {
+                if (
+                  prefix !== getAccessorPrefix().ControlledHandler ||
+                  getSpreadControllableValueProps(tagName)
+                ) {
+                  setSectionDebugVar(
+                    tagSection,
+                    getPrefixedScopeAccessor(nodeBinding, prefix),
+                    name,
+                    spreadLoc,
+                  );
+                }
+              }
+            }
+          }
+        }
 
         // A controlled `<select>` moves the whole pending buffer into its
         // content arrow at exit, so earlier siblings have to leave it first.

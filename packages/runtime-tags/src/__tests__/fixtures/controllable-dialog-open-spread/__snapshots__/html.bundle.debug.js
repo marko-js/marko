@@ -6,7 +6,10 @@ var my_dialog_default = _template("__tests__/tags/my-dialog.marko", (input) => {
 	_attrs_content(input, "#dialog/0", $scope0_id, "dialog");
 	_html(`</dialog>${_el_resume($scope0_id, "#dialog/0")}`);
 	_script($scope0_id, "__tests__/tags/my-dialog.marko_0_input#2");
-	writeScope($scope0_id, {}, "__tests__/tags/my-dialog.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/tags/my-dialog.marko", 0, {
+		"ControlledHandler:#dialog/0": ["...input", "1:12"],
+		"EventAttributes:#dialog/0": ["...input", "1:12"]
+	});
 });
 
 // template.marko

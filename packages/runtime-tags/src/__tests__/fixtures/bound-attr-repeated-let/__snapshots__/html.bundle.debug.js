@@ -13,7 +13,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$valueChange
 	}, "__tests__/template.marko", 0, {
 		x: "1:6",
-		$valueChange: 0
+		$valueChange: 0,
+		"ControlledHandler:#input/2": ["valueChange"],
+		"ControlledHandler:#input/3": ["valueChange"],
+		"ControlledHandler:#input/4": ["valueChange"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

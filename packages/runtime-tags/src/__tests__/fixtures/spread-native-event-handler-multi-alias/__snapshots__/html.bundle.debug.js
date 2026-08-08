@@ -19,7 +19,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_onClick: input.onClick
 		}, "__tests__/template.marko", "2:2", {
 			input: "2:18",
-			input_onClick: ["input.onClick", "2:18"]
+			input_onClick: ["input.onClick", "2:18"],
+			"EventAttributes:#button/0": ["...input", "3:14"]
 		});
 	}) };
 	MyButton.content({

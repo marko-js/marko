@@ -22,7 +22,10 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	writeScope($scope0_id, {
 		input,
 		"#childScope/1": _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
-	}, "__tests__/tags/my-box.marko", 0, { input: 0 });
+	}, "__tests__/tags/my-box.marko", 0, {
+		input: 0,
+		"EventAttributes:#div/0": ["...input", "1:9"]
+	});
 });
 
 // template.marko

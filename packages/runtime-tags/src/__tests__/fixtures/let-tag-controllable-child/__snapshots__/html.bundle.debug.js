@@ -21,7 +21,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		input_valueChange: ["input.valueChange"],
 		state: "1:6",
 		otherState: "6:6",
-		thirdState: "11:6"
+		thirdState: "11:6",
+		"TagVariableChange:state": ["stateChange", "1:6"],
+		"TagVariableChange:otherState": ["otherStateChange", "6:6"],
+		"TagVariableChange:thirdState": ["thirdStateChange", "11:6"]
 	});
 	_resume_branch($scope0_id);
 });

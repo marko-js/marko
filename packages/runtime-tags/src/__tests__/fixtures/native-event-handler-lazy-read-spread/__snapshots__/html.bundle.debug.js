@@ -13,7 +13,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		log
 	}, "__tests__/template.marko", 0, {
 		count: "2:6",
-		log: "3:6"
+		log: "3:6",
+		"EventAttributes:#button/1": ["...{ onClick() { log = `${log}[${count}]`; } }", "6:16"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

@@ -9,6 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_onChange: _serialize_if($scope0_reason, 0) && input.onChange
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
-		input_onChange: ["input.onChange"]
+		input_onChange: ["input.onChange"],
+		"ControlledHandler:#input/0": ["valueChange", "1:26"]
 	});
 }, 1);

@@ -7,7 +7,10 @@ var checkbox_default = _template("__tests__/tags/checkbox.marko", (input) => {
 		...input
 	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/checkbox.marko_0_input#2");
-	writeScope($scope0_id, {}, "__tests__/tags/checkbox.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/tags/checkbox.marko", 0, {
+		"ControlledHandler:#input/0": ["...input", "1:27"],
+		"EventAttributes:#input/0": ["...input", "1:27"]
+	});
 });
 
 // template.marko

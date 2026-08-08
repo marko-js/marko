@@ -8,7 +8,7 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/1", content, {}, 0, 0, $sg__input_list_item);
 		_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
 		_script($scope1_id, "__tests__/tags/hello/index.marko_1_attrs#5");
-		writeScope($scope1_id, {}, "__tests__/tags/hello/index.marko", "1:1");
+		writeScope($scope1_id, {}, "__tests__/tags/hello/index.marko", "1:1", { "EventAttributes:#div/0": ["...attrs", "2:15"] });
 	}, 0, $scope0_id, "#text/0", $sg__input_list_item, $sg__input_list_item, $sg__input_list_item__OR__input_col, 0, 1);
 	_for_of(input.col, ({ content, row, ...attrs }) => {
 		const $scope2_id = _scope_id();
@@ -21,10 +21,10 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 			_dynamic_tag($scope3_id, "#text/1", content, {}, 0, 0, $sg__input_col);
 			_html(`</div>${_el_resume($scope3_id, "#div/0")}`);
 			_script($scope3_id, "__tests__/tags/hello/index.marko_3_attrs#5");
-			writeScope($scope3_id, {}, "__tests__/tags/hello/index.marko", "7:3");
+			writeScope($scope3_id, {}, "__tests__/tags/hello/index.marko", "7:3", { "EventAttributes:#div/0": ["...attrs", "8:16"] });
 		}, 0, $scope2_id, "#text/1", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1);
 		_script($scope2_id, "__tests__/tags/hello/index.marko_2_attrs#5");
-		writeScope($scope2_id, {}, "__tests__/tags/hello/index.marko", "5:1");
+		writeScope($scope2_id, {}, "__tests__/tags/hello/index.marko", "5:1", { "EventAttributes:#div/0": ["...attrs", "6:14"] });
 	}, 0, $scope0_id, "#text/1", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });

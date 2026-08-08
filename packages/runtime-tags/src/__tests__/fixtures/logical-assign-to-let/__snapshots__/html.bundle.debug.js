@@ -18,7 +18,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		changes: "1:6",
 		value: "2:6",
-		x: "3:6"
+		x: "3:6",
+		"TagVariableChange:x": ["xChange", "3:6"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

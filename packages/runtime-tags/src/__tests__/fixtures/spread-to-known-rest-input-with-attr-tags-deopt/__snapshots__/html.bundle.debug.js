@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/1", desc, {}, 0, 0, $sg__input_foo);
 		_html(`</span>${_el_resume($scope1_id, "#span/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#5");
-		writeScope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
+		writeScope($scope1_id, {}, "__tests__/tags/child.marko", "2:2", { "EventAttributes:#span/0": ["...item", "3:12"] });
 	}, 0, $scope0_id, "#text/0", $sg__input_foo, $sg__input_foo, $sg__input_foo, 0, 1);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });

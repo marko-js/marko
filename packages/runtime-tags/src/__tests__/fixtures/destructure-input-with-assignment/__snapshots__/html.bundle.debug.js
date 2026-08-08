@@ -8,7 +8,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_rest#4");
 	_script($scope0_id, "__tests__/tags/child.marko_0_$valueChange#3");
-	writeScope($scope0_id, { $valueChange }, "__tests__/tags/child.marko", 0, { $valueChange: "3:11" });
+	writeScope($scope0_id, { $valueChange }, "__tests__/tags/child.marko", 0, {
+		$valueChange: "3:11",
+		"EventAttributes:#div/0": ["...rest", "5:8"]
+	});
 });
 
 // template.marko

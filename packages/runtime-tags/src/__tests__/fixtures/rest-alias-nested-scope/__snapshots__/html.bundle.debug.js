@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_attrs_content(rest, "#span/1", $scope1_id, "span");
 			_html(`</span>${_el_resume($scope1_id, "#span/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1_rest#5");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
+			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2", { "EventAttributes:#span/1": ["...rest", "6:12"] });
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value);

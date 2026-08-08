@@ -16,7 +16,8 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	}, "__tests__/tags/counter.marko", 0, {
 		$countChange: 0,
 		count: "1:10",
-		x: "3:6"
+		x: "3:6",
+		"TagVariableChange:x": ["xChange", "3:6"]
 	});
 	_resume_branch($scope0_id);
 });

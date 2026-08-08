@@ -11,6 +11,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(_el_resume($scope0_id, "#select/1"));
 	_script($scope0_id, "__tests__/template.marko_0_input_rest#5");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0, {
+		"ControlledHandler:#select/1": ["...input.rest", "3:12"],
+		"EventAttributes:#select/1": ["...input.rest", "3:12"]
+	});
 	_resume_branch($scope0_id);
 }, 1);

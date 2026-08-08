@@ -11,7 +11,8 @@ var custom_input_default = _template("__tests__/tags/custom-input.marko", (input
 		input_valueChange: input.valueChange
 	}, "__tests__/tags/custom-input.marko", 0, {
 		input_value: ["input.value"],
-		input_valueChange: ["input.valueChange"]
+		input_valueChange: ["input.valueChange"],
+		"ControlledHandler:#input/0": ["valueChange"]
 	});
 });
 

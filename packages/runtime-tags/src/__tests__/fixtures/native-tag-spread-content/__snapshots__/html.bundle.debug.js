@@ -29,7 +29,15 @@ var my_div_default = _template("__tests__/tags/my-div.marko", (input) => {
 	_html("</em>");
 	_script($scope0_id, "__tests__/tags/my-div.marko_0_input#8_CustomContent_content#10");
 	_script($scope0_id, "__tests__/tags/my-div.marko_0_input#8");
-	writeScope($scope0_id, { CustomContent_content: CustomContent?.content }, "__tests__/tags/my-div.marko", 0, { CustomContent_content: ["CustomContent.content", "10:8"] });
+	writeScope($scope0_id, { CustomContent_content: CustomContent?.content }, "__tests__/tags/my-div.marko", 0, {
+		CustomContent_content: ["CustomContent.content", "10:8"],
+		"EventAttributes:#div/0": ["...input", "1:8"],
+		"EventAttributes:#button/1": ["...input", "3:17"],
+		"EventAttributes:#span/2": ["...input", "5:9"],
+		"EventAttributes:#output/3": ["...input", "8:11"],
+		"EventAttributes:#strong/4": ["...input", "13:11"],
+		"EventAttributes:#p/5": ["...input", "15:36"]
+	});
 });
 
 // template.marko

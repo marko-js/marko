@@ -9,7 +9,10 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_html(`</footer>${_el_resume($scope0_id, "#footer/1")}`);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_foot#5");
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_head#4");
-	writeScope($scope0_id, {}, "__tests__/tags/my-box.marko", 0);
+	writeScope($scope0_id, {}, "__tests__/tags/my-box.marko", 0, {
+		"EventAttributes:#section/0": ["...input.head", "1:13"],
+		"EventAttributes:#footer/1": ["...input.foot", "2:12"]
+	});
 });
 
 // template.marko

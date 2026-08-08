@@ -25,7 +25,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		a: "1:6",
 		b: "2:6",
 		state_aChange: ["state.aChange", "3:8"],
-		state_bChange: ["state.bChange", "3:8"]
+		state_bChange: ["state.bChange", "3:8"],
+		"ControlledHandler:#input/2": ["valueChange"],
+		"ControlledHandler:#input/3": ["valueChange"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

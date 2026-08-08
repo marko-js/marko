@@ -18,7 +18,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		checked
 	}, "__tests__/template.marko", 0, {
 		input_rest: ["input.rest"],
-		checked: "1:6"
+		checked: "1:6",
+		"ControlledHandler:#input/0": ["...input.rest", "2:51"],
+		"EventAttributes:#input/0": ["...input.rest", "2:51"]
 	});
 	_resume_branch($scope0_id);
 }, 1);

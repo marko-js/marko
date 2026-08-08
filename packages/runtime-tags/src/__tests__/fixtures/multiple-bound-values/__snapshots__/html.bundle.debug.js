@@ -21,7 +21,9 @@ var _2counters_default = _template("__tests__/tags/2counters.marko", (input) => 
 		input_count2: ["input.count2"],
 		input_count2Change: ["input.count2Change"],
 		count1: "1:6",
-		count2: "2:6"
+		count2: "2:6",
+		"TagVariableChange:count1": ["count1Change", "1:6"],
+		"TagVariableChange:count2": ["count2Change", "2:6"]
 	});
 	_resume_branch($scope0_id);
 });

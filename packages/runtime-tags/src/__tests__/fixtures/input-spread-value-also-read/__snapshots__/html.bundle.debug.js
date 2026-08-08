@@ -8,7 +8,11 @@ var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 		...input,
 		checked: undefined,
 		checkedValue: undefined
-	} }, "__tests__/tags/my-input.marko", 0, { input: 0 });
+	} }, "__tests__/tags/my-input.marko", 0, {
+		input: 0,
+		"ControlledHandler:#input/0": ["...input", "1:11"],
+		"EventAttributes:#input/0": ["...input", "1:11"]
+	});
 });
 
 // template.marko
