@@ -495,39 +495,60 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     }
     return false;
   };
-  // Whether a template's render can reach fed content: any dynamic tag,
-  // or any whole-bag / computed / `content` read of its input.
-  const contentConsumers = new Map<unknown, boolean>();
-  const childConsumesContent = (tagPath: t.NodePath<t.MarkoTag>): boolean => {
+  // The input properties a template renders as content (`true` when the
+  // reach is unanalyzable: opaque dynamic tags, whole-bag/computed reads).
+  const renderedPropsCache = new Map<unknown, true | Set<string>>();
+  const childRenderedProps = (
+    tagPath: t.NodePath<t.MarkoTag>,
+  ): true | Set<string> => {
     const file = loadFileForTag(tagPath);
     if (!file) return true;
-    const cached = contentConsumers.get(file);
+    const cached = renderedPropsCache.get(file);
     if (cached !== undefined) return cached;
-    contentConsumers.set(file, true);
-    let consumes = false;
+    renderedPropsCache.set(file, true);
+    let props: true | Set<string> = new Set();
     file.path.traverse({
       MarkoTag(inner) {
-        consumes ||= !t.isStringLiteral(inner.node.name);
+        if (props !== true && !t.isStringLiteral(inner.node.name)) {
+          if (
+            isContentRenderTag(inner.node) &&
+            inner.scope.getBinding("input")?.path.type === "Program"
+          ) {
+            props.add(
+              ((inner.node.name as t.MemberExpression).property as t.Identifier)
+                .name,
+            );
+          } else {
+            props = true;
+          }
+        }
       },
       Identifier(id) {
         if (
-          !consumes &&
+          props !== true &&
           id.node.name === "input" &&
           id.isReferencedIdentifier() &&
           id.scope.getBinding("input")?.path.type === "Program"
         ) {
           const parent = id.parentPath;
-          consumes = !(
-            parent.isMemberExpression({ computed: false }) &&
-            t.isIdentifier(parent.node.property) &&
-            parent.node.property.name !== "content"
-          );
+          if (
+            !(
+              parent.isMemberExpression({ computed: false }) &&
+              t.isIdentifier(parent.node.property)
+            )
+          ) {
+            props = true;
+          } else if (parent.node.property.name === "content") {
+            props.add("content");
+          }
         }
       },
     });
-    contentConsumers.set(file, consumes);
-    return consumes;
+    renderedPropsCache.set(file, props);
+    return props;
   };
+  const rendersProp = (props: true | Set<string>, name: string) =>
+    props === true || props.has(name);
   // The render of a directly fed renderer: a bare non-computed member of
   // the template's input with nothing else on the tag.
   const isContentRenderTag = (node: t.MarkoTag) =>
@@ -648,6 +669,19 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               ) {
                 reason = "feeds a nested child an input it needs server-owned";
                 break;
+              }
+            }
+            if (!reason) {
+              const rendered = childRenderedProps(inner);
+              for (const innerAttr of inner.node.attributes) {
+                if (
+                  innerAttr.type === "MarkoAttribute" &&
+                  rendersProp(rendered, innerAttr.name) &&
+                  exprHasServerSources(innerAttr.value)
+                ) {
+                  reason = "feeds a nested child a server value it renders";
+                  break;
+                }
               }
             }
             reason ||= getChildUnsafety(inner);
@@ -959,10 +993,22 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               `a child inside client-owned structure ${unsafety}`,
             );
           }
+          const rendered = childRenderedProps(tag);
           for (const attr of node.attributes) {
             if (attr.type !== "MarkoAttribute") {
               unsupported(attr);
             } else {
+              // A prop the child RENDERS receives a renderer: a server
+              // value there would have to cross the wire as a function.
+              if (
+                rendersProp(rendered, attr.name) &&
+                exprHasServerSources(attr.value)
+              ) {
+                unsupported(
+                  attr,
+                  "a renderer the child renders cannot feed from a server value",
+                );
+              }
               assertNoServerChangeHandler(attr);
               assertDeliverableInClientOwned(
                 attr,
@@ -1009,19 +1055,29 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         // A content-consuming child renders what this site feeds it; a
         // server-owned instance would poison every patch, so say so now.
-        if (
-          (node.body.body.length ||
-            node.attributeTags?.length ||
+        {
+          const rendered = childRenderedProps(tag);
+          const fedContent =
+            node.body.body.length ||
             node.attributes.some(
               (attr) =>
                 attr.type === "MarkoAttribute" && attr.name === "content",
-            )) &&
-          childConsumesContent(tag)
-        ) {
-          unsupported(
-            node,
-            "content for a child that renders it only works inside client-owned structure (a server-owned instance would navigate on every patch)",
-          );
+            );
+          if (
+            (fedContent && rendersProp(rendered, "content")) ||
+            node.attributeTags?.some(
+              (attrTag) =>
+                t.isMarkoTag(attrTag) &&
+                t.isStringLiteral(attrTag.name) &&
+                rendersProp(rendered, attrTag.name.value.slice(1)),
+            ) ||
+            (rendered === true && (fedContent || node.attributeTags?.length))
+          ) {
+            unsupported(
+              node,
+              "content for a child that renders it only works inside client-owned structure (a server-owned instance would navigate on every patch)",
+            );
+          }
         }
         // A sourceless call bakes a value no client signal recomputes, so
         // its opacity counts as server-fed.
@@ -1215,7 +1271,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               "a renderer read inside client-owned structure would need to cross the wire as a function",
             );
           }
-          getSection(tag).hasOpaqueRender = true;
+          (getSection(tag).opaqueRenders ??= []).push(node.name);
           return;
         }
         unsupported(node);
