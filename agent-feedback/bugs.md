@@ -158,12 +158,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `flushSerializer` sets `state.hasGlobals = true` before calling `getFilteredGlobals`, so a render whose allow-listed `$global` keys are all still `undefined` at the first serializer flush permanently latches "globals already sent" and never re-checks. A value assigned later — e.g. `<const/_=($global.late="LATE")/>` inside `<await>` content — is then dropped from the resume payload, so streaming and non-streaming disagree on identical input. Move the assignment inside an `if (globals)` guard, as the sibling `flushSerializerGlobals` already does; that covers every case where a later flush still has scopes, but a global first defined after the last scope-carrying flush needs an explicit final-flush re-check, since `flushSerializer` returns early when neither `flushScopes` nor `serializer.pending()` holds. Re-verify: render that template with `$global.serializedGlobals=["late"]` and a promise resolving on a later tick — the streamed chunks contain no `[0,{late:…}` entry, while awaiting the same render emits `_=>[0,{late:"LATE"},{n:0},{m:5}]`.
 
-## Splice page assets after the doctype; a page entry with no literal `<head>` writes assets ahead of `<!doctype html>` and the document parses in quirks mode
-
-`packages/runtime-tags/src/html/assets.ts` › `flush` | 2026-07-27 | impact:med | effort:low
-
-`flush` ends with `return result + html`, so as the `$global.__flush__` hook it prepends the page's asset markup to the first chunk; the translator emits `_flush_head()` only at the close of a literal native `<head>` (`translator/visitors/tag/native-tag.ts`), so an entry like `<!doctype html><html><body>…` renders `<link …><script …><!doctype html>…`. A parser ignores a DOCTYPE that follows content, so the document silently falls into quirks mode. Fix in the runtime: skip a leading `<!doctype …>` in `html` before splicing `result` in — assets between the doctype and `<html>` land in the implicit head. Re-verify: render that template compiled with `linkAssets` and wrapped in `withPageAssets(tmpl, runtime, "entry")`, then parse the output with jsdom — `document.compatMode` is `BackCompat` and `document.doctype` is null.
-
 ## Preserve an Error's own enumerable properties through resume — only `message` and `cause` survive
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeError` | 2026-07-27 | impact:med | effort:med
