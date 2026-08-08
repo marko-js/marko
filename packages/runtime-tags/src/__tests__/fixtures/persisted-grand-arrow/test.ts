@@ -4,9 +4,9 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A const rename of an input property delivers like the property itself:
-// the alias applier recomputes its slot on every fill write.
+// A child using the call-clean arrow pattern internally admits at a
+// client-owned call site: the whole instance is client-created.
 export const config: TestConfig = {
   persisted: true,
-  steps: [{ min: 1 }, click, click, { min: 5 }, { min: 0 }],
+  steps: [{ title: "a" }, click, { title: "b" }, click, { title: "c" }, click],
 };
