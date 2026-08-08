@@ -146,12 +146,6 @@ The closure `signal` is assigned only in the `pending.then((mod) => queueAsyncRe
 
 `Boundary.flush()` runs `flushSerializer` on every call, and `ServerRendered.#read`'s `onNext` calls it on each `boundary.endAsync()` even when the HTML write is deferred to the next `queueTick`. Each call appends its own `_=>[…]` closure to `state.resumes`, so N awaits settling in one chunk emit N payloads and the delta scope-id encoding in `writeScopesRoot` cannot span them — see `fixtures/async-reorder-nested-batched-resolve/__snapshots__/writes.html`, where one chunk pushes `_ => [5,…], _ => [7,…]`. Serialization cannot simply be skipped, since the serializer itself calls `boundary.startAsync()`; take `flush(write?)` and serialize only when `write` or `this.count === 0`, with `#read` passing through its existing `write` flag. Re-verify: that snapshot should regenerate with a single `_ =>` closure per chunk.
 
-## Mark class/style item writes pure so a single-consumer derived binding skips `_const`
-
-`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `translate.dom.enter` | 2026-07-23 | impact:med | effort:low
-
-The DOM `class`/`style` branch passes `!!meta.dynamicItems` as `addStatement`'s `isPure`, so the split `_attr_class_item` / `_attr_style_item(s)` path is marked impure; that sets `signal.hasSideEffect` (`util/signals.ts`) and forces `signal.build` to emit `_const(accessor, fn)` plus a scope slot instead of a plain function. Those helpers are idempotent (`classList.toggle`, `style.setProperty`) and every other DOM write (`_attr`, `_attr_content`, `_text_content`) passes `true`. Confirmed with `-o dom`: `<let/x=1/><const/y=x % 2/><div class={ active: y }>` yields `const $y = _const(3, $scope => _attr_class_item($scope.a, "active", $scope.d))`, while `data-active=y` yields `const $y = ($scope, y) => _attr($scope.a, "data-active", y)`. Intersection signals already force `hasSideEffect` at creation, so passing `true` only affects the single-derived-binding case. Re-verify: flip the flag, recompile both templates, and audit the snapshot diff.
-
 ## Pass `0` for an empty `$setup` in `_template`, and keep `setupEmpty` for dynamic tags
 
 `packages/runtime-tags/src/translator/visitors/program/dom.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low

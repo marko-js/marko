@@ -1049,7 +1049,7 @@ export default {
                     tagSection,
                     valueReferences,
                     stmt,
-                    !!meta.dynamicItems,
+                    true,
                   );
                 }
               }
