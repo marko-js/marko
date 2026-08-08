@@ -552,10 +552,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
             continue;
           }
-          if (innerAttr.bound || /Change$/.test(innerAttr.name)) {
-            reason = "uses a controllable binding";
-            return;
-          }
           reason ||= nestedValueUnsafety(
             attrPath.get("value") as t.NodePath<t.Expression>,
           );

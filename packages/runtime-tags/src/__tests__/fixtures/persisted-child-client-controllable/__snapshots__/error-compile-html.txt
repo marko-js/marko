@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-client-controllable/template.marko:4:5
-      2 | <main>
-      3 |   <if=show>
-    > 4 |     <field/>
-        |     ^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure uses a controllable binding.
-      5 |   </if>
-      6 |   <button onClick() { show = !show }>t</button>
-      7 | </main>
