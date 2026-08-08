@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// Server-owned structure nested under client-owned structure: the frame
-// has no channel to speak the inner selection through.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A server value selects structure nested in client-owned structure: it
+// delivers as a fill and the inner branch re-selects client-side.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ show: true }, click, click, { show: false }, { show: true }],
 };
