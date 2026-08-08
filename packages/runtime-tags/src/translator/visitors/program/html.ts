@@ -19,6 +19,7 @@ import isStatic from "../../util/is-static";
 import {
   getKnownTagReturnReason,
   getPersistedGroupOwnership,
+  type PersistedGroupOwnership,
 } from "../../util/known-tag";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
@@ -520,7 +521,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             for (const group of ownership || []) {
               if (
                 (group.serverRequired &&
-                  (group.stateFed || group.serverable)) ||
+                  groupFedUnsafely(inner.node.attributes, group)) ||
                 group.globalFed
               ) {
                 reason = "feeds a nested child an input it needs server-owned";
@@ -534,6 +535,24 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     childUnsafety.set(file, reason);
     return reason;
+  };
+  // Provenance-free feeds (imports, opaque reads) can still change across
+  // patches, so only an absent or constant attr leaves a group inert.
+  const groupFedUnsafely = (
+    attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
+    group: PersistedGroupOwnership,
+  ) => {
+    if (group.stateFed || group.serverable) return true;
+    let names: Set<string> | undefined;
+    forEach(group.params, (param) => {
+      (names ??= new Set()).add(param.property ?? param.name);
+    });
+    return attributes.some(
+      (attr) =>
+        attr.type === "MarkoAttribute" &&
+        names?.has(attr.name) &&
+        !evaluate(attr.value).confident,
+    );
   };
   // A server-created function re-binds stale on patch; one DECLARED in
   // the region is client-created and recomputes off fills, so it's fresh.
@@ -824,7 +843,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             // ownership, which a skipped region cannot provide; an unfed
             // (or constant-fed) group can never change, so it may pass.
             if (
-              (group.serverRequired && (group.stateFed || group.serverable)) ||
+              (group.serverRequired &&
+                groupFedUnsafely(node.attributes, group)) ||
               group.globalFed
             ) {
               unsupported(

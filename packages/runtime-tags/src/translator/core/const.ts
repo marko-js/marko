@@ -82,7 +82,20 @@ export default {
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
-      if (t.isFunction(valueAttr.value)) binding.declaresFunction = true;
+      // A bare-identifier callee inside could alias a server function
+      // (param default, local const): the fact stays off, fail closed.
+      if (t.isFunction(valueAttr.value)) {
+        let opaqueCall = false;
+        t.traverseFast(valueAttr.value, (n) => {
+          opaqueCall ||=
+            ((t.isCallExpression(n) ||
+              t.isOptionalCallExpression(n) ||
+              t.isNewExpression(n)) &&
+              t.isIdentifier(n.callee)) ||
+            (t.isTaggedTemplateExpression(n) && t.isIdentifier(n.tag));
+        });
+        if (!opaqueCall) binding.declaresFunction = true;
+      }
       if (!upstreamAlias) {
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);
