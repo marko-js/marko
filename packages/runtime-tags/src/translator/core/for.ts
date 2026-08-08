@@ -217,7 +217,13 @@ export default {
       // Ownership classifies once the merged input sources resolve.
       onClassifyOwnership(tagSection, () => {
         const sources = getSerializeSourcesForExpr(tagExtra);
-        if (classifiesClientOwned(sources, tagSection)) {
+        if (
+          classifiesClientOwned(
+            sources,
+            tagSection,
+            tagExtra.referencedBindings,
+          )
+        ) {
           // A client-evaluable loop is client-owned structure (state
           // re-lists directly; param feeds fill their slots).
           bodySection.isClientOwnedStructure = true;
