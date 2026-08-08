@@ -128,12 +128,6 @@ The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix su
 
 The DOM copy rewrites a registered `ObjectMethod`/`ClassMethod`/`ClassPrivateMethod` with `t.objectProperty(node.key, replacement)` / `t.classProperty(...)` / `t.classPrivateProperty(...)`, dropping the node's `computed` and `static` flags; its twin in `visitors/program/html.ts` forwards both. A reactive computed key then crashes the compiler with a raw `TypeError: Property key of ObjectProperty expected node to be of a type [...] but instead got "MemberExpression"` and no Marko code frame; a static computed key miscompiles silently — `<const/handlers={ [key]() { n++ } }/>` emits `{ key: $handlers($scope) }` in DOM versus `{ [key]: _resume(...) }` in HTML, so `handlers[key]` is `undefined` on the client and `_on(el, "click", undefined)` wires nothing. Forward the flags exactly as html.ts does. Re-verify: compile `static const key = "bump";` plus that `<const>` and `<button onClick=handlers[key]>` with `-o dom -d` and `-o html -d`, then compare the object keys.
 
-## Flush pending HTML before the `<debug>`/`<log>` statement so SSR keeps the tag's source position
-
-`packages/runtime-tags/src/translator/core/debug.ts` › `translate.exit` | 2026-07-23 | impact:low | effort:low
-
-The `isOutputHTML()` branch calls `tag.insertBefore(statement)` without first calling `writer.flushBefore(tag)`, and `core/log.ts` does the identical thing, so the writer's buffered markup is emitted after the statement. Every other statement-emitting core tag (`if`, `for`, `await`, `try`, `return`, `define`, `show`) flushes first, and DOM output keeps source order, so the two diverge: for `<div>${bump()}</div>` / `<log=bump()/>` / `<div>${bump()}</div>`, HTML emits `console.log(bump()); _html(...)` while DOM's `$setup` emits `_text(...bump()); console.log(bump()); _text(...bump())` — the server logs before preceding content is even evaluated. Add `writer.flushBefore(tag)` in the `isOutputHTML()` branch of both tags. The `debug-tag` and `log-tag` fixtures have no markup between the tags, so add one that does. Re-verify: `pnpm run compile -o html -d` on that template should emit the first `_html(...)` before `console.log`.
-
 ## Drop escaped placeholders that render an empty string so they stop claiming a walk step
 
 `packages/runtime-tags/src/translator/util/static-text.ts` › `isStaticText` | 2026-07-23 | impact:med | effort:low
