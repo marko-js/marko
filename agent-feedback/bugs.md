@@ -320,12 +320,6 @@ For each non-repeated nested tag the `<`-branch unconditionally adds `loadAttrib
 
 For DOM, `translate.exit` folds the fallback into the derived signal itself (`value || _id($scope)`) and `_id` bumps a per-`$global` counter, so a nullish `value` mints a new id every time that signal recomputes — unlike valueless `<id/x/>`, which calls `_id` once from `$setup`. `<id/x=input.id>` is what `cheatsheet.md` recommends for reusable tags, so a caller omitting the id gets an identifier that changes on every update, never matches the resumed server id, and leaves outside references (CSS, `aria-*`, focus targets) stale. Mint it at setup and have the signal read that slot, leaving the HTML branch alone; keep `||`, since `tags/id.d.marko` types `value` as `string | null | false`. Fixture `id-tag` covers only the valueless form. Re-verify: mount compiled `<id/x=input.id>` + `<div id=x>` under jsdom and `update({ id: undefined, n })` twice — `id` goes `cM_0`, `cM_1`, `cM_2`.
 
-## Extend `<for>`'s `by=` loop-param check past bare identifiers
-
-`packages/runtime-tags/src/translator/core/for.ts` › `analyze` | 2026-07-27 | impact:med | effort:low
-
-The guard is `byAttr?.type === "Identifier" && !tag.scope.getBinding(...)`, so it fires only for a bare `by=item` (fixture `error-for-by-param`). The commoner React/Vue spelling `by=item.id` is a MemberExpression and slips through, as does a template literal, and since `by=` is emitted outside the iteration callback both targets reference an undeclared binding — HTML emits `_for_of(input.items, item => {…}, item.id, …)`, DOM emits `$for($scope, [input_items, item.id])`. Both compile clean and throw at first render, so the mistake surfaces as a 500 or a broken bundle instead of a code frame. Walk the whole `by=` expression for identifiers resolving only to `tag.node.body.params` (never `tag.scope`), reuse the existing message, and extend `error-for-by-param`. Re-verify: compile `<for|item| of=input.items by=item.id>` with `-o html` (succeeds) and render it — `ReferenceError: item is not defined`.
-
 ## Match `undefined`, not `null`, in `shallowClone`'s constructor switch
 
 `packages/compiler/src/babel-plugin/index.js` › `shallowClone` | 2026-07-27 | impact:low | effort:low

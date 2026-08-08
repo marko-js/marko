@@ -140,17 +140,22 @@ export default {
 
     // `by=` is evaluated once before the loop runs, so loop parameters are not in
     // scope; keying by one otherwise dies at render with an undefined-variable error.
-    if (
-      byAttr?.type === "Identifier" &&
-      !tag.scope.getBinding(byAttr.name) &&
-      tag.node.body.params.some((param) =>
-        Object.hasOwn(t.getBindingIdentifiers(param), byAttr.name),
-      )
-    ) {
-      throw tag.hub.buildError(
-        byAttr,
-        `The \`by=\` attribute is evaluated before the loop runs, so \`${byAttr.name}\` is not in scope. Key with a property name string (\`by="id"\`) or a function (\`by=(${byAttr.name}) => key\`).`,
-      );
+    if (byAttr) {
+      const paramNames = new Set<string>();
+      for (const param of tag.node.body.params) {
+        for (const name in t.getBindingIdentifiers(param)) {
+          paramNames.add(name);
+        }
+      }
+      const paramRead = paramNames.size
+        ? findLoopParamRead(byAttr, paramNames)
+        : undefined;
+      if (paramRead) {
+        throw tag.hub.buildError(
+          paramRead,
+          `The \`by=\` attribute is evaluated before the loop runs, so \`${paramRead.name}\` is not in scope. Key with a property name string (\`by="id"\`) or a function (\`by=(${paramRead.name}) => key\`).`,
+        );
+      }
     }
 
     const bodySection = startSection(tagBody);
@@ -478,6 +483,41 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
         case "until":
           return attr.name;
       }
+    }
+  }
+}
+
+// A plain node walk (no paths/scopes): functions and classes are skipped since
+// their params shadow, so an inner read falls back to the runtime error.
+function findLoopParamRead(
+  node: t.Node,
+  names: Set<string>,
+): t.Identifier | undefined {
+  switch (node.type) {
+    case "Identifier":
+      return names.has(node.name) ? node : undefined;
+    case "MemberExpression":
+    case "OptionalMemberExpression":
+      return (
+        findLoopParamRead(node.object, names) ||
+        (node.computed ? findLoopParamRead(node.property, names) : undefined)
+      );
+  }
+
+  if (t.isFunction(node) || t.isClass(node)) return;
+
+  for (const key of t.VISITOR_KEYS[node.type] || []) {
+    if (key === "typeAnnotation" || key === "typeParameters") continue;
+    if (key === "key" && !(node as t.ObjectProperty).computed) continue;
+    const value = (node as any)[key];
+    if (Array.isArray(value)) {
+      for (const child of value) {
+        const found = child?.type && findLoopParamRead(child, names);
+        if (found) return found;
+      }
+    } else if (value?.type) {
+      const found = findLoopParamRead(value, names);
+      if (found) return found;
     }
   }
 }
