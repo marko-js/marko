@@ -90,6 +90,7 @@ export interface TaglibLookup {
     callback: (attr: AttributeDefinition, tag: TagDefinition) => void,
   ): void;
   exclusiveTagDiscoveryDirs: undefined | false | string;
+  discoveryDirs: undefined | string[];
   manualTagsDirs: undefined | Set<string>;
 }
 
