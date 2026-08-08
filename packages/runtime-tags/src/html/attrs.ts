@@ -485,8 +485,9 @@ function nonVoidAttr(name: string, value: unknown) {
 
 // A `&` only decodes before `#` or an ASCII letter (parsers accept even
 // semicolon-less numeric and legacy named refs), so only those need escaping.
-const singleQuoteAttrReplacements = /'|&(?=[#a-zA-Z])/g;
-const doubleQuoteAttrReplacements = /"|&(?=[#a-zA-Z])/g;
+// `\r` must escape: the parser normalizes a raw CR/CRLF in a value to LF.
+const singleQuoteAttrReplacements = /['\r]|&(?=[#a-zA-Z])/g;
+const doubleQuoteAttrReplacements = /["\r]|&(?=[#a-zA-Z])/g;
 const needsQuotedAttr = /["'>\s]|&[#a-zA-Z]|\/$/g;
 export function attrAssignment(value: string) {
   return value
@@ -509,7 +510,7 @@ function escapeSingleQuotedAttrValue(value: string) {
 }
 
 function replaceUnsafeSingleQuoteAttrChar(match: string) {
-  return match === "'" ? "&#39;" : "&amp;";
+  return match === "'" ? "&#39;" : match === "\r" ? "&#13;" : "&amp;";
 }
 
 function escapeDoubleQuotedAttrValue(value: string) {
@@ -522,7 +523,7 @@ function escapeDoubleQuotedAttrValue(value: string) {
 }
 
 function replaceUnsafeDoubleQuoteAttrChar(match: string) {
-  return match === '"' ? "&#34;" : "&amp;";
+  return match === '"' ? "&#34;" : match === "\r" ? "&#13;" : "&amp;";
 }
 
 function normalizedValueMatches(a: unknown, b: unknown) {
