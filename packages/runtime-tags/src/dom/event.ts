@@ -25,6 +25,8 @@ export function _on<
   (element as any)[1 + type] = handler || null;
 }
 
+// Deliberately a single document-level listener (bundle size): ShadowRoot events
+// retarget to the host and never reach handlers; shadow trees aren't a supported target.
 export const delegate = (type: string, handler: EventListener) =>
   // The digit prefix keeps event types named after `Function` properties
   // (`name`, `length`, …) from reading truthy and skipping registration.
