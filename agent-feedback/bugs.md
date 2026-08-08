@@ -116,12 +116,6 @@ The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix su
 
 `getChangeHandler` memoizes one change-handler node per binding in `BINDING_CHANGE_HANDLER`, keyed only on `binding.identifier`, while the refining-function shorthand (`value:parseInt:=value`) is read per attribute. For an identifier-valued `:=`, the first usage's refining function is baked into the shared handler and every later `:=` on that identifier reuses it verbatim, silently discarding its own modifier. `<let/value=0/><input value:parseInt:=value/><input value:=value/>` compiles both inputs to the same `$scope.$valueChange` = `_new_value => $value($scope, parseInt(_new_value))`; reversing the order drops `parseInt` entirely, and `parseInt` followed by `parseFloat` applies `parseInt` to both. Only the identifier branch is affected — the member-expression branch re-derives per attribute — so make the key `(binding.identifier, modifier-name-or-none)`. Re-verify: compile that pair with `-o dom -d` and confirm the second input's handler is unwrapped.
 
-## Preserve `computed`/`static` when lowering registered object and class methods in DOM output
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `replaceRegisteredFunctionNode` | 2026-07-23 | impact:med | effort:low
-
-The DOM copy rewrites a registered `ObjectMethod`/`ClassMethod`/`ClassPrivateMethod` with `t.objectProperty(node.key, replacement)` / `t.classProperty(...)` / `t.classPrivateProperty(...)`, dropping the node's `computed` and `static` flags; its twin in `visitors/program/html.ts` forwards both. A reactive computed key then crashes the compiler with a raw `TypeError: Property key of ObjectProperty expected node to be of a type [...] but instead got "MemberExpression"` and no Marko code frame; a static computed key miscompiles silently — `<const/handlers={ [key]() { n++ } }/>` emits `{ key: $handlers($scope) }` in DOM versus `{ [key]: _resume(...) }` in HTML, so `handlers[key]` is `undefined` on the client and `_on(el, "click", undefined)` wires nothing. Forward the flags exactly as html.ts does. Re-verify: compile `static const key = "bump";` plus that `<const>` and `<button onClick=handlers[key]>` with `-o dom -d` and `-o html -d`, then compare the object keys.
-
 ## Drop escaped placeholders that render an empty string so they stop claiming a walk step
 
 `packages/runtime-tags/src/translator/util/static-text.ts` › `isStaticText` | 2026-07-23 | impact:med | effort:low
