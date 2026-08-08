@@ -8,6 +8,7 @@ export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
   let stringQuote = "";
   let inComment = false;
   let groupDepth = 0;
+  let urlDepth = 0;
   let blockDepth = 0;
   let valueColon = false;
   let runPlaceholder: t.MarkoPlaceholder | undefined;
@@ -33,6 +34,9 @@ export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
     if (t.isMarkoPlaceholder(child)) {
       if (stringQuote) {
         throw tag.hub.buildError(child, styleStringMsg);
+      }
+      if (urlDepth) {
+        throw tag.hub.buildError(child, styleUrlMsg);
       }
       if (!runPlaceholder) {
         runPlaceholder = child;
@@ -73,8 +77,20 @@ export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
         stringQuote = c;
       } else if (c === "(" || c === "[") {
         groupDepth++;
+        // `url(` followed by a non-quote is a raw url token that ends at the
+        // first `)`; a quoted arg is an ordinary function argument.
+        if (
+          !urlDepth &&
+          cssUrlBefore.test(text.slice(0, j + 1)) &&
+          !cssQuotedArg.test(text.slice(j + 1))
+        ) {
+          urlDepth = groupDepth;
+        }
       } else if (c === ")" || c === "]") {
-        if (groupDepth) groupDepth--;
+        if (groupDepth) {
+          if (urlDepth === groupDepth) urlDepth = 0;
+          groupDepth--;
+        }
       } else if (!groupDepth) {
         switch (c) {
           case ":":
@@ -110,8 +126,13 @@ const stylePropertyMsg =
 const styleStringMsg =
   `${styleInterpolationMsg} is not substituted inside a quoted CSS string — the literal text \`var(--…)\` would be rendered instead of the value.` +
   htmlStyleTagAlternateMsg;
+const styleUrlMsg =
+  `${styleInterpolationMsg} is not substituted inside an unquoted \`url()\` — the raw url token consumes the \`var(--…)\` text literally, invalidating the declaration. Move the whole \`url(...)\` into the interpolated value.` +
+  htmlStyleTagAlternateMsg;
 const styleGluedMsg = `${styleInterpolationMsg} CSS does not re-tokenize, so a unit written directly after it (eg \`\${x}px\`) becomes the invalid \`var(--…)px\`. Move the unit into the interpolated value (so it resolves to eg \`"10px"\`) or use \`calc(var(--…) * 1px)\`.`;
 const styleGluedBeforeMsg = `${styleInterpolationMsg} CSS does not re-tokenize, so text written directly before it (eg \`10\${x}\`) merges with the \`var(--…)\` into a single invalid token. Add whitespace before the interpolation or move the text into the interpolated value.`;
 const cssGluedValue =
   /^(?:[%.\d]|(?:p[xtc]|in|[cm]m|q|r?em|ex|ch|r?lh|v[whib]|vmin|vmax|fr|deg|g?rad|turn|m?s|k?hz|dp(?:i|cm|px)|cq[whib]|cqmin|cqmax)(?![\w-]))/i;
 const cssGluedBefore = /[\w%]$/;
+const cssUrlBefore = /(?:^|[^\w-])url\($/i;
+const cssQuotedArg = /^\s*["']/;

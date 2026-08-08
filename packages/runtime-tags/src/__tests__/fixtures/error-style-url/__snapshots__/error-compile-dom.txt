@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-url/template.marko:4:21
+      2 | <style>
+      3 |   .box {
+    > 4 |     background: url(${x});
+        |                     ^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which is not substituted inside an unquoted `url()` — the raw url token consumes the `var(--…)` text literally, invalidating the declaration. Move the whole `url(...)` into the interpolated value. For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.
+      5 |   }
+      6 | </style>
+      7 |
