@@ -1244,6 +1244,8 @@ function getRelatedControllable(
       }
 
       if (attrs.value || attrs.valueChange) {
+        // One-way `value=` is default-value semantics on purpose (updates what
+        // `form.reset()` restores), not a missing-change-handler mistake.
         const valueMode = getInputValueMode(attrs.type);
         if (valueMode === "attribute" && !attrs.valueChange) {
           break;
