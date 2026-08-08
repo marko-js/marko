@@ -236,12 +236,6 @@ The `<tag-name>` shorthand is rewritten only by the `ImportDeclaration` visitor 
 
 `replaceAssignedNode` rewrites only `AssignmentExpression` and `UpdateExpression`, so a `ForOfStatement`/`ForInStatement` whose `left` is a bare tag variable falls through to `getReadReplacement` (`util/references.ts`) and compiles to a plain scope read. `<let/x="a"/>` with `<button onClick(){ for (x of ["b","c"]) {} }>` emits `for ($scope.x of ["b", "c"]) {}`, mutating the scope slot without calling the `_let` signal, so nothing schedules a render and `${x}` keeps the stale value — no diagnostic in either output mode (`for (x in …)` is identical). Either mark for-of/for-in targets as assignments during reference analysis and route them through the binding's assignment builder, or raise a compile error naming the unsupported construct. Re-verify: `pnpm run compile -o dom -d f.marko` on that template emits `for ($scope.x of …)` with no `$x(` call in the handler.
 
-## Give a real diagnostic for two-way binding a computed-key destructured param
-
-`packages/runtime-tags/src/translator/visitors/program/pre-analyze.ts` › `getChangeHandlerFromObjectPattern` | 2026-07-23 | impact:low | effort:low
-
-For a `computed === true` object-pattern property this appends a synthetic property keyed `t.binaryExpression("+", parent.get("key").node, t.stringLiteral("Change"))`, which `createBindingsAndTrackReferences` (`translator/util/references.ts`, ObjectPattern case) always rejects with "Only identifier and string literal keys are supported when destructuring." — so the branch can never produce a compilable template. It is reachable only for a computed string-literal key, and the error attaches to the loc-less synthetic node, so the caret covers the whole `<define>` tag and never mentions two-way binding; the key node is also reused without `t.cloneNode`. Fix: normalize a computed string-literal key to a plain key before synthesizing (and clone it), or throw a targeted diagnostic like the sibling array-pattern message. Re-verify: `<define/Wrap|{ ["a"]: val }|><input value:=val/></define>` fails today; deleting `value:=val` compiles.
-
 ## Carry the Class-API compat boundary mode per call site instead of downgrading the whole program
 
 `packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts` › `pushCompatRegistration` | 2026-07-27 | impact:low | effort:med

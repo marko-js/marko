@@ -10,8 +10,6 @@ import normalizeStringExpression from "../../util/normalize-string-expression";
 import { getHTMLRuntime } from "../../util/runtime";
 import withPreviousLocation from "../../util/with-previous-location";
 
-type StringOrIdPath = t.NodePath<t.StringLiteral> | t.NodePath<t.Identifier>;
-
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 // Keyed per refining modifier (`value:parseInt:=x` vs `value:=x`), since the
 // modifier is baked into the built handler.
@@ -234,7 +232,11 @@ function getChangeHandler(
           attr.value,
           bindingIdentifierPath?.parentPath?.isArrayPattern()
             ? `Cannot two-way bind to \`${attr.value.name}\` because it comes from array destructuring, which has no change handler. Use object destructuring or pass an explicit \`${changeAttrName}\` attribute.`
-            : "Unable to bind to value.",
+            : bindingIdentifierPath?.parentPath?.isObjectProperty({
+                  computed: true,
+                })
+              ? `Cannot two-way bind to \`${attr.value.name}\` because it is destructured with a dynamically computed key, so its change handler cannot be derived. Use a static key or pass an explicit \`${changeAttrName}\` attribute.`
+              : "Unable to bind to value.",
         );
       }
 
@@ -378,56 +380,43 @@ function buildChangeHandlerFunction(
 function getChangeHandlerFromObjectPattern(
   parent: t.NodePath<t.ObjectProperty>,
 ) {
-  let changeKey: t.Identifier;
+  let changeKey: t.Identifier | undefined;
   const pattern = parent.parentPath as t.NodePath<t.ObjectPattern>;
-  if (parent.node.computed) {
-    changeKey = generateUidIdentifier("dynamicChange");
-    pattern.pushContainer(
-      "properties",
-      t.objectProperty(
-        t.binaryExpression(
-          "+",
-          parent.get("key").node,
-          t.stringLiteral("Change"),
-        ),
-        changeKey,
-        true,
-      ),
-    );
-  } else {
-    const key = parent.get("key") as StringOrIdPath;
-    const searchKey = `${getStringOrIdentifierValue(key)}Change`;
-    for (const prop of pattern.get("properties")) {
-      if (prop.isObjectProperty()) {
-        const propKey = prop.get("key");
-        const propValue = prop.get("value");
-        if (
-          !prop.node.computed &&
-          getStringOrIdentifierValue(propKey as StringOrIdPath) === searchKey &&
-          propValue.isIdentifier()
-        ) {
-          changeKey = propValue.node;
-          break;
-        }
+  const keyName = getStaticKeyName(parent.node);
+  // A dynamically computed key has no derivable change handler; caller reports.
+  if (keyName === undefined) return;
+
+  const searchKey = `${keyName}Change`;
+  for (const prop of pattern.get("properties")) {
+    if (prop.isObjectProperty()) {
+      const propValue = prop.get("value");
+      if (
+        getStaticKeyName(prop.node) === searchKey &&
+        propValue.isIdentifier()
+      ) {
+        changeKey = propValue.node;
+        break;
       }
     }
+  }
 
-    if (!changeKey!) {
-      pattern.unshiftContainer(
-        "properties",
-        t.objectProperty(
-          t.stringLiteral(searchKey),
-          (changeKey = generateUidIdentifier(searchKey)),
-        ),
-      );
-    }
+  if (!changeKey) {
+    pattern.unshiftContainer(
+      "properties",
+      t.objectProperty(
+        t.stringLiteral(searchKey),
+        (changeKey = generateUidIdentifier(searchKey)),
+      ),
+    );
   }
 
   return changeKey;
 }
 
-function getStringOrIdentifierValue(path: StringOrIdPath) {
-  return getLiteralName(path.node);
+function getStaticKeyName(prop: t.ObjectProperty) {
+  return prop.computed && !t.isStringLiteral(prop.key)
+    ? undefined
+    : getLiteralName(prop.key);
 }
 
 function getLiteralName(node: t.Node) {

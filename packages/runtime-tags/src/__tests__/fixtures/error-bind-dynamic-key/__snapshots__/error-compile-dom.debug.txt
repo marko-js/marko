@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-bind-dynamic-key/template.marko:3:17
+      1 | static const key = "a";
+      2 | <define/Wrap|{ [key]: val }|>
+    > 3 |   <input value:=val/>
+        |                 ^^^ Cannot two-way bind to `val` because it is destructured with a dynamically computed key, so its change handler cannot be derived. Use a static key or pass an explicit `valueChange` attribute.
+      4 | </define>
+      5 | <Wrap a="x" aChange(v) {}/>
+      6 |
