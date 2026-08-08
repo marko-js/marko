@@ -29,11 +29,11 @@ const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<div></div><div style=width
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => ` d b/${_w0}&/${_w1}&/${_w2}&%c`)($walks$1, $walks$1, $walks$1);
 const TestTag = custom_tag_default;
 const $test_content = _content_resume("__tests__/template.marko_1*content", "Hello");
-const $input_color = /*@__PURE__*/ _const("input_color", ($scope) => {
-	_attr_style_item($scope["#div/0"], "color", $scope.input_color);
-	_attr_style($scope["#div/1"], $scope.input_color && "color:red");
-	$input_style($scope["#childScope/2"], { color: $scope.input_color });
-});
+const $input_color = ($scope, input_color) => {
+	_attr_style_item($scope["#div/0"], "color", input_color);
+	_attr_style($scope["#div/1"], input_color && "color:red");
+	$input_style($scope["#childScope/2"], { color: input_color });
+};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5");
 function $setup($scope) {
 	$input_test($scope["#childScope/2"]);
