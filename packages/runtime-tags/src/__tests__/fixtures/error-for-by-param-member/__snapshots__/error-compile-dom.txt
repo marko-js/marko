@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-by-param-member/template.marko:1:30
+    > 1 | <for|item| of=input.items by=item.id>
+        |                              ^^^^ The `by=` attribute is evaluated before the loop runs, so `item` is not in scope. Key with a property name string (`by="id"`) or a function (`by=(item) => key`).
+      2 |   <div>${item.name}</div>
+      3 | </for>
+      4 |
