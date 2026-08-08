@@ -248,6 +248,22 @@ export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   () => [],
 );
 
+// Input props this section renders as fed renderers: a patch of the
+// section only applies faithfully while they are nullish. Translate
+// scratch (recorded by the patch assert), never section metadata.
+const [getOpaqueRenderProps, setOpaqueRenderProps] = createSectionState<
+  string[] | undefined
+>("opaqueRenderProps");
+
+export function addOpaqueRenderProp(section: Section, prop: string) {
+  const props = getOpaqueRenderProps(section);
+  if (!props) {
+    setOpaqueRenderProps(section, [prop]);
+  } else if (!props.includes(prop)) {
+    props.push(prop);
+  }
+}
+
 const [getBindingGetterIdMap] = createSectionState<Map<Binding, t.Identifier>>(
   "bindingGetterIdMap",
   () => new Map(),
@@ -1771,13 +1787,14 @@ export function writeHTMLResumeStatements(
 
   // A RENDERED fed renderer has no faithful patch: its poison entry makes
   // the frame reject (navigation). Nullish slots patch normally.
-  if (persisted && section.opaqueRenders) {
-    for (const render of section.opaqueRenders) {
+  const opaqueRenderProps = persisted && getOpaqueRenderProps(section);
+  if (opaqueRenderProps) {
+    for (const prop of opaqueRenderProps) {
       body.push(
         t.expressionStatement(
           t.logicalExpression(
             "&&",
-            t.cloneNode(render, true),
+            t.memberExpression(t.identifier("input"), t.identifier(prop)),
             callRuntime("_patch_poison", scopeIdIdentifier),
           ),
         ),
