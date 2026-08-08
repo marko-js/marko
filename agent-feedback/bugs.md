@@ -170,12 +170,6 @@ One module-level `tickQueue` holds every in-flight render's `onNext`, and `flush
 
 `flush` ends with `return result + html`, so as the `$global.__flush__` hook it prepends the page's asset markup to the first chunk; the translator emits `_flush_head()` only at the close of a literal native `<head>` (`translator/visitors/tag/native-tag.ts`), so an entry like `<!doctype html><html><body>…` renders `<link …><script …><!doctype html>…`. A parser ignores a DOCTYPE that follows content, so the document silently falls into quirks mode. Fix in the runtime: skip a leading `<!doctype …>` in `html` before splicing `result` in — assets between the doctype and `<html>` land in the implicit head. Re-verify: render that template compiled with `linkAssets` and wrapped in `withPageAssets(tmpl, runtime, "entry")`, then parse the output with jsdom — `document.compatMode` is `BackCompat` and `document.doctype` is null.
 
-## Give deferred Map/Set call arguments an eager binding — reusing one in a later flush crashes `assignId` on a null parent
-
-`packages/runtime-tags/src/html/serializer.ts` › `writeCallArg` | 2026-07-27 | impact:med | effort:low
-
-`deferCall` moves the remaining Map/Set members into post-construction `.set(...)`/`.add(...)` calls, and `writeCallArg` writes each argument as `writeProp(state, val, null, "")`, so the `Reference` left in `state.refs`/`state.strs` has neither an id nor an accessor path. Serializing that value again in a later flush skips the `pos` fast path and walks `cur.parent!`, which is null, throwing `TypeError: Cannot read properties of null (reading 'id')` out of `stringifyScopes`, which `Boundary.flush` calls unguarded, so the stream dies. `writeArrayArg` and the channel-mutation branch of `writeAssigned` already claim eager ids for this reason; do the same here. Re-verify: with `root.k0 = new Set([40, root, inner])`, `stringifyScopes([[1,{},{value:root}]])` then `stringifyScopes([[2,{},{value:inner}]])` throws; a Map key/value, a long string, or a nested value behave the same.
-
 ## Preserve an Error's own enumerable properties through resume — only `message` and `cause` survive
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeError` | 2026-07-27 | impact:med | effort:med
