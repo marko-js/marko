@@ -426,7 +426,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     } else if (
       node.attributes.length !== 1 ||
       !t.isMarkoAttribute(attr) ||
-      !attr.default
+      !(attr.default || attr.name === "value")
     ) {
       return;
     }
@@ -541,7 +541,10 @@ function assertHasValueAttribute(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const [valueAttr] = node.attributes;
 
-  if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
+  if (
+    !t.isMarkoAttribute(valueAttr) ||
+    !(valueAttr.default || valueAttr.name === "value")
+  ) {
     throw tag
       .get("name")
       .buildCodeFrameError(
