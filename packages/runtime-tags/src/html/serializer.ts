@@ -966,6 +966,8 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
       return writeDataView(state, val as DataView, ref);
     // Boxed primitives (`Object(1)`) are deliberately unsupported (wont-fix:
     // an antipattern with no template use case; write the primitive instead).
+    // `DOMException`/`AbortSignal`/`Event` too (wont-fix: no credible resume
+    // use case, and a pending `AbortSignal` has no faithful representation).
     case WeakSet:
       return writeWeakSet(state);
     case WeakMap:
