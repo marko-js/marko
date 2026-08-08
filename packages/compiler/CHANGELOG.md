@@ -1,5 +1,23 @@
 # Change Log
 
+## 5.41.18
+
+### Patch Changes
+
+- [#3784](https://github.com/marko-js/marko/pull/3784) [`4bc0479`](https://github.com/marko-js/marko/commit/4bc0479104006a6d6593a6127d5e9174ece1879c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Honor a `MARKO_AGENT_FIX_GUIDE` environment variable that force-enables (`1`) or suppresses (`0`) the coding-agent fix-guide pointer regardless of detected agent markers.
+
+- [#3843](https://github.com/marko-js/marko/pull/3843) [`877f821`](https://github.com/marko-js/marko/commit/877f821dc77d8d841c354687bae49de1b637a221) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A custom tag invoked with arguments and a body (`<my-tag("a")>hi</my-tag>`) is now a compile error instead of silently dropping the body; dynamic tags still allow arguments with fallback content.
+
+- [#3846](https://github.com/marko-js/marko/pull/3846) [`1a881a5`](https://github.com/marko-js/marko/commit/1a881a5dbd69c76c4cd1eda0480a16b286931cfc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Prototype-less objects in template metadata now clone correctly between compile phases instead of crashing the compile.
+
+- [#3795](https://github.com/marko-js/marko/pull/3795) [`97ab05e`](https://github.com/marko-js/marko/commit/97ab05e39f5cb0010da1591413558d333f27e6a6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Replace Babel's "invalid left-hand side in function parameter list" parse error for invalid tag variables with a message that names the tag variable and links its docs.
+
+- [#3773](https://github.com/marko-js/marko/pull/3773) [`eb25d4c`](https://github.com/marko-js/marko/commit/eb25d4ce19d698ea22c702b1a20aa4855f7562c8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `getTagDefForTagName` tracking seen tags by name while checking by definition, which re-ran the watch file check on every call and pushed duplicate watch file entries.
+
+- [#3848](https://github.com/marko-js/marko/pull/3848) [`05f3a1a`](https://github.com/marko-js/marko/commit/05f3a1a56af8538d9bb0545452143c8aba19b6e3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The taglib finder cache is now keyed per translator, so a process compiling with both the Marko 5 and Marko 6 translators (e.g. a language server over a mixed workspace) no longer lets whichever translator runs first freeze tag discovery for the other.
+
+- [#3849](https://github.com/marko-js/marko/pull/3849) [`798521c`](https://github.com/marko-js/marko/commit/798521c3315316214c8cbec0aba40bb6a5f6c6d5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `taglib.register()` now takes effect for translators that have already compiled; previously the per-translator taglib list was memoized forever and even the documented `taglib.clearCaches()` did not reset it.
+
 ## 5.41.17
 
 ### Patch Changes
