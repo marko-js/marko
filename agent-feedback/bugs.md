@@ -92,12 +92,6 @@ Two lookups drop translator-emitted debug info. (1) `writeObjectProps` passes th
 
 The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix subtracting 1 from the result), i.e. `x = x + 1` rather than JS's `x = ToNumeric(x) + 1`. With `<let/x="5"/>`, `x++` sets `x` to `"51"` and yields `50` instead of `6` and `5`; a `<let>` holding a bigint throws `Cannot mix BigInt and other types`. Wrapping the read in unary `+` fixes the string case but breaks bigint, so the lowering needs a real `ToNumeric` coercion — or `++`/`--` must be rejected on a tag variable whose type is not known numeric. Re-verify: compile `<let/x="5"/><button onClick(){ const v = x++ }>${x}</button>` with `-o dom`; the handler emits `const v = $x($scope, $scope.x + 1) - 1`.
 
-## Drop escaped placeholders that render an empty string so they stop claiming a walk step
-
-`packages/runtime-tags/src/translator/util/static-text.ts` › `isStaticText` | 2026-07-23 | impact:med | effort:low
-
-`isStaticText` accepts a confident escaped placeholder when `isNotVoid(computed)` — the attribute void rule — but the emitted text is `_escape(computed)`, which is `""` for `""`, `NaN` and `0n`; `placeholder.ts` (`analyze`, `translate.exit`) drops on the matching `isVoid`. Such a placeholder writes nothing yet still calls `walks.enterShallow`, so every later walk step in the section is off by one: `<div>${""}${input.x}<b/><i/></div>` compiles to `next(1), over(1), replace, out(1)` and the `replace` destroys `<b>`, while `<div>${""}<b/><i>${input.x}</i><u/></div>` walks off the end and throws `reading 'data'` from `_text`. SSR is marker-driven and unaffected. Switch `isStaticText`, `isEmptyPlaceholder` and both `placeholder.ts` checks to the text rule `computed || computed === 0`. Re-verify: `pnpm run compile -o dom -d` that template with and without the `${""}`; the walk comments differ for the same DOM shape.
-
 ## Error when one program lazily imports the same template with two different `load` triggers
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `getOrCreateHtmlLoadWrapped` | 2026-07-23 | impact:low | effort:low
