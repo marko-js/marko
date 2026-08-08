@@ -82,7 +82,12 @@ export default {
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
-      if (t.isFunction(valueAttr.value)) binding.functionValued = true;
+      // A composite (ternary, object) delivers a bound function whenever
+      // it contains one; selection among function-valued bindings
+      // propagates during source resolution.
+      t.traverseFast(valueAttr.value, (n) => {
+        if (t.isFunction(n)) binding.functionValued = true;
+      });
       if (!upstreamAlias) {
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);

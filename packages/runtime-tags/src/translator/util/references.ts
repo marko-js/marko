@@ -32,6 +32,7 @@ import {
 } from "./optional";
 import {
   finalizePersisted,
+  isPatchCaptureWriteBinding,
   isPatchEffectBinding,
   isPatchFillBinding,
 } from "./persisted";
@@ -141,8 +142,9 @@ export interface Binding {
   /** Captured inside a registered function: live-scope reads reach it at
    * any later invocation. */
   registeredFnCapture: boolean;
-  /** Declared with a literal function value, so its fill can carry a
-   * bound registration. */
+  /** Can hold a function a fill must deliver bind-aware: a literal
+   * function value, an invoked or handler-attr read, or (propagated at
+   * source resolution) a derivation over one. */
   functionValued: boolean;
   /** Interned per-prop serialize reason keys, keyed by accessor prefix
    * (`undefined` is the plain binding key). */
@@ -1404,7 +1406,11 @@ export function finalizeReferences() {
     forEachSection((section) => {
       if (!section.parent) {
         forEach(section.bindings, (binding) => {
-          if (isPatchFillBinding(binding) || isPatchEffectBinding(binding)) {
+          if (
+            isPatchFillBinding(binding) ||
+            isPatchEffectBinding(binding) ||
+            isPatchCaptureWriteBinding(binding)
+          ) {
             ensureReasonGroups(getSerializeSourcesForRef(binding));
           }
         });
@@ -1688,6 +1694,9 @@ function resolveDerivedSources(binding: Binding) {
             seen.add(ref);
             resolveBindingSources(ref);
             binding.sources = mergeSources(binding.sources, ref.sources);
+            // A derived selecting among function-valued bindings can
+            // deliver one of them.
+            if (ref.functionValued) binding.functionValued = true;
           }
         });
       }
@@ -1899,7 +1908,13 @@ function addReadToExpression(
 
   if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
     read.serializedValue = true;
+    // The captured handler can be a scope-bound registration, so its
+    // fill must deliver bind-aware.
+    binding.functionValued = true;
   }
+
+  // An invoked read likewise: whatever fills this slot is called.
+  if (isInvokedFunction(root)) binding.functionValued = true;
 
   const { parent } = root;
   if (
