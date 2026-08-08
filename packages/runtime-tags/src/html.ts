@@ -66,6 +66,7 @@ export {
   _patch_control,
   _patch_child,
   _patch_effect,
+  _patch_poison,
   _patch_text,
   _patch_value,
   _patch_write,

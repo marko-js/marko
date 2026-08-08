@@ -160,6 +160,9 @@ export interface Section {
   /** Branch body of a client-owned conditional (recorded at persisted
    * finalize): patch renders skip it and frames omit its entry. */
   isClientOwnedStructure: true | undefined;
+  /** Renders content the compile cannot see into (a fed renderer), so a
+   * patch of this section cannot apply faithfully. */
+  hasOpaqueRender: true | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -245,6 +248,7 @@ export function startSection(
       readsOwner: false,
       isBranch: false,
       isClientOwnedStructure: undefined,
+      hasOpaqueRender: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;
