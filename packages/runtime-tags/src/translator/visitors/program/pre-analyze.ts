@@ -13,9 +13,11 @@ import withPreviousLocation from "../../util/with-previous-location";
 type StringOrIdPath = t.NodePath<t.StringLiteral> | t.NodePath<t.Identifier>;
 
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
+// Keyed per refining modifier (`value:parseInt:=x` vs `value:=x`), since the
+// modifier is baked into the built handler.
 const BINDING_CHANGE_HANDLER = new WeakMap<
   t.Identifier,
-  t.MarkoAttribute | t.Identifier
+  Map<string, t.MarkoAttribute | t.Identifier>
 >();
 
 export function preAnalyze(program: t.NodePath<t.Program>) {
@@ -205,7 +207,15 @@ function getChangeHandler(
         buildChangeHandlerFunction(attr.value, modifier),
       );
 
-    const existingChangedAttr = BINDING_CHANGE_HANDLER.get(binding.identifier);
+    const modifierKey = modifier?.name ?? "";
+    let handlerByModifier = BINDING_CHANGE_HANDLER.get(binding.identifier);
+    if (!handlerByModifier) {
+      BINDING_CHANGE_HANDLER.set(
+        binding.identifier,
+        (handlerByModifier = new Map()),
+      );
+    }
+    const existingChangedAttr = handlerByModifier.get(modifierKey);
     if (!existingChangedAttr) {
       const bindingIdentifierPath =
         binding.path.getOuterBindingIdentifierPaths()[binding.identifier.name];
@@ -240,7 +250,7 @@ function getChangeHandler(
         changeAttrName,
         changeAttrExpr,
       );
-      BINDING_CHANGE_HANDLER.set(binding.identifier, changeHandlerAttr);
+      handlerByModifier.set(modifierKey, changeHandlerAttr);
       return changeHandlerAttr;
     }
 
@@ -270,8 +280,8 @@ function getChangeHandler(
       null,
       t.identifier(changeHandlerId),
     );
-    BINDING_CHANGE_HANDLER.set(
-      binding.identifier,
+    handlerByModifier.set(
+      modifierKey,
       (existingChangedAttr.value = t.identifier(changeHandlerId)),
     );
 

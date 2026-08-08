@@ -110,12 +110,6 @@ The key is `${section.id}` plus `_${name}` per referenced binding — no separat
 
 The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix subtracting 1 from the result), i.e. `x = x + 1` rather than JS's `x = ToNumeric(x) + 1`. With `<let/x="5"/>`, `x++` sets `x` to `"51"` and yields `50` instead of `6` and `5`; a `<let>` holding a bigint throws `Cannot mix BigInt and other types`. Wrapping the read in unary `+` fixes the string case but breaks bigint, so the lowering needs a real `ToNumeric` coercion — or `++`/`--` must be rejected on a tag variable whose type is not known numeric. Re-verify: compile `<let/x="5"/><button onClick(){ const v = x++ }>${x}</button>` with `-o dom`; the handler emits `const v = $x($scope, $scope.x + 1) - 1`.
 
-## Key the bound-attribute change-handler cache by refining function, not just the binding
-
-`packages/runtime-tags/src/translator/visitors/program/pre-analyze.ts` › `getChangeHandler` | 2026-07-23 | impact:med | effort:low
-
-`getChangeHandler` memoizes one change-handler node per binding in `BINDING_CHANGE_HANDLER`, keyed only on `binding.identifier`, while the refining-function shorthand (`value:parseInt:=value`) is read per attribute. For an identifier-valued `:=`, the first usage's refining function is baked into the shared handler and every later `:=` on that identifier reuses it verbatim, silently discarding its own modifier. `<let/value=0/><input value:parseInt:=value/><input value:=value/>` compiles both inputs to the same `$scope.$valueChange` = `_new_value => $value($scope, parseInt(_new_value))`; reversing the order drops `parseInt` entirely, and `parseInt` followed by `parseFloat` applies `parseInt` to both. Only the identifier branch is affected — the member-expression branch re-derives per attribute — so make the key `(binding.identifier, modifier-name-or-none)`. Re-verify: compile that pair with `-o dom -d` and confirm the second input's handler is unwrapped.
-
 ## Drop escaped placeholders that render an empty string so they stop claiming a walk step
 
 `packages/runtime-tags/src/translator/util/static-text.ts` › `isStaticText` | 2026-07-23 | impact:med | effort:low
