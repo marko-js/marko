@@ -1,4 +1,4 @@
-// size: 26009 (min) 9653 (brotli)
+// size: 26011 (min) 9692 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1101,7 +1101,10 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     (params ||= void 0));
   let clone = template
     ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(template, ns))(branch, walks);
+        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(template, ns))(
+          branch,
+          walks,
+        );
       }
     : (branch) => {
         walk((branch.S = branch.K = new Text()), walks, branch);

@@ -110,12 +110,6 @@ The key is `${section.id}` plus `_${name}` per referenced binding — no separat
 
 The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix subtracting 1 from the result), i.e. `x = x + 1` rather than JS's `x = ToNumeric(x) + 1`. With `<let/x="5"/>`, `x++` sets `x` to `"51"` and yields `50` instead of `6` and `5`; a `<let>` holding a bigint throws `Cannot mix BigInt and other types`. Wrapping the read in unary `+` fixes the string case but breaks bigint, so the lowering needs a real `ToNumeric` coercion — or `++`/`--` must be rejected on a tag variable whose type is not known numeric. Re-verify: compile `<let/x="5"/><button onClick(){ const v = x++ }>${x}</button>` with `-o dom`; the handler emits `const v = $x($scope, $scope.x + 1) - 1`.
 
-## Key the renderer clone cache with a null-prototype map
-
-`packages/runtime-tags/src/dom/renderer.ts` › `_content` | 2026-07-23 | impact:low | effort:low
-
-`_content`'s clone closure memoizes parsed markup with `((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(template, ns))(branch, walks)`. The inner cache is a plain object literal keyed by the section's raw static HTML, so a section whose entire markup is an `Object.prototype` member name resolves the inherited property instead of missing: `constructor`/`toString` return a callable that does nothing, leaving `branch[AccessorProp.StartNode]`/`[EndNode]` unset until `insertChildNodes` throws, and `__proto__` throws `is not a function` immediately. It is reachable from ordinary source — `<div><for|w| of=input.words>constructor</for></div>` compiles to `_for_of(0, "constructor")` -> `_content("", "constructor", ...)`. Fix: `Object.create(null)` or a `Map` for the per-namespace cache. Re-verify: mount that template with `{ words: ["a"] }` — it throws, while body text `x` renders fine.
-
 ## Key the bound-attribute change-handler cache by refining function, not just the binding
 
 `packages/runtime-tags/src/translator/visitors/program/pre-analyze.ts` › `getChangeHandler` | 2026-07-23 | impact:med | effort:low

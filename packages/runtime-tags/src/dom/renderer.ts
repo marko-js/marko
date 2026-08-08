@@ -95,7 +95,9 @@ export function _content(
   params ||= undefined;
   const clone: Renderer[typeof RendererProp.Clone] = template
     ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
+        // The digit prefix keeps a branch whose entire markup is an
+        // `Object.prototype` member name (`constructor`, …) off the prototype.
+        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(
           template,
           ns,
         ))(branch, walks);
