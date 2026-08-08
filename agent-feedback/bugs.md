@@ -176,12 +176,6 @@ For each non-repeated nested tag the `<`-branch unconditionally adds `loadAttrib
 
 For DOM, `translate.exit` folds the fallback into the derived signal itself (`value || _id($scope)`) and `_id` bumps a per-`$global` counter, so a nullish `value` mints a new id every time that signal recomputes — unlike valueless `<id/x/>`, which calls `_id` once from `$setup`. `<id/x=input.id>` is what `cheatsheet.md` recommends for reusable tags, so a caller omitting the id gets an identifier that changes on every update, never matches the resumed server id, and leaves outside references (CSS, `aria-*`, focus targets) stale. Mint it at setup and have the signal read that slot, leaving the HTML branch alone; keep `||`, since `tags/id.d.marko` types `value` as `string | null | false`. Fixture `id-tag` covers only the valueless form. Re-verify: mount compiled `<id/x=input.id>` + `<div id=x>` under jsdom and `update({ id: undefined, n })` twice — `id` goes `cM_0`, `cM_1`, `cM_2`.
 
-## Rewrite the `<tag-name>` shorthand in `export ... from` position, or reject it
-
-`packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `default` | 2026-07-30 | impact:med | effort:low
-
-The `<tag-name>` shorthand is rewritten only by the `ImportDeclaration` visitor (`resolveTagImport`, then `node.source.value = tagImport`); the translator has no export-declaration visitor, so `export { byDueDate } from "<table-sorts>"` is emitted verbatim with its angle brackets in both `-o html` and `-o dom` and with no diagnostic, surfacing later as a module-resolution error against generated code. Analysis already follows the shorthand here: `resolveRegisteredExport` in `visitors/function.ts` walks `ExportNamedDeclaration`/`ExportAllDeclaration` sources via `loadFileForImport`, which resolves `<tag>`. Direction: run `resolveTagImport` over an export declaration's `source` too, or raise a `buildCodeFrameError` naming the relative form if shorthand re-export is not meant to be supported. Re-verify: `pnpm run compile -o html -d tags/sort-barrel.marko` whose only line is `export { byDueDate } from "<table-sorts>"` still emits that specifier unchanged, while the `import` form emits `./table-sorts.marko`.
-
 ## Queue pending `onNextSibling` callbacks in the inline reorder runtime
 
 `packages/runtime-tags/src/html/inlined-runtimes.debug.ts` › `REORDER_RUNTIME_CODE` | 2026-07-10 | impact:low | effort:med

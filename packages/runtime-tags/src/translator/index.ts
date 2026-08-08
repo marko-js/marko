@@ -8,6 +8,7 @@ import MarkoCDATA from "./visitors/cdata";
 import MarkoComment from "./visitors/comment";
 import MarkoDeclaration from "./visitors/declaration";
 import MarkoDocumentType from "./visitors/document-type";
+import ExportDeclaration from "./visitors/export-declaration";
 import Function from "./visitors/function";
 import ImportDeclaration from "./visitors/import-declaration";
 import MarkoPlaceholder from "./visitors/placeholder";
@@ -28,6 +29,8 @@ const visitors = extractVisitors({
   Function,
   ReferencedIdentifier,
   ImportDeclaration,
+  ExportNamedDeclaration: ExportDeclaration,
+  ExportAllDeclaration: ExportDeclaration,
   MarkoDocumentType,
   MarkoDeclaration,
   MarkoCDATA,
