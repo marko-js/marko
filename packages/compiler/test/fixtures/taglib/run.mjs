@@ -27,6 +27,19 @@ const cases = {
     write(!!taglib.buildLookup(process.cwd(), emptyTranslator).getTag("probe-local"));
   },
 
+  "shorthand-attr-merge": () => {
+    taglib.register("./local/marko.json");
+    const tag = taglib.buildLookup(process.cwd(), emptyTranslator).getTag("probe-shorthand");
+    const attr = tag.attributes.label;
+    write({
+      type: attr.type,
+      defaultValue: attr.defaultValue,
+      required: attr.required,
+      autocomplete: !!attr.autocomplete,
+      target: tag.nestedTags.label.targetProperty,
+    });
+  },
+
   "optional-undeclared": () => write(taglib.resolveOptionalTaglibs(["marko-undeclared-taglib"])),
 
   "optional-throws": () =>

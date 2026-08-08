@@ -2,5 +2,17 @@
   "taglib-id": "taglib-fixture-local",
   "<probe-local>": {
     "@message": "string"
+  },
+  "<probe-shorthand>": {
+    "@label <label>": {
+      "type": "string",
+      "default-value": "L",
+      "required": true,
+      "autocomplete": [
+        {
+          "displayText": "label"
+        }
+      ]
+    }
   }
 }
