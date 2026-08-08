@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
 const click = (document: Document) => {
-  document.querySelector<HTMLButtonElement>("button:last-of-type")!.click();
+  document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
 function type(value: string) {
@@ -13,9 +13,9 @@ function type(value: string) {
   };
 }
 
-// A controllable bound to the child's own state runs the standard DOM
-// machinery: the instance is pure client, so no patch can echo over it.
+// A controllable bound through the child's input writes back to parent
+// state over tag-args: typing updates both sides, patches stay inert.
 export const config: TestConfig = {
   persisted: true,
-  steps: [{}, type("z"), {}, click, click],
+  steps: [{}, click, type("yo"), {}, click],
 };
