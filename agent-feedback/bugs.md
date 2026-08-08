@@ -140,12 +140,6 @@ The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> 
 
 `_style_shell` tags the generated stylesheet with `element.className = id`, but `SVGElement.className` is a readonly `SVGAnimatedString`, so in the runtime's strict-mode ESM that assignment throws `TypeError: Cannot set property className of #<SVGElement> which has only a getter`. `<let/c="red"/><svg><style>circle { fill: ${c}; }</style><circle cx=5 cy=5 r=4/></svg>` compiles to `_style_shell($scope, "#style/0")`, so every client-created render of such a template (a `mount`, or an `<if>`/`<for>` branch) dies before anything is inserted; SSR and resume survive because `html/attrs.ts` › `_style_html` emits `<style class=ID>` as markup and `_style_rule_item` only rewrites `textContent`. Write the marker with `element.setAttribute("class", id)` so both outputs set the same attribute regardless of namespace. Re-verify: mount that template in jsdom — it throws, while the identical `<style>` outside `<svg>` mounts as `<style class="cM_0">`.
 
-## Re-check serialized `$global` values after the first flush; `flushSerializer` latches `hasGlobals` even when it emitted nothing
-
-`packages/runtime-tags/src/html/writer.ts` › `flushSerializer` | 2026-07-27 | impact:med | effort:low
-
-`flushSerializer` sets `state.hasGlobals = true` before calling `getFilteredGlobals`, so a render whose allow-listed `$global` keys are all still `undefined` at the first serializer flush permanently latches "globals already sent" and never re-checks. A value assigned later — e.g. `<const/_=($global.late="LATE")/>` inside `<await>` content — is then dropped from the resume payload, so streaming and non-streaming disagree on identical input. Move the assignment inside an `if (globals)` guard, as the sibling `flushSerializerGlobals` already does; that covers every case where a later flush still has scopes, but a global first defined after the last scope-carrying flush needs an explicit final-flush re-check, since `flushSerializer` returns early when neither `flushScopes` nor `serializer.pending()` holds. Re-verify: render that template with `$global.serializedGlobals=["late"]` and a promise resolving on a later tick — the streamed chunks contain no `[0,{late:…}` entry, while awaiting the same render emits `_=>[0,{late:"LATE"},{n:0},{m:5}]`.
-
 ## Preserve an Error's own enumerable properties through resume — only `message` and `cause` survive
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeError` | 2026-07-27 | impact:med | effort:med
