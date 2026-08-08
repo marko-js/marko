@@ -305,11 +305,14 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
+  // Inside client-owned structure content sections keep lexical owners,
+  // so hops stay sound; elsewhere only branch chains pair for delivery.
+  const clientOwned = inClientOwnedStructure(section);
   return some(refs, (binding) => {
     if (isPatchFillBinding(binding) && binding.section !== section) {
       let cur: Section | undefined = section;
       while (cur && cur !== binding.section) {
-        if (!cur.isBranch) return true;
+        if (!cur.isBranch && !clientOwned) return true;
         cur = cur.parent;
       }
       return !cur;

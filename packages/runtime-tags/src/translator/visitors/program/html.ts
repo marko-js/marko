@@ -482,6 +482,50 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     }
     return false;
   };
+  // Whether a template's render can reach fed content: any dynamic tag,
+  // or any whole-bag / computed / `content` read of its input.
+  const contentConsumers = new Map<unknown, boolean>();
+  const childConsumesContent = (tagPath: t.NodePath<t.MarkoTag>): boolean => {
+    const file = loadFileForTag(tagPath);
+    if (!file) return true;
+    const cached = contentConsumers.get(file);
+    if (cached !== undefined) return cached;
+    contentConsumers.set(file, true);
+    let consumes = false;
+    file.path.traverse({
+      MarkoTag(inner) {
+        consumes ||= !t.isStringLiteral(inner.node.name);
+      },
+      Identifier(id) {
+        if (
+          !consumes &&
+          id.node.name === "input" &&
+          id.isReferencedIdentifier() &&
+          id.scope.getBinding("input")?.path.type === "Program"
+        ) {
+          const parent = id.parentPath;
+          consumes = !(
+            parent.isMemberExpression({ computed: false }) &&
+            t.isIdentifier(parent.node.property) &&
+            parent.node.property.name !== "content"
+          );
+        }
+      },
+    });
+    contentConsumers.set(file, consumes);
+    return consumes;
+  };
+  // The render of a directly fed renderer: a bare non-computed member of
+  // the template's input with nothing else on the tag.
+  const isContentRenderTag = (node: t.MarkoTag) =>
+    t.isMemberExpression(node.name) &&
+    !node.name.computed &&
+    t.isIdentifier(node.name.object, { name: "input" }) &&
+    !node.var &&
+    !node.attributes.length &&
+    !node.body.body.length &&
+    !node.attributeTags?.length &&
+    !node.arguments?.length;
   // The child is a pure client instance wherever it is admitted, so a
   // bare reference to its own call-clean `<const>` arrow is fresh.
   const isChildClientFnCallee = (
@@ -534,7 +578,16 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         const name =
           t.isStringLiteral(inner.node.name) && inner.node.name.value;
         if (!name) {
-          reason = "renders a dynamic tag";
+          // Rendering a directly fed renderer is the body-content channel:
+          // what it renders is validated where it was compiled.
+          if (
+            !(
+              isContentRenderTag(inner.node) &&
+              inner.scope.getBinding("input")?.path.type === "Program"
+            )
+          ) {
+            reason = "renders a dynamic tag";
+          }
           return;
         }
         // Boundaries lean on patch-era machinery this instance never
@@ -561,11 +614,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           if (inner.node.var) {
             reason = "renders a nested child with a tag variable";
           } else if (
-            inner.node.body.body.length ||
             inner.node.attributeTags?.length ||
             inner.node.arguments?.length
           ) {
-            reason = "renders a nested child with body content or arguments";
+            reason = "renders a nested child with attribute tags or arguments";
           } else {
             const ownership =
               inner.node.extra && getPersistedGroupOwnership(inner.node.extra);
@@ -688,8 +740,14 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       if (isConditionTag(tag) || isCoreTagName(tag, "for")) {
         const section = getSection(tag);
         // The walk pairs branches structurally at any depth, but only when
-        // every enclosing section is itself a branch.
-        if (!isPatchCaptureSection(section)) unsupported(node);
+        // every enclosing section is itself a branch — unless the body
+        // classified client-owned (content sections inherit ownership).
+        if (
+          !isPatchCaptureSection(section) &&
+          !getSectionForBody(tag.get("body"))?.isClientOwnedStructure
+        ) {
+          unsupported(node);
+        }
         if (getSectionForBody(tag.get("body"))?.isClientOwnedStructure) {
           for (const attr of node.attributes) {
             if (attr.type !== "MarkoAttribute") continue;
@@ -857,10 +915,12 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               "a tag variable on a child inside client-owned structure is not supported yet",
             );
           }
-          if (node.body.body.length || node.attributeTags?.length) {
+          // Body content compiles here, so its expressions are already
+          // checked in their own (client-owned) sections; attr tags are not.
+          if (node.attributeTags?.length) {
             unsupported(
               node,
-              "body content for a child inside client-owned structure is not supported yet",
+              "attribute tags for a child inside client-owned structure are not supported yet",
             );
           }
           // Arguments have no per-group channel: only named attrs deliver.
@@ -933,6 +993,22 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
           }
           return;
+        }
+        // A content-consuming child renders what this site feeds it; a
+        // server-owned instance would poison every patch, so say so now.
+        if (
+          (node.body.body.length ||
+            node.attributeTags?.length ||
+            node.attributes.some(
+              (attr) =>
+                attr.type === "MarkoAttribute" && attr.name === "content",
+            )) &&
+          childConsumesContent(tag)
+        ) {
+          unsupported(
+            node,
+            "content for a child that renders it only works inside client-owned structure (a server-owned instance would navigate on every patch)",
+          );
         }
         // A sourceless call bakes a value no client signal recomputes, so
         // its opacity counts as server-fed.
@@ -1114,6 +1190,21 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             (!tagDef.template && !tagDef.renderer))
         )
       ) {
+        // A fed renderer renders here: the compile cannot see its content,
+        // so the section poisons its patches (navigation) instead.
+        if (
+          isContentRenderTag(node) &&
+          tag.scope.getBinding("input")?.path.type === "Program"
+        ) {
+          if (inClientOwnedStructure(getSection(tag))) {
+            unsupported(
+              node,
+              "a renderer read inside client-owned structure would need to cross the wire as a function",
+            );
+          }
+          getSection(tag).hasOpaqueRender = true;
+          return;
+        }
         unsupported(node);
       }
       // A control patches through its registered helper (value entry +
