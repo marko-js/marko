@@ -208,8 +208,9 @@ export default {
       getBranchSectionAccessor(nodeBinding),
     );
 
-    if (isPersisted() && isPatchCaptureSection(tagSection)) {
-      // Ownership classifies once the merged input sources resolve.
+    if (isPersisted()) {
+      // Ownership classifies once the merged input sources resolve; a
+      // non-capture section (content) can still classify client-owned.
       onClassifyOwnership(tagSection, () => {
         const sources = getSerializeSourcesForExpr(tagExtra);
         if (
@@ -222,7 +223,7 @@ export default {
           // A client-evaluable loop is client-owned structure (state
           // re-lists directly; param feeds fill their slots).
           bodySection.isClientOwnedStructure = true;
-        } else {
+        } else if (isPatchCaptureSection(tagSection)) {
           addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
           // The loop's inputs drive structure: call sites reject feeding
           // them from client-owned values.

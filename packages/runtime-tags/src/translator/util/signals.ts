@@ -1215,11 +1215,12 @@ export function writeSignals(section: Section) {
   return written;
 }
 
-// Whether every section from `section` up to (excluding) `owner` is a
-// branch: the shape whose closures dispatch from the owner scope.
+// Whether every hop to `owner` dispatches from the owner scope: branches
+// always; inside client-owned, content sections too (lexical owners).
 function isBranchChainTo(section: Section, owner: Section) {
+  const clientOwned = inClientOwnedStructure(section);
   while (section !== owner) {
-    if (!section.isBranch || !section.parent) return false;
+    if ((!section.isBranch && !clientOwned) || !section.parent) return false;
     section = section.parent;
   }
   return true;
@@ -1705,6 +1706,13 @@ export function writeHTMLResumeStatements(
 
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
+  // An opaque render (a fed renderer) has no faithful patch: the poison
+  // entry makes the whole frame reject, falling back to navigation.
+  if (persisted && section.hasOpaqueRender) {
+    body.push(
+      t.expressionStatement(callRuntime("_patch_poison", scopeIdIdentifier)),
+    );
+  }
   // A constructible branch seeds its state onto freshly constructed scopes
   // as SETUP fills: the fill signal's joins render all downstream content.
   if (persisted && section.isBranch && isPatchCaptureSection(section)) {
