@@ -198,6 +198,8 @@ export default {
   },
 } satisfies TemplateVisitor<t.ImportDeclaration>;
 
+// Same-file lazy imports of one template share the first wrapper's triggers;
+// diverging triggers only meaningfully conflict across files, out of scope here.
 function getOrCreateHtmlLoadWrapped(
   readyId: string,
   originalIdentifier: t.Expression,
