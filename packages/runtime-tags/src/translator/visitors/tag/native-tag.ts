@@ -253,6 +253,8 @@ export default {
         hasEventHandlers ||
         textPlaceholders ||
         injectNonce ||
+        // Mirrors `getUsedAttrs`: translate emits `_attr_content` for this.
+        (seen.content && tagName !== "meta" && !node.body.body.length) ||
         isDynamicControllable(relatedControllable)
       ) {
         const tagExtra = (node.extra ??= {});
