@@ -104,12 +104,6 @@ HTML `_attrs` picks an `<input>`'s controllable from the change handler (`data.c
 
 For a custom tag with both a tag variable and attribute tags under control flow, `translateVar`'s `tag.insertBefore` puts `let menuEl = _myMenu({ item: $item })` ahead of the `let $item; _forOf(…)` statements that `translateAttrs` built and `tag.replaceWithMultiple(statements)` emits, so the render call reads `$item` in its temporal dead zone and SSR throws a ReferenceError. Sequence the call after the attr-tag statements, as the non-tag-variable path already does by pushing it onto `statements`. Only the HTML output is affected — the DOM output calls `_myMenu_input_item` after the loop. Re-verify: compile `<my-menu/menuEl><for|x| of=list><@item label=x/></for></my-menu>` with `pnpm run compile -o html -d`; the `let menuEl = _myMenu(…)` precedes `let $item`.
 
-## Reject assignments to an attribute tag `<for>` param inside an event handler
-
-`packages/runtime-tags/src/translator/util/references.ts` › `trackAssignment` | 2026-07-24 | impact:low | effort:low
-
-`<@item onClick() { x = "y" }>` where `x` is an attribute-tag `<for>` param (`BindingType.local`, from `core/for.ts`) reaches the change-handler branch of `trackAssignment` and compiles to `$scope.$Change("y")`, which nothing ever assigns, so the click throws a TypeError and nothing warns at compile time. Reads of such params work now (`referencedLocalBindingsInFunction`), which makes the silent write failure more confusing. These loops re-run wholesale on input change, so assignment has no reactive meaning; a compile error when `binding.type === BindingType.local` would be cheap and clear. Re-verify: compile that template with `pnpm run compile -o dom -d` and look for `$scope.$Change` in the handler.
-
 ## Match the internal `RenderedTemplate` to the published `Marko.RenderedTemplate`
 
 `packages/runtime-tags/src/common/types.ts` › `RenderedTemplate` | 2026-07-27 | impact:low | effort:low

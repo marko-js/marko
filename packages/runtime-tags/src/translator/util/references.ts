@@ -578,6 +578,14 @@ function trackAssignment(
     );
   }
 
+  // An attribute tag's loop params have no change handler an assignment
+  // could write through; the loop re-runs wholesale on input change.
+  if (binding.type === BindingType.local) {
+    throw assignment.buildCodeFrameError(
+      `\`${binding.name}\` is a tag parameter and cannot be assigned to.`,
+    );
+  }
+
   const fnRoot = getFnRoot(fnParent);
   const fnExtra =
     fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
