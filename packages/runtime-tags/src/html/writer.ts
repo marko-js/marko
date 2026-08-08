@@ -556,6 +556,15 @@ export function _patch_write(
   return "";
 }
 
+// No client patcher registers this kind, so applying the frame rejects
+// and the navigation fallback runs (a fed renderer cannot patch).
+export function _patch_poison(scopeId: number) {
+  if ($chunk.boundary.state.writesPatches) {
+    writePatch(scopeId, { [PatchKey.Poison]: 1 });
+  }
+  return "";
+}
+
 export function _patch_effect(
   scopeId: number,
   registerId: string,
