@@ -305,10 +305,10 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
-  // Inside client-owned structure content sections keep lexical owners,
-  // so LONE reads hop soundly; intersections still need branch chains
-  // (their emission composes per-hop branch builders).
-  const clientOwned = !Array.isArray(refs) && inClientOwnedStructure(section);
+  // Inside client-owned structure content sections keep lexical owners, so
+  // reads hop soundly: lone reads and dynamic-chain intersection members
+  // deliver through their self-registering closure signals.
+  const clientOwned = inClientOwnedStructure(section);
   return some(refs, (binding) => {
     if (isPatchFillBinding(binding) && binding.section !== section) {
       let cur: Section | undefined = section;

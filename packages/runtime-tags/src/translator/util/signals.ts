@@ -1028,6 +1028,11 @@ export function writeSignals(section: Section) {
                 "_fill_join";
               let hopExprs: t.Expression[] = [];
               if (member.section !== signal.section) {
+                // A chain that leaves the branch ladder delivers through the
+                // member's own closure signal (`_fill_join_closure`) instead.
+                if (!isBranchSectionChain(signal.section, member.section)) {
+                  continue;
+                }
                 // Each branch's closure builder is the source of truth
                 // for its hop; deeper reads compose the chain.
                 const hopArgs: t.Expression[][] = [];
@@ -1091,7 +1096,7 @@ export function writeSignals(section: Section) {
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section !== signal.referencedBindings.section &&
           isBranchChainTo(signal.section, signal.referencedBindings.section) &&
-          hasDirectRenderedRead(signal.referencedBindings, signal.section)
+          hasFillDeliveredRead(signal.referencedBindings, signal.section)
         ) {
           // Inside client-owned structure a lone closure over a server
           // fill IS the delivery channel: it registers the join itself.
@@ -1242,19 +1247,35 @@ function isBranchChainTo(section: Section, owner: Section) {
   return true;
 }
 
-// A lone read renders through the closure itself; intersections render
-// through their own self-registering signals (over-counting is safe).
-function hasDirectRenderedRead(binding: Binding, section: Section) {
+// A lone read renders through the closure itself, as does an intersection
+// member whose chain leaves the branch ladder (the intersection's own
+// registration composes branch hops only); branch-chain intersections
+// register themselves (over-counting is safe).
+function hasFillDeliveredRead(binding: Binding, section: Section) {
   for (const read of binding.reads) {
-    if (
-      !read.isEffect &&
-      read.section === section &&
-      !Array.isArray(read.referencedBindings)
-    ) {
-      return true;
+    if (!read.isEffect && read.section === section) {
+      if (
+        !Array.isArray(read.referencedBindings) ||
+        !isBranchSectionChain(section, binding.section)
+      ) {
+        return true;
+      }
     }
   }
   return false;
+}
+
+// Whether every section from `section` up to (exclusive) `owner` is a
+// branch: only those chains compose per-hop closure builders.
+function isBranchSectionChain(section: Section, owner: Section) {
+  for (
+    let cur: Section | undefined = section;
+    cur && cur !== owner;
+    cur = cur.parent
+  ) {
+    if (!cur.isBranch) return false;
+  }
+  return true;
 }
 
 function writeGetters(section: Section) {

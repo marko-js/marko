@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-content-mixed/template.marko:5:10
-      3 |   <if=open>
-      4 |     <box>
-    > 5 |       <p>${input.a + ":" + input.b}</p>
-        |          ^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value's fill delivery path leaves the branch chain.
-      6 |     </box>
-      7 |   </if>
-      8 |   <button onClick() { open = !open }>+</button>
