@@ -5,7 +5,7 @@ var box_default = _template_persisted("b", (input) => {
 	_html("<div class=box>");
 	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0));
 	_html("</div>");
-	_patch_poison($scope0_id);
+	input.content && _patch_poison($scope0_id);
 	$scope0_reason && writeScope($scope0_id, {});
 }, 0, 0);
 
