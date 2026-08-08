@@ -1,0 +1,5 @@
+static const key = "bump";
+<let/n=0/>
+<const/handlers={ [key]() { n++ } }/>
+<button onClick=handlers[key]>b</button>
+<div>${n}</div>
