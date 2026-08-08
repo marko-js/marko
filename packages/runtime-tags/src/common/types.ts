@@ -105,6 +105,18 @@ export interface MountedTemplate {
 export type RenderedTemplate = PromiseLike<string> &
   AsyncIterable<string> & {
     toReadable(): ReadableStream<Uint8Array<ArrayBufferLike>>;
+    pipe(stream: {
+      write(chunk: string): unknown;
+      end(): unknown;
+      flush?(): void;
+      destroy?(): void;
+      emit?(name: PropertyKey, ...args: unknown[]): unknown;
+    }): void;
+    toString(): string;
+    catch<T = never>(
+      onrejected?: ((reason: unknown) => T | PromiseLike<T>) | undefined | null,
+    ): Promise<string | T>;
+    finally(onfinally?: (() => void) | undefined | null): Promise<string>;
   };
 
 type ControlledType = ControlledType.Value;

@@ -104,12 +104,6 @@ HTML `_attrs` picks an `<input>`'s controllable from the change handler (`data.c
 
 For a custom tag with both a tag variable and attribute tags under control flow, `translateVar`'s `tag.insertBefore` puts `let menuEl = _myMenu({ item: $item })` ahead of the `let $item; _forOf(…)` statements that `translateAttrs` built and `tag.replaceWithMultiple(statements)` emits, so the render call reads `$item` in its temporal dead zone and SSR throws a ReferenceError. Sequence the call after the attr-tag statements, as the non-tag-variable path already does by pushing it onto `statements`. Only the HTML output is affected — the DOM output calls `_myMenu_input_item` after the loop. Re-verify: compile `<my-menu/menuEl><for|x| of=list><@item label=x/></for></my-menu>` with `pnpm run compile -o html -d`; the `let menuEl = _myMenu(…)` precedes `let $item`.
 
-## Match the internal `RenderedTemplate` to the published `Marko.RenderedTemplate`
-
-`packages/runtime-tags/src/common/types.ts` › `RenderedTemplate` | 2026-07-27 | impact:low | effort:low
-
-The internal `RenderedTemplate` is `PromiseLike<string> & AsyncIterable<string> & { toReadable() }`, but `ServerRendered` (`html/template.ts`) also implements `pipe`, `catch`, `finally` and a synchronous `toString`, and the published `Marko.RenderedTemplate` in `packages/runtime-tags/index.d.ts` already declares `Promise<string>` plus `pipe` and `toString`. The two have drifted, so anything typed off `common/types` loses `.pipe`/`.catch`/`.finally`; `__tests__/render-result.test.ts` carries a local `ServerResult` intersection for exactly this and should drop it once the internal type matches. Widening is safe: the DOM build's `render` only throws, so only the HTML build ever produces one. Re-verify: in a `.ts` file, type a value as `RenderedTemplate` from `@marko/runtime-tags/common/types` and call `.pipe(process.stdout)` — TS2339.
-
 ## Catch effect errors in `runEffects`; a throwing `<script>` escapes `<try>`'s `@catch` and kills every queued effect
 
 `packages/runtime-tags/src/dom/queue.ts` › `runEffects` | 2026-07-27 | impact:med | effort:med

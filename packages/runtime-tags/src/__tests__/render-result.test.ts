@@ -15,21 +15,7 @@ import type {
 import * as tagsTranslator from "../translator";
 import { createServerRunner } from "./utils/bundle";
 
-type PipeTarget = {
-  write(chunk: string): void;
-  end(): void;
-  flush?(): void;
-  destroy?(): void;
-  emit?(name: PropertyKey, ...args: unknown[]): unknown;
-};
-
-// `RenderedTemplate` declares `then`, async iteration and `toReadable` only,
-// while the server result also implements these — see agent-feedback/bugs.md.
-type ServerResult = RenderedTemplate & {
-  pipe(stream: PipeTarget): void;
-  catch<T>(onrejected: (reason: unknown) => T): Promise<string | T>;
-  finally(onfinally: () => void): Promise<string>;
-};
+type ServerResult = RenderedTemplate;
 
 const dir = path.join(import.meta.dirname, "render-result");
 const CONSUMED = /consumed render result/;
