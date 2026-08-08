@@ -19,6 +19,7 @@ import isStatic from "../../util/is-static";
 import {
   getKnownTagReturnReason,
   getPersistedGroupOwnership,
+  type PersistedGroupOwnership,
 } from "../../util/known-tag";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
@@ -518,7 +519,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               reason = "renders a nested child without analyzable input";
             }
             for (const group of ownership || []) {
-              if (group.serverRequired || group.globalFed) {
+              if (
+                (group.serverRequired &&
+                  groupFedUnsafely(inner.node.attributes, group)) ||
+                group.globalFed
+              ) {
                 reason = "feeds a nested child an input it needs server-owned";
                 break;
               }
@@ -531,13 +536,49 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     childUnsafety.set(file, reason);
     return reason;
   };
-  // A server-derived function re-binds to the live scope on patch, so
-  // server values its body captures read stale slots forever: fail closed.
+  // Provenance-free feeds (imports, opaque reads) can still change across
+  // patches, so only an absent or constant attr leaves a group inert.
+  const groupFedUnsafely = (
+    attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
+    group: PersistedGroupOwnership,
+  ) => {
+    if (group.stateFed || group.serverable) return true;
+    let names: Set<string> | undefined;
+    forEach(group.params, (param) => {
+      (names ??= new Set()).add(param.property ?? param.name);
+    });
+    return attributes.some(
+      (attr) =>
+        attr.type === "MarkoAttribute" &&
+        names?.has(attr.name) &&
+        !evaluate(attr.value).confident,
+    );
+  };
+  // A server-created function re-binds stale on patch; one DECLARED in
+  // the region is client-created and recomputes off fills, so it's fresh.
+  // Only a bare reference is exempt: a computed callee (`x()()`) could
+  // invoke a server value the declaring arrow merely returned.
+  const calleeIsServerDerived = (callee: t.Node) => {
+    if (t.isIdentifier(callee)) {
+      const extra = callee.extra;
+      let server = !!extra?.globalBindings;
+      forEach(extra?.read?.binding ?? extra?.referencedBindings, (binding) => {
+        const sources = getSerializeSourcesForRef(binding);
+        if (sources?.param || sources?.global) {
+          server ||= !(
+            binding.declaresFunction && inClientOwnedStructure(binding.section)
+          );
+        }
+      });
+      return server;
+    }
+    return exprHasServerSources(callee);
+  };
   const assertNoServerFnCalls = (node: t.Node, value: t.Node) => {
     t.traverseFast(value, (n) => {
       if (
         (t.isCallExpression(n) || t.isOptionalCallExpression(n)) &&
-        exprHasServerSources(n.callee)
+        calleeIsServerDerived(n.callee)
       ) {
         unsupported(
           node,
@@ -620,8 +661,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           return;
         }
-        // Server-owned structure nested under client-owned structure has
-        // no frame channel to speak through.
+        // Nested structure inherits client ownership, so reaching here
+        // means its selection has no delivery channel: fail closed.
         if (inClientOwnedStructure(section)) {
           const attrExtra = node.attributes[0]?.value.extra;
           const sources =
@@ -629,9 +670,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             getSerializeSourcesForExpr(getCanonicalExtra(attrExtra));
           unsupported(
             node,
-            sources?.param || sources?.global
-              ? "server-owned structure cannot nest inside client-owned structure"
-              : "structure inside client-owned structure must be client-driven (an unassigned `<let>` is not client state)",
+            sources?.global
+              ? "`$global`-driven structure cannot nest inside client-owned structure"
+              : "a server value selecting structure inside client-owned structure must be a directly read, named `input` property (so it can deliver as a fill)",
           );
         }
         for (const attr of node.attributes) {
@@ -799,8 +840,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           for (const group of ownership || []) {
             // A structural or `$global`-mixed child param needs server
-            // ownership, which a skipped region cannot provide.
-            if (group.serverRequired || group.globalFed) {
+            // ownership, which a skipped region cannot provide; an unfed
+            // (or constant-fed) group can never change, so it may pass.
+            if (
+              (group.serverRequired &&
+                groupFedUnsafely(node.attributes, group)) ||
+              group.globalFed
+            ) {
               unsupported(
                 node,
                 "an input the child needs server-owned cannot feed from client-owned structure",

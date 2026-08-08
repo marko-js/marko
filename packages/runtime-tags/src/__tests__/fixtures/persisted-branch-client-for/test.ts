@@ -1,8 +1,18 @@
 import type { TestConfig } from "../../main.test";
 
-// A loop nested under client-owned structure: server-owned membership has
-// no frame channel to speak through there.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A server list renders a loop nested in client-owned structure: the
+// array delivers as a fill and the client re-lists on every write.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { items: ["a", "b"] },
+    click,
+    click,
+    { items: ["a", "b", "c"] },
+    { items: ["z"] },
+  ],
 };
