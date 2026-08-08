@@ -121,8 +121,9 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
-      if (isPersisted() && isPatchCaptureSection(ifTagSection)) {
-        // Ownership classifies once the merged test sources resolve.
+      if (isPersisted()) {
+        // Ownership classifies once the merged test sources resolve; a
+        // non-capture section (content) can still classify client-owned.
         onClassifyOwnership(ifTagSection, () => {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
           if (
@@ -139,7 +140,7 @@ export const IfTag = {
                 branchBody.isClientOwnedStructure = true;
               }
             }
-          } else {
+          } else if (isPatchCaptureSection(ifTagSection)) {
             addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
             // Branch tests drive structure: call sites reject feeding them
             // from client-owned values.
