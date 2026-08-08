@@ -549,9 +549,14 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
         );
 
         if (getTagVar) {
-          scope[childScopeAccessor][AccessorProp.TagVariable] = (
-            value: unknown,
-          ) => getTagVar()(scope, value);
+          if (scope[childScopeAccessor]) {
+            scope[childScopeAccessor][AccessorProp.TagVariable] = (
+              value: unknown,
+            ) => getTagVar()(scope, value);
+          } else {
+            // The branch tore down; clear the tag variable with it.
+            getTagVar()(scope, undefined);
+          }
         }
 
         if (typeof normalizedRenderer === "string") {
