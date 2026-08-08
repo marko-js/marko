@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.41.19
+
+### Patch Changes
+
+- [#3877](https://github.com/marko-js/marko/pull/3877) [`4adcb25`](https://github.com/marko-js/marko/commit/4adcb25996368d3e456c6ad25d7af7fadbeaa2da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bound a failed attribute value parse to the attribute value instead of the rest of the file.
+
+- [#3878](https://github.com/marko-js/marko/pull/3878) [`e03de1a`](https://github.com/marko-js/marko/commit/e03de1a9d3bb01c2440e19e9be5216fc3097342c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep preserving whitespace after a nested preserve-whitespace tag (eg a `<textarea>` inside `<pre>`) closes.
+
+- [#3876](https://github.com/marko-js/marko/pull/3876) [`3c2b628`](https://github.com/marko-js/marko/commit/3c2b628618bed8aef684913eefaa827e75ad5f3b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a trimmed text node's end position overshooting by the amount of trimmed leading whitespace.
+
 ## 5.41.18
 
 ### Patch Changes
