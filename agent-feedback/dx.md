@@ -26,12 +26,6 @@ htmljs-parser treats the first unenclosed `>` as the tag close, so `<if=input.n 
 
 Positional file args are unioned with the configured `spec` glob rather than replacing it: with mocha 11.7.6, `mocha packages/runtime-tags/src/__tests__/serializer.test.ts` resolves `argv.spec` to `["…/serializer.test.ts", "packages/*/@(src|test)/**/*.test.@(js|ts)"]`, so the whole suite runs — silently, since the named file is included. `--spec <file>` merges the same way; only `--grep` or bypassing the config (`npx mocha --no-config --no-package --timeout 10000 --require ~ts <file>`) actually scopes a run. Add a `test:file` script that forwards to mocha without the default spec, or document the incantation in CLAUDE.md beside the existing `--grep` line. Re-verify by printing the resolved `argv.spec` from mocha's run-command handler.
 
-## Forward `cheatsheet` through `createInteropTranslator` so the agent fix guide fires on interop compiles
-
-`packages/runtime-tags/src/translator/interop/index.ts` › `createInteropTranslator` | 2026-07-20 | impact:med | effort:low
-
-`createInteropTranslator` returns 8 keys without `cheatsheet`, and `runtime-class/src/translator.js` re-exports exactly those, so `marko/translator` exposes none. `agent-fix-guide.js` appends `Fix guide: READ …` only when `tryLoadTranslator(translator)?.cheatsheet` is a string, so Marko 5 and mixed 5/6 sessions never see it — including tags-API files compiled through the interop, where the runtime-tags cheat sheet is exactly the migration aid wanted. Forward one and re-export it from runtime-class; `try-load-translator.js` resolves the value against the translator module's own directory, so reusing `translate6`'s `"../../cheatsheet.md"` misses (`packages/runtime-class` has no `cheatsheet.md`). Verify with `CLAUDECODE=1`: `appendAgentFixGuide(new Error("x"), "marko/translator").message` stays `"x"`, while `"@marko/runtime-tags/translator"` appends `READ packages/runtime-tags/cheatsheet.md`.
-
 ## Serialize `Blob` and `File`, including inside `FormData`
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeFormData` | 2026-07-23 | impact:med | effort:med

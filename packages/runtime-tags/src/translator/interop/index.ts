@@ -15,6 +15,8 @@ type TagDef = Record<string, unknown>;
 type Taglibs = [taglibId: string, taglib: Record<string, unknown>][];
 
 export function createInteropTranslator(translate5: any) {
+  // `cheatsheet` is deliberately not forwarded: it documents Marko 6 syntax,
+  // so surfacing it on v5/interop compiles would point agents at the wrong guidance.
   return {
     version: translate5.version ?? "0.0.0",
     preferAPI: translate5.preferAPI,
