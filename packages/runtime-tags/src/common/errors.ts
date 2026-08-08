@@ -201,6 +201,25 @@ export function assertExclusiveAttrs(
   }
 }
 
+export function assertNoValueBindingOnCheckable(
+  type: unknown,
+  valueChange: unknown,
+) {
+  if (
+    valueChange &&
+    /^(?:button|checkbox|hidden|image|radio|reset|submit)$/i.test(
+      type as string,
+    )
+  ) {
+    console.error(
+      `\`valueChange\` cannot be used on a \`type="${type}"\` \`<input>\` — user interaction can never change its \`value\`.` +
+        (/^[cr]/i.test(type as string)
+          ? " Bind `checked` or `checkedValue` instead."
+          : ""),
+    );
+  }
+}
+
 export function assertHandlerIsFunction(name: string, value: unknown) {
   if (value && typeof value !== "function") {
     throw new Error(

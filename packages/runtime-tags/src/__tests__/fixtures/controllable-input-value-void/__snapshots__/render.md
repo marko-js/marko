@@ -1,6 +1,6 @@
 # Render
 ```html
 <input
-  type="checkbox"
+  type="hidden"
 />
 ```

@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-checkbox-value-binding/template.marko:2:1
+      1 | <let/v="a"/>
+    > 2 | <input type="checkbox" value:=v/>
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `valueChange` cannot be used on a `type="checkbox"` `<input>` — user interaction can never change its `value`. Bind `checked` or `checkedValue` instead.
+      3 |
