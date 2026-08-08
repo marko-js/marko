@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-arrow-alias/template.marko:5:8
+      3 |   <if=open>
+      4 |     <const/fn=input.fn/>
+    > 5 |     <p>${fn()}</p>
+        |        ^^^^^^^ Persisted templates cannot patch this faithfully yet: calling a server-derived function inside client-owned structure is not supported yet.
+      6 |   </if>
+      7 |   <button onClick() { open = !open }>+</button>
+      8 | </main>

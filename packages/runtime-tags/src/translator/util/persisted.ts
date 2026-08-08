@@ -73,7 +73,20 @@ const [getPersistedFinalizers] = createProgramState<(() => void)[]>(() => []);
 export function onFinalizePersisted(finalize: () => void) {
   getPersistedFinalizers().push(finalize);
 }
+// Ownership classification runs first, outer sections before inner, so a
+// nested selection sees its ancestors' (possibly inherited) ownership.
+const [getOwnershipClassifiers] = createProgramState<
+  [depth: number, classify: () => void][]
+>(() => []);
+export function onClassifyOwnership(section: Section, classify: () => void) {
+  getOwnershipClassifiers().push([section.depth, classify]);
+}
 export function finalizePersisted() {
+  for (const [, classify] of getOwnershipClassifiers().sort(
+    ([a], [b]) => a - b,
+  )) {
+    classify();
+  }
   for (const finalize of getPersistedFinalizers()) finalize();
 }
 
@@ -149,11 +162,16 @@ export function paramsDeliverAsFills(params: Sources["param"]) {
   return every(params, isPatchFillBinding);
 }
 
-// Client-evaluable sources classify structure client-owned: state
-// re-renders directly, and every param feed fills its slot.
-export function classifiesClientOwned(sources: Sources | undefined) {
+// Client-evaluable sources classify structure client-owned; nesting in
+// client-owned structure inherits ownership (its bodies already bundle).
+export function classifiesClientOwned(
+  sources: Sources | undefined,
+  section: Section,
+) {
   return (
-    !!sources?.state && !sources.global && paramsDeliverAsFills(sources.param)
+    (!!sources?.state || inClientOwnedStructure(section)) &&
+    !sources?.global &&
+    paramsDeliverAsFills(sources?.param)
   );
 }
 

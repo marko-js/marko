@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// An inner list whose `<let>` is never assigned is not client state, so
-// it cannot nest inside the client-owned outer: the error names why.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// Nested structure inherits client ownership: the inner list needs no
+// client state of its own to render inside the client-owned outer.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, click, {}],
 };
