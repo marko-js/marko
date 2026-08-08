@@ -378,7 +378,10 @@ function assertHasValueAttribute(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const [valueAttr] = node.attributes;
 
-  if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
+  if (
+    !t.isMarkoAttribute(valueAttr) ||
+    !(valueAttr.default || valueAttr.name === "value")
+  ) {
     throw tag
       .get("name")
       .buildCodeFrameError(

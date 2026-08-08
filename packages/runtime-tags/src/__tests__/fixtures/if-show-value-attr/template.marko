@@ -1,0 +1,14 @@
+<let/n=0/>
+<button onClick() { n++ }>b</button>
+<if value=(n % 3 === 0)>
+  <div>zero</div>
+</if>
+<else-if value=(n % 3 === 1)>
+  <div>one</div>
+</else-if>
+<else>
+  <div>two</div>
+</else>
+<show value=(n > 0)>
+  <span>shown</span>
+</show>
