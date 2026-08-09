@@ -74,6 +74,9 @@ export interface Signal {
   section: Section;
   build: undefined | (() => t.Expression | undefined);
   register?: boolean;
+  // Other emitted statements reference this signal's identifier directly (eg
+  // the `_var` setup call), so even an empty signal keeps its declaration.
+  referenced?: boolean;
   values: Array<{
     signal: Signal;
     value: t.Expression;
@@ -1007,6 +1010,7 @@ export function writeSignals(section: Section) {
       if (
         !value ||
         (!signal.register &&
+          !signal.referenced &&
           t.isFunction(value) &&
           t.isBlockStatement(value.body) &&
           !value.body.body.length)
