@@ -17,8 +17,11 @@ export function _unescaped(val: unknown) {
   return val ? val + "" : val === 0 ? "0" : "";
 }
 
-const unsafeXMLReg = /[<&]/g;
-const replaceUnsafeXML = (c: string) => (c === "&" ? "&amp;" : "&lt;");
+// A raw carriage return would parse back as a newline (CSR keeps it); the
+// reference survives, decoded after newline normalization.
+const unsafeXMLReg = /[<&\r]/g;
+const replaceUnsafeXML = (c: string) =>
+  c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&#13;";
 const escapeXMLStr = (str: string) =>
   unsafeXMLReg.test(str) ? str.replace(unsafeXMLReg, replaceUnsafeXML) : str;
 export function _escape(val: unknown) {

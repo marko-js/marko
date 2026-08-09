@@ -134,12 +134,6 @@ For DOM, `translate.exit` folds the fallback into the derived signal itself (`va
 
 `runtime.x` keeps a single `nextSibling`/`onNextSibling` pair. A `<t hidden>` swap callback pending on that element's next sibling is silently dropped if, while walking the `<t>`'s children, a placeholder-end comment (`!id`) hits the `runtime.l[id] && placeholders[id]` branch and reassigns the pair — the outer swap then never fires and hydration freezes. Current server flush ordering appears to keep this unreachable, so this is robustness, not a live bug: fire the pending callback before reassigning (or queue), weighed against inline-runtime bytes. Re-verify: read `REORDER_RUNTIME_CODE` and confirm both the `op == "!"` and `<t>` branches assign `nextSibling`/`onNextSibling` without first draining a pending one.
 
-## Escape a carriage return in a `<textarea>` body so SSR and CSR agree
-
-`packages/runtime-tags/src/html/attrs.ts` › `_textarea_value` | 2026-07-27 | impact:low | effort:low
-
-`_textarea_value` writes the value as element text and the HTML tokenizer normalizes every CR and CRLF in text to a single LF, so a `\r` anywhere — not just at the start, which commit a6acdde917 already handles — is lost: `"a\rb"` and `"a\r\nb"` both parse back to `defaultValue === "a\nb"`. CSR keeps the CR, since `_attr_input_value_default` (`dom/controllable.ts`) assigns `el.defaultValue` verbatim and `_attr_input_value_script` seeds the resumed `ControlledValue` from `el.defaultValue`, so a resumed controlled `<textarea>` holds a different string than a client-rendered one. Writing `\r` as `&#13;` survives, because character references are decoded after newline normalization; weigh that against the bytes it costs every textarea. The attribute-value escaper has the identical gap in the entry "Escape a carriage return in an attribute value so SSR and CSR agree" — a separate fix in `attrAssignment` rather than this `_escape`-based path, but landing only one still leaves a resumed controlled `<input value=…>` diverging from its client-rendered twin. Re-verify in jsdom: `<textarea>a\rb</textarea>` reports `defaultValue === "a\nb"`, `<textarea>a&#13;b</textarea>` reports `"a\rb"`.
-
 ## Renumber alias bindings too, or stop using `Binding.id` as the `bindingUtil` identity tiebreak
 
 `packages/runtime-tags/src/translator/util/references.ts` › `finalizeReferences` | 2026-07-23 | impact:med | effort:med

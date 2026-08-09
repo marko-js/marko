@@ -1,21 +1,43 @@
-# Render `{"v":"\nkept"}`
+# Render `{"v":"\nkept a\rb\r\nc"}`
 ```html
 <textarea
+  default-value="
+kept ab
+c"
   id="attr"
 >
   
-kept
+kept a
+b
+c
 </textarea>
 <textarea
+  default-value="
+kept ab
+c"
   id="bound"
 >
   
-kept
+kept a
+b
+c
 </textarea>
 <textarea
+  default-value="
+kept ab
+c"
   id="body"
 >
   
-kept
+kept a
+b
+c
 </textarea>
+<p
+  id="text"
+>
+  
+kept ab
+c
+</p>
 ```
