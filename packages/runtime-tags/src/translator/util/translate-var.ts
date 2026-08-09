@@ -13,6 +13,7 @@ export default function translateVar(
   tag: t.NodePath<t.MarkoTag>,
   initialValue: t.Expression,
   kind: "let" | "const" = "const",
+  statements?: t.Statement[],
 ) {
   const {
     node: { var: tagVar },
@@ -106,9 +107,14 @@ export default function translateVar(
     }
   });
 
-  tag.insertBefore(
-    t.variableDeclaration(kind, [t.variableDeclarator(tagVar, initialValue)]),
-  );
+  const declaration = t.variableDeclaration(kind, [
+    t.variableDeclarator(tagVar, initialValue),
+  ]);
+  if (statements) {
+    statements.push(declaration);
+  } else {
+    tag.insertBefore(declaration);
+  }
 }
 
 function getDestructurePattern(id: t.NodePath<t.Identifier>) {

@@ -121,8 +121,13 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
+        translateVar(
+          tag,
+          propsToExpression(translatedAttrs.properties),
+          "const",
+          translatedAttrs.statements,
+        );
         tag.insertBefore(translatedAttrs.statements);
-        translateVar(tag, propsToExpression(translatedAttrs.properties));
       } else {
         if (t.isIdentifier(node.var)) {
           const babelBinding = tag.scope.getBinding(node.var.name)!;

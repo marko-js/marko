@@ -22,8 +22,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}) });
 	}
 	const $childScope = _peek_scope_id();
-	hello_default({ item: $item });
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/1")}`);
+	let menuEl = hello_default({ item: $item });
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_menuEl#4/var");
+	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		x,

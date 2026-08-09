@@ -206,20 +206,16 @@ export function knownTagTranslateHTML(
     childScopeBinding,
   );
 
+  let varStatement: t.Statement | undefined;
   if (childScopeSerializeReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
-    const peekScopeDeclaration = t.variableDeclaration("const", [
-      t.variableDeclarator(peekScopeId, callRuntime("_peek_scope_id")),
-    ]);
-    if (tagVar) {
-      // A tag variable renders the child from a declaration inserted before
-      // these statements, so the peek must precede it.
-      tag.insertBefore(peekScopeDeclaration);
-    } else {
-      // After the attr statements: building attribute tags can consume scope
-      // ids (eg `_resume_locals`), and the peek must see the child's root id.
-      statements.push(peekScopeDeclaration);
-    }
+    // After the attr statements: building attribute tags can consume scope
+    // ids (eg `_resume_locals`), and the peek must see the child's root id.
+    statements.push(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(peekScopeId, callRuntime("_peek_scope_id")),
+      ]),
+    );
 
     setBindingSerializedValue(
       section,
@@ -228,16 +224,16 @@ export function knownTagTranslateHTML(
     );
 
     if (tagVar) {
-      statements.push(
-        t.expressionStatement(
-          callRuntime(
-            "_var",
-            getScopeIdIdentifier(section),
-            getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
-            peekScopeId,
-            t.stringLiteral(
-              getResumeRegisterId(section, tagVar.extra?.binding, "var"),
-            ),
+      // Deferred below the render call: `_var` mints the post-render scope id
+      // for the scope offset.
+      varStatement = t.expressionStatement(
+        callRuntime(
+          "_var",
+          getScopeIdIdentifier(section),
+          getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
+          peekScopeId,
+          t.stringLiteral(
+            getResumeRegisterId(section, tagVar.extra?.binding, "var"),
           ),
         ),
       );
@@ -328,7 +324,15 @@ export function knownTagTranslateHTML(
   };
 
   if (tagVar) {
-    translateVar(tag, callExpression(tagIdentifier, ...getArgs()), "let");
+    // The render call reads attr-tag bindings, so its declaration must follow
+    // the attr statements rather than precede the tag.
+    translateVar(
+      tag,
+      callExpression(tagIdentifier, ...getArgs()),
+      "let",
+      statements,
+    );
+    if (varStatement) statements.push(varStatement);
   } else {
     statements.push(callStatement(tagIdentifier, ...getArgs()));
   }
