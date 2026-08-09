@@ -86,12 +86,6 @@ HTML `_attrs` picks an `<input>`'s controllable from the change handler (`data.c
 
 `_style_shell` tags the generated stylesheet with `element.className = id`, but `SVGElement.className` is a readonly `SVGAnimatedString`, so in the runtime's strict-mode ESM that assignment throws `TypeError: Cannot set property className of #<SVGElement> which has only a getter`. `<let/c="red"/><svg><style>circle { fill: ${c}; }</style><circle cx=5 cy=5 r=4/></svg>` compiles to `_style_shell($scope, "#style/0")`, so every client-created render of such a template (a `mount`, or an `<if>`/`<for>` branch) dies before anything is inserted; SSR and resume survive because `html/attrs.ts` › `_style_html` emits `<style class=ID>` as markup and `_style_rule_item` only rewrites `textContent`. Write the marker with `element.setAttribute("class", id)` so both outputs set the same attribute regardless of namespace. Re-verify: mount that template in jsdom — it throws, while the identical `<style>` outside `<svg>` mounts as `<style class="cM_0">`.
 
-## Preserve an Error's own enumerable properties through resume — only `message` and `cause` survive
-
-`packages/runtime-tags/src/html/serializer.ts` › `writeError` | 2026-07-27 | impact:med | effort:med
-
-`writeError` emits exactly `new <Ctor>(message[, {cause}])`, so every own enumerable property an application hung on an error — `status`/`code`/`details`, an assigned `name` — is dropped on resume; `writeAggregateError` has the same gap. This is reachable from idiomatic source: `<try><@catch|err|><button onClick() { report(err) }>` compiles to `_scope($scope2_id, { err })`, so the server renders with `err.status === 404` while the resumed handler reads `undefined`, with no diagnostic. Plain objects round-trip all own props and the serializer already preserves `cause` and relinks `AggregateError.errors`, so extend both writers to append the remaining own props, deferring circular ones through `addAssignment` and emitting nothing extra when there are none. Re-verify: `stringifyScopes([[1,{},{value:Object.assign(new Error("boom"),{status:404})}]])` prints `_=>[1,{value:new Error("boom")}]`.
-
 ## Route `tagNameLoad` through the compat dynamic-tag path when a Tags-API parent lazily imports a Class-API child
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med
