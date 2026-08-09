@@ -1436,6 +1436,8 @@ function writeWeakMap(state: State) {
 
 // The own `constructor` is trusted here: dispatch already matched a built-in
 // error prototype, so only this object's owner could have replaced it.
+// Errors round-trip only `message` and `cause` (plus `AggregateError.errors`);
+// own enumerable props hung on an error are deliberately not serialized.
 function writeError(state: State, val: Error, ref: Reference) {
   const result =
     "new " + val.constructor.name + "(" + quote(val.message + "", 0);
