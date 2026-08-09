@@ -110,12 +110,6 @@ HTML `_attrs` picks an `<input>`'s controllable from the change handler (`data.c
 
 The patched `MarkoTag` printer wraps every non-void body in `newline(1)`/`indent()`/`dedent()` plus a trailing `newline(1)`, guarded only by `voidElements`, `svgElements` and the concise `style`/`script` forms — never by the `parse-options.preserveWhitespace` tags (`pre`, `script`, `style`, `textarea`) declared in `packages/compiler/src/taglib/marko-html.json`. Those bodies render verbatim, so `output:"source"`/`"migrate"` silently rewrites user content and never reaches a fixed point, and `packages/runtime-class/bin/markoc.js --migrate` rewrites each file in place. Add a `preserveWhitespaceElements` set beside `voidElements` and print those bodies with no newline/indent (the concise `style { … }` branch is the shape to copy); the committed `packages/runtime-class/test/translator/fixtures/{textarea-tag,white-space-test}/snapshots/generated-expected.marko` already bake the extra whitespace and need refreshing. Re-verify: round-tripping `<textarea>abc</textarea>` through `output:"source"` turns the `output:"html"` result's `_textarea_value("abc")` into `_textarea_value("  abc\n")`.
 
-## Forward `restOffset` wherever an array rest's binding is re-created
-
-`packages/runtime-tags/src/translator/util/references.ts` › `createBindingsAndTrackReferences` | 2026-07-27 | impact:med | effort:med
-
-`restOffset` is assigned only in the `Identifier` case, so every path that re-creates a rest's binding drops it — the `ObjectPattern`/`ArrayPattern` cases reuse `upstreamAlias` verbatim when `property === undefined`, and `trackVarReferences` forwards `excludeProperties` but not `restOffset`. `<const/[first, ...[second, third]] = arr/>` then compiles in DOM to `$second` reading `$scope.first` and `$third` reading `$scope.arr[1]` (`1|1|2` vs HTML's `1|2|3`); `<for|a, ...[b, c]|>` maps `c` to `#LoopKey`; `<const/copy = rest/>` takes `getSignalFn`'s object-rest branch, so `copy.length` reads `$scope.arr.length`. All are silent SSR/CSR divergence with no diagnostic. Set `restOffset` in the pattern cases and thread it through `trackVarReferences`. Re-verify: `pnpm run compile -o dom -d` on the nested-rest template emits `_text($scope["#text/1"], $scope.first)` for `$second`.
-
 ## Mint `<id>`'s fallback once per scope
 
 `packages/runtime-tags/src/translator/core/id.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med

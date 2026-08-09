@@ -14,15 +14,26 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	forOf(["a", "b"], (item, ...meta) => {
+	let list = ["a", "b"];
+	forOf(list, (item, ...meta) => {
 		_scope_id();
 		_html(`<div>${_escape(item)}:${_escape(meta[0])}:${_escape(meta.length)}</div>`);
 	});
+	forOf(list, (item, ...[idx]) => {
+		_scope_id();
+		_html(`<div>${_escape(item)}@${_escape(idx)}</div>`);
+	});
 	child_default({ content: _content("a0", (first, ...others) => {
-		const $scope2_reason = _scope_reason(), $sg__$params3_ = _serialize_guard($scope2_reason, 2), $sg__$params3_2 = _serialize_guard($scope2_reason, 3), $sg__others_length = _serialize_guard($scope2_reason, 4);
-		const $scope2_id = _scope_id();
-		_html(`<div>${_escape(first)}${_el_resume($scope2_id, "a", _serialize_guard($scope2_reason, 1))}|${_sep($sg__$params3_)}${_escape(others[0])}${_el_resume($scope2_id, "b", $sg__$params3_)}|${_sep($sg__$params3_2)}${_escape(others[1])}${_el_resume($scope2_id, "c", $sg__$params3_2)}|${_sep($sg__others_length)}${_escape(others.length)}${_el_resume($scope2_id, "d", $sg__others_length)}</div>`);
-		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {});
+		const $scope3_reason = _scope_reason(), $sg__$params4_ = _serialize_guard($scope3_reason, 2), $sg__$params4_2 = _serialize_guard($scope3_reason, 3), $sg__others_length = _serialize_guard($scope3_reason, 4);
+		const $scope3_id = _scope_id();
+		_html(`<div>${_escape(first)}${_el_resume($scope3_id, "a", _serialize_guard($scope3_reason, 1))}|${_sep($sg__$params4_)}${_escape(others[0])}${_el_resume($scope3_id, "b", $sg__$params4_)}|${_sep($sg__$params4_2)}${_escape(others[1])}${_el_resume($scope3_id, "c", $sg__$params4_2)}|${_sep($sg__others_length)}${_escape(others.length)}${_el_resume($scope3_id, "d", $sg__others_length)}</div>`);
+		_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {});
+	}) });
+	child_default({ content: _content("a1", (x, ...[y, z]) => {
+		const $scope4_reason = _scope_reason(), $sg__y = _serialize_guard($scope4_reason, 2), $sg__z = _serialize_guard($scope4_reason, 3);
+		const $scope4_id = _scope_id();
+		_html(`<div>${_escape(x)}${_el_resume($scope4_id, "a", _serialize_guard($scope4_reason, 1))}-${_sep($sg__y)}${_escape(y)}${_el_resume($scope4_id, "b", $sg__y)}-${_sep($sg__z)}${_escape(z)}${_el_resume($scope4_id, "c", $sg__z)}</div>`);
+		_serialize_if($scope4_reason, 0) && writeScope($scope4_id, {});
 	}) });
 	_resume_branch($scope0_id);
 }, 1);

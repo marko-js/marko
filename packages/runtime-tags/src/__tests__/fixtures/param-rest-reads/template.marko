@@ -2,6 +2,12 @@
 <for|item, ...meta| of=list>
   <div>${item}:${meta[0]}:${meta.length}</div>
 </for>
+<for|item, ...[idx]| of=list>
+  <div>${item}@${idx}</div>
+</for>
 <child|first, ...others|>
   <div>${first}|${others[0]}|${others[1]}|${others.length}</div>
+</child>
+<child|x, ...[y, z]|>
+  <div>${x}-${y}-${z}</div>
 </child>
