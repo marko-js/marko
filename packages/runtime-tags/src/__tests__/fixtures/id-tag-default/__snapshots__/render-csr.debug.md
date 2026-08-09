@@ -64,7 +64,7 @@ document.querySelector("button").click();
   foo
 </div>
 <div
-  id="cM_2"
+  id="cM_0"
 >
   bar
 </div>
@@ -76,6 +76,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: #cM_2[id] "bar" => "cM_2"
+UPDATE: #cM_0[id] "bar" => "cM_0"
 UPDATE: #baz[id] "cM_1" => "baz"
 ```

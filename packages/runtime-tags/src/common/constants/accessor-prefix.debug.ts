@@ -8,6 +8,7 @@ export const ControlledType = "ControlledType:";
 export const ControlledValue = "ControlledValue:";
 export const DynamicHTMLLastChild = "DynamicHTMLLastChild:";
 export const EventAttributes = "EventAttributes:";
+export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
 export const Promise = "Promise:";

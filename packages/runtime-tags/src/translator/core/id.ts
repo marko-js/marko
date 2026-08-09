@@ -8,9 +8,11 @@ import {
 
 import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputHTML } from "../util/marko-config";
 import {
   BindingType,
+  getPrefixedScopeAccessor,
   setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
@@ -97,7 +99,25 @@ export default {
             section,
             value.extra?.referencedBindings,
             source,
-            t.logicalExpression("||", value, id),
+            t.logicalExpression(
+              "||",
+              value,
+              // The fallback memoizes into a prefixed slot on the tag
+              // variable's binding, so a nullish value cannot re-mint on
+              // every recompute.
+              evaluate(value).confident
+                ? id
+                : callRuntime(
+                    "_id",
+                    scopeIdentifier,
+                    t.stringLiteral(
+                      getPrefixedScopeAccessor(
+                        node.var!.extra!.binding!,
+                        getAccessorPrefix().IdFallback,
+                      ),
+                    ),
+                  ),
+            ),
           );
         } else {
           addValue(section, undefined, source, id);

@@ -1,4 +1,4 @@
-// size: 26078 (min) 9686 (brotli)
+// size: 26137 (min) 9713 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -774,12 +774,16 @@ function _var(scope, childAccessor, signal) {
 function _return_change(scope, changeHandler) {
   scope.U = changeHandler || void 0;
 }
-function _id({ $: $global }) {
-  let id = tagIdsByGlobal.get($global) || 0;
-  return (
-    tagIdsByGlobal.set($global, id + 1),
-    "c" + $global.runtimeId + $global.renderId + id.toString(36)
-  );
+function _id(scope, accessor) {
+  let id = accessor !== void 0 && scope[accessor];
+  if (!id) {
+    let $global = scope.$,
+      n = tagIdsByGlobal.get($global) || 0;
+    (tagIdsByGlobal.set($global, n + 1),
+      (id = "c" + $global.runtimeId + $global.renderId + n.toString(36)),
+      accessor !== void 0 && (scope[accessor] = id));
+  }
+  return id;
 }
 function _script(id, fn) {
   return (

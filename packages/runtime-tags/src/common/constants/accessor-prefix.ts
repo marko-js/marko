@@ -8,6 +8,7 @@ export const ControlledType = "F";
 export const ControlledValue = "G";
 export const DynamicHTMLLastChild = "H";
 export const EventAttributes = "I";
+export const IdFallback = "J";
 export const KeyedScopes = "O";
 export const Lifecycle = "K";
 export const Promise = "L";
