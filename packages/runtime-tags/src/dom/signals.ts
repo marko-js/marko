@@ -374,10 +374,19 @@ export const _var_change = MARKO_DEBUG
       scope[AccessorProp.TagVariableChange]?.(value);
 
 const tagIdsByGlobal = new WeakMap<Scope[typeof AccessorProp.Global], number>();
-export function _id({ [AccessorProp.Global]: $global }: Scope) {
-  const id = tagIdsByGlobal.get($global) || 0;
-  tagIdsByGlobal.set($global, id + 1);
-  return "c" + $global.runtimeId + $global.renderId + id.toString(36);
+// With `accessor`, the minted id memoizes on the scope so a keyed `<id>`'s
+// nullish fallback stays stable across recomputes. The slot is deliberately
+// not serialized: a resumed scope's first recompute simply mints again.
+export function _id(scope: Scope, accessor?: Accessor) {
+  let id = accessor !== undefined && (scope[accessor] as string | undefined);
+  if (!id) {
+    const $global = scope[AccessorProp.Global];
+    const n = tagIdsByGlobal.get($global) || 0;
+    tagIdsByGlobal.set($global, n + 1);
+    id = "c" + $global.runtimeId + $global.renderId + n.toString(36);
+    if (accessor !== undefined) scope[accessor] = id;
+  }
+  return id;
 }
 
 export function _script(id: string, fn: (scope: Scope) => void) {
