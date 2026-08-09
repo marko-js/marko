@@ -136,7 +136,7 @@ export function _textarea_value(value: unknown) {
   const escaped = _escape(normalizeStrAttrValue(value));
   // The tokenizer drops one newline directly after the start tag, so a value
   // beginning with one needs a second to survive the round trip.
-  return escaped[0] === "\n" || escaped[0] === "\r" ? "\n" + escaped : escaped;
+  return escaped[0] === "\n" ? "\n" + escaped : escaped;
 }
 
 export function _attr_input_value(
