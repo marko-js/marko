@@ -92,6 +92,8 @@ export function withPageAssets(
       g.runtimeId = runtimeId;
     }
     addAsset(g, assetId);
+    // A page entry rendered after the first flush cleared `__flush__` takes the
+    // top-level branch on purpose: co-rendered pages batch assets and flushes.
     if (g.__flush__) {
       // Not the actual page entry (nested within another page render): resume
       // data waits for this page's own entry script, as for an embedded render.
