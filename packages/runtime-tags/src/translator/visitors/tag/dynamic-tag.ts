@@ -519,7 +519,7 @@ export default {
         if (tag.node.var) {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
-          tagVarSignal.register = true;
+          tagVarSignal.register = tagVarSignal.referenced = true;
           tagVarSignal.buildAssignment = (valueSection, value) => {
             const changeArgs = [
               t.memberExpression(
