@@ -21,10 +21,11 @@ var template_default = _template("a", (input) => {
 	}) });
 	const $childScope = _peek_scope_id();
 	hello_default({ item: $item });
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "a1");
+	_var($scope0_id, "b", $childScope, "a1");
+	_html(`<button>Toggle</button>${_el_resume($scope0_id, "c")}`);
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
-		c: x,
+		d: x,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

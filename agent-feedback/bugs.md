@@ -80,12 +80,6 @@ HTML `_attrs` picks an `<input>`'s controllable from the change handler (`data.c
 
 `preAnalyze` folds a `<textarea>` body into a synthetic `value` attribute by pushing each `MarkoText` child's raw source into `normalizeStringExpression`, and `_textarea_value` (`html/attrs.ts`) escapes it again: `<textarea>&lt;p&gt;hi</textarea>` compiles to `_textarea_value("&lt;p&gt;hi")` and shows the literal `&lt;p&gt;hi`, while the same body in `<title>`/`<div>` passes through, as it does in Marko 5. Entities are the only way to author literal markup in a text-only tag, so that case is unrepresentable. CSR matches SSR, so the fix is decoding `MarkoText` children at compile time — but `MarkoText.value` is raw source and the only decoder in the tree is `he` under `packages/compiler/node_modules` (~100KB, tree-shaken out today), so it needs a new `babel-utils` export; weigh that cost. Re-verify: compile `<textarea>&lt;p&gt;hi</textarea>` with `-o html` and check the emitted `_textarea_value` literal.
 
-## Emit a custom tag's HTML render call after its attribute tag statements
-
-`packages/runtime-tags/src/translator/util/known-tag.ts` › `knownTagTranslateHTML` | 2026-07-24 | impact:med | effort:med
-
-For a custom tag with both a tag variable and attribute tags under control flow, `translateVar`'s `tag.insertBefore` puts `let menuEl = _myMenu({ item: $item })` ahead of the `let $item; _forOf(…)` statements that `translateAttrs` built and `tag.replaceWithMultiple(statements)` emits, so the render call reads `$item` in its temporal dead zone and SSR throws a ReferenceError. Sequence the call after the attr-tag statements, as the non-tag-variable path already does by pushing it onto `statements`. Only the HTML output is affected — the DOM output calls `_myMenu_input_item` after the loop. Re-verify: compile `<my-menu/menuEl><for|x| of=list><@item label=x/></for></my-menu>` with `pnpm run compile -o html -d`; the `let menuEl = _myMenu(…)` precedes `let $item`.
-
 ## Catch effect errors in `runEffects`; a throwing `<script>` escapes `<try>`'s `@catch` and kills every queued effect
 
 `packages/runtime-tags/src/dom/queue.ts` › `runEffects` | 2026-07-27 | impact:med | effort:med
