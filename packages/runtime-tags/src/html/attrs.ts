@@ -88,6 +88,8 @@ export function _attr_select_value(
     // which selects a `value=""` option for `undefined`/`null` alike.
     const selectedValue = value ?? "";
     if (MARKO_DEBUG && valueChange) {
+      // Checked when the sync content returns, so async-rendered options (eg
+      // under `<await>`) can false-positive; accepted to keep the check simple.
       const matched = { value: false };
       withContext(kSelectedValue, selectedValue, () =>
         withContext(kSelectedValueMatched, matched, content),
