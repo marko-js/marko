@@ -357,7 +357,7 @@ export function trackVarReferences(
     let canonicalUpstreamAlias =
       upstreamAlias && getCanonicalBinding(upstreamAlias);
     if (canonicalUpstreamAlias) {
-      const { excludeProperties } = canonicalUpstreamAlias;
+      const { excludeProperties, restOffset } = canonicalUpstreamAlias;
       if (excludeProperties !== undefined) {
         canonicalUpstreamAlias = canonicalUpstreamAlias.upstreamAlias!;
       }
@@ -369,6 +369,7 @@ export function trackVarReferences(
         canonicalUpstreamAlias,
         undefined,
         excludeProperties,
+        restOffset,
       );
       return canonicalUpstreamAlias;
     }
@@ -766,14 +767,16 @@ function createBindingsAndTrackReferences(
           lVal.loc,
         ));
 
-      let i = -1;
+      // A pattern that is itself a rest argument mirrors the source at
+      // shifted indices, so its elements index from the inherited offset.
+      let index = (restOffset || 0) - 1;
       for (const element of lVal.elements) {
-        i++;
+        index++;
         if (element) {
           if (element.type === "RestElement") {
             excludeProperties =
-              i > 0
-                ? addNumericPropertiesUntil(excludeProperties, i)
+              index > 0
+                ? addNumericPropertiesUntil(excludeProperties, index)
                 : undefined;
             createBindingsAndTrackReferences(
               element.argument,
@@ -785,7 +788,7 @@ function createBindingsAndTrackReferences(
               // `restOffset`; passing its own `property` would collide with a sibling binding.
               undefined,
               excludeProperties,
-              i,
+              index,
             );
           } else if (t.isLVal(element)) {
             createBindingsAndTrackReferences(
@@ -794,7 +797,7 @@ function createBindingsAndTrackReferences(
               scope,
               section,
               patternBinding,
-              `${i}`,
+              `${index}`,
               undefined,
             );
           }

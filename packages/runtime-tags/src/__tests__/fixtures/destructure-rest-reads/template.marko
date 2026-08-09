@@ -1,4 +1,8 @@
 <let/list=[1, 2, 3]/>
 <const/[first, ...rest]=list>
+<const/[, ...[second, third]]=list>
+<const/copy=rest/>
 <div>${first}|${rest[0]}|${rest[1]}|${rest.length}</div>
+<div>${second}|${third}</div>
+<div>${copy[0]}|${copy.length}</div>
 <button onClick() { list = [4, 5] }>update</button>
