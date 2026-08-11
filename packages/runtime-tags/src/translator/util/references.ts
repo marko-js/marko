@@ -562,6 +562,12 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
           trackReference(left, binding);
         }
       }
+    } else if (ref.isForXStatement()) {
+      throw ref
+        .get("left")
+        .buildCodeFrameError(
+          `\`${binding.name}\` is a [tag variable](https://markojs.com/docs/reference/language#tag-variables), so a \`for...${ref.isForOfStatement() ? "of" : "in"}\` cannot assign to it. Loop into a local variable and assign \`${binding.name}\` from it instead.`,
+        );
     }
   }
 }
