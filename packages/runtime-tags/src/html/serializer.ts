@@ -1900,6 +1900,8 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
       ) {
         sep = ",";
       } else {
+        // A deferred circular value is reassigned last, so it also moves last in
+        // key order; holding its slot with `$` costs bytes on every such graph.
         state.buf.pop();
       }
     }
