@@ -1,9 +1,9 @@
 diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
-index 0000000..16c2e02
+index 0000000000000000000000000000000000000000..ce3901856985a26fa933855208916d240d2b1a54
 --- /dev/null
 +++ b/lib/generators/marko.js
-@@ -0,0 +1,389 @@
+@@ -0,0 +1,405 @@
 +"use strict";
 +
 +const svgElements = new Set([
@@ -16,6 +16,16 @@ index 0000000..16c2e02
 +  'rect',
 +  'stop',
 +  'use'
++]);
++
++// Bodies of these render verbatim, so reindenting them rewrites user content.
++const preserveWhitespaceElements = new Set([
++  'html-script',
++  'html-style',
++  'pre',
++  'script',
++  'style',
++  'textarea'
 +]);
 +
 +const voidElements = new Set([
@@ -259,9 +269,15 @@ index 0000000..16c2e02
 +  } else {
 +    this.token(">");
 +    const bodyNodes = bodyOverride || zipAttributeTagsAndBody(node);
++    // A body override is statements, not verbatim text, so it still needs indenting.
++    const preserveWhitespace =
++      !bodyOverride && preserveWhitespaceElements.has(tagName);
 +    for (let i = 0; i < bodyNodes.length; i++) {
 +      const node = bodyNodes[i];
-+      if (i > 0 && isInlineMarkoNode(bodyNodes[i - 1]) && isInlineMarkoNode(node)) {
++      if (
++        preserveWhitespace ||
++        (i > 0 && isInlineMarkoNode(bodyNodes[i - 1]) && isInlineMarkoNode(node))
++      ) {
 +        this.print(node, false, true);
 +      } else {
 +        this.newline(1);
@@ -270,7 +286,7 @@ index 0000000..16c2e02
 +        this.dedent();
 +      }
 +    }
-+    if (bodyNodes.length > 0) this.newline(1);
++    if (bodyNodes.length > 0 && !preserveWhitespace) this.newline(1);
 +    this.token("</");
 +    if (!isDynamicTag) {
 +      this.token(tagName);
@@ -394,7 +410,7 @@ index 0000000..16c2e02
 +  return result;
 +}
 diff --git a/lib/nodes.js b/lib/nodes.js
-index 8754a38..4321759 100644
+index 8754a38931a98eba6dfc4621980cad6b952a93e0..4321759547d3df5c5f5c2a5832f4f1e8949bcb43 100644
 --- a/lib/nodes.js
 +++ b/lib/nodes.js
 @@ -16,4 +16,9 @@ for (const key of Object.keys(deprecatedGeneratorFunctions)) {

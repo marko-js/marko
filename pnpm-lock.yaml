@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  '@babel/generator@7.29.7': 1cf8bf38ea4ea6a0ce1f6a646a2f2523e4721ad1b044b8806fab7591aeedda0a
+  '@babel/generator@7.29.7': 5201f57bde2ba46af9898d8fd637b4ab563fee7232625f30a7acda60e5a29a7f
   '@babel/helper-compilation-targets@7.29.7': e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03
   '@babel/traverse@7.29.7': 831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c
   '@babel/types@7.29.7': 600297d6e82d0bae1c281caf15e85f8012e0c4faf86de92b0e2fe0de8652104e
@@ -27,7 +27,7 @@ importers:
         version: 7.29.7(supports-color@8.1.1)
       '@babel/generator':
         specifier: ^7.29.1
-        version: 7.29.7(patch_hash=1cf8bf38ea4ea6a0ce1f6a646a2f2523e4721ad1b044b8806fab7591aeedda0a)
+        version: 7.29.7(patch_hash=5201f57bde2ba46af9898d8fd637b4ab563fee7232625f30a7acda60e5a29a7f)
       '@babel/parser':
         specifier: ^7.29.3
         version: 7.29.7
@@ -3163,7 +3163,7 @@ snapshots:
   '@babel/core@7.29.7(supports-color@8.1.1)':
     dependencies:
       '@babel/code-frame': 7.29.7
-      '@babel/generator': 7.29.7(patch_hash=1cf8bf38ea4ea6a0ce1f6a646a2f2523e4721ad1b044b8806fab7591aeedda0a)
+      '@babel/generator': 7.29.7(patch_hash=5201f57bde2ba46af9898d8fd637b4ab563fee7232625f30a7acda60e5a29a7f)
       '@babel/helper-compilation-targets': 7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)
       '@babel/helper-module-transforms': 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       '@babel/helpers': 7.29.7
@@ -3180,7 +3180,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/generator@7.29.7(patch_hash=1cf8bf38ea4ea6a0ce1f6a646a2f2523e4721ad1b044b8806fab7591aeedda0a)':
+  '@babel/generator@7.29.7(patch_hash=5201f57bde2ba46af9898d8fd637b4ab563fee7232625f30a7acda60e5a29a7f)':
     dependencies:
       '@babel/parser': 7.29.7
       '@babel/types': 7.29.7(patch_hash=600297d6e82d0bae1c281caf15e85f8012e0c4faf86de92b0e2fe0de8652104e)
@@ -3817,7 +3817,7 @@ snapshots:
   '@babel/traverse@7.29.7(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)':
     dependencies:
       '@babel/code-frame': 7.29.7
-      '@babel/generator': 7.29.7(patch_hash=1cf8bf38ea4ea6a0ce1f6a646a2f2523e4721ad1b044b8806fab7591aeedda0a)
+      '@babel/generator': 7.29.7(patch_hash=5201f57bde2ba46af9898d8fd637b4ab563fee7232625f30a7acda60e5a29a7f)
       '@babel/helper-globals': 7.29.7
       '@babel/parser': 7.29.7
       '@babel/template': 7.29.7
