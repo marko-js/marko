@@ -296,6 +296,8 @@ function attrsInternal(
   }
 }
 
+// Deliberately no `withBranches`: this branch is a leaf, so every nested branch
+// latches on its own and destroy already kills what a stale render could reach.
 export function _attr_content(
   scope: Scope,
   nodeAccessor: Accessor,
