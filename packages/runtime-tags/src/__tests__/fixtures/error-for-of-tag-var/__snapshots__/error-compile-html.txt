@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-of-tag-var/template.marko:2:26
+      1 | <let/x="a"/>
+    > 2 | <button onClick() { for (x of ["b", "c"]) {} }>go</button>
+        |                          ^ `x` is a [tag variable](https://markojs.com/docs/reference/language#tag-variables), so a `for...of` cannot assign to it. Loop into a local variable and assign `x` from it instead.
+      3 | ${x}
+      4 |

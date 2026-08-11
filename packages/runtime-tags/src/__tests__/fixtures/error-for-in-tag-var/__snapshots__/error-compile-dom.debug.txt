@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-in-tag-var/template.marko:2:26
+      1 | <let/x="a"/>
+    > 2 | <button onClick() { for (x in { b: 1 }) {} }>go</button>
+        |                          ^ `x` is a [tag variable](https://markojs.com/docs/reference/language#tag-variables), so a `for...in` cannot assign to it. Loop into a local variable and assign `x` from it instead.
+      3 | ${x}
+      4 |
