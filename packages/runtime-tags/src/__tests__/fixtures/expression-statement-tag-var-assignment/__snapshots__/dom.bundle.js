@@ -9,7 +9,7 @@ const $setup__script = _script("a0", ($scope) => {
 		$direction($scope, "down");
 	});
 	_on($scope.c, "click", function() {
-		if ($scope.f === "up") $x($scope, $scope.e + 1);
-		else if ($scope.f === "down") $x($scope, $scope.e - 1);
+		if ($scope.f === "up") $x($scope, +$scope.e + 1);
+		else if ($scope.f === "down") $x($scope, +$scope.e - 1);
 	});
 });

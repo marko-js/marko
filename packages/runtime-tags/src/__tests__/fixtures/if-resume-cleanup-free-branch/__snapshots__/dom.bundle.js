@@ -17,6 +17,6 @@ const $setup__script = _script("a0", ($scope) => {
 		$outer($scope, !$scope.d);
 	});
 	_on($scope.b, "click", function() {
-		$n($scope, $scope.e + 1);
+		$n($scope, +$scope.e + 1);
 	});
 });

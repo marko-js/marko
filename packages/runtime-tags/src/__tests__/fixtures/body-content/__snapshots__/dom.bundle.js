@@ -13,6 +13,6 @@ const $clickCount = /*@__PURE__*/ _let(1, ($scope) => {
 	$clickCount__closure($scope);
 });
 const $onClick = ($scope) => function() {
-	$clickCount($scope, $scope.b + 1);
+	$clickCount($scope, +$scope.b + 1);
 };
 _resume("a0", $onClick);

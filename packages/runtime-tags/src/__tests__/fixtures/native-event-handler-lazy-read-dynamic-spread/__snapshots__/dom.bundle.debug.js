@@ -18,7 +18,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		$enabled($scope, !$scope.enabled);
 	});
 	_on($scope["#button/1"], "click", function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, +$scope.count + 1);
 	});
 });
 function $setup($scope) {

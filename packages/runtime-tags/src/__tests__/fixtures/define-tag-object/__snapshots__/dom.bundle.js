@@ -8,5 +8,5 @@ const $x = /*@__PURE__*/ _let(3, ($scope) => {
 	});
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
-	$x($scope, $scope.d + 1);
+	$x($scope, +$scope.d + 1);
 }));

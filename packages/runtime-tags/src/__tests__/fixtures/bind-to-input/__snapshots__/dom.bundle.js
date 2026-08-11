@@ -3,7 +3,7 @@ const $x$1 = /*@__PURE__*/ _let_change(9, ($scope) => _attr($scope.a, "data-inte
 const $input_countChange__OR__input_count = /*@__PURE__*/ _or(8, ($scope) => $x$1($scope, $scope.h, $scope.g));
 const $count = /*@__PURE__*/ _const(7, $input_countChange__OR__input_count);
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$x$1($scope, $scope.j + 1);
+	$x$1($scope, +$scope.j + 1);
 }));
 
 // template.marko

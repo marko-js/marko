@@ -9,7 +9,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		$visible($scope, !$scope.visible);
 	});
 	_on($scope["#button/2"], "click", function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, +$scope.count + 1);
 	});
 });
 function $setup($scope) {

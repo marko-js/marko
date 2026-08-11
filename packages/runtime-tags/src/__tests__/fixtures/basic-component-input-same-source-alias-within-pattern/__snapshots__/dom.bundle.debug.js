@@ -29,10 +29,10 @@ function $setup($scope) {
 	$clickCount($scope, 0);
 }
 const $onClick2 = ($scope) => function() {
-	$clickCount($scope, $scope.clickCount + 1);
+	$clickCount($scope, +$scope.clickCount + 1);
 };
 const $onClick = ($scope) => function() {
-	$clickCount($scope, $scope.clickCount + 1);
+	$clickCount($scope, +$scope.clickCount + 1);
 };
 _resume("__tests__/template.marko_0/onClick2", $onClick2);
 _resume("__tests__/template.marko_0/onClick", $onClick);

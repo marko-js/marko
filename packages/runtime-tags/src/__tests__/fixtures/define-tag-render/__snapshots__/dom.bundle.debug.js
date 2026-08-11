@@ -7,7 +7,7 @@ const $MyTag_content__y = /*@__PURE__*/ _let("y/7", ($scope) => {
 	_text($scope["#text/3"], $scope.y);
 });
 const $MyTag_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
-	$MyTag_content__y($scope, $scope.y + 1);
+	$MyTag_content__y($scope, +$scope.y + 1);
 }));
 const $MyTag_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
 	$MyTag_content__y($scope, 1);

@@ -9,7 +9,7 @@ const $walks$1 = " D l";
 const $input__OR__count = /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/1"], $scope.input.format($scope.count)));
 const $count = /*@__PURE__*/ _let("count/4", $input__OR__count);
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
 	$count($scope, 0);

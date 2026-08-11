@@ -38,14 +38,14 @@ const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	$dynamicTag($scope, _marko_template$1, () => ({ onChange: $onChange($scope) }));
 });
 const $setup__script = _script("__tests__/components/tags-mid.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
 const $onChange = ($scope) => function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 };
 _resume("__tests__/components/tags-mid.marko_0/onChange", $onChange);
 var tags_mid_default = /*@__PURE__*/ _template("__tests__/components/tags-mid.marko", $template, $walks, $setup);

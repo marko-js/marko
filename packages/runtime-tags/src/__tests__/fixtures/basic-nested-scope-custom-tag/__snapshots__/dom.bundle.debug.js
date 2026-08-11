@@ -13,7 +13,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $child_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
 const $child_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope._, $scope._.count + 1);
+	$count($scope._, +$scope._.count + 1);
 }));
 const $child_content__setup = ($scope) => {
 	$child_content__count($scope);

@@ -31,7 +31,7 @@ const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get(2, ($scope) 
 	$classlayout_content__multiplier__OR__baseCount($scope);
 });
 const $classlayout_content__setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$multiplier($scope._, $scope._.b + 1);
+	$multiplier($scope._, +$scope._.b + 1);
 }));
 const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__multiplier($scope);

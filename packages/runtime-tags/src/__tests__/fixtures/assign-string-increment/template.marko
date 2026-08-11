@@ -1,0 +1,8 @@
+<let/x="5"/>
+<let/seen=""/>
+
+<button#post onClick() { seen = String(x++) }>post</button>
+<button#pre onClick() { seen = String(++x) }>pre</button>
+<button#dec onClick() { seen = String(x--) }>dec</button>
+
+<div>${x}:${seen}</div>

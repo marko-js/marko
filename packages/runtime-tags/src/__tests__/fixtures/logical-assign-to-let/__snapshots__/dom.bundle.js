@@ -22,6 +22,6 @@ const $setup__script = _script("a1", ($scope) => {
 });
 const $valueChange = ($scope) => function(v) {
 	$value($scope, v);
-	$changes($scope, $scope.f + 1);
+	$changes($scope, +$scope.f + 1);
 };
 _resume("a0", $valueChange);

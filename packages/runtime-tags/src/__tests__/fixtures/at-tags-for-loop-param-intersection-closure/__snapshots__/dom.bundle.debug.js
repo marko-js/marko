@@ -23,7 +23,7 @@ const $mult = /*@__PURE__*/ _let("mult/3", ($scope) => {
 	$mult__closure($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$mult($scope, $scope.mult + 1);
+	$mult($scope, +$scope.mult + 1);
 }));
 function $setup($scope) {
 	let $item;

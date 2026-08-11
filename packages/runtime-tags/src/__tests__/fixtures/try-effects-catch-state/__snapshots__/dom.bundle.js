@@ -10,6 +10,6 @@ const $try_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => {
 	$try_content__clickCount__script($scope);
 });
 const $try_content__setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {
-	$clickCount($scope._, $scope._.c + 1);
+	$clickCount($scope._, +$scope._.c + 1);
 }));
 const $clickCount = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($try_content__clickCount));

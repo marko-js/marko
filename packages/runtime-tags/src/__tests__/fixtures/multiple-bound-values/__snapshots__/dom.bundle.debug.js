@@ -11,10 +11,10 @@ const $input_count2 = /*@__PURE__*/ _const("input_count2", $input_count2__OR__in
 const $input_count2Change = /*@__PURE__*/ _const("input_count2Change", $input_count2__OR__input_count2Change);
 const $setup__script = _script("__tests__/tags/2counters.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$count$1($scope, $scope.count1 + 1);
+		$count$1($scope, +$scope.count1 + 1);
 	});
 	_on($scope["#button/2"], "click", function() {
-		$count2$1($scope, $scope.count2 + 1);
+		$count2$1($scope, +$scope.count2 + 1);
 	});
 });
 const $setup$1 = $setup__script;

@@ -1,6 +1,6 @@
 // template.marko
 const $for_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$end($scope._, $scope._.b + 1);
+	$end($scope._, +$scope._.b + 1);
 }));
 const $for_content__setup = ($scope) => {
 	_text($scope.b, $scope.M);

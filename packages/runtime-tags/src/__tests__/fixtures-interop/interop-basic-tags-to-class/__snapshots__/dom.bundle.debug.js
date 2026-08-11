@@ -43,7 +43,7 @@ const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	$dynamicTag($scope, _marko_template, () => ({ count: $scope.count }));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

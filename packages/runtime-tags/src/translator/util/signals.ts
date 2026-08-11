@@ -1588,11 +1588,16 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
     case "UpdateExpression": {
       const { extra } = node.argument;
       if (isAssignedBindingExtra(extra)) {
+        // `+` applies `ToNumber` so a string tag variable increments numerically;
+        // a bigint one throws either way and is deliberately unsupported here.
         let builtAssignment = getBuildAssignment(extra)?.(
           extra.section,
           t.binaryExpression(
             node.operator === "++" ? "+" : "-",
-            createScopeReadExpression(extra.assignment, extra.section),
+            t.unaryExpression(
+              "+",
+              createScopeReadExpression(extra.assignment, extra.section),
+            ),
             t.numericLiteral(1),
           ),
         );

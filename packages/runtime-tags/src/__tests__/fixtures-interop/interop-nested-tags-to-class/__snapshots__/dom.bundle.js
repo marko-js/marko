@@ -27,7 +27,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $classlayout_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.b, $scope._.b));
 const $classlayout_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope._, $scope._.b + 1);
+	$count($scope._, +$scope._.b + 1);
 }));
 const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__count($scope);

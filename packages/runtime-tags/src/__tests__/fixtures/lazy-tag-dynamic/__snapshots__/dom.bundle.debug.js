@@ -26,7 +26,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		$show($scope, !$scope.show);
 	});
 	_on($scope["#button/1"], "click", function() {
-		$value($scope, $scope.value + 1);
+		$value($scope, +$scope.value + 1);
 	});
 });
 function $setup($scope) {

@@ -6,7 +6,7 @@ const $x = /*@__PURE__*/ _let("x/2", ($scope) => {
 	_return($scope, $scope.x);
 });
 const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, +$scope.x + 1);
 }));
 function $setup$1($scope) {
 	_return_change($scope, $valueChange($scope));
@@ -25,7 +25,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& D l b`)($walks$1);
 const $count = _var_resume("__tests__/template.marko_0_count#5/var", /*@__PURE__*/ _const("count", ($scope) => _text($scope["#text/3"], $scope.count)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/2"], "click", function() {
-		_var_change($scope["#childScope/0"], $scope.count + 1, "count");
+		_var_change($scope["#childScope/0"], +$scope.count + 1, "count");
 	});
 	_on($scope["#button/4"], "click", function() {
 		_var_change($scope["#childScope/0"], 0, "count");

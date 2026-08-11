@@ -13,6 +13,6 @@ const $setup__script = _script("a1", ($scope) => {
 		$enabled($scope, !$scope.g);
 	});
 	_on($scope.b, "click", function() {
-		$other($scope, $scope.h + 1);
+		$other($scope, +$scope.h + 1);
 	});
 });

@@ -5,6 +5,6 @@ const $onClick__script = _script("b0", ($scope) => _on($scope.a, "click", $scope
 const $mybutton_content__clickCount = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b));
 const $clickCount = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($mybutton_content__clickCount));
 const $onClick = ($scope) => function() {
-	$clickCount($scope, $scope.b + 1);
+	$clickCount($scope, +$scope.b + 1);
 };
 _resume("a0", $onClick);

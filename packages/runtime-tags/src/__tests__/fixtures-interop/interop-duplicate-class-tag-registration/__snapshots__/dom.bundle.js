@@ -33,7 +33,7 @@ const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	$dynamicTag2($scope, _marko_template, () => ({ count: $scope.e }));
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.e + 1);
+	$count($scope, +$scope.e + 1);
 }));
 
 // v:template.marko.hydrate-6.js

@@ -10,8 +10,8 @@ const $y = /*@__PURE__*/ _let(8, ($scope) => {
 	$input_content__OR__x__OR__y($scope);
 });
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.h + 1);
-	$y($scope, $scope.i + 1);
+	$x($scope, +$scope.h + 1);
+	$y($scope, +$scope.i + 1);
 }));
 
 // template.marko

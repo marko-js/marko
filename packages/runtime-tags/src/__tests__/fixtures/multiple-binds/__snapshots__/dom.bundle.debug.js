@@ -9,7 +9,7 @@ const $count = /*@__PURE__*/ _let("count/3", $count__OR__$valueChange);
 const $valueChange3 = /*@__PURE__*/ _const("$valueChange", $count__OR__$valueChange);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, +$scope.count + 1);
 	});
 	_attr_input_value_script($scope, "#input/1");
 	_attr_input_value_script($scope, "#input/2");

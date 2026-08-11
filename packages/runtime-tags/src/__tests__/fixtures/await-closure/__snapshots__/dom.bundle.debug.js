@@ -17,7 +17,7 @@ const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 });
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
+	$value($scope, +$scope.value + 1);
 }));
 function $setup($scope) {
 	$value($scope, 1);

@@ -33,7 +33,7 @@ const $child_content = _content_resume("__tests__/template.marko_1*content", $te
 const $x = /*@__PURE__*/ _let("x/2", ($scope) => $value($scope["#childScope/1"], $scope.x));
 const $y = /*@__PURE__*/ _let("y/3");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, +$scope.x + 1);
 }));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);

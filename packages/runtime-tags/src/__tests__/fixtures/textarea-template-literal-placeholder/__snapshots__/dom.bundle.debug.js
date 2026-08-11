@@ -6,7 +6,7 @@ const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
 	_attr_input_value_default($scope, "#textarea/2", `premid-${$scope.n}-postend`);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$n($scope, 1);

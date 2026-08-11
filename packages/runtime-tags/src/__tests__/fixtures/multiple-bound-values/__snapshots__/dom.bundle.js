@@ -7,10 +7,10 @@ const $input_count2__OR__input_count2Change = /*@__PURE__*/ _or(11, ($scope) => 
 const $input_count2 = /*@__PURE__*/ _const(9, $input_count2__OR__input_count2Change);
 const $setup__script = _script("b0", ($scope) => {
 	_on($scope.a, "click", function() {
-		$count$1($scope, $scope.m + 1);
+		$count$1($scope, +$scope.m + 1);
 	});
 	_on($scope.c, "click", function() {
-		$count2$1($scope, $scope.o + 1);
+		$count2$1($scope, +$scope.o + 1);
 	});
 });
 

@@ -7,7 +7,7 @@ const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
 	$y($scope, $scope.x, $valueChange($scope));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$y($scope, $scope.y + 1);
+	$y($scope, +$scope.y + 1);
 }));
 function $setup($scope) {
 	$x($scope, 1);

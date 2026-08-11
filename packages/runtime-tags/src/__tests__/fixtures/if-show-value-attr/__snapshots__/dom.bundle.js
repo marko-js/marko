@@ -6,5 +6,5 @@ const $n = /*@__PURE__*/ _let(4, ($scope) => {
 	$show($scope, $scope.e > 0);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.e + 1);
+	$n($scope, +$scope.e + 1);
 }));

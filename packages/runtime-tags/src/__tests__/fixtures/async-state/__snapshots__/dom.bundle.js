@@ -6,5 +6,5 @@ const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_conte
 const $try_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.c)));
 const $clickCount = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($try_content__clickCount));
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
-	$clickCount($scope, $scope.c + 1);
+	$clickCount($scope, +$scope.c + 1);
 }));

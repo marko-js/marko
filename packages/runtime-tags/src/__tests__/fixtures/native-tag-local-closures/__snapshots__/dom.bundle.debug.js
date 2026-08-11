@@ -23,7 +23,7 @@ const $size = /*@__PURE__*/ _let("size/2", ($scope) => {
 	$Child_content__input_item($scope["#childScope/0"], $item);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$size($scope, $scope.size + 1);
+	$size($scope, +$scope.size + 1);
 }));
 function $setup($scope) {
 	$size($scope, 1);

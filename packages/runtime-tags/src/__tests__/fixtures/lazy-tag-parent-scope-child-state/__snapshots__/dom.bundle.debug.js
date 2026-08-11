@@ -7,7 +7,7 @@ const $input_value = ($scope, input_value) => {
 	$count($scope, input_value);
 };
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 const $setup = $setup__script;
 const $input = ($scope, input) => $input_value($scope, input.value);
@@ -23,7 +23,7 @@ const $value = /*@__PURE__*/ _let("value/4", ($scope) => {
 	$load_Child_tag_input_value($scope["#childScope/3"], $scope.value);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
+	$value($scope, +$scope.value + 1);
 }));
 function $setup($scope) {
 	$load_Child_setup($scope);

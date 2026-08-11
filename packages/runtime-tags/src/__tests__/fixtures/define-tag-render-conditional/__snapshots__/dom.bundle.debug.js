@@ -14,7 +14,7 @@ const $x = /*@__PURE__*/ _let("x/4", ($scope) => {
 	$if_content__x($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, +$scope.x + 1);
 	$show($scope, true);
 }));
 function $setup($scope) {

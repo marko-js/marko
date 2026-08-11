@@ -6,7 +6,7 @@ const $x = /*@__PURE__*/ _let(6, ($scope) => {
 	$if($scope, $scope.g ? 0 : 1);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$x($scope, $scope.g + 1);
+	$x($scope, +$scope.g + 1);
 }));
 const $getMessage = ($scope) => () => $scope.f;
 _resume("a0", $getMessage);

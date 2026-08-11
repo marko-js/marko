@@ -35,7 +35,7 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	}));
 });
 const $onIncrement = ($scope) => function() {
-	$count($scope, $scope.c + 1);
+	$count($scope, +$scope.c + 1);
 };
 _resume("a0", $onIncrement);
 

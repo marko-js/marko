@@ -11,5 +11,5 @@ const $count = /*@__PURE__*/ _let(5, ($scope) => {
 	$doubled__OR__tripled($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.f + 1);
+	$count($scope, +$scope.f + 1);
 }));

@@ -22,7 +22,7 @@ const $await_promise2 = /*@__PURE__*/ _await_promise("#text/1", $await_content2_
 const $await_content3 = /*@__PURE__*/ _await_content("#text/2", "Got: <!> <!>", "b%c%", $await_content3__setup);
 const $await_promise3 = /*@__PURE__*/ _await_promise("#text/2", $await_content3__$params);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$await_content($scope);

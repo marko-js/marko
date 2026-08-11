@@ -5,7 +5,7 @@ const $clickCount = /*@__PURE__*/ _let("clickCount/5", ($scope) => _text($scope[
 	if ($scope.clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
 })(), $scope.clickCount)));
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$scope.input_onCount($clickCount($scope, $scope.clickCount + 1));
+	$scope.input_onCount($clickCount($scope, +$scope.clickCount + 1));
 }));
 function $setup$1($scope) {
 	$clickCount($scope, 0);

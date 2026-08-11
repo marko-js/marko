@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $await_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
 const $await_content__setup__script = _script("__tests__/child.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope._, $scope._.count + 1);
+	$count($scope._, +$scope._.count + 1);
 }));
 const $await_content__setup = ($scope) => {
 	$await_content__count($scope);

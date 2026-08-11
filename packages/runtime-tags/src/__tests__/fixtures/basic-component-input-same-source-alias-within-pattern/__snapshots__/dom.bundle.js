@@ -13,10 +13,10 @@ const $clickCount = /*@__PURE__*/ _let(2, ($scope) => {
 	$text($scope.b, $scope.c);
 });
 const $onClick2 = ($scope) => function() {
-	$clickCount($scope, $scope.c + 1);
+	$clickCount($scope, +$scope.c + 1);
 };
 const $onClick = ($scope) => function() {
-	$clickCount($scope, $scope.c + 1);
+	$clickCount($scope, +$scope.c + 1);
 };
 _resume("a1", $onClick2);
 _resume("a0", $onClick);

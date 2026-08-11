@@ -14,7 +14,7 @@ const $value = /*@__PURE__*/ _let(2, ($scope) => {
 	$if_content__value($scope);
 });
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$value($scope, $scope.c + 1);
+	$value($scope, +$scope.c + 1);
 }));
 
 // child.marko
@@ -23,7 +23,7 @@ const $walks = " D%c%l";
 const $count = /*@__PURE__*/ _let(7, ($scope) => _text($scope.c, $scope.h));
 const $input_value = $count;
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.h + 1);
+	$count($scope, +$scope.h + 1);
 }));
 const $setup = $setup__script;
 const $input_label = ($scope, input_label) => _text($scope.b, input_label);

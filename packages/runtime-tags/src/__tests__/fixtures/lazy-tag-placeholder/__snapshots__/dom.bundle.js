@@ -4,7 +4,7 @@ const $placeholder_content = _content_resume("b0", "loading...");
 const $try_content__count = /*@__PURE__*/ _closure_get(6, ($scope) => $load_Child_tag_input_value($scope.b, $scope._.f));
 const $count = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($try_content__count));
 const $setup__script = _script("b2", ($scope) => _on($scope.b, "click", function() {
-	$count($scope, $scope.f + 1);
+	$count($scope, +$scope.f + 1);
 }));
 
 // child.marko

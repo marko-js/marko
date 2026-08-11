@@ -10,7 +10,7 @@ const $await_content__value = /*@__PURE__*/ _let("value/3", ($scope) => {
 	$if_content__value($scope);
 });
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
-	$await_content__value($scope, $scope.value + 1);
+	$await_content__value($scope, +$scope.value + 1);
 }));
 const $await_content__setup = ($scope) => {
 	$await_content__value($scope, 1);

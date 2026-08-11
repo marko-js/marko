@@ -14,7 +14,7 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/1", "#childScope/2", ()
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => $load_Child_tag_input_value($scope["#childScope/2"], $scope.value));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
+	$value($scope, +$scope.value + 1);
 }));
 function $setup($scope) {
 	$load_Child_setup($scope);

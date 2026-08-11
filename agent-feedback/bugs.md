@@ -50,12 +50,6 @@ A reorder flush appends `<t hidden {commentPrefix}={reorderId}>reorderHTML</t>`,
 
 The inline trigger script for `with { load: "visible…" | "on-…" }` resolves its target as `document.querySelector(sel) || l()`, and `writeScript` lands it at the end of the current flush chunk, not the document. A flush boundary (`<await>`, `<try>`, lazy content) between the tag and its target means `querySelector` returns null and `l()` fetches the module immediately — the code split degrades to eager loading. The CSR path warns on this miss (`dom/load.ts` › `getSelectorOrResolve`); the emitted SSR string has no `MARKO_DEBUG` branch, so on server-rendered pages it degrades silently. Re-check on `DOMContentLoaded` (or observe until the node appears) before falling back to `l()`, and emit a `MARKO_DEBUG`-gated warn. Re-verify: a `visible #footer` lazy tag placed before an `<await>` whose body holds `<footer id=footer>` — the first chunk already contains `document.querySelector("#footer")||l()`.
 
-## Apply `ToNumeric` when lowering `++`/`--` on a tag variable
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `replaceAssignedNode` | 2026-07-27 | impact:med | effort:med
-
-The `UpdateExpression` case lowers `x++` to `$x(scope, scope.x + 1)` (postfix subtracting 1 from the result), i.e. `x = x + 1` rather than JS's `x = ToNumeric(x) + 1`. With `<let/x="5"/>`, `x++` sets `x` to `"51"` and yields `50` instead of `6` and `5`; a `<let>` holding a bigint throws `Cannot mix BigInt and other types`. Wrapping the read in unary `+` fixes the string case but breaks bigint, so the lowering needs a real `ToNumeric` coercion — or `++`/`--` must be rejected on a tag variable whose type is not known numeric. Re-verify: compile `<let/x="5"/><button onClick(){ const v = x++ }>${x}</button>` with `-o dom`; the handler emits `const v = $x($scope, $scope.x + 1) - 1`.
-
 ## Align the spread `<input>` controllable ladders in HTML `_attrs` and DOM `_controllable_input`
 
 `packages/runtime-tags/src/html/attrs.ts` › `_attrs` | 2026-07-23 | impact:med | effort:med

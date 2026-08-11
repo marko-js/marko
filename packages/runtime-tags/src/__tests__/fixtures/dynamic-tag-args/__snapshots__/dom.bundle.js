@@ -13,5 +13,5 @@ const $x = /*@__PURE__*/ _let(6, ($scope) => {
 	$dynamicTag($scope, tags[0], () => [$scope.g, "foo"]);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.g + 1);
+	$x($scope, +$scope.g + 1);
 }));

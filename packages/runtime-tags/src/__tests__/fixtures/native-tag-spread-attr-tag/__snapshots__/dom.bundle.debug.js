@@ -23,7 +23,7 @@ const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $head_content__n = /*@__PURE__*/ _let("n/2", ($scope) => _text($scope["#text/1"], $scope.n));
 const $head_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
-	$head_content__n($scope, $scope.n + 1);
+	$head_content__n($scope, +$scope.n + 1);
 }));
 const $head_content__setup = ($scope) => {
 	$head_content__n($scope, 0);

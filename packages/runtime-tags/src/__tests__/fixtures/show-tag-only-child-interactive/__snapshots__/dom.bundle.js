@@ -7,6 +7,6 @@ const $setup__script = _script("a0", ($scope) => {
 		$open($scope, !$scope.e);
 	});
 	_on($scope.c, "click", function() {
-		$n($scope, $scope.f + 1);
+		$n($scope, +$scope.f + 1);
 	});
 });

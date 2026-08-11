@@ -4,7 +4,7 @@ const $walks = " D%c%l";
 const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
 const $input_value = $count;
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 const $setup = $setup__script;
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
