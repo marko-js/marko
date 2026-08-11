@@ -191,6 +191,12 @@ export function assertExclusiveAttrs(
 
     if (attrs.valueChange) {
       (exclusiveAttrs ||= []).push("valueChange");
+
+      // Only `checked` makes an `<input>` checkable, and a checkable's value is
+      // never user-editable, so pairing the two binds a value nothing can change.
+      if ("checked" in attrs && !exclusiveAttrs.includes("checked")) {
+        exclusiveAttrs.push("checked");
+      }
     }
 
     if (exclusiveAttrs && exclusiveAttrs.length > 1) {
