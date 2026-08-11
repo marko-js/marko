@@ -1,10 +1,12 @@
 packages:
   - packages/*
 linkWorkspacePackages: true
-# @zcov/* is first-party: the release-age gate guards against a compromised
-# third-party publish, which is not the threat model for what we publish.
+# @zcov/* and htmljs-parser are first-party: the release-age gate guards
+# against a compromised third-party publish, which is not the threat model for
+# what we publish.
 minimumReleaseAgeExclude:
   - "@zcov/*"
+  - htmljs-parser
 patchedDependencies:
   "@babel/generator@7.29.7": patches/@babel__generator@7.29.7.patch
   "@babel/helper-compilation-targets@7.29.7": patches/@babel__helper-compilation-targets@7.29.7.patch
