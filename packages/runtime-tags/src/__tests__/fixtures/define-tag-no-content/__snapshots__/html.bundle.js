@@ -16,5 +16,5 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("<div>Baz Content</div>");
-	}) }).content({});
+	}, $scope0_id) }).content({});
 }, 1);

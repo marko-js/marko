@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let setHtml = child_default({});
 		_subscribe($what_content__subscribers, writeScope($scope1_id, { setHtml }, "__tests__/template.marko", "3:4", { setHtml: "4:12" }));
 		_assert_hoist(setHtml);
-	}) }) });
+	}, $scope0_id) }) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { "ClosureScopes:1": $what_content__subscribers }, "__tests__/template.marko", 0);
 }, 1);

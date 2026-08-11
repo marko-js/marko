@@ -1,7 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
 	({ content: _content("a0", ({ name }) => {
 		const $scope1_id = _scope_id();
 		const $sg__name = _serialize_guard(_scope_reason(), 0);
@@ -10,5 +9,5 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a1");
 		writeScope($scope1_id, { h: y });
 		_resume_branch($scope1_id);
-	}) }).content({ name: "Ryan" });
+	}, _scope_id()) }).content({ name: "Ryan" });
 }, 1);

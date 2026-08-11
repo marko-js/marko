@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`${_escape(zzz)}${_el_resume($scope1_id, "#text/0")}`);
 			writeScope($scope1_id, {}, "__tests__/template.marko", "3:5");
-		}) });
+		}, $scope0_id) });
 	});
 	list_default({ item: $item });
 }, 1);

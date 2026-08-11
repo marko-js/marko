@@ -23,6 +23,7 @@ import {
   getChunk,
   getScopeById,
   getState,
+  rendererKey,
   withBranchId,
 } from "./writer";
 
@@ -196,9 +197,7 @@ export let _dynamic_tag = (
   if (rendered) {
     if (shouldResume) {
       _scope(scopeId, {
-        [AccessorPrefix.ConditionalRenderer + accessor]:
-          (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
-          renderer,
+        [AccessorPrefix.ConditionalRenderer + accessor]: rendererKey(renderer),
       });
     }
   } else {
@@ -208,8 +207,11 @@ export let _dynamic_tag = (
   return result;
 };
 
-export function _content(id: string, fn: ServerRenderer) {
+export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
   fn[RendererProp.Id] = id;
+  // The owner id the client derives from `RendererProp.Owner`; both sides key a
+  // content instance by it, so they must be written from the same scope.
+  fn[RendererProp.Owner] = scopeId;
   return fn;
 }
 
@@ -218,7 +220,7 @@ export function _content_resume(
   fn: ServerRenderer,
   scopeId?: number,
 ) {
-  return _resume(_content(id, fn), id, scopeId);
+  return _resume(_content(id, fn, scopeId), id, scopeId);
 }
 
 export const patchDynamicTag = (

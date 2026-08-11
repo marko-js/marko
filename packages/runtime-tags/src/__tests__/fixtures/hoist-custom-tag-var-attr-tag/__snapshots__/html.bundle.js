@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		let setHtml = child_default({});
 		_subscribe($what_content__subscribers, writeScope($scope1_id, { c: setHtml }));
-	}) }) });
+	}, $scope0_id) }) });
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, { B1: $what_content__subscribers });
 }, 1);

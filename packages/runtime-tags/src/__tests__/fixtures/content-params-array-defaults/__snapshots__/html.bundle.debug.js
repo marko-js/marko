@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const a = void 0 !== $a ? $a : 1;
 		_html(`<div>${_escape(a)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))}|${_sep($sg__b)}${_escape(b)}${_el_resume($scope1_id, "#text/1", $sg__b)}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}) };
+	}, $scope0_id) };
 	let n = 2;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(1);

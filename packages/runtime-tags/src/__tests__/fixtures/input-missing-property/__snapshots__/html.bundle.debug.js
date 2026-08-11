@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_name: _serialize_if($scope1_reason, 1) && input.name,
 			"ClosureScopes:input_name": $si__input_name && $Child_content__input_name__closures
 		}, "__tests__/template.marko", "6:2", { input_name: ["input.name", "6:15"] });
-	}) };
+	}, $scope0_id) };
 	_set_serialize_reason(6);
 	const $childScope = _peek_scope_id();
 	Child.content({ count });

@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
-		})
+		}, $scope0_id)
 	});
 	_html(`<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</span>`);
 	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

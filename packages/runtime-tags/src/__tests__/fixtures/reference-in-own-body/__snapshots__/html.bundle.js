@@ -9,11 +9,11 @@ var template_default = _template("a", (input) => {
 		const $return = "A";
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 		return $return;
-	}) }.content({ content: _content("a2", () => {
+	}, $scope0_id) }.content({ content: _content("a2", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_script($scope2_id, "a1");
 		writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
 		_resume_branch($scope2_id);
-	}) }) });
+	}, $scope0_id) }) });
 }, 1);

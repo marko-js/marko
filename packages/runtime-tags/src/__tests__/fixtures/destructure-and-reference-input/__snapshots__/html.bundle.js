@@ -13,12 +13,12 @@ var child_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
+	const $scope0_id = _scope_id();
 	const value = 1;
 	child_default({ content: _content("a0", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(_escape(value));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 }, 1);

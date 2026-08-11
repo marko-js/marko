@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`${_escape(a)} ${_escape(b)} <!>${_escape(c)}${_el_resume($scope1_id, "#text/2")}`);
 		_subscribe($c__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	_html("<div>");
 	if (Math.random()) {
 		const $scope2_id = _scope_id();

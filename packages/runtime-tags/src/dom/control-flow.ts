@@ -515,6 +515,19 @@ export const _show = /*@__PURE__*/ withBranches(
   },
 );
 
+// `_content` bakes one id per section, so two instances of it share that id and
+// only their owner tells them apart. Ownerless renderers and string tags keep
+// the bare id, so nothing but owner-bound content pays the suffix.
+export function rendererKey(renderer: Renderer | string | undefined) {
+  // Only owner-bound content is qualified; a Class-API interop renderer has no
+  // owner, so its non-string id keeps comparing as it always has.
+  return (renderer as Renderer | undefined)?.[RendererProp.Owner]
+    ? (renderer as Renderer)[RendererProp.Id] +
+        " " +
+        (renderer as Renderer)[RendererProp.Owner]![AccessorProp.Id]
+    : (renderer as Renderer | undefined)?.[RendererProp.Id] || renderer;
+}
+
 export function patchDynamicTag(
   fn: <T extends typeof _dynamic_tag>(cond: T) => T,
 ) {
@@ -536,9 +549,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
         normalizeDynamicRenderer<Renderer>(newRenderer);
       if (
         scope[rendererAccessor] !==
-          (scope[rendererAccessor] =
-            (normalizedRenderer as Renderer | undefined)?.[RendererProp.Id] ||
-            normalizedRenderer) ||
+          (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       ) {
         setConditionalRenderer(
@@ -654,7 +665,7 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
     return (scope, renderer) => {
       if (
         scope[rendererAccessor] !==
-        (scope[rendererAccessor] = renderer?.[RendererProp.Id] || renderer)
+        (scope[rendererAccessor] = rendererKey(renderer))
       ) {
         setConditionalRenderer(
           scope,

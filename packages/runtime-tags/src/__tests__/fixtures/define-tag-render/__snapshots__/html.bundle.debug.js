@@ -10,6 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, { y }, "__tests__/template.marko", "1:2", { y: "2:8" });
 		_resume_branch($scope1_id);
-	}) };
+	}, $scope0_id) };
 	MyTag.content({ name: "Ryan" });
 }, 1);

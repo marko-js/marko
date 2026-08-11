@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`${_escape(a)}${_el_resume($scope1_id, "#text/0")}:<!>${_escape(v)}${_el_resume($scope1_id, "#text/1")}`);
 			writeScope($scope1_id, {}, "__tests__/template.marko", "3:8");
-		}) });
+		}, $scope0_id) });
 	});
 	hello_default({
 		item: $item,
@@ -33,6 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("other");
-		}) })
+		}, $scope0_id) })
 	});
 }, 1);

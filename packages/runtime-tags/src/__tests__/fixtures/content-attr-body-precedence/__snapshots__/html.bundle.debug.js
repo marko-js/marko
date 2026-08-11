@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("<span>note</span>");
-	}) };
+	}, $scope0_id) };
 	_html("<div id=plain>");
 	_attr_content("#div/0", $scope0_id, Note, 0);
 	_html("</div><div id=commented></div><div id=withBody>body wins</div>");

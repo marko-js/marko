@@ -17,6 +17,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			unserializable: "2:10",
 			test: "7:10"
 		});
-	}) };
+	}, $scope0_id) };
 	Foo.content({});
 }, 1);

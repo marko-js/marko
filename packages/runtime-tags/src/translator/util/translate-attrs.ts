@@ -438,15 +438,11 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
           body.node.params,
           t.blockStatement(body.node.body),
         ),
-        serialized
-          ? getScopeIdIdentifier(
-              getSection(
-                getAttributeTagParent(
-                  body.parentPath as t.NodePath<t.MarkoTag>,
-                ),
-              )!,
-            )
-          : undefined,
+        getScopeIdIdentifier(
+          getSection(
+            getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
+          )!,
+        ),
       );
     } else {
       // The section renderer declaration is elided when nothing reads the

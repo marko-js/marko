@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_script($scope1_id, "__tests__/template.marko_1");
 				writeScope($scope1_id, { n }, "__tests__/template.marko", "2:4", { n: "3:10" });
 				_resume_branch($scope1_id);
-			})
+			}, $scope0_id)
 		}),
 		foot: attrTag({ class: "f" })
 	});

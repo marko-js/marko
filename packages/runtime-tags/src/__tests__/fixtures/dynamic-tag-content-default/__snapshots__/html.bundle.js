@@ -11,11 +11,11 @@ var child_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
+	const $scope0_id = _scope_id();
 	child_default({});
 	child_default({ content: _content("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("Hello");
-	}) });
+	}, $scope0_id) });
 }, 1);

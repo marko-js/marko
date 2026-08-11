@@ -9,10 +9,9 @@ var hello_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
 	hello_default({ foo: attrTag({ content: _content("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("Foo!");
-	}) }) });
+	}, _scope_id()) }) });
 }, 1);

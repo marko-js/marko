@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope1_id) || void 0 });
 		_resume_branch($scope1_id);
 		return $return;
-	}) };
+	}, $scope0_id) };
 	const $childScope = _peek_scope_id();
 	let a = Let.content({});
 	_var($scope0_id, "b", $childScope, "a2");

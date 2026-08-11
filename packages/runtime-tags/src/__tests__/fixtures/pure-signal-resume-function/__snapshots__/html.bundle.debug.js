@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Click");
-		})
+		}, $scope0_id)
 	});
 	writeScope($scope0_id, { test }, "__tests__/template.marko", 0, { test: "1:7" });
 }, 1);

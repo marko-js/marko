@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_onClick: ["input.onClick", "2:18"],
 			"EventAttributes:#button/0": ["...input", "3:14"]
 		});
-	}) };
+	}, $scope0_id) };
 	MyButton.content({
 		"on-click": _resume(function() {
 			throw new Error("Should never be called.");
@@ -34,6 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("Click Me");
-		})
+		}, $scope0_id)
 	});
 }, 1);

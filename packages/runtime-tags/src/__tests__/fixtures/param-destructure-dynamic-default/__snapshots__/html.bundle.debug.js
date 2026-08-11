@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:1", { foo: "2:21" }));
 		_resume_branch($scope1_id);
-	}) };
+	}, $scope0_id) };
 	ChildA.content({
 		foo: { bar: 0 },
 		id: "a"
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:count": 1
 		}, "__tests__/template.marko", "9:1", { foo: "10:11" }));
 		_resume_branch($scope2_id);
-	}) };
+	}, $scope0_id) };
 	ChildB.content({
 		foo: { bar: 0 },
 		id: "d"

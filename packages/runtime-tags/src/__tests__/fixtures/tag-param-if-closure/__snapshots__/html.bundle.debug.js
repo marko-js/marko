@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_content: ["input.content", "3:13"],
 			input_value: ["input.value", "3:13"]
 		});
-	}) };
+	}, $scope0_id) };
 	_html(`<button>Increment</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(10);
 	const $childScope = _peek_scope_id();

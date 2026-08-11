@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<div>${_escape(input.a)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 1))}</div><div>${_escape(input.b)}${_el_resume($scope1_id, "b", _serialize_guard($scope1_reason, 2))}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
-	}) };
+	}, $scope0_id) };
 	_set_serialize_reason({
 		0: $sg__input_a__OR__input_b,
 		1: $sg__input_a,

@@ -1,4 +1,4 @@
-// size: 26137 (min) 9713 (brotli)
+// size: 26183 (min) 9732 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -158,8 +158,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     return (scope, newRenderer, getInput) => {
       let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
       if (
-        scope[rendererAccessor] !==
-          (scope[rendererAccessor] = normalizedRenderer?.a || normalizedRenderer) ||
+        scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       )
         if (
@@ -226,7 +225,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
       rendererAccessor = "D" + nodeAccessor;
     return (scope, renderer) => {
       if (
-        (scope[rendererAccessor] !== (scope[rendererAccessor] = renderer?.a || renderer) &&
+        (scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(renderer)) &&
           (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch),
           renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor])),
         renderer)
@@ -1276,7 +1275,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
 }
 function _attr_content(scope, nodeAccessor, value) {
   let content = normalizeClientRender(value);
-  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
+  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
     content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
   for (let accessor in content?.g)
@@ -1891,6 +1890,9 @@ function renderCatch(scope, error) {
       setConditionalRenderer(owner, tryWithCatch.C, tryWithCatch.E, createAndSetupBranch),
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
+}
+function rendererKey(renderer) {
+  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
 }
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);

@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		_html(`<div>${_escape(x)}${_el_resume($scope1_id, "a")}</div>`);
 		_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}) };
+	}, $scope0_id) };
 	MyTag.content({});
 	_if(() => {
 		{

@@ -19,7 +19,7 @@ var outer_default = _template("c", (input) => {
 		_script($scope1_id, "c0");
 		_subscribe($si__input_content && $input_content__closures, writeScope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	$si__input_content && writeScope($scope0_id, { e: $input_content__closures });
 });
 
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		_html(`<span>${_escape(count)}${_el_resume($scope1_id, "a")}</span>`);
 		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	_html(`<button id=increment>click</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {

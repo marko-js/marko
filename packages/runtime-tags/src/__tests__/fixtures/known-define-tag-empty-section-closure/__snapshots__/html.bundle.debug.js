@@ -15,7 +15,7 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", $sg__input_x, $sg__input_x, $sg__input_x, 0, 1);
 		$si__input_x && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/test.marko", "2:2");
-	}) };
+	}, $scope0_id) };
 	Tag.content({ x: 1 });
 	writeScope($scope0_id, { count }, "__tests__/tags/test.marko", 0, { count: "1:8" });
 });

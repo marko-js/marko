@@ -9,11 +9,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $return = "A";
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
 		return $return;
-	}) };
+	}, $scope0_id) };
 	let name = Tag.content({ content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<div>${_escape(name)}</div>`);
 		_resume_branch($scope2_id);
-	}) });
+	}, $scope0_id) });
 }, 1);

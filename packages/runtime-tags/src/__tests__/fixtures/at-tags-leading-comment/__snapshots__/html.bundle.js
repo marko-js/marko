@@ -15,14 +15,14 @@ var box_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
+	const $scope0_id = _scope_id();
 	box_default({ item: attrTags(attrTag({ content: _content("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("one");
-	}) }), { content: _content("a1", () => {
+	}, $scope0_id) }), { content: _content("a1", () => {
 		_scope_reason();
 		_scope_id();
 		_html("two");
-	}) }) });
+	}, $scope0_id) }) });
 }, 1);

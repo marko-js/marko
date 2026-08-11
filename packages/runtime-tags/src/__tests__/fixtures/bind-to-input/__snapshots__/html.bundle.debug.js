@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`${_escape(x)}${_el_resume($scope1_id, "#text/0")}`);
 			_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 			_resume_branch($scope1_id);
-		})
+		}, $scope0_id)
 	});
 	_set_serialize_reason(8);
 	const $childScope2 = _peek_scope_id();
@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				"ClosureSignalIndex:x": 1
 			}, "__tests__/template.marko", "4:2"));
 			_resume_branch($scope2_id);
-		})
+		}, $scope0_id)
 	});
 	writeScope($scope0_id, {
 		"ClosureScopes:x": $x__closures,

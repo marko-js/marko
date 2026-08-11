@@ -23,6 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope1_id, "__tests__/template.marko_1");
 			writeScope($scope1_id, { count }, "__tests__/template.marko", "1:1", { count: "2:8" });
 			_resume_branch($scope1_id);
-		})
+		}, $scope0_id)
 	});
 }, 1);

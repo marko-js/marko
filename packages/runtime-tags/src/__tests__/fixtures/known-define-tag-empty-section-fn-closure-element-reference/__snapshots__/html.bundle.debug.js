@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_message: input.message,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { input_message: ["input.message", "2:18"] });
-	}) };
+	}, $scope0_id) };
 	MyButton.content({ message: "hello" });
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

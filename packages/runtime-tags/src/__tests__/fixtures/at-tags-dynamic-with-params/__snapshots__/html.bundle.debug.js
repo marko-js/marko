@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`y: ${_sep($sg__y)}${_escape(y)}${_el_resume($scope1_id, "#text/0", $sg__y)}`);
 			_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "4:10");
-		}) });
+		}, $scope0_id) });
 	}
 	const $childScope = _peek_scope_id();
 	let menuEl = hello_default({ item: $item });

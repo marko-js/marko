@@ -20,14 +20,14 @@ var sections_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
+	const $scope0_id = _scope_id();
 	sections_default({ section: attrTags(attrTag({ content: _content("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("<div>static content</div>");
-	}) }), { content: _content("a1", () => {
+	}, $scope0_id) }), { content: _content("a1", () => {
 		_scope_reason();
 		_scope_id();
 		_html("<div>that never changes</div>");
-	}) }) });
+	}, $scope0_id) }) });
 }, 1);

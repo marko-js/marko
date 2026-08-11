@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
 		_resume_branch($scope1_id);
 		return $return;
-	}) });
+	}, $scope0_id) });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#3/var");
 	_html(`<div>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</div>`);
 	writeScope($scope0_id, {

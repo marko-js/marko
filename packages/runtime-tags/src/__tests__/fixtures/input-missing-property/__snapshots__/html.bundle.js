@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			e: _serialize_if($scope1_reason, 1) && input.name,
 			f: $si__input_name && $Child_content__input_name__closures
 		});
-	}) };
+	}, $scope0_id) };
 	_set_serialize_reason(6);
 	const $childScope = _peek_scope_id();
 	Child.content({ count });

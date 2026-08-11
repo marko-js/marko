@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_html(`${_escape(clickCount)}${_el_resume($scope1_id, "a")}`);
 			_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);
-		})
+		}, $scope0_id)
 	});
 	writeScope($scope0_id, {
 		b: clickCount,

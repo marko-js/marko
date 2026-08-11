@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span></span>${_el_resume($scope1_id, "a")}`);
 		_subscribe($child_content__subscribers, writeScope($scope1_id, {}));
-	}) });
+	}, $scope0_id) });
 	_dynamic_tag($scope0_id, "b", input.show ? child_default : null, {}, _content_resume("a5", () => {
 		const $scope2_id = _scope_id();
 		_hoist($scope2_id, "a1");
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope3_id, "a")}`);
 			_subscribe($child_content2__subscribers, writeScope($scope3_id, {}));
-		}) });
+		}, $scope2_id) });
 		_script($scope2_id, "a6");
 		_subscribe($inputshowChildnull_content__subscribers, writeScope($scope2_id, {
 			_: _scope_with_id($scope0_id),

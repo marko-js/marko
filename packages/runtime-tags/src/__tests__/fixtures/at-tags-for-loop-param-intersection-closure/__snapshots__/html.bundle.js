@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope0_id)
 			}));
 			_resume_branch($scope1_id);
-		}) });
+		}, $scope0_id) });
 	});
 	list_default({ item: $item });
 	_html(`<button>Multiplier: <!>${_escape(mult)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}`);

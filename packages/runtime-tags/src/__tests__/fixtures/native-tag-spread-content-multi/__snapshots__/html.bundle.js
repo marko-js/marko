@@ -16,13 +16,12 @@ var my_box_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
 	my_box_default({
 		class: "base",
 		content: _content("a0", () => {
 			_scope_reason();
 			_scope_id();
 			_html("Hello");
-		})
+		}, _scope_id())
 	});
 }, 1);

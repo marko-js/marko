@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope2_id, {}, "__tests__/template.marko", "4:4", { "EventAttributes:#div/0": ["...item", "5:13"] });
 		}, 0, $scope1_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
-	}) };
+	}, $scope0_id) };
 	_set_serialize_reason(1);
 	let $item;
 	forUntil(size, 0, 1, (i) => {

@@ -19,17 +19,16 @@ var outer_default = _template("c", (input) => {
 		_script($scope1_id, "c0");
 		_subscribe($si__input_content && $input_content__closures, writeScope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	$si__input_content && writeScope($scope0_id, { e: $input_content__closures });
 });
 
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
 	outer_default({ content: _content("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("<span>static</span>");
-	}) });
+	}, _scope_id()) });
 }, 1);

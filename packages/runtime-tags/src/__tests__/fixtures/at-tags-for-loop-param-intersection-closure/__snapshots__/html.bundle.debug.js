@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:5", { item: "3:7" }));
 			_resume_branch($scope1_id);
-		}) });
+		}, $scope0_id) });
 	});
 	list_default({ item: $item });
 	_html(`<button>Multiplier: <!>${_escape(mult)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);

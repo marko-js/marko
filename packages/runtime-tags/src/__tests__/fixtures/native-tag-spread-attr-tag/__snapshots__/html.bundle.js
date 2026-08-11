@@ -15,7 +15,6 @@ var my_box_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
 	my_box_default({
 		head: attrTag({
 			id: "h",
@@ -27,7 +26,7 @@ var template_default = _template("a", (input) => {
 				_script($scope1_id, "a0");
 				writeScope($scope1_id, { c: n });
 				_resume_branch($scope1_id);
-			})
+			}, _scope_id())
 		}),
 		foot: attrTag({ class: "f" })
 	});

@@ -18,6 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
 		_html("<div>Baz Content</div>");
-	}) };
+	}, $scope0_id) };
 	Baz.content({});
 }, 1);

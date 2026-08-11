@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_resume_branch($scope1_id);
 		return $return;
-	}) };
+	}, $scope0_id) };
 	let clickOnceCount = 0;
 	const $childScope = _peek_scope_id();
 	let onClickOnce = Once.content({ value: _resume(function() {
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_resume_branch($scope2_id);
 		return $return2;
-	}) };
+	}, $scope0_id) };
 	let clickTwiceCount = 0;
 	const $childScope2 = _peek_scope_id();
 	let onClickTwice = Twice.content({ value: _resume(function() {

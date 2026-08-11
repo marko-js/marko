@@ -20,5 +20,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_escape(value));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 }, 1);

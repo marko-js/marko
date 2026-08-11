@@ -20,6 +20,8 @@ const CONSUMED_RESULT_MESSAGE = "Cannot read from a consumed render result";
 
 export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   [RendererProp.Id]?: string;
+  // The owner's scope id, where the client holds the owner scope itself.
+  [RendererProp.Owner]?: number;
   [RendererProp.Embed]?: boolean;
 };
 

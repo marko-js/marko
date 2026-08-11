@@ -7,7 +7,7 @@ var my_tag_default = _template("b", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("default");
-	}) };
+	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", inputAs || "div", {
 		...htmlInput,
 		class: ["foo", inputClass],

@@ -76,6 +76,17 @@ export function getState(): State {
   return $chunk.boundary.state;
 }
 
+// Mirrors `dom/control-flow.ts` › `rendererKey`: two instances of one content
+// section share its id, so an owner-bound renderer is keyed by its owner too.
+export function rendererKey(renderer: unknown) {
+  return (renderer as ServerRenderer | undefined)?.[RendererProp.Owner] ===
+    undefined
+    ? (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer
+    : (renderer as ServerRenderer)[RendererProp.Id] +
+        " " +
+        (renderer as ServerRenderer)[RendererProp.Owner];
+}
+
 export function getScopeId(scope: unknown): number | undefined {
   return (scope as ScopeInternals)[K_SCOPE_ID];
 }
@@ -255,7 +266,7 @@ export function _attr_content(
       writeScope(scopeId, {
         [AccessorPrefix.BranchScopes + nodeAccessor]: writeScope(branchId, {}),
         [AccessorPrefix.ConditionalRenderer + nodeAccessor]:
-          render?.[RendererProp.Id],
+          rendererKey(render),
       });
     }
   } else {

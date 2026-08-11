@@ -18,6 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("This is the body content");
-		})
+		}, $scope0_id)
 	});
 }, 1);
