@@ -1,4 +1,4 @@
-// size: 26183 (min) 9732 (brotli)
+// size: 26202 (min) 9753 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -795,21 +795,23 @@ function _script(id, fn) {
 function _el_read(value) {
   return value;
 }
-function* traverse(scope, path, i = path.length - 1) {
+function* traverse(scope, path, args, i = path.length - 1) {
   if (scope)
     if (Symbol.iterator in scope)
-      for (let childScope of scope.values()) yield* traverse(childScope, path, i);
+      for (let childScope of scope.values()) yield* traverse(childScope, path, args, i);
     else {
       let item = scope[path[i]];
-      i ? yield* traverse(item, path, i - 1) : yield typeof item == "function" ? item() : item;
+      i
+        ? yield* traverse(item, path, args, i - 1)
+        : yield typeof item == "function" ? item(...args) : item;
     }
 }
 function _hoist(...path) {
   return (
     (path = path.map((p) => (typeof p == "string" ? p : decodeAccessor(p)))),
     (scope) => {
-      let fn = () => traverse(scope, path).next().value;
-      return ((fn[Symbol.iterator] = () => traverse(scope, path)), fn);
+      let fn = (...args) => traverse(scope, path, args).next().value;
+      return ((fn[Symbol.iterator] = () => traverse(scope, path, [])), fn);
     }
   );
 }

@@ -405,12 +405,13 @@ export function _el_read<T>(value: T): T {
   return value;
 }
 
-type Hoistable<T> = () => T;
+type Hoistable<T> = (...args: unknown[]) => T;
 type Hoisted<T> = Hoistable<T> & Iterable<T>;
 
 function* traverse<T>(
   scope: Scope,
   path: Accessor[],
+  args: unknown[],
   i: number = path.length - 1,
 ): IterableIterator<T> {
   if (MARKO_DEBUG && rendering) {
@@ -419,14 +420,16 @@ function* traverse<T>(
   if (scope) {
     if (Symbol.iterator in scope) {
       for (const childScope of scope.values() as Iterable<Scope>) {
-        yield* traverse(childScope, path, i);
+        yield* traverse(childScope, path, args, i);
       }
     } else {
       const item = scope[path[i]];
       if (i) {
-        yield* traverse(item, path, i - 1);
+        yield* traverse(item, path, args, i - 1);
       } else {
-        yield typeof item === "function" ? item() : item;
+        // Reading a hoist means calling it, so the caller's arguments have to
+        // reach the value; with none this is the bare unwrap it has always been.
+        yield typeof item === "function" ? item(...args) : item;
       }
     }
   }
@@ -436,8 +439,9 @@ export function _hoist<T>(...path: Accessor[]) {
   if (!MARKO_DEBUG)
     path = path.map((p) => (typeof p === "string" ? p : decodeAccessor(p)));
   return (scope: Scope) => {
-    const fn: Hoisted<T> = () => traverse(scope, path).next().value;
-    fn[Symbol.iterator] = () => traverse(scope, path);
+    const fn: Hoisted<T> = (...args) =>
+      traverse<T>(scope, path, args).next().value as T;
+    fn[Symbol.iterator] = () => traverse<T>(scope, path, []);
     return fn;
   };
 }
