@@ -476,6 +476,8 @@ export function parseMarko(file) {
               part.body.value.end,
             ),
           ),
+          false,
+          part.async,
         ),
         part,
       );

@@ -1,0 +1,6 @@
+export interface Input {}
+
+<let/loaded="no"/>
+<button async onClick() {
+  loaded = await Promise.resolve("yes");
+}>${loaded}</button>

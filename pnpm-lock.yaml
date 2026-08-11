@@ -173,8 +173,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       htmljs-parser:
-        specifier: ^5.12.1
-        version: 5.12.1
+        specifier: ^5.14.0
+        version: 5.14.0
       jsesc:
         specifier: ^3.1.0
         version: 3.1.0
@@ -2171,8 +2171,8 @@ packages:
     resolution: {integrity: sha512-CV9TW3Y3f8/wT0BRFc1/KAVQ3TUHiXmaAb6VW9vtiMFf7SLoMd1PdAc4W3KFOFETBJUb90KatHqlsZMWV+R9Gg==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
-  htmljs-parser@5.12.1:
-    resolution: {integrity: sha512-QnHLg5SWqoH5o8MD4iOWJFtdKSS2lXxtNgyznFXvEeeCK0CTi6URdYtFGkFGDANdq8RZzkuc91KaBgLx2WAhSA==}
+  htmljs-parser@5.14.0:
+    resolution: {integrity: sha512-cGHMvzufiWAcQl11UM8HwxxpFkVicgtJ5RniyFHTClT0WfwMWSxAc7QMAlqpKet+xTsrr7QOOeShOENBMvCPVg==}
 
   htmlparser2@5.0.1:
     resolution: {integrity: sha512-vKZZra6CSe9qsJzh0BjBGXo8dvzNsq/oGvsjfRdOrrryfeD9UOBEEQdeoqCRmKZchF5h2zOBMQ6YuQ0uRUmdbQ==}
@@ -5051,7 +5051,7 @@ snapshots:
     transitivePeerDependencies:
       - '@noble/hashes'
 
-  htmljs-parser@5.12.1: {}
+  htmljs-parser@5.14.0: {}
 
   htmlparser2@5.0.1:
     dependencies:
