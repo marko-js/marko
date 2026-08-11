@@ -1,0 +1,14 @@
+<let/result="pending"/>
+<const/first=() => { result = second("A", 42) }/>
+<const/second=(name, num) => `${name}:${num}`/>
+<const/viaAlias=() => { const alias = third; result = alias(1, 2, 3) }/>
+<const/third=(...nums) => nums.join("-")/>
+<const/callNullary=() => { result = nullary() }/>
+<const/nullary=() => "none"/>
+<const/callDefaulted=() => { result = defaulted("x") }/>
+<const/defaulted=(a, b = "def") => a + ":" + b/>
+<button id="direct" onClick() { first() }>direct</button>
+<button id="alias" onClick() { viaAlias() }>alias</button>
+<button id="nullary" onClick() { callNullary() }>nullary</button>
+<button id="defaulted" onClick() { callDefaulted() }>defaulted</button>
+<div>${result}</div>
