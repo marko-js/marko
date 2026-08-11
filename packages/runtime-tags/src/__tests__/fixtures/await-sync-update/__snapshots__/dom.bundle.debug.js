@@ -7,7 +7,7 @@ const $await_content = /*@__PURE__*/ _await_content("#text/0", "Got: <!>", "b%")
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $n = /*@__PURE__*/ _let("n/2", ($scope) => $await_promise($scope, `v${$scope.n}`));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$await_content($scope);

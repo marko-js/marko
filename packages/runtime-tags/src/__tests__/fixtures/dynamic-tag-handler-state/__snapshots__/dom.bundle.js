@@ -27,7 +27,7 @@ const $n = /*@__PURE__*/ _let(7, ($scope) => {
 	$input_tag__OR__n($scope);
 });
 const $attrs = ($scope) => function() {
-	$n($scope, $scope.h + 1);
+	$n($scope, +$scope.h + 1);
 };
 const $onClick = ($scope) => function() {
 	$n($scope, $scope.h + 10);

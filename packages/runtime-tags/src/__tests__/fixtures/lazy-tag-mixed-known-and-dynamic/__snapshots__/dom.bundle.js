@@ -13,7 +13,7 @@ const $setup__script = _script("b0", ($scope) => {
 		$show($scope, !$scope.f);
 	});
 	_on($scope.b, "click", function() {
-		$value($scope, $scope.g + 1);
+		$value($scope, +$scope.g + 1);
 	});
 });
 

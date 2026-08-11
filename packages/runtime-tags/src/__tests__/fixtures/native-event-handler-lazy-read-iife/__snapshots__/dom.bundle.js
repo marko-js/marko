@@ -14,5 +14,5 @@ const $log = /*@__PURE__*/ _let(5, ($scope) => {
 	$n__OR__log($scope);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.e + 1);
+	$n($scope, +$scope.e + 1);
 }));

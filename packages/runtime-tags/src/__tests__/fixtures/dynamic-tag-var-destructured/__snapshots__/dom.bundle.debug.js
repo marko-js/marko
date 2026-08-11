@@ -12,7 +12,7 @@ function $setup$1($scope) {
 	$count$1($scope, 1);
 }
 const $_return = ($scope) => function() {
-	$count$1($scope, $scope.count + 1);
+	$count$1($scope, +$scope.count + 1);
 };
 _resume("__tests__/tags/child/index.marko_0/_return", $_return);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1);

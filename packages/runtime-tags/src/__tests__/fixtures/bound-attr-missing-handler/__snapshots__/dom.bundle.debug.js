@@ -8,7 +8,7 @@ const $state = ($scope, state) => {
 };
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$n($scope, $scope.n + 1);
+		$n($scope, +$scope.n + 1);
 	});
 	_attr_input_value_script($scope, "#input/2");
 });

@@ -28,7 +28,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)("", $templa
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b0${_w0}&/${_w1}&b`)("", "b%c");
 const $mytag_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
 const $mytag_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
-	_var_change($scope._["#childScope/0"], $scope._.count + 1, "count");
+	_var_change($scope._["#childScope/0"], +$scope._.count + 1, "count");
 }));
 const $mytag_content__setup = ($scope) => {
 	$mytag_content__count($scope);

@@ -20,7 +20,7 @@ const $n = /*@__PURE__*/ _let("n/5", ($scope) => {
 	$open__OR__n($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$open($scope, false);

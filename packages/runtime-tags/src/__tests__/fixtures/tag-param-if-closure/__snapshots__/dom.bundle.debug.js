@@ -20,7 +20,7 @@ const $Foo_content = _content_resume("__tests__/template.marko_1*content", "<!><
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => $Foo_content2__input_value($scope["#childScope/1"], $scope.count));
 const $a = /*@__PURE__*/ _const("a");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$Foo_content2__input_content($scope["#childScope/1"], $Foo_content($scope));

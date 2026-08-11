@@ -33,7 +33,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $valueChange = ($scope) => function(nv) {
-	$calls($scope, $scope.calls + 1);
+	$calls($scope, +$scope.calls + 1);
 	$v($scope, nv);
 };
 _resume("__tests__/template.marko_0/valueChange", $valueChange);

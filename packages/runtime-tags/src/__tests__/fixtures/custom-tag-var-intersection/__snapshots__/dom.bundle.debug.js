@@ -7,7 +7,7 @@ const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 	$input_extra__OR__x($scope);
 });
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, +$scope.x + 1);
 }));
 function $setup$1($scope) {
 	$x($scope, 0);

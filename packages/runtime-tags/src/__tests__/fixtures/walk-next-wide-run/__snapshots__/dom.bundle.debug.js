@@ -3,7 +3,7 @@ const $template = "<div><div><div><div><div><div><div><div><div><div><div><div><
 const $walks = "Z wn b";
 const $n = /*@__PURE__*/ _let("n/2", ($scope) => _text($scope["#text/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$n($scope, 0);

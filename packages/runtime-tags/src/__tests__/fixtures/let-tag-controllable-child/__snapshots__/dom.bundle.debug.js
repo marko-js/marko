@@ -16,13 +16,13 @@ const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$state($scope, $scope.state + 1);
+		$state($scope, +$scope.state + 1);
 	});
 	_on($scope["#button/3"], "click", function() {
-		$otherState($scope, $scope.otherState + 1);
+		$otherState($scope, +$scope.otherState + 1);
 	});
 	_on($scope["#button/6"], "click", function() {
-		$thirdState($scope, $scope.thirdState + 1);
+		$thirdState($scope, +$scope.thirdState + 1);
 	});
 });
 const $setup$1 = $setup__script;

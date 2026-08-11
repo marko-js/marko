@@ -19,5 +19,5 @@ const $n = /*@__PURE__*/ _let(9, ($scope) => {
 	$extras__OR__n($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.j + 1);
+	$n($scope, +$scope.j + 1);
 }));

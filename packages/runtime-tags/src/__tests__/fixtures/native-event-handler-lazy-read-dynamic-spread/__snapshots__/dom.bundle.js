@@ -16,7 +16,7 @@ const $setup__script = _script("a3", ($scope) => {
 		$enabled($scope, !$scope.h);
 	});
 	_on($scope.b, "click", function() {
-		$count($scope, $scope.i + 1);
+		$count($scope, +$scope.i + 1);
 	});
 });
 const $onClick = ($scope) => function() {

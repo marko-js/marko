@@ -14,7 +14,7 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	$if_content__count($scope);
 });
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.c + 1);
+	$count($scope, +$scope.c + 1);
 }));
 
 // child.marko

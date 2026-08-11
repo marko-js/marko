@@ -15,5 +15,5 @@ const $try_content__clickCount = /*@__PURE__*/ _closure_get(4, ($scope) => {
 });
 const $clickCount = /*@__PURE__*/ _let(3, /* @__PURE__ */ _closure($try_content__clickCount));
 const $setup__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
-	$clickCount($scope, $scope.d + 1);
+	$clickCount($scope, +$scope.d + 1);
 }));

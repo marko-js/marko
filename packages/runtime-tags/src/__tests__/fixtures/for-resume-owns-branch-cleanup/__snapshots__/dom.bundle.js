@@ -24,6 +24,6 @@ const $setup__script = _script("a0", ($scope) => {
 		$outer($scope, !$scope.d);
 	});
 	_on($scope.b, "click", function() {
-		$count($scope, $scope.e + 1);
+		$count($scope, +$scope.e + 1);
 	});
 });

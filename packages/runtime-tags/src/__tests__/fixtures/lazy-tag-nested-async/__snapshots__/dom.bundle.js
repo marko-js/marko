@@ -7,7 +7,7 @@ const $count = /*@__PURE__*/ _let(6, ($scope) => {
 	$count__closure($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.g + 1);
+	$count($scope, +$scope.g + 1);
 }));
 
 // grand-child.marko
@@ -17,5 +17,5 @@ const $input_value = ($scope, input_value) => {
 	$n($scope, input_value);
 };
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.h + 1);
+	$n($scope, +$scope.h + 1);
 }));

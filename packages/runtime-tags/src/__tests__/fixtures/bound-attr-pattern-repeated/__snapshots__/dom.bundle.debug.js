@@ -25,7 +25,7 @@ const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
 	$Wrap_content__tag_param_($scope["#childScope/2"], { a: "z" + $scope.n });
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$Wrap_content__setup._($scope["#childScope/2"], $scope);

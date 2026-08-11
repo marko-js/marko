@@ -12,7 +12,7 @@ function $setup($scope) {
 	$n($scope, 0);
 }
 const $handlers = ($scope) => function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 };
 _resume("__tests__/template.marko_0/handlers", $handlers);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

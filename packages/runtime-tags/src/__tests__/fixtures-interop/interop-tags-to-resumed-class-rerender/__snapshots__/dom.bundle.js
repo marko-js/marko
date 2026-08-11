@@ -29,7 +29,7 @@ const $if = /*@__PURE__*/ _if(3, "<!><!><!>", "b%", $if_content__setup);
 const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.a, "click", function() {
-		$count($scope, $scope.e + 1);
+		$count($scope, +$scope.e + 1);
 	});
 	_on($scope.c, "click", function() {
 		$show($scope, !$scope.f);

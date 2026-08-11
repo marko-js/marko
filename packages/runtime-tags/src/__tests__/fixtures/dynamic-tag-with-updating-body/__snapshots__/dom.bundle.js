@@ -3,7 +3,7 @@ const $template = "<button id=count> </button>";
 const $walks = " D l";
 const $count = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
 const $setup__script$1 = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.c + 1);
+	$count($scope, +$scope.c + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

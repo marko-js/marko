@@ -16,7 +16,7 @@ const $_return2 = ($scope) => function(value) {
 	$count$1($scope, value);
 };
 const $_return = ($scope) => function() {
-	$count$1($scope, $scope.count + 1);
+	$count$1($scope, +$scope.count + 1);
 };
 _resume("__tests__/tags/child.marko_0/_return2", $_return2);
 _resume("__tests__/tags/child.marko_0/_return", $_return);

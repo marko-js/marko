@@ -16,7 +16,7 @@ const $if = /*@__PURE__*/ _if(0, 0, 0, $if_content__setup);
 const $show = /*@__PURE__*/ _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.b, "click", function() {
-		$x($scope, $scope.d + 1);
+		$x($scope, +$scope.d + 1);
 	});
 	_on($scope.c, "click", function() {
 		$show($scope, !$scope.e);

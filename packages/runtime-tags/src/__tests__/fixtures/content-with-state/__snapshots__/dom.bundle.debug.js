@@ -39,7 +39,7 @@ const $outer_content = /*@__PURE__*/ _content("__tests__/template.marko_1*conten
 const $count__closure = /*@__PURE__*/ _closure($outer_content__count);
 const $count = /*@__PURE__*/ _let("count/2", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

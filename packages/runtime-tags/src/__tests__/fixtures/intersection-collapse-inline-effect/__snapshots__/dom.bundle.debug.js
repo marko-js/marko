@@ -5,7 +5,7 @@ const $y__OR__z__script = _script("__tests__/template.marko_0_y#2_z#3", ($scope)
 const $y__OR__z = $y__OR__z__script;
 const $count = /*@__PURE__*/ _let("count/1", $y__OR__z);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 1);

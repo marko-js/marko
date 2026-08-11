@@ -17,7 +17,7 @@ const $log = /*@__PURE__*/ _let("log/5", ($scope) => {
 	$n__OR__log($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$n($scope, 0);

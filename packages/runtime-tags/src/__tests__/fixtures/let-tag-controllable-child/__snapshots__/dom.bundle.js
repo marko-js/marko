@@ -14,13 +14,13 @@ const $input_value = /*@__PURE__*/ _const(11, ($scope) => {
 const $input_valueChange = /*@__PURE__*/ _const(12, $input_value__OR__input_valueChange);
 const $setup__script = _script("b0", ($scope) => {
 	_on($scope.a, "click", function() {
-		$state($scope, $scope.o + 1);
+		$state($scope, +$scope.o + 1);
 	});
 	_on($scope.d, "click", function() {
-		$otherState($scope, $scope.q + 1);
+		$otherState($scope, +$scope.q + 1);
 	});
 	_on($scope.g, "click", function() {
-		$thirdState($scope, $scope.s + 1);
+		$thirdState($scope, +$scope.s + 1);
 	});
 });
 const $otherState = /*@__PURE__*/ _let_change(16, ($scope) => _text($scope.f, $scope.q));

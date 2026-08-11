@@ -14,7 +14,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>inc</button>`)($templat
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D l");
 const $n = /*@__PURE__*/ _let("n/2", ($scope) => $input_n($scope["#childScope/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$n($scope, 1);

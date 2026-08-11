@@ -29,7 +29,7 @@ const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
 	$x__OR__args($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, +$scope.x + 1);
 }));
 function $setup($scope) {
 	$MyTag_content__setup._($scope["#childScope/0"], $scope);

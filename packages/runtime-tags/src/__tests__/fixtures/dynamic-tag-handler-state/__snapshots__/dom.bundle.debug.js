@@ -39,7 +39,7 @@ const $input_tag = /*@__PURE__*/ _const("input_tag", ($scope) => {
 });
 const $input = ($scope, input) => $input_tag($scope, input.tag);
 const $attrs = ($scope) => function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, +$scope.n + 1);
 };
 const $onClick = ($scope) => function() {
 	$n($scope, $scope.n + 10);

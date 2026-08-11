@@ -19,7 +19,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 		label: "new"
 	}, ...$scope.rows]);
 	$selected($scope, $scope.nextId);
-	$nextId($scope, $scope.nextId + 1);
+	$nextId($scope, +$scope.nextId + 1);
 }));
 function $setup($scope) {
 	$rows($scope, [{

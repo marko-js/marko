@@ -11,4 +11,4 @@ const $x = /*@__PURE__*/ _let(5, ($scope) => {
 	$z($scope, $scope.f + 2);
 	$y__OR__z($scope);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", () => $x($scope, $scope.f + 1) - 1));
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", () => $x($scope, +$scope.f + 1) - 1));

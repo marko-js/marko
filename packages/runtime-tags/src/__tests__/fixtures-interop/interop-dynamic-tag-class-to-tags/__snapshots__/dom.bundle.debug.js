@@ -4,7 +4,7 @@ const $template = "<button id=tags> </button>";
 const $walks = " D l";
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/components/tags-child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

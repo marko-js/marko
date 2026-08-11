@@ -15,8 +15,8 @@ const $b__closure = /*@__PURE__*/ _closure($if_content__b);
 const $b = /*@__PURE__*/ _let("b/3", $b__closure);
 const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$a($scope, $scope.a + 1);
-	$b($scope, $scope.b + 1);
+	$a($scope, +$scope.a + 1);
+	$b($scope, +$scope.b + 1);
 }));
 function $setup($scope) {
 	$a($scope, 0);

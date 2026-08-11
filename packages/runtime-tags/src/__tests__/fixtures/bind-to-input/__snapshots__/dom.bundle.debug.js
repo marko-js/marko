@@ -8,7 +8,7 @@ const $countChange2 = /*@__PURE__*/ _const("$countChange", $input_countChange__O
 const $count = /*@__PURE__*/ _const("count", $input_countChange__OR__input_count);
 const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x$1($scope, $scope.x + 1);
+	$x$1($scope, +$scope.x + 1);
 }));
 const $setup$1 = $setup__script;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");

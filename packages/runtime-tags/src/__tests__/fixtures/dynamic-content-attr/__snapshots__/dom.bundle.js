@@ -13,5 +13,5 @@ const $count = /*@__PURE__*/ _let(1, ($scope) => {
 	$count__closure($scope);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.b + 1);
+	$count($scope, +$scope.b + 1);
 }));

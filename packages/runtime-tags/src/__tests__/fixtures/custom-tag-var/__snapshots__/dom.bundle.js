@@ -4,7 +4,7 @@ const $x = /*@__PURE__*/ _let(2, ($scope) => {
 	_return($scope, $scope.c);
 });
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.c + 1);
+	$x($scope, +$scope.c + 1);
 }));
 
 // template.marko

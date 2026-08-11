@@ -7,5 +7,5 @@ const $value = /*@__PURE__*/ _let(4, ($scope) => {
 	$if_content__value($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$value($scope, $scope.e + 1);
+	$value($scope, +$scope.e + 1);
 }));

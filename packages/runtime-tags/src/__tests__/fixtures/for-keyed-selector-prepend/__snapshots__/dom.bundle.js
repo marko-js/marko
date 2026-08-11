@@ -17,5 +17,5 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 		label: "new"
 	}, ...$scope.c]);
 	$selected($scope, $scope.e);
-	$nextId($scope, $scope.e + 1);
+	$nextId($scope, +$scope.e + 1);
 }));

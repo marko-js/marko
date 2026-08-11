@@ -7,6 +7,6 @@ const $setup__script = _script("a0", ($scope) => {
 		$visible($scope, !$scope.g);
 	});
 	_on($scope.c, "click", function() {
-		$count($scope, $scope.h + 1);
+		$count($scope, +$scope.h + 1);
 	});
 });

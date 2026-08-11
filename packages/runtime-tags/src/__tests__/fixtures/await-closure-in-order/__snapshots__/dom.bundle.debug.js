@@ -12,7 +12,7 @@ const $value = /*@__PURE__*/ _let("value/4", ($scope) => {
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<span>Hello</span>");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
+	$value($scope, +$scope.value + 1);
 }));
 function $setup($scope) {
 	$await_content($scope);

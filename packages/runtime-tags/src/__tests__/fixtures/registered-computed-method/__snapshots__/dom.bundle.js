@@ -6,6 +6,6 @@ const $n = /*@__PURE__*/ _let(2, ($scope) => {
 	$handlers2($scope, { [key]: $handlers($scope) });
 });
 const $handlers = ($scope) => function() {
-	$n($scope, $scope.c + 1);
+	$n($scope, +$scope.c + 1);
 };
 _resume("a0", $handlers);

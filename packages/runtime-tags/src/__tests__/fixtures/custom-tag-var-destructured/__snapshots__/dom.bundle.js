@@ -11,7 +11,7 @@ const $_return2 = ($scope) => function(value) {
 	$count$1($scope, value);
 };
 const $_return = ($scope) => function() {
-	$count$1($scope, $scope.b + 1);
+	$count$1($scope, +$scope.b + 1);
 };
 _resume("b1", $_return2);
 _resume("b0", $_return);

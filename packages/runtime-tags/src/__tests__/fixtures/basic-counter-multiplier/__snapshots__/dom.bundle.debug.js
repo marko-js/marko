@@ -10,10 +10,10 @@ const $multiplier = /*@__PURE__*/ _let("multiplier/5", ($scope) => {
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$multiplier($scope, $scope.multiplier + 1);
+		$multiplier($scope, +$scope.multiplier + 1);
 	});
 	_on($scope["#button/2"], "click", function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, +$scope.count + 1);
 	});
 });
 function $setup($scope) {

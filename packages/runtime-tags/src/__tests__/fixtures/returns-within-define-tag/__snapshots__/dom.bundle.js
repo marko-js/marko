@@ -17,21 +17,21 @@ const $onClickOnce2 = _var_resume("a5", /*@__PURE__*/ _const(9, _script("a9", ($
 const $onClickTwice2 = _var_resume("a7", /*@__PURE__*/ _const(11, _script("a8", ($scope) => _on($scope.g, "click", $scope.l))));
 const $_return2 = ($scope) => function() {
 	if ($scope.d) {
-		$Twice_content__call($scope, $scope.d - 1);
+		$Twice_content__call($scope, +$scope.d - 1);
 		$scope.c();
 	}
 };
 const $_return = ($scope) => function() {
 	if ($scope.d) {
-		$Once_content__call($scope, $scope.d - 1);
+		$Once_content__call($scope, +$scope.d - 1);
 		$scope.c();
 	}
 };
 const $onClickOnce = ($scope) => function() {
-	$clickOnceCount($scope, $scope.i + 1);
+	$clickOnceCount($scope, +$scope.i + 1);
 };
 const $onClickTwice = ($scope) => function() {
-	$clickTwiceCount($scope, $scope.k + 1);
+	$clickTwiceCount($scope, +$scope.k + 1);
 };
 _resume("a2", $_return2);
 _resume("a0", $_return);

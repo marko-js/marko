@@ -29,7 +29,7 @@ function $setup($scope) {
 }
 const $valueChange = ($scope) => function(v) {
 	$value($scope, v);
-	$changes($scope, $scope.changes + 1);
+	$changes($scope, +$scope.changes + 1);
 };
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -14,31 +14,31 @@
     {
       "name": "counter",
       "user": {
-        "min": 161,
-        "brotli": 138
+        "min": 162,
+        "brotli": 129
       },
       "runtime": {
         "min": 4036,
         "brotli": 1793
       },
       "total": {
-        "min": 4197,
-        "brotli": 1931
+        "min": 4198,
+        "brotli": 1922
       }
     },
     {
       "name": "counter 💧",
       "user": {
-        "min": 80,
-        "brotli": 80
+        "min": 81,
+        "brotli": 82
       },
       "runtime": {
         "min": 2679,
         "brotli": 1318
       },
       "total": {
-        "min": 2759,
-        "brotli": 1398
+        "min": 2760,
+        "brotli": 1400
       }
     },
     {

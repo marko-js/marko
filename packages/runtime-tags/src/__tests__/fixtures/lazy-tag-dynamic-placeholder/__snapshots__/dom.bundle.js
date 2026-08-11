@@ -15,7 +15,7 @@ const $setup__script = _script("b2", ($scope) => {
 		$show($scope, !$scope.d);
 	});
 	_on($scope.b, "click", function() {
-		$value($scope, $scope.e + 1);
+		$value($scope, +$scope.e + 1);
 	});
 });
 

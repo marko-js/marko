@@ -5,5 +5,5 @@ const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	$if($scope, $scope.d % 3 === 0 ? 0 : $scope.d % 3 === 1 ? 1 : 2);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, +$scope.d + 1);
 }));

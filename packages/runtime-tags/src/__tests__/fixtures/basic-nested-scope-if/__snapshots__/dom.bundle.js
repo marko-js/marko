@@ -3,7 +3,7 @@ const $else_content__clickCount = /*@__PURE__*/ _if_closure(0, 1, ($scope) => _t
 const $else_content__setup = $else_content__clickCount;
 const $if_content__clickCount = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.b, $scope._.b));
 const $if_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$clickCount($scope._, $scope._.b + 1);
+	$clickCount($scope._, +$scope._.b + 1);
 }));
 const $if_content__setup = ($scope) => {
 	$if_content__clickCount._($scope);
