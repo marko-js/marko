@@ -1,0 +1,31 @@
+<div>child 1</div>
+<!--M_[--><!--M_!^3-->loading...<!--M_!3--><!--M_]1 #text/2 3-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  ((p, h, d, l = $ => {
+    d || p.after(new Range().createContextualFragment(d = h))
+  }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
+    .isIntersecting) && i.disconnect() + l()).observe(e))(document
+    .querySelector("#footer") || (console.warn(
+      "A lazy load trigger could not find an element matching \"#footer\". The module was loaded immediately."
+      ), l())))(document.currentScript,
+    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [3, {
+    "#BranchAccessor": "#text/2",
+    "#PlaceholderContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-target-after-flush/template.marko_2*content"
+      )
+  }]];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>
+  <footer id=footer>late</footer>
+</t>
+<script>
+  M._.w()
+</script>

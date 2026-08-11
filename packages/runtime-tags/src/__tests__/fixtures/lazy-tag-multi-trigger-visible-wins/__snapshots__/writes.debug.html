@@ -6,7 +6,9 @@
   }) => {
     (e => e && new IntersectionObserver((e, i) => e.some(e => e
       .isIntersecting) && i.disconnect() + l()).observe(e))(document
-      .querySelector("body") || l());
+      .querySelector("body") || (console.warn(
+        "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
+        ), l()));
     (self.requestIdleCallback || l)(l, {
       timeout: 100
     })

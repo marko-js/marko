@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "visible #footer" }
+
+<Child value=input.value/>
+<try>
+  <@placeholder>loading...</@placeholder>
+  <await=resolveAfter(0, 4)>
+    <footer id="footer">late</footer>
+  </await>
+</try>
