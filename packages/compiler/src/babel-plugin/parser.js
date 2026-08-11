@@ -14,6 +14,7 @@ import { createParser, TagType } from "htmljs-parser";
 
 import { buildCodeFrameError } from "../util/build-code-frame";
 import throwAggregateError from "../util/merge-errors";
+import { decodeHTMLText } from "./decode-html";
 
 const noop = () => {};
 const jsxStyleAttrValueReg = /^\{[\s\S]*\}$/;
@@ -58,6 +59,18 @@ export function parseMarko(file) {
   let { preserveWhitespace } = htmlParseOptions;
   let preservingWhitespaceUntil = preserveWhitespace;
   let onNext = noop;
+  // A tag whose text is escapable raw text (`<textarea>`, `<title>`) exposes a
+  // decoded view, for translators that read the text as a value not as markup.
+  // Lazy because later passes still rewrite `value`.
+  const decodableText = (value) => {
+    const node = t.markoText(value);
+    if (currentTag?.node.tagDef?.parseOptions?.escapableText) {
+      Object.defineProperty(node, "decodedValue", {
+        get: () => decodeHTMLText(node.value),
+      });
+    }
+    return node;
+  };
   const positionAt = (index) => toBabelPosition(parser.positionAt(index));
   const locationAt = (range) => {
     const { start, end } = parser.locationAt(range);
@@ -178,7 +191,7 @@ export function parseMarko(file) {
       const rawValue = parser.read(part);
 
       if (preservingWhitespaceUntil) {
-        pushContent(withLoc(t.markoText(rawValue), part));
+        pushContent(withLoc(decodableText(rawValue), part));
         return;
       }
 
@@ -219,7 +232,7 @@ export function parseMarko(file) {
 
       if (!value) return;
 
-      const node = t.markoText(value);
+      const node = decodableText(value);
       pushContent(node);
       onNext = (next) => {
         switch (next?.type) {

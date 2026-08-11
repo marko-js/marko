@@ -70,6 +70,7 @@ export interface TagDefinition {
   migrators?: PluginDefinition<t.MarkoTag>[];
   parseOptions?: {
     text?: boolean;
+    escapableText?: boolean;
     statement?: boolean;
     controlFlow?: boolean;
     openTagOnly?: boolean;
@@ -151,6 +152,7 @@ export interface Tag {
     statement?: boolean;
     preserveWhitespace?: boolean;
     text?: boolean;
+    escapableText?: boolean;
     html?: boolean;
   };
 }

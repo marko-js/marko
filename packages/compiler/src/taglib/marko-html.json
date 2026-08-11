@@ -827,6 +827,7 @@
   "<textarea>": {
     "parse-options": {
       "text": true,
+      "escapableText": true,
       "preserveWhitespace": true
     },
     "@autocomplete": "#html-autocomplete",
@@ -875,7 +876,8 @@
     "html": true,
     "attribute-groups": ["html-attributes"],
     "parse-options": {
-      "text": true
+      "text": true,
+      "escapableText": true
     }
   },
   "<tr>": {

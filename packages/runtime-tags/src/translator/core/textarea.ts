@@ -14,10 +14,14 @@ export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
     // convert textarea body into a static value attribute.
     const parts: (string | t.Expression)[] = [];
     for (const child of tag.node.body.body) {
-      if (
-        child.type === "MarkoText" ||
-        (child.type === "MarkoPlaceholder" && child.escape)
-      ) {
+      if (child.type === "MarkoText") {
+        // The body becomes a `value`, which is re-escaped on write, so the
+        // decoded text is what should reach the DOM.
+        parts.push(
+          (child as t.MarkoText & { decodedValue?: string }).decodedValue ??
+            child.value,
+        );
+      } else if (child.type === "MarkoPlaceholder" && child.escape) {
         parts.push(child.value);
       } else {
         throw tag.hub.file.hub.buildError(
