@@ -74,12 +74,6 @@ HTML `_attrs` picks an `<input>`'s controllable from the change handler (`data.c
 
 `analyzeTagNameType` downgrades a custom tag whose child template is Class API to `TagNameType.DynamicTag` but leaves `extra.tagNameLoad` attached, so `translate.exit`'s DOM branch still sees `allKnownTagReferences` and deletes the whole `import Child … with { load: … }`, while the compat dynamic-tag path never reads `tagNameLoad` and emits a bare `$dynamicTag($scope, Child, …)`. `Child` is left undeclared, so `$setup` throws `ReferenceError` at first render with zero diagnostics, and every `fixtures-interop/lazy-class-child*` fixture uses a Class parent, so this direction is uncovered. Either wire `tagNameLoad` into the compat path or `buildCodeFrameError` in `analyze` when a `load` import resolves to a Class-API template. Re-verify: compile a `<!-- use tags -->` parent holding that import plus `<Child value=1/>` against a `class {}` child with `{ output: "dom", linkAssets, translator: "marko/translator" }`; Babel puts `Child` in the Program scope's `globals`, empty with a Tags-API child.
 
-## Skip the source printer's reindent for whitespace-preserving tags
-
-`patches/@babel__generator@7.29.7.patch` › `MarkoTag` | 2026-07-27 | impact:med | effort:med
-
-The patched `MarkoTag` printer wraps every non-void body in `newline(1)`/`indent()`/`dedent()` plus a trailing `newline(1)`, guarded only by `voidElements`, `svgElements` and the concise `style`/`script` forms — never by the `parse-options.preserveWhitespace` tags (`pre`, `script`, `style`, `textarea`) declared in `packages/compiler/src/taglib/marko-html.json`. Those bodies render verbatim, so `output:"source"`/`"migrate"` silently rewrites user content and never reaches a fixed point, and `packages/runtime-class/bin/markoc.js --migrate` rewrites each file in place. Add a `preserveWhitespaceElements` set beside `voidElements` and print those bodies with no newline/indent (the concise `style { … }` branch is the shape to copy); the committed `packages/runtime-class/test/translator/fixtures/{textarea-tag,white-space-test}/snapshots/generated-expected.marko` already bake the extra whitespace and need refreshing. Re-verify: round-tripping `<textarea>abc</textarea>` through `output:"source"` turns the `output:"html"` result's `_textarea_value("abc")` into `_textarea_value("  abc\n")`.
-
 ## Queue pending `onNextSibling` callbacks in the inline reorder runtime
 
 `packages/runtime-tags/src/html/inlined-runtimes.debug.ts` › `REORDER_RUNTIME_CODE` | 2026-07-10 | impact:low | effort:med
