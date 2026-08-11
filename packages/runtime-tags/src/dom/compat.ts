@@ -136,6 +136,8 @@ export const compat = {
     component.effects = prepareEffects(() => {
       if (!branch) {
         created = 1;
+        // The insertion point is still virtual here, so a template rooted at a
+        // bare foreign child (`<circle>`, not `<svg>`) clones as XHTML.
         branch = component.scope = createAndSetupBranch(
           out.global,
           renderer,
