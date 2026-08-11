@@ -1,1 +1,1 @@
-Unable to serialize `valueChange` from `...input.attrs` in packages/runtime-tags/src/__tests__/fixtures/error-spread-change-handler-not-controllable/template.marko:1:11. Values referenced in the browser must be serializable.
+The attributes valueChange and checked are mutually exclusive.
