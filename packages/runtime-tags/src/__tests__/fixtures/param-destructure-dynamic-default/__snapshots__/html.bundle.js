@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id)
 		}));
 		_resume_branch($scope1_id);
-	}) };
+	}, $scope0_id) };
 	ChildA.content({
 		foo: { bar: 0 },
 		id: "a"
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			Ci: 1
 		}));
 		_resume_branch($scope2_id);
-	}) };
+	}, $scope0_id) };
 	ChildB.content({
 		foo: { bar: 0 },
 		id: "d"

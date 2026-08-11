@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_1/valueChange", $scope1_id) || void 0 }, "__tests__/template.marko", "1:2");
 		_resume_branch($scope1_id);
 		return $return;
-	}) };
+	}, $scope0_id) };
 	const $childScope = _peek_scope_id();
 	let a = Let.content({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_a#4/var");

@@ -9,13 +9,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $return = "A";
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
 		return $return;
-	}) };
+	}, $scope0_id) };
 	let name = Tag.content({ content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_script($scope2_id, "__tests__/template.marko_2_name#2");
 		writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 		_resume_branch($scope2_id);
-	}) });
+	}, $scope0_id) });
 	writeScope($scope0_id, { name }, "__tests__/template.marko", 0, { name: "6:6" });
 }, 1);

@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			onClick: "1:19",
 			content: "1:28"
 		});
-	}) };
+	}, $scope0_id) };
 	const Message = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_before: ["input.before", "4:16"],
 			input_after: ["input.after", "4:16"]
 		});
-	}) };
+	}, $scope0_id) };
 	let x = 1;
 	_set_serialize_reason(26);
 	const $childScope = _peek_scope_id();

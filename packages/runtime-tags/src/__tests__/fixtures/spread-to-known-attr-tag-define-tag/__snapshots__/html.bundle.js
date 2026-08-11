@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope3_id, {});
 		}, 0, $scope1_id, "a", $sg__input_option, _serialize_guard($scope1_reason, 0), $sg__input_option, "</select>", 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
-	}) };
+	}, $scope0_id) };
 	({ content: _content("a2", ({ class: _class, ...rest }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			...rest
 		});
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, { a: _existing_scope($childScope) });
-	}) }).content({
+	}, $scope0_id) }).content({
 		class: "foo",
 		option: attrTags(attrTags(attrTag({
 			value: 1,

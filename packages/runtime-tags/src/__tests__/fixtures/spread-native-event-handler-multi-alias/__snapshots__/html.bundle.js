@@ -1,7 +1,7 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
+	const $scope0_id = _scope_id();
 	_html("<div id=el></div>");
 	({ content: _content("a2", (input) => {
 		const $scope1_id = _scope_id();
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			},
 			d: input.onClick
 		});
-	}) }).content({
+	}, $scope0_id) }).content({
 		"on-click": _resume(function() {
 			throw new Error("Should never be called.");
 		}, "a0"),
@@ -29,6 +29,6 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("Click Me");
-		})
+		}, $scope0_id)
 	});
 }, 1);

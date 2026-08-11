@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<div></div>${_el_resume($scope1_id, "#div/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1_item#2");
 			writeScope($scope1_id, { item }, "__tests__/template.marko", "3:5", { item: "2:7" });
-		}) });
+		}, $scope0_id) });
 	});
 	list_default({ item: $item });
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);

@@ -21,6 +21,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<h1>Hello ${_sep($sg__input_name)}${_escape(name)}${_el_resume($scope1_id, "#text/0", $sg__input_name)}</h1>`);
 		$si__input_name && _subscribe($name__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	$si__input_name && writeScope($scope0_id, { "ClosureScopes:name": $name__closures }, "__tests__/template.marko", 0);
 }, 1);

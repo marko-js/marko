@@ -7,7 +7,7 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("default");
-	}) };
+	}, $scope0_id) };
 	let content = startContent;
 	_dynamic_tag($scope0_id, "#text/0", inputAs || "div", {
 		...htmlInput,

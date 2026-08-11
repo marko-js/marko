@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $sg__b = _serialize_guard($scope1_reason, 2);
 		_html(`<div>${_escape(void 0 !== $a ? $a : 1)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 1))}|${_sep($sg__b)}${_escape(b)}${_el_resume($scope1_id, "b", $sg__b)}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
-	}) };
+	}, $scope0_id) };
 	let n = 2;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
 	_set_serialize_reason(1);

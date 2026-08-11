@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	writeScope($scope0_id, {
 		count,
 		"ClosureScopes:count": $count__closures

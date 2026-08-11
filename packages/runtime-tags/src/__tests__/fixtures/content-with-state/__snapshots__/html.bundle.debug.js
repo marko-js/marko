@@ -19,7 +19,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 		_script($scope1_id, "__tests__/tags/outer.marko_1");
 		_subscribe($si__input_content && $input_content__closures, writeScope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }, "__tests__/tags/outer.marko", "1:2"));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	$si__input_content && writeScope($scope0_id, { "ClosureScopes:input_content": $input_content__closures }, "__tests__/tags/outer.marko", 0);
 });
 
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<span>${_escape(count)}${_el_resume($scope1_id, "#text/0")}</span>`);
 		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	_html(`<button id=increment>click</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

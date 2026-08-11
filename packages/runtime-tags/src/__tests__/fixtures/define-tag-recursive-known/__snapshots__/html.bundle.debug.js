@@ -33,6 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_bar: ["input.bar", "1:12"],
 			input_message: ["input.message", "1:12"]
 		});
-	}) };
+	}, $scope0_id) };
 	Foo.content({ bar: "hi" });
 }, 1);

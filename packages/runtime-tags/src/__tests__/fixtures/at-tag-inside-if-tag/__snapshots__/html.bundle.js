@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("Hello");
-		})
+		}, $scope0_id)
 	});
 	else $thing = attrTag({
 		x: 2,
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("Goodbye");
-		})
+		}, $scope0_id)
 	});
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ thing: $thing });

@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<div>${_escape(number)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
-	}) };
+	}, $scope0_id) };
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	MyTag.content({ number: x });

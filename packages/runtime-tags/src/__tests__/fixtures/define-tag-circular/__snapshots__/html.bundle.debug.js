@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope3_id = _scope_id();
 					_scope_reason();
 					Foo.content({});
-				}) };
+				}, $scope2_id) };
 				Bar.content({});
 				$si__show && writeScope($scope2_id, {}, "__tests__/template.marko", "2:4");
 				return 0;
@@ -20,6 +20,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", $sg__show, $sg__show, $sg__show);
 		_html(" foo");
 		$si__show && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}) };
+	}, $scope0_id) };
 	Foo.content({ show: true });
 }, 1);

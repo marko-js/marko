@@ -12,6 +12,6 @@ var template_default = _template("a", (input) => {
 			d: input.message,
 			_: _scope_with_id($scope0_id)
 		});
-	}) }).content({ message: "hello" });
+	}, $scope0_id) }).content({ message: "hello" });
 	writeScope($scope0_id, {});
 }, 1);

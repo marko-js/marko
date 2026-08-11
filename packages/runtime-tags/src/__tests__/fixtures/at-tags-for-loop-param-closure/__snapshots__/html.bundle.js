@@ -13,7 +13,7 @@ var list_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
+	const $scope0_id = _scope_id();
 	let $item;
 	forOf([
 		1,
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`${_escape(zzz)}${_el_resume($scope1_id, "a")}`);
 			writeScope($scope1_id, {});
-		}) });
+		}, $scope0_id) });
 	});
 	list_default({ item: $item });
 }, 1);

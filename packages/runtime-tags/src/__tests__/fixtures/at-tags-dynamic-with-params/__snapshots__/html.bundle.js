@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`y: ${_sep($sg__y)}${_escape(y)}${_el_resume($scope1_id, "a", $sg__y)}`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
-	}) });
+	}, $scope0_id) });
 	const $childScope = _peek_scope_id();
 	hello_default({ item: $item });
 	_var($scope0_id, "b", $childScope, "a1");

@@ -20,9 +20,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("one");
-	}) }), { content: _content("__tests__/template.marko_3*content", () => {
+	}, $scope0_id) }), { content: _content("__tests__/template.marko_3*content", () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("two");
-	}) }) });
+	}, $scope0_id) }) });
 }, 1);

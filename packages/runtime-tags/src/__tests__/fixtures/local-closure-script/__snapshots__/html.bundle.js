@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_html(`<div></div>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
 			writeScope($scope1_id, { c: item });
-		}) });
+		}, $scope0_id) });
 	});
 	list_default({ item: $item });
 	writeScope($scope0_id, {});

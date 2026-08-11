@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("Hello World");
-		})
+		}, $scope0_id)
 	});
 	_html("</div><div id=dynamic>");
 	_dynamic_tag($scope0_id, "d", Wrap, { class: "bar" }, _content_resume("a1", () => {

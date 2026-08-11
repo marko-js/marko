@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$si__items && writeScope($scope3_id, {}, "__tests__/template.marko", "2:4");
 		}, 0, $scope1_id, "#text/0", $sg__items, $sg__items, $sg__items);
 		$si__items && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}) };
+	}, $scope0_id) };
 	forOf([[{ text: "hello" }, { text: "world" }]], (texts) => {
 		const $scope2_id = _scope_id();
 		let $item;
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope4_id = _scope_id();
 				_html(`${_escape(item.text)}${_el_resume($scope4_id, "#text/0")}`);
 				writeScope($scope4_id, {}, "__tests__/template.marko", "11:14");
-			}) });
+			}, $scope2_id) });
 		});
 		Child.content({ item: $item });
 	});

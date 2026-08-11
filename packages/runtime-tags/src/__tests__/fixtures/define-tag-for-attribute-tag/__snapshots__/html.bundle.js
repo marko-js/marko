@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_scope_reason();
 			_html("<span>The thing</span>");
-		})
+		}, $scope0_id)
 	};
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();

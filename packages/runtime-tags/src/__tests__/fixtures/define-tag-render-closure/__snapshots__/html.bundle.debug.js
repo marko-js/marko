@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<div>${_escape(x)}${_el_resume($scope1_id, "#text/0")}</div>`);
 		_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 		_resume_branch($scope1_id);
-	}) };
+	}, $scope0_id) };
 	MyTag.content({});
 	_if(() => {
 		if (x || 1) {

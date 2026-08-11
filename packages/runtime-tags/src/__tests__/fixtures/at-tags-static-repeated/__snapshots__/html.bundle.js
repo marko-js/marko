@@ -13,14 +13,14 @@ var list_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_scope_id();
+	const $scope0_id = _scope_id();
 	list_default({ item: attrTags(attrTag({ content: _content("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("Hello");
-	}) }), { content: _content("a1", () => {
+	}, $scope0_id) }), { content: _content("a1", () => {
 		_scope_reason();
 		_scope_id();
 		_html("Again");
-	}) }) });
+	}, $scope0_id) }) });
 }, 1);

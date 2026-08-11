@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			e: _serialize_if($scope1_reason, 1) && onClick,
 			f: _serialize_if($scope1_reason, 0) && content
 		});
-	}) };
+	}, $scope0_id) };
 	const Message = { content: _content("a2", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			d: _serialize_if($scope2_reason, 2) && input.before,
 			e: _serialize_if($scope2_reason, 1) && input.after
 		});
-	}) };
+	}, $scope0_id) };
 	let x = 1;
 	_set_serialize_reason(26);
 	const $childScope = _peek_scope_id();

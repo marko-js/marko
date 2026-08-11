@@ -23,7 +23,7 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { setConditionalRenderer } from "./control-flow";
+import { rendererKey, setConditionalRenderer } from "./control-flow";
 import { type ControllableAttrs, controllableScripts } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
@@ -307,7 +307,7 @@ export function _attr_content(
   if (
     scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] !==
     (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] =
-      content?.[RendererProp.Id])
+      rendererKey(content))
   ) {
     setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
     if (content?.[RendererProp.Accessor]) {

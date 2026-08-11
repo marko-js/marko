@@ -18,9 +18,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("Hello");
-	}) }), { content: _content("__tests__/template.marko_2*content", () => {
+	}, $scope0_id) }), { content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("Again");
-	}) }) });
+	}, $scope0_id) }) });
 }, 1);

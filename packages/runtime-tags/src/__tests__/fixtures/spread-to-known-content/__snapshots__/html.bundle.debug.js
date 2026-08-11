@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Hello World");
-		})
+		}, $scope0_id)
 	});
 	_html("</div><div id=dynamic>");
 	_dynamic_tag($scope0_id, "#text/3", Wrap, { class: "bar" }, _content_resume("__tests__/template.marko_2*content", () => {

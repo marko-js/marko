@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
 		_html("</section>");
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
-	}) };
+	}, $scope0_id) };
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (show) {
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html("shown content");
-			}) });
+			}, $scope2_id) });
 			writeScope($scope2_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}

@@ -15,7 +15,7 @@ var test_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a", $sg__input_x, $sg__input_x, $sg__input_x, 0, 1);
 		$si__input_x && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}) }).content({ x: 1 });
+	}, $scope0_id) }).content({ x: 1 });
 	writeScope($scope0_id, { b: count });
 });
 

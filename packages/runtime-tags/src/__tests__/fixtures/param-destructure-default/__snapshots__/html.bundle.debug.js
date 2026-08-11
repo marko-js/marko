@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const bar = void 0 !== $bar ? $bar : 1;
 		_html(`<div class=a>${_escape(bar)}${_el_resume($scope1_id, "#text/0", $sg__foo)} ${_sep($sg__foo)}${_escape(typeof foo)}${_el_resume($scope1_id, "#text/1", $sg__foo)}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:1");
-	}) };
+	}, $scope0_id) };
 	ChildA.content({ foo: { bar: 0 } });
 	ChildA.content({ foo: {} });
 	ChildA.content({});
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const bar = void 0 !== $bar2 ? $bar2 : 1;
 		_html(`<div class=b>${_escape(bar)}${_el_resume($scope2_id, "#text/0", $sg__foo2)} ${_sep($sg__foo2)}${_escape(typeof foo)}${_el_resume($scope2_id, "#text/1", $sg__foo2)}</div>`);
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {}, "__tests__/template.marko", "8:1");
-	}) };
+	}, $scope0_id) };
 	ChildB.content({ foo: { bar: 0 } });
 	ChildB.content({ foo: {} });
 	ChildB.content({});

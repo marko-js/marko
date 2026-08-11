@@ -21,6 +21,6 @@ var template_default = _template("a", (input) => {
 		_html(`<h1>Hello ${_sep($sg__input_name)}${_escape(name)}${_el_resume($scope1_id, "a", $sg__input_name)}</h1>`);
 		$si__input_name && _subscribe($name__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	$si__input_name && writeScope($scope0_id, { e: $name__closures });
 }, 1);

@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span></span>${_el_resume($scope1_id, "#span/0")}`);
 		_subscribe($child_content__subscribers, writeScope($scope1_id, {}, "__tests__/template.marko", "3:2"));
-	}) });
+	}, $scope0_id) });
 	_dynamic_tag($scope0_id, "#text/1", input.show ? child_default : null, {}, _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $inputshowChildnull_content__$el2_getter = _hoist($scope2_id, "__tests__/template.marko_2_#div#0/hoist");
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope3_id, "#div/0")}`);
 			_subscribe($child_content2__subscribers, writeScope($scope3_id, {}, "__tests__/template.marko", "16:4"));
-		}) });
+		}, $scope2_id) });
 		_script($scope2_id, "__tests__/template.marko_2");
 		_subscribe($inputshowChildnull_content__subscribers, writeScope($scope2_id, {
 			_: _scope_with_id($scope0_id),

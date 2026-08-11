@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html("Hello");
-			})
+			}, $scope0_id)
 		});
 	} else {
 		$thing = attrTag({
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("Goodbye");
-			})
+			}, $scope0_id)
 		});
 	}
 	const $childScope = _peek_scope_id();

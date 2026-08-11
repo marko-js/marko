@@ -19,6 +19,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1_setHtml#2");
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 		_resume_branch($scope1_id);
-	}) });
+	}, $scope0_id) });
 	writeScope($scope0_id, { setHtml }, "__tests__/template.marko", 0, { setHtml: "1:8" });
 }, 1);

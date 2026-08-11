@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $sg__rest = _serialize_guard($scope1_reason, 2);
 		_html(`<div>${_escape(a)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))}|${_sep($sg__rest)}${_escape(JSON.stringify(rest))}${_el_resume($scope1_id, "#text/1", $sg__rest)}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
-	}) };
+	}, $scope0_id) };
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	MyTag.content(x, "two", "three");

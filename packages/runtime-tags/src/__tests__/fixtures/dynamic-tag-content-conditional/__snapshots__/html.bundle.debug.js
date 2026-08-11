@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("shown content");
-			}) });
+			}, $scope1_id) });
 			writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

@@ -6,6 +6,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("<div>never rendered</div>");
-	}) };
+	}, $scope0_id) };
 	_html("<span>only this</span>");
 }, 1);

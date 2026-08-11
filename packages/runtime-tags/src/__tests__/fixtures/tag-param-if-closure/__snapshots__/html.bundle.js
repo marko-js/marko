@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			d: _serialize_if($scope3_reason, 2) && input.content,
 			e: _serialize_if($scope3_reason, 1) && input.value
 		});
-	}) };
+	}, $scope0_id) };
 	_html(`<button>Increment</button>${_el_resume($scope0_id, "a")}`);
 	_set_serialize_reason(10);
 	const $childScope = _peek_scope_id();

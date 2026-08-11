@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			f: _serialize_if($scope1_reason, 0) && $aChange,
 			g: _serialize_if($scope1_reason, 1) && a
 		});
-	}) };
+	}, $scope0_id) };
 	let n = 1;
 	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_set_serialize_reason(1);
