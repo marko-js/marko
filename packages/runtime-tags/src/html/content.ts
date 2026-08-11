@@ -61,6 +61,8 @@ export function _escape_style_value(val: unknown) {
   return val || val === 0 ? escapeStyleValue(val + "") : "";
 }
 
+// Comment data is never parsed for character references, so escaping `>` keeps
+// the markup intact at the cost of data a client render would leave raw.
 const unsafeCommentReg = />/g;
 const escapeCommentStr = (str: string) =>
   unsafeCommentReg.test(str) ? str.replace(unsafeCommentReg, "&gt;") : str;
