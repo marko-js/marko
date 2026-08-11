@@ -1,5 +1,33 @@
 # Change Log
 
+## 5.39.33
+
+### Patch Changes
+
+- [#3882](https://github.com/marko-js/marko/pull/3882) [`fdf0908`](https://github.com/marko-js/marko/commit/fdf09086db53d6b7191c44f4b59f438993d05b27) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error at compile time when assigning to an attribute tag `<for>` parameter instead of emitting a handler that throws at runtime.
+
+- [#3875](https://github.com/marko-js/marko/pull/3875) [`c25815c`](https://github.com/marko-js/marko/commit/c25815cf249320318beb9c92eed789d8915cbaa8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support two-way binding a destructured value with a computed string-literal key, and give a real diagnostic when the computed key is dynamic.
+
+- [#3884](https://github.com/marko-js/marko/pull/3884) [`665acbe`](https://github.com/marko-js/marko/commit/665acbe844f7c80b7eeb6c304a1af30c113c685e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error when binding `value` on an input whose type is attribute-backed (checkbox, radio, hidden, button, submit, reset, image) — at compile time when the type is statically known, and as a dev-mode runtime error otherwise.
+
+- [#3893](https://github.com/marko-js/marko/pull/3893) [`62416a3`](https://github.com/marko-js/marko/commit/62416a3c2b23a80e23da1d37116ce66390754ef0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a dynamic tag with a tag variable throwing when its value changes from rendered to falsy; the tag variable now also clears on teardown.
+
+- [#3880](https://github.com/marko-js/marko/pull/3880) [`69fe9be`](https://github.com/marko-js/marko/commit/69fe9be5ce8002efb92584eb3924dbb5da4f691d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resolve the `<tag-name>` import shorthand in `export ... from` declarations.
+
+- [#3883](https://github.com/marko-js/marko/pull/3883) [`d778608`](https://github.com/marko-js/marko/commit/d7786082d95fdeca0b86b9f425b397e088c85f2d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the `value` attribute for a void controllable input value on the client, matching server output.
+
+- [#3886](https://github.com/marko-js/marko/pull/3886) [`a3fcc6b`](https://github.com/marko-js/marko/commit/a3fcc6bfb036440347e11cb0cdbc85b55519cc9c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add `pipe`, `toString`, `catch`, and `finally` to the internal `RenderedTemplate` type, matching the published `Marko.RenderedTemplate` and the server implementation.
+
+- [#3872](https://github.com/marko-js/marko/pull/3872) [`590e117`](https://github.com/marko-js/marko/commit/590e1174be96dba1cc0f7e4632d05b631d8a5159) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error on a `<style>` interpolation inside an unquoted `url()` instead of silently emitting invalid CSS.
+
+- [#3879](https://github.com/marko-js/marko/pull/3879) [`710d920`](https://github.com/marko-js/marko/commit/710d920bc2e5d9d9b85d87f27a45bd4528836857) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Detect "template within a tags directory" from the taglib finder's discovered directories, so a package itself named `tags` can still contain Class API templates.
+
+- [#3888](https://github.com/marko-js/marko/pull/3888) [`c095873`](https://github.com/marko-js/marko/commit/c095873f74b91ead5b97b655bdf002e6b61ef618) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve debug "Unable to serialize" errors: restore variable names and locations for escaped keys and values inside Maps/Sets/generators, and name the offending controllable handler attribute or spread instead of printing internal accessors.
+
+- Updated dependencies [[`011ce07`](https://github.com/marko-js/marko/commit/011ce0795de8d2012f0f0babd0929e80fe28ad2a), [`fdf0908`](https://github.com/marko-js/marko/commit/fdf09086db53d6b7191c44f4b59f438993d05b27), [`4adcb25`](https://github.com/marko-js/marko/commit/4adcb25996368d3e456c6ad25d7af7fadbeaa2da), [`c25815c`](https://github.com/marko-js/marko/commit/c25815cf249320318beb9c92eed789d8915cbaa8), [`665acbe`](https://github.com/marko-js/marko/commit/665acbe844f7c80b7eeb6c304a1af30c113c685e), [`f178619`](https://github.com/marko-js/marko/commit/f178619dbf8b171c181f7ce045e35267a3130b72), [`62416a3`](https://github.com/marko-js/marko/commit/62416a3c2b23a80e23da1d37116ce66390754ef0), [`69fe9be`](https://github.com/marko-js/marko/commit/69fe9be5ce8002efb92584eb3924dbb5da4f691d), [`a59fdb1`](https://github.com/marko-js/marko/commit/a59fdb16aec92b0517f5d3e162e21b71017f3589), [`64f3242`](https://github.com/marko-js/marko/commit/64f3242ae94d968b2b15036089fa6c2dab9590da), [`f35426b`](https://github.com/marko-js/marko/commit/f35426b02c23d9e0f325f1316a003529169869f2), [`c6aa064`](https://github.com/marko-js/marko/commit/c6aa064c3eec076458a53f327928484246dfa276), [`d778608`](https://github.com/marko-js/marko/commit/d7786082d95fdeca0b86b9f425b397e088c85f2d), [`ed76398`](https://github.com/marko-js/marko/commit/ed763980df6b844044d1ec0cdbdffc0a82b9caad), [`42e92a5`](https://github.com/marko-js/marko/commit/42e92a51924dd43335e2c20457262cc7591fb6cb), [`26591f9`](https://github.com/marko-js/marko/commit/26591f929f82058520453eaae531fc0a0ad4d141), [`e03de1a`](https://github.com/marko-js/marko/commit/e03de1a9d3bb01c2440e19e9be5216fc3097342c), [`f0650fe`](https://github.com/marko-js/marko/commit/f0650fe1b5d8d3c061ce3af7ac5ab01eed90417b), [`1134342`](https://github.com/marko-js/marko/commit/1134342e6a0e57f954b9a6a58842c4d8ebc2da22), [`eff2d42`](https://github.com/marko-js/marko/commit/eff2d420dec3cc63a74ad1b1f46605d47f8ba3fd), [`a3fcc6b`](https://github.com/marko-js/marko/commit/a3fcc6bfb036440347e11cb0cdbc85b55519cc9c), [`2d9160c`](https://github.com/marko-js/marko/commit/2d9160cf54ae5b24eb0aa9db8c8bc062b3094575), [`ab2d7c9`](https://github.com/marko-js/marko/commit/ab2d7c90d4ee19d57f2f09dcf9e0a38fa78950bc), [`590e117`](https://github.com/marko-js/marko/commit/590e1174be96dba1cc0f7e4632d05b631d8a5159), [`0b4302d`](https://github.com/marko-js/marko/commit/0b4302d367c3d4d0467f824188ff950af196127b), [`710d920`](https://github.com/marko-js/marko/commit/710d920bc2e5d9d9b85d87f27a45bd4528836857), [`3c2b628`](https://github.com/marko-js/marko/commit/3c2b628618bed8aef684913eefaa827e75ad5f3b), [`8bef87f`](https://github.com/marko-js/marko/commit/8bef87f708e79c0f240ab596bf6171f87fa2ad8f), [`c095873`](https://github.com/marko-js/marko/commit/c095873f74b91ead5b97b655bdf002e6b61ef618), [`e2eb956`](https://github.com/marko-js/marko/commit/e2eb95635b784899cbcfc8ae7362b07eb2f0ff1a)]:
+  - @marko/compiler@5.42.0
+  - @marko/runtime-tags@6.3.35
+
 ## 5.39.32
 
 ### Patch Changes

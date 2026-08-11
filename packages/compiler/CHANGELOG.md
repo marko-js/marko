@@ -1,5 +1,25 @@
 # Change Log
 
+## 5.42.0
+
+### Minor Changes
+
+- [#3925](https://github.com/marko-js/marko/pull/3925) [`011ce07`](https://github.com/marko-js/marko/commit/011ce0795de8d2012f0f0babd0929e80fe28ad2a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support an `async` keyword before shorthand methods, eg `<button async onClick() { await save() }>` and the default attribute form `<my-tag async (event) { ... }>`. A shorthand method can no longer be named `async`.
+
+### Patch Changes
+
+- [#3877](https://github.com/marko-js/marko/pull/3877) [`4adcb25`](https://github.com/marko-js/marko/commit/4adcb25996368d3e456c6ad25d7af7fadbeaa2da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bound a failed attribute value parse to the attribute value instead of the rest of the file.
+
+- [#3878](https://github.com/marko-js/marko/pull/3878) [`e03de1a`](https://github.com/marko-js/marko/commit/e03de1a9d3bb01c2440e19e9be5216fc3097342c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep preserving whitespace after a nested preserve-whitespace tag (eg a `<textarea>` inside `<pre>`) closes.
+
+- [#3913](https://github.com/marko-js/marko/pull/3913) [`f0650fe`](https://github.com/marko-js/marko/commit/f0650fe1b5d8d3c061ce3af7ac5ab01eed90417b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop the source printer reindenting the body of a whitespace-preserving tag (`pre`, `script`, `style`, `textarea`), which rewrote user content on every `output: "source"` / `markoc --migrate` pass.
+
+- [#3881](https://github.com/marko-js/marko/pull/3881) [`ab2d7c9`](https://github.com/marko-js/marko/commit/ab2d7c90d4ee19d57f2f09dcf9e0a38fa78950bc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep the `@`-half's attribute props (type, required, default-value, autocomplete) when an `"@x <x>"` taglib shorthand also declares a nested tag, and accept the dashed `target-property` spelling there.
+
+- [#3879](https://github.com/marko-js/marko/pull/3879) [`710d920`](https://github.com/marko-js/marko/commit/710d920bc2e5d9d9b85d87f27a45bd4528836857) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Detect "template within a tags directory" from the taglib finder's discovered directories, so a package itself named `tags` can still contain Class API templates.
+
+- [#3876](https://github.com/marko-js/marko/pull/3876) [`3c2b628`](https://github.com/marko-js/marko/commit/3c2b628618bed8aef684913eefaa827e75ad5f3b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a trimmed text node's end position overshooting by the amount of trimmed leading whitespace.
+
 ## 5.41.18
 
 ### Patch Changes
