@@ -1,0 +1,3 @@
+<let/n=0/>
+<const/day=new Intl.DateTimeFormat("ja", { year: "numeric", month: "long", day: "numeric", weekday: "long", timeZone: "UTC" })/>
+<button onClick() { n += 86400000 }>${day.format(new Date(n))}</button>

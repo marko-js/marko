@@ -122,27 +122,6 @@ When a property's value is circular, `writeProp` returns false, `writeObjectProp
 
 `getMarkoFile` invalidates a cache entry on its content hash or a newer mtime among `metadata.marko.watchFiles`, which holds only taglib JSON and plugin paths; the child `.marko` templates analysis read go to `metadata.marko.analyzedTags`, which the loop ignores, so a shared cache serves a stale parent after a child edit. Reach is narrow — `@marko/vite` clears `baseConfig.cache` on every hot update — leaving `@marko/compiler/register` and direct `compile[Sync]` reuse. Any fix has to be transitive, so every cache hit would stat the whole subtree. Re-verify: `compileSync` one parent twice through a single `new Map()` cache, rewriting its child from `<return=1/>` to a stateful `<let/x=1/><button onClick(){x++}/><return=x/>` in between — output stays byte-identical with no `_el_resume`, while a fresh cache emits it.
 
-## Round-trip `Intl.DateTimeFormat` through a form that preserves `month`/`weekday`, not `resolvedOptions()`
-
-`packages/runtime-tags/src/html/serializer.ts` › `writeIntl` | 2026-07-31 | impact:med | effort:med
-
-`Intl` serialization (added in #3566) rebuilds a formatter by feeding
-`resolvedOptions()` back into the constructor, but those options are not a
-faithful round trip: for `Intl.DateTimeFormat` the resolved `month` and
-`weekday` fields are normalized to values that re-resolve differently in some
-locales, notably `ja` and `zh`, so a date formatted on the server renders
-differently once the same formatter is used after resume. That is a silent
-server/client divergence in rendered text rather than a crash, which makes it
-harder to notice than the unserializable-value error it replaced, and the
-changeset currently records it as an accepted limitation. A fix likely needs to
-capture the constructor's original `options` argument at the call site (the
-compiler already sees `new Intl.DateTimeFormat(...)` in `<const>` position)
-rather than recovering them from the built formatter, or to special-case the
-fields whose resolved form is lossy. Re-verify by server-rendering
-`<const/fmt=new Intl.DateTimeFormat("ja", { month: "long", weekday: "long" })/>`
-reached from browser-updating content, then comparing `fmt.format(date)` before
-and after resume.
-
 ## Bridge Class-API function props nested below the top level of a Tags-API child's input
 
 `packages/runtime-tags/src/html/compat.ts` › `registerClassFunctions` | 2026-08-05 | impact:med | effort:med

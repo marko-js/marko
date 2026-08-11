@@ -1668,6 +1668,14 @@ function writeResponse(state: State, val: Response, ref: Reference) {
 // instead. Exact except `DateTimeFormat` widths in some locales (`ja`, `zh`).
 function writeIntl(state: State, val: object, name: string, ref: Reference) {
   const { locale, ...options } = (val as Intl.NumberFormat).resolvedOptions();
+  if (MARKO_DEBUG && name === "DateTimeFormat") {
+    warnLossyDateTimeFormat(
+      val as Intl.DateTimeFormat,
+      locale,
+      options as Intl.DateTimeFormatOptions,
+    );
+  }
+
   let needsId = false;
   for (const key in options) {
     if (isDedupedMember((options as Record<string, unknown>)[key])) {
@@ -1696,6 +1704,25 @@ function writeIntl(state: State, val: object, name: string, ref: Reference) {
   writeObjectProps(state, options, optionsRef);
   state.buf.push("})");
   return true;
+}
+
+// A formatter is rebuilt from `resolvedOptions()`, which drops the distinction
+// between eg `month: "long"` and `"numeric"` where a locale resolves them alike
+// but patterns them differently — `ja`/`zh` full dates are the known cases.
+function warnLossyDateTimeFormat(
+  val: Intl.DateTimeFormat,
+  locale: string,
+  options: Intl.DateTimeFormatOptions,
+) {
+  const probe = new Date(0);
+  if (
+    new Intl.DateTimeFormat(locale, options).format(probe) !== val.format(probe)
+  ) {
+    console.error(
+      "An `Intl.DateTimeFormat` does not survive serialization; it will format differently after resume:",
+      { locale, ...options },
+    );
+  }
 }
 
 function writeIntlLocale(state: State, val: Intl.Locale) {
