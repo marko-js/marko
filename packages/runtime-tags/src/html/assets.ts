@@ -164,13 +164,13 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
       case "visible":
         return `(e=>e&&new IntersectionObserver((e,i)=>e.some(e=>e.isIntersecting)&&i.disconnect()+l()${
           options ? `,${options}` : ""
-        }).observe(e))(document.querySelector(${JSON.stringify(trigger.selector)})||l())`;
+        }).observe(e))(${querySelectorOrLoad(trigger.selector!)})`;
       case "idle":
         return `(self.requestIdleCallback||l)(l${options ? `,${options}` : ""})`;
       case "media":
         return `(m=>m.matches?l():m.addEventListener("change",l,{once:1}))(matchMedia(${JSON.stringify(trigger.selector)}))`;
       default:
-        return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(document.querySelector(${JSON.stringify(trigger.selector)})||l())`;
+        return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(${querySelectorOrLoad(trigger.selector!)})`;
     }
   });
   writeScript(
@@ -178,6 +178,19 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
       exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
     })(document.currentScript,${htmlStr})`,
   );
+}
+
+// A trigger script flushes with the chunk that requested the asset, so a target
+// written after a later flush boundary is not in the document yet and the module
+// loads eagerly. `dom/load.ts` warns on the same miss; match it here.
+function querySelectorOrLoad(selector: string) {
+  return `document.querySelector(${JSON.stringify(selector)})||${
+    MARKO_DEBUG
+      ? `(console.warn(${JSON.stringify(
+          `A lazy load trigger could not find an element matching "${selector}". The module was loaded immediately.`,
+        )}),l())`
+      : "l()"
+  }`;
 }
 
 function toObjectExpression(options: object) {

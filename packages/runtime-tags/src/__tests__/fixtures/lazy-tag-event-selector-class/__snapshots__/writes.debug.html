@@ -4,7 +4,9 @@
     d || p.after(new Range().createContextualFragment(d = h))
   }) => (e => e?.addEventListener("click", l, {
     once: 1
-  }))(document.querySelector(".load") || l()))(document.currentScript,
+  }))(document.querySelector(".load") || (console.warn(
+    "A lazy load trigger could not find an element matching \".load\". The module was loaded immediately."
+    ), l())))(document.currentScript,
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {
