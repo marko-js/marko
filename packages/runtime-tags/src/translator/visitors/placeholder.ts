@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
+import * as ShellBlocker from "../util/constants/shell-blocker";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
@@ -121,7 +122,7 @@ export default {
                 valueExtra.referencedBindings as Opt<Binding>,
               )
             ) {
-              section.shellBlocked = true;
+              section.shellBlocked ??= ShellBlocker.stateFed;
             }
           });
         }
