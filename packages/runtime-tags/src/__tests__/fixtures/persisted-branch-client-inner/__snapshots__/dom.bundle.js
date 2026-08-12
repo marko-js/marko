@@ -4,5 +4,5 @@ const $if_content__if = /*@__PURE__*/ _if(0, "<p> </p>", "D ", $if_content2__inp
 const $if_content__count = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__if($scope, $scope._.g > 1 ? 0 : 1));
 const $count = /*@__PURE__*/ _let(6, $if_content__count);
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$count($scope, $scope.g + 1);
+	$count($scope, +$scope.g + 1);
 }));

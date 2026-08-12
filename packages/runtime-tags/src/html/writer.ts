@@ -496,22 +496,38 @@ export function _patch_value(
   value: unknown,
   setup?: 1,
 ) {
-  if ($chunk.boundary.state.writesPatches) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatches) {
+    // A scope-bound registration cannot ride the wire as data: a source
+    // entry at its bound scope re-binds it against the paired live scope,
+    // and the fill entry references the deposit instead.
+    let kind: string = PatchKey.Value;
+    const registered = !!value && getRegistered(value as WeakKey);
+    const bound =
+      registered && (registered.scope as ScopeInternals | undefined);
+    if (bound) {
+      const n = (state.patchBinds = (state.patchBinds || 0) + 1);
+      writePatch(bound[K_SCOPE_ID]!, {
+        [PatchKey.BindSource + n]: registered.id,
+      });
+      kind = PatchKey.ValueBind;
+      value = n;
+    }
     if (setup) {
-      if (MARKO_DEBUG && $chunk.boundary.state.patchFlushed) {
+      if (MARKO_DEBUG && state.patchFlushed) {
         throw new Error(
           "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
         );
       }
       // Setup entries nest under `s`: the client applies them only to
       // freshly constructed scopes, via the shell content's setup.
-      const partial = patchPartial($chunk.boundary.state, scopeId);
+      const partial = patchPartial(state, scopeId);
       ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
-        PatchKey.Value + key
+        kind + key
       ] = value;
     } else {
       writePatch(scopeId, {
-        [PatchKey.Value + key]: value,
+        [kind + key]: value,
       });
     }
   }
@@ -1673,6 +1689,7 @@ export class State implements SerializeState {
   declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
   declare patchFlushed?: 1;
   declare patchDeferred?: 1;
+  declare patchPoison?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   public flushScopes = false;

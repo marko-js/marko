@@ -129,6 +129,7 @@ export type DOMRuntimeFeature =
   | "patch-loop"
   | "patch-text"
   | "patch-value"
+  | "patch-value-bind"
   | "placeholder";
 // The analyze-phase half of `importRuntimeFeature`: the page entry links
 // client assets from analyze metadata.

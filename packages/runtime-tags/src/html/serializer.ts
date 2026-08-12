@@ -765,9 +765,16 @@ function writeRegistered(
 ) {
   const { scope } = registered;
   // Patch-render scope ids have no client-side map, so a bound
-  // registration never serializes its scope: `_patch_bind` expresses the
-  // binding structurally instead, and anything else gets the raw access.
-  if (scope && !state.boundary?.state?.writesPatches) {
+  // registration never serializes its scope: `_patch_bind`/bound fills
+  // express the binding structurally instead. One reaching the payload as
+  // plain data (embedded in a composite value) has no rebind entry, so
+  // the frame poisons: reject over an unbound factory.
+  if (scope && state.boundary?.state?.writesPatches) {
+    // The buffer still needs a value in this slot; the poisoned frame is
+    // replaced wholesale at flush, so the access is never evaluated.
+    state.boundary.state.patchPoison = 1;
+    state.buf.push(registered.access);
+  } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(
       parent,

@@ -7,10 +7,10 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$if_content__count._($scope);
 };
-const $if_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_title__OR__count));
+const $if_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count#6/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_title__OR__count));
 const $count = /*@__PURE__*/ _let("count/6", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

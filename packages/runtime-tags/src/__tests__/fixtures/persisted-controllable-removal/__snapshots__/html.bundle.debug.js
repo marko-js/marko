@@ -14,6 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		input_wire: ["input.wire"],
-		handler: "1:8"
+		handler: "1:8",
+		"ControlledHandler:#input/1": ["valueChange", "4:28"]
 	});
 }, 1, 0);
