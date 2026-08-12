@@ -542,7 +542,8 @@ export function _patch_write(
 }
 
 // No client patcher registers this kind, so applying the frame rejects
-// and the navigation fallback runs (a fed renderer cannot patch).
+// and the navigation fallback runs. A stopgap like the admission guard:
+// fed renderers should eventually dispatch like any dynamic hop.
 export function _patch_poison(scopeId: number) {
   if ($chunk.boundary.state.writesPatches) {
     writePatch(scopeId, { [PatchKey.Poison]: 1 });

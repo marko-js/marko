@@ -50,9 +50,20 @@ export function getShellId(section: Section) {
 }
 
 // A construct blocker drops the section's shell: patches diverging to it
-// fail closed to a document navigation. The reason argument documents the
-// call site; only the blocked set is consulted.
-const [getShellBlockers] = createProgramState(() => new Set<Section>());
+// fail closed to a document navigation. Enclosing branches of a
+// client-reselectable selection derive as blocked; translate observations
+// (state-fed holes/attrs, server effects) add theirs via the recorder.
+const [getShellBlockers] = createProgramState(() => {
+  const blocked = new Set<Section>();
+  forEachSection((section) => {
+    if (section.isClientReselectable) {
+      for (let cur = section.parent; cur?.parent; cur = cur.parent) {
+        if (cur.isBranch) blocked.add(cur);
+      }
+    }
+  });
+  return blocked;
+});
 
 export function recordConstructBlocker(section: Section, _reason: string) {
   getShellBlockers().add(section);

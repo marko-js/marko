@@ -1,7 +1,6 @@
 // Translate-side patch delivery: which bindings refresh over the wire
-// (fills, effect writes, capture writes), fill identity, and what a
-// freshly constructed scope can render. Analyze facts these derive from
-// live in ./structure.
+// (fills and wire writes), fill identity, and what a freshly constructed
+// scope can render. Analyze facts these derive from live in ./structure.
 import { getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
@@ -15,15 +14,6 @@ import {
   inClientReselectableStructure,
   isCapturePathSection,
 } from "./structure";
-
-// A custom tag instance whose attrs carry only client state and constants
-// skips its render on patch, so nothing inside goes stale.
-export const kInstancePatchSkip = Symbol("instance patch skip");
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    [kInstancePatchSkip]?: true;
-  }
-}
 
 // The stable wire/registry key for a fill: template id plus a program-wide
 // fill ordinal (built in section order, so every compile output agrees and
@@ -126,25 +116,19 @@ export function isPatchFillBinding(binding: Binding) {
   return false;
 }
 
-// A registered-function capture the signal graph never renders: no fill
-// or effect re-runs it, but a re-bound factory reads its live slot at any
-// later call — the wire writes the accessor (`w`) to keep it current.
-export function isPatchCaptureWriteBinding(binding: Binding) {
+// A refreshable value the signal graph never renders (no fill registers):
+// the wire writes its accessor (`w`) so live-slot reads stay current.
+export function isPatchWriteBinding(binding: Binding) {
   return (
-    binding.registeredFnCapture &&
     isPatchRefreshableBinding(binding) &&
     !isPatchFillBinding(binding) &&
-    !isPatchEffectBinding(binding)
+    (binding.registeredFnCapture || hasPatchEffectReads(binding))
   );
 }
 
-// An effect-read value with no client-state intersection: nothing in the
-// signal graph consumes it, so no fill registers — the wire writes the
-// accessor (`w`) and re-runs readers by register id (`e`) instead.
-export function isPatchEffectBinding(binding: Binding) {
-  if (!isPatchRefreshableBinding(binding) || isPatchFillBinding(binding)) {
-    return false;
-  }
+// Effect reads of a written value re-run by register id when a patch
+// changes what they saw.
+export function hasPatchEffectReads(binding: Binding) {
   for (const read of binding.reads) {
     if (read.isEffect) return true;
   }
@@ -213,7 +197,6 @@ export function hasUnfillablePatchReads(refs: Opt<Binding>) {
     (binding) =>
       !!getSerializeSourcesForRef(binding)?.param &&
       !isPatchFillBinding(binding) &&
-      !isPatchEffectBinding(binding) &&
-      !isPatchCaptureWriteBinding(binding),
+      !isPatchWriteBinding(binding),
   );
 }
