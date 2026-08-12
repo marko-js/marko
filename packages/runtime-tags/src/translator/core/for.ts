@@ -26,7 +26,7 @@ import {
   isPatchCaptureSection,
   classifiesClientOwned,
   onClassifyOwnership,
-  recordServerRequiredParams,
+  recordStructuralOrGlobalParams,
 } from "../util/persisted";
 import {
   type Binding,
@@ -232,7 +232,7 @@ export default {
           addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
           // The loop's inputs drive structure: call sites reject feeding
           // them from client-owned values.
-          recordServerRequiredParams(sources);
+          recordStructuralOrGlobalParams(sources);
         }
       });
       // A patch can target the loop's CONTENT even when the list itself is
