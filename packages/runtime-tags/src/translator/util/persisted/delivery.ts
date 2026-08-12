@@ -1,119 +1,28 @@
-import type { types as t } from "@marko/compiler";
+// Translate-side patch delivery: which bindings refresh over the wire
+// (fills, effect writes, capture writes), fill identity, and what a
+// freshly constructed scope can render. Analyze facts these derive from
+// live in ./structure.
 import { getFile } from "@marko/compiler/babel-utils";
 
-import * as BindingType from "./constants/binding-type";
-import { isPersisted } from "./marko-config";
-import { every, filter, forEach, type Opt, some } from "./optional";
-import { type Binding, getCanonicalBinding, type Sources } from "./references";
-import { ensureReasonGroups, isDirectClosure, type Section } from "./sections";
+import * as BindingType from "../constants/binding-type";
+import { isPersisted } from "../marko-config";
+import { every, filter, forEach, type Opt, some } from "../optional";
+import { type Binding, getCanonicalBinding, type Sources } from "../references";
+import { isDirectClosure, type Section } from "../sections";
+import { getSerializeSourcesForRef } from "../serialize-reasons";
+import { createProgramState } from "../state";
 import {
-  getSerializeSourcesForExpr,
-  getSerializeSourcesForRef,
-} from "./serialize-reasons";
-import { createProgramState } from "./state";
+  inClientReselectableStructure,
+  isCapturePathSection,
+} from "./structure";
 
 // A custom tag instance whose attrs carry only client state and constants
-// is client-owned: patches skip its render, so nothing inside goes stale.
-export const kPatchClientOwned = Symbol("patch client owned");
+// skips its render on patch, so nothing inside goes stale.
+export const kInstancePatchSkip = Symbol("instance patch skip");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    [kPatchClientOwned]?: true;
+    [kInstancePatchSkip]?: true;
   }
-}
-
-// Whether the section renders inside client-owned structure (inclusive):
-// patch renders skip those bodies, so nothing inside may rely on a capture.
-export function inClientOwnedStructure(section: Section | undefined) {
-  while (section) {
-    if (section.isClientOwnedStructure) return true;
-    section = section.parent;
-  }
-  return false;
-}
-// The template's child renderers, collected at translate for the runtime
-// intrinsics export: transitive global knowledge composes at RENDER time
-// (exact under module cycles and dynamic dispatch), never at compile.
-const [getPersistedChildRenderers] = createProgramState(() => ({
-  names: new Set<string>(),
-  opaque: false,
-}));
-
-export function addPersistedChildRenderer(expr: t.Node) {
-  const state = getPersistedChildRenderers();
-  if (expr.type === "Identifier") {
-    state.names.add(expr.name);
-  } else {
-    // An unaddressable renderer cannot join the union: the template goes
-    // opaque so parents always render through it.
-    state.opaque = true;
-  }
-}
-
-export function getPersistedIntrinsics() {
-  return getPersistedChildRenderers();
-}
-
-declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    /** This template ITSELF reads `$global` (local, no roll-up): exported
-     * as the html template's intrinsics for render-time composition. */
-    readsGlobals?: true;
-  }
-}
-
-export function scopeReasonRuntime() {
-  return isPersisted()
-    ? ("_persisted_reason" as const)
-    : ("_scope_reason" as const);
-}
-
-// Persisted analyze work needing resolved sources: runs inside reference
-// finalization but BEFORE reason groups freeze and call sites classify.
-const [getPersistedFinalizers] = createProgramState<(() => void)[]>(() => []);
-export function onFinalizePersisted(finalize: () => void) {
-  getPersistedFinalizers().push(finalize);
-}
-// Ownership classification runs first, outer sections before inner, so a
-// nested selection sees its ancestors' (possibly inherited) ownership.
-const [getOwnershipClassifiers] = createProgramState<
-  [depth: number, classify: () => void][]
->(() => []);
-export function onClassifyOwnership(section: Section, classify: () => void) {
-  getOwnershipClassifiers().push([section.depth, classify]);
-}
-export function finalizePersisted() {
-  for (const [, classify] of getOwnershipClassifiers().sort(
-    ([a], [b]) => a - b,
-  )) {
-    classify();
-  }
-  for (const finalize of getPersistedFinalizers()) finalize();
-}
-
-// Structure selection and `$global` mixing both record here: neither
-// read lets the value leave through an expression channel.
-export function recordStructuralOrGlobalParams(sources: Sources | undefined) {
-  forEach(sources?.param, (binding) => {
-    if (!binding.section.parent) binding.structuralOrGlobalParam = true;
-  });
-}
-
-export function hasStructuralOrGlobalParam(params: Opt<Binding>) {
-  return some(params, (binding) => binding.structuralOrGlobalParam);
-}
-
-// Shared per-capture analyze hook: freezes the value's reason groups for
-// translate-time ownership gates and records `$global`-mixed params.
-export function ensurePersistedCaptureGroups(getExtra: () => t.NodeExtra) {
-  onFinalizePersisted(() => {
-    const sources = getSerializeSourcesForExpr(getExtra());
-    ensureReasonGroups(sources);
-    // A `$global` mixed into a param-fed value cannot survive a withheld
-    // capture: call sites derive ownership requirements from the fact.
-    if (sources?.param && sources.global) {
-      recordStructuralOrGlobalParams(sources);
-    }
-  });
 }
 
 // The stable wire/registry key for a fill: template id plus a program-wide
@@ -149,33 +58,6 @@ export function getPatchFillBindings(section: { bindings: Opt<Binding> }) {
 // re-evaluate an expression mixing them with state at any time.
 export function paramsDeliverAsFills(params: Sources["param"]) {
   return every(params, isPatchFillBinding);
-}
-
-// Client-evaluable sources classify structure client-owned; nesting in
-// client-owned structure inherits ownership (its bodies already bundle).
-// Delivery is judged per READ binding (a root derived ships its computed
-// value), mirroring the expression matrix inside client-owned structure.
-export function classifiesClientOwned(
-  sources: Sources | undefined,
-  section: Section,
-  refs: Opt<Binding>,
-) {
-  return (
-    (!!sources?.state || inClientOwnedStructure(section)) &&
-    !sources?.global &&
-    every(refs, (binding) => {
-      const refSources = getSerializeSourcesForRef(binding);
-      // A state-mixed ref recomputes client-side, so its param ORIGINS
-      // must fill; a pure-param ref ships its own computed value.
-      return (
-        !refSources?.param ||
-        (refSources.state
-          ? paramsDeliverAsFills(refSources.param)
-          : isPatchFillBinding(binding)) ||
-        inClientOwnedStructure(binding.section)
-      );
-    })
-  );
 }
 
 // Only a named property delivers as a fill: the whole bag (a positional
@@ -215,10 +97,10 @@ export function isPatchFillBinding(binding: Binding) {
     isPersisted() &&
     binding.type === BindingType.let &&
     binding.section.isBranch &&
-    isPatchCaptureSection(binding.section) &&
-    // Client-owned branches never construct from frames, so their state
-    // needs no seed fill.
-    !binding.section.isClientOwnedStructure &&
+    isCapturePathSection(binding.section) &&
+    // Client-reselectable branches never construct from frames, so their
+    // state needs no seed fill.
+    !binding.section.isClientReselectable &&
     getCanonicalBinding(binding) === binding
   ) {
     return !!binding.assignmentSections;
@@ -232,11 +114,11 @@ export function isPatchFillBinding(binding: Binding) {
     if (getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
     }
-    // A rendered read inside client-owned structure promotes to an owner
+    // A rendered read inside reselectable structure promotes to an owner
     // fill (no capture channel); effect reads use the owner slot write.
     let readSection: Section | undefined = read.section;
     while (readSection && readSection !== binding.section) {
-      if (readSection.isClientOwnedStructure) return true;
+      if (readSection.isClientReselectable) return true;
       readSection = readSection.parent;
     }
   }
@@ -306,15 +188,15 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
-  // Inside client-owned structure content sections keep lexical owners, so
+  // Inside reselectable structure content sections keep lexical owners, so
   // reads hop soundly: lone reads and dynamic-chain intersection members
   // deliver through their self-registering closure signals.
-  const clientOwned = inClientOwnedStructure(section);
+  const clientReselectable = inClientReselectableStructure(section);
   return some(refs, (binding) => {
     if (isPatchFillBinding(binding) && binding.section !== section) {
       let cur: Section | undefined = section;
       while (cur && cur !== binding.section) {
-        if (!cur.isBranch && !clientOwned) return true;
+        if (!cur.isBranch && !clientReselectable) return true;
         cur = cur.parent;
       }
       return !cur;
@@ -334,15 +216,4 @@ export function hasUnfillablePatchReads(refs: Opt<Binding>) {
       !isPatchEffectBinding(binding) &&
       !isPatchCaptureWriteBinding(binding),
   );
-}
-
-// Sections whose text/attr holes emit direct patch captures: the root and
-// any branch body reachable through branches alone — the walk pairs (or
-// constructs) every level structurally, so depth does not matter.
-export function isPatchCaptureSection(section: Section) {
-  while (section.parent) {
-    if (!section.isBranch) return false;
-    section = section.parent;
-  }
-  return true;
 }

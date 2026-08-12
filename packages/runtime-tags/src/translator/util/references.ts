@@ -30,11 +30,11 @@ import {
   Sorted,
 } from "./optional";
 import {
-  finalizePersisted,
   isPatchCaptureWriteBinding,
   isPatchEffectBinding,
   isPatchFillBinding,
-} from "./persisted";
+} from "./persisted/delivery";
+import { finalizePersisted } from "./persisted/lifecycle";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {

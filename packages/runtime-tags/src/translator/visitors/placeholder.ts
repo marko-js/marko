@@ -9,12 +9,12 @@ import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt } from "../util/optional";
+import { constructRendersReads } from "../util/persisted/delivery";
 import {
-  constructRendersReads,
   ensurePersistedCaptureGroups,
-  inClientOwnedStructure,
-  isPatchCaptureSection,
-} from "../util/persisted";
+  inClientReselectableStructure,
+  isCapturePathSection,
+} from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -101,7 +101,7 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
-        if (isPersisted() && node.escape && isPatchCaptureSection(section)) {
+        if (isPersisted() && node.escape && isCapturePathSection(section)) {
           addSerializeReason(section, true, nodeBinding);
           addAssetImport(
             placeholder.hub.file,
@@ -197,7 +197,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
     const holeSources =
-      isPersisted() && node.escape && isPatchCaptureSection(section)
+      isPersisted() && node.escape && isCapturePathSection(section)
         ? getSerializeSourcesForExpr(valueExtra)
         : undefined;
     if (holeSources?.state && holeSources.global) {
@@ -223,8 +223,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const isPatch =
       isPersisted() &&
       node.escape &&
-      isPatchCaptureSection(section) &&
-      !inClientOwnedStructure(section) &&
+      isCapturePathSection(section) &&
+      !inClientReselectableStructure(section) &&
       !!nodeBinding &&
       !holeSources?.state;
     const isPatchText = isHTML && isPatch;
