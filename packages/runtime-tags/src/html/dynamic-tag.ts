@@ -85,25 +85,39 @@ export let _dynamic_tag = (
               1,
             ),
           );
-        } else if (renderContent) {
-          if (typeof renderContent !== "function") {
+        } else {
+          if (renderContent && typeof renderContent !== "function") {
             throw new Error(
               `Body content is not supported for the \`<${renderer}>\` tag.`,
             );
           }
+
           if (
             renderer === "select" &&
             ("value" in input || "valueChange" in input)
           ) {
+            // Only this case defers the body, so it renders inside the
+            // dynamically scoped selected value; every other tag recurses directly.
             _attr_select_value(
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               input.value,
               input.valueChange,
-              renderContent,
+              renderContent
+                ? () =>
+                    _dynamic_tag(
+                      branchId,
+                      MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
+                      renderContent,
+                      undefined,
+                      0,
+                      undefined,
+                      serializeReason,
+                    )
+                : undefined,
               1,
             );
-          } else {
+          } else if (renderContent) {
             _dynamic_tag(
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
