@@ -18,9 +18,15 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, includes, type Opt, toIter } from "./optional";
+import {
+  forEach,
+  fromIter,
+  includes,
+  type Opt,
   some,
-import { kInstancePatchSkip } from "./persisted/delivery";
+  toIter,
+} from "./optional";
+import { getChildPatchPlan } from "./persisted/decisions";
 import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
 import {
@@ -240,8 +246,11 @@ export function knownTagTranslateHTML(
   if (isPersisted()) addPersistedChildRenderer(tagIdentifier);
   // A client-owned instance renders nothing into a patch: the link and the
   // child render skip together, and the absent entry keeps the live child.
-  let clientOwnedStatements: t.Statement[] | undefined =
-    isPersisted() && tagExtra[kInstancePatchSkip] ? [] : undefined;
+  const skipsPatchRender =
+    isPersisted() && getChildPatchPlan(tag).skipsPatchRender;
+  let clientOwnedStatements: t.Statement[] | undefined = skipsPatchRender
+    ? []
+    : undefined;
 
   let varStatement: t.Statement | undefined;
   if (childScopeSerializeReason) {
@@ -269,7 +278,7 @@ export function knownTagTranslateHTML(
           peekScopeId,
         ),
       );
-      if (tagExtra[kInstancePatchSkip]) {
+      if (skipsPatchRender) {
         clientOwnedStatements = [patchChildStatement];
       } else {
         statements.push(patchChildStatement);

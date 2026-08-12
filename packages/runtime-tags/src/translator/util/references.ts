@@ -30,11 +30,7 @@ import {
   push,
   Sorted,
 } from "./optional";
-import {
-  isPatchCaptureWriteBinding,
-  isPatchEffectBinding,
-  isPatchFillBinding,
-} from "./persisted/delivery";
+import { isPatchWriteBinding, isPatchFillBinding } from "./persisted/delivery";
 import { finalizePersisted } from "./persisted/lifecycle";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
@@ -1437,11 +1433,7 @@ export function finalizeReferences() {
     forEachSection((section) => {
       if (!section.parent) {
         forEach(section.bindings, (binding) => {
-          if (
-            isPatchFillBinding(binding) ||
-            isPatchEffectBinding(binding) ||
-            isPatchCaptureWriteBinding(binding)
-          ) {
+          if (isPatchFillBinding(binding) || isPatchWriteBinding(binding)) {
             ensureReasonGroups(getSerializeSourcesForRef(binding));
           }
         });
