@@ -135,9 +135,9 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
-  /** A root param the child needs server-owned (selects structure or
-   * mixes with `$global`), recorded where the reading context proves it. */
-  serverRequiredParam: boolean;
+  /** A root param whose reads select structure or mix with `$global`,
+   * recorded where the reading context proves it. */
+  structuralOrGlobalParam: boolean;
   /** Captured inside a registered function: live-scope reads reach it at
    * any later invocation. */
   registeredFnCapture: boolean;
@@ -282,7 +282,7 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
-    serverRequiredParam: false,
+    structuralOrGlobalParam: false,
     registeredFnCapture: false,
     functionValued: false,
     serializePropKeys: undefined,
