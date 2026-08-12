@@ -171,25 +171,6 @@ export function _fill_join_for<T extends SignalFn>(
   return fillJoin(key, valueAccessor, join, dispatch);
 }
 
-// A read below one hop composes the owner-side dispatch down the branch
-// chain: `[accessor, index]` conditional hops, `[accessor]` loop hops.
-export function _fill_join_deep<T extends SignalFn>(
-  key: string,
-  valueAccessor: EncodedAccessor,
-  join: T,
-  hops: [EncodedAccessor, number?][],
-): T {
-  let dispatch: SignalFn = join;
-  for (let i = hops.length; i--;) {
-    const hop = hops[i];
-    dispatch =
-      hop.length > 1
-        ? _if_closure(hop[0], hop[1]!, dispatch)
-        : _for_closure(hop[0], dispatch);
-  }
-  return fillJoin(key, valueAccessor, join, dispatch);
-}
-
 // Deep closure positions of one key reassemble the indexed composite:
 // each registers at its compile-time index; one dispatcher selects per
 // subscriber, and a shaken position is simply absent (nothing to update).
