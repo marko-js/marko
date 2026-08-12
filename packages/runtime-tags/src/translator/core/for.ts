@@ -67,7 +67,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
-import { getShellId, getShells, isShellDropped } from "../util/shell";
+import { getShellId, getShells } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -376,7 +376,7 @@ export default {
             // a bare `0` makes any addition reject the patch. (`singleChild`
             // and `skipParentEnd` are forced off above, so the two optional
             // marker args are always the unset placeholders here.)
-            const id = !isShellDropped(bodySection) && getShellId(bodySection);
+            const id = !bodySection.shellBlocked && getShellId(bodySection);
             forTagArgs.push(
               undefined,
               undefined,
