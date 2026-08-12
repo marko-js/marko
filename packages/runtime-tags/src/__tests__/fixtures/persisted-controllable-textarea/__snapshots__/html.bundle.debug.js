@@ -8,5 +8,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		document.querySelector("main").dataset.text = next;
 	}, "__tests__/template.marko_0/valueChange"))}</textarea>${_el_resume($scope0_id, "#textarea/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#textarea/1": ["valueChange", "3:30"] });
 }, 1, 0);

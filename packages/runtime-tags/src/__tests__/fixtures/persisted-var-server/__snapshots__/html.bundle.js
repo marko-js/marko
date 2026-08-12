@@ -12,10 +12,10 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
-	let label = labeler_default({ title: input.title });
+	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
+	let label = labeler_default({ title: input.title });
 	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<p>${_patch_text($scope0_id, "c", label, $scope0_owned, 0)}${_el_resume($scope0_id, "c")} <!>${_escape(count)}${_el_resume($scope0_id, "d")}</p><button>+</button>${_el_resume($scope0_id, "e")}</main>`);
 	_script($scope0_id, "a1");

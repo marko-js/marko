@@ -1,7 +1,7 @@
 // template.marko
 _renderer_shells({
-	"__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell __tests__/template.marko_1; b%;<button>+</button><!><!>`",
-	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell __tests__/template.marko_2_count/init;Db%;<p>Seen <!></p>`"
+	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1; b%;<button>+</button><!><!>`",
+	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2_count#2/init;Db%;<p>Seen <!></p>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 3), $sg__input_outer = _source_guard($scope0_reason, 2);
@@ -19,7 +19,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6");
 					return 0;
 				}
-			}, $scope1_id, "#text/1", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2_shell"]);
+			}, $scope1_id, "#text/1", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2*shell"]);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_value($scope1_id, "__tests__/template.marko0", count, 1);
 			writeScope($scope1_id, {
@@ -28,7 +28,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			}, "__tests__/template.marko", "3:4", { count: "4:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["__tests__/template.marko_1_shell"]);
+	}, $scope0_id, "#text/1", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { input_inner: input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] });
 }, 1, 0);
