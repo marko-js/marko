@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-async-await-pending/template.marko:4:3
-      2 | <main>
-      3 |   <h1>${input.title}</h1>
-    > 4 |   <await|value|=resolveAfter(input.delay, 1)>
-        |   ^ Persisted templates cannot patch this faithfully yet: `<await>` can settle after the patch frame flushes (async patch content is not supported).
-      5 |     <em>${value}</em>
-      6 |   </await>
-      7 | </main>
