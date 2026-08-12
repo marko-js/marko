@@ -1,7 +1,10 @@
 import type { TestConfig } from "../../main.test";
 
-// An `<await>` still pending at patch flush time (the multi-frame case): the compile gate rejects it before the single-frame fence could be reached at runtime.
+// An `<await>` still pending when the patch frame flushes: the runtime
+// poisons the frame so the client rejects and navigates (never a torn
+// multi-frame patch).
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  expect_rejection: true,
+  steps: [{ title: "Store" }, { title: "Store!" }],
 };
