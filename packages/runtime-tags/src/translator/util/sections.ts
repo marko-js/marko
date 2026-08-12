@@ -9,6 +9,7 @@ import {
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import type { WalkCode } from "../../common/types";
 import * as ContentType from "./constants/content-type";
+import type * as ShellBlocker from "./constants/shell-blocker";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -160,9 +161,9 @@ export interface Section {
   /** Branch body whose selection can re-run on the client (classified at
    * persisted finalize): patch renders skip it and frames omit its entry. */
   isClientReselectable: true | undefined;
-  /** Branch whose shell would construct unfaithfully (state-fed holes/attrs,
-   * derived at persisted finalize): no shell ships, patches fail closed. */
-  shellBlocked: true | undefined;
+  /** Branch whose shell would construct unfaithfully: the first blocker's
+   * reason code sticks, no shell ships, patches fail closed. */
+  shellBlocked: ShellBlocker.Value | undefined;
   /** Input props this section renders as fed renderers: a patch poisons
    * while they are non-nullish (a stopgap, dropped once they dispatch). */
   opaqueRenderProps: string[] | undefined;

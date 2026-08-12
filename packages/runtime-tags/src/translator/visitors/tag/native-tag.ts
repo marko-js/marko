@@ -24,6 +24,7 @@ import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../../util/body-to-text-literal";
+import * as ShellBlocker from "../../util/constants/shell-blocker";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -384,7 +385,7 @@ export default {
                   value.extra?.referencedBindings as Opt<Binding>,
                 )
               ) {
-                tagSection.shellBlocked = true;
+                tagSection.shellBlocked ??= ShellBlocker.stateFed;
               }
             }
           });
