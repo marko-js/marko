@@ -7,10 +7,7 @@ import { AccessorPrefix, PatchKey } from "../common/types";
 import { serverRenderers } from "./renderer-shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
-  _patch_branch_writes,
-  _patch_loop_writes,
   _peek_scope_id,
-  getChunk,
   patchPartial,
   State,
   withBranchId,
@@ -33,7 +30,6 @@ export function _template_persisted(
   page?: 0 | 1,
   intrinsics?: Intrinsics,
 ) {
-  enablePatchWrites();
   const template = _template(templateId, renderer, page as 1) as Template &
     ServerRenderer &
     WithIntrinsics;
@@ -110,7 +106,7 @@ class PatchState extends State {
   // `[...shells, tree]` — only a deferred run (its inner `_()` walks
   // mid-expression) hoists shells into a preceding `_()` call.
   override resumeScript(resumes: string) {
-    if (MARKO_DEBUG) this.patchFlushed = 1;
+    this.patchFlushed = 1;
     // A poisoned frame (a bound registration with no rebind entry) is
     // replaced by a bare poison tree: the client rejects and navigates.
     if (this.patchPoison) {
@@ -136,21 +132,17 @@ class PatchState extends State {
   override mark() {
     return "";
   }
-}
 
-// Registered on first persisted template load (not at module top level) so
-// the whole patch writer drops from bundles without persisted pages.
-let enabled: 1 | undefined;
-function enablePatchWrites() {
-  if (enabled) return;
-  enabled = 1;
   // Ships the selection, branch partial, and (once per response) the shell
   // so the client can construct on divergence without bundling content.
-  _patch_branch_writes((scopeId, accessor, cb, shellIds) => {
-    const state = getChunk()!.boundary.state as PatchState;
-    if (!state.writesPatches) return;
+  override writeBranch(
+    scopeId: number,
+    accessor: string,
+    cb: () => number | undefined | void,
+    shellIds?: string[],
+  ) {
     const branchId = _peek_scope_id();
-    (state.patchParents ??= {})[branchId] = [
+    (this.patchParents ??= {})[branchId] = [
       scopeId,
       AccessorPrefix.BranchScopes + accessor,
     ];
@@ -158,11 +150,11 @@ function enablePatchWrites() {
     const shellId =
       branchIndex === undefined
         ? undefined
-        : shipShell(state, shellIds?.[branchIndex]);
+        : shipShell(this, shellIds?.[branchIndex]);
     // Shape-typed entry, densest form first: a bare number is the
     // selection + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =
-      branchIndex === undefined ? undefined : state.patchPartials?.[branchId];
+      branchIndex === undefined ? undefined : this.patchPartials?.[branchId];
     writePatch(scopeId, {
       [PatchKey.Branch + accessor]:
         branchIndex === undefined
@@ -179,14 +171,23 @@ function enablePatchWrites() {
                 : [branchPartial]
               : shellId || 1,
     });
-    return 1;
-  });
+    return 1 as const;
+  }
 
   // Ships ordered item partials and keys: existing keys pair, new keys
   // construct from the shell, absent keys destroy.
-  _patch_loop_writes((iterate, scopeId, accessor, shellId) => {
-    const state = getChunk()!.boundary.state as PatchState;
-    if (!state.writesPatches) return;
+  override writeLoop(
+    iterate: (
+      each: (
+        itemKey: unknown,
+        sameAsIndex: boolean,
+        render: () => void,
+      ) => void,
+    ) => void,
+    scopeId: number,
+    accessor: string,
+    shellId?: string | 0,
+  ) {
     const partials: object[] = [];
     const keys: unknown[] = [];
     const seen = new Set<unknown>();
@@ -207,15 +208,15 @@ function enablePatchWrites() {
       // Loop items pair by key: the link is a keyed hop the bind walk
       // resolves against the live scopes' loop keys.
       const branchId = _peek_scope_id();
-      (state.patchParents ??= {})[branchId] = [
+      (this.patchParents ??= {})[branchId] = [
         scopeId,
         [AccessorPrefix.BranchScopes + accessor, itemKey],
       ];
       keys.push(itemKey);
       withBranchId(branchId, render);
-      partials.push(patchPartial(state, branchId));
+      partials.push(patchPartial(this, branchId));
     });
-    const sentShellId = partials.length ? shipShell(state, shellId) : undefined;
+    const sentShellId = partials.length ? shipShell(this, shellId) : undefined;
     // Interleaved `[key, partial, …, shellId?]`: keys drop when every key
     // is its index, and the shell rides as a trailing string.
     const entry: unknown[] = [];
@@ -227,8 +228,8 @@ function enablePatchWrites() {
     writePatch(scopeId, {
       [PatchKey.Loop + accessor]: entry,
     });
-    return 1;
-  });
+    return 1 as const;
+  }
 }
 
 // Only a shell the server can ship rides an entry: a missing one makes a
