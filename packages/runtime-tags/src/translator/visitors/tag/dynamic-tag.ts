@@ -42,6 +42,7 @@ import {
   callRuntime,
   getCompatRuntimeFile,
   importRuntime,
+  importRuntimeFeature,
 } from "../../util/runtime";
 import {
   createScopeReadExpression,
@@ -90,6 +91,7 @@ import { controllableFeatureFor, enableControllable } from "./native-tag";
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 const importedDynamicTagResume = new WeakSet<t.Program>();
+const importedDynamicTagVarResume = new WeakSet<t.Program>();
 
 // Class-API interop registrations are idempotent and keyed by the shared
 // renderer, so one per program suffices no matter how many tags reference it.
@@ -597,6 +599,7 @@ export default {
 
         if (!isClassAPI) {
           enableDynamicTagResume(tag);
+          enableDynamicTagVarResume(tag);
           enableDynamicTagControllables(tag);
         }
         addValue(section, tagExtra.referencedBindings, signal, tagExpression);
@@ -620,6 +623,20 @@ function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
       enableControllable(controllableFeatureFor(undefined));
       return;
     }
+  }
+}
+
+// A native branch serializes its tag variable as a getter over the branch, so
+// the registration has to survive into a resume-only bundle.
+function enableDynamicTagVarResume(tag: t.NodePath<t.MarkoTag>) {
+  const program = getProgram().node;
+  if (
+    tag.node.var &&
+    !importedDynamicTagVarResume.has(program) &&
+    analyzeTagNameType(tag, true) !== TagNameType.CustomTag
+  ) {
+    importedDynamicTagVarResume.add(program);
+    importRuntimeFeature("dynamic-tag-var");
   }
 }
 

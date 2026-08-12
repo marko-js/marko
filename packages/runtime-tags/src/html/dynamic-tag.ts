@@ -1,6 +1,9 @@
 import { assertValidTagName } from "../common/errors";
 import { normalizeDynamicRenderer } from "../common/helpers";
-import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
+import {
+  DYNAMIC_TAG_SCRIPT_REGISTER_ID,
+  DYNAMIC_TAG_VAR_REGISTER_ID,
+} from "../common/meta";
 import {
   type Accessor,
   AccessorPrefix,
@@ -11,6 +14,7 @@ import {
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
+  _el,
   _html,
   _peek_scope_id,
   _resume,
@@ -169,7 +173,9 @@ export let _dynamic_tag = (
     };
     renderNative();
 
-    // TODO: this needs to set result the element getter
+    // Registered, not written: the getter only reaches the wire when a tag
+    // variable holds it, so a native dynamic tag without one pays nothing.
+    result = _el(branchId, DYNAMIC_TAG_VAR_REGISTER_ID);
   } else {
     const chunk = getChunk()!;
     const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;

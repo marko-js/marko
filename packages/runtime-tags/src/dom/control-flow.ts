@@ -564,6 +564,10 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             scope[childScopeAccessor][AccessorProp.TagVariable] = (
               value: unknown,
             ) => getTagVar()(scope, value);
+            // A native branch has no renderer to call `_return`.
+            if (typeof normalizedRenderer === "string") {
+              bindNativeTagVar?.(scope[childScopeAccessor]);
+            }
           } else {
             // The branch tore down; clear the tag variable with it.
             getTagVar()(scope, undefined);
@@ -694,6 +698,13 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
     };
   },
 );
+
+// The native tag variable lives in `dynamic-tag-var.feat`; bundles without one
+// fold this away rather than carrying the binding in the update path.
+export let bindNativeTagVar: undefined | ((branch: Scope) => void);
+export function installDynamicTagVar(bind: typeof bindNativeTagVar) {
+  bindNativeTagVar = bind;
+}
 
 // `dynamicTagScript` runs on a branch scope, so resume-only bundles (where
 // `_dynamic_tag` itself is tree-shaken) still need branch visits processed.

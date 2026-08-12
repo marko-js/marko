@@ -1,0 +1,6 @@
+<let/tag="div"/>
+<let/text=""/>
+<${tag}/el/>
+<button id="swap" onClick() { tag = tag === "div" ? "span" : "div" }>swap</button>
+<button id="read" onClick() { text = el() ? el().tagName : "none" }>read</button>
+<output>${text}</output>
