@@ -57,6 +57,7 @@ export default {
 - `callRuntime("_name", ...args)` (`util/runtime.ts`) references runtime helpers with automatic imports; DOM helpers listed in `pureDOMFunctions` get `/*@__PURE__*/`.
 - Validate early: `assertNoSpreadAttrs` / `assertNoTagVarMutation` / `assertNoBodyContent` are local (`util/assert.ts`), while `assertNoArgs` / `assertNoParams` / `assertNoVar` / `assertAllowedAttributes` come from `@marko/compiler/babel-utils`. Compile errors use `path.buildCodeFrameError` with backticked names and a markojs.com docs link — `core/if.ts` is the canonical style.
 - `util/marko-config.ts` provides `isOutputHTML` / `isOutputDOM` / `isOptimize`.
+- Persisted-pages vocabulary follows the phase contract: analyze records **what the template does** — sources, structural/`$global` param uses, capture-path sections, and (at reference finalize) whether a branch body is **client-reselectable** (`util/persisted/structure.ts`). Translate decides **who owns** a patch region or instance, which **wire channel** refreshes a value (fill / effect write / capture write, `util/persisted/delivery.ts`), and when to poison or drop a shell. Shared Binding/Section/group fields never say server/client "owned" or "serverable"; those words belong in translate code and diagnostics.
 - `util/optional.ts` (`Opt`/`Sorted` list algebra) underpins reference tracking; `util/known-tag.ts` holds the custom/dynamic tag input contracts. Native element work lives in `visitors/tag/native-tag.ts` (with `common/helpers.ts` and `util/is-non-html-text.ts`).
 
 ## Runtime conventions
