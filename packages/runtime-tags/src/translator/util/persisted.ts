@@ -91,15 +91,15 @@ export function finalizePersisted() {
 }
 
 // Structure selection and `$global` mixing both record here: neither
-// leaves a client channel, so the param must stay server-owned.
-export function recordServerRequiredParams(sources: Sources | undefined) {
+// read lets the value leave through an expression channel.
+export function recordStructuralOrGlobalParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
-    if (!binding.section.parent) binding.serverRequiredParam = true;
+    if (!binding.section.parent) binding.structuralOrGlobalParam = true;
   });
 }
 
-export function hasServerRequiredParam(params: Opt<Binding>) {
-  return some(params, (binding) => binding.serverRequiredParam);
+export function hasStructuralOrGlobalParam(params: Opt<Binding>) {
+  return some(params, (binding) => binding.structuralOrGlobalParam);
 }
 
 // Shared per-capture analyze hook: freezes the value's reason groups for
@@ -109,9 +109,9 @@ export function ensurePersistedCaptureGroups(getExtra: () => t.NodeExtra) {
     const sources = getSerializeSourcesForExpr(getExtra());
     ensureReasonGroups(sources);
     // A `$global` mixed into a param-fed value cannot survive a withheld
-    // capture: call sites derive server-required-ness from the fact.
+    // capture: call sites derive ownership requirements from the fact.
     if (sources?.param && sources.global) {
-      recordServerRequiredParams(sources);
+      recordStructuralOrGlobalParams(sources);
     }
   });
 }
