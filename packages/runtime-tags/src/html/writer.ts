@@ -1146,7 +1146,7 @@ export function _existing_scope(scopeId: number) {
 }
 
 export function _scope_with_id(scopeId: number) {
-  return $chunk.boundary.state.scopeRef(scopeId);
+  return scopeWithId($chunk.boundary.state, scopeId);
 }
 
 function scopeWithId(state: State, scopeId: number) {
@@ -1599,10 +1599,6 @@ export class State implements SerializeState {
     }
     this.hasWrittenResume = true;
     return this.runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]";
-  }
-
-  scopeRef(scopeId: number): ScopeInternals | undefined {
-    return scopeWithId(this, scopeId);
   }
 
   get runtimePrefix() {

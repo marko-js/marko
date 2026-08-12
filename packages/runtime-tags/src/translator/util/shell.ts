@@ -50,24 +50,12 @@ export function getShellId(section: Section) {
 }
 
 // A construct blocker drops the section's shell: patches diverging to it
-// fail closed to a document navigation. Reasons accumulate for the shell
-// decision (and future diagnostics), never re-derived at use sites.
-const [getShellBlockers] = createProgramState(
-  () => new Map<Section, string[]>(),
-);
+// fail closed to a document navigation. The reason argument documents the
+// call site; only the blocked set is consulted.
+const [getShellBlockers] = createProgramState(() => new Set<Section>());
 
-export function recordConstructBlocker(section: Section, reason: string) {
-  const blockers = getShellBlockers();
-  const reasons = blockers.get(section);
-  if (reasons) {
-    reasons.push(reason);
-  } else {
-    blockers.set(section, [reason]);
-  }
-}
-
-export function getConstructBlockers(section: Section) {
-  return getShellBlockers().get(section);
+export function recordConstructBlocker(section: Section, _reason: string) {
+  getShellBlockers().add(section);
 }
 
 export function isShellDropped(section: Section) {
