@@ -1,8 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-async-try-catch-only/template.marko:2:3
-      1 | <main>
-    > 2 |   <try>
-        |   ^ Persisted templates cannot patch this faithfully yet: `<try>` boundaries rely on placeholder and catch machinery patches do not carry.
-      3 |     <em>${input.message}</em>
-      4 |     <@catch><em>bad</em></@catch>
-      5 |   </try>
