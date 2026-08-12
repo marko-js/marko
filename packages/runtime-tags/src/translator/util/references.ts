@@ -97,6 +97,9 @@ export const globalSources: Sources = {
 
 export interface Binding {
   id: number;
+  // Creation order, never renumbered, so distinct bindings stay distinct to
+  // `bindingUtil` once `id` is reassigned per section.
+  uid: number;
   name: string;
   originalName: string | undefined;
   type: BindingType;
@@ -224,6 +227,7 @@ export function createBinding(
   const declared = sameSection && refDeclared;
   const binding: Binding = {
     id,
+    uid: id,
     name,
     originalName: undefined,
     type,
@@ -1704,7 +1708,10 @@ export const bindingUtil = new Sorted(function compareBindings(
         (a.type !== b.type &&
         (a.type === BindingType.dom || b.type === BindingType.dom)
           ? a.type - b.type || a.id - b.id
-          : a.id - b.id);
+          : a.id - b.id) ||
+        // A pure alias keeps its creation id while its section mates are
+        // renumbered, so only `uid` separates the two `Sorted` treats as one.
+        a.uid - b.uid;
 });
 
 export const propsUtil = new Sorted(function compareProps(
