@@ -64,36 +64,6 @@ type ScopeInternals = PartialScope & {
 
 let $chunk: Chunk;
 
-// Patch rendering (persisted pages) intercepts branch writes; registered by
-// the patch entry so normal SSR bundles carry none of it.
-export let onWriteBranch:
-  | ((
-      scopeId: number,
-      accessor: Accessor,
-      cb: () => number | undefined | void,
-      shellIds?: string[],
-    ) => 1 | void)
-  | undefined;
-export const _patch_branch_writes = (
-  handler: NonNullable<typeof onWriteBranch>,
-) => (onWriteBranch = handler);
-export let onWriteLoop:
-  | ((
-      iterate: (
-        each: (
-          itemKey: unknown,
-          sameAsIndex: boolean,
-          render: () => void,
-        ) => void,
-      ) => void,
-      scopeId: number,
-      accessor: Accessor,
-      shellId?: string | 0,
-    ) => 1 | void)
-  | undefined;
-export const _patch_loop_writes = (handler: NonNullable<typeof onWriteLoop>) =>
-  (onWriteLoop = handler);
-
 export function getChunk(): Chunk | undefined {
   return $chunk;
 }
@@ -275,7 +245,7 @@ export function _el_resume(
 // Structural patch entries hold their child partial objects, so the root
 // partial IS the frame tree and one ordinary serializer flush emits it.
 export function writePatch(scopeId: number, entries: Record<string, unknown>) {
-  if (MARKO_DEBUG && $chunk.boundary.state.patchFlushed) {
+  if ($chunk.boundary.state.patchFlushed) {
     throw new Error(
       "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
     );
@@ -444,7 +414,7 @@ export function _patch_value(
       value = n;
     }
     if (setup) {
-      if (MARKO_DEBUG && state.patchFlushed) {
+      if (state.patchFlushed) {
         throw new Error(
           "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
         );
@@ -900,8 +870,8 @@ function forBranches(
   shellId?: string | 0,
 ) {
   if (
-    onWriteLoop?.(
-      iterate as Parameters<typeof onWriteLoop>[0],
+    $chunk.boundary.state.writeLoop?.(
+      iterate as Parameters<NonNullable<State["writeLoop"]>>[0],
       scopeId,
       accessor,
       shellId,
@@ -996,7 +966,8 @@ export function _if(
   singleNode?: 1,
   shellIds?: string[],
 ) {
-  if (onWriteBranch?.(scopeId, accessor, cb, shellIds)) return;
+  if ($chunk.boundary.state.writeBranch?.(scopeId, accessor, cb, shellIds))
+    return;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
@@ -1522,6 +1493,27 @@ export class State implements SerializeState {
   public nonceAttr = "";
   public serializer = new Serializer();
   declare writesPatches?: boolean;
+  // Patch rendering (persisted pages) intercepts branch/loop writes;
+  // defined only by the patch entry's State subclass, so normal SSR
+  // bundles carry none of it.
+  writeBranch?(
+    scopeId: number,
+    accessor: Accessor,
+    cb: () => number | undefined | void,
+    shellIds?: string[],
+  ): 1 | void;
+  writeLoop?(
+    iterate: (
+      each: (
+        itemKey: unknown,
+        sameAsIndex: boolean,
+        render: () => void,
+      ) => void,
+    ) => void,
+    scopeId: number,
+    accessor: Accessor,
+    shellId?: string | 0,
+  ): 1 | void;
   declare rootScopeId?: number;
   declare patchPartials?: Record<number, Record<string, unknown>>;
   declare patchBinds?: number;
