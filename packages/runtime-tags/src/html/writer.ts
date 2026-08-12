@@ -4,14 +4,7 @@ import {
   assertValidLoopKey,
 } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
-import {
-  isPromise,
-  normalizeAttrValue,
-  normalizeDynamicRenderer,
-  stringifyClassObject,
-  stringifyStyleObject,
-  toDelimitedString,
-} from "../common/helpers";
+import { isPromise, normalizeDynamicRenderer } from "../common/helpers";
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { concat, forEach, type Opt, push } from "../common/opt";
@@ -25,11 +18,11 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { RendererProp } from "../common/types";
-import { _attr, attrAssignment, stringAttr } from "./attrs";
+import { attrAssignment } from "./attrs";
 import * as FlushStatus from "./constants/flush-status";
 import * as Mark from "./constants/mark";
 import * as RuntimeKey from "./constants/runtime-key";
-import { _escape, _to_text, _unescaped } from "./content";
+import { _escape, _unescaped } from "./content";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -38,7 +31,6 @@ import {
 import {
   K_SCOPE_ID,
   quote,
-  getRegistered,
   register as serializerRegister,
   type ScopeFlush,
   Serializer,
@@ -59,7 +51,7 @@ interface SerializeState {
   flushScopes: boolean;
 }
 
-type ScopeInternals = PartialScope & {
+export type ScopeInternals = PartialScope & {
   [K_SCOPE_ID]?: number;
 };
 
@@ -330,312 +322,8 @@ export function patchPartial(state: State, scopeId: number) {
   return partial;
 }
 
-// Patch writers double as the output writers so the compiled template
-// evaluates each captured expression once.
-export function _patch_attr(
-  scopeId: number,
-  accessor: Accessor,
-  name: string,
-  value: unknown,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  const { state } = $chunk.boundary;
-  if (state.writesPatches) {
-    // `0` is the removal sentinel: normalized values are always strings and
-    // `undefined` entries are dropped entirely.
-    if (serverOwned(owned, group)) {
-      writePatch(scopeId, {
-        [PatchKey.Attr + accessor + " " + name]: normalizeAttrValue(value) ?? 0,
-      });
-    }
-  } else {
-    $chunk.needsWalk = true;
-  }
-
-  return _attr(name, value);
-}
-
-// Class/style normalize on the server into the same string the dom helper
-// writes, so the client applies them as plain attr entries.
-export function _patch_attr_class(
-  scopeId: number,
-  accessor: Accessor,
-  value: unknown,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  return patchStringAttr(
-    scopeId,
-    accessor,
-    "class",
-    toDelimitedString(value, " ", stringifyClassObject),
-    owned,
-    group,
-  );
-}
-
-export function _patch_attr_style(
-  scopeId: number,
-  accessor: Accessor,
-  value: unknown,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  return patchStringAttr(
-    scopeId,
-    accessor,
-    "style",
-    toDelimitedString(value, ";", stringifyStyleObject),
-    owned,
-    group,
-  );
-}
-
-function patchStringAttr(
-  scopeId: number,
-  accessor: Accessor,
-  name: string,
-  value: string,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  const { state } = $chunk.boundary;
-  if (state.writesPatches) {
-    if (serverOwned(owned, group)) {
-      writePatch(scopeId, {
-        [PatchKey.Attr + accessor + " " + name]: value || 0,
-      });
-    }
-  } else {
-    $chunk.needsWalk = true;
-  }
-
-  return stringAttr(name, value);
-}
-
-// Links a child scope into its parent's entry: immediately when already
-// written (tag-variable children render first), else on its first write.
-export function _patch_child(
-  scopeId: number,
-  accessor: Accessor,
-  childScopeId: number,
-) {
-  const { state } = $chunk.boundary;
-  if (state.writesPatches) {
-    (state.patchParents ??= {})[childScopeId] = [scopeId, accessor];
-    const partial = state.patchPartials?.[childScopeId];
-    if (partial) {
-      writePatch(scopeId, {
-        [PatchKey.Child + accessor]: partial,
-      });
-    } else {
-      (state.patchPending ??= {})[childScopeId] = [
-        scopeId,
-        PatchKey.Child + accessor,
-      ];
-    }
-  }
-}
-
-// Emitted as the scope reason's complement (`$reason || _patch_value(...)`):
-// a page render serializes the value through the reason-gated scope write,
-// so only a patch (the falsy persisted reason) ever reaches here.
-export function _patch_value(
-  scopeId: number,
-  key: string,
-  value: unknown,
-  setup?: 1,
-) {
-  const { state } = $chunk.boundary;
-  if (state.writesPatches) {
-    // A scope-bound registration cannot ride the wire as data: a source
-    // entry at its bound scope re-binds it against the paired live scope,
-    // and the fill entry references the deposit instead.
-    let kind: string = PatchKey.Value;
-    const registered = !!value && getRegistered(value as WeakKey);
-    const bound =
-      registered && (registered.scope as ScopeInternals | undefined);
-    if (bound) {
-      const n = (state.patchBinds = (state.patchBinds || 0) + 1);
-      writePatch(bound[K_SCOPE_ID]!, {
-        [PatchKey.BindSource + n]: registered.id,
-      });
-      kind = PatchKey.ValueBind;
-      value = n;
-    }
-    if (setup) {
-      if (state.patchFlushed) {
-        throw new Error(
-          "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
-        );
-      }
-      // Setup entries nest under `s`: the client applies them only to
-      // freshly constructed scopes, via the shell content's setup.
-      const partial = patchPartial(state, scopeId);
-      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
-        kind + key
-      ] = value;
-    } else {
-      writePatch(scopeId, {
-        [kind + key]: value,
-      });
-    }
-  }
-  return "";
-}
-
-// A control entry: the kind (a `ControlledType` digit) rides the key
-// ahead of the node accessor, and the kind's registered helper applies
-// the value against the frame's final handler slot.
-export function _patch_control(
-  scopeId: number,
-  accessor: Accessor,
-  type: number,
-  value: unknown,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  if ($chunk.boundary.state.writesPatches && serverOwned(owned, group)) {
-    writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
-  }
-  return "";
-}
-
-// Handler wiring: a scope-bound registration ships as a bind entry, any
-// other value rides the construct seeds as a plain write.
-export function _patch_bind(
-  scopeId: number,
-  accessor: Accessor,
-  value: unknown,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  const { state } = $chunk.boundary;
-  if (state.writesPatches && serverOwned(owned, group)) {
-    const registered = !!value && getRegistered(value as WeakKey);
-    const bound =
-      registered && (registered.scope as ScopeInternals | undefined);
-    if (bound) {
-      // A scope-bound registration installs the way CSR setup does: the
-      // entry anchors at the scope this instance was registered against
-      // and names the child-link path down to the slot, so the factory
-      // receives its own live scope. A target the bound scope cannot
-      // reach through recorded links poisons (`0`): reject, never
-      // install a silently broken handler.
-      const boundId = bound[K_SCOPE_ID]!;
-      let depth = 0;
-      let cur: number | undefined = scopeId;
-      let link;
-      while (cur !== undefined && cur !== boundId) {
-        link = state.patchParents?.[cur];
-        if (!link?.[1]) {
-          cur = undefined;
-        } else {
-          depth++;
-          cur = link[0];
-        }
-      }
-      let entry: 0 | unknown[] = 0;
-      if (cur !== undefined) {
-        entry = new Array(depth + 2);
-        entry[0] = registered.id;
-        entry[depth + 1] = accessor;
-        for (let i = depth, scope = scopeId; i; i--) {
-          link = state.patchParents![scope]!;
-          entry[i] = link[1];
-          scope = link[0];
-        }
-      }
-      writePatch(cur ?? scopeId, {
-        [PatchKey.Bind + (state.patchBinds = (state.patchBinds || 0) + 1)]:
-          entry,
-      });
-    } else {
-      // Both forms where a construct is possible: the plain write reaches
-      // PAIRED scopes (a handler removed between frames clears its live
-      // slot), while the setup entry lands after a construct's seeds — a
-      // seed's first-render write resets the change slot, so walk-time
-      // installs cannot last.
-      const partial = patchPartial(state, scopeId);
-      partial[PatchKey.Write + accessor] = value;
-      if (isInResumedBranch()) {
-        ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
-          PatchKey.Write + accessor
-        ] = value;
-      }
-    }
-  }
-  return "";
-}
-
-// A patched scope write: setup entries nest under `s` AFTER the seeds, so
-// a controllable seed cannot clobber its handler.
-export function _patch_write(
-  scopeId: number,
-  accessor: Accessor,
-  value: unknown,
-  setup?: 1,
-) {
-  if ($chunk.boundary.state.writesPatches) {
-    if (setup) {
-      const partial = patchPartial($chunk.boundary.state, scopeId);
-      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
-        PatchKey.Write + accessor
-      ] = value;
-    } else {
-      writePatch(scopeId, {
-        [PatchKey.Write + accessor]: value,
-      });
-    }
-  }
-  return "";
-}
-
-// No client patcher registers this kind, so applying the frame rejects
-// and the navigation fallback runs. A stopgap like the admission guard:
-// fed renderers should eventually dispatch like any dynamic hop.
-export function _patch_poison(scopeId: number) {
-  if ($chunk.boundary.state.writesPatches) {
-    writePatch(scopeId, { [PatchKey.Poison]: 1 });
-  }
-  return "";
-}
-
-export function _patch_effect(
-  scopeId: number,
-  registerId: string,
-  accessors: string,
-  globals?: 1,
-) {
-  if ($chunk.boundary.state.writesPatches) {
-    writePatch(scopeId, {
-      [(globals ? PatchKey.GlobalEffect : PatchKey.Effect) + registerId]:
-        accessors,
-    });
-  }
-  return "";
-}
-
-export function _patch_text(
-  scopeId: number,
-  accessor: Accessor,
-  value: unknown,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  const { state } = $chunk.boundary;
-  if (state.writesPatches) {
-    if (serverOwned(owned, group)) {
-      writePatch(scopeId, {
-        [PatchKey.Text + accessor]: _to_text(value),
-      });
-    }
-  } else {
-    $chunk.needsWalk = true;
-  }
-
-  return _escape(value);
+export function _sep(shouldResume: number) {
+  return shouldResume === 0 ? "" : "<!>";
 }
 
 export function _resume_branch(scopeId: number) {
@@ -1234,18 +922,12 @@ export function _persisted_ownership() {
   return state.writesPatches ? (state.serializeReason ?? 1) : 1;
 }
 
-function maskGroup(mask: SerializeReasonValue, group: number) {
+export function maskGroup(mask: SerializeReasonValue, group: number) {
   return mask === 1
     ? 2
     : typeof mask === "number"
       ? (mask >>> (1 + 2 * group)) & 3
       : ((mask as Partial<Record<number, number>>)[group] ?? 0);
-}
-
-// A patch write needs exclusive server ownership: a client contribution
-// means the live value wins, and a contribution-less group cannot change.
-function serverOwned(owned?: SerializeReasonValue, group?: number) {
-  return owned === undefined || maskGroup(owned, group!) === 2;
 }
 
 export function _owned_guard(mask: SerializeReasonValue, group: number) {
