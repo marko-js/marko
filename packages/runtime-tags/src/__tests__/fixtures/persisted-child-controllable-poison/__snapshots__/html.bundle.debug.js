@@ -1,5 +1,5 @@
 // tags/counter/index.marko
-_renderer_shells({ "__tests__/tags/counter/index.marko_1_shell": ",`__tests__/tags/counter/index.marko_1_shell __tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
+_renderer_shells({ "__tests__/tags/counter/index.marko_1*shell": ",`__tests__/tags/counter/index.marko_1*shell __tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
 var counter_default = _template_persisted("__tests__/tags/counter/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -15,10 +15,13 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 				count,
 				_: _scope_with_id($scope0_id),
 				"TagVariableChange:count": input.onCount || void 0
-			}, "__tests__/tags/counter/index.marko", "1:2", { count: "2:8" });
+			}, "__tests__/tags/counter/index.marko", "1:2", {
+				count: "2:8",
+				"TagVariableChange:count": ["countChange", "2:8"]
+			});
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/counter/index.marko_1_shell"]);
+	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/counter/index.marko_1*shell"]);
 	$scope0_reason ? writeScope($scope0_id, {
 		input_onCount: input.onCount,
 		input_step: input.step

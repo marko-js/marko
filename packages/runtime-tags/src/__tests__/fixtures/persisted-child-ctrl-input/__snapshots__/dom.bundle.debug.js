@@ -18,7 +18,7 @@ var field_default = /*@__PURE__*/ _template("__tests__/tags/field/index.marko", 
 // template.marko
 const $template = "<main><!><p> </p><button>+</button></main>";
 const $walks = "D%bD l l";
-const $if_content__text = /*@__PURE__*/ _resume("__tests__/template.marko_1_text/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_value($scope["#childScope/0"], $scope._.text)));
+const $if_content__text = /*@__PURE__*/ _resume("__tests__/template.marko_1_text#3/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_value($scope["#childScope/0"], $scope._.text)));
 const $if_content__setup = ($scope) => {
 	$if_content__text._($scope);
 	$setup$1($scope["#childScope/0"]);
@@ -38,10 +38,8 @@ function $setup($scope) {
 	$open($scope, true);
 	$setup__script($scope);
 }
-function $valueChange($scope) {
-	return (_new_text) => {
-		$text($scope._, _new_text);
-	};
-}
+const $valueChange = ($scope) => (_new_text) => {
+	$text($scope._, _new_text);
+};
 _resume("__tests__/template.marko_1/valueChange", $valueChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

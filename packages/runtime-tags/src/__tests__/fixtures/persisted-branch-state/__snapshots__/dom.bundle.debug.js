@@ -1,14 +1,14 @@
 // template.marko
 const $template = "<main><h1> </h1><!><button>Count <!></button></main>";
 const $walks = "E l%b Db%m";
-const $if_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.count)));
+const $if_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count#8/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.count)));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$if_content__count($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

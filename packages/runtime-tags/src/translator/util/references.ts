@@ -31,6 +31,7 @@ import {
 } from "./optional";
 import {
   finalizePersisted,
+  isPatchCaptureWriteBinding,
   isPatchEffectBinding,
   isPatchFillBinding,
 } from "./persisted";
@@ -134,17 +135,17 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
-  /** A root param whose value selects rendered structure (branch tests,
-   * loop inputs) — transitively through child templates. */
-  selectsStructure: boolean;
-  /** Declared as a literal function expression with no bare-identifier
-   * callees inside, so calling it runs only locally created code. */
-  declaresFunction: boolean;
-  /** A root param feeding an expression that also reads `$global` —
-   * transitively through child templates. */
-  globalMixed: boolean;
-  /** Interned per-prop serialize reason keys, keyed by accessor prefix
-   * (`undefined` is the plain binding key). */
+  /** A root param the child needs server-owned (selects structure or
+   * mixes with `$global`), recorded where the reading context proves it. */
+  serverRequiredParam: boolean;
+  /** Captured inside a registered function: live-scope reads reach it at
+   * any later invocation. */
+  registeredFnCapture: boolean;
+  /** Can hold a function a fill must deliver bind-aware: a literal fn,
+   * an invoked or handler-attr read, or a derivation over one. */
+  functionValued: boolean;
+  /** Binding-side counterpart of `Section.serializePropKeys`, keyed by
+   * accessor prefix (`undefined` is the plain binding key). */
   serializePropKeys:
     | Map<AccessorPrefix | symbol | undefined, SerializeKey>
     | undefined;
@@ -276,9 +277,9 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
-    selectsStructure: false,
-    declaresFunction: false,
-    globalMixed: false,
+    serverRequiredParam: false,
+    registeredFnCapture: false,
+    functionValued: false,
     serializePropKeys: undefined,
     reserveSize: 0,
   };
@@ -1390,6 +1391,9 @@ export function finalizeReferences() {
       for (const fn of exprFnReads.keys()) {
         if (fn.registerReason) {
           forEach(fn.referencedBindingsInFunction, (binding) => {
+            // A registered factory reads this capture from its live scope
+            // whenever it is invoked, so patches must keep the slot fresh.
+            binding.registeredFnCapture = true;
             addSerializeReason(binding.section, fn.registerReason, binding);
             if (binding.section !== fn.section) {
               addOwnerSerializeReason(
@@ -1422,7 +1426,11 @@ export function finalizeReferences() {
     forEachSection((section) => {
       if (!section.parent) {
         forEach(section.bindings, (binding) => {
-          if (isPatchFillBinding(binding) || isPatchEffectBinding(binding)) {
+          if (
+            isPatchFillBinding(binding) ||
+            isPatchEffectBinding(binding) ||
+            isPatchCaptureWriteBinding(binding)
+          ) {
             ensureReasonGroups(getSerializeSourcesForRef(binding));
           }
         });
@@ -1723,6 +1731,9 @@ function resolveDerivedSources(binding: Binding) {
             seen.add(ref);
             resolveBindingSources(ref);
             binding.sources = mergeSources(binding.sources, ref.sources);
+            // A derived selecting among function-valued bindings can
+            // deliver one of them.
+            if (ref.functionValued) binding.functionValued = true;
           }
         });
       }
@@ -1937,7 +1948,13 @@ function addReadToExpression(
 
   if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
     read.serializedValue = true;
+    // The captured handler can be a scope-bound registration, so its
+    // fill must deliver bind-aware.
+    binding.functionValued = true;
   }
+
+  // An invoked read likewise: whatever fills this slot is called.
+  if (isInvokedFunction(root)) binding.functionValued = true;
 
   const { parent } = root;
   if (

@@ -27,7 +27,7 @@ var template_default = _template_persisted("a", (input) => {
 				_html(`<p>${_escape("t:" + input.title)}${_el_resume($scope2_id, "a", _source_guard($scope0_reason, 0))}</p>`);
 				_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				_resume_branch($scope2_id);
-			}) });
+			}, $scope1_id) });
 			writeScope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
