@@ -341,15 +341,79 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const { node } = tag;
       const tagName = t.isStringLiteral(node.name) && node.name.value;
       const tagDef = getTagDef(tag);
-      // A patch is one frame: `<await>` can settle after it flushes, and
-      // `<try>` recovery rides placeholder machinery a frame never carries.
-      if (isCoreTagName(tag, "await") || isCoreTagName(tag, "try")) {
-        unsupported(
-          node,
-          tagName === "await"
-            ? "`<await>` can settle after the patch frame flushes (async patch content is not supported)"
-            : "`<try>` boundaries rely on placeholder and catch machinery patches do not carry",
-        );
+      // Attribute tags validate at their owner: `<try>` (the only admitted
+      // owner) checks its `<@catch>` content itself.
+      if (tagName && tagName[0] === "@") return;
+      // A patch is one frame: an `<await>` body PAIRS into the live page
+      // (a boundary still pending at flush poisons the frame at runtime),
+      // but it never constructs, so one inside divergable structure fails
+      // closed here. `<try>` admits only the catch-only shape: recovery
+      // around async content rides placeholder machinery a frame never
+      // carries.
+      if (isCoreTagName(tag, "await")) {
+        for (
+          let section = getSection(tag);
+          section.parent;
+          section = section.parent
+        ) {
+          if (!section.isBoundary) {
+            unsupported(
+              node,
+              "an `<await>` inside a branch a patch may construct cannot build from a shell yet",
+            );
+          }
+        }
+        const [valueAttr] = node.attributes;
+        if (
+          valueAttr &&
+          hasUndeliverableFillReads(
+            getSection(tag),
+            valueAttr.value.extra?.referencedBindings,
+          )
+        ) {
+          unsupported(
+            valueAttr,
+            "a server value's fill delivery path leaves the branch chain",
+          );
+        }
+        return;
+      }
+      if (isCoreTagName(tag, "try")) {
+        const tryUnsupported = () =>
+          unsupported(
+            node,
+            "`<try>` boundaries rely on placeholder and catch machinery patches do not carry",
+          );
+        for (const attrTag of node.attributeTags || []) {
+          if (
+            t.isMarkoTag(attrTag) &&
+            t.isStringLiteral(attrTag.name) &&
+            attrTag.name.value === "@placeholder"
+          ) {
+            tryUnsupported();
+          }
+        }
+        tag.traverse({
+          MarkoTag(inner) {
+            if (isCoreTagName(inner, "await")) tryUnsupported();
+          },
+        });
+        // The catch branch materializes only on client errors, after any
+        // number of patches: a server value inside it would read stale.
+        for (const attrTag of node.attributeTags || []) {
+          t.traverseFast(attrTag, (n) => {
+            if (
+              (t.isMarkoPlaceholder(n) && exprHasServerSources(n.value)) ||
+              (t.isMarkoAttribute(n) && exprHasServerSources(n.value))
+            ) {
+              unsupported(
+                n,
+                "a server value inside `<@catch>` content would go stale",
+              );
+            }
+          });
+        }
+        return;
       }
       // A server-driven conditional's patches swap in rendered html, so
       // branches must be inert; a pure-state chain is client-owned instead.

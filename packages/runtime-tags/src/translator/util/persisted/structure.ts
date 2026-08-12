@@ -84,7 +84,7 @@ export function ensurePersistedCaptureGroups(getExtra: () => t.NodeExtra) {
 // constructs) every level structurally, so depth does not matter.
 export function isCapturePathSection(section: Section) {
   while (section.parent) {
-    if (!section.isBranch) return false;
+    if (!section.isBranch && !section.isBoundary) return false;
     section = section.parent;
   }
   return true;
