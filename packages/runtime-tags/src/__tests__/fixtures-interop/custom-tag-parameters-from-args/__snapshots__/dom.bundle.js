@@ -1,42 +1,36 @@
-// v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
-
-// v:template.marko.hydrate-5.js
-var v_template_marko_hydrate_5_default = () => {};
-
 // components/custom-tag.marko
 var import_vdom = require_vdom();
 const $template = "<button class=inc><!>,<!></button><!><!>";
 const $walks = " D%c%l%c";
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/3", 0, 0, 1);
-const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_content, () => [$scope.x, $scope.y]), 2);
-const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
-	_text($scope["#text/1"], $scope.x);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(3, 0, 0, 1);
+const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.g, () => [$scope.h, $scope.i]), 2);
+const $x = /*@__PURE__*/ _let(7, ($scope) => {
+	_text($scope.b, $scope.h);
 	$input_content__OR__x__OR__y($scope);
 });
-const $y = /*@__PURE__*/ _let("y/8", ($scope) => {
-	_text($scope["#text/2"], $scope.y);
+const $y = /*@__PURE__*/ _let(8, ($scope) => {
+	_text($scope.c, $scope.i);
 	$input_content__OR__x__OR__y($scope);
 });
-const $setup__script = _script("__tests__/components/custom-tag.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, +$scope.x + 1);
-	$y($scope, +$scope.y + 1);
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+	$x($scope, +$scope.h + 1);
+	$y($scope, +$scope.i + 1);
 }));
 function $setup($scope) {
 	$x($scope, 1);
 	$y($scope, 10);
 	$setup__script($scope);
 }
-const $input_content = /*@__PURE__*/ _const("input_content", $input_content__OR__x__OR__y);
+const $input_content = /*@__PURE__*/ _const(6, $input_content__OR__x__OR__y);
 const $input = ($scope, input) => $input_content($scope, input.content);
-var custom_tag_default = /*@__PURE__*/ _template("__tests__/components/custom-tag.marko", $template, $walks, $setup, $input);
+var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "a", _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
@@ -50,7 +44,12 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 	}, null, null, _componentDef, "0");
 }, {
 	t: _marko_componentType,
-	i: true,
-	d: true
+	i: true
 }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
+
+// v:template.marko.hydrate-6.js
+var v_template_marko_hydrate_6_default = () => init();
+
+// v:template.marko.hydrate-5.js
+var v_template_marko_hydrate_5_default = () => {};

@@ -730,6 +730,12 @@ function getClassHydrationMode(file, visited = new Set()) {
     return (meta.classHydration = CLASS_HYDRATION_SELF);
   }
 
+  // A Tags template records interactivity on its program, not in metadata;
+  // it hydrates itself, so a Class ancestor has to keep the boundary.
+  if (file.ast.program.extra?.isInteractive) {
+    return (meta.classHydration = CLASS_HYDRATION_SELF);
+  }
+
   for (const tag of meta.tags) {
     if (tag.endsWith(".marko")) {
       const childFile = loadFileForImport(file, tag);

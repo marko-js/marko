@@ -2,12 +2,6 @@
 
 Out-of-scope defects noticed while working on something else. Format and rules: [README.md](README.md).
 
-## Resume a stateful Tags-API descendant rendered through an inert Class-API parent
-
-`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts` › `translate.exit` | 2026-07-13 | impact:high | effort:high
-
-A Tags page rendering an inert Class component (no class block) that renders a stateful Tags grandchild leaves the grandchild dead after SSR — its `<button onClick>` does nothing, in debug and optimize. `getClassHydrationMode` (`packages/runtime-class/src/translator/index.js`) detects interactivity only via `meta.component`, never a Tags child's `isInteractive` (on `program.node.extra`, not `metadata.marko`), so `classHydration` is undefined and the optimize path here (`!classHydration && !tagsSerializeReason` → `tag.remove()`) deletes the boundary outright; disabling that removal alone does not revive the button, so the resume gap is deeper. A fix likely needs the tags translator to surface interactivity on `metadata.marko`, `getClassHydrationMode` to return DESCENDANT for it, and the boundary to actually resume. Re-verify: with `template.marko` = `// use tags` + `<class-wrapper/>`, `components/class-wrapper.marko` = `<div><tags-counter/></div>` and `tags/tags-counter.marko` = `<let/n=0/><button onClick(){n++}>${n}</button>`, run `scripts/inspect-compiled-output.mts -t class -o dom` — today it emits `$setup = () => {}`.
-
 ## Wrap reordered out-of-order content in a parser-context-legal container
 
 `packages/runtime-tags/src/html/writer.ts` › `Chunk.flushScript` | 2026-07-23 | impact:high | effort:high
