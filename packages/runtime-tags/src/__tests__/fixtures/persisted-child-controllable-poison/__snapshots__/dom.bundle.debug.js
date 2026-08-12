@@ -47,10 +47,8 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_show = /*@__PURE__*/ _const("input_show", $for_content__input_show);
-function $onCount($scope) {
-	return (next) => {
-		$last($scope, next);
-	};
-}
+const $onCount = ($scope) => (next) => {
+	$last($scope, next);
+};
 _resume("__tests__/template.marko_0/onCount", $onCount);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

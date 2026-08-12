@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = () => {};
-const $if_content__input_value__script = _script("__tests__/template.marko_1_input_value", ($scope) => {
+const $if_content__input_value__script = _script("__tests__/template.marko_1_input_value#6", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope._.input_value + ":" + $scope.$global.brand + "]";

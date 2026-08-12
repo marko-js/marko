@@ -14,11 +14,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html("<main>");
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(2);
-	let double = doubler_default({ value: count });
+	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double/var");
+	let double = doubler_default({ value: count });
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double#5/var");
 	if ($scope0_reason) _if(() => {
 		if (double > 2) {
 			const $scope1_id = _scope_id();
