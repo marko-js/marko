@@ -1,5 +1,6 @@
 export const Attr = "PatchAttr:";
 export const Bind = "PatchBind:";
+export const BindSource = "PatchBindSource:";
 export const Branch = "PatchBranch:";
 export const Child = "PatchChild:";
 export const Control = "PatchControl:";
@@ -11,6 +12,7 @@ export const Poison = "PatchPoison:";
 export const Setup = "PatchSetup:";
 export const Text = "PatchText:";
 export const Value = "PatchValue:";
+export const ValueBind = "PatchValueBind:";
 export const Write = "PatchWrite:";
 
 type Self = typeof import("./patch-key.debug");

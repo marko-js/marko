@@ -18,7 +18,7 @@ var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler/index.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($template$2, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D0${_w0}&/${_w1}&l`)("b", "b");
-const $double = _var_resume("__tests__/template.marko_0_double/var", ($scope, double) => $input_title($scope["#childScope/2"], double));
+const $double = _var_resume("__tests__/template.marko_0_double#6/var", ($scope, double) => $input_title($scope["#childScope/2"], double));
 function $setup($scope) {
 	_var($scope, "#childScope/0", $double);
 }

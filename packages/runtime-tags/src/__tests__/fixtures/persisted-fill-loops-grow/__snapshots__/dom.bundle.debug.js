@@ -16,7 +16,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__row_cells($sco
 const $count__closure = /*@__PURE__*/ _closure($for_content2__count);
 const $count = /*@__PURE__*/ _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

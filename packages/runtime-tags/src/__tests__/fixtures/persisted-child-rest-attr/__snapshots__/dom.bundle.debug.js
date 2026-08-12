@@ -10,7 +10,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1>${_w0}<button>+</butt
 const $walks = /*@__PURE__*/ ((_w0) => `E l/${_w0}& l`)("D l");
 const $count = /*@__PURE__*/ _let("count/6", ($scope) => $input$1($scope["#childScope/1"], { value: $scope.count }));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

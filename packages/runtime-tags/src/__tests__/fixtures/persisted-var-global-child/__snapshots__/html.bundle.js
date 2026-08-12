@@ -15,10 +15,10 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html("<main>");
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(2);
-	let d = greet_default({ n: count });
+	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
+	let d = greet_default({ n: count });
 	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<p>${_escape(d)}${_el_resume($scope0_id, "c")}</p><button>+</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");

@@ -23,12 +23,12 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $card_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_title", /*@__PURE__*/ _closure_get("input_title", ($scope) => _text($scope["#text/0"], "t:" + $scope._._._.input_title), ($scope) => $scope._._._), 0);
 const $card_content__setup = $card_content__input_title;
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_3_content", "<p> </p>", "D ", $card_content__setup);
+const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<p> </p>", "D ", $card_content__setup);
 const $box_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_content_direct$1($scope["#childScope/0"], $card_content($scope));
 };
-const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $box_content__setup);
+const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $box_content__setup);
 const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $box_content($scope));

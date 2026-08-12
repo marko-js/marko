@@ -14,7 +14,7 @@ const $else_content__setup = $else_content__input_inner;
 const $count__closure = /*@__PURE__*/ _closure($if_content__count);
 const $count = /*@__PURE__*/ _let("count/7", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

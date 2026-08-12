@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell __tests__/template.marko_1_count/init;D ;<p> </p>`" });
+_renderer_shells({ "__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1_count#6/init;D ;<p> </p>`" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -12,7 +12,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			item,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:4", { item: "3:8" });
-	}, (item) => item, $scope0_id, "#text/0", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "__tests__/template.marko_1_shell");
+	}, (item) => item, $scope0_id, "#text/0", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "__tests__/template.marko_1*shell");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? writeScope($scope0_id, {

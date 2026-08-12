@@ -22,7 +22,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_id = _scope_id();
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
-			box_default({ content: _content("__tests__/template.marko_2_content", () => {
+			box_default({ content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _persisted_reason();
 				const $scope2_id = _scope_id();
 				if ($scope0_reason) _if(() => {
@@ -35,7 +35,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				}, $scope2_id, "#text/0", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
 				_subscribe(_source_if($scope0_reason, 0) && $input_show__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
 				_resume_branch($scope2_id);
-			}) });
+			}, $scope1_id) });
 			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}

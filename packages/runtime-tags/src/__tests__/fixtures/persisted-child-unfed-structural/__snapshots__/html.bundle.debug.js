@@ -1,5 +1,5 @@
 // tags/badge/index.marko
-_renderer_shells({ "__tests__/tags/badge/index.marko_1_shell": ",`__tests__/tags/badge/index.marko_1_shell,<em>on</em>`" });
+_renderer_shells({ "__tests__/tags/badge/index.marko_1*shell": ",`__tests__/tags/badge/index.marko_1*shell,<em>on</em>`" });
 var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_open = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -10,7 +10,7 @@ var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (inp
 			$scope0_reason && writeScope($scope1_id, {}, "__tests__/tags/badge/index.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["__tests__/tags/badge/index.marko_1_shell"]);
+	}, $scope0_id, "#text/0", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"]);
 	_html(`<p>${_patch_text($scope0_id, "#text/1", input.text, $scope0_owned, 1)}${_el_resume($scope0_id, "#text/1")}</p>`);
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 }, 0, 0);

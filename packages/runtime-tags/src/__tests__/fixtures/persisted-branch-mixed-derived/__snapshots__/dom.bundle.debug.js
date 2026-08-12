@@ -6,7 +6,7 @@ const $big = ($scope, big) => $if($scope, big ? 0 : 1);
 const $input_min__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_min", /*@__PURE__*/ _or(6, ($scope) => $big($scope, $scope.count > $scope.input_min)));
 const $count = /*@__PURE__*/ _let("count/5", $input_min__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 1);

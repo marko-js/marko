@@ -21,10 +21,10 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html("<main>");
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason(2);
-	let double = doubler_default({ value: count });
+	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
+	let double = doubler_default({ value: count });
 	_var($scope0_id, "b", $childScope, "a0");
 	const $childScope2 = _peek_scope_id();
 	if ($scope0_reason || _must_render(shower_default)) {
