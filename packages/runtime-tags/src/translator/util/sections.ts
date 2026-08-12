@@ -157,9 +157,9 @@ export interface Section {
   abortSignalExprs: number;
   readsOwner: boolean;
   isBranch: boolean;
-  /** Branch body of a client-owned conditional (recorded at persisted
-   * finalize): patch renders skip it and frames omit its entry. */
-  isClientOwnedStructure: true | undefined;
+  /** Branch body whose selection can re-run on the client (classified at
+   * persisted finalize): patch renders skip it and frames omit its entry. */
+  isClientReselectable: true | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -244,7 +244,7 @@ export function startSection(
       abortSignalExprs: 0,
       readsOwner: false,
       isBranch: false,
-      isClientOwnedStructure: undefined,
+      isClientReselectable: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;

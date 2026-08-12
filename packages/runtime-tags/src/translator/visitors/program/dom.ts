@@ -9,7 +9,7 @@ import {
   getPatchFillBindings,
   isPatchEffectBinding,
   isPatchFillBinding,
-} from "../../util/persisted";
+} from "../../util/persisted/delivery";
 import {
   type Binding,
   BindingType,

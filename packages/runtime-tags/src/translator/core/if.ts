@@ -23,12 +23,12 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
+import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  isPatchCaptureSection,
-  classifiesClientOwned,
-  onClassifyOwnership,
+  classifiesClientReselectable,
+  isCapturePathSection,
   recordStructuralOrGlobalParams,
-} from "../util/persisted";
+} from "../util/persisted/structure";
 import {
   getScopeAccessorLiteral,
   kBranchSerializeReason,
@@ -122,28 +122,28 @@ export const IfTag = {
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted()) {
-        // Ownership classifies once the merged test sources resolve; a
-        // non-capture section (content) can still classify client-owned.
-        onClassifyOwnership(ifTagSection, () => {
+        // Structure classifies once the merged test sources resolve; a
+        // non-capture section (content) can still classify reselectable.
+        onClassifyStructure(ifTagSection, () => {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
           if (
-            classifiesClientOwned(
+            classifiesClientReselectable(
               sources,
               ifTagSection,
               ifTagExtra.referencedBindings,
             )
           ) {
-            // A client-evaluable chain is client-owned structure (state
+            // A client-evaluable chain is client-reselectable (state
             // re-selects directly; param feeds fill their slots).
             for (const [, branchBody] of branches) {
               if (branchBody) {
-                branchBody.isClientOwnedStructure = true;
+                branchBody.isClientReselectable = true;
               }
             }
-          } else if (isPatchCaptureSection(ifTagSection)) {
+          } else if (isCapturePathSection(ifTagSection)) {
             addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
-            // Branch tests drive structure: call sites reject feeding them
-            // from client-owned values.
+            // Branch tests drive structure: the params recorded here gate
+            // call-site feeds at translate.
             recordStructuralOrGlobalParams(sources);
           }
         });
@@ -213,14 +213,12 @@ export const IfTag = {
           // A client-owned chain compiles like a stateful conditional on a
           // plain page: no marker retention, shells, or branch entry.
           const clientOwned = branches.some(
-            ([, branchBody]) => branchBody?.isClientOwnedStructure,
+            ([, branchBody]) => branchBody?.isClientReselectable,
           );
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
           const persistedPatch =
-            isPersisted() &&
-            !clientOwned &&
-            isPatchCaptureSection(ifTagSection);
+            isPersisted() && !clientOwned && isCapturePathSection(ifTagSection);
           if (persistedPatch) {
             singleChild = false;
           } else {
@@ -381,10 +379,8 @@ export const IfTag = {
           const ifTagSection = getSection(ifTag);
           if (
             isPersisted() &&
-            isPatchCaptureSection(ifTagSection) &&
-            !branches.some(
-              ([, branchBody]) => branchBody?.isClientOwnedStructure,
-            )
+            isCapturePathSection(ifTagSection) &&
+            !branches.some(([, branchBody]) => branchBody?.isClientReselectable)
           ) {
             // An interactive page receives assets transitively through its
             // dom program, so the feature import rides both outputs.
