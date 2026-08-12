@@ -4,10 +4,12 @@ import {
   assertNoAttributes,
   assertNoParams,
   assertNoVar,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { isPersisted } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   type Binding,
@@ -92,7 +94,14 @@ export default {
     const bodySection = startSection(tag.get("body"));
 
     if (bodySection) {
+      bodySection.isBoundary = true;
       bodySection.upstreamExpression = tagExtra;
+      // A persisted page serializes the boundary's registered content
+      // renderers, so its dom module (where they register) must load even
+      // when nothing else is interactive.
+      if (isPersisted()) {
+        getProgram().node.extra.isInteractive = true;
+      }
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
     }
@@ -112,6 +121,9 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        // A patch pairs the body scope through a `PatchChild` entry, so the
+        // page must ship its patcher (the import rides both outputs).
+        if (isPersisted()) importRuntimeFeature("patch-child");
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -161,6 +173,7 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        if (isPersisted()) importRuntimeFeature("patch-child");
       },
       exit(tag) {
         const { node } = tag;

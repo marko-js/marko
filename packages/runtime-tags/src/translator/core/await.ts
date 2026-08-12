@@ -9,6 +9,7 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { isPersisted } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
@@ -110,6 +111,7 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    bodySection.isBoundary = true;
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -138,6 +140,9 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        // A patch pairs the body scope through a `PatchChild` entry, so the
+        // page must ship its patcher (the import rides both outputs).
+        if (isPersisted()) importRuntimeFeature("patch-child");
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -181,6 +186,7 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        if (isPersisted()) importRuntimeFeature("patch-child");
       },
       exit(tag) {
         const { node } = tag;

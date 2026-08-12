@@ -158,6 +158,9 @@ export interface Section {
   abortSignalExprs: number;
   readsOwner: boolean;
   isBranch: boolean;
+  /** An `<await>`/`<try>` body: always-rendered like the capture path, but
+   * paired (never constructed) by patches. */
+  isBoundary: boolean;
   /** Branch body whose selection can re-run on the client (classified at
    * persisted finalize): patch renders skip it and frames omit its entry. */
   isClientReselectable: true | undefined;
@@ -251,6 +254,7 @@ export function startSection(
       abortSignalExprs: 0,
       readsOwner: false,
       isBranch: false,
+      isBoundary: false,
       isClientReselectable: undefined,
       shellBlocked: undefined,
       opaqueRenderProps: undefined,

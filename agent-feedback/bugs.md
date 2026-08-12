@@ -95,21 +95,8 @@ Re-verify: a template rendering only `<doubler/double value=input.n/>`
 into a second tag's attr, no other client code — the page bundle
 imports only feat modules.
 
-## Post-flush patch writes fail closed via two divergent channels
+## Force the `<await>` resume marker under persisted builds regardless of body serialize reason
 
-`packages/runtime-tags/src/html/writer.ts` › `writePatch` | 2026-08-12 | impact:low | effort:med
+`packages/runtime-tags/src/translator/core/await.ts` › `translate.html.exit` | 2026-08-12 | impact:low | effort:low
 
-A patch frame has two fail-closed surfaces with different caller
-contracts: `patchPoison` (in `html/patch.ts` › `PatchState.resumeScript`)
-ships a poison frame the client rejects (`applyPatch` returns false →
-navigate), while a write after the frame flushed makes `writePatch`
-throw, rejecting the `renderPatch` async iterable mid-stream — after any
-earlier frame may already have applied to the DOM. The compile-time
-admission gate now rejects `<try>`/`<await>` so translator output cannot
-reach the throw, but the runtime is callable directly and any future
-async admission would surface as a stream error, not a poison frame.
-Suggested direction: on a post-flush write, set `patchPoison` and emit a
-poison frame from the next flush instead of throwing (or document that
-renderPatch consumers must navigate on rejection as well as on a false
-applyPatch). Re-verify: grep `patchFlushed` in `html/writer.ts` — the
-throw in `writePatch` vs the poison return in `resumeScript`.
+The `_await` serialize marker arg is `getSerializeGuard(section, bodySection?.serializeReason, true)`, which can emit `0` when the body has no serialize reason of its own — but persisted patches pair the await body through the `BranchStart`/`BranchEnd` resume markers plus the runtime's `pairPatchBoundary` link, so a marker-less body could resume without its owner's `BranchScopes` link and a later patch's `PatchChild` entry would miss (rejecting to navigation). Every current persisted fixture forces the reason via the capture path (the body always holds a patch capture), so this is unverified: probe with a persisted `<await>` whose body is fully static (`<await|v|=p>done</await>`) and check the document render emits the branch markers; if not, the marker guard should ride the root scope reason like `getExprIfSerialized`'s capture-path rule.
