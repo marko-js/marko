@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-ctrl-server-handler/template.marko:4:22
-      2 | <main>
-      3 |   <if=open>
-    > 4 |     <input value="x" valueChange=input.onChange>
-        |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server-derived change handler cannot feed client-owned structure.
-      5 |   </if>
-      6 |   <button onClick() { open = !open }>+</button>
-      7 | </main>

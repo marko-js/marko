@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A client arrow may RETURN a server function: invoking that result is
-// still a server-derived call, so the computed callee stays rejected.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A client arrow RETURNING a server-bound function: the curried call runs
+// whatever the fill last delivered — fresh after every patch.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ title: "a" }, click, { title: "b" }, click, { title: "c" }, click],
 };

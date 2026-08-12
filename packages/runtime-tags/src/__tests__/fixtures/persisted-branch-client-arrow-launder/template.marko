@@ -1,7 +1,8 @@
 <let/open=false/>
 <main>
   <if=open>
-    <const/label=(fn = input.fn) => fn()/>
+    <const/mk=() => input.title/>
+    <const/label=(fn = mk) => fn()/>
     <p>${label()}</p>
   </if>
   <button onClick() { open = !open }>+</button>

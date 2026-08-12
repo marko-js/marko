@@ -6,8 +6,8 @@ const $count = /*@__PURE__*/ _let("count/6", $input_title__OR__count);
 const $input_title__OR__other = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_title", /*@__PURE__*/ _or(9, ($scope) => _text($scope["#text/1"], $scope.input_title + " / " + $scope.other)));
 const $other = /*@__PURE__*/ _let("other/8", $input_title__OR__other);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$count($scope, $scope.count + 1);
-	$other($scope, $scope.other - 1);
+	$count($scope, +$scope.count + 1);
+	$other($scope, +$scope.other - 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

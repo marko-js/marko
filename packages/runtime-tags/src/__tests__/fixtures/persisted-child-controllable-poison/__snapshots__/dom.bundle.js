@@ -6,9 +6,7 @@ const $if_content__setup__script = _script("b1", ($scope) => _on($scope.b, "clic
 
 // template.marko
 const $last = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
-function $onCount($scope) {
-	return (next) => {
-		$last($scope, next);
-	};
-}
+const $onCount = ($scope) => (next) => {
+	$last($scope, next);
+};
 _resume("a0", $onCount);

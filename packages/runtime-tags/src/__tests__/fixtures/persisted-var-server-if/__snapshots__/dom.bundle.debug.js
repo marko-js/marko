@@ -10,11 +10,11 @@ var doubler_default = /*@__PURE__*/ _template("__tests__/tags/doubler/index.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}&%b l`)("b");
-const $if_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count/init", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.count)));
+const $if_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count#7/init", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.count)));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _let("count/7", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	_var($scope, "#childScope/0", $double);
@@ -22,7 +22,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/2", "<p>big <!></p>", "Db%", $if_content__setup);
-const $double = _var_resume("__tests__/template.marko_0_double/var", ($scope, double) => $if($scope, double > 4 ? 0 : 1));
+const $double = _var_resume("__tests__/template.marko_0_double#8/var", ($scope, double) => $if($scope, double > 4 ? 0 : 1));
 const $input_n = ($scope, input_n) => $input_value($scope["#childScope/0"], input_n);
 const $input = ($scope, input) => $input_n($scope, input.n);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

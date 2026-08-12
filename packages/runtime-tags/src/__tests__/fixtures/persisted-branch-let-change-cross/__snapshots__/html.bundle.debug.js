@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell __tests__/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
+_renderer_shells({ "__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -19,10 +19,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			writeScope($scope1_id, {
 				count,
 				"TagVariableChange:count": handler || void 0
-			}, "__tests__/template.marko", "6:4", { count: "7:10" });
+			}, "__tests__/template.marko", "6:4", {
+				count: "7:10",
+				"TagVariableChange:count": ["countChange", "7:10"]
+			});
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1_shell"]);
+	}, $scope0_id, "#text/2", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { handler }, "__tests__/template.marko", 0, { handler: "2:6" });
 	_resume_branch($scope0_id);

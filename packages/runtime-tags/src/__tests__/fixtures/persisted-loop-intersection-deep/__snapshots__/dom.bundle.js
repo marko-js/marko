@@ -3,5 +3,5 @@ const $for_content__input_suffix__OR__count__OR__item = /*@__PURE__*/ _fill_join
 const $for_content__count = /*@__PURE__*/ _closure_get(10, $for_content__input_suffix__OR__count__OR__item, ($scope) => $scope._._);
 const $count = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($for_content__count));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
-	$count($scope, $scope.h + 1);
+	$count($scope, +$scope.h + 1);
 }));

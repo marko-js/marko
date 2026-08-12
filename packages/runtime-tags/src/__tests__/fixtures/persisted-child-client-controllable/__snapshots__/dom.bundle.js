@@ -10,11 +10,9 @@ function $setup($scope) {
 	$v($scope, "");
 	$setup__script$1($scope);
 }
-function $valueChange($scope) {
-	return (_new_v) => {
-		$v($scope, _new_v);
-	};
-}
+const $valueChange = ($scope) => (_new_v) => {
+	$v($scope, _new_v);
+};
 _resume("b0", $valueChange);
 
 // template.marko

@@ -19,6 +19,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_value: ["input.value"],
 		input_big: ["input.big"],
 		plain: "1:8",
-		loud: "2:8"
+		loud: "2:8",
+		"ControlledHandler:#input/1": ["valueChange", "5:28"]
 	});
 }, 1, 0);
