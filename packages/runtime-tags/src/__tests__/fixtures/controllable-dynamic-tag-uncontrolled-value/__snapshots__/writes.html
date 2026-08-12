@@ -1,13 +1,15 @@
-<select>
+<select><!--M_[-->
   <option value=a>A</option>
   <option value=b selected>B</option>
-  <option value=c>C</option>
+  <option value=c>C</option><!--M_]2 a 3-->
 </select><!--M_'1 a 2--><button>pick c</button><!--M_*1 b-->
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
     Da: "select",
     c: "select"
+  }, {
+    Da: "a0 1"
   }], "a1 1"];
   M._.w()
 </script>

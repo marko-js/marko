@@ -1,7 +1,7 @@
-<select>
+<select><!--M_[-->
   <option value=a>A</option><!--M_*3 #option/0-->
   <option value=b selected>B</option><!--M_*3 #option/1-->
-  <option value=c>C</option><!--M_*3 #option/2-->
+  <option value=c>C</option><!--M_*3 #option/2--><!--M_]2 #select/0 3-->
 </select><!--M_'1 #text/0 2--><span>b<!--M_*1 #text/1--></span>
 <script>
   WALKER_RUNTIME("M")("_");
@@ -13,6 +13,7 @@
       "ControlledHandler:#select/0": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_0/valueChange"
         ),
+      "ConditionalRenderer:#select/0": "packages/runtime-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1*content 1",
       "#Renderer": "select"
     }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1 3 _dynamicTagScript 2"

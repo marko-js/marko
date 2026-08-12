@@ -1,0 +1,7 @@
+<let/tag=input.tag/>
+<let/n=0/>
+<button id="swap" onClick() { tag = tag === "div" ? "select" : "div" }>swap</button>
+<button id="bump" onClick() { n++ }>bump</button>
+<${tag} value="b">
+  <option value="a">A${n}</option>
+</>
