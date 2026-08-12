@@ -1,4 +1,4 @@
-// size: 27265 (min) 10102 (brotli)
+// size: 27459 (min) 10162 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -108,7 +108,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   patching = 0,
   isResuming,
   cloneCache = {},
-  R = /[^\p{L}\p{N}]/gu,
+  R = /[\p{L}\p{N}]/gu,
   inputType = "",
   controllableScripts = {},
   controllableRenders = {},
@@ -171,8 +171,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     return (scope, newRenderer, getInput) => {
       let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
       if (
-        scope[rendererAccessor] !==
-          (scope[rendererAccessor] = normalizedRenderer?.a || normalizedRenderer) ||
+        scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       )
         if (
@@ -182,7 +181,10 @@ let unsafeStyleAttrReg = /[\\;]/g,
             normalizedRenderer || (getContent ? getContent(scope) : void 0),
             createBranchWithTagNameOrRenderer,
           ),
-          getTagVar && (scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
+          getTagVar &&
+            (scope[childScopeAccessor]
+              ? (scope[childScopeAccessor].T = (value) => getTagVar()(scope, value))
+              : getTagVar()(scope, void 0)),
           typeof normalizedRenderer == "string")
         ) {
           if (getContent) {
@@ -236,7 +238,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
       rendererAccessor = "D" + nodeAccessor;
     return (scope, renderer) => {
       if (
-        (scope[rendererAccessor] !== (scope[rendererAccessor] = renderer?.a || renderer) &&
+        (scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(renderer)) &&
           (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch),
           renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor])),
         renderer)
@@ -851,12 +853,16 @@ function _var(scope, childAccessor, signal) {
 function _return_change(scope, changeHandler) {
   scope.U = changeHandler || void 0;
 }
-function _id({ $: $global }) {
-  let id = tagIdsByGlobal.get($global) || 0;
-  return (
-    tagIdsByGlobal.set($global, id + 1),
-    "c" + $global.runtimeId + $global.renderId + id.toString(36)
-  );
+function _id(scope, accessor) {
+  let id = accessor !== void 0 && scope[accessor];
+  if (!id) {
+    let $global = scope.$,
+      n = tagIdsByGlobal.get($global) || 0;
+    (tagIdsByGlobal.set($global, n + 1),
+      (id = "c" + $global.runtimeId + $global.renderId + n.toString(36)),
+      accessor !== void 0 && (scope[accessor] = id));
+  }
+  return id;
 }
 function _script(id, fn) {
   return (
@@ -869,21 +875,23 @@ function _script(id, fn) {
 function _el_read(value) {
   return value;
 }
-function* traverse(scope, path, i = path.length - 1) {
+function* traverse(scope, path, args, i = path.length - 1) {
   if (scope)
     if (Symbol.iterator in scope)
-      for (let childScope of scope.values()) yield* traverse(childScope, path, i);
+      for (let childScope of scope.values()) yield* traverse(childScope, path, args, i);
     else {
       let item = scope[path[i]];
-      i ? yield* traverse(item, path, i - 1) : yield typeof item == "function" ? item() : item;
+      i
+        ? yield* traverse(item, path, args, i - 1)
+        : yield typeof item == "function" ? item(...args) : item;
     }
 }
 function _hoist(...path) {
   return (
     (path = path.map((p) => (typeof p == "string" ? p : decodeAccessor(p)))),
     (scope) => {
-      let fn = () => traverse(scope, path).next().value;
-      return ((fn[Symbol.iterator] = () => traverse(scope, path)), fn);
+      let fn = (...args) => traverse(scope, path, args).next().value;
+      return ((fn[Symbol.iterator] = () => traverse(scope, path, [])), fn);
     }
   );
 }
@@ -1196,7 +1204,10 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     (params ||= void 0));
   let clone = template
     ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(template, ns))(branch, walks);
+        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(template, ns))(
+          branch,
+          walks,
+        );
       }
     : (branch) => {
         walk((branch.S = branch.K = new Text()), walks, branch);
@@ -1317,7 +1328,9 @@ function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
     partial = {};
   for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
-    !skip[name] && !(nextAttrs && name in nextAttrs) && el.removeAttribute(name);
+    !skip[name] &&
+      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) &&
+      el.removeAttribute(name);
   }
   for (let name in nextAttrs) {
     let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
@@ -1359,7 +1372,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
 }
 function _attr_content(scope, nodeAccessor, value) {
   let content = normalizeClientRender(value);
-  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
+  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
     content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
   for (let accessor in content?.g)
@@ -1430,10 +1443,9 @@ function resolveCursorPosition(inputType, initialPosition, initialValue, updated
       after = initialValue.slice(initialPosition);
     if (updatedValue.startsWith(before)) return initialPosition;
     if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
-    let count = before.replace(R, "").length,
-      pos = 0;
-    for (; count && updatedValue[pos];) updatedValue[pos++].replace(R, "") && count--;
-    return pos;
+    let count = before.match(R)?.length;
+    for (; count && R.test(updatedValue);) count--;
+    return count ? updatedValue.length : R.lastIndex;
   }
   return -1;
 }
@@ -1559,7 +1571,7 @@ function _attr_input_value(
     (scope["F" + nodeAccessor] = valueChange ? 2 : 5),
     valueChange && scope.H < runId
       ? setInputValue(el, normalizedValue)
-      : setDefault(scope, nodeAccessor, normalizedValue));
+      : setDefault(scope, nodeAccessor, value));
 }
 function _attr_input_value_attribute_default(scope, nodeAccessor, value) {
   _attr(scope[nodeAccessor], "value", value);
@@ -1973,6 +1985,9 @@ function renderCatch(scope, error) {
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
 }
+function rendererKey(renderer) {
+  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
+}
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
 }
@@ -2030,6 +2045,7 @@ let empty = [],
   classEventResolver,
   scopesByRender = /* @__PURE__ */ new WeakMap(),
   getRenderScopes = ($global) => {
+    init($global.runtimeId);
     let render = self[$global.runtimeId]?.[$global.renderId],
       scopes = render && scopesByRender.get(render);
     return (render && !scopes && scopesByRender.set(render, (scopes = {})), scopes);
@@ -2094,6 +2110,7 @@ let empty = [],
       );
     },
     render(out, component, renderer, args) {
+      init(out.global.runtimeId);
       let branch = component.scope,
         created = 0;
       if (
