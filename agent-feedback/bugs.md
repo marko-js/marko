@@ -50,12 +50,6 @@ A reorder flush appends `<t hidden {commentPrefix}={reorderId}>reorderHTML</t>`,
 
 `runtime.x` keeps a single `nextSibling`/`onNextSibling` pair. A `<t hidden>` swap callback pending on that element's next sibling is silently dropped if, while walking the `<t>`'s children, a placeholder-end comment (`!id`) hits the `runtime.l[id] && placeholders[id]` branch and reassigns the pair — the outer swap then never fires and hydration freezes. Current server flush ordering appears to keep this unreachable, so this is robustness, not a live bug: fire the pending callback before reassigning (or queue), weighed against inline-runtime bytes. Re-verify: read `REORDER_RUNTIME_CODE` and confirm both the `op == "!"` and `<t>` branches assign `nextSibling`/`onNextSibling` without first draining a pending one.
 
-## Renumber alias bindings too, or stop using `Binding.id` as the `bindingUtil` identity tiebreak
-
-`packages/runtime-tags/src/translator/util/references.ts` › `finalizeReferences` | 2026-07-23 | impact:med | effort:med
-
-`bindingUtil.compare` returns `0` for two distinct bindings sharing `section.id` and `id` (its `type` tiebreak applies only to a dom/non-dom pair), and `Sorted.add`/`find`/`has` treat `0` as identity. But `binding.id = nextId++` renumbers only bindings in `section.bindings`, which is filled with `getCanonicalBinding(binding)`, so a pure alias (`property` and `excludeProperties` both `undefined`) keeps its creation-order id and can collide with a renumbered section-mate. `dropReferencedBindings`, run afterwards by `getReferenceFinalizers()` and rebuilding `referencedBindings` with `bindingUtil.add`, then collapses the pair and drops a real dependency — latent today, since no fixture miscompiles. Renumber aliases alongside their canonical (or into a disjoint range), or give `Binding` a separate identity field. Re-verify: wrap `bindingUtil.compare`, compile `__tests__/fixtures/param-destructure-default/template.marko`, group by `(section.id, id, type === dom)` — section 1 id 6 holds `$foo` (param alias) and `$bar` (derived), and `compare` returns `0`.
-
 ## Give a hidden `<show>` a wrapper legal in table/select insertion contexts
 
 `packages/runtime-tags/src/html/writer.ts` › `_show_start` | 2026-07-28 | impact:med | effort:high
