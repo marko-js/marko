@@ -7,7 +7,8 @@ import { writeModuleRegistrations } from "../../util/module-registrations";
 import { find, forEach } from "../../util/optional";
 import {
   getPatchFillBindings,
-  isPatchEffectBinding,
+  hasPatchEffectReads,
+  isPatchWriteBinding,
   isPatchFillBinding,
 } from "../../util/persisted/delivery";
 import {
@@ -188,7 +189,7 @@ export default {
           );
         }
         if (
-          find(fillSection.bindings, isPatchEffectBinding) ||
+          find(fillSection.bindings, needsPatchEffectRuntime) ||
           sectionHasGlobalEffect(fillSection)
         ) {
           importRuntimeFeature("patch-effect");
@@ -267,6 +268,10 @@ export default {
 
 // A destructured grain inherits its declaration's function-carrying
 // potential through the alias chain.
+function needsPatchEffectRuntime(binding: Binding) {
+  return isPatchWriteBinding(binding) && hasPatchEffectReads(binding);
+}
+
 function upstreamFunctionValued(binding: Binding) {
   for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
     if (cur.functionValued) return true;
