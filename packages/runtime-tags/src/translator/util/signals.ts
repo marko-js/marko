@@ -19,8 +19,8 @@ import {
   getPatchFillBindings,
   getPatchFillKey,
   hasUnfillablePatchReads,
-  isPatchCaptureWriteBinding,
-  isPatchEffectBinding,
+  hasPatchEffectReads,
+  isPatchWriteBinding,
   isPatchFillBinding,
 } from "./persisted/delivery";
 import {
@@ -250,22 +250,6 @@ export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   "htmlScopeStatements",
   () => [],
 );
-
-// Input props this section renders as fed renderers: a patch of the
-// section only applies faithfully while they are nullish. Translate
-// scratch (recorded by the patch assert), never section metadata.
-const [getOpaqueRenderProps, setOpaqueRenderProps] = createSectionState<
-  string[] | undefined
->("opaqueRenderProps");
-
-export function addOpaqueRenderProp(section: Section, prop: string) {
-  const props = getOpaqueRenderProps(section);
-  if (!props) {
-    setOpaqueRenderProps(section, [prop]);
-  } else if (!props.includes(prop)) {
-    props.push(prop);
-  }
-}
 
 const [getBindingGetterIdMap] = createSectionState<Map<Binding, t.Identifier>>(
   "bindingGetterIdMap",
@@ -1740,10 +1724,7 @@ export function writeHTMLResumeStatements(
   // id when the value it saw changed.
   if (isPersisted()) {
     forEach(section.bindings, (binding) => {
-      if (
-        isPatchEffectBinding(binding) ||
-        isPatchCaptureWriteBinding(binding)
-      ) {
+      if (isPatchWriteBinding(binding)) {
         fillCalls.push(
           gatePatchWrite(
             binding,
@@ -1768,7 +1749,7 @@ export function writeHTMLResumeStatements(
       if (signal.hasHTMLEffect) {
         let accessors = "";
         forEach(signal.referencedBindings, (binding) => {
-          if (isPatchEffectBinding(binding)) {
+          if (isPatchWriteBinding(binding) && hasPatchEffectReads(binding)) {
             accessors += (accessors && " ") + getScopeAccessor(binding);
           }
         });
@@ -1812,9 +1793,9 @@ export function writeHTMLResumeStatements(
 
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
-  // A RENDERED fed renderer has no faithful patch: its poison entry makes
-  // the frame reject (navigation). Nullish slots patch normally.
-  const opaqueRenderProps = persisted && getOpaqueRenderProps(section);
+  // A RENDERED fed renderer poisons the frame (navigation) — a stopgap
+  // until fed renderers dispatch like any dynamic hop; nullish slots patch.
+  const opaqueRenderProps = persisted && section.opaqueRenderProps;
   if (opaqueRenderProps) {
     for (const prop of opaqueRenderProps) {
       body.push(
