@@ -29,11 +29,11 @@ import {
 } from "./optional";
 import {
   addPersistedChildRenderer,
-  hasServerRequiredParam,
+  hasStructuralOrGlobalParam,
   inClientOwnedStructure,
   kPatchClientOwned,
   onFinalizePersisted,
-  recordServerRequiredParams,
+  recordStructuralOrGlobalParams,
 } from "./persisted";
 import {
   addRead,
@@ -546,10 +546,12 @@ export function finalizeKnownTags(section: Section) {
           ensureReasonGroups(
             getSerializeProvenance(section, scopeBinding, group.id),
           );
-          // The fact rolls up: feeding a param the child needs
-          // server-owned makes this template's feeders so too.
-          if (some(group.reason, (binding) => binding.serverRequiredParam)) {
-            recordServerRequiredParams(
+          // The fact rolls up: a param feeding a child's structural or
+          // `$global`-mixed param makes this template's params so too.
+          if (
+            some(group.reason, (binding) => binding.structuralOrGlobalParam)
+          ) {
+            recordStructuralOrGlobalParams(
               getSerializeProvenance(section, scopeBinding, group.id),
             );
           }
@@ -603,7 +605,7 @@ export function getPersistedGroupOwnership(
       globalMixed: !!(sources?.state && sources.global),
       globalFed: !!sources?.global,
       parentParams: sources?.param,
-      serverRequired: hasServerRequiredParam(group.reason),
+      serverRequired: hasStructuralOrGlobalParam(group.reason),
     };
   });
 }
