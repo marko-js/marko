@@ -180,6 +180,8 @@ export const compat = {
   // A class closure has no browser identity, so it resumes as a noop; a parent
   // that rerenders replaces it with the live handler as it hydrates.
   registerClassFunctions(input: any) {
+    // Own keys only: a nested closure resuming as a noop swallows its own clicks,
+    // so leaving it to fail as unserializable reports the split parent instead.
     for (const key in input) {
       const value = input[key];
       if (typeof value === "function" && !getRegistered(value)) {

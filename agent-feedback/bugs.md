@@ -95,12 +95,6 @@ fields whose resolved form is lossy. Re-verify by server-rendering
 reached from browser-updating content, then comparing `fmt.format(date)` before
 and after resume.
 
-## Bridge Class-API function props nested below the top level of a Tags-API child's input
-
-`packages/runtime-tags/src/html/compat.ts` › `registerClassFunctions` | 2026-08-05 | impact:med | effort:med
-
-`registerClassFunctions` walks only the input's own enumerable keys, so a Class parent's closure reaching a Tags child inside an object or an array still arrives at the tags serializer unregistered and aborts the boundary (`writeFunction` → `writeNever` → `throwUnserializable` in `packages/runtime-tags/src/html/serializer.ts`). The top-level attribute and tag-params `args` shapes are both covered, because the call site is `TagsCompat` in `packages/runtime-class/src/runtime/helpers/tags-compat/runtime-html.js`, which sees whichever of the two `dynamicTag5.___runtimeCompat` selected as `_.i`. A recursive walk would be wasteful on every class-to-tags render; the better direction is likely a serializer-side hook that resolves an unregistered function to the compat noop when it originates from the class compat layer, so the depth of the value no longer matters. Debug builds now report the abort from the compat flush, so the failure names the offending value; optimize builds compile out `throwUnserializable` and silently drop the function instead. Re-verify: change `interop-event-inline-class-to-tags/template.marko` to pass `handlers={ ping() { component.handlePing(1) } }` and have `tags-pinger.marko` call `input.handlers.ping()` from its `onClick`.
-
 ## Revive a split Class parent's inline function prop on a Tags child, or reject it at compile time
 
 `packages/runtime-class/src/runtime/helpers/dynamic-tag.js` › `addTagsEvents` | 2026-08-05 | impact:med | effort:high
