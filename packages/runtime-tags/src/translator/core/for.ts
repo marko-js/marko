@@ -441,23 +441,27 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
-        setClosureSignalBuilder(tag, (closure, render) => {
-          const selectorKeyBinding = getForSelectorKey(bodySection, closure);
-          if (selectorKeyBinding) {
+        setClosureSignalBuilder(
+          tag,
+          { kind: "for", ref: nodeRef },
+          (closure, render) => {
+            const selectorKeyBinding = getForSelectorKey(bodySection, closure);
+            if (selectorKeyBinding) {
+              return callRuntime(
+                "_for_selector",
+                getScopeAccessorLiteral(nodeRef, true),
+                getScopeAccessorLiteral(closure, true),
+                getScopeAccessorLiteral(selectorKeyBinding, true),
+                render,
+              );
+            }
             return callRuntime(
-              "_for_selector",
+              "_for_closure",
               getScopeAccessorLiteral(nodeRef, true),
-              getScopeAccessorLiteral(closure, true),
-              getScopeAccessorLiteral(selectorKeyBinding, true),
               render,
             );
-          }
-          return callRuntime(
-            "_for_closure",
-            getScopeAccessorLiteral(nodeRef, true),
-            render,
-          );
-        });
+          },
+        );
 
         const forType = getForType(node)!;
         const signal = getSignal(tagSection, nodeRef, "for");
