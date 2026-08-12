@@ -8,8 +8,10 @@ import { find, forEach } from "../../util/optional";
 import {
   getPatchFillBindings,
   isPatchEffectBinding,
+  isPatchFillBinding,
 } from "../../util/persisted";
 import {
+  type Binding,
   BindingType,
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
@@ -175,9 +177,15 @@ export default {
 
       // Patches deliver server contributions to registered fill signals, so
       // a template with fills in any section ships the patcher.
+      let boundFills = false;
       forEachSection((fillSection) => {
         if (getPatchFillBindings(fillSection)) {
           importRuntimeFeature("patch-value");
+          boundFills ||= !!find(
+            fillSection.bindings,
+            (binding) =>
+              isPatchFillBinding(binding) && upstreamFunctionValued(binding),
+          );
         }
         if (
           find(fillSection.bindings, isPatchEffectBinding) ||
@@ -186,6 +194,13 @@ export default {
           importRuntimeFeature("patch-effect");
         }
       });
+      // Function-carrying fills (`functionValued`: literal functions,
+      // invoked or handler-attr reads, derivations over them) need the
+      // bind patchers; other templates skip them (an unshipped patcher
+      // rejects the frame into navigation, never a broken bind).
+      if (boundFills) {
+        importRuntimeFeature("patch-value-bind");
+      }
 
       const written = writeSignals(section);
       writeRegisteredFns();
@@ -249,3 +264,12 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+// A destructured grain inherits its declaration's function-carrying
+// potential through the alias chain.
+function upstreamFunctionValued(binding: Binding) {
+  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
+    if (cur.functionValued) return true;
+  }
+  return false;
+}

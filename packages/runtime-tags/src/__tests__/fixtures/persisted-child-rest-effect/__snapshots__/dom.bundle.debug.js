@@ -6,7 +6,7 @@ const $input$1 = ($scope, input) => {
 	_text($scope["#text/0"], JSON.stringify(input));
 	$input_label($scope, input.label);
 };
-const $input_label__script = _script("__tests__/tags/dump/index.marko_0_input_label", ($scope) => {
+const $input_label__script = _script("__tests__/tags/dump/index.marko_0_input_label#3", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.input_label + "]";
@@ -24,7 +24,7 @@ const $input_title__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.mar
 })));
 const $count = /*@__PURE__*/ _let("count/5", $input_title__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

@@ -21,7 +21,7 @@
 }
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1_shell packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   "PatchText:#text/0": "Store!",
   "PatchLoop:#text/1": [{
     "PatchText:#text/0": "a",
@@ -31,7 +31,7 @@
         "PatchSetup:": {
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko0": 0
         }
-      }, _.e = "packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1_shell"]
+      }, _.e = "packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1*shell"]
     },
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/template.marko0": 0

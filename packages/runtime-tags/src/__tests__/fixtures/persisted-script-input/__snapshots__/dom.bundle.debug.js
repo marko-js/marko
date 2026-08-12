@@ -3,7 +3,7 @@ const $template = "<main><h1> </h1></main>";
 const $walks = "E m";
 const $setup = () => {};
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
-const $input_announce__script = _script("__tests__/template.marko_0_input_announce", ($scope) => {
+const $input_announce__script = _script("__tests__/template.marko_0_input_announce#4", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.announce = $scope.input_announce;

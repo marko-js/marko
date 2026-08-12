@@ -3,5 +3,5 @@ const $for_content__input_title__OR__count__OR__item = /*@__PURE__*/ _fill_join_
 const $for_content__count = /*@__PURE__*/ _resume("a3", /*@__PURE__*/ _for_closure(0, $for_content__input_title__OR__count__OR__item));
 const $count = /*@__PURE__*/ _let(6, $for_content__count);
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$count($scope, $scope.g + 1);
+	$count($scope, +$scope.g + 1);
 }));

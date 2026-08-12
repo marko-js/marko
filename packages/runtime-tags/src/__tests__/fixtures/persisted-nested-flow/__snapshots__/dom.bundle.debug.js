@@ -3,7 +3,7 @@ const $template$1 = "<footer><span><!> (<!>)</span><button>ack</button></footer>
 const $walks$1 = "E%c%l l";
 const $seen = /*@__PURE__*/ _let("seen/6", ($scope) => _text($scope["#text/1"], $scope.seen));
 const $setup__script = _script("__tests__/tags/badge.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$seen($scope, $scope.seen + 1);
+	$seen($scope, +$scope.seen + 1);
 }));
 function $setup$1($scope) {
 	$seen($scope, 0);

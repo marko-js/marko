@@ -9,7 +9,8 @@ var field_default = _template_persisted("__tests__/tags/field/index.marko", (inp
 		input_valueChange: input.valueChange
 	}, "__tests__/tags/field/index.marko", 0, {
 		input_value: ["input.value"],
-		input_valueChange: ["input.valueChange"]
+		input_valueChange: ["input.valueChange"],
+		"ControlledHandler:#input/0": ["valueChange"]
 	});
 }, 0, 0);
 

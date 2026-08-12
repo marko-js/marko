@@ -1,7 +1,8 @@
+<const/fmt=(s: string) => s + ":" + input.title/>
 <let/show=true/>
 <main>
   <if=show>
-    <card fn=input.fn/>
+    <card fn=fmt/>
   </if>
   <button onClick() { show = !show }>t</button>
 </main>

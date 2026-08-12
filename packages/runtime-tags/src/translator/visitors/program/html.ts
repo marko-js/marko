@@ -13,7 +13,6 @@ import {
   usedSharedUid,
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
-import { isCallCleanFn } from "../../util/is-call-clean-fn";
 import { isConditionTag, isCoreTagName } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
@@ -33,6 +32,8 @@ import {
   hasUnfillablePatchReads,
   inClientOwnedStructure,
   isPatchCaptureSection,
+  isPatchCaptureWriteBinding,
+  isPatchEffectBinding,
   isPatchFillBinding,
   kPatchClientOwned,
   scopeReasonRuntime,
@@ -392,7 +393,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         );
       }
     });
-    assertNoServerFnCalls(node, value);
   };
   // Every server-sourced read in an expression: direct reads, member
   // reads, and reads captured inside any nested function.
@@ -437,51 +437,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       });
       if (opaque) return "renders an untracked call";
     }
-    // Calls resolve in their own lexical scope so an inner shadow of a
-    // safe arrow is judged as what it actually is.
-    let serverFn = false;
-    const checkCall = (
-      n: t.CallExpression | t.OptionalCallExpression,
-      scope: t.NodePath["scope"],
-    ) => {
-      serverFn ||=
-        !isChildClientFnCallee(n.callee, scope) &&
-        (exprHasServerSources(n.callee) ||
-          localCalleeAliasesServer(n.callee, scope));
-    };
-    if (t.isCallExpression(value) || t.isOptionalCallExpression(value)) {
-      checkCall(value, valuePath.scope);
-    }
-    valuePath.traverse({
-      CallExpression(call) {
-        checkCall(call.node, call.scope);
-      },
-      OptionalCallExpression(call) {
-        checkCall(call.node, call.scope);
-      },
-    });
-    return serverFn ? "calls a server-derived function" : null;
-  };
-  // A plain local (a declarator or param default) carries no reference
-  // info of its own, so its initializer's server reads decide the call.
-  const localCalleeAliasesServer = (
-    callee: t.Node,
-    scope: t.NodePath["scope"],
-  ) => {
-    if (!t.isIdentifier(callee) || !scope) return false;
-    const bindingPath = scope.getBinding(callee.name)?.path;
-    if (bindingPath?.isVariableDeclarator()) {
-      return (
-        !!bindingPath.node.init && exprHasServerSources(bindingPath.node.init)
-      );
-    }
-    if (
-      bindingPath?.isIdentifier() &&
-      bindingPath.parentPath?.isAssignmentPattern()
-    ) {
-      return exprHasServerSources(bindingPath.parentPath.node.right);
-    }
-    return false;
+    return null;
   };
   // The input properties a template renders as content (`true` when the
   // reach is unanalyzable: opaque dynamic tags, whole-bag/computed reads).
@@ -548,25 +504,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     !node.body.body.length &&
     !node.attributeTags?.length &&
     !node.arguments?.length;
-  // The child is a pure client instance wherever it is admitted, so a
-  // bare reference to its own call-clean `<const>` arrow is fresh.
-  const isChildClientFnCallee = (
-    callee: t.Node,
-    scope: t.NodePath["scope"] | undefined,
-  ) => {
-    if (!t.isIdentifier(callee) || !scope) return false;
-    const binding = scope.getBinding(callee.name);
-    const tag = binding?.path.find((p: t.NodePath) => p.isMarkoTag())?.node as
-      | t.MarkoTag
-      | undefined;
-    return (
-      !!tag &&
-      tag.var === binding!.identifier &&
-      t.isStringLiteral(tag.name, { value: "const" }) &&
-      tag.attributes[0]?.type === "MarkoAttribute" &&
-      isCallCleanFn(tag.attributes[0].value)
-    );
-  };
   // Whether a template (and, recursively, everything it renders) is a
   // self-contained client instance: the reason it is not, or null.
   const childUnsafety = new Map<unknown, string | null>();
@@ -680,21 +617,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     childUnsafety.set(file, reason);
     return reason;
   };
-  // A server-derived change handler ships as an unbound registry factory
-  // into a skipped region (no `_patch_bind` entry rebinds it), so calls
-  // after a patch die: fail closed until fills learn to rebind.
-  const assertNoServerChangeHandler = (attr: t.MarkoAttribute) => {
-    if (
-      /Change$/.test(attr.name) &&
-      !t.isFunction(attr.value) &&
-      exprHasServerSources(attr.value)
-    ) {
-      unsupported(
-        attr,
-        "a server-derived change handler cannot feed client-owned structure",
-      );
-    }
-  };
   // Provenance-free feeds (imports, opaque reads) can still change across
   // patches, so only an absent or constant attr leaves a group inert.
   const groupFedUnsafely = (
@@ -712,39 +634,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         names?.has(attr.name) &&
         !evaluate(attr.value).confident,
     );
-  };
-  // A server-created function re-binds stale on patch; one DECLARED in
-  // the region is client-created and recomputes off fills, so it's fresh.
-  // Only a bare reference is exempt: a computed callee (`x()()`) could
-  // invoke a server value the declaring arrow merely returned.
-  const calleeIsServerDerived = (callee: t.Node) => {
-    if (t.isIdentifier(callee)) {
-      const extra = callee.extra;
-      let server = !!extra?.globalBindings;
-      forEach(extra?.read?.binding ?? extra?.referencedBindings, (binding) => {
-        const sources = getSerializeSourcesForRef(binding);
-        if (sources?.param || sources?.global) {
-          server ||= !(
-            binding.declaresFunction && inClientOwnedStructure(binding.section)
-          );
-        }
-      });
-      return server;
-    }
-    return exprHasServerSources(callee);
-  };
-  const assertNoServerFnCalls = (node: t.Node, value: t.Node) => {
-    t.traverseFast(value, (n) => {
-      if (
-        (t.isCallExpression(n) || t.isOptionalCallExpression(n)) &&
-        calleeIsServerDerived(n.callee)
-      ) {
-        unsupported(
-          node,
-          "calling a server-derived function inside client-owned structure is not supported yet",
-        );
-      }
-    });
   };
   program.traverse({
     MarkoPlaceholder(placeholder) {
@@ -997,7 +886,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                   "a renderer the child renders cannot feed from a server value",
                 );
               }
-              assertNoServerChangeHandler(attr);
               assertDeliverableInClientOwned(
                 attr,
                 attr.value,
@@ -1032,7 +920,20 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                 "an input the child needs server-owned cannot feed from client-owned structure",
               );
             }
-            if (!every(group.parentParams, isPatchFillBinding)) {
+            // Under state the child recomputes, so origins need fill
+            // JOINS; a composed value ships whole through its own fill,
+            // and only its function captures need live slots (writes).
+            if (
+              group.stateFed
+                ? !every(group.parentParams, isPatchFillBinding)
+                : !every(
+                    group.parentParams,
+                    (binding) =>
+                      isPatchFillBinding(binding) ||
+                      isPatchEffectBinding(binding) ||
+                      isPatchCaptureWriteBinding(binding),
+                  )
+            ) {
               unsupported(
                 node,
                 "a server value feeding a child inside client-owned structure must deliver as a fill",
@@ -1296,7 +1197,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           isEventOrChangeHandler(attr.name)
         ) {
           if (clientOwnedStructure) {
-            assertNoServerChangeHandler(attr);
             forEach(
               (attr.value.extra as t.FunctionExtra | undefined)
                 ?.referencedBindingsInFunction,
@@ -1313,7 +1213,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                 }
               },
             );
-            assertNoServerFnCalls(attr, attr.value);
           }
         } else {
           if (
@@ -1328,9 +1227,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             );
           }
           if (clientOwnedStructure) {
-            if (attr.type === "MarkoAttribute") {
-              assertNoServerChangeHandler(attr);
-            }
             assertDeliverableInClientOwned(attr, attr.value, attr.value.extra);
           }
         }
