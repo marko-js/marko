@@ -34,12 +34,7 @@ import {
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import { isReasonDynamic } from "../../util/serialize-reasons";
-import {
-  getDroppedShellIds,
-  getShellId,
-  getShells,
-  recordConstructBlocker,
-} from "../../util/shell";
+import { getShellId, getShells } from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -205,17 +200,14 @@ export default {
       if (persisted && shells) {
         // Branch shells, derived during analyze, register at server module
         // load so patches can ship constructible shells without the client
-        // bundling conditional content. Translate may have dropped some
-        // (state-fed holes construct unfaithfully).
+        // bundling conditional content.
         const active = { ...shells };
-        // Every blocker funnels through the recorded shell decision; the
-        // packaging below only reads it.
+        // The one translate-side blocker: `hasHTMLEffect` only exists once
+        // translate registers effects, so this drop cannot move to analyze.
         forEachSection((section) => {
-          if (shells[getShellId(section)] && sectionHasServerEffect(section)) {
-            recordConstructBlocker(section, "effect reads the server");
-          }
+          const id = getShellId(section);
+          if (active[id] && sectionHasServerEffect(section)) delete active[id];
         });
-        for (const id of getDroppedShellIds()) delete active[id];
         // Mount-effect register ids ride the shell's id token (entries
         // reference the bare id).
         forEachSection((section) => {

@@ -10,6 +10,7 @@ import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt } from "../util/optional";
 import { constructRendersReads } from "../util/persisted/delivery";
+import { onFinalizePersisted } from "../util/persisted/lifecycle";
 import {
   ensurePersistedCaptureGroups,
   inClientReselectableStructure,
@@ -46,7 +47,6 @@ import {
   getSerializeSourcesForExpr,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
-import { recordConstructBlocker } from "../util/shell";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
@@ -106,6 +106,22 @@ export default {
             `${getRuntimePath("dom")}/patch-text.feat`,
           );
           ensurePersistedCaptureGroups(() => valueExtra);
+          // A state-fed hole the construct cannot render faithfully (no
+          // seed fill or INIT closure) drops the branch's shell.
+          onFinalizePersisted(() => {
+            const holeSources = getSerializeSourcesForExpr(valueExtra);
+            if (
+              holeSources?.state &&
+              !holeSources.global &&
+              section.isBranch &&
+              !constructRendersReads(
+                section,
+                valueExtra.referencedBindings as Opt<Binding>,
+              )
+            ) {
+              section.shellBlocked = true;
+            }
+          });
         }
       }
     },
@@ -202,19 +218,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       throw placeholder.buildCodeFrameError(
         "Persisted templates do not yet support `$global` contributions to stateful expressions.",
       );
-    }
-    // Seedable local state and direct parent-state closures both construct
-    // faithfully (seed fills + the registered INIT render every read);
-    // anything else state-fed still drops the shell.
-    if (
-      holeSources?.state &&
-      section.isBranch &&
-      !constructRendersReads(
-        section,
-        valueExtra.referencedBindings as Opt<Binding>,
-      )
-    ) {
-      recordConstructBlocker(section, "state-fed hole");
     }
     // A state-fed hole recomputes through the signal graph, and inside
     // client-owned structure delivery is owner fills: neither captures.
