@@ -5,7 +5,6 @@ import normalizeStringExpression from "./normalize-string-expression";
 import { isCapturePathSection } from "./persisted/structure";
 import { forEachSection, type Section, StructureKind } from "./sections";
 import { getResumeRegisterId } from "./signals";
-import { createProgramState } from "./state";
 import { resolveStructure, trimTrailingExits } from "./structure";
 
 declare module "@marko/compiler/dist/types" {
@@ -23,6 +22,15 @@ export function getShells() {
 // Builds every branch shell as pre-serialized frame chunks the html
 // output registers as data.
 export function buildShells() {
+  // Enclosing branches of a client-reselectable selection also construct
+  // unfaithfully: the frame cannot reproduce the selection inside them.
+  forEachSection((section) => {
+    if (section.isClientReselectable) {
+      for (let cur = section.parent; cur?.parent; cur = cur.parent) {
+        if (cur.isBranch) cur.shellBlocked = true;
+      }
+    }
+  });
   forEachSection((section) => {
     // Every capture-position branch body ships a shell, except
     // client-reselectable bodies: they never construct from a frame.
@@ -37,7 +45,9 @@ export function buildShells() {
     // Frame headers reserve `;`/`,`/space, which neither ids (normalized
     // at the source) nor walk codes can carry; the template part is free.
     if (shell) {
+      // The id interns even for a blocked shell so register ids stay stable.
       const id = getShellId(section);
+      if (section.shellBlocked) return;
       (getProgram().node.extra.persistedShells ??= {})[id] = shell[1]
         ? `${id};${shell[1]};${shell[0]}`
         : `${id},${shell[0]}`;
@@ -47,34 +57,6 @@ export function buildShells() {
 
 export function getShellId(section: Section) {
   return getResumeRegisterId(section, "shell");
-}
-
-// A construct blocker drops the section's shell: patches diverging to it
-// fail closed to a document navigation. Enclosing branches of a
-// client-reselectable selection derive as blocked; translate observations
-// (state-fed holes/attrs, server effects) add theirs via the recorder.
-const [getShellBlockers] = createProgramState(() => {
-  const blocked = new Set<Section>();
-  forEachSection((section) => {
-    if (section.isClientReselectable) {
-      for (let cur = section.parent; cur?.parent; cur = cur.parent) {
-        if (cur.isBranch) blocked.add(cur);
-      }
-    }
-  });
-  return blocked;
-});
-
-export function recordConstructBlocker(section: Section, _reason: string) {
-  getShellBlockers().add(section);
-}
-
-export function isShellDropped(section: Section) {
-  return getShellBlockers().has(section);
-}
-
-export function getDroppedShellIds() {
-  return [...getShellBlockers().keys()].map(getShellId);
 }
 
 // A branch's shell is its resolved structure — the same inert template and
