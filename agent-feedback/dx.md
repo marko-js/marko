@@ -14,12 +14,6 @@ Two majors stay pinned because they are migrations, not refreshes. Babel is held
 
 `fixGuide(translator)` interpolates only the resolved cheatsheet path, so every thrown compile error gets the identical `Fix guide: READ <path> before writing a fix.` — verified: `<div` (EOF in open tag) and bare text at root produce byte-identical hints. `packages/runtime-tags/cheatsheet.md` is ~200 lines over 11 sections, and one label spans several causes (`Invalid attribute name.` covers both a bad attribute and unwrapped concise text), so a whole-file pointer cannot disambiguate. Pass the diagnostic (label/loc, or a hint the emitter attaches from its AST context) into `appendAgentFixGuide` and append a section anchor, e.g. `see 'Golden rules' #1 in <path>`. See also "Attach the agent fix-guide to `errorRecovery` diagnostics, not just thrown errors" — a separate coverage defect that wants the same diagnostic-keyed guide helper, so build it once. Re-verify: compile two differently-broken templates with `CLAUDECODE=1` and confirm the appended lines differ.
 
-## Document (or script) how to scope `npm test` to a single file
-
-`.mocharc.json` › `spec` | 2026-07-15 | impact:low | effort:low
-
-Positional file args are unioned with the configured `spec` glob rather than replacing it: with mocha 11.7.6, `mocha packages/runtime-tags/src/__tests__/serializer.test.ts` resolves `argv.spec` to `["…/serializer.test.ts", "packages/*/@(src|test)/**/*.test.@(js|ts)"]`, so the whole suite runs — silently, since the named file is included. `--spec <file>` merges the same way; only `--grep` or bypassing the config (`npx mocha --no-config --no-package --timeout 10000 --require ~ts <file>`) actually scopes a run. Add a `test:file` script that forwards to mocha without the default spec, or document the incantation in CLAUDE.md beside the existing `--grep` line. Re-verify by printing the resolved `argv.spec` from mocha's run-command handler.
-
 ## Serialize `Blob` and `File`, including inside `FormData`
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeFormData` | 2026-07-23 | impact:med | effort:med
