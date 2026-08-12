@@ -140,16 +140,6 @@ export function concat<T>(a: Opt<T>, b: Opt<T>): Opt<T> {
   return b;
 }
 
-export function indexOf<T>(data: Opt<T>, item: T) {
-  return data !== undefined
-    ? Array.isArray(data)
-      ? data.indexOf(item)
-      : data === item
-        ? 0
-        : -1
-    : -1;
-}
-
 export function size<T>(data: Opt<T>) {
   return data !== undefined ? (Array.isArray(data) ? data.length : 1) : 0;
 }
