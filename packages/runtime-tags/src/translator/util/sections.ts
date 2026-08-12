@@ -144,6 +144,9 @@ export interface Section {
   /** Branch body whose selection can re-run on the client (classified at
    * persisted finalize): patch renders skip it and frames omit its entry. */
   isClientReselectable: true | undefined;
+  /** Input props this section renders as fed renderers: a patch poisons
+   * while they are non-nullish (a stopgap, dropped once they dispatch). */
+  opaqueRenderProps: string[] | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -228,6 +231,7 @@ export function startSection(
       readsOwner: false,
       isBranch: false,
       isClientReselectable: undefined,
+      opaqueRenderProps: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     sections.push(section);

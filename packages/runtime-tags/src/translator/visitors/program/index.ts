@@ -21,6 +21,7 @@ import {
   isOutputHTML,
   isPersisted,
 } from "../../util/marko-config";
+import { assertSupportedPatch } from "../../util/persisted/admission";
 import {
   BindingType,
   finalizeReferences,
@@ -33,7 +34,7 @@ import { sectionHasSetupStatements } from "../../util/setup-statements";
 import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
-import programHTML, { assertSupportedPatch } from "./html";
+import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
 
 export let scopeIdentifier: t.Identifier;
