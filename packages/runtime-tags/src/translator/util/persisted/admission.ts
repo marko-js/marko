@@ -341,6 +341,16 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const { node } = tag;
       const tagName = t.isStringLiteral(node.name) && node.name.value;
       const tagDef = getTagDef(tag);
+      // A patch is one frame: `<await>` can settle after it flushes, and
+      // `<try>` recovery rides placeholder machinery a frame never carries.
+      if (isCoreTagName(tag, "await") || isCoreTagName(tag, "try")) {
+        unsupported(
+          node,
+          tagName === "await"
+            ? "`<await>` can settle after the patch frame flushes (async patch content is not supported)"
+            : "`<try>` boundaries rely on placeholder and catch machinery patches do not carry",
+        );
+      }
       // A server-driven conditional's patches swap in rendered html, so
       // branches must be inert; a pure-state chain is client-owned instead.
       if (isConditionTag(tag) || isCoreTagName(tag, "for")) {
