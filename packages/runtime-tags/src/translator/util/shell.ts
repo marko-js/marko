@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
 import normalizeStringExpression from "./normalize-string-expression";
-import { isPatchCaptureSection } from "./persisted";
+import { isCapturePathSection } from "./persisted/structure";
 import { forEachSection, type Section, StructureKind } from "./sections";
 import { getResumeRegisterId } from "./signals";
 import { createProgramState } from "./state";
@@ -25,11 +25,11 @@ export function getShells() {
 export function buildShells() {
   forEachSection((section) => {
     // Every capture-position branch body ships a shell, except
-    // client-owned bodies: they never construct from a frame.
+    // client-reselectable bodies: they never construct from a frame.
     if (
       !section.isBranch ||
-      !isPatchCaptureSection(section) ||
-      section.isClientOwnedStructure
+      !isCapturePathSection(section) ||
+      section.isClientReselectable
     ) {
       return;
     }
