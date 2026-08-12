@@ -42,7 +42,22 @@ export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
 export { forIn, forOf, forTo, forUntil } from "./html/for";
 export { _renderer_shells } from "./html/renderer-shells";
 export { _template } from "./html/template";
-export { _must_render, _template_persisted, renderPatch } from "./html/patch";
+export {
+  _must_render,
+  _patch_attr,
+  _patch_attr_class,
+  _patch_attr_style,
+  _patch_bind,
+  _patch_child,
+  _patch_control,
+  _patch_effect,
+  _patch_poison,
+  _patch_text,
+  _patch_value,
+  _patch_write,
+  _template_persisted,
+  renderPatch,
+} from "./html/patch";
 export {
   _attr_content,
   _await,
@@ -59,17 +74,6 @@ export {
   _if,
   _mask_group,
   _owned_guard,
-  _patch_attr,
-  _patch_attr_class,
-  _patch_attr_style,
-  _patch_bind,
-  _patch_control,
-  _patch_child,
-  _patch_effect,
-  _patch_poison,
-  _patch_text,
-  _patch_value,
-  _patch_write,
   _peek_scope_id,
   _persisted_ownership,
   _persisted_reason,
