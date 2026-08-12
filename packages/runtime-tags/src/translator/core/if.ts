@@ -400,13 +400,10 @@ export const IfTag = {
             const [testAttr] = branchTag.node.attributes;
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
-              setClosureSignalBuilder(branchTag, (_closure, render) => {
-                return callRuntime(
-                  "_if_closure",
-                  getScopeAccessorLiteral(nodeRef, true),
-                  t.numericLiteral(i),
-                  render,
-                );
+              setClosureSignalBuilder(branchTag, {
+                kind: "if",
+                ref: nodeRef,
+                index: i,
               });
             }
 
