@@ -288,7 +288,11 @@ function markText(
 // Structural patch entries hold their child partial objects, so the root
 // partial IS the frame tree and one ordinary serializer flush emits it.
 export function writePatch(scopeId: number, entries: Record<string, unknown>) {
-  if ($chunk.boundary.state.patchFlushed) {
+  const { state } = $chunk.boundary;
+  if (state.patchFlushed) {
+    // A poisoned frame already told the client to navigate; late writes
+    // from boundaries settling after the flush are dead and drop here.
+    if (state.patchPoison) return;
     throw new Error(
       "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
     );
@@ -297,6 +301,22 @@ export function writePatch(scopeId: number, entries: Record<string, unknown>) {
   for (const key in entries) {
     // `undefined` survives to the wire (`$`): it overwrites, never elides.
     partial[key] = entries[key];
+  }
+}
+
+// An `<await>`/`<try>` body pairs with the live page's branch scope: the
+// link nests its partial under the owner (lazily, on its first write) and
+// records the parent hop bind paths resolve through.
+function pairPatchBoundary(
+  scopeId: number,
+  accessor: Accessor,
+  branchId: number,
+) {
+  const { state } = $chunk.boundary;
+  if (state.writesPatches && !state.patchPartials?.[branchId]) {
+    const link = AccessorPrefix.BranchScopes + accessor;
+    (state.patchParents ??= {})[branchId] = [scopeId, link];
+    (state.patchPending ??= {})[branchId] = [scopeId, PatchKey.Child + link];
   }
 }
 
@@ -1009,6 +1029,7 @@ export function _await<T>(
   if (!isPromise(promise)) {
     if (resumeMarker) {
       const branchId = _peek_scope_id();
+      pairPatchBoundary(scopeId, accessor, branchId);
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
@@ -1042,6 +1063,7 @@ export function _await<T>(
           chunk.render(() => {
             if (resumeMarker) {
               const branchId = _peek_scope_id();
+              pairPatchBoundary(scopeId, accessor, branchId);
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
@@ -1086,6 +1108,7 @@ export function _try(
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
+  pairPatchBoundary(scopeId, accessor, branchId);
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
 
   if (catchContent !== undefined) {
@@ -1415,7 +1438,10 @@ export class Boundary extends AbortController {
   }
 
   flush() {
-    if (!this.signal.aborted) {
+    // A patch is one frame: while boundaries are pending nothing
+    // stringifies (later settles keep mutating the live partials), and a
+    // flush that catches it pending poisons instead.
+    if (!this.signal.aborted && !(this.count && this.state.writesPatches)) {
       flushSerializer(this, this.state);
     }
 
@@ -1500,6 +1526,7 @@ export class Chunk {
 
   append(chunk: Chunk) {
     this.html += chunk.html;
+    this.needsWalk ||= chunk.needsWalk;
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
     this.lastEffect = chunk.lastEffect || this.lastEffect;
