@@ -25,8 +25,9 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
+import { isContentRenderTag } from "../../util/persisted/decisions";
 import {
   type Binding,
   BindingType,
@@ -69,8 +70,8 @@ import {
   getResumeRegisterId,
   getSignal,
   initValue,
-  type Signal,
   signalHasStatements,
+  type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { createProgramState } from "../../util/state";
@@ -149,6 +150,22 @@ export default {
         });
 
         return;
+      }
+
+      // A fed renderer poisons this section's patches (navigation) — a
+      // stopgap until it dispatches like any dynamic hop.
+      if (
+        isPersisted() &&
+        isContentRenderTag(node) &&
+        tag.scope.getBinding("input")?.path.type === "Program"
+      ) {
+        const section = getOrCreateSection(tag);
+        const prop = (
+          (node.name as t.MemberExpression).property as t.Identifier
+        ).name;
+        if (!section.opaqueRenderProps?.includes(prop)) {
+          (section.opaqueRenderProps ??= []).push(prop);
+        }
       }
 
       analyzeAttributeTags(tag);
