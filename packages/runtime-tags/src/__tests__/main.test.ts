@@ -401,7 +401,7 @@ function testFixtures(interop?: true) {
             }
 
             await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { applyPatch, run } =
+            const { applyPatch, takePatchFrame, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
             await runSteps(steps, tracker, browser, run, {
@@ -413,9 +413,16 @@ function testFixtures(interop?: true) {
                     const frames: string[] = [];
                     for await (const frame of template.renderPatch(input)) {
                       frames.push(frame);
-                      // A production caller navigates on the first failed
-                      // frame; later frames must not mutate further.
-                      if (!(applied = applyPatch(frame))) break;
+                      // A transport injects each frame as a nonce'd inline
+                      // script, then applies the deposited thunk (empty
+                      // frames carry nothing and skip); a production caller
+                      // navigates on the first failed frame.
+                      if (!frame.trim()) continue;
+                      const script = window.document.createElement("script");
+                      script.textContent = frame;
+                      window.document.head.append(script);
+                      script.remove();
+                      if (!(applied = applyPatch(takePatchFrame()))) break;
                     }
                     patches.push(frames.join(""));
                     tracker.logUpdate(input);

@@ -1,5 +1,5 @@
 // PATCH
-[`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, `a0;D%b%;<section><!><!></section>`, {
+M._.a = (_, $) => ([`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, `a0;D%b%;<section><!><!></section>`, {
   la: [3, {
     ta: "Milk",
     bb: "a3"
@@ -17,10 +17,10 @@
   cc: {
     ta: "hot"
   }
-}]
+}])
 
 // PATCH
-[`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, `a1;D ;<small> </small>`, `a0;D%b%;<section><!><!></section>`, {
+M._.a = (_, $) => ([`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, `a1;D ;<small> </small>`, `a0;D%b%;<section><!><!></section>`, {
   la: [3, {
     ta: "Milk",
     bb: 0
@@ -37,10 +37,10 @@
   cc: {
     ta: "hot"
   }
-}]
+}])
 
 // PATCH
-[`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, {
+M._.a = (_, $) => ([`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, {
   la: [2, {
     ta: "Bread",
     bb: "a3"
@@ -49,4 +49,4 @@
   cc: {
     ta: "sold"
   }
-}]
+}])

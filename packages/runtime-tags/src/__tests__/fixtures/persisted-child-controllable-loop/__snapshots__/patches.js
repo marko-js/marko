@@ -1,5 +1,5 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   ta: "Store!",
   lb: [{
     ta: "a",
@@ -18,10 +18,10 @@
       va0: 0
     }
   }]
-}
+})
 
 // PATCH
-[`b0 b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+M._.a = (_, $) => ([`b0 b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   ta: "Store!",
   lb: [{
     ta: "a",
@@ -50,4 +50,4 @@
       va0: 0
     }
   }]
-}]
+}])

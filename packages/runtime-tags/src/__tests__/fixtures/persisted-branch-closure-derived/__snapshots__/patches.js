@@ -1,11 +1,11 @@
 // PATCH
-[`a0 a3;Db%;<p>Twice <!></p>`, {
+M._.a = (_, $) => ([`a0 a3;Db%;<p>Twice <!></p>`, {
   ta: "Store",
   bb: "a0"
-}]
+}])
 
 // PATCH
-[`a0 a3;Db%;<p>Twice <!></p>`, {
+M._.a = (_, $) => ([`a0 a3;Db%;<p>Twice <!></p>`, {
   ta: "Store!",
   bb: "a0"
-}]
+}])

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1; b%;<button>+</button><!><!>`, {
+M._.a = (_, $) => ([`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1; b%;<button>+</button><!><!>`, {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
     "PatchBranch:#text/1": 0,
@@ -7,10 +7,10 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell"]
-}]
+}])
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2_count#2/init;Db%;<p>Seen <!></p>`, `packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1; b%;<button>+</button><!><!>`, {
+M._.a = (_, $) => ([`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2_count#2/init;Db%;<p>Seen <!></p>`, `packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1; b%;<button>+</button><!><!>`, {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
     "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2*shell",
@@ -18,16 +18,16 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell"]
-}]
+}])
 
 // PATCH
-{
+M._.a = (_, $) => ({
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": 0
-}
+})
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2_count#2/init;Db%;<p>Seen <!></p>`, `packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1; b%;<button>+</button><!><!>`, {
+M._.a = (_, $) => ([`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2_count#2/init;Db%;<p>Seen <!></p>`, `packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1; b%;<button>+</button><!><!>`, {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
     "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_2*shell",
@@ -35,4 +35,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-closure-nested/template.marko_1*shell"]
-}]
+}])

@@ -1,5 +1,5 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   "PatchText:#text/0": "Store!",
   "PatchLoop:#text/1": [{
     "PatchText:#text/0": "a",
@@ -18,10 +18,10 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/template.marko0": 0
     }
   }]
-}
+})
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+M._.a = (_, $) => ([`packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   "PatchText:#text/0": "Store!",
   "PatchLoop:#text/1": [{
     "PatchText:#text/0": "a",
@@ -50,4 +50,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/template.marko0": 0
     }
   }]
-}]
+}])

@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+M._.a = (_, $) => ([`a0 a1,<p>promo</p>`, {
   $: {
     brand: "Marko"
   },
@@ -8,10 +8,10 @@
     ga1: "g 1 ! brand"
   }, "a0"],
   wg: "b"
-}]
+}])
 
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+M._.a = (_, $) => ([`a0 a1,<p>promo</p>`, {
   $: {
     brand: "Marko"
   },
@@ -20,10 +20,10 @@
     ga1: "g 1 ! brand"
   }, "a0"],
   wg: "b"
-}]
+}])
 
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+M._.a = (_, $) => ([`a0 a1,<p>promo</p>`, {
   $: {
     brand: "Fresh"
   },
@@ -32,4 +32,4 @@
     ga1: "g 1 ! brand"
   }, "a0"],
   wg: "b"
-}]
+}])

@@ -1,5 +1,5 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   ta: "Store!",
   "ab title": "fr",
   tc: "Acme Co",
@@ -9,4 +9,4 @@
   cf: {
     ta: "2027"
   }
-}
+})

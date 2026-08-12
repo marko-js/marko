@@ -1,5 +1,5 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   $: {
     brand: "Marko"
   },
@@ -7,10 +7,10 @@
     ta: "Marko",
     gb0: "! brand"
   }
-}
+})
 
 // PATCH
-{
+M._.a = (_, $) => ({
   $: {
     brand: "Runtime"
   },
@@ -18,4 +18,4 @@
     ta: "Runtime",
     gb0: "! brand"
   }
-}
+})

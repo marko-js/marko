@@ -1,5 +1,5 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   "PatchText:#text/0": "Store!",
   "PatchAttr:#p/1 title": "fr",
   "PatchText:#text/2": "Acme Co",
@@ -9,4 +9,4 @@
   "PatchChild:#childScope/5": {
     "PatchText:#text/0": "2027"
   }
-}
+})

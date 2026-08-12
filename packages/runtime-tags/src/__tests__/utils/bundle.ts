@@ -196,10 +196,12 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
             return isPage
               ? code +
                   `\nimport { run as _run${
-                    compileOpts.persisted ? ", applyPatch as _applyPatch" : ""
+                    compileOpts.persisted
+                      ? ", applyPatch as _applyPatch, takePatchFrame as _takePatchFrame"
+                      : ""
                   } } from "@marko/runtime-tags/dom"\n${
                     compileOpts.persisted
-                      ? "globalThis.applyPatch=_applyPatch;\n"
+                      ? "globalThis.applyPatch=_applyPatch;\nglobalThis.takePatchFrame=_takePatchFrame;\n"
                       : ""
                   }${
                     interop

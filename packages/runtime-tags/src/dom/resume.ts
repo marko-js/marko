@@ -34,6 +34,8 @@ export interface RenderData {
   v: Comment[];
   // Resumes
   r?: ResumeData;
+  // Patch frame thunk deposited by a transport-injected nonce'd script.
+  a?: ResumeFn;
   // Walk
   w(): void;
   // Deserialize scopes and run scripts ("m" for marko)

@@ -12,6 +12,7 @@ import type {
 } from "../common/types";
 import { AccessorPrefix, PatchKey } from "../common/types";
 import { _attr, stringAttr } from "./attrs";
+import * as RuntimeKey from "./constants/runtime-key";
 import { _escape, _to_text } from "./content";
 import { serverRenderers } from "./renderer-shells";
 import { getRegistered, K_SCOPE_ID } from "./serializer";
@@ -128,15 +129,26 @@ class PatchState extends State {
     if (this.patchPoison) {
       this.shellFrames = "";
       this.patchDeferred = undefined;
-      return '[{"' + PatchKey.Poison + '":1}]';
+      return this.frameScript('[{"' + PatchKey.Poison + '":1}]');
     }
     const shells = this.shellFrames && this.shellFrames.slice(1);
     this.shellFrames = "";
     if (this.patchDeferred) {
       this.patchDeferred = undefined;
-      return shells ? "(_([" + shells + "])," + resumes + ")" : resumes;
+      return this.frameScript(
+        shells ? "(_([" + shells + "])," + resumes + ")" : resumes,
+      );
     }
-    return shells ? "[" + shells + "," + resumes + "]" : resumes;
+    return this.frameScript(
+      shells ? "[" + shells + "," + resumes + "]" : resumes,
+    );
+  }
+
+  // A frame runs as a nonce'd inline script (never eval): it deposits its
+  // thunk on the live render, mirroring the document's `.r` resume writes.
+  // Parens keep a bare tree object from parsing as the arrow's block body.
+  frameScript(frame: string) {
+    return this.runtimePrefix + RuntimeKey.Patch + "=(_,$)=>(" + frame + ")";
   }
 
   override walkScript() {

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6,<p>promo</p>`, {
+M._.a = (_, $) => ([`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6,<p>promo</p>`, {
   "$global:": {
     brand: "Marko"
   },
@@ -8,10 +8,10 @@
     "PatchGlobalEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6": "input_value 1 ! brand"
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
-}]
+}])
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6,<p>promo</p>`, {
+M._.a = (_, $) => ([`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6,<p>promo</p>`, {
   "$global:": {
     brand: "Marko"
   },
@@ -20,10 +20,10 @@
     "PatchGlobalEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6": "input_value 1 ! brand"
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
-}]
+}])
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6,<p>promo</p>`, {
+M._.a = (_, $) => ([`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6,<p>promo</p>`, {
   "$global:": {
     brand: "Fresh"
   },
@@ -32,4 +32,4 @@
     "PatchGlobalEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6": "input_value 1 ! brand"
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
-}]
+}])

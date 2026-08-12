@@ -1,14 +1,14 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   $: {
     brand: "Marko"
   },
   ta: "Marko",
   bb: 0
-}
+})
 
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+M._.a = (_, $) => ([`a0 a1,<p>promo</p>`, {
   $: {
     brand: "Fresh"
   },
@@ -16,10 +16,10 @@
   bb: [{
     ga1: "! brand"
   }, "a0"]
-}]
+}])
 
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+M._.a = (_, $) => ([`a0 a1,<p>promo</p>`, {
   $: {
     brand: "Patch"
   },
@@ -27,4 +27,4 @@
   bb: [{
     ga1: "! brand"
   }, "a0"]
-}]
+}])

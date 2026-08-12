@@ -1,5 +1,5 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   $: {
     brand: "Marko",
     locale: "en",
@@ -7,10 +7,10 @@
   },
   ta: "y",
   ga0: "! brand locale"
-}
+})
 
 // PATCH
-{
+M._.a = (_, $) => ({
   $: {
     brand: "Marko",
     locale: "fr",
@@ -18,10 +18,10 @@
   },
   ta: "y",
   ga0: "! brand locale"
-}
+})
 
 // PATCH
-{
+M._.a = (_, $) => ({
   $: {
     brand: "Fresh",
     locale: "fr",
@@ -29,4 +29,4 @@
   },
   ta: "y",
   ga0: "! brand locale"
-}
+})

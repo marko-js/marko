@@ -1,5 +1,5 @@
 // PATCH
-{
+M._.a = (_, $) => ({
   "$global:": {
     brand: "Marko",
     locale: "en",
@@ -7,10 +7,10 @@
   },
   "PatchText:#text/0": "y",
   "PatchGlobalEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-script-global-keys/template.marko_0": "! brand locale"
-}
+})
 
 // PATCH
-{
+M._.a = (_, $) => ({
   "$global:": {
     brand: "Marko",
     locale: "fr",
@@ -18,10 +18,10 @@
   },
   "PatchText:#text/0": "y",
   "PatchGlobalEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-script-global-keys/template.marko_0": "! brand locale"
-}
+})
 
 // PATCH
-{
+M._.a = (_, $) => ({
   "$global:": {
     brand: "Fresh",
     locale: "fr",
@@ -29,4 +29,4 @@
   },
   "PatchText:#text/0": "y",
   "PatchGlobalEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-script-global-keys/template.marko_0": "! brand locale"
-}
+})

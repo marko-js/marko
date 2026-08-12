@@ -1,4 +1,4 @@
-// size: 27469 (min) 10171 (brotli)
+// size: 27549 (min) 10198 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2169,14 +2169,18 @@ function applyPatch(frame, renderId = "_", runtimeId = "M") {
   (init(runtimeId), (patchers.$ = patchGlobalsEntry));
   let render = beginPatch(renderId);
   try {
-    return (
-      (render.r = [Function("_", "$", "return " + frame)]), runEffects(render.m([]), 1), run(), !0
-    );
+    if (typeof frame != "function") throw 0;
+    return ((render.r = [frame]), runEffects(render.m([]), 1), run(), !0);
   } catch {
     return (abortRun(), !1);
   } finally {
     abortPatch();
   }
+}
+function takePatchFrame(renderId = "_", runtimeId = "M") {
+  let render = self[runtimeId]?.[renderId],
+    frame = render?.a;
+  return (render && (render.a = void 0), frame);
 }
 function mount(input = {}, reference, position) {
   let branch,

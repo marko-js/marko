@@ -8,6 +8,7 @@ import {
   init,
   kChanged,
   patchers,
+  type RenderData,
 } from "./resume";
 
 // Applies re-shipped globals so event-time `$global` reads never go stale;
@@ -27,7 +28,7 @@ const patchGlobalsEntry = (live: Changed, _key: string, value: unknown) => {
 };
 
 export function applyPatch(
-  frame: string,
+  frame: unknown,
   renderId = DEFAULT_RENDER_ID,
   runtimeId = DEFAULT_RUNTIME_ID,
 ) {
@@ -36,10 +37,14 @@ export function applyPatch(
   patchers[PatchKey.Globals] = patchGlobalsEntry;
   const render = beginPatch(renderId);
   try {
-    // A frame is trusted executable resume data (an envelope holding the
-    // partial tree) from the same server that produced the document.
-    // eslint-disable-next-line no-new-func
-    render.r = [new Function("_", "$", "return " + frame)] as typeof render.r;
+    // A frame arrives pre-evaluated (its nonce'd script deposited the
+    // thunk); a missing or malformed value rejects like any bad frame.
+    if (typeof frame !== "function") {
+      throw MARKO_DEBUG
+        ? new Error("applyPatch expects an evaluated frame value.")
+        : 0;
+    }
+    render.r = [frame] as typeof render.r;
     runEffects(render.m!([]), 1);
     run();
     return true;
@@ -52,4 +57,18 @@ export function applyPatch(
   } finally {
     abortPatch();
   }
+}
+
+// Takes (and clears) the thunk a frame script (`M._.a=(_,$)=>…`) deposited
+// on the render, for a transport to hand straight to `applyPatch`.
+export function takePatchFrame(
+  renderId = DEFAULT_RENDER_ID,
+  runtimeId = DEFAULT_RUNTIME_ID,
+) {
+  const render = (self as Record<string, any>)[runtimeId]?.[renderId] as
+    | RenderData
+    | undefined;
+  const frame: unknown = render?.a;
+  if (render) render.a = undefined;
+  return frame;
 }
