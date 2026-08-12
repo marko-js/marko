@@ -27,7 +27,7 @@ import {
   isPatchCaptureSection,
   classifiesClientOwned,
   onClassifyOwnership,
-  recordStructuralParams,
+  recordServerRequiredParams,
 } from "../util/persisted";
 import {
   compareSources,
@@ -144,7 +144,7 @@ export const IfTag = {
             addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
             // Branch tests drive structure: call sites reject feeding them
             // from client-owned values.
-            recordStructuralParams(sources);
+            recordServerRequiredParams(sources);
           }
         });
       }

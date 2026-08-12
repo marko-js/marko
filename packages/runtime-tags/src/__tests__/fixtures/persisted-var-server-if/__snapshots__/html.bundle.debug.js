@@ -9,17 +9,17 @@ var doubler_default = _template_persisted("__tests__/tags/doubler/index.marko", 
 }, 0, 0);
 
 // template.marko
-_renderer_shells({ "__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell __tests__/template.marko_1_count/init;Db%;<p>big <!></p>`" });
+_renderer_shells({ "__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1_count#7/init;Db%;<p>big <!></p>`" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_n = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	const $childScope = _peek_scope_id();
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
-	let double = doubler_default({ value: input.n });
+	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double/var");
+	let double = doubler_default({ value: input.n });
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double#8/var");
 	_if(() => {
 		if (double > 4) {
 			const $scope1_id = _scope_id();
@@ -27,7 +27,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, $sg__input_n, $sg__input_n, void 0, void 0, ["__tests__/template.marko_1_shell"]);
+	}, $scope0_id, "#text/2", 1, $sg__input_n, $sg__input_n, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && writeScope($scope0_id, {

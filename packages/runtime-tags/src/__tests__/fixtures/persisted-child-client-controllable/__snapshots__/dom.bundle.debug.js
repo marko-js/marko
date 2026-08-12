@@ -10,11 +10,9 @@ function $setup$1($scope) {
 	$v($scope, "");
 	$setup__script$1($scope);
 }
-function $valueChange($scope) {
-	return (_new_v) => {
-		$v($scope, _new_v);
-	};
-}
+const $valueChange = ($scope) => (_new_v) => {
+	$v($scope, _new_v);
+};
 _resume("__tests__/tags/field/index.marko_0/valueChange", $valueChange);
 var field_default = /*@__PURE__*/ _template("__tests__/tags/field/index.marko", $template$1, $walks$1, $setup$1);
 

@@ -90,27 +90,16 @@ export function finalizePersisted() {
   for (const finalize of getPersistedFinalizers()) finalize();
 }
 
-// Root-param facts for call sites, recorded once sources resolve; a
-// child's flagged param marks the parent params feeding it in turn.
-export function recordStructuralParams(sources: Sources | undefined) {
+// Structure selection and `$global` mixing both record here: neither
+// leaves a client channel, so the param must stay server-owned.
+export function recordServerRequiredParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
-    if (!binding.section.parent) binding.selectsStructure = true;
+    if (!binding.section.parent) binding.serverRequiredParam = true;
   });
 }
 
-export function recordGlobalMixedParams(sources: Sources | undefined) {
-  forEach(sources?.param, (binding) => {
-    if (!binding.section.parent) binding.globalMixed = true;
-  });
-}
-
-// The persisted policy over those facts: neither leaves a client
-// channel, so the param must stay server-owned.
 export function hasServerRequiredParam(params: Opt<Binding>) {
-  return some(
-    params,
-    (binding) => binding.selectsStructure || binding.globalMixed,
-  );
+  return some(params, (binding) => binding.serverRequiredParam);
 }
 
 // Shared per-capture analyze hook: freezes the value's reason groups for
@@ -122,7 +111,7 @@ export function ensurePersistedCaptureGroups(getExtra: () => t.NodeExtra) {
     // A `$global` mixed into a param-fed value cannot survive a withheld
     // capture: call sites derive server-required-ness from the fact.
     if (sources?.param && sources.global) {
-      recordGlobalMixedParams(sources);
+      recordServerRequiredParams(sources);
     }
   });
 }
@@ -255,6 +244,18 @@ export function isPatchFillBinding(binding: Binding) {
   return false;
 }
 
+// A registered-function capture the signal graph never renders: no fill
+// or effect re-runs it, but a re-bound factory reads its live slot at any
+// later call — the wire writes the accessor (`w`) to keep it current.
+export function isPatchCaptureWriteBinding(binding: Binding) {
+  return (
+    binding.registeredFnCapture &&
+    isPatchRefreshableBinding(binding) &&
+    !isPatchFillBinding(binding) &&
+    !isPatchEffectBinding(binding)
+  );
+}
+
 // An effect-read value with no client-state intersection: nothing in the
 // signal graph consumes it, so no fill registers — the wire writes the
 // accessor (`w`) and re-runs readers by register id (`e`) instead.
@@ -305,10 +306,10 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
-  // Inside client-owned structure content sections keep lexical owners,
-  // so LONE reads hop soundly; intersections still need branch chains
-  // (their emission composes per-hop branch builders).
-  const clientOwned = !Array.isArray(refs) && inClientOwnedStructure(section);
+  // Inside client-owned structure content sections keep lexical owners, so
+  // reads hop soundly: lone reads and dynamic-chain intersection members
+  // deliver through their self-registering closure signals.
+  const clientOwned = inClientOwnedStructure(section);
   return some(refs, (binding) => {
     if (isPatchFillBinding(binding) && binding.section !== section) {
       let cur: Section | undefined = section;
@@ -330,7 +331,8 @@ export function hasUnfillablePatchReads(refs: Opt<Binding>) {
     (binding) =>
       !!getSerializeSourcesForRef(binding)?.param &&
       !isPatchFillBinding(binding) &&
-      !isPatchEffectBinding(binding),
+      !isPatchEffectBinding(binding) &&
+      !isPatchCaptureWriteBinding(binding),
   );
 }
 

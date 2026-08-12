@@ -20,12 +20,12 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<button>+</but
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D0${_w0}&/${_w1}& l`)("b", "D l");
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => $input_value$1($scope["#childScope/0"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	_var($scope, "#childScope/0", $double);
 	$count($scope, 1);
 	$setup__script($scope);
 }
-const $double = _var_resume("__tests__/template.marko_0_double/var", ($scope, double) => $input_value($scope["#childScope/2"], double));
+const $double = _var_resume("__tests__/template.marko_0_double#5/var", ($scope, double) => $input_value($scope["#childScope/2"], double));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

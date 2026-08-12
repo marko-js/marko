@@ -7,7 +7,7 @@ const $input_accent = ($scope, input_accent) => {
 	_attr_style($scope["#p/1"], input_accent);
 	_attr_style($scope["#span/2"], [input_accent, { margin: 0 }]);
 };
-const $input_on = /*@__PURE__*/ _const("input_on", ($scope) => _attr_class_item($scope["#span/2"], "compact", $scope.input_on));
+const $input_on = ($scope, input_on) => _attr_class_item($scope["#span/2"], "compact", input_on);
 const $input = ($scope, input) => {
 	$input_theme($scope, input.theme);
 	$input_accent($scope, input.accent);

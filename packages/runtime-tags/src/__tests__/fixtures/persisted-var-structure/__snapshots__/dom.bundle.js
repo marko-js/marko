@@ -5,7 +5,7 @@ const $input_value = ($scope, input_value) => $double$1($scope, input_value * 2)
 // template.marko
 const $count = /*@__PURE__*/ _let(4, ($scope) => $input_value($scope.a, $scope.e));
 const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
-	$count($scope, $scope.e + 1);
+	$count($scope, +$scope.e + 1);
 }));
 const $if = /*@__PURE__*/ _if(2, "<p>big</p>");
 const $double = _var_resume("a0", ($scope, double) => $if($scope, double > 2 ? 0 : 1));

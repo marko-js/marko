@@ -26,8 +26,7 @@ import {
   inClientOwnedStructure,
   kPatchClientOwned,
   onFinalizePersisted,
-  recordGlobalMixedParams,
-  recordStructuralParams,
+  recordServerRequiredParams,
 } from "./persisted";
 import {
   addRead,
@@ -537,15 +536,10 @@ export function finalizeKnownTags(section: Section) {
           ensureReasonGroups(
             getSerializeProvenance(section, scopeBinding, group.id),
           );
-          // The facts roll up: feeding a param the child uses structurally
-          // (or global-mixed) makes this template's feeders so too.
-          if (some(group.reason, (binding) => binding.selectsStructure)) {
-            recordStructuralParams(
-              getSerializeProvenance(section, scopeBinding, group.id),
-            );
-          }
-          if (some(group.reason, (binding) => binding.globalMixed)) {
-            recordGlobalMixedParams(
+          // The fact rolls up: feeding a param the child needs
+          // server-owned makes this template's feeders so too.
+          if (some(group.reason, (binding) => binding.serverRequiredParam)) {
+            recordServerRequiredParams(
               getSerializeProvenance(section, scopeBinding, group.id),
             );
           }

@@ -7,7 +7,6 @@ import {
 
 import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
 import evaluate from "../util/evaluate";
-import { isCallCleanFn } from "../util/is-call-clean-fn";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
@@ -83,7 +82,12 @@ export default {
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
-      if (isCallCleanFn(valueAttr.value)) binding.declaresFunction = true;
+      // A composite (ternary, object) delivers a bound function whenever
+      // it contains one; selection among function-valued bindings
+      // propagates during source resolution.
+      t.traverseFast(valueAttr.value, (n) => {
+        if (t.isFunction(n)) binding.functionValued = true;
+      });
       if (!upstreamAlias) {
         // Keep unread initializers because their expressions may have side effects;
         // downstream minification can discard proven-pure values.
