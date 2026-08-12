@@ -76,7 +76,6 @@ import {
   isSameReason,
   type SerializeReason,
 } from "./serialize-reasons";
-import { isShellDropped } from "./shell";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
@@ -1201,7 +1200,7 @@ export function writeSignals(section: Section) {
           signal.section.isBranch &&
           isCapturePathSection(signal.section) &&
           isDirectClosure(signal.section, signal.referencedBindings) &&
-          !isShellDropped(signal.section) &&
+          !signal.section.shellBlocked &&
           !sectionHasServerEffect(signal.section)
         ) {
           // A direct state closure anchors its construct render on itself:

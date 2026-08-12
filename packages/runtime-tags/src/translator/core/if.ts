@@ -63,7 +63,7 @@ import {
   type SerializeReasons,
   sourcesUtil,
 } from "../util/serialize-reasons";
-import { getShellId, getShells, isShellDropped } from "../util/shell";
+import { getShellId, getShells } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -332,7 +332,7 @@ export const IfTag = {
                         // divergence to the branch reject the patch.
                         const id =
                           branchBody &&
-                          !isShellDropped(branchBody) &&
+                          !branchBody.shellBlocked &&
                           getShellId(branchBody);
                         return id && getShells()?.[id]
                           ? t.stringLiteral(id)
