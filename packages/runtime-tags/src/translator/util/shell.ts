@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
+import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
 import { isCapturePathSection } from "./persisted/structure";
 import { forEachSection, type Section, StructureKind } from "./sections";
@@ -27,7 +28,9 @@ export function buildShells() {
   forEachSection((section) => {
     if (section.isClientReselectable) {
       for (let cur = section.parent; cur?.parent; cur = cur.parent) {
-        if (cur.isBranch) cur.shellBlocked = true;
+        if (cur.isBranch) {
+          cur.shellBlocked ??= ShellBlocker.reselectableEnclosure;
+        }
       }
     }
   });
