@@ -1,5 +1,6 @@
 import assert from "assert/strict";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 
 import {
@@ -72,6 +73,57 @@ describe("compiler/compile", () => {
 
     it("falls back for a translator that has no version", () =>
       assert.equal(getRuntimeVersion({}), "0.0.0"));
+  });
+
+  describe("cache", () => {
+    // Analysis reads through child templates, so an edit below the compiled
+    // file has to invalidate it even though its own content is unchanged.
+    const STATEFUL = `<let/x=1/>\n<button onClick() { x++ }>bump</button>\n<return=x/>\n`;
+
+    let dir;
+    beforeEach(() => {
+      dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-cache-"));
+      fs.mkdirSync(path.join(dir, "tags"));
+      fs.writeFileSync(
+        path.join(dir, "template.marko"),
+        `<my-child/x/>\n<div>\${x}</div>\n`,
+      );
+    });
+    afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+    const writeTag = (name, src) => {
+      const file = path.join(dir, "tags", `${name}.marko`);
+      fs.writeFileSync(file, src);
+      // Pin the mtime ahead so invalidation does not race the clock's resolution.
+      const ahead = new Date(Date.now() + 1000);
+      fs.utimesSync(file, ahead, ahead);
+    };
+
+    const compileParent = (cache) =>
+      compileFileSync(path.join(dir, "template.marko"), {
+        cache,
+        output: "dom",
+        writeVersionComment: false,
+      }).code;
+
+    it("invalidates when an analyzed child changes", () => {
+      writeTag("my-child", `<return=1/>\n`);
+      const cache = new Map();
+      assert.doesNotMatch(compileParent(cache), /_var_resume/);
+
+      writeTag("my-child", STATEFUL);
+      assert.match(compileParent(cache), /_var_resume/);
+    });
+
+    it("invalidates when a transitively analyzed template changes", () => {
+      writeTag("my-child", `<my-grandchild/y/>\n<return=y/>\n`);
+      writeTag("my-grandchild", `<return=1/>\n`);
+      const cache = new Map();
+      assert.doesNotMatch(compileParent(cache), /_var_resume/);
+
+      writeTag("my-grandchild", STATEFUL);
+      assert.match(compileParent(cache), /_var_resume/);
+    });
   });
 
   it("keeps the compile error when compiling asynchronously", () =>
