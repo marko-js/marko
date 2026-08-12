@@ -123,18 +123,32 @@ type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
 ) => t.Expression;
+// Structured facts about a branch section's closure hop: what kind of
+// branch it is and which accessor (plus branch index) addresses it.
+export type ClosureHop =
+  | { kind: "if"; ref: Binding; index: number }
+  | { kind: "for"; ref: Binding };
 export const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
   () => new Map(),
 );
-const [getClosureSignalBuilder, _setClosureSignalBuilder] = createSectionState<
-  closureSignalBuilder | undefined
+const [getClosureSignal, _setClosureSignal] = createSectionState<
+  { hop: ClosureHop; build: closureSignalBuilder } | undefined
 >("queue");
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
-  builder: closureSignalBuilder,
+  hop: ClosureHop,
+  build: closureSignalBuilder = (_closure, render) =>
+    buildClosureHop(hop, render),
 ) {
-  _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
+  _setClosureSignal(getSectionForBody(tag.get("body"))!, { hop, build });
+}
+
+function buildClosureHop(hop: ClosureHop, render: t.Expression) {
+  const accessor = getScopeAccessorLiteral(hop.ref, true);
+  return hop.kind === "if"
+    ? callRuntime("_if_closure", accessor, t.numericLiteral(hop.index), render)
+    : callRuntime("_for_closure", accessor, render);
 }
 
 export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
@@ -386,10 +400,10 @@ export function getSignal(
       signal.build = () => {
         const closure = referencedBindings;
         const render = getSignalFn(signal);
-        const closureSignalBuilder = getClosureSignalBuilder(section);
+        const closureSignal = getClosureSignal(section);
 
-        if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
-          return closureSignalBuilder(closure, render);
+        if (closureSignal && !isDynamicClosure(section, closure)) {
+          return closureSignal.build(closure, render);
         }
 
         return callRuntime(
@@ -451,8 +465,23 @@ export function initValue(binding: Binding, isLet = false) {
       return fn;
     }
 
+    const helper = isLet
+      ? signal.extraArgs
+        ? "_let_change"
+        : "_let"
+      : "_const";
+    // A fill binding's own declaration doubles as its fill registration
+    // (its downstream reaches closures in child sections).
+    if (isPersisted() && isPatchFillBinding(binding)) {
+      return callRuntime(
+        `_fill${helper}`,
+        t.stringLiteral(getPatchFillKey(binding)),
+        getScopeAccessorLiteral(binding, true, isLet),
+        fn,
+      );
+    }
     return callRuntime(
-      isLet ? (signal.extraArgs ? "_let_change" : "_let") : "_const",
+      helper,
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
@@ -1058,48 +1087,38 @@ export function writeSignals(section: Section) {
                 if (!isBranchSectionChain(signal.section, member.section)) {
                   continue;
                 }
-                // Each branch's closure builder is the source of truth
-                // for its hop; deeper reads compose the chain.
-                const hopArgs: t.Expression[][] = [];
+                // Each branch's registered hop facts are the source of
+                // truth; deeper reads compose the chain.
+                const hops: ClosureHop[] = [];
                 for (
                   let hopSection: Section | undefined = signal.section;
                   hopSection && hopSection !== member.section;
                   hopSection = hopSection.parent
                 ) {
-                  const hop = getClosureSignalBuilder(hopSection)?.(
-                    member,
-                    t.numericLiteral(0),
-                  );
-                  if (!hop || !t.isCallExpression(hop)) {
-                    throw new Error(
-                      "Marko: expected a branch closure builder for a patch fill read.",
-                    );
-                  }
-                  // 3 args is `_if_closure(accessor, index, render)`;
-                  // loop forms redispatch as `_for_closure` (all items).
-                  const args = hop.arguments as t.Expression[];
-                  hopArgs.push(
-                    args.length === 3 ? [args[0], args[1]] : [args[0]],
-                  );
+                  hops.push(getClosureSignal(hopSection)!.hop);
                 }
-                const conditional = hopArgs[0].length === 2;
-                if (
-                  hopArgs.every((args) => (args.length === 2) === conditional)
-                ) {
+                const conditional = hops[0].kind === "if";
+                if (hops.every((hop) => (hop.kind === "if") === conditional)) {
                   // Homogeneous chains flatten onto the per-kind helper,
                   // owner-first: the runtime folds trailing hops outward.
                   helper = conditional ? "_fill_join_if" : "_fill_join_for";
-                  hopExprs = hopArgs.reverse().flat();
+                  hopExprs = hops
+                    .reverse()
+                    .flatMap((hop) =>
+                      hop.kind === "if"
+                        ? [
+                            getScopeAccessorLiteral(hop.ref, true),
+                            t.numericLiteral(hop.index),
+                          ]
+                        : [getScopeAccessorLiteral(hop.ref, true)],
+                    );
                 } else {
                   // Mixed chains compile a dispatch builder: the arrow
                   // pulls in only the closure kinds its chain uses.
                   const joinId = generateUidIdentifier("join");
                   let dispatch: t.Expression = joinId;
-                  for (const args of hopArgs) {
-                    dispatch =
-                      args.length === 2
-                        ? callRuntime("_if_closure", args[0], args[1], dispatch)
-                        : callRuntime("_for_closure", args[0], dispatch);
+                  for (const hop of hops) {
+                    dispatch = buildClosureHop(hop, dispatch);
                   }
                   hopExprs = [t.arrowFunctionExpression([joinId], dispatch)];
                 }
@@ -1125,21 +1144,9 @@ export function writeSignals(section: Section) {
         ) {
           // Inside client-owned structure a lone closure over a server
           // fill IS the delivery channel: it registers the join itself.
-          const closureShape =
-            t.isCallExpression(value) &&
-            t.isIdentifier(value.callee) &&
-            value.callee.name;
-          if (
-            closureShape !== "_if_closure" &&
-            closureShape !== "_for_closure" &&
-            closureShape !== "_closure_get"
-          ) {
-            throw new Error(
-              "Marko: expected a branch closure shape for a client-owned fill read.",
-            );
-          }
           value =
-            closureShape === "_closure_get"
+            !getClosureSignal(signal.section) ||
+            isDynamicClosure(signal.section, signal.referencedBindings)
               ? // Deep closure positions reassemble the indexed composite via a
                 // shared per-key table, selected by the serialized index.
                 callRuntime(
@@ -1160,33 +1167,6 @@ export function writeSignals(section: Section) {
                   getScopeAccessorLiteral(signal.referencedBindings, true),
                   value,
                 );
-        } else if (
-          signal.referencedBindings &&
-          isPatchFillBinding(signal.referencedBindings) &&
-          signal.section === signal.referencedBindings.section
-        ) {
-          // Only the binding's own declaration registers as the fill (its
-          // downstream reaches closures in child sections), fused into the
-          // `_let`/`_const` call every fill declares with.
-          if (
-            !t.isCallExpression(value) ||
-            !t.isIdentifier(value.callee) ||
-            (value.callee.name !== "_let" &&
-              value.callee.name !== "_let_change" &&
-              value.callee.name !== "_const")
-          ) {
-            throw new Error(
-              "Marko: expected a _let or _const declaration for a patch fill binding.",
-            );
-          }
-          value = callRuntime(
-            ("_fill" + value.callee.name) as
-              | "_fill_let"
-              | "_fill_let_change"
-              | "_fill_const",
-            t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
-            ...(value.arguments as t.Expression[]),
-          );
         } else if (
           signal.referencedBindings &&
           !Array.isArray(signal.referencedBindings) &&
