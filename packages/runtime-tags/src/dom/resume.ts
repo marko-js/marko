@@ -108,10 +108,14 @@ let embedRenders:
 let readyIds: undefined | Set<string>;
 let patchRender: RenderData | 0 = 0;
 let patching: 0 | 1 = 0;
+// Frame epoch: per-frame tables (bind deposits) key off it so entries
+// from one frame can never satisfy a later frame's references.
+export let patchId = 0;
 
 export function beginPatch(renderId: string) {
   const render = (patchRender = curRenders[renderId]);
   patching = 1;
+  patchId++;
   return render;
 }
 

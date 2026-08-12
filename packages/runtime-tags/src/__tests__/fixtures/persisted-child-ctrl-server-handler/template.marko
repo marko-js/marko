@@ -1,7 +1,11 @@
+<const/handle=(next: string) => {
+  document.querySelector("output")!.textContent = input.prefix + next;
+}/>
 <let/open=false/>
 <main>
   <if=open>
-    <field value=input.value valueChange=input.valueChange/>
+    <field value="a" valueChange=handle/>
   </if>
   <button onClick() { open = !open }>+</button>
+  <output/>
 </main>

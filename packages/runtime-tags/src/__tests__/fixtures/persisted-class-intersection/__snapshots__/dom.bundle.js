@@ -9,5 +9,5 @@ const $count = /*@__PURE__*/ _let(7, ($scope) => {
 	$input_tone__OR__count($scope);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.h + 1);
+	$count($scope, +$scope.h + 1);
 }));

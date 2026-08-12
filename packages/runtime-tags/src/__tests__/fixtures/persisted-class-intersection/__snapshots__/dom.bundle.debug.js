@@ -13,7 +13,7 @@ const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
 	$input_tone__OR__count($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

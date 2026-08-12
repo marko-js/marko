@@ -11,14 +11,14 @@ const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p><!> <!></p><button>+</
 const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}&D%c%l l`)("b");
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/4"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	_var($scope, "#childScope/0", $label);
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $label = _var_resume("__tests__/template.marko_0_label/var", ($scope, label) => _text($scope["#text/2"], label));
+const $label = _var_resume("__tests__/template.marko_0_label#9/var", ($scope, label) => _text($scope["#text/2"], label));
 const $input_title = ($scope, input_title) => $input_title$1($scope["#childScope/0"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

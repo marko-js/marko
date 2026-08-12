@@ -13,7 +13,7 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $box_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_title", /*@__PURE__*/ _closure_get("input_title", ($scope) => _text($scope["#text/0"], "t:" + $scope._._.input_title), ($scope) => $scope._._), 0);
 const $box_content__setup = $box_content__input_title;
-const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2_content", "<p> </p>", "D ", $box_content__setup);
+const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $box_content__setup);
 const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $box_content($scope));

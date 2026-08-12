@@ -26,9 +26,7 @@ const $open = /*@__PURE__*/ _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.e);
 }));
-function $valueChange($scope) {
-	return (_new_text) => {
-		$text($scope._, _new_text);
-	};
-}
+const $valueChange = ($scope) => (_new_text) => {
+	$text($scope._, _new_text);
+};
 _resume("a0", $valueChange);

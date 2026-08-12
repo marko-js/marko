@@ -1,8 +1,8 @@
 // template.marko
 _renderer_shells({
-	"__tests__/template.marko_1_shell": ",`__tests__/template.marko_1_shell __tests__/template.marko_1_count/init;Db%;<p>A <!></p>`",
-	"__tests__/template.marko_2_shell": ",`__tests__/template.marko_2_shell __tests__/template.marko_2_count/init;Db%;<p>B <!></p>`",
-	"__tests__/template.marko_3_shell": ",`__tests__/template.marko_3_shell __tests__/template.marko_3_count/init;Db%;<p>None <!></p>`"
+	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1_count#7/init;Db%;<p>A <!></p>`",
+	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2_count#7/init;Db%;<p>B <!></p>`",
+	"__tests__/template.marko_3*shell": ",`__tests__/template.marko_3*shell __tests__/template.marko_3_count#7/init;Db%;<p>None <!></p>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_kind = _source_guard($scope0_reason, 0);
@@ -27,9 +27,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			return 2;
 		}
 	}, $scope0_id, "#div/0", 1, $sg__input_kind, $sg__input_kind, void 0, void 0, [
-		"__tests__/template.marko_1_shell",
-		"__tests__/template.marko_2_shell",
-		"__tests__/template.marko_3_shell"
+		"__tests__/template.marko_1*shell",
+		"__tests__/template.marko_2*shell",
+		"__tests__/template.marko_3*shell"
 	]);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_kind)}<span>${_escape(input.title + " root #" + count)}${_el_resume($scope0_id, "#text/1")}</span><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");

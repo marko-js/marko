@@ -14,7 +14,7 @@ const $if = /*@__PURE__*/ _if("#text/0", "<h2> </h2><!><!>", "D l%", $if_content
 const $count = /*@__PURE__*/ _let("count/6", ($scope) => $if($scope, $scope.count > 1 ? 0 : 1));
 const $on = /*@__PURE__*/ _let("on/7", $if_content__on);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, +$scope.count + 1);
 	$on($scope, !$scope.on);
 }));
 function $setup($scope) {
