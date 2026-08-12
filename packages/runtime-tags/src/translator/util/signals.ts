@@ -19,12 +19,14 @@ import {
   getPatchFillBindings,
   getPatchFillKey,
   hasUnfillablePatchReads,
-  inClientOwnedStructure,
-  isPatchCaptureSection,
   isPatchCaptureWriteBinding,
   isPatchEffectBinding,
   isPatchFillBinding,
-} from "./persisted";
+} from "./persisted/delivery";
+import {
+  inClientReselectableStructure,
+  isCapturePathSection,
+} from "./persisted/structure";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -1132,7 +1134,7 @@ export function writeSignals(section: Section) {
           signal.referencedBindings &&
           !Array.isArray(signal.referencedBindings) &&
           !signal.referencedBindings.sources?.state &&
-          inClientOwnedStructure(signal.section) &&
+          inClientReselectableStructure(signal.section) &&
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section !== signal.referencedBindings.section &&
           isBranchChainTo(signal.section, signal.referencedBindings.section) &&
@@ -1207,7 +1209,7 @@ export function writeSignals(section: Section) {
           !Array.isArray(signal.referencedBindings) &&
           !!signal.referencedBindings.sources?.state &&
           signal.section.isBranch &&
-          isPatchCaptureSection(signal.section) &&
+          isCapturePathSection(signal.section) &&
           isDirectClosure(signal.section, signal.referencedBindings) &&
           !isShellDropped(signal.section) &&
           !sectionHasServerEffect(signal.section)
@@ -1279,7 +1281,7 @@ export function writeSignals(section: Section) {
 // Whether every hop to `owner` dispatches from the owner scope: branches
 // always; inside client-owned, content sections too (lexical owners).
 function isBranchChainTo(section: Section, owner: Section) {
-  const clientOwned = inClientOwnedStructure(section);
+  const clientOwned = inClientReselectableStructure(section);
   while (section !== owner) {
     if ((!section.isBranch && !clientOwned) || !section.parent) return false;
     section = section.parent;
@@ -1813,7 +1815,7 @@ export function writeHTMLResumeStatements(
   }
   // A constructible branch seeds its state onto freshly constructed scopes
   // as SETUP fills: the fill signal's joins render all downstream content.
-  if (persisted && section.isBranch && isPatchCaptureSection(section)) {
+  if (persisted && section.isBranch && isCapturePathSection(section)) {
     forEach(getPatchFillBindings(section), (binding) => {
       body.push(
         t.expressionStatement(
