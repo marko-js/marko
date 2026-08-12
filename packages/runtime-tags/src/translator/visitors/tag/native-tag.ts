@@ -41,12 +41,12 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
+import { constructRendersReads } from "../../util/persisted/delivery";
 import {
-  constructRendersReads,
   ensurePersistedCaptureGroups,
-  inClientOwnedStructure,
-  isPatchCaptureSection,
-} from "../../util/persisted";
+  inClientReselectableStructure,
+  isCapturePathSection,
+} from "../../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -298,7 +298,7 @@ export default {
       if (
         relatedControllable &&
         isPersisted() &&
-        isPatchCaptureSection(getOrCreateSection(tag))
+        isCapturePathSection(getOrCreateSection(tag))
       ) {
         // Handler writes/binds ride the value feat's patchers.
         addRuntimeFeatureAsset(tag.hub.file, "patch-value");
@@ -343,7 +343,7 @@ export default {
         if (
           isPersisted() &&
           hasDynamicAttributes &&
-          isPatchCaptureSection(tagSection)
+          isCapturePathSection(tagSection)
         ) {
           addSerializeReason(tagSection, true, nodeBinding);
           addAssetImport(
@@ -639,7 +639,7 @@ export default {
           // (binds queue ahead of the control's apply), then the value entry
           // makes the server's value authoritative through the registered
           // controlled helper — paired refresh and construct alike.
-          if (isPersisted() && isPatchCaptureSection(tagSection)) {
+          if (isPersisted() && isCapturePathSection(tagSection)) {
             const [valueAttr, changeAttr] = staticControllable.attrs;
             if (changeAttr) {
               // A param-fed handler binds only under server ownership, so
@@ -760,8 +760,8 @@ export default {
         // client-owned structure delivery is owner fills: neither captures.
         const capturesPatchAttr = (name: string, value: t.Expression) => {
           if (
-            !(isPersisted() && isPatchCaptureSection(tagSection)) ||
-            inClientOwnedStructure(tagSection)
+            !(isPersisted() && isCapturePathSection(tagSection)) ||
+            inClientReselectableStructure(tagSection)
           ) {
             return false;
           }
@@ -1139,7 +1139,7 @@ export default {
 
           // An interactive page receives features through its dom module,
           // so the imports ride here beside the analyze-phase assets.
-          if (isPersisted() && isPatchCaptureSection(tagSection)) {
+          if (isPersisted() && isCapturePathSection(tagSection)) {
             importRuntimeFeature("patch-value");
             importRuntimeFeature("patch-control");
             importRuntimeFeature(getPatchControlFeature(staticControllable));
@@ -1151,7 +1151,7 @@ export default {
         // an interactive page receives assets transitively through its dom
         // program, so the analyze-phase asset import alone cannot load it.
         const capturesPatchAttr = (name: string, value: t.Expression) => {
-          if (!(isPersisted() && isPatchCaptureSection(tagSection))) {
+          if (!(isPersisted() && isCapturePathSection(tagSection))) {
             return false;
           }
           const attrSources = getSerializeSourcesForExpr(value.extra || {});
