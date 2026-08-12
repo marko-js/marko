@@ -62,12 +62,6 @@ A reorder flush appends `<t hidden {commentPrefix}={reorderId}>reorderHTML</t>`,
 
 `preserveBoundary` is a per-call-site decision (`!tagsSerializeReason && …`), but `s(id, renderer, mode)` is emitted once per renderer and `boundaryModeByRenderer` in `packages/runtime-class/src/runtime/helpers/tags-compat/runtime-html.js` is keyed by renderer too. The order-dependence is fixed (commit fe76065063): any call site that cannot preserve truncates the emitted call to two arguments for the whole program, and `register` keeps a plain `true` sticky across modules. That fix is a downgrade, so one updating call site costs every inert call site of that class its split-component optimization. Carrying the mode on the per-call-site `_dynamic_tag` invocation would keep both, at the cost of a parameter every dynamic tag pays for — measure before taking it. Re-verify: `interop-mixed-boundary-split-tags-to-class` emits `s(…, renderer)` with no `"preserve"`, while `interop-self-interactive-split-tags-to-class` still emits it.
 
-## Fold `analyzedTags` into the compile cache's mtime invalidation
-
-`packages/compiler/src/babel-plugin/index.js` › `getMarkoFile` | 2026-07-27 | impact:low | effort:med
-
-`getMarkoFile` invalidates a cache entry on its content hash or a newer mtime among `metadata.marko.watchFiles`, which holds only taglib JSON and plugin paths; the child `.marko` templates analysis read go to `metadata.marko.analyzedTags`, which the loop ignores, so a shared cache serves a stale parent after a child edit. Reach is narrow — `@marko/vite` clears `baseConfig.cache` on every hot update — leaving `@marko/compiler/register` and direct `compile[Sync]` reuse. Any fix has to be transitive, so every cache hit would stat the whole subtree. Re-verify: `compileSync` one parent twice through a single `new Map()` cache, rewriting its child from `<return=1/>` to a stateful `<let/x=1/><button onClick(){x++}/><return=x/>` in between — output stays byte-identical with no `_el_resume`, while a fresh cache emits it.
-
 ## Round-trip `Intl.DateTimeFormat` through a form that preserves `month`/`weekday`, not `resolvedOptions()`
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeIntl` | 2026-07-31 | impact:med | effort:med

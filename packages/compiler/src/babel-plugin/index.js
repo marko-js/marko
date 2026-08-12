@@ -173,21 +173,9 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     if (cached.contentHash !== contentHash) {
       // File content changed, invalidate the cache.
       cached = undefined;
-    } else {
-      for (const watchFile of cached.file.metadata.marko.watchFiles) {
-        let mtime = Infinity;
-        try {
-          mtime = markoOpts.fileSystem.statSync(watchFile).mtime;
-        } catch {
-          // ignore
-        }
-
-        if (mtime > cached.time) {
-          // Some dependency changed, invalidate the cache.
-          cached = undefined;
-          break;
-        }
-      }
+    } else if (hasStaleDependency(cached, compileCache, markoOpts)) {
+      // Some dependency changed, invalidate the cache.
+      cached = undefined;
     }
   }
 
@@ -361,6 +349,43 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     taglibConfig.fs = prevFs;
     setFileInternal(prevFile);
   }
+}
+
+function hasStaleDependency(cached, compileCache, markoOpts) {
+  const seen = new Set();
+  const pending = [cached.file.metadata.marko];
+  let meta;
+
+  while ((meta = pending.pop())) {
+    for (const watchFile of meta.watchFiles) {
+      if (isNewerThan(watchFile, cached.time, markoOpts)) return true;
+    }
+
+    // A child's own analysis feeds this file, so its children count too; a
+    // cached child carries the next level, and an uncached one ends the walk.
+    for (const analyzedTag of meta.analyzedTags || []) {
+      if (seen.has(analyzedTag)) continue;
+      seen.add(analyzedTag);
+      if (isNewerThan(analyzedTag, cached.time, markoOpts)) return true;
+
+      const child = compileCache.get(getTemplateId(markoOpts, analyzedTag));
+      if (child) pending.push(child.file.metadata.marko);
+    }
+  }
+
+  return false;
+}
+
+function isNewerThan(filename, time, markoOpts) {
+  // An unreadable dependency invalidates, since its contribution is unknown.
+  let mtime = Infinity;
+  try {
+    mtime = markoOpts.fileSystem.statSync(filename).mtime;
+  } catch {
+    // ignore
+  }
+
+  return mtime > time;
 }
 
 function shallowClone(data) {
