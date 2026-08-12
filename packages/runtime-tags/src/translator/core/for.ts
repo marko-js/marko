@@ -22,12 +22,12 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
+import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  isPatchCaptureSection,
-  classifiesClientOwned,
-  onClassifyOwnership,
+  classifiesClientReselectable,
+  isCapturePathSection,
   recordStructuralOrGlobalParams,
-} from "../util/persisted";
+} from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -214,24 +214,24 @@ export default {
     );
 
     if (isPersisted()) {
-      // Ownership classifies once the merged input sources resolve; a
-      // non-capture section (content) can still classify client-owned.
-      onClassifyOwnership(tagSection, () => {
+      // Structure classifies once the merged input sources resolve; a
+      // non-capture section (content) can still classify reselectable.
+      onClassifyStructure(tagSection, () => {
         const sources = getSerializeSourcesForExpr(tagExtra);
         if (
-          classifiesClientOwned(
+          classifiesClientReselectable(
             sources,
             tagSection,
             tagExtra.referencedBindings,
           )
         ) {
-          // A client-evaluable loop is client-owned structure (state
+          // A client-evaluable loop is client-reselectable (state
           // re-lists directly; param feeds fill their slots).
-          bodySection.isClientOwnedStructure = true;
-        } else if (isPatchCaptureSection(tagSection)) {
+          bodySection.isClientReselectable = true;
+        } else if (isCapturePathSection(tagSection)) {
           addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
-          // The loop's inputs drive structure: call sites reject feeding
-          // them from client-owned values.
+          // The loop's inputs drive structure: the params recorded here
+          // gate call-site feeds at translate.
           recordStructuralOrGlobalParams(sources);
         }
       });
@@ -241,7 +241,7 @@ export default {
       onFinalizeReferences(() => {
         addSerializeReason(
           tagSection,
-          !bodySection.isClientOwnedStructure &&
+          !bodySection.isClientReselectable &&
             (!!(bodySection.isHoistThrough || bodySection.hoisted) ||
               getSerializeSourcesForRef(getDirectClosures(bodySection))),
           nodeBinding,
@@ -287,11 +287,11 @@ export default {
         const bodyStatements = node.body.body as t.Statement[];
         // A client-owned loop compiles like a stateful loop on a plain
         // page: no marker retention, shells, or loop entry.
-        const clientOwned = !!bodySection.isClientOwnedStructure;
+        const clientOwned = !!bodySection.isClientReselectable;
         // A patchable loop keeps its markers: item pairing and insertion
         // anchor at branch marks, which elision would remove.
         const persistedPatch =
-          isPersisted() && !clientOwned && isPatchCaptureSection(tagSection);
+          isPersisted() && !clientOwned && isCapturePathSection(tagSection);
         const singleChild =
           !persistedPatch &&
           bodySection.content?.singleChild &&
@@ -421,8 +421,8 @@ export default {
 
         if (
           isPersisted() &&
-          isPatchCaptureSection(getSection(tag)) &&
-          !bodySection.isClientOwnedStructure
+          isCapturePathSection(getSection(tag)) &&
+          !bodySection.isClientReselectable
         ) {
           // An interactive page receives assets transitively through its
           // dom program, so the feature import rides both outputs.

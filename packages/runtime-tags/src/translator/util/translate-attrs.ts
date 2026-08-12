@@ -19,7 +19,7 @@ import {
   getAttrTagPaths,
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
-import { scopeReasonRuntime } from "./persisted";
+import { scopeReasonRuntime } from "./persisted/intrinsics";
 import { getScopeAccessor } from "./references";
 import { callRuntime } from "./runtime";
 import {

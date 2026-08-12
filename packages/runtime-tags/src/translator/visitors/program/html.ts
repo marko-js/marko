@@ -18,8 +18,9 @@ import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import isStatic from "../../util/is-static";
 import {
   getKnownTagReturnReason,
-  getPersistedGroupOwnership,
-  type PersistedGroupOwnership,
+  getParamGroupFeeds,
+  hasServerFeed,
+  type ParamGroupFeeds,
 } from "../../util/known-tag";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
@@ -27,17 +28,21 @@ import { every, forEach, some } from "../../util/optional";
 import {
   getConstructInitClosures,
   getPatchFillBindings,
-  getPersistedIntrinsics,
   hasUndeliverableFillReads,
   hasUnfillablePatchReads,
-  inClientOwnedStructure,
-  isPatchCaptureSection,
   isPatchCaptureWriteBinding,
   isPatchEffectBinding,
   isPatchFillBinding,
-  kPatchClientOwned,
+  kInstancePatchSkip,
+} from "../../util/persisted/delivery";
+import {
+  getPersistedIntrinsics,
   scopeReasonRuntime,
-} from "../../util/persisted";
+} from "../../util/persisted/intrinsics";
+import {
+  inClientReselectableStructure,
+  isCapturePathSection,
+} from "../../util/persisted/structure";
 import {
   BindingType,
   getCanonicalExtra,
@@ -385,7 +390,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         sources?.param &&
         !sources.state &&
         !isPatchFillBinding(binding) &&
-        !inClientOwnedStructure(binding.section)
+        !inClientReselectableStructure(binding.section)
       ) {
         unsupported(
           node,
@@ -578,19 +583,19 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           ) {
             reason = "renders a nested child with attribute tags or arguments";
           } else {
-            const ownership =
-              inner.node.extra && getPersistedGroupOwnership(inner.node.extra);
+            const feeds =
+              inner.node.extra && getParamGroupFeeds(inner.node.extra);
             if (
-              !ownership &&
+              !feeds &&
               (inner.node.attributes.length || inner.node.arguments?.length)
             ) {
               reason = "renders a nested child without analyzable input";
             }
-            for (const group of ownership || []) {
+            for (const group of feeds || []) {
               if (
-                (group.serverRequired &&
+                (group.structuralOrGlobal &&
                   groupFedUnsafely(inner.node.attributes, group)) ||
-                group.globalFed
+                group.sources?.global
               ) {
                 reason = "feeds a nested child an input it needs server-owned";
                 break;
@@ -621,9 +626,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   // patches, so only an absent or constant attr leaves a group inert.
   const groupFedUnsafely = (
     attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
-    group: PersistedGroupOwnership,
+    group: ParamGroupFeeds,
   ) => {
-    if (group.stateFed || group.serverable) return true;
+    if (group.sources?.state || hasServerFeed(group.sources)) return true;
     let names: Set<string> | undefined;
     forEach(group.params, (param) => {
       (names ??= new Set()).add(param.property ?? param.name);
@@ -648,7 +653,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           "a server value's fill delivery path leaves the branch chain",
         );
       }
-      if (inClientOwnedStructure(section)) {
+      if (inClientReselectableStructure(section)) {
         assertDeliverableInClientOwned(node, node.value, node.value.extra);
       }
     },
@@ -667,12 +672,12 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // every enclosing section is itself a branch — unless the body
         // classified client-owned (content sections inherit ownership).
         if (
-          !isPatchCaptureSection(section) &&
-          !getSectionForBody(tag.get("body"))?.isClientOwnedStructure
+          !isCapturePathSection(section) &&
+          !getSectionForBody(tag.get("body"))?.isClientReselectable
         ) {
           unsupported(node);
         }
-        if (getSectionForBody(tag.get("body"))?.isClientOwnedStructure) {
+        if (getSectionForBody(tag.get("body"))?.isClientReselectable) {
           for (const attr of node.attributes) {
             if (attr.type !== "MarkoAttribute") continue;
             // A local `by` invokes client-side per re-list; any server
@@ -717,7 +722,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         // Nested structure inherits client ownership, so reaching here
         // means its selection has no delivery channel: fail closed.
-        if (inClientOwnedStructure(section)) {
+        if (inClientReselectableStructure(section)) {
           const attrExtra = node.attributes[0]?.value.extra;
           const sources =
             attrExtra &&
@@ -764,7 +769,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
             // A script's re-run entry rides the branch partial the frame no
             // longer carries, so only pure-client scripts run inside.
-            if (inClientOwnedStructure(getSection(tag))) {
+            if (inClientReselectableStructure(getSection(tag))) {
               if (attr.value.extra?.globalBindings) {
                 unsupported(
                   attr,
@@ -789,7 +794,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // state, and holes it feeds recompute through the signal graph.
       if (tagName === "let" || tagName === "const") {
         const section = getSection(tag);
-        if (inClientOwnedStructure(section)) {
+        if (inClientReselectableStructure(section)) {
           for (const attr of node.attributes) {
             if (attr.type === "MarkoAttribute") {
               assertDeliverableInClientOwned(
@@ -806,7 +811,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // output: reads stay current over the wire, so only deliverability
       // gates it (the call site classifies the return's ownership).
       if (tagName === "return") {
-        if (inClientOwnedStructure(getSection(tag))) {
+        if (inClientReselectableStructure(getSection(tag))) {
           unsupported(
             node,
             "a `<return>` inside client-owned structure is not supported yet",
@@ -832,7 +837,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       if (tagDef?.template) {
         // Inside client-owned structure a child is a pure client instance
         // (input re-applies via tag-args signals; server values fill).
-        if (inClientOwnedStructure(getSection(tag))) {
+        if (inClientReselectableStructure(getSection(tag))) {
           if (node.var) {
             unsupported(
               node,
@@ -895,25 +900,21 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           // An inputless child has no groups to classify; anything fed
           // must analyze so each group's channel can be checked.
-          const ownership =
-            node.extra && getPersistedGroupOwnership(node.extra);
-          if (
-            !ownership &&
-            (node.attributes.length || node.arguments?.length)
-          ) {
+          const feeds = node.extra && getParamGroupFeeds(node.extra);
+          if (!feeds && (node.attributes.length || node.arguments?.length)) {
             unsupported(
               node,
               "a child inside client-owned structure must have analyzable input",
             );
           }
-          for (const group of ownership || []) {
+          for (const group of feeds || []) {
             // A structural or `$global`-mixed child param needs server
             // ownership, which a skipped region cannot provide; an unfed
             // (or constant-fed) group can never change, so it may pass.
             if (
-              (group.serverRequired &&
+              (group.structuralOrGlobal &&
                 groupFedUnsafely(node.attributes, group)) ||
-              group.globalFed
+              group.sources?.global
             ) {
               unsupported(
                 node,
@@ -924,10 +925,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             // JOINS; a composed value ships whole through its own fill,
             // and only its function captures need live slots (writes).
             if (
-              group.stateFed
-                ? !every(group.parentParams, isPatchFillBinding)
+              group.sources?.state
+                ? !every(group.sources.param, isPatchFillBinding)
                 : !every(
-                    group.parentParams,
+                    group.sources?.param,
                     (binding) =>
                       isPatchFillBinding(binding) ||
                       isPatchEffectBinding(binding) ||
@@ -1070,8 +1071,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
           }
         }
-        const ownership = node.extra && getPersistedGroupOwnership(node.extra);
-        if (!ownership) {
+        const feeds = node.extra && getParamGroupFeeds(node.extra);
+        if (!feeds) {
           // No per-group analysis means no mask: an all-server child would
           // overwrite live client values.
           if (anyState) {
@@ -1083,18 +1084,18 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           return;
         }
         let anyServerable = false;
-        for (const group of ownership) {
-          anyServerable ||= group.serverable;
+        for (const group of feeds) {
+          anyServerable ||= hasServerFeed(group.sources);
           // Groups see feeds the attr walk cannot (attribute tags).
-          anyState ||= group.stateFed;
-          if (!group.stateFed) continue;
-          if (group.globalMixed) {
+          anyState ||= !!group.sources?.state;
+          if (!group.sources?.state) continue;
+          if (group.sources.global) {
             unsupported(
               node,
               "client state and `$global` cannot mix in one input group",
             );
           }
-          if (group.serverRequired) {
+          if (group.structuralOrGlobal) {
             unsupported(
               node,
               "client state cannot feed an input the child needs server-owned (it drives structure or mixes with `$global`)",
@@ -1103,8 +1104,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           // A server value sharing a client-fed group updates through its
           // fill; without one its changes could never reach the child.
           if (
-            group.parentParams &&
-            hasUnfillablePatchReads(group.parentParams)
+            group.sources?.param &&
+            hasUnfillablePatchReads(group.sources?.param)
           ) {
             unsupported(
               node,
@@ -1134,7 +1135,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             // is never a candidate: the call must render for its return,
             // and the var emission path carries no skip gate.
             if (skips && !node.var && loadFileForTag(tag)) {
-              (node.extra ??= {})[kPatchClientOwned] = true;
+              (node.extra ??= {})[kInstancePatchSkip] = true;
             }
           }
         }
@@ -1154,7 +1155,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           isContentRenderTag(node) &&
           tag.scope.getBinding("input")?.path.type === "Program"
         ) {
-          if (inClientOwnedStructure(getSection(tag))) {
+          if (inClientReselectableStructure(getSection(tag))) {
             unsupported(
               node,
               "a renderer read inside client-owned structure would need to cross the wire as a function",
@@ -1188,7 +1189,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const controlled = new Set<t.Node>(
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
       );
-      const clientOwnedStructure = inClientOwnedStructure(getSection(tag));
+      const clientOwnedStructure = inClientReselectableStructure(
+        getSection(tag),
+      );
       for (const attr of node.attributes) {
         // Handlers read the scope at call time, so only values no write
         // keeps current gate: `$global`-derived slots and function calls.
