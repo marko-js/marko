@@ -369,8 +369,8 @@ export default {
             }
           }
 
-          // The registration is per renderer but the mode is per call site, so
-          // one that cannot preserve drops it for every other use of the class.
+          // The registration is per renderer but the mode is per call site, so one
+          // that cannot preserve drops it for the rest; preserving measured larger.
           if (!preserveBoundary) {
             const emitted = getCompatBoundaryCalls().get(classId);
             if (emitted) emitted.arguments.length = 2;
