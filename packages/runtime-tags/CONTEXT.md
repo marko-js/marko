@@ -167,6 +167,55 @@ A `readyId`-keyed serialization channel that withholds lazy resume data until
 its module registers and earlier data drains.
 _Avoid_: async HTML stream
 
+## Persisted pages
+
+Analyze names observations in template terms; translate names conclusions
+(ownership, wire channels, masks) and keeps them out of shared metadata.
+
+**Patch**:
+A server rerender of a persisted page applied to the live client DOM by
+refreshing values and navigating structure, without a full page render.
+_Avoid_: rerender, hydration update
+
+**Client-reselectable structure**:
+A branch body whose selection can re-run on the client (classified at
+persisted finalize): patch renders skip it and frames omit its entry.
+Translate code may call the derived policy _client-owned_.
+_Avoid_: client-owned as a shared field name
+
+**Structural-or-global param**:
+A root param whose reads select structure or mix with `$global` — the value
+never leaves through an expression channel, so whoever renders must supply
+it. Translate derives server-ownership requirements from this fact.
+_Avoid_: server-required param
+
+**Capture path**:
+The root section and branch bodies reachable through branches alone; their
+text and attr holes emit direct patch captures.
+_Avoid_: patch section
+
+**Patch fill**:
+A server-sourced binding whose reads intersect client state, refreshed by
+patches through a registered fill signal. Distinct from a resume-payload
+_fill_ batch.
+_Avoid_: fill outside a patch-delivery discussion
+
+**Effect write / capture write**:
+Wire channels for refreshable values no fill consumes: an accessor write
+plus effect re-run, or a bare accessor write for registered-function
+captures.
+
+**Group feeds**:
+Per reason group at a templated call site: the feeding provenance
+(`sources`) and whether the group covers a structural-or-global param.
+Translate composes ownership masks and admission from it.
+_Avoid_: group ownership
+
+**Poison**:
+A runtime patch entry marking a region unanalyzable, forcing navigation.
+Translate/runtime only; analyze records why faithful patching is
+impossible, not the mechanism.
+
 ## Compilation modes
 
 **Output mode**:
