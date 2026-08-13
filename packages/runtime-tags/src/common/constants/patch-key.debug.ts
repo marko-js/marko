@@ -8,6 +8,7 @@ export const Effect = "PatchEffect:";
 export const GlobalEffect = "PatchGlobalEffect:";
 export const Globals = "$global:";
 export const Loop = "PatchLoop:";
+export const Pending = "PatchPending:";
 export const Poison = "PatchPoison:";
 export const Setup = "PatchSetup:";
 export const Text = "PatchText:";
