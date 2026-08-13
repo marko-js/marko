@@ -1,8 +1,19 @@
-// size: 6511 (min) 2873 (brotli)
+// size: 6515 (min) 2868 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  branchesEnabled,
-  rendering,
+  branchesEnabled;
+function isNotVoid(value) {
+  return value != null && value !== !1;
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
+function withBranches(runtime) {
+  return ((branchesEnabled = 1), runtime);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
@@ -189,15 +200,6 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
         ? forOf(all, (item, i) => cb(item[by], [item, i]))
         : forOf(all, (item, i) => cb(by(item, i), [item, i])));
   });
-function isNotVoid(value) {
-  return value != null && value !== !1;
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
-}
-function withBranches(runtime) {
-  return ((branchesEnabled = 1), runtime);
-}
 function forOf(list, cb) {
   if (list) {
     let i = 0;
