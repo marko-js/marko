@@ -8,12 +8,6 @@ Friction in builds, tests, tooling, or repo workflows. Format and rules: [README
 
 Two majors stay pinned because they are migrations, not refreshes. Babel is held at 7.29.7 behind four hand-authored patches against Babel 7's compiled `lib/` (`patches/@babel__{types,traverse,generator,helper-compilation-targets}@7.29.7.patch`; the types one is 78 KB of injected Marko AST node types) plus `packages/compiler` reaching Babel-7 internals through the `@marko/compiler/internal/babel` export — Babel 8 restructures those modules, so the patches stop applying and the codegen needs porting. chai is held at 4.5.0 because chai 5+ is ESM-only and 371 CommonJS `require("chai")` call sites remain, all under `packages/runtime-class/test/**`. Give each its own PR. Re-check with `ls patches` and `rg -c 'require\("chai"\)' packages`.
 
-## Key the agent fix-guide to the specific error instead of one generic cheatsheet pointer
-
-`packages/compiler/src/util/agent-fix-guide.js` › `fixGuide` | 2026-07-19 | impact:high | effort:med
-
-`fixGuide(translator)` interpolates only the resolved cheatsheet path, so every thrown compile error gets the identical `Fix guide: READ <path> before writing a fix.` — verified: `<div` (EOF in open tag) and bare text at root produce byte-identical hints. `packages/runtime-tags/cheatsheet.md` is ~200 lines over 11 sections, and one label spans several causes (`Invalid attribute name.` covers both a bad attribute and unwrapped concise text), so a whole-file pointer cannot disambiguate. Pass the diagnostic (label/loc, or a hint the emitter attaches from its AST context) into `appendAgentFixGuide` and append a section anchor, e.g. `see 'Golden rules' #1 in <path>`. See also "Attach the agent fix-guide to `errorRecovery` diagnostics, not just thrown errors" — a separate coverage defect that wants the same diagnostic-keyed guide helper, so build it once. Re-verify: compile two differently-broken templates with `CLAUDECODE=1` and confirm the appended lines differ.
-
 ## Serialize `Blob` and `File`, including inside `FormData`
 
 `packages/runtime-tags/src/html/serializer.ts` › `writeFormData` | 2026-07-23 | impact:med | effort:med
