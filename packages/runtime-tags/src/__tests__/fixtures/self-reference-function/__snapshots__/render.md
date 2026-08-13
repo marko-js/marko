@@ -1,0 +1,22 @@
+# Render
+```html
+<button />
+<div>
+  3
+</div>
+```
+
+# Update
+```js
+document.querySelector("button").click();
+```
+```html
+<button />
+<div>
+  6
+</div>
+```
+## Change
+```
+UPDATE: div::text "3" => "6"
+```

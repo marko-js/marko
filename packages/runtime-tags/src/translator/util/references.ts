@@ -498,11 +498,11 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   for (const ref of referencePaths as t.NodePath<t.Identifier>[]) {
     const refSection = getOrCreateSection(ref);
     const markoRoot = getMarkoRoot(ref);
-
-    if (
+    const isOwnAttribute =
       markoRoot?.type === "MarkoAttribute" &&
-      markoRoot.parentPath === babelBinding.path
-    ) {
+      markoRoot.parentPath === babelBinding.path;
+
+    if (isOwnAttribute && !getFnRoot(ref)) {
       throw ref.buildCodeFrameError(
         `\`${ref.node.name}\` is the [tag variable](https://markojs.com/docs/reference/language#tag-variables) this tag declares, so its own attributes cannot read it.`,
       );
