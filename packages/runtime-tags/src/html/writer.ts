@@ -238,8 +238,8 @@ export function _el_resume(
 export function writePatch(scopeId: number, entries: Record<string, unknown>) {
   const { state } = $chunk.boundary;
   if (state.patchFlushed) {
-    // A poisoned frame already told the client to navigate; late writes
-    // from boundaries settling after the flush are dead and drop here.
+    // A poisoned frame already told the client to navigate; further
+    // writes are dead.
     if (state.patchPoison) return;
     throw new Error(
       "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
@@ -1361,9 +1361,8 @@ export class Boundary extends AbortController {
   }
 
   flush() {
-    // A patch is one frame: while boundaries are pending nothing
-    // stringifies (later settles keep mutating the live partials), and a
-    // flush that catches it pending poisons instead.
+    // A patch is one frame: while boundaries are pending, later settles
+    // keep mutating the live partials and nothing stringifies.
     if (!this.signal.aborted && !(this.count && this.state.writesPatches)) {
       flushSerializer(this, this.state);
     }
@@ -1783,6 +1782,7 @@ export class Chunk {
   flushHTML() {
     const { boundary } = this;
     const { state } = boundary;
+    if (state.writesPatches && boundary.count) return "";
     if (this.needsWalk) {
       this.needsWalk = false;
       state.walkOnNextFlush = true;
