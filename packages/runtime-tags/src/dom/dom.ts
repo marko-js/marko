@@ -112,10 +112,10 @@ export function _attr_style_item(
 }
 
 export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
-  const element = scope[nodeAccessor] as HTMLStyleElement;
+  const element = scope[nodeAccessor] as Element;
   const id = _id(scope);
   _attr_nonce(scope, nodeAccessor);
-  element.className = id;
+  _attr(element, "class", id);
   _text_content(element, "." + id + "~*{}");
 }
 
