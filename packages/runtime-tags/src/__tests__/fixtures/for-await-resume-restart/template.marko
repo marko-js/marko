@@ -1,0 +1,19 @@
+import { resolveAfter } from "../../utils/resolve";
+
+static async function* stream(items) {
+  let tick = 0;
+  for (const item of items) {
+    yield resolveAfter(item, ++tick);
+  }
+}
+
+<let/mounted/>
+<script>mounted=true</script>
+<try>
+  <ul>
+    <for-await|item, i| of=stream(["a", "b", mounted ? "hello" : "goodbye"])>
+      <li>#${i}: ${item}</li>
+    </for-await>
+  </ul>
+  <@placeholder>Waiting...</@placeholder>
+</try>

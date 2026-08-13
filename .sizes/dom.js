@@ -1,4 +1,4 @@
-// size: 27423 (min) 10193 (brotli)
+// size: 27679 (min) 10306 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -353,100 +353,130 @@ let unsafeStyleAttrReg = /[\\;]/g,
     let scopesAccessor = "A" + nodeAccessor,
       keyedScopesAccessor = "O" + nodeAccessor,
       promiseAccessor = "L" + nodeAccessor,
-      renderer = _content("", template, walks, setup)();
-    return (scope, [list, by]) => {
-      let prevIteration = scope[promiseAccessor];
-      if (prevIteration && prevIteration.l === list) return;
-      let wasPending = prevIteration?.p;
-      wasPending && ((prevIteration.p = 0), prevIteration.i?.return?.());
-      let iterateAsync = list && list[Symbol.asyncIterator],
-        iterate = iterateAsync || (list && list[Symbol.iterator]),
-        iter = iterate ? iterate.call(list) : void 0,
-        iteration = {
-          l: list,
-          p: 1,
-          i: iter,
-          c: wasPending ? prevIteration.c : iterateAsync && iter ? addAwaitCounter(scope) : void 0,
-        };
-      scope[promiseAccessor] = iteration;
-      let branches = (scope[scopesAccessor] = toArray(scope[scopesAccessor])),
-        oldScopesByKey,
-        n = 0,
-        index = 0,
-        appendItem = (value) => {
-          let key = by ? (typeof by == "string" ? value[by] : by(value, index)) : index;
-          scope[keyedScopesAccessor] = null;
-          let suffix = branches[n],
-            branch;
-          if (!oldScopesByKey && suffix && (suffix.M ?? n) === key) ((branch = suffix), n++);
-          else {
-            if (!oldScopesByKey) {
-              oldScopesByKey = /* @__PURE__ */ new Map();
-              for (let j = n; j < branches.length; j++)
-                oldScopesByKey.set(branches[j].M ?? j, branches[j]);
-            }
-            if (((branch = oldScopesByKey.get(key)), branch === suffix && branch)) n++;
+      renderer = _content("", template, walks, setup)(),
+      signal = (scope, value) => {
+        let [list, by] = value,
+          prevIteration = scope[promiseAccessor];
+        if (prevIteration && prevIteration.l === list) return;
+        let wasPending = prevIteration?.p;
+        if (
+          (wasPending && ((prevIteration.p = 0), prevIteration.i?.return?.()),
+          !(scope[nodeAccessor] || scope[scopesAccessor]))
+        ) {
+          let parked = {
+            l: 0,
+            p: 1,
+            i: void 0,
+            c: wasPending ? prevIteration.c : void 0,
+          };
+          scope[promiseAccessor] = parked;
+          let check = () => {
+            scope[promiseAccessor] !== parked ||
+              !parked.p ||
+              (scope.F?.H === 0
+                ? ((parked.p = 0), parked.c?.c(), run())
+                : scope[nodeAccessor] || scope[scopesAccessor]
+                  ? (parked.c || (parked.p = 0), signal(scope, value))
+                  : requestAnimationFrame(check));
+          };
+          requestAnimationFrame(check);
+          return;
+        }
+        let iterateAsync = list && list[Symbol.asyncIterator],
+          iterate = iterateAsync || (list && list[Symbol.iterator]),
+          iter = iterate ? iterate.call(list) : void 0,
+          iteration = {
+            l: list,
+            p: 1,
+            i: iter,
+            c: wasPending
+              ? prevIteration.c
+              : iterateAsync && iter
+                ? addAwaitCounter(scope)
+                : void 0,
+          };
+        scope[promiseAccessor] = iteration;
+        let branches = (scope[scopesAccessor] = toArray(scope[scopesAccessor])),
+          oldScopesByKey,
+          n = 0,
+          index = 0,
+          appendItem = (value) => {
+            let key = by ? (typeof by == "string" ? value[by] : by(value, index)) : index;
+            scope[keyedScopesAccessor] = null;
+            let suffix = branches[n],
+              branch;
+            if (!oldScopesByKey && suffix && (suffix.M ?? n) === key) ((branch = suffix), n++);
             else {
-              branch &&
-                (oldScopesByKey.delete(key), branches.splice(branches.indexOf(branch, n), 1));
-              let ref = branches[n]?.S ?? scope[nodeAccessor];
-              ((branch ||= createAndSetupBranch(scope.$, renderer, scope, ref.parentNode)),
-                insertBranchBefore(branch, ref.parentNode, ref),
-                branches.splice(n++, 0, branch));
+              if (!oldScopesByKey) {
+                oldScopesByKey = /* @__PURE__ */ new Map();
+                for (let j = n; j < branches.length; j++)
+                  oldScopesByKey.set(branches[j].M ?? j, branches[j]);
+              }
+              if (((branch = oldScopesByKey.get(key)), branch === suffix && branch)) n++;
+              else {
+                branch &&
+                  (oldScopesByKey.delete(key), branches.splice(branches.indexOf(branch, n), 1));
+                let ref = branches[n]?.S ?? scope[nodeAccessor],
+                  insertBefore = ref ?? branches[n - 1].K.nextSibling,
+                  parentNode = (ref ?? branches[n - 1].K).parentNode;
+                ((branch ||= createAndSetupBranch(scope.$, renderer, scope, parentNode)),
+                  insertBranchBefore(branch, parentNode, insertBefore),
+                  branches.splice(n++, 0, branch));
+              }
             }
-          }
-          ((branch.M = key), params?.(branch, [value, index++]));
-        },
-        finish = () => {
-          iteration.p = 0;
-          for (let j = n; j < branches.length; j++) removeAndDestroyBranch(branches[j]);
-          ((branches.length = n), iteration.c?.c());
-        },
-        onReject = (err) => {
-          scope[promiseAccessor] === iteration &&
-            iteration.p &&
-            ((iteration.p = 0),
-            iteration.c && (iteration.c.m ? (iteration.c.i = 0) : iteration.c.c()),
-            queueAsyncRender(scope, () => {
-              scope[promiseAccessor] === iteration && renderCatch(scope, err);
-            }));
-        },
-        pump = () => {
-          for (; iteration.p;) {
-            let res = iter.next();
-            if (isPromise(res)) {
-              res.then((r) => {
-                if (!(scope[promiseAccessor] !== iteration || !iteration.p)) {
-                  if (scope.F?.H === 0) {
-                    ((iteration.p = 0), iter.return?.(), iteration.c?.c(), run());
-                    return;
+            ((branch.M = key), params?.(branch, [value, index++]));
+          },
+          finish = () => {
+            iteration.p = 0;
+            for (let j = n; j < branches.length; j++) removeAndDestroyBranch(branches[j]);
+            ((branches.length = n), iteration.c?.c());
+          },
+          onReject = (err) => {
+            scope[promiseAccessor] === iteration &&
+              iteration.p &&
+              ((iteration.p = 0),
+              iteration.c && (iteration.c.m ? (iteration.c.i = 0) : iteration.c.c()),
+              queueAsyncRender(scope, () => {
+                scope[promiseAccessor] === iteration && renderCatch(scope, err);
+              }));
+          },
+          pump = () => {
+            for (; iteration.p;) {
+              let res = iter.next();
+              if (isPromise(res)) {
+                res.then((r) => {
+                  if (!(scope[promiseAccessor] !== iteration || !iteration.p)) {
+                    if (scope.F?.H === 0) {
+                      ((iteration.p = 0), iter.return?.(), iteration.c?.c(), run());
+                      return;
+                    }
+                    queueAsyncRender(scope, () => {
+                      scope[promiseAccessor] !== iteration ||
+                        !iteration.p ||
+                        (r.done
+                          ? finish()
+                          : (placeholderShown.add(pendingEffects), appendItem(r.value), pump()));
+                    });
                   }
-                  queueAsyncRender(scope, () => {
-                    scope[promiseAccessor] !== iteration ||
-                      !iteration.p ||
-                      (r.done
-                        ? finish()
-                        : (placeholderShown.add(pendingEffects), appendItem(r.value), pump()));
-                  });
-                }
-              }, onReject);
-              return;
+                }, onReject);
+                return;
+              }
+              res.done ? finish() : appendItem(res.value);
             }
-            res.done ? finish() : appendItem(res.value);
-          }
-        };
-      iter
-        ? (iterateAsync &&
-            ($signalReset(scope, promiseAccessor),
-            $signal(scope, promiseAccessor).addEventListener("abort", () => {
-              scope[promiseAccessor] === iteration &&
-                iteration.p &&
-                ((iteration.p = 0), iter.return?.(), iteration.c?.c());
-            }),
-            placeholderShown.add(pendingEffects)),
-          pump())
-        : finish();
-    };
+          };
+        iter
+          ? (iterateAsync &&
+              ($signalReset(scope, promiseAccessor),
+              $signal(scope, promiseAccessor).addEventListener("abort", () => {
+                scope[promiseAccessor] === iteration &&
+                  iteration.p &&
+                  ((iteration.p = 0), iter.return?.(), iteration.c?.c());
+              }),
+              placeholderShown.add(pendingEffects)),
+            pump())
+          : finish();
+      };
+    return signal;
   });
 function _call(fn, v) {
   return (fn(v), v);

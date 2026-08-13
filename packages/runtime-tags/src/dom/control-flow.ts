@@ -1031,13 +1031,14 @@ export const _for_await = /*@__PURE__*/ withBranches(
     const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
     const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
     const renderer = _content("", template, walks, setup)();
-    return (
+    const signal = (
       scope: Scope,
-      [list, by]: [
+      value: [
         list: Falsy | AsyncIterable<unknown> | Iterable<unknown>,
         by?: Falsy | string | ((item: unknown, index: number) => unknown),
       ],
     ) => {
+      const [list, by] = value;
       const prevIteration = scope[promiseAccessor] as
         | ForAwaitIteration
         | undefined;
@@ -1046,6 +1047,35 @@ export const _for_await = /*@__PURE__*/ withBranches(
       if (wasPending) {
         prevIteration!.p = 0;
         prevIteration!.i?.return?.();
+      }
+
+      if (!(scope[nodeAccessor] || scope[scopesAccessor])) {
+        // The loop's SSR region has not resumed yet (its marker and branches
+        // arrive with a later stream flush); park the newest value and retry
+        // each frame until the region lands, is superseded, or is destroyed.
+        const parked: ForAwaitIteration = {
+          l: 0,
+          p: 1,
+          i: undefined,
+          c: wasPending ? prevIteration!.c : undefined,
+        };
+        scope[promiseAccessor] = parked;
+        const check = () => {
+          if (scope[promiseAccessor] !== parked || !parked.p) return;
+          if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] === 0) {
+            parked.p = 0;
+            parked.c?.c();
+            run();
+          } else if (scope[nodeAccessor] || scope[scopesAccessor]) {
+            // Without an inherited counter the rerun registers its own.
+            if (!parked.c) parked.p = 0;
+            signal(scope, value);
+          } else {
+            requestAnimationFrame(check);
+          }
+        };
+        requestAnimationFrame(check);
+        return;
       }
 
       const iterateAsync =
@@ -1130,17 +1160,26 @@ export const _for_await = /*@__PURE__*/ withBranches(
             }
             // Insertion parent/reference re-derived every time: a pending
             // `<try>` placeholder can temp-detach the whole range mid-stream.
+            // A dynamic guard may resume branches without the marker, so the
+            // end position falls back to just after the reconciled prefix.
             const ref = (branches[n]?.[AccessorProp.StartNode] ??
-              scope[nodeAccessor]) as ChildNode;
+              scope[nodeAccessor]) as ChildNode | undefined;
+            const insertBefore =
+              ref ??
+              ((branches[n - 1] as BranchScope)[AccessorProp.EndNode]
+                .nextSibling as ChildNode | null);
+            const parentNode = (
+              ref ?? (branches[n - 1] as BranchScope)[AccessorProp.EndNode]
+            ).parentNode!;
             if (!branch) {
               branch = createAndSetupBranch(
                 scope[AccessorProp.Global],
                 renderer,
                 scope,
-                ref.parentNode!,
+                parentNode,
               );
             }
-            insertBranchBefore(branch, ref.parentNode!, ref);
+            insertBranchBefore(branch, parentNode, insertBefore);
             branches.splice(n++, 0, branch);
           }
         }
@@ -1232,6 +1271,7 @@ export const _for_await = /*@__PURE__*/ withBranches(
         finish();
       }
     };
+    return signal;
   },
 );
 
