@@ -1,21 +1,20 @@
-# Render `{"title":"Store"}`
+# Render `{"title":"Store","promise":{}}`
 ```html
 <main>
   <h1>
     Store
   </h1>
+  <em>
+    hi
+  </em>
 </main>
 ```
 
-# Update `{"title":"Store!"}`
-
-## Patch rejected (navigate)
-
-# Update
+# Update `{"title":"Store!","promise":{}}`
 ```html
 <main>
   <h1>
-    Store
+    Store!
   </h1>
   <em>
     slow
@@ -24,6 +23,6 @@
 ```
 ## Change
 ```
-INSERT: main > h1 + em
-INSERT: main > em::text("slow")
+UPDATE: main > h1::text "Store" => "Store!"
+UPDATE: main > em::text "hi" => "slow"
 ```
