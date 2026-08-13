@@ -1034,6 +1034,15 @@ export function _await<T>(
     },
     (err) => {
       chunk.async = false;
+      if (boundary.state.writesPatches) {
+        if (!boundary.signal.aborted) {
+          chunk.render(() => {
+            writePatch(scopeId, { [PatchKey.Catch + accessor]: err });
+          });
+          boundary.endAsync();
+        }
+        return;
+      }
       boundary.abort(err);
     },
   );
@@ -1061,12 +1070,12 @@ export function _try(
   pairPatchBoundary(scopeId, accessor, branchId);
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
 
-  // A patch shows `@placeholder` on the client from received state; the
-  // document reorder/`<t hidden>` path must not ride the frame stream.
-  const usePlaceholder =
-    placeholderContent && !$chunk.boundary.state.writesPatches;
+  // A patch shows `@placeholder`/`@catch` from received client state;
+  // the document reorder/`<t hidden>` path must not ride the frame stream.
+  const writesPatches = $chunk.boundary.state.writesPatches;
+  const usePlaceholder = placeholderContent && !writesPatches;
 
-  if (catchContent !== undefined) {
+  if (catchContent !== undefined && !writesPatches) {
     tryCatch(
       usePlaceholder
         ? () =>
