@@ -1,15 +1,7 @@
-// size: 2888 (min) 1402 (brotli)
+// size: 2884 (min) 1392 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
-let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
-function isNotVoid(value) {
-  return value != null && value !== !1;
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
-}
-//#endregion
-//#region packages/runtime-tags/dist/dom.mjs
-let rendering,
+let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
+  rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
@@ -27,6 +19,12 @@ let rendering,
   registeredValues = {},
   curRenders,
   readyIds;
+function isNotVoid(value) {
+  return value != null && value !== !1;
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
