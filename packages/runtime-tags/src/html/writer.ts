@@ -290,8 +290,6 @@ function markText(
 export function writePatch(scopeId: number, entries: Record<string, unknown>) {
   const { state } = $chunk.boundary;
   if (state.patchFlushed) {
-    // A poisoned frame already told the client to navigate; further
-    // writes are dead.
     if (state.patchPoison) return;
     throw new Error(
       "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
@@ -1048,6 +1046,9 @@ export function _await<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
+  if (boundary.state.writesPatches) {
+    writePatch(scopeId, { [PatchKey.Pending + accessor]: 1 });
+  }
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
   if (chunk.context?.[kPendingContexts]) {
@@ -1111,13 +1112,18 @@ export function _try(
   pairPatchBoundary(scopeId, accessor, branchId);
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
 
+  // A patch shows `@placeholder` on the client from received state; the
+  // document reorder/`<t hidden>` path must not ride the frame stream.
+  const usePlaceholder =
+    placeholderContent && !$chunk.boundary.state.writesPatches;
+
   if (catchContent !== undefined) {
     tryCatch(
-      placeholderContent
+      usePlaceholder
         ? () =>
             tryPlaceholder(
               content,
-              placeholderContent,
+              placeholderContent!,
               branchId,
               scopeId,
               placeholderBranchId,
@@ -1125,10 +1131,10 @@ export function _try(
         : content,
       catchContent || (() => {}),
     );
-  } else if (placeholderContent) {
+  } else if (usePlaceholder) {
     tryPlaceholder(
       content,
-      placeholderContent,
+      placeholderContent!,
       branchId,
       scopeId,
       placeholderBranchId,
@@ -1438,8 +1444,8 @@ export class Boundary extends AbortController {
   }
 
   flush() {
-    // A patch is one frame: while boundaries are pending, later settles
-    // keep mutating the live partials and nothing stringifies.
+    // A pending patch must not stringify until its frame is actually
+    // emitted: the same partial objects keep receiving later writes.
     if (!this.signal.aborted && !(this.count && this.state.writesPatches)) {
       flushSerializer(this, this.state);
     }
@@ -1762,7 +1768,7 @@ export class Chunk {
         : '"' + effects + '"';
     }
 
-    if (state.writeReorders) {
+    if (state.writeReorders && !state.writesPatches) {
       let carried: Chunk[] | null = null;
 
       for (const reorderedChunk of state.writeReorders) {
@@ -1905,7 +1911,9 @@ export class Chunk {
   flushHTML() {
     const { boundary } = this;
     const { state } = boundary;
-    if (state.writesPatches && boundary.count) return "";
+    if (state.writesPatches && boundary.count) {
+      flushSerializer(boundary, state);
+    }
     if (this.needsWalk) {
       this.needsWalk = false;
       state.walkOnNextFlush = true;

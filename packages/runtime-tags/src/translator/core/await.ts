@@ -152,7 +152,10 @@ export default {
         setSectionParentIsOwner(bodySection, true);
         // A patch pairs the body scope through a `PatchChild` entry, so the
         // page must ship its patcher (the import rides both outputs).
-        if (isPersisted()) importRuntimeFeature("patch-child");
+        if (isPersisted()) {
+          importRuntimeFeature("patch-child");
+          importRuntimeFeature("patch-boundary");
+        }
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -196,7 +199,10 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        if (isPersisted()) importRuntimeFeature("patch-child");
+        if (isPersisted()) {
+          importRuntimeFeature("patch-child");
+          importRuntimeFeature("patch-boundary");
+        }
       },
       exit(tag) {
         const { node } = tag;
