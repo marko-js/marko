@@ -43,6 +43,7 @@ const pureDOMFunctions = new Set<string>([
   "_or",
   "_for_closure",
   "_for_selector",
+  "_for_await",
   "_for_in",
   "_for_of",
   "_for_to",

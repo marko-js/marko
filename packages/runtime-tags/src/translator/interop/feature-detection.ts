@@ -183,6 +183,7 @@ function getFeatureTypeFromCoreTagName(
     case "debug":
     case "define":
     case "effect":
+    case "for-await":
     case "id":
     case "let":
     case "lifecycle":

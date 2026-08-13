@@ -62,7 +62,7 @@ import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
-type ForType = "in" | "of" | "to" | "until";
+export type ForType = "in" | "of" | "to" | "until";
 const kStatefulReason = Symbol("<for> stateful reason");
 
 export default {
@@ -489,7 +489,7 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
 
 // A plain node walk (no paths/scopes): functions and classes are skipped since
 // their params shadow, so an inner read falls back to the runtime error.
-function findLoopParamRead(
+export function findLoopParamRead(
   node: t.Node,
   names: Set<string>,
 ): t.Identifier | undefined {
@@ -522,7 +522,7 @@ function findLoopParamRead(
   }
 }
 
-function getLoopKeyBinding(
+export function getLoopKeyBinding(
   byAttr: t.Expression | undefined,
   paramsBinding: Binding | undefined,
   forType: ForType,

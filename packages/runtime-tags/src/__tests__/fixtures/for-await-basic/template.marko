@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+static async function* stream(items) {
+  let tick = 0;
+  for (const item of items) {
+    yield resolveAfter(item, ++tick);
+  }
+}
+
+<let/clicks=0/>
+<ul>
+  <for-await|item, i| of=stream(input.items)>
+    <li>${i}: ${item} (${clicks})</li>
+  </for-await>
+</ul>
+<button onClick() { clicks++ }>inc</button>

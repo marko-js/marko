@@ -341,6 +341,7 @@ export function getNodeContentType(
               ? ContentType.Tag
               : null;
           case "for":
+          case "for-await":
           case "if":
           case "await":
           case "try":

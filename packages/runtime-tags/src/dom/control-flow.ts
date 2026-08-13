@@ -7,7 +7,7 @@ import {
   normalizeDynamicRenderer,
 } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
-import { toArray } from "../common/opt";
+import { type Opt, toArray } from "../common/opt";
 import {
   type Accessor,
   AccessorPrefix,
@@ -15,10 +15,12 @@ import {
   type AwaitCounter,
   type BranchScope,
   type EncodedAccessor,
+  type Falsy,
   NodeType,
   RendererProp,
   type Scope,
 } from "../common/types";
+import { $signal, $signalReset } from "./abort-signal";
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
@@ -1004,6 +1006,234 @@ export const _for_until = /*@__PURE__*/ loop<
   by ||= byFirstArg;
   forUntil(until, from, step, (v) => cb(by(v), [v]));
 });
+
+interface ForAwaitIteration {
+  // Latest source; identity-compared so a re-render whose iterable is
+  // unchanged does not restart a non-reobservable iterator.
+  l: unknown;
+  // Pending latch: every completion path (done, error, supersede, destroy)
+  // clears it exactly once.
+  p: 0 | 1;
+  i: AsyncIterator<unknown> | Iterator<unknown> | undefined;
+  c: AwaitCounter | undefined;
+}
+
+export const _for_await = /*@__PURE__*/ withBranches(
+  (
+    nodeAccessor: EncodedAccessor,
+    template?: string | 0,
+    walks?: string | 0,
+    setup?: SetupFn | 0,
+    params?: Signal<unknown>,
+  ) => {
+    if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+    const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+    const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
+    const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
+    const renderer = _content("", template, walks, setup)();
+    return (
+      scope: Scope,
+      [list, by]: [
+        list: Falsy | AsyncIterable<unknown> | Iterable<unknown>,
+        by?: Falsy | string | ((item: unknown, index: number) => unknown),
+      ],
+    ) => {
+      const prevIteration = scope[promiseAccessor] as
+        | ForAwaitIteration
+        | undefined;
+      if (prevIteration && prevIteration.l === list) return;
+      const wasPending = prevIteration?.p;
+      if (wasPending) {
+        prevIteration!.p = 0;
+        prevIteration!.i?.return?.();
+      }
+
+      const iterateAsync =
+        list && (list as AsyncIterable<unknown>)[Symbol.asyncIterator];
+      const iterate =
+        iterateAsync || (list && (list as Iterable<unknown>)[Symbol.iterator]);
+      const iter = iterate
+        ? (
+            iterate as (
+              this: unknown,
+            ) => AsyncIterator<unknown> | Iterator<unknown>
+          ).call(list)
+        : undefined;
+      const iteration: ForAwaitIteration = {
+        l: list,
+        p: 1,
+        i: iter,
+        // A superseded pending iteration's placeholder count transfers rather
+        // than incrementing again (mirrors `_await_promise`).
+        c: wasPending
+          ? prevIteration!.c
+          : iterateAsync && iter
+            ? addAwaitCounter(scope)
+            : undefined,
+      };
+      scope[promiseAccessor] = iteration;
+
+      // Reconciled prefix [0, n) in arrival order, unreconciled leftovers as
+      // the suffix: closure/selector signals always see every live branch.
+      const branches = (scope[scopesAccessor] = toArray<BranchScope>(
+        scope[scopesAccessor] as Opt<BranchScope>,
+      ) as BranchScope[]);
+      let oldScopesByKey: Map<unknown, BranchScope> | undefined;
+      let n = 0;
+      let index = 0;
+
+      if (MARKO_DEBUG) {
+        // eslint-disable-next-line no-var
+        var seenKeys = new Set<unknown>();
+      }
+
+      const appendItem = (value: unknown) => {
+        const key = by
+          ? typeof by === "string"
+            ? (value as Record<string, unknown>)[by]
+            : by(value, index)
+          : index;
+        if (MARKO_DEBUG) {
+          assertValidLoopKey(key, seenKeys);
+        }
+        // `_for_selector` caches a keyed map of the current list; every
+        // append invalidates it so later-arriving keys are reachable.
+        scope[keyedScopesAccessor] = null;
+        const suffix = branches[n] as BranchScope | undefined;
+        let branch: BranchScope | undefined;
+        if (
+          !oldScopesByKey &&
+          suffix &&
+          (suffix[AccessorProp.LoopKey] ?? n) === key
+        ) {
+          // Suffix positions equal original positions until the first keyed
+          // pull, so an in-order arrival reuses in place with no DOM move.
+          branch = suffix;
+          n++;
+        } else {
+          if (!oldScopesByKey) {
+            oldScopesByKey = new Map();
+            for (let j = n; j < branches.length; j++) {
+              oldScopesByKey.set(
+                branches[j][AccessorProp.LoopKey] ?? j,
+                branches[j],
+              );
+            }
+          }
+          branch = oldScopesByKey.get(key);
+          if (branch === suffix && branch) {
+            n++;
+          } else {
+            if (branch) {
+              oldScopesByKey.delete(key);
+              branches.splice(branches.indexOf(branch, n), 1);
+            }
+            // Insertion parent/reference re-derived every time: a pending
+            // `<try>` placeholder can temp-detach the whole range mid-stream.
+            const ref = (branches[n]?.[AccessorProp.StartNode] ??
+              scope[nodeAccessor]) as ChildNode;
+            if (!branch) {
+              branch = createAndSetupBranch(
+                scope[AccessorProp.Global],
+                renderer,
+                scope,
+                ref.parentNode!,
+              );
+            }
+            insertBranchBefore(branch, ref.parentNode!, ref);
+            branches.splice(n++, 0, branch);
+          }
+        }
+        branch[AccessorProp.LoopKey] = key;
+        params?.(branch, [value, index++]);
+      };
+
+      const finish = () => {
+        iteration.p = 0;
+        for (let j = n; j < branches.length; j++) {
+          removeAndDestroyBranch(branches[j]);
+        }
+        branches.length = n;
+        iteration.c?.c();
+      };
+
+      const onReject = (err: unknown) => {
+        if (scope[promiseAccessor] === iteration && iteration.p) {
+          iteration.p = 0;
+          if (iteration.c) {
+            // Mirrors `_await_promise` rejection: a resumed counter is
+            // zeroed, a live one completes so an ancestor placeholder
+            // dismisses.
+            if (iteration.c.m) iteration.c.i = 0;
+            else iteration.c.c();
+          }
+          queueAsyncRender(scope, () => {
+            if (scope[promiseAccessor] === iteration) {
+              renderCatch(scope, err);
+            }
+          });
+        }
+      };
+
+      const pump = () => {
+        while (iteration.p) {
+          const res = iter!.next();
+          if (isPromise(res)) {
+            (res as Promise<IteratorResult<unknown>>).then((r) => {
+              if (scope[promiseAccessor] !== iteration || !iteration.p) return;
+              if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] === 0) {
+                // The branch holding the loop is gone; complete here so an
+                // ancestor `@placeholder` still dismisses.
+                iteration.p = 0;
+                iter!.return?.();
+                iteration.c?.c();
+                run();
+                return;
+              }
+              queueAsyncRender(scope, () => {
+                if (scope[promiseAccessor] !== iteration || !iteration.p) {
+                  return;
+                }
+                if (r.done) {
+                  finish();
+                } else {
+                  placeholderShown.add(pendingEffects);
+                  appendItem(r.value);
+                  pump();
+                }
+              });
+            }, onReject);
+            return;
+          }
+          if ((res as IteratorResult<unknown>).done) {
+            finish();
+          } else {
+            appendItem((res as IteratorResult<unknown>).value);
+          }
+        }
+      };
+
+      if (iter) {
+        if (iterateAsync) {
+          // Destroying the owning branch aborts the controller, which
+          // releases the iterator deterministically.
+          $signalReset(scope, promiseAccessor);
+          $signal(scope, promiseAccessor).addEventListener("abort", () => {
+            if (scope[promiseAccessor] === iteration && iteration.p) {
+              iteration.p = 0;
+              iter.return?.();
+              iteration.c?.c();
+            }
+          });
+          placeholderShown.add(pendingEffects);
+        }
+        pump();
+      } else {
+        finish();
+      }
+    };
+  },
+);
 
 function createBranchWithTagNameOrRenderer(
   $global: Scope[typeof AccessorProp.Global],

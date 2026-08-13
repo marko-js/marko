@@ -47,6 +47,7 @@ export {
   _el,
   _el_resume,
   _existing_scope,
+  _for_await,
   _for_in,
   _for_of,
   _for_to,

@@ -1,0 +1,26 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+static async function* stream(items) {
+  let tick = 0;
+  for (const item of items) {
+    if (item === "boom") {
+      yield rejectAfter(new Error("boom"), ++tick);
+    } else {
+      yield resolveAfter(item, ++tick);
+    }
+  }
+}
+
+<try>
+  <ul>
+    <for-await|item| of=stream(input.items)>
+      <li>${item}</li>
+    </for-await>
+  </ul>
+  <@placeholder>
+    <span>loading</span>
+  </@placeholder>
+  <@catch|err|>
+    <em>${err.message}</em>
+  </@catch>
+</try>

@@ -9,6 +9,7 @@ import DefineTag from "./define";
 import EffectTag from "./effect";
 import ExportTag from "./export";
 import ForTag from "./for";
+import ForAwaitTag from "./for-await";
 import HTMLCommentTag from "./html-comment";
 import HTMLScriptTag from "./html-script";
 import HTMLStyleTag from "./html-style";
@@ -40,6 +41,7 @@ export default {
   "<else>": ElseTag,
   "<export>": ExportTag,
   "<for>": ForTag,
+  "<for-await>": ForAwaitTag,
   "<html-comment>": HTMLCommentTag,
   "<html-script>": HTMLScriptTag,
   "<html-style>": HTMLStyleTag,

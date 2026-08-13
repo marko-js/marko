@@ -1,0 +1,7 @@
+/** File for types only, not actual implementation **/
+
+export interface Input<T> {
+  of: AsyncIterable<T> | Iterable<T> | false | null | undefined | void;
+  by?: string | ((item: T, index: number) => unknown);
+  content: Marko.Body<[T, number]>;
+}

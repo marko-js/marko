@@ -60,6 +60,7 @@ export function isControlFlowTag(
       case "else-if":
       case "else":
       case "for":
+      case "for-await":
       case "await":
       case "try":
       case "show":

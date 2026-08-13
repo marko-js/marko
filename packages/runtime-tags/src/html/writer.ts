@@ -488,6 +488,148 @@ export function _for_until(
   );
 }
 
+export function _for_await(
+  list: Falsy | AsyncIterable<unknown> | Iterable<unknown>,
+  cb: (item: unknown, index: number) => void,
+  by: Falsy | string | ((item: unknown, index: number) => unknown),
+  scopeId: number,
+  accessor: Accessor,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
+): void {
+  const iterate =
+    list && (list as AsyncIterable<unknown>)[Symbol.asyncIterator];
+  if (!iterate) {
+    // A sync iterable takes `<for of>`'s inline path, which produces the
+    // identical serialized shape.
+    return _for_of(
+      list as Falsy | Iterable<unknown>,
+      cb,
+      by as Falsy | ((item: unknown, index: number) => unknown),
+      scopeId,
+      accessor,
+      serializeBranch,
+      serializeMarker,
+      serializeStateful,
+    );
+  }
+
+  if (MARKO_DEBUG) {
+    // eslint-disable-next-line no-var
+    var seenKeys = new Set<unknown>();
+  }
+
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  const { state } = boundary;
+  const iter = iterate.call(list);
+  const resumeBranch = serializeBranch !== 0;
+  const resumeKeys = serializeMarker !== 0;
+  // One async count is held for the entire iteration; each item unblocks its
+  // chunk and leaves a new pending tail, so `consume()` flushes settled items
+  // in document order while the loop stays open.
+  let tail = chunk;
+  let flushBranchIds = "";
+  let loopScopes: Opt<ScopeInternals>;
+  let index = 0;
+  const renderBody = (value: unknown) => cb(value, index);
+  const renderItem = (value: unknown) => {
+    if (resumeBranch) {
+      const branchId = _peek_scope_id();
+      const itemKey = forOfBy(by, value, index);
+      if (MARKO_DEBUG && by) {
+        assertValidLoopKey(itemKey, seenKeys);
+      }
+      if (resumeKeys) {
+        $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, flushBranchIds));
+        flushBranchIds = "" + branchId;
+      }
+      withBranchId(branchId, () => {
+        withIsAsync(renderBody, value);
+        const branchScope = writeScope(
+          branchId,
+          resumeKeys && itemKey !== index
+            ? { [AccessorProp.LoopKey]: itemKey }
+            : {},
+        );
+        if (!resumeKeys) {
+          loopScopes = push(loopScopes, branchScope);
+        }
+      });
+    } else {
+      withIsAsync(renderBody, value);
+    }
+    index++;
+  };
+  chunk.next = $chunk = chunk.fork(boundary, chunk.next);
+  chunk.async = true;
+  if (chunk.context?.[kPendingContexts]) {
+    chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
+  }
+  boundary.startAsync();
+  boundary.signal.addEventListener("abort", () => iter.return?.());
+  const step = (): void => {
+    iter.next().then(
+      (res) => {
+        if (!tail.async || anyAborted(boundary)) {
+          iter.return?.();
+          return;
+        }
+
+        if (res.done) {
+          tail.render(() => {
+            if (loopScopes) {
+              writeScope(scopeId, {
+                [AccessorPrefix.BranchScopes + accessor]: loopScopes,
+              });
+            }
+            writeBranchEnd(
+              scopeId,
+              accessor,
+              serializeStateful,
+              serializeMarker,
+              0,
+              undefined,
+              flushBranchIds && " " + flushBranchIds,
+            );
+          });
+          tail.async = false;
+          boundary.endAsync();
+          return;
+        }
+
+        // A nested async fork inside the item owns `tail.async`; only a fully
+        // synchronous item body may unblock the chunk itself.
+        const bodyEnd = tail.render(renderItem, res.value);
+        const newTail = bodyEnd.fork(boundary, bodyEnd.next);
+        newTail.async = true;
+        bodyEnd.next = newTail;
+        if (bodyEnd === tail) {
+          tail.async = false;
+        }
+        tail = newTail;
+        boundary.onNext();
+        step();
+      },
+      (err) => {
+        tail.async = false;
+        boundary.abort(err);
+      },
+    );
+  };
+  step();
+}
+
+// `<try @catch>` runs its body in a child boundary that does not observe
+// parent aborts, so a long-lived pump must walk the chain itself.
+function anyAborted(boundary: Boundary | undefined) {
+  while (boundary) {
+    if (boundary.signal.aborted) return 1;
+    boundary = boundary.parent;
+  }
+}
+
 // Shared branch and scope writer for every `_for_*` loop variant.
 function forBranches(
   by: unknown,

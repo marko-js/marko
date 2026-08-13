@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+static async function* stream(items) {
+  let tick = 0;
+  for (const item of items) {
+    yield resolveAfter(item, ++tick);
+  }
+}
+
+<ul>
+  <for-await|item| of=stream(input.items) by="id">
+    <li id=item.id>${item.label}</li>
+  </for-await>
+</ul>

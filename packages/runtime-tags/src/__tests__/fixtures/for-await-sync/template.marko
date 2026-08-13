@@ -1,0 +1,7 @@
+<let/clicks=0/>
+<ul>
+  <for-await|item, i| of=input.items>
+    <li>${i}: ${item} (${clicks})</li>
+  </for-await>
+</ul>
+<button onClick() { clicks++ }>inc</button>

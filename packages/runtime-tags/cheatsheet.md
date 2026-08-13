@@ -90,6 +90,18 @@ import { getUser } from "../data.js";
 
 Don't fetch while rendering: start data loads early, pass the promise through the template, and `<await>` it where the data is rendered. Fetching inside each component that renders the data serializes the requests (waterfalls). Under @marko/run, load in the route handler (`return next({ user: getUser() })`, no await) and render with `<await|user|=$global.data.user>`.
 
+For an async _iterable_ (a stream of rows, LLM tokens, paginated results), `<for-await>` renders one keyed item per yield, streaming each to the browser as it arrives:
+
+```marko
+<ul>
+  <for-await|item, index| of=getRowsStream() by="id">
+    <li>${item.name}</li>
+  </for-await>
+</ul>
+```
+
+It accepts only `of=` (async or sync iterable) and `by=` (same keying as `<for>`; default key is arrival index). Pending/error UI wraps in `<try>` like `<await>` — but note an enclosing `@placeholder` shows until the whole iterator _completes_, hiding per-item streaming, so skip the placeholder when progressive display is the point (and never combine one with an endless stream). Handing it a _new_ iterable restarts iteration, reusing existing items by key; re-rendering with the _same_ iterable object does not restart (async iterators can't be replayed).
+
 ## Components
 
 - File `src/tags/product-card.marko` is auto-discovered as `<product-card>` from any template (no import needed). Attributes arrive as `input`: `${input.title}`.
