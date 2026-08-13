@@ -15,7 +15,7 @@ import pkg from "../package.json" with { type: "json" };
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
-import appendAgentFixGuide from "./util/agent-fix-guide";
+import appendAgentFixGuide, { agentFixGuide } from "./util/agent-fix-guide";
 import { buildCodeFrameError } from "./util/build-code-frame";
 import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
@@ -38,7 +38,7 @@ export async function compile(src, filename, config) {
   try {
     const babelConfig = await loadBabelConfig(filename, markoConfig);
     const babelResult = await transformAsync(src, babelConfig);
-    return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
+    return buildResult(src, filename, markoConfig, babelResult);
   } catch (err) {
     throw appendAgentFixGuide(err, markoConfig.translator);
   }
@@ -49,7 +49,7 @@ export function compileSync(src, filename, config) {
   try {
     const babelConfig = loadBabelConfigSync(filename, markoConfig);
     const babelResult = transformSync(src, babelConfig);
-    return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
+    return buildResult(src, filename, markoConfig, babelResult);
   } catch (err) {
     throw appendAgentFixGuide(err, markoConfig.translator);
   }
@@ -156,7 +156,7 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
   return baseBabelConfig;
 }
 
-function buildResult(src, filename, errorRecovery, babelResult) {
+function buildResult(src, filename, markoConfig, babelResult) {
   const {
     ast,
     map,
@@ -164,7 +164,23 @@ function buildResult(src, filename, errorRecovery, babelResult) {
     metadata: { marko: meta },
   } = babelResult;
 
-  if (!errorRecovery) {
+  if (markoConfig.errorRecovery) {
+    // Recovery returns instead of throwing, so the guide the catch blocks put
+    // on an error has to reach the diagnostic an agent reads instead. The
+    // compile cache owns these diagnostics, so copy rather than append in place.
+    const guide = agentFixGuide(markoConfig.translator);
+    const i = guide
+      ? meta.diagnostics.findIndex((d) => d.type === DiagnosticType.Error)
+      : -1;
+    if (i !== -1) {
+      const diagnostics = meta.diagnostics.slice();
+      diagnostics[i] = {
+        ...diagnostics[i],
+        label: diagnostics[i].label + guide,
+      };
+      return { ast, map, code, meta: { ...meta, diagnostics } };
+    }
+  } else {
     const errors = [];
 
     for (const diag of meta.diagnostics) {
