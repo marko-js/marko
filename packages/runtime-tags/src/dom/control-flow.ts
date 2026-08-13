@@ -292,7 +292,7 @@ function scheduleAwaitFrame(
   }
 }
 
-function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
+export function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   const awaitCounter: AwaitCounter = (tryBranch[AccessorProp.AwaitCounter] = {
     i: 0,
     c() {
@@ -312,7 +312,7 @@ function runPendingEffects(scope: BranchScope) {
   }
 }
 
-function dismissPlaceholder(tryBranch: BranchScope) {
+export function dismissPlaceholder(tryBranch: BranchScope) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
