@@ -14,7 +14,7 @@ import { AccessorPrefix, PatchKey } from "../common/types";
 import { _attr, stringAttr } from "./attrs";
 import { _escape, _to_text } from "./content";
 import { serverRenderers } from "./renderer-shells";
-import { getRegistered, K_SCOPE_ID } from "./serializer";
+import { getRegistered, K_SCOPE_ID, Serializer } from "./serializer";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _peek_scope_id,
@@ -121,7 +121,13 @@ class PatchState extends State {
     // already rejected and navigated.
     if (this.poisonSent) return "";
     if (this.patchPoison) this.poisonSent = 1;
-    return scripts ? scripts + "\n" : "";
+    const out = scripts ? scripts + "\n" : "";
+    if (!this.patchPoison) {
+      this.patchFlushed = undefined;
+      this.patchPartials = undefined;
+      this.serializer = new Serializer();
+    }
+    return out;
   }
 
   // `[...shells, tree]` — only a deferred run (its inner `_()` walks

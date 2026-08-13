@@ -517,16 +517,24 @@ function testFixtures(interop?: true) {
                 async () => {
                   const { tracker, chunks, patches } = await ssr();
                   if (persisted) {
-                    // Formatted frames diff line-by-line under review; an
-                    // empty frame stays a lone marker (a no-op patch).
+                    // Each wire frame is one expression; format them
+                    // independently so beautify cannot glue `}{`.
                     await snapMode(
                       () =>
                         patches
-                          .map(
-                            (frame) =>
-                              "// PATCH\n" +
-                              js_beautify(frame, { indent_size: 2 }).trimEnd(),
-                          )
+                          .map((joined) => {
+                            const frames = joined
+                              .split("\n")
+                              .map((frame) => frame.trimEnd())
+                              .filter(Boolean)
+                              .map((frame) =>
+                                js_beautify(frame, {
+                                  indent_size: 2,
+                                }).trimEnd(),
+                              )
+                              .join("\n");
+                            return "// PATCH\n" + frames;
+                          })
                           .join("\n\n")
                           .trimEnd() + "\n",
                       "patches.js",
