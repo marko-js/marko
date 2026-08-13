@@ -107,6 +107,7 @@ export type DOMRuntimeFeature =
   | "controllable-select"
   | "controllable-textarea"
   | "patch-attr"
+  | "patch-boundary"
   | "patch-branch"
   | "patch-child"
   | "patch-control"

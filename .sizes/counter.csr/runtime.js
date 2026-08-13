@@ -1,7 +1,9 @@
 // size: 4036 (min) 1793 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
-let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  rendering,
+let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
