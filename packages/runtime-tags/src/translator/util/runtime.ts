@@ -119,6 +119,7 @@ export type DOMRuntimeFeature =
   | "controllable-textarea"
   | "dynamic-tag-var"
   | "patch-attr"
+  | "patch-boundary"
   | "patch-branch"
   | "patch-child"
   | "patch-control"

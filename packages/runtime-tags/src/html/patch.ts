@@ -116,19 +116,10 @@ class PatchState extends State {
     this.hasGlobals = true;
   }
 
-  override flushChunk(_html: string, scripts: string, pending: number) {
+  override flushChunk(_html: string, scripts: string) {
     // Everything after a delivered poison frame is dead: the client
     // already rejected and navigated.
     if (this.poisonSent) return "";
-    // A boundary still pending when the frame flushes can never settle
-    // into it: replace whatever was built with a poison frame so the
-    // client rejects and navigates instead of applying a torn patch.
-    if (pending && !this.patchPoison) {
-      this.patchPoison = this.patchFlushed = 1;
-      this.shellFrames = "";
-      this.patchDeferred = undefined;
-      scripts = '[{"' + PatchKey.Poison + '":1}]';
-    }
     if (this.patchPoison) this.poisonSent = 1;
     return scripts ? scripts + "\n" : "";
   }
