@@ -1047,6 +1047,8 @@ export function _await<T>(
   const chunk = $chunk;
   const { boundary } = chunk;
   if (boundary.state.writesPatches) {
+    // serializeMarker 0: the client owns this await.
+    if (!resumeMarker) return;
     writePatch(scopeId, { [PatchKey.Pending + accessor]: 1 });
   }
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);

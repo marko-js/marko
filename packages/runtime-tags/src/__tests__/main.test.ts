@@ -24,8 +24,10 @@ import {
   type FlushType,
   isDestroy,
   isFlush,
+  isNavigate,
   isThrows,
   isWait,
+  type Navigate,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -46,6 +48,7 @@ type Step =
   | Flush
   | Destroy
   | Throws
+  | Navigate
   | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
@@ -446,11 +449,21 @@ function testFixtures(interop?: true) {
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
               onInput: persisted
-                ? async (input) => {
+                ? async (input, betweenFrames) => {
                     tracker.beginUpdate();
                     let applied = true;
                     const frames: string[] = [];
                     for await (const frame of template.renderPatch(input)) {
+                      if (frames.length && betweenFrames) {
+                        tracker.logUpdate(input);
+                        tracker.beginUpdate();
+                        await betweenFrames(browser.window.document);
+                        run();
+                        await browser.runAsyncScripts();
+                        run();
+                        tracker.logUpdate(betweenFrames);
+                        tracker.beginUpdate();
+                      }
                       frames.push(frame);
                       // A production caller navigates on the first failed
                       // frame; later frames must not mutate further.
@@ -647,7 +660,10 @@ async function runSteps(
   browser: ReturnType<typeof createBrowser>,
   run: () => void,
   opts: {
-    onInput?: (input: Input) => void | boolean | Promise<void | boolean>;
+    onInput?: (
+      input: Input,
+      betweenFrames?: (document: Document) => unknown,
+    ) => void | boolean | Promise<void | boolean>;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
   },
@@ -690,7 +706,9 @@ async function runSteps(
         tracker.logUpdate(update);
       }
     } else if (opts.onInput) {
-      if ((await opts.onInput(update)) === false) break;
+      const input = isNavigate(update) ? update.navigateInput : update;
+      const between = isNavigate(update) ? update.betweenFrames : undefined;
+      if ((await opts.onInput(input, between)) === false) break;
     } else {
       // if new input is detected, stop testing
       // this will be covered by the client tests
