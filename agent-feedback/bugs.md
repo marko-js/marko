@@ -20,12 +20,6 @@ A reorder flush appends `<t hidden {commentPrefix}={reorderId}>reorderHTML</t>`,
 
 `_enable_catch`'s `runEffects` wrapper only filters destroyed/pending scopes — it never catches — and `run()` calls it outside its own `try`/`finally`, so an error thrown from a `<script>`/`<lifecycle>` body inside `<try>` escapes `mount()` instead of reaching `@catch`, and aborts the flush so every effect queued behind it never wires up. Give the wrapper the per-item `try { fn(scope) } catch (e) { renderCatch(scope, e) }` treatment `runRender` gets; the fix must also flush the catch branch's own effects, which land in the fresh array `run()` already swapped in. Nothing covers this: `try-effects-catch`, `try-effects-catch-state` and `try-effects-async` all throw from render expressions. Re-verify: mount `<try><for|item| of=["a","b","c"]><script>{ order.push(item); if (item === "a") throw new Error("boom") }</script></for><@catch|err|>caught</@catch></try>` in jsdom — `mount()` throws `boom`, `order` is `["a"]`, and no `@catch` content renders.
 
-## Write the dynamic `<style>` marker class with `setAttribute`; a `<style>` inside `<svg>` throws on client render
-
-`packages/runtime-tags/src/dom/dom.ts` › `_style_shell` | 2026-07-27 | impact:med | effort:low
-
-`_style_shell` tags the generated stylesheet with `element.className = id`, but `SVGElement.className` is a readonly `SVGAnimatedString`, so in the runtime's strict-mode ESM that assignment throws `TypeError: Cannot set property className of #<SVGElement> which has only a getter`. `<let/c="red"/><svg><style>circle { fill: ${c}; }</style><circle cx=5 cy=5 r=4/></svg>` compiles to `_style_shell($scope, "#style/0")`, so every client-created render of such a template (a `mount`, or an `<if>`/`<for>` branch) dies before anything is inserted; SSR and resume survive because `html/attrs.ts` › `_style_html` emits `<style class=ID>` as markup and `_style_rule_item` only rewrites `textContent`. Write the marker with `element.setAttribute("class", id)` so both outputs set the same attribute regardless of namespace. Re-verify: mount that template in jsdom — it throws, while the identical `<style>` outside `<svg>` mounts as `<style class="cM_0">`.
-
 ## Route `tagNameLoad` through the compat dynamic-tag path when a Tags-API parent lazily imports a Class-API child
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med
