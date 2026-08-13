@@ -1,0 +1,27 @@
+# Render `{"promise":{}}`
+```html
+<main>
+  <em>
+    hi
+  </em>
+</main>
+```
+
+# Update `{"promise":{}}`
+```html
+<main>
+  <em>
+    boom
+  </em>
+</main>
+```
+## Change
+```
+INSERT: main::text("loading")
+REMOVE:  + em
+INSERT: main > em
+REMOVE: main::text("loading")
+INSERT: main > em
+REMOVE: main > em + em
+UPDATE: main > em::text " " => "boom"
+```

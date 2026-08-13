@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-async-catch-server-read/template.marko:6:22
+      4 |       <em>${value}</em>
+      5 |     </await>
+    > 6 |     <@catch|err|><em>${input.title}</em></@catch>
+        |                      ^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value inside `<@catch>` content would go stale.
+      7 |   </try>
+      8 | </main>
+      9 |

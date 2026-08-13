@@ -6,6 +6,7 @@ export const Bind = "d";
 // in the frame's bind table for `ValueBind` fills to reference.
 export const BindSource = "h";
 export const Branch = "b";
+export const Catch = "k";
 export const Child = "c";
 export const Control = "n";
 export const Effect = "e";
