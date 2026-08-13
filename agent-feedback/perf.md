@@ -204,12 +204,6 @@ With no program setup signal, `program/dom.ts` emits `export const $setup = () =
 
 `knownTagTranslateHTML` falls back to an object literal `{0: g0, 1: g1, …}` whenever any group guard is a runtime expression, even when every group shares the same expression, and that literal is allocated on every render of the call site — one per row inside a `<for>`. Since `_serialize_if` treats `1` as "all groups" and a number as a bit-per-group mask, a shared 1|0 guard can be passed bare when `hasSkippedReasons` is false, or as `<bitmask> * guard` when groups were skipped. Gate it on the shared expression being normalized to 1|0 (a `_serialize_guard` call, an `||` chain of them, or a numeric literal), because `buildGuardExpr` can also hand back a raw `$scopeN_reason` whose value is itself a mask or object. Re-verify: `fixtures/at-tag-inside-if-tag/__snapshots__/html.bundle.js` emits `_set_serialize_reason({0: $sg__input_x, 1: $sg__input_x, 2: $sg__input_x})`; across the committed html.bundle.js corpus 17 of 137 calls use the object form and 14 have identical values in every slot.
 
-## Memoize runtime-helper imports; every `callRuntime` rescans the import's specifier list
-
-`packages/runtime-tags/src/translator/util/runtime.ts` › `importRuntime` | 2026-07-23 | impact:med | effort:low
-
-Every emitted helper reference goes `callRuntime` → `importRuntime` → `importNamed`, and `importNamed` (`packages/compiler/src/babel-utils/imports.js`) does `importDeclaration.get("specifiers")` — rebuilding a NodePath per specifier (setContext/setScope) — plus a linear `.find` before it can reuse the existing local. The calls are almost all repeats: a 20-section page compiled for dom+html issues 830 `importNamed` calls for 28 distinct `(request, name)` pairs. Keep a per-program `name → local` map (via `createProgramState`, so a dom compile cannot leak its path into an html one) and return `t.identifier(cached)` on a hit; the general fix is a second-level `name → local` map inside `getImports`, which also covers `importDefault`/`importStar`. Re-verify: wrapping `importNamed` with such a memo keeps output byte-identical and cut 80 dom+html compiles of that page from ~2480 ms to ~2355 ms (best of 5).
-
 ## Reuse the `anchors` map for the intersection id loop in `finalizeReferences`
 
 `packages/runtime-tags/src/translator/util/references.ts` › `finalizeReferences` | 2026-07-23 | impact:low | effort:low

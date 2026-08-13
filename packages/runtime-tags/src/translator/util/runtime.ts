@@ -15,6 +15,7 @@ import {
 import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
+import { createProgramState } from "./state";
 
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
@@ -61,6 +62,10 @@ const pureDOMFunctions = new Set<string>([
   "_load_race_trigger",
 ] satisfies DOMRuntimeHelpers[]);
 
+const [getRuntimeImports] = createProgramState(
+  () => new Map<DOMRuntimeHelpers | HTMLRuntimeHelpers, string>(),
+);
+
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
   // The `dom`/`html` import path is only known at translate; emitting it into
   // the cached, output-shared earlier AST leaks one runtime into the other.
@@ -70,7 +75,13 @@ export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
     );
   }
   const { output } = getMarkoOpts();
-  return importNamed(getFile(), getRuntimePath(output), name);
+  const imports = getRuntimeImports();
+  let localName = imports.get(name);
+  if (!localName) {
+    localName = importNamed(getFile(), getRuntimePath(output), name).name;
+    imports.set(name, localName);
+  }
+  return t.identifier(localName);
 }
 
 export function callRuntime(
