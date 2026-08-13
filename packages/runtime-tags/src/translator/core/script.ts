@@ -16,7 +16,7 @@ import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
-import { skip, traverseContains } from "../util/traverse";
+import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
 
 const htmlScriptTagAlternateMsg =
   " For a native html [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.";
@@ -47,7 +47,7 @@ export default {
         const valueFn = t.arrowFunctionExpression(
           [],
           t.blockStatement(bodyStatements),
-          traverseContains(bodyStatements, isAwaitExpression),
+          !!traverseFindAwait(bodyStatements),
         );
 
         node.attributes.push(t.markoAttribute("value", valueFn));
@@ -171,26 +171,6 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/script.d.marko",
 } as Tag;
-
-// Only a `<script>` body is lowered to an async function. An `await` in a
-// reactive expression is left for the downstream parser to reject.
-function isAwaitExpression(node: t.Node) {
-  switch (node.type) {
-    case "ForOfStatement":
-      return node.await;
-    case "FunctionDeclaration":
-    case "FunctionExpression":
-    case "ArrowFunctionExpression":
-    case "ClassMethod":
-    case "ObjectMethod":
-    case "ClassPrivateMethod":
-      return skip;
-    case "AwaitExpression":
-      return true;
-    default:
-      return false;
-  }
-}
 
 function isReturnedFunction(node: t.Node) {
   switch (node.type) {

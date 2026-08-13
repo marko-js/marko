@@ -4,6 +4,7 @@ import {
   getProgram,
   getTemplateId,
   loadFileForImport,
+  withLoc,
 } from "@marko/compiler/babel-utils";
 
 import { generateUid } from "../util/generate-uid";
@@ -29,6 +30,7 @@ import {
 } from "../util/serialize-reasons";
 import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
+import { traverseFindAwait } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
 
 declare module "@marko/compiler/dist/types" {
@@ -62,6 +64,24 @@ const [getReferencesByImportedFn] = createProgramState(
 );
 export default {
   analyze(fn) {
+    const awaitNode =
+      isMarkoAttribute(fn.parentPath) &&
+      t.isFunctionExpression(fn.node) &&
+      !fn.node.async &&
+      traverseFindAwait(fn.node.body);
+    if (awaitNode) {
+      const file = getFile();
+      const start = file.code.indexOf("await", awaitNode.start ?? 0);
+      const highlight =
+        start >= 0 && (awaitNode.end == null || start < awaitNode.end)
+          ? withLoc(file, t.cloneNode(awaitNode), start, start + 5)
+          : awaitNode;
+      throw fn.hub.buildError(
+        highlight,
+        "Attribute methods containing `await` must be `async`. Add `async` before the method name.",
+      );
+    }
+
     // bail on closures
     if (fn !== getFnRoot(fn)) return;
 

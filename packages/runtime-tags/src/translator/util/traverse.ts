@@ -39,32 +39,53 @@ export function traverseContains(
   node: undefined | null | t.Node | t.Node[],
   check: (node: t.Node) => void | boolean | typeof skip,
 ): boolean {
+  return !!traverseFind(node, check);
+}
+
+export function traverseFind(
+  node: undefined | null | t.Node | t.Node[],
+  check: (node: t.Node) => void | boolean | typeof skip,
+): t.Node | undefined {
   if (node) {
     if (Array.isArray(node)) {
       for (const item of node) {
-        if (traverseContains(item, check)) {
-          return true;
-        }
+        const found = traverseFind(item, check);
+        if (found) return found;
       }
     } else {
       switch (check(node)) {
         case true:
-          return true;
+          return node;
         case skip:
-          return false;
+          return;
       }
 
       for (const key of (t as any).VISITOR_KEYS[node.type] as VisitKeys<
         typeof node
       >[]) {
-        if (traverseContains((node as any)[key], check)) {
-          return true;
-        }
+        const found = traverseFind((node as any)[key], check);
+        if (found) return found;
       }
     }
   }
+}
 
-  return false;
+export function traverseFindAwait(node: undefined | null | t.Node | t.Node[]) {
+  return traverseFind(node, (child) => {
+    switch (child.type) {
+      case "ForOfStatement":
+        return child.await;
+      case "FunctionDeclaration":
+      case "FunctionExpression":
+      case "ArrowFunctionExpression":
+      case "ClassMethod":
+      case "ObjectMethod":
+      case "ClassPrivateMethod":
+        return skip;
+      case "AwaitExpression":
+        return true;
+    }
+  });
 }
 
 export function traverse(
