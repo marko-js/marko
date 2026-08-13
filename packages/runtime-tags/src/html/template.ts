@@ -358,7 +358,12 @@ class ServerRendered implements RenderedTemplate {
         if (!tick) offTick(onNext);
         boundary.onNext = NOOP;
         onAbort(boundary.signal.reason);
-      } else if (write || status === FlushStatus.complete) {
+      } else if (
+        // A patch is one frame: hold it until pending boundaries settle
+        // instead of flushing a prefix (documents stream; patches must not).
+        (write && !boundary.state.writesPatches) ||
+        status === FlushStatus.complete
+      ) {
         head = head.consume();
         if (boundary.signal.aborted) return;
         const html = head.flushHTML();

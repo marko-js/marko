@@ -1,4 +1,7 @@
 // PATCH
-[{
-  "x": 1
-}]
+{
+  ta: "Store!",
+  cAb: {
+    ta: "slow"
+  }
+}

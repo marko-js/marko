@@ -18,7 +18,11 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -112,6 +116,12 @@ export default {
 
     const bodySection = startSection(tagBody)!;
     bodySection.isBoundary = true;
+    // Page entry must ship the child patcher and branch-resume latch even
+    // when this template module does not load (a scriptless persisted await).
+    if (isPersisted()) {
+      addRuntimeFeatureAsset(tag.hub.file, "patch-child");
+      addRuntimeFeatureAsset(tag.hub.file, "patch-boundary");
+    }
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
