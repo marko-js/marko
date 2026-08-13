@@ -2,9 +2,14 @@ import tryLoadTranslator from "./try-load-translator";
 
 const applied = Symbol("markoAgentFixGuide");
 
+// The guide an agent-facing surface should carry, or nothing for a human run.
+export function agentFixGuide(translator) {
+  return isCodingAgent() ? fixGuide(translator) : undefined;
+}
+
 export default function appendAgentFixGuide(error, translator) {
-  if (error instanceof Error && !error[applied] && isCodingAgent()) {
-    const guide = fixGuide(translator);
+  if (error instanceof Error && !error[applied]) {
+    const guide = agentFixGuide(translator);
     if (guide) {
       // `message` is locked against Babel mutations, so redefine rather than assign.
       error[applied] = true;

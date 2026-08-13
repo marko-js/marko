@@ -25,6 +25,51 @@ describe("compiler/error recovery", () => {
     assert.match(meta.diagnostics[0].label, /Unexpected token/);
   });
 
+  // The guide rides the thrown error everywhere else; recovery mode returns
+  // instead of throwing, which is how an editor or LSP compiles.
+  const withGuideEnv = (value, fn) => {
+    const prev = process.env.MARKO_AGENT_FIX_GUIDE;
+    process.env.MARKO_AGENT_FIX_GUIDE = value;
+    try {
+      return fn();
+    } finally {
+      if (prev === undefined) delete process.env.MARKO_AGENT_FIX_GUIDE;
+      else process.env.MARKO_AGENT_FIX_GUIDE = prev;
+    }
+  };
+  const recoveryLabels = (value) =>
+    withGuideEnv(value, () =>
+      compile("$ const x = ;", {
+        translator: "@marko/runtime-tags/translator",
+      }).meta.diagnostics.map((d) => d.label),
+    );
+
+  it("appends the agent fix guide to the first recovered error", () => {
+    const labels = recoveryLabels("1");
+    assert.match(labels[0], /Fix guide: READ .*cheatsheet\.md/);
+    assert.equal(labels.filter((l) => l.includes("Fix guide")).length, 1);
+  });
+
+  it("appends the guide once when a cached compile is repeated", () => {
+    // The compile cache shares diagnostic objects, so appending in place would
+    // stack another guide onto the same label on every later hit.
+    const cache = new Map();
+    const labels = withGuideEnv("1", () =>
+      [1, 2].map(
+        () =>
+          compile("$ const x = ;", {
+            translator: "@marko/runtime-tags/translator",
+            cache,
+          }).meta.diagnostics[0].label,
+      ),
+    );
+    assert.equal(labels[1].split("Fix guide").length - 1, 1);
+  });
+
+  it("leaves recovered diagnostics alone outside an agent", () => {
+    assert.ok(!recoveryLabels("0").some((l) => l.includes("Fix guide")));
+  });
+
   it("still produces code past the error", () => {
     assert.equal(typeof compile("$ const x = ;").code, "string");
   });
