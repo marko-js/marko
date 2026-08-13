@@ -1,4 +1,4 @@
-// size: 27469 (min) 10171 (brotli)
+// size: 27469 (min) 10150 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -18,8 +18,62 @@ let unsafeStyleAttrReg = /[\\;]/g,
     return str;
   },
   decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  branchesEnabled,
-  rendering,
+  branchesEnabled;
+function _call(fn, v) {
+  return (fn(v), v);
+}
+function stringifyClassObject(name, value) {
+  return value ? name : "";
+}
+function stringifyStyleObject(name, value) {
+  return value || value === 0 ? escapeStyleAttr(name) + ":" + escapeStyleAttr(value + "") : "";
+}
+function escapeStyleAttr(str) {
+  return unsafeStyleAttrReg.test(str)
+    ? str.replace(unsafeStyleAttrReg, replaceUnsafeStyleAttr)
+    : str;
+}
+function escapeStyleValue(str) {
+  let closers = "",
+    result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
+      c === "<" ? "\\3C " : c === ";" ? "\\3B " : c === "{" ? "\\7B " : "\\" + c,
+    );
+  for (let c of result)
+    c === "("
+      ? (closers = ")" + closers)
+      : c === "["
+        ? (closers = "]" + closers)
+        : c === closers[0] && (closers = closers.slice(1));
+  return result + closers;
+}
+function isEventHandler(name) {
+  return /^on[A-Z-]/.test(name);
+}
+function getEventHandlerName(name) {
+  return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
+}
+function isNotVoid(value) {
+  return value != null && value !== !1;
+}
+function isPromise(value) {
+  return value != null && typeof value.then == "function";
+}
+function normalizeDynamicRenderer(value) {
+  if (value) {
+    if (typeof value == "string") return value;
+    let normalized = value.content || value.default || value;
+    if ("a" in normalized) return normalized;
+  }
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
+function withBranches(runtime) {
+  return ((branchesEnabled = 1), runtime);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let rendering,
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -359,58 +413,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   _for_until = /*@__PURE__*/ loop(([until, from, step, by], cb) => {
     ((by ||= byFirstArg), forUntil(until, from, step, (v) => cb(by(v), [v])));
   });
-function _call(fn, v) {
-  return (fn(v), v);
-}
-function stringifyClassObject(name, value) {
-  return value ? name : "";
-}
-function stringifyStyleObject(name, value) {
-  return value || value === 0 ? escapeStyleAttr(name) + ":" + escapeStyleAttr(value + "") : "";
-}
-function escapeStyleAttr(str) {
-  return unsafeStyleAttrReg.test(str)
-    ? str.replace(unsafeStyleAttrReg, replaceUnsafeStyleAttr)
-    : str;
-}
-function escapeStyleValue(str) {
-  let closers = "",
-    result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
-      c === "<" ? "\\3C " : c === ";" ? "\\3B " : c === "{" ? "\\7B " : "\\" + c,
-    );
-  for (let c of result)
-    c === "("
-      ? (closers = ")" + closers)
-      : c === "["
-        ? (closers = "]" + closers)
-        : c === closers[0] && (closers = closers.slice(1));
-  return result + closers;
-}
-function isEventHandler(name) {
-  return /^on[A-Z-]/.test(name);
-}
-function getEventHandlerName(name) {
-  return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
-}
-function isNotVoid(value) {
-  return value != null && value !== !1;
-}
-function isPromise(value) {
-  return value != null && typeof value.then == "function";
-}
-function normalizeDynamicRenderer(value) {
-  if (value) {
-    if (typeof value == "string") return value;
-    let normalized = value.content || value.default || value;
-    if ("a" in normalized) return normalized;
-  }
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
-}
-function withBranches(runtime) {
-  return ((branchesEnabled = 1), runtime);
-}
 function _assert_hoist(value) {}
 function forIn(obj, cb) {
   for (let key in obj) cb(key, obj[key]);
