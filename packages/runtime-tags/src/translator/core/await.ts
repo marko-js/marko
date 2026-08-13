@@ -33,7 +33,11 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
+import {
+  getSerializeGuard,
+  scopeReasonIdentifier,
+} from "../util/serialize-guard";
+import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
 import {
   addStatement,
@@ -169,6 +173,20 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
+        const valueSources = getSerializeSourcesForExpr(
+          valueAttr.value.extra || {},
+        );
+        // Client-owned thenables resolve via `_await_promise`; a patch
+        // must not Pending them (the body has no fills to Child).
+        const serializeGuard =
+          isPersisted() && !valueSources?.param && !valueSources?.global
+            ? t.logicalExpression(
+                "||",
+                scopeReasonIdentifier(section),
+                t.numericLiteral(0),
+              )
+            : getSerializeGuard(section, bodySection?.serializeReason, true);
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -181,7 +199,7 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(section, bodySection?.serializeReason, true),
+                serializeGuard,
               ),
             ),
           )[0]
