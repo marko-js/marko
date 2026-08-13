@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-var-cycle-chain/template.marko:1:8
+    > 1 | <const/a=b/>
+        |        ^ `a`, `b`, and `c` form a cycle of [tag variables](https://markojs.com/docs/reference/language#tag-variables), so none of their values can be computed. Break the cycle so each tag variable is built only from values that do not depend on it.
+      2 | <const/b=c/>
+      3 | <const/c=a/>
+      4 | <div>${a}</div>

@@ -121,6 +121,7 @@ export default {
     if (valueChangeAttr) {
       // Reserves the TagVariableChange accessor at `id + 1`.
       binding.reserveSize = 1;
+      binding.skipInitEdges = true;
       setBindingDownstream(binding, tagExtra);
       // The serialized change handler is only invoked by an assignment to the
       // tag variable, so it does not resume when nothing assigns.
@@ -133,7 +134,7 @@ export default {
         );
       }
     } else {
-      setBindingDownstream(binding, false);
+      setBindingDownstream(binding, tagExtra, true);
     }
   },
   translate: {

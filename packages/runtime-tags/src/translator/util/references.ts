@@ -1,5 +1,9 @@
 import { types as t } from "@marko/compiler";
-import { getProgram, isNativeTag } from "@marko/compiler/babel-utils";
+import {
+  diagnosticError,
+  getProgram,
+  isNativeTag,
+} from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { decodeAccessor, isEventHandler } from "../../common/helpers";
@@ -111,6 +115,9 @@ export interface Binding {
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
   hoists: Opt<Section>;
+  // Bindings this one's initializer reads eagerly. The sources graph is not a
+  // substitute: it drops hoists and holds nothing for an unassigned `<let>`.
+  initDeps: Opt<Binding>;
   getters: Map<Getter["hoisted"], boolean>;
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
@@ -130,6 +137,9 @@ export interface Binding {
   forcePersist: boolean;
   // Extra ids reserved after `id` for derived accessors (eg TagVariableChange).
   reserveSize: number;
+  // A controllable `<let>` merges `valueChange` into its tag extra, so its
+  // reads cannot be told apart from the value's; skip rather than misreport.
+  skipInitEdges: boolean;
 }
 
 export interface InputBinding extends Binding {
@@ -157,6 +167,9 @@ interface Read {
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
   deferred: boolean;
+  // Runs after the surrounding tag is initialized, so it orders nothing. Wider
+  // than `deferred`: an accessor body is eager for reactivity but not for init.
+  afterInit: boolean;
   serializedValue?: true;
 }
 
@@ -244,6 +257,7 @@ export function createBinding(
     reads: new Set(),
     aliases: new Set(),
     hoists: undefined,
+    initDeps: undefined,
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
@@ -257,6 +271,7 @@ export function createBinding(
     exposed: false,
     forcePersist: false,
     reserveSize: 0,
+    skipInitEdges: false,
   };
 
   if (property) {
@@ -349,6 +364,12 @@ export function trackDomVarReferences(
 
   return binding;
 }
+
+// `downstream` also drives serialize reasons, so an edge that only orders init
+// is kept beside it rather than folded in.
+const [getInitOnlyExprs] = createProgramState<Map<t.NodeExtra, Opt<Binding>>>(
+  () => new Map(),
+);
 
 export function trackVarReferences(
   tag: t.NodePath<t.MarkoTag>,
@@ -992,6 +1013,18 @@ export function finalizeReferences() {
           exprBindings.hoistedBindings,
         );
       }
+      if (exprBindings.eagerBindings) {
+        forEach(
+          bindingUtil.union(expr.downstream, getInitOnlyExprs().get(expr)),
+          (target) => {
+            if (target.skipInitEdges) return;
+            target.initDeps = bindingUtil.union(
+              target.initDeps,
+              exprBindings.eagerBindings,
+            );
+          },
+        );
+      }
 
       if (expr.isEffect) {
         forEach(exprBindings.referencedBindings, (binding) => {
@@ -1036,6 +1069,9 @@ export function finalizeReferences() {
       }
     }
   }
+
+  // Before pruning, so a cycle member that is otherwise unused still reports.
+  assertNoValueCycles();
 
   for (const binding of bindings) {
     if (binding.type !== BindingType.dom) {
@@ -1536,7 +1572,18 @@ function getCollapsibleIntersectionSource(
 export function setBindingDownstream(
   binding: Binding,
   expr: boolean | Opt<t.NodeExtra>,
+  // An unassigned `<let>` is its own source and its initializer must not reach
+  // `downstream`, which drives serialize reasons — but it still orders init.
+  initOnly?: boolean,
 ) {
+  if (initOnly) {
+    forEach(expr as Opt<t.NodeExtra>, (expr) => {
+      const initExprs = getInitOnlyExprs();
+      initExprs.set(expr, bindingUtil.add(initExprs.get(expr), binding));
+    });
+    getBindingValueExprs().set(binding, false);
+    return;
+  }
   getBindingValueExprs().set(binding, expr || false);
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
@@ -1549,6 +1596,58 @@ const [getResolvedSources] = createProgramState(() => new Set<Binding>());
 const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
+function reportValueCycle(cycle: Binding[]) {
+  const names = cycle.map((binding) => `\`${getDebugName(binding)}\``).sort();
+  const list =
+    names.length > 2
+      ? `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`
+      : names.join(" and ");
+  diagnosticError(getProgram(), {
+    label: `${names.length > 1 ? `${list} form` : `${list} forms`} a cycle of [tag variables](https://markojs.com/docs/reference/language#tag-variables), so ${names.length > 2 ? "none of their values" : names.length > 1 ? "neither value" : "its value"} can be computed. Break the cycle so each tag variable is built only from values that do not depend on it.`,
+    loc: cycle[0].loc || undefined,
+  });
+}
+
+// A tag variable can only be built after everything its initializer reads, so a
+// loop in that graph has no valid evaluation order in any output. `initDeps` is
+// that graph; the sources graph is not a substitute, because it over-approximates
+// (a controllable `<let>` merges its change handler into the value it reads).
+function assertNoValueCycles() {
+  const done = new Set<Binding>();
+  const stack: Binding[] = [];
+  const onStack = new Set<Binding>();
+  const reported = new Set<Binding>();
+
+  const visit = (binding: Binding) => {
+    if (done.has(binding)) return;
+    if (onStack.has(binding)) {
+      const cycle = stack.slice(stack.indexOf(binding));
+      // A tag variable cycle always closes on a read that precedes its
+      // declaration; a cycle without one is recursion between sections.
+      if (
+        cycle.some((member) => member.hoists) &&
+        !cycle.some((member) => reported.has(member))
+      ) {
+        for (const member of cycle) reported.add(member);
+        reportValueCycle(cycle);
+      }
+      return;
+    }
+
+    stack.push(binding);
+    onStack.add(binding);
+    // An alias forwards its value, so it is an initialization edge too.
+    if (binding.upstreamAlias) visit(binding.upstreamAlias);
+    forEach(binding.initDeps, visit);
+    onStack.delete(binding);
+    stack.pop();
+    done.add(binding);
+  };
+
+  // Declaration order, so the caret lands on the first tag in the cycle.
+  for (const binding of getBindings()) visit(binding);
+}
+
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
@@ -1752,6 +1851,7 @@ export function addRead(
     ownVar: false,
     comparedTo: undefined,
     deferred: false,
+    afterInit: false,
   };
   binding.reads.add(exprExtra);
   exprExtra.section = section;
@@ -1810,6 +1910,35 @@ function isSerializedChangeHandlerRead(exprRoot: t.NodePath) {
   );
 }
 
+// A class member body runs on construction or access, never when the class
+// expression is evaluated, so it orders nothing. A static block does run then.
+function isInClassMemberBody(path: t.NodePath<t.Node>) {
+  let cur: t.NodePath<t.Node> | null = path;
+  while (cur && !cur.isMarkoTag() && !cur.isMarkoAttribute()) {
+    const parent: t.NodePath<t.Node> | null = cur.parentPath;
+    if (parent) {
+      switch (parent.type) {
+        case "ClassMethod":
+        case "ClassPrivateMethod":
+          return true;
+        case "ClassProperty":
+        case "ClassPrivateProperty":
+          if (
+            (parent.node as t.ClassProperty | t.ClassPrivateProperty).value ===
+            cur.node
+          ) {
+            return true;
+          }
+          break;
+        case "StaticBlock":
+          return false;
+      }
+    }
+    cur = parent;
+  }
+  return false;
+}
+
 function addReadToExpression(
   root:
     | t.NodePath<t.Identifier>
@@ -1834,6 +1963,10 @@ function addReadToExpression(
     section,
     getter,
   );
+
+  if (isInClassMemberBody(root)) {
+    read.afterInit = true;
+  }
 
   if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
     read.serializedValue = true;
@@ -1864,6 +1997,7 @@ function addReadToExpression(
     // is invoked.
     read.deferred =
       fnRoot.node.type !== "ObjectMethod" || fnRoot.node.kind === "method";
+    read.afterInit = true;
     const fnReadsByExpr = getFunctionReadsByExpression();
     let exprFnReads = fnReadsByExpr.get(exprExtra);
     if (!exprFnReads) {
@@ -2461,6 +2595,9 @@ function resolveReferencedBindings(
   let referencedBindings: ReferencedBindings;
   let constantBindings: ReferencedBindings;
   let hoistedBindings: ReferencedBindings;
+  // Everything this expression reads during initialization. A read inside a
+  // function body runs after init, so it orders nothing and is left out.
+  let eagerBindings: ReferencedBindings;
   let allBindings: ReferencedBindings;
   let lazyBindings: ReferencedBindings;
   let globalBindings: ReferencedBindings;
@@ -2508,6 +2645,9 @@ function resolveReferencedBindings(
         }
       }
       allBindings = bindingUtil.add(allBindings, binding);
+      if (!read.afterInit) {
+        eagerBindings = bindingUtil.add(eagerBindings, binding);
+      }
     }
   } else if (reads) {
     const { binding, extra, getter, ownVar } = reads;
@@ -2536,6 +2676,9 @@ function resolveReferencedBindings(
 
     extra.section = expr.section;
     allBindings = binding;
+    if (!reads.afterInit) {
+      eagerBindings = binding;
+    }
   }
 
   if (lazyBindings) {
@@ -2593,6 +2736,7 @@ function resolveReferencedBindings(
     referencedBindings,
     constantBindings,
     hoistedBindings,
+    eagerBindings,
     allBindings,
     lazyBindings,
     globalBindings,

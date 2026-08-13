@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-var-cycle-mixed/template.marko:1:8
+    > 1 | <const/a=b+1/>
+        |        ^ `a` and `b` form a cycle of [tag variables](https://markojs.com/docs/reference/language#tag-variables), so neither value can be computed. Break the cycle so each tag variable is built only from values that do not depend on it.
+      2 | <let/b=a+1/>
+      3 | <div>${a}${b}</div>
+      4 |

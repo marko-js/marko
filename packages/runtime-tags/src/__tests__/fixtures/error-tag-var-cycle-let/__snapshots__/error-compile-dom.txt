@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-var-cycle-let/template.marko:1:6
+    > 1 | <let/a=b/>
+        |      ^ `a` and `b` form a cycle of [tag variables](https://markojs.com/docs/reference/language#tag-variables), so neither value can be computed. Break the cycle so each tag variable is built only from values that do not depend on it.
+      2 | <let/b=a/>
+      3 | <div>${a}${b}</div>
+      4 |

@@ -1,0 +1,8 @@
+<const/mutualA=() => mutualB()/>
+<const/mutualB=() => mutualA()/>
+<const/cls=class { m() { return alias } }/>
+<const/obj={ m() { return alias } }/>
+<const/alias=cls/>
+<let/ctrl=0 valueChange=onCtrl/>
+<const/onCtrl=(v) => { ctrl = v }/>
+<button onClick() { mutualA(); obj.m(); onCtrl(ctrl + 1) }>${ctrl}</button>
