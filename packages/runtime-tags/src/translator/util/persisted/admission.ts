@@ -116,6 +116,32 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     return server;
   };
+  const exprHasStaleServerSources = (
+    value: t.Node,
+    localSection: NonNullable<ReturnType<typeof getSectionForBody>>,
+  ) => {
+    let stale = false;
+    const visitRef = (ref: Parameters<typeof getSerializeSourcesForRef>[0]) => {
+      if (!ref) return;
+      if (Array.isArray(ref)) {
+        for (const binding of ref) visitRef(binding);
+        return;
+      }
+      const sources = ref.sources;
+      stale ||= !!sources?.global;
+      stale ||= !!(sources?.param && ref.section !== localSection);
+    };
+    t.traverseFast(value, (n) => {
+      const extra = n.extra;
+      stale ||= !!extra?.globalBindings;
+      visitRef(extra?.read?.binding ?? extra?.referencedBindings);
+      forEach(
+        (extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction,
+        visitRef,
+      );
+    });
+    return stale;
+  };
   // The outer expression matrix, applied inside nested templates so
   // nesting cannot launder shapes the region boundary rejects.
   const nestedValueUnsafety = (
@@ -377,17 +403,28 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       }
       if (isCoreTagName(tag, "try")) {
         // Catch/placeholder materialize after any number of patches: a
-        // server value inside them would read stale.
-        for (const attrTag of node.attributeTags || []) {
+        // request/input read inside them would go stale. The catch error
+        // param is delivered when the branch fires, not a server fill.
+        for (const attrPath of tag.get(
+          "attributeTags",
+        ) as t.NodePath<t.MarkoTag>[]) {
+          const attrTag = attrPath.node;
           const attrName =
-            t.isMarkoTag(attrTag) &&
-            t.isStringLiteral(attrTag.name) &&
-            attrTag.name.value;
+            t.isStringLiteral(attrTag.name) && attrTag.name.value;
           if (attrName !== "@catch" && attrName !== "@placeholder") continue;
+          const localSection =
+            attrName === "@catch"
+              ? getSectionForBody(attrPath.get("body"))
+              : undefined;
           t.traverseFast(attrTag, (n) => {
+            const value =
+              (t.isMarkoPlaceholder(n) && n.value) ||
+              (t.isMarkoAttribute(n) && n.value);
             if (
-              (t.isMarkoPlaceholder(n) && exprHasServerSources(n.value)) ||
-              (t.isMarkoAttribute(n) && exprHasServerSources(n.value))
+              value &&
+              (localSection
+                ? exprHasStaleServerSources(value, localSection)
+                : exprHasServerSources(value))
             ) {
               unsupported(
                 n,

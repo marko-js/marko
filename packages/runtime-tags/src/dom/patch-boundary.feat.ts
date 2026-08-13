@@ -8,7 +8,11 @@ import {
   PatchKey,
   type Scope,
 } from "../common/types";
-import { createAwaitCounter, dismissPlaceholder } from "./control-flow";
+import {
+  createAwaitCounter,
+  dismissPlaceholder,
+  renderCatch,
+} from "./control-flow";
 import { pendingEffects, placeholderShown } from "./queue";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { patchers, walkScope } from "./resume";
@@ -118,14 +122,25 @@ patchers[PatchKey.Pending] = (scope, key) => {
   });
 };
 
+function markSettled(scope: Scope, accessor: string) {
+  (settled.get(scope) ?? settled.set(scope, new Set()).get(scope)!).add(
+    accessor,
+  );
+}
+
 const applyChild = patchers[PatchKey.Child];
 patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
   if (applyChild) applyChild(scope, key, value);
   else walkScope(value as Scope, scope[link] as Scope);
-  (settled.get(scope) ?? settled.set(scope, new Set()).get(scope)!).add(
-    accessor,
-  );
+  markSettled(scope, accessor);
   endAwaitPending(scope, accessor);
+};
+
+patchers[PatchKey.Catch] = (scope, key, error) => {
+  const accessor = key.slice(PatchKey.Catch.length);
+  markSettled(scope, accessor);
+  endAwaitPending(scope, accessor);
+  renderCatch(scope, error);
 };
