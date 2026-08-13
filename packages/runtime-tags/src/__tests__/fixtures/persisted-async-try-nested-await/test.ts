@@ -1,7 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-// Nested `<try>` boundaries around an `<await>`: the outer boundary fails closed at compile.
+// Nested `<try>` around a settled `<await>`: both boundaries pair, the
+// body fills in one frame.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: () => [
+    { promise: Promise.resolve("hi") },
+    { promise: Promise.resolve("bye") },
+  ],
 };

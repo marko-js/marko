@@ -344,11 +344,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // Attribute tags validate at their owner: `<try>` (the only admitted
       // owner) checks its `<@catch>` content itself.
       if (tagName && tagName[0] === "@") return;
-      // A patch is one frame: an `<await>` body PAIRS into the live page
-      // (the frame is held until the boundary settles) but never
+      // An `<await>` body pairs into the live page. A still-pending one
+      // flushes a prefix frame and settles in a later frame; it never
       // constructs, so one inside divergable structure fails closed here.
-      // `<try>` admits only the catch-only shape: recovery around async
-      // content rides placeholder machinery a frame never carries.
       if (isCoreTagName(tag, "await")) {
         for (
           let section = getSection(tag);
@@ -378,28 +376,14 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         return;
       }
       if (isCoreTagName(tag, "try")) {
-        const tryUnsupported = () =>
-          unsupported(
-            node,
-            "`<try>` boundaries rely on placeholder and catch machinery patches do not carry",
-          );
+        // Catch/placeholder materialize after any number of patches: a
+        // server value inside them would read stale.
         for (const attrTag of node.attributeTags || []) {
-          if (
+          const attrName =
             t.isMarkoTag(attrTag) &&
             t.isStringLiteral(attrTag.name) &&
-            attrTag.name.value === "@placeholder"
-          ) {
-            tryUnsupported();
-          }
-        }
-        tag.traverse({
-          MarkoTag(inner) {
-            if (isCoreTagName(inner, "await")) tryUnsupported();
-          },
-        });
-        // The catch branch materializes only on client errors, after any
-        // number of patches: a server value inside it would read stale.
-        for (const attrTag of node.attributeTags || []) {
+            attrTag.name.value;
+          if (attrName !== "@catch" && attrName !== "@placeholder") continue;
           t.traverseFast(attrTag, (n) => {
             if (
               (t.isMarkoPlaceholder(n) && exprHasServerSources(n.value)) ||
@@ -407,7 +391,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             ) {
               unsupported(
                 n,
-                "a server value inside `<@catch>` content would go stale",
+                attrName === "@placeholder"
+                  ? "a server value inside `<@placeholder>` content would go stale"
+                  : "a server value inside `<@catch>` content would go stale",
               );
             }
           });
