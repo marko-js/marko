@@ -24,5 +24,6 @@
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-UPDATE: main > em::text "hi" => "slow"
+REMOVE: main > em
+INSERT: main > h1 + em
 ```

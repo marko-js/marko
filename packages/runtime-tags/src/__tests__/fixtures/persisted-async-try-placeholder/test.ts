@@ -1,15 +1,14 @@
 import type { TestConfig } from "../../main.test";
 
-// A patch whose `<await>` is still pending flushes ready fills now and
-// the resolved body in a later frame.
+// Pending `<await>` inside `<try>` + `@placeholder`: the first frame
+// applies ready fills and re-enters received placeholder state; the
+// settle frame replaces it with the resolved body.
 export const config: TestConfig = {
   persisted: true,
   steps: () => [
     { title: "Store", promise: Promise.resolve("hi") },
     {
       title: "Store!",
-      // then() starts the timer so the delay begins at render, not at
-      // getSteps (which runs before the first document render).
       promise: {
         then: (onFulfilled: (value: string) => unknown) =>
           new Promise<string>((resolve) =>

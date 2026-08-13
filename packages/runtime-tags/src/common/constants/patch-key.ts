@@ -13,6 +13,7 @@ export const GlobalEffect = "g";
 // Mirrors `AccessorProp.Global` on live scopes.
 export const Globals = "$";
 export const Loop = "l";
+export const Pending = "p";
 export const Poison = "x";
 export const Setup = "s";
 export const Text = "t";
