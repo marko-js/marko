@@ -42,6 +42,8 @@ function isCodingAgent() {
   );
 }
 
+// Whole-file pointer is intended; do not key this to the diagnostic
+// or add a per-error section anchor.
 function fixGuide(translator) {
   // Only resolved specifiers expose a cheat sheet; inline objects (tests,
   // embedders) opt out.
