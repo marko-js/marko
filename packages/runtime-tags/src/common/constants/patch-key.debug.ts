@@ -2,6 +2,7 @@ export const Attr = "PatchAttr:";
 export const Bind = "PatchBind:";
 export const BindSource = "PatchBindSource:";
 export const Branch = "PatchBranch:";
+export const Catch = "PatchCatch:";
 export const Child = "PatchChild:";
 export const Control = "PatchControl:";
 export const Effect = "PatchEffect:";
