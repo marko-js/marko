@@ -345,11 +345,10 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // owner) checks its `<@catch>` content itself.
       if (tagName && tagName[0] === "@") return;
       // A patch is one frame: an `<await>` body PAIRS into the live page
-      // (a boundary still pending at flush poisons the frame at runtime),
-      // but it never constructs, so one inside divergable structure fails
-      // closed here. `<try>` admits only the catch-only shape: recovery
-      // around async content rides placeholder machinery a frame never
-      // carries.
+      // (the frame is held until the boundary settles) but never
+      // constructs, so one inside divergable structure fails closed here.
+      // `<try>` admits only the catch-only shape: recovery around async
+      // content rides placeholder machinery a frame never carries.
       if (isCoreTagName(tag, "await")) {
         for (
           let section = getSection(tag);
