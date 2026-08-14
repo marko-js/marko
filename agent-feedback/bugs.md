@@ -14,12 +14,6 @@ A reorder flush appends `<t hidden {commentPrefix}={reorderId}>reorderHTML</t>`,
 
 `preAnalyze` folds a `<textarea>` body into a synthetic `value` attribute by pushing each `MarkoText` child's raw source into `normalizeStringExpression`, and `_textarea_value` (`html/attrs.ts`) escapes it again: `<textarea>&lt;p&gt;hi</textarea>` compiles to `_textarea_value("&lt;p&gt;hi")` and shows the literal `&lt;p&gt;hi`, while the same body in `<title>`/`<div>` passes through, as it does in Marko 5. Entities are the only way to author literal markup in a text-only tag, so that case is unrepresentable. CSR matches SSR, so the fix is decoding `MarkoText` children at compile time — but `MarkoText.value` is raw source and the only decoder in the tree is `he` under `packages/compiler/node_modules` (~100KB, tree-shaken out today), so it needs a new `babel-utils` export; weigh that cost. Re-verify: compile `<textarea>&lt;p&gt;hi</textarea>` with `-o html` and check the emitted `_textarea_value` literal.
 
-## Catch effect errors in `runEffects`; a throwing `<script>` escapes `<try>`'s `@catch` and kills every queued effect
-
-`packages/runtime-tags/src/dom/queue.ts` › `runEffects` | 2026-07-27 | impact:med | effort:med
-
-`_enable_catch`'s `runEffects` wrapper only filters destroyed/pending scopes — it never catches — and `run()` calls it outside its own `try`/`finally`, so an error thrown from a `<script>`/`<lifecycle>` body inside `<try>` escapes `mount()` instead of reaching `@catch`, and aborts the flush so every effect queued behind it never wires up. Give the wrapper the per-item `try { fn(scope) } catch (e) { renderCatch(scope, e) }` treatment `runRender` gets; the fix must also flush the catch branch's own effects, which land in the fresh array `run()` already swapped in. Nothing covers this: `try-effects-catch`, `try-effects-catch-state` and `try-effects-async` all throw from render expressions. Re-verify: mount `<try><for|item| of=["a","b","c"]><script>{ order.push(item); if (item === "a") throw new Error("boom") }</script></for><@catch|err|>caught</@catch></try>` in jsdom — `mount()` throws `boom`, `order` is `["a"]`, and no `@catch` content renders.
-
 ## Route `tagNameLoad` through the compat dynamic-tag path when a Tags-API parent lazily imports a Class-API child
 
 `packages/runtime-tags/src/translator/visitors/import-declaration.ts` › `translate.exit` | 2026-07-27 | impact:med | effort:med
