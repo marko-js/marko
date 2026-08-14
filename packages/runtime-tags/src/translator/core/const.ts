@@ -83,6 +83,8 @@ export default {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
       if (!upstreamAlias) {
+        // Keep unread initializers because their expressions may have side effects;
+        // downstream minification can discard proven-pure values.
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);
       }
