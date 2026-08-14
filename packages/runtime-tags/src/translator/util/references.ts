@@ -19,7 +19,6 @@ import {
   addSorted,
   concat,
   filter,
-  find,
   findSorted,
   forEach,
   includes,
@@ -1037,6 +1036,7 @@ export function finalizeReferences() {
     }
   }
 
+  const bindingNamesBySection = new Map<Section, Set<string>>();
   for (const binding of bindings) {
     if (binding.type !== BindingType.dom) {
       if (pruneBinding(binding)) {
@@ -1085,7 +1085,12 @@ export function finalizeReferences() {
         addOwnerSerializeReason(assignedSection, section, true);
       });
 
-      if (find(section.bindings, ({ name }) => name === binding.name)) {
+      let bindingNames = bindingNamesBySection.get(section);
+      if (!bindingNames) {
+        bindingNamesBySection.set(section, (bindingNames = new Set()));
+        forEach(section.bindings, ({ name }) => bindingNames!.add(name));
+      }
+      if (bindingNames.has(binding.name)) {
         binding.name = generateUid(name);
       }
     }
@@ -1121,10 +1126,9 @@ export function finalizeReferences() {
       }
     }
 
-    section.bindings = bindingUtil.add(
-      section.bindings,
-      getCanonicalBinding(binding),
-    );
+    const canonicalBinding = getCanonicalBinding(binding);
+    section.bindings = bindingUtil.add(section.bindings, canonicalBinding);
+    bindingNamesBySection.get(section)?.add(canonicalBinding.name);
 
     for (const exprExtra of binding.reads) {
       const { isEffect, section } = exprExtra;
@@ -1367,6 +1371,7 @@ export function finalizeReferences() {
   forEachSection((section) => {
     const { id, bindings } = section;
     const isOwnedBinding = ({ section }: Binding) => section.id === id;
+    const ownedBindings = filter(bindings, isOwnedBinding);
     const intersections = (intersectionsBySection.get(section) || []).filter(
       (intersection) => {
         const collapseSource = getCollapsibleIntersectionSource(
@@ -1379,20 +1384,21 @@ export function finalizeReferences() {
         return !collapseSource;
       },
     );
+    let anchors: Map<Intersection, Binding | undefined> | undefined;
     if (intersections.length) {
-      const anchors = new Map<Intersection, Binding | undefined>();
+      const sectionAnchors = (anchors = new Map());
       for (const intersection of intersections) {
         for (let i = intersection.length; i--;) {
           if (isOwnedBinding(intersection[i])) {
-            anchors.set(intersection, intersection[i]);
+            sectionAnchors.set(intersection, intersection[i]);
             break;
           }
         }
       }
 
       intersections.sort((a, b) => {
-        const aAnchor = anchors.get(a);
-        const bAnchor = anchors.get(b);
+        const aAnchor = sectionAnchors.get(a);
+        const bAnchor = sectionAnchors.get(b);
         return aAnchor
           ? bAnchor
             ? bindingUtil.compare(aAnchor, bAnchor)
@@ -1406,16 +1412,15 @@ export function finalizeReferences() {
     let intersectionIndex = 0;
     let nextId = 0;
     let intersection: Intersection;
-    forEach(filter(bindings, isOwnedBinding), (binding) => {
+    forEach(ownedBindings, (binding) => {
       binding.id = nextId++;
       // Reserved ids follow the binding's own; dom bindings never reserve
       // since their ids are the walker's dense indexes.
       nextId += binding.reserveSize;
       while (
         intersectionIndex < intersections.length &&
-        (intersection = intersections[intersectionIndex])
-          .filter(isOwnedBinding)
-          .at(-1) === binding
+        anchors!.get((intersection = intersections[intersectionIndex])) ===
+          binding
       ) {
         intersectionIndex++;
         intersectionMeta.set(intersection, {
@@ -1436,7 +1441,7 @@ export function finalizeReferences() {
 
     // Closure accessor ids trail the id space; `_closure_get` receives the
     // id directly, so unused reservations never reach the wire.
-    forEach(filter(bindings, isOwnedBinding), (binding) => {
+    forEach(ownedBindings, (binding) => {
       if (binding.closureSections) {
         closureAccessorIds.set(binding, nextId++);
       }
