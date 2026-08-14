@@ -13,4 +13,4 @@ const $input = ($scope, input) => {
 	$input_accent($scope, input.accent);
 	$input_on($scope, input.on);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

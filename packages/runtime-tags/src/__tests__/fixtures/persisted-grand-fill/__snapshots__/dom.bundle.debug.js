@@ -4,7 +4,7 @@ const $walks$2 = "D l";
 const $setup$2 = () => {};
 const $input_text = ($scope, input_text) => _text($scope["#text/0"], input_text);
 const $input$2 = ($scope, input) => $input_text($scope, input.text);
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/card/tags/badge/index.marko", $template$2, "D l", $setup$2, $input$2);
+var badge_default = /*@__PURE__*/ _template("__tests__/tags/card/tags/badge/index.marko", $template$2, "D l", 0, $input$2);
 
 // tags/card/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<h3> </h3>${_w0}`)($template$2);
@@ -16,7 +16,7 @@ const $input$1 = ($scope, input) => {
 	$input_title$1($scope, input.title);
 	$input_subtitle$1($scope, input.subtitle);
 };
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";

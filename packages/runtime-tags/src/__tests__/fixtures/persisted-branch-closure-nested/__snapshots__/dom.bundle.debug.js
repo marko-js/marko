@@ -24,4 +24,4 @@ const $input = ($scope, input) => {
 	$input_inner($scope, input.inner);
 };
 const $input_inner = /*@__PURE__*/ _const("input_inner", $if_content__input_inner);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

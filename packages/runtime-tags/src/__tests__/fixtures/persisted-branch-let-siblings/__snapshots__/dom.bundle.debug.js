@@ -28,4 +28,4 @@ const $input = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

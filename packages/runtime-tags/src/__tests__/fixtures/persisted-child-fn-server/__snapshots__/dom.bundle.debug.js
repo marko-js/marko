@@ -3,7 +3,7 @@ const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input$1 = ($scope, input) => _text($scope["#text/0"], input.format(input.value));
-var dump_default = /*@__PURE__*/ _template("__tests__/tags/dump/index.marko", $template$1, "D l", $setup$1, $input$1);
+var dump_default = /*@__PURE__*/ _template("__tests__/tags/dump/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
