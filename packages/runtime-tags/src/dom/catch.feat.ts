@@ -31,6 +31,8 @@ const handlePendingTry = (
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program containing `<try>`, `<await>`, or lazy loading.
 installCatch(
+  // Deliberately no per-effect try/catch: an error thrown from a `<script>` or
+  // `<lifecycle>` body escapes the flush instead of reaching `@catch`.
   (runEffects) =>
     (effects, checkPending = placeholderShown.has(effects)) => {
       if (checkPending || caughtError.has(effects)) {
