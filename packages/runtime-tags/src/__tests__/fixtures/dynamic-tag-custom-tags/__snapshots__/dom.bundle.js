@@ -1,18 +1,16 @@
 // tags/child1.marko
 const $template$1 = "<div>Child 1 has <!></div>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
 const $value$1 = ($scope, value) => _text($scope.a, value);
 const $input$1 = ($scope, input) => $value$1($scope, input.value);
-var child1_default = /*@__PURE__*/ _template("b", $template$1, $walks$1, $setup$1, $input$1);
+var child1_default = /*@__PURE__*/ _template("b", $template$1, $walks$1, 0, $input$1);
 
 // tags/child2.marko
 const $template = "<div>Child 2 has <!></div>";
 const $walks = "Db%l";
-const $setup = () => {};
 const $value = ($scope, value) => _text($scope.a, value);
 const $input = ($scope, input) => $value($scope, input.value);
-var child2_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $input);
+var child2_default = /*@__PURE__*/ _template("c", $template, $walks, 0, $input);
 
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);

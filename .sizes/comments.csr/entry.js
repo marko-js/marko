@@ -1,4 +1,4 @@
-// size: 645 (min) 364 (brotli)
+// size: 636 (min) 359 (brotli)
 //#region packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/tags/comments.marko
 const $template$1 = "<ul></ul>";
 const $if_content__comment_comments = /*@__PURE__*/ _if_closure(4, 0, ($scope) =>
@@ -60,7 +60,6 @@ const $input_path$1 = /*@__PURE__*/ _const(4, $for_content__input_path);
 //#region packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $setup = () => {};
 const $input_comments = ($scope, input_comments) => $input_comments$1($scope.a, input_comments);
 const $input_path = ($scope, input_path) => $input_path$1($scope.a, input_path);
 const $input = ($scope, input) => {
@@ -69,5 +68,5 @@ const $input = ($scope, input) => {
 };
 //#endregion
 //#region entry
-/* @__PURE__ */ _template("b", $template, $walks, $setup, $input).mount();
+/* @__PURE__ */ _template("b", $template, $walks, 0, $input).mount();
 //#endregion

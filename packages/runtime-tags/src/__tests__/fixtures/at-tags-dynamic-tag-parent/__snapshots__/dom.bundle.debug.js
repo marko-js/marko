@@ -26,7 +26,7 @@ const $input_footer = ($scope, input_footer) => {
 	$input_footer_class($scope, input_footer?.class);
 	$input_footer_content($scope, input_footer?.content);
 };
-var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, $setup$1, $input);
+var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = "<!><!><!>";

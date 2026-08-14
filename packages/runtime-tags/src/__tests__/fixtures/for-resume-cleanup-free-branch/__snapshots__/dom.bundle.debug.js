@@ -10,7 +10,7 @@ const $count$1 = ($scope, count) => $for($scope, [
 	1
 ]);
 const $input = ($scope, input) => $count$1($scope, input.count);
-var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $template$1, "b%c", $setup$1, $input);
+var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<button id=o>O</button><button id=c>C</button><!><!>";

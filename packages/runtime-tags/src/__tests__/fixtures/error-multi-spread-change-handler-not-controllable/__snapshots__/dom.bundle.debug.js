@@ -16,4 +16,4 @@ const $input = ($scope, input) => {
 	$input_attrs($scope, input.attrs);
 	$input_more($scope, input.more);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

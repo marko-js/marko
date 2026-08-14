@@ -4,7 +4,7 @@ const $walks$1 = "Db%l";
 const $setup$1 = () => {};
 const $input_ = ($scope, input_0) => _text($scope["#text/0"], input_0);
 const $input = ($scope, input) => $input_($scope, input[0]);
-var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, $setup$1, $input);
+var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = "<!><!><button></button>";

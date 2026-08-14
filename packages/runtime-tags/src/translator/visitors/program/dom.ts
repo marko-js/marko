@@ -219,10 +219,12 @@ export default {
           callRuntime(
             "_template",
             t.stringLiteral(program.hub.file.metadata.marko.id),
-            templateIdentifier,
-            walksIdentifier,
-            setupIdentifier,
-            programInputSignal?.identifier,
+            ...replaceNullishAndEmptyFunctionsWith0([
+              templateIdentifier,
+              walksIdentifier,
+              domExports.setupEmpty ? undefined : setupIdentifier,
+              programInputSignal?.identifier,
+            ]),
           ),
         ),
       );

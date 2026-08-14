@@ -161,12 +161,6 @@ The closure `signal` is assigned only in the `pending.then((mod) => queueAsyncRe
 
 `Boundary.flush()` runs `flushSerializer` on every call, and `ServerRendered.#read`'s `onNext` calls it on each `boundary.endAsync()` even when the HTML write is deferred to the next `queueTick`. Each call appends its own `_=>[…]` closure to `state.resumes`, so N awaits settling in one chunk emit N payloads and the delta scope-id encoding in `writeScopesRoot` cannot span them — see `fixtures/async-reorder-nested-batched-resolve/__snapshots__/writes.html`, where one chunk pushes `_ => [5,…], _ => [7,…]`. Serialization cannot simply be skipped, since the serializer itself calls `boundary.startAsync()`; take `flush(write?)` and serialize only when `write` or `this.count === 0`, with `#read` passing through its existing `write` flag. Re-verify: that snapshot should regenerate with a single `_ =>` closure per chunk.
 
-## Pass `0` for an empty `$setup` in `_template`, and keep `setupEmpty` for dynamic tags
-
-`packages/runtime-tags/src/translator/visitors/program/dom.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low
-
-With no program setup signal, `program/dom.ts` emits `export const $setup = () => {};` and still passes that identifier as `_template`'s 4th argument, so `_content` stores a truthy `RendererProp.Setup` and `setupBranch` queues `queueRender(branch, emptyFn, -1)` for every branch built from the template (and `mount` calls it directly). Child-section `_content` args already go through `replaceNullishAndEmptyFunctionsWith0`; the program `_template` args do not, and `program/index.ts` carries the matching TODO. Separately, `visitors/tag/dynamic-tag.ts` calls `addSetupStatement` unconditionally, so any template containing a dynamic tag loses `domExports.setupEmpty` and its parents still emit `import { $setup as _wrap }` + `_wrap($scope.a)` for a function translate left empty. Re-verify: compile `<section class="wrap"><${input.content}/></section>` and a parent that uses it with `-o dom`; 19 committed `dom.bundle.js` snapshots still contain `$setup = () => {}`.
-
 ## Collapse an all-same `_set_serialize_reason` group object into a bare guard or bitmask
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `knownTagTranslateHTML` | 2026-07-23 | impact:low | effort:low

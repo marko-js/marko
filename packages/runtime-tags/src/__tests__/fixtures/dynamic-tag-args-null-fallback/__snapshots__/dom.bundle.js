@@ -1,10 +1,9 @@
 // tags/custom-tag.marko
 const $template = "<div>tag <!></div>";
 const $walks = "Db%l";
-const $setup = () => {};
 const $input_ = ($scope, input_0) => _text($scope.a, input_0);
 const $input = ($scope, input) => $input_($scope, input[0]);
-var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
+var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, 0, $input);
 
 // template.marko
 const $x_content = _content_resume("a0", "Fallback Body");

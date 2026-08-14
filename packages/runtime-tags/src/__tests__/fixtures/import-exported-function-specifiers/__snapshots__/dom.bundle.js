@@ -1,13 +1,12 @@
 // tags/handlers.marko
 const $template = "<div> </div>";
 const $walks = "D l";
-const $setup = () => {};
 function shout(message) {
 	return message.toUpperCase() + "!";
 }
 const $input_message = ($scope, input_message) => _text($scope.a, input_message);
 const $input = ($scope, input) => $input_message($scope, input.message);
-var handlers_default = /*@__PURE__*/ _template("b", $template, "D l", $setup, $input);
+var handlers_default = /*@__PURE__*/ _template("b", $template, "D l", 0, $input);
 
 // tags/v:handlers.marko.register-shout.js
 _resume("b0", shout);

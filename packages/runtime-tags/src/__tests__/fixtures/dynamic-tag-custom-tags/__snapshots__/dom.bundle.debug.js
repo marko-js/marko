@@ -4,7 +4,7 @@ const $walks$2 = "Db%l";
 const $setup$2 = () => {};
 const $value$1 = ($scope, value) => _text($scope["#text/0"], value);
 const $input$1 = ($scope, input) => $value$1($scope, input.value);
-var child1_default = /*@__PURE__*/ _template("__tests__/tags/child1.marko", $template$2, $walks$2, $setup$2, $input$1);
+var child1_default = /*@__PURE__*/ _template("__tests__/tags/child1.marko", $template$2, $walks$2, 0, $input$1);
 
 // tags/child2.marko
 const $template$1 = "<div>Child 2 has <!></div>";
@@ -12,7 +12,7 @@ const $walks$1 = "Db%l";
 const $setup$1 = () => {};
 const $value = ($scope, value) => _text($scope["#text/0"], value);
 const $input = ($scope, input) => $value($scope, input.value);
-var child2_default = /*@__PURE__*/ _template("__tests__/tags/child2.marko", $template$1, $walks$1, $setup$1, $input);
+var child2_default = /*@__PURE__*/ _template("__tests__/tags/child2.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = "<!><!><button></button>";

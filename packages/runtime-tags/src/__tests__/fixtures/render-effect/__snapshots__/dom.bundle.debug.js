@@ -3,7 +3,7 @@ const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = () => {};
 const $input = /*@__PURE__*/ _const("input", ($scope) => _return($scope, $scope.input.value()));
-var render_effect_default = /*@__PURE__*/ _template("__tests__/tags/render-effect.marko", "", "", $setup$1, $input);
+var render_effect_default = /*@__PURE__*/ _template("__tests__/tags/render-effect.marko", "", "", 0, $input);
 
 // template.marko
 const $template = "";

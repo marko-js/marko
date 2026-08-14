@@ -7,4 +7,4 @@ const $input_x = ($scope, input_x) => {
 	_text($scope["#text/1"], input_x);
 };
 const $input = ($scope, input) => $input_x($scope, input.x);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

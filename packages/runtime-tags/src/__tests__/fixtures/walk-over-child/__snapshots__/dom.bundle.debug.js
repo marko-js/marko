@@ -2,7 +2,7 @@
 const $template$1 = "<span>Hello</span>";
 const $walks$1 = "b";
 const $setup$1 = () => {};
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b", $setup$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b");
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<section>${_w0}</section><div> </div>`)($template$1);

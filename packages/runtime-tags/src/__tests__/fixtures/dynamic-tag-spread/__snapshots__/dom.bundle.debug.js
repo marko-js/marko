@@ -17,15 +17,13 @@ const $input = ($scope, input) => {
 	$inputAs($scope, input.as);
 	$foo($scope, input.foo);
 };
-var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", $setup$1, $input);
+var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)("b%c", "b%c");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { id: "foo" });
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$foo($scope["#childScope/1"], "bar");
 	const $wrapper_input_spread = { id: "foo" };
 	$inputAs($scope["#childScope/1"], $wrapper_input_spread.as);

@@ -1,7 +1,6 @@
 // tags/child.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $setup = () => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(1);
 const $input_content = ($scope, input_content) => {
@@ -19,7 +18,6 @@ const $inputshowChildnull_content__setup__script = _script("a6", ($scope) => {
 	for (const el of $inputshowChildnull_content__$el2_getter($scope)) el.classList.add("inner");
 });
 const $inputshowChildnull_content__setup = ($scope) => {
-	/* @__PURE__ */ $setup($scope.a);
 	$input_content($scope.a, $child_content2($scope));
 	$inputshowChildnull_content__setup__script($scope);
 };

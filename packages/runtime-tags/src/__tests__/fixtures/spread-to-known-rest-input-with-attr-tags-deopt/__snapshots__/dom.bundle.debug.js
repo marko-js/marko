@@ -17,7 +17,7 @@ const $for_content__$temp = ($scope, $temp) => {
 const $for = /*@__PURE__*/ _for_of("#text/0", "<span><!></span>", " D%", 0, $for_content__$params);
 const $foo = ($scope, foo) => $for($scope, [foo]);
 const $input$2 = ($scope, input) => $foo($scope, input.foo);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, "b%c", $setup$2, $input$2);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, "b%c", 0, $input$2);
 
 // tags/wrap.marko
 const $template$1 = " <!><!>";
@@ -41,7 +41,7 @@ const $input$1 = ($scope, input) => {
 };
 const $input_foo__closure = /*@__PURE__*/ _closure($_classspandiv_content__input_foo);
 const $input_foo = /*@__PURE__*/ _const("input_foo", $input_foo__closure);
-var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, "b%c", $setup$1, $input$1);
+var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
@@ -49,7 +49,6 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)("b%c");
 const $desc_content2 = _content_resume("__tests__/template.marko_2*content", "Two");
 const $desc_content = _content_resume("__tests__/template.marko_1*content", "One");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_foo($scope["#childScope/0"], attrTags(attrTag({
 		value: 1,
 		desc: attrTag({ content: $desc_content($scope) })

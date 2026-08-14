@@ -14,7 +14,7 @@ const $input = ($scope, input) => {
 	$input_item($scope, input.item);
 	$input_other($scope, input.other);
 };
-var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, $setup$1, $input);
+var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
@@ -29,7 +29,6 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 	}
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_other($scope["#childScope/0"], attrTag({ content: $other_content($scope) }));
 	let $item;
 	forIn({

@@ -8,7 +8,7 @@ const $input = ($scope, input) => {
 	(({ first, ...rest }) => $rest($scope, rest))(input);
 	$first($scope, input.first);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}`)($template$1);

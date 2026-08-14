@@ -18,7 +18,6 @@ _marko_template$1.Component = (0, import_defineComponent.default)(_marko_compone
 // components/tags-child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
 _resume("b", _marko_template$1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $input_onChange = /*@__PURE__*/ _const(3, ($scope) => $dynamicTag($scope, _marko_template$1, () => ({ "on-change": $onchange($scope) })));
@@ -27,7 +26,7 @@ const $onchange = ($scope) => function() {
 	$scope.d?.();
 };
 _resume("c0", $onchange);
-var tags_child_default = /*@__PURE__*/ _template("c", $template, "b%c", $setup, $input);
+var tags_child_default = /*@__PURE__*/ _template("c", $template, "b%c", 0, $input);
 
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

@@ -8,7 +8,7 @@ const $input = ($scope, input) => {
 	$skip($scope, input.skip);
 	$input_label($scope, input.label);
 };
-var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $template$1, $walks$1, $setup$1, $input);
+var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);

@@ -11,7 +11,7 @@ const $input_depth = /*@__PURE__*/ _const("input_depth", ($scope) => {
 	$if_content__input_depth($scope);
 });
 const $input = ($scope, input) => $input_depth($scope, input.depth);
-var tree_default = /*@__PURE__*/ _template("__tests__/tags/tree/index.marko", $template$1, $walks$1, $setup$1, $input);
+var tree_default = /*@__PURE__*/ _template("__tests__/tags/tree/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}`)($template$1);

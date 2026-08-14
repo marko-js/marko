@@ -1,18 +1,16 @@
 // tags/a/index.marko
 const $template$1 = "<div>A <!></div>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
 const $input_label$1 = ($scope, input_label) => _text($scope.a, input_label);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);
-var a_default = /*@__PURE__*/ _template("b", $template$1, $walks$1, $setup$1, $input$1);
+var a_default = /*@__PURE__*/ _template("b", $template$1, $walks$1, 0, $input$1);
 
 // tags/b/index.marko
 const $template = "<div>B <!></div>";
 const $walks = "Db%l";
-const $setup = () => {};
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-var b_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $input);
+var b_default = /*@__PURE__*/ _template("c", $template, $walks, 0, $input);
 
 // template.marko
 const localTag = a_default;

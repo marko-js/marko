@@ -30,7 +30,7 @@ const $onchange = ($scope) => function() {
 	$scope.input_onChange?.();
 };
 _resume("__tests__/components/tags-child.marko_0/onchange", $onchange);
-var tags_child_default = /*@__PURE__*/ _template("__tests__/components/tags-child.marko", $template, "b%c", $setup, $input);
+var tags_child_default = /*@__PURE__*/ _template("__tests__/components/tags-child.marko", $template, "b%c", 0, $input);
 
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

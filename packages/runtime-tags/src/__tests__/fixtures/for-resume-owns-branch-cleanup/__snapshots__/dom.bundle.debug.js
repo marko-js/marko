@@ -16,7 +16,7 @@ const $count$1 = ($scope, count) => $for($scope, [
 	1
 ]);
 const $input = ($scope, input) => $count$1($scope, input.count);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<div id=ref>init</div><button id=o>O</button><button id=a>A</button><!><!>";

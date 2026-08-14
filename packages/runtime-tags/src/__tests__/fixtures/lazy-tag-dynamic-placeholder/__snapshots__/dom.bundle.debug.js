@@ -8,7 +8,7 @@ const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_value($scope, input.value);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, 0, $input);
 
 // template.marko
 const $template = "<button class=toggle>Toggle</button><button class=inc>Inc</button><!><!>";

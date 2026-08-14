@@ -18,7 +18,7 @@ const $input = ($scope, input) => {
 	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _const("input_content", $for_content__input_content);
-var my_for_default = /*@__PURE__*/ _template("__tests__/tags/my-for.marko", $template$1, "b%c", $setup$1, $input);
+var my_for_default = /*@__PURE__*/ _template("__tests__/tags/my-for.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);

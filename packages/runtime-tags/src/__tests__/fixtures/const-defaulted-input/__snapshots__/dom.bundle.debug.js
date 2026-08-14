@@ -31,4 +31,4 @@ const $falsy_label = ($scope, falsy_label) => _text($scope["#text/2"], falsy_lab
 const $falsy_size = ($scope, falsy_size) => _text($scope["#text/3"], falsy_size);
 const $guarded_label = ($scope, guarded_label) => _text($scope["#text/4"], guarded_label);
 const $input = ($scope, input) => $input_opts($scope, input.opts);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

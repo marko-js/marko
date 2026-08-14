@@ -12,4 +12,4 @@ const $for_content__$params = ($scope, $params2) => $for_content__item_label($sc
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!></li>", "D%", $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

@@ -5,7 +5,7 @@ const $setup$2 = () => {};
 const $input_value__script = _script("__tests__/tags/thing.marko_0_input_value#2", ($scope) => $scope.input_value);
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__script);
 const $input = ($scope, input) => $input_value($scope, input.value);
-var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", "", "", $setup$2, $input);
+var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", "", "", 0, $input);
 
 // tags/child.marko
 const $template$1 = "<div></div>";

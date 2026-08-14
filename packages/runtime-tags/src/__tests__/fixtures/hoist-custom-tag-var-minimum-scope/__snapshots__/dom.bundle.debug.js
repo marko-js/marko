@@ -6,7 +6,7 @@ const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => _return($sc
 const $input = ($scope, input) => $input_value($scope, input.value);
 const $_return = ($scope) => () => $scope.input_value;
 _resume("__tests__/tags/child.marko_0/_return", $_return);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", 0, $input);
 
 // template.marko
 const $template = "<pre id=root></pre><pre id=outer></pre><pre id=inner></pre><!><!>";

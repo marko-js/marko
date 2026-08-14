@@ -17,7 +17,7 @@ const $_return = ($scope) => function(v) {
 };
 _resume("__tests__/tags/store.marko_0/_return2", $_return2);
 _resume("__tests__/tags/store.marko_0/_return", $_return);
-var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", "", $setup$1, $input);
+var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", "", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Clear</button><ul></ul>`)("");

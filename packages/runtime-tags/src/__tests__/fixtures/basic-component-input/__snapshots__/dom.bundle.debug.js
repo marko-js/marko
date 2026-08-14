@@ -9,7 +9,7 @@ const $input = ($scope, input) => {
 	$onClick$1($scope, input.onClick);
 	$text($scope, input.text);
 };
-var my_button_default = /*@__PURE__*/ _template("__tests__/tags/my-button.marko", $template$1, $walks$1, $setup$1, $input);
+var my_button_default = /*@__PURE__*/ _template("__tests__/tags/my-button.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = $template$1;

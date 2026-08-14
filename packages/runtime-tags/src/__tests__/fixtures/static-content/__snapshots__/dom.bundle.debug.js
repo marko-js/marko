@@ -6,7 +6,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content$1 = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content$1($scope, input.content);
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $template$2, "b%c", $setup$2, $input$1);
+var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $template$2, "b%c", 0, $input$1);
 
 // tags/outer.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
@@ -22,7 +22,6 @@ const $inner_content__setup = ($scope) => {
 };
 const $inner_content = /*@__PURE__*/ _content("__tests__/tags/outer.marko_1*content", "<button>click</button><!><!>", " b%", $inner_content__setup);
 function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $inner_content($scope));
 }
 const $input = ($scope, input) => $input_content($scope, input.content);

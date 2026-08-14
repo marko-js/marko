@@ -10,4 +10,4 @@ const $value = /*@__PURE__*/ _const("value", ($scope) => {
 	$if_content__input_value($scope);
 });
 const $input = ($scope, input) => $value($scope, input.value);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D%l", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D%l", 0, $input);

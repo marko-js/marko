@@ -26,7 +26,7 @@ const $walks = "Db%l";
 const $setup = () => {};
 const $value = ($scope, value) => _text($scope["#text/0"], value);
 const $input = ($scope, input) => $value($scope, input.value);
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, 0, $input);
 
 // v:child.marko.setup.js
 const _ = [

@@ -21,4 +21,4 @@ const $value = ($scope, value) => {
 const $input = ($scope, input) => $value($scope, input.value);
 const $rest = /*@__PURE__*/ _const("rest", $if_content__rest);
 const $input_value_foo = /*@__PURE__*/ _const("foo", $if_content__input_value_foo);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

@@ -12,4 +12,4 @@ const $for = /*@__PURE__*/ _for_of("#text/0", "<button> </button>", " D ", $for_
 const $items = /*@__PURE__*/ _let("items/4", ($scope) => $for($scope, [$scope.items, () => "dup"]));
 const $input_items = $items;
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

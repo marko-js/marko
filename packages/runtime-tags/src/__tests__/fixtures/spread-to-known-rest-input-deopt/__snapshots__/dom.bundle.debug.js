@@ -16,7 +16,7 @@ const $input$1 = ($scope, input) => {
 	(({ class: $class, ...rest }) => $rest($scope, rest))(input);
 	$_class($scope, input.class);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b b", $setup$1, $input$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b b", 0, $input$1);
 
 // template.marko
 const $template = $template$1;
@@ -30,4 +30,4 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$_class($scope["#childScope/0"], $child_input_spread.class);
 	$rest($scope["#childScope/0"], (({ class: $class, ...rest }) => rest)($child_input_spread));
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

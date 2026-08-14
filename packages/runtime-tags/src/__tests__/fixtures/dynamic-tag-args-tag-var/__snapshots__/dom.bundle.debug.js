@@ -6,7 +6,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_text($scope["#text/0"], $scope.input);
 	_return($scope, $scope.input);
 });
-var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, $setup$1, $input);
+var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = "<button>Count: <!></button><!><div>Parent: <!></div>";

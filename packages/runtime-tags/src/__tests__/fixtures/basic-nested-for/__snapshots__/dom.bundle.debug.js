@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $name = ($scope, name) => _text($scope["#text/0"], name);
 const $input = ($scope, input) => $name($scope, input.name);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input);
 
 // template.marko
 const $template = "<button>Push</button><!><!>";

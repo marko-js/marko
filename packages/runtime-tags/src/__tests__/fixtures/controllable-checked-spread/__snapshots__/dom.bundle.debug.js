@@ -10,7 +10,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	}, _controllable_input);
 	$input__script($scope);
 });
-var checkbox_default = /*@__PURE__*/ _template("__tests__/tags/checkbox.marko", $template$1, " b", $setup$1, $input);
+var checkbox_default = /*@__PURE__*/ _template("__tests__/tags/checkbox.marko", $template$1, " b", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<span> </span>`)($template$1);

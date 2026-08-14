@@ -22,7 +22,7 @@ const $input = ($scope, input) => {
 	(({ button, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
 	$buttons($scope, input.button);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", 0, $input);
 
 // template.marko
 const $template = $template$1;

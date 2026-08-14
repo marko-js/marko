@@ -10,14 +10,13 @@ const $input = ($scope, input) => {
 	$name($scope, input.name);
 	$content($scope, input.content);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "This is the body content");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$content_direct($scope["#childScope/0"], $child_content($scope));
 	$name($scope["#childScope/0"], "World");
 }

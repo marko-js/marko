@@ -21,7 +21,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-var my_tag_default = /*@__PURE__*/ _template("__tests__/tags/my-tag.marko", $template$1, "b%c", $setup$1, $input);
+var my_tag_default = /*@__PURE__*/ _template("__tests__/tags/my-tag.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)("", $template$1);
@@ -41,7 +41,6 @@ function $setup($scope) {
 	_var($scope, "#childScope/0", $count);
 	$setup$2($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], 0);
-	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
 	$input_content_direct($scope["#childScope/2"], $mytag_content($scope));
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

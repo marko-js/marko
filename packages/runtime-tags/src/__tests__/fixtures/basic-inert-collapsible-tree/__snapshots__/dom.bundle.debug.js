@@ -42,7 +42,7 @@ const $input$1 = ($scope, input) => {
 	$input_comments$1($scope, input.comments);
 	$input_path$1($scope, input.path);
 };
-var comments_default = /*@__PURE__*/ _template("__tests__/tags/comments.marko", $template$1, " b", $setup$1, $input$1);
+var comments_default = /*@__PURE__*/ _template("__tests__/tags/comments.marko", $template$1, " b", 0, $input$1);
 
 // template.marko
 const $template = $template$1;
@@ -54,4 +54,4 @@ const $input = ($scope, input) => {
 	$input_comments($scope, input.comments);
 	$input_path($scope, input.path);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

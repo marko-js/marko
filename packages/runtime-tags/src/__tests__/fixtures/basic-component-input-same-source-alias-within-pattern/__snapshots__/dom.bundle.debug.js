@@ -14,7 +14,7 @@ const $input = ($scope, input) => {
 	$value2($scope, input.value);
 };
 const $value2 = ($scope, $value) => $text($scope, $value.text);
-var my_button_default = /*@__PURE__*/ _template("__tests__/tags/my-button.marko", $template$1, $walks$1, $setup$1, $input);
+var my_button_default = /*@__PURE__*/ _template("__tests__/tags/my-button.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1);

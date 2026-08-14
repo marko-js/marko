@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $el__script = _script("__tests__/tags/hello-setter.marko_0_el#2", ($scope) => $scope.el().textContent = "hello");
 const $el = /*@__PURE__*/ _const("el", $el__script);
 const $input = ($scope, input) => $el($scope, input.el);
-var hello_setter_default = /*@__PURE__*/ _template("__tests__/tags/hello-setter.marko", "", "", $setup$1, $input);
+var hello_setter_default = /*@__PURE__*/ _template("__tests__/tags/hello-setter.marko", "", "", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)("");

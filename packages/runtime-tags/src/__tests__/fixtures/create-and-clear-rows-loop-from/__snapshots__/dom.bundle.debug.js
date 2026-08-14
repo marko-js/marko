@@ -17,4 +17,4 @@ const $input = ($scope, input) => {
 	$input_to($scope, input.to);
 	$input_step($scope, input.step);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

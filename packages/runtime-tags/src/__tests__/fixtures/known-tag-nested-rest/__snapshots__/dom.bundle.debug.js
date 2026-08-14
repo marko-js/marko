@@ -5,7 +5,7 @@ const $setup$2 = () => {};
 const $input_data_val = ($scope, input_data_val) => _text($scope["#text/0"], input_data_val);
 const $input$1 = ($scope, input) => $input_data($scope, input.data);
 const $input_data = ($scope, input_data) => $input_data_val($scope, input_data?.val);
-var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $template$2, $walks$2, $setup$2, $input$1);
+var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $template$2, $walks$2, 0, $input$1);
 
 // tags/mid.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<p><!> <!></p>${_w0}`)($template$2);
@@ -22,7 +22,7 @@ const $group2 = ($scope, $group) => {
 	(({ keep, ...rest }) => $rest($scope, rest))($group);
 	$keep($scope, $group.keep);
 };
-var mid_default = /*@__PURE__*/ _template("__tests__/tags/mid.marko", $template$1, $walks$1, $setup$1, $input);
+var mid_default = /*@__PURE__*/ _template("__tests__/tags/mid.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}`)($template$1);

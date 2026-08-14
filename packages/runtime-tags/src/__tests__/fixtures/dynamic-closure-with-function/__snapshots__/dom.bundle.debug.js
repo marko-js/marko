@@ -31,4 +31,4 @@ const $bar = ($scope) => function(test) {
 	return $scope.input_c + test;
 };
 _resume("__tests__/template.marko_0/bar", $bar);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

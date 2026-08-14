@@ -14,7 +14,7 @@ const $input = ($scope, input) => {
 	(({ content, ...attrs }) => $attrs($scope, attrs))(input);
 	$content($scope, input.content);
 };
-var FancyButton_default = /*@__PURE__*/ _template("__tests__/tags/FancyButton.marko", $template$1, $walks$1, $setup$1, $input);
+var FancyButton_default = /*@__PURE__*/ _template("__tests__/tags/FancyButton.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = $template$1;
@@ -28,7 +28,6 @@ const $clickCount = /*@__PURE__*/ _let("clickCount/1", ($scope) => {
 	$clickCount__closure($scope);
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$content_direct($scope["#childScope/0"], $FancyButton_content($scope));
 	$clickCount($scope, 0);
 }

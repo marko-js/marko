@@ -13,4 +13,4 @@ const $input_children = ($scope, input_children) => {
 	$for2($scope, [input_children]);
 };
 const $input = ($scope, input) => $input_children($scope, input.children);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

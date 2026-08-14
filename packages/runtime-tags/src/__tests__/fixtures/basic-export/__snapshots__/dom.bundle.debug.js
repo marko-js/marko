@@ -3,7 +3,7 @@ const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = () => {};
 const v = 123;
-var exporter_default = /*@__PURE__*/ _template("__tests__/exporter.marko", "", "", $setup$1);
+var exporter_default = /*@__PURE__*/ _template("__tests__/exporter.marko", "", "");
 
 // template.marko
 const $template = "<div> </div>";

@@ -16,7 +16,7 @@ const $input = ($scope, input) => {
 	$input_head($scope, input.head);
 	$input_foot($scope, input.foot);
 };
-var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $template$1, $walks$1, $setup$1, $input);
+var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = $template$1;

@@ -15,4 +15,4 @@ function $onClick(_, el) {
 	el.textContent = "clicked";
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

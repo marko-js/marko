@@ -5,7 +5,7 @@ const $setup$2 = () => {};
 function shout(message) {
 	return message.toUpperCase() + "!";
 }
-var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", "", "", $setup$2);
+var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", "", "");
 
 // tags/press.marko
 const $template$1 = "<button>press</button><div> </div>";

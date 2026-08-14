@@ -12,7 +12,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$signalReset($scope, 0);
 	$input__script($scope);
 });
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b", 0, $input);
 
 // template.marko
 const $template = "<button>Toggle</button><div></div><!><!>";
