@@ -1,4 +1,4 @@
-// size: 27506 (min) 10193 (brotli)
+// size: 27604 (min) 10194 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2043,6 +2043,36 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
+let patchGlobalsEntry = (live, _key, value) => {
+    let globals = live.$;
+    for (let key in value)
+      if (globals[key] !== value[key]) {
+        globals[key] = value[key];
+        let marks = (globals[kChanged] ??= {});
+        marks["." + key] = marks.$ = runId;
+      }
+  },
+  frameChecks = [],
+  frameVars = {};
+function applyPatch(frame, renderId = "_", runtimeId = "M") {
+  (init(runtimeId), (patchers.$ = patchGlobalsEntry));
+  let render = beginPatch(renderId);
+  try {
+    let names = Object.keys(frameVars),
+      fn = Function("_", "$", ...names, "return " + frame);
+    ((render.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
+      runEffects(render.m([]), 1),
+      run());
+    for (let check of frameChecks) check();
+    return !0;
+  } catch {
+    return (abortRun(), !1);
+  } finally {
+    abortPatch();
+  }
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
   classIdToBranch = /* @__PURE__ */ new Map(),
@@ -2144,15 +2174,6 @@ let empty = [],
         return toInsertNode(branch.S, branch.K);
     },
   },
-  patchGlobalsEntry = (live, _key, value) => {
-    let globals = live.$;
-    for (let key in value)
-      if (globals[key] !== value[key]) {
-        globals[key] = value[key];
-        let marks = (globals[kChanged] ??= {});
-        marks["." + key] = marks.$ = runId;
-      }
-  },
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
@@ -2167,19 +2188,6 @@ function attrTags(first, attrs) {
 }
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
-}
-function applyPatch(frame, renderId = "_", runtimeId = "M") {
-  (init(runtimeId), (patchers.$ = patchGlobalsEntry));
-  let render = beginPatch(renderId);
-  try {
-    return (
-      (render.r = [Function("_", "$", "return " + frame)]), runEffects(render.m([]), 1), run(), !0
-    );
-  } catch {
-    return (abortRun(), !1);
-  } finally {
-    abortPatch();
-  }
 }
 function mount(input = {}, reference, position) {
   let branch,
