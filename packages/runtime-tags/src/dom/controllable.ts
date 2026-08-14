@@ -547,6 +547,7 @@ function syncControllableFormInput<
   onChange: (ev?: Event) => void,
 ) {
   (el as any)._ = onChange;
+  (el as any).c = hasChanged;
   delegate("input", handleChange);
   if ((el as any).form) {
     delegate("reset", handleFormReset);
@@ -564,7 +565,7 @@ function handleChange(ev: Event) {
 function handleFormReset(ev: Event) {
   const handlers: (() => void)[] = [];
   for (const el of (ev.target as HTMLFormElement).elements) {
-    if ((el as any)._ && hasFormElementChanged(el)) {
+    if ((el as any)._ && (el as any).c(el)) {
       handlers.push((el as any)._);
     }
   }
@@ -592,13 +593,6 @@ function hasSelectChanged(el: HTMLSelectElement) {
       return true;
     }
   }
-}
-
-function hasFormElementChanged(el: Element) {
-  return (el as HTMLSelectElement).options
-    ? hasSelectChanged(el as HTMLSelectElement)
-    : hasValueChanged(el as HTMLInputElement) ||
-        hasCheckboxChanged(el as HTMLInputElement);
 }
 
 function normalizeStrProp(value: unknown) {
