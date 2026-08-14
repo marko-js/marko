@@ -15,4 +15,4 @@ const $input = ($scope, input) => {
 	$input_tag($scope, input.tag);
 };
 const $input_tag = /*@__PURE__*/ _const("input_tag");
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

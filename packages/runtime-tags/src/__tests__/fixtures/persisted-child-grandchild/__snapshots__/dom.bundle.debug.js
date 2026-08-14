@@ -2,13 +2,13 @@
 const $template$2 = "<em>leaf</em>";
 const $walks$2 = "b";
 const $setup$2 = () => {};
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/widget/tags/inner/index.marko", $template$2, "b", $setup$2);
+var inner_default = /*@__PURE__*/ _template("__tests__/tags/widget/tags/inner/index.marko", $template$2, "b");
 
 // tags/widget/index.marko
 const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b");
 const $setup$1 = () => {};
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, $walks$1, $setup$1);
+var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, $walks$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";

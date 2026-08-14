@@ -9,7 +9,7 @@ const $input$2 = ($scope, input) => {
 	$input_open($scope, input.open);
 	$input_text($scope, input.text);
 };
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$2, $walks$2, $setup$2, $input$2);
+var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$2, $walks$2, 0, $input$2);
 
 // tags/wrap/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<div class=wrap>${_w0}</div>`)($template$2);
