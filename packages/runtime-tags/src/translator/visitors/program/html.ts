@@ -240,7 +240,7 @@ export default {
         if (Object.keys(active).length) {
           program.node.body.push(
             t.expressionStatement(
-              callRuntime("_renderer_shells", t.valueToNode(active)),
+              callRuntime("_shells", t.valueToNode(active)),
             ),
           );
         }
