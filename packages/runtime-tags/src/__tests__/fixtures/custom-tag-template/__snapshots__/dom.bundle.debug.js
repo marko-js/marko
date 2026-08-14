@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $input_name = ($scope, input_name) => _text($scope["#text/0"], input_name);
 const $input = ($scope, input) => $input_name($scope, input.name);
-var hello_default = /*@__PURE__*/ _template("__tests__/hello.marko", $template$1, "b%c", $setup$1, $input);
+var hello_default = /*@__PURE__*/ _template("__tests__/hello.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = $template$1;

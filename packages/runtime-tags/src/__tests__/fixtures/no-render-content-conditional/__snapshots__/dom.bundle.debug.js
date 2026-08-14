@@ -4,7 +4,7 @@ const $walks$2 = "";
 const $setup$2 = () => {};
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => _return($scope, $scope.input_value));
 const $input$2 = ($scope, input) => $input_value($scope, input.value);
-var my_const_default = /*@__PURE__*/ _template("__tests__/tags/my-const.marko", "", "", $setup$2, $input$2);
+var my_const_default = /*@__PURE__*/ _template("__tests__/tags/my-const.marko", "", "", 0, $input$2);
 
 // tags/child.marko
 const $template$1 = "";

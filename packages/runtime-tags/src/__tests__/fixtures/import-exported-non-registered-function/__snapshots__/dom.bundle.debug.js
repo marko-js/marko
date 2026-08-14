@@ -7,7 +7,7 @@ function shout(message) {
 }
 const $input_message = ($scope, input_message) => _text($scope["#text/0"], input_message);
 const $input = ($scope, input) => $input_message($scope, input.message);
-var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", $template$1, "D l", $setup$1, $input);
+var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", $template$1, "D l", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}`)($template$1);

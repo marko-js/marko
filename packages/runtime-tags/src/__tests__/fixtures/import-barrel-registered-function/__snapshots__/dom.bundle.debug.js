@@ -5,7 +5,7 @@ const $setup$3 = () => {};
 function gamma(message) {
 	return message + "-g";
 }
-var extras_default = /*@__PURE__*/ _template("__tests__/tags/extras.marko", "", "", $setup$3);
+var extras_default = /*@__PURE__*/ _template("__tests__/tags/extras.marko", "", "");
 
 // tags/handlers.marko
 const $template$2 = "";
@@ -17,13 +17,13 @@ function alpha(message) {
 function beta(message) {
 	return message + "-b";
 }
-var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", "", "", $setup$2);
+var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", "", "");
 
 // tags/barrel.marko
 const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = () => {};
-var barrel_default = /*@__PURE__*/ _template("__tests__/tags/barrel.marko", "", "", $setup$1);
+var barrel_default = /*@__PURE__*/ _template("__tests__/tags/barrel.marko", "", "");
 
 // tags/v:handlers.marko.register-beta.js
 _resume("__tests__/tags/handlers.marko_0/export/beta", beta);

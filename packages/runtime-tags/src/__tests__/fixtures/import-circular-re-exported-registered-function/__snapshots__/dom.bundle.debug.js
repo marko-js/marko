@@ -5,7 +5,7 @@ const $setup$2 = () => {};
 function bFn(message) {
 	return message + "-b";
 }
-var chain_b_default = /*@__PURE__*/ _template("__tests__/tags/chain-b.marko", $template$2, "b", $setup$2);
+var chain_b_default = /*@__PURE__*/ _template("__tests__/tags/chain-b.marko", $template$2, "b");
 
 // tags/chain-a.marko
 const $template$1 = "<div>a</div>";
@@ -14,7 +14,7 @@ const $setup$1 = () => {};
 function aFn(message) {
 	return message + "-a";
 }
-var chain_a_default = /*@__PURE__*/ _template("__tests__/tags/chain-a.marko", $template$1, "b", $setup$1);
+var chain_a_default = /*@__PURE__*/ _template("__tests__/tags/chain-a.marko", $template$1, "b");
 
 // tags/v:chain-b.marko.register-bFn.js
 _resume("__tests__/tags/chain-b.marko_0/export/bFn", bFn);

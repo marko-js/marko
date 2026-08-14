@@ -21,7 +21,7 @@ const $input = ($scope, input) => {
 	$name($scope, input.name);
 	$write$1($scope, input.write);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input);
 
 // template.marko
 const $template = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";

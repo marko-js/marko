@@ -8,7 +8,7 @@ const $input$1 = ($scope, input) => {
 	$input_class$1($scope, input.class);
 	$input_value$1($scope, input.value);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, " b", $setup$2, $input$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, " b", 0, $input$1);
 
 // tags/wrap.marko
 const $template$1 = $template$2;
@@ -20,7 +20,7 @@ const $input = ($scope, input) => {
 	$input_class($scope, input.class);
 	$input_value($scope, input.value);
 };
-var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, $walks$1, $setup$1, $input);
+var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div id=known>${_w0}</div><div id=dynamic><!></div>`)($template$1);

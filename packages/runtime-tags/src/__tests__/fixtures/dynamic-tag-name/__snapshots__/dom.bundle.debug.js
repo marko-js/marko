@@ -12,7 +12,7 @@ const $input$2 = ($scope, input) => {
 	$other$2($scope, input.other);
 	$content$2($scope, input.content);
 };
-var tag_a_default = /*@__PURE__*/ _template("__tests__/tags/tag-a/index.marko", $template$2, $walks$2, $setup$2, $input$2);
+var tag_a_default = /*@__PURE__*/ _template("__tests__/tags/tag-a/index.marko", $template$2, $walks$2, 0, $input$2);
 
 // tags/tag-b/index.marko
 const $template$1 = "<div>B <!></div>";
@@ -28,7 +28,7 @@ const $input$1 = ($scope, input) => {
 	$other$1($scope, input.other);
 	$content$1($scope, input.content);
 };
-var tag_b_default = /*@__PURE__*/ _template("__tests__/tags/tag-b/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var tag_b_default = /*@__PURE__*/ _template("__tests__/tags/tag-b/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";

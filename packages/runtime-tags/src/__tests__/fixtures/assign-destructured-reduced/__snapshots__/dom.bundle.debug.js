@@ -13,7 +13,7 @@ const $input__script = _script("__tests__/tags/child.marko_0_input#1", ($scope) 
 	}
 });
 const $input = /*@__PURE__*/ _const("input", $input__script);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", 0, $input);
 
 // template.marko
 const $template = "";

@@ -8,7 +8,7 @@ const $input$1 = ($scope, input) => {
 	$input_a$1($scope, input.a);
 	$input_b$1($scope, input.b);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $Child_content__walks = "D lD l", $Child_content__template = "<div> </div><div> </div>";

@@ -9,7 +9,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$input__script($scope);
 });
 const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
-var my_input_default = /*@__PURE__*/ _template("__tests__/tags/my-input.marko", $template$1, $walks$1, $setup$1, $input);
+var my_input_default = /*@__PURE__*/ _template("__tests__/tags/my-input.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = $template$1;

@@ -4,7 +4,7 @@ const $walks$2 = "";
 const $setup$2 = () => {};
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => _return($scope, $scope.input_value));
 const $input$2 = ($scope, input) => $input_value($scope, input.value);
-var my_const_default = /*@__PURE__*/ _template("__tests__/tags/my-const.marko", "", "", $setup$2, $input$2);
+var my_const_default = /*@__PURE__*/ _template("__tests__/tags/my-const.marko", "", "", 0, $input$2);
 
 // tags/child.marko
 const $template$1 = "";
@@ -37,4 +37,4 @@ const $output_getter = _el("__tests__/template.marko_0_#div#0", "#div/0");
 const $if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => $input_show($scope, input.show);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

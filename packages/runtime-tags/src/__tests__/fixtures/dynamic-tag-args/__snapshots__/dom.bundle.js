@@ -1,9 +1,8 @@
 // tags/custom-tag.marko
 const $template = "<div> </div>";
 const $walks = "D l";
-const $setup = () => {};
 const $input = ($scope, input) => _text($scope.a, JSON.stringify(input));
-var custom_tag_default = /*@__PURE__*/ _template("b", $template, "D l", $setup, $input);
+var custom_tag_default = /*@__PURE__*/ _template("b", $template, "D l", 0, $input);
 
 // template.marko
 const tags = [custom_tag_default];

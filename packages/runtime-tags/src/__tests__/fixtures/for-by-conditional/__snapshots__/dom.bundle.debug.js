@@ -12,4 +12,4 @@ const $input = ($scope, input) => {
 	$input_items($scope, input.items);
 	$input_useKey($scope, input.useKey);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

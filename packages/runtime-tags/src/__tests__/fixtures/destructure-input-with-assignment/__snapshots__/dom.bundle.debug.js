@@ -13,7 +13,7 @@ const $input = ($scope, input) => {
 	(({ value, valueChange, ...rest }) => $rest($scope, rest))(input);
 	$valueChange2($scope, input.valueChange);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", 0, $input);
 
 // template.marko
 const $template = $template$1;

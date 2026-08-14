@@ -7,7 +7,7 @@ function shout(message) {
 }
 const $input_message = ($scope, input_message) => _text($scope["#text/0"], input_message);
 const $input = ($scope, input) => $input_message($scope, input.message);
-var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", $template$2, "D l", $setup$2, $input);
+var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", $template$2, "D l", 0, $input);
 
 // tags/v:greeting.marko.register-shout.js
 _resume("__tests__/tags/greeting.marko_0/export/shout", shout);

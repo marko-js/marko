@@ -9,7 +9,7 @@ const $if_content__setup$1 = $if_content__setup__script;
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<p>inner</p>", 0, $if_content__setup$1);
 const $show$1 = ($scope, show) => $if$1($scope, show ? 0 : 1);
 const $input = ($scope, input) => $show$1($scope, input.show);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<div id=ref>init</div><button id=o>O</button><button id=s>S</button><!><!>";

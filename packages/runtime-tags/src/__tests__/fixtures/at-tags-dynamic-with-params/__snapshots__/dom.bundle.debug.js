@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
 const $input_item = ($scope, input_item) => $dynamicTag($scope, input_item, () => [1]);
 const $input = ($scope, input) => $input_item($scope, input.item);
-var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, "b%c", $setup$1, $input);
+var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Toggle</button>`)($template$1);
@@ -25,7 +25,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	_var($scope, "#childScope/0", $menuEl);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$x($scope, true);
 	$setup__script($scope);
 }

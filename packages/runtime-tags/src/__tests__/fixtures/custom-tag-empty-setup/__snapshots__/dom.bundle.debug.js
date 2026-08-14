@@ -4,7 +4,7 @@ const $walks$2 = "D l";
 const $setup$2 = () => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
-var cell_default = /*@__PURE__*/ _template("__tests__/tags/cell/index.marko", $template$2, "D l", $setup$2, $input$1);
+var cell_default = /*@__PURE__*/ _template("__tests__/tags/cell/index.marko", $template$2, "D l", 0, $input$1);
 
 // tags/row/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0, _w1) => `<div class=row>${_w0}${_w1}</div>`)($template$2, $template$2);
@@ -16,7 +16,7 @@ const $input = ($scope, input) => {
 	$input_name($scope, input.name);
 	$input_quantity($scope, input.quantity);
 };
-var row_default = /*@__PURE__*/ _template("__tests__/tags/row/index.marko", $template$1, $walks$1, $setup$1, $input);
+var row_default = /*@__PURE__*/ _template("__tests__/tags/row/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}`)($template$1);

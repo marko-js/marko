@@ -16,7 +16,7 @@ const $input_stuff = ($scope, input_stuff) => {
 };
 const $input_stuff_other = ($scope, input_stuff_other) => $input_stuff_other_y($scope, input_stuff_other?.y);
 const $input_stuff_cond = ($scope, input_stuff_cond) => $input_stuff_cond_a($scope, input_stuff_cond?.a);
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner/index.marko", $template$2, $walks$2, $setup$2, $input$1);
+var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner/index.marko", $template$2, $walks$2, 0, $input$1);
 
 // tags/child/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<h1> </h1>${_w0}`)($template$2);
@@ -28,7 +28,7 @@ const $input = ($scope, input) => {
 	(({ title, ...rest }) => $rest($scope, rest))(input);
 	$title($scope, input.title);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);

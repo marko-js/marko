@@ -16,7 +16,7 @@ const $input_what_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_what = $dynamicTag;
 const $input = ($scope, input) => $input_what($scope, input.what);
-var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", $template$1, "b%c", $setup$1, $input);
+var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
@@ -34,7 +34,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	}
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_what($scope["#childScope/0"], attrTag({ content: $what_content($scope) }));
 	$setup__script($scope);
 }

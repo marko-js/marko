@@ -16,7 +16,7 @@ const $input$1 = ($scope, input) => {
 	(({ class: $class, ...rest }) => $rest($scope, rest))(input);
 	$_class($scope, input.class);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b b", $setup$1, $input$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div id=known>${_w0}</div><div id=dynamic><!></div>`)($template$1);

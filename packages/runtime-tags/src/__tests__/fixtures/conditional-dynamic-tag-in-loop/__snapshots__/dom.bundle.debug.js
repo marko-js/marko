@@ -14,7 +14,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__content($scope
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_section = ($scope, input_section) => $for($scope, [input_section]);
 const $input = ($scope, input) => $input_section($scope, input.section);
-var sections_default = /*@__PURE__*/ _template("__tests__/tags/sections.marko", $template$1, "b%c", $setup$1, $input);
+var sections_default = /*@__PURE__*/ _template("__tests__/tags/sections.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);

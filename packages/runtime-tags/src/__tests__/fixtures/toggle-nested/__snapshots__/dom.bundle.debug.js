@@ -31,4 +31,4 @@ const $value2 = /*@__PURE__*/ _const("value2", ($scope) => {
 	$if_content__input_value2($scope);
 	$value2__closure($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

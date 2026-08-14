@@ -19,7 +19,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$if_content__input($scope);
 });
 const $input_item = /*@__PURE__*/ _const("input_item", $if_content__input_item);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<button id=show>show</button><button id=clear>clear</button><div></div><!><!>";

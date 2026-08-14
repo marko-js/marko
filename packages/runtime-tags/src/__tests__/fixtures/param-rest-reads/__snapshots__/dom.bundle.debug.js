@@ -9,7 +9,7 @@ const $input_content = ($scope, input_content) => $dynamicTag($scope, input_cont
 	3
 ]);
 const $input = ($scope, input) => $input_content($scope, input.content);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!><!><!>${_w0}${_w1}<!>`)($template$1, $template$1);
@@ -53,9 +53,7 @@ const $list = /*@__PURE__*/ _let("list/4", ($scope) => {
 	$for2($scope, [$scope.list]);
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
 	$input_content($scope["#childScope/2"], $child_content($scope));
-	/* @__PURE__ */ $setup$1($scope["#childScope/3"]);
 	$input_content($scope["#childScope/3"], $child_content2($scope));
 	$list($scope, ["a", "b"]);
 }

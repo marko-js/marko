@@ -10,7 +10,7 @@ const $input$2 = ($scope, input) => {
 	$input_b$1($scope, input.b);
 	$input_c($scope, input.c);
 };
-var child_a_default = /*@__PURE__*/ _template("__tests__/tags/child-a/index.marko", $template$2, $walks$2, $setup$2, $input$2);
+var child_a_default = /*@__PURE__*/ _template("__tests__/tags/child-a/index.marko", $template$2, $walks$2, 0, $input$2);
 
 // tags/child-c/index.marko
 const $template$1 = "<div><!> <!></div>";
@@ -22,7 +22,7 @@ const $input$1 = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
 };
-var child_c_default = /*@__PURE__*/ _template("__tests__/tags/child-c/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var child_c_default = /*@__PURE__*/ _template("__tests__/tags/child-c/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<button>inc <!></button>${_w0}${_w1}${_w2}`)($template$2, $template$2, $template$1);

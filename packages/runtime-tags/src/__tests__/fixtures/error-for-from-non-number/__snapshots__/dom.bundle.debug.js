@@ -10,4 +10,4 @@ const $input_from = ($scope, input_from) => $for($scope, [
 	1
 ]);
 const $input = ($scope, input) => $input_from($scope, input.from);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

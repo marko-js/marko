@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $input_valueChange__script = _script("__tests__/tags/child.marko_0_input_valueChange#2", ($scope) => $scope.input_valueChange(1));
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_valueChange__script);
 const $input = ($scope, input) => $input_valueChange($scope, input.valueChange);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", 0, $input);
 
 // template.marko
 const $template = "<!><!><!>";

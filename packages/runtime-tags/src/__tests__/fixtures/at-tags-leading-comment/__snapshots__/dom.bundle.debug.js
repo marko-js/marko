@@ -8,7 +8,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__content($scope
 const $for = /*@__PURE__*/ _for_of("#text/0", "<div class=item><!></div>", "D%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input = ($scope, input) => $input_item($scope, input.item);
-var box_default = /*@__PURE__*/ _template("__tests__/tags/box/index.marko", $template$1, "b%c", $setup$1, $input);
+var box_default = /*@__PURE__*/ _template("__tests__/tags/box/index.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);

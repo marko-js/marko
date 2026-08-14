@@ -9,7 +9,7 @@ const $input_content = ($scope, input_content) => {
 	$dynamicTag2$1($scope, input_content);
 };
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", $template$2, $walks$2, $setup$2, $input$1);
+var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", $template$2, $walks$2, 0, $input$1);
 
 // tags/child.marko
 const $template$1 = "<div></div>";
@@ -38,10 +38,7 @@ const $thing_content2__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $thing_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $thing_content2__setup, 0, "ClosureScopes:3");
-const $inputshowThingnull_content__setup = ($scope) => {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-	$input_content($scope["#childScope/0"], $thing_content2($scope));
-};
+const $inputshowThingnull_content__setup = ($scope) => $input_content($scope["#childScope/0"], $thing_content2($scope));
 const $inputshowThingnull_content = _content_resume("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$2), $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
 const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2/hoist", "setHtml", "ClosureScopes:1");
 const $thing_content__setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
@@ -58,7 +55,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	$setHtml3_getter($scope)()("Hoist from dynamic tag");
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $thing_content($scope));
 	$setup__script($scope);
 }

@@ -10,7 +10,7 @@ const $n$1 = /*@__PURE__*/ _const("n", ($scope) => {
 	$if_content__input_n($scope);
 });
 const $input = ($scope, input) => $n$1($scope, input.n);
-var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $template$1, "b%c", $setup$1, $input);
+var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<button id=o>O</button><button id=n>N</button><!><!>";

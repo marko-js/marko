@@ -17,7 +17,7 @@ const $if_content__setup$1 = ($scope) => {
 const $if$1 = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"), $if_content__setup$1);
 const $show$1 = ($scope, show) => $if$1($scope, show ? 0 : 1);
 const $input = ($scope, input) => $show$1($scope, input.show);
-var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", $setup$1, $input);
+var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<div id=ref>init</div><button id=o>O</button><button id=s>S</button><!><!>";

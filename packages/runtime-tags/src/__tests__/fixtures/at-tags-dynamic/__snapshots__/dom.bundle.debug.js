@@ -47,7 +47,7 @@ const $input = ($scope, input) => {
 	$input_col($scope, input.col);
 };
 const $input_list = ($scope, input_list) => $input_list_item($scope, input_list?.item);
-var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, $setup$1, $input);
+var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);

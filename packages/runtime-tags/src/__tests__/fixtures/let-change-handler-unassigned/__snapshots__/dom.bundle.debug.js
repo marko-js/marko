@@ -10,7 +10,7 @@ const $input = ($scope, input) => {
 	$initial$1($scope, input.initial);
 	$onValue$1($scope, input.onValue);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>inc</button>`)($template$1);

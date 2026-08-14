@@ -22,7 +22,7 @@ const $input$1 = ($scope, input) => {
 };
 const $input_test_style = /*@__PURE__*/ _const("input_test_style", $if_content__input_test_style);
 const $input_test_content = /*@__PURE__*/ _const("input_test_content", $if_content__input_test_content);
-var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, $setup$1, $input$1);
+var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<div></div><div style=width:100px></div><div style="color: green"></div><div></div>${_w0}${_w1}${_w2}<!><!>`)($template$1, $template$1, $template$1);

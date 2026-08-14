@@ -1,6 +1,5 @@
 // tags/child.marko
 const $template = "<div><!></div>";
-const $setup = () => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, 0, 1);
 const $input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d, () => [$scope.e]));
 const $content = /*@__PURE__*/ _const(3, $input_content__OR__input_value);
@@ -15,7 +14,6 @@ const $child_content2 = _content_resume("a0", "<div><!>.<!></div>", "D%c%", $chi
 const $child_content__y = /*@__PURE__*/ _closure_get(4, ($scope) => $value($scope.a, $scope._.d));
 const $child_content__setup = ($scope) => {
 	$child_content__y($scope);
-	/* @__PURE__ */ $setup($scope.a);
 	$content($scope.a, $child_content2($scope));
 };
 const $child_content__$params = ($scope, $params2) => $child_content__outer($scope, $params2[0]);

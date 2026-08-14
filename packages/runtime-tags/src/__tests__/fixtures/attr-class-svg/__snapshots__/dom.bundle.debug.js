@@ -7,4 +7,4 @@ const $active = ($scope, active) => {
 	_attr_class($scope["#circle/1"], active ? "on" : "off");
 };
 const $input = ($scope, input) => $active($scope, input.active);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

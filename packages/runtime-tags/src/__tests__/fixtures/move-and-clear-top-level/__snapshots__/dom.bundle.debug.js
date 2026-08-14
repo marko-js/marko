@@ -9,4 +9,4 @@ const $input_children = ($scope, input_children) => $for($scope, [input_children
 	return c.id;
 }]);
 const $input = ($scope, input) => $input_children($scope, input.children);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

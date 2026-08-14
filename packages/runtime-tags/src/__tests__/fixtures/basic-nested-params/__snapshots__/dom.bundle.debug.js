@@ -10,7 +10,7 @@ const $input = ($scope, input) => {
 	$content($scope, input.content);
 	$value($scope, input.value);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D%l", $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D%l", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>Inc</button>${_w0}`)($template$1);
@@ -23,7 +23,6 @@ const $child_content2 = _content_resume("__tests__/template.marko_2*content", "<
 const $child_content__y = /*@__PURE__*/ _closure_get("y", ($scope) => $value($scope["#childScope/0"], $scope._.y));
 const $child_content__setup = ($scope) => {
 	$child_content__y($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$content($scope["#childScope/0"], $child_content2($scope));
 };
 const $child_content__$params = ($scope, $params2) => $child_content__outer($scope, $params2[0]);
@@ -36,7 +35,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$x($scope, +$scope.x + 1);
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$content($scope["#childScope/1"], $child_content($scope));
 	$x($scope, 1);
 	$y($scope, 2);

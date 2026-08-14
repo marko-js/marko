@@ -16,4 +16,4 @@ const $input = ($scope, input) => {
 	$input_foo($scope, input.foo);
 	$input_bar($scope, input.bar);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

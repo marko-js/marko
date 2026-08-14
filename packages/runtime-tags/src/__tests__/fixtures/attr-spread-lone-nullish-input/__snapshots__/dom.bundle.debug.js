@@ -8,4 +8,4 @@ const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$attrs__script($scope);
 });
 const $input = ($scope, input) => $attrs($scope, input.attrs);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

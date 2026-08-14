@@ -7,7 +7,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#select/0", $scope.input, _controllable_select);
 	$input__script($scope);
 });
-var my_select_default = /*@__PURE__*/ _template("__tests__/tags/my-select.marko", $template$1, " b", $setup$1, $input);
+var my_select_default = /*@__PURE__*/ _template("__tests__/tags/my-select.marko", $template$1, " b", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<span> </span>`)($template$1);

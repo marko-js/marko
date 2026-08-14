@@ -2,7 +2,7 @@
 const $template$1 = "<span></span>";
 const $walks$1 = "b";
 const $setup$1 = () => {};
-var foo_default = /*@__PURE__*/ _template("__tests__/tags/foo.marko", $template$1, "b", $setup$1);
+var foo_default = /*@__PURE__*/ _template("__tests__/tags/foo.marko", $template$1, "b");
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}<!><!>`)($template$1);

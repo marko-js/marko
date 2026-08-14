@@ -8,7 +8,7 @@ const b = "b";
 const $template$1 = "<div></div>";
 const $walks$1 = "b";
 const $setup$1 = () => {};
-var baz_default = /*@__PURE__*/ _template("__tests__/tags/baz.marko", $template$1, "b", $setup$1);
+var baz_default = /*@__PURE__*/ _template("__tests__/tags/baz.marko", $template$1, "b");
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<!>`)($template$1, $template$1, $template$1);

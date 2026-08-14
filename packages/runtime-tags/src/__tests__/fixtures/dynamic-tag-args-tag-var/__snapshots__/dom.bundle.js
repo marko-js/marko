@@ -1,12 +1,11 @@
 // tags/custom-tag.marko
 const $template = "<div>Child: <!></div>";
 const $walks = "Db%l";
-const $setup = () => {};
 const $input = /*@__PURE__*/ _const(2, ($scope) => {
 	_text($scope.a, $scope.c);
 	_return($scope, $scope.c);
 });
-var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
+var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, 0, $input);
 
 // template.marko
 const tags = [custom_tag_default];

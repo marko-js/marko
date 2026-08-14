@@ -9,7 +9,7 @@ const $input_content = ($scope, input_content) => {
 	$dynamicTag2$1($scope, input_content);
 };
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)($template$1);
@@ -25,7 +25,6 @@ const $inputshowChildnull_content__setup__script = _script("__tests__/template.m
 	}
 });
 const $inputshowChildnull_content__setup = ($scope) => {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $child_content2($scope));
 	$inputshowChildnull_content__setup__script($scope);
 };
@@ -47,7 +46,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	}
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $child_content($scope));
 	$setup__script($scope);
 }

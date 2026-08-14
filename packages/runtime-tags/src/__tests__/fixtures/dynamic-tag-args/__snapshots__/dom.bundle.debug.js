@@ -3,7 +3,7 @@ const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input = ($scope, input) => _text($scope["#text/0"], JSON.stringify(input));
-var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, "D l", $setup$1, $input);
+var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, "D l", 0, $input);
 
 // template.marko
 const $template = "<button>Count: <!></button><!><!><!><!><!>";

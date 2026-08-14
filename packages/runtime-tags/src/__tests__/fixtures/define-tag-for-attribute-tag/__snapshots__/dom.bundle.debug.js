@@ -11,7 +11,7 @@ const $input_thing = ($scope, input_thing) => {
 	$input_thing_selected($scope, input_thing?.selected);
 	$input_thing_content($scope, input_thing?.content);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Toggle</button>`)($template$1);
@@ -26,7 +26,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$selected($scope, !$scope.selected);
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$selected($scope, false);
 	$setup__script($scope);
 }

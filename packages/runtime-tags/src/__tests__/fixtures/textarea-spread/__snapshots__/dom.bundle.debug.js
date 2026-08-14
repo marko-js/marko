@@ -7,4 +7,4 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs($scope, "#textarea/0", $scope.input, _controllable_textarea);
 	$input__script($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

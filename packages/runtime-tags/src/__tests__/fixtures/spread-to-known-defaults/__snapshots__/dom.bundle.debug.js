@@ -8,7 +8,7 @@ const $input$1 = ($scope, input) => {
 	$input_class$1($scope, input.class);
 	$input_value($scope, input.value);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, " b", $setup$2, $input$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, " b", 0, $input$1);
 
 // tags/wrap.marko
 const $template$1 = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, $template$2);
