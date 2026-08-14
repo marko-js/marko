@@ -46,6 +46,7 @@ export default function normalizeStringExpression(
 
     if (useIife) {
       // Note: this is a temporary workaround for https://github.com/rolldown/rolldown/issues/9189
+      // (a bare template literal defeats DCE when templates reference each other, eg recursive tags).
       const params = exprs.map((_, i) => t.identifier(`_w${i}`));
       const iife = t.callExpression(
         t.arrowFunctionExpression(
