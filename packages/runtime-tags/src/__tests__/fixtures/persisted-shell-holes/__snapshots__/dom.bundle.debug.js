@@ -23,4 +23,4 @@ const $input = ($scope, input) => {
 const $input_href = /*@__PURE__*/ _const("input_href", $if_content__input_href);
 const $input_hidden = /*@__PURE__*/ _const("input_hidden", $if_content__input_hidden);
 const $input_label = /*@__PURE__*/ _const("input_label", $if_content__input_label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

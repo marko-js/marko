@@ -4,7 +4,7 @@ const $walks$1 = "b";
 const $setup$1 = () => {};
 const $input_title$1 = /*@__PURE__*/ _const("input_title", ($scope) => _return($scope, "[" + $scope.input_title + "]"));
 const $input$1 = ($scope, input) => $input_title$1($scope, input.title);
-var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler/index.marko", $template$1, "b", $setup$1, $input$1);
+var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler/index.marko", $template$1, "b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button> </button></main>`)($template$1);

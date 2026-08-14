@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $double$1 = /*@__PURE__*/ _const("double", ($scope) => _return($scope, $scope.double));
 const $input_value = ($scope, input_value) => $double$1($scope, input_value * 2);
 const $input = ($scope, input) => $input_value($scope, input.value);
-var doubler_default = /*@__PURE__*/ _template("__tests__/tags/doubler/index.marko", $template$1, "b", $setup$1, $input);
+var doubler_default = /*@__PURE__*/ _template("__tests__/tags/doubler/index.marko", $template$1, "b", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template$1);

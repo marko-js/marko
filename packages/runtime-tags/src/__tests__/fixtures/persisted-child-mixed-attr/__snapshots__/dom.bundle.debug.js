@@ -8,7 +8,7 @@ const $input$1 = ($scope, input) => {
 	$input_label$1($scope, input.label);
 	$input_qty($scope, input.qty);
 };
-var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);

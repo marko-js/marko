@@ -4,7 +4,7 @@ const $walks$4 = "D l";
 const $setup$4 = () => {};
 const $input_note$4 = ($scope, input_note) => _text($scope["#text/0"], input_note);
 const $input$4 = ($scope, input) => $input_note$4($scope, input.note);
-var dia_d_default = /*@__PURE__*/ _template("__tests__/tags/dia-d/index.marko", $template$4, "D l", $setup$4, $input$4);
+var dia_d_default = /*@__PURE__*/ _template("__tests__/tags/dia-d/index.marko", $template$4, "D l", 0, $input$4);
 
 // tags/dia-b/index.marko
 const $template$3 = $template$4;
@@ -12,7 +12,7 @@ const $walks$3 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
 const $setup$3 = () => {};
 const $input_note$3 = ($scope, input_note) => $input_note$4($scope["#childScope/0"], input_note);
 const $input$3 = ($scope, input) => $input_note$3($scope, input.note);
-var dia_b_default = /*@__PURE__*/ _template("__tests__/tags/dia-b/index.marko", $template$3, $walks$3, $setup$3, $input$3);
+var dia_b_default = /*@__PURE__*/ _template("__tests__/tags/dia-b/index.marko", $template$3, $walks$3, 0, $input$3);
 
 // tags/dia-c/index.marko
 const $template$2 = $template$4;
@@ -20,7 +20,7 @@ const $walks$2 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
 const $setup$2 = () => {};
 const $input_note$2 = ($scope, input_note) => $input_note$4($scope["#childScope/0"], input_note);
 const $input$2 = ($scope, input) => $input_note$2($scope, input.note);
-var dia_c_default = /*@__PURE__*/ _template("__tests__/tags/dia-c/index.marko", $template$2, $walks$2, $setup$2, $input$2);
+var dia_c_default = /*@__PURE__*/ _template("__tests__/tags/dia-c/index.marko", $template$2, $walks$2, 0, $input$2);
 
 // tags/dia-a/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$3, $template$2);
@@ -31,7 +31,7 @@ const $input_note$1 = ($scope, input_note) => {
 	$input_note$2($scope["#childScope/1"], input_note);
 };
 const $input$1 = ($scope, input) => $input_note$1($scope, input.note);
-var dia_a_default = /*@__PURE__*/ _template("__tests__/tags/dia-a/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var dia_a_default = /*@__PURE__*/ _template("__tests__/tags/dia-a/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
