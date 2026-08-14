@@ -105,7 +105,7 @@ export function renderPatch(
 // source: a frame carries only patch fills.
 class PatchState extends State {
   public sentShells?: Set<string>;
-  public bindDeposits?: Map<WeakKey, number>;
+  public binds?: Map<WeakKey, number>;
   public shellFrames = "";
   override writesPatches = true;
   override shipShell(shellId: string | 0 | undefined) {
@@ -355,9 +355,9 @@ export function _patch_value(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    // Bound registrations cannot ride the wire as data: each deposits at
-    // its bound scope and the serialized value references the deposit.
-    depositEmbeddedBinds(state as PatchState, value);
+    // Bound registrations cannot ride the wire as data: each stores a
+    // bind at its bound scope and the serialized value references it.
+    writeEmbeddedBinds(state as PatchState, value);
     if (setup) {
       if (state.patchFlushed) {
         throw new Error(
@@ -392,7 +392,7 @@ export function _patch_control(
 ) {
   const state = getState();
   if (state.writesPatches && serverOwned(owned, group)) {
-    depositEmbeddedBinds(state as PatchState, value);
+    writeEmbeddedBinds(state as PatchState, value);
     writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
   }
   return "";
@@ -453,7 +453,7 @@ export function _patch_bind(
       // slot), while the setup entry lands after a construct's seeds — a
       // seed's first-render write resets the change slot, so apply-time
       // installs cannot last.
-      depositEmbeddedBinds(state as PatchState, value);
+      writeEmbeddedBinds(state as PatchState, value);
       const partial = patchPartial(state, scopeId);
       partial[PatchKey.Write + accessor] = value;
       if (isInResumedBranch()) {
@@ -476,7 +476,7 @@ export function _patch_write(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    depositEmbeddedBinds(state as PatchState, value);
+    writeEmbeddedBinds(state as PatchState, value);
     if (setup) {
       const partial = patchPartial(state, scopeId);
       ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
@@ -491,9 +491,9 @@ export function _patch_write(
   return "";
 }
 
-// Deposits each scope-bound registration in a patch value while the
+// Binds each scope-bound registration in a patch value while the
 // partial tree still accepts writes; the serialized slot references it.
-function depositEmbeddedBinds(
+function writeEmbeddedBinds(
   state: PatchState,
   value: unknown,
   seen?: Set<unknown>,
@@ -508,33 +508,29 @@ function depositEmbeddedBinds(
   const registered = getRegistered(value as WeakKey);
   const bound = registered && (registered.scope as ScopeInternals | undefined);
   if (bound) {
-    const deposits = (state.bindDeposits ??= new Map());
-    if (!deposits.has(value as WeakKey)) {
+    const binds = (state.binds ??= new Map());
+    if (!binds.has(value as WeakKey)) {
       const n = (state.patchBinds = (state.patchBinds || 0) + 1);
       writePatch(bound[K_SCOPE_ID]!, {
         [PatchKey.BindSource + n]: registered.id,
       });
-      deposits.set(value as WeakKey, n);
+      binds.set(value as WeakKey, n);
     }
     return;
   }
   (seen ??= new Set()).add(value);
   if (Array.isArray(value)) {
-    for (const item of value) depositEmbeddedBinds(state, item, seen);
+    for (const item of value) writeEmbeddedBinds(state, item, seen);
   } else if (value instanceof Map) {
     for (const [key, item] of value) {
-      depositEmbeddedBinds(state, key, seen);
-      depositEmbeddedBinds(state, item, seen);
+      writeEmbeddedBinds(state, key, seen);
+      writeEmbeddedBinds(state, item, seen);
     }
   } else if (value instanceof Set) {
-    for (const item of value) depositEmbeddedBinds(state, item, seen);
+    for (const item of value) writeEmbeddedBinds(state, item, seen);
   } else if (typeof value === "object") {
     for (const key in value) {
-      depositEmbeddedBinds(
-        state,
-        (value as Record<string, unknown>)[key],
-        seen,
-      );
+      writeEmbeddedBinds(state, (value as Record<string, unknown>)[key], seen);
     }
   }
 }
