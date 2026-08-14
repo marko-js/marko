@@ -1,5 +1,5 @@
 // tags/counter/index.marko
-_renderer_shells({ "__tests__/tags/counter/index.marko_1*shell": ",`__tests__/tags/counter/index.marko_1*shell __tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
+_shells({ "__tests__/tags/counter/index.marko_1*shell": ",`__tests__/tags/counter/index.marko_1*shell __tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
 var counter_default = _template_persisted("__tests__/tags/counter/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();

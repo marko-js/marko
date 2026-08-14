@@ -10,7 +10,7 @@ var badge_default = _template_persisted("__tests__/tags/badge.marko", (input) =>
 }, 0, 0);
 
 // template.marko
-_renderer_shells({
+_shells({
 	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell;D%b%;<section><!><!></section>`",
 	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell;D ;<small> </small>`",
 	"__tests__/template.marko_3*shell": ",`__tests__/template.marko_3*shell;D%b%;<li><!><!></li>`",

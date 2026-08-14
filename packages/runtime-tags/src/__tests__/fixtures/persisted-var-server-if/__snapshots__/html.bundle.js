@@ -8,7 +8,7 @@ var doubler_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_renderer_shells({ a0: ",`a0 a4;Db%;<p>big <!></p>`" });
+_shells({ a0: ",`a0 a4;Db%;<p>big <!></p>`" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_n = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
