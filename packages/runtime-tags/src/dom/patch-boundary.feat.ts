@@ -26,7 +26,7 @@ import {
   failPatch,
   getRegisteredWithScope,
   patchers,
-  walkScope,
+  patchScope,
 } from "./resume";
 import {
   collectScopes,
@@ -203,11 +203,11 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
   const apply = () => {
     if (applyChild) applyChild(scope, key, value);
-    else walkScope(value as Scope, scope[link] as Scope);
+    else patchScope(value as Scope, scope[link] as Scope);
     markSettled(scope, accessor);
   };
   // A newly constructed await body may itself initialize nested boundaries.
-  // Run that setup before walking the settled child partial.
+  // Run that setup before applying the settled child partial.
   if (!attachDetachedAwait(scope, accessor, apply)) {
     apply();
     endAwaitPending(scope, accessor);

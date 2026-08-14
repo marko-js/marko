@@ -25,7 +25,7 @@ import {
 } from "./persisted/delivery";
 import {
   inClientReselectableStructure,
-  isCapturePathSection,
+  isBranchPathSection,
 } from "./persisted/structure";
 import {
   type AssignedBindingExtra,
@@ -1178,7 +1178,7 @@ export function writeSignals(section: Section) {
           !Array.isArray(signal.referencedBindings) &&
           !!signal.referencedBindings.sources?.state &&
           signal.section.isBranch &&
-          isCapturePathSection(signal.section) &&
+          isBranchPathSection(signal.section) &&
           isDirectClosure(signal.section, signal.referencedBindings) &&
           !signal.section.shellBlocked &&
           !sectionHasServerEffect(signal.section)
@@ -1765,7 +1765,7 @@ export function writeHTMLResumeStatements(
 
   // A constructible branch seeds its state onto freshly constructed scopes
   // as SETUP fills: the fill signal's joins render all downstream content.
-  if (persisted && section.isBranch && isCapturePathSection(section)) {
+  if (persisted && section.isBranch && isBranchPathSection(section)) {
     forEach(getPatchFillBindings(section), (binding) => {
       body.push(
         t.expressionStatement(

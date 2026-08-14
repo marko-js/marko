@@ -157,7 +157,7 @@ export interface Section {
   abortSignalExprs: number;
   readsOwner: boolean;
   isBranch: boolean;
-  /** An `<await>`/`<try>` body: always-rendered like the capture path, but
+  /** An `<await>`/`<try>` body: always-rendered like the branch path, but
    * paired (never constructed) by patches. */
   isBoundary: boolean;
   /** Awaits a construct must deliver body content for (marker binding +

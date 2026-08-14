@@ -40,7 +40,7 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
 
 // A bind installs a handler the way CSR setup does: anchored at the scope
 // its factory was registered against, writing down the child-link path
-// (`[registerId, ...links, slot]`) after the walk so freshly constructed
+// (`[registerId, ...links, slot]`) after the apply so freshly constructed
 // targets exist. Any break — poison `0`, missing link, missing
 // registration — rejects the patch.
 patchers[PatchKey.Bind] = (scope, _key, entry) => {

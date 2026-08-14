@@ -13,8 +13,8 @@ import type {
 import { AccessorPrefix, PatchKey } from "../common/types";
 import { _attr, stringAttr } from "./attrs";
 import { _escape, _to_text } from "./content";
-import { serverRenderers } from "./renderer-shells";
 import { getRegistered, K_SCOPE_ID, Serializer } from "./serializer";
+import { shells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _peek_scope_id,
@@ -145,13 +145,15 @@ class PatchState extends State {
       this.patchDeferred = undefined;
       return '[{"' + PatchKey.Poison + '":1}]';
     }
-    const shells = this.shellFrames && this.shellFrames.slice(1);
+    const shellChunks = this.shellFrames && this.shellFrames.slice(1);
     this.shellFrames = "";
     if (this.patchDeferred) {
       this.patchDeferred = undefined;
-      return shells ? "(_([" + shells + "])," + resumes + ")" : resumes;
+      return shellChunks
+        ? "(_([" + shellChunks + "])," + resumes + ")"
+        : resumes;
     }
-    return shells ? "[" + shells + "," + resumes + "]" : resumes;
+    return shellChunks ? "[" + shellChunks + "," + resumes + "]" : resumes;
   }
 
   override walkScript() {
@@ -202,7 +204,7 @@ class PatchState extends State {
                 : [branchPartial]
               : shellId || 1,
     });
-    // Later settle frames nest under the live branch as a Child walk.
+    // Later settle frames nest under the live branch as a Child apply.
     if (branchIndex !== undefined) {
       (this.patchPending ??= {})[branchId] = [
         scopeId,
@@ -271,7 +273,7 @@ class PatchState extends State {
 }
 
 // Patch writers double as the output writers so the compiled template
-// evaluates each captured expression once.
+// evaluates each patch-written expression once.
 export function _patch_attr(
   scopeId: number,
   accessor: Accessor,
@@ -463,7 +465,7 @@ export function _patch_bind(
       // Both forms where a construct is possible: the plain write reaches
       // PAIRED scopes (a handler removed between frames clears its live
       // slot), while the setup entry lands after a construct's seeds — a
-      // seed's first-render write resets the change slot, so walk-time
+      // seed's first-render write resets the change slot, so apply-time
       // installs cannot last.
       depositEmbeddedBinds(state as PatchState, value);
       const partial = patchPartial(state, scopeId);
@@ -618,10 +620,10 @@ function serverOwned(owned?: SerializeReasonValue, group?: number) {
 // Only a shell the server can ship rides an entry: a missing one makes a
 // divergence unapplyable and the client rejects the patch.
 function shipShell(state: PatchState, shellId: string | 0 | undefined) {
-  if (!shellId || !serverRenderers[shellId]) return undefined;
+  if (!shellId || !shells[shellId]) return undefined;
   if (!(state.sentShells ??= new Set()).has(shellId)) {
     state.sentShells.add(shellId);
-    state.shellFrames += serverRenderers[shellId];
+    state.shellFrames += shells[shellId];
   }
   return shellId;
 }

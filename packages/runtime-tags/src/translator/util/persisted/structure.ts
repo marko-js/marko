@@ -1,5 +1,5 @@
 // Analyze-side structure facts for persisted pages: what the template
-// does (sources, structural/global param uses, capture paths, and whether
+// does (sources, structural/global param uses, branch paths, and whether
 // a branch body is client-reselectable). Ownership conclusions and wire
 // channels belong to translate (see ./delivery).
 import type { types as t } from "@marko/compiler";
@@ -16,7 +16,7 @@ import { onFinalizePersisted } from "./lifecycle";
 
 // Whether the section renders inside client-reselectable structure
 // (inclusive): patch renders skip those bodies, so nothing inside may
-// rely on a capture.
+// rely on a patch write.
 export function inClientReselectableStructure(section: Section | undefined) {
   while (section) {
     if (section.isClientReselectable) return true;
@@ -65,24 +65,24 @@ export function hasStructuralOrGlobalParam(params: Opt<Binding>) {
   return some(params, (binding) => binding.structuralOrGlobalParam);
 }
 
-// Shared per-capture analyze hook: freezes the value's reason groups for
+// Shared per-patch-write analyze hook: freezes the value's reason groups
 // translate-time ownership gates and records `$global`-mixed params.
-export function ensurePersistedCaptureGroups(getExtra: () => t.NodeExtra) {
+export function ensurePersistedWriteGroups(getExtra: () => t.NodeExtra) {
   onFinalizePersisted(() => {
     const sources = getSerializeSourcesForExpr(getExtra());
     ensureReasonGroups(sources);
     // A `$global` mixed into a param-fed value cannot survive a withheld
-    // capture: call sites derive ownership requirements from the fact.
+    // patch write: call sites derive ownership requirements from the fact.
     if (sources?.param && sources.global) {
       recordStructuralOrGlobalParams(sources);
     }
   });
 }
 
-// Sections whose text/attr holes emit direct patch captures: the root and
+// Sections whose text/attr holes emit direct patch writes: the root and
 // any branch body reachable through branches alone — the walk pairs (or
 // constructs) every level structurally, so depth does not matter.
-export function isCapturePathSection(section: Section) {
+export function isBranchPathSection(section: Section) {
   while (section.parent) {
     if (!section.isBranch && !section.isBoundary) return false;
     section = section.parent;

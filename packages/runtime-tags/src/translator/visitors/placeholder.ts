@@ -13,9 +13,9 @@ import { type Opt } from "../util/optional";
 import { constructRendersReads } from "../util/persisted/delivery";
 import { onFinalizePersisted } from "../util/persisted/lifecycle";
 import {
-  ensurePersistedCaptureGroups,
+  ensurePersistedWriteGroups,
   inClientReselectableStructure,
-  isCapturePathSection,
+  isBranchPathSection,
 } from "../util/persisted/structure";
 import {
   type Binding,
@@ -100,13 +100,13 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
-        if (isPersisted() && node.escape && isCapturePathSection(section)) {
+        if (isPersisted() && node.escape && isBranchPathSection(section)) {
           addSerializeReason(section, true, nodeBinding);
           addAssetImport(
             placeholder.hub.file,
             `${getRuntimePath("dom")}/patch-text.feat`,
           );
-          ensurePersistedCaptureGroups(() => valueExtra);
+          ensurePersistedWriteGroups(() => valueExtra);
           // A state-fed hole the construct cannot render faithfully (no
           // seed fill or INIT closure) drops the branch's shell.
           onFinalizePersisted(() => {
@@ -212,7 +212,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
     const holeSources =
-      isPersisted() && node.escape && isCapturePathSection(section)
+      isPersisted() && node.escape && isBranchPathSection(section)
         ? getSerializeSourcesForExpr(valueExtra)
         : undefined;
     if (holeSources?.state && holeSources.global) {
@@ -221,11 +221,11 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       );
     }
     // A state-fed hole recomputes through the signal graph, and inside
-    // client-owned structure delivery is owner fills: neither captures.
+    // client-owned structure delivery is owner fills: neither patch-writes.
     const isPatch =
       isPersisted() &&
       node.escape &&
-      isCapturePathSection(section) &&
+      isBranchPathSection(section) &&
       !inClientReselectableStructure(section) &&
       !!nodeBinding &&
       !holeSources?.state;
@@ -251,8 +251,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
             : guard,
         )}`;
       } else {
-        // The capture writes the escaped text itself, so the expression
-        // appears (and evaluates) once; a param-fed capture's ownership
+        // The patch write emits the escaped text itself, so the expression
+        // appears (and evaluates) once; a param-fed write's ownership
         // bit rides as trailing args.
         write`${
           isPatchText

@@ -16,8 +16,8 @@ import {
   failPatch,
   getRegisteredWithScope,
   patchers,
-  walkConstruct,
-  walkScope,
+  patchConstruct,
+  patchScope,
 } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 
@@ -29,7 +29,8 @@ const _content = /*@__PURE__*/ withBranches(content);
 // stashed setup entries (seeds) and attaches mount effects on construct.
 // Setup sub-partials stash here and only the shell content's setup — run
 // solely for freshly created branches, inside `run()` where `_let` treats
-// the scope as first-render — applies them; a walk-time apply would take
+// the scope as first-render — applies them; an apply during the partial
+// application would take
 // the value-change path and clobber paired state.
 const kSetup = Symbol();
 
@@ -73,7 +74,7 @@ _patch_records((record) => {
     effects
       ? (branch: Scope & { [kSetup]?: Scope | 0 }) => {
           if (branch[kSetup]) {
-            walkConstruct(branch[kSetup] as Scope, branch);
+            patchConstruct(branch[kSetup] as Scope, branch);
             branch[kSetup] = 0;
           }
           if (fns) for (const impl of fns) queueEffect(branch, impl);
@@ -117,7 +118,7 @@ patchers[PatchKey.Branch] = (scope, key, value) => {
   const current = liveBranch ? ((scope[rendererKey] as number) ?? 0) : -1;
   scope[rendererKey] = selection as never;
   if (selection === current) {
-    walkScope(branchPartial as Scope, liveBranch as Scope);
+    patchScope(branchPartial as Scope, liveBranch as Scope);
   } else if (shellId) {
     construct(scope, branchKey, branchPartial as Scope, shells[shellId]);
   } else {
@@ -157,7 +158,7 @@ function construct(
     branch[AccessorProp.EndNode],
   );
   scope[branchKey] = branch as never;
-  // The fresh branch has no live children, so nested structural entries in
-  // the walked scope mismatch and construct recursively through this path.
-  walkScope(branchPartial, branch as Scope);
+  // The fresh branch has no live children, so nested structural entries
+  // in the applied partial mismatch and construct recursively through here.
+  patchScope(branchPartial, branch as Scope);
 }

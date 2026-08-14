@@ -1,5 +1,5 @@
 // tags/badge/index.marko
-_renderer_shells({ "__tests__/tags/badge/index.marko_1*shell": ",`__tests__/tags/badge/index.marko_1*shell,<em>on</em>`" });
+_shells({ "__tests__/tags/badge/index.marko_1*shell": ",`__tests__/tags/badge/index.marko_1*shell,<em>on</em>`" });
 var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_open = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();

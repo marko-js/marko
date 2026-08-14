@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({ a1: ",`a1 a2; ;<input>`" });
+_shells({ a1: ",`a1 a2; ;<input>`" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
