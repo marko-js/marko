@@ -1021,8 +1021,13 @@ export function _await<T>(
   promise: Promise<T> | T,
   content: (value: T) => void,
   serializeMarker?: number,
+  patchContent?: 0 | string,
 ) {
-  const resumeMarker = serializeMarker !== 0;
+  const writesPatches = $chunk.boundary.state.writesPatches;
+  // `0`: a client-owned thenable, resolved by `_await_promise`. A string is
+  // the body's content id, letting a construct build the await branch.
+  if (writesPatches && patchContent === 0) return;
+  const resumeMarker = serializeMarker !== 0 || writesPatches;
 
   if (!isPromise(promise)) {
     if (resumeMarker) {
@@ -1046,10 +1051,11 @@ export function _await<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
-  if (boundary.state.writesPatches) {
-    // serializeMarker 0: the client owns this await.
-    if (!resumeMarker) return;
-    writePatch(scopeId, { [PatchKey.Pending + accessor]: 1 });
+  if (writesPatches) {
+    // The record only exists on scriptless pages; a construct on an
+    // interactive page resolves the id through its dom registration.
+    $chunk.boundary.state.shipShell!(patchContent);
+    writePatch(scopeId, { [PatchKey.Pending + accessor]: patchContent || 1 });
   }
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
@@ -1309,6 +1315,7 @@ export class State implements SerializeState {
     accessor: Accessor,
     shellId?: string | 0,
   ): 1 | void;
+  shipShell?(shellId: string | 0 | undefined): string | undefined;
   declare rootScopeId?: number;
   declare patchPartials?: Record<number, Record<string, unknown>>;
   declare patchBinds?: number;

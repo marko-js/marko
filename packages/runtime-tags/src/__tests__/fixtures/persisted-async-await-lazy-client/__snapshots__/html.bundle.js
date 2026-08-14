@@ -7,12 +7,12 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1>`);
 	_try($scope0_id, "b", _content_resume("a1", () => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _persisted_reason();
+		_persisted_reason();
 		_await($scope1_id, "a", resolveAfter("v0", n), (value) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_escape(value)}${_el_resume($scope3_id, "a")}</em>`);
 			writeScope($scope3_id, {});
-		}, $scope1_reason || 0);
+		}, void 0, 0);
 		_subscribe($n__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
