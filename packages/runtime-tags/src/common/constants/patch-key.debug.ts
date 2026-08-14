@@ -11,7 +11,6 @@ export const DynamicTag = "PatchDynamicTag:";
 export const Globals = "$global:";
 export const Loop = "PatchLoop:";
 export const Pending = "PatchPending:";
-export const Poison = "PatchPoison:";
 export const Setup = "PatchSetup:";
 export const Text = "PatchText:";
 export const Value = "PatchValue:";
