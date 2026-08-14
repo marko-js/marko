@@ -1,3 +1,4 @@
+import { BIND_DEPOSIT_FRAME_VAR } from "../common/meta";
 import * as Char from "./constants/char";
 import type { Boundary } from "./writer";
 
@@ -763,15 +764,19 @@ function writeRegistered(
 ) {
   const { scope } = registered;
   // Patch-render scope ids have no client-side map, so a bound
-  // registration never serializes its scope: `_patch_bind`/bound fills
-  // express the binding structurally instead. One reaching the payload as
-  // plain data (embedded in a composite value) has no rebind entry, so
-  // the frame poisons: reject over an unbound factory.
+  // registration references the deposit recorded at render time instead.
   if (scope && state.boundary?.state?.writesPatches) {
-    // The buffer still needs a value in this slot; the poisoned frame is
-    // replaced wholesale at flush, so the access is never evaluated.
-    state.boundary.state.patchPoison = 1;
-    state.buf.push(registered.access);
+    const n = (
+      state.boundary.state as { bindDeposits?: Map<WeakKey, number> }
+    ).bindDeposits?.get(val);
+    if (n) {
+      state.buf.push(BIND_DEPOSIT_FRAME_VAR + "(" + n + ")");
+    } else {
+      // No deposit (a container the render-time scan cannot reach): the
+      // frame poisons and its buffered access is never evaluated.
+      state.boundary.state.patchPoison = 1;
+      state.buf.push(registered.access);
+    }
   } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(
