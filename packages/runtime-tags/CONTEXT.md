@@ -189,10 +189,10 @@ never leaves through an expression channel, so whoever renders must supply
 it. Translate derives server-ownership requirements from this fact.
 _Avoid_: server-required param
 
-**Capture path**:
+**Branch path**:
 The root section and branch bodies reachable through branches alone; their
-text and attr holes emit direct patch captures.
-_Avoid_: patch section
+text and attr holes emit direct patch writes.
+_Avoid_: capture path, patch section
 
 **Patch fill**:
 A server-sourced binding whose reads intersect client state, refreshed by

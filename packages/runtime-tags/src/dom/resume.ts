@@ -76,7 +76,7 @@ export const failPatch = () => {
 // REQUIRED, so misses fail (paired refresh via `patchers` stays soft —
 // a shaken fill is a correct no-op).
 export const constructPatchers: typeof patchers = {};
-export const walkConstruct = (setup: Scope, live: Scope) => {
+export const patchConstruct = (setup: Scope, live: Scope) => {
   for (const key in setup) {
     (
       constructPatchers[
@@ -89,7 +89,7 @@ export const walkConstruct = (setup: Scope, live: Scope) => {
 // recurse back through here, so no scope is ever addressed by id. An
 // entry kind this bundle has no patcher for rejects: skew, never a
 // silently unapplied frame.
-export const walkScope = (partial: Scope, live: Scope) => {
+export const patchScope = (partial: Scope, live: Scope) => {
   for (const key in partial) {
     (
       patchers[
@@ -202,7 +202,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               onPatchRecord!(partials[i++] as unknown as string);
             }
             if (partials[i]) {
-              walkScope(partials[i] as Scope, getScope(1));
+              patchScope(partials[i] as Scope, getScope(1));
             }
             return;
           }

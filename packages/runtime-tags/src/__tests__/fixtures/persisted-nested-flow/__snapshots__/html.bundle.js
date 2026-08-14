@@ -10,7 +10,7 @@ var badge_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_renderer_shells({
+_shells({
 	a0: ",`a0;D%b%;<section><!><!></section>`",
 	a1: ",`a1;D ;<small> </small>`",
 	a2: ",`a2;D%b%;<li><!><!></li>`",

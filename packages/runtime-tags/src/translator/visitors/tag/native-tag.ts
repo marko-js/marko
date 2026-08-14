@@ -45,9 +45,9 @@ import { includes, type Opt, push } from "../../util/optional";
 import { constructRendersReads } from "../../util/persisted/delivery";
 import { onFinalizePersisted } from "../../util/persisted/lifecycle";
 import {
-  ensurePersistedCaptureGroups,
+  ensurePersistedWriteGroups,
   inClientReselectableStructure,
-  isCapturePathSection,
+  isBranchPathSection,
 } from "../../util/persisted/structure";
 import {
   type Binding,
@@ -300,7 +300,7 @@ export default {
       if (
         relatedControllable &&
         isPersisted() &&
-        isCapturePathSection(getOrCreateSection(tag))
+        isBranchPathSection(getOrCreateSection(tag))
       ) {
         // Handler writes/binds ride the value feat's patchers.
         addRuntimeFeatureAsset(tag.hub.file, "patch-value");
@@ -311,7 +311,7 @@ export default {
         );
         const controlValue = relatedControllable.attrs[0]?.value;
         if (controlValue) {
-          ensurePersistedCaptureGroups(() => controlValue.extra || {});
+          ensurePersistedWriteGroups(() => controlValue.extra || {});
         }
       }
 
@@ -345,7 +345,7 @@ export default {
         if (
           isPersisted() &&
           hasDynamicAttributes &&
-          isCapturePathSection(tagSection)
+          isBranchPathSection(tagSection)
         ) {
           addSerializeReason(tagSection, true, nodeBinding);
           addAssetImport(
@@ -355,10 +355,10 @@ export default {
           for (const attr of node.attributes) {
             if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
               const { value } = attr;
-              ensurePersistedCaptureGroups(() => value.extra || {});
+              ensurePersistedWriteGroups(() => value.extra || {});
             }
           }
-          // A patched attr `capturesPatchAttr` rejects as state-fed makes the
+          // A patched attr `writesPatchAttr` rejects as state-fed makes the
           // shell construct unfaithfully; see the placeholder's hole check.
           onFinalizePersisted(() => {
             if (
@@ -671,7 +671,7 @@ export default {
           // (binds queue ahead of the control's apply), then the value entry
           // makes the server's value authoritative through the registered
           // controlled helper — paired refresh and construct alike.
-          if (isPersisted() && isCapturePathSection(tagSection)) {
+          if (isPersisted() && isBranchPathSection(tagSection)) {
             const [valueAttr, changeAttr] = staticControllable.attrs;
             if (changeAttr) {
               // A param-fed handler binds only under server ownership, so
@@ -805,9 +805,9 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
-                // The capture renders the attribute itself (expression
+                // The patch write renders the attribute itself (expression
                 // appears once); ownership rides as trailing args.
-                if (capturesPatchAttr(tag, tagSection, name, value)) {
+                if (writesPatchAttr(tag, tagSection, name, value)) {
                   write`${callRuntime(
                     `_patch_attr_${name as "class" | "style"}`,
                     getScopeIdIdentifier(tagSection),
@@ -843,9 +843,9 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                // The capture renders the attribute itself (expression
+                // The patch write renders the attribute itself (expression
                 // appears once); ownership rides as trailing args.
-                if (capturesPatchAttr(tag, tagSection, name, value)) {
+                if (writesPatchAttr(tag, tagSection, name, value)) {
                   write`${callRuntime(
                     "_patch_attr",
                     getScopeIdIdentifier(tagSection),
@@ -1142,7 +1142,7 @@ export default {
 
           // An interactive page receives features through its dom module,
           // so the imports ride here beside the analyze-phase assets.
-          if (isPersisted() && isCapturePathSection(tagSection)) {
+          if (isPersisted() && isBranchPathSection(tagSection)) {
             importRuntimeFeature("patch-value");
             importRuntimeFeature("patch-control");
             importRuntimeFeature(getPatchControlFeature(staticControllable));
@@ -1160,8 +1160,8 @@ export default {
               const helper = `_attr_${name}` as const;
               if (!confident) {
                 // The dom compile shares the capture gating (errors must
-                // match html) and imports the feature the capture applies.
-                if (capturesPatchAttr(tag, tagSection, name, value)) {
+                // match html) and imports the feature the patch write applies.
+                if (writesPatchAttr(tag, tagSection, name, value)) {
                   importRuntimeFeature("patch-attr");
                 }
                 const nodeExpr = createScopeReadExpression(nodeBinding!);
@@ -1243,7 +1243,7 @@ export default {
                   ),
                 );
               } else {
-                if (capturesPatchAttr(tag, tagSection, name, value)) {
+                if (writesPatchAttr(tag, tagSection, name, value)) {
                   importRuntimeFeature("patch-attr");
                 }
                 addStatement(
@@ -1394,15 +1394,15 @@ function getSpreadControllableValueProps(tagName: string) {
 
 type RelatedControllable = ReturnType<typeof getRelatedControllable>;
 // A state-fed attribute recomputes client-side, and inside client-owned
-// structure delivery is owner fills: neither captures.
-function capturesPatchAttr(
+// structure delivery is owner fills: neither patch-writes.
+function writesPatchAttr(
   tag: t.NodePath<t.MarkoTag>,
   tagSection: Section,
   name: string,
   value: t.Expression,
 ) {
   if (
-    !(isPersisted() && isCapturePathSection(tagSection)) ||
+    !(isPersisted() && isBranchPathSection(tagSection)) ||
     inClientReselectableStructure(tagSection)
   ) {
     return false;

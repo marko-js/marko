@@ -224,7 +224,7 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
       };
     }
   }
-  // An untracked call can change server-side, but a withheld capture
+  // An untracked call can change server-side, but a withheld patch write
   // has no other way to deliver it.
   if (anyState && anyOpaque) {
     return {
