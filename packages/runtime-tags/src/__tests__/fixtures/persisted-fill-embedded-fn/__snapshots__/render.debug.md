@@ -28,5 +28,17 @@ UPDATE: main > p::text " " => "a"
 ```
 
 # Update `{"title":"b"}`
-
-## Patch rejected (navigate)
+```html
+<main>
+  <p>
+    b
+  </p>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > p::text "a" => "b"
+```

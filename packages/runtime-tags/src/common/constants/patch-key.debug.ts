@@ -14,7 +14,6 @@ export const Poison = "PatchPoison:";
 export const Setup = "PatchSetup:";
 export const Text = "PatchText:";
 export const Value = "PatchValue:";
-export const ValueBind = "PatchValueBind:";
 export const Write = "PatchWrite:";
 
 type Self = typeof import("./patch-key.debug");

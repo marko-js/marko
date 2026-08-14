@@ -1,13 +1,13 @@
 // PATCH
 {
   h1: "a0",
-  fa0: 1,
+  va0: b(1),
   we: "b"
 }
 
 // PATCH
 {
   h1: "a0",
-  fa0: 1,
+  va0: b(1),
   we: "c"
 }
