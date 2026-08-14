@@ -83,12 +83,6 @@ The `isLoad` branch emits a separate virtual module, dynamic import, and `_load_
 
 Parameter reason groups (`contentSection.paramReasonGroups`, known-tag.ts:246-311) already narrow the HTML payload per known call site via `_set_serialize_reason`, but the child's DOM module emits every `_resume(registerId, fn)` as an unconditional top-level statement (`signals.ts` `writeRegisteredFns`, collected with no serialize-reason gate; `_resume` is intentionally not in `pureDOMFunctions`), so a caller that activates one group still retains the client behavior of all of them. Export pure values plus group-keyed registration anchors so known callers keep only active behavior, with stateful, circular, dynamic, and unknown callers conservatively retaining all groups. The anchor a caller emits must itself be a retained root: in an optimized page bundle every pure chain shakes away (see `fixtures/dynamic-tag-spread/__snapshots__/dom.bundle.js`, which keeps only non-pure statements), and a register id resume cannot resolve is not a no-op — `dom/resume.ts` pushes the missing value and calls it. Re-verify on a fixture whose child has a group no caller activates: that group's registered functions should disappear from the dom bundle snapshot with html output and resume unchanged.
 
-## Coalesce `queueAsyncRender`'s per-completion microtasks
-
-`packages/runtime-tags/src/dom/queue.ts` › `queueAsyncRender` | 2026-07-13 | impact:low | effort:low
-
-`queueAsyncRender()` ends in an unconditional `queueMicrotask(run)`, so N promise completions in one tick schedule N microtasks; the first `run()` drains every pending render and effect and the rest are empty passes that still allocate two arrays and bump `runId`. Streaming resume hits this directly — `dom/load.ts` and `_await_promise` in `dom/control-flow.ts` call it once per settled promise. Guard with a module-level scheduled bit cleared at the top of the flush, so work enqueued during the flush still schedules a fresh microtask. Re-verify: settle several `<await>`/lazy boundaries in one tick and assert `run` executes once.
-
 ## Propagate invoke-only inputs into same-program `<define>` tags
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `analyzeAttrs` | 2026-07-13 | impact:med | effort:high

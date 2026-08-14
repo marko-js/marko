@@ -1,8 +1,9 @@
 import assert from "assert/strict";
 import path from "path";
 
-import type { Template } from "@marko/runtime-tags/common/types";
+import { AccessorProp, type Template } from "@marko/runtime-tags/common/types";
 
+import { queueAsyncRender } from "../dom/queue";
 import * as tagsTranslator from "../translator";
 import { createServerRunner } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
@@ -12,6 +13,28 @@ const dir = path.join(import.meta.dirname, "mounted-template");
 // needs its own directory rather than sharing and clobbering the first.
 const valueDir = path.join(import.meta.dirname, "mounted-template-value");
 const spreadDir = path.join(import.meta.dirname, "mounted-template-spread");
+
+describe("runtime-tags/dom async render queue", () => {
+  it("schedules one flush for multiple completions in the same turn", () => {
+    const queueMicrotask = globalThis.queueMicrotask;
+    const tasks: (() => void)[] = [];
+    const values: number[] = [];
+    const scope = { [AccessorProp.Id]: 1 } as any;
+
+    globalThis.queueMicrotask = (task) => tasks.push(task);
+    try {
+      queueAsyncRender(scope, (_, value) => values.push(value!), 1);
+      queueAsyncRender(scope, (_, value) => values.push(value!), 2);
+      const taskCount = tasks.length;
+      for (const task of tasks) task();
+
+      assert.equal(taskCount, 1);
+      assert.deepEqual(values, [1, 2]);
+    } finally {
+      globalThis.queueMicrotask = queueMicrotask;
+    }
+  });
+});
 
 describe("runtime-tags/dom mounted template", () => {
   let clientRunner: (ctx: any) => Promise<{ template: Template }>;
