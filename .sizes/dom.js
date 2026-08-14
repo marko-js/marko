@@ -1,4 +1,4 @@
-// size: 26206 (min) 9777 (brotli)
+// size: 26237 (min) 9754 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -32,6 +32,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
     (!branchesEnabled || render.b.F?.H !== 0) && render.c(render.b, render.d);
   },
   catchEnabled,
+  abortsEnabled,
+  subscriptionsEnabled,
   delegate = (type, handler) =>
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
@@ -500,13 +502,17 @@ function $signalReset(scope, id) {
   ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
 }
 function $signal(scope, id) {
-  return (trackCleanup(scope), ((scope.A ||= {})[id] ||= new AbortController()).signal);
+  return (
+    (abortsEnabled = 1),
+    trackCleanup(scope),
+    ((scope.A ||= {})[id] ||= new AbortController()).signal
+  );
 }
 /** Enrols `scope` with its branch so destroying the branch cleans it up. */
 function trackCleanup(scope, subscribers) {
   let branch = scope.F;
   (branch && (branch.B ||= /* @__PURE__ */ new Set()).add(scope),
-    subscribers && (scope.Z ||= []).push(subscribers));
+    subscribers && ((subscriptionsEnabled = 1), (scope.Z ||= []).push(subscribers)));
 }
 function abort(ctrl) {
   ctrl.abort();
@@ -575,8 +581,8 @@ function destroyScope(scope) {
   scope.H && (destroyNestedScopes(scope), cleanupScope(scope));
 }
 function cleanupScope(scope) {
-  scope.Z?.forEach(unsubscribe, scope);
-  for (let id in scope.A) $signalReset(scope, id);
+  if ((subscriptionsEnabled && scope.Z?.forEach(unsubscribe, scope), abortsEnabled))
+    for (let id in scope.A) $signalReset(scope, id);
 }
 function unsubscribe(subscribers) {
   subscribers.delete(this);
