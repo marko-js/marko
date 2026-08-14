@@ -1,4 +1,6 @@
+<let/count=0/>
 <main>
+  <h1>${input.title}</h1>
   <if=input.show>
     <await|value|=input.promise>
       <em>${value}</em>
@@ -7,4 +9,5 @@
   <else>
     <em>closed</em>
   </else>
+  <button onClick() { count++ }>Count ${count}</button>
 </main>
