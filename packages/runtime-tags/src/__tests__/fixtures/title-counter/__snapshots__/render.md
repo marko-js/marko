@@ -22,6 +22,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: title::text("Count is 0")
+INSERT: title::text("Count is 1")
 REMOVE: div::text("Count is 0")
 INSERT: div::text("Count is 1")
 ```
@@ -40,6 +42,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: title::text("Count is 1")
+INSERT: title::text("Count is 2")
 REMOVE: div::text("Count is 1")
 INSERT: div::text("Count is 2")
 ```
@@ -58,6 +62,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: title::text("Count is 2")
+INSERT: title::text("Count is 3")
 REMOVE: div::text("Count is 2")
 INSERT: div::text("Count is 3")
 ```

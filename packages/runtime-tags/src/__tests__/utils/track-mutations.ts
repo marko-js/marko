@@ -281,14 +281,14 @@ function formatMutationRecord(record: MutationRecord) {
   const { target, oldValue } = record;
 
   if (record.type === "characterData") {
-    if (nodeInfo.isIgnoredNode(target.parentNode!)) return;
+    if (isIgnoredMutationNode(target.parentNode!)) return;
 
     return `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
       oldValue || "",
     )} => ${JSON.stringify(target.nodeValue || "")}`;
   }
 
-  if (nodeInfo.isIgnoredNode(target)) return;
+  if (isIgnoredMutationNode(target)) return;
 
   switch (record.type) {
     case "attributes": {
@@ -303,8 +303,12 @@ function formatMutationRecord(record: MutationRecord) {
 
     case "childList": {
       const { removedNodes, addedNodes, previousSibling } = record;
-      const removed = nodeInfo.getSanitizedNodes(removedNodes);
-      const added = nodeInfo.getSanitizedNodes(addedNodes);
+      const removed = Array.from(removedNodes).filter(
+        (node) => !isIgnoredMutationNode(node),
+      );
+      const added = Array.from(addedNodes).filter(
+        (node) => !isIgnoredMutationNode(node),
+      );
 
       if (!removed.length && !added.length) return;
 
@@ -324,6 +328,13 @@ function formatMutationRecord(record: MutationRecord) {
       return details.join("\n");
     }
   }
+}
+
+function isIgnoredMutationNode(node: Node) {
+  if (!nodeInfo.isIgnoredNode(node)) return false;
+  return !(
+    nodeInfo.isElement(node) && /^(?:LINK|STYLE|TITLE)$/i.test(node.tagName)
+  );
 }
 
 function getFunctionBody(rawSource: string) {
