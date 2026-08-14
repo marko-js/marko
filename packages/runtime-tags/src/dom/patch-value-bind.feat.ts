@@ -1,15 +1,9 @@
 import "./patch-value.feat";
+import { BIND_DEPOSIT_FRAME_VAR } from "../common/meta";
 import type { Scope } from "../common/types";
 import { PatchKey } from "../common/types";
-import { prepareEffects, queueEffect, runEffects } from "./queue";
-import {
-  constructPatchers,
-  failPatch,
-  getRegisteredWithScope,
-  patchers,
-  patchId,
-} from "./resume";
-import { patchFills } from "./signals";
+import { frameChecks, frameVars } from "./patch";
+import { failPatch, getRegisteredWithScope, patchers, patchId } from "./resume";
 
 // Per-frame bind deposits: a source entry re-binds its registration
 // against the paired live scope it anchors at, and bound fills reference
@@ -31,41 +25,26 @@ patchers[PatchKey.BindSource] = (scope, key, id) => {
     ) => unknown
   )(scope);
 };
-// Applied after the walk (the source entry's anchor may walk later) in
-// ONE batch, validated first: joins over several bound fills coalesce
-// like plain fills, and a missing deposit (the bound scope never paired)
-// rejects before ANY bound fill renders — never a silently unbound
-// handler or a half-applied frame. A missing FILL mirrors `Value`: soft
-// for paired refresh, required for construct seeds.
-let pendingBound: [scope: Scope, key: string, n: number][] = [];
-let pendingBoundPatch = 0;
-const flushBound = () => {
-  const fills = pendingBound;
+// The frame's bind-deposit references: each wrapper resolves lazily (its
+// deposit walks in after the frame text evaluates), validated at commit.
+let expectedEmbedded: [deposits: Record<string, unknown>, n: number][] = [];
+let expectedEmbeddedPatch = 0;
+frameChecks.push(() => {
+  const expected = expectedEmbedded;
+  expectedEmbedded = [];
+  if (expectedEmbeddedPatch === patchId) {
+    for (const [deposits, n] of expected) {
+      if (!(n in deposits)) failPatch();
+    }
+  }
+});
+frameVars[BIND_DEPOSIT_FRAME_VAR] = (n: number) => {
   const deposits = binds();
-  pendingBound = [];
-  for (const [, , n] of fills) {
-    if (!(n in deposits)) failPatch();
+  if (expectedEmbeddedPatch !== patchId) {
+    expectedEmbeddedPatch = patchId;
+    expectedEmbedded = [];
   }
-  runEffects(
-    prepareEffects(() => {
-      for (const [scope, key, n] of fills) {
-        patchFills[key.slice(PatchKey.ValueBind.length)]?.(scope, deposits[n]);
-      }
-    }),
-  );
-};
-const applyBoundFill = (scope: Scope, key: string, n: unknown) => {
-  // A frame rejected before its flush leaves entries behind: the epoch
-  // discards them so the leftover list cannot suppress this frame's flush.
-  if (pendingBoundPatch !== patchId || !pendingBound.length) {
-    pendingBoundPatch = patchId;
-    pendingBound = [];
-    queueEffect(scope, flushBound);
-  }
-  pendingBound.push([scope, key, n as number]);
-};
-patchers[PatchKey.ValueBind] = applyBoundFill;
-constructPatchers[PatchKey.ValueBind] = (scope, key, n) => {
-  if (!patchFills[key.slice(PatchKey.ValueBind.length)]) failPatch();
-  applyBoundFill(scope, key, n);
+  expectedEmbedded.push([deposits, n]);
+  return (...args: unknown[]) =>
+    (deposits[n] as (...args: unknown[]) => unknown)(...args);
 };

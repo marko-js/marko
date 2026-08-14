@@ -1,0 +1,8 @@
+<const/api={ get: () => input.title, label: "title" }/>
+<let/show=false/>
+<main>
+  <if=show>
+    <p>${api.label}: ${api.get()}</p>
+  </if>
+  <button onClick() { show = true }>show</button>
+</main>
