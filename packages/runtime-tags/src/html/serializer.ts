@@ -1,4 +1,4 @@
-import { BIND_DEPOSIT_FRAME_VAR } from "../common/meta";
+import { BIND_FRAME_VAR } from "../common/meta";
 import * as Char from "./constants/char";
 import type { Boundary } from "./writer";
 
@@ -766,14 +766,14 @@ function writeRegistered(
 ) {
   const { scope } = registered;
   // Patch-render scope ids have no client-side map, so a bound
-  // registration references the deposit recorded at render time instead.
+  // registration references the bind recorded at render time instead.
   if (scope && state.boundary?.state?.writesPatches) {
     const n = (
-      state.boundary.state as { bindDeposits?: Map<WeakKey, number> }
-    ).bindDeposits?.get(val);
-    // Deposit `0` is never written, so a registration the render-time scan
+      state.boundary.state as { binds?: Map<WeakKey, number> }
+    ).binds?.get(val);
+    // Bind `0` is never written, so a registration the render-time scan
     // could not reach rejects at the frame's commit check (navigation).
-    state.buf.push(BIND_DEPOSIT_FRAME_VAR + "(" + (n || 0) + ")");
+    state.buf.push(BIND_FRAME_VAR + "(" + (n || 0) + ")");
   } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(
