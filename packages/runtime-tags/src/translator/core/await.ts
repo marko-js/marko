@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoVar,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -33,15 +34,13 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
-import {
-  getSerializeGuard,
-  scopeReasonIdentifier,
-} from "../util/serialize-guard";
+import { getSerializeGuard } from "../util/serialize-guard";
 import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
 import {
   addStatement,
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
@@ -125,6 +124,16 @@ export default {
     if (isPersisted()) {
       addRuntimeFeatureAsset(tag.hub.file, "patch-child");
       addRuntimeFeatureAsset(tag.hub.file, "patch-boundary");
+      // A scriptless construct paints the settled body via text fills.
+      addRuntimeFeatureAsset(tag.hub.file, "patch-text");
+      // Recorded on every parented section; `buildShells` keeps only those
+      // a shipped shell constructs (dom registration or shipped body record).
+      if (section.parent) {
+        (section.constructSetups ??= []).push({
+          binding: tagExtra[kDOMBinding]!,
+          body: bodySection,
+        });
+      }
     }
     const valueExtra = evaluate(valueAttr.value);
 
@@ -177,15 +186,14 @@ export default {
           valueAttr.value.extra || {},
         );
         // Client-owned thenables resolve via `_await_promise`; a patch
-        // must not Pending them (the body has no fills to Child).
-        const serializeGuard =
+        // must not Pending them (the body has no fills to Child). Otherwise
+        // a constructible await's Pending carries its body content id.
+        const patchContent =
           isPersisted() && !valueSources?.param && !valueSources?.global
-            ? t.logicalExpression(
-                "||",
-                scopeReasonIdentifier(section),
-                t.numericLiteral(0),
-              )
-            : getSerializeGuard(section, bodySection?.serializeReason, true);
+            ? t.numericLiteral(0)
+            : section.constructSetups?.some((s) => s.binding === nodeRef)
+              ? t.stringLiteral(getResumeRegisterId(section, nodeRef, "await"))
+              : undefined;
 
         tag
           .replaceWith(
@@ -199,7 +207,8 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                serializeGuard,
+                getSerializeGuard(section, bodySection?.serializeReason, true),
+                patchContent,
               ),
             ),
           )[0]
@@ -234,15 +243,27 @@ export default {
         signal.build = () => {
           const branchRenderArgs = getBranchRendererArgs(bodySection);
           const branchParams = branchRenderArgs.pop();
+          const awaitContent = callRuntime(
+            "_await_content",
+            getScopeAccessorLiteral(nodeRef, true),
+            ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
+          );
           (signal.prependStatements ||= []).push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                callRuntime(
-                  "_await_content",
-                  getScopeAccessorLiteral(nodeRef, true),
-                  ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
-                ),
+                // Scriptless pages construct from a shipped record instead;
+                // registering here would keep this dom module bundled.
+                getProgram().node.extra.isInteractive &&
+                  section.constructSetups?.some((s) => s.binding === nodeRef)
+                  ? callRuntime(
+                      "_resume",
+                      t.stringLiteral(
+                        getResumeRegisterId(section, nodeRef, "await"),
+                      ),
+                      awaitContent,
+                    )
+                  : awaitContent,
               ),
             ]),
           );
