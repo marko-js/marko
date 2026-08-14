@@ -155,3 +155,9 @@ imports only feat modules.
 `packages/runtime-tags/src/translator/core/await.ts` › `translate.html.exit` | 2026-08-12 | impact:low | effort:low
 
 The `_await` serialize marker arg is `getSerializeGuard(section, bodySection?.serializeReason, true)`, which can emit `0` when the body has no serialize reason of its own — but persisted patches pair the await body through the `BranchStart`/`BranchEnd` resume markers plus the runtime's `pairPatchBoundary` link, so a marker-less body could resume without its owner's `BranchScopes` link and a later patch's `PatchChild` entry would miss (rejecting to navigation). Every current persisted fixture forces the reason via the capture path (the body always holds a patch capture), so this is unverified: probe with a persisted `<await>` whose body is fully static (`<await|v|=p>done</await>`) and check the document render emits the branch markers; if not, the marker guard should ride the root scope reason like `getExprIfSerialized`'s capture-path rule.
+
+## Ship paired-fill feature assets (`patch-attr`) to scriptless persisted pages
+
+`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` › `capturesPatchAttr` call sites | 2026-08-14 | impact:medium | effort:low
+
+`patch-attr` reaches the client only via `importRuntimeFeature` in the dom output, so a scriptless persisted page (no dom module) whose frames carry `PatchAttr` fills has no patcher and `walkScope` rejects the patch to navigation. `patch-text` had the same gap and now rides `addRuntimeFeatureAsset` (see `core/await.ts` analyze); attr fills need the same page-asset treatment, added at analyze where the capture is detected (translate-time asset additions never reach the page bundle). Reproduce with a scriptless persisted template whose capture-path branch has `<div class=input.x>` and a frame that changes `x`.

@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-async-await-in-branch/template.marko:3:5
-      1 | <main>
-      2 |   <if=input.show>
-    > 3 |     <await|value|=input.promise>
-        |     ^ Persisted templates cannot patch this faithfully yet: an `<await>` inside a branch a patch may construct cannot build from a shell yet.
-      4 |       <em>${value}</em>
-      5 |     </await>
-      6 |   </if>
