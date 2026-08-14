@@ -35,5 +35,4 @@ var template_default = _template("a", (input) => {
 		_html(`<div>${_escape(x)}${_el_resume($scope4_id, "a", _serialize_guard($scope4_reason, 1))}-${_sep($sg__y)}${_escape(y)}${_el_resume($scope4_id, "b", $sg__y)}-${_sep($sg__z)}${_escape(z)}${_el_resume($scope4_id, "c", $sg__z)}</div>`);
 		_serialize_if($scope4_reason, 0) && writeScope($scope4_id, {});
 	}, $scope0_id) });
-	_resume_branch($scope0_id);
 }, 1);

@@ -8,10 +8,9 @@ var child_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
+	_scope_id();
 	let count = 0;
 	_html("<section>");
 	child_default({});
 	_html(`</section><div>${_escape(count)}</div>`);
-	_resume_branch($scope0_id);
 }, 1);

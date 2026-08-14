@@ -27,5 +27,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("</section>");
 	}
 	_html("</div>");
-	_resume_branch($scope0_id);
 }, 1);

@@ -5,7 +5,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let x = 1;
 	_html("<span>child</span>");
 	const $return = x;
-	_resume_branch($scope0_id);
 	return $return;
 });
 

@@ -1,11 +1,9 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
+	_scope_id();
 	_html("<span>child</span>");
-	const $return = 4;
-	_resume_branch($scope0_id);
-	return $return;
+	return 4;
 });
 
 // template.marko

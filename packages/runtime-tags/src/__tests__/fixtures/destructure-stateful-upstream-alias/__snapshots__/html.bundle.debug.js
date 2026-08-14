@@ -12,7 +12,6 @@ var store_default = _template("__tests__/tags/store.marko", (input) => {
 			list = [];
 		}, "__tests__/tags/store.marko_0/_return2", $scope0_id)
 	};
-	_resume_branch($scope0_id);
 	return $return;
 });
 

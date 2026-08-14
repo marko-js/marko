@@ -1477,7 +1477,11 @@ export function writeHTMLResumeStatements(
     !section.isBranch &&
     (section.hasAbortSignal ||
       !!section.referencedClosures ||
-      !!find(section.bindings, (binding) => binding.type === BindingType.let));
+      (sectionSerializeReason &&
+        !!find(
+          section.bindings,
+          (binding) => binding.type === BindingType.let,
+        )));
 
   if (resumeClosestBranch) {
     body.push(

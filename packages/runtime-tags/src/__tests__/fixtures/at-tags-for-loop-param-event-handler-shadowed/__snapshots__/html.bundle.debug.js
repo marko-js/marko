@@ -34,5 +34,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	my_menu_default({ item: $item });
 	_html(`<div>${_escape(foo)}</div>`);
-	_resume_branch($scope0_id);
 }, 1);

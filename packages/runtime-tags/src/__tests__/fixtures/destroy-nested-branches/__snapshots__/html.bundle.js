@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
+	_scope_id();
 	let items = ["a", "b"];
 	_html("<div>");
 	_scope_id();
@@ -24,5 +24,4 @@ var template_default = _template("a", (input) => {
 	});
 	_html("</section>");
 	_html("</div>");
-	_resume_branch($scope0_id);
 }, 1);

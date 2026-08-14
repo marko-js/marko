@@ -37,5 +37,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "4:4", { row_id: ["row.id", "4:8"] });
 	}, "id", $scope0_id, "#ul/0", 1, 0, 0, 0, 1);
 	_html("</ul>");
-	_resume_branch($scope0_id);
 }, 1);

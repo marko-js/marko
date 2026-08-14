@@ -95,12 +95,6 @@ Parameter reason groups (`contentSection.paramReasonGroups`, known-tag.ts:246-31
 
 `analyzeAttrs` sets `attrExtra.invokeOnly` only when `getRootSection(templateExportAttr.binding.section) !== getProgram().node.extra.section`, so a local `<define>` never gets the treatment an equivalent cross-file tag does — same-program prop trees are mid-analysis with incomplete reads. `<define/Btn|input|><button onClick=input.onClick>x</button></define>` with `<let/count=0/><Btn onClick=() => count++ />${count}` therefore folds `$Btn_content__input_onClick(...)` into the `$count` signal body, re-pushing the handler and re-running its `_on` script on every state update; the identical `tags/btn.marko` version hoists it into `$setup` alone. A conservative post-analysis fixed point would let local handlers read persisted slots lazily, dropping the intersection, input update, closure propagation and owner state. Re-verify: compile both shapes with `node -r ~ts scripts/inspect-compiled-output.mts -o dom -d` and diff the `$count` bodies.
 
-## Skip `_resume_branch` for sections with no serialize reason
-
-`packages/runtime-tags/src/translator/util/signals.ts` › `writeHTMLResumeStatements` | 2026-07-13 | impact:low | effort:low
-
-`resumeClosestBranch` ignores `sectionSerializeReason`, so an inert section emits `_resume_branch(scopeId)` with no accompanying `_scope(...)` write — wasted bytes, plus a `ClosestBranchId`-only scope nothing resumes when nested under a branch. Gate it on the finalized section reason while preserving empty referenced owners and ready-channel descendants. Re-verify: `fixtures/html-style-injection/__snapshots__/html.bundle.js` must stop emitting `_resume_branch($scope0_id)` for a template whose only state is an unserialized `<let>`.
-
 ## Cache the handler `addTagsEvents` binds for a Class parent's `on-x`
 
 `packages/runtime-class/src/runtime/helpers/dynamic-tag.js` › `addTagsEvents` | 2026-07-13 | impact:low | effort:low

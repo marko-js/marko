@@ -13,5 +13,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<section>");
 	child_default({});
 	_html(`</section><div>${_escape(count)}</div>`);
-	_resume_branch($scope0_id);
 }, 1);

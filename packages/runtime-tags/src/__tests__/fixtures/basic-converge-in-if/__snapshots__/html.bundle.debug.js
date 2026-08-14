@@ -8,5 +8,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_escape(a + b));
 	}
-	_resume_branch($scope0_id);
 }, 1);
