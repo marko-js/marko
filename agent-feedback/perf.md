@@ -2,25 +2,6 @@
 
 Runtime speed and bundle size opportunities. Format and rules: [README.md](README.md).
 
-## Resolve a single hoist read without allocating a generator
-
-`packages/runtime-tags/src/dom/signals.ts` › `traverse` | 2026-08-11 | impact:med | effort:low
-
-`_hoist` reads a single value with `traverse(scope, path, args).next().value`, allocating a
-generator per read even though the iterator form is only needed by `fn[Symbol.iterator]`, which
-multi-instance tag vars consume (`for (const fn of setHtml)`). Replacing the single-value path
-with a plain recursive resolve measured 137.6 -> 21.0 ns/op on a one-segment path, ~6.5x, in a
-Node microbenchmark of the read path alone. Hoist reads only occur in `<script>` blocks and
-event handlers — `_hoist_read_error` rejects reads during render — so this is handler latency,
-not render latency. Two constraints: the generator yields its first value even when that value
-is `undefined`, so an early-return resolve needs a sentinel to keep sibling-scope traversal
-identical; and the generator has to stay for the iterator, so this adds a second traversal
-function rather than replacing one — measure against the per-fixture size gates before taking
-it. Passing `arguments` instead of a rest parameter is much worse (229 ns/op, leaked
-`arguments` deoptimizes), so keep the rest parameter. Re-verify: benchmark `_hoist`'s returned
-function against a non-generator equivalent; neither the `counter` nor `comments` size
-benchmark exercises `_hoist` at all, so `build:sizes` will not show this path.
-
 ## Shorten the owner-qualified dynamic tag content key in optimized output
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `rendererKey` | 2026-08-11 | impact:low | effort:low

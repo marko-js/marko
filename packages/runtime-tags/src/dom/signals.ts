@@ -439,6 +439,8 @@ export function _hoist<T>(...path: Accessor[]) {
   if (!MARKO_DEBUG)
     path = path.map((p) => (typeof p === "string" ? p : decodeAccessor(p)));
   return (scope: Scope) => {
+    // Single reads intentionally share the iterable traversal: a dedicated
+    // fast path costs more runtime bytes than its latency savings justify.
     const fn: Hoisted<T> = (...args) =>
       traverse<T>(scope, path, args).next().value as T;
     fn[Symbol.iterator] = () => traverse<T>(scope, path, []);
