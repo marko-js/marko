@@ -1763,22 +1763,6 @@ export function writeHTMLResumeStatements(
 
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
-  // A RENDERED fed renderer poisons the frame (navigation) — a stopgap
-  // until fed renderers dispatch like any dynamic hop; nullish slots patch.
-  const opaqueRenderProps = persisted && section.opaqueRenderProps;
-  if (opaqueRenderProps) {
-    for (const prop of opaqueRenderProps) {
-      body.push(
-        t.expressionStatement(
-          t.logicalExpression(
-            "&&",
-            t.memberExpression(t.identifier("input"), t.identifier(prop)),
-            callRuntime("_patch_poison", scopeIdIdentifier),
-          ),
-        ),
-      );
-    }
-  }
   // A constructible branch seeds its state onto freshly constructed scopes
   // as SETUP fills: the fill signal's joins render all downstream content.
   if (persisted && section.isBranch && isCapturePathSection(section)) {
