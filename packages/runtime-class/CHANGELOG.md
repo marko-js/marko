@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.34
+
+### Patch Changes
+
+- [#3939](https://github.com/marko-js/marko/pull/3939) [`8600028`](https://github.com/marko-js/marko/commit/8600028f031c706e567fdd25c1f8d72236dc0f8c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Hydrate a stateful Tags-API template rendered through an inert Class-API component, which previously left it dead after server rendering.
+
+- Updated dependencies [[`ed10b25`](https://github.com/marko-js/marko/commit/ed10b2568e9afcf92f2cfea88419167261322253), [`e5d18a8`](https://github.com/marko-js/marko/commit/e5d18a8d806cf2e7b0cf7473dc668407b07eb9dd), [`4f73ac2`](https://github.com/marko-js/marko/commit/4f73ac2abf4e00c43daab235a8854b540d694be8), [`56f226d`](https://github.com/marko-js/marko/commit/56f226d2049d22cb0ef65a36c358dcc9feba1881), [`672c5e1`](https://github.com/marko-js/marko/commit/672c5e1af789dc34bd62cd1f1067d90dbac01cbc), [`61c3723`](https://github.com/marko-js/marko/commit/61c3723f22509a5bb03ee41b8e34305b5c4197bb), [`614d438`](https://github.com/marko-js/marko/commit/614d4382021d4c2b3f2b479fb9461fac9474a008)]:
+  - @marko/runtime-tags@6.3.36
+  - @marko/compiler@5.42.1
+
 ## 5.39.33
 
 ### Patch Changes
