@@ -771,14 +771,9 @@ function writeRegistered(
     const n = (
       state.boundary.state as { bindDeposits?: Map<WeakKey, number> }
     ).bindDeposits?.get(val);
-    if (n) {
-      state.buf.push(BIND_DEPOSIT_FRAME_VAR + "(" + n + ")");
-    } else {
-      // No deposit (a container the render-time scan cannot reach): the
-      // frame poisons and its buffered access is never evaluated.
-      state.boundary.state.patchPoison = 1;
-      state.buf.push(registered.access);
-    }
+    // Deposit `0` is never written, so a registration the render-time scan
+    // could not reach rejects at the frame's commit check (navigation).
+    state.buf.push(BIND_DEPOSIT_FRAME_VAR + "(" + (n || 0) + ")");
   } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(
