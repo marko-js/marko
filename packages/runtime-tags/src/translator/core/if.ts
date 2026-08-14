@@ -26,7 +26,7 @@ import { addSorted } from "../util/optional";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
   classifiesClientReselectable,
-  isCapturePathSection,
+  isBranchPathSection,
   recordStructuralOrGlobalParams,
 } from "../util/persisted/structure";
 import {
@@ -123,7 +123,7 @@ export const IfTag = {
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted()) {
         // Structure classifies once the merged test sources resolve; a
-        // non-capture section (content) can still classify reselectable.
+        // non-branch-path section (content) can still classify reselectable.
         onClassifyStructure(ifTagSection, () => {
           const sources = getSerializeSourcesForExpr(ifTagExtra);
           if (
@@ -140,7 +140,7 @@ export const IfTag = {
                 branchBody.isClientReselectable = true;
               }
             }
-          } else if (isCapturePathSection(ifTagSection)) {
+          } else if (isBranchPathSection(ifTagSection)) {
             addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
             // Branch tests drive structure: the params recorded here gate
             // call-site feeds at translate.
@@ -218,7 +218,7 @@ export const IfTag = {
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
           const persistedPatch =
-            isPersisted() && !clientOwned && isCapturePathSection(ifTagSection);
+            isPersisted() && !clientOwned && isBranchPathSection(ifTagSection);
           if (persistedPatch) {
             singleChild = false;
           } else {
@@ -385,7 +385,7 @@ export const IfTag = {
           const ifTagSection = getSection(ifTag);
           if (
             isPersisted() &&
-            isCapturePathSection(ifTagSection) &&
+            isBranchPathSection(ifTagSection) &&
             !branches.some(([, branchBody]) => branchBody?.isClientReselectable)
           ) {
             // An interactive page receives assets transitively through its

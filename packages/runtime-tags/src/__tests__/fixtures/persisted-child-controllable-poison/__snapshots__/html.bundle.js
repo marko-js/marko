@@ -1,5 +1,5 @@
 // tags/counter/index.marko
-_renderer_shells({ b0: ",`b0 b1;Db%l ;<span>Seen <!></span><button>+</button>`" });
+_shells({ b0: ",`b0 b1;Db%l ;<span>Seen <!></span><button>+</button>`" });
 var counter_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();

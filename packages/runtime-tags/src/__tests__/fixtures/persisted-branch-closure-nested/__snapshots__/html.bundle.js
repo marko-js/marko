@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({
+_shells({
 	a0: ",`a0 a2; b%;<button>+</button><!><!>`",
 	a1: ",`a1 a4;Db%;<p>Seen <!></p>`"
 });
