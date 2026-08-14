@@ -99,7 +99,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   failPatch = () => {
     throw 0;
   },
-  walkScope = (partial, live) => {
+  patchScope = (partial, live) => {
     for (let key in partial) (patchers[key[0]] || failPatch())(live, key, partial[key]);
   },
   curRenders,
@@ -972,7 +972,7 @@ function init(runtimeId = "M") {
               if (patching && patchRender === render) {
                 let i = 0;
                 for (; typeof partials[i] == "string";) onPatchRecord(partials[i++]);
-                partials[i] && walkScope(partials[i], getScope(1));
+                partials[i] && patchScope(partials[i], getScope(1));
                 return;
               }
               let scopeId = partials[0];
