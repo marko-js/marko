@@ -25,7 +25,7 @@ import { isPersisted } from "../util/marko-config";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
   classifiesClientReselectable,
-  isCapturePathSection,
+  isBranchPathSection,
   recordStructuralOrGlobalParams,
 } from "../util/persisted/structure";
 import {
@@ -215,7 +215,7 @@ export default {
 
     if (isPersisted()) {
       // Structure classifies once the merged input sources resolve; a
-      // non-capture section (content) can still classify reselectable.
+      // non-branch-path section (content) can still classify reselectable.
       onClassifyStructure(tagSection, () => {
         const sources = getSerializeSourcesForExpr(tagExtra);
         if (
@@ -228,7 +228,7 @@ export default {
           // A client-evaluable loop is client-reselectable (state
           // re-lists directly; param feeds fill their slots).
           bodySection.isClientReselectable = true;
-        } else if (isCapturePathSection(tagSection)) {
+        } else if (isBranchPathSection(tagSection)) {
           addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
           // The loop's inputs drive structure: the params recorded here
           // gate call-site feeds at translate.
@@ -291,7 +291,7 @@ export default {
         // A patchable loop keeps its markers: item pairing and insertion
         // anchor at branch marks, which elision would remove.
         const persistedPatch =
-          isPersisted() && !clientOwned && isCapturePathSection(tagSection);
+          isPersisted() && !clientOwned && isBranchPathSection(tagSection);
         const singleChild =
           !persistedPatch &&
           bodySection.content?.singleChild &&
@@ -421,7 +421,7 @@ export default {
 
         if (
           isPersisted() &&
-          isCapturePathSection(getSection(tag)) &&
+          isBranchPathSection(getSection(tag)) &&
           !bodySection.isClientReselectable
         ) {
           // An interactive page receives assets transitively through its

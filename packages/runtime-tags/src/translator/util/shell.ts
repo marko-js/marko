@@ -3,7 +3,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
-import { isCapturePathSection } from "./persisted/structure";
+import { isBranchPathSection } from "./persisted/structure";
 import { forEachSection, type Section, StructureKind } from "./sections";
 import { getResumeRegisterId } from "./signals";
 import { resolveStructure, trimTrailingExits } from "./structure";
@@ -37,11 +37,11 @@ export function buildShells() {
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
   forEachSection((section) => {
-    // Every capture-position branch body ships a shell, except
+    // Every branch-path body ships a shell, except
     // client-reselectable bodies: they never construct from a frame.
     if (
       !section.isBranch ||
-      !isCapturePathSection(section) ||
+      !isBranchPathSection(section) ||
       section.isClientReselectable
     ) {
       return;

@@ -12,7 +12,7 @@ import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
 import {
   inClientReselectableStructure,
-  isCapturePathSection,
+  isBranchPathSection,
 } from "./structure";
 
 // The stable wire/registry key for a fill: template id plus a program-wide
@@ -87,7 +87,7 @@ export function isPatchFillBinding(binding: Binding) {
     isPersisted() &&
     binding.type === BindingType.let &&
     binding.section.isBranch &&
-    isCapturePathSection(binding.section) &&
+    isBranchPathSection(binding.section) &&
     // Client-reselectable branches never construct from frames, so their
     // state needs no seed fill.
     !binding.section.isClientReselectable &&
@@ -108,7 +108,7 @@ export function isPatchFillBinding(binding: Binding) {
       return true;
     }
     // A rendered read inside reselectable structure promotes to an owner
-    // fill (no capture channel); effect reads use the owner slot write.
+    // fill (no patch-write channel); effect reads use the owner slot write.
     let readSection: Section | undefined = read.section;
     while (readSection && readSection !== binding.section) {
       if (readSection.isClientReselectable) return true;

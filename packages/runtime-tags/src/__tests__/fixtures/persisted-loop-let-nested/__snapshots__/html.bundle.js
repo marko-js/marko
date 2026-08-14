@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({
+_shells({
 	a0: ",`a0;D%b%;<li><!><!></li>`",
 	a1: ",`a1 a2;D l ;<span> </span><button>note</button>`"
 });

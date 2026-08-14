@@ -36,7 +36,7 @@ import {
 } from "./delivery";
 import {
   inClientReselectableStructure,
-  isCapturePathSection,
+  isBranchPathSection,
 } from "./structure";
 
 export function assertSupportedPatch(program: t.NodePath<t.Program>) {
@@ -433,7 +433,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // every enclosing section is itself a branch — unless the body
         // classified client-owned (content sections inherit ownership).
         if (
-          !isCapturePathSection(section) &&
+          !isBranchPathSection(section) &&
           !getSectionForBody(tag.get("body"))?.isClientReselectable
         ) {
           unsupported(node);
