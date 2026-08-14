@@ -1,4 +1,4 @@
-// size: 26250 (min) 9757 (brotli)
+// size: 26206 (min) 9777 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1620,6 +1620,7 @@ function observeOnce(scope, nodeAccessor, init, callback) {
 }
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),
+    (el.c = hasChanged),
     delegate("input", handleChange),
     el.form && delegate("reset", handleFormReset),
     isResuming && hasChanged(el) && queueMicrotask(onChange));
@@ -1629,7 +1630,7 @@ function handleChange(ev) {
 }
 function handleFormReset(ev) {
   let handlers = [];
-  for (let el of ev.target.elements) el._ && hasFormElementChanged(el) && handlers.push(el._);
+  for (let el of ev.target.elements) el._ && el.c(el) && handlers.push(el._);
   requestAnimationFrame(() => {
     if (!ev.defaultPrevented) for (let change of handlers) change();
   });
@@ -1642,9 +1643,6 @@ function hasCheckboxChanged(el) {
 }
 function hasSelectChanged(el) {
   for (let opt of el.options) if (opt.selected !== opt.defaultSelected) return !0;
-}
-function hasFormElementChanged(el) {
-  return el.options ? hasSelectChanged(el) : hasValueChanged(el) || hasCheckboxChanged(el);
 }
 function normalizeStrProp(value) {
   return normalizeAttrValue(value) || "";
