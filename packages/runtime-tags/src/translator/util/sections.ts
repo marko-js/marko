@@ -344,7 +344,10 @@ export function getNodeContentType(
           case "if":
           case "await":
           case "try":
+            return ContentType.Dynamic;
           case "show":
+            // Optimizing a redundant `<show=true>` only saves its placeholder,
+            // so all `<show>` tags intentionally remain dynamic here.
             return ContentType.Dynamic;
           default:
             return null;

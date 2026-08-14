@@ -60,12 +60,6 @@ occurrences and 11% of all SSR bytes at 13 B each, 9 B of which is fixed comment
 
 `<${expr}/>` always builds the fully general `_dynamic_tag` signal (`visitors/tag/dynamic-tag.ts`), whose string-tag branch pulls `_attrs`, `_attrs_content`, `_attrs_script` and `controllableRenders` (`src/dom/control-flow.ts`) into the shared chunk. A slim `_dynamic_tag_content` already exists, emitted as an extra `directContentExport` a known parent calls instead, so `<${input.content}/>` lets the bundler shake the general signal out. But `isDirectContentBinding` requires `read.section === binding.section`, so the idiomatic optional slot `<if=input.aside><${input.aside.content}/></if>` — the read now lives in the `<if>` body section — gets no direct export and drags `_dynamic_tag` in. Relax the section check (the passthrough is still input-less and parameter-less; only the branch scope differs) so the direct export is emitted there too. Related but separate: the `TODO: Optimize for when we are certain that this is either always a string or always a custom tag` at `tag-name-type.ts:191` would cover the `<let>`-bound tag name case. Re-verify: compile that `<if>` template with `-o dom` and check for an `export const $input_aside_content_direct = _dynamic_tag_content(0)` beside the `_dynamic_tag` signal, as `<div><${input.content}/></div>` already produces.
 
-## See through statically-shown `<show>` bodies in `getNodeContentType`
-
-`packages/runtime-tags/src/translator/util/sections.ts` › `getNodeContentType` | 2026-07-02 | impact:low | effort:low
-
-`getNodeContentType` returns `ContentType.Dynamic` for every core `<show>`, so a placeholder beside one is classified `SiblingText.Before` — a `<!>` in the client template plus a Replace visit — even when the display value is statically truthy and `<show>`'s translate exit splices the body inline with no runtime boundary. Compiling `<div><show=true><b/></show>${input.x}</div>` to dom gives `"<div><b></b><!></div>"` / walks `"Db%l"`, versus `"<div><b></b> </div>"` / `"Db l"` for the same markup without the `<show>`. Return the body's `startType`/`endType` for a static-display `<show>`, the way the custom-tag arm reads `tagSection.content[extraMember]`; `evaluate()` on the display attribute is cached, so it is safe to call here even before `<show>`'s own analyze has run. Re-verify with that dom compile.
-
 ## Skip child client wiring for constant-input instances of client-inert tags
 
 `packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts` › `analyze.enter` | 2026-07-09 | impact:med | effort:high
