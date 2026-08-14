@@ -1,5 +1,5 @@
 // template.marko
-_renderer_shells({
+_shells({
 	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>`",
 	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`"
 });

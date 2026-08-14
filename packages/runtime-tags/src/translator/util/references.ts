@@ -1461,7 +1461,7 @@ export function finalizeReferences() {
     });
   }
 
-  // The RETURN classifies like a capture: its reason (and, persisted, its
+  // The RETURN classifies like a patch write: its reason (and, persisted, its
   // param groups) must exist BEFORE group finalize and known-tag stamping,
   // or same-file call sites fail closed on a group-count mismatch.
   const programSection = getProgram().node.extra.section!;

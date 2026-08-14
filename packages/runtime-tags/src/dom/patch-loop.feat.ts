@@ -10,7 +10,7 @@ import {
 } from "../common/types";
 import { _for_of } from "./control-flow";
 import { shells } from "./patch-branch.feat";
-import { failPatch, patchers, walkScope } from "./resume";
+import { failPatch, patchers, patchScope } from "./resume";
 
 // Interleaved `[key, partial, …, shellId?]`: an object head means implicit
 // index keys, and the trailing string (a partial never is one) is the shell.
@@ -55,7 +55,7 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
     walks,
     setup || 0,
     ((branch: Scope, [partial]: [Scope]) =>
-      walkScope(partial, branch)) as never,
+      patchScope(partial, branch)) as never,
   )(
     scope,
     keys ? [partials, (_partial: unknown, i: number) => keys[i]] : [partials],

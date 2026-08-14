@@ -4,7 +4,7 @@ import { generateUid, getSharedUid } from "./generate-uid";
 import { isPersisted } from "./marko-config";
 import { type Opt, some, Sorted } from "./optional";
 import { scopeReasonRuntime } from "./persisted/intrinsics";
-import { isCapturePathSection } from "./persisted/structure";
+import { isBranchPathSection } from "./persisted/structure";
 import {
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -128,9 +128,9 @@ export function getExprIfSerialized<
     return expr as R;
   }
 
-  // Capture-branch pairing never prunes with a value group: interior patch
+  // Branch-path pairing never prunes with a value group: interior patch
   // writes anchor through it, so it rides the root page/patch reason.
-  if (isPersisted() && isCapturePathSection(section) && section.parent) {
+  if (isPersisted() && isBranchPathSection(section) && section.parent) {
     let rootSection = section;
     while (rootSection.parent) rootSection = rootSection.parent;
     return t.logicalExpression(
