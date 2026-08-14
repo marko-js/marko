@@ -161,6 +161,9 @@ export interface Section {
   /** An `<await>`/`<try>` body: always-rendered like the capture path, but
    * paired (never constructed) by patches. */
   isBoundary: boolean;
+  /** Awaits a construct must deliver body content for (marker binding +
+   * body section); `buildShells` prunes those no shipped shell reaches. */
+  constructSetups: { binding: Binding; body: Section }[] | undefined;
   /** Branch body whose selection can re-run on the client (classified at
    * persisted finalize): patch renders skip it and frames omit its entry. */
   isClientReselectable: true | undefined;
@@ -255,6 +258,7 @@ export function startSection(
       readsOwner: false,
       isBranch: false,
       isBoundary: false,
+      constructSetups: undefined,
       isClientReselectable: undefined,
       shellBlocked: undefined,
       opaqueRenderProps: undefined,

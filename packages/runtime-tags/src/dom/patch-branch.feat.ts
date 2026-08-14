@@ -37,13 +37,17 @@ patchers[PatchKey.Setup] = (scope, _key, value) => {
   (scope as Scope & { [kSetup]?: Scope })[kSetup] = value as Scope;
 };
 
-type Shell = [
+type SetupFn = (branch: Scope) => void;
+export type Shell = [
   template: string,
   walks: string,
-  setup?: ((branch: Scope) => void) | 0,
-  content?: ReturnType<typeof _content>,
+  setup?: SetupFn | 0,
+  content?: ReturnType<ReturnType<typeof _content>>,
 ];
 export const shells: Record<string, Shell> = {};
+
+export const getShellContent = (shell: Shell) =>
+  (shell[3] ??= _content("", shell[0], shell[1], shell[2])());
 
 // `"id effects…;walks;template"` (`,` in place of `;walks;` when walk-less):
 // the header excludes both separators, so the first one is authoritative.
@@ -53,10 +57,16 @@ _patch_records((record) => {
   const idToken = record.slice(0, first);
   const sep = (idToken + " ").indexOf(" ");
   const effects = idToken.slice(sep + 1);
+  // A missing registration means required client code was tree-shaken:
+  // constructing would silently misrender. Closure renders ride as `._`.
   const fns =
-    effects &&
-    effects !== "!" &&
-    effects.split(" ").map((id) => getRegisteredWithScope(id));
+    effects && effects !== "!"
+      ? effects.split(" ").map((id) => {
+          const fn = getRegisteredWithScope(id);
+          return ((fn && ((fn as { _?: unknown })._ || fn)) ||
+            failPatch()) as SetupFn;
+        })
+      : undefined;
   shells[idToken.slice(0, sep)] = [
     record.slice(second + 1),
     record.slice(first + 1, second),
@@ -66,19 +76,7 @@ _patch_records((record) => {
             walkConstruct(branch[kSetup] as Scope, branch);
             branch[kSetup] = 0;
           }
-          if (fns) {
-            // A missing registration means required client code was
-            // tree-shaken: constructing would silently misrender. Closure
-            // signals expose their per-branch render as `._`.
-            for (const fn of fns) {
-              queueEffect(
-                branch,
-                ((fn && ((fn as { _?: unknown })._ || fn)) || failPatch()) as (
-                  s: Scope,
-                ) => void,
-              );
-            }
-          }
+          if (fns) for (const impl of fns) queueEffect(branch, impl);
         }
       : 0,
   ];
@@ -148,7 +146,7 @@ function construct(
   const parentNode = inside ? (marker as Element) : marker.parentNode!;
   const branch = createAndSetupBranch(
     scope[AccessorProp.Global],
-    (shell[3] ??= _content("", shell[0], shell[1], shell[2]))(),
+    getShellContent(shell),
     scope,
     parentNode,
   );
