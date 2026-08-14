@@ -6,5 +6,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const y = x * 2;
 	const z = y * 3;
 	_html(`<div>${_escape(z)}</div>`);
-	_resume_branch($scope0_id);
 }, 1);

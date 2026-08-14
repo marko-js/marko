@@ -14,5 +14,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = "y";
 	child_default({ value: 3 });
 	child_default({ value: x });
-	_resume_branch($scope0_id);
 }, 1);

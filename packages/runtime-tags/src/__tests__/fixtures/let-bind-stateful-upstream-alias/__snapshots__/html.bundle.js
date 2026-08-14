@@ -3,7 +3,7 @@ var store_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let list = input.value;
-	const $return = {
+	return {
 		list,
 		listChange: _resume(function(v) {
 			list = v;
@@ -12,8 +12,6 @@ var store_default = _template("b", (input) => {
 			list = [];
 		}, "b1", $scope0_id)
 	};
-	_resume_branch($scope0_id);
-	return $return;
 });
 
 // template.marko

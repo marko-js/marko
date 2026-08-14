@@ -16,5 +16,4 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div id=tags-api>${_escape(0)}</div>`);
 	_dynamic_tag($scope0_id, "b", _marko_template, {}, 0, 0, 0);
-	_resume_branch($scope0_id);
 }, 1);

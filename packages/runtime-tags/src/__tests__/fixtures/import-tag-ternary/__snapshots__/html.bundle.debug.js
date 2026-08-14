@@ -18,5 +18,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let x = 1;
 	_dynamic_tag($scope0_id, "#text/0", x === 1 ? baz_default : foo_default, {}, 0, 0, 0);
-	_resume_branch($scope0_id);
 }, 1);

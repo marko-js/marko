@@ -28,5 +28,4 @@ var template_default = _template("a", (input) => {
 		});
 	}, "id", $scope0_id, "a", 1, 0, 0, 0, 1);
 	_html("</tbody></table>");
-	_resume_branch($scope0_id);
 }, 1);
