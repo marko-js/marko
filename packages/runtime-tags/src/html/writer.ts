@@ -309,7 +309,6 @@ function markText(
 export function writePatch(scopeId: number, entries: Record<string, unknown>) {
   const { state } = $chunk.boundary;
   if (state.patchFlushed) {
-    if (state.patchPoison) return;
     throw new Error(
       "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
     );
@@ -1408,7 +1407,6 @@ export class State implements SerializeState {
   declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
   declare patchFlushed?: 1;
   declare patchDeferred?: 1;
-  declare patchPoison?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   public flushScopes = false;

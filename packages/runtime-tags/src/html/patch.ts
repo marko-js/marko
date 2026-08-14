@@ -106,7 +106,6 @@ export function renderPatch(
 class PatchState extends State {
   public sentShells?: Set<string>;
   public bindDeposits?: Map<WeakKey, number>;
-  public poisonSent?: 1;
   public shellFrames = "";
   override writesPatches = true;
   override shipShell(shellId: string | 0 | undefined) {
@@ -121,16 +120,10 @@ class PatchState extends State {
   }
 
   override flushChunk(_html: string, scripts: string) {
-    // Everything after a delivered poison frame is dead: the client
-    // already rejected and navigated.
-    if (this.poisonSent) return "";
-    if (this.patchPoison) this.poisonSent = 1;
     const out = scripts ? scripts + "\n" : "";
-    if (!this.patchPoison) {
-      this.patchFlushed = undefined;
-      this.patchPartials = undefined;
-      this.serializer = new Serializer();
-    }
+    this.patchFlushed = undefined;
+    this.patchPartials = undefined;
+    this.serializer = new Serializer();
     return out;
   }
 
@@ -138,13 +131,6 @@ class PatchState extends State {
   // mid-expression) hoists shells into a preceding `_()` call.
   override resumeScript(resumes: string) {
     this.patchFlushed = 1;
-    // A poisoned frame (a bound registration with no rebind entry) is
-    // replaced by a bare poison tree: the client rejects and navigates.
-    if (this.patchPoison) {
-      this.shellFrames = "";
-      this.patchDeferred = undefined;
-      return '[{"' + PatchKey.Poison + '":1}]';
-    }
     const shellChunks = this.shellFrames && this.shellFrames.slice(1);
     this.shellFrames = "";
     if (this.patchDeferred) {
