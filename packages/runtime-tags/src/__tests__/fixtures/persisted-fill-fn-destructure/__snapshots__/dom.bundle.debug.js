@@ -3,7 +3,7 @@ const $template$1 = "<em> </em>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input$1 = ($scope, input) => _text($scope["#text/0"], input.fn("x"));
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, "D l", $setup$1, $input$1);
+var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";

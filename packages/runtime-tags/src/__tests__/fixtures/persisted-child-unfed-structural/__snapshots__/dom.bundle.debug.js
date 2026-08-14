@@ -9,7 +9,7 @@ const $input$1 = ($scope, input) => {
 	$input_open($scope, input.open);
 	$input_text($scope, input.text);
 };
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>+</button></main>";

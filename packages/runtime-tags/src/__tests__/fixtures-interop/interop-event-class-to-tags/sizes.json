@@ -2,8 +2,8 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 64674,
-        "brotli": 20216
+        "min": 64710,
+        "brotli": 20232
       },
       "files": {
         "components/tags-pinger.marko": 659,

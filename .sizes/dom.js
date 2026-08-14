@@ -1,4 +1,4 @@
-// size: 27469 (min) 10171 (brotli)
+// size: 27506 (min) 10193 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -184,7 +184,9 @@ let unsafeStyleAttrReg = /[\\;]/g,
           ),
           getTagVar &&
             (scope[childScopeAccessor]
-              ? (scope[childScopeAccessor].T = (value) => getTagVar()(scope, value))
+              ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
+                typeof normalizedRenderer == "string" &&
+                  bindNativeTagVar?.(scope[childScopeAccessor]))
               : getTagVar()(scope, void 0)),
           typeof normalizedRenderer == "string")
         ) {
@@ -248,6 +250,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
           renderer.g[accessor](scope[childScopeAccessor], renderer.h[accessor]);
     };
   }),
+  bindNativeTagVar,
   _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => _resume("d", dynamicTagScript)),
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
@@ -1282,7 +1285,7 @@ function _style_shell(scope, nodeAccessor) {
   let element = scope[nodeAccessor],
     id = _id(scope);
   (_attr_nonce(scope, nodeAccessor),
-    (element.className = id),
+    _attr(element, "class", id),
     _text_content(element, "." + id + "~*{}"));
 }
 function _style_rule_item(element, name, value) {

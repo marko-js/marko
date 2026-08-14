@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label || "x");
 const $input = ($scope, input) => $input_label($scope, input.label);
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, "D l", $setup$1, $input);
+var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, "D l", 0, $input);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";

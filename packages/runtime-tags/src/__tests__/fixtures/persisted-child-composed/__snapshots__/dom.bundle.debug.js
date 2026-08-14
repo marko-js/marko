@@ -8,7 +8,7 @@ const $input$2 = ($scope, input) => {
 	$input_text($scope, input.text);
 	$input_note($scope, input.note);
 };
-var leaf_default = /*@__PURE__*/ _template("__tests__/tags/relay/tags/leaf/index.marko", $template$2, $walks$2, $setup$2, $input$2);
+var leaf_default = /*@__PURE__*/ _template("__tests__/tags/relay/tags/leaf/index.marko", $template$2, $walks$2, 0, $input$2);
 
 // tags/relay/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<section>${_w0}</section>`)($template$2);
@@ -20,7 +20,7 @@ const $input$1 = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_qty($scope, input.qty);
 };
-var relay_default = /*@__PURE__*/ _template("__tests__/tags/relay/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var relay_default = /*@__PURE__*/ _template("__tests__/tags/relay/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);

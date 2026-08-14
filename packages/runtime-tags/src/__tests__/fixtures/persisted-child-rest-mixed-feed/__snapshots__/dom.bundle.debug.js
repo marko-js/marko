@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $input_label$1 = ($scope, rest_label) => _text($scope["#text/0"], rest_label);
 const $input2 = ($scope, input) => $input_label$1($scope, input?.label);
 const $input$1 = $input2;
-var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $template$1, "D l", $setup$1, $input$1);
+var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);

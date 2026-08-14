@@ -16,4 +16,4 @@ const $for_content__$params = ($scope, $params2) => {
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> <span> </span><button>+</button></li>", "D bD l ", $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
