@@ -93,8 +93,9 @@ export function queueAsyncRender<T, U extends Scope = Scope>(
   signal: Signal<T, U>,
   value?: T,
 ) {
+  // Existing pending work already owns a scheduled flush.
+  if (!pendingRenders.length) queueMicrotask(run);
   queueRender(scope, signal, -1, value);
-  queueMicrotask(run);
 }
 
 export function prepareEffects(fn: () => void): unknown[] {

@@ -1,4 +1,4 @@
-// size: 26240 (min) 9737 (brotli)
+// size: 26250 (min) 9757 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -456,7 +456,7 @@ function run() {
   runEffects(effects);
 }
 function queueAsyncRender(scope, signal, value) {
-  (queueRender(scope, signal, -1, value), queueMicrotask(run));
+  (pendingRenders.length || queueMicrotask(run), queueRender(scope, signal, -1, value));
 }
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
