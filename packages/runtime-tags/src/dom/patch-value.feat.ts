@@ -1,7 +1,8 @@
 import "./patch-write";
+import { rendererKey } from "../common/helpers";
 import { type Opt, toArray } from "../common/opt";
 import type { Accessor, Scope } from "../common/types";
-import { AccessorProp, PatchKey } from "../common/types";
+import { AccessorPrefix, AccessorProp, PatchKey } from "../common/types";
 import { queueEffect } from "./queue";
 import {
   constructPatchers,
@@ -9,7 +10,7 @@ import {
   getRegisteredWithScope,
   patchers,
 } from "./resume";
-import { patchFills } from "./signals";
+import { dynamicTagFills, patchFills } from "./signals";
 
 // A soft miss is a fill whose intersection was tree-shaken: nothing to
 // update. A construct's seed missing means required client code is gone.
@@ -17,6 +18,25 @@ patchers[PatchKey.Value] = (scope, key, value) =>
   patchFills[key.slice(PatchKey.Value.length)]?.(scope, value);
 constructPatchers[PatchKey.Value] = (scope, key, value) =>
   (patchFills[key.slice(PatchKey.Value.length)] || failPatch())(scope, value);
+
+// A dynamic tag's renderer selection (the value itself rides its fill
+// entry): with no live signal an unchanged key pairs, a change rejects.
+patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
+  scope,
+  key,
+  entry,
+) => {
+  const [fillKey, value] = entry as [string | 0, unknown];
+  if (
+    !(fillKey && dynamicTagFills.has(fillKey)) &&
+    scope[
+      (AccessorPrefix.ConditionalRenderer +
+        key.slice(PatchKey.DynamicTag.length)) as Accessor
+    ] !== rendererKey(value as string)
+  ) {
+    failPatch();
+  }
+};
 
 // A bind installs a handler the way CSR setup does: anchored at the scope
 // its factory was registered against, writing down the child-link path

@@ -171,7 +171,6 @@ export interface Section {
   shellBlocked: ShellBlocker.Value | undefined;
   /** Input props this section renders as fed renderers: a patch poisons
    * while they are non-nullish (a stopgap, dropped once they dispatch). */
-  opaqueRenderProps: string[] | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -260,7 +259,6 @@ export function startSection(
       constructSetups: undefined,
       isClientReselectable: undefined,
       shellBlocked: undefined,
-      opaqueRenderProps: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;

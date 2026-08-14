@@ -101,6 +101,9 @@ export function isPatchFillBinding(binding: Binding) {
 
   for (const read of binding.reads) {
     if (read.isEffect) continue;
+    // A dynamic tag name is a hole only the client can paint (a re-render,
+    // not a server-written entry): it fills without a state intersection.
+    if (read.isDynamicTagName) return true;
     if (getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
     }
