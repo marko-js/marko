@@ -21,4 +21,4 @@ function $valueChange(next) {
 	document.querySelector("main").dataset.attempt = String(next);
 }
 _resume("__tests__/template.marko_1/valueChange", $valueChange);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

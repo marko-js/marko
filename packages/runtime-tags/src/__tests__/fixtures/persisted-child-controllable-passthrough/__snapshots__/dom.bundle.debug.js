@@ -18,7 +18,7 @@ const $input$2 = ($scope, input) => {
 	$input_onCount$1($scope, input.onCount);
 };
 const $input_onCount$1 = /*@__PURE__*/ _const("input_onCount", $if_content__input_onCount);
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$2, "b%c", $setup$2, $input$2);
+var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$2, "b%c", 0, $input$2);
 
 // tags/middle/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
@@ -30,7 +30,7 @@ const $input$1 = ($scope, input) => {
 	$input_show$1($scope, input.show);
 	$input_onCount($scope, input.onCount);
 };
-var middle_default = /*@__PURE__*/ _template("__tests__/tags/middle/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var middle_default = /*@__PURE__*/ _template("__tests__/tags/middle/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template$1);
