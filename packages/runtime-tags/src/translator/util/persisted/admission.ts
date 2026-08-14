@@ -725,8 +725,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             (!tagDef.template && !tagDef.renderer))
         )
       ) {
-        // A fed renderer renders here: the compile cannot see its content,
-        // so the section poisons its patches (navigation) instead.
+        // A fed renderer delivers as a fill (`fedRenderProps`): the
+        // dispatcher re-renders on a key change and pairs otherwise.
         if (
           isContentRenderTag(node) &&
           tag.scope.getBinding("input")?.path.type === "Program"
@@ -737,7 +737,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               "a renderer read inside client-owned structure would need to cross the wire as a function",
             );
           }
-          // Recorded as an opaque render prop by the decisions pass.
           return;
         }
         unsupported(node);

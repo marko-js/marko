@@ -551,16 +551,6 @@ function depositEmbeddedBinds(
   }
 }
 
-// No client patcher registers this kind, so applying the frame rejects
-// and the navigation fallback runs. A stopgap like the admission guard:
-// fed renderers should eventually dispatch like any dynamic hop.
-export function _patch_poison(scopeId: number) {
-  if (getState().writesPatches) {
-    writePatch(scopeId, { [PatchKey.Poison]: 1 });
-  }
-  return "";
-}
-
 export function _patch_effect(
   scopeId: number,
   registerId: string,
