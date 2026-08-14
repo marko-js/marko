@@ -18,7 +18,7 @@ const $input$1 = ($scope, input) => {
 	$input_onCount($scope, input.onCount);
 };
 const $input_onCount = /*@__PURE__*/ _const("input_onCount", $if_content__input_onCount);
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$1, "b%c", $setup$1, $input$1);
+var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko
 const $template = "<main><h1> </h1><!></main>";
