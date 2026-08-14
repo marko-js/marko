@@ -155,12 +155,6 @@ The closure `signal` is assigned only in the `pending.then((mod) => queueAsyncRe
 
 `knownTagTranslateHTML` falls back to an object literal `{0: g0, 1: g1, …}` whenever any group guard is a runtime expression, even when every group shares the same expression, and that literal is allocated on every render of the call site — one per row inside a `<for>`. Since `_serialize_if` treats `1` as "all groups" and a number as a bit-per-group mask, a shared 1|0 guard can be passed bare when `hasSkippedReasons` is false, or as `<bitmask> * guard` when groups were skipped. Gate it on the shared expression being normalized to 1|0 (a `_serialize_guard` call, an `||` chain of them, or a numeric literal), because `buildGuardExpr` can also hand back a raw `$scopeN_reason` whose value is itself a mask or object. Re-verify: `fixtures/at-tag-inside-if-tag/__snapshots__/html.bundle.js` emits `_set_serialize_reason({0: $sg__input_x, 1: $sg__input_x, 2: $sg__input_x})`; across the committed html.bundle.js corpus 17 of 137 calls use the object form and 14 have identical values in every slot.
 
-## Reuse the `anchors` map for the intersection id loop in `finalizeReferences`
-
-`packages/runtime-tags/src/translator/util/references.ts` › `finalizeReferences` | 2026-07-23 | impact:low | effort:low
-
-The id-assignment loop tests `intersections[intersectionIndex].filter(isOwnedBinding).at(-1) === binding`, allocating a filtered array per owned binding, while the `anchors` map built ~30 lines above already holds each intersection's last owned binding; hoist `anchors` out of the `if (intersections.length)` block and the test becomes `anchors.get(intersection) === binding`. That removes an O(ownBindings × intersectionLength) walk (~640k element visits for 800 `<let>`s read in one expression). Same pass: `filter(bindings, isOwnedBinding)` is built twice and could be shared, and the name-collision check `find(section.bindings, ({ name }) => name === binding.name)` is an O(bindings²) scan a per-section `Set<string>` makes O(1). Re-verify: swap in the map lookup and run `pnpm run test:update -- --grep "runtime-tags/translator for-tag "` — snapshots must be unchanged, since the two expressions are equal by construction.
-
 ## Skip the `AbortController` when a section only uses `$signal` for cleanup
 
 `packages/runtime-tags/src/translator/visitors/referenced-identifier.ts` › `analyze` | 2026-07-29 | impact:med | effort:med
