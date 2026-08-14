@@ -4,9 +4,9 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A registered function inside a custom iterator the deposit scan cannot
-// traverse still serializes: its own write channel deposits it first, and
-// deposits share by value identity across the frame.
+// A registered function inside a custom iterator the bind scan cannot
+// traverse still serializes: its own write channel binds it first, and
+// binds share by value identity across the frame.
 export const config: TestConfig = {
   persisted: true,
   steps: [{ title: "a" }, click, { title: "b" }],
