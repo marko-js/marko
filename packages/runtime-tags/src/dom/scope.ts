@@ -1,5 +1,9 @@
 import { AccessorProp, type BranchScope, type Scope } from "../common/types";
-import { $signalReset } from "./abort-signal";
+import {
+  $signalReset,
+  abortsEnabled,
+  subscriptionsEnabled,
+} from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
 import { runId } from "./queue";
 
@@ -93,10 +97,14 @@ const destroyNestedScopes = function destroyNestedScopes(scope: Scope) {
 };
 
 function cleanupScope(scope: Scope) {
-  scope[AccessorProp.Subscriptions]?.forEach(unsubscribe, scope);
+  if (subscriptionsEnabled) {
+    scope[AccessorProp.Subscriptions]?.forEach(unsubscribe, scope);
+  }
 
-  for (const id in scope[AccessorProp.AbortControllers]) {
-    $signalReset(scope, id);
+  if (abortsEnabled) {
+    for (const id in scope[AccessorProp.AbortControllers]) {
+      $signalReset(scope, id);
+    }
   }
 }
 

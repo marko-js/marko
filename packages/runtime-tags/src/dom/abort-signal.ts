@@ -13,6 +13,7 @@ export function $signalReset(scope: Scope, id: string | number) {
 }
 
 export function $signal(scope: Scope, id: string | number) {
+  abortsEnabled = 1;
   trackCleanup(scope);
 
   return ((scope[AccessorProp.AbortControllers] ||= {})[id] ||=
@@ -23,8 +24,16 @@ export function $signal(scope: Scope, id: string | number) {
 export function trackCleanup(scope: Scope, subscribers?: Set<Scope>) {
   const branch = scope[AccessorProp.ClosestBranch];
   if (branch) (branch[AccessorProp.AbortScopes] ||= new Set()).add(scope);
-  if (subscribers) (scope[AccessorProp.Subscriptions] ||= []).push(subscribers);
+  if (subscribers) {
+    subscriptionsEnabled = 1;
+    (scope[AccessorProp.Subscriptions] ||= []).push(subscribers);
+  }
 }
+
+// Teardown-sweep latches for `scope.ts`, written only here: like
+// `branchesEnabled`, they fold away with their writers, and the sweeps with them.
+export let abortsEnabled: undefined | 1;
+export let subscriptionsEnabled: undefined | 1;
 
 function abort(ctrl: AbortController) {
   ctrl.abort();
