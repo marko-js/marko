@@ -7,5 +7,5 @@ export const DYNAMIC_TAG_SCRIPT_REGISTER_ID = MARKO_DEBUG
 
 export const DYNAMIC_TAG_VAR_REGISTER_ID = MARKO_DEBUG ? "_dynamicTagVar" : "e";
 
-// Frame-scoped var resolving a patch frame's bind-deposit references.
-export const BIND_DEPOSIT_FRAME_VAR = MARKO_DEBUG ? "bindDeposit" : "b";
+// Frame-scoped var resolving an index in the frame's bind table.
+export const BIND_FRAME_VAR = MARKO_DEBUG ? "bind" : "b";
