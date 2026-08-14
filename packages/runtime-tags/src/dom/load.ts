@@ -11,6 +11,7 @@ import {
 import { addAwaitCounter, renderCatch } from "./control-flow";
 import { queueAsyncRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
+import { withLazy } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -30,74 +31,78 @@ export interface LoadTrigger {
   <T>(load: () => Promise<T>): () => Promise<T>;
 }
 
-export function _load_template(id: string, load: () => Promise<Renderer>) {
-  let pending: ReturnType<typeof load> | undefined;
-  const lazyTemplate = _template(
-    id,
-    0,
-    0,
-    (branch) => {
-      const awaitCounter = addAwaitCounter(branch);
-      branch[AccessorProp.Load] ||= new Map() as LoadValues;
-      (pending ||= load()).then(
-        (renderer) => {
-          Object.assign(lazyTemplate, renderer);
-          queueAsyncRender(branch as BranchScope, (branch) =>
-            insertLoaded(
-              renderer,
-              branch,
-              branch[AccessorProp.StartNode],
-              awaitCounter,
-            ),
-          );
-        },
-        loadFailed(branch as BranchScope, awaitCounter),
-      );
-    },
-    _load_signal(() =>
-      (pending ||= load()).then((r) => ({ _: r[RendererProp.Params]! })),
-    ),
-  ) as Template & Renderer;
-  return lazyTemplate;
-}
+export const _load_template = /*@__PURE__*/ withLazy(
+  (id: string, load: () => Promise<Renderer>) => {
+    let pending: ReturnType<typeof load> | undefined;
+    const lazyTemplate = _template(
+      id,
+      0,
+      0,
+      (branch) => {
+        const awaitCounter = addAwaitCounter(branch);
+        branch[AccessorProp.Load] ||= new Map() as LoadValues;
+        (pending ||= load()).then(
+          (renderer) => {
+            Object.assign(lazyTemplate, renderer);
+            queueAsyncRender(branch as BranchScope, (branch) =>
+              insertLoaded(
+                renderer,
+                branch,
+                branch[AccessorProp.StartNode],
+                awaitCounter,
+              ),
+            );
+          },
+          loadFailed(branch as BranchScope, awaitCounter),
+        );
+      },
+      _load_signal(() =>
+        (pending ||= load()).then((r) => ({ _: r[RendererProp.Params]! })),
+      ),
+    ) as Template & Renderer;
+    return lazyTemplate;
+  },
+);
 
-export function _load_setup(
-  nodeAccessor: EncodedAccessor,
-  childScopeAccessor: EncodedAccessor,
-  load: () => Promise<LoadModule>,
-) {
-  if (!MARKO_DEBUG) {
-    nodeAccessor = decodeAccessor(nodeAccessor as number);
-    childScopeAccessor = decodeAccessor(childScopeAccessor as number);
-  }
-
-  let pending: ReturnType<typeof load> | undefined;
-  let renderer: Renderer | undefined;
-
-  return (owner: Scope) => {
-    const child = owner[childScopeAccessor] as BranchScope;
-    if (renderer) {
-      insertLoaded(renderer, child, owner[nodeAccessor] as ChildNode);
-    } else {
-      const awaitCounter = addAwaitCounter(owner);
-      child[AccessorProp.Load] ||= new Map() as LoadValues;
-      (pending ||= load()).then(
-        (mod) => {
-          renderer = _content("", ...mod._)();
-          queueAsyncRender(child, (child) =>
-            insertLoaded(
-              renderer!,
-              child,
-              owner[nodeAccessor] as ChildNode,
-              awaitCounter,
-            ),
-          );
-        },
-        loadFailed(child, awaitCounter),
-      );
+export const _load_setup = /*@__PURE__*/ withLazy(
+  (
+    nodeAccessor: EncodedAccessor,
+    childScopeAccessor: EncodedAccessor,
+    load: () => Promise<LoadModule>,
+  ) => {
+    if (!MARKO_DEBUG) {
+      nodeAccessor = decodeAccessor(nodeAccessor as number);
+      childScopeAccessor = decodeAccessor(childScopeAccessor as number);
     }
-  };
-}
+
+    let pending: ReturnType<typeof load> | undefined;
+    let renderer: Renderer | undefined;
+
+    return (owner: Scope) => {
+      const child = owner[childScopeAccessor] as BranchScope;
+      if (renderer) {
+        insertLoaded(renderer, child, owner[nodeAccessor] as ChildNode);
+      } else {
+        const awaitCounter = addAwaitCounter(owner);
+        child[AccessorProp.Load] ||= new Map() as LoadValues;
+        (pending ||= load()).then(
+          (mod) => {
+            renderer = _content("", ...mod._)();
+            queueAsyncRender(child, (child) =>
+              insertLoaded(
+                renderer!,
+                child,
+                owner[nodeAccessor] as ChildNode,
+                awaitCounter,
+              ),
+            );
+          },
+          loadFailed(child, awaitCounter),
+        );
+      }
+    };
+  },
+);
 
 function insertLoaded(
   renderer: Renderer,
@@ -159,28 +164,30 @@ function loadFailed(
   };
 }
 
-export function _load_signal(load: () => Promise<LoadSignal>): Signal {
-  let pending: ReturnType<typeof load> | undefined;
-  let signal: Signal | undefined;
-  return (scope: Scope, value: unknown) => {
-    pending ||= load();
-    if (
-      scope[AccessorProp.Load] ||
-      (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)
-    ) {
-      (scope[AccessorProp.Load] ||= new Map() as LoadValues).set(pending, {
-        [LoadSignalValue.Value]: value,
-      });
-    } else if (signal) {
-      signal(scope, value);
-    } else {
-      pending.then(
-        (mod) => queueAsyncRender(scope, (signal = mod._), value),
-        () => 0,
-      );
-    }
-  };
-}
+export const _load_signal = /*@__PURE__*/ withLazy(
+  (load: () => Promise<LoadSignal>): Signal => {
+    let pending: ReturnType<typeof load> | undefined;
+    let signal: Signal | undefined;
+    return (scope: Scope, value: unknown) => {
+      pending ||= load();
+      if (
+        scope[AccessorProp.Load] ||
+        (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)
+      ) {
+        (scope[AccessorProp.Load] ||= new Map() as LoadValues).set(pending, {
+          [LoadSignalValue.Value]: value,
+        });
+      } else if (signal) {
+        signal(scope, value);
+      } else {
+        pending.then(
+          (mod) => queueAsyncRender(scope, (signal = mod._), value),
+          () => 0,
+        );
+      }
+    };
+  },
+);
 
 export function _load_visible_trigger(
   selector: string,

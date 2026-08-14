@@ -1,4 +1,4 @@
-// size: 26237 (min) 9754 (brotli)
+// size: 26268 (min) 9780 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -95,6 +95,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   curRenders,
   embedRenders,
   readyIds,
+  lazyEnabled,
   isResuming,
   cloneCache = {},
   R = /[\p{L}\p{N}]/gu,
@@ -835,6 +836,9 @@ function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
+function withLazy(runtime) {
+  return ((lazyEnabled = 1), runtime);
+}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
@@ -1042,7 +1046,7 @@ function init(runtimeId = "M") {
                 } else
                   branchesEnabled
                     ? (visitBranches ||= createVisitBranches())()
-                    : render.b && (visits[retained++] = visit);
+                    : lazyEnabled && render.b && (visits[retained++] = visit);
               return (
                 embedRenders &&
                   !embedAnchor &&
@@ -2058,7 +2062,66 @@ let empty = [],
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
-  };
+  },
+  _load_template = /*@__PURE__*/ withLazy((id, load) => {
+    let pending,
+      lazyTemplate = _template(
+        id,
+        0,
+        0,
+        (branch) => {
+          let awaitCounter = addAwaitCounter(branch);
+          ((branch.X ||= /* @__PURE__ */ new Map()),
+            (pending ||= load()).then(
+              (renderer) => {
+                (Object.assign(lazyTemplate, renderer),
+                  queueAsyncRender(branch, (branch) =>
+                    insertLoaded(renderer, branch, branch.S, awaitCounter),
+                  ));
+              },
+              loadFailed(branch, awaitCounter),
+            ));
+        },
+        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
+      );
+    return lazyTemplate;
+  }),
+  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
+    ((nodeAccessor = decodeAccessor(nodeAccessor)),
+      (childScopeAccessor = decodeAccessor(childScopeAccessor)));
+    let pending, renderer;
+    return (owner) => {
+      let child = owner[childScopeAccessor];
+      if (renderer) insertLoaded(renderer, child, owner[nodeAccessor]);
+      else {
+        let awaitCounter = addAwaitCounter(owner);
+        ((child.X ||= /* @__PURE__ */ new Map()),
+          (pending ||= load()).then(
+            (mod) => {
+              ((renderer = _content("", ...mod._)()),
+                queueAsyncRender(child, (child) =>
+                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
+                ));
+            },
+            loadFailed(child, awaitCounter),
+          ));
+      }
+    };
+  }),
+  _load_signal = /*@__PURE__*/ withLazy((load) => {
+    let pending, signal;
+    return (scope, value) => {
+      ((pending ||= load()),
+        scope.X || (!("X" in scope) && scope.H === runId)
+          ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
+          : signal
+            ? signal(scope, value)
+            : pending.then(
+                (mod) => queueAsyncRender(scope, (signal = mod._), value),
+                () => 0,
+              ));
+    };
+  });
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2134,51 +2197,6 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-function _load_template(id, load) {
-  let pending,
-    lazyTemplate = _template(
-      id,
-      0,
-      0,
-      (branch) => {
-        let awaitCounter = addAwaitCounter(branch);
-        ((branch.X ||= /* @__PURE__ */ new Map()),
-          (pending ||= load()).then(
-            (renderer) => {
-              (Object.assign(lazyTemplate, renderer),
-                queueAsyncRender(branch, (branch) =>
-                  insertLoaded(renderer, branch, branch.S, awaitCounter),
-                ));
-            },
-            loadFailed(branch, awaitCounter),
-          ));
-      },
-      _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
-    );
-  return lazyTemplate;
-}
-function _load_setup(nodeAccessor, childScopeAccessor, load) {
-  ((nodeAccessor = decodeAccessor(nodeAccessor)),
-    (childScopeAccessor = decodeAccessor(childScopeAccessor)));
-  let pending, renderer;
-  return (owner) => {
-    let child = owner[childScopeAccessor];
-    if (renderer) insertLoaded(renderer, child, owner[nodeAccessor]);
-    else {
-      let awaitCounter = addAwaitCounter(owner);
-      ((child.X ||= /* @__PURE__ */ new Map()),
-        (pending ||= load()).then(
-          (mod) => {
-            ((renderer = _content("", ...mod._)()),
-              queueAsyncRender(child, (child) =>
-                insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
-              ));
-          },
-          loadFailed(child, awaitCounter),
-        ));
-    }
-  };
-}
 function insertLoaded(renderer, branch, marker, awaitCounter) {
   let parent = marker.parentNode,
     values = branch.X,
@@ -2213,20 +2231,6 @@ function loadFailed(scope, awaitCounter) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
       queueAsyncRender(scope, renderCatch, error));
-  };
-}
-function _load_signal(load) {
-  let pending, signal;
-  return (scope, value) => {
-    ((pending ||= load()),
-      scope.X || (!("X" in scope) && scope.H === runId)
-        ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
-        : signal
-          ? signal(scope, value)
-          : pending.then(
-              (mod) => queueAsyncRender(scope, (signal = mod._), value),
-              () => 0,
-            ));
   };
 }
 function _load_visible_trigger(selector, options) {

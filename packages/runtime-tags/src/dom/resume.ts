@@ -62,12 +62,20 @@ let embedRenders:
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
+// Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
+// is before any resume; a page without lazy tags folds it and the retention away.
+let lazyEnabled: undefined | 1;
 
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+}
+
+export function withLazy<T>(runtime: T) {
+  lazyEnabled = 1;
+  return runtime;
 }
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
@@ -394,7 +402,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   : visit.parentNode!.insertBefore(new Text(), visit);
             } else if (branchesEnabled) {
               (visitBranches ||= createVisitBranches())();
-            } else if (render.b) {
+            } else if (lazyEnabled && render.b) {
               // A lazily loaded module may still enable branches, so retain
               // (compact) these visits to reprocess once the ready data lands.
               visits[retained++] = visit;
