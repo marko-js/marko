@@ -26,6 +26,14 @@ const patchGlobalsEntry = (live: Changed, _key: string, value: unknown) => {
   }
 };
 
+// Frame-commit checks registered by patch features: one that throws
+// (`failPatch`) rejects the frame like any patcher.
+export const frameChecks: (() => void)[] = [];
+
+// Frame-scoped bindings patch features inject: the frame text references
+// each name as a free variable (`b(1)`), skipping registry indirection.
+export const frameVars: Record<string, unknown> = {};
+
 export function applyPatch(
   frame: string,
   renderId = DEFAULT_RENDER_ID,
@@ -38,10 +46,17 @@ export function applyPatch(
   try {
     // A frame is trusted executable resume data (an envelope holding the
     // partial tree) from the same server that produced the document.
+    // `$` stays the serializer's `undefined` sentinel (never passed).
+    const names = Object.keys(frameVars);
     // eslint-disable-next-line no-new-func
-    render.r = [new Function("_", "$", "return " + frame)] as typeof render.r;
+    const fn = new Function("_", "$", ...names, "return " + frame);
+    render.r = [
+      (ctx: unknown) =>
+        fn(ctx, undefined, ...names.map((name) => frameVars[name])),
+    ] as typeof render.r;
     runEffects(render.m!([]), 1);
     run();
+    for (const check of frameChecks) check();
     return true;
   } catch (error) {
     // The frame did not apply faithfully, so the caller navigates; only an
