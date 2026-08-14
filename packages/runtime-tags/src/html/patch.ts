@@ -108,6 +108,9 @@ class PatchState extends State {
   public poisonSent?: 1;
   public shellFrames = "";
   override writesPatches = true;
+  override shipShell(shellId: string | 0 | undefined) {
+    return shipShell(this, shellId);
+  }
 
   constructor($global: State["$global"]) {
     super($global);
@@ -198,6 +201,13 @@ class PatchState extends State {
                 : [branchPartial]
               : shellId || 1,
     });
+    // Later settle frames nest under the live branch as a Child walk.
+    if (branchIndex !== undefined) {
+      (this.patchPending ??= {})[branchId] = [
+        scopeId,
+        PatchKey.Child + AccessorPrefix.BranchScopes + accessor,
+      ];
+    }
     return 1 as const;
   }
 

@@ -34,6 +34,8 @@ export function buildShells() {
       }
     }
   });
+  const interactive = getProgram().node.extra.isInteractive;
+  const keep = new Set<Section>();
   forEachSection((section) => {
     // Every capture-position branch body ships a shell, except
     // client-reselectable bodies: they never construct from a frame.
@@ -50,12 +52,50 @@ export function buildShells() {
     if (shell) {
       // The id interns even for a blocked shell so register ids stay stable.
       const id = getShellId(section);
-      if (section.shellBlocked) return;
-      (getProgram().node.extra.persistedShells ??= {})[id] = shell[1]
-        ? `${id};${shell[1]};${shell[0]}`
-        : `${id},${shell[0]}`;
+      // An interactive page's dom module registers await body content. A
+      // scriptless page never loads one, so each body ships as its own
+      // record instead; an inexpressible body blocks the branch (fail
+      // closed) rather than bundle more than a non-persisted page would.
+      const chain: Section[] = [];
+      const bodyRecords: Record<string, string> = {};
+      if (!interactive && !buildAwaitBodyRecords(section, bodyRecords, chain)) {
+        section.shellBlocked ??= ShellBlocker.inexpressibleAwaitBody;
+      }
+      if (!section.shellBlocked) {
+        keep.add(section);
+        for (const body of chain) keep.add(body);
+        const records = (getProgram().node.extra.persistedShells ??= {});
+        Object.assign(records, bodyRecords);
+        records[id] = shell[1]
+          ? `${id};${shell[1]};${shell[0]}`
+          : `${id},${shell[0]}`;
+      }
     }
   });
+  // Only kept sections' awaits construct: their `Pending` patches carry a
+  // content id and (interactive) their body registers in the dom output.
+  forEachSection((section) => {
+    if (!keep.has(section)) section.constructSetups = undefined;
+  });
+}
+
+// Body records reuse the shell record grammar; nested awaits recurse so a
+// constructed body can itself construct the awaits it contains.
+function buildAwaitBodyRecords(
+  section: Section,
+  records: Record<string, string>,
+  chain: Section[],
+) {
+  for (const { binding, body } of section.constructSetups || []) {
+    const shell = !body.shellBlocked && buildSectionShell(body);
+    if (!shell || !buildAwaitBodyRecords(body, records, chain)) return false;
+    const id = getResumeRegisterId(section, binding, "await");
+    records[id] = shell[1]
+      ? `${id};${shell[1]};${shell[0]}`
+      : `${id},${shell[0]}`;
+    chain.push(body);
+  }
+  return true;
 }
 
 export function getShellId(section: Section) {
@@ -71,12 +111,13 @@ function buildSectionShell(section: Section) {
   for (const op of section.structure) {
     if (typeof op === "object" && op.kind !== StructureKind.Visit) return;
   }
-  // A nested branch leaves only its marker in this shell (it constructs
-  // from its own shell during the walk); any other child section carries
-  // content the shell cannot express.
+  // A nested branch or boundary leaves only its marker in this shell
+  // (it pairs or constructs during the walk); any other child section
+  // carries content the shell cannot express.
   let contentChild = false;
   forEachSection((child) => {
-    contentChild ||= child.parent === section && !child.isBranch;
+    contentChild ||=
+      child.parent === section && !child.isBranch && !child.isBoundary;
   });
   if (contentChild) return;
 
