@@ -1,4 +1,4 @@
-// size: 27604 (min) 10194 (brotli)
+// size: 27691 (min) 10231 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -44,6 +44,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   channel,
   patchFills = {},
   closureFillJoins = {},
+  dynamicTagFills = /* @__PURE__ */ new Set(),
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -414,6 +415,9 @@ function normalizeAttrValue(value) {
 function withBranches(runtime) {
   return ((branchesEnabled = 1), runtime);
 }
+function rendererKey(renderer) {
+  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
+}
 function _assert_hoist(value) {}
 function forIn(obj, cb) {
   for (let key in obj) cb(key, obj[key]);
@@ -713,6 +717,14 @@ function _fill_join_closure(key, valueAccessor, join, index) {
 }
 function fill(key, signal) {
   return ((patchFills[key] = signal), signal);
+}
+function _fill_dynamic_tag(key, valueAccessor, signal) {
+  let readAccessor = decodeAccessor(valueAccessor);
+  return (
+    dynamicTagFills.add(key),
+    fillJoin(key, valueAccessor, signal, (scope) => signal(scope, scope[readAccessor])),
+    signal
+  );
 }
 function _fill_let(key, id, fn) {
   return fill(key, _let(id, fn));
@@ -1988,9 +2000,6 @@ function renderCatch(scope, error) {
       setConditionalRenderer(owner, tryWithCatch.C, tryWithCatch.E, createAndSetupBranch),
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
-}
-function rendererKey(renderer) {
-  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
 }
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
