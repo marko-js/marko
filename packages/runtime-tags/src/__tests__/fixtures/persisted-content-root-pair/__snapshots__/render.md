@@ -9,5 +9,3 @@
 ```
 
 # Update `{"content":"div"}`
-
-## Patch rejected (navigate)
