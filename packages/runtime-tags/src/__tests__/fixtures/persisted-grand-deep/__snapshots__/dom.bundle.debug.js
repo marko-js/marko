@@ -4,7 +4,7 @@ const $walks$3 = "D l";
 const $setup$3 = () => {};
 const $input_note$3 = ($scope, input_note) => _text($scope["#text/0"], input_note);
 const $input$3 = ($scope, input) => $input_note$3($scope, input.note);
-var l3_default = /*@__PURE__*/ _template("__tests__/tags/l1/tags/l2/tags/l3/index.marko", $template$3, "D l", $setup$3, $input$3);
+var l3_default = /*@__PURE__*/ _template("__tests__/tags/l1/tags/l2/tags/l3/index.marko", $template$3, "D l", 0, $input$3);
 
 // tags/l1/tags/l2/index.marko
 const $template$2 = /*@__PURE__*/ ((_w0) => `<button class=n> </button>${_w0}`)($template$3);

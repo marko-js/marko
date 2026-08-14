@@ -8,7 +8,7 @@ const $input$1 = ($scope, input) => {
 	$input_title$1($scope, input.title);
 	$input_body$1($scope, input.body);
 };
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";

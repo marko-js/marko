@@ -5,7 +5,7 @@ const $setup$2 = () => {};
 const $double$1 = /*@__PURE__*/ _const("double", ($scope) => _return($scope, $scope.double));
 const $input_value = ($scope, input_value) => $double$1($scope, input_value * 2);
 const $input$2 = ($scope, input) => $input_value($scope, input.value);
-var doubler_default = /*@__PURE__*/ _template("__tests__/tags/doubler/index.marko", $template$2, "b", $setup$2, $input$2);
+var doubler_default = /*@__PURE__*/ _template("__tests__/tags/doubler/index.marko", $template$2, "b", 0, $input$2);
 
 // tags/labeler/index.marko
 const $template$1 = "<span>fmt</span>";
@@ -13,7 +13,7 @@ const $walks$1 = "b";
 const $setup$1 = () => {};
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => _return($scope, "[" + $scope.input_title + "]"));
 const $input$1 = ($scope, input) => $input_title($scope, input.title);
-var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler/index.marko", $template$1, "b", $setup$1, $input$1);
+var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler/index.marko", $template$1, "b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($template$2, $template$1);

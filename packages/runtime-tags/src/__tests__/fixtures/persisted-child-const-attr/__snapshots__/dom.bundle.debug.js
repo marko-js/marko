@@ -14,7 +14,7 @@ const $input$1 = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_note($scope, input.note);
 };
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button> </button></main>`)($template$1);
