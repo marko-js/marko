@@ -3,7 +3,7 @@ const $template$1 = "<div class=box><!></div>";
 const $walks$1 = "D%l";
 const $setup$1 = () => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
+const $dynamicTag = /*@__PURE__*/ _fill_dynamic_tag("__tests__/tags/box/index.marko0", "input_content", /*@__PURE__*/ _dynamic_tag("#text/0"));
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 var box_default = /*@__PURE__*/ _template("__tests__/tags/box/index.marko", $template$1, "D%l", 0, $input$1);

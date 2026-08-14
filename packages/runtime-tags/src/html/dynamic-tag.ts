@@ -8,6 +8,7 @@ import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
+  PatchKey,
   RendererProp,
   ResumeSymbol,
 } from "../common/types";
@@ -28,6 +29,7 @@ import {
   getScopeById,
   getState,
   rendererKey,
+  writePatch,
   withBranchId,
 } from "./writer";
 
@@ -46,11 +48,19 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  patchFill?: string | 0,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
+  // A fed renderer's selection entry: the client fill re-renders on a
+  // renderer-key change; without its tag signal an unchanged key pairs.
+  if (patchFill !== undefined && state.writesPatches) {
+    writePatch(scopeId, {
+      [PatchKey.DynamicTag + accessor]: [patchFill, renderer],
+    });
+  }
   let rendered: boolean;
   let result: unknown;
 

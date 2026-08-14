@@ -4,7 +4,7 @@ const $walks$1 = "E l%l";
 const $setup$1 = () => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $input_title$1 = ($scope, input_title) => _text($scope["#text/0"], input_title);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
+const $dynamicTag = /*@__PURE__*/ _fill_dynamic_tag("__tests__/tags/card/index.marko0", "input_content", /*@__PURE__*/ _dynamic_tag("#text/1"));
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => {
 	$input_title$1($scope, input.title);
