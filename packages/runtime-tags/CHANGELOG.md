@@ -1,5 +1,22 @@
 # @marko/runtime-tags
 
+## 6.3.36
+
+### Patch Changes
+
+- [#3952](https://github.com/marko-js/marko/pull/3952) [`ed10b25`](https://github.com/marko-js/marko/commit/ed10b2568e9afcf92f2cfea88419167261322253) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a source-located error when `await` is used directly in a non-async shorthand attribute method.
+
+- [#3955](https://github.com/marko-js/marko/pull/3955) [`e5d18a8`](https://github.com/marko-js/marko/commit/e5d18a8d806cf2e7b0cf7473dc668407b07eb9dd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render dynamic style tags inside SVG elements without throwing during client rendering.
+
+- [#3924](https://github.com/marko-js/marko/pull/3924) [`4f73ac2`](https://github.com/marko-js/marko/commit/4f73ac2abf4e00c43daab235a8854b540d694be8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render a value-carrying dynamic `<select>` through the same path as every other dynamic tag, so its body claims a branch that resume can tear down, and write the controlled type and handler when such a `<select>` has no body.
+
+- [#3937](https://github.com/marko-js/marko/pull/3937) [`61c3723`](https://github.com/marko-js/marko/commit/61c3723f22509a5bb03ee41b8e34305b5c4197bb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Initialize the tag variable for a dynamic tag that resolves to a native tag name, in both client render and resume.
+
+- [#3953](https://github.com/marko-js/marko/pull/3953) [`614d438`](https://github.com/marko-js/marko/commit/614d4382021d4c2b3f2b479fb9461fac9474a008) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow tag variables to reference themselves from deferred functions in their own attributes.
+
+- Updated dependencies [[`56f226d`](https://github.com/marko-js/marko/commit/56f226d2049d22cb0ef65a36c358dcc9feba1881), [`672c5e1`](https://github.com/marko-js/marko/commit/672c5e1af789dc34bd62cd1f1067d90dbac01cbc)]:
+  - @marko/compiler@5.42.1
+
 ## 6.3.35
 
 ### Patch Changes

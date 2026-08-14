@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.42.1
+
+### Patch Changes
+
+- [#3932](https://github.com/marko-js/marko/pull/3932) [`56f226d`](https://github.com/marko-js/marko/commit/56f226d2049d22cb0ef65a36c358dcc9feba1881) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Invalidate a cached template when a child template it analyzed changes, including transitively.
+
+- [#3943](https://github.com/marko-js/marko/pull/3943) [`672c5e1`](https://github.com/marko-js/marko/commit/672c5e1af789dc34bd62cd1f1067d90dbac01cbc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Append the agent fix-guide pointer to the first recovered diagnostic when compiling with `errorRecovery`, which previously only reached thrown errors.
+
 ## 5.42.0
 
 ### Minor Changes
