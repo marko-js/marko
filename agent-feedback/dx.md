@@ -14,12 +14,6 @@ Two majors stay pinned because they are migrations, not refreshes. Babel is held
 
 Neither type has a case in `writeUnknownObject`, and `writeFormData` aborts on any non-string entry ("`File`/`Blob` entries aren't serializable yet"), so a resumed form carrying an upload cannot be represented at all. Both hold binary content the existing `writeArrayBuffer`/`writeTypedArray` path already encodes and both rebuild from a constructor call (`new File([bytes], name, { type, lastModified })`); the work is reading the bytes and threading the async read through the boundary the way `writeReadableStream` does. Verify: `serializer.test.ts`'s "aborts on File/Blob values instead of dropping them" pins today's behavior, and a bare `new Blob(["hi"])` hits `throwUnserializable`.
 
-## Record `<style>`/`<title>`/`<link>` mutations in the render log; a dynamic `<style>` update snapshots as an empty step
-
-`packages/runtime-tags/src/__tests__/utils/get-node-info.ts` › `isIgnoredTag` | 2026-07-23 | impact:med | effort:med
-
-`isIgnoredTag` returns true for `T`, `LINK`, `TITLE`, `STYLE` and untyped/module `SCRIPT`, and `utils/track-mutations.ts` › `formatMutationRecord` drops any record whose target (or characterData parent) is ignored, so no committed `render*.md` contains a `<style`/`<title` change. `_style_rule_item` (`src/dom/dom.ts`) splices a CSS custom property into that `textContent`, yet `fixtures/style-tag-dynamic/__snapshots__/render-csr.debug.md` ends at the bare line ``# Update `{"color":"blue"}` `` — byte-identical to a no-op client update, with the path covered only by `assert` calls in `style-tag-dynamic-injection`'s steps. AGENTS.md tells reviewers to audit the mutation log, so this is a blind spot in the primary review artifact. Direction: ignore Marko-emitted asset/resume nodes (the `T` placeholder, resume `<script>`s, injected `<link>`s) rather than the element type, or always emit style/title text changes. Re-verify: read that snapshot and confirm the second step has no `## Change`.
-
 ## Raise the unresolvable-tag-name error during analyze; at translate its `<let>`/`<const>` hint is lost and only the first bad tag reports
 
 `packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts` › `tagNotFoundError` | 2026-07-23 | impact:med | effort:med

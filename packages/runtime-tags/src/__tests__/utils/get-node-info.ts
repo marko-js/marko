@@ -118,14 +118,6 @@ export function getNodeSelector(
     : `${parentPath} > ${rhs}`;
 }
 
-export function getSanitizedNodes(nodeList: NodeList): Node[] {
-  const result: Node[] = [];
-  for (const node of nodeList) {
-    if (!isIgnoredNode(node)) result.push(node);
-  }
-  return result;
-}
-
 export function isIgnoredNode(node: Node) {
   return isMarkoComment(node) || isIgnoredTag(node) || isEmptyTextNode(node);
 }
