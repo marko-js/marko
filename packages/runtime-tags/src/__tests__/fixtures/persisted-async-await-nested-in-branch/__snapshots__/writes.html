@@ -1,0 +1,22 @@
+<main><!--M_]1 a--><button>interactive</button><!--M_*1 b--></main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    f: (p => p = new Promise((f, r) => _.a = {
+      f,
+      r(e) {
+        p.catch(_ => 0);
+        r(e)
+      }
+    }))(),
+    g: (p => p = new Promise((f, r) => _.b = {
+      f,
+      r(e) {
+        p.catch(_ => 0);
+        r(e)
+      }
+    }))(),
+    i: new Set
+  }], _ => (_.a.f("old outer"), 0), _ => (_.b.f("old inner"), 0), "a2 1"];
+  M._.w()
+</script>
