@@ -371,21 +371,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // owner) checks its `<@catch>` content itself.
       if (tagName && tagName[0] === "@") return;
       // An `<await>` body pairs into the live page. A still-pending one
-      // flushes a prefix frame and settles in a later frame; it never
-      // constructs, so one inside divergable structure fails closed here.
+      // flushes a prefix frame and settles in a later frame; the enclosing
+      // branch constructs from its shell first.
       if (isCoreTagName(tag, "await")) {
-        for (
-          let section = getSection(tag);
-          section.parent;
-          section = section.parent
-        ) {
-          if (!section.isBoundary) {
-            unsupported(
-              node,
-              "an `<await>` inside a branch a patch may construct cannot build from a shell yet",
-            );
-          }
-        }
         const [valueAttr] = node.attributes;
         if (
           valueAttr &&
