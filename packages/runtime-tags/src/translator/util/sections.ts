@@ -205,7 +205,7 @@ export function startSection(
             : parentTag.get("name").toString()) + "_content",
         )
       : "";
-    const programExtra = (path.hub.file.path.node.extra ??= {});
+    const programExtra = (getProgram().node.extra ??= {});
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
       id: sections.length,

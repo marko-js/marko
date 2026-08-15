@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   assertAttributesOrArgs,
   getProgram,
   getTagTemplate,
@@ -161,7 +162,7 @@ export default {
       // The selection entry applies through the value patchers, which
       // must ship even when this template's dom module does not load.
       if (fedRenderProp !== undefined) {
-        addRuntimeFeatureAsset(tag.hub.file, "patch-value");
+        addRuntimeFeatureAsset("patch-value");
       }
 
       analyzeAttributeTags(tag);
@@ -350,7 +351,7 @@ export default {
 
         if (t.isStringLiteral(tagExpression)) {
           tagExpression = importDefault(
-            tag.hub.file,
+            getFile(),
             getTagRelativePath(tag),
             tagExpression.value,
           );
@@ -370,7 +371,7 @@ export default {
           const classId = classFile!.metadata.marko.id;
           const registration = isOutputHTML()
             ? t.callExpression(
-                importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
+                importNamed(getFile(), getCompatRuntimeFile(), "s"),
                 [
                   t.stringLiteral(classId),
                   t.identifier((tagExpression as t.Identifier).name),
@@ -427,7 +428,7 @@ export default {
         }
       } else if (t.isStringLiteral(tagExpression)) {
         tagExpression = importDefault(
-          tag.hub.file,
+          getFile(),
           getTagRelativePath(tag),
           tagExpression.value,
         );
