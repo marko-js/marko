@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { isAttributeTag } from "@marko/compiler/babel-utils";
+import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier } from "../visitors/program";
@@ -434,6 +434,26 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         );
       }
 
+      // A static boundary body on a page with no dom module compiles to
+      // data alone: an in-band template the client and server both render.
+      if (
+        serialized &&
+        isPersisted() &&
+        bodySection.boundaryContent &&
+        bodySection.contentTemplate !== undefined &&
+        !getProgram().node.extra.isInteractive
+      ) {
+        return callRuntime(
+          "_content_template",
+          t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+          getScopeIdIdentifier(
+            getSection(
+              getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
+            )!,
+          ),
+          t.stringLiteral(bodySection.contentTemplate),
+        );
+      }
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),
