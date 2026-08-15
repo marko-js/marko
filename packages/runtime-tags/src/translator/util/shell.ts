@@ -4,7 +4,12 @@ import { getProgram } from "@marko/compiler/babel-utils";
 import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
 import { isBranchPathSection } from "./persisted/structure";
-import { forEachSection, type Section, StructureKind } from "./sections";
+import {
+  forEachSection,
+  getSectionRegisterReasons,
+  type Section,
+  StructureKind,
+} from "./sections";
 import { getResumeRegisterId } from "./signals";
 import { resolveStructure, trimTrailingExits } from "./structure";
 
@@ -76,6 +81,26 @@ export function buildShells() {
   // content id and (interactive) their body registers in the dom output.
   forEachSection((section) => {
     if (!keep.has(section)) section.constructSetups = undefined;
+  });
+
+  // `@placeholder`/`@catch` content slot-serializes by register id. A
+  // static body re-registers from entry-emitted data; anything else keeps
+  // the dom module loading (a shrinking stopgap).
+  forEachSection((section) => {
+    // Only a slot the document registers (`_content_resume`) is ever
+    // dereferenced: an unregistered one needs no record and no module.
+    if (!section.boundaryContent || !getSectionRegisterReasons(section)) {
+      return;
+    }
+    const shell = buildSectionShell(section);
+    if (shell && !shell[1]) {
+      section.contentTemplate = shell[0];
+    } else {
+      // The slot's registration is dereferenced at DOCUMENT resume, so a
+      // missing one breaks the page (not just a rejected patch): dynamic
+      // content still loads the real renderer's dom module.
+      getProgram().node.extra.isInteractive = true;
+    }
   });
 }
 

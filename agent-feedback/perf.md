@@ -334,3 +334,9 @@ The direct-state-closure construct anchor is gated on `!isShellDropped(signal.se
 `packages/runtime-tags/src/translator/core/try.ts` › `analyze` | 2026-08-12 | impact:low | effort:med
 
 A persisted page serializes `<try>`'s registered content renderers (`#CatchContent` etc. as `_(scope, "…*content")`), so resume needs those registrations client-side. The slice that admitted catch-only `<try>` gets them there by setting `extra.isInteractive` in analyze, which pulls the ENTIRE template dom module plus `init()` into an otherwise server-only page — much more than the two registrations resume actually dereferences. A leaner channel would ship just the registered renderers the html output serialized (an asset module of `_content_resume` calls, like `addRuntimeFeatureAsset` does for patch feats). Re-verify: `persisted-async-try-catch-only`'s `sizes.json` dom `template.marko.page.mjs` entry vs a hand-built module holding only the catch renderer registration.
+
+## Reason-guard `<try>` boundary slot serialization
+
+`packages/runtime-tags/src/html/writer.ts` › `_try` `writeScope` | 2026-08-15 | impact:low | effort:med
+
+The `CatchContent`/`PlaceholderContent` slots serialize on every document render of the boundary — `_try`'s `writeScope` has no serialize-reason guard (pre-existing; translate gates only statically via `getSectionRegisterReasons`). A dynamic reason that evaluates false at runtime still ships the slot, and the cost grew now that scriptless pages inline the template (`_._.content(tpl, _(scope))`) instead of an id ref. The value cannot simply be reason-nulled because `_try` also invokes it server-side for error UI, so the guard must apply inside serialization (e.g. `registerAccess` honoring a runtime guard). Re-verify with a `<try>` whose register reason rides a source guard that stays false.
