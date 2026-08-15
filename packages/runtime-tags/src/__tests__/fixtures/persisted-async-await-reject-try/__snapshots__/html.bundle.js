@@ -15,12 +15,8 @@ var template_default = _template_persisted("a", (input) => {
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
-		placeholder: attrTag({ content: _content_resume("a0", () => {
-			_persisted_reason();
-			_scope_id();
-			_html("loading");
-		}, $scope0_id) }),
-		catch: attrTag({ content: _content_resume("a1", (err) => {
+		placeholder: attrTag({ content: _content_template("a0", $scope0_id, "loading") }),
+		catch: attrTag({ content: _content_elide("a1", (err) => {
 			const $scope3_reason = _persisted_reason();
 			const $scope3_id = _scope_id();
 			_html(`<em>${_escape(err.message)}${_el_resume($scope3_id, "a", _source_guard($scope3_reason, 0))}</em>`);

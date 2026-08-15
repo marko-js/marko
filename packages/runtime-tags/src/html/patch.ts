@@ -160,6 +160,8 @@ class PatchState extends State {
     cb: () => number | undefined | void,
     shellIds?: string[],
   ) {
+    // Inert captures render plain html: no entries, no interception.
+    if (this.patchInert) return;
     const branchId = _peek_scope_id();
     (this.patchParents ??= {})[branchId] = [
       scopeId,
@@ -214,6 +216,7 @@ class PatchState extends State {
     accessor: string,
     shellId?: string | 0,
   ) {
+    if (this.patchInert) return;
     const partials: object[] = [];
     const keys: unknown[] = [];
     const seen = new Set<unknown>();
