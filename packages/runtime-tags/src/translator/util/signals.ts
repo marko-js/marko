@@ -1850,7 +1850,7 @@ export function writeHTMLResumeStatements(
 
     if (debug) {
       writeScopeArgs.push(
-        t.stringLiteral(path.hub.file.opts.filenameRelative as string),
+        t.stringLiteral(getFile().opts.filenameRelative as string),
         section.loc && section.loc.start.line != null
           ? t.stringLiteral(
               `${section.loc.start.line}:${section.loc.start.column + 1}`,

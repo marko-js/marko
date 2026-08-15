@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getFile } from "@marko/compiler/babel-utils";
 
 import {
   generateUidIdentifier,
@@ -247,7 +248,7 @@ export default {
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
           persisted ? "_template_persisted" : "_template",
-          t.stringLiteral(program.hub.file.metadata.marko.id),
+          t.stringLiteral(getFile().metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
           // Persisted templates always carry their intrinsics (absent =
           // FOREIGN renderer, which parents must render through): the local
