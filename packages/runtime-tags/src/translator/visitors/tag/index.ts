@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef, type Plugin } from "@marko/compiler/babel-utils";
+import { getFile, getTagDef, type Plugin } from "@marko/compiler/babel-utils";
 
 import { reportAnalyzeError } from "../../util/analyze-errors";
 import * as hooks from "../../util/plugin-hooks";
@@ -79,7 +79,7 @@ export default {
 
       if (tagDef?.translator) {
         if (tagDef.translator.path) {
-          tag.hub.file.metadata.marko.watchFiles.push(tagDef.translator.path);
+          getFile().metadata.marko.watchFiles.push(tagDef.translator.path);
         }
         hooks.enter(tagDef.translator.hook, tag);
         return;

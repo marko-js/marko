@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
+import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import { WalkCode, WalkRangeSize } from "../../common/types";
 import * as Step from "./constants/step";
@@ -180,7 +180,7 @@ function resolveRef(ref: StructureRef, part: "template" | "walks") {
   return ref.program.section === getProgram().node.extra.section
     ? t.identifier(name)
     : importOrSelfReferenceName(
-        getProgram().hub.file as t.BabelFile,
+        getFile(),
         ref.path,
         name,
         `${ref.hint}_${part}`,
