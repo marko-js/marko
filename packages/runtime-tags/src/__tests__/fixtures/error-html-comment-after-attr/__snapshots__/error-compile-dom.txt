@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-html-comment-after-attr/template.marko:1:18
+    > 1 | <div class="foo" <!-- the label --> id="bar">Hello</div>
+        |                  ^^^^ HTML comments are not supported in a tag's attributes. Use a JavaScript comment (`// …` or `/* … */`), or move the `<!-- … -->` outside the tag.
+      2 |

@@ -36,6 +36,8 @@ const withWrappedAttrValueHint = (file, part, rawValue, node) => {
   }
   return node;
 };
+const htmlCommentInAttrsError =
+  "HTML comments are not supported in a tag's attributes. Use a JavaScript comment (`// …` or `/* … */`), or move the `<!-- … -->` outside the tag.";
 const emptyRange = (part) => part.start === part.end;
 const isAttrTag = (tag) => tag.name.value?.[0] === "@";
 const isStatementTag = (tag) => tag.tagDef?.parseOptions?.statement;
@@ -146,11 +148,17 @@ export function parseMarko(file) {
 
   const parser = createParser({
     onError(part) {
+      // htmljs-parser reads the `<` of a `<!--` sitting where an attribute
+      // belongs as tag type arguments, and reports that instead.
+      const isHTMLComment =
+        part.start > 0 && code.startsWith("<!--", part.start - 1);
       const err = buildCodeFrameError(
         file.opts.filename,
         file.code,
-        locationAt(part),
-        part.message,
+        locationAt(
+          isHTMLComment ? { start: part.start - 1, end: part.start + 3 } : part,
+        ),
+        isHTMLComment ? htmlCommentInAttrsError : part.message,
       );
 
       if (!file.___hasParseErrors) {
@@ -504,6 +512,25 @@ export function parseMarko(file) {
       const { node } = currentTag;
       const { attributes } = node;
       const parseOptions = node.tagDef?.parseOptions;
+      // A `<!--` anywhere else in the open tag was swallowed into an attribute
+      // expression, so nothing downstream can still recognize it as a comment.
+      const htmlCommentIndex = findHTMLCommentInAttrs(
+        code,
+        node.name.end,
+        part.start,
+      );
+      if (~htmlCommentIndex) {
+        throw buildCodeFrameError(
+          file.opts.filename,
+          file.code,
+          locationAt({
+            start: htmlCommentIndex,
+            end: htmlCommentIndex + 4,
+          }),
+          htmlCommentInAttrsError,
+        );
+      }
+
       endAttr();
 
       if (currentShorthandClassNames) {
@@ -719,6 +746,37 @@ export function parseMarko(file) {
 
 function sortByStart(a, b) {
   return a.start - b.start;
+}
+
+// Strings and JS comments are the only places between a tag name and the end of
+// its open tag where a literal `<!--` is the author's text rather than a mistake.
+function findHTMLCommentInAttrs(code, start, end) {
+  for (let i = start; i < end; i++) {
+    switch (code[i]) {
+      case '"':
+      case "'":
+      case "`": {
+        const quote = code[i];
+        while (++i < end && code[i] !== quote) {
+          if (code[i] === "\\") i++;
+        }
+        break;
+      }
+      case "/":
+        if (code[i + 1] === "/") {
+          while (++i < end && code[i] !== "\n");
+        } else if (code[i + 1] === "*") {
+          while (++i < end && !(code[i] === "*" && code[i + 1] === "/"));
+          i++;
+        }
+        break;
+      case "<":
+        if (code.startsWith("<!--", i)) return i;
+        break;
+    }
+  }
+
+  return -1;
 }
 
 function templateElement(value, tail) {

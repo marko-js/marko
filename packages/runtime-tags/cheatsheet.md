@@ -196,6 +196,7 @@ Each left-hand habit is an error or silently wrong.
 | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | `disabled=n>=8` (hugging `>` in a value)                    | `disabled=n >= 8` or `disabled=(n >= 8)`; a hugging `>` silently closes the tag      |
 | `<let/s=new Set<string>()>` (type argument in a value)      | `<let/s=(new Set<string>())>`; a tag-var annotation fails type-check                 |
+| `<div <!-- note --> class="a">` (comment in the attributes) | `<div /* note */ class="a">`; `<!-- … -->` is markup, so it only belongs in a body   |
 | `{expr}` in markup, `className`, `key=`, `style={{...}}`    | `${expr}`, `class`, `by=` on `<for>`, `style={...}`                                  |
 | `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                                  |
 | `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                                             |
