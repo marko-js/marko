@@ -1,6 +1,7 @@
 import { assertValidTagName } from "../common/errors";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
+  CONTENT_REGISTER_ID,
   DYNAMIC_TAG_SCRIPT_REGISTER_ID,
   DYNAMIC_TAG_VAR_REGISTER_ID,
 } from "../common/meta";
@@ -13,11 +14,13 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import { quote, registerAccess, toAccess, toObjectKey } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _el,
   _html,
   _peek_scope_id,
+  _persisted_reason,
   _resume,
   _scope,
   _scope_id,
@@ -251,6 +254,36 @@ export function _content_resume(
   scopeId?: number,
 ) {
   return _resume(_content(id, fn, scopeId), id, scopeId);
+}
+
+// Static content whose registration must exist with no template dom module
+// loaded: the slot serializes as an in-band template the client rebuilds,
+// so gated markup only reaches responses the server rendered for this user.
+const contentAccessPrefix =
+  "_._" +
+  /*@__PURE__*/ toAccess(/*@__PURE__*/ toObjectKey(CONTENT_REGISTER_ID)) +
+  "(";
+export function _content_template(
+  id: string,
+  scopeId: number | undefined,
+  template: string,
+) {
+  return registerAccess(
+    // The server render derives from the same template (the canonical
+    // static-body shape), so eligible bodies compile to data alone.
+    _content(
+      id,
+      () => {
+        _persisted_reason();
+        _scope_id();
+        _html(template);
+      },
+      scopeId,
+    ),
+    contentAccessPrefix +
+      quote(template, 0) +
+      (scopeId === undefined ? ")" : ",_(" + scopeId + "))"),
+  );
 }
 
 export const patchDynamicTag = (
