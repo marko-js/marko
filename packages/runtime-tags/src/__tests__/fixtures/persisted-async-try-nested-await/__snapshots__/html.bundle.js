@@ -17,17 +17,9 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			_resume_branch($scope2_id);
-		}, $scope1_id), { catch: attrTag({ content: _content_resume("a0", () => {
-			_persisted_reason();
-			_scope_id();
-			_html("<em>inner</em>");
-		}, $scope1_id) }) });
+		}, $scope1_id), { catch: attrTag({ content: _content_template("a0", $scope1_id, "<em>inner</em>") }) });
 		$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), { catch: attrTag({ content: _content_resume("a2", () => {
-		_persisted_reason();
-		_scope_id();
-		_html("<em>outer</em>");
-	}, $scope0_id) }) });
+	}, $scope0_id), { catch: attrTag({ content: _content_template("a2", $scope0_id, "<em>outer</em>") }) });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { e: $input_promise__closures });
 }, 1, 0);
