@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   getTemplateId,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
@@ -90,10 +91,10 @@ export default {
 
       // Resolve any colocated style file (eg `template.style.css`) once so the
       // dom output and the page entry builder can both link it in.
-      const styleFile = getStyleFile(program.hub.file);
+      const styleFile = getStyleFile(getFile());
       if (styleFile) {
         programExtra.styleFile = styleFile;
-        addAssetImport(program.hub.file, styleFile);
+        addAssetImport(styleFile);
       }
     },
 
@@ -164,7 +165,7 @@ export default {
         }
 
         if (isLoadEntry) {
-          const entryFile = program.hub.file;
+          const entryFile = getFile();
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
           // A rejected chunk blocks this ready id forever: the debug build
@@ -223,7 +224,7 @@ export default {
         }
 
         if (isDOMPageEntry) {
-          const entryFile = program.hub.file;
+          const entryFile = getFile();
           entryBuilder.visit(entryFile, entryFile);
           program.node.body = entryBuilder.build(entryFile);
           program.skip();
@@ -231,7 +232,7 @@ export default {
         }
 
         if (isServerEntry) {
-          const entryFile = program.hub.file;
+          const entryFile = getFile();
           const { filename } = entryFile.opts;
           const relativeImport = resolveRelativePath(entryFile, filename);
           const templateId = getTemplateId(markoOpts, filename);

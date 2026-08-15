@@ -160,7 +160,7 @@ export function knownTagAnalyze(
     // Children inside client-owned structure never pair from a patch.
     onFinalizePersisted(() => {
       if (!inClientReselectableStructure(section)) {
-        addRuntimeFeatureAsset(tag.hub.file, "patch-child");
+        addRuntimeFeatureAsset("patch-child");
       }
     });
   }

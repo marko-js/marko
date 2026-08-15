@@ -141,7 +141,7 @@ export const IfTag = {
               }
             }
           } else if (isBranchPathSection(ifTagSection)) {
-            addRuntimeFeatureAsset(ifTag.hub.file, "patch-branch");
+            addRuntimeFeatureAsset("patch-branch");
             // Branch tests drive structure: the params recorded here gate
             // call-site feeds at translate.
             recordStructuralOrGlobalParams(sources);
