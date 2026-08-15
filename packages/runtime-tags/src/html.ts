@@ -40,6 +40,7 @@ export {
 } from "./html/content";
 export {
   _content,
+  _content_elide,
   _content_template,
   _content_resume,
   _dynamic_tag,
