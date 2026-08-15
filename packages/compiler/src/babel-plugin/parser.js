@@ -36,7 +36,6 @@ const withWrappedAttrValueHint = (file, part, rawValue, node) => {
   }
   return node;
 };
-const htmlCommentOpen = "<!--";
 const emptyRange = (part) => part.start === part.end;
 const isAttrTag = (tag) => tag.name.value?.[0] === "@";
 const isStatementTag = (tag) => tag.tagDef?.parseOptions?.statement;
@@ -112,14 +111,6 @@ export function parseMarko(file) {
       currentAttr = undefined;
     }
   };
-  const throwHTMLCommentInAttrs = (start) => {
-    throw buildCodeFrameError(
-      file.opts.filename,
-      file.code,
-      locationAt({ start, end: start + htmlCommentOpen.length }),
-      "HTML comments are not supported in a tag's attributes. Use a JavaScript comment (`// …` or `/* … */`), or move the `<!-- … -->` outside the tag.",
-    );
-  };
   const parseTemplateString = ({ quasis, expressions }) => {
     switch (expressions.length) {
       case 0: {
@@ -155,14 +146,6 @@ export function parseMarko(file) {
 
   const parser = createParser({
     onError(part) {
-      const htmlCommentIndex = part.start - 1;
-      if (
-        htmlCommentIndex >= 0 &&
-        code.startsWith(htmlCommentOpen, htmlCommentIndex)
-      ) {
-        throwHTMLCommentInAttrs(htmlCommentIndex);
-      }
-
       const err = buildCodeFrameError(
         file.opts.filename,
         file.code,
@@ -521,13 +504,6 @@ export function parseMarko(file) {
       const { node } = currentTag;
       const { attributes } = node;
       const parseOptions = node.tagDef?.parseOptions;
-      const htmlCommentIndex = findHTMLCommentInAttrs(
-        code,
-        node.name.end,
-        part.start,
-      );
-      if (~htmlCommentIndex) throwHTMLCommentInAttrs(htmlCommentIndex);
-
       endAttr();
 
       if (currentShorthandClassNames) {
@@ -743,35 +719,6 @@ export function parseMarko(file) {
 
 function sortByStart(a, b) {
   return a.start - b.start;
-}
-
-function findHTMLCommentInAttrs(code, start, end) {
-  for (let i = start; i < end; i++) {
-    switch (code[i]) {
-      case "<":
-        if (code.startsWith(htmlCommentOpen, i)) return i;
-        break;
-      case '"':
-      case "'":
-      case "`": {
-        const quote = code[i];
-        while (++i < end && code[i] !== quote) {
-          if (code[i] === "\\") i++;
-        }
-        break;
-      }
-      case "/":
-        if (code[i + 1] === "/") {
-          while (++i < end && code[i] !== "\n");
-        } else if (code[i + 1] === "*") {
-          while (++i < end && !(code[i] === "*" && code[i + 1] === "/"));
-          i++;
-        }
-        break;
-    }
-  }
-
-  return -1;
 }
 
 function templateElement(value, tail) {

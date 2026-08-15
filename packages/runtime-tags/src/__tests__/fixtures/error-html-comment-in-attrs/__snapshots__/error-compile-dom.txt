@@ -1,8 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/error-html-comment-in-attrs/template.marko:2:3
-      1 | <div
-    > 2 |   <!-- the label -->
-        |   ^^^^ HTML comments are not supported in a tag's attributes. Use a JavaScript comment (`// …` or `/* … */`), or move the `<!-- … -->` outside the tag.
-      3 |   class="foo"
-      4 | >Hello</div>
-      5 |
