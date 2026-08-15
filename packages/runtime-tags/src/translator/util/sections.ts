@@ -160,6 +160,13 @@ export interface Section {
   /** An `<await>`/`<try>` body: always-rendered like the branch path, but
    * paired (never constructed) by patches. */
   isBoundary: boolean;
+  /** A content renderer slot-serialized by register id (today only
+   * `<try>` `@placeholder`/`@catch` bodies): `buildShells` re-registers
+   * static ones from entry data; others load the dom module. */
+  boundaryContent: boolean;
+  /** A `boundaryContent` body's static template, set by `buildShells`: the
+   * slot serializes as an in-band template instead of a register-id ref. */
+  contentTemplate: string | undefined;
   /** Awaits a construct must deliver body content for (marker binding +
    * body section); `buildShells` prunes those no shipped shell reaches. */
   constructSetups: { binding: Binding; body: Section }[] | undefined;
@@ -256,6 +263,8 @@ export function startSection(
       readsOwner: false,
       isBranch: false,
       isBoundary: false,
+      boundaryContent: false,
+      contentTemplate: undefined,
       constructSetups: undefined,
       isClientReselectable: undefined,
       shellBlocked: undefined,

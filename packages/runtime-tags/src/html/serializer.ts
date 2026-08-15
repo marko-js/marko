@@ -440,6 +440,13 @@ export function register<T extends WeakKey>(
   return val;
 }
 
+// A value whose serialized form is a fixed expression (an in-band
+// record): unbound, so every occurrence emits the access text itself.
+export function registerAccess<T extends WeakKey>(val: T, access: string) {
+  REGISTRY.set(val, { id: "", scope: undefined, access });
+  return val;
+}
+
 export function getRegistered(val: WeakKey) {
   const registered = REGISTRY.get(val);
   if (registered) {
