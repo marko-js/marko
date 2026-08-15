@@ -29,6 +29,7 @@ import {
   applyBranchStart,
   deferBranchStart,
   getChunk,
+  elidedContents,
   getScopeById,
   getState,
   rendererKey,
@@ -254,6 +255,23 @@ export function _content_resume(
   scopeId?: number,
 ) {
   return _resume(_content(id, fn, scopeId), id, scopeId);
+}
+
+// Dynamic boundary content on a page with no dom module: a catch slot
+// serializes a sentinel (`0`) its rejection frame fills with server-
+// rendered html; a placeholder slot elides outright (pending shows the
+// live content). Nothing bundles either way.
+export function _content_elide(
+  id: string,
+  fn: ServerRenderer,
+  scopeId: number | undefined,
+  placeholder?: 1,
+) {
+  elidedContents.add(fn);
+  return registerAccess(
+    _content(id, fn, scopeId),
+    placeholder ? "void 0" : "0",
+  );
 }
 
 // Static content whose registration must exist with no template dom module
