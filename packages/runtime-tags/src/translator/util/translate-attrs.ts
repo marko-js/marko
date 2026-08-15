@@ -434,25 +434,44 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         );
       }
 
-      // A static boundary body on a page with no dom module compiles to
-      // data alone: an in-band template the client and server both render.
+      // Boundary content on a page with no dom module never references a
+      // registration: a static body compiles to an in-band template the
+      // client and server both render; a dynamic one elides its slot and
+      // a delivered catch rejects to navigation (fail closed) instead of
+      // bundling the template's renderer.
       if (
         serialized &&
         isPersisted() &&
         bodySection.boundaryContent &&
-        bodySection.contentTemplate !== undefined &&
         !getProgram().node.extra.isInteractive
       ) {
-        return callRuntime(
-          "_content_template",
-          t.stringLiteral(getResumeRegisterId(bodySection, "content")),
-          getScopeIdIdentifier(
-            getSection(
-              getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
-            )!,
-          ),
-          t.stringLiteral(bodySection.contentTemplate),
+        const ownerScopeId = getScopeIdIdentifier(
+          getSection(
+            getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
+          )!,
         );
+        return bodySection.contentTemplate !== undefined
+          ? callRuntime(
+              "_content_template",
+              t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+              ownerScopeId,
+              t.stringLiteral(bodySection.contentTemplate),
+            )
+          : callRuntime(
+              "_content_elide",
+              t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+              t.arrowFunctionExpression(
+                body.node.params,
+                t.blockStatement(body.node.body),
+              ),
+              ownerScopeId,
+              (body.parentPath.node as t.MarkoTag).name &&
+                t.isStringLiteral((body.parentPath.node as t.MarkoTag).name) &&
+                ((body.parentPath.node as t.MarkoTag).name as t.StringLiteral)
+                  .value === "@placeholder"
+                ? t.numericLiteral(1)
+                : undefined,
+            );
       }
       return callRuntime(
         serialized ? "_content_resume" : "_content",
