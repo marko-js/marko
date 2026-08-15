@@ -14,11 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		});
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume$1("__tests__/template.marko_2*content", () => {
-		const $scope2_reason = _persisted_reason();
-		const $scope2_id = _scope_id();
-		_html$1("<em>loading</em>");
-	}, $scope0_id) }) });
+	}, $scope0_id), { placeholder: attrTag({ content: _content_template("__tests__/template.marko_2*content", $scope0_id, "<em>loading</em>") }) });
 	_html$1("</main>");
 	$scope0_reason && writeScope($scope0_id, { "ClosureScopes:input_promise": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  isAttributeTag,
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
@@ -10,7 +11,10 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { isPersisted } from "../util/marko-config";
-import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import {
+  analyzeAttributeTags,
+  getAttrTagPaths,
+} from "../util/nested-attribute-tags";
 import {
   type Binding,
   BindingType,
@@ -19,7 +23,11 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -56,55 +64,70 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze(tag) {
-    assertNoVar(tag);
-    assertNoArgs(tag);
-    assertNoParams(tag);
-    assertNoAttributes(tag);
-    const attrTags = analyzeAttributeTags(tag);
-    // The runtime reads only `placeholder` and `catch`, so any other attribute
-    // tag (usually a typo) would silently drop its pending/error UI.
-    if (attrTags) {
-      for (const name in attrTags) {
-        if (name !== "@placeholder" && name !== "@catch") {
-          const suggestion =
-            name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
-          throw tag.buildCodeFrameError(
-            `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
-          );
+  analyze: {
+    enter(tag) {
+      assertNoVar(tag);
+      assertNoArgs(tag);
+      assertNoParams(tag);
+      assertNoAttributes(tag);
+      const attrTags = analyzeAttributeTags(tag);
+      // The runtime reads only `placeholder` and `catch`, so any other attribute
+      // tag (usually a typo) would silently drop its pending/error UI.
+      if (attrTags) {
+        for (const name in attrTags) {
+          if (name !== "@placeholder" && name !== "@catch") {
+            const suggestion =
+              name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
+            throw tag.buildCodeFrameError(
+              `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
+            );
+          }
         }
       }
-    }
-    const section = getOrCreateSection(tag);
-    const tagExtra = mergeReferences(
-      section,
-      tag.node,
-      getAllTagReferenceNodes(tag.node),
-    );
-    tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
+      const section = getOrCreateSection(tag);
+      const tagExtra = mergeReferences(
+        section,
+        tag.node,
+        getAllTagReferenceNodes(tag.node),
+      );
+      tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
 
-    if (!tag.node.body.body.length) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
-        );
-    }
-
-    const bodySection = startSection(tag.get("body"));
-
-    if (bodySection) {
-      bodySection.isBoundary = true;
-      bodySection.upstreamExpression = tagExtra;
-      // A persisted page serializes the boundary's registered content
-      // renderers, so its dom module (where they register) must load even
-      // when nothing else is interactive.
-      if (isPersisted()) {
-        getProgram().node.extra.isInteractive = true;
+      if (!tag.node.body.body.length) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
+          );
       }
-      structure.visit(tag, WalkCode.Replace);
-      structure.enterShallow(tag);
-    }
+
+      const bodySection = startSection(tag.get("body"));
+
+      if (bodySection) {
+        bodySection.isBoundary = true;
+        bodySection.upstreamExpression = tagExtra;
+        if (isPersisted()) {
+          // Page entry must ship the boundary patchers even when this
+          // template's dom module does not load (a scriptless `<try>`).
+          addRuntimeFeatureAsset("patch-child");
+          addRuntimeFeatureAsset("catch");
+        }
+        structure.visit(tag, WalkCode.Replace);
+        structure.enterShallow(tag);
+      }
+    },
+    exit(tag) {
+      // The attr tag bodies' sections exist once their own analyze ran; a
+      // shape this cannot flag falls back to loading the dom module.
+      if (!isPersisted()) return;
+      for (const attrTag of getAttrTagPaths(tag)) {
+        const section =
+          attrTag.isMarkoTag() && isAttributeTag(attrTag)
+            ? attrTag.node.body.extra?.section
+            : undefined;
+        if (section) section.boundaryContent = true;
+        else getProgram().node.extra.isInteractive = true;
+      }
+    },
   },
   translate: translateByTarget({
     html: {

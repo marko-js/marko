@@ -14,11 +14,7 @@ var template_default = _template_persisted("a", (input) => {
 		});
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
-		_persisted_reason();
-		_scope_id();
-		_html("<em>loading</em>");
-	}, $scope0_id) }) });
+	}, $scope0_id), { placeholder: attrTag({ content: _content_template("a0", $scope0_id, "<em>loading</em>") }) });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { g: $input_promise__closures });
 }, 1, 0);
