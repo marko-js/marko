@@ -102,10 +102,7 @@ export default {
         addSerializeExpr(section, valueExtra, nodeBinding);
         if (isPersisted() && node.escape && isBranchPathSection(section)) {
           addSerializeReason(section, true, nodeBinding);
-          addAssetImport(
-            placeholder.hub.file,
-            `${getRuntimePath("dom")}/patch-text.feat`,
-          );
+          addAssetImport(`${getRuntimePath("dom")}/patch-text.feat`);
           ensurePersistedWriteGroups(() => valueExtra);
           // A state-fed hole the construct cannot render faithfully (no
           // seed fill or INIT closure) drops the branch's shell.

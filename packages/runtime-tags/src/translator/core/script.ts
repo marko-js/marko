@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,

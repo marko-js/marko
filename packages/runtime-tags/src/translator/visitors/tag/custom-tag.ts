@@ -2,6 +2,7 @@ import path from "path";
 
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   assertAttributesOrSingleArg,
   getFile,
   getProgram,

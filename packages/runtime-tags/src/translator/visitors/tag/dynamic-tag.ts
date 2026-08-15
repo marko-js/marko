@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   assertAttributesOrArgs,
   getFile,
   getProgram,
@@ -164,7 +165,7 @@ export default {
       // The selection entry applies through the value patchers, which
       // must ship even when this template's dom module does not load.
       if (fedRenderProp !== undefined) {
-        addRuntimeFeatureAsset(tag.hub.file, "patch-value");
+        addRuntimeFeatureAsset("patch-value");
       }
 
       analyzeAttributeTags(tag);

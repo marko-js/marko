@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
@@ -304,12 +305,9 @@ export default {
         isBranchPathSection(getOrCreateSection(tag))
       ) {
         // Handler writes/binds ride the value feat's patchers.
-        addRuntimeFeatureAsset(tag.hub.file, "patch-value");
-        addRuntimeFeatureAsset(tag.hub.file, "patch-control");
-        addRuntimeFeatureAsset(
-          tag.hub.file,
-          getPatchControlFeature(relatedControllable),
-        );
+        addRuntimeFeatureAsset("patch-value");
+        addRuntimeFeatureAsset("patch-control");
+        addRuntimeFeatureAsset(getPatchControlFeature(relatedControllable));
         const controlValue = relatedControllable.attrs[0]?.value;
         if (controlValue) {
           ensurePersistedWriteGroups(() => controlValue.extra || {});
@@ -349,10 +347,7 @@ export default {
           isBranchPathSection(tagSection)
         ) {
           addSerializeReason(tagSection, true, nodeBinding);
-          addAssetImport(
-            tag.hub.file,
-            `${getRuntimePath("dom")}/patch-attr.feat`,
-          );
+          addAssetImport(`${getRuntimePath("dom")}/patch-attr.feat`);
           for (const attr of node.attributes) {
             if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
               const { value } = attr;

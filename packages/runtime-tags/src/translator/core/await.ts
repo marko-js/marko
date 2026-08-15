@@ -122,10 +122,10 @@ export default {
     // Page entry must ship the child patcher and branch-resume latch even
     // when this template module does not load (a scriptless persisted await).
     if (isPersisted()) {
-      addRuntimeFeatureAsset(tag.hub.file, "patch-child");
-      addRuntimeFeatureAsset(tag.hub.file, "patch-boundary");
+      addRuntimeFeatureAsset("patch-child");
+      addRuntimeFeatureAsset("patch-boundary");
       // A scriptless construct paints the settled body via text fills.
-      addRuntimeFeatureAsset(tag.hub.file, "patch-text");
+      addRuntimeFeatureAsset("patch-text");
       // Recorded on every parented section; `buildShells` keeps only those
       // a shipped shell constructs (dom registration or shipped body record).
       if (section.parent) {
