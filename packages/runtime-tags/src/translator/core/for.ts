@@ -229,7 +229,7 @@ export default {
           // re-lists directly; param feeds fill their slots).
           bodySection.isClientReselectable = true;
         } else if (isBranchPathSection(tagSection)) {
-          addRuntimeFeatureAsset(tag.hub.file, "patch-loop");
+          addRuntimeFeatureAsset("patch-loop");
           // The loop's inputs drive structure: the params recorded here
           // gate call-site feeds at translate.
           recordStructuralOrGlobalParams(sources);

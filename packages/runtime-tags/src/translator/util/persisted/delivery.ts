@@ -1,7 +1,7 @@
 // Translate-side patch delivery: which bindings refresh over the wire
 // (fills and wire writes), fill identity, and what a freshly constructed
 // scope can render. Analyze facts these derive from live in ./structure.
-import { getFile } from "@marko/compiler/babel-utils";
+import { getProgram, getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
 import { isPersisted } from "../marko-config";
@@ -26,7 +26,7 @@ export function getPatchFillKey(binding: Binding) {
   const ordinals = getFillOrdinals();
   if (!ordinals.m) {
     const m = (ordinals.m = new Map());
-    for (const section of getFile().path.node.extra!.sections!) {
+    for (const section of getProgram().node.extra.sections!) {
       forEach(getPatchFillBindings(section), (fill) => {
         m.set(fill, m.size);
       });

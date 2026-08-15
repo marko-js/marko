@@ -207,7 +207,7 @@ function addFeature(
   if (state.feature) {
     if (state.feature.type !== type) {
       throw buildAggregateError(
-        path.hub.file,
+        getFile(),
         "Cannot mix Tags API and Class API features in the same file",
         [state.feature.name, state.feature.path],
         [name, path],

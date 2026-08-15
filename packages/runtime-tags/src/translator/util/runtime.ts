@@ -137,11 +137,8 @@ export type DOMRuntimeFeature =
   | "placeholder";
 // The analyze-phase half of `importRuntimeFeature`: the page entry links
 // client assets from analyze metadata.
-export function addRuntimeFeatureAsset(
-  file: t.BabelFile,
-  feature: DOMRuntimeFeature,
-) {
-  addAssetImport(file, `${getRuntimePath("dom")}/${feature}.feat`);
+export function addRuntimeFeatureAsset(feature: DOMRuntimeFeature) {
+  addAssetImport(`${getRuntimePath("dom")}/${feature}.feat`);
 }
 
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
