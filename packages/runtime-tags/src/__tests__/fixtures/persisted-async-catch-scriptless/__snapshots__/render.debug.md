@@ -2,7 +2,7 @@
 ```html
 <main>
   <em>
-    hi
+    ok
   </em>
 </main>
 ```
@@ -17,10 +17,6 @@
 ```
 ## Change
 ```
-INSERT: main::text("loading")
-REMOVE:  + em
-INSERT: main > em
-REMOVE: main::text("loading")
 INSERT: main > em
 REMOVE: main > em + em
 ```

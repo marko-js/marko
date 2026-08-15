@@ -21,7 +21,12 @@ import {
   queueRender,
   rendering,
 } from "./queue";
-import { createAndSetupBranch, createBranch, type Renderer } from "./renderer";
+import {
+  _content,
+  createAndSetupBranch,
+  createBranch,
+  type Renderer,
+} from "./renderer";
 import {
   failPatch,
   getRegisteredWithScope,
@@ -216,6 +221,19 @@ patchers[PatchKey.Child] = (scope, key, value) => {
 
 patchers[PatchKey.Catch] = (scope, key, error) => {
   const accessor = key.slice(PatchKey.Catch.length);
+  // An elided catch slot (`0`) fills from the frame's server-rendered
+  // html before the normal catch machinery runs; a frame without it (an
+  // async catch body) rejects.
+  const tryBranch = findBranchWithKey(scope, AccessorProp.CatchContent);
+  if (tryBranch && (tryBranch[AccessorProp.CatchContent] as unknown) === 0) {
+    const [err, html] = error as [unknown, string | 0];
+    if (typeof html !== "string") failPatch();
+    tryBranch[AccessorProp.CatchContent] = _content(
+      "",
+      html as string,
+    )(tryBranch[AccessorProp.Owner]) as never;
+    error = err;
+  }
   markSettled(scope, accessor);
   endAwaitPending(scope, accessor);
   renderCatch(scope, error);
