@@ -23,5 +23,4 @@ INSERT: main > em
 REMOVE: main::text("loading")
 INSERT: main > em
 REMOVE: main > em + em
-UPDATE: main > em::text " " => "boom"
 ```

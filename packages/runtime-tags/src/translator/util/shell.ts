@@ -95,12 +95,9 @@ export function buildShells() {
     const shell = buildSectionShell(section);
     if (shell && !shell[1]) {
       section.contentTemplate = shell[0];
-    } else {
-      // The slot's registration is dereferenced at DOCUMENT resume, so a
-      // missing one breaks the page (not just a rejected patch): dynamic
-      // content still loads the real renderer's dom module.
-      getProgram().node.extra.isInteractive = true;
     }
+    // A dynamic body sets no template: its slot elides at translate, so a
+    // delivered catch rejects to navigation rather than bundling code.
   });
 }
 

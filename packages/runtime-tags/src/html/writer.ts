@@ -121,6 +121,12 @@ export function _peek_scope_id() {
 }
 
 const kPendingContexts = Symbol("Pending Contexts");
+// The nearest elided `@catch` renderer: a rejection under it captures the
+// server-rendered catch html into its frame.
+const kElidedCatch = Symbol("Elided Catch");
+// Boundary content elided from a scriptless page's slots (no client
+// renderer): marked so `_try` routes rejections through inert captures.
+export const elidedContents = new WeakSet<WeakKey>();
 
 export function withContext<T>(
   key: PropertyKey,
@@ -289,6 +295,7 @@ function markText(
 // partial IS the frame tree and one ordinary serializer flush emits it.
 export function writePatch(scopeId: number, entries: Record<string, unknown>) {
   const { state } = $chunk.boundary;
+  if (state.patchInert) return;
   if (state.patchFlushed) {
     throw new Error(
       "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
@@ -310,7 +317,11 @@ function pairPatchBoundary(
   branchId: number,
 ) {
   const { state } = $chunk.boundary;
-  if (state.writesPatches && !state.patchPartials?.[branchId]) {
+  if (
+    state.writesPatches &&
+    !state.patchInert &&
+    !state.patchPartials?.[branchId]
+  ) {
     const link = AccessorPrefix.BranchScopes + accessor;
     (state.patchParents ??= {})[branchId] = [scopeId, link];
     (state.patchPending ??= {})[branchId] = [scopeId, PatchKey.Child + link];
@@ -318,6 +329,7 @@ function pairPatchBoundary(
 }
 
 export function patchPartial(state: State, scopeId: number) {
+  if (state.patchInert) return {};
   const partials = (state.patchPartials ??= {});
   let partial = partials[scopeId];
   if (!partial) {
@@ -1014,6 +1026,27 @@ export function writeWaitReady(
   }
 }
 
+// Renders content into a detached chunk with patch writes suppressed:
+// the html ships as frame data (a rejection's catch UI), never entries.
+// Async content cannot ride one frame, so it yields `0` (reject).
+function renderInert(renderer: (arg: unknown) => void, arg: unknown) {
+  const chunk = $chunk;
+  const { state } = chunk.boundary;
+  const body = new Chunk(chunk.boundary, null, chunk.context, {
+    parent: chunk.serializeState,
+    resumes: "",
+    writeScopes: {},
+    flushScopes: false,
+  } as Chunk["serializeState"]);
+  state.patchInert = 1;
+  try {
+    return body.render(renderer, arg) === body ? body.html : 0;
+  } finally {
+    state.patchInert = undefined;
+    $chunk = chunk;
+  }
+}
+
 export function _await<T>(
   scopeId: number,
   accessor: Accessor,
@@ -1095,7 +1128,16 @@ export function _await<T>(
       if (boundary.state.writesPatches) {
         if (!boundary.signal.aborted) {
           chunk.render(() => {
-            writePatch(scopeId, { [PatchKey.Catch + accessor]: err });
+            // An elided catch has no client renderer: its frame carries
+            // the server-rendered catch html alongside the error.
+            const elidedCatch = $chunk.context?.[kElidedCatch] as
+              | ((err: unknown) => void)
+              | undefined;
+            writePatch(scopeId, {
+              [PatchKey.Catch + accessor]: elidedCatch
+                ? [err, renderInert(elidedCatch, err)]
+                : err,
+            });
           });
           boundary.endAsync();
         }
@@ -1155,6 +1197,12 @@ export function _try(
       scopeId,
       placeholderBranchId,
     );
+  } else if (
+    writesPatches &&
+    catchContent &&
+    elidedContents.has(catchContent as WeakKey)
+  ) {
+    withContext(kElidedCatch, catchContent, content);
   } else {
     content();
   }
@@ -1324,6 +1372,7 @@ export class State implements SerializeState {
   >;
   declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
   declare patchFlushed?: 1;
+  declare patchInert?: 1;
   declare patchDeferred?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
