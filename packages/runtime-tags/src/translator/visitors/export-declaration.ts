@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { resolveTagImport } from "@marko/compiler/babel-utils";
+import { getFile, resolveTagImport } from "@marko/compiler/babel-utils";
 
 import type { TemplateVisitor } from "../util/visitors";
 
@@ -11,7 +11,7 @@ export default {
       const tagImport = resolveTagImport(exportDecl, source.value);
       if (tagImport) {
         (node.extra ??= {}).tagImport = tagImport;
-        const tags = exportDecl.hub.file.metadata.marko.tags!;
+        const tags = getFile().metadata.marko.tags!;
         if (!tags.includes(tagImport)) {
           tags.push(tagImport);
         }

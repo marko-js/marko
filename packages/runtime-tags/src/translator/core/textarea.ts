@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getFile } from "@marko/compiler/babel-utils";
 
 import normalizeStringExpression from "../util/normalize-string-expression";
 
@@ -20,7 +21,7 @@ export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
       ) {
         parts.push(child.value);
       } else {
-        throw tag.hub.file.hub.buildError(
+        throw getFile().hub.buildError(
           child,
           "Unexpected content in textarea, only text and placeholders are supported.",
           SyntaxError,
@@ -34,7 +35,7 @@ export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
         (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
       );
       if (valueAttr) {
-        throw tag.hub.file.hub.buildError(
+        throw getFile().hub.buildError(
           valueAttr,
           "A textarea cannot have both a value attribute and body content.",
           SyntaxError,

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   getTemplateId,
   loadFileForImport,
   resolveRelativePath,
@@ -86,10 +87,10 @@ export default {
 
       // Resolve any colocated style file (eg `template.style.css`) once so the
       // dom output and the page entry builder can both link it in.
-      const styleFile = getStyleFile(program.hub.file);
+      const styleFile = getStyleFile(getFile());
       if (styleFile) {
         programExtra.styleFile = styleFile;
-        addAssetImport(program.hub.file, styleFile);
+        addAssetImport(styleFile);
       }
     },
 
@@ -146,7 +147,7 @@ export default {
         }
 
         if (isLoadEntry) {
-          const entryFile = program.hub.file;
+          const entryFile = getFile();
           const { filename } = entryFile.opts;
           program.node.body = [
             t.importDeclaration(
@@ -181,7 +182,7 @@ export default {
         }
 
         if (isDOMPageEntry) {
-          const entryFile = program.hub.file;
+          const entryFile = getFile();
           const { filename } = entryFile.opts;
           const visitedFiles = new Set([
             resolveRelativePath(entryFile, filename),
@@ -208,7 +209,7 @@ export default {
         }
 
         if (isServerEntry) {
-          const entryFile = program.hub.file;
+          const entryFile = getFile();
           const { filename } = entryFile.opts;
           const relativeImport = resolveRelativePath(entryFile, filename);
           const templateId = getTemplateId(markoOpts, filename);
