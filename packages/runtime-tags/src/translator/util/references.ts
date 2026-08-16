@@ -2300,7 +2300,10 @@ export function pruneBinding(binding: Binding) {
     }
   }
 
-  let shouldPrune = !binding.reads.size;
+  // A let binding with reserveSize > 0 reserves adjacent scope slots (e.g.
+  // TagVariableChange at id+1). Even when its reads are covered by an alias,
+  // the slot reservation must survive so translate can emit the correct ids.
+  let shouldPrune = !binding.reads.size && !binding.reserveSize;
 
   for (const alias of binding.aliases) {
     if (pruneBinding(alias)) {
