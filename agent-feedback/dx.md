@@ -14,6 +14,12 @@ Two majors stay pinned because they are migrations, not refreshes. Babel is held
 
 Neither type has a case in `writeUnknownObject`, and `writeFormData` aborts on any non-string entry ("`File`/`Blob` entries aren't serializable yet"), so a resumed form carrying an upload cannot be represented at all. Both hold binary content the existing `writeArrayBuffer`/`writeTypedArray` path already encodes and both rebuild from a constructor call (`new File([bytes], name, { type, lastModified })`); the work is reading the bytes and threading the async read through the boundary the way `writeReadableStream` does. Verify: `serializer.test.ts`'s "aborts on File/Blob values instead of dropping them" pins today's behavior, and a bare `new Blob(["hi"])` hits `throwUnserializable`.
 
+## Record `<style>`/`<title>`/`<link>` mutations in the render log; a dynamic `<style>` update snapshots as an empty step
+
+`packages/runtime-tags/src/__tests__/utils/get-node-info.ts` › `isIgnoredTag` | 2026-07-23 | impact:med | effort:med
+
+`isIgnoredTag` returns true for `T`, `LINK`, `TITLE`, `STYLE` and untyped/module `SCRIPT`, and `utils/track-mutations.ts` › `formatMutationRecord` drops any record whose target (or characterData parent) is ignored, so no committed `render*.md` contains a `<style`/`<title` change. `_style_rule_item` (`src/dom/dom.ts`) splices a CSS custom property into that `textContent`, yet `fixtures/style-tag-dynamic/__snapshots__/render-csr.debug.md` ends at the bare line ``# Update `{"color":"blue"}` `` — byte-identical to a no-op client update, with the path covered only by `assert` calls in `style-tag-dynamic-injection`'s steps. AGENTS.md tells reviewers to audit the mutation log, so this is a blind spot in the primary review artifact. Direction: ignore Marko-emitted asset/resume nodes (the `T` placeholder, resume `<script>`s, injected `<link>`s) rather than the element type, or always emit style/title text changes. Re-verify: read that snapshot and confirm the second step has no `## Change`.
+
 ## Raise the unresolvable-tag-name error during analyze; at translate its `<let>`/`<const>` hint is lost and only the first bad tag reports
 
 `packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts` › `tagNotFoundError` | 2026-07-23 | impact:med | effort:med
@@ -85,3 +91,17 @@ After resume `$global` holds only `{runtimeId, renderId}` unless a key is enable
 `packages/runtime-tags/src/translator/core/script.ts` › default export | 2026-08-10 | impact:high | effort:med
 
 A `<script>` re-runs when any binding it references changes, and an assignment like `items = items.filter(...)` inside that same script produces a new array identity on every run — so the script re-triggers itself forever. In a real app the loop sat inside a data loader (`openIds = openIds.filter(id => list.some(...))` after a fetch), yielding an unbounded three-requests-per-cycle fetch loop that only surfaced as the browser's `ERR_INSUFFICIENT_RESOURCES`, far from the cause; the fix was guarding the assignment behind a length comparison to preserve identity. The hazard is statically visible: the script's body both reads a binding and unconditionally assigns it an expression guaranteed to be a fresh object identity (array/object literal, `.filter`/`.map`/`.concat`/spread). Warn on that shape, pointing at identity-preserving guards or `<const>`. Re-verify: mount `<let/items=[[]]>` with `<script>items = items.filter(Boolean); console.count("run")</script>` in jsdom — the counter never stops.
+
+## Diagnose nullish-coalesce inside handlers that also assign `<let>` (false TS2588)
+
+`packages/runtime-tags` › handler type extract | 2026-08-13 | impact:med | effort:med
+
+Inside a native-tag handler or `<const/fn=() => {…}>`, an expression like `pending ?? value || ""` (or optional-chain + `??`) makes every later assignment to a `<let>` report TS2588 "Cannot assign to 'x' because it is a constant", even though the binding is a `<let>`. Workarounds that typecheck: parenthesize `(pending ?? value) || ""`, or avoid `??` in that function (`pending !== null ? pending : value || ""`). Cheatsheet/golden-rules should call this out next to the existing `>=` / `>` attribute-close gotchas. Re-verify: compile a tag with `<let/x=0>` and `onClick() { const y = a ?? b; x = 1 }` — TS2588 on `x = 1`; replace with a ternary and the error disappears.
+
+## Document out-of-order `<try>`/`@placeholder` HTML shape for SSR debugging
+
+`website/docs/explanation/streaming.md` › `@placeholder` / out-of-order | 2026-08-13 | impact:med | effort:low
+
+When `<try>` has `@placeholder` around `<await>`, a single `curl` of the response shows the placeholder still inside `<main>` even after the promise has resolved — the real branch is appended as out-of-order markers (`<t hidden M_=…>…</t>` + small runtime scripts) later in the body. Agents debugging "SSR didn't render X" often stop at the placeholder in `<main>` and miss that the streamed branch (or a `@catch` error string) is further down.
+
+Direction: in the streaming doc (or cheatsheet SSR section), show a minimal response sketch: placeholder in-tree → later hidden replacement fragment; note that `@catch` errors surface the same way (`<p>…is not a function</p>` inside a hidden `t`). Re-verify: stream a page with slow `<await>` + placeholder; `curl -N` and observe placeholder first, then hidden content blocks before `</body>`.

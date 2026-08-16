@@ -2,6 +2,25 @@
 
 Runtime speed and bundle size opportunities. Format and rules: [README.md](README.md).
 
+## Resolve a single hoist read without allocating a generator
+
+`packages/runtime-tags/src/dom/signals.ts` › `traverse` | 2026-08-11 | impact:med | effort:low
+
+`_hoist` reads a single value with `traverse(scope, path, args).next().value`, allocating a
+generator per read even though the iterator form is only needed by `fn[Symbol.iterator]`, which
+multi-instance tag vars consume (`for (const fn of setHtml)`). Replacing the single-value path
+with a plain recursive resolve measured 137.6 -> 21.0 ns/op on a one-segment path, ~6.5x, in a
+Node microbenchmark of the read path alone. Hoist reads only occur in `<script>` blocks and
+event handlers — `_hoist_read_error` rejects reads during render — so this is handler latency,
+not render latency. Two constraints: the generator yields its first value even when that value
+is `undefined`, so an early-return resolve needs a sentinel to keep sibling-scope traversal
+identical; and the generator has to stay for the iterator, so this adds a second traversal
+function rather than replacing one — measure against the per-fixture size gates before taking
+it. Passing `arguments` instead of a rest parameter is much worse (229 ns/op, leaked
+`arguments` deoptimizes), so keep the rest parameter. Re-verify: benchmark `_hoist`'s returned
+function against a non-generator equivalent; neither the `counter` nor `comments` size
+benchmark exercises `_hoist` at all, so `build:sizes` will not show this path.
+
 ## Shorten the owner-qualified dynamic tag content key in optimized output
 
 `packages/runtime-tags/src/dom/control-flow.ts` › `rendererKey` | 2026-08-11 | impact:low | effort:low
@@ -40,6 +59,12 @@ occurrences and 11% of all SSR bytes at 13 B each, 9 B of which is fixed comment
 `packages/runtime-tags/src/translator/util/binding-prop-tree.ts` › `isDirectContentBinding` | 2026-07-02 | impact:med | effort:med
 
 `<${expr}/>` always builds the fully general `_dynamic_tag` signal (`visitors/tag/dynamic-tag.ts`), whose string-tag branch pulls `_attrs`, `_attrs_content`, `_attrs_script` and `controllableRenders` (`src/dom/control-flow.ts`) into the shared chunk. A slim `_dynamic_tag_content` already exists, emitted as an extra `directContentExport` a known parent calls instead, so `<${input.content}/>` lets the bundler shake the general signal out. But `isDirectContentBinding` requires `read.section === binding.section`, so the idiomatic optional slot `<if=input.aside><${input.aside.content}/></if>` — the read now lives in the `<if>` body section — gets no direct export and drags `_dynamic_tag` in. Relax the section check (the passthrough is still input-less and parameter-less; only the branch scope differs) so the direct export is emitted there too. Related but separate: the `TODO: Optimize for when we are certain that this is either always a string or always a custom tag` at `tag-name-type.ts:191` would cover the `<let>`-bound tag name case. Re-verify: compile that `<if>` template with `-o dom` and check for an `export const $input_aside_content_direct = _dynamic_tag_content(0)` beside the `_dynamic_tag` signal, as `<div><${input.content}/></div>` already produces.
+
+## See through statically-shown `<show>` bodies in `getNodeContentType`
+
+`packages/runtime-tags/src/translator/util/sections.ts` › `getNodeContentType` | 2026-07-02 | impact:low | effort:low
+
+`getNodeContentType` returns `ContentType.Dynamic` for every core `<show>`, so a placeholder beside one is classified `SiblingText.Before` — a `<!>` in the client template plus a Replace visit — even when the display value is statically truthy and `<show>`'s translate exit splices the body inline with no runtime boundary. Compiling `<div><show=true><b/></show>${input.x}</div>` to dom gives `"<div><b></b><!></div>"` / walks `"Db%l"`, versus `"<div><b></b> </div>"` / `"Db l"` for the same markup without the `<show>`. Return the body's `startType`/`endType` for a static-display `<show>`, the way the custom-tag arm reads `tagSection.content[extraMember]`; `evaluate()` on the display attribute is cached, so it is safe to call here even before `<show>`'s own analyze has run. Re-verify with that dom compile.
 
 ## Skip child client wiring for constant-input instances of client-inert tags
 
@@ -83,11 +108,23 @@ The `isLoad` branch emits a separate virtual module, dynamic import, and `_load_
 
 Parameter reason groups (`contentSection.paramReasonGroups`, known-tag.ts:246-311) already narrow the HTML payload per known call site via `_set_serialize_reason`, but the child's DOM module emits every `_resume(registerId, fn)` as an unconditional top-level statement (`signals.ts` `writeRegisteredFns`, collected with no serialize-reason gate; `_resume` is intentionally not in `pureDOMFunctions`), so a caller that activates one group still retains the client behavior of all of them. Export pure values plus group-keyed registration anchors so known callers keep only active behavior, with stateful, circular, dynamic, and unknown callers conservatively retaining all groups. The anchor a caller emits must itself be a retained root: in an optimized page bundle every pure chain shakes away (see `fixtures/dynamic-tag-spread/__snapshots__/dom.bundle.js`, which keeps only non-pure statements), and a register id resume cannot resolve is not a no-op — `dom/resume.ts` pushes the missing value and calls it. Re-verify on a fixture whose child has a group no caller activates: that group's registered functions should disappear from the dom bundle snapshot with html output and resume unchanged.
 
+## Coalesce `queueAsyncRender`'s per-completion microtasks
+
+`packages/runtime-tags/src/dom/queue.ts` › `queueAsyncRender` | 2026-07-13 | impact:low | effort:low
+
+`queueAsyncRender()` ends in an unconditional `queueMicrotask(run)`, so N promise completions in one tick schedule N microtasks; the first `run()` drains every pending render and effect and the rest are empty passes that still allocate two arrays and bump `runId`. Streaming resume hits this directly — `dom/load.ts` and `_await_promise` in `dom/control-flow.ts` call it once per settled promise. Guard with a module-level scheduled bit cleared at the top of the flush, so work enqueued during the flush still schedules a fresh microtask. Re-verify: settle several `<await>`/lazy boundaries in one tick and assert `run` executes once.
+
 ## Propagate invoke-only inputs into same-program `<define>` tags
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `analyzeAttrs` | 2026-07-13 | impact:med | effort:high
 
 `analyzeAttrs` sets `attrExtra.invokeOnly` only when `getRootSection(templateExportAttr.binding.section) !== getProgram().node.extra.section`, so a local `<define>` never gets the treatment an equivalent cross-file tag does — same-program prop trees are mid-analysis with incomplete reads. `<define/Btn|input|><button onClick=input.onClick>x</button></define>` with `<let/count=0/><Btn onClick=() => count++ />${count}` therefore folds `$Btn_content__input_onClick(...)` into the `$count` signal body, re-pushing the handler and re-running its `_on` script on every state update; the identical `tags/btn.marko` version hoists it into `$setup` alone. A conservative post-analysis fixed point would let local handlers read persisted slots lazily, dropping the intersection, input update, closure propagation and owner state. Re-verify: compile both shapes with `node -r ~ts scripts/inspect-compiled-output.mts -o dom -d` and diff the `$count` bodies.
+
+## Skip `_resume_branch` for sections with no serialize reason
+
+`packages/runtime-tags/src/translator/util/signals.ts` › `writeHTMLResumeStatements` | 2026-07-13 | impact:low | effort:low
+
+`resumeClosestBranch` ignores `sectionSerializeReason`, so an inert section emits `_resume_branch(scopeId)` with no accompanying `_scope(...)` write — wasted bytes, plus a `ClosestBranchId`-only scope nothing resumes when nested under a branch. Gate it on the finalized section reason while preserving empty referenced owners and ready-channel descendants. Re-verify: `fixtures/html-style-injection/__snapshots__/html.bundle.js` must stop emitting `_resume_branch($scope0_id)` for a template whose only state is an unserialized `<let>`.
 
 ## Cache the handler `addTagsEvents` binds for a Class parent's `on-x`
 
@@ -112,6 +149,12 @@ No user-facing doc warns that one custom tag per grid/list cell dominates page w
 `packages/runtime-tags/src/translator/util/signals.ts` › `getSignal` | 2026-07-19 | impact:med | effort:med
 
 `signal.inline` is set only inside `getSignal`'s `collapsedIntersectionSource` branch (gated on `member.reads.size === 1`), so a standalone derived value with a single consumer still emits a named module function plus a one-shot call from `getSignalFn`. `<for|item| of=input.items><li>${item.name}</li></for>` compiles (`-o dom`, optimize) to `$for_content__item_name` referenced exactly once by `$for_content__$params`; a single-use `<const>` gives the same shape, and minifiers do not cross-inline them (rolldown `minifySync` keeps both arrows), so it is shipped size on every `<for>`. Gate inlining on "one consumer call-site" (broader than `reads.size === 1`), keeping a standalone function when the value has >1 consumer, is persisted (`forcePersist`/cross-scope), or has dynamic subscribers. Priced 2026-07-30 by holding everything else constant across 33 components: **21.3 min / 5.0 brotli per single-consumer derived binding** (4780/1724 → 5463/1883), about a third of the whole per-component client-JS cost of a simple input-driven component, and 16.0/4.4 per single-use `<const>` against writing the expression inline, with byte-identical SSR either way. Unlike most repetitive-codegen shrinks this one actually compresses, because it removes a function plus a call rather than repeated text — replacing the ubiquitous per-binding `($scope, v) => _text($scope.a, v)` with a `_text_signal("a")` helper, by contrast, measures -258 min but **+4 brotli**. Re-verify: recompile that `<for>` and confirm the value body lands inside `$for_content__$params`.
+
+## Drop unused derived `<const>` bindings instead of emitting a live discarded expression
+
+`packages/runtime-tags/src/translator/core/const.ts` › `analyze` | 2026-07-19 | impact:low | effort:low
+
+`analyze` calls `setBindingDownstream` + `addSetupExpr` for every non-aliased `<const>` binding without checking whether it has readers, and `translate.exit` still calls `addValue`, so a zero-reader binding survives `pruneBinding`. `<let/x=[1]><const/expensive=x.map(v => v * 2).join(",")>` with `expensive` unread compiles (`-o dom`) to `_let(1, $scope => /* expensive */$scope.b.map(v => v * 2).join(","))` — recomputed on every `x` update and unremovable by the minifier because the expression has calls (an unused `<const/pure=99>` does minify away). Skip value emission for a read-less binding, or at minimum surface an "unused binding" diagnostic. Shares the value-emission locus (`signals.ts` › `getSignalFn`) with "Inline single-consumer derived value signals, not only intersection-collapsed members", but is a distinct phenomenon: 0 consumers → bare live expr vs 1 consumer → redundant call. Re-verify: recompile that template and confirm the `/* expensive */` statement is gone.
 
 ## Check whether the handler-setup `_script` registration is droppable
 
@@ -149,11 +192,29 @@ The closure `signal` is assigned only in the `pending.then((mod) => queueAsyncRe
 
 `Boundary.flush()` runs `flushSerializer` on every call, and `ServerRendered.#read`'s `onNext` calls it on each `boundary.endAsync()` even when the HTML write is deferred to the next `queueTick`. Each call appends its own `_=>[…]` closure to `state.resumes`, so N awaits settling in one chunk emit N payloads and the delta scope-id encoding in `writeScopesRoot` cannot span them — see `fixtures/async-reorder-nested-batched-resolve/__snapshots__/writes.html`, where one chunk pushes `_ => [5,…], _ => [7,…]`. Serialization cannot simply be skipped, since the serializer itself calls `boundary.startAsync()`; take `flush(write?)` and serialize only when `write` or `this.count === 0`, with `#read` passing through its existing `write` flag. Re-verify: that snapshot should regenerate with a single `_ =>` closure per chunk.
 
+## Pass `0` for an empty `$setup` in `_template`, and keep `setupEmpty` for dynamic tags
+
+`packages/runtime-tags/src/translator/visitors/program/dom.ts` › `translate.exit` | 2026-07-23 | impact:med | effort:low
+
+With no program setup signal, `program/dom.ts` emits `export const $setup = () => {};` and still passes that identifier as `_template`'s 4th argument, so `_content` stores a truthy `RendererProp.Setup` and `setupBranch` queues `queueRender(branch, emptyFn, -1)` for every branch built from the template (and `mount` calls it directly). Child-section `_content` args already go through `replaceNullishAndEmptyFunctionsWith0`; the program `_template` args do not, and `program/index.ts` carries the matching TODO. Separately, `visitors/tag/dynamic-tag.ts` calls `addSetupStatement` unconditionally, so any template containing a dynamic tag loses `domExports.setupEmpty` and its parents still emit `import { $setup as _wrap }` + `_wrap($scope.a)` for a function translate left empty. Re-verify: compile `<section class="wrap"><${input.content}/></section>` and a parent that uses it with `-o dom`; 19 committed `dom.bundle.js` snapshots still contain `$setup = () => {}`.
+
 ## Collapse an all-same `_set_serialize_reason` group object into a bare guard or bitmask
 
 `packages/runtime-tags/src/translator/util/known-tag.ts` › `knownTagTranslateHTML` | 2026-07-23 | impact:low | effort:low
 
 `knownTagTranslateHTML` falls back to an object literal `{0: g0, 1: g1, …}` whenever any group guard is a runtime expression, even when every group shares the same expression, and that literal is allocated on every render of the call site — one per row inside a `<for>`. Since `_serialize_if` treats `1` as "all groups" and a number as a bit-per-group mask, a shared 1|0 guard can be passed bare when `hasSkippedReasons` is false, or as `<bitmask> * guard` when groups were skipped. Gate it on the shared expression being normalized to 1|0 (a `_serialize_guard` call, an `||` chain of them, or a numeric literal), because `buildGuardExpr` can also hand back a raw `$scopeN_reason` whose value is itself a mask or object. Re-verify: `fixtures/at-tag-inside-if-tag/__snapshots__/html.bundle.js` emits `_set_serialize_reason({0: $sg__input_x, 1: $sg__input_x, 2: $sg__input_x})`; across the committed html.bundle.js corpus 17 of 137 calls use the object form and 14 have identical values in every slot.
+
+## Memoize runtime-helper imports; every `callRuntime` rescans the import's specifier list
+
+`packages/runtime-tags/src/translator/util/runtime.ts` › `importRuntime` | 2026-07-23 | impact:med | effort:low
+
+Every emitted helper reference goes `callRuntime` → `importRuntime` → `importNamed`, and `importNamed` (`packages/compiler/src/babel-utils/imports.js`) does `importDeclaration.get("specifiers")` — rebuilding a NodePath per specifier (setContext/setScope) — plus a linear `.find` before it can reuse the existing local. The calls are almost all repeats: a 20-section page compiled for dom+html issues 830 `importNamed` calls for 28 distinct `(request, name)` pairs. Keep a per-program `name → local` map (via `createProgramState`, so a dom compile cannot leak its path into an html one) and return `t.identifier(cached)` on a hit; the general fix is a second-level `name → local` map inside `getImports`, which also covers `importDefault`/`importStar`. Re-verify: wrapping `importNamed` with such a memo keeps output byte-identical and cut 80 dom+html compiles of that page from ~2480 ms to ~2355 ms (best of 5).
+
+## Reuse the `anchors` map for the intersection id loop in `finalizeReferences`
+
+`packages/runtime-tags/src/translator/util/references.ts` › `finalizeReferences` | 2026-07-23 | impact:low | effort:low
+
+The id-assignment loop tests `intersections[intersectionIndex].filter(isOwnedBinding).at(-1) === binding`, allocating a filtered array per owned binding, while the `anchors` map built ~30 lines above already holds each intersection's last owned binding; hoist `anchors` out of the `if (intersections.length)` block and the test becomes `anchors.get(intersection) === binding`. That removes an O(ownBindings × intersectionLength) walk (~640k element visits for 800 `<let>`s read in one expression). Same pass: `filter(bindings, isOwnedBinding)` is built twice and could be shared, and the name-collision check `find(section.bindings, ({ name }) => name === binding.name)` is an O(bindings²) scan a per-section `Set<string>` makes O(1). Re-verify: swap in the map lookup and run `pnpm run test:update -- --grep "runtime-tags/translator for-tag "` — snapshots must be unchanged, since the two expressions are equal by construction.
 
 ## Skip the `AbortController` when a section only uses `$signal` for cleanup
 
@@ -257,6 +318,12 @@ For a `singleNode` `<for>`, `forBranches` builds one string (`flushBranchIds = "
 
 All four `_for_*` exports share one `loop()` factory whose `oldScopesByKey` Map, common-suffix scan and LIS move planner are unreachable when the loop key is the item index — `_for_of` defaults `by` to the callback's second argument and `_for_to`/`_for_until` are emitted with literal `from=0, step=1`, so `start` always reaches `min(oldLen, newLen)` — and because the planner sits inside the signal the shared factory returns, none of it tree-shakes. Substituting an index-diff helper in the built page entry measures dom 7088/3281 → 6459/2939 for `<for|i| to=n>` (-629 min / -342 brotli) and 7127/3278 → 6447/2933 for an unkeyed `<for|item| of=list>`, with faster updates too (no Map build or LIS pass per render). The HTML side already draws this distinction — `html/writer.ts` › `_for_of` calls `forOf(list, cb)` with no key bookkeeping when `by` is falsy — so `translator/core/for.ts` › `forTypeToDOMRuntime` can select the variant when no `by` attribute is present. Two gates an obvious implementation misses: `branch[AccessorProp.LoopKey] = key` cannot be dropped, because for an unkeyed loop `core/for.ts` sets `keyBinding.scopeAccessor = LoopKey` and that slot _is_ the loop param's storage; and the choice is effectively whole-program, since a page shipping both helpers measures +592 min / +99 brotli against shipping only `loop`. Re-verify: build a `<let>`-driven `<for|i| to=n>` fixture (baseline 7088/3281), delete the Map/suffix/LIS tail from its bundled `dom` page entry, and re-minify.
 
+## Gate `cleanupScope`'s abort and subscription sweeps behind self-modifying installs
+
+`packages/runtime-tags/src/dom/scope.ts` › `cleanupScope` | 2026-07-30 | impact:med | effort:low
+
+`cleanupScope`'s sweeps read `AccessorProp.AbortScopes`, `Subscriptions` and `AbortControllers`, which are written in exactly one module (`dom/abort-signal.ts`, via `$signal` and `trackCleanup`) and never delivered by the resume payload, so a page using neither `$signal` nor a closure subscription ships both sweeps plus `$signalReset`/`abort` as provably dead code. Measured on a `<let>` + `<if>` page (dom 6008/2757): deleting the abort sweep is -116 min / -48 brotli, deleting both -197/-70; reach is broad, since of the 312 fixture DOM bundles that ship branch machinery 299 (96%) never call `$signal` and 187 (60%) use neither mechanism. Apply the repo's existing self-modifying idiom (`enableBranches`, `_enable_catch`) — `$signal` installs the abort sweep, `trackCleanup` installs the subscription sweep — which also drops two dead loops per scope from teardown. One gate the obvious form misses: `destroyScope` calls `cleanupScope(scope)` unconditionally, unlike the optional-chained `scope[AbortScopes]?.forEach`, so the uninstalled default must be a no-op function or an optional call, or embedded-island teardown throws. Distinct from "Skip the `AbortController` when a section only uses `$signal` for cleanup", which narrows the allocation rather than the sweep. Re-verify: build that page as a fixture, delete the two sweeps from its bundled entry chunk, and re-minify.
+
 ## Emit the inline walker runtime only when the render can stream or reorder
 
 `packages/runtime-tags/src/html/inlined-runtimes.ts` › `WALKER_RUNTIME_CODE` | 2026-07-30 | impact:med | effort:high
@@ -268,6 +335,12 @@ All four `_for_*` exports share one `loop()` factory whose `oldScopesByKey` Map,
 `packages/runtime-tags/src/translator/util/signals.ts` › `getResumeRegisterId` | 2026-08-08 | impact:med | effort:high
 
 Under `optimizeKnownTemplates` a register id is already `templateId + a sequential per-template counter` assigned in first-request order (`babel-utils/tags.js` › `getTemplateId`), yet every registration still spells the id as a string literal — 696 `_script(`, 196 `_resume(`, 109 `_content_resume(`, 38 `_var_resume(` and 24 `_hoist_resume(` sites across the committed `dom.bundle.js` corpus. A single trailing `_resume(templateId, [v0, v1, …])` whose runtime assigns `registeredValues[templateId + i] = v` drops the id argument from every helper (`_script`/`_var_resume`/`_content_resume` need id-less variants that push into the array) and subsumes the const-arrow factory inlining, since a single-use factory's binding disappears into the array literal; hash mode shrinks too, per-key hashes becoming one file hash plus a small int in the SSR payload. Two hazards make this a protocol change rather than a tweak: index agreement between the HTML and DOM compiles — ids match today because both derive the same key string, so the positional counter must be pinned to a canonical ordering computed in shared analyze, with a debug assertion that a served id resolves, or one output requesting a key the other never does silently shifts every later index — and lazy `load:` virtual modules, which register a subset of a template's values from a separate module and so need their own contiguous id space (`tid + module discriminator + index`). Re-verify the size claim first: rewrite the registrations in a few built page entries into the array form and re-minify (~6-10 min bytes per site expected).
+
+## Drop the `useIife` string-concat workaround for `$template`/`$walks`
+
+`packages/runtime-tags/src/translator/util/normalize-string-expression.ts` › `normalizeStringExpression` | 2026-07-30 | impact:med | effort:low
+
+`getSectionMeta` (`util/writer.ts`) and `getWalkString` (`util/walks.ts`) pass `useIife: true`, so a section that interpolates child templates emits ``/*@__PURE__*/ ((_w0,_w1) => `${_w0}${_w1}<span> </span>`)(_c_template, _c_template)`` instead of a plain template literal, marked in-source as "a temporary workaround for <https://github.com/rolldown/rolldown/issues/9189>". oxc-minify never folds an IIFE, so the parameter list, arrow and argument list survive into the shipped bundle even when every argument resolves to a string literal: rewriting each IIFE to the equivalent template literal in the emitted chunk and re-minifying measures ~19 min / 2.2-4.5 brotli per custom-tag placement in a section whose client renderer is retained, plus 13 min / 8-40 brotli once per such section (64 static children in an `<if>`: 9268/3384 → 8063/3120; 64 stateful children: 17417/4139 → 16203/4000), and it stays a win in the worst case where the same child is placed 64 times so the interpolated const is not single-use (7393/3068 → 6509/2784). Re-validate rolldown 9189 before removing — a mimic of the marko module shape built against the pinned rolldown 1.1.4 tree-shook the child's template strings identically for the IIFE, template-literal and `+` forms, so the workaround may already be obsolete — and prefer the template literal over `+` concatenation, which duplicates markup when one child is placed many times in a section.
 
 ## Specialize single-node vs range branch reconstruction behind separate enables
 
@@ -322,3 +395,15 @@ A monotonically increasing list of distinct scope ids is the least compressible 
 `packages/runtime-tags/src/dom/renderer.ts` › `_content` | 2026-07-30 | impact:low | effort:med
 
 `_content` decides at runtime between three shapes the compiler already knows — no template (walk a fresh `Text`), template with empty walks (clone, no walk), and template with walks (clone and walk) — and its `clone` closure hard-references `walk`, `parseHTML` and `cloneCache` in all three, so `dom/walker.ts` and `dom/parse-html.ts` are retained even when every branch body is static. For `<if=(x>1)>yes</if>` the translator already emits `_if(2, "yes")` with the walks argument omitted, yet ablating the walker interpreter from that bundle measures -674 min / -270 brotli, parse-html + cloneCache + createCloneableHTML -426/-152, and both -1073/-417 (6647/3010 → 5574/2593). Emitting a distinct walk-free constructor (and a plain `new Text(str)` form for a branch whose static content is a single text literal) removes those references per call site, so the modules drop only when _every_ client-created branch in the app qualifies — be honest about reach, since a corpus scan of `_if(...)` calls in the fixture snapshots shows most branch bodies do carry a non-empty walks string. Two pieces are unconditional wins worth taking regardless: pre-trimming the trailing exit codes at compile time removes `walks.replace(/[^\0-1]+$/, "")` from `_content` (-26 min / -11 brotli plus one regex execution per branch renderer at module init), and a text-literal branch skips an `innerHTML` parse on first construction.
+
+## Gate the lazy-resume visit retention behind an enable from `dom/load.ts`
+
+`packages/runtime-tags/src/dom/resume.ts` › `init` | 2026-07-30 | impact:low | effort:low
+
+`readyIds` is already correctly self-modifying — a page with no `ready()` caller drops the whole ready/lazy fixed-point loop — but the visit-retention fallback in `render.m` (`let retained = 0`, `else if (render.b) visits[retained++] = visit`, `visits.length = retained`) is guarded only by the runtime property `render.b`, so it survives in every page entry. It exists solely so a lazily loaded module that later calls `enableBranches()` can reprocess branch visits. Guarding it with a module-level flag set from `dom/load.ts` — which is in the graph only when a template uses `import … with { load: … }`, and which non-lazy pages tree-shake entirely — measures 2587/1306 → 2543/1282 and stops non-lazy pages writing back into `visits` and truncating it after every resume. The flag must be assigned at `dom/load.ts` module scope (or from a `_load_*` constructor that always runs before `init`), never from `ready()`, which can fire after `render.m` has already run — precisely the case the retention exists for.
+
+## Give `handleFormReset` the element's own change detector
+
+`packages/runtime-tags/src/dom/controllable.ts` › `syncControllableFormInput` | 2026-07-30 | impact:low | effort:low
+
+`syncControllableFormInput(el, hasChanged, onChange)` already receives the element's own change detector and stores `onChange` on the element as `el._`, but `handleFormReset` discards it and calls `hasFormElementChanged(el)`, which branches on `el.options` into `hasSelectChanged` / `hasValueChanged` / `hasCheckboxChanged` — so a page whose only controllable is `value:=` on a text input still ships every kind's detector (~300 of that page's 2355 raw bytes of `controllable.ts`, ≈115 min / ≈40 brotli). Stash the detector alongside the handler (`el._c = hasChanged`) and have `handleFormReset` call `el._c(el)`; `hasFormElementChanged` and the two foreign detectors then disappear from single-kind pages. This is also the concrete blocker for the per-kind `controllable.ts` split proposed in "Split rarely-used dom machinery out of the eager runtime chunks": with `hasFormElementChanged` in the shared core, per-kind modules would still cross-reference every kind's detector, so that split alone would not stop a value-only page pulling select and checkbox code. Re-verify: build `<let/x=""/><input value:=x>` and grep the entry chunk for `hasCheckboxChanged` and `hasSelectChanged`.
