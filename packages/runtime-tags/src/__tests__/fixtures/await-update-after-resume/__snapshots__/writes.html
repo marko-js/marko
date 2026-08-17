@@ -3,6 +3,7 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
     d: new Set([_(2)])
   }, {
@@ -10,7 +11,6 @@
     C: "b",
     Q: _(1, "a2")
   }], "a4 1"];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
@@ -20,11 +20,11 @@
   <div id=inside>0<!--M_*4 a--></div><!--M_]2 a 4-->
 </t>
 <script>
-  M._.r.push(_ => [4, {
-    c: 0
-  }]);
   M._.j.b = _ => {
     _.push("a0 4 a1 4")
   };
+  M._.r.push(_ => [4, {
+    c: 0
+  }]);
   M._.w()
 </script>

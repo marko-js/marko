@@ -5,7 +5,12 @@
 <t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [3, {
+  REORDER_RUNTIME(M._);
+  M._.r = [];
+  M._.j[3] = _ => {
+    _.push("f 3")
+  };
+  M._.r.push(_ => [3, {
     C: "a",
     Q: _(2, "a0")
   }], _ => [3, {
@@ -16,11 +21,7 @@
   }, {
     f: "a",
     G: 4
-  }], "b0 6 c0 5 a2 1"];
-  REORDER_RUNTIME(M._);
-  M._.j[3] = _ => {
-    _.push("f 3")
-  };
+  }], "b0 6 c0 5 a2 1");
   M._.w()
 </script>
 
@@ -32,6 +33,9 @@
   </div>
 </t>
 <script>
+  M._.j.b = _ => {
+    _.push("b0 9 c0 8")
+  };
   M._.r.push(_ => [8, {
     G: 2,
     e: "ready"
@@ -39,8 +43,5 @@
     G: 2,
     f: "a"
   }]);
-  M._.j.b = _ => {
-    _.push("b0 9 c0 8")
-  };
   M._.w()
 </script>

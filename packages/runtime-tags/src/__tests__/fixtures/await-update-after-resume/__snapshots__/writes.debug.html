@@ -3,6 +3,7 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
       "ClosureScopes:value": new Set([_(2)])
     }, {
@@ -14,7 +15,6 @@
     }],
     "packages/runtime-tags/src/__tests__/fixtures/await-update-after-resume/template.marko_0 1"
   ];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
@@ -24,13 +24,13 @@
   <div id=inside>0<!--M_*4 #text/0--></div><!--M_]2 #text/0 4-->
 </t>
 <script>
-  M._.r.push(_ => [4, {
-    value: 0
-  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/await-update-after-resume/template.marko_3_value#2 4 packages/runtime-tags/src/__tests__/fixtures/await-update-after-resume/template.marko_3 4"
       )
   };
+  M._.r.push(_ => [4, {
+    value: 0
+  }]);
   M._.w()
 </script>

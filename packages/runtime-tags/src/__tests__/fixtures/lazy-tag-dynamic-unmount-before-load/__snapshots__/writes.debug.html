@@ -2,6 +2,7 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
       show: !0,
       "ClosureScopes:show": new Set
@@ -14,7 +15,6 @@
     }],
     "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/template.marko_0 1"
   ];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
@@ -25,10 +25,6 @@
   <span>1<!--M_*5 #text/0--></span><!--M_]4 #text/0 5--><!--M_]2 #text/0 4-->
 </t>
 <script>
-  M._.r.push(_ => [4, {
-    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko",
-    _: _(2)
-  }]);
   M._.b = {
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko": [
       1
@@ -44,5 +40,9 @@
       "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/template.marko_2_show#2/pending 4"
       )
   };
+  M._.r.push(_ => [4, {
+    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko",
+    _: _(2)
+  }]);
   M._.w()
 </script>

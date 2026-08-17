@@ -3,7 +3,12 @@
 <t hidden M_=2><!--M_#c--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [1, {
+  REORDER_RUNTIME(M._);
+  M._.r = [];
+  M._.j[2] = _ => {
+    _.push("_placeholderDismiss 2")
+  };
+  M._.r.push(_ => [1, {
       attempt: 1,
       "ClosureScopes:attempt": new Set([_(2)])
     }, {
@@ -22,11 +27,7 @@
       _: _(1)
     }]), (_.a = _(1)["ClosureScopes:attempt"]).add(_(3)), 0),
     "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1 3"
-  ];
-  REORDER_RUNTIME(M._);
-  M._.j[2] = _ => {
-    _.push("_placeholderDismiss 2")
-  };
+    );
   M._.w()
 </script>
 

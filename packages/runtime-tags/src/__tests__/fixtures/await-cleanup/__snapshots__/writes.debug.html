@@ -5,6 +5,7 @@
 <t hidden M_=3><!--M_#b--><!--M_#c--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
       show: 1,
       "ClosureScopes:show": new Set
@@ -17,7 +18,6 @@
     }],
     "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_0 1"
   ];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
@@ -26,12 +26,6 @@
 <t hidden M_=b><!--M_[-->1<!--M_*5 #text/0--><!--M_]3 #text/0 5--></t>
 <t hidden M_=c></t>
 <script>
-  M._.r.push(_ => [5, {
-    "#ClosestBranchId": 2,
-    _: _(3)
-  }], _ => [6, {
-    "#ClosestBranchId": 2
-  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_3_show#2/pending 5 packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_3 5"
@@ -42,5 +36,11 @@
       "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_5 6"
       )
   };
+  M._.r.push(_ => [5, {
+    "#ClosestBranchId": 2,
+    _: _(3)
+  }], _ => [6, {
+    "#ClosestBranchId": 2
+  }]);
   M._.w()
 </script>

@@ -3,7 +3,12 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [1, {
+  REORDER_RUNTIME(M._);
+  M._.r = [];
+  M._.j[2] = _ => {
+    _.push("f 2")
+  };
+  M._.r.push(_ => [1, {
     b: 0,
     c: new Set
   }, {
@@ -14,11 +19,7 @@
     P: _(3)
   }, {
     _: _(1)
-  }]), (_.a = _(1).c).add(_(3)), 0), "a0 3"];
-  REORDER_RUNTIME(M._);
-  M._.j[2] = _ => {
-    _.push("f 2")
-  };
+  }]), (_.a = _(1).c).add(_(3)), 0), "a0 3");
   M._.w()
 </script>
 
@@ -27,12 +28,12 @@
 <t hidden M_=b><!--M_[--><button>loaded <!>
       0<!--M_*4 b--></button><!--M_*4 a--><!--M_]2 a 4--></t>
 <script>
+  M._.j.b = _ => {
+    _.push("a1 4 a2 4")
+  };
   M._.r.push(_ => [4, {
     _: _(2),
     Cc: 1
   }]);
-  M._.j.b = _ => {
-    _.push("a1 4 a2 4")
-  };
   M._.w()
 </script>
