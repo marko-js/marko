@@ -1,9 +1,8 @@
-// Analyze-side structure facts for persisted pages: what the template
-// does (sources, structural/global param uses, branch paths, and whether
-// a branch body is client-reselectable). Ownership conclusions and wire
-// channels belong to translate (see ./delivery).
+// Analyze-side structure facts for persisted pages, in template terms;
+// ownership conclusions and wire channels belong to translate (./delivery).
 import type { types as t } from "@marko/compiler";
 
+import { isPersisted } from "../marko-config";
 import { every, forEach, type Opt, some } from "../optional";
 import type { Binding, Sources } from "../references";
 import { ensureReasonGroups, type Section } from "../sections";
@@ -14,42 +13,50 @@ import {
 import { isPatchFillBinding, paramsDeliverAsFills } from "./delivery";
 import { onFinalizePersisted } from "./lifecycle";
 
-// Whether the section renders inside client-reselectable structure
+// Whether the section renders inside state-selected structure
 // (inclusive): patch renders skip those bodies, so nothing inside may
 // rely on a patch write.
-export function inClientReselectableStructure(section: Section | undefined) {
+export function inStateSelectedStructure(section: Section | undefined) {
   while (section) {
-    if (section.isClientReselectable) return true;
+    if (isStateSelected(section)) return true;
     section = section.parent;
   }
   return false;
 }
 
-// Client-evaluable sources classify structure client-reselectable; nesting
-// in reselectable structure inherits the classification (its bodies
-// already bundle). Delivery is judged per READ binding (a root derived
-// ships its computed value), mirroring the expression matrix inside
-// reselectable structure.
-export function classifiesClientReselectable(
-  sources: Sources | undefined,
-  section: Section,
-  refs: Opt<Binding>,
-) {
+// A branch body selected by a state reason (or nested in one) whose param
+// feeds all deliver; resolved sources are required, so call at finalize or later.
+const stateSelectedBySection = new WeakMap<Section, boolean>();
+export function isStateSelected(section: Section): boolean {
+  let stateSelected = stateSelectedBySection.get(section);
+  if (stateSelected === undefined) {
+    const expr =
+      isPersisted() && section.isBranch
+        ? section.upstreamExpression
+        : undefined;
+    const sources = expr && getSerializeSourcesForExpr(expr);
+    stateSelectedBySection.set(
+      section,
+      (stateSelected =
+        !!expr &&
+        !sources?.global &&
+        (!!sources?.state || inStateSelectedStructure(section.parent)) &&
+        every(expr.referencedBindings, selectionFeedDelivers)),
+    );
+  }
+  return stateSelected;
+}
+
+// A state-mixed ref recomputes client-side, so its param ORIGINS must fill;
+// a pure-param ref ships its own computed value.
+function selectionFeedDelivers(binding: Binding) {
+  const sources = getSerializeSourcesForRef(binding);
   return (
-    (!!sources?.state || inClientReselectableStructure(section)) &&
-    !sources?.global &&
-    every(refs, (binding) => {
-      const refSources = getSerializeSourcesForRef(binding);
-      // A state-mixed ref recomputes client-side, so its param ORIGINS
-      // must fill; a pure-param ref ships its own computed value.
-      return (
-        !refSources?.param ||
-        (refSources.state
-          ? paramsDeliverAsFills(refSources.param)
-          : isPatchFillBinding(binding)) ||
-        inClientReselectableStructure(binding.section)
-      );
-    })
+    !sources?.param ||
+    (sources.state
+      ? paramsDeliverAsFills(sources.param)
+      : isPatchFillBinding(binding)) ||
+    inStateSelectedStructure(binding.section)
   );
 }
 

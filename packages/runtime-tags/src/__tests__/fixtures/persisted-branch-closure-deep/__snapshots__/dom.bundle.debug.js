@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><h1> </h1><!><button>+</button></main>";
 const $walks = "E l%b l";
-const $if_content2__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._);
+const $if_content2__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#8/init", "count", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._);
 const $if_content2__setup = $if_content2__count;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span>", "Db%", $if_content2__setup);
 const $if_content__input_inner = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__if($scope, $scope._.input_inner ? 0 : 1));

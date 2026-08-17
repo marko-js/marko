@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_title($scope);
 	$if_content__count($scope);
 };
-const $if_content__count = /*@__PURE__*/ _closure_get("count", $if_content__input_title__OR__count, ($scope) => $scope._._);
+const $if_content__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#7/init", "count", $if_content__input_title__OR__count, ($scope) => $scope._._);
 const $else_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $else_content__input_inner = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => $else_content__if($scope, $scope._.input_inner ? 0 : 1));
 const $else_content__setup = $else_content__input_inner;

@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!><button>+</button></main>";
 const $walks = "E l%b l";
 const $if_content__count__script = _script("__tests__/template.marko_1_count#7", ($scope) => document.querySelector("main").dataset.count = String($scope._.count));
-const $if_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count#7/init", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__count__script));
+const $if_content__count = /*@__PURE__*/ _init_if_closure("__tests__/template.marko_1_count#7/init", "#text/1", 0, $if_content__count__script);
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _let("count/7", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {

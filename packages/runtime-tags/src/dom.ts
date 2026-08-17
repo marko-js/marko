@@ -87,7 +87,6 @@ export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
   _resume,
-  _resume_init,
   _var_resume,
   init,
   initEmbedded,
@@ -114,6 +113,10 @@ export {
   _hoist_resume,
   _id,
   _if_closure,
+  _init_closure_get,
+  _init_for_closure,
+  _init_for_selector,
+  _init_if_closure,
   _let,
   _let_change,
   _or,

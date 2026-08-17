@@ -177,11 +177,12 @@ A server rerender of a persisted page applied to the live client DOM by
 refreshing values and navigating structure, without a full page render.
 _Avoid_: rerender, hydration update
 
-**Client-reselectable structure**:
-A branch body whose selection can re-run on the client (classified at
-persisted finalize): patch renders skip it and frames omit its entry.
-Translate code may call the derived policy _client-owned_.
-_Avoid_: client-owned as a shared field name
+**State-selected structure**:
+A branch body whose selection has a state reason — state sources, no
+`$global`, fill-deliverable param feeds — derived from its upstream
+expression (`isStateSelected`), never stored. Resumed code re-selects it,
+so patch renders skip it and frames omit its entry. Translate code may call the derived policy _client-owned_.
+_Avoid_: client-reselectable, client-owned as a shared field name
 
 **Structural-or-global param**:
 A root param whose reads select structure or mix with `$global` — the value

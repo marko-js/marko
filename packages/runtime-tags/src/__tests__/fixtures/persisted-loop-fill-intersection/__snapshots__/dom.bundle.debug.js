@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__input_note._($scope);
 	$for_content__count._($scope);
 };
-const $for_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count#7/init", /*@__PURE__*/ _for_closure("#ul/0", $for_content__input_note__OR__count__OR__item));
+const $for_content__count = /*@__PURE__*/ _for_closure("#ul/0", $for_content__input_note__OR__count__OR__item);
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_note__OR__count__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D ", $for_content__setup, $for_content__$params);

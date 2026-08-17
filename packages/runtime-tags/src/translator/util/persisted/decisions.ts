@@ -18,7 +18,7 @@ import {
   getSerializeSourcesForRef,
 } from "../serialize-reasons";
 import { hasUnfillablePatchReads } from "./delivery";
-import { inClientReselectableStructure } from "./structure";
+import { inStateSelectedStructure } from "./structure";
 
 export interface PatchViolation {
   node: t.Node;
@@ -240,7 +240,7 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
   if (
     anyState &&
     !anyServerable &&
-    !inClientReselectableStructure(getSection(tag))
+    !inStateSelectedStructure(getSection(tag))
   ) {
     let skips = true;
     for (const child of tag.get("body").get("body")) {
