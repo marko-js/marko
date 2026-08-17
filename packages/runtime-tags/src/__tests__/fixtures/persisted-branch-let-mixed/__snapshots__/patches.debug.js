@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
   "PatchBranch:#text/2": [{
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko1": 0
@@ -15,7 +15,7 @@
 }
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko_1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
   "PatchBranch:#text/2": [{
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-let-mixed/template.marko1": 0

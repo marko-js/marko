@@ -39,6 +39,7 @@ const pureDOMFunctions = new Set<string>([
   "_init_for_closure",
   "_init_for_selector",
   "_init_if_closure",
+  "_init_join",
   "_fill_const",
   "_fill_dynamic_tag",
   "_fill_let",

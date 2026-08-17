@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+[`a0 !a1,<p>promo</p>`, {
   ta: "Store",
   bb: [{
     ea1: "g 1"
@@ -15,7 +15,7 @@
 }
 
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+[`a0 !a1,<p>promo</p>`, {
   ta: "Store",
   bb: [{
     ea1: "g 1"
