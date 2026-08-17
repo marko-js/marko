@@ -3,7 +3,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
-import { isBranchPathSection } from "./persisted/structure";
+import { isBranchPathSection, isStateSelected } from "./persisted/structure";
 import {
   forEachSection,
   getSectionRegisterReasons,
@@ -28,13 +28,13 @@ export function getShells() {
 // Builds every branch shell as pre-serialized frame chunks the html
 // output registers as data.
 export function buildShells() {
-  // Enclosing branches of a client-reselectable selection also construct
+  // Enclosing branches of state-selected structure also construct
   // unfaithfully: the frame cannot reproduce the selection inside them.
   forEachSection((section) => {
-    if (section.isClientReselectable) {
+    if (isStateSelected(section)) {
       for (let cur = section.parent; cur?.parent; cur = cur.parent) {
         if (cur.isBranch) {
-          cur.shellBlocked ??= ShellBlocker.reselectableEnclosure;
+          cur.shellBlocked ??= ShellBlocker.stateSelectedEnclosure;
         }
       }
     }
@@ -43,11 +43,11 @@ export function buildShells() {
   const keep = new Set<Section>();
   forEachSection((section) => {
     // Every branch-path body ships a shell, except
-    // client-reselectable bodies: they never construct from a frame.
+    // state-selected bodies: they never construct from a frame.
     if (
       !section.isBranch ||
       !isBranchPathSection(section) ||
-      section.isClientReselectable
+      isStateSelected(section)
     ) {
       return;
     }

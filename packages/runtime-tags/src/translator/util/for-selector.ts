@@ -2,7 +2,7 @@ import type { types as t } from "@marko/compiler";
 
 import { forEach } from "./optional";
 import { isPatchFillBinding } from "./persisted/delivery";
-import { inClientReselectableStructure } from "./persisted/structure";
+import { inStateSelectedStructure } from "./persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -50,8 +50,7 @@ export function detectForSelector(
         // A fill delivers through the plain scan join; the keyed selector
         // dispatch has no fill channel.
         !(
-          inClientReselectableStructure(bodySection) &&
-          isPatchFillBinding(canonical)
+          inStateSelectedStructure(bodySection) && isPatchFillBinding(canonical)
         ) &&
         !closures?.has(canonical) &&
         onlyComparesKey(closure, canonical, bodySection, keyBinding)

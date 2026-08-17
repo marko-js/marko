@@ -1,14 +1,17 @@
 import type { TestConfig } from "../../main.test";
 
-// Root state read two branch levels deep is a dynamic closure the INIT
-// cannot render yet: the inner shell drops, pairing still patches, and
-// diverging to the inner branch rejects the patch (a document navigation).
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// Root state read two branch levels deep constructs from the live count
+// and keeps updating after later clicks (the INIT subscribed the scope).
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [
     { title: "Store", outer: true, inner: false },
-    { title: "Store!", outer: true, inner: false },
+    click,
     { title: "Store!", outer: true, inner: true },
+    click,
   ],
 };
