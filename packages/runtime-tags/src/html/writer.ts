@@ -1286,9 +1286,10 @@ export class Chunk {
         // while the body streams, destroyed when the reorder swaps it in.
         const placeholderBranchId = state.scopeId;
         const placeholderChunk = this.fork(this.boundary, null);
-        const scopesBefore = Object.keys(
-          this.serializeState.writeScopes,
-        ).length;
+        const { serializeState } = this;
+        // writeScope raises this flag; borrow it to see if the placeholder did.
+        const { flushScopes } = serializeState;
+        serializeState.flushScopes = false;
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
         if (
           placeholderChunk !==
@@ -1301,10 +1302,7 @@ export class Chunk {
           this.boundary.abort(
             new Error("An @placeholder cannot contain async content."),
           );
-        } else if (
-          placeholderChunk.effects ||
-          Object.keys(this.serializeState.writeScopes).length !== scopesBefore
-        ) {
+        } else if (placeholderChunk.effects || serializeState.flushScopes) {
           this.render(() =>
             writeBranch(
               scopeId,
@@ -1326,6 +1324,7 @@ export class Chunk {
         } else {
           this.append(placeholderChunk);
         }
+        serializeState.flushScopes ||= flushScopes;
         this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
         // The placeholder rendered after this flush's serializer pass; its
         // effects go out now, so its scopes must too or they resume empty.
