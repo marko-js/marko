@@ -11,7 +11,7 @@ import {
   StructureKind,
 } from "./sections";
 import { getResumeRegisterId } from "./signals";
-import { resolveStructure, trimTrailingExits } from "./structure";
+import { getSectionMeta, trimTrailingExits } from "./structure";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -164,27 +164,25 @@ function isChildRootExpressible(program: t.ProgramExtra) {
 // The shell's template and walk strings when both are fully static.
 function getStaticShell(section: Section) {
   if (!isShellExpressible(section)) return;
-  const { writes, walks } = resolveStructure(section);
-  const template = normalizeStringExpression(writes, true);
-  const walkLiteral = trimTrailingExits(normalizeStringExpression(walks, true));
-  if (!t.isStringLiteral(template) || !template.value) return;
+  const { writes, walks } = getSectionMeta(section);
+  const walkLiteral = trimTrailingExits(walks);
+  if (!t.isStringLiteral(writes) || !writes.value) return;
   // A fully static branch claims nothing, so an empty walk string is valid.
   if (walkLiteral && !t.isStringLiteral(walkLiteral)) return;
-  return [template.value, walkLiteral?.value ?? ""] as const;
+  return [writes.value, walkLiteral?.value ?? ""] as const;
 }
 
 // The frame record `id marker;walks;template` (`,` for `;walks;` when the
-// walk is empty) as an html-side expression; child parts import.
+// walk is empty): the section's dom template parts, child imports included.
 export function buildShellRecord(id: string, section: Section, marker = "") {
-  const { writes, walks } = resolveStructure(section);
-  const template = normalizeStringExpression(writes, true);
-  const walkExpr = trimTrailingExits(normalizeStringExpression(walks, true));
+  const { writes, walks } = getSectionMeta(section);
+  const walkExpr = trimTrailingExits(walks);
   const walkless =
     !walkExpr || (t.isStringLiteral(walkExpr) && !walkExpr.value);
   const parts: (string | t.Expression)[] = [
     id + (marker && " " + marker) + (walkless ? "," : ";"),
   ];
   if (!walkless) parts.push(walkExpr!, ";");
-  if (template) parts.push(template);
+  if (writes) parts.push(writes);
   return normalizeStringExpression(parts, true)!;
 }
