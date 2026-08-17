@@ -5,16 +5,17 @@ var badge_default = _template_persisted("b", (input) => {
 	let seen = 0;
 	_html(`<footer><span>${_patch_text($scope0_id, "a", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "a")} (<!>${_escape(seen)}${_el_resume($scope0_id, "b")})</span><button>ack</button>${_el_resume($scope0_id, "c")}</footer>`);
 	_script($scope0_id, "b0");
+	_patch_value($scope0_id, "b0", seen, 1);
 	$scope0_reason && writeScope($scope0_id, { g: seen });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
 _shells({
-	a0: ",`a0;D%b%;<section><!><!></section>`",
-	a1: ",`a1;D ;<small> </small>`",
-	a2: ",`a2;D%b%;<li><!><!></li>`",
-	a3: ",`a3,<em>on sale</em>`"
+	a0: "a0;D%b%;<section><!><!></section>",
+	a1: "a1;D ;<small> </small>",
+	a2: "a2;D%b%;<li><!><!></li>",
+	a3: "a3,<em>on sale</em>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 1), $sg__input_detail = _source_guard($scope0_reason, 3), $sg__input_summary = _source_guard($scope0_reason, 2);

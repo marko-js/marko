@@ -1,5 +1,7 @@
 // tags/counter/index.marko
-_shells({ "__tests__/tags/counter/index.marko_1*shell": ",`__tests__/tags/counter/index.marko_1*shell !__tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`" });
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+_shells({ "__tests__/tags/counter/index.marko_1*shell": "__tests__/tags/counter/index.marko_1*shell !__tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>" });
 var counter_default = _template_persisted("__tests__/tags/counter/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -32,6 +34,9 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 }, 0, 0);
 
 // template.marko
+const $template = "<main><h1> </h1><p>Last <!></p><!></main>";
+const $walks = "E lDb%l%l";
+_shells({ "__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)) });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -57,7 +62,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "6:4");
-	}, 0, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, 0);
+	}, 0, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "__tests__/template.marko_1*shell");
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);

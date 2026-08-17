@@ -9,7 +9,7 @@ var l3_default = /*@__PURE__*/ _template("__tests__/tags/l1/tags/l2/tags/l3/inde
 // tags/l1/tags/l2/index.marko
 const $template$2 = /*@__PURE__*/ ((_w0) => `<button class=n> </button>${_w0}`)($template$3);
 const $walks$2 = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D l");
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/l1/tags/l2/index.marko0", "n/6", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script$1 = _script("__tests__/tags/l1/tags/l2/index.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));

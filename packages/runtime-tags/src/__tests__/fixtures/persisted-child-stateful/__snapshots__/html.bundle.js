@@ -5,6 +5,7 @@ var counter_default = _template_persisted("b", (input) => {
 	let n = 0;
 	_html(`<button class=c>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
+	_patch_value($scope0_id, "b0", n, 1);
 	$scope0_reason && writeScope($scope0_id, { c: n });
 	_resume_branch($scope0_id);
 }, 0, 0);

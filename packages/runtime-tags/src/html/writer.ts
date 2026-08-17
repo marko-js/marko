@@ -186,6 +186,33 @@ export function _script(scopeId: number, registryId: string) {
   }
   $chunk.boundary.state.needsMainRuntime = true;
   $chunk.writeEffect(scopeId, registryId);
+  // Paired scopes keep their effects and a branch's ride its shell; a scope
+  // a construct creates below a branch (a child instance) mounts from setup.
+  const { state } = $chunk.boundary;
+  if (
+    state.writesPatches &&
+    !state.patchInert &&
+    isInResumedBranch() &&
+    $chunk.context![kBranchId] !== scopeId
+  ) {
+    addSetupId(scopeId, registryId, 1);
+  }
+}
+
+// Setup ids share the shell record grammar (`inits…!effects…`); each side
+// dedupes so a feed shared by several locals arrives once.
+export function addSetupId(scopeId: number, id: string, effect?: 1) {
+  const { state } = $chunk.boundary;
+  const setup = (patchPartial(state, scopeId)[PatchKey.Setup] ??= {}) as Record<
+    string,
+    string
+  >;
+  const [inits = "", effects = ""] = (setup[PatchKey.Init] || "").split("!");
+  const side = effect ? effects : inits;
+  if ((" " + side + " ").includes(" " + id + " ")) return;
+  const added = side ? side + " " + id : id;
+  const next = effect ? [inits, added] : [added, effects];
+  setup[PatchKey.Init] = next[1] ? next[0] + "!" + next[1] : next[0];
 }
 
 export function _trailers(html: string) {
@@ -592,6 +619,9 @@ function forBranches(
     )
   )
     return;
+  // A patchable loop's markers must resume even on a page with no other
+  // client code: a patch pairs and constructs through them.
+  if (shellId !== undefined) $chunk.needsWalk = true;
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
     var seenKeys = new Set<unknown>();
@@ -682,6 +712,9 @@ export function _if(
 ) {
   if ($chunk.boundary.state.writeBranch?.(scopeId, accessor, cb, shellIds))
     return;
+  // A patchable conditional's markers must resume even on a page with no
+  // other client code: a patch pairs and constructs through them.
+  if (shellIds) $chunk.needsWalk = true;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);

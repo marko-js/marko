@@ -1,20 +1,25 @@
 // tags/badge.marko
+const $template$1 = "<footer><span><!> (<!>)</span><button>ack</button></footer>";
+const $walks$1 = "E%c%l l";
 var badge_default = _template_persisted("__tests__/tags/badge.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let seen = 0;
 	_html(`<footer><span>${_patch_text($scope0_id, "#text/0", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")} (<!>${_escape(seen)}${_el_resume($scope0_id, "#text/1")})</span><button>ack</button>${_el_resume($scope0_id, "#button/2")}</footer>`);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/badge.marko0", seen, 1);
 	$scope0_reason && writeScope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D b%b/${_w0}&l`)($walks$1);
 _shells({
-	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell;D%b%;<section><!><!></section>`",
-	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell;D ;<small> </small>`",
-	"__tests__/template.marko_3*shell": ",`__tests__/template.marko_3*shell;D%b%;<li><!><!></li>`",
-	"__tests__/template.marko_4*shell": ",`__tests__/template.marko_4*shell,<em>on sale</em>`"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D%b%;<section><!><!></section>",
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<small> </small>",
+	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D%b%;<li><!><!></li>",
+	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell,<em>on sale</em>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 1), $sg__input_detail = _source_guard($scope0_reason, 3), $sg__input_summary = _source_guard($scope0_reason, 2);

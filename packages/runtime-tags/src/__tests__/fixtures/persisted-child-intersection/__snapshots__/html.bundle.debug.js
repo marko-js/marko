@@ -1,10 +1,13 @@
 // tags/price-card.marko
+const $template$1 = "<div><h2> </h2><button>+</button></div>";
+const $walks$1 = "E l l";
 var price_card_default = _template_persisted("__tests__/tags/price-card.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let qty = 1;
 	_html(`<div><h2>${_escape(input.label + " x" + qty)}${_el_resume($scope0_id, "#text/0")}</h2><button>+</button>${_el_resume($scope0_id, "#button/1")}</div>`);
 	_script($scope0_id, "__tests__/tags/price-card.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/price-card.marko1", qty, 1);
 	$scope0_reason ? writeScope($scope0_id, {
 		input_label: input.label,
 		qty
@@ -16,6 +19,8 @@ var price_card_default = _template_persisted("__tests__/tags/price-card.marko", 
 }, 0, 0);
 
 // template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1>${_w0}</main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `E l/${_w0}&l`)($walks$1);
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

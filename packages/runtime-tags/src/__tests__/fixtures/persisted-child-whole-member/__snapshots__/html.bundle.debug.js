@@ -1,4 +1,6 @@
 // tags/duo/index.marko
+const $template$1 = "<h2> </h2><p> </p>";
+const $walks$1 = "D lD l";
 var duo_default = _template_persisted("__tests__/tags/duo/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -7,6 +9,8 @@ var duo_default = _template_persisted("__tests__/tags/duo/index.marko", (input) 
 }, 0, 0);
 
 // template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

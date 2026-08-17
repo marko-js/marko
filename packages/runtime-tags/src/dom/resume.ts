@@ -126,6 +126,17 @@ export function beginPatch(renderId: string) {
 export function abortPatch() {
   patchRender = patching = 0;
 }
+// Set while a partial applies to a tree a shell's walk just created: fresh
+// scopes met then have no renderer to set them up (see `PatchKey.Setup`).
+export let constructing = 0;
+export function withConstructing<T>(fn: () => T) {
+  constructing++;
+  try {
+    return fn();
+  } finally {
+    constructing--;
+  }
+}
 
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
