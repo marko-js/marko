@@ -1,4 +1,4 @@
-// size: 6511 (min) 2873 (brotli)
+// size: 6347 (min) 2810 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -279,13 +279,6 @@ function runRenders() {
     runRender(render);
   }
 }
-function $signalReset(scope, id) {
-  let ctrl = scope.A?.[id];
-  ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
-}
-function abort(ctrl) {
-  ctrl.abort();
-}
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
@@ -317,13 +310,7 @@ function skipScope() {
 function destroyBranch(branch) {
   (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
 }
-function cleanupScope(scope) {
-  scope.Z?.forEach(unsubscribe, scope);
-  for (let id in scope.A) $signalReset(scope, id);
-}
-function unsubscribe(subscribers) {
-  subscribers.delete(this);
-}
+function cleanupScope(scope) {}
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
