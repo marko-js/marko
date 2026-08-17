@@ -17,7 +17,8 @@
 ```
 ## Console
 ```
-LOG "child mounted" undefined
+LOG "child mounted" "a"
+LOG "shell mounted" "loading" "loading"
 ```
 
 # Update
@@ -48,8 +49,10 @@ INSERT: div
 ```
 ## Console
 ```
+LOG "child destroyed" "a"
+LOG "shell destroyed" "loading"
 LOG "child mounted" "a"
-LOG "shell mounted" "ready"
+LOG "shell mounted" "ready" "ready"
 ```
 
 # Update

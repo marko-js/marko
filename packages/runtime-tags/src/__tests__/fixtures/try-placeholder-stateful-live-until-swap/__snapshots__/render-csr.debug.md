@@ -1,4 +1,6 @@
 # Render
+
+# Update
 ```html
 <div
   data-status="loading"
@@ -15,9 +17,18 @@
   </section>
 </div>
 ```
+## Change
+```
+INSERT: div
+UPDATE: div[data-status] null => "loading"
+INSERT: div > a + .on
+UPDATE: .on::text " " => "A"
+UPDATE: .on[class] null => "on"
+```
 ## Console
 ```
-LOG "child mounted" undefined
+LOG "shell mounted" "loading" "loading"
+LOG "child mounted" "a"
 ```
 
 # Update
@@ -39,17 +50,19 @@ LOG "child mounted" undefined
 ```
 ## Change
 ```
-INSERT: div > a
-INSERT: div > a::text("open b")
-INSERT: div > a + .on
-INSERT: .on::text("A")
-REMOVE: div
 INSERT: div
+REMOVE: div + div
+UPDATE: div[data-status] null => "ready"
+INSERT: div > a + .on
+UPDATE: .on::text " " => "A"
+UPDATE: .on[class] null => "on"
 ```
 ## Console
 ```
+LOG "child destroyed" "a"
+LOG "shell destroyed" "loading"
+LOG "shell mounted" "ready" "ready"
 LOG "child mounted" "a"
-LOG "shell mounted" "ready"
 ```
 
 # Update

@@ -28,14 +28,14 @@ const $template$1 = "<div><a href=#b>open b</a><!></div>";
 const $walks$1 = " Db%l";
 const $if_content__selectedId__OR__ws_id = /*@__PURE__*/ _or(1, ($scope) => $input_active($scope["#childScope/0"], $scope._.ws_id === $scope._._.selectedId));
 const $if_content__selectedId = /*@__PURE__*/ _closure_get("selectedId", $if_content__selectedId__OR__ws_id, ($scope) => $scope._._);
-const $if_content__setup = ($scope) => {
+const $if_content__setup$1 = ($scope) => {
 	$if_content__selectedId($scope);
 	$if_content__ws._($scope);
 	$if_content__ws_id._($scope);
 };
 const $if_content__ws = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_workspace($scope["#childScope/0"], $scope._.ws));
 const $if_content__ws_id = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__selectedId__OR__ws_id);
-const $for_content__if = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $if_content__setup);
+const $for_content__if = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $if_content__setup$1);
 const $for_content__ws = /*@__PURE__*/ _const("ws", ($scope) => {
 	$for_content__ws_id($scope, $scope.ws?.id);
 	$for_content__if($scope, $scope.ws ? 0 : 1);
@@ -51,7 +51,7 @@ const $selectedId__closure = /*@__PURE__*/ _closure($if_content__selectedId);
 const $selectedId = /*@__PURE__*/ _let("selectedId/6", $selectedId__closure);
 const $input_status__OR__open__script = _script("__tests__/tags/shell.marko_0_input_status#4_open#8", ($scope) => _lifecycle($scope, {
 	onMount: function() {
-		console.log("shell mounted", $scope.input_status);
+		console.log("shell mounted", $scope.input_status, _el_read($scope["#div/0"]).dataset.status);
 		const abort = new AbortController();
 		document.addEventListener("click", (e) => {
 			if (e.defaultPrevented) return;
@@ -100,7 +100,10 @@ var shell_default = /*@__PURE__*/ _template("__tests__/tags/shell.marko", $templ
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__workspaces = /*@__PURE__*/ _closure_get("workspaces", ($scope) => $input_workspaces($scope["#childScope/0"], $scope._._.workspaces), ($scope) => $scope._._, "__tests__/template.marko_3_workspaces#1/pending");
+const $catch_content__err = ($scope, err) => _text($scope["#text/0"], String(err));
+const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
+const $catch_content = _content_resume("__tests__/template.marko_6*content", " ", " ", 0, $catch_content__$params);
+const $await_content__workspaces = /*@__PURE__*/ _closure_get("workspaces", ($scope) => $input_workspaces($scope["#childScope/0"], $scope._._._.workspaces), ($scope) => $scope._._._, "__tests__/template.marko_5_workspaces#1/pending");
 const $await_content__setup = ($scope) => {
 	$await_content__workspaces($scope);
 	$setup$1($scope["#childScope/0"]);
@@ -112,18 +115,28 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter({ ok: true }, 1));
 };
-const $placeholder_content__workspaces = /*@__PURE__*/ _closure_get("workspaces", ($scope) => $input_workspaces($scope["#childScope/0"], $scope._.workspaces));
+const $placeholder_content__workspaces = /*@__PURE__*/ _closure_get("workspaces", ($scope) => $input_workspaces($scope["#childScope/0"], $scope._._.workspaces), ($scope) => $scope._._);
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__workspaces($scope);
 	$setup$1($scope["#childScope/0"]);
 	$input_status($scope["#childScope/0"], "loading");
 };
-const $placeholder_content = _content_resume("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $placeholder_content__setup);
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $placeholder_content__setup);
+const $else_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $else_content__setup = ($scope) => $else_content__try($scope, {
+	placeholder: attrTag({ content: $placeholder_content($scope) }),
+	catch: attrTag({ content: $catch_content($scope) })
+});
+const $if_content__workspaces = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_workspaces($scope["#childScope/0"], $scope._.workspaces));
+const $if_content__setup = ($scope) => {
+	$if_content__workspaces._($scope);
+	$setup$1($scope["#childScope/0"]);
+	$input_status($scope["#childScope/0"], "ready");
+};
 const $workspaces = /*@__PURE__*/ _const("workspaces");
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup, "<!><!><!>", "b%", $else_content__setup);
+const $ready = ($scope, ready) => $if($scope, ready ? 0 : 1);
 function $setup($scope) {
-	"a";
-	["a"];
 	$workspaces($scope, [{
 		id: "a",
 		name: "A"
@@ -131,6 +144,6 @@ function $setup($scope) {
 		id: "b",
 		name: "B"
 	}]);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$ready($scope, null);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
