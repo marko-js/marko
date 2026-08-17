@@ -1,5 +1,5 @@
 // PATCH
-[`a1 a2;Db%l ;<p>Seen <!></p><button>+</button>`, {
+[`a1 !a2;Db%l ;<p>Seen <!></p><button>+</button>`, {
   ta: "Store!",
   bb: [{
     s: {
@@ -17,7 +17,7 @@
 }
 
 // PATCH
-[`a1 a2;Db%l ;<p>Seen <!></p><button>+</button>`, {
+[`a1 !a2;Db%l ;<p>Seen <!></p><button>+</button>`, {
   ta: "Store!",
   bb: [{
     s: {

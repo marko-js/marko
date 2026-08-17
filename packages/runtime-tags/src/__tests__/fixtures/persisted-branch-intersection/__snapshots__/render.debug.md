@@ -83,7 +83,7 @@ REMOVE: main > p
 ```html
 <main>
   <p>
-     
+    Store!! #2
   </p>
   <button>
     +
@@ -93,6 +93,7 @@ REMOVE: main > p
 ## Change
 ```
 INSERT: main > p
+UPDATE: main > p::text " " => "Store!! #2"
 ```
 
 # Update
@@ -111,5 +112,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: main > p::text " " => "Store!! #3"
+UPDATE: main > p::text "Store!! #2" => "Store!! #3"
 ```
