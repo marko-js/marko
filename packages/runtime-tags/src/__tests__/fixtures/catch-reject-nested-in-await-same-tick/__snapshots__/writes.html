@@ -1,12 +1,12 @@
-<!--M_[--><!--M_!^2-->loading outer...<!--M_!2--><!--M_]1 a 2-->
-<t hidden M_=2><!--M_#b--></t>
+<!--M_[--><!--M_!^3-->loading outer...<!--M_!3--><!--M_]1 a 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
     b: 0,
     c: new Set
-  }, {
+  }, 1, {
     _: _(1),
     C: "a",
     Q: _(1, "a4")
@@ -16,19 +16,19 @@
 
 <!-- FLUSH -->
 
-<t hidden M_=b><!--M_[--><!--M_[--><!--M_!^c--><!--M_!c--><!--M_]4 a 5-->
-  <div>changes: <!>0<!--M_*4 c--></div><!--M_*4 b--><!--M_]2 a 4-->
+<t hidden M_=b><!--M_[--><!--M_[--><!--M_!^c--><!--M_!c--><!--M_]5 a 6-->
+  <div>changes: <!>0<!--M_*5 c--></div><!--M_*5 b--><!--M_]3 a 5-->
 </t>
 <t hidden M_=c>caught: ERROR!</t>
 <script>
   M._.j.b = _ => {
-    _.push("a2 4 a3 4")
+    _.push("a2 5 a3 5")
   };
-  M._.r.push(_ => [4, {
-    _: _(2)
+  M._.r.push(_ => [5, {
+    _: _(3)
   }, {
     C: "a",
-    E: _(4, "a0")
+    E: _(5, "a0")
   }]);
   M._.w()
 </script>

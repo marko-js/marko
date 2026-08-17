@@ -1,17 +1,17 @@
-<!--M_[--><!--M_!^b--><!--M_!^2--><!--M_[--><button>retry <!>
-    1<!--M_*3 #text/1--></button><!--M_*3 #button/0--><!--M_]1 #PlaceholderBranch2 3--><!--M_!2--><!--M_!b--><!--M_]1 #text/0 2-->
-<t hidden M_=2><!--M_#c--></t>
+<!--M_[--><!--M_!^b--><!--M_!^3--><!--M_[--><button>retry <!>
+    1<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_!b--><!--M_]1 #text/0 3-->
+<t hidden M_=3><!--M_#c--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [];
-  M._.j[2] = _ => {
-    _.push("_placeholderDismiss 2")
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
   };
   M._.r.push(_ => [1, {
       attempt: 1,
-      "ClosureScopes:attempt": new Set([_(2)])
-    }, {
+      "ClosureScopes:attempt": new Set([_(3)])
+    }, 1, {
       _: _(1),
       "ClosureSignalIndex:attempt": 1,
       "#BranchAccessor": "#text/0",
@@ -21,12 +21,13 @@
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1*content"
         )
-    }], _ => (_([2, {
-      "#PlaceholderBranch": _(3)
+    }], _ => (_([3, {
+      "#PlaceholderBranch": _(2)
     }, {
-      _: _(1)
-    }]), (_.a = _(1)["ClosureScopes:attempt"]).add(_(3)), 0),
-    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1 3"
+      _: _(1),
+      "#ClosestBranchId": 2
+    }]), (_.a = _(1)["ClosureScopes:attempt"]).add(_(4)), 0),
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1 4"
     );
   M._.w()
 </script>
@@ -34,7 +35,7 @@
 <!-- FLUSH -->
 
 <t hidden M_=c><!--M_[-->
-  <p>body<!--M_*4 #text/0--></p><!--M_]2 #text/0 4-->
+  <p>body<!--M_*5 #text/0--></p><!--M_]3 #text/0 5-->
 </t>
 <script>
   M._.w()

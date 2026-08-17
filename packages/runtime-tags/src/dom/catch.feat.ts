@@ -1,4 +1,3 @@
-import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 import {
   AccessorProp,
   type BranchScope,
@@ -12,20 +11,7 @@ import {
   type PendingRender,
   placeholderShown,
 } from "./queue";
-import { _resume } from "./resume";
-import { destroyBranch } from "./scope";
 import type { SignalFn } from "./signals";
-
-// A resumed try's stateful placeholder is a live branch until the streamed
-// body lands; the body's flush carries this effect on the try branch.
-const destroyResumedPlaceholder = (tryBranch: BranchScope) => {
-  const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
-  if (placeholderBranch) {
-    tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    destroyBranch(placeholderBranch);
-  }
-};
-_resume(PLACEHOLDER_DISMISS_REGISTER_ID, destroyResumedPlaceholder);
 
 const handlePendingTry = (
   fn: SignalFn,
@@ -33,20 +19,12 @@ const handlePendingTry = (
   branch: BranchScope | undefined,
 ) => {
   // Defer the fn onto the nearest ancestor try branch still awaiting;
-  // a truthy return means it was deferred (or dropped).
-  let parent: BranchScope | undefined;
+  // a truthy return means it was deferred.
   while (branch) {
-    parent = branch[AccessorProp.ParentBranch];
-    if (parent?.[AccessorProp.PlaceholderBranch] === branch) {
-      // A resumed placeholder is live until its body swaps it out — dropped
-      // when the swap beat its effects (the reorder runtime parked it).
-      if (branch[AccessorProp.StartNode].isConnected) return;
-      return (destroyResumedPlaceholder(parent), 1);
-    }
     if (branch[AccessorProp.AwaitCounter]?.i) {
       return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
     }
-    branch = parent;
+    branch = branch[AccessorProp.ParentBranch];
   }
 };
 

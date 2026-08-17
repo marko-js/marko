@@ -1,12 +1,12 @@
 <div id=outside>0<!--M_*1 #text/0--></div>
-<!--M_[--><!--M_!^2-->loading...<!--M_!2--><!--M_]1 #text/1 2-->
-<t hidden M_=2><!--M_#b--></t>
+<!--M_[--><!--M_!^3-->loading...<!--M_!3--><!--M_]1 #text/1 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
-      "ClosureScopes:value": new Set([_(2)])
-    }, {
+      "ClosureScopes:value": new Set([_(3)])
+    }, 1, {
       _: _(1),
       "#BranchAccessor": "#text/1",
       "#PlaceholderContent": _(1,
@@ -21,15 +21,15 @@
 <!-- FLUSH -->
 
 <t hidden M_=b><!--M_[-->
-  <div id=inside>0<!--M_*4 #text/0--></div><!--M_]2 #text/0 4-->
+  <div id=inside>0<!--M_*5 #text/0--></div><!--M_]3 #text/0 5-->
 </t>
 <script>
   M._.j.b = _ => {
     _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/await-update-before-resume/template.marko_3_value#2 4 packages/runtime-tags/src/__tests__/fixtures/await-update-before-resume/template.marko_3 4"
+      "packages/runtime-tags/src/__tests__/fixtures/await-update-before-resume/template.marko_3_value#2 5 packages/runtime-tags/src/__tests__/fixtures/await-update-before-resume/template.marko_3 5"
       )
   };
-  M._.r.push(_ => [4, {
+  M._.r.push(_ => [5, {
     value: 0
   }]);
   M._.w()

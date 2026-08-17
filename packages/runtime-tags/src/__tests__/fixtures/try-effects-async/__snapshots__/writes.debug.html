@@ -1,20 +1,20 @@
 <button>inc</button><!--M_*1 #button/0-->
 <div></div>
-<!--M_*1 #div/1--><!--M_[--><!--M_!^b--><!--M_!^2-->LOADING...<!--M_!2--><!--M_!b--><!--M_]1 #text/2 2-->
-<t hidden M_=2><!--M_#c--></t>
+<!--M_*1 #div/1--><!--M_[--><!--M_!^b--><!--M_!^3-->LOADING...<!--M_!3--><!--M_!b--><!--M_]1 #text/2 3-->
+<t hidden M_=3><!--M_#c--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [];
-  M._.j[2] = _ => {
+  M._.j[3] = _ => {
     _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_1_clickCount#3 2"
+      "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_1_clickCount#3 3"
       )
   };
   M._.r.push(_ => [1, {
       clickCount: 0,
-      "ClosureScopes:clickCount": new Set([_(2)])
-    }, {
+      "ClosureScopes:clickCount": new Set([_(3)])
+    }, 1, {
       _: _(1),
       "#BranchAccessor": "#text/2",
       "#CatchContent": _(1,
@@ -31,7 +31,7 @@
 
 <!-- FLUSH -->
 
-<t hidden M_=c><!--M_[-->Async: <!>0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t>
+<t hidden M_=c><!--M_[-->Async: <!>0<!--M_*5 #text/0--><!--M_]3 #text/0 5--></t>
 <script>
   M._.w()
 </script>

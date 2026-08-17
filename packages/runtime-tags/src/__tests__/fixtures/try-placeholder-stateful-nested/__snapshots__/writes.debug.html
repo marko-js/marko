@@ -1,30 +1,30 @@
 <button>clicks <!>
-    0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[--><!--M_!^2--><!--M_[--><span>outer
-  placeholder</span><!--M_]1 #PlaceholderBranch2 3--><!--M_!2--><!--M_]1 #text/2 2-->
-<t hidden M_=2><!--M_#b--></t>
+    0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[--><!--M_!^3--><!--M_[--><span>outer
+  placeholder</span><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_]1 #text/2 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [];
-  M._.j[2] = _ => {
-    _.push("_placeholderDismiss 2")
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
   };
   M._.r.push(_ => [1, {
       clicks: 0,
       "ClosureScopes:clicks": new Set
-    }, {
+    }, 1, {
       _: _(1),
       "#BranchAccessor": "#text/2",
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_5*content"
         )
-    }], _ => [2, {
-      "#PlaceholderBranch": _(3)
+    }], _ => [3, {
+      "#PlaceholderBranch": _(2)
     }, 1, {
       input_label: "outer placeholder",
-      "#ClosestBranchId": 3
+      "#ClosestBranchId": 2
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 4 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_0 1"
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 5 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_0 1"
     );
   M._.w()
 </script>
@@ -32,29 +32,29 @@
 <!-- FLUSH -->
 
 <t hidden M_=b><!--M_[-->
-  <p>outer <!>0<!--M_*5 #text/1--></p>
-  <!--M_[--><!--M_!^6--><!--M_[--><span>inner
-    placeholder</span><!--M_]5 #PlaceholderBranch6 7--><!--M_!6--><!--M_]5 #text/2 6--><!--M_]2 #text/0 5-->
+  <p>outer <!>0<!--M_*6 #text/1--></p>
+  <!--M_[--><!--M_!^8--><!--M_[--><span>inner
+    placeholder</span><!--M_]6 #PlaceholderBranch8 7--><!--M_!8--><!--M_]6 #text/2 8--><!--M_]3 #text/0 6-->
 </t>
-<t hidden M_=6><!--M_#c--></t>
+<t hidden M_=8><!--M_#c--></t>
 <script>
   M._.j.b = _ => {
     _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_2_clicks#3/pending 5 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 8"
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_2_clicks#3/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 10"
       )
   };
-  M._.j[6] = _ => {
-    _.push("_placeholderDismiss 6")
+  M._.j[8] = _ => {
+    _.push("_placeholderDismiss 8")
   };
-  M._.r.push(_ => [5, {
-    _: _(2)
-  }, {
-    _: _(5),
+  M._.r.push(_ => [6, {
+    _: _(3)
+  }, 1, {
+    _: _(6),
     "#BranchAccessor": "#text/2",
-    "#PlaceholderContent": _(5,
+    "#PlaceholderContent": _(6,
       "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_6*content"
       )
-  }], _ => [6, {
+  }], _ => [8, {
     "#PlaceholderBranch": _(7)
   }, 1, {
     input_label: "inner placeholder",
@@ -66,17 +66,17 @@
 <!-- FLUSH -->
 
 <t hidden M_=c><!--M_[--><span>inner
-    0<!--M_*10 #text/0--></span><!--M_]6 #text/0 9--></t>
+    0<!--M_*12 #text/0--></span><!--M_]8 #text/0 11--></t>
 <script>
   M._.j.c = _ => {
     _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_4_clicks#3/pending 9 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 10"
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_4_clicks#3/pending 11 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 12"
       )
   };
-  M._.r.push(_ => [9, {
+  M._.r.push(_ => [11, {
     inner: "inner",
-    _: _(6),
-    "#childScope/0": _(10),
+    _: _(8),
+    "#childScope/0": _(12),
     "ClosureSignalIndex:clicks": 1
   }, {
     input_label: "inner 0"

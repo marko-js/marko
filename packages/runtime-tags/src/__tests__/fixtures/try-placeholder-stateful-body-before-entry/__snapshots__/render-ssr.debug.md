@@ -18,6 +18,10 @@
 ## Console
 ```
 LOG "child mounted" "a"
+LOG "shell mounted" "loading" "loading"
+LOG "child destroyed" "a"
+LOG "shell destroyed" "loading"
+LOG "child mounted" "a"
 LOG "shell mounted" "ready" "ready"
 ```
 
