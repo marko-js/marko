@@ -3,10 +3,13 @@ import { types as t } from "@marko/compiler";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
+import { isPersisted } from "./marko-config";
 import { toArray } from "./optional";
+import { isPatchFillBinding } from "./persisted/delivery";
 import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";
+import { writeLocalFill } from "./signals";
 import { toPropertyName } from "./to-property-name";
 
 export default function translateVar(
@@ -110,10 +113,28 @@ export default function translateVar(
   const declaration = t.variableDeclaration(kind, [
     t.variableDeclarator(tagVar, initialValue),
   ]);
+  const inserted: t.Statement[] = [declaration];
+  // A server-owned branch local that fills writes right after it exists.
+  if (isPersisted()) {
+    forEachIdentifierPath(tag.get("var"), (id) => {
+      const binding = id.node.extra?.binding;
+      if (
+        binding &&
+        binding.section === tagSection &&
+        tagSection.parent &&
+        !binding.sources?.state &&
+        isPatchFillBinding(binding)
+      ) {
+        inserted.push(
+          t.expressionStatement(writeLocalFill(tagSection, binding)),
+        );
+      }
+    });
+  }
   if (statements) {
-    statements.push(declaration);
+    statements.push(...inserted);
   } else {
-    tag.insertBefore(declaration);
+    tag.insertBefore(inserted);
   }
 }
 

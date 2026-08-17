@@ -323,14 +323,14 @@ A monotonically increasing list of distinct scope ids is the least compressible 
 
 `_content` decides at runtime between three shapes the compiler already knows — no template (walk a fresh `Text`), template with empty walks (clone, no walk), and template with walks (clone and walk) — and its `clone` closure hard-references `walk`, `parseHTML` and `cloneCache` in all three, so `dom/walker.ts` and `dom/parse-html.ts` are retained even when every branch body is static. For `<if=(x>1)>yes</if>` the translator already emits `_if(2, "yes")` with the walks argument omitted, yet ablating the walker interpreter from that bundle measures -674 min / -270 brotli, parse-html + cloneCache + createCloneableHTML -426/-152, and both -1073/-417 (6647/3010 → 5574/2593). Emitting a distinct walk-free constructor (and a plain `new Text(str)` form for a branch whose static content is a single text literal) removes those references per call site, so the modules drop only when _every_ client-created branch in the app qualifies — be honest about reach, since a corpus scan of `_if(...)` calls in the fixture snapshots shows most branch bodies do carry a non-empty walks string. Two pieces are unconditional wins worth taking regardless: pre-trimming the trailing exit codes at compile time removes `walks.replace(/[^\0-1]+$/, "")` from `_content` (-26 min / -11 brotli plus one regex execution per branch renderer at module init), and a text-literal branch skips an `innerHTML` parse on first construction.
 
-
-
-
-
-
-
 ## Reason-guard `<try>` boundary slot serialization
 
 `packages/runtime-tags/src/html/writer.ts` › `_try` `writeScope` | 2026-08-15 | impact:low | effort:med
 
 The `CatchContent`/`PlaceholderContent` slots serialize on every document render of the boundary — `_try`'s `writeScope` has no serialize-reason guard (pre-existing; translate gates only statically via `getSectionRegisterReasons`). A dynamic reason that evaluates false at runtime still ships the slot, and the cost grew now that scriptless pages inline the template (`_._.content(tpl, _(scope))`) instead of an id ref. The value cannot simply be reason-nulled because `_try` also invokes it server-side for error UI, so the guard must apply inside serialization (e.g. `registerAccess` honoring a runtime guard). Re-verify with a `<try>` whose register reason rides a source guard that stays false.
+
+## Alias chains multiply local fill writes for one value
+
+`packages/runtime-tags/src/translator/util/persisted/delivery.ts` › `isPatchFillBinding` (server-owned locals) with `getCanonicalBinding` (`references.ts`) | 2026-08-17 | impact:low | effort:med
+
+`getCanonicalBinding` collapses one alias hop, and property aliases hang off the immediate alias, so `<for|item|><const/a=item/><const/b=a/>${b.id + a.id + item.id + count}` classifies `item.id`, `a.id`, and `b.id` as three fills: three `_patch_value` writes per item per frame and three `_fill_join`/`_fill_const` wrappers in the bundle for one value. Correct output, N× cost. Resolving property aliases against the alias root (or canonicalizing through the chain) would collapse them. Re-verify with the template above under `persisted: true`: `patches.debug.js` carries three `PatchValue` keys per item.

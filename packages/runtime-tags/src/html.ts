@@ -58,6 +58,7 @@ export {
   _patch_control,
   _patch_effect,
   _patch_text,
+  _patch_init,
   _patch_value,
   _patch_write,
   _template_persisted,

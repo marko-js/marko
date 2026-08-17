@@ -10,10 +10,11 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { forEach, some } from "../../util/optional";
 import {
   getConstructInitClosures,
   getPatchFillBindings,
+  isPatchFillBinding,
 } from "../../util/persisted/delivery";
 import {
   getPersistedIntrinsics,
@@ -213,11 +214,16 @@ export default {
                   (marker && " ") +
                   getResumeRegisterId(section, closure, "init");
               });
-              // A state-fed effect is queued by the construct's own renders
-              // (an init or a seed cascades into it), so it is not replayed.
+              // An effect the construct's own renders queue (an init, seed,
+              // or item write cascades into it) is not replayed.
               const effectIds = getSectionEffectRegisterIds(
                 section,
-                (refs) => !!getSerializeSourcesForRef(refs)?.state,
+                (refs) =>
+                  !!getSerializeSourcesForRef(refs)?.state ||
+                  some(
+                    refs,
+                    (ref) => ref.section === section && isPatchFillBinding(ref),
+                  ),
               );
               if (effectIds) marker += "!" + effectIds;
               marker ||= getPatchFillBindings(section) ? "!" : "";
