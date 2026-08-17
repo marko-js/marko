@@ -62,6 +62,12 @@ export type TestConfig = {
    * substrings, simulating a network-level lazy-chunk load failure.
    */
   reject_load?: string[];
+  /**
+   * Streams this many extra flushes into the document before the page's
+   * entry module runs, simulating a bundle that loads slower than the
+   * server streams (reordered content lands before resume starts).
+   */
+  entry_delay?: number;
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
@@ -370,6 +376,9 @@ function testFixtures(interop?: true) {
             // errors thrown by inline resume scripts in it aren't swallowed.
             const tracker = createMutationTracker(browser);
             let hasFlush = flushNext();
+            for (let i = config.entry_delay || 0; i && hasFlush; i--) {
+              hasFlush = flushNext();
+            }
 
             for (const group of logs) {
               for (const { type, args } of group) {

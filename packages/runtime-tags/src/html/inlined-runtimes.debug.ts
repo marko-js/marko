@@ -68,12 +68,15 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
         (placeholderRoot = placeholders[id] =
           {
             i: runtime.l[id] ? 1 : 2,
-            c(start = runtime.l["^" + id]) {
+            // Resume may still walk markers inside the dropped placeholder, so
+            // park it in any detached parent (a bare <t> clone is the cheapest).
+            c(start = runtime.l["^" + id], removed = node.cloneNode()) {
               if (--placeholderRoot.i) return 1;
               for (
                 ;
-                (nextSibling =
-                  runtime.l[id].previousSibling || start).remove(),
+                removed.prepend(
+                  (nextSibling = runtime.l[id].previousSibling || start),
+                ),
                   start != nextSibling;
 
               );
