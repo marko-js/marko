@@ -1,3 +1,4 @@
+import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 import {
   AccessorProp,
   type BranchScope,
@@ -11,35 +12,22 @@ import {
   type PendingRender,
   placeholderShown,
 } from "./queue";
+import { _resume } from "./resume";
 import { destroyBranch } from "./scope";
 import type { SignalFn } from "./signals";
 
-// Resumed placeholders mounted live, held only while their try branch is
-// alive and shows them; each effects flush drops the rest (swapped, gone).
-const livePlaceholders = new Set<BranchScope>();
+// A resumed try's stateful placeholder is a live branch until the streamed
+// body lands; the body's flush carries this effect on the try branch.
 const dismissPlaceholder = (
   tryBranch: BranchScope,
   placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch],
 ) => {
-  livePlaceholders.delete(tryBranch);
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    // Already torn down with a destroyed try (its branch set includes this one).
-    if (placeholderBranch[AccessorProp.Gen]) destroyBranch(placeholderBranch);
+    destroyBranch(placeholderBranch);
   }
 };
-const dismissSwappedPlaceholders = () => {
-  for (const tryBranch of livePlaceholders) {
-    const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
-    if (
-      !tryBranch[AccessorProp.Gen] ||
-      !placeholderBranch ||
-      !placeholderBranch[AccessorProp.StartNode].isConnected
-    ) {
-      dismissPlaceholder(tryBranch, placeholderBranch);
-    }
-  }
-};
+_resume(PLACEHOLDER_DISMISS_REGISTER_ID, dismissPlaceholder);
 
 const handlePendingTry = (
   fn: SignalFn,
@@ -52,11 +40,9 @@ const handlePendingTry = (
   while (branch) {
     parent = branch[AccessorProp.ParentBranch];
     if (parent?.[AccessorProp.PlaceholderBranch] === branch) {
-      // A resumed placeholder is live until its body swaps it out.
-      if (branch[AccessorProp.StartNode].isConnected) {
-        livePlaceholders.add(parent);
-        return;
-      }
+      // A resumed placeholder is live until its body swaps it out — dropped
+      // when the swap beat its effects (the reorder runtime parked it).
+      if (branch[AccessorProp.StartNode].isConnected) return;
       return (dismissPlaceholder(parent), 1);
     }
     if (branch[AccessorProp.AwaitCounter]?.i) {
@@ -73,7 +59,6 @@ installCatch(
   // `<lifecycle>` body escapes the flush instead of reaching `@catch`.
   (runEffects) =>
     (effects, checkPending = placeholderShown.has(effects)) => {
-      dismissSwappedPlaceholders();
       if (checkPending || caughtError.has(effects)) {
         let i = 0;
         let fn: SignalFn;
