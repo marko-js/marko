@@ -757,7 +757,19 @@ export default {
           const valueReferences = value.extra?.referencedBindings;
 
           if (tagName === "option" && name === "value") {
-            write`${callRuntime("_attr_option_value", value)}`;
+            write`${
+              !confident && writesPatchAttr(tag, tagSection, name, value)
+                ? callRuntime(
+                    "_patch_attr_option_value",
+                    getScopeIdIdentifier(tagSection),
+                    getScopeAccessorLiteral(nodeBinding!),
+                    value,
+                    ...getPatchWriteOwnership(
+                      getSerializeSourcesForExpr(value.extra || {}),
+                    ),
+                  )
+                : callRuntime("_attr_option_value", value)
+            }`;
             continue;
           }
 
