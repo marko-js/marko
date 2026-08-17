@@ -6,3 +6,7 @@ export const DYNAMIC_TAG_SCRIPT_REGISTER_ID = MARKO_DEBUG
   : "d";
 
 export const DYNAMIC_TAG_VAR_REGISTER_ID = MARKO_DEBUG ? "_dynamicTagVar" : "e";
+
+export const PLACEHOLDER_DISMISS_REGISTER_ID = MARKO_DEBUG
+  ? "_placeholderDismiss"
+  : "f";

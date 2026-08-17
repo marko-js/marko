@@ -5,6 +5,7 @@ import {
 } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { isPromise, normalizeDynamicRenderer } from "../common/helpers";
+import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { concat, forEach, type Opt, push } from "../common/opt";
 import {
@@ -1320,6 +1321,8 @@ export class Chunk {
               },
             ),
           );
+          // The body's flush ends the placeholder's life on the client.
+          body.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
         } else {
           this.append(placeholderChunk);
         }
