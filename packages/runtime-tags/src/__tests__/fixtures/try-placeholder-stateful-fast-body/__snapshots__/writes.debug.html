@@ -1,28 +1,29 @@
-<!--M_[--><!--M_!^2--><!--M_[--><button>loading <!>
-    0<!--M_*3 #text/1--></button><!--M_*3 #button/0--><!--M_]1 #PlaceholderBranch2 3--><!--M_!2--><!--M_]1 #text/0 2-->
-<t hidden M_=2><!--M_#b--></t>
+<!--M_[--><!--M_!^3--><!--M_[--><button>loading <!>
+    0<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_]1 #text/0 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [];
-  M._.j[2] = _ => {
-    _.push("_placeholderDismiss 2")
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
   };
   M._.r.push(_ => [1, {
       clicks: 0,
       "ClosureScopes:clicks": new Set
-    }, {
+    }, 1, {
       _: _(1),
       "#BranchAccessor": "#text/0",
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_1*content"
         )
-    }], _ => (_([2, {
-      "#PlaceholderBranch": _(3)
+    }], _ => (_([3, {
+      "#PlaceholderBranch": _(2)
     }, {
-      _: _(1)
-    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(3)), 0),
-    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_1 3"
+      _: _(1),
+      "#ClosestBranchId": 2
+    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(4)), 0),
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_1 4"
     );
   M._.w()
 </script>
@@ -30,16 +31,16 @@
 <!-- FLUSH -->
 
 <t hidden M_=b><!--M_[--><button>loaded <!>
-      0<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_]2 #text/0 4-->
+      0<!--M_*5 #text/1--></button><!--M_*5 #button/0--><!--M_]3 #text/0 5-->
 </t>
 <script>
   M._.j.b = _ => {
     _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3_clicks#1/pending 4 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3 4"
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3_clicks#1/pending 5 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3 5"
       )
   };
-  M._.r.push(_ => [4, {
-    _: _(2),
+  M._.r.push(_ => [5, {
+    _: _(3),
     "ClosureSignalIndex:clicks": 1
   }]);
   M._.w()

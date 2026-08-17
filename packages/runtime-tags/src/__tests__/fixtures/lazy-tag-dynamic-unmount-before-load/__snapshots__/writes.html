@@ -1,12 +1,12 @@
-<button>Toggle</button><!--M_*1 a--><!--M_[--><!--M_!^2-->Loading...<!--M_!2--><!--M_]1 b 2-->
-<t hidden M_=2><!--M_#b--></t>
+<button>Toggle</button><!--M_*1 a--><!--M_[--><!--M_!^3-->Loading...<!--M_!3--><!--M_]1 b 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
     c: !0,
     d: new Set
-  }, {
+  }, 1, {
     _: _(1),
     C: "b",
     Q: _(1, "b1")
@@ -18,19 +18,19 @@
 
 <t hidden M_=b><!--M_[--><!--M_[-->
   <script async type=module src="child.marko.load.mjs"></script>
-  <span>1<!--M_*5 a--></span><!--M_]4 a 5--><!--M_]2 a 4-->
+  <span>1<!--M_*6 a--></span><!--M_]5 a 6--><!--M_]3 a 5-->
 </t>
 <script>
   M._.b = {
     _a: [1]
   };
   M._.j.b = _ => {
-    (b => b.splice(b.indexOf(1), 1, "a0 5"))(M._.b._a);
-    _.push("b0 4")
+    (b => b.splice(b.indexOf(1), 1, "a0 6"))(M._.b._a);
+    _.push("b0 5")
   };
-  M._.r.push(_ => [4, {
+  M._.r.push(_ => [5, {
     Da: "a",
-    _: _(2)
+    _: _(3)
   }]);
   M._.w()
 </script>

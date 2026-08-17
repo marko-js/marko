@@ -183,8 +183,11 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
 
+        const hasPlaceholder =
+          !!tag.node.extra?.attributeTags?.["@placeholder"];
         signal.build = () => {
           importRuntimeFeature("catch");
+          if (hasPlaceholder) importRuntimeFeature("placeholder");
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),

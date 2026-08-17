@@ -1,51 +1,51 @@
 <button>clicks <!>
-    0<!--M_*1 b--></button><!--M_*1 a--><!--M_[--><!--M_!^2--><!--M_[--><span>outer
-  placeholder</span><!--M_]1 P2 3--><!--M_!2--><!--M_]1 c 2-->
-<t hidden M_=2><!--M_#b--></t>
+    0<!--M_*1 b--></button><!--M_*1 a--><!--M_[--><!--M_!^3--><!--M_[--><span>outer
+  placeholder</span><!--M_]1 P3 2--><!--M_!3--><!--M_]1 c 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [];
-  M._.j[2] = _ => {
-    _.push("f 2")
+  M._.j[3] = _ => {
+    _.push("f 3")
   };
   M._.r.push(_ => [1, {
     d: 0,
     e: new Set
-  }, {
+  }, 1, {
     _: _(1),
     C: "c",
     Q: _(1, "a4")
-  }], _ => [2, {
-    P: _(3)
+  }], _ => [3, {
+    P: _(2)
   }, 1, {
     d: "outer placeholder",
-    G: 3
-  }], "b0 4 a6 1");
+    G: 2
+  }], "b0 5 a6 1");
   M._.w()
 </script>
 
 <!-- FLUSH -->
 
 <t hidden M_=b><!--M_[-->
-  <p>outer <!>0<!--M_*5 b--></p><!--M_[--><!--M_!^6--><!--M_[--><span>inner
-    placeholder</span><!--M_]5 P6 7--><!--M_!6--><!--M_]5 c 6--><!--M_]2 a 5-->
+  <p>outer <!>0<!--M_*6 b--></p><!--M_[--><!--M_!^8--><!--M_[--><span>inner
+    placeholder</span><!--M_]6 P8 7--><!--M_!8--><!--M_]6 c 8--><!--M_]3 a 6-->
 </t>
-<t hidden M_=6><!--M_#c--></t>
+<t hidden M_=8><!--M_#c--></t>
 <script>
   M._.j.b = _ => {
-    _.push("a3 5 b0 8")
+    _.push("a3 6 b0 10")
   };
-  M._.j[6] = _ => {
-    _.push("f 6")
+  M._.j[8] = _ => {
+    _.push("f 8")
   };
-  M._.r.push(_ => [5, {
-    _: _(2)
-  }, {
-    _: _(5),
+  M._.r.push(_ => [6, {
+    _: _(3)
+  }, 1, {
+    _: _(6),
     C: "c",
-    Q: _(5, "a1")
-  }], _ => [6, {
+    Q: _(6, "a1")
+  }], _ => [8, {
     P: _(7)
   }, 1, {
     d: "inner placeholder",
@@ -56,15 +56,15 @@
 
 <!-- FLUSH -->
 
-<t hidden M_=c><!--M_[--><span>inner 0<!--M_*10 a--></span><!--M_]6 a 9--></t>
+<t hidden M_=c><!--M_[--><span>inner 0<!--M_*12 a--></span><!--M_]8 a 11--></t>
 <script>
   M._.j.c = _ => {
-    _.push("a0 9 b0 10")
+    _.push("a0 11 b0 12")
   };
-  M._.r.push(_ => [9, {
+  M._.r.push(_ => [11, {
     c: "inner",
-    _: _(6),
-    a: _(10),
+    _: _(8),
+    a: _(12),
     Ce: 1
   }, {
     d: "inner 0"

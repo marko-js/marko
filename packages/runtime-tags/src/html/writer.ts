@@ -902,24 +902,36 @@ export function _try(
     catch?: { content?(err: unknown): void };
   },
 ) {
-  const branchId = _peek_scope_id();
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
     : undefined;
   const placeholderContent = normalizeDynamicRenderer(input.placeholder) as
     | ServerRenderer
     | undefined;
+  // The placeholder's branch id precedes the body's so the walker parents it
+  // to the try's enclosing branch (a sibling of the try), as CSR does.
+  const placeholderBranchId = placeholderContent ? _scope_id() : 0;
+  const branchId = _peek_scope_id();
 
   writeBranch(scopeId, accessor, branchId, () => {
     if (catchContent !== undefined) {
       tryCatch(
         placeholderContent
-          ? () => tryPlaceholder(content, placeholderContent, branchId, scopeId)
+          ? () =>
+              tryPlaceholder(content, placeholderContent, {
+                branchId,
+                scopeId,
+                placeholderBranchId,
+              })
           : content,
         catchContent || (() => {}),
       );
     } else if (placeholderContent) {
-      tryPlaceholder(content, placeholderContent, branchId, scopeId);
+      tryPlaceholder(content, placeholderContent, {
+        branchId,
+        scopeId,
+        placeholderBranchId,
+      });
     } else {
       content();
     }
@@ -952,8 +964,7 @@ function writeBranch(
 function tryPlaceholder(
   content: () => void,
   placeholder: () => void,
-  branchId: number,
-  scopeId: number,
+  ids: PlaceholderIds,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -965,7 +976,16 @@ function tryPlaceholder(
   }
 
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
-  chunk.placeholder = { body, render: placeholder, branchId, scopeId };
+  chunk.placeholder = { body, render: placeholder, ...ids };
+}
+
+interface PlaceholderIds {
+  /** The try's branch (its body's first scope). */
+  branchId: number;
+  /** The scope owning the try. */
+  scopeId: number;
+  /** Reserved ahead of the body for the placeholder's own branch. */
+  placeholderBranchId: number;
 }
 
 function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
@@ -1201,12 +1221,12 @@ export class Chunk {
   public needsWalk = false;
   public reorderId: string | null = null;
   public deferredReady: Opt<Chunk> = null;
-  public placeholder: {
-    body: Chunk;
-    render: () => void;
-    branchId: number;
-    scopeId: number;
-  } | null = null;
+  public placeholder:
+    | (PlaceholderIds & {
+        body: Chunk;
+        render: () => void;
+      })
+    | null = null;
   public boundary: Boundary;
   public next: Chunk | null;
   public context: Record<string | symbol, unknown> | null;
@@ -1278,13 +1298,12 @@ export class Chunk {
 
       if (body.async) {
         const { state } = this.boundary;
-        const { branchId, scopeId } = placeholder;
+        const { branchId, scopeId, placeholderBranchId } = placeholder;
         const reorderId = (body.reorderId = branchId
           ? branchId + ""
           : state.nextReorderId());
-        // A stateful placeholder is a branch of the try like the body: live
-        // while the body streams, destroyed when the reorder swaps it in.
-        const placeholderBranchId = state.scopeId;
+        // A stateful placeholder is a branch like the body: live while the
+        // body streams, destroyed when the reorder swaps it in.
         const placeholderChunk = this.fork(this.boundary, null);
         const { serializeState } = this;
         // writeScope raises this flag; borrow it to see if the placeholder did.

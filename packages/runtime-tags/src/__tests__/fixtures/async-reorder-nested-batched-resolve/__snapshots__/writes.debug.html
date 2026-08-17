@@ -1,9 +1,9 @@
-<!--M_[--><!--M_!^2-->LOADING A1<!--M_!2--><!--M_]1 #text/0 2-->
-<t hidden M_=2><!--M_#b--></t>
+<!--M_[--><!--M_!^3-->LOADING A1<!--M_!3--><!--M_]1 #text/0 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [_ => [2, {
+  M._.r = [_ => [3, {
     "#BranchAccessor": "#text/0",
     "#PlaceholderContent": _(1,
       "packages/runtime-tags/src/__tests__/fixtures/async-reorder-nested-batched-resolve/template.marko_4*content"
@@ -16,20 +16,20 @@
 
 <t hidden M_=b>
   <div class=a level=1><!--M_[-->
-    <div class=a level=2><!--M_[--><!--M_!^7-->LOADING
-      B1<!--M_!7--><!--M_]6 #text/1 7--></div><!--M_]4 #text/1 5-->
+    <div class=a level=2><!--M_[--><!--M_!^10-->LOADING
+      B1<!--M_!10--><!--M_]8 #text/1 10--></div><!--M_]5 #text/1 7-->
   </div>
 </t>
-<t hidden M_=7><!--M_#c--></t>
+<t hidden M_=10><!--M_#c--></t>
 <script>
-  M._.r.push(_ => [5, {
+  M._.r.push(_ => [7, {
     "#BranchAccessor": "#text/1",
-    "#PlaceholderContent": _(4,
+    "#PlaceholderContent": _(5,
       "packages/runtime-tags/src/__tests__/fixtures/async-reorder-nested-batched-resolve/template.marko_5*content"
       )
-  }], _ => [7, {
+  }], _ => [10, {
     "#BranchAccessor": "#text/1",
-    "#PlaceholderContent": _(6,
+    "#PlaceholderContent": _(8,
       "packages/runtime-tags/src/__tests__/fixtures/async-reorder-nested-batched-resolve/template.marko_10*content"
       )
   }]);
@@ -40,13 +40,13 @@
 
 <t hidden M_=c>
   <div class=b level=3><!--M_[-->
-    <div class=b level=4></div><!--M_]9 #text/1 10-->
+    <div class=b level=4></div><!--M_]12 #text/1 14-->
   </div>
 </t>
 <script>
-  M._.r.push(_ => [10, {
+  M._.r.push(_ => [14, {
     "#BranchAccessor": "#text/1",
-    "#PlaceholderContent": _(9,
+    "#PlaceholderContent": _(12,
       "packages/runtime-tags/src/__tests__/fixtures/async-reorder-nested-batched-resolve/template.marko_11*content"
       )
   }]);
