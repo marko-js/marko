@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/clicks=0>
+<button onClick() { clicks++ }>clicks ${clicks}</button>
+<try>
+  <@placeholder><note label="outer placeholder"/></@placeholder>
+  <await|outer|=resolveAfter("outer", 2)>
+    <p>${outer} ${clicks}</p>
+    <try>
+      <@placeholder><note label="inner placeholder"/></@placeholder>
+      <await|inner|=resolveAfter("inner", 4)>
+        <note label=`${inner} ${clicks}`/>
+      </await>
+    </try>
+  </await>
+</try>

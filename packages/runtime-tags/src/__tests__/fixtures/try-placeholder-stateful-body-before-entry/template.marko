@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<const/workspaces=[{ id: "a", name: "A" }, { id: "b", name: "B" }]>
+<const/ready=(null as null | { ok: boolean })>
+<if=ready>
+  <shell status="ready" workspaces=workspaces/>
+</if>
+<else>
+  <try>
+    <@placeholder>
+      <shell status="loading" workspaces=workspaces/>
+    </@placeholder>
+    <await|status|=resolveAfter({ ok: true }, 1)>
+      <shell status="ready" workspaces=workspaces/>
+    </await>
+    <@catch|err|>${String(err)}</@catch>
+  </try>
+</else>

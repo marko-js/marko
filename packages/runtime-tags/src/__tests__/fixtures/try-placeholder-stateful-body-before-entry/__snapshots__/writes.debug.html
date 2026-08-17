@@ -1,0 +1,95 @@
+<!--M_[--><!--M_!^b--><!--M_!^3--><!--M_[-->
+<div data-status=loading><a href=#b>open b</a><!--M_[-->
+  <section class=on>A<!--M_*8 #text/1--></section>
+  <!--M_*8 #section/0--><!--M_|6 #text/0 7--><!--M_]5 #text/1 6-->
+</div>
+<!--M_*5 #div/0--><!--M_]2 #PlaceholderBranch3 4--><!--M_!3--><!--M_!b--><!--M_]2 #text/0 3-->
+<t hidden M_=3><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      workspaces: [{
+        id: "a",
+        name: "A"
+      }, {
+        id: "b",
+        name: "B"
+      }]
+    }, {
+      _: _(1)
+    }, {
+      "#BranchAccessor": "#text/0",
+      "#CatchContent": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/template.marko_6*content"
+        ),
+      "#PlaceholderContent": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/template.marko_3*content"
+        )
+    }], _ => [3, {
+      "#PlaceholderBranch": _(4)
+    }, {
+      _: _(2)
+    }, {
+      input_status: "loading",
+      input_workspaces: _.a = _(1).workspaces,
+      selectedId: "a",
+      openIds: ["a"],
+      open: _(5,
+        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/tags/shell.marko_0/open"
+        ),
+      "ClosureScopes:selectedId": new Set([_(7)]),
+      "#ClosestBranchId": 4
+    }, {
+      ws: _.b = _.a[0],
+      ws_id: "a",
+      "#LoopKey": "a"
+    }, {
+      "#childScope/0": _(8)
+    }, {
+      input_workspace_id: "a",
+      "#ClosestBranchId": 7
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/tags/child.marko_0_input_workspace_id#5 8 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/tags/shell.marko_0_input_status#4_open#8 5"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c>
+  <div data-status=ready><a href=#b>open b</a><!--M_[-->
+    <section class=on>A<!--M_*13 #text/1--></section>
+    <!--M_*13 #section/0--><!--M_|11 #text/0 12--><!--M_]10 #text/1 11-->
+  </div><!--M_*10 #div/0-->
+</t>
+<script>
+  M._.r.push(_ => [10, {
+    input_status: "ready",
+    input_workspaces: _.a,
+    selectedId: "a",
+    openIds: ["a"],
+    open: _(10,
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/tags/shell.marko_0/open"
+      ),
+    "ClosureScopes:selectedId": new Set([_(12)])
+  }, {
+    ws: _.b,
+    ws_id: "a",
+    "#LoopKey": "a"
+  }, {
+    "#childScope/0": _(13)
+  }, {
+    "#ClosestBranchId": 12,
+    input_workspace_id: "a"
+  }]);
+  M._.j.c = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/tags/child.marko_0_input_workspace_id#5 13 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-body-before-entry/tags/shell.marko_0_input_status#4_open#8 10"
+      )
+  };
+  M._.w()
+</script>

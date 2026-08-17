@@ -1,0 +1,8 @@
+export interface Input {
+  label: string;
+}
+<lifecycle
+  onMount() { console.log("mounted", input.label) }
+  onDestroy() { console.log("destroyed", input.label) }
+/>
+<span>${input.label}</span>
