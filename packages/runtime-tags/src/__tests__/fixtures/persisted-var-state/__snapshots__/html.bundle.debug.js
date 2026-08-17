@@ -1,4 +1,6 @@
 // tags/doubler/index.marko
+const $template$1 = "<span>x2</span>";
+const $walks$1 = "b";
 var doubler_default = _template_persisted("__tests__/tags/doubler/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -9,6 +11,8 @@ var doubler_default = _template_persisted("__tests__/tags/doubler/index.marko", 
 }, 0, 0);
 
 // template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p><button>+</button></main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}&D l l`)("b");
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -1,10 +1,13 @@
 // tags/price-card.marko
+const $template$3 = "<section><h2> </h2><button>+</button></section>";
+const $walks$3 = "E l l";
 var price_card_default = _template_persisted("__tests__/tags/price-card.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let qty = 1;
 	_html(`<section><h2>${_escape(input.label + " x" + qty)}${_el_resume($scope0_id, "#text/0")}</h2><button>+</button>${_el_resume($scope0_id, "#button/1")}</section>`);
 	_script($scope0_id, "__tests__/tags/price-card.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/price-card.marko1", qty, 1);
 	$scope0_reason ? writeScope($scope0_id, {
 		input_label: input.label,
 		qty
@@ -16,12 +19,15 @@ var price_card_default = _template_persisted("__tests__/tags/price-card.marko", 
 }, 0, 0);
 
 // tags/promo-tag.marko
+const $template$2 = "<aside> </aside><button class=promo>seen</button>";
+const $walks$2 = "D l b";
 var promo_tag_default = _template_persisted("__tests__/tags/promo-tag.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let seen = 0;
 	_html(`<aside>${_escape(input.text + " (" + seen + ")")}${_el_resume($scope0_id, "#text/0")}</aside><button class=promo>seen</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/promo-tag.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/promo-tag.marko1", seen, 1);
 	$scope0_reason ? writeScope($scope0_id, {
 		input_text: input.text,
 		seen
@@ -33,6 +39,8 @@ var promo_tag_default = _template_persisted("__tests__/tags/promo-tag.marko", (i
 }, 0, 0);
 
 // tags/site-footer.marko
+const $template$1 = "<footer> </footer>";
+const $walks$1 = "D l";
 var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -43,6 +51,8 @@ var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko"
 }, 0, 0);
 
 // template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_w0}${_w1}${_w2}</main>`)($template$3, $template$2, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}&l`)($walks$3, $walks$2, "D l");
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

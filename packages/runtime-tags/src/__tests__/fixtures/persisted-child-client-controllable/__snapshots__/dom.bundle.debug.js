@@ -1,7 +1,7 @@
 // tags/field/index.marko
 const $template$1 = "<input><em> </em>";
 const $walks$1 = " bD l";
-const $v = /*@__PURE__*/ _let("v/2", ($scope) => {
+const $v = /*@__PURE__*/ _fill_let("__tests__/tags/field/index.marko0", "v/2", ($scope) => {
 	_attr_input_value($scope, "#input/0", $scope.v, $valueChange($scope));
 	_text($scope["#text/1"], $scope.v);
 });

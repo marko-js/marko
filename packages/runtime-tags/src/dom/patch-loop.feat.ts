@@ -10,7 +10,7 @@ import {
 } from "../common/types";
 import { _for_of } from "./control-flow";
 import { shells } from "./patch-branch.feat";
-import { failPatch, patchers, patchScope } from "./resume";
+import { failPatch, patchers, patchScope, withConstructing } from "./resume";
 
 // Interleaved `[key, partial, …, shellId?]`: an object head means implicit
 // index keys, and the trailing string (a partial never is one) is the shell.
@@ -49,15 +49,18 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
   const [template, walks, setup] = shells[shellId!] || [];
   // The reconciler applies the patch: `params` walks each partial into its
   // paired/constructed branch, and setup attaches effects to fresh ones.
-  _for_of(
-    (MARKO_DEBUG ? suffix : encodeAccessor(suffix)) as never,
-    template,
-    walks,
-    setup || 0,
-    ((branch: Scope, [partial]: [Scope]) =>
-      patchScope(partial, branch)) as never,
-  )(
-    scope,
-    keys ? [partials, (_partial: unknown, i: number) => keys[i]] : [partials],
-  );
+  const apply = () =>
+    _for_of(
+      (MARKO_DEBUG ? suffix : encodeAccessor(suffix)) as never,
+      template,
+      walks,
+      setup || 0,
+      ((branch: Scope, [partial]: [Scope]) =>
+        patchScope(partial, branch)) as never,
+    )(
+      scope,
+      keys ? [partials, (_partial: unknown, i: number) => keys[i]] : [partials],
+    );
+  if (shellId) withConstructing(apply);
+  else apply();
 };

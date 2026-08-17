@@ -1,15 +1,15 @@
 // tags/child.marko
 const $template$1 = "<div><!><button id=c>c</button></div>";
 const $walks$1 = "D%b l";
-const $if_content__c__OR__l = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko0", "l", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope.l + "#" + $scope._.c)));
-const $if_content__l = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko0", "l", $if_content__c__OR__l);
+const $if_content__c__OR__l = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko1", "l", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko0", "c", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope.l + "#" + $scope._.c)), "#text/0", 0));
+const $if_content__l = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko1", "l", $if_content__c__OR__l);
 const $if_content__input_label = /*@__PURE__*/ _init_if_closure("__tests__/tags/child.marko_1_input_label#5/init", "#text/0", 0, ($scope) => $if_content__l($scope, $scope._.input_label + "!"));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__c._($scope);
 };
 const $if_content__c = /*@__PURE__*/ _init_if_closure("__tests__/tags/child.marko_1_c#6/init", "#text/0", 0, $if_content__c__OR__l);
-const $c = /*@__PURE__*/ _let("c/6", $if_content__c);
+const $c = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko0", "c/6", $if_content__c);
 const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$c($scope, +$scope.c + 1);
 }));

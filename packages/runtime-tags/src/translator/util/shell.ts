@@ -15,9 +15,9 @@ import { resolveStructure, trimTrailingExits } from "./structure";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    /** Patchable branch shells, pre-serialized as frame records during
-     * analyze so the html output registers them without a dom compile. */
-    persistedShells?: Record<string, string>;
+    /** Patchable shell records by id: the branch (or await body) section
+     * whose structure the html output serializes as a frame record. */
+    persistedShells?: Record<string, Section>;
   }
 }
 
@@ -25,8 +25,8 @@ export function getShells() {
   return getProgram().node.extra.persistedShells;
 }
 
-// Builds every branch shell as pre-serialized frame chunks the html
-// output registers as data.
+// Decides every branch shell (expressibility, blockers) so the html output
+// serializes the kept sections as frame records.
 export function buildShells() {
   // Enclosing branches of state-selected structure also construct
   // unfaithfully: the frame cannot reproduce the selection inside them.
@@ -51,10 +51,7 @@ export function buildShells() {
     ) {
       return;
     }
-    const shell = buildSectionShell(section);
-    // Frame headers reserve `;`/`,`/space, which neither ids (normalized
-    // at the source) nor walk codes can carry; the template part is free.
-    if (shell) {
+    if (isShellExpressible(section)) {
       // The id interns even for a blocked shell so register ids stay stable.
       const id = getShellId(section);
       // An interactive page's dom module registers await body content. A
@@ -62,7 +59,7 @@ export function buildShells() {
       // record instead; an inexpressible body blocks the branch (fail
       // closed) rather than bundle more than a non-persisted page would.
       const chain: Section[] = [];
-      const bodyRecords: Record<string, string> = {};
+      const bodyRecords: Record<string, Section> = {};
       if (!interactive && !buildAwaitBodyRecords(section, bodyRecords, chain)) {
         section.shellBlocked ??= ShellBlocker.inexpressibleAwaitBody;
       }
@@ -71,9 +68,7 @@ export function buildShells() {
         for (const body of chain) keep.add(body);
         const records = (getProgram().node.extra.persistedShells ??= {});
         Object.assign(records, bodyRecords);
-        records[id] = shell[1]
-          ? `${id};${shell[1]};${shell[0]}`
-          : `${id},${shell[0]}`;
+        records[id] = section;
       }
     }
   });
@@ -92,7 +87,7 @@ export function buildShells() {
     if (!section.boundaryContent || !getSectionRegisterReasons(section)) {
       return;
     }
-    const shell = buildSectionShell(section);
+    const shell = getStaticShell(section);
     if (shell && !shell[1]) {
       section.contentTemplate = shell[0];
     }
@@ -105,16 +100,18 @@ export function buildShells() {
 // constructed body can itself construct the awaits it contains.
 function buildAwaitBodyRecords(
   section: Section,
-  records: Record<string, string>,
+  records: Record<string, Section>,
   chain: Section[],
 ) {
   for (const { binding, body } of section.constructSetups || []) {
-    const shell = !body.shellBlocked && buildSectionShell(body);
-    if (!shell || !buildAwaitBodyRecords(body, records, chain)) return false;
-    const id = getResumeRegisterId(section, binding, "await");
-    records[id] = shell[1]
-      ? `${id};${shell[1]};${shell[0]}`
-      : `${id},${shell[0]}`;
+    if (
+      body.shellBlocked ||
+      !isShellExpressible(body) ||
+      !buildAwaitBodyRecords(body, records, chain)
+    ) {
+      return false;
+    }
+    records[getResumeRegisterId(section, binding, "await")] = body;
     chain.push(body);
   }
   return true;
@@ -124,14 +121,25 @@ export function getShellId(section: Section) {
   return getResumeRegisterId(section, "shell");
 }
 
-// A branch's shell is its resolved structure — the same inert template and
-// walk string its renderer would ship. Anything resolution cannot reduce to
-// plain strings (child renderers, unresolved refs) leaves the branch
-// shell-less: patches diverging to it fail closed to a document navigation.
-function buildSectionShell(section: Section) {
-  if (!section.structure) return;
+// A branch's shell is its resolved structure (known child templates
+// included); anything else leaves it shell-less, so divergence fails closed.
+function isShellExpressible(section: Section) {
+  if (!section.structure) return false;
   for (const op of section.structure) {
-    if (typeof op === "object" && op.kind !== StructureKind.Visit) return;
+    if (
+      typeof op === "object" &&
+      op.kind !== StructureKind.Visit &&
+      // A known child composes when a construct can wire it: no tag var
+      // (only the branch's setup returns it), no boundary in its root.
+      !(
+        op.kind === StructureKind.Child &&
+        !op.hasVar &&
+        op.renderer?.kind === StructureKind.ExportRef &&
+        isChildRootExpressible(op.renderer.program)
+      )
+    ) {
+      return false;
+    }
   }
   // A nested branch or boundary leaves only its marker in this shell
   // (it pairs or constructs during the walk); any other child section
@@ -141,17 +149,42 @@ function buildSectionShell(section: Section) {
     contentChild ||=
       child.parent === section && !child.isBranch && !child.isBoundary;
   });
-  if (contentChild) return;
+  return !contentChild;
+}
 
-  // Every op is a string, step, or visit, so both projections are strings.
+function isChildRootExpressible(program: t.ProgramExtra) {
+  const root = program.section!;
+  if (!isShellExpressible(root)) return false;
+  for (const child of program.sections || []) {
+    if (child.isBoundary) return false;
+  }
+  return true;
+}
+
+// The shell's template and walk strings when both are fully static.
+function getStaticShell(section: Section) {
+  if (!isShellExpressible(section)) return;
   const { writes, walks } = resolveStructure(section);
-  const template = normalizeStringExpression(writes as string[], true);
-  const walkLiteral = trimTrailingExits(
-    normalizeStringExpression(walks as string[], true),
-  );
+  const template = normalizeStringExpression(writes, true);
+  const walkLiteral = trimTrailingExits(normalizeStringExpression(walks, true));
   if (!t.isStringLiteral(template) || !template.value) return;
   // A fully static branch claims nothing, so an empty walk string is valid.
   if (walkLiteral && !t.isStringLiteral(walkLiteral)) return;
-
   return [template.value, walkLiteral?.value ?? ""] as const;
+}
+
+// The frame record `id marker;walks;template` (`,` for `;walks;` when the
+// walk is empty) as an html-side expression; child parts import.
+export function buildShellRecord(id: string, section: Section, marker = "") {
+  const { writes, walks } = resolveStructure(section);
+  const template = normalizeStringExpression(writes, true);
+  const walkExpr = trimTrailingExits(normalizeStringExpression(walks, true));
+  const walkless =
+    !walkExpr || (t.isStringLiteral(walkExpr) && !walkExpr.value);
+  const parts: (string | t.Expression)[] = [
+    id + (marker && " " + marker) + (walkless ? "," : ";"),
+  ];
+  if (!walkless) parts.push(walkExpr!, ";");
+  if (template) parts.push(template);
+  return normalizeStringExpression(parts, true)!;
 }

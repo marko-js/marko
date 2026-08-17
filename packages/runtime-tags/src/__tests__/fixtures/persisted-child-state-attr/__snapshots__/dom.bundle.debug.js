@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template$1 = "<section><p>Value <!> (spun <!>)</p><button class=spin>spin</button></section>";
 const $walks$1 = "Eb%c%l l";
-const $spins = /*@__PURE__*/ _let("spins/6", ($scope) => _text($scope["#text/1"], $scope.spins));
+const $spins = /*@__PURE__*/ _fill_let("__tests__/tags/counter/index.marko0", "spins/6", ($scope) => _text($scope["#text/1"], $scope.spins));
 const $setup__script$1 = _script("__tests__/tags/counter/index.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$spins($scope, +$scope.spins + 1);
 }));

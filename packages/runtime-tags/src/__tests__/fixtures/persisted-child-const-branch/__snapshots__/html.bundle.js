@@ -1,5 +1,5 @@
 // tags/badge/index.marko
-_shells({ b0: ",`b0;D ;<i> </i>`" });
+_shells({ b0: "b0;D ;<i> </i>" });
 var badge_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_label = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
