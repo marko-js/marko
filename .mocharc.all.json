@@ -1,4 +1,0 @@
-{
-  "extends": "./.mocharc.json",
-  "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"]
-}
