@@ -873,6 +873,8 @@ function writeUnknownSymbol(state: State) {
   return true;
 }
 
+// Unserializable values are diagnosed only under `MARKO_DEBUG`, which alone has
+// the metadata to name them; production omits the property rather than throwing.
 function writeNever(state: State, val: unknown, ref: Reference) {
   MARKO_DEBUG && throwUnserializable(state, val, ref);
   return false;
