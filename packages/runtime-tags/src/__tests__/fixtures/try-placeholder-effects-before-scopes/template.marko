@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/selectedId="a">
+<let/openIds=["a"]>
+<const/workspaces=[{ id: "a", name: "A" }, { id: "b", name: "B" }]>
+<try>
+  <@placeholder>
+    <shell status="loading" workspaces=workspaces/>
+  </@placeholder>
+  <await|status|=resolveAfter({ ok: true }, 1)>
+    <shell status="ready" workspaces=workspaces/>
+  </await>
+</try>
