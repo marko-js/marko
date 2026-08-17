@@ -1,1 +1,8 @@
-<a href="/static" ...input.attrs>${input.label}</a>
+<let/count=0/>
+<main>
+  <a href="/static" ...input.attrs>${input.label}</a>
+  <if=input.show>
+    <img alt="hero" ...input.img>
+  </if>
+  <button onClick() { count++ }>${count}</button>
+</main>

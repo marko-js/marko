@@ -122,7 +122,6 @@ export default {
     // Page entry must ship the child patcher and branch-resume latch even
     // when this template module does not load (a scriptless persisted await).
     if (isPersisted()) {
-      addRuntimeFeatureAsset("patch-child");
       addRuntimeFeatureAsset("patch-boundary");
       // A scriptless construct paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
@@ -166,7 +165,6 @@ export default {
         // A patch pairs the body scope through a `PatchChild` entry, so the
         // page must ship its patcher (the import rides both outputs).
         if (isPersisted()) {
-          importRuntimeFeature("patch-child");
           importRuntimeFeature("patch-boundary");
         }
         writer.flushBefore(tag);
@@ -227,7 +225,6 @@ export default {
 
         setSectionParentIsOwner(bodySection, true);
         if (isPersisted()) {
-          importRuntimeFeature("patch-child");
           importRuntimeFeature("patch-boundary");
         }
       },

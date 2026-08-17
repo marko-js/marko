@@ -1,8 +1,13 @@
 import type { TestConfig } from "../../main.test";
 
-// A middle template spreading input to a nested child rejects at the
-// root call site (and the middle's own compile rejects the spread too).
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A middle template spreading its input into a nested child inside
+// client-owned structure: the spread's provenance feeds every group the
+// leaf may carry, so the text fills through both hops.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ text: "a" }, { text: "b" }, click, { text: "c" }, click],
 };
