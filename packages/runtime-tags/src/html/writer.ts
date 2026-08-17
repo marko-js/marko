@@ -902,8 +902,6 @@ export function _try(
   },
 ) {
   const branchId = _peek_scope_id();
-  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
-
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
     : undefined;
@@ -911,25 +909,37 @@ export function _try(
     | ServerRenderer
     | undefined;
 
-  if (catchContent !== undefined) {
-    tryCatch(
-      placeholderContent
-        ? () => tryPlaceholder(content, placeholderContent, branchId, scopeId)
-        : content,
-      catchContent || (() => {}),
-    );
-  } else if (placeholderContent) {
-    tryPlaceholder(content, placeholderContent, branchId, scopeId);
-  } else {
-    content();
-  }
+  writeBranch(scopeId, accessor, branchId, () => {
+    if (catchContent !== undefined) {
+      tryCatch(
+        placeholderContent
+          ? () => tryPlaceholder(content, placeholderContent, branchId, scopeId)
+          : content,
+        catchContent || (() => {}),
+      );
+    } else if (placeholderContent) {
+      tryPlaceholder(content, placeholderContent, branchId, scopeId);
+    } else {
+      content();
+    }
 
-  writeScope(branchId, {
-    [AccessorProp.BranchAccessor]: accessor,
-    [AccessorProp.CatchContent]: catchContent,
-    [AccessorProp.PlaceholderContent]: placeholderContent,
+    writeScope(branchId, {
+      [AccessorProp.BranchAccessor]: accessor,
+      [AccessorProp.CatchContent]: catchContent,
+      [AccessorProp.PlaceholderContent]: placeholderContent,
+    });
   });
+}
 
+/** Content resumed as its own branch (`branchId` is its first scope). */
+function writeBranch(
+  scopeId: number,
+  accessor: Accessor,
+  branchId: number,
+  content: () => void,
+) {
+  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
+  content();
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       ResumeSymbol.BranchEnd,
@@ -1271,56 +1281,49 @@ export class Chunk {
         const reorderId = (body.reorderId = branchId
           ? branchId + ""
           : state.nextReorderId());
-        // A stateful placeholder is its own branch on the client (live until
-        // the swap destroys it); its content's first scope is that branch.
+        // A stateful placeholder is a branch of the try like the body: live
+        // while the body streams, destroyed when the reorder swaps it in.
         const placeholderBranchId = state.scopeId;
-        const branchStart = state.mark(ResumeSymbol.BranchStart, "");
-        this.writeHTML(state.mark(Mark.Placeholder, reorderId));
-        const htmlBefore = this.html;
-        const effectsBefore = this.effects;
+        const placeholderChunk = this.fork(this.boundary, null);
         const scopesBefore = Object.keys(
           this.serializeState.writeScopes,
         ).length;
-        this.writeHTML(branchStart);
-        const after = this.render(() =>
-          withBranchId(placeholderBranchId, placeholder.render),
-        );
-        if (after !== this) {
+        this.writeHTML(state.mark(Mark.Placeholder, reorderId));
+        if (
+          placeholderChunk !==
+          placeholderChunk.render(() =>
+            withBranchId(placeholderBranchId, placeholder.render),
+          )
+        ) {
           // TODO: eventually this should be allowed.
           // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
           this.boundary.abort(
             new Error("An @placeholder cannot contain async content."),
           );
         } else if (
-          this.effects === effectsBefore &&
-          Object.keys(this.serializeState.writeScopes).length === scopesBefore
+          placeholderChunk.effects ||
+          Object.keys(this.serializeState.writeScopes).length !== scopesBefore
         ) {
-          // Static placeholder: nothing to resume, nothing to destroy.
-          this.html =
-            htmlBefore +
-            this.html.slice(htmlBefore.length + branchStart.length);
-        } else {
-          after.render(() =>
-            writeScope(branchId, {
-              [AccessorProp.PlaceholderBranch]: scopeWithId(
-                state,
-                placeholderBranchId,
-              ),
-            }),
-          );
-          after.writeHTML(
-            state.mark(
-              ResumeSymbol.BranchEnd,
-              scopeId +
-                " " +
-                AccessorProp.PlaceholderBranch +
-                branchId +
-                " " +
-                placeholderBranchId,
+          this.render(() =>
+            writeBranch(
+              scopeId,
+              AccessorProp.PlaceholderBranch + branchId,
+              placeholderBranchId,
+              () => {
+                this.append(placeholderChunk);
+                writeScope(branchId, {
+                  [AccessorProp.PlaceholderBranch]: scopeWithId(
+                    state,
+                    placeholderBranchId,
+                  ),
+                });
+              },
             ),
           );
+        } else {
+          this.append(placeholderChunk);
         }
-        after.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
+        this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
         // The placeholder rendered after this flush's serializer pass; its
         // effects go out now, so its scopes must too or they resume empty.
         if (!this.boundary.signal.aborted) {
