@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	a0: ",`a0 a2; b%;<button>+</button><!><!>`",
+	a0: ",`a0 !a2; b%;<button>+</button><!><!>`",
 	a1: ",`a1 a4;Db%;<p>Seen <!></p>`"
 });
 var template_default = _template_persisted("a", (input) => {

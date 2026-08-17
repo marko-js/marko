@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell;b%;<!><!><!>`",
-	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2_count#7/init;D ;<p> </p>`",
+	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2_input_title#6/init __tests__/template.marko_2_count#7/init;D ;<p> </p>`",
 	"__tests__/template.marko_3*shell": ",`__tests__/template.marko_3*shell,<p>shown</p>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {

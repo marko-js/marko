@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a0: ",`a0;b%;<!><!><!>`",
-	a1: ",`a1 a5;D ;<p> </p>`",
+	a1: ",`a1 a5 a6;D ;<p> </p>`",
 	a2: ",`a2,<p>shown</p>`"
 });
 var template_default = _template_persisted("a", (input) => {

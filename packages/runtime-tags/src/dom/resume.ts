@@ -582,6 +582,22 @@ export function _resume<T>(id: string, obj: T): T {
   return (registeredValues[id] = obj);
 }
 
+// A fill closure's construct init is the arrival at each join it feeds:
+// registered from the join's own fill wrapper, so it lives exactly as long.
+export function _init_join<T extends (scope: Scope) => void>(
+  id: string,
+  join: T,
+): T {
+  const prev = registeredValues[id] as T | undefined;
+  registeredValues[id] = prev
+    ? (scope: Scope) => {
+        prev(scope);
+        join(scope);
+      }
+    : join;
+  return join;
+}
+
 export function _var_resume<T extends Signal<unknown>>(
   id: string,
   signal: T,

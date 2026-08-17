@@ -1,5 +1,5 @@
 // PATCH
-[`a1 a2; ;<input>`, {
+[`a1 !a2; ;<input>`, {
   ta: "Store!",
   bb: [{
     wEa: _._.a0,
