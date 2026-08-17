@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $for_content2__count__OR__row_id = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.row_id + "@" + $scope._._.count));
-const $for_content2__count = /*@__PURE__*/ _closure_get("count", $for_content2__count__OR__row_id, ($scope) => $scope._._);
+const $for_content2__count__OR__row_id = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "row_id", /*@__PURE__*/ _init_join("__tests__/template.marko_2_row_id#4/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.row_id + "@" + $scope._._.count))), "#text/0");
+const $for_content2__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#5/init", "count", $for_content2__count__OR__row_id, ($scope) => $scope._._);
 const $for_content2__setup = ($scope) => {
 	$for_content2__count($scope);
 	$for_content2__row_id._($scope);
@@ -14,7 +14,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_cells($scope, $params2[0]?.cells);
 	$for_content__row_id($scope, $params2[0]?.id);
 };
-const $for_content__row_id = /*@__PURE__*/ _const("row_id", $for_content2__row_id);
+const $for_content__row_id = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "row_id", $for_content2__row_id);
 const $count__closure = /*@__PURE__*/ _closure($for_content2__count);
 const $count = /*@__PURE__*/ _let("count/5", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

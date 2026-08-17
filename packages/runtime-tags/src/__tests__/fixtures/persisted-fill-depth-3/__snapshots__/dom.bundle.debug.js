@@ -1,14 +1,14 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $for_content__input_suffix__OR__count__OR__item = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.item + ":" + $scope._._._.input_suffix + "@" + $scope._._._.count), 2), ($join) => /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join))));
+const $for_content__input_suffix__OR__count__OR__item = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "item", /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _init_join("__tests__/template.marko_3_input_suffix#7/init", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.item + ":" + $scope._._._.input_suffix + "@" + $scope._._._.count), 2)), ($join) => /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join)))));
 const $for_content__input_suffix = /*@__PURE__*/ _closure_get("input_suffix", $for_content__input_suffix__OR__count__OR__item, ($scope) => $scope._._._);
 const $for_content__setup = ($scope) => {
 	$for_content__input_suffix($scope);
 	$for_content__count($scope);
 };
-const $for_content__count = /*@__PURE__*/ _closure_get("count", $for_content__input_suffix__OR__count__OR__item, ($scope) => $scope._._._);
-const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_suffix__OR__count__OR__item);
+const $for_content__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_3_count#8/init", "count", $for_content__input_suffix__OR__count__OR__item, ($scope) => $scope._._._);
+const $for_content__item = /*@__PURE__*/ _fill_const("__tests__/template.marko1", "item", $for_content__input_suffix__OR__count__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $if_content2__for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $for_content__setup, $for_content__$params);
 const $if_content2__input_items = /*@__PURE__*/ _closure_get("input_items", ($scope) => $if_content2__for($scope, [$scope._._.input_items, (item) => item]), ($scope) => $scope._._);

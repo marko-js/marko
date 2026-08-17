@@ -4,11 +4,10 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A grown item's hole mixes the loop item with state: the item value is
-// never seeded, so the shell drops and the growth rejects (fail closed).
+// A grown item's hole mixes the loop item with state: the item partial
+// writes the item, seeding the fresh scope, so the growth constructs.
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [
     { title: "Store", items: ["a"] },
     click,
