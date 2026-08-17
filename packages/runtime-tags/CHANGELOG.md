@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.39
+
+### Patch Changes
+
+- [#3986](https://github.com/marko-js/marko/pull/3986) [`e9ea619`](https://github.com/marko-js/marko/commit/e9ea619b8085984b008f53541d3d0853f8d6fedc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a derived value computed only from closures inside a branch (`<if>`, `<for>`) rendering one update late when the same event also updated an input of the tag that consumes it.
+
 ## 6.3.38
 
 ### Patch Changes
