@@ -1490,6 +1490,14 @@ export class Chunk {
         : '"' + effects + '"';
     }
 
+    // Reordered content renders its placeholders now, ahead of the resumes
+    // going out below, so a stateful one's scopes ride this same flush.
+    forEach(state.writeReorders, (reorderedChunk) => {
+      for (let cur: Chunk | null = reorderedChunk; cur; cur = cur.next) {
+        cur.flushPlaceholder();
+      }
+    });
+
     if (state.resumes) {
       if (state.hasWrittenResume) {
         scripts = concatScripts(

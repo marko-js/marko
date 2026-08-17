@@ -18,16 +18,14 @@ import type { SignalFn } from "./signals";
 
 // A resumed try's stateful placeholder is a live branch until the streamed
 // body lands; the body's flush carries this effect on the try branch.
-const dismissPlaceholder = (
-  tryBranch: BranchScope,
-  placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch],
-) => {
+const destroyResumedPlaceholder = (tryBranch: BranchScope) => {
+  const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
     destroyBranch(placeholderBranch);
   }
 };
-_resume(PLACEHOLDER_DISMISS_REGISTER_ID, dismissPlaceholder);
+_resume(PLACEHOLDER_DISMISS_REGISTER_ID, destroyResumedPlaceholder);
 
 const handlePendingTry = (
   fn: SignalFn,
@@ -43,7 +41,7 @@ const handlePendingTry = (
       // A resumed placeholder is live until its body swaps it out — dropped
       // when the swap beat its effects (the reorder runtime parked it).
       if (branch[AccessorProp.StartNode].isConnected) return;
-      return (dismissPlaceholder(parent), 1);
+      return (destroyResumedPlaceholder(parent), 1);
     }
     if (branch[AccessorProp.AwaitCounter]?.i) {
       return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);

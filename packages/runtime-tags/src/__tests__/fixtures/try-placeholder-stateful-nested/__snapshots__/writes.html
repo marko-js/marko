@@ -1,0 +1,72 @@
+<button>clicks <!>
+    0<!--M_*1 b--></button><!--M_*1 a--><!--M_[--><!--M_!^2--><!--M_[--><span>outer
+  placeholder</span><!--M_]1 P2 3--><!--M_!2--><!--M_]1 c 2-->
+<t hidden M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    d: 0,
+    e: new Set
+  }, {
+    _: _(1),
+    C: "c",
+    Q: _(1, "a4")
+  }], _ => [2, {
+    P: _(3)
+  }, 1, {
+    d: "outer placeholder",
+    G: 3
+  }], "b0 4 a6 1"];
+  REORDER_RUNTIME(M._);
+  M._.j[2] = _ => {
+    _.push("f 2")
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->
+  <p>outer <!>0<!--M_*5 b--></p><!--M_[--><!--M_!^6--><!--M_[--><span>inner
+    placeholder</span><!--M_]5 P6 7--><!--M_!6--><!--M_]5 c 6--><!--M_]2 a 5-->
+</t>
+<t hidden M_=6><!--M_#c--></t>
+<script>
+  M._.r.push(_ => [5, {
+    _: _(2)
+  }, {
+    _: _(5),
+    C: "c",
+    Q: _(5, "a1")
+  }], _ => [6, {
+    P: _(7)
+  }, 1, {
+    d: "inner placeholder",
+    G: 7
+  }]);
+  M._.j.b = _ => {
+    _.push("a3 5 b0 8")
+  };
+  M._.j[6] = _ => {
+    _.push("f 6")
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[--><span>inner 0<!--M_*10 a--></span><!--M_]6 a 9--></t>
+<script>
+  M._.r.push(_ => [9, {
+    c: "inner",
+    _: _(6),
+    a: _(10),
+    Ce: 1
+  }, {
+    d: "inner 0"
+  }]);
+  M._.j.c = _ => {
+    _.push("a0 9 b0 10")
+  };
+  M._.w()
+</script>
