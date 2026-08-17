@@ -76,11 +76,8 @@ export default {
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
       case "$global":
-        if (isOutputHTML()) {
-          identifier.replaceWith(
-            t.callExpression(importRuntime("$global"), []),
-          );
-        } else {
+        // An HTML read resolves to the `$global` const the program declares.
+        if (!isOutputHTML()) {
           identifier.replaceWith(
             t.memberExpression(
               scopeIdentifier,

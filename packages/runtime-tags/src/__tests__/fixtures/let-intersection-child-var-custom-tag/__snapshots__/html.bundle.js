@@ -3,12 +3,13 @@ var subsByKey;
 var let_global_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $return = $global()[input.value];
+	const $global$1 = $global();
+	const $return = $global$1[input.value];
 	_script($scope0_id, "c1");
 	writeScope($scope0_id, {
 		c: input.value,
 		U: _resume(function(next) {
-			$global()[input.value] = next;
+			$global$1[input.value] = next;
 			subsByKey[input.value]?.forEach((cb) => cb());
 		}, "c0", $scope0_id) || void 0
 	});

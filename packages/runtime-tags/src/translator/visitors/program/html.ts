@@ -129,6 +129,19 @@ export default {
       });
     },
     exit(program) {
+      if (program.node.extra.hasGlobalRead) {
+        // Declared, not rewritten: `$global` reads already resolve to this
+        // binding, and one read keeps deferred callbacks off a stale chunk.
+        getHTMLSectionStatements(getSection(program)).push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              t.identifier("$global"),
+              callRuntime("$global"),
+            ),
+          ]),
+        );
+      }
+
       flushInto(program);
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);

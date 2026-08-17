@@ -74,9 +74,3 @@ Direction: one cheatsheet rule + a common-mistakes row: "render path → normal 
 `docs` / tags cheatsheet › `<show>` / `<const>` | 2026-08-13 | impact:med | effort:low
 
 `<show>` always renders its body (hidden → `<t hidden>`) so the branch can resume without shipping the body's template; `<if>` mounts and destroys. Agents treating `<show>` as a free "display:none" for heavy client-only panes (diff, tabs) discover only after SSR that derived function-valued `<const>`s were serialized as holes and throw `is not a function` on first open. Cheatsheet should state: use `<if>` when the subtree should not exist until needed; use `<show>` only when keep-alive + resume of already-rendered DOM is required; never store a function in a `<const>` that SSRs — call pure helpers inside an expression that produces a serializable result (`items.filter(makeFilter(q))`) or keep the helper call inside handlers/lifecycle. Re-verify: an agent following only the cheatsheet picks `<if>` for a first-paint-closed review pane and does not leave `const/match=makeFilter(...)` on a shown/hidden SSR branch.
-
-## Cheatsheet: do not read `$global` inside a promise `.then`
-
-`packages/runtime-tags` › `$global` / html writer `$chunk` | 2026-08-13 | impact:high | effort:low
-
-`$global` is backed by the current render chunk (`$chunk.boundary…`). Capturing `$global.data.somePromise.then(() => $global.data.other)` looks fine during the render that creates the promise, but when the promise settles the chunk is gone and the read throws `Cannot read properties of undefined (reading 'boundary')` — often only visible as a streamed `<try>` `@catch` full-page error. Snap sync fields into locals before chaining, or fold them in the handler with values already closed over. Re-verify: SSR a page that does `($global.data.slow as Promise<T>).then(() => $global.data.fast)` under `<try>/<await>` and observe the catch; fix by `const fast = $global.data.fast` before `.then`.

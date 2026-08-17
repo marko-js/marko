@@ -2,6 +2,7 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	const $global$1 = $global();
 	_try($scope0_id, "a", _content_resume("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
@@ -12,7 +13,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a1", (error) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		const message = $global().settings.message;
+		const message = $global$1.settings.message;
 		let clicked = false;
 		_html(`<button>${_escape(error.message)}${_el_resume($scope2_id, "b")}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a0");
