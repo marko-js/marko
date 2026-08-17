@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><ul></ul><button>Count <!></button></main>";
 const $walks = "D b Db%m";
-const $for_content__count = /*@__PURE__*/ _resume("__tests__/template.marko_1_count#6/init", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => _text($scope["#text/1"], $scope._.count)));
+const $for_content__count = /*@__PURE__*/ _init_for_closure("__tests__/template.marko_1_count#6/init", "#ul/0", ($scope) => _text($scope["#text/1"], $scope._.count));
 const $for_content__setup = $for_content__count;
 const $for_content__item_label = ($scope, item_label) => _text($scope["#text/0"], item_label);
 const $for_content__$params = ($scope, $params2) => $for_content__item_label($scope, $params2[0]?.label);

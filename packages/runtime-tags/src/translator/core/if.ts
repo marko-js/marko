@@ -25,7 +25,7 @@ import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  classifiesClientReselectable,
+  isStateSelected,
   isBranchPathSection,
   recordStructuralOrGlobalParams,
 } from "../util/persisted/structure";
@@ -122,29 +122,20 @@ export const IfTag = {
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted()) {
-        // Structure classifies once the merged test sources resolve; a
-        // non-branch-path section (content) can still classify reselectable.
         onClassifyStructure(ifTagSection, () => {
-          const sources = getSerializeSourcesForExpr(ifTagExtra);
+          // Patches select a chain that is not state-selected.
           if (
-            classifiesClientReselectable(
-              sources,
-              ifTagSection,
-              ifTagExtra.referencedBindings,
-            )
+            !branches.some(
+              ([, branchBody]) => branchBody && isStateSelected(branchBody),
+            ) &&
+            isBranchPathSection(ifTagSection)
           ) {
-            // A client-evaluable chain is client-reselectable (state
-            // re-selects directly; param feeds fill their slots).
-            for (const [, branchBody] of branches) {
-              if (branchBody) {
-                branchBody.isClientReselectable = true;
-              }
-            }
-          } else if (isBranchPathSection(ifTagSection)) {
             addRuntimeFeatureAsset("patch-branch");
             // Branch tests drive structure: the params recorded here gate
             // call-site feeds at translate.
-            recordStructuralOrGlobalParams(sources);
+            recordStructuralOrGlobalParams(
+              getSerializeSourcesForExpr(ifTagExtra),
+            );
           }
         });
       }
@@ -213,7 +204,7 @@ export const IfTag = {
           // A client-owned chain compiles like a stateful conditional on a
           // plain page: no marker retention, shells, or branch entry.
           const clientOwned = branches.some(
-            ([, branchBody]) => branchBody?.isClientReselectable,
+            ([, branchBody]) => branchBody && isStateSelected(branchBody),
           );
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
@@ -386,7 +377,9 @@ export const IfTag = {
           if (
             isPersisted() &&
             isBranchPathSection(ifTagSection) &&
-            !branches.some(([, branchBody]) => branchBody?.isClientReselectable)
+            !branches.some(
+              ([, branchBody]) => branchBody && isStateSelected(branchBody),
+            )
           ) {
             // An interactive page receives assets transitively through its
             // dom program, so the feature import rides both outputs.
