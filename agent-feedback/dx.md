@@ -99,6 +99,7 @@ Inside a native-tag handler or `<const/fn=() => {…}>`, an expression like `pen
 When `<try>` has `@placeholder` around `<await>`, a single `curl` of the response shows the placeholder still inside `<main>` even after the promise has resolved — the real branch is appended as out-of-order markers (`<t hidden M_=…>…</t>` + small runtime scripts) later in the body. Agents debugging "SSR didn't render X" often stop at the placeholder in `<main>` and miss that the streamed branch (or a `@catch` error string) is further down.
 
 Direction: in the streaming doc (or cheatsheet SSR section), show a minimal response sketch: placeholder in-tree → later hidden replacement fragment; note that `@catch` errors surface the same way (`<p>…is not a function</p>` inside a hidden `t`). Re-verify: stream a page with slow `<await>` + placeholder; `curl -N` and observe placeholder first, then hidden content blocks before `</body>`.
+
 ## Assert optimize-only patch rejection (needs a debug-skipping test mode)
 
 `packages/runtime-tags/src/__tests__/main.test.ts` › `TestConfig` | 2026-08-14 | impact:low | effort:low

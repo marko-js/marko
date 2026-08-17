@@ -3,15 +3,11 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
-import * as ShellBlocker from "../util/constants/shell-blocker";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
-import { type Opt } from "../util/optional";
-import { constructRendersReads } from "../util/persisted/delivery";
-import { onFinalizePersisted } from "../util/persisted/lifecycle";
 import {
   ensurePersistedWriteGroups,
   inStateSelectedStructure,
@@ -106,22 +102,6 @@ export default {
           addSerializeReason(section, true, nodeBinding);
           addAssetImport(`${getRuntimePath("dom")}/patch-text.feat`);
           ensurePersistedWriteGroups(() => valueExtra);
-          // A state-fed hole the construct cannot render faithfully (no
-          // seed fill or INIT closure) drops the branch's shell.
-          onFinalizePersisted(() => {
-            const holeSources = getSerializeSourcesForExpr(valueExtra);
-            if (
-              holeSources?.state &&
-              !holeSources.global &&
-              section.isBranch &&
-              !constructRendersReads(
-                section,
-                valueExtra.referencedBindings as Opt<Binding>,
-              )
-            ) {
-              section.shellBlocked ??= ShellBlocker.stateFed;
-            }
-          });
         }
       }
     },

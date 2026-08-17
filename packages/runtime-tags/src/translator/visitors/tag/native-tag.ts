@@ -24,7 +24,6 @@ import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../../util/body-to-text-literal";
-import * as ShellBlocker from "../../util/constants/shell-blocker";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -43,8 +42,6 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
-import { constructRendersReads } from "../../util/persisted/delivery";
-import { onFinalizePersisted } from "../../util/persisted/lifecycle";
 import {
   ensurePersistedWriteGroups,
   inStateSelectedStructure,
@@ -353,33 +350,6 @@ export default {
               ensurePersistedWriteGroups(() => value.extra || {});
             }
           }
-          // A patched attr `writesPatchAttr` rejects as state-fed makes the
-          // shell construct unfaithfully; see the placeholder's hole check.
-          onFinalizePersisted(() => {
-            if (!tagSection.isBranch || inStateSelectedStructure(tagSection)) {
-              return;
-            }
-            for (const { name, value } of getUsedAttrs(tagName, node, true)
-              .staticAttrs) {
-              if (
-                isEventHandler(name) ||
-                (tagName === "option" && name === "value")
-              ) {
-                continue;
-              }
-              const sources = getSerializeSourcesForExpr(value.extra || {});
-              if (
-                sources?.state &&
-                !sources.global &&
-                !constructRendersReads(
-                  tagSection,
-                  value.extra?.referencedBindings as Opt<Binding>,
-                )
-              ) {
-                tagSection.shellBlocked ??= ShellBlocker.stateFed;
-              }
-            }
-          });
         }
 
         if (spreadReferenceNodes) {

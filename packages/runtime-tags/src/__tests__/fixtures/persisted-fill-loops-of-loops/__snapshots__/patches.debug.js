@@ -1,9 +1,15 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko_2_input_suffix#5/init packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko_2_count#6/init;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchLoop:#text/0": ["r2", {
-    "PatchLoop:#text/0": ["c", {}]
+    "PatchLoop:#text/0": ["c", {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko1": "c"
+    }, _.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko_2*shell"]
   }, "r1", {
-    "PatchLoop:#text/0": ["b", {}, "a", {}]
+    "PatchLoop:#text/0": ["b", {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko1": "b"
+    }, "a", {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko1": "a"
+    }, _.a]
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-fill-loops-of-loops/template.marko0": "y"
 }]
