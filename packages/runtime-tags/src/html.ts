@@ -53,6 +53,8 @@ export {
   _patch_attr,
   _patch_attr_class,
   _patch_attr_option_value,
+  _patch_attrs,
+  _patch_attrs_partial,
   _patch_attr_style,
   _patch_bind,
   _patch_child,

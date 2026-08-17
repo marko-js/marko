@@ -212,6 +212,9 @@ declare module "@marko/compiler/dist/types" {
     globalBindings?: ReferencedBindings;
     spreadFrom?: Binding;
     nativeTagSpread?: true;
+    /** A native tag spread whose attribute set is serialized with the
+     * persisted structure, so its effect read needs no other delivery. */
+    serializedSpread?: true;
     nativeTagSpreadMerged?: true;
     merged?: NodeExtra;
   }

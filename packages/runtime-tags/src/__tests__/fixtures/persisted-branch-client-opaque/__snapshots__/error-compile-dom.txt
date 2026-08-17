@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-opaque/template.marko:4:8
-      2 | <main>
-      3 |   <if=show>
-    > 4 |     <p>${Date.now()}</p>
-        |        ^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: an untracked call inside client-owned structure has no delivery channel.
-      5 |   </if>
-      6 |   <button onClick() { show = true }>show</button>
-      7 | </main>
