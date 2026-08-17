@@ -1,0 +1,6 @@
+export interface Input {
+  workspace: { id: string; name: string };
+  active: boolean;
+}
+<lifecycle onMount() { console.log("child mounted", input.workspace.id) } onDestroy() { console.log("child destroyed", input.workspace.id) }/>
+<section class=(input.active ? "on" : "off")>${input.workspace.name}</section>
