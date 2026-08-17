@@ -1,4 +1,6 @@
 // tags/doubler/index.marko
+const $template$1 = "<span>x2</span>";
+const $walks$1 = "b";
 var doubler_default = _template_persisted("__tests__/tags/doubler/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -9,7 +11,9 @@ var doubler_default = _template_persisted("__tests__/tags/doubler/index.marko", 
 }, 0, 0);
 
 // template.marko
-_shells({ "__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1_count#7/init;Db%;<p>big <!></p>`" });
+const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}&%b l`)("b");
+_shells({ "__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#7/init;Db%;<p>big <!></p>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_n = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();

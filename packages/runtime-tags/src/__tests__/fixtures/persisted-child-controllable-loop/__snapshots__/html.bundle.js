@@ -1,5 +1,6 @@
 // tags/counter/index.marko
-_shells({ b0: ",`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`" });
+const $template = "<!><!><!>";
+_shells({ b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>" });
 var counter_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -23,6 +24,7 @@ var counter_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a1: /*@__PURE__*/ ((_w0, _w1) => `a1 !;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D%c%l/${_w0}&b`)("b%c"), /*@__PURE__*/ ((_w0) => `<p><!> hit <!></p>${_w0}<!>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -48,7 +50,7 @@ var template_default = _template_persisted("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			c: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "b", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, 0);
+	}, 0, $scope0_id, "b", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "a1");
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {});
 }, 1, () => [counter_default]);

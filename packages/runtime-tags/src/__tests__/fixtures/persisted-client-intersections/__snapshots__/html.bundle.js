@@ -5,6 +5,7 @@ var price_card_default = _template_persisted("b", (input) => {
 	let qty = 1;
 	_html(`<section><h2>${_escape(input.label + " x1")}${_el_resume($scope0_id, "a")}</h2><button>+</button>${_el_resume($scope0_id, "b")}</section>`);
 	_script($scope0_id, "b0");
+	_patch_value($scope0_id, "b1", qty, 1);
 	$scope0_reason ? writeScope($scope0_id, {
 		e: input.label,
 		f: qty
@@ -19,6 +20,7 @@ var promo_tag_default = _template_persisted("c", (input) => {
 	let seen = 0;
 	_html(`<aside>${_escape(input.text + " (0)")}${_el_resume($scope0_id, "a")}</aside><button class=promo>seen</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "c0");
+	_patch_value($scope0_id, "c1", seen, 1);
 	$scope0_reason ? writeScope($scope0_id, {
 		e: input.text,
 		f: seen

@@ -1,15 +1,20 @@
 // tags/counter/index.marko
+const $template$1 = "<section><p>Value <!> (spun <!>)</p><button class=spin>spin</button></section>";
+const $walks$1 = "Eb%c%l l";
 var counter_default = _template_persisted("__tests__/tags/counter/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let spins = 0;
 	_html(`<section><p>Value <!>${_patch_text($scope0_id, "#text/0", input.value, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")} (spun <!>${_escape(spins)}${_el_resume($scope0_id, "#text/1")})</p><button class=spin>spin</button>${_el_resume($scope0_id, "#button/2")}</section>`);
 	_script($scope0_id, "__tests__/tags/counter/index.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/counter/index.marko0", spins, 1);
 	$scope0_reason && writeScope($scope0_id, { spins }, "__tests__/tags/counter/index.marko", 0, { spins: "1:6" });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1>${_w0}<button class=inc>+</button></main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `E l/${_w0}& l`)($walks$1);
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

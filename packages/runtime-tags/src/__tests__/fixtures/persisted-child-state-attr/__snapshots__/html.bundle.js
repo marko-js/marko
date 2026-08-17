@@ -5,6 +5,7 @@ var counter_default = _template_persisted("b", (input) => {
 	let spins = 0;
 	_html(`<section><p>Value <!>${_patch_text($scope0_id, "a", input.value, $scope0_owned, 0)}${_el_resume($scope0_id, "a")} (spun <!>${_escape(spins)}${_el_resume($scope0_id, "b")})</p><button class=spin>spin</button>${_el_resume($scope0_id, "c")}</section>`);
 	_script($scope0_id, "b0");
+	_patch_value($scope0_id, "b0", spins, 1);
 	$scope0_reason && writeScope($scope0_id, { g: spins });
 	_resume_branch($scope0_id);
 }, 0, 0);

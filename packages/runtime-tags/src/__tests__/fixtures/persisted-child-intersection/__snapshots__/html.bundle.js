@@ -5,6 +5,7 @@ var price_card_default = _template_persisted("b", (input) => {
 	let qty = 1;
 	_html(`<div><h2>${_escape(input.label + " x1")}${_el_resume($scope0_id, "a")}</h2><button>+</button>${_el_resume($scope0_id, "b")}</div>`);
 	_script($scope0_id, "b0");
+	_patch_value($scope0_id, "b1", qty, 1);
 	$scope0_reason ? writeScope($scope0_id, {
 		e: input.label,
 		f: qty
