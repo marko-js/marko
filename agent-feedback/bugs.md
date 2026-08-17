@@ -64,6 +64,7 @@ A _split_ Class component (one with a `component-browser.js`, so `FLAG_WILL_RERE
 `packages/runtime-tags/src/translator` › `<lifecycle>` / tags typecheck | 2026-08-13 | impact:med | effort:med
 
 Returning `{ wasActive: !!this.active, … }` from `onMount` while `active=…` is also a lifecycle attr collapses the whole tag's `ThisType` to `object`: every attr (`active`, `load`, …) and every `this.*` access then fails with TS2353/TS2339, even though the same `this.active` read is legal inside `start()` / `onUpdate`. Assigning after construction works: `const self = { wasActive: false, … }; self.wasActive = !!this.active; return self`. Re-verify with a fixture that sets `active=true` on `<lifecycle>`, returns `{ wasActive: !!this.active }` from `onMount`, and runs `mtc` / the tags typecheck — expect green after the post-construction assign form and red on the inline form.
+
 ## Circular custom tags TDZ at module evaluation in DOM output
 
 Mutually recursive custom tags (`tags/a-tag` renders `b-tag`, which

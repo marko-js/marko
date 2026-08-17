@@ -5,7 +5,15 @@ import { getProgram, getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
 import { isPersisted } from "../marko-config";
-import { every, filter, forEach, type Opt, some } from "../optional";
+import {
+  every,
+  filter,
+  forEach,
+  includes,
+  type Opt,
+  push,
+  some,
+} from "../optional";
 import { type Binding, getCanonicalBinding, type Sources } from "../references";
 import { type Section } from "../sections";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
@@ -52,8 +60,8 @@ export function paramsDeliverAsFills(params: Sources["param"]) {
 }
 
 // Only a named property delivers as a fill: the whole bag (a positional
-// program param) and rest grains carry shapes the wire cannot write.
-function isFillableGrain(binding: Binding) {
+// program param) and rests carry shapes the wire cannot write.
+function hasWritableShape(binding: Binding) {
   return (
     binding.upstreamAlias !== binding.section.params &&
     binding.excludeProperties === undefined
@@ -87,7 +95,6 @@ export function isPatchFillBinding(binding: Binding) {
   // effect) must never retain userland code hydration would drop.
   if (
     isPersisted() &&
-    binding.type === BindingType.let &&
     binding.section.isBranch &&
     isBranchPathSection(binding.section) &&
     // State-selected branches never construct from frames, so their
@@ -95,12 +102,31 @@ export function isPatchFillBinding(binding: Binding) {
     !isStateSelected(binding.section) &&
     getCanonicalBinding(binding) === binding
   ) {
-    return !!binding.assignmentSections;
+    if (binding.sources?.state) {
+      return binding.type === BindingType.let && !!binding.assignmentSections;
+    }
+    // A server-owned local a state join reads: its partial writes it,
+    // refreshing a paired scope and seeding a fresh one.
+    if (binding !== binding.section.params && isSeedableLocal(binding)) {
+      return hasStateJoinedRead(binding);
+    }
   }
-  if (!isFillableGrain(binding) || !isPatchRefreshableBinding(binding)) {
-    return false;
-  }
+  return (
+    hasWritableShape(binding) &&
+    isPatchRefreshableBinding(binding) &&
+    hasStateJoinedRead(binding)
+  );
+}
 
+// A rendered read (through any alias) the client must recompute:
+// intersecting state, a dynamic tag name, or inside state-selected structure.
+function hasStateJoinedRead(binding: Binding): boolean {
+  for (const alias of binding.aliases) {
+    // A property alias or rest fills on its own; a direct alias reads this.
+    if (getCanonicalBinding(alias) === binding && hasStateJoinedRead(alias)) {
+      return true;
+    }
+  }
   for (const read of binding.reads) {
     if (read.isEffect) continue;
     // A dynamic tag name is a hole only the client can paint (a re-render,
@@ -117,7 +143,6 @@ export function isPatchFillBinding(binding: Binding) {
       readSection = readSection.parent;
     }
   }
-
   return false;
 }
 
@@ -165,43 +190,41 @@ function fillJoinsIn(closure: Binding, section: Section) {
   return false;
 }
 
-// A construct re-evaluates a derived, and a never-assigned let's
-// initializer, from the feeds it renders.
-function isConstructDerived(binding: Binding) {
+// Closures a section's server-owned local fills derive from: when a frame
+// withholds such a write, the fresh scope re-derives through their inits.
+export function getLocalFillFeeds(section: Section) {
+  let feeds: Opt<Binding>;
+  forEach(getPatchFillBindings(section), (fill) => {
+    if (fill.section === section && !fill.sources?.state) {
+      forEach(fill.sources?.param, (feed) => {
+        if (feed.section !== section && !includes(feeds, feed)) {
+          feeds = push(feeds, feed);
+        }
+      });
+    }
+  });
+  return feeds;
+}
+
+// A local the server computes without client state: a param property
+// (or rest, a declared object), or a derivation/never-assigned let.
+function isSeedableLocal(binding: Binding) {
   return (
-    binding.type === BindingType.derived ||
-    (binding.type === BindingType.let && !binding.assignmentSections)
+    !binding.sources?.state &&
+    !binding.sources?.global &&
+    (isSectionParam(binding) ||
+      binding.type === BindingType.derived ||
+      (binding.type === BindingType.let && !binding.assignmentSections))
   );
 }
 
-// A grain of the section's own params bag (a loop item, or its property).
+// A property alias of the section's own params (a loop item, its property).
 function isSectionParam(binding: Binding) {
   const { params } = binding.section;
   for (let alias = binding.upstreamAlias; alias; alias = alias.upstreamAlias) {
     if (alias === params) return true;
   }
   return binding === params || binding.type === BindingType.param;
-}
-
-// Every read arrives on the fresh scope: parent state (init), parent fills
-// (join arrival), local state (seed), and their local derivations.
-export function constructRendersReads(
-  section: Section,
-  refs: Opt<Binding>,
-): boolean {
-  return every(refs, (binding) =>
-    binding.section !== section
-      ? !(binding.section.isBranch && isSectionParam(binding))
-      : isSectionParam(binding)
-        ? false
-        : isConstructDerived(binding)
-          ? // Its own join must fire: only state feeds arrive at a local
-            // derivation, params beside them through fills.
-            !!binding.sources?.state &&
-            constructRendersReads(section, binding.sources.state) &&
-            paramsDeliverAsFills(binding.sources.param)
-          : isPatchFillBinding(binding),
-  );
 }
 
 // Composed dispatch delivers fills down any branch chain; a non-branch on

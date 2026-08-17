@@ -1,14 +1,14 @@
 // template.marko
 const $template = "<main><h1> </h1><!><button>+</button></main>";
 const $walks = "E l%b l";
-const $for_content2__input_suffix__OR__count__OR__cell = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.cell + ":" + $scope._._.input_suffix + "@" + $scope._._.count), 2), "#text/1", "#text/0");
+const $for_content2__input_suffix__OR__count__OR__cell = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "cell", /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _init_join("__tests__/template.marko_2_input_suffix#7/init", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.cell + ":" + $scope._._.input_suffix + "@" + $scope._._.count), 2)), "#text/1", "#text/0"));
 const $for_content2__input_suffix = /*@__PURE__*/ _closure_get("input_suffix", $for_content2__input_suffix__OR__count__OR__cell, ($scope) => $scope._._);
 const $for_content2__setup = ($scope) => {
 	$for_content2__input_suffix($scope);
 	$for_content2__count($scope);
 };
-const $for_content2__count = /*@__PURE__*/ _closure_get("count", $for_content2__input_suffix__OR__count__OR__cell, ($scope) => $scope._._);
-const $for_content2__cell = /*@__PURE__*/ _const("cell", $for_content2__input_suffix__OR__count__OR__cell);
+const $for_content2__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#8/init", "count", $for_content2__input_suffix__OR__count__OR__cell, ($scope) => $scope._._);
+const $for_content2__cell = /*@__PURE__*/ _fill_const("__tests__/template.marko1", "cell", $for_content2__input_suffix__OR__count__OR__cell);
 const $for_content2__$params = ($scope, $params3) => $for_content2__cell($scope, $params3[0]);
 const $for_content__for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $for_content2__setup, $for_content2__$params);
 const $for_content__row_cells = ($scope, row_cells) => $for_content__for($scope, [row_cells, (cell) => cell]);
