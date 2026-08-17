@@ -44,7 +44,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__id($scope, $pa
 const $selectedId = /*@__PURE__*/ _let(6, /* @__PURE__ */ _closure($if_content__selectedId));
 const $input_status__OR__open = /*@__PURE__*/ _or(9, _script("c1", ($scope) => _lifecycle($scope, {
 	onMount: function() {
-		console.log("shell mounted", $scope.e);
+		console.log("shell mounted", $scope.e, $scope.a.dataset.status);
 		const abort = new AbortController();
 		document.addEventListener("click", (e) => {
 			if (e.defaultPrevented) return;
@@ -85,7 +85,10 @@ const $open = ($scope) => (id) => {
 _resume("c0", $open);
 
 // template.marko
-const $placeholder_content__workspaces = /*@__PURE__*/ _closure_get(2, ($scope) => $input_workspaces($scope.a, $scope._.b));
+const $catch_content__err = ($scope, err) => _text($scope.a, String(err));
+const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
+const $catch_content = _content_resume("a1", " ", " ", 0, $catch_content__$params);
+const $placeholder_content__workspaces = /*@__PURE__*/ _closure_get(3, ($scope) => $input_workspaces($scope.a, $scope._._.b), ($scope) => $scope._._);
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__workspaces($scope);
 	$setup($scope.a);

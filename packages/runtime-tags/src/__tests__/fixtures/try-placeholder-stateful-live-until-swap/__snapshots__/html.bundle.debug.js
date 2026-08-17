@@ -37,7 +37,7 @@ var shell_default = _template("__tests__/tags/shell.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
 		writeScope($scope1_id, {
-			id: _serialize_if($scope0_reason, 1) && id,
+			id: _serialize_if($scope0_reason, 0) && id,
 			ws,
 			ws_id: ws?.id
 		}, "__tests__/tags/shell.marko", "32:4", {
@@ -46,7 +46,7 @@ var shell_default = _template("__tests__/tags/shell.marko", (input) => {
 			ws_id: ["ws.id", "33:12"]
 		});
 	}, (id) => id, $scope0_id, "#text/1");
-	_html(`</div>${_el_resume($scope0_id, "#div/0", _serialize_guard($scope0_reason, 0))}`);
+	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/shell.marko_0_input_status#4_open#8");
 	writeScope($scope0_id, {
 		input_status: input.status,
@@ -69,8 +69,6 @@ var shell_default = _template("__tests__/tags/shell.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let selectedId = "a";
-	let openIds = ["a"];
 	const workspaces = [{
 		id: "a",
 		name: "A"
@@ -78,26 +76,45 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		id: "b",
 		name: "B"
 	}];
-	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_2*content", () => {
-		const $scope2_id = _scope_id();
-		_scope_reason();
-		_await($scope2_id, "#text/0", resolveAfter({ ok: true }, 1), (status) => {
-			const $scope3_id = _scope_id();
-			shell_default({
-				status: "ready",
-				workspaces
-			});
-			_resume_branch($scope3_id);
-		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
-		_scope_reason();
+	const ready = null;
+	if (ready) {
 		const $scope1_id = _scope_id();
 		shell_default({
-			status: "loading",
+			status: "ready",
 			workspaces
 		});
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4");
-		_resume_branch($scope1_id);
-	}, $scope0_id) }) });
-	writeScope($scope0_id, { workspaces }, "__tests__/template.marko", 0, { workspaces: "5:8" });
+	} else {
+		const $scope2_id = _scope_id();
+		_try($scope2_id, "#text/0", _content_resume("__tests__/template.marko_4*content", () => {
+			const $scope4_id = _scope_id();
+			_scope_reason();
+			_await($scope4_id, "#text/0", resolveAfter({ ok: true }, 1), (status) => {
+				const $scope5_id = _scope_id();
+				shell_default({
+					status: "ready",
+					workspaces
+				});
+				_resume_branch($scope5_id);
+			}, 0);
+		}, $scope2_id), {
+			placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
+				_scope_reason();
+				const $scope3_id = _scope_id();
+				shell_default({
+					status: "loading",
+					workspaces
+				});
+				writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "10:6");
+				_resume_branch($scope3_id);
+			}, $scope2_id) }),
+			catch: attrTag({ content: _content_resume("__tests__/template.marko_6*content", (err) => {
+				const $scope6_reason = _scope_reason();
+				const $scope6_id = _scope_id();
+				_html(`${_escape(String(err))}${_el_resume($scope6_id, "#text/0", _serialize_guard($scope6_reason, 0))}`);
+				_serialize_if($scope6_reason, 0) && writeScope($scope6_id, {}, "__tests__/template.marko", "16:6");
+			}, $scope2_id) })
+		});
+		writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2");
+	}
+	writeScope($scope0_id, { workspaces }, "__tests__/template.marko", 0, { workspaces: "3:8" });
 }, 1);

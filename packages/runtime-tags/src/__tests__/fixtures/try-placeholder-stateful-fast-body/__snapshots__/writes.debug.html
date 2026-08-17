@@ -1,5 +1,5 @@
-<!--M_[--><!--M_!^2--><button>loading <!>
-    0<!--M_*3 #text/1--></button><!--M_*3 #button/0--><!--M_!2--><!--M_]1 #text/0 2-->
+<!--M_[--><!--M_!^2--><!--M_[--><button>loading <!>
+    0<!--M_*3 #text/1--></button><!--M_*3 #button/0--><!--M_]1 #PlaceholderBranch2 3--><!--M_!2--><!--M_]1 #text/0 2-->
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
@@ -12,7 +12,11 @@
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_1*content"
         )
-    }],
+    }], _ => (_([2, {
+      "#PlaceholderBranch": _(3)
+    }, {
+      _: _(1)
+    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(3)), 0),
     "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_1 3"
   ];
   REORDER_RUNTIME(M._);
@@ -25,12 +29,10 @@
       0<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_]2 #text/0 4-->
 </t>
 <script>
-  M._.r.push(_ => (_([3, {
-    _: _(1)
-  }, {
+  M._.r.push(_ => [4, {
     _: _(2),
     "ClosureSignalIndex:clicks": 1
-  }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(3)), 0));
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3_clicks#1/pending 4 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3 4"

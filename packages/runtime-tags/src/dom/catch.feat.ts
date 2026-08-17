@@ -11,6 +11,8 @@ import {
   type PendingRender,
   placeholderShown,
 } from "./queue";
+import { installPlaceholderDismiss } from "./resume";
+import { destroyBranch } from "./scope";
 import type { SignalFn } from "./signals";
 
 const handlePendingTry = (
@@ -19,14 +21,35 @@ const handlePendingTry = (
   branch: BranchScope | undefined,
 ) => {
   // Defer the fn onto the nearest ancestor try branch still awaiting;
-  // a truthy return means it was deferred.
+  // a truthy return means it was deferred (or dropped).
+  let parent: BranchScope | undefined;
   while (branch) {
+    parent = branch[AccessorProp.ParentBranch];
+    if (parent?.[AccessorProp.PlaceholderBranch] === branch) {
+      // A resumed placeholder is live until its body swaps it out — unless
+      // that already happened (parked, detached) before its effects ran.
+      if (!branch[AccessorProp.StartNode].isConnected) {
+        parent[AccessorProp.PlaceholderBranch] = 0;
+        destroyBranch(branch);
+        return 1;
+      }
+      return;
+    }
     if (branch[AccessorProp.AwaitCounter]?.i) {
       return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
     }
-    branch = branch[AccessorProp.ParentBranch];
+    branch = parent;
   }
 };
+
+// A resumed placeholder's branch dies with the swap (see `render.q`).
+installPlaceholderDismiss((tryBranch) => {
+  const placeholderBranch = tryBranch?.[AccessorProp.PlaceholderBranch];
+  if (placeholderBranch) {
+    tryBranch![AccessorProp.PlaceholderBranch] = 0;
+    destroyBranch(placeholderBranch);
+  }
+});
 
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program containing `<try>`, `<await>`, or lazy loading.

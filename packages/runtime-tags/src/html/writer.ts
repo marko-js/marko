@@ -914,12 +914,12 @@ export function _try(
   if (catchContent !== undefined) {
     tryCatch(
       placeholderContent
-        ? () => tryPlaceholder(content, placeholderContent, branchId)
+        ? () => tryPlaceholder(content, placeholderContent, branchId, scopeId)
         : content,
       catchContent || (() => {}),
     );
   } else if (placeholderContent) {
-    tryPlaceholder(content, placeholderContent, branchId);
+    tryPlaceholder(content, placeholderContent, branchId, scopeId);
   } else {
     content();
   }
@@ -942,6 +942,7 @@ function tryPlaceholder(
   content: () => void,
   placeholder: () => void,
   branchId: number,
+  scopeId: number,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -953,7 +954,7 @@ function tryPlaceholder(
   }
 
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
-  chunk.placeholder = { body, render: placeholder, branchId };
+  chunk.placeholder = { body, render: placeholder, branchId, scopeId };
 }
 
 function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
@@ -1193,6 +1194,7 @@ export class Chunk {
     body: Chunk;
     render: () => void;
     branchId: number;
+    scopeId: number;
   } | null = null;
   public boundary: Boundary;
   public next: Chunk | null;
@@ -1265,11 +1267,24 @@ export class Chunk {
 
       if (body.async) {
         const { state } = this.boundary;
-        const reorderId = (body.reorderId = placeholder.branchId
-          ? placeholder.branchId + ""
+        const { branchId, scopeId } = placeholder;
+        const reorderId = (body.reorderId = branchId
+          ? branchId + ""
           : state.nextReorderId());
+        // A stateful placeholder is its own branch on the client (live until
+        // the swap destroys it); its content's first scope is that branch.
+        const placeholderBranchId = state.scopeId;
+        const branchStart = state.mark(ResumeSymbol.BranchStart, "");
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
-        const after = this.render(placeholder.render);
+        const htmlBefore = this.html;
+        const effectsBefore = this.effects;
+        const scopesBefore = Object.keys(
+          this.serializeState.writeScopes,
+        ).length;
+        this.writeHTML(branchStart);
+        const after = this.render(() =>
+          withBranchId(placeholderBranchId, placeholder.render),
+        );
         if (after !== this) {
           // TODO: eventually this should be allowed.
           // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
@@ -1277,7 +1292,40 @@ export class Chunk {
             new Error("An @placeholder cannot contain async content."),
           );
         }
+        if (
+          after === this &&
+          this.effects === effectsBefore &&
+          Object.keys(this.serializeState.writeScopes).length === scopesBefore
+        ) {
+          // Static placeholder: nothing to resume, nothing to destroy.
+          this.html =
+            htmlBefore +
+            this.html.slice(htmlBefore.length + branchStart.length);
+        } else {
+          after.render(() =>
+            writeScope(branchId, {
+              [AccessorProp.PlaceholderBranch]: scopeWithId(
+                state,
+                placeholderBranchId,
+              ),
+            }),
+          );
+          after.writeHTML(
+            state.mark(
+              ResumeSymbol.BranchEnd,
+              scopeId +
+                " " +
+                AccessorProp.PlaceholderBranch +
+                branchId +
+                " " +
+                placeholderBranchId,
+            ),
+          );
+        }
         after.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
+        // The placeholder rendered after this flush's serializer pass; its
+        // effects go out now, so its scopes must too or they resume empty.
+        flushSerializer(this.boundary, this.serializeState);
         state.reorder(body);
       } else {
         body.next = this.next;
