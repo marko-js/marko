@@ -2,7 +2,7 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if_content__mixed = ($scope, mixed) => _text($scope["#text/0"], mixed);
-const $if_content__input_title__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_title#5/init", /*@__PURE__*/ _or(2, ($scope) => $if_content__mixed($scope, $scope._.input_title + "@" + $scope._.count))), "#text/0", 0);
+const $if_content__input_title__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_title#5/init", /*@__PURE__*/ _or(1, ($scope) => $if_content__mixed($scope, $scope._.input_title + "@" + $scope._.count))), "#text/0", 0);
 const $if_content__input_title = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_title__OR__count);
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
