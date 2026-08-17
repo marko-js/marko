@@ -361,9 +361,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         assertDeliverableInClientOwned(node, node.value, node.value.extra);
       }
     },
-    MarkoScriptlet({ node }) {
-      unsupported(node);
-    },
     MarkoTag(tag) {
       const { node } = tag;
       const tagName = t.isStringLiteral(node.name) && node.name.value;
