@@ -1,4 +1,4 @@
-// size: 27925 (min) 10298 (brotli)
+// size: 27949 (min) 10317 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -32,6 +32,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
     (!branchesEnabled || render.b.F?.H !== 0) && render.c(render.b, render.d);
   },
   catchEnabled,
+  abortsEnabled,
+  subscriptionsEnabled,
   delegate = (type, handler) =>
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
@@ -105,6 +107,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   curRenders,
   embedRenders,
   readyIds,
+  lazyEnabled,
   patchRender = 0,
   patching = 0,
   patchId = 0,
@@ -480,7 +483,7 @@ function abortRun() {
   (runId++, (pendingRenders = []), (pendingEffects = []));
 }
 function queueAsyncRender(scope, signal, value) {
-  (queueRender(scope, signal, -1, value), queueMicrotask(run));
+  (pendingRenders.length || queueMicrotask(run), queueRender(scope, signal, -1, value));
 }
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
@@ -524,13 +527,17 @@ function $signalReset(scope, id) {
   ctrl && ((scope.A[id] = void 0), rendering ? queueEffect(ctrl, abort) : abort(ctrl));
 }
 function $signal(scope, id) {
-  return (trackCleanup(scope), ((scope.A ||= {})[id] ||= new AbortController()).signal);
+  return (
+    (abortsEnabled = 1),
+    trackCleanup(scope),
+    ((scope.A ||= {})[id] ||= new AbortController()).signal
+  );
 }
 /** Enrols `scope` with its branch so destroying the branch cleans it up. */
 function trackCleanup(scope, subscribers) {
   let branch = scope.F;
   (branch && (branch.B ||= /* @__PURE__ */ new Set()).add(scope),
-    subscribers && (scope.Z ||= []).push(subscribers));
+    subscribers && ((subscriptionsEnabled = 1), (scope.Z ||= []).push(subscribers)));
 }
 function abort(ctrl) {
   ctrl.abort();
@@ -599,8 +606,8 @@ function destroyScope(scope) {
   scope.H && (destroyNestedScopes(scope), cleanupScope(scope));
 }
 function cleanupScope(scope) {
-  scope.Z?.forEach(unsubscribe, scope);
-  for (let id in scope.A) $signalReset(scope, id);
+  if ((subscriptionsEnabled && scope.Z?.forEach(unsubscribe, scope), abortsEnabled))
+    for (let id in scope.A) $signalReset(scope, id);
 }
 function unsubscribe(subscribers) {
   subscribers.delete(this);
@@ -950,6 +957,9 @@ function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
+function withLazy(runtime) {
+  return ((lazyEnabled = 1), runtime);
+}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
@@ -1165,7 +1175,7 @@ function init(runtimeId = "M") {
                 } else
                   branchesEnabled
                     ? (visitBranches ||= createVisitBranches())()
-                    : render.b && (visits[retained++] = visit);
+                    : lazyEnabled && render.b && (visits[retained++] = visit);
               return (
                 embedRenders &&
                   !embedAnchor &&
@@ -1757,6 +1767,7 @@ function observeOnce(scope, nodeAccessor, init, callback) {
 }
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),
+    (el.c = hasChanged),
     delegate("input", handleChange),
     el.form && delegate("reset", handleFormReset),
     isResuming && hasChanged(el) && queueMicrotask(onChange));
@@ -1766,7 +1777,7 @@ function handleChange(ev) {
 }
 function handleFormReset(ev) {
   let handlers = [];
-  for (let el of ev.target.elements) el._ && hasFormElementChanged(el) && handlers.push(el._);
+  for (let el of ev.target.elements) el._ && el.c(el) && handlers.push(el._);
   requestAnimationFrame(() => {
     if (!ev.defaultPrevented) for (let change of handlers) change();
   });
@@ -1779,9 +1790,6 @@ function hasCheckboxChanged(el) {
 }
 function hasSelectChanged(el) {
   for (let opt of el.options) if (opt.selected !== opt.defaultSelected) return !0;
-}
-function hasFormElementChanged(el) {
-  return el.options ? hasSelectChanged(el) : hasValueChanged(el) || hasCheckboxChanged(el);
 }
 function normalizeStrProp(value) {
   return normalizeAttrValue(value) || "";
@@ -2218,7 +2226,66 @@ let empty = [],
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
-  };
+  },
+  _load_template = /*@__PURE__*/ withLazy((id, load) => {
+    let pending,
+      lazyTemplate = _template(
+        id,
+        0,
+        0,
+        (branch) => {
+          let awaitCounter = addAwaitCounter(branch);
+          ((branch.X ||= /* @__PURE__ */ new Map()),
+            (pending ||= load()).then(
+              (renderer) => {
+                (Object.assign(lazyTemplate, renderer),
+                  queueAsyncRender(branch, (branch) =>
+                    insertLoaded(renderer, branch, branch.S, awaitCounter),
+                  ));
+              },
+              loadFailed(branch, awaitCounter),
+            ));
+        },
+        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
+      );
+    return lazyTemplate;
+  }),
+  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
+    ((nodeAccessor = decodeAccessor(nodeAccessor)),
+      (childScopeAccessor = decodeAccessor(childScopeAccessor)));
+    let pending, renderer;
+    return (owner) => {
+      let child = owner[childScopeAccessor];
+      if (renderer) insertLoaded(renderer, child, owner[nodeAccessor]);
+      else {
+        let awaitCounter = addAwaitCounter(owner);
+        ((child.X ||= /* @__PURE__ */ new Map()),
+          (pending ||= load()).then(
+            (mod) => {
+              ((renderer = _content("", ...mod._)()),
+                queueAsyncRender(child, (child) =>
+                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
+                ));
+            },
+            loadFailed(child, awaitCounter),
+          ));
+      }
+    };
+  }),
+  _load_signal = /*@__PURE__*/ withLazy((load) => {
+    let pending, signal;
+    return (scope, value) => {
+      ((pending ||= load()),
+        scope.X || (!("X" in scope) && scope.H === runId)
+          ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
+          : signal
+            ? signal(scope, value)
+            : pending.then(
+                (mod) => queueAsyncRender(scope, (signal = mod._), value),
+                () => 0,
+              ));
+    };
+  });
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2294,51 +2361,6 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-function _load_template(id, load) {
-  let pending,
-    lazyTemplate = _template(
-      id,
-      0,
-      0,
-      (branch) => {
-        let awaitCounter = addAwaitCounter(branch);
-        ((branch.X ||= /* @__PURE__ */ new Map()),
-          (pending ||= load()).then(
-            (renderer) => {
-              (Object.assign(lazyTemplate, renderer),
-                queueAsyncRender(branch, (branch) =>
-                  insertLoaded(renderer, branch, branch.S, awaitCounter),
-                ));
-            },
-            loadFailed(branch, awaitCounter),
-          ));
-      },
-      _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
-    );
-  return lazyTemplate;
-}
-function _load_setup(nodeAccessor, childScopeAccessor, load) {
-  ((nodeAccessor = decodeAccessor(nodeAccessor)),
-    (childScopeAccessor = decodeAccessor(childScopeAccessor)));
-  let pending, renderer;
-  return (owner) => {
-    let child = owner[childScopeAccessor];
-    if (renderer) insertLoaded(renderer, child, owner[nodeAccessor]);
-    else {
-      let awaitCounter = addAwaitCounter(owner);
-      ((child.X ||= /* @__PURE__ */ new Map()),
-        (pending ||= load()).then(
-          (mod) => {
-            ((renderer = _content("", ...mod._)()),
-              queueAsyncRender(child, (child) =>
-                insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
-              ));
-          },
-          loadFailed(child, awaitCounter),
-        ));
-    }
-  };
-}
 function insertLoaded(renderer, branch, marker, awaitCounter) {
   let parent = marker.parentNode,
     values = branch.X,
@@ -2373,20 +2395,6 @@ function loadFailed(scope, awaitCounter) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
       queueAsyncRender(scope, renderCatch, error));
-  };
-}
-function _load_signal(load) {
-  let pending, signal;
-  return (scope, value) => {
-    ((pending ||= load()),
-      scope.X || (!("X" in scope) && scope.H === runId)
-        ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
-        : signal
-          ? signal(scope, value)
-          : pending.then(
-              (mod) => queueAsyncRender(scope, (signal = mod._), value),
-              () => 0,
-            ));
   };
 }
 function _load_visible_trigger(selector, options) {
