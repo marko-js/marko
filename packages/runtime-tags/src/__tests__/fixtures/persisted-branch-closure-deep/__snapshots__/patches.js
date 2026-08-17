@@ -1,15 +1,7 @@
 // PATCH
-[`a0;b%;<p>promo</p><!><!>`, {
+[`a1 a4;Db%;<span>Seen <!></span>`, `a0;b%;<p>promo</p><!><!>`, {
   ta: "Store!",
   bb: [{
-    ba: 0
-  }, "a0"]
-}]
-
-// PATCH
-[`a0;b%;<p>promo</p><!><!>`, {
-  ta: "Store!",
-  bb: [{
-    ba: 1
+    ba: "a1"
   }, "a0"]
 }]

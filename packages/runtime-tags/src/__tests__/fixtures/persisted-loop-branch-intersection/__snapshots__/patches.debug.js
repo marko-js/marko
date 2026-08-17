@@ -1,9 +1,9 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-loop-branch-intersection/template.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-loop-branch-intersection/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/persisted-loop-branch-intersection/template.marko_2_count#7/init;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/persisted-loop-branch-intersection/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchLoop:#text/0": ["a", {
-    "PatchBranch:#text/0": 1
+    "PatchBranch:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-branch-intersection/template.marko_2*shell"
   }, "b", {
-    "PatchBranch:#text/0": 1
+    "PatchBranch:#text/0": _.a
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-branch-intersection/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-loop-branch-intersection/template.marko0": "y"
 }]
