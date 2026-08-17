@@ -1,4 +1,6 @@
 // tags/dia-d/index.marko
+const $template$4 = "<em> </em>";
+const $walks$4 = "D l";
 var dia_d_default = _template_persisted("__tests__/tags/dia-d/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -7,6 +9,8 @@ var dia_d_default = _template_persisted("__tests__/tags/dia-d/index.marko", (inp
 }, 0, 0);
 
 // tags/dia-b/index.marko
+const $template$3 = $template$4;
+const $walks$3 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
 var dia_b_default = _template_persisted("__tests__/tags/dia-b/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -18,6 +22,8 @@ var dia_b_default = _template_persisted("__tests__/tags/dia-b/index.marko", (inp
 }, 0, () => [dia_d_default]);
 
 // tags/dia-c/index.marko
+const $template$2 = $template$4;
+const $walks$2 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
 var dia_c_default = _template_persisted("__tests__/tags/dia-c/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -29,6 +35,8 @@ var dia_c_default = _template_persisted("__tests__/tags/dia-c/index.marko", (inp
 }, 0, () => [dia_d_default]);
 
 // tags/dia-a/index.marko
+const $template$1 = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$3, $template$2);
+const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$3, $walks$2);
 var dia_a_default = _template_persisted("__tests__/tags/dia-a/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -47,6 +55,8 @@ var dia_a_default = _template_persisted("__tests__/tags/dia-a/index.marko", (inp
 }, 0, () => [dia_b_default, dia_c_default]);
 
 // template.marko
+const $template = "<main><!><button>t</button></main>";
+const $walks = "D%b l";
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

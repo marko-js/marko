@@ -1,8 +1,8 @@
 // template.marko
 _shells({
-	a1: ",`a1;D ;<em> </em>`",
-	a0: ",`a0;b%;<!><!><!>`",
-	a2: ",`a2,<em>closed</em>`"
+	a1: "a1;D ;<em> </em>",
+	a0: "a0;b%;<!><!><!>",
+	a2: "a2,<em>closed</em>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_promise = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);

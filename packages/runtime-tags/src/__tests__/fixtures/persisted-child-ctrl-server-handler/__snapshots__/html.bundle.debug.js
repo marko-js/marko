@@ -1,4 +1,6 @@
 // tags/field/index.marko
+const $template$1 = "<input>";
+const $walks$1 = " b";
 var field_default = _template_persisted("__tests__/tags/field/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -15,6 +17,8 @@ var field_default = _template_persisted("__tests__/tags/field/index.marko", (inp
 }, 0, 0);
 
 // template.marko
+const $template = "<main><!><button>+</button><output></output></main>";
+const $walks = "D%b l";
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

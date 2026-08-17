@@ -1,4 +1,6 @@
 // template.marko
+const $template = "<main><h1> </h1><button>read</button><p> </p></main>";
+const $walks = "E l bD m";
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

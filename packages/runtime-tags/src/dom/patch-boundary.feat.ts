@@ -14,7 +14,7 @@ import {
   dismissPlaceholder,
   renderCatch,
 } from "./control-flow";
-import { getShellContent, shells } from "./patch-branch.feat";
+import { getShellContent, kShell, shells } from "./patch-branch.feat";
 import {
   pendingEffects,
   placeholderShown,
@@ -32,6 +32,7 @@ import {
   getRegisteredWithScope,
   patchers,
   patchScope,
+  withConstructing,
 } from "./resume";
 import {
   collectScopes,
@@ -190,7 +191,12 @@ function attachDetachedAwait(
   const renderer = awaitBranch[AccessorProp.DetachedAwait] as Renderer;
   const setupAndAttach = () => {
     renderer[RendererProp.Setup]?.(awaitBranch);
-    applyChildPartial();
+    // A shell content's walk created the body's scopes with no setup.
+    if ((renderer as { [kShell]?: 1 })[kShell]) {
+      withConstructing(applyChildPartial);
+    } else {
+      applyChildPartial();
+    }
     const anchor = scope[accessor] as ChildNode;
     insertBranchBefore(awaitBranch, anchor.parentNode!, anchor);
     anchor.remove();

@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template = "<button class=c> </button>";
 const $walks = " D l";
-const $n = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $n = /*@__PURE__*/ _fill_let("b0", 2, ($scope) => _text($scope.b, $scope.c));
 const $setup__script$1 = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, $scope.c + 1);
 }));

@@ -1,7 +1,10 @@
-// Branch shells, pre-encoded at compile time as quoted frame chunks and
-// shipped at most once per response for construct-on-divergence.
+// Branch shell records (`id marker;walks;template`), quoted once here as
+// frame chunks and shipped at most once per response for constructs.
 export const shells: Record<string, string> = {};
 
 export function _shells(registered: Record<string, string>) {
-  Object.assign(shells, registered);
+  for (const id in registered) {
+    shells[id] =
+      ",`" + registered[id].replace(/[\\`]|\$\{/g, (m) => "\\" + m) + "`";
+  }
 }

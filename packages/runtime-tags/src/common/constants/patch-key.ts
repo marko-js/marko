@@ -16,8 +16,8 @@ export const GlobalEffect = "g";
 export const DynamicTag = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
 export const Globals = "$";
-// Setup-only: closure inits a fresh scope runs because the frame withheld
-// a client-fed local's write (the client re-derives it from its own feed).
+// Setup-only: registered ids a fresh scope runs, in the shell record's
+// `inits…!effects…` grammar (a client-fed local's feeds, a child's mounts).
 export const Init = "i";
 export const Loop = "l";
 export const Pending = "p";

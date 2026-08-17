@@ -5,6 +5,7 @@ var widget_default = _template_persisted("c", (input) => {
 	let n = 0;
 	_html(`<button class=c>${_patch_text($scope0_id, "b", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "b")}:<!>${_escape(n)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
+	_patch_value($scope0_id, "c0", n, 1);
 	$scope0_reason && writeScope($scope0_id, { g: n });
 	_resume_branch($scope0_id);
 }, 0, 0);

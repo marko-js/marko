@@ -17,6 +17,7 @@ var l2_default = _template_persisted("c", (input) => {
 	_patch_child($scope0_id, "c", $childScope);
 	l3_default({ note: input.note });
 	_script($scope0_id, "c0");
+	_patch_value($scope0_id, "c0", n, 1);
 	$scope0_reason && writeScope($scope0_id, {
 		g: n,
 		c: _existing_scope($childScope)
