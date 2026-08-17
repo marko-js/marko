@@ -9,6 +9,7 @@ export const Effect = "PatchEffect:";
 export const GlobalEffect = "PatchGlobalEffect:";
 export const DynamicTag = "PatchDynamicTag:";
 export const Globals = "$global:";
+export const Init = "PatchInit:";
 export const Loop = "PatchLoop:";
 export const Pending = "PatchPending:";
 export const Setup = "PatchSetup:";

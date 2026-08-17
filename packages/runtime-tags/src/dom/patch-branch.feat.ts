@@ -13,6 +13,7 @@ import { queueEffect } from "./queue";
 import { _content as content, createAndSetupBranch } from "./renderer";
 import {
   _patch_records,
+  constructPatchers,
   failPatch,
   getRegisteredWithScope,
   patchers,
@@ -31,6 +32,16 @@ const kSetup = Symbol();
 
 patchers[PatchKey.Setup] = (scope, _key, value) => {
   (scope as Scope & { [kSetup]?: Scope })[kSetup] = value as Scope;
+};
+// Closure inits the frame asks a fresh scope to run: a client-fed local
+// re-derives from its own feed instead of a withheld server write.
+constructPatchers[PatchKey.Init] = (scope, _key, ids) => {
+  for (const id of (ids as string).split(" ")) {
+    const fn = getRegisteredWithScope(id) as
+      | (SetupFn & { _?: SetupFn })
+      | undefined;
+    ((fn && (fn._ || fn)) || failPatch())(scope);
+  }
 };
 
 type SetupFn = (branch: Scope) => void;
