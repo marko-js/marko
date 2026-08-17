@@ -48,7 +48,7 @@ import { constructRendersReads } from "../../util/persisted/delivery";
 import { onFinalizePersisted } from "../../util/persisted/lifecycle";
 import {
   ensurePersistedWriteGroups,
-  inClientReselectableStructure,
+  inStateSelectedStructure,
   isBranchPathSection,
 } from "../../util/persisted/structure";
 import {
@@ -357,10 +357,7 @@ export default {
           // A patched attr `writesPatchAttr` rejects as state-fed makes the
           // shell construct unfaithfully; see the placeholder's hole check.
           onFinalizePersisted(() => {
-            if (
-              !tagSection.isBranch ||
-              inClientReselectableStructure(tagSection)
-            ) {
+            if (!tagSection.isBranch || inStateSelectedStructure(tagSection)) {
               return;
             }
             for (const { name, value } of getUsedAttrs(tagName, node, true)
@@ -1399,7 +1396,7 @@ function writesPatchAttr(
 ) {
   if (
     !(isPersisted() && isBranchPathSection(tagSection)) ||
-    inClientReselectableStructure(tagSection)
+    inStateSelectedStructure(tagSection)
   ) {
     return false;
   }

@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_suffix._($scope);
 	$if_content__count._($scope);
 };
-const $if_content__count = /*@__PURE__*/ _resume("a1", /*@__PURE__*/ _if_closure(0, 0, $if_content__input_suffix__OR__count));
+const $if_content__count = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_suffix__OR__count);
 const $count = /*@__PURE__*/ _let(6, $if_content__count);
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
 const $show = /*@__PURE__*/ _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
