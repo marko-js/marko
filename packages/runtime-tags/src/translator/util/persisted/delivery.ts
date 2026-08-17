@@ -127,7 +127,9 @@ function hasStateJoinedRead(binding: Binding): boolean {
     }
   }
   for (const read of binding.reads) {
-    if (read.isEffect) continue;
+    // A native tag spread is an effect read (its handlers attach lazily)
+    // whose attributes still render.
+    if (read.isEffect && !read.nativeTagSpread) continue;
     // A dynamic tag name is a hole only the client can paint (a re-render,
     // not a server-written entry): it fills without a state intersection.
     if (read.isDynamicTagName) return true;
@@ -159,7 +161,8 @@ export function isPatchWriteBinding(binding: Binding) {
 // changes what they saw.
 export function hasPatchEffectReads(binding: Binding) {
   for (const read of binding.reads) {
-    if (read.isEffect) return true;
+    // A serialized spread's set is its own delivery.
+    if (read.isEffect && !read.serializedSpread) return true;
   }
   return false;
 }

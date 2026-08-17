@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-grand-attr-inert/template.marko:4:5
+      2 | <main>
+      3 |   <if=show>
+    > 4 |     <mid value=input.value/>
+        |     ^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure renders an inert call.
+      5 |   </if>
+      6 |   <button onClick() { show = !show }>t</button>
+      7 | </main>

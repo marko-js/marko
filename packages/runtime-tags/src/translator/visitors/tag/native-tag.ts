@@ -350,6 +350,11 @@ export default {
               ensurePersistedWriteGroups(() => value.extra || {});
             }
           }
+          if (spreadReferenceNodes && isAttrsOnlySpread(tag, tagName)) {
+            addRuntimeFeatureAsset("patch-attrs");
+            ensurePersistedWriteGroups(() => node.extra || {});
+            (node.extra ??= {}).serializedSpread = true;
+          }
         }
 
         if (spreadReferenceNodes) {
@@ -757,7 +762,7 @@ export default {
 
           if (tagName === "option" && name === "value") {
             write`${
-              !confident && writesPatchAttr(tag, tagSection, name, value)
+              !confident && writesPatchAttr(tag, tagSection, name, value.extra)
                 ? callRuntime(
                     "_patch_attr_option_value",
                     getScopeIdIdentifier(tagSection),
@@ -781,7 +786,7 @@ export default {
               } else {
                 // The patch write renders the attribute itself (expression
                 // appears once); ownership rides as trailing args.
-                if (writesPatchAttr(tag, tagSection, name, value)) {
+                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
                   write`${callRuntime(
                     `_patch_attr_${name as "class" | "style"}`,
                     getScopeIdIdentifier(tagSection),
@@ -819,7 +824,7 @@ export default {
               } else {
                 // The patch write renders the attribute itself (expression
                 // appears once); ownership rides as trailing args.
-                if (writesPatchAttr(tag, tagSection, name, value)) {
+                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
                   write`${callRuntime(
                     "_patch_attr",
                     getScopeIdIdentifier(tagSection),
@@ -860,14 +865,35 @@ export default {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
           if (isTextOnly || isOpenOnly || hasChildren || staticContentAttr) {
+            const patches =
+              isAttrsOnlySpread(tag, tagName) &&
+              writesPatchAttr(tag, tagSection, "spread", tag.node.extra);
             if (skipExpression) {
               write`${callRuntime(
-                "_attrs_partial",
+                patches ? "_patch_attrs_partial" : "_attrs_partial",
                 spreadExpression,
                 skipExpression,
                 visitAccessor,
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
+                ...(patches
+                  ? getPatchWriteOwnership(
+                      getSerializeSourcesForExpr(tag.node.extra || {}),
+                    )
+                  : []),
+              )}`;
+            } else if (patches) {
+              // The patch write renders the set itself; ownership rides
+              // as trailing args (see `_patch_attr`).
+              write`${callRuntime(
+                "_patch_attrs",
+                spreadExpression,
+                visitAccessor,
+                getScopeIdIdentifier(tagSection),
+                t.stringLiteral(tagName),
+                ...getPatchWriteOwnership(
+                  getSerializeSourcesForExpr(tag.node.extra || {}),
+                ),
               )}`;
             } else {
               write`${callRuntime(
@@ -1135,7 +1161,7 @@ export default {
               if (!confident) {
                 // The dom compile shares the capture gating (errors must
                 // match html) and imports the feature the patch write applies.
-                if (writesPatchAttr(tag, tagSection, name, value)) {
+                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
                   importRuntimeFeature("patch-attr");
                 }
                 const nodeExpr = createScopeReadExpression(nodeBinding!);
@@ -1217,7 +1243,7 @@ export default {
                   ),
                 );
               } else {
-                if (writesPatchAttr(tag, tagSection, name, value)) {
+                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
                   importRuntimeFeature("patch-attr");
                 }
                 addStatement(
@@ -1253,6 +1279,13 @@ export default {
             : undefined;
           const controllable =
             !staticControllable && controllableClaimFor(staticName);
+          if (
+            isPersisted() &&
+            isBranchPathSection(tagSection) &&
+            isAttrsOnlySpread(tag, staticName)
+          ) {
+            importRuntimeFeature("patch-attrs");
+          }
           if (skipExpression) {
             addStatement(
               "render",
@@ -1373,7 +1406,7 @@ function writesPatchAttr(
   tag: t.NodePath<t.MarkoTag>,
   tagSection: Section,
   name: string,
-  value: t.Expression,
+  extra: t.NodeExtra | undefined,
 ) {
   if (
     !(isPersisted() && isBranchPathSection(tagSection)) ||
@@ -1381,7 +1414,7 @@ function writesPatchAttr(
   ) {
     return false;
   }
-  const attrSources = getSerializeSourcesForExpr(value.extra || {});
+  const attrSources = getSerializeSourcesForExpr(extra || {});
   if (!attrSources?.state) return true;
   if (attrSources.global) {
     throw tag.buildCodeFrameError(
@@ -1389,6 +1422,24 @@ function writesPatchAttr(
     );
   }
   return false;
+}
+
+// A spread whose set is plain attributes: no controllable descriptor and no
+// `content` renderer (the tag has its own body or admits none).
+export function isAttrsOnlySpread(
+  tag: t.NodePath<t.MarkoTag>,
+  tagName: string | undefined,
+) {
+  return (
+    !!tagName &&
+    !controllableClaimFor(tagName) &&
+    tagName !== "option" &&
+    !!(
+      isTextOnlyNativeTag(tag) ||
+      getTagDef(tag)?.parseOptions?.openTagOnly ||
+      tag.node.body.body.length
+    )
+  );
 }
 
 export function getRelatedControllable(

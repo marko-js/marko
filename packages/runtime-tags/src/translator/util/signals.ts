@@ -21,6 +21,7 @@ import {
   includes,
   type Opt,
   push,
+  some,
   toArray,
 } from "./optional";
 import {
@@ -1288,7 +1289,7 @@ function isBranchChainTo(section: Section, owner: Section) {
 // register themselves (over-counting is safe).
 function hasFillDeliveredRead(binding: Binding, section: Section) {
   for (const read of binding.reads) {
-    if (!read.isEffect && read.section === section) {
+    if ((!read.isEffect || read.nativeTagSpread) && read.section === section) {
       if (
         !Array.isArray(read.referencedBindings) ||
         !isBranchSectionChain(section, binding.section)
@@ -1540,11 +1541,27 @@ export function writeLocalFill(section: Section, binding: Binding) {
 // the section's leading writes cover only the param properties.
 const writtenLocalFills = new WeakSet<Binding>();
 
+// A spread's effect re-attaches what its serialized set carried: the frame's
+// attribute set is the delivery, so its reads need no other channel.
+function isSerializedSpreadEffect(signal: Signal) {
+  const refs = signal.referencedBindings;
+  return (
+    !!refs &&
+    some(refs, (binding) => {
+      for (const read of binding.reads) {
+        if (read.referencedBindings === refs && read.serializedSpread)
+          return true;
+      }
+      return false;
+    })
+  );
+}
+
 // An effect read the wire cannot keep current (unfillable params, global-
 // derived bindings) blocks constructs; direct `$global` reads re-queue.
 export function sectionHasServerEffect(section: Section) {
   for (const signal of getSignals(section).values()) {
-    if (signal.hasHTMLEffect) {
+    if (signal.hasHTMLEffect && !isSerializedSpreadEffect(signal)) {
       if (
         getSerializeSourcesForRef(signal.referencedBindings)?.global ||
         hasUnfillablePatchReads(signal.referencedBindings)
