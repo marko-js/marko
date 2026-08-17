@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=true>
+<button onClick() { show = false }>hide</button>
+<if=show>
+  <try>
+    <@placeholder>
+      <shell status="loading"/>
+    </@placeholder>
+    <await|status|=resolveAfter({ ok: true }, 3)>
+      <shell status="ready"/>
+    </await>
+  </try>
+</if>

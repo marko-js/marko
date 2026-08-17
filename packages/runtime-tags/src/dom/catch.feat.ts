@@ -14,8 +14,8 @@ import {
 import { destroyBranch } from "./scope";
 import type { SignalFn } from "./signals";
 
-// Resumed placeholders mounted live: each effects flush after the swap
-// finds one detached (parked by the reorder runtime) and destroys it.
+// Resumed placeholders mounted live, held only while their try branch is
+// alive and shows them; each effects flush drops the rest (swapped, gone).
 const livePlaceholders = new Set<BranchScope>();
 const dismissPlaceholder = (
   tryBranch: BranchScope,
@@ -24,13 +24,15 @@ const dismissPlaceholder = (
   livePlaceholders.delete(tryBranch);
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    destroyBranch(placeholderBranch);
+    // Already torn down with a destroyed try (its branch set includes this one).
+    if (placeholderBranch[AccessorProp.Gen]) destroyBranch(placeholderBranch);
   }
 };
 const dismissSwappedPlaceholders = () => {
   for (const tryBranch of livePlaceholders) {
     const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
     if (
+      !tryBranch[AccessorProp.Gen] ||
       !placeholderBranch ||
       !placeholderBranch[AccessorProp.StartNode].isConnected
     ) {
