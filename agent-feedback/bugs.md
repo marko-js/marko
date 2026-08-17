@@ -2,6 +2,12 @@
 
 Out-of-scope defects noticed while working on something else. Format and rules: [README.md](README.md).
 
+## A resumed unescaped placeholder updates only its last node
+
+`packages/runtime-tags/src/dom/dom.ts` › `_html` with `packages/runtime-tags/src/translator/visitors/placeholder.ts` (html output for `$!{}`) | 2026-08-17 | impact:med | effort:med
+
+`_html(scope, value, accessor)` treats `scope[accessor]` as the range's first node and `DynamicHTMLLastChild` (unset on resume) as its last, but the SSR marker (`_el_resume` after the content) resumes only the node preceding it — the LAST node of a multi-node value. So `<let/v="Hello <strong>World</strong>"/><main>$!{v}</main>` with a handler assigning `"<i>a</i> and <b>b</b>"` leaves `Hello ` behind on a resumed page (`INSERT … REMOVE: main > b + strong` — CSR removes both). Fix by resuming the range's first node (a leading separator marker, or serializing the last-child accessor) so `_html` replaces the whole range. Persisted `$!{}` admission (`admission.ts` `MarkoPlaceholder` `!node.escape`) is parked on this. Re-verify with the template above as an ssr fixture with a click step.
+
 ## Wrap reordered out-of-order content in a parser-context-legal container
 
 `packages/runtime-tags/src/html/writer.ts` › `Chunk.flushScript` | 2026-07-23 | impact:high | effort:high
