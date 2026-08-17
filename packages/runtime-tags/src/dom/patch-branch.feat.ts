@@ -25,13 +25,8 @@ import { removeAndDestroyBranch } from "./scope";
 // it even when no client control flow does.
 const _content = /*@__PURE__*/ withBranches(content);
 
-// Server-shipped shells, cached per session; the content's setup applies
-// stashed setup entries (seeds) and attaches mount effects on construct.
-// Setup sub-partials stash here and only the shell content's setup — run
-// solely for freshly created branches, inside `run()` where `_let` treats
-// the scope as first-render — applies them; an apply during the partial
-// application would take
-// the value-change path and clobber paired state.
+// Server-shipped shells, cached per session; setup sub-partials stash here
+// and the shell content's setup (a fresh branch's first render) applies them.
 const kSetup = Symbol();
 
 patchers[PatchKey.Setup] = (scope, _key, value) => {
@@ -50,34 +45,37 @@ export const shells: Record<string, Shell> = {};
 export const getShellContent = (shell: Shell) =>
   (shell[3] ??= _content("", shell[0], shell[1], shell[2])());
 
-// `"id effects…;walks;template"` (`,` in place of `;walks;` when walk-less):
-// the header excludes both separators, so the first one is authoritative.
+// `"id inits…!effects…;walks;template"` (`,` for `;walks;` when walk-less):
+// inits render inside the fresh scope's setup, `!` opens the mount effects.
 _patch_records((record) => {
   const first = record.search(/[;,]/);
   const second = record[first] === ";" ? record.indexOf(";", first + 1) : first;
   const idToken = record.slice(0, first);
   const sep = (idToken + " ").indexOf(" ");
-  const effects = idToken.slice(sep + 1);
+  const setupIds = idToken.slice(sep + 1);
   // A missing registration means required client code was tree-shaken:
   // constructing would silently misrender. Closure renders ride as `._`.
-  const fns =
-    effects && effects !== "!"
-      ? effects.split(" ").map((id) => {
+  const [inits, effects] = setupIds.split("!").map((ids) =>
+    ids
+      ? ids.split(" ").map((id) => {
           const fn = getRegisteredWithScope(id);
           return ((fn && ((fn as { _?: unknown })._ || fn)) ||
             failPatch()) as SetupFn;
         })
-      : undefined;
+      : [],
+  );
   shells[idToken.slice(0, sep)] = [
     record.slice(second + 1),
     record.slice(first + 1, second),
-    effects
+    setupIds
       ? (branch: Scope & { [kSetup]?: Scope | 0 }) => {
           if (branch[kSetup]) {
             patchConstruct(branch[kSetup] as Scope, branch);
             branch[kSetup] = 0;
           }
-          if (fns) for (const impl of fns) queueEffect(branch, impl);
+          for (const init of inits) init(branch);
+          if (effects)
+            for (const effect of effects) queueEffect(branch, effect);
         }
       : 0,
   ];

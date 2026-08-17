@@ -1,8 +1,7 @@
 // template.marko
 _shells({
 	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell;b%;<!><!><!>`",
-	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell;b%;<!><!><!>`",
-	"__tests__/template.marko_3*shell": ",`__tests__/template.marko_3*shell __tests__/template.marko_3_count#8/init;D ;<p> </p>`"
+	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell;b%;<!><!><!>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 3), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);
@@ -25,7 +24,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 							item,
 							_: _scope_with_id($scope2_id)
 						}, "__tests__/template.marko", "5:8", { item: "5:12" })));
-					}, (item) => item, $scope2_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell");
+					}, (item) => item, $scope2_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, 0);
 					_subscribe(_source_if($scope0_reason, 3) && $input_items__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
 					return 0;
 				}

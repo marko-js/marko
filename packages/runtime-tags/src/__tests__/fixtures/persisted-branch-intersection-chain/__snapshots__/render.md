@@ -67,7 +67,7 @@ UPDATE: main > div > p::text@2 "Store #1" => "Store! #1"
 <main>
   <div>
     <p>
-      B 
+      B Store! @1
     </p>
   </div>
   <span>
@@ -82,6 +82,7 @@ UPDATE: main > div > p::text@2 "Store #1" => "Store! #1"
 ```
 REMOVE: main > div > p
 INSERT: main > div > p
+UPDATE: main > div > p::text@2 "" => "Store! @1"
 ```
 
 # Update `{"kind":"b","title":"Plaza"}`
@@ -103,7 +104,7 @@ INSERT: main > div > p
 ## Change
 ```
 UPDATE: main > span::text "Store! root #1" => "Plaza root #1"
-UPDATE: main > div > p::text@2 "" => "Plaza @1"
+UPDATE: main > div > p::text@2 "Store! @1" => "Plaza @1"
 ```
 
 # Update

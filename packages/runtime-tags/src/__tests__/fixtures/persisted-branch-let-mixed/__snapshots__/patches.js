@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
+[`a0 !a1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
   bc: [{
     s: {
       va1: 0
@@ -15,7 +15,7 @@
 }
 
 // PATCH
-[`a0 a1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
+[`a0 !a1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
   bc: [{
     s: {
       va1: 0

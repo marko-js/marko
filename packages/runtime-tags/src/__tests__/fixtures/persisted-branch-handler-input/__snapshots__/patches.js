@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a1; ;<button>read</button>`, {
+[`a0 !a1; ;<button>read</button>`, {
   ta: "Store",
   bb: "a0",
   wg: "b"
@@ -13,7 +13,7 @@
 }
 
 // PATCH
-[`a0 a1; ;<button>read</button>`, {
+[`a0 !a1; ;<button>read</button>`, {
   ta: "Store",
   bb: "a0",
   wg: "d"

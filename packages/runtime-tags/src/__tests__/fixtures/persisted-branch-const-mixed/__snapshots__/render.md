@@ -78,5 +78,18 @@ REMOVE: main > p
 ```
 
 # Update `{"show":true,"title":"Fresh"}`
-
-## Patch rejected (navigate)
+```html
+<main>
+  <p>
+    Fresh@2
+  </p>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+INSERT: main > p
+UPDATE: main > p::text " " => "Fresh@2"
+```
