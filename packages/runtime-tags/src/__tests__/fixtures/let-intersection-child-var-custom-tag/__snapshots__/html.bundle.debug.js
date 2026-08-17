@@ -3,13 +3,14 @@ var subsByKey;
 var let_global_default = _template("__tests__/tags/let-global.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let value = $global()[input.value];
+	const $global$1 = $global();
+	let value = $global$1[input.value];
 	const $return = value;
 	_script($scope0_id, "__tests__/tags/let-global.marko_0_input_value#2");
 	writeScope($scope0_id, {
 		input_value: input.value,
 		"#TagVariableChange": _resume(function(next) {
-			$global()[input.value] = next;
+			$global$1[input.value] = next;
 			subsByKey[input.value]?.forEach((cb) => cb());
 		}, "__tests__/tags/let-global.marko_0/valueChange", $scope0_id) || void 0
 	}, "__tests__/tags/let-global.marko", 0, { input_value: ["input.value"] });

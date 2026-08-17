@@ -2,13 +2,14 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	const $global$1 = $global();
 	let show = false;
 	_html("<div>");
 	_if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_if(() => {
 		{
 			const $scope2_id = _scope_id();
-			_html(`<span class=hidden>${_escape($global().x)}</span>`);
+			_html(`<span class=hidden>${_escape($global$1.x)}</span>`);
 			writeScope($scope2_id, {});
 			return 0;
 		}
