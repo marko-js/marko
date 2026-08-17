@@ -1,6 +1,7 @@
 // template.marko
 _shells({
 	a0: ",`a0;b%;<!><!><!>`",
+	a1: ",`a1 a5;D ;<p> </p>`",
 	a2: ",`a2,<p>shown</p>`"
 });
 var template_default = _template_persisted("a", (input) => {
@@ -25,7 +26,7 @@ var template_default = _template_persisted("a", (input) => {
 					_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_title__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) })));
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, [0]);
+			}, $scope1_id, "a", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"]);
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 1;
 		}

@@ -7,7 +7,7 @@ const $for_content2__setup = ($scope) => {
 	$for_content2__input_suffix($scope);
 	$for_content2__count($scope);
 };
-const $for_content2__count = /*@__PURE__*/ _closure_get("count", $for_content2__input_suffix__OR__count__OR__cell, ($scope) => $scope._._);
+const $for_content2__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#6/init", "count", $for_content2__input_suffix__OR__count__OR__cell, ($scope) => $scope._._);
 const $for_content2__cell = /*@__PURE__*/ _const("cell", $for_content2__input_suffix__OR__count__OR__cell);
 const $for_content2__$params = ($scope, $params3) => $for_content2__cell($scope, $params3[0]);
 const $for_content__for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $for_content2__setup, $for_content2__$params);

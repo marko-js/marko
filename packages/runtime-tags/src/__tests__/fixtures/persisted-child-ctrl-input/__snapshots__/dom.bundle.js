@@ -11,7 +11,7 @@ const $setup__script$1 = _script("b0", ($scope) => _attr_input_value_script($sco
 const $setup = $setup__script$1;
 
 // template.marko
-const $if_content__text = /*@__PURE__*/ _resume("a2", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_value($scope.a, $scope._.d)));
+const $if_content__text = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_value($scope.a, $scope._.d));
 const $if_content__setup = ($scope) => {
 	$if_content__text._($scope);
 	$setup($scope.a);

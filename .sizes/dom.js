@@ -1,4 +1,4 @@
-// size: 27691 (min) 10231 (brotli)
+// size: 27866 (min) 10281 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -853,6 +853,27 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
     (closureSignal.b = "C" + valueAccessor),
     resumeId && _resume(resumeId, closureSignal),
     closureSignal
+  );
+}
+function _init_closure_get(initId, valueAccessor, fn, getOwnerScope, resumeId) {
+  return _resume(initId, _closure_get(valueAccessor, fn, getOwnerScope, resumeId));
+}
+function _init_if_closure(initId, ownerConditionalNodeAccessor, branch, fn) {
+  return _resume(initId, _if_closure(ownerConditionalNodeAccessor, branch, fn));
+}
+function _init_for_closure(initId, ownerLoopNodeAccessor, fn) {
+  return _resume(initId, _for_closure(ownerLoopNodeAccessor, fn));
+}
+function _init_for_selector(
+  initId,
+  ownerLoopNodeAccessor,
+  ownerValueAccessor,
+  keyValueAccessor,
+  fn,
+) {
+  return _resume(
+    initId,
+    _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn),
   );
 }
 function _child_setup(setup) {
