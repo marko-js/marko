@@ -1,8 +1,8 @@
 // template.marko
 _shells({
-	a0: ",`a0 a5;Db%;<p>A <!></p>`",
-	a1: ",`a1 a6;Db%;<p>B <!></p>`",
-	a2: ",`a2 a7;Db%;<p>None <!></p>`"
+	a0: ",`a0 a5 a6;Db%;<p>A <!></p>`",
+	a1: ",`a1 a7 a8;Db%;<p>B <!></p>`",
+	a2: ",`a2 a9;Db%;<p>None <!></p>`"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_kind = _source_guard($scope0_reason, 0);

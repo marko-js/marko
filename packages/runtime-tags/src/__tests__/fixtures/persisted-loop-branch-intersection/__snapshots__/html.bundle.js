@@ -1,8 +1,5 @@
 // template.marko
-_shells({
-	a0: ",`a0;b%;<!><!><!>`",
-	a1: ",`a1 a4;D ;<p> </p>`"
-});
+_shells({ a0: ",`a0;b%;<!><!><!>`" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_flag = _source_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
@@ -19,7 +16,7 @@ var template_default = _template_persisted("a", (input) => {
 				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_suffix__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) })));
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $sg__input_flag, $sg__input_flag, void 0, void 0, ["a1"]);
+		}, $scope1_id, "a", 1, $sg__input_flag, $sg__input_flag, void 0, void 0, [0]);
 		writeScope($scope1_id, {
 			c: item,
 			_: _scope_with_id($scope0_id)

@@ -8,11 +8,12 @@ import {
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPersisted } from "../util/marko-config";
 import {
   BindingType,
   mergeReferences,
   setBindingDownstream,
+  setBindingValueExprs,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -132,6 +133,10 @@ export default {
           getAccessorPrefix().TagVariableChange,
         );
       }
+    } else if (isPersisted()) {
+      // A never-assigned let re-evaluates its initializer on construct, so
+      // its sources resolve from it (never downstream: no re-derivation).
+      setBindingValueExprs(binding, tagExtra);
     } else {
       setBindingDownstream(binding, false);
     }

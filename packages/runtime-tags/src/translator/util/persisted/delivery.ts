@@ -72,7 +72,8 @@ function isPatchRefreshableBinding(binding: Binding) {
     !binding.sources.state &&
     (binding.type === BindingType.input ||
       binding.type === BindingType.param ||
-      binding.type === BindingType.derived)
+      binding.type === BindingType.derived ||
+      (binding.type === BindingType.let && !binding.assignmentSections))
   );
 }
 
@@ -139,35 +140,67 @@ export function hasPatchEffectReads(binding: Binding) {
   return false;
 }
 
-// State closures whose registered construct INITs paint state-fed holes
-// from live owner values (see `constructsWithInit`).
+// Closures whose construct INITs render a fresh scope: state closures
+// through their own signal, fill closures as arrivals at the joins they feed.
 export function getConstructInitClosures(section: Section) {
   return filter(
     section.referencedClosures as Opt<Binding>,
-    (closure) => !!closure.sources?.state,
+    (closure) => !!closure.sources?.state || fillJoinsIn(closure, section),
   );
 }
 
-// A state-fed hole (or attribute) constructs faithfully when every read is
-// available at construct time: section-local seedable state, parent state
-// reached through a direct closure the INIT renders, and owner values the
-// walk keeps current. Section-local params (loop items) are never seeded.
+// A fill closure feeding a state intersection read in `section` (which
+// then rides a `_fill_join_*` wrapper registering the closure's init).
+function fillJoinsIn(closure: Binding, section: Section) {
+  if (!isPatchFillBinding(closure)) return false;
+  for (const read of closure.reads) {
+    if (
+      read.section === section &&
+      Array.isArray(read.referencedBindings) &&
+      getSerializeSourcesForRef(read.referencedBindings)?.state
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// A construct re-evaluates a derived, and a never-assigned let's
+// initializer, from the feeds it renders.
+function isConstructDerived(binding: Binding) {
+  return (
+    binding.type === BindingType.derived ||
+    (binding.type === BindingType.let && !binding.assignmentSections)
+  );
+}
+
+// A grain of the section's own params bag (a loop item, or its property).
+function isSectionParam(binding: Binding) {
+  const { params } = binding.section;
+  for (let alias = binding.upstreamAlias; alias; alias = alias.upstreamAlias) {
+    if (alias === params) return true;
+  }
+  return binding === params || binding.type === BindingType.param;
+}
+
+// Every read arrives on the fresh scope: parent state (init), parent fills
+// (join arrival), local state (seed), and their local derivations.
 export function constructRendersReads(
   section: Section,
   refs: Opt<Binding>,
 ): boolean {
   return every(refs, (binding) =>
-    binding.sources?.state
-      ? binding.section === section
-        ? binding.type === BindingType.derived && !binding.sources.param
-          ? // A param mix compiles to a join whose param side has no construct
-            // delivery, so only pure state derivations construct with their feeds.
-            constructRendersReads(section, binding.sources.state)
-          : isPatchFillBinding(binding)
-        : // Parent state paints through a registered construct INIT: the
-          // direct scan or the dynamic closure's self-subscribing signal.
-          true
-      : !(binding.section === section && binding.type === BindingType.param),
+    binding.section !== section
+      ? !(binding.section.isBranch && isSectionParam(binding))
+      : isSectionParam(binding)
+        ? false
+        : isConstructDerived(binding)
+          ? // Its own join must fire: only state feeds arrive at a local
+            // derivation, params beside them through fills.
+            !!binding.sources?.state &&
+            constructRendersReads(section, binding.sources.state) &&
+            paramsDeliverAsFills(binding.sources.param)
+          : isPatchFillBinding(binding),
   );
 }
 

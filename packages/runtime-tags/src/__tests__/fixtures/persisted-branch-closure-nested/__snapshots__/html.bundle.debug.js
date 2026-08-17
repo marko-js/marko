@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1; b%;<button>+</button><!><!>`",
+	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell !__tests__/template.marko_1; b%;<button>+</button><!><!>`",
 	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2_count#2/init;Db%;<p>Seen <!></p>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
