@@ -1,8 +1,8 @@
 // PATCH
-{
-  ba: 1,
+[`a0 a3 a4;D ;<p> </p>`, {
+  ba: "a0",
   va0: "Store?"
-}
+}]
 
 // PATCH
 {
@@ -11,7 +11,7 @@
 }
 
 // PATCH
-{
-  ba: 1,
+[`a0 a3 a4;D ;<p> </p>`, {
+  ba: "a0",
   va0: "Fresh"
-}
+}]

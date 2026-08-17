@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a2;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>`, `a1 a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`, {
+[`a0 !a2;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>`, `a1 !a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`, {
   ta: "Store!",
   bb: [{
     s: {
@@ -14,7 +14,7 @@
 }]
 
 // PATCH
-[`a1 a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`, {
+[`a1 !a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`, {
   ta: "Store!",
   bb: 0,
   bc: [{
@@ -25,7 +25,7 @@
 }]
 
 // PATCH
-[`a0 a2;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>`, `a1 a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`, {
+[`a0 !a2;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>`, `a1 !a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`, {
   ta: "Store!",
   bb: [{
     s: {

@@ -34,7 +34,10 @@ import {
   type Section,
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
-import { isReasonDynamic } from "../../util/serialize-reasons";
+import {
+  getSerializeSourcesForRef,
+  isReasonDynamic,
+} from "../../util/serialize-reasons";
 import { getShellId, getShells } from "../../util/shell";
 import {
   addWriteScopeBuilder,
@@ -202,16 +205,21 @@ export default {
           const id = getShellId(section);
           if (active[id]) {
             {
-              // `!` marks a shell needing setup for seeds alone, so purely
-              // static shells skip the setup queue entirely. Closure render
-              // ids lead: a construct paints state-fed holes before mount
-              // effects can read them.
-              let marker = getSectionEffectRegisterIds(section);
+              // `inits…!effects…`; a lone `!` marks a shell needing setup
+              // for seeds alone.
+              let marker = "";
               forEach(getConstructInitClosures(section), (closure) => {
-                marker =
-                  getResumeRegisterId(section, closure, "init") +
-                  (marker && " " + marker);
+                marker +=
+                  (marker && " ") +
+                  getResumeRegisterId(section, closure, "init");
               });
+              // A state-fed effect is queued by the construct's own renders
+              // (an init or a seed cascades into it), so it is not replayed.
+              const effectIds = getSectionEffectRegisterIds(
+                section,
+                (refs) => !!getSerializeSourcesForRef(refs)?.state,
+              );
+              if (effectIds) marker += "!" + effectIds;
               marker ||= getPatchFillBindings(section) ? "!" : "";
               if (marker) {
                 active[id] = id + " " + marker + active[id].slice(id.length);

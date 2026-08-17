@@ -86,6 +86,7 @@ export { run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
+  _init_join,
   _resume,
   _var_resume,
   init,

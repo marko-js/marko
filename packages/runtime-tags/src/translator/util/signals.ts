@@ -1150,6 +1150,20 @@ export function writeSignals(section: Section) {
                   hopExprs = [t.arrowFunctionExpression([joinId], dispatch)];
                 }
               }
+              // A constructible body's fill closure inits as the arrival at
+              // this join, registered under the closure's init id.
+              if (
+                member.section !== signal.section &&
+                sectionConstructs(signal.section)
+              ) {
+                value = callRuntime(
+                  "_init_join",
+                  t.stringLiteral(
+                    getResumeRegisterId(signal.section, member, "init"),
+                  ),
+                  value,
+                );
+              }
               value = callRuntime(
                 helper,
                 t.stringLiteral(getPatchFillKey(member)),
@@ -1460,11 +1474,15 @@ export function sectionHasGlobalEffect(section: Section) {
 }
 
 // A state closure into a body that ships a shell; the shell record names
-// the same closures (`getConstructInitClosures`) as its leading init ids.
+// the same closures (`getConstructInitClosures`) as its init ids.
 function constructsWithInit(section: Section, closure: Binding) {
+  return !!closure.sources?.state && sectionConstructs(section);
+}
+
+// A branch body that ships a shell, so a patch may construct it.
+function sectionConstructs(section: Section) {
   return (
     isPersisted() &&
-    !!closure.sources?.state &&
     section.isBranch &&
     isBranchPathSection(section) &&
     !isStateSelected(section) &&
@@ -1491,14 +1509,16 @@ export function sectionHasServerEffect(section: Section) {
 
 // The section's mount effects as space-joined register ids, in hydration
 // replay order, for its shell to ship.
-export function getSectionEffectRegisterIds(section: Section) {
+export function getSectionEffectRegisterIds(
+  section: Section,
+  skip?: (referencedBindings: ReferencedBindings) => boolean,
+) {
   let ids = "";
   const allSignals = Array.from(getSignals(section).values());
   for (let i = allSignals.length; i--;) {
-    if (allSignals[i].hasHTMLEffect) {
-      ids +=
-        (ids && " ") +
-        getResumeRegisterId(section, allSignals[i].referencedBindings);
+    const { hasHTMLEffect, referencedBindings } = allSignals[i];
+    if (hasHTMLEffect && !skip?.(referencedBindings)) {
+      ids += (ids && " ") + getResumeRegisterId(section, referencedBindings);
     }
   }
   return ids;
