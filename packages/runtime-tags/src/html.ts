@@ -52,6 +52,7 @@ export {
   _must_render,
   _patch_attr,
   _patch_attr_class,
+  _patch_attr_option_value,
   _patch_attr_style,
   _patch_bind,
   _patch_child,
