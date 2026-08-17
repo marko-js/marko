@@ -3,7 +3,7 @@
       2 | <main>
       3 |   <if=show>
     > 4 |     <widget title=input.title format=input.format/>
-        |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure renders an untracked call.
+        |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure renders an inert call.
       5 |   </if>
       6 |   <button.outer onClick() { show = !show }>+</button>
       7 | </main>

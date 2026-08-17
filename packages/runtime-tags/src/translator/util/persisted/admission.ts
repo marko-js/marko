@@ -6,7 +6,10 @@ import { types as t } from "@marko/compiler";
 import { getTagDef, loadFileForTag } from "@marko/compiler/babel-utils";
 
 import { isEventHandler } from "../../../common/helpers";
-import { getRelatedControllable } from "../../visitors/tag/native-tag";
+import {
+  getRelatedControllable,
+  isAttrsOnlySpread,
+} from "../../visitors/tag/native-tag";
 import * as BindingType from "../constants/binding-type";
 import evaluate from "../evaluate";
 import { isConditionTag, isCoreTagName } from "../is-core-tag";
@@ -25,7 +28,7 @@ import {
 } from "../serialize-reasons";
 import {
   getChildPatchPlan,
-  hasOpaqueCall,
+  hasInertCall,
   isContentRenderTag,
 } from "./decisions";
 import {
@@ -62,16 +65,16 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         "`$global` cannot be read inside client-owned structure",
       );
     }
-    // A source-free untracked call would render once and never again:
+    // A sourceless inert call would render once and never again:
     // nothing recomputes it client-side and nothing ships it.
     if (
       !getSerializeSourcesForExpr(extra || {}) &&
       !evaluate(value).confident &&
-      hasOpaqueCall(value)
+      hasInertCall(value)
     ) {
       unsupported(
         node,
-        "an untracked call inside client-owned structure has no delivery channel",
+        "an inert call inside client-owned structure has no delivery channel",
       );
     }
     forEach(extra?.referencedBindings, (binding) => {
@@ -153,9 +156,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     if (
       !getSerializeSourcesForExpr(extra || {}) &&
       !evaluate(value).confident &&
-      hasOpaqueCall(value)
+      hasInertCall(value)
     ) {
-      return "renders an untracked call";
+      return "renders an inert call";
     }
     return null;
   };
@@ -196,6 +199,19 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         ) {
           const parent = id.parentPath;
           if (
+            parent.isMarkoSpreadAttribute() &&
+            getTagDef(parent.parentPath as t.NodePath<t.MarkoTag>)?.template
+          ) {
+            // `<child ...input/>` renders whatever the child renders.
+            const nested = childRenderedProps(
+              parent.parentPath as t.NodePath<t.MarkoTag>,
+            );
+            if (nested === true) {
+              props = true;
+            } else {
+              for (const name of nested) props.add(name);
+            }
+          } else if (
             !(
               parent.isMemberExpression({ computed: false }) &&
               t.isIdentifier(parent.node.property)
@@ -265,14 +281,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           return;
         }
         for (const attrPath of inner.get("attributes")) {
-          const innerAttr = attrPath.node;
-          if (innerAttr.type !== "MarkoAttribute") {
-            if (getTagDef(inner)?.template) {
-              reason = "renders a nested child with a spread";
-              return;
-            }
-            continue;
-          }
           reason ||= nestedValueUnsafety(
             attrPath.get("value") as t.NodePath<t.Expression>,
           );
@@ -308,9 +316,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             if (!reason) {
               const rendered = childRenderedProps(inner);
               for (const innerAttr of inner.node.attributes) {
+                // A spread may carry any prop the child renders.
                 if (
-                  innerAttr.type === "MarkoAttribute" &&
-                  rendersProp(rendered, innerAttr.name) &&
+                  (innerAttr.type === "MarkoAttribute"
+                    ? rendersProp(rendered, innerAttr.name)
+                    : rendered === true || rendered.size > 0) &&
                   exprHasServerSources(innerAttr.value)
                 ) {
                   reason = "feeds a nested child a server value it renders";
@@ -451,7 +461,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
             // A mixed input re-evaluates on every fill write, so a call in
             // it has no stable value; a pure-state sibling attr may call.
-            if (exprHasServerSources(attr.value) && hasOpaqueCall(attr.value)) {
+            if (exprHasServerSources(attr.value) && hasInertCall(attr.value)) {
               unsupported(
                 attr,
                 "a call mixing client state with server values has no stable delivery",
@@ -617,25 +627,27 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           const rendered = childRenderedProps(tag);
           for (const attr of node.attributes) {
-            if (attr.type !== "MarkoAttribute") {
-              unsupported(attr);
-            } else {
-              // A prop the child RENDERS receives a renderer: a server
-              // value there would have to cross the wire as a function.
-              if (
-                rendersProp(rendered, attr.name) &&
-                exprHasServerSources(attr.value)
-              ) {
-                unsupported(
-                  attr,
-                  "a renderer the child renders cannot feed from a server value",
-                );
-              }
+            // A prop the child RENDERS receives a renderer (a spread may
+            // carry any): a server value there cannot cross the wire.
+            if (
+              (attr.type === "MarkoAttribute"
+                ? rendersProp(rendered, attr.name)
+                : rendered === true || rendered.size > 0) &&
+              exprHasServerSources(attr.value)
+            ) {
+              unsupported(
+                attr,
+                "a renderer the child renders cannot feed from a server value",
+              );
+            }
+            if (attr.type === "MarkoAttribute") {
               assertDeliverableInClientOwned(
                 attr,
                 attr.value,
                 attr.value.extra,
               );
+            } else {
+              assertDeliverableInClientOwned(attr, attr.value, node.extra);
             }
           }
           // An inputless child has no groups to classify; anything fed
@@ -803,7 +815,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (attr.type === "MarkoAttribute" && controlled.has(attr)) continue;
         if (
           attr.type === "MarkoSpreadAttribute"
-            ? !evaluate(attr.value).confident
+            ? // A controllable or content-carrying spread cannot patch.
+              !evaluate(attr.value).confident &&
+              !isAttrsOnlySpread(tag, tagName as string)
             : !evaluate(attr.value).confident &&
               ((isEventOrChangeHandler(attr.name) &&
                 !isEventHandler(attr.name)) ||
