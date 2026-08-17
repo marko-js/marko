@@ -1,7 +1,9 @@
 // template.marko
+const $template = "<main><!><button>+</button></main>";
+const $walks = "D%b l";
 _shells({
-	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell;b%;<!><!><!>`",
-	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2_input_title#6/init __tests__/template.marko_2_count#7/init;D ;<p> </p>`"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>",
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_title#6/init __tests__/template.marko_2_count#7/init;D ;<p> </p>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);

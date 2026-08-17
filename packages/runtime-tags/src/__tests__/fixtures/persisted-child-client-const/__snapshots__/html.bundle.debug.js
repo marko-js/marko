@@ -1,15 +1,20 @@
 // tags/widget/index.marko
+const $template$1 = "<button class=c><!>:<!></button>";
+const $walks$1 = " D%c%l";
 var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=c>${_patch_text($scope0_id, "#text/1", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/1")}:<!>${_escape(n)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/widget/index.marko0", n, 1);
 	$scope0_reason && writeScope($scope0_id, { n }, "__tests__/tags/widget/index.marko", 0, { n: "1:6" });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
+const $template = "<main><!><button class=t>t</button></main>";
+const $walks = "D%b l";
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -1,5 +1,7 @@
 // tags/badge/index.marko
-_shells({ "__tests__/tags/badge/index.marko_1*shell": ",`__tests__/tags/badge/index.marko_1*shell;D ;<i> </i>`" });
+const $template$1 = "<div></div>";
+const $walks$1 = " b";
+_shells({ "__tests__/tags/badge/index.marko_1*shell": "__tests__/tags/badge/index.marko_1*shell;D ;<i> </i>" });
 var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_label = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -17,6 +19,8 @@ var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (inp
 }, 0, 0);
 
 // template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button> </button></main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& D m`)(" b");
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

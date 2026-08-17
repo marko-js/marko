@@ -1,8 +1,10 @@
 // template.marko
+const $template = "<main><div></div><span> </span><button>+</button></main>";
+const $walks = "D bD l l";
 _shells({
-	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1_input_title#6/init __tests__/template.marko_1_count#7/init;Db%;<p>A <!></p>`",
-	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2_input_title#6/init __tests__/template.marko_2_count#7/init;Db%;<p>B <!></p>`",
-	"__tests__/template.marko_3*shell": ",`__tests__/template.marko_3*shell __tests__/template.marko_3_count#7/init;Db%;<p>None <!></p>`"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_title#6/init __tests__/template.marko_1_count#7/init;Db%;<p>A <!></p>",
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_title#6/init __tests__/template.marko_2_count#7/init;Db%;<p>B <!></p>",
+	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_count#7/init;Db%;<p>None <!></p>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_kind = _source_guard($scope0_reason, 0);

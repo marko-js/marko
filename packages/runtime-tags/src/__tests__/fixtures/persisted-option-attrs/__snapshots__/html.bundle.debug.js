@@ -1,5 +1,7 @@
 // template.marko
-_shells({ "__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell; D ;<option> </option>`" });
+const $template = "<main><select></select><select id=plain><option value=a>A</option><option value=b>B</option></select><em> </em><button>+</button></main>";
+const $walks = "D bD b lD l l";
+_shells({ "__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; D ;<option> </option>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

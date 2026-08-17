@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a0: ",`a0;D ;<aside> </aside>`",
-	a1: ",`a1;D ;<li> </li>`"
+	a0: "a0;D ;<aside> </aside>",
+	a1: "a1;D ;<li> </li>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 0), $sg__input_promo = _source_guard($scope0_reason, 1);

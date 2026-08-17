@@ -14,7 +14,15 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML, isPersisted } from "./marko-config";
-import { find, forEach, includes, type Opt, push, toArray } from "./optional";
+import {
+  filter,
+  find,
+  forEach,
+  includes,
+  type Opt,
+  push,
+  toArray,
+} from "./optional";
 import {
   getLocalFillFeeds,
   getPatchFillBindings,
@@ -1159,9 +1167,11 @@ export function writeSignals(section: Section) {
                 }
               }
               // A constructible body's fill closure inits as the arrival at
-              // this join, registered under the closure's init id.
+              // this join, registered under the closure's init id (a state
+              // closure's own signal is its init).
               if (
                 member.section !== signal.section &&
+                !member.sources?.state &&
                 sectionConstructs(signal.section)
               ) {
                 value = callRuntime(
@@ -1763,16 +1773,19 @@ export function writeHTMLResumeStatements(
     const owned = getOwnershipGuard(getSerializeSourcesForRef(binding));
     return owned ? t.logicalExpression("&&", owned, write) : write;
   };
-  const fillCalls = toArray(getPatchFillBindings(section), (binding) =>
-    gatePatchWrite(
-      binding,
-      callRuntime(
-        "_patch_value",
-        scopeIdIdentifier,
-        t.stringLiteral(getPatchFillKey(binding)),
-        getDeclaredBindingExpression(binding),
+  // Root state seeds (below); a plain write would clobber the client's.
+  const fillCalls = toArray(
+    filter(getPatchFillBindings(section), (binding) => !binding.sources?.state),
+    (binding) =>
+      gatePatchWrite(
+        binding,
+        callRuntime(
+          "_patch_value",
+          scopeIdIdentifier,
+          t.stringLiteral(getPatchFillKey(binding)),
+          getDeclaredBindingExpression(binding),
+        ),
       ),
-    ),
   );
 
   // Effect-read values need no client registration: the wire writes the
@@ -1849,14 +1862,18 @@ export function writeHTMLResumeStatements(
 
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
-  // A constructible branch seeds its state onto freshly constructed scopes
-  // as SETUP fills: the fill signal's joins render all downstream content.
-  if (persisted && section.isBranch && isBranchPathSection(section)) {
+  // A constructible branch (or a non-page root a parent may construct)
+  // seeds its state onto fresh scopes as SETUP fills.
+  if (
+    persisted &&
+    (!section.parent || (section.isBranch && isBranchPathSection(section)))
+  ) {
     forEach(getPatchFillBindings(section), (binding) => {
       if (!binding.sources?.state) {
         // A server-owned local writes plainly as soon as it exists: a param
-        // property leads the body, a declared var follows its declaration.
-        if (!writtenLocalFills.has(binding)) {
+        // property leads the body, a declared var follows its declaration
+        // (root fills already write as the scope reason's complement).
+        if (section.parent && !writtenLocalFills.has(binding)) {
           getHTMLSectionStatements(section).push(
             t.expressionStatement(writeLocalFill(section, binding)),
           );
@@ -1876,12 +1893,14 @@ export function writeHTMLResumeStatements(
       );
       // A controllable let's change handler wires through `_patch_bind`,
       // emitted after the value so a seed cannot clobber an installed
-      // handler.
+      // handler (only a let reserving the change slot has one).
       const changeAccessor = getPrefixedScopeAccessor(
         binding,
         getAccessorPrefix().TagVariableChange,
       );
-      const change = getSerializedAccessors(section).get(changeAccessor);
+      const change =
+        binding.reserveSize &&
+        getSerializedAccessors(section).get(changeAccessor);
       if (change) {
         // The runtime decides how the handler wires from the rendered
         // value alone (bind by owner-hop distance, or plain write), so any

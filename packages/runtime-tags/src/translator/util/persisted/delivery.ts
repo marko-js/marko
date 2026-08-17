@@ -89,18 +89,17 @@ function isPatchRefreshableBinding(binding: Binding) {
 // state. The server writes every potential fill; the client registration
 // rides the intersection itself, so tree-shaking decides which apply.
 export function isPatchFillBinding(binding: Binding) {
-  // Branch-local state seeds freshly constructed scopes through its fill
-  // signal — but only ASSIGNED state: an unwritten let's signal graph is
-  // shaken from non-persisted bundles, and a fill registration (a side
-  // effect) must never retain userland code hydration would drop.
+  // State of a scope a construct may create (a branch body, a non-page
+  // root) seeds through its fill signal — assigned state only (retention).
   if (
     isPersisted() &&
-    binding.section.isBranch &&
-    isBranchPathSection(binding.section) &&
+    ((!binding.section.parent && !getProgram().node.extra.page) ||
+      (binding.section.isBranch && isBranchPathSection(binding.section))) &&
     // State-selected branches never construct from frames, so their
     // state needs no seed fill.
     !isStateSelected(binding.section) &&
-    getCanonicalBinding(binding) === binding
+    getCanonicalBinding(binding) === binding &&
+    (binding.sources?.state || binding.section.parent)
   ) {
     if (binding.sources?.state) {
       return binding.type === BindingType.let && !!binding.assignmentSections;
@@ -177,7 +176,7 @@ export function getConstructInitClosures(section: Section) {
 // A fill closure feeding a state intersection read in `section` (which
 // then rides a `_fill_join_*` wrapper registering the closure's init).
 function fillJoinsIn(closure: Binding, section: Section) {
-  if (!isPatchFillBinding(closure)) return false;
+  if (closure.sources?.state || !isPatchFillBinding(closure)) return false;
   for (const read of closure.reads) {
     if (
       read.section === section &&
@@ -238,7 +237,12 @@ export function hasUndeliverableFillReads(
   // deliver through their self-registering closure signals.
   const stateSelected = inStateSelectedStructure(section);
   return some(refs, (binding) => {
-    if (isPatchFillBinding(binding) && binding.section !== section) {
+    // Seeded state is client-owned after its seed: no frame delivers it.
+    if (
+      !binding.sources?.state &&
+      isPatchFillBinding(binding) &&
+      binding.section !== section
+    ) {
       let cur: Section | undefined = section;
       while (cur && cur !== binding.section) {
         if (!cur.isBranch && !stateSelected) return true;
