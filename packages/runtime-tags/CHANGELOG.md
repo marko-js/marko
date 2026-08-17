@@ -1,5 +1,23 @@
 # @marko/runtime-tags
 
+## 6.3.37
+
+### Patch Changes
+
+- [#3963](https://github.com/marko-js/marko/pull/3963) [`ccbbb79`](https://github.com/marko-js/marko/commit/ccbbb7986e376b12d047b54f0c661189eb6828f0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Coalesce same-turn async render completions into one microtask.
+
+- [#3960](https://github.com/marko-js/marko/pull/3960) [`78933cf`](https://github.com/marko-js/marko/commit/78933cff36c00b15a14b40992540d5dd72d69d86) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid scheduling empty template setup functions in the browser runtime.
+
+- [#3969](https://github.com/marko-js/marko/pull/3969) [`3bc0ffc`](https://github.com/marko-js/marko/commit/3bc0ffc28d58b634b0e67ab07491faf5b82907f1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Tree-shake scope teardown's abort and subscription sweeps out of pages that use neither `$signal` nor closure subscriptions.
+
+- [#3971](https://github.com/marko-js/marko/pull/3971) [`7181dcf`](https://github.com/marko-js/marko/commit/7181dcf71917cd8758a1695baffcb84651b30411) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Tree-shake the resume visit retention out of pages without lazy tags.
+
+- [#3964](https://github.com/marko-js/marko/pull/3964) [`c95c498`](https://github.com/marko-js/marko/commit/c95c49899557c539f523911ba94d56a52ea962f6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce client runtime retained by controlled form inputs.
+
+- [#3962](https://github.com/marko-js/marko/pull/3962) [`e3de653`](https://github.com/marko-js/marko/commit/e3de653cfbbbd36639ce3a3805b7b7f0c995c09b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid emitting closest-branch resume metadata for scopes that are not serialized.
+
+- [#3966](https://github.com/marko-js/marko/pull/3966) [`3fc3c46`](https://github.com/marko-js/marko/commit/3fc3c46e1d9bbd16055697f34fac8860ee850b43) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce compile time for templates with many intersecting bindings.
+
 ## 6.3.36
 
 ### Patch Changes
