@@ -817,11 +817,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                   )) ||
                 // `content=` mounts structural content the patch wire has no
                 // entry for, so a dynamic one cannot apply faithfully.
-                attr.name === "content" ||
-                // Option state couples to the parent select's selection;
-                // a lone attribute write cannot re-sync it.
-                (tagName === "option" &&
-                  (attr.name === "value" || attr.name === "selected")))
+                attr.name === "content")
         ) {
           unsupported(attr);
         }

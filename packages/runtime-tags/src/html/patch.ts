@@ -11,7 +11,7 @@ import type {
   TemplateInput,
 } from "../common/types";
 import { AccessorPrefix, PatchKey } from "../common/types";
-import { _attr, stringAttr } from "./attrs";
+import { _attr, _attr_option_value, stringAttr } from "./attrs";
 import { _escape, _to_text } from "./content";
 import { getRegistered, K_SCOPE_ID, Serializer } from "./serializer";
 import { shells } from "./shells";
@@ -594,6 +594,28 @@ export function _patch_text(
   }
 
   return _escape(value);
+}
+
+// An option's `value` renders through the select-aware writer (it may add
+// `selected`); the patch entry is the plain attribute the client re-syncs.
+export function _patch_attr_option_value(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const state = getState();
+  if (state.writesPatches) {
+    if (serverOwned(owned, group)) {
+      writePatch(scopeId, {
+        [PatchKey.Attr + accessor + " value"]: normalizeAttrValue(value) ?? 0,
+      });
+    }
+  } else {
+    getChunk()!.needsWalk = true;
+  }
+  return _attr_option_value(value);
 }
 
 function patchStringAttr(
