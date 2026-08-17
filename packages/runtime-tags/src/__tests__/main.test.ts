@@ -445,6 +445,7 @@ function testFixtures(interop?: true) {
             await browser.runAsyncScripts(() => tracker.logRender(input));
             const { applyPatch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
+            let rejected = false;
 
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
@@ -477,12 +478,18 @@ function testFixtures(interop?: true) {
                           "A persisted patch unexpectedly rejected (set `expect_rejection` if intended).",
                         );
                       }
+                      rejected = true;
                       tracker.logStatus("## Patch rejected (navigate)");
                     }
                     return applied;
                   }
                 : undefined,
             });
+            if (config.expect_rejection && !rejected) {
+              throw new Error(
+                "No persisted patch rejected (drop `expect_rejection` if the case now applies).",
+              );
+            }
 
             while (hasFlush) {
               await resolveAfter(0, 1);

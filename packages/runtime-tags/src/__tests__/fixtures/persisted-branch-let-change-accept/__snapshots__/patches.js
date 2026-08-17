@@ -5,7 +5,7 @@
 }
 
 // PATCH
-[`a1 a2;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`a1 !a2;Db%l ;<span>Seen <!></span><button>+</button>`, {
   ta: "Store!",
   bc: [{
     s: {

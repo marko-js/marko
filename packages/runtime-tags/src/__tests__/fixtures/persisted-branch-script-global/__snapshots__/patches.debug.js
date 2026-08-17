@@ -8,7 +8,7 @@
 }
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1,<p>promo</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1,<p>promo</p>`, {
   "$global:": {
     brand: "Fresh"
   },
@@ -19,7 +19,7 @@
 }]
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1,<p>promo</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1,<p>promo</p>`, {
   "$global:": {
     brand: "Patch"
   },

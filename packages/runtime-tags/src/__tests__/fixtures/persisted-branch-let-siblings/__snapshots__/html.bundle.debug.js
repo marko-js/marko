@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell __tests__/template.marko_1;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>`",
-	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell __tests__/template.marko_2;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`"
+	"__tests__/template.marko_1*shell": ",`__tests__/template.marko_1*shell !__tests__/template.marko_1;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>`",
+	"__tests__/template.marko_2*shell": ",`__tests__/template.marko_2*shell !__tests__/template.marko_2;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>`"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a__OR__input_b = _source_guard($scope0_reason, 0);

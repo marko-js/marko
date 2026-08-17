@@ -1649,13 +1649,22 @@ export function setBindingDownstream(
   expr: boolean | Opt<t.NodeExtra>,
   exprs?: KnownExprs,
 ) {
-  getBindingValueExprs().set(binding, expr || false);
+  setBindingValueExprs(binding, expr);
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
       expr.downstream = bindingUtil.add(expr.downstream, binding);
       if (exprs) expr.downstreamExprs = exprs;
     });
   }
+}
+
+// Value expressions a binding derives its sources from when nothing
+// assigns it, without wiring it downstream of them.
+export function setBindingValueExprs(
+  binding: Binding,
+  expr: boolean | Opt<t.NodeExtra>,
+) {
+  getBindingValueExprs().set(binding, expr || false);
 }
 
 const [getResolvedSources] = createProgramState(() => new Set<Binding>());

@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+[`a0 !a1,<p>promo</p>`, {
   $: {
     brand: "Marko"
   },
@@ -11,7 +11,7 @@
 }]
 
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+[`a0 !a1,<p>promo</p>`, {
   $: {
     brand: "Marko"
   },
@@ -23,7 +23,7 @@
 }]
 
 // PATCH
-[`a0 a1,<p>promo</p>`, {
+[`a0 !a1,<p>promo</p>`, {
   $: {
     brand: "Fresh"
   },
