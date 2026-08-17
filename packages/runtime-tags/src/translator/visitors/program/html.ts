@@ -10,7 +10,6 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import normalizeStringExpression from "../../util/normalize-string-expression";
 import { forEach, some } from "../../util/optional";
 import {
   getConstructInitClosures,
@@ -52,7 +51,7 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
-import { resolveStructure } from "../../util/structure";
+import { getSectionMeta } from "../../util/structure";
 import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -205,23 +204,22 @@ export default {
 
       if (persisted) {
         // A parent's shell composes this template's inert markup and walks
-        // (as its dom module does), exported under the same names.
-        const { writes, walks } = resolveStructure(section);
+        // (its dom template parts), exported under the dom module's names.
+        const { writes, walks } = getSectionMeta(section);
         const domExports = program.node.extra.domExports!;
-        const declarators: t.VariableDeclarator[] = [];
-        for (const [name, parts] of [
-          [domExports.template, writes],
-          [domExports.walks, walks],
-        ] as const) {
-          declarators.push(
-            t.variableDeclarator(
-              t.identifier(name),
-              normalizeStringExpression(parts, true) || t.stringLiteral(""),
-            ),
-          );
-        }
         program.node.body.push(
-          t.exportNamedDeclaration(t.variableDeclaration("const", declarators)),
+          t.exportNamedDeclaration(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                t.identifier(domExports.template),
+                writes || t.stringLiteral(""),
+              ),
+              t.variableDeclarator(
+                t.identifier(domExports.walks),
+                walks || t.stringLiteral(""),
+              ),
+            ]),
+          ),
         );
       }
 
