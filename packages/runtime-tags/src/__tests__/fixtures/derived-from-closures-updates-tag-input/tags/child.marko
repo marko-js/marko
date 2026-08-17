@@ -1,0 +1,8 @@
+export interface Input {
+  label: string;
+  count: number;
+  hrefFor: (key: string) => string;
+  onToggle: () => void;
+}
+<button onClick() { input.onToggle() }>${input.label}</button>
+<a href=input.hrefFor("x") class=(input.count % 2 ? "odd" : "even")>x</a>

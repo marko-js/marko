@@ -1,0 +1,23 @@
+export interface Input {
+  count: number;
+  onToggle: () => void;
+}
+
+// `label` is derived only from closures of the outer scope (`shut`,
+// `prefix`); the click flips `shut` and, through the parent, `count` in
+// the same event.
+<const/prefix="a">
+<let/shut=false>
+<const/hrefFor=(key: string) => `#${key}`>
+<if=true>
+  <const/label=(shut ? `${prefix}:shut` : `${prefix}:open`)>
+  <child
+    label=label
+    count=input.count
+    hrefFor=hrefFor
+    onToggle() {
+      shut = !shut;
+      input.onToggle();
+    }
+  />
+</if>
