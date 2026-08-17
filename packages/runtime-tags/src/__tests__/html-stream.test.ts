@@ -85,7 +85,12 @@ describe("runtime-tags/html async iterator", () => {
       queueTick(() => {
         ran = true;
       });
-      await new Promise((resolve) => setTimeout(resolve, 30));
+      // The rethrow rides a second tick after the flush; under a loaded CI
+      // box a fixed sleep raced it, so wait for both outcomes (bounded).
+      const deadline = Date.now() + 5000;
+      while (!(ran && errors.length) && Date.now() < deadline) {
+        await new Promise((resolve) => setImmediate(resolve));
+      }
       assert.equal(ran, true);
       assert.deepEqual(errors, ["boom"]);
     } finally {
