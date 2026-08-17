@@ -1,20 +1,12 @@
 {
   "dom": {
     "template.marko.page.mjs": {
-<<<<<<< HEAD
-      "min": 5836,
-      "brotli": 2650
-||||||| parent of 98e93d4d92 (feat(runtime-tags): dispatch fed renderers instead of poisoning)
       "min": 5874,
-      "brotli": 2662
-=======
-      "min": 6002,
-      "brotli": 2710
->>>>>>> 98e93d4d92 (feat(runtime-tags): dispatch fed renderers instead of poisoning)
+      "brotli": 2669
     }
   },
   "html": {
     "min": 421,
-    "brotli": 295
+    "brotli": 296
   }
 }
