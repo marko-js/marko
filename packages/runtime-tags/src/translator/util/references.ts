@@ -1396,15 +1396,17 @@ export function finalizeReferences() {
         }
       }
 
+      // Renders run in id order, so a closure-only intersection must come
+      // before the owned derived binding it may feed.
       intersections.sort((a, b) => {
         const aAnchor = sectionAnchors.get(a);
         const bAnchor = sectionAnchors.get(b);
         return aAnchor
           ? bAnchor
             ? bindingUtil.compare(aAnchor, bAnchor)
-            : -1
+            : 1
           : bAnchor
-            ? 1
+            ? -1
             : 0;
       });
     }
@@ -1413,6 +1415,20 @@ export function finalizeReferences() {
     let nextId = 0;
     let intersection: Intersection;
     forEach(ownedBindings, (binding) => {
+      // Dom ids are the walker's dense indexes; unanchored intersections
+      // slot in right after them, ahead of every other owned binding.
+      if (binding.type !== BindingType.dom) {
+        while (
+          intersectionIndex < intersections.length &&
+          !anchors!.get((intersection = intersections[intersectionIndex]))
+        ) {
+          intersectionIndex++;
+          intersectionMeta.set(intersection, {
+            id: nextId++,
+            scopeOffset: getMaxOwnSourceOffset(intersection, section),
+          });
+        }
+      }
       binding.id = nextId++;
       // Reserved ids follow the binding's own; dom bindings never reserve
       // since their ids are the walker's dense indexes.
