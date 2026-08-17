@@ -11,22 +11,33 @@ import {
   type PendingRender,
   placeholderShown,
 } from "./queue";
-import { installPlaceholderDismiss } from "./resume";
 import { destroyBranch } from "./scope";
 import type { SignalFn } from "./signals";
 
-// A resumed placeholder's branch dies with the swap (`render.q`), or is
-// dropped if it was already swapped out before its effects ran.
+// Resumed placeholders mounted live: each effects flush after the swap
+// finds one detached (parked by the reorder runtime) and destroys it.
+const livePlaceholders = new Set<BranchScope>();
 const dismissPlaceholder = (
-  tryBranch?: BranchScope,
-  placeholderBranch = tryBranch?.[AccessorProp.PlaceholderBranch],
+  tryBranch: BranchScope,
+  placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch],
 ) => {
+  livePlaceholders.delete(tryBranch);
   if (placeholderBranch) {
-    tryBranch![AccessorProp.PlaceholderBranch] = 0;
+    tryBranch[AccessorProp.PlaceholderBranch] = 0;
     destroyBranch(placeholderBranch);
   }
 };
-installPlaceholderDismiss(dismissPlaceholder);
+const dismissSwappedPlaceholders = () => {
+  for (const tryBranch of livePlaceholders) {
+    const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
+    if (
+      !placeholderBranch ||
+      !placeholderBranch[AccessorProp.StartNode].isConnected
+    ) {
+      dismissPlaceholder(tryBranch, placeholderBranch);
+    }
+  }
+};
 
 const handlePendingTry = (
   fn: SignalFn,
@@ -40,7 +51,10 @@ const handlePendingTry = (
     parent = branch[AccessorProp.ParentBranch];
     if (parent?.[AccessorProp.PlaceholderBranch] === branch) {
       // A resumed placeholder is live until its body swaps it out.
-      if (branch[AccessorProp.StartNode].isConnected) return;
+      if (branch[AccessorProp.StartNode].isConnected) {
+        livePlaceholders.add(parent);
+        return;
+      }
       return (dismissPlaceholder(parent), 1);
     }
     if (branch[AccessorProp.AwaitCounter]?.i) {
@@ -57,6 +71,7 @@ installCatch(
   // `<lifecycle>` body escapes the flush instead of reaching `@catch`.
   (runEffects) =>
     (effects, checkPending = placeholderShown.has(effects)) => {
+      dismissSwappedPlaceholders();
       if (checkPending || caughtError.has(effects)) {
         let i = 0;
         let fn: SignalFn;

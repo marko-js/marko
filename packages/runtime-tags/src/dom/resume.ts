@@ -51,8 +51,6 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
-  // Placeholder swapped out by the reorder runtime (reorder id = try branch id)
-  q?(id: string): void;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
@@ -432,11 +430,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           runResumeEffects(render);
         };
 
-        // The reorder runtime swapped a placeholder for its body: its branch
-        // goes with it (before resume, the effects runner drops it instead).
-        render.q = (id) =>
-          dismissResumedPlaceholder?.(scopeLookup[id] as BranchScope);
-
         return render;
       }) as Renders),
     });
@@ -455,15 +448,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 }
 
 export let isResuming: undefined | 0 | 1;
-
-// Installed by the try/await feature module, so other pages ship neither
-// the hook body nor the scope teardown it pulls in.
-let dismissResumedPlaceholder: undefined | ((tryBranch?: BranchScope) => void);
-export function installPlaceholderDismiss(
-  fn: typeof dismissResumedPlaceholder,
-) {
-  dismissResumedPlaceholder = fn;
-}
 
 function runResumeEffects(render: RenderData) {
   try {
