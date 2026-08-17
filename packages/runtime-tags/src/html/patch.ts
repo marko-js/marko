@@ -11,7 +11,13 @@ import type {
   TemplateInput,
 } from "../common/types";
 import { AccessorPrefix, PatchKey } from "../common/types";
-import { _attr, _attr_option_value, stringAttr } from "./attrs";
+import {
+  _attr,
+  _attr_option_value,
+  _attrs,
+  _attrs_partial,
+  stringAttr,
+} from "./attrs";
 import { _escape, _to_text } from "./content";
 import { getRegistered, K_SCOPE_ID, Serializer } from "./serializer";
 import { shells } from "./shells";
@@ -583,6 +589,50 @@ export function _patch_text(
   }
 
   return _escape(value);
+}
+
+// A spread's attribute set: the entry carries the merged object and the
+// client's `_attrs` re-applies it (removing what the new set lacks).
+export function _patch_attrs(
+  data: Record<string, unknown>,
+  accessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const state = getState();
+  if (state.writesPatches) {
+    if (serverOwned(owned, group)) {
+      writeEmbeddedBinds(state as PatchState, data);
+      writePatch(scopeId, { [PatchKey.Attrs + accessor]: data ?? 0 });
+    }
+  } else {
+    getChunk()!.needsWalk = true;
+  }
+  return _attrs(data, accessor, scopeId, tagName);
+}
+// The partial form: static attrs after the spread render separately, so
+// the entry names them (`skip`) for the client to leave alone.
+export function _patch_attrs_partial(
+  data: Record<string, unknown>,
+  skip: Record<string, 1>,
+  accessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const state = getState();
+  if (state.writesPatches) {
+    if (serverOwned(owned, group)) {
+      writeEmbeddedBinds(state as PatchState, data);
+      writePatch(scopeId, { [PatchKey.Attrs + accessor]: [data ?? 0, skip] });
+    }
+  } else {
+    getChunk()!.needsWalk = true;
+  }
+  return _attrs_partial(data, skip, accessor, scopeId, tagName);
 }
 
 // An option's `value` renders through the select-aware writer (it may add

@@ -1,6 +1,8 @@
 // Patch wire entry kinds — a namespace of their own: `patchers` dispatch is
 // patch-only, so these never meet live scope accessor prefixes.
 export const Attr = "a";
+// A spread's whole attribute set: the client re-applies it as a render.
+export const Attrs = "j";
 export const Bind = "d";
 // A bound registration resolved against its paired live scope, stored
 // in the frame's bind table for `_._.b(n)` references to resolve.

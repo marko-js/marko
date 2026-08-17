@@ -15,6 +15,7 @@ import {
   renderCatch,
 } from "./control-flow";
 import { getShellContent, kShell, shells } from "./patch-branch.feat";
+import "./patch-child.feat";
 import {
   pendingEffects,
   placeholderShown,
