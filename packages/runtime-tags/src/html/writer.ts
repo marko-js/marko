@@ -1321,16 +1321,14 @@ export class Chunk {
           );
           // The body's flush ends the placeholder's life on the client.
           body.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
+          // Rendered after this flush's serializer pass; its effects go out
+          // now, so its scopes must too or they resume empty.
+          flushSerializer(this.boundary, serializeState);
         } else {
           this.append(placeholderChunk);
         }
         serializeState.flushScopes ||= flushScopes;
         this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
-        // The placeholder rendered after this flush's serializer pass; its
-        // effects go out now, so its scopes must too or they resume empty.
-        if (!this.boundary.signal.aborted) {
-          flushSerializer(this.boundary, this.serializeState);
-        }
         state.reorder(body);
       } else {
         body.next = this.next;
