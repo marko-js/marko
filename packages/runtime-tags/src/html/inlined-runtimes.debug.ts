@@ -82,7 +82,7 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
               );
               replace(id, node);
               // Let the main runtime destroy the placeholder's branch.
-              runtime.q && runtime.q(id);
+              runtime.q?.(id);
             },
           });
       // repurpose "op" for callbacks ...carefully

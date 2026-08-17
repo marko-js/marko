@@ -1291,9 +1291,7 @@ export class Chunk {
           this.boundary.abort(
             new Error("An @placeholder cannot contain async content."),
           );
-        }
-        if (
-          after === this &&
+        } else if (
           this.effects === effectsBefore &&
           Object.keys(this.serializeState.writeScopes).length === scopesBefore
         ) {
@@ -1325,7 +1323,9 @@ export class Chunk {
         after.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
         // The placeholder rendered after this flush's serializer pass; its
         // effects go out now, so its scopes must too or they resume empty.
-        flushSerializer(this.boundary, this.serializeState);
+        if (!this.boundary.signal.aborted) {
+          flushSerializer(this.boundary, this.serializeState);
+        }
         state.reorder(body);
       } else {
         body.next = this.next;

@@ -15,6 +15,19 @@ import { installPlaceholderDismiss } from "./resume";
 import { destroyBranch } from "./scope";
 import type { SignalFn } from "./signals";
 
+// A resumed placeholder's branch dies with the swap (`render.q`), or is
+// dropped if it was already swapped out before its effects ran.
+const dismissPlaceholder = (
+  tryBranch?: BranchScope,
+  placeholderBranch = tryBranch?.[AccessorProp.PlaceholderBranch],
+) => {
+  if (placeholderBranch) {
+    tryBranch![AccessorProp.PlaceholderBranch] = 0;
+    destroyBranch(placeholderBranch);
+  }
+};
+installPlaceholderDismiss(dismissPlaceholder);
+
 const handlePendingTry = (
   fn: SignalFn,
   scope: Scope,
@@ -26,14 +39,9 @@ const handlePendingTry = (
   while (branch) {
     parent = branch[AccessorProp.ParentBranch];
     if (parent?.[AccessorProp.PlaceholderBranch] === branch) {
-      // A resumed placeholder is live until its body swaps it out — unless
-      // that already happened (parked, detached) before its effects ran.
-      if (!branch[AccessorProp.StartNode].isConnected) {
-        parent[AccessorProp.PlaceholderBranch] = 0;
-        destroyBranch(branch);
-        return 1;
-      }
-      return;
+      // A resumed placeholder is live until its body swaps it out.
+      if (branch[AccessorProp.StartNode].isConnected) return;
+      return (dismissPlaceholder(parent), 1);
     }
     if (branch[AccessorProp.AwaitCounter]?.i) {
       return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
@@ -41,15 +49,6 @@ const handlePendingTry = (
     branch = parent;
   }
 };
-
-// A resumed placeholder's branch dies with the swap (see `render.q`).
-installPlaceholderDismiss((tryBranch) => {
-  const placeholderBranch = tryBranch?.[AccessorProp.PlaceholderBranch];
-  if (placeholderBranch) {
-    tryBranch![AccessorProp.PlaceholderBranch] = 0;
-    destroyBranch(placeholderBranch);
-  }
-});
 
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program containing `<try>`, `<await>`, or lazy loading.
