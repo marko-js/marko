@@ -1,5 +1,5 @@
 // template.marko
-const $for_content2__item = /*@__PURE__*/ _resume("a1", /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.a, $scope._.c)));
+const $for_content2__item = /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.a, $scope._.c));
 const $for_content2__setup = $for_content2__item;
 const $for_content2__s = ($scope, s) => _text($scope.b, s);
 const $for_content2__$params = ($scope, $params3) => $for_content2__s($scope, $params3[0]);

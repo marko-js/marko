@@ -14,7 +14,7 @@ import { constructRendersReads } from "../util/persisted/delivery";
 import { onFinalizePersisted } from "../util/persisted/lifecycle";
 import {
   ensurePersistedWriteGroups,
-  inClientReselectableStructure,
+  inStateSelectedStructure,
   isBranchPathSection,
 } from "../util/persisted/structure";
 import {
@@ -223,7 +223,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       isPersisted() &&
       node.escape &&
       isBranchPathSection(section) &&
-      !inClientReselectableStructure(section) &&
+      !inStateSelectedStructure(section) &&
       !!nodeBinding &&
       !holeSources?.state;
     const isPatchText = isHTML && isPatch;

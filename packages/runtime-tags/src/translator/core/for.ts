@@ -24,7 +24,7 @@ import {
 import { isPersisted } from "../util/marko-config";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  classifiesClientReselectable,
+  isStateSelected,
   isBranchPathSection,
   recordStructuralOrGlobalParams,
 } from "../util/persisted/structure";
@@ -214,25 +214,13 @@ export default {
     );
 
     if (isPersisted()) {
-      // Structure classifies once the merged input sources resolve; a
-      // non-branch-path section (content) can still classify reselectable.
       onClassifyStructure(tagSection, () => {
-        const sources = getSerializeSourcesForExpr(tagExtra);
-        if (
-          classifiesClientReselectable(
-            sources,
-            tagSection,
-            tagExtra.referencedBindings,
-          )
-        ) {
-          // A client-evaluable loop is client-reselectable (state
-          // re-lists directly; param feeds fill their slots).
-          bodySection.isClientReselectable = true;
-        } else if (isBranchPathSection(tagSection)) {
+        // Patches select a loop that is not state-selected.
+        if (!isStateSelected(bodySection) && isBranchPathSection(tagSection)) {
           addRuntimeFeatureAsset("patch-loop");
           // The loop's inputs drive structure: the params recorded here
           // gate call-site feeds at translate.
-          recordStructuralOrGlobalParams(sources);
+          recordStructuralOrGlobalParams(getSerializeSourcesForExpr(tagExtra));
         }
       });
       // A patch can target the loop's CONTENT even when the list itself is
@@ -241,7 +229,7 @@ export default {
       onFinalizeReferences(() => {
         addSerializeReason(
           tagSection,
-          !bodySection.isClientReselectable &&
+          !isStateSelected(bodySection) &&
             (!!(bodySection.isHoistThrough || bodySection.hoisted) ||
               getSerializeSourcesForRef(getDirectClosures(bodySection))),
           nodeBinding,
@@ -287,7 +275,7 @@ export default {
         const bodyStatements = node.body.body as t.Statement[];
         // A client-owned loop compiles like a stateful loop on a plain
         // page: no marker retention, shells, or loop entry.
-        const clientOwned = !!bodySection.isClientReselectable;
+        const clientOwned = isStateSelected(bodySection);
         // A patchable loop keeps its markers: item pairing and insertion
         // anchor at branch marks, which elision would remove.
         const persistedPatch =
@@ -422,7 +410,7 @@ export default {
         if (
           isPersisted() &&
           isBranchPathSection(getSection(tag)) &&
-          !bodySection.isClientReselectable
+          !isStateSelected(bodySection)
         ) {
           // An interactive page receives assets transitively through its
           // dom program, so the feature import rides both outputs.
@@ -444,22 +432,32 @@ export default {
         setClosureSignalBuilder(
           tag,
           { kind: "for", ref: nodeRef },
-          (closure, render) => {
+          (closure, render, initId) => {
             const selectorKeyBinding = getForSelectorKey(bodySection, closure);
+            const init = initId && t.stringLiteral(initId);
             if (selectorKeyBinding) {
-              return callRuntime(
-                "_for_selector",
+              const args = [
                 getScopeAccessorLiteral(nodeRef, true),
                 getScopeAccessorLiteral(closure, true),
                 getScopeAccessorLiteral(selectorKeyBinding, true),
                 render,
-              );
+              ];
+              return init
+                ? callRuntime("_init_for_selector", init, ...args)
+                : callRuntime("_for_selector", ...args);
             }
-            return callRuntime(
-              "_for_closure",
-              getScopeAccessorLiteral(nodeRef, true),
-              render,
-            );
+            return init
+              ? callRuntime(
+                  "_init_for_closure",
+                  init,
+                  getScopeAccessorLiteral(nodeRef, true),
+                  render,
+                )
+              : callRuntime(
+                  "_for_closure",
+                  getScopeAccessorLiteral(nodeRef, true),
+                  render,
+                );
           },
         );
 

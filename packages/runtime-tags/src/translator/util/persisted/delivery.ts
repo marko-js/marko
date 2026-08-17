@@ -7,12 +7,13 @@ import * as BindingType from "../constants/binding-type";
 import { isPersisted } from "../marko-config";
 import { every, filter, forEach, type Opt, some } from "../optional";
 import { type Binding, getCanonicalBinding, type Sources } from "../references";
-import { isDirectClosure, type Section } from "../sections";
+import { type Section } from "../sections";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
 import {
-  inClientReselectableStructure,
+  inStateSelectedStructure,
   isBranchPathSection,
+  isStateSelected,
 } from "./structure";
 
 // The stable wire/registry key for a fill: template id plus a program-wide
@@ -88,9 +89,9 @@ export function isPatchFillBinding(binding: Binding) {
     binding.type === BindingType.let &&
     binding.section.isBranch &&
     isBranchPathSection(binding.section) &&
-    // Client-reselectable branches never construct from frames, so their
+    // State-selected branches never construct from frames, so their
     // state needs no seed fill.
-    !binding.section.isClientReselectable &&
+    !isStateSelected(binding.section) &&
     getCanonicalBinding(binding) === binding
   ) {
     return !!binding.assignmentSections;
@@ -107,11 +108,11 @@ export function isPatchFillBinding(binding: Binding) {
     if (getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
     }
-    // A rendered read inside reselectable structure promotes to an owner
+    // A rendered read inside state-selected structure promotes to an owner
     // fill (no patch-write channel); effect reads use the owner slot write.
     let readSection: Section | undefined = read.section;
     while (readSection && readSection !== binding.section) {
-      if (readSection.isClientReselectable) return true;
+      if (isStateSelected(readSection)) return true;
       readSection = readSection.parent;
     }
   }
@@ -138,13 +139,12 @@ export function hasPatchEffectReads(binding: Binding) {
   return false;
 }
 
-// Direct (scan-based) closures over client state: their per-branch render
-// fns compose the section's registered construct INIT, so a freshly
-// constructed scope renders state-fed holes from the owner's live values.
+// State closures whose registered construct INITs paint state-fed holes
+// from live owner values (see `constructsWithInit`).
 export function getConstructInitClosures(section: Section) {
   return filter(
     section.referencedClosures as Opt<Binding>,
-    (closure) => !!closure.sources?.state && isDirectClosure(section, closure),
+    (closure) => !!closure.sources?.state,
   );
 }
 
@@ -164,7 +164,9 @@ export function constructRendersReads(
             // delivery, so only pure state derivations construct with their feeds.
             constructRendersReads(section, binding.sources.state)
           : isPatchFillBinding(binding)
-        : isDirectClosure(section, binding)
+        : // Parent state paints through a registered construct INIT: the
+          // direct scan or the dynamic closure's self-subscribing signal.
+          true
       : !(binding.section === section && binding.type === BindingType.param),
   );
 }
@@ -175,15 +177,15 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
-  // Inside reselectable structure content sections keep lexical owners, so
+  // Inside state-selected structure content sections keep lexical owners, so
   // reads hop soundly: lone reads and dynamic-chain intersection members
   // deliver through their self-registering closure signals.
-  const clientReselectable = inClientReselectableStructure(section);
+  const stateSelected = inStateSelectedStructure(section);
   return some(refs, (binding) => {
     if (isPatchFillBinding(binding) && binding.section !== section) {
       let cur: Section | undefined = section;
       while (cur && cur !== binding.section) {
-        if (!cur.isBranch && !clientReselectable) return true;
+        if (!cur.isBranch && !stateSelected) return true;
         cur = cur.parent;
       }
       return !cur;

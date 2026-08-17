@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $for_content2__item = /*@__PURE__*/ _resume("__tests__/template.marko_2_item#2/init", /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.item)));
+const $for_content2__item = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.item));
 const $for_content2__setup = $for_content2__item;
 const $for_content2__s = ($scope, s) => _text($scope["#text/1"], s);
 const $for_content2__$params = ($scope, $params3) => $for_content2__s($scope, $params3[0]);

@@ -170,9 +170,6 @@ export interface Section {
   /** Awaits a construct must deliver body content for (marker binding +
    * body section); `buildShells` prunes those no shipped shell reaches. */
   constructSetups: { binding: Binding; body: Section }[] | undefined;
-  /** Branch body whose selection can re-run on the client (classified at
-   * persisted finalize): patch renders skip it and frames omit its entry. */
-  isClientReselectable: true | undefined;
   /** Branch whose shell would construct unfaithfully: the first blocker's
    * reason code sticks, no shell ships, patches fail closed. */
   shellBlocked: ShellBlocker.Value | undefined;
@@ -266,7 +263,6 @@ export function startSection(
       boundaryContent: false,
       contentTemplate: undefined,
       constructSetups: undefined,
-      isClientReselectable: undefined,
       shellBlocked: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
