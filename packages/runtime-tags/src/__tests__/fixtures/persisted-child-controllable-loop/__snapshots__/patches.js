@@ -1,5 +1,5 @@
 // PATCH
-{
+[`a1 !;D%c%l/b%c&b;<p><!> hit <!></p><!><!><!><!>`, {
   ta: "Store!",
   lb: [{
     ta: "a",
@@ -17,11 +17,11 @@
     s: {
       va0: 0
     }
-  }]
-}
+  }, "a1"]
+}]
 
 // PATCH
-[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, `a1 !;D%c%l/b%c&b;<p><!> hit <!></p><!><!><!><!>`, {
   ta: "Store!",
   lb: [{
     ta: "a",
@@ -49,5 +49,5 @@
     s: {
       va0: 0
     }
-  }]
+  }, "a1"]
 }]

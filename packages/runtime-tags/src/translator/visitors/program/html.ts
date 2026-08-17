@@ -10,6 +10,7 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
+import normalizeStringExpression from "../../util/normalize-string-expression";
 import { forEach, some } from "../../util/optional";
 import {
   getConstructInitClosures,
@@ -39,7 +40,7 @@ import {
   getSerializeSourcesForRef,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
-import { getShellId, getShells } from "../../util/shell";
+import { buildShellRecord, getShellId, getShells } from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -51,6 +52,7 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
+import { resolveStructure } from "../../util/structure";
 import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -188,9 +190,31 @@ export default {
 
       writeModuleRegistrations(program);
 
+      if (persisted) {
+        // A parent's shell composes this template's inert markup and walks
+        // (as its dom module does), exported under the same names.
+        const { writes, walks } = resolveStructure(section);
+        const domExports = program.node.extra.domExports!;
+        const declarators: t.VariableDeclarator[] = [];
+        for (const [name, parts] of [
+          [domExports.template, writes],
+          [domExports.walks, walks],
+        ] as const) {
+          declarators.push(
+            t.variableDeclarator(
+              t.identifier(name),
+              normalizeStringExpression(parts, true) || t.stringLiteral(""),
+            ),
+          );
+        }
+        program.node.body.push(
+          t.exportNamedDeclaration(t.variableDeclaration("const", declarators)),
+        );
+      }
+
       const shells = getShells();
       if (persisted && shells) {
-        // Branch shells, derived during analyze, register at server module
+        // Branch shells, decided during analyze, register at server module
         // load so patches can ship constructible shells without the client
         // bundling conditional content.
         const active = { ...shells };
@@ -200,49 +224,39 @@ export default {
           const id = getShellId(section);
           if (active[id] && sectionHasServerEffect(section)) delete active[id];
         });
-        // Mount-effect register ids ride the shell's id token (entries
-        // reference the bare id).
-        forEachSection((section) => {
-          const id = getShellId(section);
-          if (active[id]) {
-            {
-              // `inits…!effects…`; a lone `!` marks a shell needing setup
-              // for seeds alone.
-              let marker = "";
-              forEach(getConstructInitClosures(section), (closure) => {
-                marker +=
-                  (marker && " ") +
-                  getResumeRegisterId(section, closure, "init");
-              });
-              // An effect the construct's own renders queue (an init, seed,
-              // or item write cascades into it) is not replayed.
-              const effectIds = getSectionEffectRegisterIds(
-                section,
-                (refs) =>
-                  !!getSerializeSourcesForRef(refs)?.state ||
-                  some(
-                    refs,
-                    (ref) => ref.section === section && isPatchFillBinding(ref),
-                  ),
-              );
-              if (effectIds) marker += "!" + effectIds;
-              marker ||= getPatchFillBindings(section) ? "!" : "";
-              if (marker) {
-                active[id] = id + " " + marker + active[id].slice(id.length);
-              }
-            }
-          }
-        });
-        // Pre-quoted as frame chunks here (template literals, so attribute
-        // quotes ride unescaped); the runtime registry just stores them.
+        const records: t.ObjectProperty[] = [];
         for (const id in active) {
-          active[id] =
-            ",`" + active[id].replace(/[\\`]|\$\{/g, (m) => "\\" + m) + "`";
+          const section = active[id];
+          // The id token carries `inits…!effects…` (entries reference the
+          // bare id); a lone `!` marks a shell needing setup for seeds alone.
+          let marker = "";
+          if (id === getShellId(section)) {
+            forEach(getConstructInitClosures(section), (closure) => {
+              marker +=
+                (marker && " ") + getResumeRegisterId(section, closure, "init");
+            });
+            // An effect the construct's own renders queue (an init, seed,
+            // or item write cascades into it) is not replayed.
+            const effectIds = getSectionEffectRegisterIds(
+              section,
+              (refs) =>
+                !!getSerializeSourcesForRef(refs)?.state ||
+                some(
+                  refs,
+                  (ref) => ref.section === section && isPatchFillBinding(ref),
+                ),
+            );
+            if (effectIds) marker += "!" + effectIds;
+            marker ||= getPatchFillBindings(section) ? "!" : "";
+          }
+          records.push(
+            toObjectProperty(id, buildShellRecord(id, section, marker)),
+          );
         }
-        if (Object.keys(active).length) {
+        if (records.length) {
           program.node.body.push(
             t.expressionStatement(
-              callRuntime("_shells", t.valueToNode(active)),
+              callRuntime("_shells", t.objectExpression(records)),
             ),
           );
         }

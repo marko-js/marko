@@ -1,4 +1,6 @@
 // tags/widget/tags/inner/index.marko
+const $template$2 = "<em>leaf</em>";
+const $walks$2 = "b";
 var inner_default = _template_persisted("__tests__/tags/widget/tags/inner/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -6,6 +8,8 @@ var inner_default = _template_persisted("__tests__/tags/widget/tags/inner/index.
 }, 0, 0);
 
 // tags/widget/index.marko
+const $template$1 = $template$2;
+const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b");
 var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -16,6 +20,8 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 }, 0, () => [inner_default]);
 
 // template.marko
+const $template = "<main><!><button>t</button></main>";
+const $walks = "D%b l";
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

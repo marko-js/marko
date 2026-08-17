@@ -5,7 +5,7 @@ const $input_note$2 = ($scope, input_note) => _text($scope.a, input_note);
 // tags/l1/tags/l2/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<button class=n> </button>${_w0}`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D l");
-const $n = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $n = /*@__PURE__*/ _fill_let("c0", 6, ($scope) => _text($scope.b, $scope.g));
 const $setup__script$1 = _script("c0", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, $scope.g + 1);
 }));

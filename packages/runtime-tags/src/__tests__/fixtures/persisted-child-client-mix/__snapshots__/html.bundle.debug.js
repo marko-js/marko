@@ -1,4 +1,6 @@
 // tags/label/index.marko
+const $template$1 = "<em> </em>";
+const $walks$1 = "D l";
 var label_default = _template_persisted("__tests__/tags/label/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -7,6 +9,8 @@ var label_default = _template_persisted("__tests__/tags/label/index.marko", (inp
 }, 0, 0);
 
 // template.marko
+const $template = "<main><!><button>+</button><button class=t>t</button></main>";
+const $walks = "D%b b l";
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
