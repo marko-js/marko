@@ -3,11 +3,11 @@
 <t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [3, {
     C: "a",
     Q: _(2, "a1")
   }], "a3 1"];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
@@ -15,11 +15,11 @@
 
 <t hidden M_=b></t>
 <script>
-  M._.r.push(_ => [5, {
-    G: 2
-  }]);
   M._.j.b = _ => {
     _.push("a0 5")
   };
+  M._.r.push(_ => [5, {
+    G: 2
+  }]);
   M._.w()
 </script>

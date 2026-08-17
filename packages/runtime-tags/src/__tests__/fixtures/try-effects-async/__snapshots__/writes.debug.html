@@ -4,7 +4,14 @@
 <t hidden M_=2><!--M_#c--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [1, {
+  REORDER_RUNTIME(M._);
+  M._.r = [];
+  M._.j[2] = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_1_clickCount#3 2"
+      )
+  };
+  M._.r.push(_ => [1, {
       clickCount: 0,
       "ClosureScopes:clickCount": new Set([_(2)])
     }, {
@@ -18,13 +25,7 @@
         )
     }],
     "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_0 1"
-  ];
-  REORDER_RUNTIME(M._);
-  M._.j[2] = _ => {
-    _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_1_clickCount#3 2"
-      )
-  };
+    );
   M._.w()
 </script>
 

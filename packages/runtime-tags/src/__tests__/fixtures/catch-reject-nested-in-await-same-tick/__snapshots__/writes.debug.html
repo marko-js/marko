@@ -2,6 +2,7 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
     changes: 0,
     "ClosureScopes:changes": new Set
@@ -12,7 +13,6 @@
       "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_3*content"
       )
   }]];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
@@ -24,6 +24,11 @@
 </t>
 <t hidden M_=c>caught: ERROR!</t>
 <script>
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_2_changes#1/pending 4 packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_2 4"
+      )
+  };
   M._.r.push(_ => [4, {
     _: _(2)
   }, {
@@ -32,10 +37,5 @@
       "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_5*content"
       )
   }]);
-  M._.j.b = _ => {
-    _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_2_changes#1/pending 4 packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_2 4"
-      )
-  };
   M._.w()
 </script>

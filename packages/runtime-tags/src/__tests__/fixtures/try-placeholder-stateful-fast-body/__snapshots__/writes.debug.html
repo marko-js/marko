@@ -3,7 +3,12 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [1, {
+  REORDER_RUNTIME(M._);
+  M._.r = [];
+  M._.j[2] = _ => {
+    _.push("_placeholderDismiss 2")
+  };
+  M._.r.push(_ => [1, {
       clicks: 0,
       "ClosureScopes:clicks": new Set
     }, {
@@ -18,11 +23,7 @@
       _: _(1)
     }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(3)), 0),
     "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_1 3"
-  ];
-  REORDER_RUNTIME(M._);
-  M._.j[2] = _ => {
-    _.push("_placeholderDismiss 2")
-  };
+    );
   M._.w()
 </script>
 
@@ -32,14 +33,14 @@
       0<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_]2 #text/0 4-->
 </t>
 <script>
-  M._.r.push(_ => [4, {
-    _: _(2),
-    "ClosureSignalIndex:clicks": 1
-  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3_clicks#1/pending 4 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-fast-body/template.marko_3 4"
       )
   };
+  M._.r.push(_ => [4, {
+    _: _(2),
+    "ClosureSignalIndex:clicks": 1
+  }]);
   M._.w()
 </script>

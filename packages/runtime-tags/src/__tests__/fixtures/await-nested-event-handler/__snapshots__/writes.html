@@ -2,6 +2,7 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
     b: 0,
     c: new Set
@@ -10,7 +11,6 @@
     C: "a",
     Q: _(1, "a4")
   }]];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
@@ -36,11 +36,11 @@
   <div>changes: <!>0<!--M_*7 b--></div><!--M_*7 a--><!--M_]5 a 7-->
 </t>
 <script>
-  M._.r.push(_ => [7, {
-    _: _(5)
-  }]);
   M._.j.c = _ => {
     _.push("a0 7 a1 7")
   };
+  M._.r.push(_ => [7, {
+    _: _(5)
+  }]);
   M._.w()
 </script>

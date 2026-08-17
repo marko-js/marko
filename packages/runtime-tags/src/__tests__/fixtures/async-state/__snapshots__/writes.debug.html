@@ -2,6 +2,7 @@
 <t hidden M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
       clickCount: 0,
       "ClosureScopes:clickCount": new Set([_(2)])
@@ -14,7 +15,6 @@
     }],
     "packages/runtime-tags/src/__tests__/fixtures/async-state/template.marko_0 1"
   ];
-  REORDER_RUNTIME(M._);
   M._.w()
 </script>
 
