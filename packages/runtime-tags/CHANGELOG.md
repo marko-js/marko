@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.3.38
+
+### Patch Changes
+
+- [#3979](https://github.com/marko-js/marko/pull/3979) [`afefa51`](https://github.com/marko-js/marko/commit/afefa512d9b26ed7b09ba2bc64b3d936fb3fa56b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix scope slot collision when a controllable `<let>` binding is pruned
+
+- [#3982](https://github.com/marko-js/marko/pull/3982) [`1c970de`](https://github.com/marko-js/marko/commit/1c970de9e84a5b160be309311d9a2120d95034fd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a streamed `<await>` whose body arrives before the page's entry module has run (a slow bundle, or a promise that settles right after its `@placeholder` flushed) throwing `Cannot read properties of null (reading 'insertBefore')` during resume when the placeholder held stateful content. The reorder runtime now parks the swapped-out placeholder in a detached holder instead of removing its nodes one by one, so markers the walker already collected still resolve.
+
 ## 6.3.37
 
 ### Patch Changes
