@@ -1,4 +1,4 @@
-// size: 26282 (min) 9770 (brotli)
+// size: 26268 (min) 9780 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1062,7 +1062,6 @@ function init(runtimeId = "M") {
             (render.w = () => {
               (walk(), runResumeEffects(render));
             }),
-            (render.q = (id) => void 0),
             render
           );
         }),
