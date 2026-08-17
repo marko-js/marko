@@ -25,17 +25,17 @@ export interface PatchViolation {
   detail?: string;
 }
 
-// A sourceless untracked call bakes a value no client signal recomputes.
-export function hasOpaqueCall(value: t.Node) {
-  let opaque = false;
+// A call none of whose inputs are tracked: no client signal recomputes it.
+export function hasInertCall(value: t.Node) {
+  let inert = false;
   t.traverseFast(value, (n) => {
-    opaque ||=
+    inert ||=
       t.isCallExpression(n) ||
       t.isOptionalCallExpression(n) ||
       t.isNewExpression(n) ||
       t.isTaggedTemplateExpression(n);
   });
-  return opaque;
+  return inert;
 }
 
 // The render of a directly fed renderer: a bare non-computed member of
@@ -75,15 +75,15 @@ export function getChildPatchPlan(tag: t.NodePath<t.MarkoTag>) {
 
 function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
   const { node } = tag;
-  // A sourceless call bakes a value no client signal recomputes, so
-  // its opacity counts as server-fed.
-  let anyOpaque = false;
-  const checkOpaque = (extra: t.NodeExtra | undefined, value: t.Expression) => {
+  // A sourceless inert call bakes a value no client signal recomputes,
+  // so it counts as server-fed.
+  let anyInert = false;
+  const checkInert = (extra: t.NodeExtra | undefined, value: t.Expression) => {
     if (
       !getSerializeSourcesForExpr(extra || {}) &&
       !evaluate(value).confident
     ) {
-      anyOpaque ||= hasOpaqueCall(value);
+      anyInert ||= hasInertCall(value);
     }
   };
   const hasStateFeed = (extra: t.NodeExtra | undefined) =>
@@ -94,10 +94,13 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
     );
   let anyState = false;
   for (const attr of node.attributes) {
+    // A spread's reads merge into the tag's own extra (checked below);
+    // its provenance already feeds every group it may carry.
     if (attr.type === "MarkoSpreadAttribute") {
-      return { violation: { node: attr } };
+      checkInert(node.extra, attr.value);
+      continue;
     }
-    checkOpaque(attr.value.extra, attr.value);
+    checkInert(attr.value.extra, attr.value);
     anyState ||= hasStateFeed(attr.value.extra);
   }
   // Arguments and rest-consumed children (a whole-`input` read, rest
@@ -107,7 +110,7 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
     if (t.isSpreadElement(arg)) {
       return { violation: { node: arg } };
     }
-    checkOpaque(arg.extra, arg);
+    checkInert(arg.extra, arg);
     anyState ||= hasStateFeed(arg.extra);
   }
   // Attribute tags feed params too; opacity must see their values.
@@ -116,7 +119,7 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
       if (child.isMarkoTag() && isAttributeTag(child)) {
         for (const attr of child.node.attributes) {
           if (attr.type === "MarkoAttribute") {
-            checkOpaque(attr.value.extra, attr.value);
+            checkInert(attr.value.extra, attr.value);
           }
         }
         checkAttrTags(child.get("body"));
@@ -224,14 +227,14 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
       };
     }
   }
-  // An untracked call can change server-side, but a withheld patch write
+  // An inert call can change server-side, but a withheld patch write
   // has no other way to deliver it.
-  if (anyState && anyOpaque) {
+  if (anyState && anyInert) {
     return {
       violation: {
         node,
         detail:
-          "an untracked call cannot mix with client state across one tag's input",
+          "an inert call cannot mix with client state across one tag's input",
       },
     };
   }

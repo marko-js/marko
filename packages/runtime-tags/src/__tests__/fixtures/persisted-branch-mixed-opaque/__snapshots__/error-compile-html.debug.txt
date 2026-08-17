@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-mixed-opaque/template.marko:3:6
-      1 | <let/count=0/>
-      2 | <main>
-    > 3 |   <if=(count > input.min && Math.random() > 0.5)>
-        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a call mixing client state with server values has no stable delivery.
-      4 |     <p>win</p>
-      5 |   </if>
-      6 |   <button onClick() { count = count + 1 }>+</button>
