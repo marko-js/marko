@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/attempt=1>
+<try>
+  <@placeholder>
+    <lifecycle
+      onMount() { console.log("placeholder mounted") }
+      onDestroy() { console.log("placeholder destroyed") }
+    />
+    <button onClick() { attempt++ }>retry ${attempt}</button>
+  </@placeholder>
+  <await|value|=(attempt === 1 ? resolveAfter("body", 3) : Promise.reject(new Error("nope")))>
+    <p>${value}</p>
+  </await>
+  <@catch|err|>
+    <b>${err.message}</b>
+  </@catch>
+</try>
