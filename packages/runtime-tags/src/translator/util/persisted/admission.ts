@@ -35,8 +35,9 @@ import {
   isPatchWriteBinding,
 } from "./delivery";
 import {
-  inClientReselectableStructure,
+  inStateSelectedStructure,
   isBranchPathSection,
+  isStateSelected,
 } from "./structure";
 
 export function assertSupportedPatch(program: t.NodePath<t.Program>) {
@@ -85,7 +86,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         sources?.param &&
         !sources.state &&
         !isPatchFillBinding(binding) &&
-        !inClientReselectableStructure(binding.section)
+        !inStateSelectedStructure(binding.section)
       ) {
         unsupported(
           node,
@@ -356,7 +357,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           "a server value's fill delivery path leaves the branch chain",
         );
       }
-      if (inClientReselectableStructure(section)) {
+      if (inStateSelectedStructure(section)) {
         assertDeliverableInClientOwned(node, node.value, node.value.extra);
       }
     },
@@ -429,16 +430,15 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // branches must be inert; a pure-state chain is client-owned instead.
       if (isConditionTag(tag) || isCoreTagName(tag, "for")) {
         const section = getSection(tag);
+        const bodySection = getSectionForBody(tag.get("body"));
+        const stateSelected = !!bodySection && isStateSelected(bodySection);
         // The walk pairs branches structurally at any depth, but only when
         // every enclosing section is itself a branch — unless the body
         // classified client-owned (content sections inherit ownership).
-        if (
-          !isBranchPathSection(section) &&
-          !getSectionForBody(tag.get("body"))?.isClientReselectable
-        ) {
+        if (!isBranchPathSection(section) && !stateSelected) {
           unsupported(node);
         }
-        if (getSectionForBody(tag.get("body"))?.isClientReselectable) {
+        if (stateSelected) {
           for (const attr of node.attributes) {
             if (attr.type !== "MarkoAttribute") continue;
             // A local `by` invokes client-side per re-list; any server
@@ -465,7 +465,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         // Nested structure inherits client ownership, so reaching here
         // means its selection has no delivery channel: fail closed.
-        if (inClientReselectableStructure(section)) {
+        if (inStateSelectedStructure(section)) {
           const attrExtra = node.attributes[0]?.value.extra;
           const sources =
             attrExtra &&
@@ -512,7 +512,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
             // A script's re-run entry rides the branch partial the frame no
             // longer carries, so only pure-client scripts run inside.
-            if (inClientReselectableStructure(getSection(tag))) {
+            if (inStateSelectedStructure(getSection(tag))) {
               if (attr.value.extra?.globalBindings) {
                 unsupported(
                   attr,
@@ -537,7 +537,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // state, and holes it feeds recompute through the signal graph.
       if (tagName === "let" || tagName === "const") {
         const section = getSection(tag);
-        if (inClientReselectableStructure(section)) {
+        if (inStateSelectedStructure(section)) {
           for (const attr of node.attributes) {
             if (attr.type === "MarkoAttribute") {
               assertDeliverableInClientOwned(
@@ -554,7 +554,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // output: reads stay current over the wire, so only deliverability
       // gates it (the call site classifies the return's ownership).
       if (tagName === "return") {
-        if (inClientReselectableStructure(getSection(tag))) {
+        if (inStateSelectedStructure(getSection(tag))) {
           unsupported(
             node,
             "a `<return>` inside client-owned structure is not supported yet",
@@ -580,7 +580,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       if (tagDef?.template) {
         // Inside client-owned structure a child is a pure client instance
         // (input re-applies via tag-args signals; server values fill).
-        if (inClientReselectableStructure(getSection(tag))) {
+        if (inStateSelectedStructure(getSection(tag))) {
           if (node.var) {
             unsupported(
               node,
@@ -731,7 +731,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           isContentRenderTag(node) &&
           tag.scope.getBinding("input")?.path.type === "Program"
         ) {
-          if (inClientReselectableStructure(getSection(tag))) {
+          if (inStateSelectedStructure(getSection(tag))) {
             unsupported(
               node,
               "a renderer read inside client-owned structure would need to cross the wire as a function",
@@ -761,9 +761,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const controlled = new Set<t.Node>(
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
       );
-      const clientOwnedStructure = inClientReselectableStructure(
-        getSection(tag),
-      );
+      const clientOwnedStructure = inStateSelectedStructure(getSection(tag));
       for (const attr of node.attributes) {
         // Handlers read the scope at call time, so only values no write
         // keeps current gate: `$global`-derived slots and function calls.

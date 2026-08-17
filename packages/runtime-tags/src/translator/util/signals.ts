@@ -24,8 +24,9 @@ import {
   isPatchFillBinding,
 } from "./persisted/delivery";
 import {
-  inClientReselectableStructure,
+  inStateSelectedStructure,
   isBranchPathSection,
+  isStateSelected,
 } from "./persisted/structure";
 import {
   type AssignedBindingExtra,
@@ -58,7 +59,6 @@ import {
   getDynamicClosureIndex,
   getScopeIdIdentifier,
   getSectionForBody,
-  isDirectClosure,
   isDynamicClosure,
   isImmediateOwner,
   type Section,
@@ -122,6 +122,7 @@ export interface Signal {
 type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
+  initId?: string,
 ) => t.Expression;
 // Structured facts about a branch section's closure hop: what kind of
 // branch it is and which accessor (plus branch index) addresses it.
@@ -138,17 +139,37 @@ const [getClosureSignal, _setClosureSignal] = createSectionState<
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
   hop: ClosureHop,
-  build: closureSignalBuilder = (_closure, render) =>
-    buildClosureHop(hop, render),
+  build: closureSignalBuilder = (_closure, render, initId) =>
+    buildClosureHop(hop, render, initId),
 ) {
   _setClosureSignal(getSectionForBody(tag.get("body"))!, { hop, build });
 }
 
-function buildClosureHop(hop: ClosureHop, render: t.Expression) {
+function buildClosureHop(
+  hop: ClosureHop,
+  render: t.Expression,
+  initId?: string,
+) {
   const accessor = getScopeAccessorLiteral(hop.ref, true);
+  const init = initId && t.stringLiteral(initId);
   return hop.kind === "if"
-    ? callRuntime("_if_closure", accessor, t.numericLiteral(hop.index), render)
-    : callRuntime("_for_closure", accessor, render);
+    ? init
+      ? callRuntime(
+          "_init_if_closure",
+          init,
+          accessor,
+          t.numericLiteral(hop.index),
+          render,
+        )
+      : callRuntime(
+          "_if_closure",
+          accessor,
+          t.numericLiteral(hop.index),
+          render,
+        )
+    : init
+      ? callRuntime("_init_for_closure", init, accessor, render)
+      : callRuntime("_for_closure", accessor, render);
 }
 
 export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
@@ -401,13 +422,19 @@ export function getSignal(
         const closure = referencedBindings;
         const render = getSignalFn(signal);
         const closureSignal = getClosureSignal(section);
+        // The construct INIT registers on the closure signal itself (pure
+        // fused helpers), so shaking the signal makes a construct fail closed.
+        const initId = constructsWithInit(section, closure)
+          ? getResumeRegisterId(section, closure, "init")
+          : undefined;
 
         if (closureSignal && !isDynamicClosure(section, closure)) {
-          return closureSignal.build(closure, render);
+          return closureSignal.build(closure, render, initId);
         }
 
         return callRuntime(
-          "_closure_get",
+          initId ? "_init_closure_get" : "_closure_get",
+          ...(initId ? [t.stringLiteral(initId)] : []),
           // Optimized builds pass the reserved closure accessor id.
           isOptimize()
             ? t.numericLiteral(getClosureAccessorId(closure))
@@ -1136,7 +1163,7 @@ export function writeSignals(section: Section) {
           signal.referencedBindings &&
           !Array.isArray(signal.referencedBindings) &&
           !signal.referencedBindings.sources?.state &&
-          inClientReselectableStructure(signal.section) &&
+          inStateSelectedStructure(signal.section) &&
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section !== signal.referencedBindings.section &&
           isBranchChainTo(signal.section, signal.referencedBindings.section) &&
@@ -1167,29 +1194,6 @@ export function writeSignals(section: Section) {
                   getScopeAccessorLiteral(signal.referencedBindings, true),
                   value,
                 );
-        } else if (
-          signal.referencedBindings &&
-          !Array.isArray(signal.referencedBindings) &&
-          !!signal.referencedBindings.sources?.state &&
-          signal.section.isBranch &&
-          isBranchPathSection(signal.section) &&
-          isDirectClosure(signal.section, signal.referencedBindings) &&
-          !signal.section.shellBlocked &&
-          !sectionHasServerEffect(signal.section)
-        ) {
-          // A direct state closure anchors its construct render on itself:
-          // shaken with the signal, and a construct then fails closed.
-          value = callRuntime(
-            "_resume_init",
-            t.stringLiteral(
-              getResumeRegisterId(
-                signal.section,
-                signal.referencedBindings,
-                "init",
-              ),
-            ),
-            value,
-          );
         }
       }
 
@@ -1244,7 +1248,7 @@ export function writeSignals(section: Section) {
 // Whether every hop to `owner` dispatches from the owner scope: branches
 // always; inside client-owned, content sections too (lexical owners).
 function isBranchChainTo(section: Section, owner: Section) {
-  const clientOwned = inClientReselectableStructure(section);
+  const clientOwned = inStateSelectedStructure(section);
   while (section !== owner) {
     if ((!section.isBranch && !clientOwned) || !section.parent) return false;
     section = section.parent;
@@ -1453,6 +1457,20 @@ export function sectionHasGlobalEffect(section: Section) {
     if (signal.globalEffectReads) return true;
   }
   return false;
+}
+
+// A state closure into a body that ships a shell; the shell record names
+// the same closures (`getConstructInitClosures`) as its leading init ids.
+function constructsWithInit(section: Section, closure: Binding) {
+  return (
+    isPersisted() &&
+    !!closure.sources?.state &&
+    section.isBranch &&
+    isBranchPathSection(section) &&
+    !isStateSelected(section) &&
+    !section.shellBlocked &&
+    !sectionHasServerEffect(section)
+  );
 }
 
 // An effect read the wire cannot keep current (unfillable params, global-

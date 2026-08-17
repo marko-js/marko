@@ -5,7 +5,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__input_note._($scope);
 	$for_content__count._($scope);
 };
-const $for_content__count = /*@__PURE__*/ _resume("a1", /*@__PURE__*/ _for_closure(0, $for_content__input_note__OR__count__OR__item));
+const $for_content__count = /*@__PURE__*/ _for_closure(0, $for_content__input_note__OR__count__OR__item);
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_note__OR__count__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of(0, "<li> </li>", "D ", $for_content__setup, $for_content__$params);

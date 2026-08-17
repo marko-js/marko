@@ -497,6 +497,53 @@ export function _closure_get(
   return closureSignal;
 }
 
+// Construct INIT registration fused into the closure helpers: pure call
+// sites let tree shaking drop signal and registration together (fail closed).
+export function _init_closure_get(
+  initId: string,
+  valueAccessor: EncodedAccessor,
+  fn: SignalFn,
+  getOwnerScope?: (scope: Scope) => Scope,
+  resumeId?: string,
+) {
+  return _resume(
+    initId,
+    _closure_get(valueAccessor, fn, getOwnerScope, resumeId),
+  );
+}
+export function _init_if_closure(
+  initId: string,
+  ownerConditionalNodeAccessor: EncodedAccessor,
+  branch: number,
+  fn: SignalFn,
+) {
+  return _resume(initId, _if_closure(ownerConditionalNodeAccessor, branch, fn));
+}
+export function _init_for_closure(
+  initId: string,
+  ownerLoopNodeAccessor: EncodedAccessor,
+  fn: SignalFn,
+) {
+  return _resume(initId, _for_closure(ownerLoopNodeAccessor, fn));
+}
+export function _init_for_selector(
+  initId: string,
+  ownerLoopNodeAccessor: EncodedAccessor,
+  ownerValueAccessor: EncodedAccessor,
+  keyValueAccessor: EncodedAccessor,
+  fn: SignalFn,
+) {
+  return _resume(
+    initId,
+    _for_selector(
+      ownerLoopNodeAccessor,
+      ownerValueAccessor,
+      keyValueAccessor,
+      fn,
+    ),
+  );
+}
+
 export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {
   setup._ = (scope, owner) => {
     scope[AccessorProp.Owner] = owner;
