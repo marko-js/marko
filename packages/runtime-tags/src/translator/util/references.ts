@@ -717,7 +717,7 @@ export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   trackReference(path, getGlobalBinding());
 }
 
-// The persisted guard grain for an expression's global reads: first-hop
+// The persisted guard key set for an expression's global reads: first-hop
 // property keys, or `true` when the bag itself was read (opaque).
 export function getGlobalReadKeys(globalBindings: ReferencedBindings) {
   let keys: true | Set<string> | undefined;
@@ -1451,13 +1451,11 @@ export function finalizeReferences() {
   if (isPersisted()) {
     finalizePersisted();
     forEachSection((section) => {
-      if (!section.parent) {
-        forEach(section.bindings, (binding) => {
-          if (isPatchFillBinding(binding) || isPatchWriteBinding(binding)) {
-            ensureReasonGroups(getSerializeSourcesForRef(binding));
-          }
-        });
-      }
+      forEach(section.bindings, (binding) => {
+        if (isPatchFillBinding(binding) || isPatchWriteBinding(binding)) {
+          ensureReasonGroups(getSerializeSourcesForRef(binding));
+        }
+      });
     });
   }
 

@@ -14,8 +14,9 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML, isPersisted } from "./marko-config";
-import { find, forEach, type Opt, push, toArray } from "./optional";
+import { find, forEach, includes, type Opt, push, toArray } from "./optional";
 import {
+  getLocalFillFeeds,
   getPatchFillBindings,
   getPatchFillKey,
   hasUnfillablePatchReads,
@@ -1109,7 +1110,8 @@ export function writeSignals(section: Section) {
       // tree-shaking keeps it exactly when the intersection is retained.
       if (isPersisted()) {
         if (Array.isArray(signal.referencedBindings)) {
-          for (const member of signal.referencedBindings) {
+          for (const ref of signal.referencedBindings) {
+            const member = getCanonicalBinding(ref);
             if (isPatchFillBinding(member)) {
               let helper: "_fill_join" | "_fill_join_if" | "_fill_join_for" =
                 "_fill_join";
@@ -1479,10 +1481,13 @@ export function sectionHasGlobalEffect(section: Section) {
   return false;
 }
 
-// A state closure into a body that ships a shell; the shell record names
-// the same closures (`getConstructInitClosures`) as its init ids.
+// A closure into a body that ships a shell whose init a construct may run:
+// state (named by the shell record) or a local fill's feed (by the frame).
 function constructsWithInit(section: Section, closure: Binding) {
-  return !!closure.sources?.state && sectionConstructs(section);
+  return (
+    sectionConstructs(section) &&
+    (!!closure.sources?.state || includes(getLocalFillFeeds(section), closure))
+  );
 }
 
 // A branch body that ships a shell, so a patch may construct it.
@@ -1496,6 +1501,40 @@ function sectionConstructs(section: Section) {
     !sectionHasServerEffect(section)
   );
 }
+
+// The plain fill write of a server-owned branch local, gated like a root
+// fill by its param group's ownership; a client-fed instance instead asks
+// a fresh scope to re-derive it through its feeds' closure inits.
+export function writeLocalFill(section: Section, binding: Binding) {
+  writtenLocalFills.add(binding);
+  const write = callRuntime(
+    "_patch_value",
+    getScopeIdIdentifier(section),
+    t.stringLiteral(getPatchFillKey(binding)),
+    getDeclaredBindingExpression(binding),
+  );
+  const owned = getOwnershipGuard(getSerializeSourcesForRef(binding));
+  if (!owned) return write;
+  let initIds = "";
+  forEach(binding.sources?.param, (feed) => {
+    if (feed.section !== section) {
+      initIds += (initIds && " ") + getResumeRegisterId(section, feed, "init");
+    }
+  });
+  return t.conditionalExpression(
+    owned,
+    write,
+    callRuntime(
+      "_patch_init",
+      getScopeIdIdentifier(section),
+      t.stringLiteral(initIds),
+    ),
+  );
+}
+
+// Locals whose declaration already wrote their fill (`translateVar`), so
+// the section's leading writes cover only the param properties.
+const writtenLocalFills = new WeakSet<Binding>();
 
 // An effect read the wire cannot keep current (unfillable params, global-
 // derived bindings) blocks constructs; direct `$global` reads re-queue.
@@ -1814,6 +1853,16 @@ export function writeHTMLResumeStatements(
   // as SETUP fills: the fill signal's joins render all downstream content.
   if (persisted && section.isBranch && isBranchPathSection(section)) {
     forEach(getPatchFillBindings(section), (binding) => {
+      if (!binding.sources?.state) {
+        // A server-owned local writes plainly as soon as it exists: a param
+        // property leads the body, a declared var follows its declaration.
+        if (!writtenLocalFills.has(binding)) {
+          getHTMLSectionStatements(section).push(
+            t.expressionStatement(writeLocalFill(section, binding)),
+          );
+        }
+        return;
+      }
       body.push(
         t.expressionStatement(
           callRuntime(

@@ -268,7 +268,7 @@ export default {
   },
 } satisfies TemplateVisitor<t.Program>;
 
-// A destructured grain inherits its declaration's function-carrying
+// A destructured property alias inherits its declaration's function-carrying
 // potential through the alias chain.
 function needsPatchEffectRuntime(binding: Binding) {
   return isPatchWriteBinding(binding) && hasPatchEffectReads(binding);

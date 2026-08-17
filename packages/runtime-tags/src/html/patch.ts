@@ -347,6 +347,28 @@ export function _patch_child(
   }
 }
 
+// A server-owned local whose param group the client feeds is not written:
+// a fresh scope re-derives it by running its feeds' closure inits (setup).
+export function _patch_init(scopeId: number, initIds: string) {
+  const state = getState();
+  if (state.writesPatches) {
+    const setup = (patchPartial(state, scopeId)[PatchKey.Setup] ??=
+      {}) as Record<string, string>;
+    const prev = setup[PatchKey.Init];
+    for (const id of initIds.split(" ")) {
+      if (
+        !prev ||
+        !(" " + setup[PatchKey.Init] + " ").includes(" " + id + " ")
+      ) {
+        setup[PatchKey.Init] = setup[PatchKey.Init]
+          ? setup[PatchKey.Init] + " " + id
+          : id;
+      }
+    }
+  }
+  return "";
+}
+
 // Emitted as the scope reason's complement (`$reason || _patch_value(...)`):
 // a page render serializes the value through the reason-gated scope write,
 // so only a patch (the falsy persisted reason) ever reaches here.
