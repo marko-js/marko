@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// Optimize builds compile out `throwUnserializable`, so they drop the function
-// and render; only debug produces an error for the compat flush to surface.
+// Nested functions in object attr values are not resumed across the class→tags
+// boundary; the flush aborts as unserializable. Optimize drops the value.
 export const config: TestConfig = {
   error_html: true,
   skip_optimize: true,

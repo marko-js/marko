@@ -1,4 +1,5 @@
 import { compat } from "@marko/runtime-tags/dom";
 
-import { p } from "./runtime-dom.js";
+import { f, p } from "./runtime-dom.js";
 p(compat);
+export { f };

@@ -1,8 +1,11 @@
 import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
+  getFile,
+  getProgram,
   getTagDef,
   importDefault,
+  importNamed,
   resolveRelativePath,
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
@@ -26,6 +29,7 @@ export default function (path, isNullable) {
   let tagIdentifier;
 
   if (node.extra?.featureType === "tags") {
+    registerClassHandlerFunctions(path);
     // A dynamic `<${tagName}>` already references the imported template
     // binding directly; only a static tag name needs to be resolved to one.
     if (t.isStringLiteral(name)) {
@@ -131,4 +135,125 @@ export default function (path, isNullable) {
   } else {
     path.replaceWith(customTagRenderCall);
   }
+}
+
+// Hoist direct attribute handlers to a component factory for class→tags resume.
+// Nested functions in object/array attr values are not supported across the boundary.
+function registerClassHandlerFunctions(path) {
+  for (const attr of path.get("attributes")) {
+    if (!attr.isMarkoAttribute()) continue;
+    const valuePath = attr.get("value");
+    if (
+      !valuePath.isFunctionExpression() &&
+      !valuePath.isArrowFunctionExpression()
+    ) {
+      continue;
+    }
+    const factory = hoistToFactory(valuePath);
+    if (factory) {
+      replaceWithResumable(valuePath, factory);
+    }
+  }
+}
+
+// `input`/`out`/`state`/`$global` only become renderer parameters in `Program.exit`,
+// so at this point they can still look module scoped.
+const RENDER_LOCALS = new Set(["input", "out", "state", "$global"]);
+
+// Only the component survives into the browser; anything else the body closes
+// over belongs to a render frame that resume cannot rebuild.
+function hoistToFactory(fnPath) {
+  const file = getFile();
+  const componentId = file._componentInstanceIdentifier;
+  if (!componentId) return null;
+
+  const program = getProgram();
+  const outer = new Set();
+
+  for (let scope = fnPath.scope.parent; scope; scope = scope.parent) {
+    for (const name in scope.bindings) {
+      const binding = scope.bindings[name];
+      if (!binding.referencePaths.some((ref) => ref.isDescendant(fnPath))) {
+        continue;
+      }
+
+      if (
+        name === "component" ||
+        name === componentId.name ||
+        binding.identifier === componentId
+      ) {
+        outer.add("component");
+      } else if (RENDER_LOCALS.has(name) || binding.scope !== program.scope) {
+        outer.add(name);
+      }
+    }
+    if (scope === program.scope) break;
+  }
+
+  for (const name of outer) {
+    if (name !== "component") return null;
+  }
+
+  const factoryId = program.scope.generateUidIdentifier("marko_class_fn");
+
+  program.pushContainer("body", [
+    t.variableDeclaration("const", [
+      t.variableDeclarator(
+        factoryId,
+        t.arrowFunctionExpression([t.cloneNode(componentId)], fnPath.node),
+      ),
+    ]),
+  ]);
+
+  return factoryId;
+}
+
+function replaceWithResumable(fnPath, factoryId) {
+  const file = getFile();
+  const { markoOpts } = file;
+  const isHTML = markoOpts.output === "html";
+  const id = t.stringLiteral(nextClassFnId());
+  const built = t.callExpression(t.cloneNode(factoryId), [
+    t.cloneNode(file._componentInstanceIdentifier),
+  ]);
+  let replacement;
+
+  if (isHTML) {
+    replacement = t.callExpression(compatHelper(), [
+      id,
+      built,
+      t.cloneNode(file._componentInstanceIdentifier),
+      t.identifier("out"),
+    ]);
+  } else {
+    // Registered once per module so a resumed reference can rebuild the
+    // handler against whichever component instance the scope names.
+    getProgram().pushContainer("body", [
+      t.expressionStatement(
+        t.callExpression(compatHelper(), [id, t.cloneNode(factoryId)]),
+      ),
+    ]);
+    replacement = built;
+  }
+
+  fnPath.replaceWith(replacement);
+}
+
+function nextClassFnId() {
+  const file = getFile();
+  file._markoClassFnCount = (file._markoClassFnCount || 0) + 1;
+  return `${file.metadata.marko.id}/h${file._markoClassFnCount - 1}`;
+}
+
+function compatHelper() {
+  const file = getFile();
+  const { optimize, modules, output } = file.markoOpts;
+  return importNamed(
+    file,
+    `marko/${optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
+      output === "html" ? "html" : "dom"
+    }${optimize ? "" : "-debug"}.${modules === "esm" ? "mjs" : "js"}`,
+    "f",
+    "marko_class_fn",
+  );
 }

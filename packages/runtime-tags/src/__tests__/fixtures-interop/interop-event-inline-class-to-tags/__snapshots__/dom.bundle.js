@@ -21,6 +21,10 @@ var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
 const _marko_componentType = "a", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_class_fn = (_component) => function(count) {
+	_component.handlePing(count);
+};
+(0, import_runtime_dom.f)("a/h0", _marko_class_fn);
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = {
 	onCreate() {
@@ -34,8 +38,6 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 	out.be("div", { "id": "class" }, "0", _component, null, 1);
 	out.t(state.pinged, _component);
 	out.ee();
-	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "onPing": function(count) {
-		_component.handlePing(count);
-	} }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "onPing": _marko_class_fn(_component) }), null, null, null, _componentDef, "1");
 }, { t: _marko_componentType }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
