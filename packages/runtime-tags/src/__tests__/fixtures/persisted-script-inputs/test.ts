@@ -5,6 +5,8 @@ import type { TestConfig } from "../../main.test";
 // returning to a former one (a: x->z->x) still re-runs each time.
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [
     { title: "Store", a: "x", b: "y" },
     { title: "Store!", a: "x", b: "y" },

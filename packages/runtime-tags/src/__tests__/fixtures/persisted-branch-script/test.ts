@@ -5,6 +5,8 @@ import type { TestConfig } from "../../main.test";
 // merely pairs the already-shown branch.
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [
     { title: "Store", show: true },
     { title: "Store!", show: true },

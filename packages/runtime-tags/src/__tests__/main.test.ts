@@ -38,7 +38,7 @@ import {
   stripDebugRuntime,
   stripOptimizeRuntime,
 } from "./utils/strip-inline-runtime";
-import createMutationTracker from "./utils/track-mutations";
+import createMutationTracker, { formatBody } from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
@@ -95,6 +95,9 @@ export type TestConfig = {
   runtime_id?: string;
   /** Compiles the fixture with the `persisted` compiler option. */
   persisted?: boolean;
+  /** Persisted: skip checking each patched page against a fresh render of
+   * the same input (client effects leave state a fresh render lacks). */
+  skip_fresh_render?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -447,8 +450,46 @@ function testFixtures(interop?: true) {
               browser.ctx as typeof import("@marko/runtime-tags/dom");
             let rejected = false;
 
+            // Until a client-side step diverges the page from what the
+            // server would render for the same input, every applied patch
+            // must leave the DOM as a fresh render of that input would.
+            let diverged = hasFlush || !!config.skip_fresh_render;
+            const assertPatchedLikeFresh = async (input: Input) => {
+              const capture = captureConsole();
+              const freshChunks: string[] = [];
+              try {
+                resetResolveState();
+                for await (const data of template.render(input)) {
+                  freshChunks.push(data);
+                }
+              } finally {
+                resetResolveState();
+                capture.cleanup();
+              }
+              // The fresh page resumes like the live one did, so client
+              // effects and reorders land on both sides.
+              const fresh = createBrowser(
+                runner.assets,
+                config.load_order,
+                rejectLoad || undefined,
+              );
+              browsers.push(fresh);
+              const freshFlush = fresh.stream(freshChunks);
+              while (freshFlush());
+              await fresh.runAsyncScripts();
+              const expected = formatBody(fresh.window.document.body, false);
+              const actual = formatBody(browser.window.document.body, false);
+              if (expected !== actual) {
+                throw new Error(
+                  `A persisted patch left the page unlike a fresh render of ${JSON.stringify(input)}.\n--- fresh render\n${expected}\n--- patched page\n${actual}\n`,
+                );
+              }
+            };
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onStep: () => {
+                diverged = true;
+              },
               onInput: persisted
                 ? async (input, betweenFrames) => {
                     tracker.beginUpdate();
@@ -472,6 +513,9 @@ function testFixtures(interop?: true) {
                     }
                     patches.push(frames.join(""));
                     tracker.logUpdate(input);
+                    if (applied && !diverged && !betweenFrames) {
+                      await assertPatchedLikeFresh(input);
+                    }
                     if (!applied) {
                       if (!config.expect_rejection) {
                         throw new Error(
@@ -667,6 +711,7 @@ async function runSteps(
   browser: ReturnType<typeof createBrowser>,
   run: () => void,
   opts: {
+    onStep?: () => void;
     onInput?: (
       input: Input,
       betweenFrames?: (document: Document) => unknown,
@@ -689,6 +734,7 @@ async function runSteps(
       run();
       tracker.logUpdate();
     } else if (isFlush(update)) {
+      opts.onStep?.();
       if (update.flushType === "stream") {
         if (opts.onFlush) {
           tracker.beginUpdate();
@@ -702,6 +748,7 @@ async function runSteps(
         tracker.logUpdate();
       }
     } else if (typeof update === "function") {
+      opts.onStep?.();
       tracker.beginUpdate();
       await update(browser.window.document);
       run();
