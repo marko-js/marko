@@ -1292,9 +1292,9 @@ export class Chunk {
           ? branchId + ""
           : state.nextReorderId());
         const { serializeState } = this;
-        // writeScope raises this flag; borrow it to see if the placeholder did.
-        const { flushScopes } = serializeState;
-        serializeState.flushScopes = false;
+        // Start from a clean serializer so anything pending after the render
+        // is the placeholder's own.
+        flushSerializer(this.boundary, serializeState);
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
         const { effects } = this;
         const beforeBranch = deferBranchStart(this);
@@ -1338,7 +1338,6 @@ export class Chunk {
           // now, so its scopes must too or they resume empty.
           flushSerializer(this.boundary, serializeState);
         }
-        serializeState.flushScopes ||= flushScopes;
         this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
         state.reorder(body);
       } else {
