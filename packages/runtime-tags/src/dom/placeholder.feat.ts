@@ -8,9 +8,8 @@ import { destroyBranch } from "./scope";
 registeredValues[PLACEHOLDER_DISMISS_REGISTER_ID] = (
   tryBranch: BranchScope,
 ) => {
-  const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
-  if (placeholderBranch) {
+  if (tryBranch[AccessorProp.PlaceholderBranch]) {
+    destroyBranch(tryBranch[AccessorProp.PlaceholderBranch]);
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    destroyBranch(placeholderBranch);
   }
 };
