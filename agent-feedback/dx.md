@@ -50,12 +50,6 @@ The "CPU-bound, so packing and worker count can't help" conclusion rests on a pr
 
 A `<script>` effect that writes a `<let>` it transitively reads re-renders forever with no cycle or max-depth diagnostic. `<let/n=0/><div>${n}</div><script>{ n = n + 1 }</script>` compiles to a `_let("n/1", ...)` signal that invokes the `_script` effect, whose body calls the setter again: `_let`'s non-rendering branch fires `schedule()` + `queueRender` on every value change with no per-scope update counter, `_script` is a bare `queueEffect` with no dedupe, and `run()` in `dom/queue.ts` drains renders then effects with no depth tracking. Mounted in jsdom the effect runs ~124 times per second (the `queueMicrotask`->`requestAnimationFrame`->`MessageChannel` pacing in `dom/schedule.ts` yields ~2 passes per frame), `n` grows unbounded and the console stays silent; a terminating variant (`if (n < 3) n = n + 1`) settles at `n = 3`, showing each self-write is a full render+effect pass. Writing state from an effect is user error (derive with `<const>`), so the gap is the diagnostic React and Solid provide. Add a `MARKO_DEBUG`-only update-depth guard in `run()`/`queueRender` that throws after N self-perpetuating passes on the same scope+signal.
 
-## Detect mutually-referential `<const>` cycles, not just self-references
-
-`packages/runtime-tags/src/translator/util/references.ts` › `trackReferencesForBinding` | 2026-07-20 | impact:low | effort:med
-
-`trackReferencesForBinding` throws `Tag variable circular references are not supported.` only when a reference's `MarkoAttribute` root is the binding's own tag, so `<const/a=b/><const/b=a/>` passes and compiles. The output then references an undeclared `$b_getter` (`const a = $b_getter;`) and dies with a ReferenceError at render time instead of a compile error. Detect the cycle through the binding graph and reuse the same diagnostic. Verify: `pnpm run compile -o html -d cycle.marko` on `<const/a=b/><const/b=a/><div>${a}${b}</div>` succeeds and emits `$b_getter`.
-
 ## Unify `packages/runtime-class/src` on ESM so its module type can be declared
 
 `packages/runtime-class/package.json` › `files` | 2026-07-24 | impact:low | effort:high
