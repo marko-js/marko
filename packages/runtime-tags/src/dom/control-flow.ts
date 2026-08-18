@@ -312,16 +312,6 @@ function runPendingEffects(scope: BranchScope) {
   }
 }
 
-// A resumed try's stateful placeholder is a live branch until the streamed
-// body lands (placeholder.feat registers this as an effect on the try).
-export function destroyResumedPlaceholder(tryBranch: BranchScope) {
-  const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
-  if (placeholderBranch) {
-    tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    destroyBranch(placeholderBranch);
-  }
-}
-
 function dismissPlaceholder(tryBranch: BranchScope) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
