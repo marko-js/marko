@@ -4,9 +4,19 @@ const $await_content__setup__script = _script("a2", ($scope) => _on($scope.a, "c
 	$clicks($scope._._, +$scope._._.b + 1);
 }));
 const $placeholder_content__clicks = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.b, $scope._.b));
-const $placeholder_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$clicks($scope._, +$scope._.b + 1);
-}));
+const $placeholder_content__setup__script = _script("a0", ($scope) => {
+	_lifecycle($scope, {
+		onMount: function() {
+			console.log("placeholder mounted");
+		},
+		onDestroy: function() {
+			console.log("placeholder destroyed");
+		}
+	});
+	_on($scope.a, "click", function() {
+		$clicks($scope._, +$scope._.b + 1);
+	});
+});
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$placeholder_content__setup__script($scope);

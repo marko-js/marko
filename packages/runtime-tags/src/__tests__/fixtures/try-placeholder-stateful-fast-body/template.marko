@@ -1,8 +1,12 @@
 import { resolveAfter } from "../../utils/resolve";
 
-<let/clicks = 0/>
+<let/clicks=0>
 <try>
   <@placeholder>
+    <lifecycle
+      onMount() { console.log("placeholder mounted") }
+      onDestroy() { console.log("placeholder destroyed") }
+    />
     <button onClick() { clicks++ }>loading ${clicks}</button>
   </@placeholder>
   <await=resolveAfter("done", 1)>

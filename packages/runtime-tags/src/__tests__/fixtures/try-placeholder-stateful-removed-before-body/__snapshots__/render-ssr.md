@@ -3,20 +3,11 @@
 <button>
   hide
 </button>
-<div
-  data-status="loading"
->
-  <section
-    class="on"
-  >
-    A
-  </section>
-</div>
+loading
 ```
 ## Console
 ```
-LOG "child mounted" "a"
-LOG "shell mounted" "loading"
+LOG "placeholder mounted"
 ```
 
 # Update
@@ -30,22 +21,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + div
+REMOVE: button + ::text(" loading")
 ```
 ## Console
 ```
-LOG "child destroyed" "a"
-LOG "shell destroyed" "loading"
-```
-
-# Update
-```html
-<button>
-  hide
-</button>
-```
-## Change
-```
-INSERT: t > div > section
-INSERT: t > div > section::text("A")
+LOG "placeholder destroyed"
 ```

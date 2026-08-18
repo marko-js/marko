@@ -16,9 +16,19 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter("done", 1));
 };
 const $placeholder_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope["#text/1"], $scope._.clicks));
-const $placeholder_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
-	$clicks($scope._, +$scope._.clicks + 1);
-}));
+const $placeholder_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {
+	_lifecycle($scope, {
+		onMount: function() {
+			console.log("placeholder mounted");
+		},
+		onDestroy: function() {
+			console.log("placeholder destroyed");
+		}
+	});
+	_on($scope["#button/0"], "click", function() {
+		$clicks($scope._, +$scope._.clicks + 1);
+	});
+});
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$placeholder_content__setup__script($scope);

@@ -4,6 +4,11 @@
   loaded 0
 </button>
 ```
+## Console
+```
+LOG "placeholder mounted"
+LOG "placeholder destroyed"
+```
 
 # Update
 ```js

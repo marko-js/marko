@@ -1,103 +1,53 @@
 # Render
 
 # Update
-```html
-<div
-  data-status="loading"
->
-  <a
-    href="#b"
-  >
-    open b
-  </a>
-  <section
-    class="on"
-  >
-    A
-  </section>
-</div>
-```
-## Change
-```
-INSERT: div
-UPDATE: div[data-status] null => "loading"
-INSERT: div > a + .on
-UPDATE: .on::text " " => "A"
-UPDATE: .on[class] null => "on"
-```
-## Console
-```
-LOG "shell mounted" "loading" "loading"
-LOG "child mounted" "a"
+```js
+document.querySelector("button")?.click();
 ```
 
 # Update
 ```html
-<div
-  data-status="ready"
->
-  <a
-    href="#b"
-  >
-    open b
-  </a>
-  <section
-    class="on"
-  >
-    A
-  </section>
-</div>
+<button>
+  loading 0
+</button>
 ```
 ## Change
 ```
-INSERT: div
-REMOVE: div + div
-UPDATE: div[data-status] null => "ready"
-INSERT: div > a + .on
-UPDATE: .on::text " " => "A"
-UPDATE: .on[class] null => "on"
+INSERT: button
+UPDATE: button::text@8 "" => "0"
 ```
 ## Console
 ```
-LOG "child destroyed" "a"
-LOG "shell destroyed" "loading"
-LOG "shell mounted" "ready" "ready"
-LOG "child mounted" "a"
+LOG "placeholder mounted"
+```
+
+# Update
+```html
+<button>
+  loaded 0
+</button>
+```
+## Change
+```
+INSERT: button
+REMOVE: button + button
+UPDATE: button::text@7 "" => "0"
+```
+## Console
+```
+LOG "placeholder destroyed"
 ```
 
 # Update
 ```js
-document.querySelector("a").click();
+document.querySelector("button")?.click();
 ```
 ```html
-<div
-  data-status="ready"
->
-  <a
-    href="#b"
-  >
-    open b
-  </a>
-  <section
-    class="off"
-  >
-    A
-  </section>
-  <section
-    class="on"
-  >
-    B
-  </section>
-</div>
+<button>
+  loaded 1
+</button>
 ```
 ## Change
 ```
-UPDATE: .off[class] "on" => "off"
-INSERT: .off + .on
-UPDATE: .on::text " " => "B"
-UPDATE: .on[class] null => "on"
-```
-## Console
-```
-LOG "child mounted" "b"
+UPDATE: button::text@7 "0" => "1"
 ```

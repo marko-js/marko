@@ -1,84 +1,40 @@
-<!--M_[--><!--M_!^b--><!--M_!^4--><!--M_[-->
-<div data-status=loading><a href=#b>open b</a><!--M_[-->
-  <section class=on>A<!--M_*9 b--></section>
-  <!--M_*9 a--><!--M_|7 a 8--><!--M_]6 b 7-->
-</div><!--M_*6 a--><!--M_]2 P4 3--><!--M_!4--><!--M_!b--><!--M_]2 a 4-->
-<t hidden M_=4><!--M_#c--></t>
+<!--M_[--><!--M_!^3--><!--M_[--><button>loading <!>
+    0<!--M_*4 b--></button><!--M_*4 a--><!--M_]1 P3 2--><!--M_!3--><!--M_]1 a 3-->
+<t hidden M_=3><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [];
-  M._.j[4] = _ => {
-    _.push("f 4")
+  M._.j[3] = _ => {
+    _.push("f 3")
   };
   M._.r.push(_ => [1, {
-    b: [{
-      id: "a",
-      name: "A"
-    }, {
-      id: "b",
-      name: "B"
-    }]
-  }, {
-    _: _(1)
+    b: 0,
+    c: new Set
   }, 1, {
+    _: _(1),
     C: "a",
-    E: _(2, "a1"),
-    Q: _(2, "a0")
-  }], "b0 9 c1 6", _ => [4, {
-    P: _(3)
+    Q: _(1, "a3")
+  }], "a0 4", _ => (_([3, {
+    P: _(2)
   }, {
-    _: _(2),
-    G: 3
-  }, {
-    e: "loading",
-    f: _.a = _(1).b,
-    g: "a",
-    h: ["a"],
-    i: _(6, "c0"),
-    l: new Set([_(8)]),
-    G: 3
-  }, {
-    e: _.b = _.a[0],
-    f: "a",
-    M: "a"
-  }, {
-    a: _(9)
-  }, {
-    f: "a",
-    G: 8
-  }]);
+    _: _(1),
+    G: 2
+  }]), (_.a = _(1).c).add(_(4)), 0));
   M._.w()
 </script>
 
 <!-- FLUSH -->
 
-<t hidden M_=c>
-  <div data-status=ready><a href=#b>open b</a><!--M_[-->
-    <section class=on>A<!--M_*14 b--></section>
-    <!--M_*14 a--><!--M_|12 a 13--><!--M_]11 b 12-->
-  </div><!--M_*11 a-->
-</t>
+<t hidden M_=b><!--M_[--><button>loaded <!>
+      0<!--M_*5 b--></button><!--M_*5 a--><!--M_]3 a 5--></t>
 <script>
-  M._.j.c = _ => {
-    _.push("b0 14 c1 11")
+  M._.j.b = _ => {
+    _.push("a1 5 a2 5")
   };
-  M._.r.push(_ => [11, {
-    e: "ready",
-    f: _.a,
-    g: "a",
-    h: ["a"],
-    i: _(11, "c0"),
-    l: new Set([_(13)])
-  }, {
-    e: _.b,
-    f: "a",
-    M: "a"
-  }, {
-    a: _(14)
-  }, {
-    G: 13,
-    f: "a"
+  M._.r.push(_ => [5, {
+    _: _(3),
+    Cc: 1
   }]);
   M._.w()
 </script>
