@@ -13,6 +13,8 @@ const globals = (brand: string, locale: string, other: string) => ({
 
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [
     globals("Marko", "en", "x"),
     globals("Marko", "en", "y"),

@@ -132,6 +132,29 @@ export default function createMutationTracker(browser: {
   }
 }
 
+// The body as the render log prints it (markers, scripts and whitespace
+// dropped): two documents that print alike render alike. `defaults` off
+// drops the `default-*` annotations (a patched control keeps the defaults
+// it loaded with; a fresh render's defaults are its current values).
+export function formatBody(body: Document["body"], defaults = true) {
+  const clone = cloneAndSanitize(body);
+  if (!defaults) {
+    for (const el of (clone as Element).querySelectorAll(
+      "[default-value],[default-checked],[default-selected]",
+    )) {
+      el.removeAttribute("default-value");
+      el.removeAttribute("default-checked");
+      el.removeAttribute("default-selected");
+    }
+  }
+  return Array.from(clone.childNodes, (node) =>
+    format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
+  )
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+}
+
 function cloneAndSanitize(body: Document["body"]) {
   const clone = body.cloneNode(true) as ParentNode;
   const ignoredNodes: ChildNode[] = [];
@@ -247,14 +270,7 @@ function getStatusString(
     .filter(Boolean)
     .join("\n");
   const formattedHTML =
-    !body || (hasRendered && !formattedMutations)
-      ? ""
-      : Array.from(cloneAndSanitize(body).childNodes, (node) =>
-          format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
-        )
-          .filter(Boolean)
-          .join("\n")
-          .trim();
+    !body || (hasRendered && !formattedMutations) ? "" : formatBody(body);
 
   if (
     hasRendered &&
