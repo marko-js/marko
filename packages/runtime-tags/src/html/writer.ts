@@ -912,47 +912,36 @@ export function _try(
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
-
-  writeBranch(scopeId, accessor, branchId, () => {
-    if (catchContent !== undefined) {
-      tryCatch(
-        placeholderContent
-          ? () =>
-              tryPlaceholder(content, placeholderContent, {
-                branchId,
-                scopeId,
-                placeholderBranchId,
-              })
-          : content,
-        catchContent || (() => {}),
-      );
-    } else if (placeholderContent) {
-      tryPlaceholder(content, placeholderContent, {
-        branchId,
-        scopeId,
-        placeholderBranchId,
-      });
-    } else {
-      content();
-    }
-
-    writeScope(branchId, {
-      [AccessorProp.BranchAccessor]: accessor,
-      [AccessorProp.CatchContent]: catchContent,
-      [AccessorProp.PlaceholderContent]: placeholderContent,
-    });
-  });
-}
-
-/** Content resumed as its own branch (`branchId` is its first scope). */
-function writeBranch(
-  scopeId: number,
-  accessor: Accessor,
-  branchId: number,
-  content: () => void,
-) {
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
-  content();
+
+  if (catchContent !== undefined) {
+    tryCatch(
+      placeholderContent
+        ? () =>
+            tryPlaceholder(content, placeholderContent, {
+              branchId,
+              scopeId,
+              placeholderBranchId,
+            })
+        : content,
+      catchContent || (() => {}),
+    );
+  } else if (placeholderContent) {
+    tryPlaceholder(content, placeholderContent, {
+      branchId,
+      scopeId,
+      placeholderBranchId,
+    });
+  } else {
+    content();
+  }
+
+  writeScope(branchId, {
+    [AccessorProp.BranchAccessor]: accessor,
+    [AccessorProp.CatchContent]: catchContent,
+    [AccessorProp.PlaceholderContent]: placeholderContent,
+  });
+
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       ResumeSymbol.BranchEnd,
@@ -1302,40 +1291,45 @@ export class Chunk {
         const reorderId = (body.reorderId = branchId
           ? branchId + ""
           : state.nextReorderId());
-        // A stateful placeholder is a branch like the body: live while the
-        // body streams, destroyed when the reorder swaps it in.
-        const placeholderChunk = this.fork(this.boundary, null);
         const { serializeState } = this;
         // writeScope raises this flag; borrow it to see if the placeholder did.
         const { flushScopes } = serializeState;
         serializeState.flushScopes = false;
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
-        if (
-          placeholderChunk !==
-          placeholderChunk.render(() =>
-            withBranchId(placeholderBranchId, placeholder.render),
-          )
-        ) {
+        const { effects } = this;
+        const beforeBranch = deferBranchStart(this);
+        const after = this.render(() =>
+          withBranchId(placeholderBranchId, placeholder.render),
+        );
+        // A stateful placeholder is a branch like the body: live while the
+        // body streams, destroyed when the reorder swaps it in.
+        const stateful =
+          after === this &&
+          (this.effects !== effects || serializeState.flushScopes);
+        applyBranchStart(this, beforeBranch, stateful);
+        if (after !== this) {
           // TODO: eventually this should be allowed.
           // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
           this.boundary.abort(
             new Error("An @placeholder cannot contain async content."),
           );
-        } else if (placeholderChunk.effects || serializeState.flushScopes) {
+        } else if (stateful) {
           this.render(() =>
-            writeBranch(
-              scopeId,
-              AccessorProp.PlaceholderBranch + branchId,
-              placeholderBranchId,
-              () => {
-                this.append(placeholderChunk);
-                writeScope(branchId, {
-                  [AccessorProp.PlaceholderBranch]: scopeWithId(
-                    state,
-                    placeholderBranchId,
-                  ),
-                });
-              },
+            writeScope(branchId, {
+              [AccessorProp.PlaceholderBranch]: scopeWithId(
+                state,
+                placeholderBranchId,
+              ),
+            }),
+          );
+          this.writeHTML(
+            state.mark(
+              ResumeSymbol.BranchEnd,
+              scopeId +
+                " " +
+                (AccessorProp.PlaceholderBranch + branchId) +
+                " " +
+                placeholderBranchId,
             ),
           );
           // The body's flush ends the placeholder's life on the client.
@@ -1343,8 +1337,6 @@ export class Chunk {
           // Rendered after this flush's serializer pass; its effects go out
           // now, so its scopes must too or they resume empty.
           flushSerializer(this.boundary, serializeState);
-        } else {
-          this.append(placeholderChunk);
         }
         serializeState.flushScopes ||= flushScopes;
         this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
