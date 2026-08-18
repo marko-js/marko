@@ -4,6 +4,8 @@ import type { TestConfig } from "../../main.test";
 // then — the runs counter shows patches without a change skip it).
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [
     { title: "Store", announce: "sale" },
     { title: "Store!", announce: "sale" },
