@@ -4,5 +4,7 @@ import type { TestConfig } from "../../main.test";
 // refreshes it and re-runs the reader per frame change.
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [{ title: "a" }, { title: "a" }, { title: "b" }],
 };

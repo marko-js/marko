@@ -16,6 +16,9 @@ const check = (document: Document) => {
 // input to uncontrolled behavior — typing sticks, nothing reports.
 export const config: TestConfig = {
   persisted: true,
+  // An uncontrolled input keeps its live value (CSR semantics); a fresh
+  // render shows the new default.
+  skip_fresh_render: true,
   steps: [
     { title: "Store", value: "first", wire: true },
     { title: "Store!", value: "second", wire: false },
