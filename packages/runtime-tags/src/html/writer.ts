@@ -1291,21 +1291,15 @@ export class Chunk {
         const reorderId = (body.reorderId = branchId
           ? branchId + ""
           : state.nextReorderId());
-        const { serializeState } = this;
-        // Start from a clean serializer so anything pending after the render
-        // is the placeholder's own.
-        flushSerializer(this.boundary, serializeState);
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
         const { effects } = this;
         const beforeBranch = deferBranchStart(this);
         const after = this.render(() =>
           withBranchId(placeholderBranchId, placeholder.render),
         );
-        // A stateful placeholder is a branch like the body: live while the
-        // body streams, destroyed when the reorder swaps it in.
-        const stateful =
-          after === this &&
-          (this.effects !== effects || serializeState.flushScopes);
+        // A placeholder with effects is a branch like the body: live while
+        // the body streams, destroyed when the reorder swaps it in.
+        const stateful = after === this && this.effects !== effects;
         applyBranchStart(this, beforeBranch, stateful);
         if (after !== this) {
           // TODO: eventually this should be allowed.
@@ -1334,9 +1328,6 @@ export class Chunk {
           );
           // The body's flush ends the placeholder's life on the client.
           body.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
-          // Rendered after this flush's serializer pass; its effects go out
-          // now, so its scopes must too or they resume empty.
-          flushSerializer(this.boundary, serializeState);
         }
         this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
         state.reorder(body);
@@ -1612,8 +1603,8 @@ export class Chunk {
       state.writeReorders = carried;
     }
 
-    // After the reorders: their placeholders render in that pass, and a
-    // stateful one's scopes must ride this same flush as its effects do.
+    // Placeholders render during this pass; their scopes go out with it.
+    flushSerializer(boundary, state);
     if (state.resumes) {
       if (state.hasWrittenResume) {
         scripts = concatScripts(
