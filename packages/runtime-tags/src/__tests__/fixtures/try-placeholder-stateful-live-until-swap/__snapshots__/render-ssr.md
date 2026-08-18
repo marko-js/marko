@@ -1,93 +1,57 @@
 # Render
 ```html
-<div
-  data-status="loading"
->
-  <a
-    href="#b"
-  >
-    open b
-  </a>
-  <section
-    class="on"
-  >
-    A
-  </section>
-</div>
+<button>
+  loading 0
+</button>
 ```
 ## Console
 ```
-LOG "child mounted" "a"
-LOG "shell mounted" "loading" "loading"
-```
-
-# Update
-```html
-<div
-  data-status="ready"
->
-  <a
-    href="#b"
-  >
-    open b
-  </a>
-  <section
-    class="on"
-  >
-    A
-  </section>
-</div>
-```
-## Change
-```
-INSERT: div > a
-INSERT: div > a::text("open b")
-INSERT: div > a + .on
-INSERT: .on::text("A")
-REMOVE: div
-INSERT: div
-```
-## Console
-```
-LOG "child destroyed" "a"
-LOG "shell destroyed" "loading"
-LOG "child mounted" "a"
-LOG "shell mounted" "ready" "ready"
+LOG "placeholder mounted"
 ```
 
 # Update
 ```js
-document.querySelector("a").click();
+document.querySelector("button")?.click();
 ```
 ```html
-<div
-  data-status="ready"
->
-  <a
-    href="#b"
-  >
-    open b
-  </a>
-  <section
-    class="off"
-  >
-    A
-  </section>
-  <section
-    class="on"
-  >
-    B
-  </section>
-</div>
+<button>
+  loading 1
+</button>
 ```
 ## Change
 ```
-UPDATE: .off[class] "on" => "off"
-INSERT: .off + .on
-UPDATE: .on::text " " => "B"
-UPDATE: .on[class] null => "on"
+UPDATE: button::text@8 "0" => "1"
+```
+
+# Update
+```html
+<button>
+  loaded 1
+</button>
+```
+## Change
+```
+INSERT: button::text("loaded ")
+INSERT: button::text@0 + ::text("1")
+REMOVE: button
+INSERT: button
+UPDATE: button::text@7 "0" => "1"
 ```
 ## Console
 ```
-LOG "child mounted" "b"
+LOG "placeholder destroyed"
+```
+
+# Update
+```js
+document.querySelector("button")?.click();
+```
+```html
+<button>
+  loaded 2
+</button>
+```
+## Change
+```
+UPDATE: button::text@7 "1" => "2"
 ```

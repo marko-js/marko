@@ -5,10 +5,12 @@ import { resolveAfter } from "../../utils/resolve";
 <if=show>
   <try>
     <@placeholder>
-      <shell status="loading"/>
+      <lifecycle
+        onMount() { console.log("placeholder mounted") }
+        onDestroy() { console.log("placeholder destroyed") }
+      />
+      loading
     </@placeholder>
-    <await|status|=resolveAfter({ ok: true }, 3)>
-      <shell status="ready"/>
-    </await>
+    <await=resolveAfter("done", 3)>done</await>
   </try>
 </if>

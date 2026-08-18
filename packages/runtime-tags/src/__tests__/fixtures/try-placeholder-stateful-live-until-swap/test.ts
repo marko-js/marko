@@ -2,12 +2,11 @@ import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
 
 const click = (document: Document) =>
-  document.querySelector<HTMLAnchorElement>("a")!.click();
+  document.querySelector<HTMLButtonElement>("button")?.click();
 
-// Entry runs first, the streamed body lands after. The stateful placeholder
-// resumes live (its lifecycles mount with their data), and the swap destroys
-// it — its document listener must not keep stealing clicks from the body.
+// A stateful placeholder resumes live while the body streams and is
+// destroyed when the body swaps in.
 export const config: TestConfig = {
   equivalent: false,
-  steps: [{}, wait, flush, click],
+  steps: [{}, click, wait, flush, click],
 };

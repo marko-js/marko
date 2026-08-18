@@ -11,6 +11,10 @@
 INSERT: button
 UPDATE: button::text@8 "" => "0"
 ```
+## Console
+```
+LOG "placeholder mounted"
+```
 
 # Update
 ```html
@@ -23,6 +27,10 @@ UPDATE: button::text@8 "" => "0"
 INSERT: button
 REMOVE: button + button
 UPDATE: button::text@7 "" => "0"
+```
+## Console
+```
+LOG "placeholder destroyed"
 ```
 
 # Update

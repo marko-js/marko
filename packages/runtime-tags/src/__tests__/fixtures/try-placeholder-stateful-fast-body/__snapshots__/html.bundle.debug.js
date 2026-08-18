@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope3_id, {
 				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:clicks": 1
-			}, "__tests__/template.marko", "8:4");
+			}, "__tests__/template.marko", "12:4");
 			_resume_branch($scope3_id);
 		});
 		writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
