@@ -918,20 +918,24 @@ export function _try(
     tryCatch(
       placeholderContent
         ? () =>
-            tryPlaceholder(content, placeholderContent, {
+            tryPlaceholder(
+              content,
+              placeholderContent,
               branchId,
               scopeId,
               placeholderBranchId,
-            })
+            )
         : content,
       catchContent || (() => {}),
     );
   } else if (placeholderContent) {
-    tryPlaceholder(content, placeholderContent, {
+    tryPlaceholder(
+      content,
+      placeholderContent,
       branchId,
       scopeId,
       placeholderBranchId,
-    });
+    );
   } else {
     content();
   }
@@ -953,7 +957,9 @@ export function _try(
 function tryPlaceholder(
   content: () => void,
   placeholder: () => void,
-  ids: PlaceholderIds,
+  branchId: number,
+  scopeId: number,
+  placeholderBranchId: number,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -965,16 +971,13 @@ function tryPlaceholder(
   }
 
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
-  chunk.placeholder = { body, render: placeholder, ...ids };
-}
-
-interface PlaceholderIds {
-  /** The try's branch (its body's first scope). */
-  branchId: number;
-  /** The scope owning the try. */
-  scopeId: number;
-  /** Reserved ahead of the body for the placeholder's own branch. */
-  placeholderBranchId: number;
+  chunk.placeholder = {
+    body,
+    render: placeholder,
+    branchId,
+    scopeId,
+    placeholderBranchId,
+  };
 }
 
 function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
@@ -1210,12 +1213,14 @@ export class Chunk {
   public needsWalk = false;
   public reorderId: string | null = null;
   public deferredReady: Opt<Chunk> = null;
-  public placeholder:
-    | (PlaceholderIds & {
-        body: Chunk;
-        render: () => void;
-      })
-    | null = null;
+  public placeholder: {
+    body: Chunk;
+    render: () => void;
+    branchId: number;
+    scopeId: number;
+    // Reserved ahead of the body for the placeholder's own branch.
+    placeholderBranchId: number;
+  } | null = null;
   public boundary: Boundary;
   public next: Chunk | null;
   public context: Record<string | symbol, unknown> | null;

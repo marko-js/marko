@@ -54,7 +54,7 @@ export interface RenderData {
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredValues: Record<string, unknown> = {};
+export const registeredValues: Record<string, unknown> = {};
 let curRenders: Renders;
 let embedRenders:
   | undefined
