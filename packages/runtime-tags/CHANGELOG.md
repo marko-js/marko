@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.3.40
+
+### Patch Changes
+
+- [#3990](https://github.com/marko-js/marko/pull/3990) [`c425ea9`](https://github.com/marko-js/marko/commit/c425ea93ef17cc1e525b9cafcf61754bc44243cc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A streamed `<try>` placeholder with state now resumes as its own branch: its scopes ship with the flush that registers its effects (so lifecycles see their input), and swapping the body in destroys it — its listeners and effects no longer outlive it.
+
+- [#3991](https://github.com/marko-js/marko/pull/3991) [`a909c03`](https://github.com/marko-js/marko/commit/a909c036555f6abedaf8c02a9636921dd8ac59d1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Hoist a single `$global` read per template in HTML output so deferred callbacks close over the value instead of throwing when the render chunk is gone.
+
 ## 6.3.39
 
 ### Patch Changes
