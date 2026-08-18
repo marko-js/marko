@@ -4,6 +4,8 @@ import type { TestConfig } from "../../main.test";
 // change to ANY serialized global re-runs the script (never goes stale).
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [
     {
       $global: {

@@ -4,6 +4,8 @@ import type { TestConfig } from "../../main.test";
 // value changes, and a constructed branch runs it against current fills.
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [
     { title: "Store", show: true, value: "a" },
     { title: "Store", show: true, value: "b" },

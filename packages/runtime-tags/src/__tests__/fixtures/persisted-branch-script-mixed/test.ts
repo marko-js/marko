@@ -12,6 +12,8 @@ const step = (value: string, brand: string, title = "Store") => ({
 
 export const config: TestConfig = {
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
   steps: [
     step("a", "Marko"),
     step("b", "Marko"),
