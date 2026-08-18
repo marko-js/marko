@@ -23,6 +23,9 @@ var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_class_fn = (_component) => function(count) {
+	_component.handlePing(count);
+};
 const _marko_component = {
 	onCreate() {
 		this.state = { pinged: "none" };
@@ -35,9 +38,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 	out.w("<div id=class>");
 	out.w((0, import_escape_xml.x)(state.pinged));
 	out.w("</div>");
-	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "onPing": function(count) {
-		_component.handlePing(count);
-	} }), null, null, null, _componentDef, "1");
+	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "onPing": (0, import_runtime_html.f)("__tests__/template.marko/h0", _marko_class_fn(_component), _component, out) }), null, null, null, _componentDef, "1");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "2");
 }, {
 	t: _marko_componentType,

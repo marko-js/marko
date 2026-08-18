@@ -1,4 +1,4 @@
-// size: 26283 (min) 9764 (brotli)
+// size: 26316 (min) 9796 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1989,6 +1989,9 @@ let empty = [],
     },
     setClassEventResolver(fn) {
       classEventResolver = fn;
+    },
+    resumeClassFunction(id, build) {
+      _resume(id, build);
     },
     getScope($global, scopeId) {
       return getRenderScopes($global)?.[scopeId];

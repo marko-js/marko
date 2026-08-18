@@ -140,6 +140,17 @@ export const compat = {
     }
 
     head.render(() => {
+      // Handlers bind to a scope of their own: sharing the boundary scope would
+      // pull whatever input the child was given through the serializer with them.
+      if (this.hasPendingClassFunctions(classAPIOut.global)) {
+        drainClassFunctions(classAPIOut.global, (hostId) => {
+          const fnScopeId = _scope_id();
+          const scope = _scope(fnScopeId, { m5c: component.id, m5h: hostId });
+          _script(fnScopeId, SET_SCOPE_REGISTER_ID);
+          return scope;
+        });
+      }
+
       if (willRerender || registerChildScope) {
         const scopeId = _peek_scope_id();
         _scope(scopeId, { m5c: component.id });
@@ -178,7 +189,8 @@ export const compat = {
     register(RENDER_BODY_ID, fn);
   },
   // A class closure has no browser identity, so it resumes as a noop; a parent
-  // that rerenders replaces it with the live handler as it hydrates.
+  // that rerenders replaces it with the live handler as it hydrates. Only the
+  // top level is scanned: crawling every input would cost more than it serializes.
   registerClassFunctions(input: any) {
     // Own keys only: a nested closure resuming as a noop swallows its own clicks,
     // so leaving it to fail as unserializable reports the split parent instead.
@@ -189,6 +201,42 @@ export const compat = {
       }
     }
   },
+  // Hold a direct class→tags handler until its resume scope is created below.
+  registerClassFunction<T extends WeakKey>(
+    $global: object,
+    id: string,
+    fn: T,
+    hostId: string,
+  ) {
+    let pending = pendingClassFunctions.get($global);
+    if (!pending) {
+      pendingClassFunctions.set($global, (pending = []));
+    }
+    pending.push([id, fn, hostId]);
+    return fn;
+  },
+  hasPendingClassFunctions($global: object) {
+    return !!pendingClassFunctions.get($global)?.length;
+  },
 };
+
+// Keyed by $global so an aborted render's entries die with it instead of
+// bleeding into whichever class-to-tags render drains next.
+const pendingClassFunctions = new WeakMap<
+  object,
+  [id: string, fn: WeakKey, hostId: string][]
+>();
+
+function drainClassFunctions(
+  $global: object,
+  writeScope: (hostId: string) => unknown,
+) {
+  const pending = pendingClassFunctions.get($global)!;
+  const scopeByHost: Record<string, unknown> = {};
+  for (const [id, fn, hostId] of pending) {
+    register(id, fn, (scopeByHost[hostId] ||= writeScope(hostId)));
+  }
+  pending.length = 0;
+}
 
 function NOOP() {}
