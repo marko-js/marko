@@ -9,7 +9,14 @@ const createRenderer = require("../../components/renderer");
 const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
 
+// Bound in `p` so entry files (html / html-debug, cjs / esm) just re-export `f`.
+let registerClassFunction;
+
+exports.f = (id, fn, component, out) =>
+  registerClassFunction(out.global, id, fn, component.id);
+
 exports.p = function (htmlCompat) {
+  registerClassFunction = htmlCompat.registerClassFunction;
   const writersByGlobal = new WeakMap();
   const boundaryModeByRenderer = new WeakMap();
   const isMarko6 = (fn) => typeof fn !== "function" || htmlCompat.isTagsAPI(fn);
@@ -144,7 +151,9 @@ exports.p = function (htmlCompat) {
         component,
         input,
         writers.tagsAPI,
-        !willRerender && hasBridgedClassEvent(input),
+        !willRerender &&
+          (hasBridgedClassEvent(input) ||
+            htmlCompat.hasPendingClassFunctions(out.global)),
       );
       out.ef();
     },
