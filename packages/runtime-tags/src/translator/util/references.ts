@@ -2156,10 +2156,13 @@ export function getReadReplacement(
         ) {
           replacement = getSignalValueIdentifier(signal);
         } else if (read.getter?.hoisted) {
-          replacement = t.callExpression(
-            getBindingGetterIdentifier(readBinding, read.getter.hoisted),
-            [getScopeExpression(extra.section!, read.getter.hoisted)],
-          );
+          // Alias getters are never declared on section.bindings.
+          replacement = readBinding.upstreamAlias
+            ? callRuntime("_hoist_read_error")
+            : t.callExpression(
+                getBindingGetterIdentifier(readBinding, read.getter.hoisted),
+                [getScopeExpression(extra.section!, read.getter.hoisted)],
+              );
         } else if (readBinding.type === BindingType.dom) {
           if (read.getter) {
             replacement = t.callExpression(
@@ -2182,10 +2185,9 @@ export function getReadReplacement(
         if (node.type !== "Identifier") {
           replacement = t.identifier(readBinding.name);
         } else if (read.getter?.hoisted) {
-          replacement = getBindingGetterIdentifier(
-            readBinding,
-            read.getter.hoisted,
-          );
+          replacement = readBinding.upstreamAlias
+            ? callRuntime("_hoist_read_error")
+            : getBindingGetterIdentifier(readBinding, read.getter.hoisted);
         } else if (readBinding.type === BindingType.dom) {
           if (readBinding.getters.has(readBinding.section)) {
             replacement = getBindingGetterIdentifier(
