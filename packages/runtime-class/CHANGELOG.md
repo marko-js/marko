@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.35
+
+### Patch Changes
+
+- [#3997](https://github.com/marko-js/marko/pull/3997) [`d3ded54`](https://github.com/marko-js/marko/commit/d3ded5496cf092525a81459cf4e7f31561ffbecf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resume a Class-API parent's direct inline event handlers on a Tags-API child, including under a split parent. They previously serialized as a noop, so a split parent's handler never fired and the rest only worked once the parent rerendered.
+
+- [#3999](https://github.com/marko-js/marko/pull/3999) [`cb6e6f4`](https://github.com/marko-js/marko/commit/cb6e6f44013e9878f60c55c6bd096898db93a7df) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Improve types for Marko 5 w/ interop
+
+- Updated dependencies [[`2a4fe2e`](https://github.com/marko-js/marko/commit/2a4fe2ed54a7e3a5fc559ba589d75370a91629f2), [`d3ded54`](https://github.com/marko-js/marko/commit/d3ded5496cf092525a81459cf4e7f31561ffbecf), [`cb6e6f4`](https://github.com/marko-js/marko/commit/cb6e6f44013e9878f60c55c6bd096898db93a7df)]:
+  - @marko/runtime-tags@6.3.41
+
 ## 5.39.34
 
 ### Patch Changes
