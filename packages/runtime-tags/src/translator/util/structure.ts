@@ -77,6 +77,12 @@ export function writeTo(path: t.NodePath<any>) {
   };
 }
 
+export function writeTextTo(path: t.NodePath<any>, value: string) {
+  if (value) {
+    getSection(path).structure?.push({ kind: StructureKind.Text, value });
+  }
+}
+
 function pushMarkup(structure: StructureOp[], str: string) {
   if (!str) return;
   const last = structure.length - 1;
@@ -117,14 +123,23 @@ export function resolveStructure(section: Section) {
     walkComment: [],
     steps: startDynamic ? [Step.Enter, Step.Exit] : [],
   };
+  let textEdge: undefined | "own" | "child";
 
   for (const op of section.structure!) {
     if (typeof op === "string") {
       appendLiteral(resolved.writes, op);
+      textEdge = undefined;
     } else if (typeof op === "number") {
       resolved.steps.push(op);
     } else {
       switch (op.kind) {
+        case StructureKind.Text:
+          if (textEdge === "child") {
+            separate(resolved);
+          }
+          appendLiteral(resolved.writes, op.value);
+          textEdge = "own";
+          break;
         case StructureKind.Visit:
           if (!op.claimed) continue;
           flushSteps(resolved);
@@ -132,9 +147,16 @@ export function resolveStructure(section: Section) {
           appendLiteral(resolved.walks, String.fromCharCode(op.code));
           if (op.code !== WalkCode.Get) {
             appendLiteral(resolved.writes, "<!>");
+            textEdge = undefined;
           }
           break;
         case StructureKind.Child: {
+          const content = refContent(op.renderer);
+          if (textEdge && content?.startType === ContentType.Text) {
+            separate(resolved);
+          }
+          textEdge =
+            content?.endType === ContentType.Text ? "child" : undefined;
           flushSteps(resolved);
           const template = op.renderer && resolveRef(op.renderer, "template");
           if (template) {
@@ -165,6 +187,18 @@ export function resolveStructure(section: Section) {
 
   flushSteps(resolved);
   return resolved;
+}
+
+function separate(resolved: ResolvedStructure) {
+  appendLiteral(resolved.writes, "<!>");
+  resolved.steps.push(Step.Enter, Step.Exit);
+}
+
+function refContent(ref: StructureRef | undefined) {
+  const section =
+    ref &&
+    (ref.kind === StructureKind.SectionRef ? ref.section : ref.program.section);
+  return section?.content;
 }
 
 // A ref reads this compile's identifier for a renderer part: a sibling

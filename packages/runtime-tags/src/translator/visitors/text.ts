@@ -12,7 +12,7 @@ export default {
     exit(text) {
       if (isNonHTMLText(text)) return;
 
-      structure.writeTo(text)`${text.node.value}`;
+      structure.writeTextTo(text, text.node.value);
       // Adjacent static text merges into one DOM text node, so only the run's
       // first node emits its walk step; later nodes defer to it.
       if (!isStaticText(getPrevStaticSibling(text))) {

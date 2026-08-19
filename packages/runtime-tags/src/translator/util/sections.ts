@@ -73,8 +73,16 @@ export interface StructureExportRef {
 export type StructureOp =
   | string // static markup
   | Step.Value // walk enter/exit step
+  | StructureText
   | StructureVisit
   | StructureChild;
+
+// Static text written into the markup; distinguished from markup strings so
+// resolution knows which template edges parse as text nodes.
+export interface StructureText {
+  kind: typeof StructureKind.Text;
+  value: string;
+}
 
 export interface StructureVisit {
   kind: typeof StructureKind.Visit;

@@ -88,7 +88,7 @@ export default {
 
       const extra = node.extra || {};
       if (confident && node.escape) {
-        structure.writeTo(placeholder)`${staticText!}`;
+        structure.writeTextTo(placeholder, staticText!);
       } else {
         const siblingText = extra[kSiblingText]!;
         if (
@@ -97,7 +97,7 @@ export default {
         ) {
           structure.visit(placeholder, WalkCode.Replace);
         } else {
-          structure.writeTo(placeholder)` `;
+          structure.writeTextTo(placeholder, " ");
           structure.visit(placeholder, WalkCode.Get);
         }
       }
