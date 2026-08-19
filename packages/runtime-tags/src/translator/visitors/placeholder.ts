@@ -10,7 +10,7 @@ import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   ensurePersistedWriteGroups,
-  inStateSelectedStructure,
+  inStatefulBranch,
   isBranchPathSection,
 } from "../util/persisted/structure";
 import {
@@ -203,7 +203,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       isPersisted() &&
       node.escape &&
       isBranchPathSection(section) &&
-      !inStateSelectedStructure(section) &&
+      !inStatefulBranch(section) &&
       !!nodeBinding &&
       !holeSources?.state;
     const isPatchText = isHTML && isPatch;

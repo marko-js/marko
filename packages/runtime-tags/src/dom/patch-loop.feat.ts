@@ -9,7 +9,7 @@ import {
   type Scope,
 } from "../common/types";
 import { _for_of } from "./control-flow";
-import { shells } from "./patch-branch.feat";
+import { shells } from "./patch-shells";
 import { failPatch, patchers, patchScope, withConstructing } from "./resume";
 
 // Interleaved `[key, partial, …, shellId?]`: an object head means implicit

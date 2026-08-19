@@ -1,7 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
-// Static list AND static item content: no patch can ever target the loop,
-// so the marker does not resume (no wasted page bytes).
+// A static list whose items hold a hole: the items link (an enclosing
+// construct needs their text), so the marker resumes and each patch
+// re-ships the constant item text.
 export const config: TestConfig = {
   persisted: true,
   steps: [{ title: "Store" }, { title: "Store!" }],

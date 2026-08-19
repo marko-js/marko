@@ -9,7 +9,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	if ($scope0_reason) _if(() => {
 		if (on) {
 			const $scope1_id = _scope_id();
-			_html(`<b>${_escape(input.title)}${_el_resume($scope1_id, "#text/0", _source_guard($scope0_reason, 0))}</b>`);
+			_html(`<b>${_escape(input.title)}${_el_resume($scope1_id, "#text/0")}</b>`);
 			writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		} else {

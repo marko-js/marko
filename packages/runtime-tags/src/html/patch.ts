@@ -1,5 +1,6 @@
 import {
   normalizeAttrValue,
+  normalizeDynamicRenderer,
   stringifyClassObject,
   stringifyStyleObject,
   toDelimitedString,
@@ -10,7 +11,7 @@ import type {
   Template,
   TemplateInput,
 } from "../common/types";
-import { AccessorPrefix, PatchKey } from "../common/types";
+import { AccessorPrefix, PatchKey, RendererProp } from "../common/types";
 import {
   _attr,
   _attr_option_value,
@@ -117,6 +118,13 @@ class PatchState extends State {
   override writesPatches = true;
   override shipShell(shellId: string | 0 | undefined) {
     return shipShell(this, shellId);
+  }
+  override pairBranch(scopeId: number, accessor: Accessor, branchId: number) {
+    if (!this.patchInert && !this.patchPartials?.[branchId]) {
+      const link = AccessorPrefix.BranchScopes + accessor;
+      (this.patchParents ??= {})[branchId] = [scopeId, link];
+      (this.patchPending ??= {})[branchId] = [scopeId, PatchKey.Child + link];
+    }
   }
 
   constructor($global: State["$global"]) {
@@ -282,11 +290,13 @@ export function _patch_attr(
   if (state.writesPatches) {
     // `0` is the removal sentinel: normalized values are always strings and
     // `undefined` entries are dropped entirely.
-    if (serverOwned(owned, group)) {
-      writePatch(scopeId, {
-        [PatchKey.Attr + accessor + " " + name]: normalizeAttrValue(value) ?? 0,
-      });
-    }
+    writeOwned(
+      scopeId,
+      PatchKey.Attr + accessor + " " + name,
+      normalizeAttrValue(value) ?? 0,
+      owned,
+      group,
+    );
   } else {
     getChunk()!.needsWalk = true;
   }
@@ -411,9 +421,15 @@ export function _patch_control(
   group?: number,
 ) {
   const state = getState();
-  if (state.writesPatches && serverOwned(owned, group)) {
+  if (state.writesPatches && ownedWrite(owned, group)) {
     writeEmbeddedBinds(state as PatchState, value);
-    writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
+    writeOwned(
+      scopeId,
+      PatchKey.Control + type + accessor,
+      value,
+      owned,
+      group,
+    );
   }
   return "";
 }
@@ -428,7 +444,7 @@ export function _patch_bind(
   group?: number,
 ) {
   const state = getState();
-  if (state.writesPatches && serverOwned(owned, group)) {
+  if (state.writesPatches && ownedWrite(owned, group)) {
     const registered = !!value && getRegistered(value as WeakKey);
     const bound =
       registered && (registered.scope as ScopeInternals | undefined);
@@ -570,6 +586,33 @@ export function _patch_effect(
   return "";
 }
 
+// The dynamic tag entry of `input` content: a shell record ships its id
+// alone, a registered renderer rides the serializer, `0` marks none.
+export function _patch_dynamic_tag(
+  scopeId: number,
+  accessor: Accessor,
+  tag: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const state = getState();
+  if (!state.writesPatches) {
+    getChunk()!.needsWalk = true;
+  } else {
+    const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
+    if (ownedWrite(owned, group)) {
+      const id =
+        typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
+      writePatch(scopeId, {
+        [PatchKey.DynamicTag + accessor]:
+          id && shells[id]
+            ? [shipShell(state as PatchState, id)]
+            : (renderer ?? 0),
+      });
+    }
+  }
+}
+
 export function _patch_text(
   scopeId: number,
   accessor: Accessor,
@@ -579,11 +622,13 @@ export function _patch_text(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (serverOwned(owned, group)) {
-      writePatch(scopeId, {
-        [PatchKey.Text + accessor]: _to_text(value),
-      });
-    }
+    writeOwned(
+      scopeId,
+      PatchKey.Text + accessor,
+      _to_text(value),
+      owned,
+      group,
+    );
   } else {
     getChunk()!.needsWalk = true;
   }
@@ -603,9 +648,9 @@ export function _patch_attrs(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (serverOwned(owned, group)) {
+    if (ownedWrite(owned, group)) {
       writeEmbeddedBinds(state as PatchState, data);
-      writePatch(scopeId, { [PatchKey.Attrs + accessor]: data ?? 0 });
+      writeOwned(scopeId, PatchKey.Attrs + accessor, data ?? 0, owned, group);
     }
   } else {
     getChunk()!.needsWalk = true;
@@ -625,9 +670,15 @@ export function _patch_attrs_partial(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (serverOwned(owned, group)) {
+    if (ownedWrite(owned, group)) {
       writeEmbeddedBinds(state as PatchState, data);
-      writePatch(scopeId, { [PatchKey.Attrs + accessor]: [data ?? 0, skip] });
+      writeOwned(
+        scopeId,
+        PatchKey.Attrs + accessor,
+        [data ?? 0, skip],
+        owned,
+        group,
+      );
     }
   } else {
     getChunk()!.needsWalk = true;
@@ -646,11 +697,13 @@ export function _patch_attr_option_value(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (serverOwned(owned, group)) {
-      writePatch(scopeId, {
-        [PatchKey.Attr + accessor + " value"]: normalizeAttrValue(value) ?? 0,
-      });
-    }
+    writeOwned(
+      scopeId,
+      PatchKey.Attr + accessor + " value",
+      normalizeAttrValue(value) ?? 0,
+      owned,
+      group,
+    );
   } else {
     getChunk()!.needsWalk = true;
   }
@@ -667,11 +720,13 @@ function patchStringAttr(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (serverOwned(owned, group)) {
-      writePatch(scopeId, {
-        [PatchKey.Attr + accessor + " " + name]: value || 0,
-      });
-    }
+    writeOwned(
+      scopeId,
+      PatchKey.Attr + accessor + " " + name,
+      value || 0,
+      owned,
+      group,
+    );
   } else {
     getChunk()!.needsWalk = true;
   }
@@ -679,10 +734,20 @@ function patchStringAttr(
   return stringAttr(name, value);
 }
 
-// A patch write needs exclusive server ownership: a client contribution
-// means the live value wins, and a contribution-less group cannot change.
-function serverOwned(owned?: SerializeReasonValue, group?: number) {
-  return owned === undefined || maskGroup(owned, group!) === 2;
+// A patch write needs exclusive server ownership; a contribution-less group
+// (a call-site constant) writes only where a fresh scope may need it.
+function ownedWrite(owned?: SerializeReasonValue, group?: number) {
+  const mask = owned === undefined ? 2 : maskGroup(owned, group!);
+  return mask === 2 || (mask === 0 && isInResumedBranch());
+}
+function writeOwned(
+  scopeId: number,
+  key: string,
+  value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  if (ownedWrite(owned, group)) writePatch(scopeId, { [key]: value });
 }
 
 // Only a shell the server can ship rides an entry: a missing one makes a

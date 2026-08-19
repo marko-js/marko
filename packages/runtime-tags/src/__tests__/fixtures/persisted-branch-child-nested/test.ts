@@ -4,7 +4,7 @@ const toggle = (document: Document) => {
   document.querySelector<HTMLButtonElement>(".toggle")!.click();
 };
 
-// A constructed child with its own state-selected branch rendering a
+// A constructed child with its own stateful branch rendering a
 // grandchild: the child's client code (bundled as usual) renders it, and
 // server fills keep both levels current.
 export const config: TestConfig = {

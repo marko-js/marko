@@ -3,12 +3,14 @@ var box_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<div class=box>");
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), "b0");
+	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
+	_dynamic_tag$1($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</div>");
-	$scope0_reason ? writeScope($scope0_id, {}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "b0", input.content);
+	$scope0_reason && writeScope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
+_shells({ a0: "a0;D ;<p> </p>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -20,10 +22,10 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
-			box_default({ content: _content("a0", () => {
+			box_default({ content: _content_elide("a0", () => {
 				_persisted_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>${_escape("t:" + input.title)}${_el_resume($scope2_id, "a", _source_guard($scope0_reason, 0))}</p>`);
+				_html(`<p>${_escape("t:" + input.title)}${_el_resume($scope2_id, "a")}</p>`);
 				_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				_resume_branch($scope2_id);
 			}, $scope1_id) });

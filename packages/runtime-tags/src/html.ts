@@ -41,7 +41,7 @@ export {
 export {
   _content,
   _content_elide,
-  _content_template,
+  _content_record,
   _content_resume,
   _dynamic_tag,
 } from "./html/dynamic-tag";
@@ -60,6 +60,7 @@ export {
   _patch_child,
   _patch_control,
   _patch_effect,
+  _patch_dynamic_tag,
   _patch_text,
   _patch_init,
   _patch_value,
