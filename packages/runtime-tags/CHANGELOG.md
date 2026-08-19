@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.42
+
+### Patch Changes
+
+- [#4000](https://github.com/marko-js/marko/pull/4000) [`cda5ae4`](https://github.com/marko-js/marko/commit/cda5ae47ab9786d0291a9af0d0296db271b5c942) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix the published `./tags-html` subpath export, which was dropped from the production `exports` map, breaking Marko 5's global HTML/SVG type declarations for consumers.
+
 ## 6.3.41
 
 ### Patch Changes
