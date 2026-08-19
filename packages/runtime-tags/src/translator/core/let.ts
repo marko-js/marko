@@ -133,6 +133,8 @@ export default {
         );
       }
     } else {
+      // Uncontrolled <let> is a seed, not a formula: no downstream from the
+      // initializer, even when it reads reactive bindings. Use <const> to derive.
       setBindingDownstream(binding, false);
     }
   },
