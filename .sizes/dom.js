@@ -1,4 +1,4 @@
-// size: 26586 (min) 9948 (brotli)
+// size: 27997 (min) 10358 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -19,7 +19,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
-  dynamicHtmlEnabled,
   rendering,
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
@@ -45,6 +44,9 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   isScheduled,
   channel,
+  patchFills = {},
+  closureFillJoins = {},
+  dynamicTagFills = /* @__PURE__ */ new Set(),
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -93,25 +95,24 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
+  patchers = {},
+  kChanged = Symbol(),
+  onPatchRecord,
+  failPatch = () => {
+    throw 0;
+  },
+  patchScope = (partial, live) => {
+    for (let key in partial) (patchers[key[0]] || failPatch())(live, key, partial[key]);
+  },
   curRenders,
   embedRenders,
   readyIds,
   lazyEnabled,
+  patchRender = 0,
+  patching = 0,
+  patchId = 0,
   isResuming,
   cloneCache = {},
-  _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
-    let firstChild = scope[accessor],
-      parentNode = firstChild.parentNode,
-      lastChild = scope["H" + accessor] || firstChild,
-      newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
-    (insertChildNodes(
-      parentNode,
-      firstChild,
-      (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
-      (scope["H" + accessor] = newContent.lastChild),
-    ),
-      removeChildNodes(firstChild, lastChild));
-  }),
   R = /[\p{L}\p{N}]/gu,
   inputType = "",
   controllableScripts = {},
@@ -411,11 +412,14 @@ function normalizeDynamicRenderer(value) {
     if ("a" in normalized) return normalized;
   }
 }
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
 function withBranches(runtime) {
   return ((branchesEnabled = 1), runtime);
 }
-function withDynamicHtml(runtime) {
-  return ((dynamicHtmlEnabled = 1), runtime);
+function rendererKey(renderer) {
+  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
 }
 function _hoist_read_error() {}
 function _assert_hoist(value) {}
@@ -475,6 +479,9 @@ function run() {
     (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
   runEffects(effects);
+}
+function abortRun() {
+  (runId++, (pendingRenders = []), (pendingEffects = []));
 }
 function queueAsyncRender(scope, signal, value) {
   (pendingRenders.length || queueMicrotask(run), queueRender(scope, signal, -1, value));
@@ -667,6 +674,75 @@ function _const(valueAccessor, fn) {
     }
   );
 }
+function fillJoin(key, valueAccessor, join, dispatch) {
+  let prev = patchFills[key],
+    prevFn = prev?._;
+  if (!prev || prevFn) {
+    let fn = prevFn
+      ? (scope) => {
+          (prevFn(scope), dispatch(scope));
+        }
+      : dispatch;
+    (patchFills[key] = _const(valueAccessor, fn))._ = fn;
+  }
+  return join;
+}
+function _fill_join(key, valueAccessor, join, buildDispatch) {
+  return fillJoin(key, valueAccessor, join, buildDispatch ? buildDispatch(join) : join);
+}
+function _fill_join_if(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i > 0; i -= 2)
+    dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_for(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_closure(key, valueAccessor, join, index) {
+  let signals = (closureFillJoins[key] ??= []),
+    closureJoin = join;
+  return (
+    (signals[index] = join),
+    (closureJoin.c = index),
+    signals.d ||
+      ((signals.d = 1),
+      fillJoin(key, valueAccessor, join, (scope) => {
+        let instances = scope[closureJoin.a];
+        if (instances) {
+          let signalIndex = closureJoin.b;
+          for (let childScope of instances)
+            if (childScope.H > 0 && childScope.H < runId) {
+              let sig = signals[childScope[signalIndex] || 0];
+              sig && queueRender(childScope, sig, -1);
+            }
+        }
+      })),
+    join
+  );
+}
+function fill(key, signal) {
+  return ((patchFills[key] = signal), signal);
+}
+function _fill_dynamic_tag(key, valueAccessor, signal) {
+  let readAccessor = decodeAccessor(valueAccessor);
+  return (
+    dynamicTagFills.add(key),
+    fillJoin(key, valueAccessor, signal, (scope) => signal(scope, scope[readAccessor])),
+    signal
+  );
+}
+function _fill_let(key, id, fn) {
+  return fill(key, _let(id, fn));
+}
+function _fill_let_change(key, id, fn) {
+  return fill(key, _let_change(id, fn));
+}
+function _fill_const(key, id, fn) {
+  return fill(key, _const(id, fn));
+}
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
   return (
     scopeIdAccessor !== "L" && (scopeIdAccessor = decodeAccessor(scopeIdAccessor)),
@@ -787,6 +863,27 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
     closureSignal
   );
 }
+function _init_closure_get(initId, valueAccessor, fn, getOwnerScope, resumeId) {
+  return _resume(initId, _closure_get(valueAccessor, fn, getOwnerScope, resumeId));
+}
+function _init_if_closure(initId, ownerConditionalNodeAccessor, branch, fn) {
+  return _resume(initId, _if_closure(ownerConditionalNodeAccessor, branch, fn));
+}
+function _init_for_closure(initId, ownerLoopNodeAccessor, fn) {
+  return _resume(initId, _for_closure(ownerLoopNodeAccessor, fn));
+}
+function _init_for_selector(
+  initId,
+  ownerLoopNodeAccessor,
+  ownerValueAccessor,
+  keyValueAccessor,
+  fn,
+) {
+  return _resume(
+    initId,
+    _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn),
+  );
+}
 function _child_setup(setup) {
   return (
     (setup._ = (scope, owner) => {
@@ -820,15 +917,6 @@ function _script(id, fn) {
     }
   );
 }
-function _global_read($global, key) {
-  return (
-    key in $global ||
-      console.error(
-        `\`$global.${key}\` is not serialized to the client, so this read is \`undefined\`. Add \`${key}\` to \`serializedGlobals\` at the render call.`,
-      ),
-    $global[key]
-  );
-}
 function _el_read(value) {
   return value;
 }
@@ -859,11 +947,17 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
+function beginPatch(renderId) {
+  let render = (patchRender = curRenders[renderId]);
+  return ((patching = 1), patchId++, render);
+}
+function abortPatch() {
+  patchRender = patching = 0;
+}
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
-function readyFailed(readyId) {}
 function withLazy(runtime) {
   return ((lazyEnabled = 1), runtime);
 }
@@ -907,6 +1001,12 @@ function init(runtimeId = "M") {
               scope
             ),
             applyScopes = (partials) => {
+              if (patching && patchRender === render) {
+                let i = 0;
+                for (; typeof partials[i] == "string";) onPatchRecord(partials[i++]);
+                partials[i] && patchScope(partials[i], getScope(1));
+                return;
+              }
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
                 let partial = partials[i];
@@ -970,7 +1070,7 @@ function init(runtimeId = "M") {
                     );
                     ((branch._ ??= visitScope),
                       (branch.K = branch.S = startVisit),
-                      visitType === "(" && (branch.a = startVisit));
+                      visitType === "'" && (branch.a = startVisit));
                   } else
                     ((curBranchScopes = push(curBranchScopes, branch)),
                       accessor &&
@@ -1031,7 +1131,9 @@ function init(runtimeId = "M") {
                 } else if (readyIds && typeof serialized == "number") break;
                 else {
                   let scopes = serialized(serializeContext);
-                  Array.isArray(scopes) && applyScopes(scopes);
+                  Array.isArray(scopes)
+                    ? applyScopes(scopes)
+                    : patching && patchRender === render && scopes && applyScopes([scopes]);
                 }
               }
               return (resumes.splice(0, i), i);
@@ -1045,7 +1147,6 @@ function init(runtimeId = "M") {
             lastToken,
             lastTokenIndex,
             visitBranches,
-            htmlStart,
             embedAnchor;
           return (
             (serializeContext._ = registeredValues),
@@ -1060,23 +1161,22 @@ function init(runtimeId = "M") {
                 }
               let retained = 0;
               for (visit of (visits = render.v))
-                ((lastTokenIndex = render.i.length),
+                if (
+                  ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
-                  dynamicHtmlEnabled && visitType > "%" && visitType <= "'"
-                    ? visitType === "&"
-                      ? (htmlStart = visit)
-                      : ((visitScope[nextToken()] = htmlStart),
-                        (visitScope["H" + lastToken] = visit))
-                    : branchesEnabled && visitType > "'"
-                      ? (visitBranches ||= createVisitBranches())()
-                      : lazyEnabled && render.b && visitType > "%"
-                        ? (visits[retained++] = visit)
-                        : (visitScope[nextToken()] =
-                            visitType === "$"
-                              ? visit.previousSibling
-                              : visit.parentNode.insertBefore(new Text(), visit)));
+                  visitType === "*")
+                ) {
+                  let prev = visit.previousSibling;
+                  visitScope[nextToken()] =
+                    prev && (prev.nodeType < 8 || prev.data)
+                      ? prev
+                      : visit.parentNode.insertBefore(new Text(), visit);
+                } else
+                  branchesEnabled
+                    ? (visitBranches ||= createVisitBranches())()
+                    : lazyEnabled && render.b && (visits[retained++] = visit);
               return (
                 embedRenders &&
                   !embedAnchor &&
@@ -1119,6 +1219,17 @@ function getRegisteredWithScope(id, scope) {
 }
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
+}
+function _init_join(id, join) {
+  let prev = registeredValues[id];
+  return (
+    (registeredValues[id] = prev
+      ? (scope) => {
+          (prev(scope), join(scope));
+        }
+      : join),
+    join
+  );
 }
 function _var_resume(id, signal) {
   return (_resume(id, (scope) => (value) => signal(scope, value)), signal);
@@ -1332,12 +1443,22 @@ function _attrs_script(scope, nodeAccessor) {
   controllableScripts[scope["F" + nodeAccessor]]?.(scope, nodeAccessor);
   for (let name in events) _on(el, name, events[name]);
 }
+function _html(scope, value, accessor) {
+  let firstChild = scope[accessor],
+    parentNode = firstChild.parentNode,
+    lastChild = scope["H" + accessor] || firstChild,
+    newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
+  (insertChildNodes(
+    parentNode,
+    firstChild,
+    (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
+    (scope["H" + accessor] = newContent.lastChild),
+  ),
+    removeChildNodes(firstChild, lastChild));
+}
 function normalizeClientRender(value) {
   let renderer = normalizeDynamicRenderer(value);
   if (renderer && renderer.a) return renderer;
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function _lifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,
@@ -1921,9 +2042,6 @@ function renderCatch(scope, error) {
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
 }
-function rendererKey(renderer) {
-  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
-}
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
 }
@@ -1972,6 +2090,36 @@ function bySecondArg(_item, index) {
 }
 function byFirstArg(name) {
   return name;
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let patchGlobalsEntry = (live, _key, value) => {
+    let globals = live.$;
+    for (let key in value)
+      if (globals[key] !== value[key]) {
+        globals[key] = value[key];
+        let marks = (globals[kChanged] ??= {});
+        marks["." + key] = marks.$ = runId;
+      }
+  },
+  frameChecks = [],
+  frameVars = {};
+function applyPatch(frame, renderId = "_", runtimeId = "M") {
+  (init(runtimeId), (patchers.$ = patchGlobalsEntry));
+  let render = beginPatch(renderId);
+  try {
+    let names = Object.keys(frameVars),
+      fn = Function("_", "$", ...names, "return " + frame);
+    ((render.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
+      runEffects(render.m([]), 1),
+      run());
+    for (let check of frameChecks) check();
+    return !0;
+  } catch {
+    return (abortRun(), !1);
+  } finally {
+    abortPatch();
+  }
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
