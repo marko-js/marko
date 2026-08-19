@@ -2,7 +2,7 @@ import type { types as t } from "@marko/compiler";
 
 import { forEach } from "./optional";
 import { isPatchFillBinding } from "./persisted/delivery";
-import { inStateSelectedStructure } from "./persisted/structure";
+import { inStatefulBranch } from "./persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -49,9 +49,7 @@ export function detectForSelector(
         isDirectClosure(bodySection, closure) &&
         // A fill delivers through the plain scan join; the keyed selector
         // dispatch has no fill channel.
-        !(
-          inStateSelectedStructure(bodySection) && isPatchFillBinding(canonical)
-        ) &&
+        !(inStatefulBranch(bodySection) && isPatchFillBinding(canonical)) &&
         !closures?.has(canonical) &&
         onlyComparesKey(closure, canonical, bodySection, keyBinding)
       ) {

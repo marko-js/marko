@@ -1,4 +1,8 @@
 // template.marko
+_shells({
+	a0: "a0,<em>inner</em>",
+	a1: "a1,<em>outer</em>"
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -7,7 +11,7 @@ var template_default = _template_persisted("a", (input) => {
 	_try($scope0_id, "a", _content_resume("a3", () => {
 		const $scope1_id = _scope_id();
 		_persisted_reason();
-		_try($scope1_id, "a", _content_resume("a1", () => {
+		_try($scope1_id, "a", _content_resume("a2", () => {
 			const $scope2_id = _scope_id();
 			_persisted_reason();
 			_await($scope2_id, "a", input.promise, (value) => {
@@ -17,9 +21,9 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			_resume_branch($scope2_id);
-		}, $scope1_id), { catch: attrTag({ content: _content_template("a0", $scope1_id, "<em>inner</em>") }) });
+		}, $scope1_id), { catch: attrTag({ content: _content_record("a0", $scope1_id) }) });
 		$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), { catch: attrTag({ content: _content_template("a2", $scope0_id, "<em>outer</em>") }) });
+	}, $scope0_id), { catch: attrTag({ content: _content_record("a1", $scope0_id) }) });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { e: $input_promise__closures });
 }, 1, 0);

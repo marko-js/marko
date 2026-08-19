@@ -12,13 +12,14 @@ import {
   hasServerFeed,
 } from "../known-tag";
 import { some } from "../optional";
+import { getCanonicalBinding } from "../references";
 import { getSection } from "../sections";
 import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../serialize-reasons";
 import { hasUnfillablePatchReads } from "./delivery";
-import { inStateSelectedStructure } from "./structure";
+import { inStatefulBranch } from "./structure";
 
 export interface PatchViolation {
   node: t.Node;
@@ -38,19 +39,35 @@ export function hasInertCall(value: t.Node) {
   return inert;
 }
 
-// The render of a directly fed renderer: a bare non-computed member of
-// the template's input with nothing else on the tag.
-export function isContentRenderTag(node: t.MarkoTag) {
+// A dynamic tag rendering `input` content (a body or attribute tag) and
+// nothing else: its name reads one property of the template's input, through
+// any alias; resolved references are required, so call at finalize or later.
+export function isContentRenderTag(tag: t.NodePath<t.MarkoTag>) {
+  const { node } = tag;
+  if (
+    t.isStringLiteral(node.name) ||
+    node.var ||
+    node.attributes.length ||
+    node.body.body.length ||
+    node.attributeTags?.length ||
+    node.arguments?.length
+  ) {
+    return false;
+  }
+  const binding = node.extra?.referencedBindings;
   return (
-    t.isMemberExpression(node.name) &&
-    !node.name.computed &&
-    t.isIdentifier(node.name.object, { name: "input" }) &&
-    !node.var &&
-    !node.attributes.length &&
-    !node.body.body.length &&
-    !node.attributeTags?.length &&
-    !node.arguments?.length
+    !!binding &&
+    !Array.isArray(binding) &&
+    binding.property !== undefined &&
+    !!binding.upstreamAlias &&
+    getCanonicalBinding(binding.upstreamAlias) === getInputBinding(tag)
   );
+}
+// The template's `input` param binding (the first program param).
+function getInputBinding(tag: t.NodePath<t.MarkoTag>) {
+  return (
+    tag.hub.file as { ast: { program: t.Program } }
+  ).ast.program.extra?.binding?.propertyAliases.get("0");
 }
 
 export interface ChildPatchPlan {
@@ -240,11 +257,7 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
   }
   // Skip only when nothing could change server-side: any other vector
   // (globals, body content) keeps the guarded render.
-  if (
-    anyState &&
-    !anyServerable &&
-    !inStateSelectedStructure(getSection(tag))
-  ) {
+  if (anyState && !anyServerable && !inStatefulBranch(getSection(tag))) {
     let skips = true;
     for (const child of tag.get("body").get("body")) {
       skips &&= isStatic(child);

@@ -101,7 +101,6 @@ export {
   _const,
   _el_read,
   _fill_const,
-  _fill_dynamic_tag,
   _fill_join,
   _fill_join_for,
   _fill_join_if,

@@ -32,7 +32,7 @@ import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
 import {
   hasStructuralOrGlobalParam,
-  inStateSelectedStructure,
+  inStatefulBranch,
   recordStructuralOrGlobalParams,
 } from "./persisted/structure";
 import {
@@ -163,7 +163,7 @@ export function knownTagAnalyze(
     addSerializeReason(section, true, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
     onFinalizePersisted(() => {
-      if (!inStateSelectedStructure(section)) {
+      if (!inStatefulBranch(section)) {
         addRuntimeFeatureAsset("patch-child");
       }
     });
@@ -273,7 +273,7 @@ export function knownTagTranslateHTML(
       callRuntime("_existing_scope", peekScopeId),
     );
 
-    if (isPersisted() && !inStateSelectedStructure(section)) {
+    if (isPersisted() && !inStatefulBranch(section)) {
       const patchChildStatement = t.expressionStatement(
         callRuntime(
           "_patch_child",
@@ -309,7 +309,7 @@ export function knownTagTranslateHTML(
   if (contentSection.paramReasonGroups) {
     let childSerializeReasonExpr: t.Expression | undefined;
     if (isPersisted()) {
-      if (inStateSelectedStructure(section)) {
+      if (inStatefulBranch(section)) {
         // The client owns this instance after the page render (patches
         // skip the region), so it serializes fully like a page.
         childSerializeReasonExpr = t.numericLiteral(1);
@@ -459,7 +459,7 @@ export function knownTagTranslateDOM(
 
   // An interactive page receives assets transitively through its dom
   // program, so the feature import rides both outputs.
-  if (isPersisted() && !inStateSelectedStructure(getSection(tag))) {
+  if (isPersisted() && !inStatefulBranch(getSection(tag))) {
     importRuntimeFeature("patch-child");
   }
 

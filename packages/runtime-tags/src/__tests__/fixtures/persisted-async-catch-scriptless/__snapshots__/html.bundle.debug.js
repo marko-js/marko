@@ -19,8 +19,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id), { catch: attrTag({ content: _content_elide("__tests__/template.marko_2*content", (err) => {
 		const $scope2_reason = _persisted_reason();
 		const $scope2_id = _scope_id();
-		_html(`<em>${_escape(err.message)}${_el_resume($scope2_id, "#text/0", _source_guard($scope2_reason, 0))}</em>`);
-		_source_if($scope2_reason, 0) && writeScope($scope2_id, {}, "__tests__/template.marko", "6:6");
+		_html(`<em>${_escape(err.message)}${_el_resume($scope2_id, "#text/0")}</em>`);
+		writeScope($scope2_id, {}, "__tests__/template.marko", "6:6");
 	}, $scope0_id) }) });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { "ClosureScopes:input_promise": $input_promise__closures }, "__tests__/template.marko", 0);

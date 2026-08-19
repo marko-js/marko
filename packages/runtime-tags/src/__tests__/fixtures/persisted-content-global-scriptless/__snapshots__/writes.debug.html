@@ -1,0 +1,17 @@
+<main>
+  <section>
+    <h2>a<!--M_*2 #text/0--></h2>
+    <!--M_[--><em>Acme<!--M_*3 #text/0--></em><!--M_]2 #text/1 3-->
+  </section><!--M_]1 #text/1-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [0, {
+    brand: "Acme"
+  }, {
+    "#childScope/0": _(2)
+  }, {
+    "ConditionalRenderer:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-global-scriptless/template.marko_1*content 1"
+  }]];
+  M._.w()
+</script>

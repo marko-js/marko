@@ -10,7 +10,7 @@ const $box_content__setup = ($scope) => {
 	$box_content__count($scope);
 };
 const $box_content__count = /*@__PURE__*/ _closure_get(10, $box_content__input_a__OR__count, ($scope) => $scope._._);
-const $box_content = /*@__PURE__*/ _content("a0", "<p> </p>", "D ", $box_content__setup);
+const $box_content = /*@__PURE__*/ _content$1("a0", "<p> </p>", "D ", $box_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope.a, $box_content($scope));
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $open = /*@__PURE__*/ _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));

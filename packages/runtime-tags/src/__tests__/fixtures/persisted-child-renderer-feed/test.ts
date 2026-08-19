@@ -1,8 +1,20 @@
 import type { TestConfig } from "../../main.test";
 
-// A prop the child renders receives a renderer: a server value there
-// would cross the wire as a function, so the feed fails closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A prop the child renders receives a server value inside client-owned
+// structure: the fill delivers it, and the child's own tag signal
+// re-renders on a change.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { renderer: "div" },
+    click,
+    { renderer: "span" },
+    click,
+    { renderer: "em" },
+    click,
+  ],
 };

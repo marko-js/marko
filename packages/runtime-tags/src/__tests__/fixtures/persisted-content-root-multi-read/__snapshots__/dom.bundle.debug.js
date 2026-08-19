@@ -10,7 +10,7 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $dynamicTag = /*@__PURE__*/ _fill_dynamic_tag("__tests__/template.marko0", "input_content", /*@__PURE__*/ _dynamic_tag("#text/0"));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_content", ($scope) => {
 	$dynamicTag($scope, $scope.input_content);
 	$input_content__OR__count($scope);
