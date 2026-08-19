@@ -1,0 +1,62 @@
+<button>clicks <!>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><button
+  class=swap>swap</button><!--M_*1 #button/2--><!--M_[--><!--M_!^3--><!--M_[--><button
+  class=n1>placeholder 0<!--M_*5 #text/1-->
+  <!>0<!--M_*5 #text/2-->
+</button><!--M_*5 #button/0--><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_]1 #text/3 3-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [];
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
+  };
+  M._.r.push(_ => [1, {
+      clicks: 0,
+      tag: _._[
+        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n5.marko"
+        ],
+      "ClosureScopes:clicks": new Set,
+      "ClosureScopes:tag": new Set
+    }, 1, {
+      _: _(1),
+      "#BranchAccessor": "#text/3",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_1*content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n1.marko_0 5 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_0 1",
+    _ => (_([3, {
+      "#PlaceholderBranch": _(2)
+    }, {
+      _: _(1),
+      "#childScope/0": _(5),
+      "#ClosestBranchId": 2
+    }, {
+      n: 0,
+      "#ClosestBranchId": 2
+    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(4)), 0));
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[--><!--M_[--><button class=n5>body 0<!--M_*7 #text/1-->
+    <!>0<!--M_*7 #text/2-->
+  </button><!--M_*7 #button/0--><!--M_]6 #text/0 7--><!--M_]3 #text/0 6--></t>
+<script>
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_3_clicks#4/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_3_tag#5/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n5.marko_0 7"
+      )
+  };
+  M._.r.push(_ => [6, {
+    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n5.marko",
+    body: "body",
+    _: _(3),
+    "ClosureSignalIndex:clicks": 1
+  }, {
+    n: 0
+  }]);
+  M._.w()
+</script>
