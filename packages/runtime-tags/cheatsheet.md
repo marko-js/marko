@@ -200,7 +200,7 @@ Each left-hand habit is an error or silently wrong.
 | `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                                  |
 | `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                                             |
 | `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                                    |
-| `<let/n=a + b>` for a value that should recompute           | `<const/n=a + b>`; `<let>` returns state it controls, not its value                  |
+| `<let/n=a + b>` for a value that should recompute           | `<const/n=a + b>`; `<let>` seeds an initial value, then de-syncs by design           |
 | `function fmt(n) {…}` / `const LIMIT = 10` at module level  | `static function fmt(n) {…}` / `static const LIMIT = 10`                             |
 | `type Row = {…}` at module level                            | `static type Row = {…}`                                                              |
 | `<let x=0>`                                                 | `<let/x=0>`                                                                          |
