@@ -4,8 +4,9 @@ const $walks$1 = "D l";
 var greet_default = _template_persisted("__tests__/tags/greet/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
+	const $global$1 = $global();
 	const double = input.n * 2;
-	_html(`<span>${_patch_text($scope0_id, "#text/0", $global().locale)}${_el_resume($scope0_id, "#text/0")}</span>`);
+	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.locale)}${_el_resume($scope0_id, "#text/0")}</span>`);
 	const $return = double;
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/greet/index.marko", 0);
 	return $return;

@@ -56,7 +56,8 @@ const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</h1><p${_patch_attr($scope0_id, "#p/1", "title", $global().locale)}>${_patch_text($scope0_id, "#text/2", $global().brand)}${_el_resume($scope0_id, "#text/2")}</p>${_el_resume($scope0_id, "#p/1")}`);
+	const $global$1 = $global();
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</h1><p${_patch_attr($scope0_id, "#p/1", "title", $global$1.locale)}>${_patch_text($scope0_id, "#text/2", $global$1.brand)}${_el_resume($scope0_id, "#text/2")}</p>${_el_resume($scope0_id, "#p/1")}`);
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 1) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/3", $childScope);
