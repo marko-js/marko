@@ -34,9 +34,9 @@ import {
   isPatchFillBinding,
 } from "./persisted/delivery";
 import {
-  inStateSelectedStructure,
+  inStatefulBranch,
   isBranchPathSection,
-  isStateSelected,
+  isStatefulBranch,
 } from "./persisted/structure";
 import {
   type AssignedBindingExtra,
@@ -1190,7 +1190,7 @@ export function writeSignals(section: Section) {
           signal.referencedBindings &&
           !Array.isArray(signal.referencedBindings) &&
           !signal.referencedBindings.sources?.state &&
-          inStateSelectedStructure(signal.section) &&
+          inStatefulBranch(signal.section) &&
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section !== signal.referencedBindings.section &&
           isBranchChainTo(signal.section, signal.referencedBindings.section) &&
@@ -1275,7 +1275,7 @@ export function writeSignals(section: Section) {
 // Whether every hop to `owner` dispatches from the owner scope: branches
 // always; inside client-owned, content sections too (lexical owners).
 function isBranchChainTo(section: Section, owner: Section) {
-  const clientOwned = inStateSelectedStructure(section);
+  const clientOwned = inStatefulBranch(section);
   while (section !== owner) {
     if ((!section.isBranch && !clientOwned) || !section.parent) return false;
     section = section.parent;
@@ -1501,7 +1501,7 @@ function sectionConstructs(section: Section) {
     isPersisted() &&
     section.isBranch &&
     isBranchPathSection(section) &&
-    !isStateSelected(section) &&
+    !isStatefulBranch(section) &&
     !section.shellBlocked &&
     !sectionHasServerEffect(section)
   );

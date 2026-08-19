@@ -10,7 +10,7 @@ const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_title__OR
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $box_content__for = /*@__PURE__*/ _for_of(0, "<span> </span>", "D ", $for_content__setup, $for_content__$params);
 const $box_content__setup = ($scope) => $box_content__for($scope, [["p", "q"]]);
-const $box_content = /*@__PURE__*/ _content("a0", "<!><!><!>", "b%", $box_content__setup);
+const $box_content = /*@__PURE__*/ _content$1("a0", "<!><!><!>", "b%", $box_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope.a, $box_content($scope));
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $open = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));

@@ -434,28 +434,25 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         );
       }
 
-      // Boundary content on a page with no dom module never references a
-      // registration: a static body compiles to an in-band template the
-      // client and server both render; a dynamic one elides its slot and
-      // a delivered catch rejects to navigation (fail closed) instead of
-      // bundling the template's renderer.
+      // A static record rides its slot; a dynamic one (or, with no dom
+      // module, unrecorded boundary content) elides it.
       if (
-        serialized &&
         isPersisted() &&
-        bodySection.boundaryContent &&
-        !getProgram().node.extra.isInteractive
+        (bodySection.contentRecord ||
+          (bodySection.boundaryContent &&
+            serialized &&
+            !getProgram().node.extra.isInteractive))
       ) {
         const ownerScopeId = getScopeIdIdentifier(
           getSection(
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
           )!,
         );
-        return bodySection.contentTemplate !== undefined
+        return bodySection.contentRecord === "static"
           ? callRuntime(
-              "_content_template",
+              "_content_record",
               t.stringLiteral(getResumeRegisterId(bodySection, "content")),
               ownerScopeId,
-              t.stringLiteral(bodySection.contentTemplate),
             )
           : callRuntime(
               "_content_elide",

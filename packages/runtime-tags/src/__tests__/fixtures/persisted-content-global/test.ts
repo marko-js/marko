@@ -1,9 +1,18 @@
 import type { TestConfig } from "../../main.test";
 
-// A `content=` renderer fed to a content-consuming child at a
-// server-owned call site rejects AT THE SITE: a server-owned instance
-// would poison (navigate) every patch, so the compiler says so instead.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A `content=` renderer fed to a content-consuming child at a server-owned
+// site: the selection entry pairs the unchanged template each patch while
+// its `$global` hole patch-writes.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { $global: { brand: "Acme", serializedGlobals: ["brand"] } },
+    click,
+    { $global: { brand: "Zed", serializedGlobals: ["brand"] } },
+    click,
+  ],
 };

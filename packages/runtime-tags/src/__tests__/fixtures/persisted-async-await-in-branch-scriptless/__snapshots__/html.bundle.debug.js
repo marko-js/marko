@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<em>closed</em>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_promise = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html$1("<main>");
 	_if$1(() => {
@@ -15,9 +15,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", input.promise, (value) => {
 				const $scope3_id = _scope_id();
-				_html$1(`<em>${_patch_text($scope3_id, "#text/0", value, $scope0_owned, 2)}${_el_resume($scope3_id, "#text/0", $sg__input_promise)}</em>`);
-				$scope0_reason && writeScope($scope3_id, {}, "__tests__/template.marko", "3:6");
-			}, $sg__input_promise, "__tests__/template.marko_1_#text#0/await");
+				_html$1(`<em>${_patch_text($scope3_id, "#text/0", value, $scope0_owned, 2)}${_el_resume($scope3_id, "#text/0")}</em>`);
+				writeScope($scope3_id, {}, "__tests__/template.marko", "3:6");
+			}, void 0, "__tests__/template.marko_1_#text#0/await");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		} else {

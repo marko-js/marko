@@ -223,26 +223,6 @@ function fill<T>(key: string, signal: Signal<unknown>) {
   patchFills[key] = signal;
   return signal as Signal<T>;
 }
-// Fill keys whose dynamic tag signal survived bundling: a `DynamicTag`
-// entry consults this to tell a shaken signal (pair or reject) from one
-// the fill will run.
-export const dynamicTagFills = new Set<string>();
-// A dynamic tag fed its renderer: its signal joins the value's fill, so
-// the stored value re-applies through it like any other join.
-export function _fill_dynamic_tag<T>(
-  key: string,
-  valueAccessor: EncodedAccessor,
-  signal: Signal<T>,
-) {
-  const readAccessor = (
-    MARKO_DEBUG ? valueAccessor : decodeAccessor(valueAccessor as number)
-  ) as Accessor;
-  dynamicTagFills.add(key);
-  fillJoin(key, valueAccessor, signal as SignalFn, (scope) =>
-    signal(scope, scope[readAccessor] as T),
-  );
-  return signal;
-}
 export function _fill_let<T>(key: string, id: EncodedAccessor, fn?: SignalFn) {
   return fill<T>(key, _let<T>(id, fn) as Signal<unknown>);
 }

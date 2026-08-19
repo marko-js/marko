@@ -1,4 +1,5 @@
 // template.marko
+_shells({ a0: "a0,<em>loading</em>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -14,7 +15,7 @@ var template_default = _template_persisted("a", (input) => {
 		});
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_template("a0", $scope0_id, "<em>loading</em>") }) });
+	}, $scope0_id), { placeholder: attrTag({ content: _content_record("a0", $scope0_id) }) });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { g: $input_promise__closures });
 }, 1, 0);

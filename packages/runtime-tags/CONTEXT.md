@@ -177,12 +177,13 @@ A server rerender of a persisted page applied to the live client DOM by
 refreshing values and navigating structure, without a full page render.
 _Avoid_: rerender, hydration update
 
-**State-selected structure**:
-A branch body whose selection has a state reason — state sources, no
-`$global`, fill-deliverable param feeds — derived from its upstream
-expression (`isStateSelected`), never stored. Resumed code re-selects it,
-so patch renders skip it and frames omit its entry. Translate code may call the derived policy _client-owned_.
-_Avoid_: client-reselectable, client-owned as a shared field name
+**Stateful structure**:
+A branch body whose selection has a state reason (main's `kStatefulReason`
+vocabulary) — state sources, no `$global`, fill-deliverable param feeds —
+derived from its upstream expression (`isStatefulBranch`), never stored.
+Resumed code re-selects it, so patch renders skip it and frames omit its
+entry. Translate code may call the derived policy _client-owned_.
+_Avoid_: state-selected, client-reselectable, client-owned as a shared field name
 
 **Structural-or-global param**:
 A root param whose reads select structure or mix with `$global` — the value
@@ -191,8 +192,9 @@ it. Translate derives server-ownership requirements from this fact.
 _Avoid_: server-required param
 
 **Branch path**:
-The root section and branch bodies reachable through branches alone; their
-text and attr holes emit direct patch writes.
+The root section and every section below it not crossing boundary content
+or a content body its consumer renders stateful; their text and attr
+holes emit direct patch writes.
 _Avoid_: capture path, patch section
 
 **Patch fill**:
