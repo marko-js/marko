@@ -2,8 +2,9 @@
 var greet_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
+	const $global$1 = $global();
 	const double = input.n * 2;
-	_html(`<span>${_patch_text($scope0_id, "a", $global().locale)}${_el_resume($scope0_id, "a")}</span>`);
+	_html(`<span>${_patch_text($scope0_id, "a", $global$1.locale)}${_el_resume($scope0_id, "a")}</span>`);
 	const $return = double;
 	$scope0_reason && writeScope($scope0_id, {});
 	return $return;

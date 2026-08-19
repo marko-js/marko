@@ -42,7 +42,8 @@ var site_footer_default = _template_persisted("d", (input) => {
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1><p${_patch_attr($scope0_id, "b", "title", $global().locale)}>${_patch_text($scope0_id, "c", $global().brand)}${_el_resume($scope0_id, "c")}</p>${_el_resume($scope0_id, "b")}`);
+	const $global$1 = $global();
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1><p${_patch_attr($scope0_id, "b", "title", $global$1.locale)}>${_patch_text($scope0_id, "c", $global$1.brand)}${_el_resume($scope0_id, "c")}</p>${_el_resume($scope0_id, "b")}`);
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 1) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "d", $childScope);

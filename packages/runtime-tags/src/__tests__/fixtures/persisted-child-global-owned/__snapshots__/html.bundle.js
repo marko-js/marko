@@ -2,7 +2,8 @@
 var g_badge_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "a", input.value, $scope0_owned, 0)}${_el_resume($scope0_id, "a")} <!>${_patch_text($scope0_id, "b", $global().flag)}${_el_resume($scope0_id, "b")}</p>`);
+	const $global$1 = $global();
+	_html(`<p>${_patch_text($scope0_id, "a", input.value, $scope0_owned, 0)}${_el_resume($scope0_id, "a")} <!>${_patch_text($scope0_id, "b", $global$1.flag)}${_el_resume($scope0_id, "b")}</p>`);
 	$scope0_reason && writeScope($scope0_id, {});
 }, 0, 1);
 

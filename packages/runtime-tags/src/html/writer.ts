@@ -1930,18 +1930,7 @@ export class Chunk {
     // Placeholders render during this pass; their scopes go out with it.
     flushSerializer(boundary, state);
     if (state.resumes) {
-      if (state.hasWrittenResume) {
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
-        );
-      } else {
-        state.hasWrittenResume = true;
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
-        );
-      }
+      scripts = concatScripts(scripts, state.resumeScript(state.resumes));
     }
 
     if (needsWalk) {
