@@ -13,8 +13,7 @@ export const Child = "c";
 export const Control = "n";
 export const Effect = "e";
 export const GlobalEffect = "g";
-// A dynamic tag's renderer selection: without a live `_fill_dynamic_tag`
-// registration an unchanged renderer key pairs and a change rejects.
+// A dynamic tag whose renderer arrives as input: the entry re-renders it.
 export const DynamicTag = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
 export const Globals = "$";

@@ -2,8 +2,9 @@
 // ownership conclusions and wire channels belong to translate (./delivery).
 import type { types as t } from "@marko/compiler";
 
+import { kDirectContent } from "../binding-prop-tree";
 import { isPersisted } from "../marko-config";
-import { every, forEach, type Opt, some } from "../optional";
+import { every, forEach, type Opt, some, toArray } from "../optional";
 import type { Binding, Sources } from "../references";
 import { ensureReasonGroups, type Section } from "../sections";
 import {
@@ -13,38 +14,108 @@ import {
 import { isPatchFillBinding, paramsDeliverAsFills } from "./delivery";
 import { onFinalizePersisted } from "./lifecycle";
 
-// Whether the section renders inside state-selected structure
+// Whether the section renders inside stateful structure
 // (inclusive): patch renders skip those bodies, so nothing inside may
 // rely on a patch write.
-export function inStateSelectedStructure(section: Section | undefined) {
+export function inStatefulBranch(section: Section | undefined) {
   while (section) {
-    if (isStateSelected(section)) return true;
+    if (isStatefulBranch(section)) return true;
     section = section.parent;
   }
   return false;
 }
 
+// Whether a child renders this prop (any prop, unnamed) inside stateful
+// structure; a child still mid-analysis (a cycle) counts as yes.
+export function childRendersStateful(
+  childExtra: t.ProgramExtra | undefined,
+  prop?: string,
+) {
+  const params = childExtra?.domExports?.params;
+  const input = params?.props?.[0]?.binding;
+  if (!input) {
+    const paramsBinding = (childExtra as t.NodeExtra | undefined)?.binding;
+    return !params && !!paramsBinding && !paramsBinding.pruned;
+  }
+  return prop === undefined
+    ? rendersStateful(input)
+    : rendersStatefulProp(input, prop);
+}
+
+// A binding (or a property of it) rendered as a tag inside stateful
+// structure, here or by the child binding a read feeds.
+const rendering = new Set<Binding>();
+function rendersStateful(binding: Binding): boolean {
+  if (rendering.has(binding)) return false;
+  rendering.add(binding);
+  try {
+    if (readsRenderStateful(binding)) return true;
+    for (const alias of binding.propertyAliases.values()) {
+      if (rendersStateful(alias)) return true;
+    }
+    for (const alias of binding.aliases) {
+      if (rendersStateful(alias)) return true;
+    }
+    return false;
+  } finally {
+    rendering.delete(binding);
+  }
+}
+function rendersStatefulProp(binding: Binding, prop: string) {
+  // A whole read (`...input` onward) may hand any prop over.
+  if (readsRenderStateful(binding)) return true;
+  const alias = binding.propertyAliases.get(prop);
+  return !!alias && rendersStateful(alias);
+}
+// A read inside stateful structure renders there (directly, or by the
+// child it feeds); elsewhere only the child's own structure decides.
+function readsRenderStateful(binding: Binding) {
+  for (const read of binding.reads) {
+    if (
+      (read[kDirectContent] || read.downstream) &&
+      inStatefulBranch(read.section)
+    ) {
+      return true;
+    }
+    if (some(read.downstream, rendersStateful)) return true;
+  }
+  return false;
+}
+// A tag body is stateful when the prop it feeds renders so in the child;
+// the last hop stays a prop query so whole reads of its owner count.
+function bodyRendersStateful(section: Section) {
+  const downstream = section.downstreamBinding;
+  if (!downstream) return false;
+  const props = toArray(downstream.properties, (prop) => prop);
+  let target: Binding | undefined = downstream.binding;
+  for (let i = 0; target && i < props.length - 1; i++) {
+    target = target.propertyAliases.get(props[i]);
+  }
+  return !!target && rendersStatefulProp(target, props[props.length - 1]);
+}
+
 // A branch body selected by a state reason (or nested in one) whose param
 // feeds all deliver; resolved sources are required, so call at finalize or later.
-const stateSelectedBySection = new WeakMap<Section, boolean>();
-export function isStateSelected(section: Section): boolean {
-  let stateSelected = stateSelectedBySection.get(section);
-  if (stateSelected === undefined) {
+const statefulBySection = new WeakMap<Section, boolean>();
+export function isStatefulBranch(section: Section): boolean {
+  let stateful = statefulBySection.get(section);
+  if (stateful === undefined) {
     const expr =
       isPersisted() && section.isBranch
         ? section.upstreamExpression
         : undefined;
     const sources = expr && getSerializeSourcesForExpr(expr);
-    stateSelectedBySection.set(
+    statefulBySection.set(
       section,
-      (stateSelected =
-        !!expr &&
-        !sources?.global &&
-        (!!sources?.state || inStateSelectedStructure(section.parent)) &&
-        every(expr.referencedBindings, selectionFeedDelivers)),
+      (stateful =
+        (!expr && bodyRendersStateful(section)) ||
+        (!!expr &&
+          !sources?.global &&
+          (!!sources?.state || inStatefulBranch(section.parent)) &&
+          every(expr.referencedBindings, selectionFeedDelivers))),
     );
   }
-  return stateSelected;
+  return stateful;
 }
 
 // A state-mixed ref recomputes client-side, so its param ORIGINS must fill;
@@ -56,7 +127,7 @@ function selectionFeedDelivers(binding: Binding) {
     (sources.state
       ? paramsDeliverAsFills(sources.param)
       : isPatchFillBinding(binding)) ||
-    inStateSelectedStructure(binding.section)
+    inStatefulBranch(binding.section)
   );
 }
 
@@ -86,12 +157,11 @@ export function ensurePersistedWriteGroups(getExtra: () => t.NodeExtra) {
   });
 }
 
-// Sections whose text/attr holes emit direct patch writes: the root and
-// any branch body reachable through branches alone — the walk pairs (or
-// constructs) every level structurally, so depth does not matter.
+// Sections whose holes patch-write directly: every level down to them links
+// structurally, except boundary content, which renders outside the patch.
 export function isBranchPathSection(section: Section) {
   while (section.parent) {
-    if (!section.isBranch && !section.isBoundary) return false;
+    if (section.boundaryContent) return false;
     section = section.parent;
   }
   return true;

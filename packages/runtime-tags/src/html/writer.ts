@@ -284,26 +284,6 @@ export function writePatch(scopeId: number, entries: Record<string, unknown>) {
   }
 }
 
-// An `<await>`/`<try>` body pairs with the live page's branch scope: the
-// link nests its partial under the owner (lazily, on its first write) and
-// records the parent hop bind paths resolve through.
-function pairPatchBoundary(
-  scopeId: number,
-  accessor: Accessor,
-  branchId: number,
-) {
-  const { state } = $chunk.boundary;
-  if (
-    state.writesPatches &&
-    !state.patchInert &&
-    !state.patchPartials?.[branchId]
-  ) {
-    const link = AccessorPrefix.BranchScopes + accessor;
-    (state.patchParents ??= {})[branchId] = [scopeId, link];
-    (state.patchPending ??= {})[branchId] = [scopeId, PatchKey.Child + link];
-  }
-}
-
 export function patchPartial(state: State, scopeId: number) {
   if (state.patchInert) return {};
   const partials = (state.patchPartials ??= {});
@@ -904,7 +884,8 @@ export function _set_serialize_reason(reason: SerializeReasonValue) {
 
 // Compiled into persisted templates in place of `_scope_reason`: a page
 // render serializes by the instance's sources mask (any contribution can
-// change) while a patch serializes nothing beyond its own fills.
+// change; no contribution at all serializes fully, as an unset reason does)
+// while a patch serializes nothing beyond its own fills.
 export function _persisted_reason() {
   const { state } = $chunk.boundary;
   const reason = state.serializeReason;
@@ -923,7 +904,7 @@ export function _persisted_reason() {
     }
     return undefined;
   }
-  return reason ?? 1;
+  return reason || 1;
 }
 
 // The instance's sources mask (2 bits per group: client/server contribute;
@@ -1046,7 +1027,7 @@ export function _await<T>(
   if (!isPromise(promise)) {
     if (resumeMarker) {
       const branchId = _peek_scope_id();
-      pairPatchBoundary(scopeId, accessor, branchId);
+      $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
@@ -1086,7 +1067,7 @@ export function _await<T>(
           chunk.render(() => {
             if (resumeMarker) {
               const branchId = _peek_scope_id();
-              pairPatchBoundary(scopeId, accessor, branchId);
+              $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
@@ -1149,7 +1130,7 @@ export function _try(
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
-  pairPatchBoundary(scopeId, accessor, branchId);
+  $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
 
   // A patch shows `@placeholder`/`@catch` from received client state;
@@ -1343,6 +1324,9 @@ export class State implements SerializeState {
     shellId?: string | 0,
   ): 1 | void;
   shipShell?(shellId: string | 0 | undefined): string | undefined;
+  // A boundary body or dynamic tag branch pairs with the live page's branch
+  // scope: its partial nests under the owner, bind paths resolve through it.
+  pairBranch?(scopeId: number, accessor: Accessor, branchId: number): void;
   declare rootScopeId?: number;
   declare patchPartials?: Record<number, Record<string, unknown>>;
   declare patchBinds?: number;

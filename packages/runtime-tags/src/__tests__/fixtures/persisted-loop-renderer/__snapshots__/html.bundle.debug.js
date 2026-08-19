@@ -1,0 +1,32 @@
+// tags/widget/index.marko
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	_patch_dynamic_tag($scope0_id, "#text/0", input.renderer, $scope0_owned, 0);
+	_dynamic_tag$1($scope0_id, "#text/0", input.renderer, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
+}, 0, 0);
+
+// template.marko
+const $template = "<ul></ul>";
+const $walks = " b";
+_shells({ "__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("b%c"), /*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)) });
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_html$1("<ul>");
+	_for_of$1(input.items, (item) => {
+		const $scope1_id = _scope_id();
+		_html$1("<li>");
+		_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
+		const $childScope = _peek_scope_id();
+		_patch_child($scope1_id, "#childScope/0", $childScope);
+		widget_default({ renderer: item.tag });
+		_html$1("</li>");
+		writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "2:4");
+	}, 0, $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell");
+	_html$1(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
+	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+}, 1, () => [widget_default]);

@@ -1,6 +1,10 @@
 // template.marko
 const $template = "<main><!></main>";
 const $walks = "D%l";
+_shells({
+	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content,<em>inner</em>",
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<em>outer</em>"
+});
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -19,9 +23,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			});
 			$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 			_resume_branch($scope2_id);
-		}, $scope1_id), { catch: attrTag({ content: _content_template("__tests__/template.marko_4*content", $scope1_id, "<em>inner</em>") }) });
+		}, $scope1_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_4*content", $scope1_id) }) });
 		$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
-	}, $scope0_id), { catch: attrTag({ content: _content_template("__tests__/template.marko_3*content", $scope0_id, "<em>outer</em>") }) });
+	}, $scope0_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_3*content", $scope0_id) }) });
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { "ClosureScopes:input_promise": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

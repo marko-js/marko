@@ -1,30 +1,8 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import { type Accessor, AccessorProp, PatchKey } from "../common/types";
-import { abortRun, run, runEffects, runId } from "./queue";
-import {
-  abortPatch,
-  beginPatch,
-  type Changed,
-  init,
-  kChanged,
-  patchers,
-} from "./resume";
-
-// Applies re-shipped globals so event-time `$global` reads never go stale;
-// a changed value marks the globals object itself with the frame's epoch
-// (every scope shares it, so readers at any composition depth re-run).
-// Marks land per key (`.`-prefixed: never collides with the whole-bag
-// slot or `__proto__`) plus the whole-bag slot for opaque readers.
-const patchGlobalsEntry = (live: Changed, _key: string, value: unknown) => {
-  const globals = live[AccessorProp.Global];
-  for (const key in value as Record<string, unknown>) {
-    if (globals[key] !== (value as Record<string, unknown>)[key]) {
-      globals[key] = (value as Record<string, unknown>)[key];
-      const marks = ((globals as unknown as Changed)[kChanged] ??= {});
-      marks[("." + key) as Accessor] = marks[AccessorProp.Global] = runId;
-    }
-  }
-};
+import { PatchKey } from "../common/types";
+import { patchGlobalsEntry } from "./patch-changed";
+import { abortRun, run, runEffects } from "./queue";
+import { abortPatch, beginPatch, init, patchers } from "./resume";
 
 // Frame-commit checks registered by patch features: one that throws
 // (`failPatch`) rejects the frame like any patcher.

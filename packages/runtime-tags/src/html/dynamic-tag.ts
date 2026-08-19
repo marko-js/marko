@@ -9,12 +9,12 @@ import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
-  PatchKey,
   RendererProp,
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
-import { quote, registerAccess, toAccess, toObjectKey } from "./serializer";
+import { registerAccess, toAccess, toObjectKey } from "./serializer";
+import { shellRecords, shells } from "./shells";
 import type { ServerRenderer } from "./template";
 import {
   _el,
@@ -33,7 +33,6 @@ import {
   getScopeById,
   getState,
   rendererKey,
-  writePatch,
   withBranchId,
 } from "./writer";
 
@@ -52,19 +51,16 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
-  patchFill?: string | 0,
+  patches?: 1,
 ) => {
   const shouldResume = serializeReason !== 0;
+  // A patch entry may target this site: its branch marks and pairs, while
+  // the child's data still serializes on the site's own reason.
+  const marks = shouldResume || patches;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
-  // A fed renderer's selection entry: the client fill re-renders on a
-  // renderer-key change; without its tag signal an unchanged key pairs.
-  if (patchFill !== undefined && state.writesPatches) {
-    writePatch(scopeId, {
-      [PatchKey.DynamicTag + accessor]: [patchFill, renderer],
-    });
-  }
+  if (patches && renderer) state.pairBranch?.(scopeId, accessor, branchId);
   let rendered: boolean;
   let result: unknown;
 
@@ -176,7 +172,7 @@ export let _dynamic_tag = (
         _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
       }
 
-      if (shouldResume || needsScript) {
+      if (marks || needsScript) {
         _html(
           state.mark(
             ResumeSymbol.BranchEndNativeTag,
@@ -192,7 +188,7 @@ export let _dynamic_tag = (
     result = _el(branchId, DYNAMIC_TAG_VAR_REGISTER_ID);
   } else {
     const chunk = getChunk()!;
-    const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
+    const beforeBranch = marks ? deferBranchStart(chunk) : undefined;
 
     const render = () => {
       if (renderer) {
@@ -214,7 +210,7 @@ export let _dynamic_tag = (
         return content();
       }
     };
-    result = shouldResume ? withBranchId(branchId, render) : render();
+    result = marks ? withBranchId(branchId, render) : render();
     rendered = _peek_scope_id() !== branchId;
 
     if (beforeBranch !== undefined) {
@@ -229,7 +225,13 @@ export let _dynamic_tag = (
   }
 
   if (rendered) {
-    if (shouldResume) {
+    // A patched site keeps its key so a shell record pairs by id alone.
+    if (
+      shouldResume ||
+      (patches &&
+        typeof renderer === "function" &&
+        shells[renderer[RendererProp.Id]!])
+    ) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]: rendererKey(renderer),
       });
@@ -257,10 +259,9 @@ export function _content_resume(
   return _resume(_content(id, fn, scopeId), id, scopeId);
 }
 
-// Dynamic boundary content on a page with no dom module: a catch slot
-// serializes a sentinel (`0`) its rejection frame fills with server-
-// rendered html; a placeholder slot elides outright (pending shows the
-// live content). Nothing bundles either way.
+// Dynamic content with no client renderer elides its slot: a catch slot
+// serializes `0` (its rejection frame carries server-rendered html), a
+// placeholder slot `undefined` (pending shows the live content).
 export function _content_elide(
   id: string,
   fn: ServerRenderer,
@@ -274,21 +275,17 @@ export function _content_elide(
   );
 }
 
-// Static content whose registration must exist with no template dom module
-// loaded: the slot serializes as an in-band template the client rebuilds,
-// so gated markup only reaches responses the server rendered for this user.
+// A static shell record renders server-side from its own template and rides
+// its slot in-band for the client to rebuild: gated markup only reaches
+// responses the server rendered for this user, and nothing bundles.
 const contentAccessPrefix =
   "_._" +
   /*@__PURE__*/ toAccess(/*@__PURE__*/ toObjectKey(CONTENT_REGISTER_ID)) +
   "(";
-export function _content_template(
-  id: string,
-  scopeId: number | undefined,
-  template: string,
-) {
+export function _content_record(id: string, scopeId: number | undefined) {
+  const record = shellRecords[id];
+  const template = record.slice(record.indexOf(",") + 1);
   return registerAccess(
-    // The server render derives from the same template (the canonical
-    // static-body shape), so eligible bodies compile to data alone.
     _content(
       id,
       () => {
@@ -299,7 +296,7 @@ export function _content_template(
       scopeId,
     ),
     contentAccessPrefix +
-      quote(template, 0) +
+      shells[id].slice(1) +
       (scopeId === undefined ? ")" : ",_(" + scopeId + "))"),
   );
 }
@@ -315,6 +312,7 @@ export const patchDynamicTag = (
       content,
       inputIsArgs,
       resume,
+      patches,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -327,6 +325,7 @@ export const patchDynamicTag = (
         content,
         inputIsArgs,
         resume,
+        patches,
       );
     };
   }
