@@ -97,23 +97,42 @@ function bodyRendersStateful(section: Section) {
 // A branch body selected by a state reason (or nested in one) whose param
 // feeds all deliver; resolved sources are required, so call at finalize or later.
 const statefulBySection = new WeakMap<Section, boolean>();
+const computing = new Map<Section, number>();
+let provisionalAt = Infinity;
 export function isStatefulBranch(section: Section): boolean {
   let stateful = statefulBySection.get(section);
   if (stateful === undefined) {
+    // An in-flight re-ask (a read inside the branch its own selection walks)
+    // answers false: statefulness needs a grounded source, never itself.
+    const at = computing.get(section);
+    if (at !== undefined) {
+      if (at < provisionalAt) provisionalAt = at;
+      return false;
+    }
+    const frame = computing.size;
+    computing.set(section, frame);
+    const outerProvisionalAt = provisionalAt;
+    provisionalAt = Infinity;
     const expr =
       isPersisted() && section.isBranch
         ? section.upstreamExpression
         : undefined;
     const sources = expr && getSerializeSourcesForExpr(expr);
-    statefulBySection.set(
-      section,
-      (stateful =
-        (!expr && bodyRendersStateful(section)) ||
-        (!!expr &&
-          !sources?.global &&
-          (!!sources?.state || inStatefulBranch(section.parent)) &&
-          every(expr.referencedBindings, selectionFeedDelivers))),
-    );
+    stateful =
+      (!expr && bodyRendersStateful(section)) ||
+      (!!expr &&
+        !sources?.global &&
+        (!!sources?.state || inStatefulBranch(section.parent)) &&
+        every(expr.referencedBindings, selectionFeedDelivers));
+    computing.delete(section);
+    // A frame that consumed an OUTER frame's provisional answer must not
+    // cache: that outer result may still land stateful.
+    if (provisionalAt >= frame) {
+      statefulBySection.set(section, stateful);
+      provisionalAt = outerProvisionalAt;
+    } else if (outerProvisionalAt < provisionalAt) {
+      provisionalAt = outerProvisionalAt;
+    }
   }
   return stateful;
 }
