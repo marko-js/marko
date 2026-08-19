@@ -2059,25 +2059,7 @@ export class Chunk {
     // Placeholders render during this pass; their scopes go out with it.
     flushSerializer(boundary, state);
     if (state.resumes) {
-      if (state.hasWrittenResume) {
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
-        );
-      } else {
-        state.hasWrittenResume = true;
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
-        );
-      }
-    } else if (needsResumeArray && !state.hasWrittenResume) {
-      // A reordered chunk's script pushes its effects into the resume array.
-      state.hasWrittenResume = true;
-      scripts = concatScripts(
-        scripts,
-        runtimePrefix + RuntimeKey.Resume + "=[]",
-      );
+      scripts = concatScripts(scripts, state.resumeScript(state.resumes));
     }
 
     // Reordered scripts follow the resume data they push after.

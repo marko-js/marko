@@ -4,7 +4,8 @@ const $walks$1 = "D%c%l";
 var g_badge_default = _template_persisted("__tests__/tags/g-badge/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", input.value, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")} <!>${_patch_text($scope0_id, "#text/1", $global().flag)}${_el_resume($scope0_id, "#text/1")}</p>`);
+	const $global$1 = $global();
+	_html(`<p>${_patch_text($scope0_id, "#text/0", input.value, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")} <!>${_patch_text($scope0_id, "#text/1", $global$1.flag)}${_el_resume($scope0_id, "#text/1")}</p>`);
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/g-badge/index.marko", 0);
 }, 0, 1);
 

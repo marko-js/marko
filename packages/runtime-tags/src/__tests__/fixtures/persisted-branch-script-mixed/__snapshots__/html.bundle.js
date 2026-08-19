@@ -3,6 +3,7 @@ _shells({ a0: "a0 !a1,<p>promo</p>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
+	$global();
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "a")}</h1>`);
 	_if(() => {
 		if (input.show) {
