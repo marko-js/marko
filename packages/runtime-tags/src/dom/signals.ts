@@ -44,6 +44,8 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
       (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
       ((scope[valueAccessor] = value), fn)
     ) {
+      // Comparing by reference means reassigning a fresh identity re-renders
+      // forever. That cycle is a supported pattern (animation loops), not a bug.
       schedule();
       queueRender(scope, fn, id as number);
     }
