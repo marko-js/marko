@@ -1,6 +1,5 @@
-import banner from "./tags/banner/index.marko";
 <let/count=0/>
 <main>
-  <widget value=count content=banner/>
+  <widget value=count><div>${$global.brand}</div></widget>
   <button onClick() { count++ }>+</button>
 </main>

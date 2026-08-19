@@ -12,11 +12,11 @@
     }
   },
   "html": {
-    "min": 473,
-    "brotli": 302
+    "min": 485,
+    "brotli": 311
   },
   "patch": {
-    "min": 18,
-    "brotli": 22
+    "min": 38,
+    "brotli": 42
   }
 }
