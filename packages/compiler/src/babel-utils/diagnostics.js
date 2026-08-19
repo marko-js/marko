@@ -9,6 +9,8 @@ export function diagnosticError(path, options) {
   add(DiagnosticType.Error, path, options);
 }
 
+// The three channels below never throw, in either mode. They reach
+// `meta.diagnostics` only, so a consumer reading thrown errors alone sees none.
 export function diagnosticWarn(path, options) {
   add(DiagnosticType.Warning, path, options);
 }
