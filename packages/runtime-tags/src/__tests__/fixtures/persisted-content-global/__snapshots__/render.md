@@ -40,6 +40,25 @@ UPDATE: main > section > span::text "0" => "1"
 ```
 
 # Update `{"$global":{"brand":"Zed","serializedGlobals":["brand"]}}`
+```html
+<main>
+  <section>
+    <span>
+      1
+    </span>
+    <div>
+      Zed
+    </div>
+  </section>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > section > div::text "Acme" => "Zed"
+```
 
 # Update
 ```js
@@ -52,7 +71,7 @@ document.querySelector("button").click();
       2
     </span>
     <div>
-      Acme
+      Zed
     </div>
   </section>
   <button>
