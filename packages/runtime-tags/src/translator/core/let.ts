@@ -133,6 +133,8 @@ export default {
         );
       }
     } else {
+      // The value expression stays reactive and re-runs, but a `<let>` returns
+      // state it controls rather than that value, so the binding has no downstream.
       setBindingDownstream(binding, false);
     }
   },
