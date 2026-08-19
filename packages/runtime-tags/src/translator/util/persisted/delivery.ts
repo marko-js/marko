@@ -19,9 +19,9 @@ import { type Section } from "../sections";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
 import {
-  inStateSelectedStructure,
+  inStatefulBranch,
   isBranchPathSection,
-  isStateSelected,
+  isStatefulBranch,
 } from "./structure";
 
 // The stable wire/registry key for a fill: template id plus a program-wide
@@ -95,9 +95,9 @@ export function isPatchFillBinding(binding: Binding) {
     isPersisted() &&
     ((!binding.section.parent && !getProgram().node.extra.page) ||
       (binding.section.isBranch && isBranchPathSection(binding.section))) &&
-    // State-selected branches never construct from frames, so their
+    // Stateful branches never construct from frames, so their
     // state needs no seed fill.
-    !isStateSelected(binding.section) &&
+    !isStatefulBranch(binding.section) &&
     getCanonicalBinding(binding) === binding &&
     (binding.sources?.state || binding.section.parent)
   ) {
@@ -118,7 +118,7 @@ export function isPatchFillBinding(binding: Binding) {
 }
 
 // A rendered read (through any alias) the client must recompute:
-// intersecting state, a dynamic tag name, or inside state-selected structure.
+// intersecting state or inside stateful structure.
 function hasStateJoinedRead(binding: Binding): boolean {
   for (const alias of binding.aliases) {
     // A property alias or rest fills on its own; a direct alias reads this.
@@ -130,17 +130,14 @@ function hasStateJoinedRead(binding: Binding): boolean {
     // A native tag spread is an effect read (its handlers attach lazily)
     // whose attributes still render.
     if (read.isEffect && !read.nativeTagSpread) continue;
-    // A dynamic tag name is a hole only the client can paint (a re-render,
-    // not a server-written entry): it fills without a state intersection.
-    if (read.isDynamicTagName) return true;
     if (getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
     }
-    // A rendered read inside state-selected structure promotes to an owner
+    // A rendered read inside stateful structure promotes to an owner
     // fill (no patch-write channel); effect reads use the owner slot write.
     let readSection: Section | undefined = read.section;
     while (readSection && readSection !== binding.section) {
-      if (isStateSelected(readSection)) return true;
+      if (isStatefulBranch(readSection)) return true;
       readSection = readSection.parent;
     }
   }
@@ -235,10 +232,10 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
-  // Inside state-selected structure content sections keep lexical owners, so
+  // Inside stateful structure content sections keep lexical owners, so
   // reads hop soundly: lone reads and dynamic-chain intersection members
   // deliver through their self-registering closure signals.
-  const stateSelected = inStateSelectedStructure(section);
+  const stateful = inStatefulBranch(section);
   return some(refs, (binding) => {
     // Seeded state is client-owned after its seed: no frame delivers it.
     if (
@@ -248,7 +245,7 @@ export function hasUndeliverableFillReads(
     ) {
       let cur: Section | undefined = section;
       while (cur && cur !== binding.section) {
-        if (!cur.isBranch && !stateSelected) return true;
+        if (!cur.isBranch && !stateful) return true;
         cur = cur.parent;
       }
       return !cur;

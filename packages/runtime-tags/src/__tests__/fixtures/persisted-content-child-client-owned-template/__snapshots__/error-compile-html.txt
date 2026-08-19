@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-content-child-client-owned-template/template.marko:3:27
+      1 | import banner from "./tags/banner/index.marko";
+      2 | <main>
+    > 3 |   <card title=input.title content=banner/>
+        |                           ^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a renderer the child renders inside client-owned structure must be a body, an attribute tag or a plain `input` property.
+      4 | </main>
+      5 |

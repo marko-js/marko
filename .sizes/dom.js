@@ -1,4 +1,4 @@
-// size: 27997 (min) 10358 (brotli)
+// size: 27883 (min) 10326 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -46,7 +46,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   channel,
   patchFills = {},
   closureFillJoins = {},
-  dynamicTagFills = /* @__PURE__ */ new Set(),
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -96,7 +95,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
   patchers = {},
-  kChanged = Symbol(),
   onPatchRecord,
   failPatch = () => {
     throw 0;
@@ -725,14 +723,6 @@ function _fill_join_closure(key, valueAccessor, join, index) {
 }
 function fill(key, signal) {
   return ((patchFills[key] = signal), signal);
-}
-function _fill_dynamic_tag(key, valueAccessor, signal) {
-  let readAccessor = decodeAccessor(valueAccessor);
-  return (
-    dynamicTagFills.add(key),
-    fillJoin(key, valueAccessor, signal, (scope) => signal(scope, scope[readAccessor])),
-    signal
-  );
 }
 function _fill_let(key, id, fn) {
   return fill(key, _let(id, fn));
@@ -2102,16 +2092,15 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let patchGlobalsEntry = (live, _key, value) => {
+let globalsChanged = {},
+  patchGlobalsEntry = (live, _key, value) => {
     let globals = live.$;
     for (let key in value)
-      if (globals[key] !== value[key]) {
-        globals[key] = value[key];
-        let marks = (globals[kChanged] ??= {});
-        marks["." + key] = marks.$ = runId;
-      }
-  },
-  frameChecks = [],
+      globals[key] !== value[key] && ((globals[key] = value[key]), (globalsChanged[key] = runId));
+  };
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let frameChecks = [],
   frameVars = {};
 function applyPatch(frame, renderId = "_", runtimeId = "M") {
   (init(runtimeId), (patchers.$ = patchGlobalsEntry));

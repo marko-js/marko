@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-content-global/template.marko:4:3
-      2 | <let/count=0/>
-      3 | <main>
-    > 4 |   <widget value=count content=banner/>
-        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: content for a child that renders it only works inside client-owned structure (a server-owned instance would navigate on every patch).
-      5 |   <button onClick() { count++ }>+</button>
-      6 | </main>
-      7 |

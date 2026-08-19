@@ -1,0 +1,6 @@
+import banner from "./tags/banner/index.marko";
+<let/count=0/>
+<main>
+  <widget renderer=(input.kind === "banner" ? banner : input.kind)/>
+  <button onClick() { count++ }>${count}</button>
+</main>

@@ -25,7 +25,7 @@ import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  isStateSelected,
+  isStatefulBranch,
   isBranchPathSection,
   recordStructuralOrGlobalParams,
 } from "../util/persisted/structure";
@@ -123,10 +123,10 @@ export const IfTag = {
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted()) {
         onClassifyStructure(ifTagSection, () => {
-          // Patches select a chain that is not state-selected.
+          // Patches select a chain that is not stateful.
           if (
             !branches.some(
-              ([, branchBody]) => branchBody && isStateSelected(branchBody),
+              ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
             ) &&
             isBranchPathSection(ifTagSection)
           ) {
@@ -204,7 +204,7 @@ export const IfTag = {
           // A client-owned chain compiles like a stateful conditional on a
           // plain page: no marker retention, shells, or branch entry.
           const clientOwned = branches.some(
-            ([, branchBody]) => branchBody && isStateSelected(branchBody),
+            ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
           );
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
@@ -372,7 +372,7 @@ export const IfTag = {
             isPersisted() &&
             isBranchPathSection(ifTagSection) &&
             !branches.some(
-              ([, branchBody]) => branchBody && isStateSelected(branchBody),
+              ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
             )
           ) {
             // An interactive page receives assets transitively through its

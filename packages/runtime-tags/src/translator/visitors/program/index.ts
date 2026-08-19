@@ -28,7 +28,11 @@ import {
   finalizeReferences,
   trackParamsReferences,
 } from "../../util/references";
-import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
+import {
+  getCompatRuntimeFile,
+  getRuntimePath,
+  importRuntimeFeature,
+} from "../../util/runtime";
 import {
   forEachSection,
   getSectionRegisterReasons,
@@ -275,6 +279,13 @@ export default {
 
       if (isPersisted()) {
         assertSupportedPatch(program);
+        // A static record slot rebuilds client-side; the import rides both
+        // outputs (an interactive page gets assets through its dom program).
+        forEachSection((section) => {
+          if (section.contentRecord === "static") {
+            importRuntimeFeature("patch-content");
+          }
+        });
       }
 
       if (isOutputHTML()) {

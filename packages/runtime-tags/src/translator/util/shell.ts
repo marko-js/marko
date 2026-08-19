@@ -3,9 +3,11 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
-import { isBranchPathSection, isStateSelected } from "./persisted/structure";
+import { isBranchPathSection, isStatefulBranch } from "./persisted/structure";
+import { addRuntimeFeatureAsset } from "./runtime";
 import {
   forEachSection,
+  forEachSectionReverse,
   getSectionRegisterReasons,
   type Section,
   StructureKind,
@@ -28,26 +30,67 @@ export function getShells() {
 // Decides every branch shell (expressibility, blockers) so the html output
 // serializes the kept sections as frame records.
 export function buildShells() {
-  // Enclosing branches of state-selected structure also construct
+  // Enclosing branches of stateful structure also construct
   // unfaithfully: the frame cannot reproduce the selection inside them.
   forEachSection((section) => {
-    if (isStateSelected(section)) {
+    if (isStatefulBranch(section)) {
       for (let cur = section.parent; cur?.parent; cur = cur.parent) {
         if (cur.isBranch) {
-          cur.shellBlocked ??= ShellBlocker.stateSelectedEnclosure;
+          cur.shellBlocked ??= ShellBlocker.statefulEnclosure;
         }
       }
     }
   });
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
+  const records = (getProgram().node.extra.persistedShells ??= {});
+  // A content body nothing registers ships as a shell record (a dynamic tag
+  // entry constructs by id, a static one rides its slot); static boundary
+  // content is a record too.
+  forEachSectionReverse((section) => {
+    if (
+      !section.parent ||
+      section.isBranch ||
+      section.isBoundary ||
+      isStatefulBranch(section)
+    ) {
+      return;
+    }
+    if (section.boundaryContent) {
+      if (isStaticRecord(section)) {
+        section.contentRecord = "static";
+        records[getResumeRegisterId(section, "content")] = section;
+        addRuntimeFeatureAsset("patch-content");
+      }
+    } else if (
+      (!interactive || !getSectionRegisterReasons(section)) &&
+      isShellExpressible(section)
+    ) {
+      const chain: Section[] = [];
+      const bodyRecords: Record<string, Section> = {};
+      if (interactive || buildAwaitBodyRecords(section, bodyRecords, chain)) {
+        // Only a slot the client dereferences rides in-band.
+        section.contentRecord =
+          getSectionRegisterReasons(section) && isStaticRecord(section)
+            ? "static"
+            : true;
+        if (section.contentRecord === "static") {
+          addRuntimeFeatureAsset("patch-content");
+        }
+        keep.add(section);
+        for (const body of chain) keep.add(body);
+        Object.assign(records, bodyRecords);
+        records[getResumeRegisterId(section, "content")] = section;
+      }
+    }
+  });
   forEachSection((section) => {
     // Every branch-path body ships a shell, except
-    // state-selected bodies: they never construct from a frame.
+    // stateful bodies: they never construct from a frame.
     if (
       !section.isBranch ||
       !isBranchPathSection(section) ||
-      isStateSelected(section)
+      isStatefulBranch(section)
     ) {
       return;
     }
@@ -66,7 +109,6 @@ export function buildShells() {
       if (!section.shellBlocked) {
         keep.add(section);
         for (const body of chain) keep.add(body);
-        const records = (getProgram().node.extra.persistedShells ??= {});
         Object.assign(records, bodyRecords);
         records[id] = section;
       }
@@ -76,23 +118,6 @@ export function buildShells() {
   // content id and (interactive) their body registers in the dom output.
   forEachSection((section) => {
     if (!keep.has(section)) section.constructSetups = undefined;
-  });
-
-  // `@placeholder`/`@catch` content slot-serializes by register id. A
-  // static body re-registers from entry-emitted data; anything else keeps
-  // the dom module loading (a shrinking stopgap).
-  forEachSection((section) => {
-    // Only a slot the document registers (`_content_resume`) is ever
-    // dereferenced: an unregistered one needs no record and no module.
-    if (!section.boundaryContent || !getSectionRegisterReasons(section)) {
-      return;
-    }
-    const shell = getStaticShell(section);
-    if (shell && !shell[1]) {
-      section.contentTemplate = shell[0];
-    }
-    // A dynamic body sets no template: its slot elides at translate, so a
-    // delivered catch rejects to navigation rather than bundling code.
   });
 }
 
@@ -141,13 +166,15 @@ function isShellExpressible(section: Section) {
       return false;
     }
   }
-  // A nested branch or boundary leaves only its marker in this shell
-  // (it pairs or constructs during the walk); any other child section
-  // carries content the shell cannot express.
+  // Nested branches, boundaries and recorded content bodies arrive through
+  // the walk or entry data; any other child section the shell cannot express.
   let contentChild = false;
   forEachSection((child) => {
     contentChild ||=
-      child.parent === section && !child.isBranch && !child.isBoundary;
+      child.parent === section &&
+      !child.isBranch &&
+      !child.isBoundary &&
+      !child.contentRecord;
   });
   return !contentChild;
 }
@@ -162,6 +189,12 @@ function isChildRootExpressible(program: t.ProgramExtra) {
 }
 
 // The shell's template and walk strings when both are fully static.
+// A record the client rebuilds from its template alone (no walk, no setup).
+function isStaticRecord(section: Section) {
+  const shell = getStaticShell(section);
+  return !!shell && !shell[1];
+}
+
 function getStaticShell(section: Section) {
   if (!isShellExpressible(section)) return;
   const { writes, walks } = getSectionMeta(section);

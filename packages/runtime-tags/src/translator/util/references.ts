@@ -207,9 +207,6 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
-    /** A dynamic tag's name expression — a hole only the client can
-     * paint (a re-render), so its reads fill without a state mix. */
-    isDynamicTagName?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     /** `$global` bindings this expression reads: the root means an opaque

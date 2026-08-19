@@ -14,7 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			return 0;
 		} else if (mode === 2) {
 			const $scope1_id = _scope_id();
-			_html(`<i>${_escape(input.title)}${_el_resume($scope1_id, "#text/0", _source_guard($scope0_reason, 0))}</i>`);
+			_html(`<i>${_escape(input.title)}${_el_resume($scope1_id, "#text/0")}</i>`);
 			writeScope($scope1_id, {}, "__tests__/template.marko", "7:4");
 			return 1;
 		} else {

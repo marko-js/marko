@@ -5,14 +5,16 @@ var box_default = _template_persisted("__tests__/tags/box/index.marko", (input) 
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html$1("<div class=box>");
-	_dynamic_tag$1($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), "__tests__/tags/box/index.marko0");
+	_patch_dynamic_tag($scope0_id, "#text/0", input.content, $scope0_owned, 0);
+	_dynamic_tag$1($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html$1("</div>");
-	$scope0_reason ? writeScope($scope0_id, {}, "__tests__/tags/box/index.marko", 0) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/box/index.marko0", input.content);
+	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/box/index.marko", 0);
 }, 0, 0);
 
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
+_shells({ "__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p> </p>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -24,10 +26,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_id = _scope_id();
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
-			box_default({ content: _content$1("__tests__/template.marko_2*content", () => {
+			box_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _persisted_reason();
 				const $scope2_id = _scope_id();
-				_html$1(`<p>${_escape("t:" + input.title)}${_el_resume($scope2_id, "#text/0", _source_guard($scope0_reason, 0))}</p>`);
+				_html$1(`<p>${_escape("t:" + input.title)}${_el_resume($scope2_id, "#text/0")}</p>`);
 				_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
 				_resume_branch($scope2_id);
 			}, $scope1_id) });

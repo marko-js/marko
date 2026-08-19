@@ -1,0 +1,33 @@
+<main><!--M_[-->
+  <section><!--M_[--><i>Acme<!--M_*4 #text/0-->:<!>p<!--M_*4 #text/1-->:<!>
+          a<!--M_*4 #text/2--></i><!--M_]3 #text/0 4--></section><!--M_[2-->
+  <section><!--M_[--><i>Acme<!--M_*7 #text/0-->:<!>p<!--M_*7 #text/1-->:<!>
+          b<!--M_*7 #text/2--></i><!--M_]6 #text/0 7--></section>
+  <!--M_]1 #main/0 5-->
+</main><!--M_*1 #main/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [0, {
+    brand: "Acme"
+  }, {
+    input_prefix: "p",
+    "ClosureScopes:input_prefix": new Set([_(4), _(7)])
+  }, {
+    _: _(1),
+    "ClosureScopes:item": new Set([_(4)]),
+    "#childScope/0": _(3)
+  }, {
+    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-closure-mix/template.marko_2*content 2"
+  }, {
+    _: _(2)
+  }, {
+    _: _(1),
+    "ClosureScopes:item": new Set([_(7)]),
+    "#childScope/0": _(6)
+  }, {
+    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-closure-mix/template.marko_2*content 5"
+  }, {
+    _: _(5)
+  }]];
+  M._.w()
+</script>

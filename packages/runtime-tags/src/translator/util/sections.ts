@@ -165,17 +165,16 @@ export interface Section {
    * `<try>` `@placeholder`/`@catch` bodies): `buildShells` re-registers
    * static ones from entry data; others load the dom module. */
   boundaryContent: boolean;
-  /** A `boundaryContent` body's static template, set by `buildShells`: the
-   * slot serializes as an in-band template instead of a register-id ref. */
-  contentTemplate: string | undefined;
+  /** A content body shipped as a shell record (set by `buildShells`): a
+   * `"static"` one (template only) rides its slot in-band, a dynamic one
+   * elides its slot and a dynamic tag entry constructs it by id. */
+  contentRecord: false | true | "static";
   /** Awaits a construct must deliver body content for (marker binding +
    * body section); `buildShells` prunes those no shipped shell reaches. */
   constructSetups: { binding: Binding; body: Section }[] | undefined;
   /** Branch whose shell would construct unfaithfully: the first blocker's
    * reason code sticks, no shell ships, patches fail closed. */
   shellBlocked: ShellBlocker.Value | undefined;
-  /** Input props this section renders as fed renderers: a patch poisons
-   * while they are non-nullish (a stopgap, dropped once they dispatch). */
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -262,7 +261,7 @@ export function startSection(
       isBranch: false,
       isBoundary: false,
       boundaryContent: false,
-      contentTemplate: undefined,
+      contentRecord: false,
       constructSetups: undefined,
       shellBlocked: undefined,
       structure: parentSection && !parentSection.structure ? null : [],

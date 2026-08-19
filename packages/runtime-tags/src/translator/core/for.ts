@@ -22,9 +22,10 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
+import { some } from "../util/optional";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  isStateSelected,
+  isStatefulBranch,
   isBranchPathSection,
   recordStructuralOrGlobalParams,
 } from "../util/persisted/structure";
@@ -47,12 +48,14 @@ import {
 } from "../util/runtime";
 import {
   ContentType,
+  forEachSection,
   getBranchRendererArgs,
   getDirectClosures,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -215,25 +218,36 @@ export default {
 
     if (isPersisted()) {
       onClassifyStructure(tagSection, () => {
-        // Patches select a loop that is not state-selected.
-        if (!isStateSelected(bodySection) && isBranchPathSection(tagSection)) {
+        // Patches select a loop that is not stateful.
+        if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
           addRuntimeFeatureAsset("patch-loop");
           // The loop's inputs drive structure: the params recorded here
           // gate call-site feeds at translate.
           recordStructuralOrGlobalParams(getSerializeSourcesForExpr(tagExtra));
         }
       });
-      // A patch can target the loop's CONTENT even when the list itself is
-      // static, so whatever could update the items (their closure sources)
-      // is a marker resume reason: the entry anchors there.
       onFinalizeReferences(() => {
         addSerializeReason(
           tagSection,
-          !isStateSelected(bodySection) &&
+          !isStatefulBranch(bodySection) &&
             (!!(bodySection.isHoistThrough || bodySection.hoisted) ||
               getSerializeSourcesForRef(getDirectClosures(bodySection))),
           nodeBinding,
         );
+        // Items with dom bindings or nested sections link: a source-less list
+        // (a literal) still resumes its marker.
+        if (
+          !isStatefulBranch(bodySection) &&
+          isBranchPathSection(tagSection) &&
+          hasDomBindingsOrNestedSections(bodySection)
+        ) {
+          if (!getSerializeReason(tagSection, nodeBinding)) {
+            addSerializeReason(tagSection, true, nodeBinding);
+          }
+          if (!getSerializeReason(bodySection, kBranchSerializeReason)) {
+            addSerializeReason(bodySection, true, kBranchSerializeReason);
+          }
+        }
       });
     }
 
@@ -275,7 +289,7 @@ export default {
         const bodyStatements = node.body.body as t.Statement[];
         // A client-owned loop compiles like a stateful loop on a plain
         // page: no marker retention, shells, or loop entry.
-        const clientOwned = isStateSelected(bodySection);
+        const clientOwned = isStatefulBranch(bodySection);
         // A patchable loop keeps its markers: item pairing and insertion
         // anchor at branch marks, which elision would remove.
         const persistedPatch =
@@ -410,7 +424,7 @@ export default {
         if (
           isPersisted() &&
           isBranchPathSection(getSection(tag)) &&
-          !isStateSelected(bodySection)
+          !isStatefulBranch(bodySection)
         ) {
           // An interactive page receives assets transitively through its
           // dom program, so the feature import rides both outputs.
@@ -689,6 +703,17 @@ function getStaticMemberChain(
   if (cur.type === "Identifier" && cur.name === rootName) {
     return chain.reverse();
   }
+}
+
+function hasDomBindingsOrNestedSections(section: Section) {
+  let has = some(
+    section.bindings,
+    (binding) => binding.type === BindingType.dom,
+  );
+  forEachSection((child) => {
+    has ||= child.parent === section;
+  });
+  return has;
 }
 
 function forTypeToRuntime(type: ForType) {

@@ -1,15 +1,13 @@
 // PATCH
 {
   ca: {
-    ta: "b",
-    fb: ["b0", $]
+    ta: "b"
   }
 }
 
 // PATCH
 {
   ca: {
-    ta: "c",
-    fb: ["b0", $]
+    ta: "c"
   }
 }

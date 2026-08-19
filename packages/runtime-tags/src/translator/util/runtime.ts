@@ -25,9 +25,7 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 // result is unused, despite call-time side effects: `_resume` registration
 // (`_template`, `_dynamic_tag`). This is sound because registration only
 // matters when the value is referenced by a serialized register id, which
-// keeps it in the module graph. `_fill_dynamic_tag` is sound differently:
-// its `dynamicTagFills` mark exists to REPORT whether the tag signal
-// survived, so dropping it with the call is correct (fail closed).
+// keeps it in the module graph.
 //
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
@@ -41,7 +39,6 @@ const pureDOMFunctions = new Set<string>([
   "_init_if_closure",
   "_init_join",
   "_fill_const",
-  "_fill_dynamic_tag",
   "_fill_let",
   "_fill_let_change",
   "_await_content",
@@ -130,10 +127,12 @@ export type DOMRuntimeFeature =
   | "patch-boundary"
   | "patch-branch"
   | "patch-child"
+  | "patch-content"
   | "patch-control"
   | "patch-control-input"
   | "patch-control-open"
   | "patch-control-select"
+  | "patch-dynamic-tag"
   | "patch-effect"
   | "patch-loop"
   | "patch-text"

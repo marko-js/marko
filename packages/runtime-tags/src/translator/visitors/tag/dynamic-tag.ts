@@ -30,7 +30,13 @@ import {
 import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { isContentRenderTag } from "../../util/persisted/decisions";
-import { getPatchFillKey } from "../../util/persisted/delivery";
+import { addPersistedChildRenderer } from "../../util/persisted/intrinsics";
+import { onFinalizePersisted } from "../../util/persisted/lifecycle";
+import {
+  ensurePersistedWriteGroups,
+  inStatefulBranch,
+  isBranchPathSection,
+} from "../../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -62,10 +68,14 @@ import {
   startSection,
   StructureKind,
 } from "../../util/sections";
-import { getSerializeGuard } from "../../util/serialize-guard";
+import {
+  getPatchWriteOwnership,
+  getSerializeGuard,
+} from "../../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
 } from "../../util/serialize-reasons";
 import { addSetupStatement } from "../../util/setup-statements";
 import {
@@ -156,18 +166,6 @@ export default {
         return;
       }
 
-      const fedRenderProp =
-        isPersisted() &&
-        isContentRenderTag(node) &&
-        tag.scope.getBinding("input")?.path.type === "Program"
-          ? ((node.name as t.MemberExpression).property as t.Identifier).name
-          : undefined;
-      // The selection entry applies through the value patchers, which
-      // must ship even when this template's dom module does not load.
-      if (fedRenderProp !== undefined) {
-        addRuntimeFeatureAsset("patch-value");
-      }
-
       analyzeAttributeTags(tag);
 
       const tagSection = getOrCreateSection(tag);
@@ -176,11 +174,6 @@ export default {
         node.name,
         ...inputNodes,
       ]);
-      // A root-read dynamic tag name delivers as a fill the tag's own
-      // signal joins; deeper tags pair-or-reject through their entry only.
-      if (fedRenderProp !== undefined && !tagSection.parent) {
-        tagExtra.isDynamicTagName = true;
-      }
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const nodeBinding = (tagExtra[kDOMBinding] = createBinding(
@@ -188,6 +181,18 @@ export default {
         BindingType.dom,
         tagSection,
       ));
+      // The dynamic tag entry applies without this template's dom module;
+      // decided once references and structure resolve, as translate decides.
+      if (isPersisted() && !t.isStringLiteral(node.name)) {
+        onFinalizePersisted(() => {
+          if (isContentRenderTag(tag)) {
+            ensurePersistedWriteGroups(() => tagExtra);
+            if (writesPatchDynamicTag(tag, tagSection)) {
+              addRuntimeFeatureAsset("patch-dynamic-tag");
+            }
+          }
+        });
+      }
 
       if (
         hasVar ||
@@ -249,14 +254,18 @@ export default {
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
-      // The selection entry applies through the value patchers;
-      // interactive pages get them transitively (the import rides both outputs).
+      // The import rides both outputs (interactive pages load it transitively).
+      if (writesPatchDynamicTag(tag, getSection(tag))) {
+        importRuntimeFeature("patch-dynamic-tag");
+      }
+      // An unknown renderer defeats transitive `$global` knowledge; `input`
+      // content is the parent's own, already counted where it was compiled.
       if (
         isPersisted() &&
-        isContentRenderTag(tag.node) &&
-        tag.scope.getBinding("input")?.path.type === "Program"
+        !t.isStringLiteral(tag.node.name) &&
+        !isContentRenderTag(tag)
       ) {
-        importRuntimeFeature("patch-value");
+        addPersistedChildRenderer(tag.node.name);
       }
     },
     exit(tag) {
@@ -473,26 +482,21 @@ export default {
           serializeReason,
           true,
         );
-        // The selection entry rides the tag site: an unchanged renderer key
-        // pairs even when the tag signal was shaken (`0`: no fill — a
-        // deeper fed renderer pairs or rejects, never re-renders yet).
-        let patchFill: t.Expression | undefined;
-        if (
-          tagExtra.isDynamicTagName &&
-          tagExtra.referencedBindings &&
-          !Array.isArray(tagExtra.referencedBindings)
-        ) {
-          patchFill = t.stringLiteral(
-            getPatchFillKey(tagExtra.referencedBindings),
+        // The dynamic tag entry rides the tag site, ownership gated; the tag
+        // marks its branch for it whatever the site's own reason.
+        const patches = writesPatchDynamicTag(tag, tagSection);
+        if (patches) {
+          statements.push(
+            t.expressionStatement(
+              callRuntime(
+                "_patch_dynamic_tag",
+                getScopeIdIdentifier(tagSection),
+                getScopeAccessorLiteral(nodeBinding),
+                t.cloneNode(tagExpression),
+                ...getPatchWriteOwnership(getSerializeSourcesForExpr(tagExtra)),
+              ),
+            ),
           );
-        }
-        if (
-          !patchFill &&
-          isPersisted() &&
-          isContentRenderTag(node) &&
-          tag.scope.getBinding("input")?.path.type === "Program"
-        ) {
-          patchFill = t.numericLiteral(0);
         }
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
@@ -506,7 +510,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
-              patchFill,
+              patches ? t.numericLiteral(1) : undefined,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -517,7 +521,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
-              patchFill,
+              patches ? t.numericLiteral(1) : undefined,
             );
 
         if (node.var) {
@@ -606,22 +610,7 @@ export default {
               : undefined,
             hasTagArgs && t.numericLiteral(1),
           );
-          // A fed renderer's signal joins its value's fill: the stored
-          // value re-applies through it like any other join.
-          const nameBinding =
-            tagExtra.isDynamicTagName &&
-            tagExtra.referencedBindings &&
-            !Array.isArray(tagExtra.referencedBindings)
-              ? tagExtra.referencedBindings
-              : undefined;
-          return nameBinding
-            ? callRuntime(
-                "_fill_dynamic_tag",
-                t.stringLiteral(getPatchFillKey(nameBinding)),
-                getScopeAccessorLiteral(nameBinding, true),
-                tagSignal,
-              )
-            : tagSignal;
+          return tagSignal;
         };
 
         // Additional optimized export a known parent calls instead of the
@@ -730,4 +719,14 @@ function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
       }
     }
   }
+}
+
+// A tag rendering `input` content whose dynamic tag entry re-renders it from the server's value.
+function writesPatchDynamicTag(tag: t.NodePath<t.MarkoTag>, section: Section) {
+  return (
+    isPersisted() &&
+    isContentRenderTag(tag) &&
+    isBranchPathSection(section) &&
+    !inStatefulBranch(section)
+  );
 }

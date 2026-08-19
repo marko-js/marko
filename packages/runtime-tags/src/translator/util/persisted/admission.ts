@@ -38,9 +38,10 @@ import {
   isPatchWriteBinding,
 } from "./delivery";
 import {
-  inStateSelectedStructure,
+  childRendersStateful,
+  inStatefulBranch,
   isBranchPathSection,
-  isStateSelected,
+  isStatefulBranch,
 } from "./structure";
 
 export function assertSupportedPatch(program: t.NodePath<t.Program>) {
@@ -89,7 +90,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         sources?.param &&
         !sources.state &&
         !isPatchFillBinding(binding) &&
-        !inStateSelectedStructure(binding.section)
+        !inStatefulBranch(binding.section)
       ) {
         unsupported(
           node,
@@ -162,73 +163,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     }
     return null;
   };
-  // The input properties a template renders as content (`true` when the
-  // reach is unanalyzable: opaque dynamic tags, whole-bag/computed reads).
-  const renderedPropsCache = new Map<unknown, true | Set<string>>();
-  const childRenderedProps = (
-    tagPath: t.NodePath<t.MarkoTag>,
-  ): true | Set<string> => {
-    const file = loadFileForTag(tagPath);
-    if (!file) return true;
-    const cached = renderedPropsCache.get(file);
-    if (cached !== undefined) return cached;
-    renderedPropsCache.set(file, true);
-    let props: true | Set<string> = new Set();
-    file.path.traverse({
-      MarkoTag(inner) {
-        if (props !== true && !t.isStringLiteral(inner.node.name)) {
-          if (
-            isContentRenderTag(inner.node) &&
-            inner.scope.getBinding("input")?.path.type === "Program"
-          ) {
-            props.add(
-              ((inner.node.name as t.MemberExpression).property as t.Identifier)
-                .name,
-            );
-          } else {
-            props = true;
-          }
-        }
-      },
-      Identifier(id) {
-        if (
-          props !== true &&
-          id.node.name === "input" &&
-          id.isReferencedIdentifier() &&
-          id.scope.getBinding("input")?.path.type === "Program"
-        ) {
-          const parent = id.parentPath;
-          if (
-            parent.isMarkoSpreadAttribute() &&
-            getTagDef(parent.parentPath as t.NodePath<t.MarkoTag>)?.template
-          ) {
-            // `<child ...input/>` renders whatever the child renders.
-            const nested = childRenderedProps(
-              parent.parentPath as t.NodePath<t.MarkoTag>,
-            );
-            if (nested === true) {
-              props = true;
-            } else {
-              for (const name of nested) props.add(name);
-            }
-          } else if (
-            !(
-              parent.isMemberExpression({ computed: false }) &&
-              t.isIdentifier(parent.node.property)
-            )
-          ) {
-            props = true;
-          } else if (parent.node.property.name === "content") {
-            props.add("content");
-          }
-        }
-      },
-    });
-    renderedPropsCache.set(file, props);
-    return props;
-  };
-  const rendersProp = (props: true | Set<string>, name: string) =>
-    props === true || props.has(name);
   // Whether a template (and, recursively, everything it renders) is a
   // self-contained client instance: the reason it is not, or null.
   const childUnsafety = new Map<unknown, string | null>();
@@ -262,14 +196,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         const name =
           t.isStringLiteral(inner.node.name) && inner.node.name.value;
         if (!name) {
-          // Rendering a directly fed renderer is the body-content channel:
+          // Rendering an `input` property is the body-content channel:
           // what it renders is validated where it was compiled.
-          if (
-            !(
-              isContentRenderTag(inner.node) &&
-              inner.scope.getBinding("input")?.path.type === "Program"
-            )
-          ) {
+          if (!isContentRenderTag(inner)) {
             reason = "renders a dynamic tag";
           }
           return;
@@ -313,21 +242,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                 break;
               }
             }
-            if (!reason) {
-              const rendered = childRenderedProps(inner);
-              for (const innerAttr of inner.node.attributes) {
-                // A spread may carry any prop the child renders.
-                if (
-                  (innerAttr.type === "MarkoAttribute"
-                    ? rendersProp(rendered, innerAttr.name)
-                    : rendered === true || rendered.size > 0) &&
-                  exprHasServerSources(innerAttr.value)
-                ) {
-                  reason = "feeds a nested child a server value it renders";
-                  break;
-                }
-              }
-            }
             reason ||= getChildUnsafety(inner);
           }
         }
@@ -367,7 +281,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           "a server value's fill delivery path leaves the branch chain",
         );
       }
-      if (inStateSelectedStructure(section)) {
+      if (inStatefulBranch(section)) {
         assertDeliverableInClientOwned(node, node.value, node.value.extra);
       }
     },
@@ -438,14 +352,14 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       if (isConditionTag(tag) || isCoreTagName(tag, "for")) {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
-        const stateSelected = !!bodySection && isStateSelected(bodySection);
+        const stateful = !!bodySection && isStatefulBranch(bodySection);
         // The walk pairs branches structurally at any depth, but only when
         // every enclosing section is itself a branch — unless the body
         // classified client-owned (content sections inherit ownership).
-        if (!isBranchPathSection(section) && !stateSelected) {
+        if (!isBranchPathSection(section) && !stateful) {
           unsupported(node);
         }
-        if (stateSelected) {
+        if (stateful) {
           for (const attr of node.attributes) {
             if (attr.type !== "MarkoAttribute") continue;
             // A local `by` invokes client-side per re-list; any server
@@ -472,7 +386,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         // Nested structure inherits client ownership, so reaching here
         // means its selection has no delivery channel: fail closed.
-        if (inStateSelectedStructure(section)) {
+        if (inStatefulBranch(section)) {
           const attrExtra = node.attributes[0]?.value.extra;
           const sources =
             attrExtra &&
@@ -519,7 +433,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             }
             // A script's re-run entry rides the branch partial the frame no
             // longer carries, so only pure-client scripts run inside.
-            if (inStateSelectedStructure(getSection(tag))) {
+            if (inStatefulBranch(getSection(tag))) {
               if (attr.value.extra?.globalBindings) {
                 unsupported(
                   attr,
@@ -544,7 +458,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // state, and holes it feeds recompute through the signal graph.
       if (tagName === "let" || tagName === "const") {
         const section = getSection(tag);
-        if (inStateSelectedStructure(section)) {
+        if (inStatefulBranch(section)) {
           for (const attr of node.attributes) {
             if (attr.type === "MarkoAttribute") {
               assertDeliverableInClientOwned(
@@ -561,7 +475,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // output: reads stay current over the wire, so only deliverability
       // gates it (the call site classifies the return's ownership).
       if (tagName === "return") {
-        if (inStateSelectedStructure(getSection(tag))) {
+        if (inStatefulBranch(getSection(tag))) {
           unsupported(
             node,
             "a `<return>` inside client-owned structure is not supported yet",
@@ -587,7 +501,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       if (tagDef?.template) {
         // Inside client-owned structure a child is a pure client instance
         // (input re-applies via tag-args signals; server values fill).
-        if (inStateSelectedStructure(getSection(tag))) {
+        if (inStatefulBranch(getSection(tag))) {
           if (node.var) {
             unsupported(
               node,
@@ -625,21 +539,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               `a child inside client-owned structure ${unsafety}`,
             );
           }
-          const rendered = childRenderedProps(tag);
           for (const attr of node.attributes) {
-            // A prop the child RENDERS receives a renderer (a spread may
-            // carry any): a server value there cannot cross the wire.
-            if (
-              (attr.type === "MarkoAttribute"
-                ? rendersProp(rendered, attr.name)
-                : rendered === true || rendered.size > 0) &&
-              exprHasServerSources(attr.value)
-            ) {
-              unsupported(
-                attr,
-                "a renderer the child renders cannot feed from a server value",
-              );
-            }
             if (attr.type === "MarkoAttribute") {
               assertDeliverableInClientOwned(
                 attr,
@@ -694,30 +594,37 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           return;
         }
-        // A content-consuming child renders what this site feeds it; a
-        // server-owned instance would poison every patch, so say so now.
+        // Only a body, attribute tag or `input` pass-through can feed a prop
+        // the child renders inside stateful structure (it fills there).
         {
-          const rendered = childRenderedProps(tag);
-          const fedContent =
-            node.body.body.length ||
-            node.attributes.some(
-              (attr) =>
-                attr.type === "MarkoAttribute" && attr.name === "content",
-            );
-          if (
-            (fedContent && rendersProp(rendered, "content")) ||
-            node.attributeTags?.some(
-              (attrTag) =>
-                t.isMarkoTag(attrTag) &&
-                t.isStringLiteral(attrTag.name) &&
-                rendersProp(rendered, attrTag.name.value.slice(1)),
-            ) ||
-            (rendered === true && (fedContent || node.attributeTags?.length))
-          ) {
-            unsupported(
-              node,
-              "content for a child that renders it only works inside client-owned structure (a server-owned instance would navigate on every patch)",
-            );
+          const childExtra = loadFileForTag(tag)?.ast.program.extra;
+          for (const attr of node.attributes) {
+            if (attr.type === "MarkoAttribute") {
+              if (
+                childRendersStateful(childExtra, attr.name) &&
+                !t.isLiteral(attr.value) &&
+                (!t.isMemberExpression(attr.value, { computed: false }) ||
+                  !t.isIdentifier(attr.value.object) ||
+                  tag.scope.getBinding(attr.value.object.name)?.path.type !==
+                    "Program")
+              ) {
+                unsupported(
+                  attr,
+                  "a renderer the child renders inside client-owned structure must be a body, an attribute tag or a plain `input` property",
+                );
+              }
+            } else if (
+              childRendersStateful(childExtra) &&
+              !(
+                t.isIdentifier(attr.value) &&
+                tag.scope.getBinding(attr.value.name)?.path.type === "Program"
+              )
+            ) {
+              unsupported(
+                attr,
+                "a spread may carry a renderer the child renders inside client-owned structure",
+              );
+            }
           }
         }
         // Fact-finding and the instance patch-skip live in the decisions
@@ -734,18 +641,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             (!tagDef.template && !tagDef.renderer))
         )
       ) {
-        // A fed renderer delivers as a fill (`fedRenderProps`): the
-        // dispatcher re-renders on a key change and pairs otherwise.
-        if (
-          isContentRenderTag(node) &&
-          tag.scope.getBinding("input")?.path.type === "Program"
-        ) {
-          if (inStateSelectedStructure(getSection(tag))) {
-            unsupported(
-              node,
-              "a renderer read inside client-owned structure would need to cross the wire as a function",
-            );
-          }
+        // `input` content re-renders from its dynamic tag entry, or through
+        // its fill inside client-owned structure.
+        if (isContentRenderTag(tag)) {
           return;
         }
         unsupported(node);
@@ -770,7 +668,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const controlled = new Set<t.Node>(
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
       );
-      const clientOwnedStructure = inStateSelectedStructure(getSection(tag));
+      const clientOwnedStructure = inStatefulBranch(getSection(tag));
       for (const attr of node.attributes) {
         // Handlers read the scope at call time, so only values no write
         // keeps current gate: `$global`-derived slots and function calls.

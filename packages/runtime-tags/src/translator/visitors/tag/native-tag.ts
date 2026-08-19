@@ -45,7 +45,7 @@ import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
   ensurePersistedWriteGroups,
-  inStateSelectedStructure,
+  inStatefulBranch,
   isBranchPathSection,
 } from "../../util/persisted/structure";
 import {
@@ -1411,7 +1411,7 @@ function writesPatchAttr(
 ) {
   if (
     !(isPersisted() && isBranchPathSection(tagSection)) ||
-    inStateSelectedStructure(tagSection)
+    inStatefulBranch(tagSection)
   ) {
     return false;
   }
