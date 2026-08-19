@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+import n2 from "./tags/n2.marko";
+import n5 from "./tags/n5.marko";
+
+<let/clicks=0>
+<let/tag=n5>
+<button onClick() { clicks++ }>clicks ${clicks}</button>
+<button class="swap" onClick() { tag = tag === n5 ? n2 : n5 }>swap</button>
+<try>
+  <@placeholder><n1 label=`placeholder ${clicks}`/></@placeholder>
+  <await|body|=resolveAfter("body", 2)>
+    <${tag} label=`${body} ${clicks}`/>
+  </await>
+</try>
