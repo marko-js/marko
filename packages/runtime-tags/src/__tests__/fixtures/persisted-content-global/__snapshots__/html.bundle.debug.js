@@ -1,14 +1,3 @@
-// tags/banner/index.marko
-const $template$2 = "<div> </div>";
-const $walks$2 = "D l";
-var banner_default = _template_persisted("__tests__/tags/banner/index.marko", (input) => {
-	const $scope0_reason = _persisted_reason();
-	const $scope0_id = _scope_id();
-	const $global$1 = $global();
-	_html$1(`<div>${_patch_text($scope0_id, "#text/0", $global$1.brand)}${_el_resume($scope0_id, "#text/0")}</div>`);
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/banner/index.marko", 0);
-}, 0, 1);
-
 // tags/widget/index.marko
 const $template$1 = "<section><span> </span><!></section>";
 const $walks$1 = "E l%l";
@@ -25,25 +14,30 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
+_shells({ "__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<div> </div>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
+	const $global$1 = $global();
 	let count = 0;
 	_html$1("<main>");
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
-	if ($scope0_reason || _must_render(widget_default)) {
-		_set_serialize_reason(2);
-		_patch_child($scope0_id, "#childScope/0", $childScope);
-		widget_default({
-			value: count,
-			content: banner_default
-		});
-	}
+	_patch_child($scope0_id, "#childScope/0", $childScope);
+	widget_default({
+		value: count,
+		content: _content_elide("__tests__/template.marko_1*content", () => {
+			const $scope1_reason = _persisted_reason();
+			const $scope1_id = _scope_id();
+			_html$1(`<div>${_patch_text($scope1_id, "#text/0", $global$1.brand)}${_el_resume($scope1_id, "#text/0")}</div>`);
+			writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
+		}, $scope0_id)
+	});
 	_html$1(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script$1($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && writeScope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "2:6" });
+	}, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
-}, 1, () => [widget_default]);
+}, 1, 1);
