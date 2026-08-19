@@ -69,7 +69,7 @@ Marko 6 = HTML superset, not JSX and not Marko 4/5 syntax. `.marko` files are co
 <show=open> stays mounted, keeps state (form drafts) when hidden </show>
 ```
 
-`<if>` destroys/rebuilds its content; `<show>` just hides it (use for toggles that must keep state).
+`<if>` destroys/rebuilds its content; `<show>` renders it and hides it, on the server too (use for toggles that must keep state).
 
 ## Async (`<await>`)
 
