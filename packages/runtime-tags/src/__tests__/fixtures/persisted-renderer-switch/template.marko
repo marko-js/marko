@@ -1,9 +1,0 @@
-import banner from "./tags/banner/index.marko";
-<let/open=true/>
-<main>
-  <widget renderer=(input.kind === "banner" ? banner : input.kind)/>
-  <if=open>
-    <widget renderer=(input.kind === "banner" ? banner : input.kind)/>
-  </if>
-  <button onClick() { open = !open }>+</button>
-</main>

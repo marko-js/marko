@@ -1,0 +1,14 @@
+<let/open=true/>
+<main>
+  <widget>
+    <if=input.kind === "a"><b>A</b></if>
+    <else-if=input.kind === "b"><i>B:${input.kind}</i></else-if>
+  </widget>
+  <if=open>
+    <widget>
+      <if=input.inner === "a"><b>A</b></if>
+      <else-if=input.inner === "b"><i>B:${input.inner}</i></else-if>
+    </widget>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>
