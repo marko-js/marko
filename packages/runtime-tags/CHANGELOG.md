@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.43
+
+### Patch Changes
+
+- [#4002](https://github.com/marko-js/marko/pull/4002) [`0ecd0a2`](https://github.com/marko-js/marko/commit/0ecd0a2584e51438a36e516d6ac391893c35218e) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Separate a template's static text edges so they cannot merge with a parent's adjacent text into a single DOM node, which desynchronized the client-side walk and left later accessors undefined.
+
 ## 6.3.42
 
 ### Patch Changes
