@@ -3,7 +3,6 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoVar,
-  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -126,8 +125,8 @@ export default {
       // A scriptless construct paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
       // Recorded on every section (a root's awaits construct when a parent
-      // shell composes this template); `buildShells` keeps only those a
-      // shipped shell constructs (dom registration or shipped body record).
+      // shell composes this template); `buildShells` keeps only those whose
+      // shipped body records a construct can resolve.
       (section.constructSetups ??= []).push({
         binding: tagExtra[kDOMBinding]!,
         body: bodySection,
@@ -248,18 +247,9 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                // Scriptless pages construct from a shipped record instead;
-                // registering here would keep this dom module bundled.
-                getProgram().node.extra.isInteractive &&
-                  section.constructSetups?.some((s) => s.binding === nodeRef)
-                  ? callRuntime(
-                      "_resume",
-                      t.stringLiteral(
-                        getResumeRegisterId(section, nodeRef, "await"),
-                      ),
-                      awaitContent,
-                    )
-                  : awaitContent,
+                // Constructs resolve body content from the frame's shipped
+                // record; registering here would bundle html resume elides.
+                awaitContent,
               ),
             ]),
           );

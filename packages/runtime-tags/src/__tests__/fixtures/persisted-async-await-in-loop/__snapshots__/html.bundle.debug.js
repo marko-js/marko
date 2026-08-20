@@ -4,6 +4,7 @@ const $walks = "D%b l";
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<em> </em>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>interactive</button></main>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {

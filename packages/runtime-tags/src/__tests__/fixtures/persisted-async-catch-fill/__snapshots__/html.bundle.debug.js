@@ -3,6 +3,7 @@ const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
+	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
