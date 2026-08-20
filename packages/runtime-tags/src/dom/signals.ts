@@ -216,6 +216,36 @@ export function _fill_join_closure<T extends SignalFn>(
   return join;
 }
 
+export function _fill_join_scope<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  value: T,
+  getJoin: () => SignalFn & {
+    [ClosureSignalProp.ScopeInstancesAccessor]: string;
+    [ClosureSignalProp.SignalIndexAccessor]: string;
+  },
+  index: number,
+) {
+  return fillJoin(key, valueAccessor, value, (scope) => {
+    const join = getJoin();
+    const instances = scope[join[ClosureSignalProp.ScopeInstancesAccessor]] as
+      | Set<Scope>
+      | undefined;
+    if (instances) {
+      const signalIndex = join[ClosureSignalProp.SignalIndexAccessor];
+      for (const childScope of instances) {
+        if (
+          childScope[AccessorProp.Gen] > 0 &&
+          childScope[AccessorProp.Gen] < runId &&
+          ((childScope[signalIndex] as number) || 0) === index
+        ) {
+          queueRender(childScope, join, -1);
+        }
+      }
+    }
+  });
+}
+
 // A binding's declaration signal already writes + queues its downstream
 // (closures included), so it registers as the fill directly, fused so
 // compiled templates spend one call, not two.

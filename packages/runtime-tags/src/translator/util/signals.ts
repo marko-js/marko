@@ -1126,9 +1126,26 @@ export function writeSignals(section: Section) {
                 "_fill_join";
               let hopExprs: t.Expression[] = [];
               if (member.section !== signal.section) {
-                // A chain that leaves the branch ladder delivers through the
-                // member's own closure signal (`_fill_join_closure`) instead.
+                // A chain leaving the branch ladder dispatches through the
+                // member's scope subscription instead.
                 if (!isBranchSectionChain(signal.section, member.section)) {
+                  if (
+                    inStatefulBranch(signal.section) ||
+                    inBoundaryContent(signal.section)
+                  ) {
+                    continue;
+                  }
+                  const closureSignal = getSignal(signal.section, member);
+                  value = callRuntime(
+                    "_fill_join_scope",
+                    t.stringLiteral(getPatchFillKey(member)),
+                    getScopeAccessorLiteral(member, true),
+                    value,
+                    t.arrowFunctionExpression([], closureSignal.identifier),
+                    t.numericLiteral(
+                      getDynamicClosureIndex(member, signal.section),
+                    ),
+                  );
                   continue;
                 }
                 // Each branch's registered hop facts are the source of

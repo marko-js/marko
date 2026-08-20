@@ -18,11 +18,7 @@ import { type Binding, getCanonicalBinding, type Sources } from "../references";
 import { type Section } from "../sections";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
-import {
-  inStatefulBranch,
-  isBranchPathSection,
-  isStatefulBranch,
-} from "./structure";
+import { isBranchPathSection, isStatefulBranch } from "./structure";
 
 // The stable wire/registry key for a fill: template id plus a program-wide
 // fill ordinal (built in section order, so every compile output agrees and
@@ -232,40 +228,6 @@ function isSectionParam(binding: Binding) {
     if (alias === params) return true;
   }
   return binding === params || binding.type === BindingType.param;
-}
-
-// Composed dispatch delivers fills down any branch chain; a non-branch on
-// the owner-to-reader path is the (defensive) undeliverable case.
-export function hasUndeliverableFillReads(
-  section: Section,
-  refs: Opt<Binding>,
-) {
-  // Content sections and boundaries keep lexical owners, so reads hop
-  // soundly through their self-registering closure signals.
-  const stateful = inStatefulBranch(section);
-  return some(refs, (binding) => {
-    // Seeded state is client-owned after its seed: no frame delivers it.
-    if (
-      !binding.sources?.state &&
-      isPatchFillBinding(binding) &&
-      binding.section !== section
-    ) {
-      let cur: Section | undefined = section;
-      while (cur && cur !== binding.section) {
-        if (
-          !cur.isBranch &&
-          !cur.isBoundary &&
-          !cur.boundaryContent &&
-          !stateful
-        ) {
-          return true;
-        }
-        cur = cur.parent;
-      }
-      return !cur;
-    }
-    return false;
-  });
 }
 
 // Server-sourced reads a patch cannot keep current: param-sourced bindings
