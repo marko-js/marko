@@ -98,6 +98,7 @@ export {
   _closure_get,
   _const,
   _el_read,
+  _global_read,
   _for_closure,
   _for_selector,
   _hoist,

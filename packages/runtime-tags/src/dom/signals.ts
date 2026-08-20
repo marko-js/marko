@@ -400,6 +400,16 @@ export function _script(id: string, fn: (scope: Scope) => void) {
   };
 }
 
+// Emitted only for a debug build, around a client-reactive `$global` read.
+export function _global_read($global: Record<string, unknown>, key: string) {
+  if (!(key in $global)) {
+    console.error(
+      `\`$global.${key}\` is not serialized to the client, so this read is \`undefined\`. Add \`${key}\` to \`serializedGlobals\` at the render call.`,
+    );
+  }
+  return $global[key];
+}
+
 export function _el_read<T>(value: T): T {
   if (rendering) {
     _el_read_error();
