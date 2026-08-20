@@ -10,7 +10,7 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isPersisted } from "../util/marko-config";
-import { isSnapshotLiveBoundary } from "../util/persisted/structure";
+import { boundaryAlwaysPairs } from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -125,8 +125,7 @@ export default {
       addRuntimeFeatureAsset("patch-boundary");
       // A scriptless construct paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
-      // Recorded on every section (a root's awaits construct when a parent
-      // shell composes this template); `buildShells` keeps only those whose
+      // Recorded on every section; `buildShells` keeps only those whose
       // shipped body records a construct can resolve.
       (section.constructSetups ??= []).push({
         binding: tagExtra[kDOMBinding]!,
@@ -206,11 +205,11 @@ export default {
                 ),
                 getSerializeGuard(section, bodySection?.serializeReason, true),
                 patchContent,
-                // A snapshot-live body settled in every snapshot, so its
-                // Pending entry may drop the construct id outside divergence.
+                // An always-pairing body's Pending entry drops its
+                // construct id outside divergent contexts.
                 ...(isPersisted() &&
                 bodySection &&
-                isSnapshotLiveBoundary(bodySection)
+                boundaryAlwaysPairs(bodySection)
                   ? [t.numericLiteral(1)]
                   : []),
               ),

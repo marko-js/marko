@@ -1662,9 +1662,8 @@ export function writeHTMLResumeStatements(
         }
 
         if (underTryPlaceholder(section)) {
-          // A scriptless persisted page never registers the pending replay,
-          // and constructed scopes receive their content through patch
-          // entries instead, so the envelope must not require the id.
+          // A scriptless page never registers the pending replay (constructs
+          // get content via patch entries), so the envelope must not need it.
           const reason =
             isPersisted() && !getProgram().node.extra.isInteractive
               ? undefined
