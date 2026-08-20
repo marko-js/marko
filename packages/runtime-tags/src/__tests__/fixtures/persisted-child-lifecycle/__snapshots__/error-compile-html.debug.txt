@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-lifecycle/template.marko:4:5
+      2 | <main>
+      3 |   <if=show>
+    > 4 |     <widget label=input.label/>
+        |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure uses `<lifecycle>`.
+      5 |   </if>
+      6 |   <button.outer onClick() { show = !show }>+</button>
+      7 | </main>
