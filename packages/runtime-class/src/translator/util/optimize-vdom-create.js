@@ -6,9 +6,7 @@ import {
   isLoopTag,
   isNativeTag,
 } from "@marko/compiler/babel-utils";
-import he from "he";
-
-const { decode } = he;
+import { decodeHTML } from "@marko/compiler/babel-utils";
 
 import translateAttributes from "../tag/native-tag[vdom]/attributes";
 import { getKeyManager, hasUserKey } from "./key-manager";
@@ -29,7 +27,7 @@ const mergeStaticCreateVisitor = {
     const { node } = path;
     state.currentRoot = t.callExpression(
       t.memberExpression(state.currentRoot, t.identifier("t")),
-      [t.stringLiteral(decode(node.value))],
+      [t.stringLiteral(decodeHTML(node.value))],
     );
   },
   MarkoPlaceholder(path, state) {

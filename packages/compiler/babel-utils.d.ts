@@ -421,5 +421,8 @@ type Computed =
   | Computed[];
 export function computeNode(node: t.Node): undefined | { value: Computed };
 
+/** Decodes HTML character references in raw source text. */
+export function decodeHTML(htmlString: string): string;
+
 export function getFile(): t.BabelFile;
 export function getProgram(): t.NodePath<t.Program>;

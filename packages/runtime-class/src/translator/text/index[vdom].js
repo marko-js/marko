@@ -1,7 +1,5 @@
 import { types as t } from "@marko/compiler";
-import he from "he";
-
-const { decode } = he;
+import { decodeHTML } from "@marko/compiler/babel-utils";
 
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";
@@ -13,7 +11,7 @@ export default function (path) {
     withPreviousLocation(
       write(
         "t",
-        t.stringLiteral(decode(node.value)),
+        t.stringLiteral(decodeHTML(node.value)),
         path.hub.file._componentInstanceIdentifier,
       ),
       node,

@@ -9,6 +9,7 @@ export {
   assertNoVar,
 } from "./assert";
 export { computeNode } from "./compute";
+export { decodeHTML } from "./decode-html";
 export {
   diagnosticDeprecate,
   diagnosticError,

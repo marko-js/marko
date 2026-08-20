@@ -167,7 +167,9 @@ await Promise.all([
     // out through the package exports and into another chunk, and that cycle
     // deadlocks rolldown's lazy chunk init. `modules` (a published root file)
     // and `internal/babel` (its own bundle) stay external.
-    external: (id) => /^[^./]/.test(id) && !(id in selfReferences),
+    // `entities` is ESM only, so bundling it keeps this CJS output requirable.
+    external: (id) =>
+      /^[^./]/.test(id) && id !== "entities/decode" && !(id in selfReferences),
     plugins: [
       {
         name: "resolve-self-references",
