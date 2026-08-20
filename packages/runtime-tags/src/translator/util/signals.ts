@@ -1126,8 +1126,8 @@ export function writeSignals(section: Section) {
                 "_fill_join";
               let hopExprs: t.Expression[] = [];
               if (member.section !== signal.section) {
-                // A chain leaving the branch ladder dispatches through the
-                // member's scope subscription instead.
+                // A chain that leaves the branch ladder delivers through the
+                // member's own closure signal (`_fill_join_closure`) instead.
                 if (!isBranchSectionChain(signal.section, member.section)) {
                   if (
                     inStatefulBranch(signal.section) ||
