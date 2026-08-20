@@ -5,6 +5,8 @@ effort: med
 site: packages/runtime-tags/src/translator/util/shell.ts › buildShells
 ---
 
+# Emit root records only for templates a dynamic tag can reference
+
 Every persisted template with a shell-expressible root now emits a root
 record (its full template markup, keyed by the template id) into its html
 module's `_shells({...})` call, so dynamic tag entries can construct it as a
