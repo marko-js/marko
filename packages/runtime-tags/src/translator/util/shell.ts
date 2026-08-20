@@ -38,14 +38,13 @@ export function buildShells() {
   // content is a record too.
   forEachSectionReverse((section) => {
     // A root's awaits construct when a parent shell composes this template:
-    // keeping them lets `Pending` carry a content id (a dom registration on
-    // interactive pages, a shipped record otherwise). The root itself
-    // records under the template id so a dynamic tag entry can construct
-    // this template as a renderer without its dom module.
+    // keeping them lets `Pending` carry the shipped body record's id. The
+    // root itself records under the template id so a dynamic tag entry can
+    // construct this template as a renderer without its dom module.
     if (!section.parent) {
       const chain: Section[] = [];
       const bodyRecords: Record<string, Section> = {};
-      if (interactive || buildAwaitBodyRecords(section, bodyRecords, chain)) {
+      if (buildAwaitBodyRecords(section, bodyRecords, chain)) {
         keep.add(section);
         for (const body of chain) keep.add(body);
         Object.assign(records, bodyRecords);
@@ -66,7 +65,7 @@ export function buildShells() {
       const bodyRecords: Record<string, Section> = {};
       if (
         isShellExpressible(section) &&
-        (interactive || buildAwaitBodyRecords(section, bodyRecords, chain))
+        buildAwaitBodyRecords(section, bodyRecords, chain)
       ) {
         keep.add(section);
         for (const body of chain) keep.add(body);
@@ -88,7 +87,7 @@ export function buildShells() {
     ) {
       const chain: Section[] = [];
       const bodyRecords: Record<string, Section> = {};
-      if (interactive || buildAwaitBodyRecords(section, bodyRecords, chain)) {
+      if (buildAwaitBodyRecords(section, bodyRecords, chain)) {
         // Only a slot the client dereferences rides in-band.
         section.contentRecord =
           getSectionRegisterReasons(section) && isStaticRecord(section)
@@ -117,13 +116,12 @@ export function buildShells() {
     if (isShellExpressible(section)) {
       // The id interns even for a blocked shell so register ids stay stable.
       const id = getShellId(section);
-      // An interactive page's dom module registers await body content. A
-      // scriptless page never loads one, so each body ships as its own
-      // record instead; an inexpressible body blocks the branch (fail
-      // closed) rather than bundle more than a non-persisted page would.
+      // Each await body ships as its own record; an inexpressible one
+      // blocks the branch (fail closed) rather than bundle more than a
+      // non-persisted page would.
       const chain: Section[] = [];
       const bodyRecords: Record<string, Section> = {};
-      if (!interactive && !buildAwaitBodyRecords(section, bodyRecords, chain)) {
+      if (!buildAwaitBodyRecords(section, bodyRecords, chain)) {
         section.shellBlocked ??= ShellBlocker.inexpressibleAwaitBody;
       }
       if (!section.shellBlocked) {

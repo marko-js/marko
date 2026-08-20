@@ -17,6 +17,7 @@ var counter_default = _template_persisted("b", (input) => {
 _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template),
 	a: "a !a3;D%b D ;<main><!><button id=c> </button></main>",
+	a2: /*@__PURE__*/ ((_w0, _w1) => `a2;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)($walks), $template),
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
