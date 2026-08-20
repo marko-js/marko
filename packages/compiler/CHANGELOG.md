@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.42.2
+
+### Patch Changes
+
+- [#4019](https://github.com/marko-js/marko/pull/4019) [`15b32e4`](https://github.com/marko-js/marko/commit/15b32e4102bece016e1a707c37dda2acb4de0a7c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop installing `entities` in consumer projects; it is bundled into the published output.
+
+- [#4018](https://github.com/marko-js/marko/pull/4018) [`242877d`](https://github.com/marko-js/marko/commit/242877d37a7e8bd48c0bf130f6aa2a0f8d4546da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Replace the `he` dependency with `entities`, bundled and exposed as a `decodeHTML` babel-utils export.
+
 ## 5.42.1
 
 ### Patch Changes
