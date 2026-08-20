@@ -1,4 +1,5 @@
 // tags/box/index.marko
+_shells({ b: "b;D%;<div class=box><!></div>" });
 var box_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -10,7 +11,10 @@ var box_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({ a0: "a0;b%;<!><!><!>" });
+_shells({
+	a0: "a0;b%;<!><!><!>",
+	a: "a !a1;D%b ;<main><!><button>+</button></main>"
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

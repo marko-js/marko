@@ -63,6 +63,47 @@ export function isContentRenderTag(tag: t.NodePath<t.MarkoTag>) {
     getCanonicalBinding(binding.upstreamAlias) === getInputBinding(tag)
   );
 }
+// A dynamic tag whose renderer and every input the server owns: the site's
+// dynamic tag entry re-renders it (a registered renderer or shipped record)
+// and the rendered subtree's own patch writes deliver input changes, so no
+// per-group ownership mask is needed. Client state feeding an unanalyzable
+// renderer has no mask to derive, so any state feed disqualifies; resolved
+// references are required, so call at finalize or later.
+export function isServerOwnedDynamicTag(tag: t.NodePath<t.MarkoTag>) {
+  const { node } = tag;
+  if (t.isStringLiteral(node.name) || node.var || node.arguments?.length) {
+    return false;
+  }
+  // Name, attribute, spread and argument reads all merge into the tag extra.
+  if (hasStateFeed(node.extra)) return false;
+  let attrTagState = false;
+  const checkAttrTags = (body: t.NodePath<t.MarkoTagBody>) => {
+    for (const child of body.get("body")) {
+      if (child.isMarkoTag() && isAttributeTag(child)) {
+        for (const attr of child.node.attributes) {
+          if (attr.type === "MarkoAttribute") {
+            attrTagState ||= hasStateFeed(attr.value.extra);
+          }
+        }
+        attrTagState ||= hasStateFeed(child.node.extra);
+        checkAttrTags(child.get("body"));
+      }
+    }
+  };
+  checkAttrTags(tag.get("body"));
+  return !attrTagState;
+}
+
+export function hasStateFeed(extra: t.NodeExtra | undefined) {
+  return (
+    !!getSerializeSourcesForExpr(extra || {})?.state ||
+    some(
+      (extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction,
+      (binding) => !!getSerializeSourcesForRef(binding)?.state,
+    )
+  );
+}
+
 // The template's `input` param binding (the first program param).
 function getInputBinding(tag: t.NodePath<t.MarkoTag>) {
   return (
@@ -103,12 +144,6 @@ function computeChildPatchPlan(tag: t.NodePath<t.MarkoTag>): ChildPatchPlan {
       anyInert ||= hasInertCall(value);
     }
   };
-  const hasStateFeed = (extra: t.NodeExtra | undefined) =>
-    !!getSerializeSourcesForExpr(extra || {})?.state ||
-    some(
-      (extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction,
-      (binding) => !!getSerializeSourcesForRef(binding)?.state,
-    );
   let anyState = false;
   for (const attr of node.attributes) {
     // A spread's reads merge into the tag's own extra (checked below);

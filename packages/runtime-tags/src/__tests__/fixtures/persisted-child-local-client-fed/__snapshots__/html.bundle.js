@@ -1,5 +1,10 @@
 // tags/child.marko
-_shells({ b0: "b0 b4;D ;<p> </p>" });
+const $template = "<div><!><button id=c>c</button></div>";
+const $walks = "D%b l";
+_shells({
+	b: "b !b2;D%b ;<div><!><button id=c>c</button></div>",
+	b0: "b0 b4;D ;<p> </p>"
+});
 var child_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -29,6 +34,7 @@ var child_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a0;${_w0};${_w1}`)(((_w0) => `D/${_w0}& l`)($walks), ((_w0) => `<main>${_w0}<button id=p>p</button></main>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

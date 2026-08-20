@@ -13,7 +13,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
-const $await_content = /*@__PURE__*/ _await_content("#text/1", "<em> </em>", "D ");
+const $await_content = _resume("__tests__/template.marko_0_#text#1/await", /*@__PURE__*/ _await_content("#text/1", "<em> </em>", "D "));
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
 const $input_promise = $await_promise;
 const $input = ($scope, input) => {

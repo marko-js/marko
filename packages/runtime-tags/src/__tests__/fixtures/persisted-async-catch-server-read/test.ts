@@ -1,7 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-// Request/input reads inside `<@catch>` would go stale after later patches.
+// A scriptless `<@catch>` renders server-side per rejection frame, so its
+// request reads are current at materialization.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { promise: Promise.resolve("ok"), title: "first" },
+    { promise: Promise.reject(new Error("boom")), title: "second" },
+  ],
 };

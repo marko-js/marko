@@ -6,12 +6,15 @@
 # Update `{"show":true,"value":"x"}`
 ```html
 <main>
-  <section />
+  <section>
+    <em>
+      x
+    </em>
+  </section>
 </main>
 ```
 ## Change
 ```
 INSERT: main > section
+INSERT: main > section > em
 ```
-
-## Patch rejected (navigate)

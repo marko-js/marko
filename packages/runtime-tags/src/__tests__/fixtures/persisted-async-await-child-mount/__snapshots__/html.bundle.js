@@ -1,4 +1,7 @@
 // tags/counter.marko
+const $template = "<div class=counter><span><!>: <!></span><button class=inc>+</button></div>";
+const $walks = "E%c%l l";
+_shells({ b: "b !b0;E%c%l ;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>" });
 var counter_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -11,7 +14,11 @@ var counter_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({ a0: "a0;b%;<!><!><!>" });
+_shells({
+	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template),
+	a: "a !a3;D%b D ;<main><!><button id=c> </button></main>",
+	a1: "a1;b%;<!><!><!>"
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -30,13 +37,13 @@ var template_default = _template_persisted("a", (input) => {
 					start: 1
 				});
 				writeScope($scope2_id, { a: _existing_scope($childScope) });
-			}, void 0, "a1");
+			}, void 0, "a2");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"]);
 	_html(`<button id=c>${_escape(count)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	$scope0_reason && writeScope($scope0_id, {
 		g: input.promise,
 		h: count

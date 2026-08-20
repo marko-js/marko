@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-native-content-state/template.marko:4:12
+      2 | <let/open=false/>
+      3 | <main>
+    > 4 |   <section content=(open ? boxA : null)/>
+        |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: client state cannot feed `content=` on a native tag.
+      5 |   <button onClick() { open = !open }>+</button>
+      6 | </main>
+      7 |

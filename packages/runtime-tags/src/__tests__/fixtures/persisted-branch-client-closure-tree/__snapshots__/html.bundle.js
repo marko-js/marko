@@ -1,4 +1,5 @@
 // tags/note/index.marko
+_shells({ b: "b;D ;<p> </p>" });
 var note_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -7,6 +8,7 @@ var note_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: "a !a0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

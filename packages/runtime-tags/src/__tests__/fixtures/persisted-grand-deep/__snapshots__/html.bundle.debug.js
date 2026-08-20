@@ -1,6 +1,7 @@
 // tags/l1/tags/l2/tags/l3/index.marko
 const $template$3 = "<em> </em>";
 const $walks$3 = "D l";
+_shells({ "__tests__/tags/l1/tags/l2/tags/l3/index.marko": "__tests__/tags/l1/tags/l2/tags/l3/index.marko;D ;<em> </em>" });
 var l3_default = _template_persisted("__tests__/tags/l1/tags/l2/tags/l3/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -11,6 +12,7 @@ var l3_default = _template_persisted("__tests__/tags/l1/tags/l2/tags/l3/index.ma
 // tags/l1/tags/l2/index.marko
 const $template$2 = /*@__PURE__*/ ((_w0) => `<button class=n> </button>${_w0}`)($template$3);
 const $walks$2 = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D l");
+_shells({ "__tests__/tags/l1/tags/l2/index.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/l1/tags/l2/index.marko !__tests__/tags/l1/tags/l2/index.marko_0;${_w0};${_w1}`)(((_w0) => ` D l/${_w0}&`)("D l"), ((_w0) => `<button class=n> </button>${_w0}`)($template$3)) });
 var l2_default = _template_persisted("__tests__/tags/l1/tags/l2/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -32,6 +34,7 @@ var l2_default = _template_persisted("__tests__/tags/l1/tags/l2/index.marko", (i
 // tags/l1/index.marko
 const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2);
+_shells({ "__tests__/tags/l1/index.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/l1/index.marko;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)($walks$2), $template$2) });
 var l1_default = _template_persisted("__tests__/tags/l1/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -45,6 +48,7 @@ var l1_default = _template_persisted("__tests__/tags/l1/index.marko", (input) =>
 // template.marko
 const $template = "<main><!><button class=t>t</button></main>";
 const $walks = "D%b l";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button class=t>t</button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

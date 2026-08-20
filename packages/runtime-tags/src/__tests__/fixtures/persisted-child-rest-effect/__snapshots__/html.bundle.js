@@ -1,4 +1,6 @@
 // tags/dump/index.marko
+const $template = "<p> </p>";
+_shells({ b: "b !b0;D ;<p> </p>" });
 var dump_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -9,6 +11,7 @@ var dump_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a0;${_w0};${_w1}`)(((_w0) => `D/${_w0}& l`)("D l"), ((_w0) => `<main>${_w0}<button>+</button></main>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

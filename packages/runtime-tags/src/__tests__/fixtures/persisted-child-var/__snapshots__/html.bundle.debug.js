@@ -1,6 +1,7 @@
 // tags/price-card.marko
 const $template$1 = "<div><h2> </h2><button class=bump>+</button></div>";
 const $walks$1 = "E l l";
+_shells({ "__tests__/tags/price-card.marko": "__tests__/tags/price-card.marko !__tests__/tags/price-card.marko_0;E l ;<div><h2> </h2><button class=bump>+</button></div>" });
 var price_card_default = _template_persisted("__tests__/tags/price-card.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

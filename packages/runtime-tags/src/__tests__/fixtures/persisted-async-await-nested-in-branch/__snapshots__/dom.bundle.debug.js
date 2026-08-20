@@ -5,7 +5,7 @@ const $await_content2__outer = /*@__PURE__*/ _closure_get("outer", ($scope) => _
 const $await_content2__setup = $await_content2__outer;
 const $await_content2__inner = ($scope, inner) => _text($scope["#text/1"], inner);
 const $await_content2__$params = ($scope, $params3) => $await_content2__inner($scope, $params3[0]);
-const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<em><!>:<!></em>", "D%c%", $await_content2__setup);
+const $await_content2 = _resume("__tests__/template.marko_2_#text#0/await", /*@__PURE__*/ _await_content("#text/0", "<em><!>:<!></em>", "D%c%", $await_content2__setup));
 const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $await_content__input_inner = /*@__PURE__*/ _closure_get("input_inner", ($scope) => $await_content__await_promise($scope, $scope._._.input_inner), ($scope) => $scope._._);
 const $await_content__setup = ($scope) => {

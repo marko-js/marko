@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-async-catch-global-derived/template.marko:8:18
+       6 |       <em>${value}</em>
+       7 |     </await>
+    >  8 |     <@catch><p>${tag}</p></@catch>
+         |                  ^^^ Persisted templates cannot patch this faithfully yet: a `$global`-derived value inside `<@catch>` content would go stale.
+       9 |   </try>
+      10 |   <button onClick() { n++ }>${n}</button>
+      11 | </main>

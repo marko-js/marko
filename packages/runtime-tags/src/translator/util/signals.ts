@@ -1190,7 +1190,8 @@ export function writeSignals(section: Section) {
           signal.referencedBindings &&
           !Array.isArray(signal.referencedBindings) &&
           !signal.referencedBindings.sources?.state &&
-          inStatefulBranch(signal.section) &&
+          (inStatefulBranch(signal.section) ||
+            inBoundaryContent(signal.section)) &&
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section !== signal.referencedBindings.section &&
           isBranchChainTo(signal.section, signal.referencedBindings.section) &&
@@ -1277,10 +1278,28 @@ export function writeSignals(section: Section) {
 function isBranchChainTo(section: Section, owner: Section) {
   const clientOwned = inStatefulBranch(section);
   while (section !== owner) {
-    if ((!section.isBranch && !clientOwned) || !section.parent) return false;
+    if (
+      (!section.isBranch &&
+        !section.isBoundary &&
+        !section.boundaryContent &&
+        !clientOwned) ||
+      !section.parent
+    ) {
+      return false;
+    }
     section = section.parent;
   }
   return true;
+}
+
+// Whether the section renders inside `<try>` attr-tag content (inclusive):
+// it materializes client-side later, so lone fill reads register there.
+function inBoundaryContent(section: Section | undefined) {
+  while (section) {
+    if (section.boundaryContent) return true;
+    section = section.parent;
+  }
+  return false;
 }
 
 // A lone read renders through the closure itself, as does an intersection
@@ -1643,7 +1662,13 @@ export function writeHTMLResumeStatements(
         }
 
         if (underTryPlaceholder(section)) {
-          const reason = getSerializeReason(section);
+          // A scriptless persisted page never registers the pending replay,
+          // and constructed scopes receive their content through patch
+          // entries instead, so the envelope must not require the id.
+          const reason =
+            isPersisted() && !getProgram().node.extra.isInteractive
+              ? undefined
+              : getSerializeReason(section);
           if (reason) {
             getHTMLSectionStatements(section).push(
               t.expressionStatement(

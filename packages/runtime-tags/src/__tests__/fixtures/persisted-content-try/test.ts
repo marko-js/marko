@@ -1,10 +1,9 @@
 import type { TestConfig } from "../../main.test";
 
-// A `<try>` has no construct entry yet, so a content body holding one
-// rejects when the fed renderer constructs it (boundary records, cluster G).
+// A content body holding a `<try>` constructs the boundary from its content
+// record when the fed renderer builds it.
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [
     { show: false, value: "x" },
     { show: true, value: "x" },

@@ -3,7 +3,11 @@
 // by contract — permanent decisions live in ./decisions — so widening
 // support deletes assertions here until the whole module goes.
 import { types as t } from "@marko/compiler";
-import { getTagDef, loadFileForTag } from "@marko/compiler/babel-utils";
+import {
+  getProgram,
+  getTagDef,
+  loadFileForTag,
+} from "@marko/compiler/babel-utils";
 
 import { isEventHandler } from "../../../common/helpers";
 import {
@@ -19,8 +23,8 @@ import {
   hasServerFeed,
   type ParamGroupFeeds,
 } from "../known-tag";
-import { every, forEach } from "../optional";
-import { getCanonicalExtra } from "../references";
+import { every, forEach, type Opt } from "../optional";
+import { type Binding, getCanonicalExtra } from "../references";
 import { getSection, getSectionForBody } from "../sections";
 import {
   getSerializeSourcesForExpr,
@@ -29,7 +33,9 @@ import {
 import {
   getChildPatchPlan,
   hasInertCall,
+  hasStateFeed,
   isContentRenderTag,
+  isServerOwnedDynamicTag,
 } from "./decisions";
 import {
   hasUndeliverableFillReads,
@@ -120,32 +126,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       );
     });
     return server;
-  };
-  const exprHasStaleServerSources = (
-    value: t.Node,
-    localSection: NonNullable<ReturnType<typeof getSectionForBody>>,
-  ) => {
-    let stale = false;
-    const visitRef = (ref: Parameters<typeof getSerializeSourcesForRef>[0]) => {
-      if (!ref) return;
-      if (Array.isArray(ref)) {
-        for (const binding of ref) visitRef(binding);
-        return;
-      }
-      const sources = ref.sources;
-      stale ||= !!sources?.global;
-      stale ||= !!(sources?.param && ref.section !== localSection);
-    };
-    t.traverseFast(value, (n) => {
-      const extra = n.extra;
-      stale ||= !!extra?.globalBindings;
-      visitRef(extra?.read?.binding ?? extra?.referencedBindings);
-      forEach(
-        (extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction,
-        visitRef,
-      );
-    });
-    return stale;
   };
   // The outer expression matrix, applied inside nested templates so
   // nesting cannot launder shapes the region boundary rejects.
@@ -312,9 +292,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         return;
       }
       if (isCoreTagName(tag, "try")) {
-        // Catch/placeholder materialize after any number of patches: a
-        // request/input read inside them would go stale. The catch error
-        // param is delivered when the branch fires, not a server fill.
+        // Scriptless catch/placeholder html renders server-side per frame;
+        // interactive ones render client-side, so reads must ride fills.
+        if (!getProgram().node.extra.isInteractive) return;
         for (const attrPath of tag.get(
           "attributeTags",
         ) as t.NodePath<t.MarkoTag>[]) {
@@ -322,27 +302,44 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           const attrName =
             t.isStringLiteral(attrTag.name) && attrTag.name.value;
           if (attrName !== "@catch" && attrName !== "@placeholder") continue;
-          const localSection =
-            attrName === "@catch"
-              ? getSectionForBody(attrPath.get("body"))
-              : undefined;
+          const localSection = getSectionForBody(attrPath.get("body"));
+          const checkRef = (n: t.Node, ref: unknown) => {
+            forEach(ref as Opt<Binding>, (binding) => {
+              if (binding.section === localSection) return;
+              const sources = getSerializeSourcesForRef(binding);
+              if (sources?.global) {
+                unsupported(
+                  n,
+                  `a \`$global\`-derived value inside \`<${attrName}>\` content would go stale`,
+                );
+              }
+              if (
+                sources?.param &&
+                !sources.state &&
+                !isPatchFillBinding(binding) &&
+                !inStatefulBranch(binding.section)
+              ) {
+                unsupported(
+                  n,
+                  `a server value inside \`<${attrName}>\` content must deliver as a fill`,
+                );
+              }
+            });
+          };
           t.traverseFast(attrTag, (n) => {
-            const value =
-              (t.isMarkoPlaceholder(n) && n.value) ||
-              (t.isMarkoAttribute(n) && n.value);
-            if (
-              value &&
-              (localSection
-                ? exprHasStaleServerSources(value, localSection)
-                : exprHasServerSources(value))
-            ) {
+            const extra = n.extra;
+            if (!extra) return;
+            if (extra.globalBindings) {
               unsupported(
                 n,
-                attrName === "@placeholder"
-                  ? "a server value inside `<@placeholder>` content would go stale"
-                  : "a server value inside `<@catch>` content would go stale",
+                `a \`$global\`-derived value inside \`<${attrName}>\` content would go stale`,
               );
             }
+            checkRef(n, extra.read?.binding ?? extra.referencedBindings);
+            checkRef(
+              n,
+              (extra as t.FunctionExtra).referencedBindingsInFunction,
+            );
           });
         }
         return;
@@ -646,7 +643,36 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (isContentRenderTag(tag)) {
           return;
         }
-        unsupported(node);
+        // A server-owned dynamic tag re-renders from its entry; the shapes
+        // that would need channels the entry cannot express stay closed.
+        if (inStatefulBranch(getSection(tag))) {
+          unsupported(
+            node,
+            "a dynamic tag inside client-owned structure must render a plain `input` property",
+          );
+        }
+        if (!isBranchPathSection(getSection(tag))) {
+          unsupported(
+            node,
+            "a dynamic tag inside boundary content is not supported yet",
+          );
+        }
+        if (node.var) {
+          unsupported(
+            node,
+            "a tag variable on a dynamic tag is not supported yet",
+          );
+        }
+        if (node.arguments?.length) {
+          unsupported(node, "arguments on a dynamic tag are not supported yet");
+        }
+        if (!isServerOwnedDynamicTag(tag)) {
+          unsupported(
+            node,
+            "client state cannot feed a dynamic tag (its renderer's input needs are not analyzable)",
+          );
+        }
+        return;
       }
       // A control patches through its registered helper (value entry +
       // handler bind), so its own attrs lift; kinds the wire cannot yet
@@ -710,6 +736,28 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             assertDeliverableInClientOwned(attr, attr.value, attr.value.extra);
           }
         }
+        // `content=` re-renders from a dynamic tag entry like a dynamic tag
+        // site: the shapes that entry cannot express stay closed.
+        if (
+          attr.type === "MarkoAttribute" &&
+          attr.name === "content" &&
+          node.body.body.length === 0 &&
+          !evaluate(attr.value).confident
+        ) {
+          if (clientOwnedStructure || !isBranchPathSection(getSection(tag))) {
+            unsupported(
+              attr,
+              "`content=` on a native tag inside client-owned structure or boundary content is not supported yet",
+            );
+          }
+          if (hasStateFeed(attr.value.extra)) {
+            unsupported(
+              attr,
+              "client state cannot feed `content=` on a native tag",
+            );
+          }
+          continue;
+        }
         if (attr.type === "MarkoAttribute" && controlled.has(attr)) continue;
         if (
           attr.type === "MarkoSpreadAttribute"
@@ -726,10 +774,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
                   hasUnfillablePatchReads(
                     (attr.value.extra as t.FunctionExtra | undefined)
                       ?.referencedBindingsInFunction,
-                  )) ||
-                // `content=` mounts structural content the patch wire has no
-                // entry for, so a dynamic one cannot apply faithfully.
-                attr.name === "content")
+                  )))
         ) {
           unsupported(attr);
         }

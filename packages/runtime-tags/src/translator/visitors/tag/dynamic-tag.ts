@@ -28,7 +28,10 @@ import {
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
-import { isContentRenderTag } from "../../util/persisted/decisions";
+import {
+  isContentRenderTag,
+  isServerOwnedDynamicTag,
+} from "../../util/persisted/decisions";
 import { addPersistedChildRenderer } from "../../util/persisted/intrinsics";
 import { onFinalizePersisted } from "../../util/persisted/lifecycle";
 import {
@@ -181,7 +184,7 @@ export default {
       // decided once references and structure resolve, as translate decides.
       if (isPersisted() && !t.isStringLiteral(node.name)) {
         onFinalizePersisted(() => {
-          if (isContentRenderTag(tag)) {
+          if (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) {
             ensurePersistedWriteGroups(() => tagExtra);
             if (writesPatchDynamicTag(tag, tagSection)) {
               addRuntimeFeatureAsset("patch-dynamic-tag");
@@ -717,11 +720,12 @@ function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// A tag rendering `input` content whose dynamic tag entry re-renders it from the server's value.
+// A tag whose dynamic tag entry re-renders it from the server's value:
+// `input` content, or a fully server-owned renderer and input.
 function writesPatchDynamicTag(tag: t.NodePath<t.MarkoTag>, section: Section) {
   return (
     isPersisted() &&
-    isContentRenderTag(tag) &&
+    (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) &&
     isBranchPathSection(section) &&
     !inStatefulBranch(section)
   );

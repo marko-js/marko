@@ -1,4 +1,7 @@
 // tags/counter/index.marko
+const $template = "<section><p>Value <!> (spun <!>)</p><button class=spin>spin</button></section>";
+const $walks = "Eb%c%l l";
+_shells({ b: "b !b0;Eb%c%l ;<section><p>Value <!> (spun <!>)</p><button class=spin>spin</button></section>" });
 var counter_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -11,6 +14,7 @@ var counter_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a0;${_w0};${_w1}`)(((_w0) => `E l/${_w0}& l`)($walks), ((_w0) => `<main><h1> </h1>${_w0}<button class=inc>+</button></main>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

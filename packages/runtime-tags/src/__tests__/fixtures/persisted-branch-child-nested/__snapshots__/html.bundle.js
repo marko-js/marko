@@ -1,4 +1,5 @@
 // tags/badge.marko
+_shells({ b: "b;Db%;<b class=badge>[<!>]</b>" });
 var badge_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -9,6 +10,7 @@ var badge_default = _template_persisted("b", (input) => {
 // tags/card.marko
 const $template = "<section class=card><h2> </h2><button class=toggle>toggle</button><!></section>";
 const $walks = "E l b%l";
+_shells({ c: "c !c0;E l b%;<section class=card><h2> </h2><button class=toggle>toggle</button><!></section>" });
 var card_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -26,7 +28,10 @@ var card_default = _template_persisted("c", (input) => {
 }, 0, () => [badge_default]);
 
 // template.marko
-_shells({ a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template) });
+_shells({
+	a: "a; ;<main></main>",
+	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template)
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();

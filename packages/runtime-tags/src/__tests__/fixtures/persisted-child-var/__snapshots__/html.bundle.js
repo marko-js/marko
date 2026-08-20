@@ -1,4 +1,5 @@
 // tags/price-card.marko
+_shells({ b: "b !b0;E l ;<div><h2> </h2><button class=bump>+</button></div>" });
 var price_card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
