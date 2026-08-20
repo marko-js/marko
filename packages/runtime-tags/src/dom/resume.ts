@@ -106,6 +106,7 @@ let embedRenders:
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
 let failedIds: undefined | Set<string>;
+let patchReady: undefined | ((readyId: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -142,6 +143,15 @@ export function ready(readyId: string) {
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+  patchReady?.(readyId);
+}
+
+export function installReady(fn: (readyId: string) => void) {
+  patchReady = fn;
+}
+
+export function isReady(readyId: string) {
+  return !!readyIds?.has(readyId);
 }
 
 // A lazy module that will never arrive can never deliver its channel's

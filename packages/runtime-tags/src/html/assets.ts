@@ -3,7 +3,13 @@ import type { $Global, Template } from "../common/types";
 import { _escape_script } from "./content";
 import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
-import { _html, $global, writeScript, writeWaitReady } from "./writer";
+import {
+  _html,
+  $global,
+  getState,
+  writeScript,
+  writeWaitReady,
+} from "./writer";
 
 const kAssets = Symbol();
 const kBlockIndex = Symbol();
@@ -62,6 +68,9 @@ export function withLoadAssets(
   triggers?: Trigger[],
 ): ServerRenderer {
   return Object.assign((input: unknown) => {
+    if (getState().writesPatches) {
+      return writeWaitReady(assetId, renderer, input);
+    }
     const g = $global();
     addAsset(g, assetId, triggers);
     _html(flush(g, ""));

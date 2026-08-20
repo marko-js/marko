@@ -1,4 +1,4 @@
-// size: 28603 (min) 10523 (brotli)
+// size: 28884 (min) 10652 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -105,6 +105,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   curRenders,
   embedRenders,
   readyIds,
+  patchReady,
   lazyEnabled,
   patchRender = 0,
   patching = 0,
@@ -961,6 +962,13 @@ function abortPatch() {
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  patchReady?.(readyId);
+}
+function installReady(fn) {
+  patchReady = fn;
+}
+function isReady(readyId) {
+  return !!readyIds?.has(readyId);
 }
 function withLazy(runtime) {
   return ((lazyEnabled = 1), runtime);
@@ -2263,6 +2271,9 @@ let empty = [],
         return toInsertNode(branch.S, branch.K);
     },
   },
+  pending = /* @__PURE__ */ new Map(),
+  resolves = /* @__PURE__ */ new Map(),
+  installed = 0,
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
@@ -2341,30 +2352,47 @@ function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
 function _patch_ready() {
-  installPatchReady(prepareReady, pendingReady);
+  installed ||
+    ((installed = 1), installPatchReady(prepareReady, pendingReady), installReady(markReady));
 }
 function prepareReady(render, result) {
   if (!render.b || result !== render.b) return !1;
   for (let readyId in render.b) {
-    let batch = render.b[readyId];
+    let batch = render.b[readyId],
+      deferred = [];
     for (let i = 0; i < batch.length; i++) {
       let partial = batch[i];
-      typeof partial == "object" && (batch[i] = (ctx) => ctx([partial]));
+      typeof partial == "object" &&
+        (isReady(readyId) ? (batch[i] = wrapPartial(partial)) : deferred.push(partial));
+    }
+    if (deferred.length) {
+      batch.length = 0;
+      let channels = pending.get(render);
+      (channels || pending.set(render, (channels = /* @__PURE__ */ new Map())),
+        channels.set(readyId, deferred));
     }
   }
   return !0;
 }
 function pendingReady(render) {
-  if (hasPendingReady(render)) return new Promise((resolve) => waitReady(resolve, render));
+  if (pending.has(render)) return new Promise((resolve) => resolves.set(render, resolve));
 }
-function waitReady(resolve, render) {
-  hasPendingReady(render) ? setTimeout(waitReady, 0, resolve, render) : resolve();
-}
-function hasPendingReady(render) {
-  if (render.b) {
-    for (let readyId in render.b) if (render.b[readyId].length) return !0;
+function markReady(readyId) {
+  for (let [render, channels] of pending) {
+    let partials = channels.get(readyId);
+    if (partials) {
+      channels.delete(readyId);
+      for (let partial of partials) render.b[readyId].push(wrapPartial(partial));
+      if (!channels.size) {
+        pending.delete(render);
+        let resolve = resolves.get(render);
+        (resolves.delete(render), resolve?.());
+      }
+    }
   }
-  return !1;
+}
+function wrapPartial(partial) {
+  return (ctx) => ctx([partial]);
 }
 function mount(input = {}, reference, position) {
   let branch,

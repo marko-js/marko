@@ -14,10 +14,7 @@ var child_default = _template_persisted("__tests__/child.marko", (input) => {
 }, 0, 0);
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko", [{
-	type: "on-click",
-	selector: "body"
-}]);
+const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko");
 const $template = "<main><!></main>";
 const $walks = "D%/&l";
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
