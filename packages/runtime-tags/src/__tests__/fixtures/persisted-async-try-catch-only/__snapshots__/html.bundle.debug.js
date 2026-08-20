@@ -17,7 +17,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.message, $scope0_owned, 0)}${_el_resume($scope1_id, "#text/0")}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_message__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) });
+	}, $scope0_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { "ClosureScopes:input_message": $input_message__closures }, "__tests__/template.marko", 0);
 }, 1, 0);
