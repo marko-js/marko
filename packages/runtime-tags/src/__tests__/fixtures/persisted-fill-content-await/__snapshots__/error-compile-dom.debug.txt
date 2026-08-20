@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-fill-content-await/template.marko:4:18
-      2 | <main>
-      3 |   <frame>
-    > 4 |     <await|value|=showSecond ? input.second : input.first>
-        |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value's fill delivery path leaves the branch chain.
-      5 |       <p>${value}</p>
-      6 |     </await>
-      7 |   </frame>

@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-fill-content-section/template.marko:4:8
-      2 | <main>
-      3 |   <frame>
-    > 4 |     <p>${input.label + ":" + count}</p>
-        |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value's fill delivery path leaves the branch chain.
-      5 |   </frame>
-      6 |   <button onClick() { count++ }>+</button>
-      7 | </main>
