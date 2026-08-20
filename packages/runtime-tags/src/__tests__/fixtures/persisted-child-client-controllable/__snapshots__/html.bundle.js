@@ -1,4 +1,5 @@
 // tags/field/index.marko
+_shells({ b: "b !b1; bD ;<input><em> </em>" });
 var field_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -15,6 +16,7 @@ var field_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: "a !a0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

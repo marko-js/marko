@@ -1,5 +1,6 @@
 // template.marko
 _shells({
+	a: "a;Eb%l%b%;<div class=wrap><h1>Hello <!></h1><!><!></div>",
 	a0: "a0,<p>shown</p>",
 	a1: "a1;D ;<li> </li>"
 });

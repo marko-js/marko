@@ -209,10 +209,71 @@ function attachDetachedAwait(
   return true;
 }
 
+// A boundary slot: `0` stays the elided sentinel; an id resolves through
+// the shipped record or the dom registration against the try's owner.
+function resolveBoundaryContent(id: string | 0, owner: Scope) {
+  if (id === 0) return 0;
+  const shell = shells[id];
+  if (shell) return getShellContent(shell, id, owner);
+  const registered = getRegisteredWithScope(id) as
+    | ((owner: Scope) => unknown)
+    | undefined;
+  return registered ? registered(owner) : failPatch();
+}
+
 const applyChild = patchers[PatchKey.Child];
 patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
+  // A boundary entry `[partial, contentId, catchId?, placeholderId?]`
+  // rebuilds a missing branch from its content id, then applies the partial.
+  if (Array.isArray(value)) {
+    const [partial, contentId, catchId, placeholderId] = value as [
+      Scope,
+      string,
+      string | 0 | undefined,
+      string | 0 | undefined,
+    ];
+    value = partial;
+    if (!scope[link]) {
+      const shell = shells[contentId];
+      const renderer = ((shell && getShellContent(shell, contentId)) ||
+        getRegisteredWithScope(contentId) ||
+        failPatch()) as Renderer;
+      const marker = (scope[accessor as Accessor] || failPatch()) as ChildNode;
+      const inside = marker.nodeType === 1;
+      const parentNode = inside
+        ? (marker as unknown as Element)
+        : marker.parentNode!;
+      const branch = createAndSetupBranch(
+        scope[AccessorProp.Global],
+        renderer,
+        scope,
+        parentNode,
+      );
+      branch[AccessorProp.BranchAccessor] = accessor as Accessor;
+      if (catchId !== undefined) {
+        branch[AccessorProp.CatchContent] = resolveBoundaryContent(
+          catchId,
+          scope,
+        ) as never;
+      }
+      if (placeholderId !== undefined) {
+        branch[AccessorProp.PlaceholderContent] = resolveBoundaryContent(
+          placeholderId,
+          scope,
+        ) as never;
+      }
+      insertBranchBefore(branch, parentNode, inside ? null : marker);
+      scope[link] = branch as never;
+      if (shell) {
+        withConstructing(() => patchScope(value as Scope, branch));
+      } else {
+        patchScope(value as Scope, branch);
+      }
+      return;
+    }
+  }
   const apply = () => {
     if (applyChild) applyChild(scope, key, value);
     else patchScope(value as Scope, scope[link] as Scope);

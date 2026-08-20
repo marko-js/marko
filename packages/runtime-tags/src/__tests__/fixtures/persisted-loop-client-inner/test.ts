@@ -4,6 +4,5 @@ import type { TestConfig } from "../../main.test";
 // drops (its interior listing has no channel), so revealing navigates.
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [{ show: false }, { show: true }],
 };

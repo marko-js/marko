@@ -1,5 +1,6 @@
 // tags/card/index.marko
 const $template = "<section class=card><!></section>";
+_shells({ c: "c;D%;<section class=card><!></section>" });
 var card_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -11,6 +12,7 @@ var card_default = _template_persisted("c", (input) => {
 }, 0, 0);
 
 // tags/box/index.marko
+_shells({ b: "b;D%;<div class=box><!></div>" });
 var box_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -24,7 +26,8 @@ var box_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;D ;<p> </p>",
-	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template)
+	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template),
+	a: "a !a2;D%b ;<main><!><button>+</button></main>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();

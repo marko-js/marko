@@ -1,6 +1,7 @@
 // tags/labeler/index.marko
 const $template$1 = "<span>fmt</span>";
 const $walks$1 = "b";
+_shells({ "__tests__/tags/labeler/index.marko": "__tests__/tags/labeler/index.marko,<span>fmt</span>" });
 var labeler_default = _template_persisted("__tests__/tags/labeler/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

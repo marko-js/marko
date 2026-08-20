@@ -8,5 +8,18 @@
 ```
 
 # Update `{"show":true,"promise":{}}`
-
-## Patch rejected (navigate)
+```html
+<main>
+  <div
+    class="ld"
+  >
+    one
+  </div>
+</main>
+```
+## Change
+```
+REMOVE: main > em
+INSERT: main > .ld
+INSERT: .ld::text("one")
+```

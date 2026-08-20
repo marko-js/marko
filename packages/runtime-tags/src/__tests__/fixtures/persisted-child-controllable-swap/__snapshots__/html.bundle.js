@@ -1,5 +1,9 @@
 // tags/counter/index.marko
-_shells({ b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>" });
+const $template = "<!><!><!>";
+_shells({
+	b: "b;b%;<!><!><!>",
+	b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>"
+});
 var counter_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -23,6 +27,7 @@ var counter_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `E lDb%l/${_w0}&l`)("b%c"), ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

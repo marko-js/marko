@@ -4,7 +4,7 @@ const $walks = "D%b l";
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $if_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D ", 0, $for_content__$params);
-const $if_content__items = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__for($scope, [$scope._.items]));
+const $if_content__items = /*@__PURE__*/ _init_if_closure("__tests__/template.marko_1_items#5/init", "#text/0", 0, ($scope) => $if_content__for($scope, [$scope._.items]));
 const $if_content__setup = $if_content__items;
 const $items = /*@__PURE__*/ _let("items/5", $if_content__items);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

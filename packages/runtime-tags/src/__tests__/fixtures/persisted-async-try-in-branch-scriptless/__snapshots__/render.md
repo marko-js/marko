@@ -4,5 +4,14 @@
 ```
 
 # Update `{"show":true,"value":"x"}`
-
-## Patch rejected (navigate)
+```html
+<main>
+  <em>
+    x
+  </em>
+</main>
+```
+## Change
+```
+INSERT: main > em
+```

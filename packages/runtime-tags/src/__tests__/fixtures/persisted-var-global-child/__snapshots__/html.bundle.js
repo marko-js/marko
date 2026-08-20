@@ -1,4 +1,5 @@
 // tags/greet/index.marko
+_shells({ b: "b;D ;<span> </span>" });
 var greet_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -1,6 +1,7 @@
 // template.marko
 const $template = "<main><h1>Static title</h1><button>Count <!></button></main>";
 const $walks = "Db Db%m";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;Db Db%;<main><h1>Static title</h1><button>Count <!></button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

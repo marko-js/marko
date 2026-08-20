@@ -1,6 +1,7 @@
 // tags/card/index.marko
 const $template$1 = "<section><!></section>";
 const $walks$1 = "D%l";
+_shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D%;<section><!></section>" });
 var card_default = _template_persisted("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -16,7 +17,11 @@ const $template = "<main></main>";
 const $walks = " b";
 _shells({
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content,loading",
+	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<em> </em>",
+	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await;D ;<em> </em>",
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template$1)
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
@@ -38,14 +43,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					const $scope3_reason = _persisted_reason();
 					_await($scope3_id, "#text/0", Promise.resolve(input.value), () => {
 						const $scope4_id = _scope_id();
-						_script($scope4_id, "__tests__/template.marko_4_input_value#4/pending");
 						_html(`<em>${_patch_text($scope4_id, "#text/0", input.value, $scope0_owned, 2)}${_el_resume($scope4_id, "#text/0")}</em>`);
 						writeScope($scope4_id, {
 							_: _scope_with_id($scope3_id),
 							"ClosureSignalIndex:input_value": 1
 						}, "__tests__/template.marko", "5:10");
 						_resume_branch($scope4_id);
-					});
+					}, void 0, "__tests__/template.marko_3_#text#0/await");
 					$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_value__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 					_resume_branch($scope3_id);
 				}, $scope2_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_5*content", $scope2_id) }) });

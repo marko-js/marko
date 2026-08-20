@@ -240,8 +240,10 @@ export default {
           const section = active[id];
           // The id token carries `inits…!effects…` (entries reference the
           // bare id); a lone `!` marks a shell needing setup for seeds alone.
+          // Roots (template records a dynamic tag entry constructs) carry
+          // their own inits/effects like a branch shell.
           let marker = "";
-          if (id === getShellId(section)) {
+          if (id === getShellId(section) || !section.parent) {
             forEach(getConstructInitClosures(section), (closure) => {
               marker +=
                 (marker && " ") + getResumeRegisterId(section, closure, "init");

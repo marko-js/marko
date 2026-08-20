@@ -1,6 +1,7 @@
 // tags/pill.marko
 const $template$1 = "<b class=pill> </b>";
 const $walks$1 = "D l";
+_shells({ "__tests__/tags/pill.marko": "__tests__/tags/pill.marko;D ;<b class=pill> </b>" });
 var pill_default = _template_persisted("__tests__/tags/pill.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -12,7 +13,9 @@ var pill_default = _template_persisted("__tests__/tags/pill.marko", (input) => {
 const $template = "<main></main>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko_1_#text#0/await": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1_#text#0/await;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $template$1),
+	"__tests__/template.marko_3*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_3*content;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $template$1),
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
+	"__tests__/template.marko_1_#text#0/await": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1_#text#0/await;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("D l"), $template$1),
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<em>closed</em>"
 });

@@ -1,0 +1,8 @@
+<main>
+  <if=input.show>
+    <await=Promise.resolve(input.value)>
+      <widget/w label=input.value/>
+      <em>${w}</em>
+    </await>
+  </if>
+</main>

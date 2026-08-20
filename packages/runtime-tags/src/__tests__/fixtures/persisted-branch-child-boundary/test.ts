@@ -1,10 +1,9 @@
 import type { TestConfig } from "../../main.test";
 
-// A child whose root holds a boundary needs its own records or renderer:
-// the parent's shell cannot compose it, so no shell ships (fail closed).
+// A child whose root holds a boundary composes into the parent's shell; the
+// await constructs detached from its record and attaches on settle.
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: () => [
     { show: false, promise: Promise.resolve("one") },
     { show: true, promise: Promise.resolve("one") },

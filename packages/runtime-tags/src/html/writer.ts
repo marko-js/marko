@@ -344,8 +344,24 @@ export function patchPartial(state: State, scopeId: number) {
     const pending = state.patchPending?.[scopeId];
     if (pending) {
       // A child scope links into its parent's entry only on its first
-      // write, so an untouched child subtree never reaches the wire.
-      writePatch(pending[0], { [pending[1]]: partial });
+      // write, so an untouched child subtree never reaches the wire. A
+      // boundary carries its content id and catch/placeholder content ids
+      // so a construct can rebuild it (shipped records or registrations);
+      // a paired branch keeps its live slots and ignores them.
+      const [parentScopeId, key, contentId, slotIds] = pending;
+      if (contentId) {
+        state.shipShell?.(contentId);
+        for (const id of slotIds || []) {
+          if (typeof id === "string") state.shipShell?.(id);
+        }
+        writePatch(parentScopeId, {
+          [key]: slotIds
+            ? [partial, contentId, ...slotIds]
+            : [partial, contentId],
+        });
+      } else {
+        writePatch(parentScopeId, { [key]: partial });
+      }
     } else if (scopeId === state.rootScopeId) {
       // Every other partial reaches the wire nested inside a structural
       // entry of an ancestor, rooted here (`writeScope` is patch-inert, so
@@ -1181,12 +1197,36 @@ export function _try(
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
-  $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
-  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
-
   // A patch shows `@placeholder`/`@catch` from received client state;
   // the document reorder/`<t hidden>` path must not ride the frame stream.
   const writesPatches = $chunk.boundary.state.writesPatches;
+  // A construct rebuilds the try's branch from its body content and its
+  // catch/placeholder content ids (`0` = elided catch; a content-less id
+  // rejects the construct); all ride the pairing entry only when the
+  // branch partial materializes. A paired branch keeps its live slots.
+  let trySlotIds: (string | 0 | undefined)[] | undefined;
+  if (writesPatches && (catchContent !== undefined || placeholderContent)) {
+    trySlotIds = [
+      catchContent === undefined
+        ? undefined
+        : catchContent === 0 || elidedContents.has(catchContent)
+          ? 0
+          : ((catchContent[RendererProp.Id] as string | undefined) ?? ""),
+      placeholderContent === undefined || elidedContents.has(placeholderContent)
+        ? undefined
+        : ((placeholderContent[RendererProp.Id] as string | undefined) ?? ""),
+    ];
+  }
+  $chunk.boundary.state.pairBranch?.(
+    scopeId,
+    accessor,
+    branchId,
+    writesPatches
+      ? ((content as ServerRenderer)[RendererProp.Id] as string | undefined)
+      : undefined,
+    trySlotIds,
+  );
+  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
   const usePlaceholder = placeholderContent && !writesPatches;
 
   if (catchContent !== undefined && !writesPatches) {
@@ -1379,7 +1419,13 @@ export class State implements SerializeState {
   shipShell?(shellId: string | 0 | undefined): string | undefined;
   // A boundary body or dynamic tag branch pairs with the live page's branch
   // scope: its partial nests under the owner, bind paths resolve through it.
-  pairBranch?(scopeId: number, accessor: Accessor, branchId: number): void;
+  pairBranch?(
+    scopeId: number,
+    accessor: Accessor,
+    branchId: number,
+    contentId?: string,
+    slotIds?: (string | 0 | undefined)[],
+  ): void;
   declare rootScopeId?: number;
   declare patchPartials?: Record<number, Record<string, unknown>>;
   declare patchBinds?: number;
@@ -1387,7 +1433,15 @@ export class State implements SerializeState {
     number,
     [parentScopeId: number, link: string | [accessor: string, key: unknown]]
   >;
-  declare patchPending?: Record<number, [parentScopeId: number, key: string]>;
+  declare patchPending?: Record<
+    number,
+    [
+      parentScopeId: number,
+      key: string,
+      contentId?: string,
+      slotIds?: (string | 0 | undefined)[],
+    ]
+  >;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
   declare patchDeferred?: 1;
