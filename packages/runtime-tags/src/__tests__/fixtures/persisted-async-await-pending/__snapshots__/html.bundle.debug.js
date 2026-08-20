@@ -14,7 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_id = _scope_id();
 		_html$1(`<em>${_patch_text($scope1_id, "#text/0", value, $scope0_owned, 1)}${_el_resume($scope1_id, "#text/0")}</em>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
-	}, void 0, "__tests__/template.marko_0_#text#1/await");
+	}, void 0, "__tests__/template.marko_0_#text#1/await", 1);
 	_html$1("</main>");
 	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

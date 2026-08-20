@@ -14,6 +14,21 @@ import {
 import { isPatchFillBinding, paramsDeliverAsFills } from "./delivery";
 import { onFinalizePersisted } from "./lifecycle";
 
+// A boundary branch present in every snapshot, so its pairing needs no
+// construct payload: it pairs on every page render (persisted branch-path
+// guards ride the always-truthy root page reason) and nothing on the chain
+// diverges across snapshots — no selected structure, no settling boundary
+// content; a caught or placeholder-showing boundary keeps its branch
+// (recovery rebuilds the whole `<try>`). The runtime still guards divergent
+// render contexts (branch/loop/dynamic-tag composition).
+export function isSnapshotLiveBoundary(bodySection: Section) {
+  if (!bodySection.serializeReason) return false;
+  for (let s: Section | undefined = bodySection; s; s = s.parent) {
+    if (s.isBranch || s.boundaryContent) return false;
+  }
+  return true;
+}
+
 // Whether the section renders inside stateful structure
 // (inclusive): patch renders skip those bodies, so nothing inside may
 // rely on a patch write.

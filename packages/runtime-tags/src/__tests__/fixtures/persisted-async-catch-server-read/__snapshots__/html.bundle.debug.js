@@ -19,7 +19,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "#text/0", value, $scope0_owned, 1)}${_el_resume($scope3_id, "#text/0")}</em>`);
 			writeScope($scope3_id, {}, "__tests__/template.marko", "3:6");
-		}, void 0, "__tests__/template.marko_2_#text#0/await");
+		}, void 0, "__tests__/template.marko_2_#text#0/await", 1);
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		_resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_elide("__tests__/template.marko_1*content", (err) => {
@@ -28,7 +28,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		_html(`<em>${_escape(input.title)}${_el_resume($scope1_id, "#text/0")}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:6"));
 		_resume_branch($scope1_id);
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {
 		input_title: input.title,
