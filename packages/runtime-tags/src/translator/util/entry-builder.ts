@@ -12,6 +12,8 @@ declare module "@marko/compiler/dist/types" {
     needsCompat?: boolean;
     isInteractive?: boolean;
     page?: boolean;
+    /** This template contains at least one analyzed lazy import. */
+    hasLoadImport?: true;
   }
 }
 
@@ -124,13 +126,13 @@ export default {
       assets: new Set(),
     });
     const programExtra = file.path.node.extra;
-    const { analyzedTags, assetImports, hasLoadImport } = file.metadata.marko;
+    const { analyzedTags, assetImports } = file.metadata.marko;
 
     if (programExtra.isInteractive || programExtra.needsCompat) {
       state.init = true;
     }
 
-    if (hasLoadImport) state.hasLoadImport = true;
+    if (programExtra.hasLoadImport) state.hasLoadImport = true;
 
     // Link the template's known client side assets (styles, css imports, etc) into
     // the page entry so that static routes still ship them; collected during analyze.
