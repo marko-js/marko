@@ -8,7 +8,6 @@ const click = (document: Document) => {
 // fills, but the loop shell drops, so growing the list navigates.
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [
     { items: ["x"], note: "n1" },
     click,

@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
+import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
@@ -30,17 +30,6 @@ export function getShells() {
 // Decides every branch shell (expressibility, blockers) so the html output
 // serializes the kept sections as frame records.
 export function buildShells() {
-  // Enclosing branches of stateful structure also construct
-  // unfaithfully: the frame cannot reproduce the selection inside them.
-  forEachSection((section) => {
-    if (isStatefulBranch(section)) {
-      for (let cur = section.parent; cur?.parent; cur = cur.parent) {
-        if (cur.isBranch) {
-          cur.shellBlocked ??= ShellBlocker.statefulEnclosure;
-        }
-      }
-    }
-  });
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
   const records = (getProgram().node.extra.persistedShells ??= {});
@@ -48,12 +37,42 @@ export function buildShells() {
   // entry constructs by id, a static one rides its slot); static boundary
   // content is a record too.
   forEachSectionReverse((section) => {
-    if (
-      !section.parent ||
-      section.isBranch ||
-      section.isBoundary ||
-      isStatefulBranch(section)
-    ) {
+    // A root's awaits construct when a parent shell composes this template:
+    // keeping them lets `Pending` carry a content id (a dom registration on
+    // interactive pages, a shipped record otherwise). The root itself
+    // records under the template id so a dynamic tag entry can construct
+    // this template as a renderer without its dom module.
+    if (!section.parent) {
+      const chain: Section[] = [];
+      const bodyRecords: Record<string, Section> = {};
+      if (interactive || buildAwaitBodyRecords(section, bodyRecords, chain)) {
+        keep.add(section);
+        for (const body of chain) keep.add(body);
+        Object.assign(records, bodyRecords);
+        if (isShellExpressible(section)) {
+          records[getFile().metadata.marko.id] = section;
+        }
+      }
+      return;
+    }
+    if (section.isBranch || isStatefulBranch(section)) {
+      return;
+    }
+    // A boundary (`<try>` body) constructs from its content record when its
+    // enclosing structure does; an inexpressible one stays record-less, so a
+    // construct that reaches it rejects.
+    if (section.isBoundary) {
+      const chain: Section[] = [];
+      const bodyRecords: Record<string, Section> = {};
+      if (
+        isShellExpressible(section) &&
+        (interactive || buildAwaitBodyRecords(section, bodyRecords, chain))
+      ) {
+        keep.add(section);
+        for (const body of chain) keep.add(body);
+        Object.assign(records, bodyRecords);
+        records[getResumeRegisterId(section, "content")] = section;
+      }
       return;
     }
     if (section.boundaryContent) {
@@ -63,6 +82,7 @@ export function buildShells() {
         addRuntimeFeatureAsset("patch-content");
       }
     } else if (
+      !isAwaitBody(section) &&
       (!interactive || !getSectionRegisterReasons(section)) &&
       isShellExpressible(section)
     ) {
@@ -154,13 +174,13 @@ function isShellExpressible(section: Section) {
     if (
       typeof op === "object" &&
       op.kind !== StructureKind.Visit &&
-      // A known child composes when a construct can wire it: no tag var
-      // (only the branch's setup returns it), no boundary in its root.
+      // A known child composes when its root is expressible (nested
+      // branches/boundaries pair via their own entries) and has no tag var.
       !(
         op.kind === StructureKind.Child &&
         !op.hasVar &&
         op.renderer?.kind === StructureKind.ExportRef &&
-        isChildRootExpressible(op.renderer.program)
+        isShellExpressible(op.renderer.program.section!)
       )
     ) {
       return false;
@@ -179,13 +199,10 @@ function isShellExpressible(section: Section) {
   return !contentChild;
 }
 
-function isChildRootExpressible(program: t.ProgramExtra) {
-  const root = program.section!;
-  if (!isShellExpressible(root)) return false;
-  for (const child of program.sections || []) {
-    if (child.isBoundary) return false;
-  }
-  return true;
+// Await bodies ship as their construct's `await` records, never as
+// standalone content records nothing references.
+function isAwaitBody(section: Section) {
+  return !!section.parent?.constructSetups?.some((s) => s.body === section);
 }
 
 // The shell's template and walk strings when both are fully static.

@@ -64,5 +64,18 @@ REMOVE: main > p
 ```
 
 # Update `{"show":true,"title":"e"}`
-
-## Patch rejected (navigate)
+```html
+<main>
+  <p>
+    e
+  </p>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+INSERT: main > p
+UPDATE: main > p::text " " => "e"
+```

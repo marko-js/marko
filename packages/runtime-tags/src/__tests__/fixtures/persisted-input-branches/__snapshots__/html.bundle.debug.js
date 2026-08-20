@@ -2,6 +2,7 @@
 const $template = "<div class=wrap><h1>Hello <!></h1><!><!></div>";
 const $walks = "Eb%l%b%l";
 _shells({
+	"__tests__/template.marko": "__tests__/template.marko;Eb%l%b%;<div class=wrap><h1>Hello <!></h1><!><!></div>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell,<p>shown</p>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<li> </li>"
 });

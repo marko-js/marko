@@ -1,4 +1,5 @@
 // template.marko
+_shells({ a: "a !a1;D b ;<main><ul></ul><button class=add>+</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

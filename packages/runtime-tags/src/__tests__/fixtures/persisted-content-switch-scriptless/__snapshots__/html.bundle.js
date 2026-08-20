@@ -1,4 +1,6 @@
 // tags/widget/index.marko
+const $template = "<section><!></section>";
+_shells({ b: "b;D%;<section><!></section>" });
 var widget_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -12,6 +14,7 @@ var widget_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;b%;<!><!><!>",
+	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)("D%l"), ((_w0) => `<main>${_w0}</main>`)($template)),
 	a1: "a1;Db%;<i>B:<!></i>",
 	a2: "a2,<b>A</b>"
 });

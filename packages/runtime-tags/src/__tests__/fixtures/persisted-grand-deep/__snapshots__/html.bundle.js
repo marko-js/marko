@@ -1,4 +1,6 @@
 // tags/l1/tags/l2/tags/l3/index.marko
+const $template$1 = "<em> </em>";
+_shells({ d: "d;D ;<em> </em>" });
 var l3_default = _template_persisted("d", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -7,6 +9,9 @@ var l3_default = _template_persisted("d", (input) => {
 }, 0, 0);
 
 // tags/l1/tags/l2/index.marko
+const $template = /*@__PURE__*/ ((_w0) => `<button class=n> </button>${_w0}`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D l");
+_shells({ c: /*@__PURE__*/ ((_w0, _w1) => `c !c0;${_w0};${_w1}`)(((_w0) => ` D l/${_w0}&`)("D l"), ((_w0) => `<button class=n> </button>${_w0}`)($template$1)) });
 var l2_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -26,6 +31,7 @@ var l2_default = _template_persisted("c", (input) => {
 }, 0, () => [l3_default]);
 
 // tags/l1/index.marko
+_shells({ b: /*@__PURE__*/ ((_w0, _w1) => `b;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)($walks), $template) });
 var l1_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -37,6 +43,7 @@ var l1_default = _template_persisted("b", (input) => {
 }, 0, () => [l2_default]);
 
 // template.marko
+_shells({ a: "a !a0;D%b ;<main><!><button class=t>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

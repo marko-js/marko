@@ -43,6 +43,7 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
+import { hasStateFeed } from "../../util/persisted/decisions";
 import {
   ensurePersistedWriteGroups,
   inStatefulBranch,
@@ -336,6 +337,18 @@ export default {
 
         if (hasEventHandlers) {
           getProgram().node.extra.isInteractive = true;
+        }
+
+        if (
+          isPersisted() &&
+          seen.content &&
+          tagName !== "meta" &&
+          !node.body.body.length &&
+          isBranchPathSection(tagSection)
+        ) {
+          const contentValue = seen.content.value;
+          ensurePersistedWriteGroups(() => contentValue.extra || {});
+          addRuntimeFeatureAsset("patch-dynamic-tag");
         }
 
         if (
@@ -913,7 +926,32 @@ export default {
         } else if (staticContentAttr) {
           write`>`;
           tagExtra[kTagContentAttr] = true;
-          (tag.node.body.body as t.Statement[]) = [
+          const contentStatements: t.Statement[] = [];
+          // A server-owned `content=` re-renders from a dynamic tag entry,
+          // like a dynamic tag site (the client signal shape is the same).
+          if (
+            isPersisted() &&
+            isBranchPathSection(tagSection) &&
+            !inStatefulBranch(tagSection) &&
+            !hasStateFeed(staticContentAttr.value.extra)
+          ) {
+            contentStatements.push(
+              t.expressionStatement(
+                callRuntime(
+                  "_patch_dynamic_tag",
+                  getScopeIdIdentifier(tagSection),
+                  visitAccessor,
+                  t.cloneNode(staticContentAttr.value),
+                  ...getPatchWriteOwnership(
+                    getSerializeSourcesForExpr(
+                      staticContentAttr.value.extra || {},
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+          contentStatements.push(
             t.expressionStatement(
               callRuntime(
                 "_attr_content",
@@ -927,7 +965,8 @@ export default {
                 ),
               ),
             ),
-          ];
+          );
+          (tag.node.body.body as t.Statement[]) = contentStatements;
         } else if (spreadExpression && !hasChildren) {
           const serializeReason = getSerializeGuard(
             tagSection,

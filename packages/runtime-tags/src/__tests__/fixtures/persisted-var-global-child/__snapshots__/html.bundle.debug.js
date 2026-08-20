@@ -1,6 +1,7 @@
 // tags/greet/index.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
+_shells({ "__tests__/tags/greet/index.marko": "__tests__/tags/greet/index.marko;D ;<span> </span>" });
 var greet_default = _template_persisted("__tests__/tags/greet/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

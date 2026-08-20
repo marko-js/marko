@@ -1,4 +1,5 @@
 // tags/doubler/index.marko
+_shells({ b: "b,<span>x2</span>" });
 var doubler_default = _template_persisted("b", (input) => {
 	_persisted_reason();
 	_scope_id();
@@ -8,6 +9,7 @@ var doubler_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // tags/labeler/index.marko
+_shells({ c: "c,<span>fmt</span>" });
 var labeler_default = _template_persisted("c", (input) => {
 	_persisted_reason();
 	_scope_id();

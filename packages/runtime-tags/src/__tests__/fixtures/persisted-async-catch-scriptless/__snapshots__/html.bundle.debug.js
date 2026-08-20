@@ -1,6 +1,11 @@
 // template.marko
 const $template = "<main><!></main>";
 const $walks = "D%l";
+_shells({
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>"
+});
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -13,7 +18,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "#text/0", value, $scope0_owned, 0)}${_el_resume($scope3_id, "#text/0")}</em>`);
 			writeScope($scope3_id, {}, "__tests__/template.marko", "3:6");
-		});
+		}, void 0, "__tests__/template.marko_1_#text#0/await");
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_elide("__tests__/template.marko_2*content", (err) => {

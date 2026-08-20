@@ -1,14 +1,14 @@
 // PATCH
-{
-  "PatchBranch:#text/0": 1,
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1_count#6/init;b%;<!><!><!>`, {
+  "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko0": "b"
-}
+}]
 
 // PATCH
-{
-  "PatchBranch:#text/0": 1,
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1_count#6/init;b%;<!><!><!>`, {
+  "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko0": "c"
-}
+}]
 
 // PATCH
 {
@@ -17,7 +17,7 @@
 }
 
 // PATCH
-{
-  "PatchBranch:#text/0": 1,
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1_count#6/init;b%;<!><!><!>`, {
+  "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-inner/template.marko0": "e"
-}
+}]

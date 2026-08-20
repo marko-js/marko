@@ -1,5 +1,6 @@
 // tags/card/index.marko
 const $template = "<section><!></section>";
+_shells({ b: "b;D%;<section><!></section>" });
 var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -13,8 +14,10 @@ var card_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a1: "a1;b%;<!><!><!>",
-	a2: /*@__PURE__*/ ((_w0, _w1) => `a2;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template)
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
+	a: "a; ;<main></main>",
+	a3: /*@__PURE__*/ ((_w0, _w1) => `a3;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template)
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_value = _source_if($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);
@@ -27,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 			_set_serialize_reason(0);
 			const $childScope = _peek_scope_id();
 			_patch_child($scope1_id, "a", $childScope);
-			card_default({ content: _content_elide("a1", () => {
+			card_default({ content: _content_elide("a2", () => {
 				_persisted_reason();
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", Promise.resolve(input.value), () => {
@@ -38,7 +41,7 @@ var template_default = _template_persisted("a", (input) => {
 						Cf: 1
 					}));
 					_resume_branch($scope3_id);
-				}, void 0, "a0");
+				}, void 0, "a1");
 				$scope0_reason && _subscribe($si__input_value && $input_value__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				_resume_branch($scope2_id);
 			}, $scope1_id) });
@@ -48,7 +51,7 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a3"]);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && writeScope($scope0_id, {
 		e: input.value,

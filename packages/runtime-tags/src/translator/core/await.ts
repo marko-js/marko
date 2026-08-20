@@ -125,14 +125,13 @@ export default {
       addRuntimeFeatureAsset("patch-boundary");
       // A scriptless construct paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
-      // Recorded on every parented section; `buildShells` keeps only those
-      // a shipped shell constructs (dom registration or shipped body record).
-      if (section.parent) {
-        (section.constructSetups ??= []).push({
-          binding: tagExtra[kDOMBinding]!,
-          body: bodySection,
-        });
-      }
+      // Recorded on every section (a root's awaits construct when a parent
+      // shell composes this template); `buildShells` keeps only those a
+      // shipped shell constructs (dom registration or shipped body record).
+      (section.constructSetups ??= []).push({
+        binding: tagExtra[kDOMBinding]!,
+        body: bodySection,
+      });
     }
     const valueExtra = evaluate(valueAttr.value);
 

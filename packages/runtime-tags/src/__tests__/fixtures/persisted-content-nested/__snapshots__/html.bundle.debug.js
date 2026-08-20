@@ -1,6 +1,7 @@
 // tags/grand/index.marko
 const $template$2 = "<div><!></div>";
 const $walks$2 = "D%l";
+_shells({ "__tests__/tags/grand/index.marko": "__tests__/tags/grand/index.marko;D%;<div><!></div>" });
 var grand_default = _template_persisted("__tests__/tags/grand/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -14,6 +15,7 @@ var grand_default = _template_persisted("__tests__/tags/grand/index.marko", (inp
 // tags/child/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<section><h2> </h2>${_w0}</section>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `E l/${_w0}&l`)("D%l");
+_shells({ "__tests__/tags/child/index.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/child/index.marko;${_w0};${_w1}`)(((_w0) => `E l/${_w0}&l`)("D%l"), ((_w0) => `<section><h2> </h2>${_w0}</section>`)($template$2)) });
 var child_default = _template_persisted("__tests__/tags/child/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -29,7 +31,10 @@ var child_default = _template_persisted("__tests__/tags/child/index.marko", (inp
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1);
-_shells({ "__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>" });
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>",
+	"__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)($walks$1), ((_w0) => `<main>${_w0}</main>`)($template$1))
+});
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
