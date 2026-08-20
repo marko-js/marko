@@ -72,7 +72,6 @@
   "dependencies": {
     "@luxass/strip-json-comments": "^2.0.1",
     "complain": "^1.6.1",
-    "entities": "^8.0.0",
     "htmljs-parser": "^5.14.0",
     "jsesc": "^3.1.0",
     "kleur": "^4.1.5",
@@ -86,6 +85,7 @@
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
+    "entities": "^8.0.0",
     "marko": "^5.39.34"
   },
   "engines": {

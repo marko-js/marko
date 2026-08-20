@@ -169,9 +169,6 @@ importers:
       complain:
         specifier: ^1.6.1
         version: 1.6.1
-      entities:
-        specifier: ^8.0.0
-        version: 8.0.0
       htmljs-parser:
         specifier: ^5.14.0
         version: 5.14.0
@@ -206,6 +203,9 @@ importers:
         specifier: ^0.5.21
         version: 0.5.21
     devDependencies:
+      entities:
+        specifier: ^8.0.0
+        version: 8.0.0
       marko:
         specifier: ^5.39.34
         version: link:../runtime-class
