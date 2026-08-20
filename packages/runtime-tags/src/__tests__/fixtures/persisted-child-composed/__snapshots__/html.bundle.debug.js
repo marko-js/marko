@@ -1,6 +1,7 @@
 // tags/relay/tags/leaf/index.marko
 const $template$2 = "<b> </b><i> </i>";
 const $walks$2 = "D lD l";
+_shells({ "__tests__/tags/relay/tags/leaf/index.marko": "__tests__/tags/relay/tags/leaf/index.marko;D lD ;<b> </b><i> </i>" });
 var leaf_default = _template_persisted("__tests__/tags/relay/tags/leaf/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -11,6 +12,7 @@ var leaf_default = _template_persisted("__tests__/tags/relay/tags/leaf/index.mar
 // tags/relay/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<section>${_w0}</section>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$2);
+_shells({ "__tests__/tags/relay/index.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/relay/index.marko;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)($walks$2), ((_w0) => `<section>${_w0}</section>`)($template$2)) });
 var relay_default = _template_persisted("__tests__/tags/relay/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -32,6 +34,7 @@ var relay_default = _template_persisted("__tests__/tags/relay/index.marko", (inp
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0) => `D/${_w0}& l`)($walks$1), ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1)) });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -1,17 +1,17 @@
 // PATCH
-{
+[`a3;b%;<!><!><!>`, `a2,loading`, {
   ta: "Store!",
-  cAb: {
-    pa: 1
-  },
-  pc: 1
-}
+  cAb: [{
+    pa: "a4"
+  }, "a3", $, "a2"],
+  pc: "a5"
+}]
 {
-  cAb: {
+  cAb: [{
     cAa: {
       ta: "boots"
     }
-  }
+  }, "a3", $, "a2"]
 }
 {
   cAc: {

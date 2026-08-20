@@ -1,4 +1,5 @@
 // tags/widget/index.marko
+_shells({ c: "c !c0; D%c%;<button class=c><!>:<!></button>" });
 var widget_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -11,6 +12,7 @@ var widget_default = _template_persisted("c", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: "a !a0;D%b ;<main><!><button class=t>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

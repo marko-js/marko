@@ -1,6 +1,7 @@
 // tags/widget/index.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
+_shells({ "__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko;D ;<p> </p>" });
 var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -12,6 +13,7 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -1,4 +1,6 @@
 // tags/grand/index.marko
+const $template = "<div><!></div>";
+_shells({ c: "c;D%;<div><!></div>" });
 var grand_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -10,6 +12,7 @@ var grand_default = _template_persisted("c", (input) => {
 }, 0, 0);
 
 // tags/child/index.marko
+_shells({ b: /*@__PURE__*/ ((_w0, _w1) => `b;${_w0};${_w1}`)(((_w0) => `E l/${_w0}&l`)("D%l"), ((_w0) => `<section><h2> </h2>${_w0}</section>`)($template)) });
 var child_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -23,7 +26,10 @@ var child_default = _template_persisted("b", (input) => {
 }, 0, () => [grand_default]);
 
 // template.marko
-_shells({ a0: "a0;D ;<em> </em>" });
+_shells({
+	a0: "a0;D ;<em> </em>",
+	a: "a !a1;D%b ;<main><!><button>+</button></main>"
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

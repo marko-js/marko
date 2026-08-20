@@ -1,4 +1,7 @@
 // tags/price-card.marko
+const $template$2 = "<section><h2> </h2><button>+</button></section>";
+const $walks$1 = "E l l";
+_shells({ b: "b !b0;E l ;<section><h2> </h2><button>+</button></section>" });
 var price_card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -14,6 +17,9 @@ var price_card_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // tags/promo-tag.marko
+const $template$1 = "<aside> </aside><button class=promo>seen</button>";
+const $walks = "D l b";
+_shells({ c: "c !c0;D l ;<aside> </aside><button class=promo>seen</button>" });
 var promo_tag_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -29,6 +35,8 @@ var promo_tag_default = _template_persisted("c", (input) => {
 }, 0, 0);
 
 // tags/site-footer.marko
+const $template = "<footer> </footer>";
+_shells({ d: "d;D ;<footer> </footer>" });
 var site_footer_default = _template_persisted("d", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -39,6 +47,7 @@ var site_footer_default = _template_persisted("d", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}&l`)($walks$1, $walks, "D l"), ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_w0}${_w1}${_w2}</main>`)($template$2, $template$1, $template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

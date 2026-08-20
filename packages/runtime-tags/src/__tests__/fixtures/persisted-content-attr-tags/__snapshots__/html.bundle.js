@@ -1,4 +1,7 @@
 // tags/card/index.marko
+const $template = "<section><header><!></header><footer><!></footer></section>";
+const $walks = "E%lD%m";
+_shells({ b: "b;E%lD%;<section><header><!></header><footer><!></footer></section>" });
 var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -15,7 +18,8 @@ var card_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0,static",
-	a1: "a1;D ;<b> </b>"
+	a1: "a1;D ;<b> </b>",
+	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)($walks), ((_w0) => `<main>${_w0}</main>`)($template))
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();

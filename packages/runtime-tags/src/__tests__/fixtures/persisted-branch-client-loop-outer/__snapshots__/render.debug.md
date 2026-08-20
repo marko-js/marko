@@ -54,5 +54,29 @@ UPDATE: main > li > p::text "n1" => "n2"
 ```
 
 # Update `{"items":["x","y"],"note":"n2"}`
-
-## Patch rejected (navigate)
+```html
+<main>
+  <li>
+    x
+    <p>
+      n2
+    </p>
+  </li>
+  <li>
+    y
+    <p>
+      n2
+    </p>
+  </li>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > li:nth-of-type(1)::text "x" => "x"
+INSERT: main > li:nth-of-type(1) + li
+INSERT: main > li:nth-of-type(2)::text + p
+UPDATE: main > li:nth-of-type(2) > p::text " " => "n2"
+```

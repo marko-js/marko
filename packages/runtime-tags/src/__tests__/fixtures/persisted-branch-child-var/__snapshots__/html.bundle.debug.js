@@ -1,6 +1,7 @@
 // tags/box.marko
 const $template$1 = "<div class=box> </div>";
 const $walks$1 = " D l";
+_shells({ "__tests__/tags/box.marko": "__tests__/tags/box.marko; D ;<div class=box> </div>" });
 var box_default = _template_persisted("__tests__/tags/box.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -14,6 +15,7 @@ var box_default = _template_persisted("__tests__/tags/box.marko", (input) => {
 // template.marko
 const $template = "<main><!><button id=c> </button></main>";
 const $walks = "D%b D m";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b D ;<main><!><button id=c> </button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();

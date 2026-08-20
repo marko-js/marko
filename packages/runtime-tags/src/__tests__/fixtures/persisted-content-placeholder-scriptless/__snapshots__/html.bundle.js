@@ -1,20 +1,26 @@
 // tags/card/index.marko
+const $template = "<section><!></section>";
+_shells({
+	b0: "b0,<span>done</span>",
+	b1: "b1,<span>done</span>",
+	b2: "b2;b%;<!><!><!>"
+});
 var card_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	_html("<section>");
-	_try($scope0_id, "a", _content_resume("b1", () => {
+	_try($scope0_id, "a", _content_resume("b2", () => {
 		const $scope2_id = _scope_id();
 		_persisted_reason();
 		_await($scope2_id, "a", input.promise, () => {
 			_scope_id();
 			_html("<span>done</span>");
-		}, 0);
+		}, 0, "b1");
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope2_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_elide("b0", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_elide("b3", () => {
 		_persisted_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0));
@@ -30,7 +36,10 @@ var card_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({ a0: "a0;D ;<em> </em>" });
+_shells({
+	a0: "a0;D ;<em> </em>",
+	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)("D%l"), ((_w0) => `<main>${_w0}</main>`)($template))
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

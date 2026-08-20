@@ -1,4 +1,6 @@
 // tags/widget/tags/inner/index.marko
+const $template = "<em>leaf</em>";
+_shells({ c: "c,<em>leaf</em>" });
 var inner_default = _template_persisted("c", (input) => {
 	_persisted_reason();
 	_scope_id();
@@ -6,6 +8,7 @@ var inner_default = _template_persisted("c", (input) => {
 }, 0, 0);
 
 // tags/widget/index.marko
+_shells({ b: /*@__PURE__*/ ((_w0, _w1) => `b;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("b"), $template) });
 var widget_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -16,6 +19,7 @@ var widget_default = _template_persisted("b", (input) => {
 }, 0, () => [inner_default]);
 
 // template.marko
+_shells({ a: "a !a0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

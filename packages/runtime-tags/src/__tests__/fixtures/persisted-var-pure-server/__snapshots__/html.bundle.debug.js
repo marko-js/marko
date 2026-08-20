@@ -1,6 +1,7 @@
 // tags/doubler/index.marko
 const $template$2 = "<span>x2</span>";
 const $walks$2 = "b";
+_shells({ "__tests__/tags/doubler/index.marko": "__tests__/tags/doubler/index.marko,<span>x2</span>" });
 var doubler_default = _template_persisted("__tests__/tags/doubler/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -13,6 +14,7 @@ var doubler_default = _template_persisted("__tests__/tags/doubler/index.marko", 
 // tags/labeler/index.marko
 const $template$1 = "<span>fmt</span>";
 const $walks$1 = "b";
+_shells({ "__tests__/tags/labeler/index.marko": "__tests__/tags/labeler/index.marko,<span>fmt</span>" });
 var labeler_default = _template_persisted("__tests__/tags/labeler/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

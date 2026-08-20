@@ -1,7 +1,7 @@
 // PATCH
 {
   ta: "Store!",
-  pb: 1,
+  pb: "a1",
   cAb: {
     ta: "bye"
   }

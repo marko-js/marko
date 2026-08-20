@@ -1,6 +1,7 @@
 // tags/widget/index.marko
 const $template = "<p> </p><!><!>";
 const $walks = "D l%c";
+_shells({ b: "b;D l%;<p> </p><!><!>" });
 var widget_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -13,6 +14,7 @@ var widget_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
+	a: "a; ;<main></main>",
 	a1: "a1; ;<div></div>",
 	a2: /*@__PURE__*/ ((_w0, _w1) => `a2;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks), /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template))
 });

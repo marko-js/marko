@@ -1,6 +1,7 @@
 // tags/counter.marko
 const $template$1 = "<div class=counter><span><!>: <!></span><button class=inc>+</button></div>";
 const $walks$1 = "E%c%l l";
+_shells({ "__tests__/tags/counter.marko": "__tests__/tags/counter.marko !__tests__/tags/counter.marko_0;E%c%l ;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>" });
 var counter_default = _template_persisted("__tests__/tags/counter.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -15,7 +16,11 @@ var counter_default = _template_persisted("__tests__/tags/counter.marko", (input
 // template.marko
 const $template = "<main><!><button id=c> </button></main>";
 const $walks = "D%b D m";
-_shells({ "__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>" });
+_shells({
+	"__tests__/template.marko_2*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*content;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1),
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b D ;<main><!><button id=c> </button></main>",
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
+});
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();

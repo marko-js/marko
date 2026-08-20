@@ -1,6 +1,7 @@
 // tags/counter/index.marko
 const $template$1 = "<button class=c> </button>";
 const $walks$1 = " D l";
+_shells({ "__tests__/tags/counter/index.marko": "__tests__/tags/counter/index.marko !__tests__/tags/counter/index.marko_0; D ;<button class=c> </button>" });
 var counter_default = _template_persisted("__tests__/tags/counter/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -15,6 +16,7 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 // template.marko
 const $template = "<main><!><button class=t>t</button></main>";
 const $walks = "D%b l";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button class=t>t</button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

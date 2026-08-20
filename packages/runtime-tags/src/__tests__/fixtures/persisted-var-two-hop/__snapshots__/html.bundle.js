@@ -1,4 +1,5 @@
 // tags/doubler/index.marko
+_shells({ b: "b,<span>x2</span>" });
 var doubler_default = _template_persisted("b", (input) => {
 	_persisted_reason();
 	_scope_id();
@@ -8,6 +9,7 @@ var doubler_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // tags/shower/index.marko
+_shells({ c: "c;D ;<em> </em>" });
 var shower_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
