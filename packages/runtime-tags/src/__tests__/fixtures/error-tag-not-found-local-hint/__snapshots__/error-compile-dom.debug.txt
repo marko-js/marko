@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-not-found-local-hint/template.marko:2:2
+      1 | <let/thing="hi"/>
+    > 2 | <thing/>
+        |  ^^^^^ Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use `<${thing}/>` or rename to `Thing`.
+      3 |

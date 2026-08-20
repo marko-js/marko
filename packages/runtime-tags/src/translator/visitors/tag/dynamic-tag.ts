@@ -85,7 +85,7 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
-import { getTagRelativePath } from "./custom-tag";
+import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
 import { controllableFeatureFor, enableControllable } from "./native-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
@@ -129,6 +129,8 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze: {
     enter(tag) {
+      if (tag.node.extra?.tagNameUnresolved) throw tagNotFoundError(tag);
+
       assertAttributesOrArgs(tag);
       const { node } = tag;
       const definedBodySection = node.extra?.defineBodySection;

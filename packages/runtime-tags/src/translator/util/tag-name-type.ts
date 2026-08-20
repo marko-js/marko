@@ -21,6 +21,7 @@ declare module "@marko/compiler/dist/types" {
     tagNameNullable?: boolean;
     tagNameDynamic?: boolean;
     tagNameImported?: string;
+    tagNameUnresolved?: boolean;
     tagNameLoad?: LoadImportConfig;
     featureType?: ProgramExtra["featureType"];
   }
@@ -30,6 +31,8 @@ type TagNameType = TagNameType.Value;
 export { TagNameType };
 
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
+// Matches `pre-analyze`, which rewrites a bound PascalCase tag to `<${Name}>`.
+const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 
 export default function analyzeTagNameType(
   tag: t.NodePath<t.MarkoTag>,
@@ -74,6 +77,14 @@ export default function analyzeTagNameType(
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;
+        // A PascalCase name with a binding is a local tag reference, so only
+        // the rest is unresolvable. `DynamicTag.analyze` reports it: at
+        // translate the scope its hint reads is already rewritten, and the
+        // error escapes analyze batching.
+        const tagName = (name.node as t.StringLiteral).value;
+        extra.tagNameUnresolved = !(
+          TAG_NAME_IDENTIFIER_REG.test(tagName) && tag.scope.hasBinding(tagName)
+        );
       }
     }
   }

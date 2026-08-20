@@ -1,0 +1,12 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-not-found-batched/template.marko:1:2
+    > 1 | <unknownone/>
+        |  ^^^^^^^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<unknownone>`.
+      2 | <unknowntwo/>
+      3 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-not-found-batched/template.marko:2:2
+      1 | <unknownone/>
+    > 2 | <unknowntwo/>
+        |  ^^^^^^^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<unknowntwo>`.
+      3 |
