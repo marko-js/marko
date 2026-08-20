@@ -387,7 +387,7 @@ const knownWrongTags = new Map([
   ],
 ]);
 
-function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
+export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag);
   if (tagName && tag.scope.hasBinding(tagName)) {
     return tag
