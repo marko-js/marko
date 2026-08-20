@@ -1084,6 +1084,7 @@ export function _await<T>(
   content: (value: T) => void,
   serializeMarker?: number,
   patchContent?: 0 | string,
+  snapshotLive?: 1,
 ) {
   const writesPatches = $chunk.boundary.state.writesPatches;
   // `0`: a client-owned thenable, resolved by `_await_promise`. A string is
@@ -1114,9 +1115,13 @@ export function _await<T>(
   const chunk = $chunk;
   const { boundary } = chunk;
   if (writesPatches) {
-    // A construct resolves the pending body from this shipped record.
-    $chunk.boundary.state.shipShell!(patchContent);
-    writePatch(scopeId, { [PatchKey.Pending + accessor]: patchContent || 1 });
+    // A construct resolves the pending body from this shipped record; a
+    // snapshot-live body outside divergent contexts never constructs.
+    const elide = snapshotLive && !isInResumedBranch();
+    if (!elide) $chunk.boundary.state.shipShell!(patchContent);
+    writePatch(scopeId, {
+      [PatchKey.Pending + accessor]: (!elide && patchContent) || 1,
+    });
   }
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
@@ -1185,6 +1190,7 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
+  snapshotLive?: 1,
 ) {
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
@@ -1203,8 +1209,15 @@ export function _try(
   // catch/placeholder content ids (`0` = elided catch; a content-less id
   // rejects the construct); all ride the pairing entry only when the
   // branch partial materializes. A paired branch keeps its live slots.
+  // A snapshot-live branch outside divergent contexts never constructs, so
+  // its pairing entry drops the content id, slot ids and shipped record.
+  const elide = snapshotLive && !isInResumedBranch();
   let trySlotIds: (string | 0 | undefined)[] | undefined;
-  if (writesPatches && (catchContent !== undefined || placeholderContent)) {
+  if (
+    writesPatches &&
+    !elide &&
+    (catchContent !== undefined || placeholderContent)
+  ) {
     trySlotIds = [
       catchContent === undefined
         ? undefined
@@ -1220,7 +1233,7 @@ export function _try(
     scopeId,
     accessor,
     branchId,
-    writesPatches
+    writesPatches && !elide
       ? ((content as ServerRenderer)[RendererProp.Id] as string | undefined)
       : undefined,
     trySlotIds,

@@ -10,6 +10,7 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isPersisted } from "../util/marko-config";
+import { isSnapshotLiveBoundary } from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -205,6 +206,13 @@ export default {
                 ),
                 getSerializeGuard(section, bodySection?.serializeReason, true),
                 patchContent,
+                // A snapshot-live body settled in every snapshot, so its
+                // Pending entry may drop the construct id outside divergence.
+                ...(isPersisted() &&
+                bodySection &&
+                isSnapshotLiveBoundary(bodySection)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]
