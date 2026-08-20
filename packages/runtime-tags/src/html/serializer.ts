@@ -1667,7 +1667,7 @@ function writeResponse(state: State, val: Response, ref: Reference) {
 }
 
 // Rebuilt from `resolvedOptions()`, with `locale` passed as the first argument
-// instead. Exact except `DateTimeFormat` widths in some locales (`ja`, `zh`).
+// instead. It reports a locale's best match, not the request (tc39/ecma402#58).
 function writeIntl(state: State, val: object, name: string, ref: Reference) {
   const { locale, ...options } = (val as Intl.NumberFormat).resolvedOptions();
   let needsId = false;
