@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/lazy-class-child-tags-parent/template.marko:1:1
+    > 1 | import Child from "<child>" with { load: "render" }
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The [`load` import attribute](https://markojs.com/docs/reference/lazy-loading) is not supported for the Marko 5 (class API) tag `<child>`. Import it without `load`, or migrate the tag to the tags API.
+      2 |
+      3 | <let/value=1>
+      4 | <button id="inc" onClick() { value++ }>Inc</button>
