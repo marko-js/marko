@@ -1,6 +1,7 @@
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
+	a1: "a1;D ;<em> </em>",
 	a: "a !a2;E l%b Db%;<main><h1> </h1><!><button>Count <!></button></main>"
 });
 var template_default = _template_persisted("a", (input) => {

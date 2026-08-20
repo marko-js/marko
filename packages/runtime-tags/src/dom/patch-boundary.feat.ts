@@ -141,30 +141,22 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // The server now owns this await frame. Invalidate a promise started while
   // setting up a newly constructed parent body so its stale resolution drops.
   scope[(AccessorPrefix.Promise + accessor) as Accessor] = 0 as never;
-  // A construct has no live await branch, so the entry's id delivers the
-  // body's content: a shipped record on scriptless pages (no dom module),
-  // a dom-module registration otherwise. Mirrors `_await_content`.
+  // A construct has no live await branch: the entry's id delivers the body
+  // content record its frame shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
-    const shell = shells[value];
-    if (shell) {
-      const renderer = getShellContent(shell);
-      const pendingScopes = collectScopes(
-        () =>
-          ((
-            (scope[link] = createBranch(
-              scope[AccessorProp.Global],
-              renderer,
-              scope,
-              (scope[accessor as Accessor] as ChildNode).parentNode!,
-            )) as BranchScope
-          )[AccessorProp.DetachedAwait] = renderer),
-      );
-      (scope[link] as BranchScope)[AccessorProp.PendingScopes] = pendingScopes;
-    } else {
-      (
-        (getRegisteredWithScope(value) || failPatch()) as (scope: Scope) => void
-      )(scope);
-    }
+    const renderer = getShellContent(shells[value] || failPatch());
+    const pendingScopes = collectScopes(
+      () =>
+        ((
+          (scope[link] = createBranch(
+            scope[AccessorProp.Global],
+            renderer,
+            scope,
+            (scope[accessor as Accessor] as ChildNode).parentNode!,
+          )) as BranchScope
+        )[AccessorProp.DetachedAwait] = renderer),
+    );
+    (scope[link] as BranchScope)[AccessorProp.PendingScopes] = pendingScopes;
   }
   // Same-frame settle (Promise.resolve) also writes Child; skip pending UI.
   queueMicrotask(() => {

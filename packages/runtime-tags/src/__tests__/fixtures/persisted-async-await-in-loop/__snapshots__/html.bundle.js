@@ -2,6 +2,7 @@
 _shells({
 	a0: "a0;D ;<em> </em>",
 	a: "a !a3;D%b ;<main><!><button>interactive</button></main>",
+	a2: "a2;D ;<em> </em>",
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
