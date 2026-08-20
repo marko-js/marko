@@ -1,5 +1,4 @@
 // template.marko
-const $await_content = _resume("a2", /*@__PURE__*/ _await_content(0, "<em> </em>", "D "));
 const $catch_content__input_title = /*@__PURE__*/ _fill_join_closure("a0", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f)), 0);
 const $catch_content__setup = $catch_content__input_title;
 const $catch_content__err_message = ($scope, err_message) => _text($scope.b, err_message);

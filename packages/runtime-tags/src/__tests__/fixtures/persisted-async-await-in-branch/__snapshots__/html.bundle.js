@@ -2,8 +2,9 @@
 _shells({
 	a0: "a0;D ;<em> </em>",
 	a: "a !a4;E l%b Db%;<main><h1> </h1><!><button>Count <!></button></main>",
+	a2: "a2;D ;<em> </em>",
 	a1: "a1;b%;<!><!><!>",
-	a2: "a2,<em>closed</em>"
+	a3: "a3,<em>closed</em>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 2);
@@ -17,7 +18,7 @@ var template_default = _template_persisted("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_patch_text($scope3_id, "a", value, $scope0_owned, 3)}${_el_resume($scope3_id, "a")}</em>`);
 				writeScope($scope3_id, {});
-			}, void 0, "a3");
+			}, void 0, "a2");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		} else {
@@ -26,7 +27,7 @@ var template_default = _template_persisted("a", (input) => {
 			$scope0_reason && writeScope($scope2_id, {});
 			return 1;
 		}
-	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1", "a2"]);
+	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1", "a3"]);
 	_html(`<button>Count <!>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_reason && writeScope($scope0_id, {

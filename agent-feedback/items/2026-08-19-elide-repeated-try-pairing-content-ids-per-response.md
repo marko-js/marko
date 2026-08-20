@@ -1,22 +1,26 @@
 ---
-type: perf
-impact: low
+type: bug
+impact: med
 effort: med
 site: packages/runtime-tags/src/html/writer.ts › patchPartial
 ---
 
-Every patch frame in which a `<try>`'s branch partial materializes re-ships
-the boundary's content id plus its catch/placeholder content ids in the
-pairing entry (`[partial, contentId, catchId?, placeholderId?]`), because the
+Every patch response in which a boundary/child pairing entry materializes
+re-ships the content id AND its full shell record (`shipShell`), because the
 server cannot know whether the client's branch is live or must construct.
-For a long-lived page with async tries this is O(frames) repeated id strings
-the client only needs once (or never, when the branch stays paired).
+For a paired branch this repeats the branch's entire markup in every
+response the client ignores — and in small templates a single patch frame
+can exceed the fresh html response, breaking the wire-size invariant (patch
+< html). Example: `persisted-branch-child-state` ships
+`a0;/E%c%l l&;<div class=counter>…</div>` in both frames while a fresh html
+response is smaller than one frame.
 
-A per-response "server knows what the client has" elision phase (the same
-lever noted for setup-channel unification) could drop the ids after the
-first frame of a response, or a client-acknowledged session could drop them
-entirely.
+The server renders against the client's persisted snapshot, so it can know:
+if the branch scope existed in the incoming snapshot, the client has it live
+and neither the record nor the content ids are needed; only a branch the
+render newly materializes needs them. A snapshot-aware elision in
+`pairBranch`/`patchPartial` (or a client-acknowledged session) removes the
+repeat entirely.
 
-Check: render `persisted-async-try-catch-only` with two patch steps and
-observe the same `template.marko_2*content` id in each frame's
-`PatchChild:BranchScopes:` entry of `patches.debug.js`.
+Check: `persisted-branch-child-state/__snapshots__/patches.js` — the same
+shell record heads every frame; compare byte size to `writes.html`.

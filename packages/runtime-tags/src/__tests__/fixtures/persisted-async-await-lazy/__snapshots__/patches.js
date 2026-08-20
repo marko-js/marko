@@ -1,9 +1,9 @@
 // PATCH
-[`a3;b%;<!><!><!>`, `a2,loading`, {
+[`a3;D ;<em> </em>`, `a4;b%;<!><!><!>`, `a2,loading`, `a5;D ;<span> </span>`, {
   ta: "Store!",
   cAb: [{
-    pa: "a4"
-  }, "a3", $, "a2"],
+    pa: "a3"
+  }, "a4", $, "a2"],
   pc: "a5"
 }]
 {
@@ -11,7 +11,7 @@
     cAa: {
       ta: "boots"
     }
-  }, "a3", $, "a2"]
+  }, "a4", $, "a2"]
 }
 {
   cAc: {
