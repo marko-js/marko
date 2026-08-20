@@ -697,7 +697,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const controlled = new Set<t.Node>(
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
       );
-      const clientOwnedStructure = inStatefulBranch(getSection(tag));
+      const stateful = inStatefulBranch(getSection(tag));
       for (const attr of node.attributes) {
         // Handlers read the scope at call time, so only values no write
         // keeps current gate: `$global`-derived slots and function calls.
@@ -705,7 +705,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           attr.type === "MarkoAttribute" &&
           isEventOrChangeHandler(attr.name)
         ) {
-          if (clientOwnedStructure) {
+          if (stateful) {
             forEach(
               (attr.value.extra as t.FunctionExtra | undefined)
                 ?.referencedBindingsInFunction,
@@ -724,7 +724,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             );
           }
         } else {
-          if (clientOwnedStructure) {
+          if (stateful) {
             assertDeliverableInClientOwned(attr, attr.value, attr.value.extra);
           }
         }
@@ -736,7 +736,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           node.body.body.length === 0 &&
           !evaluate(attr.value).confident
         ) {
-          if (clientOwnedStructure || !isBranchPathSection(getSection(tag))) {
+          if (stateful || !isBranchPathSection(getSection(tag))) {
             unsupported(
               attr,
               "`content=` on a native tag inside client-owned structure or boundary content is not supported yet",
