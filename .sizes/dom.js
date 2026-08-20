@@ -1,4 +1,4 @@
-// size: 28018 (min) 10326 (brotli)
+// size: 28603 (min) 10523 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2105,7 +2105,9 @@ let globalsChanged = {},
   };
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let frameChecks = [],
+let prepareReady$1,
+  pendingReady$1,
+  frameChecks = [],
   frameVars = {};
 function applyPatch(frame, renderId = "_", runtimeId = "M") {
   (init(runtimeId), (patchers.$ = patchGlobalsEntry));
@@ -2113,9 +2115,31 @@ function applyPatch(frame, renderId = "_", runtimeId = "M") {
   try {
     let names = Object.keys(frameVars),
       fn = Function("_", "$", ...names, "return " + frame);
-    ((render.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
+    ((render.r = [
+      (ctx) => {
+        let result = fn(ctx, void 0, ...names.map((name) => frameVars[name]));
+        if (!prepareReady$1?.(render, result)) return result;
+      },
+    ]),
       runEffects(render.m([]), 1),
       run());
+    for (let check of frameChecks) check();
+    let pending = pendingReady$1?.(render);
+    return pending ? pending.then(() => applyReadyPatch(renderId, runtimeId)) : !0;
+  } catch {
+    return (abortRun(), !1);
+  } finally {
+    abortPatch();
+  }
+}
+function installPatchReady(prepare, pending) {
+  ((prepareReady$1 = prepare), (pendingReady$1 = pending));
+}
+function applyReadyPatch(renderId, runtimeId) {
+  init(runtimeId);
+  let render = beginPatch(renderId);
+  try {
+    (runEffects(render.m([]), 1), run());
     for (let check of frameChecks) check();
     return !0;
   } catch {
@@ -2303,6 +2327,32 @@ function attrTags(first, attrs) {
 }
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
+}
+function _patch_ready() {
+  installPatchReady(prepareReady, pendingReady);
+}
+function prepareReady(render, result) {
+  if (!render.b || result !== render.b) return !1;
+  for (let readyId in render.b) {
+    let batch = render.b[readyId];
+    for (let i = 0; i < batch.length; i++) {
+      let partial = batch[i];
+      typeof partial == "object" && (batch[i] = (ctx) => ctx([partial]));
+    }
+  }
+  return !0;
+}
+function pendingReady(render) {
+  if (hasPendingReady(render)) return new Promise((resolve) => waitReady(resolve, render));
+}
+function waitReady(resolve, render) {
+  hasPendingReady(render) ? setTimeout(waitReady, 0, resolve, render) : resolve();
+}
+function hasPendingReady(render) {
+  if (render.b) {
+    for (let readyId in render.b) if (render.b[readyId].length) return !0;
+  }
+  return !1;
 }
 function mount(input = {}, reference, position) {
   let branch,
