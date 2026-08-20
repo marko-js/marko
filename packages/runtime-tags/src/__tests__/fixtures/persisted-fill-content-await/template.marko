@@ -1,0 +1,9 @@
+<let/showSecond=false/>
+<main>
+  <frame>
+    <await|value|=showSecond ? input.second : input.first>
+      <p>${value}</p>
+    </await>
+  </frame>
+  <button onClick() { showSecond = !showSecond }>toggle</button>
+</main>
