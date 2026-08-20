@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A handler-local shadow of a safe arrow aliases a server function: the
-// call resolves in its own scope and the child fails closed.
+const toggle = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button.outer")!.click();
+};
+
+// A call whose callee is a tracked local arrow recomputes client-side;
+// only untracked callees are inert.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ title: "a" }, toggle, { title: "b" }, toggle, { title: "c" }],
 };
