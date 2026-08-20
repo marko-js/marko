@@ -1,8 +1,8 @@
 // PATCH
-[`b1,<span>done</span>`, `b2;b%;<!><!><!>`, {
+[`b1,<span>done</span>`, {
   ca: {
-    cAa: [{
+    cAa: {
       pa: "b1"
-    }, "b2", $, $]
+    }
   }
 }]
