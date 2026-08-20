@@ -20,10 +20,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "#text/0", value, $scope0_owned, 1)}${_el_resume($scope3_id, "#text/0")}</em>`);
 			writeScope($scope3_id, {}, "__tests__/template.marko", "4:6");
-		}, void 0, "__tests__/template.marko_1_#text#0/await");
+		}, void 0, "__tests__/template.marko_1_#text#0/await", 1);
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) });
+	}, $scope0_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { "ClosureScopes:input_promise": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

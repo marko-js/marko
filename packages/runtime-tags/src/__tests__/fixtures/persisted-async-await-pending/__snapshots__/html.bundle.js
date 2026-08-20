@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "a", value, $scope0_owned, 1)}${_el_resume($scope1_id, "a")}</em>`);
 		writeScope($scope1_id, {});
-	}, void 0, "a1");
+	}, void 0, "a1", 1);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, {});
 }, 1, 0);

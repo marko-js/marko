@@ -27,7 +27,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 		_dynamic_tag$1($scope1_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0));
 		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "4:6"));
 		_resume_branch($scope1_id);
-	}, $scope0_id, 1) }) });
+	}, $scope0_id, 1) }) }, 1);
 	_html$1("</section>");
 	$scope0_reason && writeScope($scope0_id, {
 		input_content: input.content,

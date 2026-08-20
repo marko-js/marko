@@ -15,6 +15,7 @@ import {
   analyzeAttributeTags,
   getAttrTagPaths,
 } from "../util/nested-attribute-tags";
+import { isSnapshotLiveBoundary } from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -181,6 +182,12 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                // The branch is in every snapshot, so a pairing entry may
+                // drop its construct payload outside divergent contexts.
+                ...(isPersisted() &&
+                isSnapshotLiveBoundary(getSectionForBody(tagBody)!)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]

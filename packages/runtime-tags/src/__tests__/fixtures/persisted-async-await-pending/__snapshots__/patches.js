@@ -1,8 +1,8 @@
 // PATCH
-[`a1;D ;<em> </em>`, {
+{
   ta: "Store!",
-  pb: "a1"
-}]
+  pb: 1
+}
 {
   cAb: {
     ta: "slow"

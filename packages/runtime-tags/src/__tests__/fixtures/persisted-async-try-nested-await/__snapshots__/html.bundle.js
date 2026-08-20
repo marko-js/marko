@@ -23,12 +23,12 @@ var template_default = _template_persisted("a", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<em>${_patch_text($scope5_id, "a", value, $scope0_owned, 0)}${_el_resume($scope5_id, "a")}</em>`);
 				writeScope($scope5_id, {});
-			}, void 0, "a3");
+			}, void 0, "a3", 1);
 			$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			_resume_branch($scope2_id);
-		}, $scope1_id), { catch: attrTag({ content: _content_record("a1", $scope1_id) }) });
+		}, $scope1_id), { catch: attrTag({ content: _content_record("a1", $scope1_id) }) }, 1);
 		$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), { catch: attrTag({ content: _content_record("a2", $scope0_id) }) });
+	}, $scope0_id), { catch: attrTag({ content: _content_record("a2", $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_reason && writeScope($scope0_id, { e: $input_promise__closures });
 }, 1, 0);

@@ -26,7 +26,7 @@ var card_default = _template_persisted("b", (input) => {
 		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0));
 		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}, $scope0_id, 1) }) });
+	}, $scope0_id, 1) }) }, 1);
 	_html("</section>");
 	$scope0_reason && writeScope($scope0_id, {
 		d: input.content,
