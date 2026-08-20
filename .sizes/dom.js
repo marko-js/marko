@@ -721,7 +721,7 @@ function _fill_join_closure(key, valueAccessor, join, index) {
     join
   );
 }
-function _fill_join_scope(key, valueAccessor, value, getJoin, index) {
+function _fill_join_subscribers(key, valueAccessor, value, getJoin, index) {
   return fillJoin(key, valueAccessor, value, (scope) => {
     let join = getJoin(),
       instances = scope[join.a];

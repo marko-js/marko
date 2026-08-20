@@ -216,7 +216,9 @@ export function _fill_join_closure<T extends SignalFn>(
   return join;
 }
 
-export function _fill_join_scope<T extends SignalFn>(
+// Keeps an intersection fill registered while dispatching through its
+// lazily declared closure signal to matching subscribed content scopes.
+export function _fill_join_subscribers<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   value: T,
