@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { decodeHTML } from "@marko/compiler/babel-utils";
 
 import normalizeStringExpression from "../util/normalize-string-expression";
 
@@ -14,10 +15,11 @@ export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
     // convert textarea body into a static value attribute.
     const parts: (string | t.Expression)[] = [];
     for (const child of tag.node.body.body) {
-      if (
-        child.type === "MarkoText" ||
-        (child.type === "MarkoPlaceholder" && child.escape)
-      ) {
+      if (child.type === "MarkoText") {
+        // Body text is markup, so its character references have to be decoded
+        // before the value path escapes it again.
+        parts.push(decodeHTML(child.value));
+      } else if (child.type === "MarkoPlaceholder" && child.escape) {
         parts.push(child.value);
       } else {
         throw tag.hub.file.hub.buildError(
