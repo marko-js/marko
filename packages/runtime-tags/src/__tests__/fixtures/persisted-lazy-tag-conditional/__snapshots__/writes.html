@@ -1,4 +1,5 @@
-<main><button>a<!--M_*2 b-->:<!>0<!--M_*2 c--></button><!--M_*2 a--></main>
+<main><!--M_[--><button>a<!--M_*3 b-->:<!>
+      0<!--M_*3 c--></button><!--M_*3 a--><!--M_]1 a 2--></main><!--M_*1 a-->
 <script>
   ((p, h, d, l = $ => {
     d || p.after(new Range().createContextualFragment(d = h))
@@ -8,12 +9,16 @@
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    _a: [_ => [2, {
+    _a: [_ => [3, {
+      G: 2,
       g: 0
-    }], "a0 2"]
+    }], "a0 3"]
   };
   M._.r = [_ => [1, {
-    b: _(2)
+    e: "a"
+  }, {
+    _: _(1),
+    b: _(3)
   }]];
   M._.w()
 </script>
