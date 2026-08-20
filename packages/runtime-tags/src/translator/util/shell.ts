@@ -19,12 +19,12 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     /** Patchable shell records by id: the branch (or await body) section
      * whose structure the html output serializes as a frame record. */
-    persistedShells?: Record<string, Section>;
+    shellRecords?: Record<string, Section>;
   }
 }
 
-export function getShells() {
-  return getProgram().node.extra.persistedShells;
+export function getShellRecords() {
+  return getProgram().node.extra.shellRecords;
 }
 
 // Decides every branch shell (expressibility, blockers) so the html output
@@ -32,7 +32,7 @@ export function getShells() {
 export function buildShells() {
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
-  const records = (getProgram().node.extra.persistedShells ??= {});
+  const records = (getProgram().node.extra.shellRecords ??= {});
   // A content body nothing registers ships as a shell record (a dynamic tag
   // entry constructs by id, a static one rides its slot); static boundary
   // content is a record too.

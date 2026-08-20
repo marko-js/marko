@@ -124,20 +124,13 @@ export default {
       assets: new Set(),
     });
     const programExtra = file.path.node.extra;
-    const { analyzedTags, assetImports } = file.metadata.marko;
+    const { analyzedTags, assetImports, hasLoadImport } = file.metadata.marko;
 
     if (programExtra.isInteractive || programExtra.needsCompat) {
       state.init = true;
     }
 
-    if (
-      !state.hasLoadImport &&
-      file.path.node.body.some(
-        (node) => t.isImportDeclaration(node) && node.extra?.loadImport,
-      )
-    ) {
-      state.hasLoadImport = true;
-    }
+    if (hasLoadImport) state.hasLoadImport = true;
 
     // Link the template's known client side assets (styles, css imports, etc) into
     // the page entry so that static routes still ship them; collected during analyze.

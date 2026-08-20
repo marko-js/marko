@@ -22,6 +22,13 @@ import {
   trackImportedFn,
 } from "./function";
 
+declare module "@marko/compiler" {
+  export interface MarkoMeta {
+    /** This template contains at least one analyzed lazy import. */
+    hasLoadImport?: true;
+  }
+}
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     tagImport?: string;
@@ -101,6 +108,7 @@ export default {
       }
 
       (node.extra ??= {}).loadImport = loadImport;
+      getFile().metadata.marko.hasLoadImport = true;
       const { file } = importDecl.hub;
 
       const loadFile = tagImport && loadFileForImport(file, value);
