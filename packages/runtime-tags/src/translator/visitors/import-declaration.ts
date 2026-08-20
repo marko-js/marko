@@ -11,7 +11,12 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
-import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPersisted,
+} from "../util/marko-config";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
@@ -41,6 +46,7 @@ const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const [getHtmlLoadWrapped] = createProgramState(
   () => new Map<string, string>(),
 );
+const [getPatchReadyEnabled] = createProgramState(() => ({ value: false }));
 
 export default {
   analyze(importDecl) {
@@ -160,6 +166,12 @@ export default {
             node.attributes = undefined;
             return;
           } else {
+            if (isPersisted() && !getPatchReadyEnabled().value) {
+              getPatchReadyEnabled().value = true;
+              getProgram().node.body.push(
+                t.expressionStatement(callRuntime("_patch_ready")),
+              );
+            }
             const allKnownTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,

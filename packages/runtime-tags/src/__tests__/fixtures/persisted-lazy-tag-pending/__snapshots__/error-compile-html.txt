@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-pending/template.marko:1:1
+    > 1 | import Child from "./child.marko" with { load: "render" }
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a lazy template may not be loaded before its patch data arrives.
+      2 |
+      3 | <main><Child label=input.label/></main>
+      4 |
