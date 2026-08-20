@@ -17,6 +17,7 @@ declare module "@marko/compiler/dist/types" {
 
 interface EntryState {
   init: boolean;
+  hasLoadImport: boolean;
   assets: Set<string>;
 }
 type EntryFile = t.BabelFile & {
@@ -35,6 +36,8 @@ export default {
     const body: t.Statement[] = [];
     if (state.init) {
       const isPage = entryFile.path.node.extra.page;
+      const installPatchReady =
+        isPage && entryFile.markoOpts.persisted && state.hasLoadImport;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
       // The main entry import below pulls in every template (and their client assets)
       // transitively, so the collected asset imports are not needed here.
@@ -45,6 +48,14 @@ export default {
               t.identifier(initHelper),
               t.identifier(initHelper),
             ),
+            ...(installPatchReady
+              ? [
+                  t.importSpecifier(
+                    t.identifier("_patch_ready"),
+                    t.identifier("_patch_ready"),
+                  ),
+                ]
+              : []),
           ],
           t.stringLiteral(
             `${runtimeInfo.name}/${
@@ -71,6 +82,13 @@ export default {
             : [],
       );
 
+      if (installPatchReady) {
+        body.push(
+          t.expressionStatement(
+            t.callExpression(t.identifier("_patch_ready"), []),
+          ),
+        );
+      }
       body.push(
         exportInit
           ? t.exportDefaultDeclaration(
@@ -102,6 +120,7 @@ export default {
   ) {
     const state = (entryFile[kState] ||= {
       init: false,
+      hasLoadImport: false,
       assets: new Set(),
     });
     const programExtra = file.path.node.extra;
@@ -109,6 +128,15 @@ export default {
 
     if (programExtra.isInteractive || programExtra.needsCompat) {
       state.init = true;
+    }
+
+    if (
+      !state.hasLoadImport &&
+      file.path.node.body.some(
+        (node) => t.isImportDeclaration(node) && node.extra?.loadImport,
+      )
+    ) {
+      state.hasLoadImport = true;
     }
 
     // Link the template's known client side assets (styles, css imports, etc) into

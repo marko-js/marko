@@ -17,7 +17,6 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
-_patch_ready();
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
 let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_label.mjs")));
