@@ -1137,7 +1137,7 @@ export function writeSignals(section: Section) {
                   }
                   const closureSignal = getSignal(signal.section, member);
                   value = callRuntime(
-                    "_fill_join_scope",
+                    "_fill_join_subscribers",
                     t.stringLiteral(getPatchFillKey(member)),
                     getScopeAccessorLiteral(member, true),
                     value,
