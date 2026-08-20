@@ -614,9 +614,8 @@ export function _patch_dynamic_tag(
     if (ownedWrite(owned, group)) {
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
-      // An identified renderer ships its id (comparable, so an unchanged
-      // tag no-ops): the record rides in-band when one exists, else the
-      // dom registration resolves it. Anything else rides the serializer.
+      // An identified renderer ships its comparable id (record in-band or
+      // dom registration); anything else rides the serializer.
       if (id) shipShell(state as PatchState, id);
       writePatch(scopeId, {
         [PatchKey.DynamicTag + accessor]: id ? [id] : (renderer ?? 0),

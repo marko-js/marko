@@ -240,11 +240,8 @@ export function hasUndeliverableFillReads(
   section: Section,
   refs: Opt<Binding>,
 ) {
-  // Inside stateful structure content sections keep lexical owners, so
-  // reads hop soundly: lone reads and dynamic-chain intersection members
-  // deliver through their self-registering closure signals. Boundaries and
-  // their content branches keep lexical owners too and subscribe when they
-  // materialize.
+  // Content sections and boundaries keep lexical owners, so reads hop
+  // soundly through their self-registering closure signals.
   const stateful = inStatefulBranch(section);
   return some(refs, (binding) => {
     // Seeded state is client-owned after its seed: no frame delivers it.
