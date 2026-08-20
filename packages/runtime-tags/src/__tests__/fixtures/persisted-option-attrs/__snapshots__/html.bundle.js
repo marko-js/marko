@@ -1,5 +1,8 @@
 // template.marko
-_shells({ a0: "a0; D ;<option> </option>" });
+_shells({
+	a: "a !a1;D bD b lD l ;<main><select></select><select id=plain><option value=a>A</option><option value=b>B</option></select><em> </em><button>+</button></main>",
+	a0: "a0; D ;<option> </option>"
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

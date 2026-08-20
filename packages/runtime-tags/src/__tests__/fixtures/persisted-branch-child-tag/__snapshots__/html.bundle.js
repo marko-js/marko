@@ -1,6 +1,7 @@
 // tags/badge.marko
 const $template = "<span class=badge><!><!></span>";
 const $walks = "D%b%l";
+_shells({ b: "b;D%b%;<span class=badge><!><!></span>" });
 var badge_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -10,6 +11,7 @@ var badge_default = _template_persisted("b", (input) => {
 
 // template.marko
 _shells({
+	a: "a !a2;D%b D ;<main><!><button> </button></main>",
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template),
 	a1: "a1,<em>closed</em>"
 });

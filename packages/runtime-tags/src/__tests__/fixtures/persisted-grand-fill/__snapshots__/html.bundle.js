@@ -1,4 +1,6 @@
 // tags/card/tags/badge/index.marko
+const $template = "<em> </em>";
+_shells({ c: "c;D ;<em> </em>" });
 var badge_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -7,6 +9,7 @@ var badge_default = _template_persisted("c", (input) => {
 }, 0, 0);
 
 // tags/card/index.marko
+_shells({ b: /*@__PURE__*/ ((_w0, _w1) => `b;${_w0};${_w1}`)(((_w0) => `D l/${_w0}&`)("D l"), ((_w0) => `<h3> </h3>${_w0}`)($template)) });
 var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -19,6 +22,7 @@ var card_default = _template_persisted("b", (input) => {
 }, 0, () => [badge_default]);
 
 // template.marko
+_shells({ a: "a !a0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -2,6 +2,7 @@
 const $template = "<main><h1> </h1><!><!></main>";
 const $walks = "E l%b%l";
 _shells({
+	"__tests__/template.marko": "__tests__/template.marko;E l%b%;<main><h1> </h1><!><!></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1;Db%l ;<p class=pa>A <!></p><button class=ba>+</button>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell !__tests__/template.marko_2;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>"
 });

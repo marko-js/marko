@@ -1,4 +1,5 @@
 // tags/card/index.marko
+_shells({ b: "b !b0;E l%b ;<section><h2> </h2><!><button>+</button></section>" });
 var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

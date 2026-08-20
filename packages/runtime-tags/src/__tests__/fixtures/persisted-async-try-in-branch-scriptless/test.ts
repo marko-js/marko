@@ -1,10 +1,9 @@
 import type { TestConfig } from "../../main.test";
 
-// A `<try>` has no construct entry yet, so a scriptless branch holding one
-// rejects when it constructs (boundary records, cluster G).
+// A scriptless branch holding a `<try>` constructs from its shell: the
+// pending replay stays out of the envelope (patch entries carry the body).
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [
     { show: false, value: "x" },
     { show: true, value: "x" },

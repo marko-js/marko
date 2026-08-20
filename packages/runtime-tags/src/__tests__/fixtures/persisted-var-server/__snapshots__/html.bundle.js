@@ -1,4 +1,5 @@
 // tags/labeler/index.marko
+_shells({ b: "b,<span>fmt</span>" });
 var labeler_default = _template_persisted("b", (input) => {
 	_persisted_reason();
 	_scope_id();

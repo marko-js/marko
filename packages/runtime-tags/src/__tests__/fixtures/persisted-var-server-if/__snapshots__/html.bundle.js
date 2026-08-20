@@ -1,4 +1,5 @@
 // tags/doubler/index.marko
+_shells({ b: "b,<span>x2</span>" });
 var doubler_default = _template_persisted("b", (input) => {
 	_persisted_reason();
 	_scope_id();

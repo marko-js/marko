@@ -1,6 +1,7 @@
 // tags/grand/index.marko
 const $template$2 = "<div><!></div>";
 const $walks$2 = "D%l";
+_shells({ "__tests__/tags/grand/index.marko": "__tests__/tags/grand/index.marko;D%;<div><!></div>" });
 var grand_default = _template_persisted("__tests__/tags/grand/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -14,6 +15,7 @@ var grand_default = _template_persisted("__tests__/tags/grand/index.marko", (inp
 // tags/card/index.marko
 const $template$1 = "<section><h2> </h2><!><button>+</button></section>";
 const $walks$1 = "E l%b l";
+_shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko !__tests__/tags/card/index.marko_0;E l%b ;<section><h2> </h2><!><button>+</button></section>" });
 var card_default = _template_persisted("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-state-feed/template.marko:4:3
+      2 | <let/active=false/>
+      3 | <main>
+    > 4 |   <${input.on ? cardA : null} label=active/>
+        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: client state cannot feed a dynamic tag (its renderer's input needs are not analyzable).
+      5 |   <button onClick() { active = !active }>+</button>
+      6 | </main>
+      7 |

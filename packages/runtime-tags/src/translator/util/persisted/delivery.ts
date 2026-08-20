@@ -135,9 +135,17 @@ function hasStateJoinedRead(binding: Binding): boolean {
     }
     // A rendered read inside stateful structure promotes to an owner
     // fill (no patch-write channel); effect reads use the owner slot write.
+    // Boundary content an interactive page registers renders client-side
+    // whenever it materializes, so its reads promote the same way.
     let readSection: Section | undefined = read.section;
     while (readSection && readSection !== binding.section) {
       if (isStatefulBranch(readSection)) return true;
+      if (
+        readSection.boundaryContent &&
+        getProgram().node.extra.isInteractive
+      ) {
+        return true;
+      }
       readSection = readSection.parent;
     }
   }
@@ -234,7 +242,9 @@ export function hasUndeliverableFillReads(
 ) {
   // Inside stateful structure content sections keep lexical owners, so
   // reads hop soundly: lone reads and dynamic-chain intersection members
-  // deliver through their self-registering closure signals.
+  // deliver through their self-registering closure signals. Boundaries and
+  // their content branches keep lexical owners too and subscribe when they
+  // materialize.
   const stateful = inStatefulBranch(section);
   return some(refs, (binding) => {
     // Seeded state is client-owned after its seed: no frame delivers it.
@@ -245,7 +255,14 @@ export function hasUndeliverableFillReads(
     ) {
       let cur: Section | undefined = section;
       while (cur && cur !== binding.section) {
-        if (!cur.isBranch && !stateful) return true;
+        if (
+          !cur.isBranch &&
+          !cur.isBoundary &&
+          !cur.boundaryContent &&
+          !stateful
+        ) {
+          return true;
+        }
         cur = cur.parent;
       }
       return !cur;

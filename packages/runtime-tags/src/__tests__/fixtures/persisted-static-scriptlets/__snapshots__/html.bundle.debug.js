@@ -4,7 +4,10 @@ const stamp = "srv";
 var flag;
 const $template = "<main><p><!> <!></p><!><button>+</button></main>";
 const $walks = "E%c%l%b l";
-_shells({ "__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_title#6/init __tests__/template.marko_1_count#8/init;D ;<span> </span>" });
+_shells({
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E%c%l%b ;<main><p><!> <!></p><!><button>+</button></main>",
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_title#6/init __tests__/template.marko_1_count#8/init;D ;<span> </span>"
+});
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();

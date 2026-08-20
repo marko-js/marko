@@ -1,4 +1,5 @@
 // template.marko
+_shells({ a: "a; D b ;<div><p>content</p><span class=base>badge</span></div>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

@@ -119,11 +119,22 @@ class PatchState extends State {
   override shipShell(shellId: string | 0 | undefined) {
     return shipShell(this, shellId);
   }
-  override pairBranch(scopeId: number, accessor: Accessor, branchId: number) {
+  override pairBranch(
+    scopeId: number,
+    accessor: Accessor,
+    branchId: number,
+    contentId?: string,
+    slotIds?: (string | 0 | undefined)[],
+  ) {
     if (!this.patchInert && !this.patchPartials?.[branchId]) {
       const link = AccessorPrefix.BranchScopes + accessor;
       (this.patchParents ??= {})[branchId] = [scopeId, link];
-      (this.patchPending ??= {})[branchId] = [scopeId, PatchKey.Child + link];
+      (this.patchPending ??= {})[branchId] = [
+        scopeId,
+        PatchKey.Child + link,
+        contentId,
+        slotIds,
+      ];
     }
   }
 
@@ -603,11 +614,12 @@ export function _patch_dynamic_tag(
     if (ownedWrite(owned, group)) {
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
+      // An identified renderer ships its id (comparable, so an unchanged
+      // tag no-ops): the record rides in-band when one exists, else the
+      // dom registration resolves it. Anything else rides the serializer.
+      if (id) shipShell(state as PatchState, id);
       writePatch(scopeId, {
-        [PatchKey.DynamicTag + accessor]:
-          id && shells[id]
-            ? [shipShell(state as PatchState, id)]
-            : (renderer ?? 0),
+        [PatchKey.DynamicTag + accessor]: id ? [id] : (renderer ?? 0),
       });
     }
   }

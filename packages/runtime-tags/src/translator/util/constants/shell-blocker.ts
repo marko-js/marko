@@ -1,13 +1,10 @@
 // Why a branch's shell would construct unfaithfully. Values are truthy
 // (readers test truthiness) and the first blocker recorded wins.
 
-// A branch enclosing a stateful branch: the client owns that inner
-// selection, so a frame cannot construct the outer one faithfully.
-export const statefulEnclosure = 1;
 // Scriptless awaits normally construct from shipped body records; this is
 // the fallback for a body only a dom-module registration could render
 // (child renderers, unresolved refs) when no dom module ever loads.
-export const inexpressibleAwaitBody = 2;
+export const inexpressibleAwaitBody = 1;
 
 type Self = typeof import("./shell-blocker");
 export type Value = Self[keyof Self];
