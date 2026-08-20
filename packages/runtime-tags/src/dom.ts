@@ -106,7 +106,7 @@ export {
   _fill_join_for,
   _fill_join_if,
   _fill_join_closure,
-  _fill_join_scope,
+  _fill_join_subscribers,
   _fill_let,
   _global_read,
   _fill_let_change,
