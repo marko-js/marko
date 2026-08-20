@@ -108,6 +108,14 @@ export default {
           "Unable to resolve marko file for load import.",
         );
       }
+
+      // The compat dynamic tag this child renders through cannot read the load
+      // config, so it would reference a binding this import no longer declares.
+      if (loadFile.ast.program.extra?.featureType === "class") {
+        throw importDecl.buildCodeFrameError(
+          `The [\`load\` import attribute](https://markojs.com/docs/reference/lazy-loading) is not supported for the Marko 5 (class API) tag \`${value}\`. Import it without \`load\`, or migrate the tag to the tags API.`,
+        );
+      }
     }
   },
   translate: {
