@@ -12,5 +12,12 @@ const load = (document: Document) => {
 export const config: TestConfig = {
   persisted: true,
   equivalent: false,
-  steps: [{ label: "a" }, load, { label: "b" }, wait, click],
+  steps: [
+    { show: true, label: "a" },
+    load,
+    { show: true, label: "b" },
+    wait,
+    click,
+    { show: false, label: "b" },
+  ],
 };

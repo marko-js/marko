@@ -18,16 +18,27 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/chi
 	type: "on-click",
 	selector: "body"
 }]);
-const $template = "<main><!></main>";
-const $walks = "D%/&l";
+const $template = "<main></main>";
+const $walks = " b";
+_shells({ "__tests__/template.marko": "__tests__/template.marko; ;<main></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
-	const $childScope = _peek_scope_id();
-	_patch_child($scope0_id, "#childScope/1", $childScope);
-	$Child_withLoadAssets({ label: input.label });
-	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_set_serialize_reason({ 0: _mask_group($scope0_owned, 2) });
+			const $childScope = _peek_scope_id();
+			_patch_child($scope1_id, "#childScope/1", $childScope);
+			$Child_withLoadAssets({ label: input.label });
+			writeScope($scope1_id, {
+				_: _scope_with_id($scope0_id),
+				"#childScope/1": _existing_scope($childScope)
+			}, "__tests__/template.marko", "4:4");
+			return 0;
+		}
+	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
+	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
+	$scope0_reason && writeScope($scope0_id, { input_label: input.label }, "__tests__/template.marko", 0, { input_label: ["input.label"] });
 }, 1, () => [$Child_withLoadAssets]);

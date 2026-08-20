@@ -320,7 +320,11 @@ function markText(
 
 // Structural patch entries hold their child partial objects, so the root
 // partial IS the frame tree and one ordinary serializer flush emits it.
-export function writePatch(scopeId: number, entries: Record<string, unknown>) {
+export function writePatch(
+  scopeId: number,
+  entries: Record<string, unknown>,
+  serializeState = $chunk.serializeState,
+) {
   const { state } = $chunk.boundary;
   if (state.patchInert) return;
   if (state.patchFlushed) {
@@ -328,19 +332,26 @@ export function writePatch(scopeId: number, entries: Record<string, unknown>) {
       "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
     );
   }
-  const partial = patchPartial($chunk.boundary.state, scopeId);
+  const partial = patchPartial($chunk.boundary.state, scopeId, serializeState);
   for (const key in entries) {
     // `undefined` survives to the wire (`$`): it overwrites, never elides.
     partial[key] = entries[key];
   }
 }
 
-export function patchPartial(state: State, scopeId: number) {
+export function patchPartial(
+  state: State,
+  scopeId: number,
+  serializeState = $chunk.serializeState,
+) {
   if (state.patchInert) return {};
   const partials = (state.patchPartials ??= {});
   let partial = partials[scopeId];
   if (!partial) {
     partial = partials[scopeId] = {};
+    if (serializeState.readyId) {
+      (state.patchChannels ??= {})[scopeId] = serializeState;
+    }
     const pending = state.patchPending?.[scopeId];
     if (pending) {
       // A child links into its parent's entry on its first write; boundary
@@ -351,21 +362,25 @@ export function patchPartial(state: State, scopeId: number) {
         for (const id of slotIds || []) {
           if (typeof id === "string") state.shipShell?.(id);
         }
-        writePatch(parentScopeId, {
-          [key]: slotIds
-            ? [partial, contentId, ...slotIds]
-            : [partial, contentId],
-        });
+        writePatch(
+          parentScopeId,
+          {
+            [key]: slotIds
+              ? [partial, contentId, ...slotIds]
+              : [partial, contentId],
+          },
+          serializeState,
+        );
       } else {
-        writePatch(parentScopeId, { [key]: partial });
+        writePatch(parentScopeId, { [key]: partial }, serializeState);
       }
     } else if (scopeId === state.rootScopeId) {
       // Every other partial reaches the wire nested inside a structural
       // entry of an ancestor, rooted here (`writeScope` is patch-inert, so
       // the root also registers with the serialize state directly).
       writeScope(scopeId, partial);
-      $chunk.serializeState.writeScopes[scopeId] = partial;
-      $chunk.serializeState.flushScopes = true;
+      serializeState.writeScopes[scopeId] = partial;
+      serializeState.flushScopes = true;
     }
   }
   return partial;
@@ -1447,6 +1462,7 @@ export class State implements SerializeState {
       slotIds?: (string | 0 | undefined)[],
     ]
   >;
+  declare patchChannels?: Record<number, SerializeState>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
   declare patchDeferred?: 1;
