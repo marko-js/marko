@@ -479,7 +479,12 @@ function testFixtures(interop?: true) {
                       frames.push(frame);
                       // A production caller navigates on the first failed
                       // frame; later frames must not mutate further.
-                      if (!(applied = applyPatch(frame))) break;
+                      const result = applyPatch(frame);
+                      if (result instanceof Promise) {
+                        await resolveAfter(0, 1);
+                        await browser.runAsyncScripts();
+                      }
+                      if (!(applied = await result)) break;
                     }
                     patches.push(frames.join(""));
                     tracker.logUpdate(input);

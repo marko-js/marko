@@ -1,0 +1,16 @@
+<main>
+  <script async type=module src="child.marko.load.mjs"></script>
+  <button>a<!--M_*2 b-->:<!>0<!--M_*2 c--></button><!--M_*2 a-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [2, {
+      g: 0
+    }], "a0 2"]
+  };
+  M._.r = [_ => [1, {
+    b: _(2)
+  }]];
+  M._.w()
+</script>
