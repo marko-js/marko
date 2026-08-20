@@ -15,6 +15,8 @@ declare module "@marko/compiler/dist/types" {
     isInteractive?: boolean;
     hasClientStatement?: boolean;
     page?: boolean;
+    /** This template contains at least one analyzed lazy import. */
+    hasLoadImport?: true;
   }
 }
 
@@ -186,7 +188,7 @@ const builder = {
       ]),
     });
     const programExtra = file.path.node.extra;
-    const { analyzedTags, assetImports, hasLoadImport } = file.metadata.marko;
+    const { analyzedTags, assetImports } = file.metadata.marko;
     const { loadImports } = programExtra;
 
     const init = !!(programExtra.isInteractive || programExtra.needsCompat);
@@ -204,7 +206,7 @@ const builder = {
       );
     }
 
-    if (hasLoadImport) state.hasLoadImport = true;
+    if (programExtra.hasLoadImport) state.hasLoadImport = true;
     // Collected during analyze (styles, css imports, etc).
 
     if (assetImports) {
