@@ -63,12 +63,8 @@ export function isContentRenderTag(tag: t.NodePath<t.MarkoTag>) {
     getCanonicalBinding(binding.upstreamAlias) === getInputBinding(tag)
   );
 }
-// A dynamic tag whose renderer and every input the server owns: the site's
-// dynamic tag entry re-renders it (a registered renderer or shipped record)
-// and the rendered subtree's own patch writes deliver input changes, so no
-// per-group ownership mask is needed. Client state feeding an unanalyzable
-// renderer has no mask to derive, so any state feed disqualifies; resolved
-// references are required, so call at finalize or later.
+// A dynamic tag whose renderer and every input the server owns (any client
+// state feed disqualifies); needs resolved references — call at finalize.
 export function isServerOwnedDynamicTag(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   if (t.isStringLiteral(node.name) || node.var || node.arguments?.length) {

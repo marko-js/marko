@@ -362,11 +362,8 @@ export function patchPartial(state: State, scopeId: number) {
     partial = partials[scopeId] = {};
     const pending = state.patchPending?.[scopeId];
     if (pending) {
-      // A child scope links into its parent's entry only on its first
-      // write, so an untouched child subtree never reaches the wire. A
-      // boundary carries its content id and catch/placeholder content ids
-      // so a construct can rebuild it (shipped records or registrations);
-      // a paired branch keeps its live slots and ignores them.
+      // A child links into its parent's entry on its first write; boundary
+      // construct ids ride it and a paired branch ignores them.
       const [parentScopeId, key, contentId, slotIds] = pending;
       if (contentId) {
         state.shipShell?.(contentId);
@@ -1104,7 +1101,7 @@ export function _await<T>(
   content: (value: T) => void,
   serializeMarker?: number,
   patchContent?: 0 | string,
-  snapshotLive?: 1,
+  alwaysPairs?: 1,
 ) {
   const writesPatches = $chunk.boundary.state.writesPatches;
   // `0`: a client-owned thenable, resolved by `_await_promise`. A string is
@@ -1135,9 +1132,9 @@ export function _await<T>(
   const chunk = $chunk;
   const { boundary } = chunk;
   if (writesPatches) {
-    // A construct resolves the pending body from this shipped record; a
-    // snapshot-live body outside divergent contexts never constructs.
-    const elide = snapshotLive && !isInResumedBranch();
+    // A construct resolves the pending body from this shipped record; an
+    // always-pairing body outside divergent contexts never constructs.
+    const elide = alwaysPairs && !isInResumedBranch();
     if (!elide) $chunk.boundary.state.shipShell!(patchContent);
     writePatch(scopeId, {
       [PatchKey.Pending + accessor]: (!elide && patchContent) || 1,
@@ -1210,7 +1207,7 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
-  snapshotLive?: 1,
+  alwaysPairs?: 1,
 ) {
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
@@ -1225,13 +1222,9 @@ export function _try(
   // A patch shows `@placeholder`/`@catch` from received client state;
   // the document reorder/`<t hidden>` path must not ride the frame stream.
   const writesPatches = $chunk.boundary.state.writesPatches;
-  // A construct rebuilds the try's branch from its body content and its
-  // catch/placeholder content ids (`0` = elided catch; a content-less id
-  // rejects the construct); all ride the pairing entry only when the
-  // branch partial materializes. A paired branch keeps its live slots.
-  // A snapshot-live branch outside divergent contexts never constructs, so
-  // its pairing entry drops the content id, slot ids and shipped record.
-  const elide = snapshotLive && !isInResumedBranch();
+  // Construct payload (content id + slot ids, `0` = elided catch) rides the
+  // pairing entry, except for always-pairing branches outside divergence.
+  const elide = alwaysPairs && !isInResumedBranch();
   let trySlotIds: (string | 0 | undefined)[] | undefined;
   if (
     writesPatches &&

@@ -37,10 +37,8 @@ export function buildShells() {
   // entry constructs by id, a static one rides its slot); static boundary
   // content is a record too.
   forEachSectionReverse((section) => {
-    // A root's awaits construct when a parent shell composes this template:
-    // keeping them lets `Pending` carry the shipped body record's id. The
-    // root itself records under the template id so a dynamic tag entry can
-    // construct this template as a renderer without its dom module.
+    // Kept root awaits let `Pending` carry a body record id; the root
+    // records under the template id so a dynamic tag entry can construct it.
     if (!section.parent) {
       const chain: Section[] = [];
       const bodyRecords: Record<string, Section> = {};
@@ -57,9 +55,8 @@ export function buildShells() {
     if (section.isBranch || isStatefulBranch(section)) {
       return;
     }
-    // A boundary (`<try>` body) constructs from its content record when its
-    // enclosing structure does; an inexpressible one stays record-less, so a
-    // construct that reaches it rejects.
+    // A boundary constructs from its content record; an inexpressible one
+    // stays record-less, so a construct reaching it rejects.
     if (section.isBoundary) {
       const chain: Section[] = [];
       const bodyRecords: Record<string, Section> = {};
@@ -117,8 +114,7 @@ export function buildShells() {
       // The id interns even for a blocked shell so register ids stay stable.
       const id = getShellId(section);
       // Each await body ships as its own record; an inexpressible one
-      // blocks the branch (fail closed) rather than bundle more than a
-      // non-persisted page would.
+      // blocks the branch (fail closed) rather than bundle extra content.
       const chain: Section[] = [];
       const bodyRecords: Record<string, Section> = {};
       if (!buildAwaitBodyRecords(section, bodyRecords, chain)) {
