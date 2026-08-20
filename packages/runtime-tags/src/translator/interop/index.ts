@@ -9,7 +9,17 @@ import { generator } from "@marko/compiler/internal/babel";
 
 import * as translate6 from "..";
 import { resolveRelativeToEntry } from "../util/resolve-relative-to-entry";
+import { getCompatRuntimeFile } from "../util/runtime";
 import { isTagsAPI } from "./feature-detection";
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** A Class API template that registers hoisted handlers for Tags resume. */
+    resumesClassFns?: boolean;
+    /** A Class API template that passes anything into a Tags child. */
+    bridgesToTags?: boolean;
+  }
+}
 
 type TagDef = Record<string, unknown>;
 type Taglibs = [taglibId: string, taglib: Record<string, unknown>][];
@@ -50,6 +60,8 @@ export function createInteropTranslator(translate5: any) {
       [kState]?: {
         has5: boolean;
         has6: boolean;
+        needsCompat: boolean;
+        compatFiles: Set<string>;
       };
     };
     const { Program } = visitor;
@@ -88,6 +100,19 @@ export function createInteropTranslator(translate5: any) {
               );
             };
             return [
+              // A Tags template captures the dynamic tag helper at module scope,
+              // so the Class runtime has to patch it in before either half runs.
+              ...(state.needsCompat
+                ? [
+                    t.importDeclaration(
+                      [],
+                      t.stringLiteral(getCompatRuntimeFile()),
+                    ),
+                  ]
+                : []),
+              ...Array.from(state.compatFiles, (compatFile) =>
+                t.importDeclaration([], t.stringLiteral(compatFile)),
+              ),
               importHydrateProgram(
                 "6",
                 translate6.internalEntryBuilder.build(entryFile, true),
@@ -118,6 +143,8 @@ export function createInteropTranslator(translate5: any) {
         const state = (entryFile[kState] ||= {
           has5: false,
           has6: false,
+          needsCompat: false,
+          compatFiles: new Set(),
         });
 
         if (isTagsAPI(file)) {
@@ -125,6 +152,15 @@ export function createInteropTranslator(translate5: any) {
           translate6.internalEntryBuilder.visit(file, entryFile, visitChild);
         } else {
           state.has5 = true;
+          if (file.path.node.extra?.bridgesToTags) {
+            state.needsCompat = true;
+          }
+          if (file.path.node.extra?.resumesClassFns) {
+            // Its Tags resume registrations run when the module itself is loaded.
+            state.compatFiles.add(
+              resolveRelativePath(entryFile, file.opts.filename as string),
+            );
+          }
           translate5.internalEntryBuilder.visit(file, entryFile, visitChild);
         }
       },

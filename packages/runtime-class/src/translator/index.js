@@ -152,7 +152,7 @@ export const analyze = {
       const childFile = loadFileForTag(tag);
       if (childFile?.ast.program.extra?.featureType === "tags") {
         tag.node.extra.featureType = "tags";
-        (file.path.node.extra ??= {}).needsCompat = true;
+        markInteropBoundary(file, tag);
       }
     } else if (isDynamicTag(tag)) {
       // A dynamic `<${expr}/>` whose name references an imported Tags API
@@ -169,7 +169,7 @@ export const analyze = {
           );
           if (childFile?.ast.program.extra?.featureType === "tags") {
             (tag.node.extra ??= {}).featureType = "tags";
-            (file.path.node.extra ??= {}).needsCompat = true;
+            markInteropBoundary(file, tag);
             return true;
           }
         }
@@ -702,6 +702,39 @@ export function getRuntimeEntryFiles(output, optimize) {
   ];
 }
 
+/**
+ * Records what crosses into a Tags child so the page entry can link the client
+ * side of the boundary: anything passed at all is revived through the compat
+ * layer, and a direct function attribute is hoisted into this module and
+ * registered for resume, so the module itself has to load — a split component's
+ * browser file is not enough.
+ */
+function markInteropBoundary(file, tag) {
+  const extra = (file.path.node.extra ??= {});
+  extra.needsCompat = true;
+
+  if (!extra.resumesClassFns) {
+    for (const attr of tag.get("attributes")) {
+      const value = attr.isMarkoAttribute() && attr.get("value");
+      if (
+        value &&
+        (value.isFunctionExpression() || value.isArrowFunctionExpression())
+      ) {
+        extra.resumesClassFns = true;
+        break;
+      }
+    }
+  }
+
+  if (
+    tag.node.attributes.length ||
+    tag.node.body.body.length ||
+    tag.node.attributeTags.length
+  ) {
+    extra.bridgesToTags = true;
+  }
+}
+
 function isRenderContent({ node }) {
   return /^Marko/.test(node.type) && !node.static;
 }
@@ -733,15 +766,25 @@ function getClassHydrationMode(file, visited = new Set()) {
   // A Tags template records interactivity on its program, not in metadata;
   // it hydrates itself, so a Class ancestor has to keep the boundary.
   if (file.ast.program.extra?.isInteractive) {
+    meta.hydratesTags = true;
     return (meta.classHydration = CLASS_HYDRATION_SELF);
   }
 
+  let mode;
   for (const tag of meta.tags) {
     if (tag.endsWith(".marko")) {
       const childFile = loadFileForImport(file, tag);
       if (childFile && getClassHydrationMode(childFile, visited)) {
-        return (meta.classHydration = CLASS_HYDRATION_DESCENDANT);
+        mode = CLASS_HYDRATION_DESCENDANT;
+        // A Tags descendant resumes through this boundary, which a Tags
+        // ancestor has to keep alive; a Class one hydrates on its own.
+        if (childFile.metadata.marko.hydratesTags) {
+          meta.hydratesTags = true;
+          break;
+        }
       }
     }
   }
+
+  return mode && (meta.classHydration = mode);
 }

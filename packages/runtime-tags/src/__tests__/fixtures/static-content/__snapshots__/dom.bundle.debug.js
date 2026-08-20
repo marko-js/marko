@@ -1,16 +1,26 @@
+// template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
+const $outer_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span>static</span>");
+function $setup($scope) {
+	$setup$1($scope["#childScope/0"]);
+	$input_content($scope["#childScope/0"], $outer_content($scope));
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
 // tags/inner.marko
-const $template$2 = "<!><!><!>";
-const $walks$2 = "b%c";
-const $setup$2 = () => {};
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+const $setup$1 = () => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content$1 = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content$1($scope, input.content);
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $template$2, "b%c", 0, $input$1);
+var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $template$1, "b%c", 0, $input$1);
 
 // tags/outer.marko
-const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
-const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $inner_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $inner_content__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $inner_content__dynamicTag($scope, $scope._.input_content));
 const $inner_content__setup__script = _script("__tests__/tags/outer.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -21,20 +31,10 @@ const $inner_content__setup = ($scope) => {
 	$inner_content__setup__script($scope);
 };
 const $inner_content = /*@__PURE__*/ _content("__tests__/tags/outer.marko_1*content", "<button>click</button><!><!>", " b%", $inner_content__setup);
-function $setup$1($scope) {
+function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $inner_content($scope));
 }
 const $input = ($scope, input) => $input_content($scope, input.content);
 const $input_content__closure = /*@__PURE__*/ _closure($inner_content__input_content);
 const $input_content = /*@__PURE__*/ _const("input_content", $input_content__closure);
-var outer_default = /*@__PURE__*/ _template("__tests__/tags/outer.marko", $template$1, $walks$1, $setup$1, $input);
-
-// template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
-const $outer_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span>static</span>");
-function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
-	$input_content($scope["#childScope/0"], $outer_content($scope));
-}
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var outer_default = /*@__PURE__*/ _template("__tests__/tags/outer.marko", $template, $walks, $setup, $input);

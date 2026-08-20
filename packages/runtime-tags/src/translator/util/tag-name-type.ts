@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
+  getProgram,
   getTagDef,
   isNativeTag,
   loadFileForTag,
@@ -10,9 +11,18 @@ import type { LoadImportConfig } from "../visitors/import-declaration";
 import * as TagNameType from "./constants/tag-name-type";
 import { isCoreTag } from "./is-core-tag";
 
+declare module "@marko/compiler" {
+  export interface MarkoMeta {
+    /** Set by the Class API translator when Tags content resumes below here. */
+    hydratesTags?: boolean;
+  }
+}
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     featureType?: "class" | "tags";
+    /** Renders a Class API child that wraps Tags content needing hydration. */
+    rendersClassTag?: boolean;
   }
   export interface MarkoTagExtra {
     tagNameType?: TagNameType;
@@ -74,6 +84,11 @@ export default function analyzeTagNameType(
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;
         extra.featureType = "class";
+        if (childFile?.metadata.marko.hydratesTags) {
+          // The interop has to rebuild this boundary before its Tags
+          // descendants can resume, so this template stays in the bundle.
+          getProgram().node.extra!.rendersClassTag = true;
+        }
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;

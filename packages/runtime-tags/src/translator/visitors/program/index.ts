@@ -7,6 +7,7 @@ import {
 
 import { hasAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
+import { isSectionRendererElided } from "../../util/binding-has-prop";
 import {
   type BindingPropTree,
   getBindingPropTree,
@@ -27,7 +28,11 @@ import {
 } from "../../util/references";
 import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
-import { startSection } from "../../util/sections";
+import {
+  forEachSection,
+  getSectionRegisterReasons,
+  startSection,
+} from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -39,6 +44,7 @@ export let localsIdentifier: t.Identifier;
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
+    registersForResume?: boolean;
     domExports?: {
       template: string;
       walks: string;
@@ -102,6 +108,23 @@ export default {
       }
 
       const section = programExtra.section!;
+
+      // Anything serialized, and any registered content renderer, is revived
+      // against this module, so it has to reach the client even with no client
+      // statements of its own.
+      forEachSection((childSection) => {
+        if (
+          !programExtra.registersForResume &&
+          (childSection.serializeReason ||
+            childSection.serializeReasons.size ||
+            (childSection !== section &&
+              !isSectionRendererElided(childSection) &&
+              getSectionRegisterReasons(childSection)))
+        ) {
+          programExtra.registersForResume = true;
+        }
+      });
+
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
         // importing and calling it (checked when this template translates).

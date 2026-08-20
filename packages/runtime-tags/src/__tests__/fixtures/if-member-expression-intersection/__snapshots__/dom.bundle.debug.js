@@ -1,6 +1,15 @@
+// template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)(" b", " b");
+function $setup($scope) {
+	$setup$1($scope["#childScope/0"]);
+	$setup$1($scope["#childScope/1"]);
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
 // tags/child.marko
-const $template$1 = "<div></div>";
-const $walks$1 = " b";
+const $template = "<div></div>";
+const $walks = " b";
 const $if_content__text = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.text));
 const $if_content__setup = $if_content__text;
 const $if = /*@__PURE__*/ _if("#div/0", "<div> </div>", "D ", $if_content__setup);
@@ -18,19 +27,10 @@ const $id = /*@__PURE__*/ _const("id", ($scope) => {
 	_attr($scope["#div/0"], "id", $scope.id);
 	$id__script($scope);
 });
-function $setup$1($scope) {
+function $setup($scope) {
 	$hide($scope, true);
 	$text($scope, "");
 	$id($scope, _id($scope));
 }
 const $text_length = /*@__PURE__*/ _const("text_length", $hide__OR__text_length);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1);
-
-// template.marko
-const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1);
-const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)(" b", " b");
-function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
-	$setup$1($scope["#childScope/1"]);
-}
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, " b", $setup);

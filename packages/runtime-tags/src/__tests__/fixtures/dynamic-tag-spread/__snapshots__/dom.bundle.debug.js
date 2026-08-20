@@ -1,7 +1,19 @@
+// template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)($template$1, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)("b%c", "b%c");
+function $setup($scope) {
+	$input($scope["#childScope/0"], { id: "foo" });
+	$foo($scope["#childScope/1"], "bar");
+	const $wrapper_input_spread = { id: "foo" };
+	$inputAs($scope["#childScope/1"], $wrapper_input_spread.as);
+	$htmlInput($scope["#childScope/1"], (({ as, foo, ...htmlInput }) => htmlInput)($wrapper_input_spread));
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
 // tags/wrapper.marko
-const $template$1 = "<!><!><!>";
-const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $template = "<!><!><!>";
+const $walks = "b%c";
+const $setup = () => {};
 _resume_dynamic_tag();
 const $inputAsdiv_content = _content_resume("__tests__/tags/wrapper.marko_1*content", "hi");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputAsdiv_content);
@@ -17,16 +29,4 @@ const $input = ($scope, input) => {
 	$inputAs($scope, input.as);
 	$foo($scope, input.foo);
 };
-var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", 0, $input);
-
-// template.marko
-const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)($template$1, $template$1);
-const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)("b%c", "b%c");
-function $setup($scope) {
-	$input($scope["#childScope/0"], { id: "foo" });
-	$foo($scope["#childScope/1"], "bar");
-	const $wrapper_input_spread = { id: "foo" };
-	$inputAs($scope["#childScope/1"], $wrapper_input_spread.as);
-	$htmlInput($scope["#childScope/1"], (({ as, foo, ...htmlInput }) => htmlInput)($wrapper_input_spread));
-}
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template, "b%c", 0, $input);

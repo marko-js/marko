@@ -21,6 +21,13 @@ import {
   trackImportedFn,
 } from "./function";
 
+declare module "@marko/compiler" {
+  export interface MarkoMeta {
+    /** Absolute filenames of templates this one imports with `load`. */
+    loadImports?: Set<string>;
+  }
+}
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     tagImport?: string;
@@ -108,6 +115,12 @@ export default {
           "Unable to resolve marko file for load import.",
         );
       }
+
+      // The page entry links eager templates only; a lazy one arrives through
+      // its own load entry.
+      (file.metadata.marko.loadImports ??= new Set()).add(
+        loadFile.opts.filename as string,
+      );
 
       // The compat dynamic tag this child renders through cannot read the load
       // config, so it would reference a binding this import no longer declares.
