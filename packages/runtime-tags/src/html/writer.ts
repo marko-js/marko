@@ -350,7 +350,7 @@ export function patchPartial(
   if (!partial) {
     partial = partials[scopeId] = {};
     if (serializeState.readyId) {
-      (state.patchChannels ??= {})[scopeId] = serializeState;
+      (state.patchSerializeStates ??= {})[scopeId] = serializeState;
     }
     const pending = state.patchPending?.[scopeId];
     if (pending) {
@@ -1462,7 +1462,7 @@ export class State implements SerializeState {
       slotIds?: (string | 0 | undefined)[],
     ]
   >;
-  declare patchChannels?: Record<number, SerializeState>;
+  declare patchSerializeStates?: Record<number, SerializeState>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
   declare patchDeferred?: 1;

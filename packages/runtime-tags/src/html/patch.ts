@@ -149,7 +149,7 @@ class PatchState extends State {
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
     this.patchPartials = undefined;
-    this.patchChannels = undefined;
+    this.patchSerializeStates = undefined;
     this.serializer = new Serializer();
     return out;
   }
@@ -221,7 +221,7 @@ class PatchState extends State {
                   : [branchPartial]
                 : shellId || 1,
       },
-      this.patchChannels?.[branchId],
+      this.patchSerializeStates?.[branchId],
     );
     // Later settle frames nest under the live branch as a Child apply.
     if (branchIndex !== undefined) {
