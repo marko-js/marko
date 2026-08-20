@@ -3,7 +3,7 @@ const $template = "<main><h1> </h1><!><button>Count <!></button></main>";
 const $walks = "E l%b Db%m";
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
-const $await_content = _resume("__tests__/template.marko_1_#text#0/await", /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D "));
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $if_content__input_promise = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, $scope._.input_promise));
 const $if_content__setup = ($scope) => {

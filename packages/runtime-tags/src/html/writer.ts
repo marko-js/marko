@@ -1114,8 +1114,7 @@ export function _await<T>(
   const chunk = $chunk;
   const { boundary } = chunk;
   if (writesPatches) {
-    // The record only exists on scriptless pages; a construct on an
-    // interactive page resolves the id through its dom registration.
+    // A construct resolves the pending body from this shipped record.
     $chunk.boundary.state.shipShell!(patchContent);
     writePatch(scopeId, { [PatchKey.Pending + accessor]: patchContent || 1 });
   }
