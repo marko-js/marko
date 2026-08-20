@@ -1299,13 +1299,13 @@ export function writeSignals(section: Section) {
 // Whether every hop to `owner` dispatches from the owner scope: branches
 // always; inside client-owned, content sections too (lexical owners).
 function isBranchChainTo(section: Section, owner: Section) {
-  const clientOwned = inStatefulBranch(section);
+  const stateful = inStatefulBranch(section);
   while (section !== owner) {
     if (
       (!section.isBranch &&
         !section.isBoundary &&
         !section.boundaryContent &&
-        !clientOwned) ||
+        !stateful) ||
       !section.parent
     ) {
       return false;

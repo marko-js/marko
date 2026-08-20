@@ -186,7 +186,7 @@ const builder = {
       ]),
     });
     const programExtra = file.path.node.extra;
-    const { analyzedTags, assetImports } = file.metadata.marko;
+    const { analyzedTags, assetImports, hasLoadImport } = file.metadata.marko;
     const { loadImports } = programExtra;
 
     const init = !!(programExtra.isInteractive || programExtra.needsCompat);
@@ -204,15 +204,8 @@ const builder = {
       );
     }
 
+    if (hasLoadImport) state.hasLoadImport = true;
     // Collected during analyze (styles, css imports, etc).
-    if (
-      !state.hasLoadImport &&
-      file.path.node.body.some(
-        (node) => t.isImportDeclaration(node) && node.extra?.loadImport,
-      )
-    ) {
-      state.hasLoadImport = true;
-    }
 
     if (assetImports) {
       const assets =

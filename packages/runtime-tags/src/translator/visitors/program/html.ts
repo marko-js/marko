@@ -39,7 +39,11 @@ import {
   getSerializeSourcesForRef,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
-import { buildShellRecord, getShellId, getShells } from "../../util/shell";
+import {
+  buildShellRecord,
+  getShellId,
+  getShellRecords,
+} from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -223,7 +227,7 @@ export default {
         );
       }
 
-      const shells = getShells();
+      const shells = getShellRecords();
       if (persisted && shells) {
         // Branch shells, decided during analyze, register at server module
         // load so patches can ship constructible shells without the client

@@ -70,7 +70,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
-import { getShellId, getShells } from "../util/shell";
+import { getShellId, getShellRecords } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -289,11 +289,11 @@ export default {
         const bodyStatements = node.body.body as t.Statement[];
         // A client-owned loop compiles like a stateful loop on a plain
         // page: no marker retention, shells, or loop entry.
-        const clientOwned = isStatefulBranch(bodySection);
+        const stateful = isStatefulBranch(bodySection);
         // A patchable loop keeps its markers: item pairing and insertion
         // anchor at branch marks, which elision would remove.
         const persistedPatch =
-          isPersisted() && !clientOwned && isBranchPathSection(tagSection);
+          isPersisted() && !stateful && isBranchPathSection(tagSection);
         const singleChild =
           !persistedPatch &&
           bodySection.content?.singleChild &&
@@ -382,7 +382,7 @@ export default {
             forTagArgs.push(
               undefined,
               undefined,
-              id && getShells()?.[id]
+              id && getShellRecords()?.[id]
                 ? t.stringLiteral(id)
                 : t.numericLiteral(0),
             );
@@ -392,7 +392,7 @@ export default {
         let statement: t.Statement = t.expressionStatement(
           callRuntime(forTagHTMLRuntime, ...forTagArgs),
         );
-        if (clientOwned) {
+        if (stateful) {
           // Patch renders skip the loop: its state reads are server-stale
           // and the frame never speaks the listing.
           let rootSection = tagSection;

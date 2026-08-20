@@ -63,7 +63,7 @@ import {
   type SerializeReasons,
   sourcesUtil,
 } from "../util/serialize-reasons";
-import { getShellId, getShells } from "../util/shell";
+import { getShellId, getShellRecords } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -203,13 +203,13 @@ export const IfTag = {
 
           // A client-owned chain compiles like a stateful conditional on a
           // plain page: no marker retention, shells, or branch entry.
-          const clientOwned = branches.some(
+          const stateful = branches.some(
             ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
           );
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
           const persistedPatch =
-            isPersisted() && !clientOwned && isBranchPathSection(ifTagSection);
+            isPersisted() && !stateful && isBranchPathSection(ifTagSection);
           if (persistedPatch) {
             singleChild = false;
           } else {
@@ -325,7 +325,7 @@ export const IfTag = {
                           branchBody &&
                           !branchBody.shellBlocked &&
                           getShellId(branchBody);
-                        return id && getShells()?.[id]
+                        return id && getShellRecords()?.[id]
                           ? t.stringLiteral(id)
                           : t.numericLiteral(0);
                       }),
@@ -335,7 +335,7 @@ export const IfTag = {
             );
           }
 
-          if (clientOwned) {
+          if (stateful) {
             // Patch renders skip the chain: the tests' state reads are
             // server-stale and the frame never speaks the selection.
             let rootSection = ifTagSection;
