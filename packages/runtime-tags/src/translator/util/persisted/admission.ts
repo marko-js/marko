@@ -34,7 +34,6 @@ import {
   isServerOwnedDynamicTag,
 } from "./decisions";
 import {
-  hasUndeliverableFillReads,
   hasUnfillablePatchReads,
   isPatchFillBinding,
   isPatchWriteBinding,
@@ -298,14 +297,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       const { node } = placeholder;
       if (!node.escape) unsupported(node);
       const section = getSection(placeholder);
-      if (
-        hasUndeliverableFillReads(section, node.value.extra?.referencedBindings)
-      ) {
-        unsupported(
-          node,
-          "a server value's fill delivery path leaves the branch chain",
-        );
-      }
       if (inStatefulBranch(section)) {
         assertDeliverableInClientOwned(node, node.value, node.value.extra);
       }
@@ -321,19 +312,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       // flushes a prefix frame and settles in a later frame; the enclosing
       // branch constructs from its shell first.
       if (isCoreTagName(tag, "await")) {
-        const [valueAttr] = node.attributes;
-        if (
-          valueAttr &&
-          hasUndeliverableFillReads(
-            getSection(tag),
-            valueAttr.value.extra?.referencedBindings,
-          )
-        ) {
-          unsupported(
-            valueAttr,
-            "a server value's fill delivery path leaves the branch chain",
-          );
-        }
         return;
       }
       if (isCoreTagName(tag, "try")) {
@@ -521,19 +499,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           unsupported(
             node,
             "a `<return>` inside client-owned structure is not supported yet",
-          );
-        }
-        const [attr] = node.attributes;
-        if (
-          attr?.type === "MarkoAttribute" &&
-          hasUndeliverableFillReads(
-            getSection(tag),
-            attr.value.extra?.referencedBindings,
-          )
-        ) {
-          unsupported(
-            attr,
-            "a server value's fill delivery path leaves the branch chain",
           );
         }
         return;
@@ -759,17 +724,6 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             );
           }
         } else {
-          if (
-            hasUndeliverableFillReads(
-              getSection(tag),
-              attr.value.extra?.referencedBindings,
-            )
-          ) {
-            unsupported(
-              attr,
-              "a server value's fill delivery path leaves the branch chain",
-            );
-          }
           if (clientOwnedStructure) {
             assertDeliverableInClientOwned(attr, attr.value, attr.value.extra);
           }
