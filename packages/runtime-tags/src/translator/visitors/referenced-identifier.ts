@@ -2,9 +2,9 @@ import { types as t } from "@marko/compiler";
 
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
-import { isOutputHTML } from "../util/marko-config";
+import { isOptimize, isOutputHTML } from "../util/marko-config";
 import { setReferencesScope, trackGlobalReference } from "../util/references";
-import { importRuntime } from "../util/runtime";
+import { callRuntime, importRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
@@ -75,17 +75,24 @@ export default {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
-      case "$global":
+      case "$global": {
         // An HTML read resolves to the `$global` const the program declares.
-        if (!isOutputHTML()) {
-          identifier.replaceWith(
-            t.memberExpression(
-              scopeIdentifier,
-              t.identifier(getAccessorProp().Global),
-            ),
+        if (isOutputHTML()) break;
+
+        const globalRead = t.memberExpression(
+          scopeIdentifier,
+          t.identifier(getAccessorProp().Global),
+        );
+        const key = !isOptimize() && getSignalGlobalKey(identifier);
+        if (key) {
+          identifier.parentPath.replaceWith(
+            callRuntime("_global_read", globalRead, t.stringLiteral(key)),
           );
+        } else {
+          identifier.replaceWith(globalRead);
         }
         break;
+      }
       case "$signal":
         if (isOutputHTML()) {
           identifier.replaceWith(
@@ -134,3 +141,23 @@ export default {
     }
   },
 } satisfies TemplateVisitor<t.Identifier>;
+
+// A `$global.x` read with referenced bindings becomes a signal, so it re-runs
+// against the resumed globals, where an unserialized key is missing entirely.
+function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
+  const { parent } = identifier;
+  if (
+    !t.isMemberExpression(parent) ||
+    parent.computed ||
+    !t.isIdentifier(parent.property) ||
+    parent.object !== identifier.node
+  ) {
+    return;
+  }
+
+  const { name } = parent.property;
+  if (name === "runtimeId" || name === "renderId") return;
+  return getExprRoot(identifier).node.extra?.referencedBindings
+    ? name
+    : undefined;
+}
