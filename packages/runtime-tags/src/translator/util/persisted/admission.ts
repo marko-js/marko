@@ -18,11 +18,7 @@ import * as BindingType from "../constants/binding-type";
 import evaluate from "../evaluate";
 import { isConditionTag, isCoreTagName } from "../is-core-tag";
 import { isEventOrChangeHandler } from "../is-event-or-change-handler";
-import {
-  getParamGroupFeeds,
-  hasServerFeed,
-  type ParamGroupFeeds,
-} from "../known-tag";
+import { getParamGroupFeeds, type ParamGroupFeeds } from "../known-tag";
 import { every, forEach, type Opt } from "../optional";
 import { type Binding, getCanonicalExtra } from "../references";
 import { getSection, getSectionForBody } from "../sections";
@@ -127,55 +123,35 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     return server;
   };
-  // The outer expression matrix, applied inside nested templates so
-  // nesting cannot launder shapes the region boundary rejects.
-  const nestedValueUnsafety = (
-    valuePath: t.NodePath<t.Expression>,
+  // TEMPORARY (deleted with the guard): whether a template renders as a
+  // self-contained client instance, the reason it cannot, or null. Judged
+  // from resolved reference extras with a per-file memo; a template cycle
+  // fails closed while its entry is pending.
+  const instanceUnsafeties = new Map<unknown, string | null>();
+  const getInstanceUnsafety = (
+    tagPath: t.NodePath<t.MarkoTag>,
   ): string | null => {
-    const value = valuePath.node;
-    const extra = value.extra;
-    if (
-      !getSerializeSourcesForExpr(extra || {}) &&
-      !evaluate(value).confident &&
-      hasInertCall(value)
-    ) {
-      return "renders an inert call";
-    }
-    return null;
-  };
-  // Whether a template (and, recursively, everything it renders) is a
-  // self-contained client instance: the reason it is not, or null.
-  const childUnsafety = new Map<unknown, string | null>();
-  const getChildUnsafety = (tagPath: t.NodePath<t.MarkoTag>): string | null => {
     const file = loadFileForTag(tagPath);
     if (!file) return "must be analyzable";
-    const cached = childUnsafety.get(file);
+    const cached = instanceUnsafeties.get(file);
     if (cached !== undefined) return cached;
-    // A template cycle can only terminate through data the region cannot
-    // deliver: fail closed while the entry is pending.
-    childUnsafety.set(file, "renders a template cycle");
+    instanceUnsafeties.set(file, "renders a template cycle");
     let reason: string | null = null;
     file.path.traverse({
-      MarkoPlaceholder(ph) {
-        reason ||= nestedValueUnsafety(
-          ph.get("value") as t.NodePath<t.Expression>,
+      MarkoPlaceholder(placeholder) {
+        reason ||= instanceValueUnsafety(
+          placeholder.get("value") as t.NodePath<t.Expression>,
         );
       },
-      // Imported code can carry untracked server knowledge, and aliasing
-      // hides call shapes: any module binding fails closed.
-      Identifier(id) {
-        if (reason || !id.isReferencedIdentifier()) return;
-        if (id.node.name === "$global") {
-          reason = "reads `$global` (it would go stale)";
-        } else if (id.scope.getBinding(id.node.name)?.kind === "module") {
-          reason = "references imported code";
+      MarkoScriptlet(scriptlet) {
+        for (const statement of scriptlet.get("body")) {
+          reason ||= instanceValueUnsafety(statement);
         }
       },
       MarkoTag(inner) {
         if (reason) return;
-        const name =
-          t.isStringLiteral(inner.node.name) && inner.node.name.value;
-        if (!name) {
+        const { node } = inner;
+        if (!t.isStringLiteral(node.name)) {
           // Rendering an `input` property is the body-content channel:
           // what it renders is validated where it was compiled.
           if (!isContentRenderTag(inner)) {
@@ -183,60 +159,128 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           }
           return;
         }
-        // Boundaries lean on patch-era machinery this instance never
-        // receives.
-        if (name === "try" || name === "await" || name === "lifecycle") {
-          reason = `uses \`<${name}>\``;
+        // A pending promise cannot re-fire on a client re-render, and
+        // `<lifecycle>` rejects in the child's own persisted compile.
+        if (
+          isCoreTagName(inner, "await") ||
+          isCoreTagName(inner, "lifecycle")
+        ) {
+          reason = `uses \`<${(inner.node.name as t.StringLiteral).value}>\``;
           return;
         }
         for (const attrPath of inner.get("attributes")) {
-          reason ||= nestedValueUnsafety(
-            attrPath.get("value") as t.NodePath<t.Expression>,
-          );
+          const attr = attrPath.node;
+          // Handlers run against the live client scope, so imported code
+          // and calls are fine there; `$global` is absent client-side.
+          reason ||=
+            attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name)
+              ? instanceGlobalUnsafety(attrPath.get("value") as t.NodePath)
+              : instanceValueUnsafety(attrPath.get("value") as t.NodePath);
           if (reason) return;
         }
         if (getTagDef(inner)?.template) {
-          if (inner.node.var) {
+          if (node.var) {
             reason = "renders a nested child with a tag variable";
-          } else if (
-            inner.node.attributeTags?.length ||
-            inner.node.arguments?.length
-          ) {
+          } else if (node.attributeTags?.length || node.arguments?.length) {
             reason = "renders a nested child with attribute tags or arguments";
           } else {
-            const feeds =
-              inner.node.extra && getParamGroupFeeds(inner.node.extra);
-            if (
-              !feeds &&
-              (inner.node.attributes.length || inner.node.arguments?.length)
-            ) {
+            // An inputless child has no groups: anything fed must analyze.
+            const feeds = node.extra && getParamGroupFeeds(node.extra);
+            if (!feeds && node.attributes.length) {
               reason = "renders a nested child without analyzable input";
             }
             for (const group of feeds || []) {
-              if (
-                (group.structuralOrGlobal &&
-                  groupFedUnsafely(inner.node.attributes, group)) ||
-                group.sources?.global
-              ) {
-                reason = "feeds a nested child an input it needs server-owned";
+              if (group.sources?.global) {
+                reason = "feeds a nested child a `$global`-derived input";
                 break;
               }
             }
-            reason ||= getChildUnsafety(inner);
+            reason ||= getInstanceUnsafety(inner);
           }
         }
       },
     });
-    childUnsafety.set(file, reason);
+    instanceUnsafeties.set(file, reason);
     return reason;
   };
-  // Provenance-free feeds (imports, opaque reads) can still change across
-  // patches, so only an absent or constant attr leaves a group inert.
+  // A render-computed value the instance re-renders client-side: `$global`
+  // is absent there, module value reads can hide server knowledge, and a
+  // call with no tracked callee bakes a value nothing recomputes.
+  const instanceValueUnsafety = (valuePath: t.NodePath): string | null => {
+    const value = valuePath.node as t.Expression;
+    if (!value || evaluate(value).confident) return null;
+    let reason: string | null = null;
+    // `traverse` skips the root, so every rule also runs on the value.
+    const visit = (path: t.NodePath) => {
+      reason ||= instanceExtraUnsafety(path.node);
+      if (reason) return;
+      if (path.isIdentifier() && path.isReferencedIdentifier()) {
+        if (path.node.name === "$global") {
+          reason = "reads `$global` (it would go stale)";
+        } else if (path.scope.getBinding(path.node.name)?.kind === "module") {
+          reason = "references imported code";
+        }
+      } else if (path.isCallExpression() || path.isOptionalCallExpression()) {
+        // A callee some tracked binding provides recomputes on any client
+        // render; anything unaddressable (module and global helpers) bakes.
+        let callee: t.Node = path.node.callee;
+        while (
+          t.isMemberExpression(callee) ||
+          t.isOptionalMemberExpression(callee)
+        ) {
+          callee = callee.object;
+        }
+        const extra = callee.extra;
+        if (!extra?.read?.binding && !extra?.referencedBindings) {
+          reason = "renders an inert call";
+        }
+      } else if (path.isNewExpression() || path.isTaggedTemplateExpression()) {
+        reason = "renders an inert call";
+      }
+    };
+    visit(valuePath);
+    if (!reason) {
+      valuePath.traverse({
+        enter(path) {
+          visit(path);
+        },
+      });
+    }
+    return reason;
+  };
+  // `$global` and `$global`-derived reads through the resolved references
+  // (direct, member, or captured inside nested functions).
+  const instanceExtraUnsafety = (n: t.Node): string | null => {
+    let reason: string | null = null;
+    const extra = n.extra;
+    if (!extra) return null;
+    if (extra.globalBindings) reason = "reads `$global` (it would go stale)";
+    const check = (binding: Binding) => {
+      if (getSerializeSourcesForRef(binding)?.global) {
+        reason ||= "reads a `$global`-derived value (it would go stale)";
+      }
+    };
+    forEach(extra.read?.binding ?? extra.referencedBindings, check);
+    forEach((extra as t.FunctionExtra).referencedBindingsInFunction, check);
+    return reason;
+  };
+  const instanceGlobalUnsafety = (handlerPath: t.NodePath): string | null => {
+    let reason = instanceExtraUnsafety(handlerPath.node);
+    if (!reason) {
+      handlerPath.traverse({
+        enter(path) {
+          reason ||= instanceExtraUnsafety(path.node);
+        },
+      });
+    }
+    return reason;
+  };
+  // Provenance-free feeds (imports, opaque reads) have no fill channel, so
+  // only a tracked (param/state) or constant feed can gate structure.
   const groupFedUnsafely = (
     attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
     group: ParamGroupFeeds,
   ) => {
-    if (group.sources?.state || hasServerFeed(group.sources)) return true;
     let names: Set<string> | undefined;
     forEach(group.params, (param) => {
       (names ??= new Set()).add(param.property ?? param.name);
@@ -245,7 +289,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       (attr) =>
         attr.type === "MarkoAttribute" &&
         names?.has(attr.name) &&
-        !evaluate(attr.value).confident,
+        !evaluate(attr.value).confident &&
+        !getSerializeSourcesForExpr(attr.value.extra || {}),
     );
   };
   program.traverse({
@@ -520,16 +565,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               "arguments for a child inside client-owned structure are not supported yet",
             );
           }
-          const childFile = loadFileForTag(tag);
-          if (!childFile) {
-            unsupported(
-              node,
-              "a child inside client-owned structure must be analyzable",
-            );
-          }
-          // Transitive safety recurses the rendered tree with a memo:
+          // Transitive safety composes per-template facts with a memo:
           // every template below must be a self-contained client instance.
-          const unsafety = getChildUnsafety(tag);
+          const unsafety = getInstanceUnsafety(tag);
           if (unsafety) {
             unsupported(
               node,
@@ -557,9 +595,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             );
           }
           for (const group of feeds || []) {
-            // A structural or `$global`-mixed child param needs server
-            // ownership, which a skipped region cannot provide; an unfed
-            // (or constant-fed) group can never change, so it may pass.
+            // Fills keep tracked params current and the instance
+            // re-selects client-side; a provenance-free structural feed
+            // has no channel, and `$global` never re-ships.
             if (
               (group.structuralOrGlobal &&
                 groupFedUnsafely(node.attributes, group)) ||
