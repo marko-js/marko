@@ -1,5 +1,20 @@
 # @marko/runtime-tags
 
+## 6.3.44
+
+### Patch Changes
+
+- [#4025](https://github.com/marko-js/marko/pull/4025) [`0d16035`](https://github.com/marko-js/marko/commit/0d160351d834edc98eafc6030c5d465f4c0e0b34) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a dev-mode error when a client-reactive expression reads a `$global` key that was not serialized, instead of silently evaluating to `undefined`.
+
+- [#4021](https://github.com/marko-js/marko/pull/4021) [`51d797a`](https://github.com/marko-js/marko/commit/51d797a5b492759b9995d75a1bac235b7ef59e8c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report an unresolvable tag name during analyze, so its `<let>`/`<const>` hint survives and every bad tag in a template reports instead of only the first.
+
+- [#4018](https://github.com/marko-js/marko/pull/4018) [`242877d`](https://github.com/marko-js/marko/commit/242877d37a7e8bd48c0bf130f6aa2a0f8d4546da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Decode character references in a `<textarea>` body, so `<textarea>&lt;p&gt;</textarea>` renders `<p>` as `<title>` does.
+
+- [#4022](https://github.com/marko-js/marko/pull/4022) [`32deb43`](https://github.com/marko-js/marko/commit/32deb43629cfcb2dd0242e242c55fd890e4ca363) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a compile error when a tags API template lazily imports a class API tag, instead of throwing `ReferenceError` at first render.
+
+- Updated dependencies [[`15b32e4`](https://github.com/marko-js/marko/commit/15b32e4102bece016e1a707c37dda2acb4de0a7c), [`242877d`](https://github.com/marko-js/marko/commit/242877d37a7e8bd48c0bf130f6aa2a0f8d4546da)]:
+  - @marko/compiler@5.42.2
+
 ## 6.3.43
 
 ### Patch Changes
