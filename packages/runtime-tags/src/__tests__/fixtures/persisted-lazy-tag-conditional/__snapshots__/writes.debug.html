@@ -1,5 +1,6 @@
-<main><button>a<!--M_*2 #text/1-->:<!>
-      0<!--M_*2 #text/2--></button><!--M_*2 #button/0--></main>
+<main><!--M_[--><button>a<!--M_*3 #text/1-->:<!>
+      0<!--M_*3 #text/2--></button><!--M_*3 #button/0--><!--M_]1 #main/0 2-->
+</main><!--M_*1 #main/0-->
 <script>
   ((p, h, d, l = $ => {
     d || p.after(new Range().createContextualFragment(d = h))
@@ -11,15 +12,19 @@
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-pending/child.marko": [
-      _ => [2, {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko": [
+      _ => [3, {
+        "#ClosestBranchId": 2,
         count: 0
       }],
-      "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-pending/child.marko_0 2"
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko_0 3"
     ]
   };
   M._.r = [_ => [1, {
-    "#childScope/1": _(2)
+    input_label: "a"
+  }, {
+    _: _(1),
+    "#childScope/1": _(3)
   }]];
   M._.w()
 </script>

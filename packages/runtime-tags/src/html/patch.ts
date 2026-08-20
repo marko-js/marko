@@ -149,6 +149,7 @@ class PatchState extends State {
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
     this.patchPartials = undefined;
+    this.patchChannels = undefined;
     this.serializer = new Serializer();
     return out;
   }
@@ -202,22 +203,26 @@ class PatchState extends State {
     // selection + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =
       branchIndex === undefined ? undefined : this.patchPartials?.[branchId];
-    writePatch(scopeId, {
-      [PatchKey.Branch + accessor]:
-        branchIndex === undefined
-          ? 0
-          : branchIndex
-            ? branchPartial || shellId
-              ? shellId
-                ? [branchIndex, branchPartial || {}, shellId]
-                : [branchIndex, branchPartial || {}]
-              : branchIndex + 1
-            : branchPartial
-              ? shellId
-                ? [branchPartial, shellId]
-                : [branchPartial]
-              : shellId || 1,
-    });
+    writePatch(
+      scopeId,
+      {
+        [PatchKey.Branch + accessor]:
+          branchIndex === undefined
+            ? 0
+            : branchIndex
+              ? branchPartial || shellId
+                ? shellId
+                  ? [branchIndex, branchPartial || {}, shellId]
+                  : [branchIndex, branchPartial || {}]
+                : branchIndex + 1
+              : branchPartial
+                ? shellId
+                  ? [branchPartial, shellId]
+                  : [branchPartial]
+                : shellId || 1,
+      },
+      this.patchChannels?.[branchId],
+    );
     // Later settle frames nest under the live branch as a Child apply.
     if (branchIndex !== undefined) {
       (this.patchPending ??= {})[branchId] = [

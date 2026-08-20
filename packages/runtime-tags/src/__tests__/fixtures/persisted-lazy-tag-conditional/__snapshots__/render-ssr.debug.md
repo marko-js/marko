@@ -1,4 +1,4 @@
-# Render `{"label":"a"}`
+# Render `{"show":true,"label":"a"}`
 ```html
 <main>
   <button>
@@ -12,7 +12,7 @@
 setTimeout(() => document.body.click());
 ```
 
-# Update `{"label":"b"}`
+# Update `{"show":true,"label":"b"}`
 ```html
 <main>
   <button>
@@ -28,4 +28,13 @@ UPDATE: main > button::text@0 "a" => "b"
 # Update
 ```js
 document.querySelector("button").click();
+```
+
+# Update `{"show":false,"label":"b"}`
+```html
+<main />
+```
+## Change
+```
+REMOVE: main > button
 ```

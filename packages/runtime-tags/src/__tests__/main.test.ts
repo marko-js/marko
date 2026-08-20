@@ -510,7 +510,7 @@ function testFixtures(interop?: true) {
                       // A production caller navigates on the first failed
                       // frame; later frames must not mutate further.
                       const result = applyPatch(frame);
-                      if (result instanceof Promise) {
+                      if (typeof result !== "boolean") {
                         await resolveAfter(0, 1);
                         await browser.runAsyncScripts();
                       }
