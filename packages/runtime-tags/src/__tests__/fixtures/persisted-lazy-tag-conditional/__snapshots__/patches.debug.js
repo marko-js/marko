@@ -1,5 +1,5 @@
 // PATCH
-M._.b = {
+ready({
   "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko": [{
     "PatchBranch:#main/0": [{
       "PatchChild:#childScope/1": {
@@ -11,7 +11,7 @@ M._.b = {
       }
     }]
   }]
-}
+})
 
 // PATCH
 {

@@ -1,4 +1,4 @@
-// size: 28884 (min) 10652 (brotli)
+// size: 29111 (min) 10737 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -106,6 +106,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   embedRenders,
   readyIds,
   patchReady,
+  patchReadyFailed,
   lazyEnabled,
   patchRender = 0,
   patching = 0,
@@ -964,11 +965,17 @@ function ready(readyId) {
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
   patchReady?.(readyId);
 }
-function installReady(fn) {
-  patchReady = fn;
+function installReady(onReady, onFail) {
+  ((patchReady = onReady), (patchReadyFailed = onFail));
+}
+function readyFailed() {
+  patchReadyFailed?.();
 }
 function isReady(readyId) {
   return !!readyIds?.has(readyId);
+}
+function getPatchRender() {
+  return patchRender;
 }
 function withLazy(runtime) {
   return ((lazyEnabled = 1), runtime);
@@ -2122,8 +2129,8 @@ let globalsChanged = {},
   };
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let prepareReady$1,
-  pendingReady$1,
+let pendingReady$1,
+  discardReady$1,
   frameChecks = [],
   frameVars = {};
 function applyPatch(frame, renderId = "_", runtimeId = "M") {
@@ -2132,38 +2139,34 @@ function applyPatch(frame, renderId = "_", runtimeId = "M") {
   try {
     let names = Object.keys(frameVars),
       fn = Function("_", "$", ...names, "return " + frame);
-    ((render.r = [
-      (ctx) => {
-        let result = fn(ctx, void 0, ...names.map((name) => frameVars[name]));
-        if (!prepareReady$1?.(render, result)) return result;
-      },
-    ]),
-      runEffects(render.m([]), 1),
-      run());
-    for (let check of frameChecks) check();
-    let pending = pendingReady$1?.(render);
-    return pending ? pending.then(() => applyReadyPatch(renderId, runtimeId)) : !0;
+    return (
+      (render.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
+      commitFrame(render),
+      pendingReady$1?.(render, renderId, runtimeId) || !0
+    );
   } catch {
-    return (abortRun(), !1);
+    return (discardReady$1?.(render), abortRun(), !1);
   } finally {
     abortPatch();
   }
 }
-function installPatchReady(prepare, pending) {
-  ((prepareReady$1 = prepare), (pendingReady$1 = pending));
+function installPatchReady(pending, discard) {
+  ((pendingReady$1 = pending), (discardReady$1 = discard));
 }
 function applyReadyPatch(renderId, runtimeId) {
   init(runtimeId);
   let render = beginPatch(renderId);
   try {
-    (runEffects(render.m([]), 1), run());
-    for (let check of frameChecks) check();
-    return !0;
+    return (commitFrame(render), !0);
   } catch {
     return (abortRun(), !1);
   } finally {
     abortPatch();
   }
+}
+function commitFrame(render) {
+  (runEffects(render.m([]), 1), run());
+  for (let check of frameChecks) check();
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
@@ -2272,7 +2275,6 @@ let empty = [],
     },
   },
   pending = /* @__PURE__ */ new Map(),
-  resolves = /* @__PURE__ */ new Map(),
   installed = 0,
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
@@ -2353,43 +2355,69 @@ function* attrTagIterator() {
 }
 function _patch_ready() {
   installed ||
-    ((installed = 1), installPatchReady(prepareReady, pendingReady), installReady(markReady));
+    ((installed = 1),
+    (frameVars.y = acceptReady),
+    installPatchReady(pendingReady, discardReady),
+    installReady(markReady, failReady));
 }
-function prepareReady(render, result) {
-  if (!render.b || result !== render.b) return !1;
-  for (let readyId in render.b) {
-    let batch = render.b[readyId],
-      deferred = [];
-    for (let i = 0; i < batch.length; i++) {
-      let partial = batch[i];
-      typeof partial == "object" &&
-        (isReady(readyId) ? (batch[i] = wrapPartial(partial)) : deferred.push(partial));
+function acceptReady(record) {
+  let render = getPatchRender();
+  for (let readyId in record)
+    if (isReady(readyId)) pushBatch(render, readyId, record[readyId]);
+    else {
+      let entry = pending.get(render);
+      entry ||
+        pending.set(
+          render,
+          (entry = {
+            c: /* @__PURE__ */ new Map(),
+            r: [],
+            renderId: "",
+            runtimeId: "",
+          }),
+        );
+      let deferred = entry.c.get(readyId);
+      deferred ? deferred.push(...record[readyId]) : entry.c.set(readyId, record[readyId]);
     }
-    if (deferred.length) {
-      batch.length = 0;
-      let channels = pending.get(render);
-      (channels || pending.set(render, (channels = /* @__PURE__ */ new Map())),
-        channels.set(readyId, deferred));
-    }
-  }
-  return !0;
 }
-function pendingReady(render) {
-  if (pending.has(render)) return new Promise((resolve) => resolves.set(render, resolve));
+function pushBatch(render, readyId, batch) {
+  let target = ((render.b ??= {})[readyId] ??= []);
+  for (let partial of batch)
+    target.push(
+      typeof partial == "object" && partial && !Array.isArray(partial)
+        ? wrapPartial(partial)
+        : partial,
+    );
+}
+function pendingReady(render, renderId, runtimeId) {
+  let entry = pending.get(render);
+  if (entry)
+    return (
+      (entry.renderId = renderId),
+      (entry.runtimeId = runtimeId),
+      new Promise((resolve) => entry.r.push(resolve))
+    );
 }
 function markReady(readyId) {
-  for (let [render, channels] of pending) {
-    let partials = channels.get(readyId);
-    if (partials) {
-      channels.delete(readyId);
-      for (let partial of partials) render.b[readyId].push(wrapPartial(partial));
-      if (!channels.size) {
-        pending.delete(render);
-        let resolve = resolves.get(render);
-        (resolves.delete(render), resolve?.());
-      }
-    }
+  for (let [render, entry] of pending) {
+    let deferred = entry.c.get(readyId);
+    deferred &&
+      (entry.c.delete(readyId),
+      pushBatch(render, readyId, deferred),
+      entry.c.size ||
+        (pending.delete(render), settle(entry, applyReadyPatch(entry.renderId, entry.runtimeId))));
   }
+}
+function failReady() {
+  for (let entry of pending.values()) settle(entry, !1);
+  pending.clear();
+}
+function discardReady(render) {
+  let entry = pending.get(render);
+  entry && (pending.delete(render), settle(entry, !1));
+}
+function settle(entry, applied) {
+  for (let resolve of entry.r) resolve(applied);
 }
 function wrapPartial(partial) {
   return (ctx) => ctx([partial]);
@@ -2489,6 +2517,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
 function loadFailed(scope, awaitCounter) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
+      readyFailed(),
       queueAsyncRender(scope, renderCatch, error));
   };
 }

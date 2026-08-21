@@ -10,7 +10,7 @@ import {
 import { addAwaitCounter, renderCatch } from "./control-flow";
 import { queueAsyncRender, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
-import { withLazy } from "./resume";
+import { readyFailed, withLazy } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -171,6 +171,7 @@ function loadFailed(
       if (awaitCounter.m) awaitCounter.i = 0;
       else awaitCounter.c();
     }
+    readyFailed();
     queueAsyncRender(scope, renderCatch, error);
   };
 }

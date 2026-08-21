@@ -5,10 +5,14 @@ import { abortRun, run, runEffects } from "./queue";
 import { abortPatch, beginPatch, init, patchers } from "./resume";
 import type { RenderData } from "./resume";
 
-type PrepareReady = (render: RenderData, result: unknown) => boolean;
-type PendingReady = (render: RenderData) => Promise<void> | undefined;
-let prepareReady: PrepareReady | undefined;
+type PendingReady = (
+  render: RenderData,
+  renderId: string,
+  runtimeId: string,
+) => Promise<boolean> | undefined;
+type DiscardReady = (render: RenderData) => void;
 let pendingReady: PendingReady | undefined;
+let discardReady: DiscardReady | undefined;
 
 // Frame-commit checks registered by patch features: one that throws
 // (`failPatch`) rejects the frame like any patcher.
@@ -35,26 +39,19 @@ export function applyPatch(
     // eslint-disable-next-line no-new-func
     const fn = new Function("_", "$", ...names, "return " + frame);
     render.r = [
-      (ctx: unknown) => {
-        const result = fn(
-          ctx,
-          undefined,
-          ...names.map((name) => frameVars[name]),
-        );
-        if (!prepareReady?.(render, result)) return result;
-      },
+      (ctx: unknown) =>
+        fn(ctx, undefined, ...names.map((name) => frameVars[name])),
     ] as typeof render.r;
-    runEffects(render.m!([]), 1);
-    run();
-    for (const check of frameChecks) check();
-    const pending = pendingReady?.(render);
-    return pending
-      ? pending.then(() => applyReadyPatch(renderId, runtimeId))
-      : true;
+    commitFrame(render);
+    // A frame holding data for a not-yet-loaded lazy module settles once
+    // every deferred channel drains (or a load fails).
+    return pendingReady?.(render, renderId, runtimeId) || true;
   } catch (error) {
     // The frame did not apply faithfully, so the caller navigates; only an
-    // intentional rejection (`failPatch`) throws 0.
+    // intentional rejection (`failPatch`) throws 0. Deferred data from this
+    // (or any earlier pending) frame is meaningless after the navigation.
     if (MARKO_DEBUG && error) console.error(error);
+    discardReady?.(render);
     abortRun();
     return false;
   } finally {
@@ -63,20 +60,21 @@ export function applyPatch(
 }
 
 export function installPatchReady(
-  prepare: PrepareReady,
   pending: PendingReady,
+  discard: DiscardReady,
 ) {
-  prepareReady = prepare;
   pendingReady = pending;
+  discardReady = discard;
 }
 
-function applyReadyPatch(renderId: string, runtimeId: string) {
+// Commits deferred ready-channel data after its module loads: the wrapped
+// partials already sit in the render's ready record, so an empty frame run
+// applies them under the same commit sequence as `applyPatch`.
+export function applyReadyPatch(renderId: string, runtimeId: string) {
   init(runtimeId);
   const render = beginPatch(renderId);
   try {
-    runEffects(render.m!([]), 1);
-    run();
-    for (const check of frameChecks) check();
+    commitFrame(render);
     return true;
   } catch (error) {
     if (MARKO_DEBUG && error) console.error(error);
@@ -85,4 +83,10 @@ function applyReadyPatch(renderId: string, runtimeId: string) {
   } finally {
     abortPatch();
   }
+}
+
+function commitFrame(render: RenderData) {
+  runEffects(render.m!([]), 1);
+  run();
+  for (const check of frameChecks) check();
 }
