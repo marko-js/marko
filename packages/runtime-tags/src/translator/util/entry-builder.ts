@@ -15,8 +15,6 @@ declare module "@marko/compiler/dist/types" {
     isInteractive?: boolean;
     hasClientStatement?: boolean;
     page?: boolean;
-    /** This template contains at least one analyzed lazy import. */
-    hasLoadImport?: true;
   }
 }
 
@@ -29,7 +27,6 @@ interface EntryState {
   bundled: number;
   roots: string[];
   /** Assets of templates the bundle never loads; the entry imports them. */
-  hasLoadImport: boolean;
   assets: Set<string>;
   /** Assets that arrive through a bundled template's imports; the entry
    * imports them itself only when it links nothing (a server only page). */
@@ -61,8 +58,6 @@ const builder = {
 
     if (state.init || state.load) {
       const isPage = entryFile.path.node.extra.page;
-      const installPatchReady =
-        isPage && entryFile.markoOpts.persisted && state.hasLoadImport;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
       if (state.init) {
         body.push(
@@ -78,14 +73,6 @@ const builder = {
                 entryFile.markoOpts.optimize ? "" : "debug/"
               }dom`,
             ),
-            ...(installPatchReady
-              ? [
-                  t.importSpecifier(
-                    t.identifier("_patch_ready"),
-                    t.identifier("_patch_ready"),
-                  ),
-                ]
-              : []),
           ),
         );
       }
@@ -123,13 +110,6 @@ const builder = {
             : [],
       );
 
-      if (installPatchReady) {
-        body.push(
-          t.expressionStatement(
-            t.callExpression(t.identifier("_patch_ready"), []),
-          ),
-        );
-      }
       body.push(
         exportInit
           ? t.exportDefaultDeclaration(
@@ -177,7 +157,6 @@ const builder = {
       load: false,
       bundled: 0,
       roots: [],
-      hasLoadImport: false,
       assets: new Set(),
       bundledAssets: new Set(),
       visited: new Map([
@@ -206,9 +185,7 @@ const builder = {
       );
     }
 
-    if (programExtra.hasLoadImport) state.hasLoadImport = true;
     // Collected during analyze (styles, css imports, etc).
-
     if (assetImports) {
       const assets =
         isRoot || state.bundled ? state.bundledAssets : state.assets;

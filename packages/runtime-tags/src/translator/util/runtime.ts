@@ -136,6 +136,7 @@ export type DOMRuntimeFeature =
   | "patch-dynamic-tag"
   | "patch-effect"
   | "patch-loop"
+  | "patch-ready"
   | "patch-text"
   | "patch-value"
   | "patch-value-bind"
