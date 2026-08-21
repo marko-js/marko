@@ -2,7 +2,7 @@
 type: cleanup
 impact: low
 effort: low
-site: packages/runtime-tags/src/dom/patch-ready.ts › pending
+site: packages/runtime-tags/src/dom/patch-ready.feat.ts › pending
 ---
 
 `pending` maps `RenderData` to deferred patch state and only deletes entries

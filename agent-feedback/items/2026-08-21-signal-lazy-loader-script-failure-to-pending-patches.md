@@ -10,7 +10,7 @@ with no `onerror`, so a chunk that fails to load is invisible to the page
 runtime. `readyFailed()` (`src/dom/resume.ts`) settles pending deferred
 patches only on runtime-managed dynamic-import failures
 (`loadFailed` in `src/dom/load.ts`); a failed SSR loader script leaves a
-deferred `applyPatch` promise (`src/dom/patch-ready.ts` › `pendingReady`)
+deferred `applyPatch` promise (`src/dom/patch-ready.feat.ts` › `pendingReady`)
 pending forever, so the caller never falls back to navigation — and the
 lazy subtree stays inert with no `@catch` either. Needs an error protocol on
 the emitted loader script (e.g. an `onerror` that reaches `readyFailed`),
