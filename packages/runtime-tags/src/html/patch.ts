@@ -167,11 +167,9 @@ class PatchState extends State {
 
   override flushChunk(_html: string, scripts: string) {
     if (this.readyFrames) {
-      let record = "";
-      for (const [id, resumes] of this.readyFrames) {
-        record =
-          (record && record + ",") + toObjectKey(id) + ":[" + resumes + "]";
-      }
+      const record = [...this.readyFrames]
+        .map(([id, resumes]) => toObjectKey(id) + ":[" + resumes + "]")
+        .join(",");
       this.readyFrames = undefined;
       const readyCall = READY_FRAME_VAR + "({" + record + "})";
       // One frame stays one expression: the record call sequences ahead of
