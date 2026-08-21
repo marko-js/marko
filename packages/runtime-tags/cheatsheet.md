@@ -129,6 +129,7 @@ Don't fetch while rendering: start data loads early, pass the promise through th
 - Conditional attrs: `false`/`null` attrs are omitted from HTML. `aria-selected` etc. want strings: `aria-selected=(i === active && "true")`.
 - `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces). `style=` keys are kebab-case CSS names (`{ "background-color": c }`), not camelCase.
 - `<id/x>` mints a collision-free id for label/input wiring (`<label for=x>`/`<input id=x>`); don't hardcode ids in reusable tags; `<id/x=input.id>` reuses a caller's.
+- Head tags render where written: a `<title>`/`<meta>`/`<link>` inside a nested component stays in the body, giving a second title or an inert canonical. `<head>` is already written by the time descendants render, so page meta has to be known before it: under @marko/run declare it in the route's `+meta.*` file and read `$global.meta` from the layout that owns `<head>`, otherwise pass it down or set it on `$global` at the render call.
 
 ## Sharing data (`$global`)
 
@@ -223,6 +224,7 @@ Each left-hand habit is an error or silently wrong.
 | hand-rolled `IntersectionObserver` to defer a widget's JS   | `import W from "<w>" with { load: "visible#sel" }`                                   |
 | imperative lib wired through `<script>` mount + cleanup     | `<lifecycle onMount/onUpdate/onDestroy>` (keeps `this` across all three)             |
 | `createContext`/provider to share data                      | `input` (prop drilling) or request-scoped `$global`                                  |
+| `<title>`/`<meta>` in a nested component                    | put page meta in the layout that owns `<head>`; head tags never hoist                |
 | `$global.x` in client-reactive code, not allow-listed       | `$global.serializedGlobals = { x: true }` first; otherwise the read is `undefined`   |
 | hand-namespaced global classes (`.my-card-title`)           | `<style/styles>` + `class=styles.card` (scoped CSS modules)                          |
 | `tsc --noEmit` to type check templates                      | `mtc`; `tsc` skips `.marko` files and exits 0                                        |
