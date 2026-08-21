@@ -5,6 +5,7 @@ import {
   stringifyStyleObject,
   toDelimitedString,
 } from "../common/helpers";
+import { READY_FRAME_VAR } from "../common/meta";
 import type {
   Accessor,
   RenderedTemplate,
@@ -20,7 +21,12 @@ import {
   stringAttr,
 } from "./attrs";
 import { _escape, _to_text } from "./content";
-import { getRegistered, K_SCOPE_ID, Serializer } from "./serializer";
+import {
+  getRegistered,
+  K_SCOPE_ID,
+  Serializer,
+  toObjectKey,
+} from "./serializer";
 import { shells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
@@ -115,7 +121,21 @@ class PatchState extends State {
   public sentShells?: Set<string>;
   public binds?: Map<WeakKey, number>;
   public shellFrames = "";
+  public readyFrames?: Map<string, string>;
   override writesPatches = true;
+
+  // Ready data rides the frame as an explicit record call (see
+  // `flushChunk`): a frame must merge into the live page's ready record —
+  // never replace it, the page still holds unresumed data for modules that
+  // have not loaded — and only the client patch-ready feature knows how.
+  override writeReady(id: string, resumes: string) {
+    const existing = this.readyFrames?.get(id);
+    (this.readyFrames ??= new Map()).set(
+      id,
+      existing ? existing + "," + resumes : resumes,
+    );
+    return "";
+  }
   override shipShell(shellId: string | 0 | undefined) {
     return shipShell(this, shellId);
   }
@@ -146,6 +166,18 @@ class PatchState extends State {
   }
 
   override flushChunk(_html: string, scripts: string) {
+    if (this.readyFrames) {
+      let record = "";
+      for (const [id, resumes] of this.readyFrames) {
+        record =
+          (record && record + ",") + toObjectKey(id) + ":[" + resumes + "]";
+      }
+      this.readyFrames = undefined;
+      const readyCall = READY_FRAME_VAR + "({" + record + "})";
+      // One frame stays one expression: the record call sequences ahead of
+      // the partial tree, which remains the frame's value.
+      scripts = scripts ? "(" + readyCall + "," + scripts + ")" : readyCall;
+    }
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
     this.patchPartials = undefined;
