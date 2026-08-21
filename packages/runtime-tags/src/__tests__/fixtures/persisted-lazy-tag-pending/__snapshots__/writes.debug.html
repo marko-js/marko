@@ -2,7 +2,10 @@
       0<!--M_*2 #text/2--></button><!--M_*2 #button/0--></main>
 <script>
   ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-pending/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      )), p.after(d))
   }) => (e => e?.addEventListener("click", l, {
     once: 1
   }))(document.querySelector("body") || (console.warn(

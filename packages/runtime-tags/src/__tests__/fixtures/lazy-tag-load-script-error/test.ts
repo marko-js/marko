@@ -10,6 +10,8 @@ const load = (document: Document) => {
 // event reports the failure. (CSR loads through the runtime-managed path
 // instead, which drives `@catch`.)
 export const config: TestConfig = {
+  // Debug intentionally logs the load-failure diagnostic optimize cannot.
+  skip_parity: true,
   equivalent: false,
   reject_load: ["load.mjs"],
   steps: [{ label: "a" }, load, wait],
