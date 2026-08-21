@@ -1,7 +1,9 @@
 import { READY_FRAME_VAR } from "../common/meta";
 import { applyReadyPatch, frameVars, installPatchReady } from "./patch";
 import {
+  failPatch,
   installReady,
+  isFailed,
   isReady,
   patchRender,
   type RenderData,
@@ -32,6 +34,10 @@ function acceptReady(record: Record<string, unknown[]>) {
   for (const readyId in record) {
     if (isReady(readyId)) {
       pushBatch(render, readyId, record[readyId]);
+    } else if (isFailed(readyId)) {
+      // The channel's module will never arrive: reject the frame now so
+      // the caller navigates instead of waiting forever.
+      failPatch();
     } else {
       let entry = pending.get(render);
       if (!entry) {
@@ -90,9 +96,13 @@ function markReady(readyId: string) {
   }
 }
 
-function failReady() {
-  for (const entry of pending.values()) settle(entry, false);
-  pending.clear();
+function failReady(readyId?: string) {
+  for (const [render, entry] of pending) {
+    if (!readyId || entry.c.has(readyId)) {
+      pending.delete(render);
+      settle(entry, false);
+    }
+  }
 }
 
 function discardReady(render: RenderData) {

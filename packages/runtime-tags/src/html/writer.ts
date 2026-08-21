@@ -288,20 +288,49 @@ export function writePatch(
   }
 }
 
+// Partial trees are per serialize state: the main tree is the frame's value
+// and each ready channel ships its own root-anchored tree (its content must
+// not apply before the channel's module arrives).
+export function patchTree(state: State, serializeState: SerializeState) {
+  const trees = (state.patchTrees ??= new Map());
+  let tree = trees.get(serializeState);
+  if (!tree) trees.set(serializeState, (tree = {}));
+  return tree;
+}
+
+export function peekPatchPartial(state: State, scopeId: number) {
+  return state.patchTrees?.get($chunk.serializeState)?.[scopeId];
+}
+
 export function patchPartial(
   state: State,
   scopeId: number,
-  serializeState = $chunk.serializeState,
-) {
+  serializeState: SerializeState = $chunk.serializeState,
+): Record<string, unknown> {
   if (state.patchInert) return {};
-  const partials = (state.patchPartials ??= {});
+  const partials = patchTree(state, serializeState);
   let partial = partials[scopeId];
   if (!partial) {
-    partial = partials[scopeId] = {};
-    if (serializeState.readyId) {
-      (state.patchSerializeStates ??= {})[scopeId] = serializeState;
-    }
     const pending = state.patchPending?.[scopeId];
+    if (serializeState.readyId && !pending && scopeId !== state.rootScopeId) {
+      const link = state.patchParents?.[scopeId];
+      if (link && typeof link[1] === "string") {
+        // A channel tree re-links through the recorded parent hop; the
+        // live page resolves it when the channel applies.
+        partial = partials[scopeId] = {};
+        writePatch(
+          link[0],
+          { [PatchKey.Child + link[1]]: partial },
+          serializeState,
+        );
+        return partial;
+      }
+      // No linkable hop (keyed loop items): the write rides the main tree
+      // embedded in its structural entry, so it cannot defer — construct
+      // data naming a not-yet-registered id then rejects at apply.
+      return patchPartial(state, scopeId, state);
+    }
+    partial = partials[scopeId] = {};
     if (pending) {
       // A child links into its parent's entry on its first write; boundary
       // construct ids ride it and a paired branch ignores them.
@@ -1396,7 +1425,10 @@ export class State implements SerializeState {
     slotIds?: (string | 0 | undefined)[],
   ): void;
   declare rootScopeId?: number;
-  declare patchPartials?: Record<number, Record<string, unknown>>;
+  declare patchTrees?: Map<
+    SerializeState,
+    Record<number, Record<string, unknown>>
+  >;
   declare patchBinds?: number;
   declare patchParents?: Record<
     number,
@@ -1411,7 +1443,6 @@ export class State implements SerializeState {
       slotIds?: (string | 0 | undefined)[],
     ]
   >;
-  declare patchSerializeStates?: Record<number, SerializeState>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
   declare patchDeferred?: 1;

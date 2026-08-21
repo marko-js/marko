@@ -37,6 +37,7 @@ import {
   isInResumedBranch,
   maskGroup,
   patchPartial,
+  peekPatchPartial,
   type ScopeInternals,
   type SerializeReasonValue,
   State,
@@ -146,7 +147,7 @@ class PatchState extends State {
     contentId?: string,
     slotIds?: (string | 0 | undefined)[],
   ) {
-    if (!this.patchInert && !this.patchPartials?.[branchId]) {
+    if (!this.patchInert && !peekPatchPartial(this, branchId)) {
       const link = AccessorPrefix.BranchScopes + accessor;
       (this.patchParents ??= {})[branchId] = [scopeId, link];
       (this.patchPending ??= {})[branchId] = [
@@ -178,8 +179,7 @@ class PatchState extends State {
     }
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
-    this.patchPartials = undefined;
-    this.patchSerializeStates = undefined;
+    this.patchTrees = undefined;
     this.serializer = new Serializer();
     return out;
   }
@@ -232,27 +232,23 @@ class PatchState extends State {
     // Shape-typed entry, densest form first: a bare number is the
     // selection + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =
-      branchIndex === undefined ? undefined : this.patchPartials?.[branchId];
-    writePatch(
-      scopeId,
-      {
-        [PatchKey.Branch + accessor]:
-          branchIndex === undefined
-            ? 0
-            : branchIndex
-              ? branchPartial || shellId
-                ? shellId
-                  ? [branchIndex, branchPartial || {}, shellId]
-                  : [branchIndex, branchPartial || {}]
-                : branchIndex + 1
-              : branchPartial
-                ? shellId
-                  ? [branchPartial, shellId]
-                  : [branchPartial]
-                : shellId || 1,
-      },
-      this.patchSerializeStates?.[branchId],
-    );
+      branchIndex === undefined ? undefined : peekPatchPartial(this, branchId);
+    writePatch(scopeId, {
+      [PatchKey.Branch + accessor]:
+        branchIndex === undefined
+          ? 0
+          : branchIndex
+            ? branchPartial || shellId
+              ? shellId
+                ? [branchIndex, branchPartial || {}, shellId]
+                : [branchIndex, branchPartial || {}]
+              : branchIndex + 1
+            : branchPartial
+              ? shellId
+                ? [branchPartial, shellId]
+                : [branchPartial]
+              : shellId || 1,
+    });
     // Later settle frames nest under the live branch as a Child apply.
     if (branchIndex !== undefined) {
       (this.patchPending ??= {})[branchId] = [
@@ -396,7 +392,7 @@ export function _patch_child(
   const state = getState();
   if (state.writesPatches) {
     (state.patchParents ??= {})[childScopeId] = [scopeId, accessor];
-    const partial = state.patchPartials?.[childScopeId];
+    const partial = peekPatchPartial(state, childScopeId);
     if (partial) {
       writePatch(scopeId, {
         [PatchKey.Child + accessor]: partial,

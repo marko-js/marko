@@ -1,0 +1,28 @@
+<main><button>a<!--M_*2 #text/1-->:<!>
+      0<!--M_*2 #text/2--></button><!--M_*2 #button/0--></main>
+<script>
+  ((p, h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => self["M"]?.["_"]?.e?.(
+      "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-chunk-failed/child.marko"
+      )), p.after(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("body") || (console.warn(
+    "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
+    ), l())))(document.currentScript,
+    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-chunk-failed/child.marko": [
+      _ => [2, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-chunk-failed/child.marko_0 2"
+    ]
+  };
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2)
+  }]];
+  M._.w()
+</script>

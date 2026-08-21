@@ -39,6 +39,8 @@ export interface RenderData {
   m?(effects: unknown[]): unknown[];
   // Blocking resumes keyed by ready id.
   b?: Record<string, ResumeData>;
+  // Load-error sink: a lazy loader script's `onerror` reports its channel.
+  e?(readyId?: string): void;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -103,7 +105,7 @@ let embedRenders:
 let readyIds: undefined | Set<string>;
 let failedIds: undefined | Set<string>;
 let patchReady: undefined | ((readyId: string) => void);
-let patchReadyFailed: undefined | (() => void);
+let patchReadyFailed: undefined | ((readyId?: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -146,26 +148,31 @@ export function ready(readyId: string) {
 
 export function installReady(
   onReady: (readyId: string) => void,
-  onFail: () => void,
+  onFail: (readyId?: string) => void,
 ) {
   patchReady = onReady;
   patchReadyFailed = onFail;
 }
 
-// A lazy module that will never arrive can never drain a deferred patch;
-// pending patches settle as rejected so their callers navigate, and the
-// debug build reports the channel instead of staying silent (repeat
-// reports fold).
+// A module that will never arrive can never drain the data waiting on it:
+// the failure is recorded (later patches naming the channel reject
+// immediately), pending patches settle so their callers navigate, and the
+// debug build says so instead of staying silent (repeat reports fold). The
+// loader script's `onerror` reaches here through the render data (`e`);
+// runtime-managed loads report without an id (the failing load is not
+// tied to one channel).
 export function readyFailed(readyId?: string) {
-  if (MARKO_DEBUG) {
-    if (readyId && !failedIds?.has(readyId) && !readyIds?.has(readyId)) {
-      (failedIds ||= new Set()).add(readyId);
-      console.error(
-        `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
-      );
+  if (readyId) {
+    if (MARKO_DEBUG) {
+      if (!failedIds?.has(readyId) && !readyIds?.has(readyId)) {
+        console.error(
+          `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
+        );
+      }
     }
+    (failedIds ||= new Set()).add(readyId);
   }
-  patchReadyFailed?.();
+  patchReadyFailed?.(readyId);
 }
 
 export function isReady(readyId: string) {
@@ -485,6 +492,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
         }
 
+        // Installed only when something consumes failures (the patch-ready
+        // feature); its latch is what keeps the sink out of other bundles.
+        if (patchReadyFailed) render.e = readyFailed;
         render.m = (effects: unknown[]) => {
           processResumes(render.r, effects);
 
