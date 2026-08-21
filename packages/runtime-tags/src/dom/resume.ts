@@ -157,8 +157,18 @@ export function installReady(
 }
 
 // A lazy module that will never arrive can never drain a deferred patch;
-// pending patches settle as rejected so their callers navigate.
-export function readyFailed() {
+// pending patches settle as rejected so their callers navigate, and the
+// debug build reports the channel instead of staying silent (repeat
+// reports fold).
+export function readyFailed(readyId?: string) {
+  if (MARKO_DEBUG) {
+    if (readyId && !failedIds?.has(readyId) && !readyIds?.has(readyId)) {
+      (failedIds ||= new Set()).add(readyId);
+      console.error(
+        `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
+      );
+    }
+  }
   patchReadyFailed?.();
 }
 
@@ -166,18 +176,6 @@ export function isReady(readyId: string) {
   return !!readyIds?.has(readyId);
 }
 
-// A lazy module that will never arrive can never deliver its channel's
-// pending resume data: the debug build records the failure per channel
-// (repeat reports fold) and says so instead of staying silent. Production
-// builds compile no reporting call sites, so this strips away entirely.
-export function readyFailed(readyId: string) {
-  if (MARKO_DEBUG) {
-    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
-    (failedIds ||= new Set()).add(readyId);
-    console.error(
-      `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
-    );
-  }
 export function withLazy<T>(runtime: T) {
   lazyEnabled = 1;
   return runtime;
