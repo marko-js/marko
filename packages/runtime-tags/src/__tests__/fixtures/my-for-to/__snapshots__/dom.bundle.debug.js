@@ -25,7 +25,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $myfor_content__i = ($scope, i) => _text($scope["#text/0"], i);
 const $myfor_content__$params = ($scope, $params2) => $myfor_content__i($scope, $params2[0]);
-const $myfor_content = _content_resume("__tests__/template.marko_1*content", " ", " ", 0, $myfor_content__$params);
+const $myfor_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", 0, $myfor_content__$params);
 function $setup($scope) {
 	$input_content($scope["#childScope/0"], $myfor_content($scope));
 	$input_to($scope["#childScope/0"], 5);

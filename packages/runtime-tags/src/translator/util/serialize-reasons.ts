@@ -9,9 +9,13 @@ import { getAccessorProp } from "./get-accessor-enums";
 import { concat, forEach, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
+  bindingUtil,
   compareSources,
+  createSources,
   getCanonicalBinding,
   isReferencedExtra,
+  type KnownExprs,
+  mapParamBindingToExpr,
   mergeSources,
   type ReferencedBindings,
   type Sources,
@@ -227,18 +231,89 @@ export function getSerializeSourcesForRef(ref: ReferencedBindings) {
   }
 }
 
+// Reasons recorded by a downstream template stay in its own terms; params in
+// its (or a deeper) program dereference through the call site's expressions.
+export function mapCrossProgramReason(
+  program: Section,
+  reason: Sources,
+  exprs: KnownExprs | undefined,
+): SerializeReason | undefined {
+  let params: Sources["param"];
+  let mapped: SerializeReason | undefined;
+  let crossProgram = false;
+  forEach(reason.param, (param) => {
+    if (param.section.program === program) {
+      params = bindingUtil.add(params, param) as Sources["param"];
+    } else {
+      crossProgram = true;
+      mapped = exprs
+        ? mergeSerializeReasons(
+            mapped,
+            getSerializeSourcesForExprs(mapParamBindingToExpr(exprs, param)),
+          )
+        : true;
+    }
+  });
+  if (!crossProgram) return reason;
+  return mergeRemappedSources(reason, params, mapped);
+}
+
+// The inverse split of `mapCrossProgramReason`: dereferences params belonging
+// to a downstream program through its call site's expressions, keeping others.
+export function mapDownstreamReason(
+  program: Section,
+  reason: Sources,
+  exprs: KnownExprs,
+): SerializeReason | undefined {
+  let params: Sources["param"];
+  let mapped: SerializeReason | undefined;
+  let downstream = false;
+  forEach(reason.param, (param) => {
+    if (param.section.program === program) {
+      downstream = true;
+      mapped = mergeSerializeReasons(
+        mapped,
+        getSerializeSourcesForExprs(mapParamBindingToExpr(exprs, param)),
+      );
+    } else {
+      params = bindingUtil.add(params, param) as Sources["param"];
+    }
+  });
+  if (!downstream) return reason;
+  return mergeRemappedSources(reason, params, mapped);
+}
+
+// Rebuilding with `createSources` mirrors `mergeSources`; the kept params are
+// a subset of a deduped, sorted, alias-filtered set, so its invariants hold.
+function mergeRemappedSources(
+  reason: Sources,
+  params: Sources["param"],
+  mapped: SerializeReason | undefined,
+): SerializeReason | undefined {
+  if (mapped !== true && (reason.state || reason.global || params)) {
+    mapped = mergeSerializeReasons(
+      mapped,
+      createSources(reason.state, params, reason.global),
+    );
+  }
+  return mapped;
+}
+
 export function mergeSerializeReasons(
   a: SerializeReason,
   b: undefined | SerializeReason,
 ): SerializeReason;
+
 export function mergeSerializeReasons(
   a: undefined | SerializeReason,
   b: SerializeReason,
 ): SerializeReason;
+
 export function mergeSerializeReasons(
   a: undefined | SerializeReason,
   b: undefined | SerializeReason,
 ): SerializeReason | undefined;
+
 export function mergeSerializeReasons(
   a: undefined | SerializeReason,
   b: undefined | SerializeReason,

@@ -17,7 +17,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
 	let y = 2;
@@ -32,19 +32,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $child_content__outer__closures = new Set();
 			child_default({
 				value: y,
-				content: _content_resume("__tests__/template.marko_2*content", (inner) => {
+				content: _content("__tests__/template.marko_2*content", (inner) => {
 					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0);
 					const $scope2_id = _scope_id();
 					_html(`<div>${_escape(outer)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope1_reason, 0))}.${_sep($sg__inner)}${_escape(inner)}${_el_resume($scope2_id, "#text/1", $sg__inner)}</div>`);
-					_subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"));
+					(_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"));
 					_resume_branch($scope2_id);
 				}, $scope1_id)
 			});
 			writeScope($scope1_id, {
-				outer,
 				_: _scope_with_id($scope0_id),
 				"ClosureScopes:outer": $si__outer && $child_content__outer__closures
-			}, "__tests__/template.marko", "6:2", { outer: "6:8" });
+			}, "__tests__/template.marko", "6:2");
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});

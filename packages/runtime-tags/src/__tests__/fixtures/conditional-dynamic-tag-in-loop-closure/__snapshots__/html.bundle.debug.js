@@ -19,7 +19,7 @@ var sections_default = _template("__tests__/tags/sections.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;

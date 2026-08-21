@@ -29,11 +29,16 @@ import {
   getAllSerializeReasonsForBinding,
   getDebugNames,
   type InputBinding,
+  type KnownExprs,
   type ParamBinding,
   type ReferencedBindings,
   type Sources,
 } from "./references";
-import { isReasonDynamic, type SerializeReason } from "./serialize-reasons";
+import {
+  isReasonDynamic,
+  mapCrossProgramReason,
+  type SerializeReason,
+} from "./serialize-reasons";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -109,6 +114,7 @@ export interface Section {
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
+  program: Section;
   sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
   params: undefined | ParamBinding | InputBinding;
   referencedLocalClosures: ReferencedBindings;
@@ -125,7 +131,11 @@ export interface Section {
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   downstreamBinding:
-    | { binding: Binding; properties: Opt<string> }
+    | {
+        binding: Binding;
+        properties: Opt<string>;
+        exprs: KnownExprs | undefined;
+      }
     | false
     | undefined;
   hasAbortSignal: boolean;
@@ -191,6 +201,7 @@ export function startSection(
       loc: parentTag?.node.name.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      program: undefined as unknown as Section,
       sectionAccessor: undefined,
       params: undefined,
       referencedLocalClosures: undefined,
@@ -214,6 +225,7 @@ export function startSection(
       isBranch: false,
       structure: parentSection && !parentSection.structure ? null : [],
     };
+    section.program = parentSection ? parentSection.program : section;
     sections.push(section);
   }
 
@@ -391,10 +403,17 @@ export function getSectionRegisterReasons(section: Section) {
 
   const { downstreamBinding } = section;
   if (downstreamBinding) {
-    const downstreamReasons = getAllSerializeReasonsForBinding(
+    let downstreamReasons = getAllSerializeReasonsForBinding(
       downstreamBinding.binding,
       downstreamBinding.properties,
     );
+    if (downstreamReasons && downstreamReasons !== true) {
+      downstreamReasons = mapCrossProgramReason(
+        section.program,
+        downstreamReasons,
+        downstreamBinding.exprs,
+      );
+    }
     if (!downstreamReasons) return false;
     if (
       isReasonDynamic(downstreamReasons) &&

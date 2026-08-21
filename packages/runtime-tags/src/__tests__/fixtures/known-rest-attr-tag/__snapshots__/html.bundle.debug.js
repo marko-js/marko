@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	child_default({ button: attrTag({
-		onClick: _resume(function() {}, "__tests__/template.marko_0/onClick"),
+		onClick: function() {},
 		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();

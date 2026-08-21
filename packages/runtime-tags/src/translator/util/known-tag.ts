@@ -18,14 +18,7 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import {
-  concat,
-  forEach,
-  fromIter,
-  includes,
-  type Opt,
-  toIter,
-} from "./optional";
+import { forEach, fromIter, includes, type Opt, toIter } from "./optional";
 import {
   addRead,
   type Binding,
@@ -39,8 +32,9 @@ import {
   getScopeAccessorLiteral,
   type InputBinding,
   isInvokeOnlyBinding,
+  type KnownExprs,
+  mapParamReasonToExpr,
   mergeReferences,
-  type ParamBinding,
   type ReferencedExtra,
   setBindingDownstream,
   trackParamsReferences,
@@ -88,10 +82,6 @@ import { withLeadingComment } from "./with-comment";
 import * as writer from "./writer";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
-interface KnownExprs {
-  known?: Record<string, KnownExprs>;
-  value?: t.NodeExtra;
-}
 
 const [getKnownTags] = createSectionState(
   "known tags",
@@ -131,7 +121,6 @@ export function knownTagAnalyze(
   startSection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
-  setTagDownstream(tag, propTree?.props?.[0]?.binding);
   tagExtra[kContentSection] = contentSection;
 
   const varBinding = trackVarReferences(tag, BindingType.derived);
@@ -143,6 +132,7 @@ export function knownTagAnalyze(
     propTree,
     attrExprs,
   ));
+  setTagDownstream(tag, propTree?.props?.[0]?.binding, exprs);
 
   if (varBinding) {
     // Tag variables emit a `_var` statement in the parent's setup.
@@ -444,7 +434,7 @@ function analyzeParams(
       getAllTagReferenceNodes(tag.node),
     ));
 
-    setBindingDownstream(propTree.binding, extra);
+    setBindingDownstream(propTree.binding, extra, inputExpr);
     return inputExpr;
   }
 
@@ -476,6 +466,7 @@ function analyzeParams(
       tag,
       attrPropsTree,
       rootAttrExprs,
+      inputExpr,
     );
   } else {
     const args = tag.node.arguments;
@@ -493,6 +484,7 @@ function analyzeAttrs(
   tag: t.NodePath<t.MarkoTag>,
   propTree: BindingPropTree,
   rootAttrExprs: Set<t.NodeExtra>,
+  rootExprs: KnownExprs,
 ): KnownExprs {
   const inputExpr: KnownExprs = {};
   if (!propTree.props) {
@@ -502,7 +494,7 @@ function analyzeAttrs(
       getAllTagReferenceNodes(tag.node),
     ));
 
-    setBindingDownstream(propTree.binding, extra);
+    setBindingDownstream(propTree.binding, extra, rootExprs);
     return inputExpr;
   }
 
@@ -566,6 +558,7 @@ function analyzeAttrs(
               child,
               childAttrExport,
               rootAttrExprs,
+              rootExprs,
             );
           } else {
             analyzeDynamicAttrTagChildGroup(attrTagMeta.group, child);
@@ -631,7 +624,7 @@ function analyzeAttrs(
       rootAttrExprs.add(groupExtra);
 
       forEach(bindings, (binding) => {
-        setBindingDownstream(binding, groupExtra);
+        setBindingDownstream(binding, groupExtra, rootExprs);
       });
 
       for (const name of group) {
@@ -685,7 +678,7 @@ function analyzeAttrs(
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
-        setBindingDownstream(templateExportAttr.binding, attrExtra);
+        setBindingDownstream(templateExportAttr.binding, attrExtra, rootExprs);
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
@@ -735,6 +728,7 @@ function analyzeAttrs(
           ? propTree.rest!.binding
           : templateExportAttr.binding,
         propExtra,
+        rootExprs,
       );
     }
   } else if (spreadReferenceNodes) {
@@ -747,6 +741,7 @@ function analyzeAttrs(
       setBindingDownstream(
         propTree.rest?.binding || propTree.binding,
         inputExpr.value,
+        rootExprs,
       );
     } else {
       dropNodes(spreadReferenceNodes);
@@ -754,7 +749,7 @@ function analyzeAttrs(
   } else {
     if (restReferenceNodes) {
       inputExpr.value = mergeReferences(section, tag.node, restReferenceNodes);
-      setBindingDownstream(propTree.rest!.binding, inputExpr.value);
+      setBindingDownstream(propTree.rest!.binding, inputExpr.value, rootExprs);
     }
 
     if (remaining.size) {
@@ -1454,68 +1449,6 @@ function writeAttrsToSignals(
       );
     }
   }
-}
-
-function mapParamReasonToExpr(
-  exprs: KnownExprs,
-  reason: boolean | Opt<InputBinding | ParamBinding>,
-) {
-  if (reason) {
-    if (reason === true) return true;
-    const result = new Set<t.NodeExtra>();
-    forEach(reason, (prop) => {
-      forEach(mapParamBindingToExpr(exprs, prop), (expr) => {
-        result.add(expr);
-      });
-    });
-    return fromIter(result);
-  }
-}
-
-function mapParamBindingToExpr(
-  exprs: KnownExprs,
-  binding: InputBinding | ParamBinding,
-): Opt<t.NodeExtra> {
-  // Property-less with an upstream covers every whole-value link: pure
-  // rests (which carry no excludeProperties), rest grains, and aliases.
-  const isWholeAlias =
-    binding.property === undefined && binding.upstreamAlias !== undefined;
-  const props: string[] = [];
-  let curBinding: Binding | undefined = isWholeAlias
-    ? binding.upstreamAlias
-    : binding;
-  // Property-less links (rest grains, direct aliases) sit between real
-  // property hops: pass through them rather than stopping the walk.
-  while (
-    curBinding &&
-    (curBinding.property !== undefined || curBinding.upstreamAlias)
-  ) {
-    if (curBinding.property !== undefined) props.push(curBinding.property);
-    curBinding = curBinding.upstreamAlias;
-  }
-
-  let curExpr = exprs;
-  for (let i = props.length; i--;) {
-    const nestedExpr = curExpr.known?.[props[i]];
-    if (!nestedExpr) {
-      return curExpr.value;
-    }
-    curExpr = nestedExpr;
-  }
-
-  if (isWholeAlias) {
-    let result: Opt<t.NodeExtra> = curExpr.value;
-    if (curExpr.known) {
-      for (const key in curExpr.known) {
-        if (!includes(binding.excludeProperties, key)) {
-          result = concat(result, curExpr.known[key].value);
-        }
-      }
-    }
-    return result;
-  }
-
-  return curExpr.value;
 }
 
 function callStatement(
