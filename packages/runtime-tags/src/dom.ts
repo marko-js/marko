@@ -72,7 +72,6 @@ export {
 } from "./dom/dom";
 export { _on } from "./dom/event";
 export { applyPatch } from "./dom/patch";
-export { _patch_ready } from "./dom/patch-ready";
 export {
   _load_event_trigger,
   _load_idle_trigger,

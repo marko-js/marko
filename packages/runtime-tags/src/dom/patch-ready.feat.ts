@@ -1,9 +1,9 @@
 import { READY_FRAME_VAR } from "../common/meta";
 import { applyReadyPatch, frameVars, installPatchReady } from "./patch";
 import {
-  getPatchRender,
   installReady,
   isReady,
+  patchRender,
   type RenderData,
   type ResumeFn,
 } from "./resume";
@@ -17,22 +17,18 @@ interface Pending {
   runtimeId: string;
 }
 const pending = new Map<RenderData, Pending>();
-let installed: 0 | 1 = 0;
 
-export function _patch_ready() {
-  if (!installed) {
-    installed = 1;
-    frameVars[READY_FRAME_VAR] = acceptReady;
-    installPatchReady(pendingReady, discardReady);
-    installReady(markReady, failReady);
-  }
-}
+// Module evaluation is the enablement: the compiler injects this side-effect
+// import once per program with a lazy load import in a persisted build.
+frameVars[READY_FRAME_VAR] = acceptReady;
+installPatchReady(pendingReady, discardReady);
+installReady(markReady, failReady);
 
 // Receives a frame's ready-channel record (an explicit call in the frame
 // text): data for a loaded channel merges into the live render's ready
 // record for this frame's run; the rest waits for its module.
 function acceptReady(record: Record<string, unknown[]>) {
-  const render = getPatchRender();
+  const render = patchRender as RenderData;
   for (const readyId in record) {
     if (isReady(readyId)) {
       pushBatch(render, readyId, record[readyId]);

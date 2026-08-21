@@ -106,7 +106,8 @@ let patchReadyFailed: undefined | (() => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
-let patchRender: RenderData | 0 = 0;
+// The render a frame is applying against (set by `beginPatch`).
+export let patchRender: RenderData | 0 = 0;
 let patching: 0 | 1 = 0;
 // Frame epoch: per-frame tables (the bind table) key off it so entries
 // from one frame can never satisfy a later frame's references.
@@ -158,11 +159,6 @@ export function readyFailed() {
 
 export function isReady(readyId: string) {
   return !!readyIds?.has(readyId);
-}
-
-// The render a frame is currently applying against (set by `beginPatch`).
-export function getPatchRender() {
-  return patchRender as RenderData;
 }
 
 export function withLazy<T>(runtime: T) {
