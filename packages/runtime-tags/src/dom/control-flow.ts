@@ -6,7 +6,6 @@ import {
   isPromise,
   normalizeDynamicRenderer,
 } from "../common/helpers";
-import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import { toArray } from "../common/opt";
 import {
   type Accessor,
@@ -17,6 +16,7 @@ import {
   type EncodedAccessor,
   NodeType,
   RendererProp,
+  ResumeSymbol,
   type Scope,
 } from "../common/types";
 import { controllableRenders } from "./controllable";
@@ -42,7 +42,7 @@ import {
   setupBranch,
   type SetupFn,
 } from "./renderer";
-import { _resume } from "./resume";
+import { lazyEnabled, visitEffects } from "./resume";
 import {
   collectScopes,
   destroyBranch,
@@ -53,6 +53,7 @@ import {
   tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
+import { getDebugKey } from "./walker";
 
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
@@ -619,12 +620,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             controllableRenders[(childScope[nodeAccessor] as Element).tagName],
           );
 
-          if (
-            childScope[AccessorPrefix.EventAttributes + nodeAccessor] ||
-            childScope[AccessorPrefix.ControlledHandler + nodeAccessor]
-          ) {
-            queueEffect(childScope, dynamicTagScript);
-          }
+          queueEffect(childScope as BranchScope, dynamicTagScript);
         } else {
           for (const accessor in normalizedRenderer[
             RendererProp.LocalClosures
@@ -706,19 +702,45 @@ export function installDynamicTagVar(bind: typeof bindNativeTagVar) {
   bindNativeTagVar = bind;
 }
 
-// `dynamicTagScript` runs on a branch scope, so resume-only bundles (where
-// `_dynamic_tag` itself is tree-shaken) still need branch visits processed.
-export const _resume_dynamic_tag = /*@__PURE__*/ withBranches(() =>
-  _resume(DYNAMIC_TAG_SCRIPT_REGISTER_ID, dynamicTagScript),
+// `resumeDynamicTagScript` runs on a branch scope, so resume-only bundles
+// (where `_dynamic_tag` itself is tree-shaken) still need branch visits
+// processed.
+export const _resume_dynamic_tag = /*@__PURE__*/ withBranches(
+  () =>
+    (visitEffects[ResumeSymbol.BranchEndNativeTag] = resumeDynamicTagScript),
 );
 
-function dynamicTagScript(branch: Scope) {
-  _attrs_script(
-    branch,
-    MARKO_DEBUG
-      ? `#${(branch[AccessorProp.Renderer] as string).toLowerCase()}/0`
-      : "a",
-  );
+// Attaches a native dynamic tag's serialized handlers when present; shared by
+// the update path and the resume marker dispatch, both via the effects queue.
+// The accessor derives from the branch root element, which both paths store.
+function dynamicTagScript(branch: BranchScope) {
+  const nodeAccessor = MARKO_DEBUG
+    ? (getDebugKey(0, branch[AccessorProp.StartNode]) as string)
+    : "a";
+  if (
+    branch[AccessorPrefix.EventAttributes + nodeAccessor] ||
+    branch[AccessorPrefix.ControlledHandler + nodeAccessor]
+  ) {
+    _attrs_script(branch, nodeAccessor);
+    return 1;
+  }
+}
+
+// Branches whose handlers were still streaming in a lazy channel park here —
+// a sibling of resume's retained-visit deferral — and retry on pass ticks.
+let pendingResumeScripts: BranchScope[] = [];
+function resumeDynamicTagScript(branchOrPurge?: BranchScope | 1) {
+  if (branchOrPurge === 1) {
+    pendingResumeScripts = [];
+  } else if (branchOrPurge) {
+    if (!dynamicTagScript(branchOrPurge) && lazyEnabled) {
+      pendingResumeScripts.push(branchOrPurge);
+    }
+  } else if (pendingResumeScripts.length) {
+    pendingResumeScripts = pendingResumeScripts.filter(
+      (branch) => branch[AccessorProp.Gen] && !dynamicTagScript(branch),
+    );
+  }
 }
 
 export function setConditionalRenderer<T>(

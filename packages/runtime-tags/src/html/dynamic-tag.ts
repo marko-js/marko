@@ -1,13 +1,9 @@
 import { assertValidTagName } from "../common/errors";
 import { normalizeDynamicRenderer } from "../common/helpers";
-import {
-  DYNAMIC_TAG_SCRIPT_REGISTER_ID,
-  DYNAMIC_TAG_VAR_REGISTER_ID,
-} from "../common/meta";
+import { DYNAMIC_TAG_VAR_REGISTER_ID } from "../common/meta";
 import {
   type Accessor,
   AccessorPrefix,
-  AccessorProp,
   RendererProp,
   ResumeSymbol,
 } from "../common/types";
@@ -20,7 +16,6 @@ import {
   _resume,
   _scope,
   _scope_id,
-  _script,
   _set_serialize_reason,
   applyBranchStart,
   deferBranchStart,
@@ -154,12 +149,9 @@ export let _dynamic_tag = (
           ]);
 
       if (needsScript) {
-        // The debug accessor is this write's only consumer, and `needsScript`
-        // already means the branch scope ships.
-        if (MARKO_DEBUG) {
-          _scope(branchId, { [AccessorProp.Renderer]: renderer });
-        }
-        _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
+        // The marker dispatches the attribute script on resume, so ask for a
+        // walk at this flush rather than waiting on the page's entry.
+        getChunk()!.needsWalk = true;
       }
 
       if (shouldResume || needsScript) {

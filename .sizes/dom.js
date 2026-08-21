@@ -1,4 +1,4 @@
-// size: 26526 (min) 9878 (brotli)
+// size: 26705 (min) 9970 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -92,6 +92,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
+  visitEffects = {},
   curRenders,
   embedRenders,
   readyIds,
@@ -201,7 +202,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
             (inputIsArgs ? args[0] : args) || {},
             controllableRenders[childScope.a.tagName],
           ),
-            (childScope.Ia || childScope.Ea) && queueEffect(childScope, dynamicTagScript));
+            queueEffect(childScope, dynamicTagScript));
         else {
           for (let accessor in normalizedRenderer.g)
             normalizedRenderer.g[accessor](childScope, normalizedRenderer.h[accessor]);
@@ -240,7 +241,10 @@ let unsafeStyleAttrReg = /[\\;]/g,
     };
   }),
   bindNativeTagVar,
-  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => _resume("_d", dynamicTagScript)),
+  _resume_dynamic_tag = /*@__PURE__*/ withBranches(
+    () => (visitEffects["'"] = resumeDynamicTagScript),
+  ),
+  pendingResumeScripts = [],
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
@@ -926,6 +930,7 @@ function init(runtimeId = "M") {
                 endedBranches,
                 accessor,
                 singleNode,
+                visitEffect = visitEffects[visitType],
                 parent = visit.parentNode,
                 startVisit = visit,
                 i = orphanBranches.length,
@@ -942,6 +947,7 @@ function init(runtimeId = "M") {
                 ) {
                   if (
                     ((endedBranches ||= []).push((branch = getScope(branchId))),
+                    visitEffect && curEffects.push(visitEffect, branch),
                     setParentBranch(branch, branch.F),
                     (branch.O = render.p?.[branchId]) && (branch.O.m = render.m),
                     singleNode)
@@ -1019,6 +1025,7 @@ function init(runtimeId = "M") {
               }
               return (resumes.splice(0, i), i);
             },
+            curEffects,
             lastEffect,
             visits,
             visit,
@@ -1032,7 +1039,7 @@ function init(runtimeId = "M") {
           return (
             (serializeContext._ = registeredValues),
             (render.m = (effects) => {
-              if ((processResumes(render.r, effects), readyIds && render.b))
+              if ((processResumes(render.r, (curEffects = effects)), readyIds && render.b))
                 for (let progress = 1; progress;) {
                   progress = 0;
                   for (let readyId of readyIds) {
@@ -1058,17 +1065,18 @@ function init(runtimeId = "M") {
                   branchesEnabled
                     ? (visitBranches ||= createVisitBranches())()
                     : lazyEnabled && render.b && (visits[retained++] = visit);
-              return (
-                embedRenders &&
+              if (
+                (embedRenders &&
                   !embedAnchor &&
                   visit &&
                   embedRenders.set(
                     (embedAnchor = visit.parentNode.insertBefore(new Text(), visit.nextSibling)),
                     [renderId, scopeLookup],
                   ),
-                (visits.length = retained),
-                effects
-              );
+                branchesEnabled)
+              )
+                for (let symbol in visitEffects) effects.push(visitEffects[symbol], 0);
+              return ((visits.length = retained), effects);
             }),
             (render.w = () => {
               (walk(), runResumeEffects(render));
@@ -1922,7 +1930,17 @@ function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
 }
 function dynamicTagScript(branch) {
-  _attrs_script(branch, "a");
+  if (branch.Ia || branch.Ea) return (_attrs_script(branch, "a"), 1);
+}
+function resumeDynamicTagScript(branchOrPurge) {
+  branchOrPurge === 1
+    ? (pendingResumeScripts = [])
+    : branchOrPurge
+      ? !dynamicTagScript(branchOrPurge) && lazyEnabled && pendingResumeScripts.push(branchOrPurge)
+      : pendingResumeScripts.length &&
+        (pendingResumeScripts = pendingResumeScripts.filter(
+          (branch) => branch.H && !dynamicTagScript(branch),
+        ));
 }
 function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
   let referenceNode = scope[nodeAccessor],

@@ -55,6 +55,14 @@ export interface RenderData {
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 export const registeredValues: Record<string, unknown> = {};
+// Feature effects dispatched by resume markers, keyed by visit symbol. An
+// entry runs with each branch its marker lands and once per pass with no
+// branch (retrying work parked while its data was still streaming; `1` means
+// pending data can no longer arrive), always among that pass's effects. An
+// empty table folds away, like `controllableScripts`.
+export const visitEffects: {
+  [S in ResumeSymbol]?: (branchOrPurge?: BranchScope | 1) => void;
+} = {};
 let curRenders: Renders;
 let embedRenders:
   | undefined
@@ -65,7 +73,7 @@ let readyIds: undefined | Set<string>;
 let failedIds: undefined | Set<string>;
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
-let lazyEnabled: undefined | 1;
+export let lazyEnabled: undefined | 1;
 
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
@@ -85,6 +93,16 @@ export function readyFailed(readyId: string) {
     console.error(
       `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
     );
+    // Once no unfailed channel holds data, work parked on it can never
+    // resolve; tell the visit effects to drop theirs.
+    for (const renderId in curRenders) {
+      for (const id in curRenders[renderId].b) {
+        if (!failedIds.has(id) && curRenders[renderId].b![id].length) return;
+      }
+    }
+    for (const symbol in visitEffects) {
+      visitEffects[symbol as ResumeSymbol]!(1);
+    }
   }
 }
 
@@ -202,6 +220,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             endedBranches?: BranchScope[],
             accessor?: string,
             singleNode?: boolean,
+            visitEffect = visitEffects[visitType],
             parent = visit.parentNode!,
             startVisit: ChildNode = visit,
             i = orphanBranches.length,
@@ -224,6 +243,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               (endedBranches ||= []).push(
                 (branch = getScope(branchId) as BranchScope),
               );
+              if (visitEffect) curEffects.push(visitEffect, branch);
               setParentBranch(branch, branch[AccessorProp.ClosestBranch]);
               if ((branch[AccessorProp.AwaitCounter] = render.p?.[branchId])) {
                 branch[AccessorProp.AwaitCounter].m = render.m;
@@ -363,6 +383,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           resumes.splice(0, i);
           return i;
         };
+        let curEffects: unknown[];
         let lastEffect: unknown;
         let visits: RenderData["v"];
         let visit: Comment;
@@ -384,7 +405,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         }
 
         render.m = (effects: unknown[]) => {
-          processResumes(render.r, effects);
+          processResumes(render.r, (curEffects = effects));
 
           if (readyIds && render.b) {
             // Process ready channels to a fixed point — draining one may
@@ -434,6 +455,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               )),
               [renderId, scopeLookup],
             );
+          }
+
+          // The pass tick: entries retry work parked while its data was
+          // still streaming; only branch features install entries.
+          if (branchesEnabled) {
+            for (const symbol in visitEffects) {
+              effects.push(visitEffects[symbol as ResumeSymbol], 0);
+            }
           }
 
           visits.length = retained;
