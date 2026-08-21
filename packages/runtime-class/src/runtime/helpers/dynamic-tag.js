@@ -178,6 +178,8 @@ function addTagsEvents(attrs, componentDef, customEvents) {
     var eventName = event[0];
     var handler = event[1];
     var extraArgs = event[3];
+    // A Class parent addresses a Tags child by the child's own camelCase prop
+    // (`onSetFilter`); a dashed name does not type-check against its `Input`.
     var prop = "on" + eventName.charAt(0).toUpperCase() + eventName.slice(1);
 
     if (IS_SERVER) {
