@@ -21,6 +21,7 @@ import {
   filter,
   findSorted,
   forEach,
+  fromIter,
   includes,
   type Many,
   mapToString,
@@ -56,6 +57,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
   isForceSerialized,
+  mapDownstreamReason,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -178,6 +180,9 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
     referencedBindings?: ReferencedBindings;
     downstream?: Opt<Binding>;
+    /** The tag-root `KnownExprs` of the call site that linked this expression
+     * to a downstream template's binding, for dereferencing its reasons. */
+    downstreamExprs?: KnownExprs;
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
@@ -1563,11 +1568,13 @@ function getCollapsibleIntersectionSource(
 export function setBindingDownstream(
   binding: Binding,
   expr: boolean | Opt<t.NodeExtra>,
+  exprs?: KnownExprs,
 ) {
   getBindingValueExprs().set(binding, expr || false);
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
       expr.downstream = bindingUtil.add(expr.downstream, binding);
+      if (exprs) expr.downstreamExprs = exprs;
     });
   }
 }
@@ -2741,10 +2748,18 @@ export function getAllSerializeReasonsForExtra(
     } else {
       serializeReasonCache.set(extra, false);
       forEach(extra.downstream, (binding) => {
-        reason = mergeSerializeReasons(
-          reason as SerializeReason,
-          getAllSerializeReasonsForBinding(binding, true),
-        );
+        let linked = getAllSerializeReasonsForBinding(binding, true);
+        if (linked && linked !== true) {
+          const exprs = extra.downstreamExprs;
+          if (exprs) {
+            linked = mapDownstreamReason(
+              binding.section.program,
+              linked,
+              exprs,
+            );
+          }
+        }
+        reason = mergeSerializeReasons(reason as SerializeReason, linked);
       });
     }
 
@@ -2925,4 +2940,73 @@ function setReadsOwner(from: Section, to: Section) {
     cur.readsOwner = true;
     cur = cur.parent;
   }
+}
+
+// The call site expressions feeding a child template's input, keyed the way
+// the child destructures it; `value` is the whole-value expression.
+export interface KnownExprs {
+  known?: Record<string, KnownExprs>;
+  value?: t.NodeExtra;
+}
+
+export function mapParamReasonToExpr(
+  exprs: KnownExprs,
+  reason: boolean | Opt<InputBinding | ParamBinding>,
+) {
+  if (reason) {
+    if (reason === true) return true;
+    const result = new Set<t.NodeExtra>();
+    forEach(reason, (prop) => {
+      forEach(mapParamBindingToExpr(exprs, prop), (expr) => {
+        result.add(expr);
+      });
+    });
+    return fromIter(result);
+  }
+}
+
+export function mapParamBindingToExpr(
+  exprs: KnownExprs,
+  binding: InputBinding | ParamBinding,
+): Opt<t.NodeExtra> {
+  // Property-less with an upstream covers every whole-value link: pure
+  // rests (which carry no excludeProperties), rest grains, and aliases.
+  const isWholeAlias =
+    binding.property === undefined && binding.upstreamAlias !== undefined;
+  const props: string[] = [];
+  let curBinding: Binding | undefined = isWholeAlias
+    ? binding.upstreamAlias
+    : binding;
+  // Property-less links (rest grains, direct aliases) sit between real
+  // property hops: pass through them rather than stopping the walk.
+  while (
+    curBinding &&
+    (curBinding.property !== undefined || curBinding.upstreamAlias)
+  ) {
+    if (curBinding.property !== undefined) props.push(curBinding.property);
+    curBinding = curBinding.upstreamAlias;
+  }
+
+  let curExpr = exprs;
+  for (let i = props.length; i--;) {
+    const nestedExpr = curExpr.known?.[props[i]];
+    if (!nestedExpr) {
+      return curExpr.value;
+    }
+    curExpr = nestedExpr;
+  }
+
+  if (isWholeAlias) {
+    let result: Opt<t.NodeExtra> = curExpr.value;
+    if (curExpr.known) {
+      for (const key in curExpr.known) {
+        if (!includes(binding.excludeProperties, key)) {
+          result = concat(result, curExpr.known[key].value);
+        }
+      }
+    }
+    return result;
+  }
+
+  return curExpr.value;
 }

@@ -29,16 +29,15 @@ var template_default = _template("a", (input) => {
 			const $child_content__outer__closures = /* @__PURE__ */ new Set();
 			child_default({
 				value: y,
-				content: _content_resume("a0", (inner) => {
-					const $sg__inner = _serialize_guard(_scope_reason(), 0);
+				content: _content("a0", (inner) => {
+					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0);
 					const $scope2_id = _scope_id();
 					_html(`<div>${_escape(outer)}${_el_resume($scope2_id, "a", _serialize_guard($scope1_reason, 0))}.${_sep($sg__inner)}${_escape(inner)}${_el_resume($scope2_id, "b", $sg__inner)}</div>`);
-					_subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					(_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }));
 					_resume_branch($scope2_id);
 				}, $scope1_id)
 			});
 			writeScope($scope1_id, {
-				c: outer,
 				_: _scope_with_id($scope0_id),
 				d: $si__outer && $child_content__outer__closures
 			});

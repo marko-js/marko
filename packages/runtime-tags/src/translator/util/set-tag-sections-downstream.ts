@@ -4,33 +4,39 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
 import { concat, forEach, includes, type Opt } from "./optional";
-import type { Binding } from "./references";
+import type { Binding, KnownExprs } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
 
 const [getTagDownstreams] = createSectionState(
   "tag-downstreams",
-  () => new Map<t.NodePath<t.MarkoTag>, Binding>(),
+  () =>
+    new Map<
+      t.NodePath<t.MarkoTag>,
+      { binding: Binding; exprs: KnownExprs | undefined }
+    >(),
 );
 
 export function setTagDownstream(
   tag: t.NodePath<t.MarkoTag>,
   binding: undefined | Binding,
+  exprs?: KnownExprs,
 ) {
   if (binding) {
-    getTagDownstreams(getSection(tag)).set(tag, binding);
+    getTagDownstreams(getSection(tag)).set(tag, { binding, exprs });
   }
 }
 
 export function finalizeTagDownstreams(section: Section) {
-  for (const [tag, binding] of getTagDownstreams(section)) {
-    crawlSectionsAndSetBinding(tag, binding);
+  for (const [tag, { binding, exprs }] of getTagDownstreams(section)) {
+    crawlSectionsAndSetBinding(tag, binding, exprs);
   }
 }
 
 function crawlSectionsAndSetBinding(
   tag: t.NodePath<t.MarkoTag>,
   binding: Binding,
+  exprs: KnownExprs | undefined,
   properties?: Opt<string>,
   skip?: true,
 ) {
@@ -46,7 +52,7 @@ function crawlSectionsAndSetBinding(
         (target.noSerialize ||
           includes(target.noSerializeProperties, "content"))
           ? false
-          : { binding, properties: concat(properties, "content") };
+          : { binding, properties: concat(properties, "content"), exprs };
     }
   }
 
@@ -63,10 +69,11 @@ function crawlSectionsAndSetBinding(
         crawlSectionsAndSetBinding(
           child,
           binding,
+          exprs,
           concat(properties, attrTagMeta.name),
         );
       } else {
-        crawlSectionsAndSetBinding(child, binding, properties, true);
+        crawlSectionsAndSetBinding(child, binding, exprs, properties, true);
       }
     }
   }

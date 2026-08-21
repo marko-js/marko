@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	child_default({
 		value: "Hi",
-		content: _content_resume("a0", (x) => {
+		content: _content("a0", (x) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(x)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}`);

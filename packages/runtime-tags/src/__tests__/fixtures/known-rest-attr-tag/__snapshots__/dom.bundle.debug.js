@@ -30,11 +30,9 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
 const $button_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "one");
 function $setup($scope) {
 	$buttons($scope["#childScope/0"], attrTag({
-		onClick: $onClick,
+		onClick: function() {},
 		content: $button_content($scope)
 	}));
 	$htmlInput($scope["#childScope/0"], {});
 }
-function $onClick() {}
-_resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

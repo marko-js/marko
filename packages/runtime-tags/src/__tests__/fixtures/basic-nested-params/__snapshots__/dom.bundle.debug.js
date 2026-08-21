@@ -19,7 +19,7 @@ const $child_content2__outer = /*@__PURE__*/ _closure_get("outer", ($scope) => _
 const $child_content2__setup = $child_content2__outer;
 const $child_content2__inner = ($scope, inner) => _text($scope["#text/1"], inner);
 const $child_content2__$params = ($scope, $params3) => $child_content2__inner($scope, $params3[0]);
-const $child_content2 = _content_resume("__tests__/template.marko_2*content", "<div><!>.<!></div>", "D%c%", $child_content2__setup, $child_content2__$params);
+const $child_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<div><!>.<!></div>", "D%c%", $child_content2__setup, $child_content2__$params);
 const $child_content__y = /*@__PURE__*/ _closure_get("y", ($scope) => $value($scope["#childScope/0"], $scope._.y));
 const $child_content__setup = ($scope) => {
 	$child_content__y($scope);
