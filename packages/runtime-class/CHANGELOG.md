@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.37
+
+### Patch Changes
+
+- [#4037](https://github.com/marko-js/marko/pull/4037) [`4bdda78`](https://github.com/marko-js/marko/commit/4bdda787df61e96b5b08d92e4fd4b7b0dc6fd1c4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Mixed Class/Tags page entries now link the Tags API's interactive roots instead of the root-most template, so a Class API layout wrapping Tags API components is no longer pulled into the client bundle.
+
+- Updated dependencies [[`5193509`](https://github.com/marko-js/marko/commit/5193509df533f5a96106d2791e65135702835b35), [`b8c9b0d`](https://github.com/marko-js/marko/commit/b8c9b0d207ddc76d081c016809815f800f7ac165), [`4bdda78`](https://github.com/marko-js/marko/commit/4bdda787df61e96b5b08d92e4fd4b7b0dc6fd1c4), [`ea72f0e`](https://github.com/marko-js/marko/commit/ea72f0e5b68b4c3f87ac7fb2bd7e4bbd2fb3c1f8), [`b619291`](https://github.com/marko-js/marko/commit/b619291398f907706f6f01c0abee50c80c2bed72), [`55b76d1`](https://github.com/marko-js/marko/commit/55b76d1dcc52b5568f52b932bbb27e33eb1636e4), [`90e206e`](https://github.com/marko-js/marko/commit/90e206ea27b30e74bf3b9d676bd06aca352716dd)]:
+  - @marko/runtime-tags@6.3.45
+  - @marko/compiler@5.42.3
+
 ## 5.39.36
 
 ### Patch Changes
