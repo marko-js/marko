@@ -287,8 +287,10 @@ function resolveMarkoFile(file, filename) {
 
     (file.metadata.marko.analyzedTags ||= new Set()).add(filename);
     return childFile;
-  } catch (_) {
-    // ignore
+  } catch (err) {
+    // A file that exists but fails to compile is not a missing tag, so only a
+    // genuinely absent file is swallowed; the child's error surfaces instead.
+    if (err?.code !== "ENOENT" && err?.code !== "ENOTDIR") throw err;
   }
 }
 

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-child-template-compile-error/tags/broken.marko:5:1
+      3 | <else>
+      4 |   b
+    > 5 | </if=oops>
+        | ^^^^^^^^^^ The closing "if=oops" tag does not match the corresponding opening "else" tag
+      6 |
