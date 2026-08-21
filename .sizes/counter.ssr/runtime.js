@@ -1,4 +1,4 @@
-// size: 2650 (min) 1302 (brotli)
+// size: 2660 (min) 1312 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -183,7 +183,7 @@ function init(runtimeId = "M") {
                       : effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) break;
                 else {
-                  let scopes = serialized(serializeContext);
+                  let scopes = ((resumes[i] = ""), serialized)(serializeContext);
                   Array.isArray(scopes) && applyScopes(scopes);
                 }
               }

@@ -1,0 +1,59 @@
+<button>0<!--M_*1 b--></button><!--M_*1 a-->
+<div id=first><!--M_[--><!--M_!^3-->loading...<!--M_!3--><!--M_]1 c 3--></div>
+<div id=second><!--M_[--><!--M_!^5-->loading...<!--M_!5--><!--M_]1 d 5--></div>
+<t hidden M_=3><!--M_#b--></t>
+<t hidden M_=5><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+    e: 0
+  }, 1, {
+    C: "c",
+    Q: _(1, "a1")
+  }, 1, {
+    C: "d",
+    Q: _(1, "a4")
+  }], "a6 1"];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->a<script>
+    M._.w = (w => () => {
+      try {
+        w()
+      } catch (e) {
+        console.log("resume threw: " + e.message)
+      }
+    })(M._.w);
+    M._.r.push(_ => {
+      console.log("stale payload applied");
+      return 0
+    }, _ => {
+      throw new Error("stale payload")
+    })
+  </script><!--M_]3 a 8--></t>
+<script>
+  M._.j.b = _ => {
+    _.push("a0 8")
+  };
+  M._.r.push(_ => [8, {
+    d: "a"
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->b<!--M_]5 a 9--></t>
+<script>
+  M._.j.c = _ => {
+    _.push("a3 9")
+  };
+  M._.r.push(_ => [9, {
+    c: "b"
+  }]);
+  M._.w()
+</script>

@@ -1,0 +1,28 @@
+import { resolveAfter } from "../../utils/resolve";
+// Mimics a stale flush under deploy skew: a payload that logs each time it is
+// applied, then one that throws (like a payload naming a missing registry id).
+static const stalePayloads =
+  '<script>M._.w=(w=>()=>{try{w()}catch(e){console.log("resume threw: "+e.message)}})(M._.w);' +
+  'M._.r.push(_=>{console.log("stale payload applied");return 0},_=>{throw new Error("stale payload")})<' +
+  "/script>";
+
+<let/n=0>
+<button onClick() { n++ }>${n}</button>
+<div id="first">
+  <try>
+    <@placeholder>loading...</@placeholder>
+    <await|a|=resolveAfter("a", 1)>
+      ${a}$!{stalePayloads}
+      <script>console.log(`effect a=${a}`)</script>
+    </await>
+  </try>
+</div>
+<div id="second">
+  <try>
+    <@placeholder>loading...</@placeholder>
+    <await|b|=resolveAfter("b", 2)>
+      ${b}
+      <script>console.log(`effect b=${b}`)</script>
+    </await>
+  </try>
+</div>

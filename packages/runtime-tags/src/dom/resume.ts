@@ -356,7 +356,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             } else {
               // Gates can't reach here (only in ready streams, readyIds set);
               // a payload returns its fill or applies it and ends in `,0`.
-              const scopes = (serialized as ResumeFn)(serializeContext);
+              // Consumed up front so a payload that throws (skipping the
+              // splice below) cannot reapply scope data on a later pass.
+              const scopes = ((resumes[i] = ""), serialized as ResumeFn)(
+                serializeContext,
+              );
               if (Array.isArray(scopes)) applyScopes(scopes);
             }
           }

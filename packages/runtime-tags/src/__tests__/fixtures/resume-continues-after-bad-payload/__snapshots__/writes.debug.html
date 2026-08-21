@@ -1,0 +1,71 @@
+<button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<div id=first><!--M_[--><!--M_!^3-->loading...<!--M_!3--><!--M_]1 #text/2 3-->
+</div>
+<div id=second><!--M_[--><!--M_!^5-->loading...<!--M_!5--><!--M_]1 #text/3 5-->
+</div>
+<t hidden M_=3><!--M_#b--></t>
+<t hidden M_=5><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+      n: 0
+    }, 1, {
+      "#BranchAccessor": "#text/2",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/resume-continues-after-bad-payload/template.marko_2*content"
+        )
+    }, 1, {
+      "#BranchAccessor": "#text/3",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/resume-continues-after-bad-payload/template.marko_5*content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/resume-continues-after-bad-payload/template.marko_0 1"
+  ];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->a<script>
+    M._.w = (w => () => {
+      try {
+        w()
+      } catch (e) {
+        console.log("resume threw: " + e.message)
+      }
+    })(M._.w);
+    M._.r.push(_ => {
+      console.log("stale payload applied");
+      return 0
+    }, _ => {
+      throw new Error("stale payload")
+    })
+  </script><!--M_]3 #text/0 8--></t>
+<script>
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/resume-continues-after-bad-payload/template.marko_3_a#3 8"
+      )
+  };
+  M._.r.push(_ => [8, {
+    a: "a"
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->b<!--M_]5 #text/0 9--></t>
+<script>
+  M._.j.c = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/resume-continues-after-bad-payload/template.marko_6_b#2 9"
+      )
+  };
+  M._.r.push(_ => [9, {
+    b: "b"
+  }]);
+  M._.w()
+</script>
