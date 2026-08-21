@@ -62,6 +62,7 @@ let embedRenders:
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
+let failedIds: undefined | Set<string>;
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -70,6 +71,20 @@ export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
+  }
+}
+
+// A lazy module that will never arrive can never deliver its channel's
+// pending resume data: the debug build records the failure per channel
+// (repeat reports fold) and says so instead of staying silent. Production
+// builds compile no reporting call sites, so this strips away entirely.
+export function readyFailed(readyId: string) {
+  if (MARKO_DEBUG) {
+    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
+    (failedIds ||= new Set()).add(readyId);
+    console.error(
+      `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
+    );
   }
 }
 

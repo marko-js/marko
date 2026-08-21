@@ -90,6 +90,7 @@ export {
   init,
   initEmbedded,
   ready,
+  readyFailed,
 } from "./dom/resume";
 export { _assert_init } from "./dom/scope";
 export {
