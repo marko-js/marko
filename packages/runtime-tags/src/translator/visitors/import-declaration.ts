@@ -22,6 +22,10 @@ import {
 } from "./function";
 
 declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** Absolute filenames of templates this one imports with `load`. */
+    loadImports?: Set<string>;
+  }
   export interface NodeExtra {
     tagImport?: string;
     loadImport?: LoadImportConfig;
@@ -108,6 +112,12 @@ export default {
           "Unable to resolve marko file for load import.",
         );
       }
+
+      // The page entry links eager templates only; a lazy one arrives through
+      // its own load entry.
+      ((file.path.node.extra.loadImports ??= new Set()) as Set<string>).add(
+        loadFile.opts.filename as string,
+      );
 
       // The compat dynamic tag this child renders through cannot read the load
       // config, so it would reference a binding this import no longer declares.

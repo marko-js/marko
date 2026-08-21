@@ -28,7 +28,9 @@ export default {
     );
 
     if (scriptlet.node.target === "client") {
-      getProgram().node.extra.isInteractive = true;
+      // Client statements run at module load; unlike interactivity they do not
+      // need the resume runtime, only for the page entry to load the module.
+      getProgram().node.extra.hasClientStatement = true;
     }
   },
   translate: {

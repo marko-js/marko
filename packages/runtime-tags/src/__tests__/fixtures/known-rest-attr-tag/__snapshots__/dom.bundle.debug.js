@@ -1,7 +1,20 @@
+// template.marko
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
+const $button_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "one");
+function $setup($scope) {
+	$buttons($scope["#childScope/0"], attrTag({
+		onClick: function() {},
+		content: $button_content($scope)
+	}));
+	$htmlInput($scope["#childScope/0"], {});
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
 // tags/child.marko
-const $template$1 = "<div></div>";
-const $walks$1 = " b";
-const $setup$1 = () => {};
+const $template = "<div></div>";
+const $walks = " b";
+const $setup = () => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__button = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.button));
 const $if_content__setup = $if_content__button;
@@ -22,17 +35,4 @@ const $input = ($scope, input) => {
 	(({ button, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
 	$buttons($scope, input.button);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", 0, $input);
-
-// template.marko
-const $template = $template$1;
-const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $button_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "one");
-function $setup($scope) {
-	$buttons($scope["#childScope/0"], attrTag({
-		onClick: function() {},
-		content: $button_content($scope)
-	}));
-	$htmlInput($scope["#childScope/0"], {});
-}
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, " b", 0, $input);

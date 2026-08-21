@@ -1,21 +1,3 @@
-// tags/child.marko
-const $template$1 = "<div><!></div>";
-const $walks$1 = " D%l";
-const $setup$1 = () => {};
-const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $rest__script = _script("__tests__/tags/child.marko_0_rest#5", ($scope) => _attrs_script($scope, "#div/0"));
-const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
-	_attrs($scope, "#div/0", $scope.rest);
-	$rest__script($scope);
-});
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $content = $dynamicTag;
-const $input = ($scope, input) => {
-	(({ content, ...rest }) => $rest($scope, rest))(input);
-	$content($scope, input.content);
-};
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input);
-
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
@@ -29,3 +11,21 @@ function $setup($scope) {
 	$value($scope, 1);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
+// tags/child.marko
+const $template = "<div><!></div>";
+const $walks = " D%l";
+const $setup = () => {};
+const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
+const $rest__script = _script("__tests__/tags/child.marko_0_rest#5", ($scope) => _attrs_script($scope, "#div/0"));
+const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
+	_attrs($scope, "#div/0", $scope.rest);
+	$rest__script($scope);
+});
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
+const $content = $dynamicTag;
+const $input = ($scope, input) => {
+	(({ content, ...rest }) => $rest($scope, rest))(input);
+	$content($scope, input.content);
+};
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, $walks, 0, $input);

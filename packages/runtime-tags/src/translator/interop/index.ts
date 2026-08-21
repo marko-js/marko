@@ -9,7 +9,17 @@ import { generator } from "@marko/compiler/internal/babel";
 
 import * as translate6 from "..";
 import { resolveRelativeToEntry } from "../util/resolve-relative-to-entry";
+import { getCompatRuntimeFile } from "../util/runtime";
 import { isTagsAPI } from "./feature-detection";
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** A Class API template that registers hoisted handlers for Tags resume. */
+    resumesClassFns?: boolean;
+    /** A Class API template whose Tags child revives through the compat runtime. */
+    resumesCompat?: boolean;
+  }
+}
 
 type TagDef = Record<string, unknown>;
 type Taglibs = [taglibId: string, taglib: Record<string, unknown>][];
@@ -50,6 +60,8 @@ export function createInteropTranslator(translate5: any) {
       [kState]?: {
         has5: boolean;
         has6: boolean;
+        needsCompat: boolean;
+        compatFiles: Set<string>;
       };
     };
     const { Program } = visitor;
@@ -88,6 +100,20 @@ export function createInteropTranslator(translate5: any) {
               );
             };
             return [
+              // A Tags template captures the dynamic tag helper at module
+              // scope, so the Class runtime has to patch it in before either
+              // half runs.
+              ...(state.needsCompat
+                ? [
+                    t.importDeclaration(
+                      [],
+                      t.stringLiteral(getCompatRuntimeFile()),
+                    ),
+                  ]
+                : []),
+              ...Array.from(state.compatFiles, (compatFile) =>
+                t.importDeclaration([], t.stringLiteral(compatFile)),
+              ),
               importHydrateProgram(
                 "6",
                 translate6.internalEntryBuilder.build(entryFile, true),
@@ -113,11 +139,13 @@ export function createInteropTranslator(translate5: any) {
       visit(
         file: t.BabelFile,
         entryFile: EntryFile,
-        visitChild: (id: string) => void,
+        visitChild: (id: string, bundled?: boolean) => void,
       ) {
         const state = (entryFile[kState] ||= {
           has5: false,
           has6: false,
+          needsCompat: false,
+          compatFiles: new Set(),
         });
 
         if (isTagsAPI(file)) {
@@ -125,6 +153,15 @@ export function createInteropTranslator(translate5: any) {
           translate6.internalEntryBuilder.visit(file, entryFile, visitChild);
         } else {
           state.has5 = true;
+          if (file.path.node.extra?.resumesCompat) {
+            state.needsCompat = true;
+          }
+          if (file.path.node.extra?.resumesClassFns) {
+            // Its Tags resume registrations run when the module itself loads.
+            state.compatFiles.add(
+              resolveRelativePath(entryFile, file.opts.filename as string),
+            );
+          }
           translate5.internalEntryBuilder.visit(file, entryFile, visitChild);
         }
       },
@@ -143,21 +180,34 @@ export function createInteropTranslator(translate5: any) {
             return enterProgram?.call(this, program, state);
           }
 
-          const visitedFiles = new Set([
-            resolveRelativePath(entryFile, entryFile.opts.filename as string),
+          // Mirrors the Tags builder's own traversal: a file only ever
+          // reached below a bundled template is re-visited if later reached
+          // eagerly. The Class builder omits the flag, so children inherit
+          // how their parent was reached.
+          const visitedFiles = new Map([
+            [
+              resolveRelativePath(entryFile, entryFile.opts.filename as string),
+              false,
+            ],
           ]);
           entryBuilder.visit(
             entryFile,
             entryFile,
-            function visitChild(resolved) {
-              if (!visitedFiles.has(resolved)) {
-                visitedFiles.add(resolved);
-                const file = loadFileForImport(entryFile, resolved);
-                if (file) {
-                  entryBuilder.visit(file, entryFile, (id) =>
-                    visitChild(resolveRelativeToEntry(entryFile, file, id)),
-                  );
-                }
+            function visitChild(resolved: string, bundled = false) {
+              const seenBundled = visitedFiles.get(resolved);
+              if (seenBundled === false || (seenBundled && bundled)) return;
+              visitedFiles.set(resolved, bundled);
+              const file = loadFileForImport(entryFile, resolved);
+              if (file) {
+                entryBuilder.visit(
+                  file,
+                  entryFile,
+                  (id, childBundled = false) =>
+                    visitChild(
+                      resolveRelativeToEntry(entryFile, file, id),
+                      childBundled || bundled,
+                    ),
+                );
               }
             },
           );
