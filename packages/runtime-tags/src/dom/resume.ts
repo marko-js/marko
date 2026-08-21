@@ -16,8 +16,8 @@ import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
-type ResumeFn = (ctx: SerializeContext) => unknown;
-type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
+export type ResumeFn = (ctx: SerializeContext) => unknown;
+export type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
 interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
@@ -102,6 +102,7 @@ let embedRenders:
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
 let patchReady: undefined | ((readyId: string) => void);
+let patchReadyFailed: undefined | (() => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -141,12 +142,27 @@ export function ready(readyId: string) {
   patchReady?.(readyId);
 }
 
-export function installReady(fn: (readyId: string) => void) {
-  patchReady = fn;
+export function installReady(
+  onReady: (readyId: string) => void,
+  onFail: () => void,
+) {
+  patchReady = onReady;
+  patchReadyFailed = onFail;
+}
+
+// A lazy module that will never arrive can never drain a deferred patch;
+// pending patches settle as rejected so their callers navigate.
+export function readyFailed() {
+  patchReadyFailed?.();
 }
 
 export function isReady(readyId: string) {
   return !!readyIds?.has(readyId);
+}
+
+// The render a frame is currently applying against (set by `beginPatch`).
+export function getPatchRender() {
+  return patchRender as RenderData;
 }
 
 export function withLazy<T>(runtime: T) {

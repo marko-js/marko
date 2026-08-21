@@ -481,6 +481,9 @@ function testFixtures(interop?: true) {
                       // frame; later frames must not mutate further.
                       const result = applyPatch(frame);
                       if (typeof result !== "boolean") {
+                        // A deferred patch is waiting on a lazy module; load
+                        // triggers schedule via setTimeout, so a macrotask
+                        // tick must pass before the chunk can be imported.
                         await resolveAfter(0, 1);
                         await browser.runAsyncScripts();
                       }
