@@ -43,6 +43,10 @@ type Trigger = LoadTrigger;
 interface Asset {
   id: string;
   triggers?: Trigger[];
+  /** Main reports loader failures in debug builds only; a persisted page
+   * also reports in production (its loader wires the render's failure sink
+   * so pending patches settle), recorded per asset at the compiling
+   * template's `withLoadAssets` call. */
   reportErrors?: 0 | 1;
 }
 
