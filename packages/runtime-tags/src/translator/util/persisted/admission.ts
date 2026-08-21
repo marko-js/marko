@@ -372,10 +372,19 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (stateful) {
           for (const attr of node.attributes) {
             if (attr.type !== "MarkoAttribute") continue;
-            // A local `by` invokes client-side per re-list; any server
-            // source anywhere in the keyer would read stale.
+            // A locally written keyer re-invokes client-side per re-list,
+            // so its captured server reads stay current through fills; a
+            // server-provided keyer VALUE (a function) cannot ship.
             if (attr.name === "by") {
-              if (exprHasServerSources(attr.value)) {
+              if (
+                t.isFunction(attr.value)
+                  ? attr.value.extra?.globalBindings ||
+                    hasUnfillablePatchReads(
+                      (attr.value.extra as t.FunctionExtra | undefined)
+                        ?.referencedBindingsInFunction,
+                    )
+                  : exprHasServerSources(attr.value)
+              ) {
                 unsupported(
                   attr,
                   "a server-derived `by` key inside a client-owned loop would read stale",
