@@ -47,7 +47,7 @@ function compileMarkoModule(module, filename) {
   return module._compile(
     compiler.compileFile(filename, {
       writeToDisk: false,
-      output: "vdom",
+      output: "dom",
       browser: true,
       meta: true,
       modules: "cjs",

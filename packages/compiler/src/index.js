@@ -85,8 +85,16 @@ export function getRuntimeVersion(requestedTranslator) {
   return tryLoadTranslator(requestedTranslator)?.version ?? "0.0.0";
 }
 
+const outputValues = new Set(["html", "dom", "source", "migrate", "hydrate"]);
+
 function loadMarkoConfig(config) {
   const markoConfig = { ...globalConfig, ...config };
+
+  if (!outputValues.has(markoConfig.output)) {
+    throw new Error(
+      `Invalid Marko compiler option "output": ${JSON.stringify(markoConfig.output)}. Expected one of: ${[...outputValues].join(", ")}.`,
+    );
+  }
 
   if (markoConfig.stripTypes === undefined) {
     markoConfig.stripTypes = isTranslatedOutput(markoConfig.output);

@@ -11,8 +11,9 @@ export function readFileSync(path) {
     var taglibProps = JSON.parse(stripJsonComments(json));
     return taglibProps;
   } catch (cause) {
-    throw new Error('Unable to parse JSON file at path "' + path + '".', {
-      cause,
-    });
+    throw new Error(
+      `Unable to parse JSON file at path "${path}": ${cause.message}`,
+      { cause },
+    );
   }
 }

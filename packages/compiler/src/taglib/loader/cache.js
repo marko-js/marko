@@ -8,8 +8,12 @@ function put(key, value) {
   cache[key] = value;
 }
 
+function remove(key) {
+  delete cache[key];
+}
+
 function clear() {
   cache = {};
 }
 
-export { get, put, clear };
+export { get, put, remove, clear };
