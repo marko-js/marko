@@ -1,5 +1,22 @@
 # @marko/runtime-tags
 
+## 6.3.45
+
+### Patch Changes
+
+- [#4041](https://github.com/marko-js/marko/pull/4041) [`5193509`](https://github.com/marko-js/marko/commit/5193509df533f5a96106d2791e65135702835b35) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix content sections passed through another tag's body parameter resolving serialization from the child template's raw analysis: serialize reasons now dereference through the call site's expressions, fixing `Unable to serialize "input.<attrTag>" (reading content)` errors and dropping serialized data and registered renderers that were never needed.
+
+- [#4035](https://github.com/marko-js/marko/pull/4035) [`b8c9b0d`](https://github.com/marko-js/marko/commit/b8c9b0d207ddc76d081c016809815f800f7ac165) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a child template's compile error instead of marking the parent tag unresolved, and name an imported tag in the missing-tag error rather than printing `<undefined>`.
+
+- [#4037](https://github.com/marko-js/marko/pull/4037) [`4bdda78`](https://github.com/marko-js/marko/commit/4bdda787df61e96b5b08d92e4fd4b7b0dc6fd1c4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Page entries now link the topmost templates with client work instead of the root-most template, and only pull in and initialize the resume runtime when something actually resumes; a page whose only client code is static `client {}` statements just loads its modules.
+
+- [#4043](https://github.com/marko-js/marko/pull/4043) [`b619291`](https://github.com/marko-js/marko/commit/b619291398f907706f6f01c0abee50c80c2bed72) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serializing a `RegExp` whose source contains `<`: a named group or lookbehind previously shipped as invalid regexp syntax (`/(?\x3Cname>a)/`), which threw a `SyntaxError` while parsing the resume script and broke hydration entirely. Sources containing `<` now serialize through the `RegExp` constructor and round-trip exactly.
+
+- [#4044](https://github.com/marko-js/marko/pull/4044) [`55b76d1`](https://github.com/marko-js/marko/commit/55b76d1dcc52b5568f52b932bbb27e33eb1636e4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Suggest `static` when a module level JavaScript statement (`function`, `class`, `type`, `interface`, `enum`, `async function`, `declare`) parses as an unknown tag, instead of a misleading nearest-tag guess like `` Did you mean `<section>`? ``.
+
+- Updated dependencies [[`b8c9b0d`](https://github.com/marko-js/marko/commit/b8c9b0d207ddc76d081c016809815f800f7ac165), [`ea72f0e`](https://github.com/marko-js/marko/commit/ea72f0e5b68b4c3f87ac7fb2bd7e4bbd2fb3c1f8), [`90e206e`](https://github.com/marko-js/marko/commit/90e206ea27b30e74bf3b9d676bd06aca352716dd)]:
+  - @marko/compiler@5.42.3
+
 ## 6.3.44
 
 ### Patch Changes

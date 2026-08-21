@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.42.3
+
+### Patch Changes
+
+- [#4035](https://github.com/marko-js/marko/pull/4035) [`b8c9b0d`](https://github.com/marko-js/marko/commit/b8c9b0d207ddc76d081c016809815f800f7ac165) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a child template's compile error instead of marking the parent tag unresolved, and name an imported tag in the missing-tag error rather than printing `<undefined>`.
+
+- [#4045](https://github.com/marko-js/marko/pull/4045) [`ea72f0e`](https://github.com/marko-js/marko/commit/ea72f0e5b68b4c3f87ac7fb2bd7e4bbd2fb3c1f8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop folding unusual characters in template ids to `/`, which let distinct paths collide (`foo+bar.marko` and `foo/bar.marko` produced one id, silently cross-wiring the two templates in the resume registry). Only characters unsafe in a string/URL/filesystem context are percent-encoded now; benign punctuation such as `+`, `[`, `(` and `@` passes through literally. Also documents the `getTemplateId` config override.
+
+- [#4042](https://github.com/marko-js/marko/pull/4042) [`90e206e`](https://github.com/marko-js/marko/commit/90e206ea27b30e74bf3b9d676bd06aca352716dd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reject an unrecognized `output` compiler option with an error naming the accepted values (`html`, `dom`, `source`, `migrate`, `hydrate`) instead of silently compiling to the DOM runtime. Also stop caching a taglib whose JSON failed to parse, so fixing a broken `marko-tag.json` takes effect without restarting, and include the JSON parse error in the message.
+
 ## 5.42.2
 
 ### Patch Changes
