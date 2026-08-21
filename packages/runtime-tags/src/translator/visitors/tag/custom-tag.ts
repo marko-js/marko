@@ -372,6 +372,8 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
 
 // Tags from other frameworks (or older Marko versions) that deserve a curated
 // pointer instead of a nearest-name suggestion.
+const staticHint =
+  "To declare module level JavaScript, prefix the statement with `static`.";
 const knownWrongTags = new Map([
   [
     "slot",
@@ -385,6 +387,13 @@ const knownWrongTags = new Map([
     "fragment",
     "Marko templates and tag bodies may have multiple root nodes; no fragment wrapper is needed.",
   ],
+  ["async", staticHint],
+  ["class", staticHint],
+  ["declare", staticHint],
+  ["enum", staticHint],
+  ["function", staticHint],
+  ["interface", staticHint],
+  ["type", staticHint],
 ]);
 
 export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
