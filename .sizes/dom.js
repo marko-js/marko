@@ -1,4 +1,4 @@
-// size: 28039 (min) 10334 (brotli)
+// size: 28233 (min) 10426 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -919,6 +919,15 @@ function _script(id, fn) {
     (scope) => {
       queueEffect(scope, fn);
     }
+  );
+}
+function _global_read($global, key) {
+  return (
+    key in $global ||
+      console.error(
+        `\`$global.${key}\` is not serialized to the client, so this read is \`undefined\`. Add \`${key}\` to \`serializedGlobals\` at the render call.`,
+      ),
+    $global[key]
   );
 }
 function _el_read(value) {

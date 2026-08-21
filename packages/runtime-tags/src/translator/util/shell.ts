@@ -168,6 +168,8 @@ function isShellExpressible(section: Section) {
     if (
       typeof op === "object" &&
       op.kind !== StructureKind.Visit &&
+      // Static text is plain markup, expressible like a markup string.
+      op.kind !== StructureKind.Text &&
       // A known child composes when its root is expressible (nested
       // branches/boundaries pair via their own entries) and has no tag var.
       !(

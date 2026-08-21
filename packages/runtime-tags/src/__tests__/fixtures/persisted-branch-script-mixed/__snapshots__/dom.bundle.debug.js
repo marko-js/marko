@@ -5,7 +5,7 @@ const $setup = () => {};
 const $if_content__input_value__script = _script("__tests__/template.marko_1_input_value#6", ($scope) => {
 	{
 		const el = document.querySelector("main");
-		el.dataset.log = (el.dataset.log || "") + "[" + $scope._.input_value + ":" + $scope.$global.brand + "]";
+		el.dataset.log = (el.dataset.log || "") + "[" + $scope._.input_value + ":" + _global_read($scope.$global, "brand") + "]";
 	}
 });
 const $if_content__input_value = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_value__script);

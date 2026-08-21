@@ -35,8 +35,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $input_note__closures = new Set();
 	_html$1("<main>");
 	_set_serialize_reason({
-		0: _mask_group($scope0_owned, 0),
-		1: _mask_group($scope0_owned, 0)
+		0: _mask_group($scope0_owned, 1),
+		1: _mask_group($scope0_owned, 1)
 	});
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
@@ -45,8 +45,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		content: _content_elide("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
-			_html$1(`<em>${_patch_text($scope1_id, "#text/0", input.note, $scope0_owned, 1)}${_el_resume($scope1_id, "#text/0")}</em>`);
-			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+			_html$1(`<em>${_patch_text($scope1_id, "#text/0", input.note, $scope0_owned, 2)}${_el_resume($scope1_id, "#text/0")}</em>`);
+			_subscribe(_source_if($scope0_reason, 2) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
