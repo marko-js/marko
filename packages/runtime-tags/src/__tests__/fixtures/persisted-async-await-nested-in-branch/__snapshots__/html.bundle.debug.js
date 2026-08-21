@@ -32,7 +32,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					"ClosureScopes:outer": $await_content__outer__closures
 				}, "__tests__/template.marko", "3:6", { outer: "3:12" }));
 				_resume_branch($scope2_id);
-			}, _source_guard($scope0_reason, 2), "__tests__/template.marko_1_#text#0/await");
+			}, void 0, "__tests__/template.marko_1_#text#0/await");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		}

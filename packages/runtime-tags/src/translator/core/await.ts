@@ -10,7 +10,10 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isPersisted } from "../util/marko-config";
-import { boundaryAlwaysPairs } from "../util/persisted/structure";
+import {
+  boundaryAlwaysPairs,
+  inStatefulBranch,
+} from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -203,7 +206,16 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(section, bodySection?.serializeReason, true),
+                // A persisted page always marks a patchable boundary: a
+                // frame pairs its body through the branch link the marker
+                // resumes, wherever the boundary renders.
+                isPersisted() && !inStatefulBranch(section)
+                  ? undefined
+                  : getSerializeGuard(
+                      section,
+                      bodySection?.serializeReason,
+                      true,
+                    ),
                 patchContent,
                 // An always-pairing body's Pending entry drops its
                 // construct id outside divergent contexts.

@@ -30,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 					d: $await_content__outer__closures
 				}));
 				_resume_branch($scope2_id);
-			}, _source_guard($scope0_reason, 2), "a4");
+			}, void 0, "a4");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
