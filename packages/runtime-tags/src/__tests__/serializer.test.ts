@@ -1594,9 +1594,17 @@ describe("serializer", () => {
 
   describe("regexp", () => {
     it("literal", () => assertStringify(/abc/g, `/abc/g`));
-    it("escapes <", () => assertStringify(/a<b/, `/a\\x3Cb/`));
+    it("escapes < via the constructor", () =>
+      assertStringify(/a<b/, `RegExp("a\\x3Cb")`));
+    it("keeps a named group intact", () =>
+      assertStringify(/(?<name>a)/, `RegExp("(?\\x3Cname>a)")`));
+    it("keeps a lookbehind intact", () =>
+      assertStringify(/(?<=a)b/, `RegExp("(?\\x3C=a)b")`));
     it("escapes < in </script>", () =>
-      assertStringify(new RegExp("x</script>y"), `/x\\x3C\\/script>y/`));
+      assertStringify(
+        new RegExp("x</script>y"),
+        `RegExp("x\\x3C\\\\/script>y")`,
+      ));
     it("escapes a raw NUL in the source", () =>
       assertStringify(
         new RegExp("a" + String.fromCharCode(0) + "b"),
