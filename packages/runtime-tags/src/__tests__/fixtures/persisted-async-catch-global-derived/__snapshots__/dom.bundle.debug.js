@@ -15,13 +15,12 @@ const $try_content__setup = ($scope) => {
 };
 const $tag__closure = /*@__PURE__*/ _closure($catch_content__tag);
 const $tag = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "tag", $tag__closure);
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => _text($scope["#text/2"], $scope.n));
+const $n = /*@__PURE__*/ _let("n/8", ($scope) => _text($scope["#text/2"], $scope.n));
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$tag($scope, `${$scope.$global.brand}!`);
 	$n($scope, 0);
 	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
 	$setup__script($scope);

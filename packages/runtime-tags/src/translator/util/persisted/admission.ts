@@ -443,11 +443,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       if (tagName === "script") {
         for (const attr of node.attributes) {
           if (attr.type === "MarkoAttribute" && attr.name === "value") {
-            if (
-              getSerializeSourcesForRef(attr.value.extra?.referencedBindings)
-                ?.global ||
-              hasUnfillablePatchReads(attr.value.extra?.referencedBindings)
-            ) {
+            // `$global`-derived reads deliver like any server value now, so
+            // only an unfillable read rejects.
+            if (hasUnfillablePatchReads(attr.value.extra?.referencedBindings)) {
               unsupported(attr);
             }
             // A script's re-run entry rides the branch partial the frame no

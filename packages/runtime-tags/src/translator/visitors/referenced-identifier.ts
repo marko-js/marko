@@ -78,6 +78,15 @@ export default {
       case "$global": {
         // An HTML read resolves to the `$global` const the program declares.
         if (isOutputHTML()) break;
+        // A tracked member read (a persisted keyed read) rewrites through
+        // the standard read replacement instead of the bag access.
+        if (
+          (t.isMemberExpression(identifier.parent) ||
+            t.isOptionalMemberExpression(identifier.parent)) &&
+          identifier.parent.extra?.read
+        ) {
+          break;
+        }
 
         const globalRead = t.memberExpression(
           scopeIdentifier,

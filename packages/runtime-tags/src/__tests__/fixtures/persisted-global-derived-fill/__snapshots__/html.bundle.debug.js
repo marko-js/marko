@@ -20,9 +20,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? writeScope($scope0_id, {
 		greeting,
+		$global_prefix: $global$1?.prefix,
 		count
 	}, "__tests__/template.marko", 0, {
 		greeting: "1:8",
+		$global_prefix: ["$global.prefix"],
 		count: "2:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", greeting);
 	_resume_branch($scope0_id);

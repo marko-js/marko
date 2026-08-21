@@ -33,9 +33,9 @@ var template_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a4");
 	$scope0_reason ? writeScope($scope0_id, {
 		g: tag,
-		h: n,
-		j: $tag__closures,
-		i: $input_promise__closures
+		i: n,
+		k: $tag__closures,
+		j: $input_promise__closures
 	}) : _patch_value($scope0_id, "a0", tag);
 	_resume_branch($scope0_id);
 }, 1, 1);

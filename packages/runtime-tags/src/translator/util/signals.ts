@@ -1593,15 +1593,13 @@ function isSerializedSpreadEffect(signal: Signal) {
   );
 }
 
-// An effect read the wire cannot keep current (unfillable params, global-
-// derived bindings) blocks constructs; direct `$global` reads re-queue.
+// An effect read the wire cannot keep current blocks constructs; fill and
+// wire-write deliveries (param- and `$global`-derived alike) stay current,
+// and direct `$global` reads re-queue against the live bag.
 export function sectionHasServerEffect(section: Section) {
   for (const signal of getSignals(section).values()) {
     if (signal.hasHTMLEffect && !isSerializedSpreadEffect(signal)) {
-      if (
-        getSerializeSourcesForRef(signal.referencedBindings)?.global ||
-        hasUnfillablePatchReads(signal.referencedBindings)
-      ) {
+      if (hasUnfillablePatchReads(signal.referencedBindings)) {
         return true;
       }
     }

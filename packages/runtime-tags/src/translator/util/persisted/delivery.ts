@@ -79,6 +79,8 @@ function isPatchRefreshableBinding(binding: Binding) {
     (binding.type === BindingType.input ||
       binding.type === BindingType.param ||
       binding.type === BindingType.derived ||
+      // A keyed `$global` read; the bag itself never re-ships.
+      (binding.type === BindingType.global && !!binding.upstreamAlias) ||
       (binding.type === BindingType.let && !binding.assignmentSections))
   );
 }
