@@ -35,6 +35,8 @@ declare const Config: {
   hydrateInit?: boolean;
   optimize?: boolean;
   optimizeKnownTemplates?: string[];
+  /** Overrides the default template id (the root-relative, percent-encoded path). */
+  getTemplateId?(request: string): string;
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */

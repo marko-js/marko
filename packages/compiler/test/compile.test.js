@@ -68,6 +68,35 @@ describe("compiler/compile", () => {
       ));
   });
 
+  describe("template id", () => {
+    it("keeps paths with unusual characters distinct", () => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-id-"));
+      fs.mkdirSync(path.join(dir, "foo"));
+      fs.writeFileSync(path.join(dir, "foo+bar.marko"), "<div>a</div>");
+      fs.writeFileSync(path.join(dir, "foo", "bar.marko"), "<div>b</div>");
+      const ids = ["foo+bar.marko", path.join("foo", "bar.marko")].map(
+        (f) => compileFileSync(path.join(dir, f), { output: "html" }).meta.id,
+      );
+      assert.notEqual(ids[0], ids[1]);
+    });
+
+    it("keeps benign punctuation literal and encodes the rest", () => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-id-"));
+      fs.writeFileSync(path.join(dir, "+(x).marko"), "<div>a</div>");
+      fs.writeFileSync(path.join(dir, "a b.marko"), "<div>b</div>");
+      assert.match(
+        compileFileSync(path.join(dir, "+(x).marko"), { output: "html" }).meta
+          .id,
+        /\+\(x\)\.marko$/,
+      );
+      assert.match(
+        compileFileSync(path.join(dir, "a b.marko"), { output: "html" }).meta
+          .id,
+        /a%20b\.marko$/,
+      );
+    });
+  });
+
   describe("getRuntimeEntryFiles", () => {
     it("asks the translator", () =>
       assert.ok(getRuntimeEntryFiles("html").length));
