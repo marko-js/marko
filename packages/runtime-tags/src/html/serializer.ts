@@ -1089,14 +1089,22 @@ function writeRegExp(state: State, val: RegExp) {
   // source/flags are read off the instance intentionally: an own-property shadow
   // only arises from a deliberate server-side defineProperty, not worth guarding.
   const { source } = val;
-  state.buf.push(
-    "/" +
-      (unsafeRegExpSourceDetect.test(source)
-        ? source.replace(unsafeRegExpSourceReg, replaceUnsafeRegExpSourceChar)
-        : source) +
+  if (source.includes("<")) {
+    // A `<` cannot be escaped within regexp syntax (named groups/lookbehinds),
+    // so the constructor form round-trips the source exactly.
+    state.buf.push(
+      `RegExp(${quote(source, 0)}${val.flags ? ',"' + val.flags + '"' : ""})`,
+    );
+  } else {
+    state.buf.push(
       "/" +
-      val.flags,
-  );
+        (unsafeRegExpSourceDetect.test(source)
+          ? source.replace(unsafeRegExpSourceReg, replaceUnsafeRegExpSourceChar)
+          : source) +
+        "/" +
+        val.flags,
+    );
+  }
   return true;
 }
 
