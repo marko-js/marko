@@ -29,15 +29,21 @@ installReady(markReady, failReady);
 // Receives a frame's ready-channel record (an explicit call in the frame
 // text): data for a loaded channel merges into the live render's ready
 // record for this frame's run; the rest waits for its module.
+// Live-record pushes of the frame being applied, undone if it rejects.
+let framePushes: [batch: unknown[], length: number][] = [];
+
 function acceptReady(record: Record<string, unknown[]>) {
   const render = patchRender as RenderData;
+  // Validate before any write reaches the live ready record: a channel
+  // whose module will never arrive rejects the whole frame (the caller
+  // navigates instead of waiting forever).
+  for (const readyId in record) {
+    if (isFailed(readyId)) failPatch();
+  }
+  framePushes = [];
   for (const readyId in record) {
     if (isReady(readyId)) {
       pushBatch(render, readyId, record[readyId]);
-    } else if (isFailed(readyId)) {
-      // The channel's module will never arrive: reject the frame now so
-      // the caller navigates instead of waiting forever.
-      failPatch();
     } else {
       let entry = pending.get(render);
       if (!entry) {
@@ -64,6 +70,7 @@ function acceptReady(record: Record<string, unknown[]>) {
 // strings keep their native resume handling.
 function pushBatch(render: RenderData, readyId: string, batch: unknown[]) {
   const target = ((render.b ??= {})[readyId] ??= []);
+  framePushes.push([target, target.length]);
   for (const partial of batch) {
     target.push(
       typeof partial === "object" && partial && !Array.isArray(partial)
@@ -106,6 +113,13 @@ function failReady(readyId?: string) {
 }
 
 function discardReady(render: RenderData) {
+  // A rejected frame's channel pushes must not survive to a later run;
+  // truncating is exact unless the batch was partially consumed mid-run —
+  // then the caller is navigating anyway and dropping the rest is safe.
+  for (const [batch, length] of framePushes) {
+    if (batch.length > length) batch.length = length;
+  }
+  framePushes = [];
   const entry = pending.get(render);
   if (entry) {
     pending.delete(render);

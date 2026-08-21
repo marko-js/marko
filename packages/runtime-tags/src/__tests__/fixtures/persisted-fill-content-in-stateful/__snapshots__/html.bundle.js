@@ -1,0 +1,49 @@
+// tags/wrap/index.marko
+_shells({ b: "b;D%;<div><!></div>" });
+var wrap_default = _template_persisted("b", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	_html("<div>");
+	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
+	_dynamic_tag$1($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_html("</div>");
+	$scope0_reason && writeScope($scope0_id, {});
+}, 0, 0);
+
+// template.marko
+_shells({
+	a0: "a0;D ;<span> </span>",
+	a: "a !a1; b%;<button>inc</button><!><!>"
+});
+var template_default = _template_persisted("a", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	const $input_msg__closures = /* @__PURE__ */ new Set();
+	const $count__closures = /* @__PURE__ */ new Set();
+	let count = 0;
+	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
+	if ($scope0_reason) _if(() => {
+		{
+			const $scope1_id = _scope_id();
+			_set_serialize_reason(1);
+			const $childScope = _peek_scope_id();
+			wrap_default({ content: _content_elide("a0", () => {
+				_persisted_reason();
+				const $scope2_id = _scope_id();
+				_html(`<span>${_escape(input.msg + ":0")}${_el_resume($scope2_id, "a")}</span>`);
+				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_msg__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) })));
+				_resume_branch($scope2_id);
+			}, $scope1_id) });
+			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			return 0;
+		}
+	}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	_script($scope0_id, "a1");
+	$scope0_reason ? writeScope($scope0_id, {
+		e: input.msg,
+		f: count,
+		g: $input_msg__closures,
+		h: $count__closures
+	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.msg);
+	_resume_branch($scope0_id);
+}, 1, () => [wrap_default]);

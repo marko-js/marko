@@ -1,4 +1,4 @@
-// size: 28283 (min) 10431 (brotli)
+// size: 28301 (min) 10489 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -34,6 +34,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   catchEnabled,
   abortsEnabled,
   subscriptionsEnabled,
+  toReadyId = (templateId) => "_" + templateId,
   delegate = (type, handler) =>
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
@@ -2265,7 +2266,7 @@ let empty = [],
                     insertLoaded(renderer, branch, branch.S, awaitCounter),
                   ));
               },
-              loadFailed(branch, awaitCounter),
+              loadFailed(branch, awaitCounter, toReadyId(id)),
             ));
         },
         _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
@@ -2413,10 +2414,10 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
       );
   } else (setupBranch(renderer, branch), insert());
 }
-function loadFailed(scope, awaitCounter) {
+function loadFailed(scope, awaitCounter, readyId) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
-      readyFailed(),
+      readyFailed(readyId),
       queueAsyncRender(scope, renderCatch, error));
   };
 }

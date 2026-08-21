@@ -104,6 +104,9 @@ let embedRenders:
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
 let failedIds: undefined | Set<string>;
+// An unidentified load failure (the failing load names no channel): every
+// still-unready channel is suspect, so later patches reject conservatively.
+let anyFailed: undefined | 1;
 let patchReady: undefined | ((readyId: string) => void);
 let patchReadyFailed: undefined | ((readyId?: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
@@ -171,6 +174,8 @@ export function readyFailed(readyId?: string) {
       }
     }
     (failedIds ||= new Set()).add(readyId);
+  } else {
+    anyFailed = 1;
   }
   patchReadyFailed?.(readyId);
 }
