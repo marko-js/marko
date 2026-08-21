@@ -16,7 +16,7 @@ var template_default = _template_persisted("a", (input) => {
 				onClick: _resume(function() {
 					count++;
 				}, "a0", $scope1_id)
-			}, "a", $scope1_id, "a", $scope0_owned, 2)}>go</a>${_el_resume($scope1_id, "a")}`);
+			}, "a", $scope1_id, "a", void 0, $scope0_owned, 2)}>go</a>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a2");
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

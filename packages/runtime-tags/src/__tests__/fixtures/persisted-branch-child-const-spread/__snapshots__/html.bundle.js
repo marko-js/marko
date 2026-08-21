@@ -5,7 +5,7 @@ _shells({ b: "b !b0; D ;<div id=fixed> </div>" });
 var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div id=fixed${_patch_attrs_partial(input.attrs, { id: 1 }, "a", $scope0_id, "div", $scope0_owned, 0)}>${_patch_text($scope0_id, "b", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</div>${_el_resume($scope0_id, "a")}`);
+	_html(`<div id=fixed${_patch_attrs_partial(input.attrs, { id: 1 }, "a", $scope0_id, "div", void 0, $scope0_owned, 0)}>${_patch_text($scope0_id, "b", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	$scope0_reason && writeScope($scope0_id, {});
 }, 0, 0);

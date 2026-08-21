@@ -12,7 +12,7 @@ import {
 import { isEventHandler } from "../../../common/helpers";
 import {
   getRelatedControllable,
-  isAttrsOnlySpread,
+  isPatchableSpread,
 } from "../../visitors/tag/native-tag";
 import * as BindingType from "../constants/binding-type";
 import evaluate from "../evaluate";
@@ -754,7 +754,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           attr.type === "MarkoSpreadAttribute"
             ? // A controllable or content-carrying spread cannot patch.
               !evaluate(attr.value).confident &&
-              !isAttrsOnlySpread(tag, tagName as string)
+              !isPatchableSpread(tag, tagName as string)
             : !evaluate(attr.value).confident &&
               ((isEventOrChangeHandler(attr.name) &&
                 !isEventHandler(attr.name)) ||

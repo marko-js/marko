@@ -10,7 +10,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li${_patch_attrs(item.attrs, "a", $scope1_id, "li", $scope0_owned, 0)}>${_patch_text($scope1_id, "b", item.id, $scope0_owned, 0)}${_el_resume($scope1_id, "b")}</li>${_el_resume($scope1_id, "a")}`);
+		_html(`<li${_patch_attrs(item.attrs, "a", $scope1_id, "li", void 0, $scope0_owned, 0)}>${_patch_text($scope1_id, "b", item.id, $scope0_owned, 0)}${_el_resume($scope1_id, "b")}</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		writeScope($scope1_id, {});
 	}, (item) => item.id, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0");

@@ -11,19 +11,17 @@ const probe = (document: Document) => {
     `live:${document.querySelector("input")!.value}`;
 };
 
-// A spread carrying a controllable: the patched set re-claims the control
-// through the run-time claim table, so the change handler stays live, an
-// unchanged frame preserves the controlled value, and a changed server
-// value wins the input.
+// A control owned by a static (client-state) attr with a server spread: a
+// frame carrying only the spread must leave the live control alone — the
+// binding, handler, and typed value all survive the patch.
 export const config: TestConfig = {
   persisted: true,
   steps: [
-    { field: { value: "a", placeholder: "p1" } },
+    { rest: { placeholder: "p1" } },
     type,
+    { rest: { placeholder: "p2" } },
     probe,
-    { field: { value: "a", placeholder: "p2" } },
-    probe,
-    { field: { value: "b", placeholder: "p2" } },
+    type,
     probe,
   ],
 };

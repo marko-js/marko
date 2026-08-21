@@ -12,14 +12,14 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`<main><a${_patch_attrs({
 		href: "/static",
 		...input.attrs
-	}, "#a/0", $scope0_id, "a", $scope0_owned, 1)}>${_patch_text($scope0_id, "#text/1", input.label, $scope0_owned, 2)}${_el_resume($scope0_id, "#text/1")}</a>${_el_resume($scope0_id, "#a/0")}`);
+	}, "#a/0", $scope0_id, "a", void 0, $scope0_owned, 1)}>${_patch_text($scope0_id, "#text/1", input.label, $scope0_owned, 2)}${_el_resume($scope0_id, "#text/1")}</a>${_el_resume($scope0_id, "#a/0")}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<img${_patch_attrs({
 				alt: "hero",
 				...input.img
-			}, "#img/0", $scope1_id, "img", $scope0_owned, 4)}>${_el_resume($scope1_id, "#img/0")}`);
+			}, "#img/0", $scope1_id, "img", void 0, $scope0_owned, 4)}>${_el_resume($scope1_id, "#img/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1_input_img#10");
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#img/0": ["...input.img", "5:24"] });
 			return 0;

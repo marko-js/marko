@@ -364,8 +364,11 @@ export default {
               ensurePersistedWriteGroups(() => value.extra || {});
             }
           }
-          if (spreadReferenceNodes && isAttrsOnlySpread(tag, tagName)) {
+          if (spreadReferenceNodes && isPatchableSpread(tag, tagName)) {
             addRuntimeFeatureAsset("patch-attrs");
+            if (controllableClaimFor(tagName)) {
+              addRuntimeFeatureAsset("controllable");
+            }
             ensurePersistedWriteGroups(() => node.extra || {});
             (node.extra ??= {}).serializedSpread = true;
           }
@@ -909,7 +912,7 @@ export default {
 
           if (isTextOnly || isOpenOnly || hasChildren || staticContentAttr) {
             const patches =
-              isAttrsOnlySpread(tag, tagName) &&
+              isPatchableSpread(tag, tagName) &&
               writesPatchAttr(tag, tagSection, "spread", tag.node.extra);
             if (skipExpression) {
               write`${callRuntime(
@@ -920,9 +923,14 @@ export default {
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
                 ...(patches
-                  ? getPatchWriteOwnership(
-                      getSerializeSourcesForExpr(tag.node.extra || {}),
-                    )
+                  ? [
+                      !staticControllable && controllableClaimFor(tagName)
+                        ? t.numericLiteral(1)
+                        : buildUndefined(),
+                      ...getPatchWriteOwnership(
+                        getSerializeSourcesForExpr(tag.node.extra || {}),
+                      ),
+                    ]
                   : []),
               )}`;
             } else if (patches) {
@@ -934,6 +942,9 @@ export default {
                 visitAccessor,
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
+                !staticControllable && controllableClaimFor(tagName)
+                  ? t.numericLiteral(1)
+                  : buildUndefined(),
                 ...getPatchWriteOwnership(
                   getSerializeSourcesForExpr(tag.node.extra || {}),
                 ),
@@ -1351,9 +1362,14 @@ export default {
           if (
             isPersisted() &&
             isBranchPathSection(tagSection) &&
-            isAttrsOnlySpread(tag, staticName)
+            isPatchableSpread(tag, staticName)
           ) {
             importRuntimeFeature("patch-attrs");
+            // A spread that owns the element's controllable (no static attr
+            // does) re-claims it through the run-time claim table.
+            if (!staticControllable && controllableClaimFor(staticName)) {
+              importRuntimeFeature("controllable");
+            }
           }
           if (skipExpression) {
             addStatement(
@@ -1493,15 +1509,15 @@ function writesPatchAttr(
   return false;
 }
 
-// A spread whose set is plain attributes: no controllable descriptor and no
-// `content` renderer (the tag has its own body or admits none).
-export function isAttrsOnlySpread(
+// A spread a patch can re-apply: plain attributes or a controllable claim
+// (the client re-claims from the shipped set), and no `content` renderer
+// (the tag has its own body or admits none).
+export function isPatchableSpread(
   tag: t.NodePath<t.MarkoTag>,
   tagName: string | undefined,
 ) {
   return (
     !!tagName &&
-    !controllableClaimFor(tagName) &&
     tagName !== "option" &&
     !!(
       isTextOnlyNativeTag(tag) ||

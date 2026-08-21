@@ -1,1 +1,4 @@
-<input ...input.attrs>
+<let/text=""/>
+<const/field={ ...input.field, valueChange: (next: string) => { text = next } }/>
+<input type="text" ...field>
+<p>${text}</p>

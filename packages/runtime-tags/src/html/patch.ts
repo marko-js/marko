@@ -685,6 +685,7 @@ export function _patch_attrs(
   accessor: Accessor,
   scopeId: number,
   tagName: string,
+  claims?: 1,
   owned?: SerializeReasonValue,
   group?: number,
 ) {
@@ -692,7 +693,15 @@ export function _patch_attrs(
   if (state.writesPatches) {
     if (ownedWrite(owned, group)) {
       writeEmbeddedBinds(state as PatchState, data);
-      writeOwned(scopeId, PatchKey.Attrs + accessor, data ?? 0, owned, group);
+      // `claims` marks a spread that owns the element's controllable (no
+      // static attr does), so only then does the client re-claim it.
+      writeOwned(
+        scopeId,
+        PatchKey.Attrs + accessor,
+        claims ? [data ?? 0, 0, 1] : (data ?? 0),
+        owned,
+        group,
+      );
     }
   } else {
     getChunk()!.needsWalk = true;
@@ -707,6 +716,7 @@ export function _patch_attrs_partial(
   accessor: Accessor,
   scopeId: number,
   tagName: string,
+  claims?: 1,
   owned?: SerializeReasonValue,
   group?: number,
 ) {
@@ -717,7 +727,7 @@ export function _patch_attrs_partial(
       writeOwned(
         scopeId,
         PatchKey.Attrs + accessor,
-        [data ?? 0, skip],
+        claims ? [data ?? 0, skip, 1] : [data ?? 0, skip],
         owned,
         group,
       );
