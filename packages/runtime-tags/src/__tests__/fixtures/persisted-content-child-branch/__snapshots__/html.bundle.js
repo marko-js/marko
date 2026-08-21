@@ -32,8 +32,8 @@ var template_default = _template_persisted("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
 	_set_serialize_reason({
-		0: _mask_group($scope0_owned, 0),
-		1: _mask_group($scope0_owned, 0)
+		0: _mask_group($scope0_owned, 1),
+		1: _mask_group($scope0_owned, 1)
 	});
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
@@ -42,8 +42,8 @@ var template_default = _template_persisted("a", (input) => {
 		content: _content_elide("a0", () => {
 			_persisted_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "a", input.note, $scope0_owned, 1)}${_el_resume($scope1_id, "a")}</em>`);
-			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_html(`<em>${_patch_text($scope1_id, "a", input.note, $scope0_owned, 2)}${_el_resume($scope1_id, "a")}</em>`);
+			_subscribe(_source_if($scope0_reason, 2) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
