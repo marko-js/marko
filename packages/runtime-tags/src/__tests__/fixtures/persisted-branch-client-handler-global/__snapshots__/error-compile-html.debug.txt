@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-handler-global/template.marko:5:18
-      3 | <main>
-      4 |   <if=show>
-    > 5 |     <button.read onClick() {
-        |                  ^ Persisted templates cannot patch this faithfully yet: a handler reading a `$global`-derived value inside client-owned structure would go stale.
-      6 |       document.querySelector("main")!.dataset.title = title;
-      7 |     }>read</button>
-      8 |   </if>

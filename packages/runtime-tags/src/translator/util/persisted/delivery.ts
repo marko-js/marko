@@ -66,14 +66,16 @@ function hasWritableShape(binding: Binding) {
 
 // The shape a patch can keep current: a canonical root server value (only
 // canonical bindings get ordinals and server writes — an alias never
-// qualifies, so its reads reject rather than going silently stale).
+// qualifies, so its reads reject rather than going silently stale). A
+// `$global`-derived value qualifies like a param-derived one: every frame
+// re-ships changed globals, and its own write keeps derived reads current.
 function isPatchRefreshableBinding(binding: Binding) {
   return (
     isPersisted() &&
     getCanonicalBinding(binding) === binding &&
     !binding.section.parent &&
-    !!binding.sources?.param &&
-    !binding.sources.state &&
+    !!(binding.sources?.param || binding.sources?.global) &&
+    !binding.sources!.state &&
     (binding.type === BindingType.input ||
       binding.type === BindingType.param ||
       binding.type === BindingType.derived ||
@@ -210,11 +212,11 @@ export function getLocalFillFeeds(section: Section) {
 }
 
 // A local the server computes without client state: a param property
-// (or rest, a declared object), or a derivation/never-assigned let.
+// (or rest, a declared object), or a derivation/never-assigned let. A
+// `$global` contribution is fine — the shipped value is per-frame current.
 function isSeedableLocal(binding: Binding) {
   return (
     !binding.sources?.state &&
-    !binding.sources?.global &&
     (isSectionParam(binding) ||
       binding.type === BindingType.derived ||
       (binding.type === BindingType.let && !binding.assignmentSections))
@@ -233,11 +235,12 @@ function isSectionParam(binding: Binding) {
 // Server-sourced reads a patch cannot keep current: param-sourced bindings
 // that neither fill nor refresh over the wire read stale after any patch.
 export function hasUnfillablePatchReads(refs: Opt<Binding>) {
-  return some(
-    refs,
-    (binding) =>
-      !!getSerializeSourcesForRef(binding)?.param &&
+  return some(refs, (binding) => {
+    const sources = getSerializeSourcesForRef(binding);
+    return (
+      !!(sources?.param || sources?.global) &&
       !isPatchFillBinding(binding) &&
-      !isPatchWriteBinding(binding),
-  );
+      !isPatchWriteBinding(binding)
+    );
+  });
 }

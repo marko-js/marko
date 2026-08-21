@@ -81,15 +81,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     }
     forEach(extra?.referencedBindings, (binding) => {
       const sources = getSerializeSourcesForRef(binding);
-      if (sources?.global) {
-        unsupported(
-          node,
-          "`$global` cannot be read inside client-owned structure",
-        );
-      }
+      // A `$global`-derived value delivers like any server value: its fill
+      // re-ships each frame, so only an unfillable read rejects.
       if (
-        sources?.param &&
-        !sources.state &&
+        (sources?.param || sources?.global) &&
+        !sources!.state &&
         !isPatchFillBinding(binding) &&
         !inStatefulBranch(binding.section)
       ) {
@@ -330,15 +326,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             forEach(ref as Opt<Binding>, (binding) => {
               if (binding.section === localSection) return;
               const sources = getSerializeSourcesForRef(binding);
-              if (sources?.global) {
-                unsupported(
-                  n,
-                  `a \`$global\`-derived value inside \`<${attrName}>\` content would go stale`,
-                );
-              }
               if (
-                sources?.param &&
-                !sources.state &&
+                (sources?.param || sources?.global) &&
+                !sources!.state &&
                 !isPatchFillBinding(binding) &&
                 !inStatefulBranch(binding.section)
               ) {
@@ -562,11 +552,12 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           for (const group of feeds || []) {
             // Fills keep tracked params current and the instance
             // re-selects client-side; a provenance-free structural feed
-            // has no channel, and `$global` never re-ships.
+            // has no channel. (`$global`-derived feeds deliver as fills,
+            // checked per attribute above; direct `$global` reads reject
+            // there too.)
             if (
-              (group.structuralOrGlobal &&
-                groupFedUnsafely(node.attributes, group)) ||
-              group.sources?.global
+              group.structuralOrGlobal &&
+              groupFedUnsafely(node.attributes, group)
             ) {
               unsupported(
                 node,
@@ -710,10 +701,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               (attr.value.extra as t.FunctionExtra | undefined)
                 ?.referencedBindingsInFunction,
               (binding) => {
-                // Direct reads (BindingType.global) see the live bag.
+                // Direct reads (BindingType.global) see the live bag; a
+                // derived value stays current through its fill/wire write.
                 if (
                   binding.type !== BindingType.global &&
-                  getSerializeSourcesForRef(binding)?.global
+                  getSerializeSourcesForRef(binding)?.global &&
+                  !isPatchFillBinding(binding) &&
+                  !isPatchWriteBinding(binding)
                 ) {
                   unsupported(
                     attr,
