@@ -984,7 +984,9 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const { state } = boundary;
-  const catchBoundary = new Boundary(state, undefined, boundary);
+  // Shares the parent's signal so a disconnected render strands pending body
+  // work; the outer-aborted check in onNext keeps that from firing the catch.
+  const catchBoundary = new Boundary(state, boundary.signal, boundary);
   const body = chunk.fork(catchBoundary, null);
   const bodyEnd = body.render(content);
 

@@ -1,0 +1,12 @@
+<try>
+  <await|v|=input.a>
+    <p>A:${(console.log("body-ran:a", v), v)}</p>
+  </await>
+  <@catch>caught-a</@catch>
+</try>
+<try>
+  <await|v|=input.b>
+    <p>B:${(console.log("body-ran:b", v), v)}</p>
+  </await>
+  <@catch>caught-b</@catch>
+</try>
