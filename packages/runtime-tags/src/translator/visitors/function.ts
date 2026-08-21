@@ -85,11 +85,20 @@ export default {
     // bail on closures
     if (fn !== getFnRoot(fn)) return;
 
+    const { node } = fn;
+
+    // Accessors stay exactly as written; they are never registered.
+    if (
+      (t.isObjectMethod(node) || t.isClassMethod(node)) &&
+      (node.kind === "get" || node.kind === "set")
+    ) {
+      return;
+    }
+
     const exprRoot = getExprRoot(fn);
     const markoRoot = getMarkoRoot(exprRoot);
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) return;
 
-    const { node } = fn;
     const section = getSection(fn);
     const fnExtra = (node.extra ??= {}) as RegisteredFnExtra;
     fnExtra.section = section;
