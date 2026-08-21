@@ -49,7 +49,7 @@ type Step =
   | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
-  steps?: Steps | (() => Steps | Promise<Steps>);
+  steps?: Steps | ((signal?: AbortSignal) => Steps | Promise<Steps>);
   embedded?: true;
   equivalent?: boolean;
   /**
@@ -68,6 +68,8 @@ export type TestConfig = {
    * server streams (reordered content lands before resume starts).
    */
   entry_delay?: number;
+  /** Aborts the SSR render once the first flush streams, simulating a disconnect. */
+  abort_ssr?: boolean;
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
@@ -332,28 +334,56 @@ function testFixtures(interop?: true) {
           const ssr = once(async () => {
             resetResolveState();
             const runner = await ssrRunner();
-            const { input, steps } = await getSteps(config);
+            const abortController = config.abort_ssr
+              ? new AbortController()
+              : undefined;
+            const { input, steps } = await getSteps(
+              config,
+              abortController?.signal,
+            );
             const chunks: string[] = [];
             const logs: ConsoleRecord[][] = [];
             const capture = captureConsole();
 
             try {
               const { template } = await runner.runServer();
-              for await (const data of template.render(
-                config.embedded
-                  ? {
-                      ...input,
-                      $global: {
-                        ...(input.$global as any),
-                        renderId: "embedded",
-                      },
-                    }
-                  : input,
-              )) {
-                chunks.push(data);
+              if (abortController) {
+                input.$global = {
+                  ...(input.$global as any),
+                  signal: abortController.signal,
+                };
+              }
+              let aborted = false;
+              try {
+                for await (const data of template.render(
+                  config.embedded
+                    ? {
+                        ...input,
+                        $global: {
+                          ...(input.$global as any),
+                          renderId: "embedded",
+                        },
+                      }
+                    : input,
+                )) {
+                  chunks.push(data);
+                  logs.push(capture.records());
+                  if (abortController && !aborted) {
+                    aborted = true;
+                    // The abort rejects the pending read, ending the stream.
+                    abortController.abort();
+                  }
+                }
+              } catch (err) {
+                // The disconnect is the point; anything else still throws.
+                if (!aborted || (err as Error).name !== "AbortError") throw err;
+              }
+              if (abortController) {
+                // Hold the capture open past the inputs' settlement so late
+                // renders from a stranded body reach the snapshot.
+                await new Promise((resolve) => setTimeout(resolve, 1100));
                 logs.push(capture.records());
               }
-              logs.push(capture.records());
             } finally {
               resetResolveState();
               capture.cleanup();
@@ -568,10 +598,10 @@ async function runSteps(
   }
 }
 
-async function getSteps(config: TestConfig) {
+async function getSteps(config: TestConfig, signal?: AbortSignal) {
   const [input = {} as Input, ...steps] =
     typeof config.steps === "function"
-      ? await config.steps()
+      ? await config.steps(signal)
       : (config.steps ?? []);
   return { input, steps };
 }
