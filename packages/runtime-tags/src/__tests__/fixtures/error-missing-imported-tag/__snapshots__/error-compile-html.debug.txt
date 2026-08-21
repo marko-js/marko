@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-missing-imported-tag/template.marko:2:2
+      1 | import Missing from "./tags/nope.marko"
+    > 2 | <Missing/>
+        |  ^^^^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<Missing>`.
+      3 |

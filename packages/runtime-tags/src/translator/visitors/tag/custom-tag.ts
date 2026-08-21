@@ -416,7 +416,7 @@ export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   return tag
     .get("name")
     .buildCodeFrameError(
-      `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.${didYouMean}`,
+      `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName ?? getStaticTagName(tag.node)}>\`.${didYouMean}`,
     );
 }
 
