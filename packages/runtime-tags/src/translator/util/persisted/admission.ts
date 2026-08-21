@@ -687,12 +687,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (attr.type === "MarkoAttribute") seen[attr.name] = attr;
       }
       const related = getRelatedControllable(tagName as string, seen);
-      if (related) {
-        if (related.helper === "_attr_input_checkedValue") {
-          unsupported(node, "`checkedValue` groups are not patchable");
-        } else if ("valueMode" in related && related.valueMode) {
-          unsupported(node, "a dynamic `type=` can change the control kind");
-        }
+      if (related && "valueMode" in related && related.valueMode) {
+        unsupported(node, "a dynamic `type=` can change the control kind");
       }
       const controlled = new Set<t.Node>(
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],

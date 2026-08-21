@@ -56,6 +56,7 @@ import {
   getPrefixedScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
+  mergeSources,
   trackDomVarReferences,
 } from "../../util/references";
 import {
@@ -652,7 +653,8 @@ export default {
           // makes the server's value authoritative through the registered
           // controlled helper — paired refresh and construct alike.
           if (isPersisted() && isBranchPathSection(tagSection)) {
-            const [valueAttr, changeAttr] = staticControllable.attrs;
+            const [valueAttr, changeAttr, groupValueAttr] =
+              staticControllable.attrs;
             if (changeAttr) {
               // A param-fed handler binds only under server ownership, so
               // a client-owned control never rebinds a stale handler.
@@ -672,15 +674,43 @@ export default {
               )}`;
             }
             // A param-fed control value writes only under server ownership.
+            // A group entry (`checkedValue`) also carries the input's own
+            // `value`: each node applies its own comparison client-side.
+            const groupEntry =
+              staticControllable.helper === "_attr_input_checkedValue";
             write`${callRuntime(
               "_patch_control",
               getScopeIdIdentifier(tagSection),
               t.cloneNode(visitAccessor!, true),
               t.numericLiteral(getControlledType(staticControllable)),
-              valueAttr ? t.cloneNode(valueAttr.value, true) : buildUndefined(),
-              ...(valueAttr
+              groupEntry
+                ? t.arrayExpression([
+                    valueAttr
+                      ? t.cloneNode(valueAttr.value, true)
+                      : buildUndefined(),
+                    groupValueAttr
+                      ? t.cloneNode(groupValueAttr.value, true)
+                      : buildUndefined(),
+                  ])
+                : valueAttr
+                  ? t.cloneNode(valueAttr.value, true)
+                  : buildUndefined(),
+              ...(valueAttr || (groupEntry && groupValueAttr)
                 ? getPatchWriteOwnership(
-                    getSerializeSourcesForExpr(valueAttr.value.extra || {}),
+                    groupEntry
+                      ? mergeSources(
+                          valueAttr &&
+                            getSerializeSourcesForExpr(
+                              valueAttr.value.extra || {},
+                            ),
+                          groupValueAttr &&
+                            getSerializeSourcesForExpr(
+                              groupValueAttr.value.extra || {},
+                            ),
+                        )
+                      : getSerializeSourcesForExpr(
+                          valueAttr!.value.extra || {},
+                        ),
                   )
                 : []),
             )}`;
@@ -1581,7 +1611,9 @@ function getPatchControlFeature(
     ? ("patch-control-select" as const)
     : controllable.helper.endsWith("_open")
       ? ("patch-control-open" as const)
-      : ("patch-control-input" as const);
+      : controllable.helper === "_attr_input_checkedValue"
+        ? ("patch-control-checked-value" as const)
+        : ("patch-control-input" as const);
 }
 
 // The wire's control kind ids mirror `ControlledType`.
@@ -1589,6 +1621,8 @@ function getControlledType(controllable: NonNullable<RelatedControllable>) {
   switch (controllable.helper) {
     case "_attr_input_checked":
       return ControlledType.InputChecked;
+    case "_attr_input_checkedValue":
+      return ControlledType.InputCheckedValue;
     case "_attr_select_value":
       return ControlledType.SelectValue;
     case "_attr_input_value":
