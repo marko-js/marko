@@ -1,7 +1,9 @@
-import path from "node:path";
-
 import { types as t } from "@marko/compiler";
-import { getTemplateId } from "@marko/compiler/babel-utils";
+import {
+  getTemplateId,
+  loadFileForImport,
+  resolveRelativePath,
+} from "@marko/compiler/babel-utils";
 
 import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
 import type { DOMRuntimeHelpers } from "./runtime";
@@ -11,20 +13,34 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     needsCompat?: boolean;
     isInteractive?: boolean;
+    hasClientStatement?: boolean;
     page?: boolean;
   }
 }
 
 interface EntryState {
   init: boolean;
+  load: boolean;
+  /** Depth of enclosing templates whose modules the bundle already loads:
+   * below a root everything arrives through its imports, and a lazy subtree
+   * is loaded by its own load entry. */
+  bundled: number;
+  roots: string[];
+  /** Assets of templates the bundle never loads; the entry imports them. */
   assets: Set<string>;
+  /** Assets that arrive through a bundled template's imports; the entry
+   * imports them itself only when it links nothing (a server only page). */
+  bundledAssets: Set<string>;
+  /** Whether each reached file was only ever seen below a bundled template. */
+  visited: Map<string, boolean>;
 }
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
 };
+type VisitChild = (id: string, bundled?: boolean) => void;
 const kState: unique symbol = Symbol();
 
-export default {
+const builder = {
   build(entryFile: EntryFile, exportInit?: boolean) {
     const state = entryFile[kState];
     if (!state) {
@@ -33,30 +49,53 @@ export default {
       );
     }
     const body: t.Statement[] = [];
-    if (state.init) {
+
+    // Client assets (styles, css imports, etc) of a template the bundle does
+    // not link are imported directly, so that static routes still ship them.
+    for (const asset of state.assets) {
+      body.push(t.importDeclaration([], t.stringLiteral(asset)));
+    }
+
+    if (state.init || state.load) {
       const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
-      // The main entry import below pulls in every template (and their client assets)
-      // transitively, so the collected asset imports are not needed here.
-      body.push(
-        t.importDeclaration(
-          [
-            t.importSpecifier(
-              t.identifier(initHelper),
-              t.identifier(initHelper),
+      if (state.init) {
+        body.push(
+          t.importDeclaration(
+            [
+              t.importSpecifier(
+                t.identifier(initHelper),
+                t.identifier(initHelper),
+              ),
+            ],
+            t.stringLiteral(
+              `${runtimeInfo.name}/${
+                entryFile.markoOpts.optimize ? "" : "debug/"
+              }dom`,
             ),
-          ],
-          t.stringLiteral(
-            `${runtimeInfo.name}/${
-              entryFile.markoOpts.optimize ? "" : "debug/"
-            }dom`,
           ),
-        ),
-        t.importDeclaration(
-          [],
-          t.stringLiteral(`./${path.basename(entryFile.opts.filename)}`),
-        ),
-      );
+        );
+      }
+
+      // The topmost templates with client side work; everything below one of
+      // them (and its client assets) arrives through its imports.
+      for (const root of state.roots) {
+        body.push(t.importDeclaration([], t.stringLiteral(root)));
+      }
+
+      if (!state.init) {
+        // Client statements ran when the modules above loaded; with nothing
+        // to resume there is no runtime to initialize.
+        if (exportInit) {
+          body.push(
+            t.exportDefaultDeclaration(
+              t.arrowFunctionExpression([], t.blockStatement([])),
+            ),
+          );
+        }
+        return body;
+      }
+
       const { runtimeId } = entryFile.markoOpts;
       const readyId =
         !isPage && getTemplateId(entryFile.markoOpts, entryFile.opts.filename);
@@ -79,9 +118,9 @@ export default {
           : t.expressionStatement(initExpression),
       );
     } else {
-      // A server only page has no runtime to initialize, so its client assets must be
-      // linked directly (an interactive page receives them transitively via the main entry import).
-      for (const asset of state.assets) {
+      // A server only page has no runtime to initialize, so nothing loads
+      // the assets of the templates below it either.
+      for (const asset of state.bundledAssets) {
         body.push(t.importDeclaration([], t.stringLiteral(asset)));
       }
 
@@ -93,34 +132,79 @@ export default {
         );
       }
     }
+
     return body;
   },
+  // Recurses into each reachable template once, resolving and loading it; a
+  // file only ever reached below a bundled template is re-visited if later
+  // reached eagerly, since only then can it become a root itself.
+  // The interop entry passes a `visitChild` to dispatch each file itself.
   visit(
     file: t.BabelFile,
     entryFile: EntryFile,
-    visitChild: (id: string) => void,
+    visitChild: VisitChild = (id, bundled = false) => {
+      const state = entryFile[kState]!;
+      const resolved = resolveRelativeToEntry(entryFile, file, id);
+      const seenBundled = state.visited.get(resolved);
+      if (seenBundled === false || (seenBundled && bundled)) return;
+      state.visited.set(resolved, bundled);
+      const childFile = loadFileForImport(entryFile, resolved);
+      if (childFile) builder.visit(childFile, entryFile);
+    },
   ) {
     const state = (entryFile[kState] ||= {
       init: false,
+      load: false,
+      bundled: 0,
+      roots: [],
       assets: new Set(),
+      bundledAssets: new Set(),
+      visited: new Map([
+        [
+          resolveRelativePath(entryFile, entryFile.opts.filename as string),
+          false,
+        ],
+      ]),
     });
     const programExtra = file.path.node.extra;
     const { analyzedTags, assetImports } = file.metadata.marko;
+    const { loadImports } = programExtra;
 
-    if (programExtra.isInteractive || programExtra.needsCompat) {
-      state.init = true;
+    const init = !!(programExtra.isInteractive || programExtra.needsCompat);
+    const load = !!programExtra.hasClientStatement;
+    // The topmost templates with client side work are what the bundle links;
+    // everything below one of them arrives through its imports.
+    const isRoot =
+      !state.bundled && (init || load || !!programExtra.hasResumes);
+
+    if (init) state.init = true;
+    if (load) state.load = true;
+    if (isRoot) {
+      state.roots.push(
+        resolveRelativePath(entryFile, file.opts.filename as string),
+      );
     }
 
-    // Link the template's known client side assets (styles, css imports, etc) into
-    // the page entry so that static routes still ship them; collected during analyze.
+    // Collected during analyze (styles, css imports, etc).
     if (assetImports) {
+      const assets =
+        isRoot || state.bundled ? state.bundledAssets : state.assets;
       for (const request of assetImports) {
-        state.assets.add(resolveRelativeToEntry(entryFile, file, request));
+        assets.add(resolveRelativeToEntry(entryFile, file, request));
       }
     }
 
-    for (const tag of analyzedTags || []) {
-      visitChild(tag);
+    if (isRoot) state.bundled++;
+    // Copied because loading a child appends this file's own `analyzedTags`.
+    for (const tag of analyzedTags ? [...analyzedTags] : []) {
+      // A lazily imported subtree is loaded by its own load entry, never here.
+      const lazy = loadImports?.has(tag);
+      if (lazy) state.bundled++;
+      visitChild(tag, !!state.bundled);
+      if (lazy) state.bundled--;
     }
+    if (isRoot) state.bundled--;
   },
 };
+
+export default builder;

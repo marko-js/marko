@@ -1,12 +1,12 @@
 import { types as t } from "@marko/compiler";
 import {
   getTemplateId,
-  loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
 import { hasAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
+import { isSectionRendererElided } from "../../util/binding-has-prop";
 import {
   type BindingPropTree,
   getBindingPropTree,
@@ -25,9 +25,12 @@ import {
   finalizeReferences,
   trackParamsReferences,
 } from "../../util/references";
-import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
-import { startSection } from "../../util/sections";
+import {
+  forEachSection,
+  getSectionRegisterReasons,
+  startSection,
+} from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -39,6 +42,7 @@ export let localsIdentifier: t.Identifier;
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
+    hasResumes?: boolean;
     domExports?: {
       template: string;
       walks: string;
@@ -102,6 +106,20 @@ export default {
       }
 
       const section = programExtra.section!;
+
+      // Anything serialized, and any registered content renderer, is revived
+      // against this module, so it has to reach the client even with no client
+      // statements of its own.
+      forEachSection((childSection) => {
+        programExtra.hasResumes ||= !!(
+          childSection.serializeReason ||
+          childSection.serializeReasons.size ||
+          (childSection !== section &&
+            !isSectionRendererElided(childSection) &&
+            getSectionRegisterReasons(childSection))
+        );
+      });
+
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
         // importing and calling it (checked when this template translates).
@@ -176,26 +194,7 @@ export default {
 
         if (isDOMPageEntry) {
           const entryFile = program.hub.file;
-          const { filename } = entryFile.opts;
-          const visitedFiles = new Set([
-            resolveRelativePath(entryFile, filename),
-          ]);
-          entryBuilder.visit(
-            entryFile,
-            entryFile,
-            function visitChild(resolved) {
-              if (!visitedFiles.has(resolved)) {
-                visitedFiles.add(resolved);
-                const file = loadFileForImport(entryFile, resolved);
-                if (file) {
-                  entryBuilder.visit(file, entryFile, (id) =>
-                    visitChild(resolveRelativeToEntry(entryFile, file, id)),
-                  );
-                }
-              }
-            },
-          );
-
+          entryBuilder.visit(entryFile, entryFile);
           program.node.body = entryBuilder.build(entryFile);
           program.skip();
           return;

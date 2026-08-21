@@ -1,12 +1,3 @@
-// tags/child.marko
-const $template = "<span> </span>";
-const $walks = "D l";
-const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
-const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => console.log("loaded"));
-const $setup = $setup__script;
-const $input = ($scope, input) => $input_value($scope, input.value);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, "D l", $setup, $input);
-
 // tags/parent-a.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%/&c";
@@ -39,6 +30,15 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
+// tags/child.marko
+const $template = "<span> </span>";
+const $walks = "D l";
+const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
+const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => console.log("loaded"));
+const $setup = $setup__script;
+const $input = ($scope, input) => $input_value($scope, input.value);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, "D l", $setup, $input);
 
 // tags/v:child.marko.setup.js
 const _ = [

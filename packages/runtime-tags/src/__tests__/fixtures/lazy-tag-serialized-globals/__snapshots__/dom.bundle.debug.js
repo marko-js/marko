@@ -1,3 +1,10 @@
+// template.marko
+const $template = "<!><!><!>";
+const $walks = "b%/&c";
+let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+const $setup = $load_Child_setup;
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
 // child.marko
 const $template = "<button>count: <!></button>";
 const $walks = " Db%l";
@@ -10,13 +17,6 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup);
-
-// template.marko
-const $template = "<!><!><!>";
-const $walks = "b%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
-const $setup = $load_Child_setup;
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // v:child.marko.setup.js
 const _ = [

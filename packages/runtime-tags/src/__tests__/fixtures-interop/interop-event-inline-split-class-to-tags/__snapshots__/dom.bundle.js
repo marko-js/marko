@@ -1,4 +1,5 @@
 // components/tags-pinger.marko
+var import_vdom = require_vdom();
 var import_const_element = /* @__PURE__ */ __toESM(require_const_element());
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
@@ -27,33 +28,20 @@ var component_browser_default = class {
 
 // components/class-host/index.marko
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType$1 = "c", _marko_template$1 = (0, import_vdom.t)(_marko_componentType$1);
+const _marko_componentType = "c", _marko_template = (0, import_vdom.t)(_marko_componentType);
 const _marko_node = (0, import_const_element.default)("div", { "id": "class" }, 1).t("none");
 const _marko_class_fn = (_component) => function(count) {
 	_component.handlePing(count);
 };
 (0, import_runtime_dom.f)("c/h0", _marko_class_fn);
-(0, import_registry.r)(_marko_componentType$1, () => component_browser_default);
-const _marko_component$1 = {};
-component_browser_default.renderer = _marko_template$1._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
+(0, import_registry.r)(_marko_componentType, () => component_browser_default);
+const _marko_component = {};
+component_browser_default.renderer = _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.n(_marko_node, _component);
 	(0, import_dynamic_tag.default)(out, tags_pinger_default, () => ({ "onPing": _marko_class_fn(_component) }), null, null, null, _componentDef, "1");
 }, {
-	t: _marko_componentType$1,
-	s: true
-}, _marko_component$1);
-_marko_template$1.Component = (0, import_defineComponent.default)(_marko_component$1, _marko_template$1._);
-
-// template.marko
-var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
-const _marko_componentType = "a", _marko_template = (0, import_vdom.t)(_marko_componentType);
-(0, import_registry.r)(_marko_componentType, () => _marko_template);
-const _marko_component = {};
-_marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
-	(0, import_render_tag.default)(_marko_template$1, {}, out, _componentDef, "0");
-}, {
 	t: _marko_componentType,
-	i: true
+	s: true
 }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 

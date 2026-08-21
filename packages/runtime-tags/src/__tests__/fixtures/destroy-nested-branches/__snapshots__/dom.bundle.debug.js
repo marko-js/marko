@@ -1,21 +1,3 @@
-// tags/child.marko
-const $template$1 = "<p> </p>";
-const $walks$1 = "D l";
-const $setup$1 = () => {};
-const $name__script = _script("__tests__/tags/child.marko_0_name#3", ($scope) => {
-	_lifecycle($scope, { onDestroy: function() {
-		console.log(`lifecycle ${$scope.name} destroyed`);
-	} });
-	$signal($scope, 0).onabort = () => console.log(`effect ${$scope.name} destroyed`);
-});
-const $name = /*@__PURE__*/ _const("name", ($scope) => {
-	_text($scope["#text/0"], $scope.name);
-	$signalReset($scope, 0);
-	$name__script($scope);
-});
-const $input = ($scope, input) => $name($scope, input.name);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input);
-
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
@@ -35,3 +17,21 @@ function $setup($scope) {
 	$items($scope, ["a", "b"]);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);
+
+// tags/child.marko
+const $template = "<p> </p>";
+const $walks = "D l";
+const $setup = () => {};
+const $name__script = _script("__tests__/tags/child.marko_0_name#3", ($scope) => {
+	_lifecycle($scope, { onDestroy: function() {
+		console.log(`lifecycle ${$scope.name} destroyed`);
+	} });
+	$signal($scope, 0).onabort = () => console.log(`effect ${$scope.name} destroyed`);
+});
+const $name = /*@__PURE__*/ _const("name", ($scope) => {
+	_text($scope["#text/0"], $scope.name);
+	$signalReset($scope, 0);
+	$name__script($scope);
+});
+const $input = ($scope, input) => $name($scope, input.name);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, "D l", 0, $input);
