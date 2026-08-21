@@ -243,7 +243,7 @@ export function _content_resume(
   return _resume(_content(id, fn, scopeId), id, scopeId);
 }
 
-export const patchDynamicTag = (
+export const patchDynamicTag = /* @__PURE__ */ (
   (originalDynamicTag) =>
   (patch: (tag: unknown, scopeId: number, accessor: Accessor) => unknown) => {
     _dynamic_tag = (
