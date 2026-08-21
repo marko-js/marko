@@ -7,6 +7,7 @@ import {
   compile,
   compileFile,
   compileFileSync,
+  compileSync,
   getRuntimeEntryFiles,
   getRuntimeVersion,
 } from "@marko/compiler";
@@ -56,6 +57,14 @@ describe("compiler/compile", () => {
           fileSystem: fromMemory("<div>from config</div>"),
         }).code,
         /from config/,
+      ));
+  });
+
+  describe("output", () => {
+    it("rejects an unrecognized value instead of falling through to dom", () =>
+      assert.throws(
+        () => compileSync("<div>hi</div>", template, { output: "HTML" }),
+        /Invalid Marko compiler option "output": "HTML"\. Expected one of: html, dom, source, migrate, hydrate\./,
       ));
   });
 

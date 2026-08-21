@@ -37,6 +37,12 @@ describe("compiler/taglib", () => {
       assert.equal(run({ CASE: "register-by-module" }), true));
   });
 
+  it("re-reads a taglib whose JSON was fixed in the same process", () => {
+    const { firstError, tags } = run({ CASE: "reload-after-parse-error" });
+    assert.match(firstError, /Unable to parse JSON file at path/);
+    assert.deepEqual(tags, ["legacy-panel"]);
+  });
+
   describe("optional taglibs", () => {
     it("skips one the root package does not depend on", () =>
       assert.deepEqual(run({ CASE: "optional-undeclared" }), []));

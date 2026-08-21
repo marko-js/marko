@@ -1,3 +1,7 @@
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+
 import { taglib } from "@marko/compiler";
 
 // Empty on both halves of what a translator owes the lookup, so what comes
@@ -51,6 +55,18 @@ const cases = {
       errors.push(err.message),
     );
     write({ resolved, errors });
+  },
+
+  "reload-after-parse-error": () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-taglib-"));
+    const file = path.join(dir, "marko-tag.json");
+    fs.writeFileSync(file, "{ BAD JSON");
+    const firstError = message(() => taglib._loader.loadTaglibFromFile(file));
+    fs.writeFileSync(file, JSON.stringify({ tags: { "legacy-panel": {} } }));
+    write({
+      firstError,
+      tags: Object.keys(taglib._loader.loadTaglibFromFile(file).tags),
+    });
   },
 };
 
