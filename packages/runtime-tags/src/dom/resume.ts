@@ -184,6 +184,10 @@ export function isReady(readyId: string) {
   return !!readyIds?.has(readyId);
 }
 
+export function isFailed(readyId: string) {
+  return !!(anyFailed || failedIds?.has(readyId)) && !readyIds?.has(readyId);
+}
+
 export function withLazy<T>(runtime: T) {
   lazyEnabled = 1;
   return runtime;

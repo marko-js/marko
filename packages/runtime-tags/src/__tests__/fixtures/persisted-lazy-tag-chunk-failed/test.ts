@@ -9,6 +9,8 @@ const load = (document: Document) => {
 // the failure so the pending `applyPatch` promise settles as rejected (the
 // caller navigates) instead of hanging.
 export const config: TestConfig = {
+  // Debug intentionally logs the load-failure diagnostic optimize cannot.
+  skip_parity: true,
   persisted: true,
   equivalent: false,
   expect_rejection: true,

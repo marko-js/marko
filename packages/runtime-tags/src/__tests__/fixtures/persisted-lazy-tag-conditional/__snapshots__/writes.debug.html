@@ -4,9 +4,11 @@
 <script>
   ((p, h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
-      "script").forEach(s => s.onerror = () => self["M"]?.["_"]?.e?.(
+      "script").forEach(s => s.onerror = () => (console.error(
+      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      ), self["M"]?.["_"]?.e?.(
       "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko"
-      )), p.after(d))
+      ))), p.after(d))
   }) => (e => e?.addEventListener("click", l, {
     once: 1
   }))(document.querySelector("body") || (console.warn(
