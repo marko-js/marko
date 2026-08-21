@@ -3,7 +3,10 @@
   id=inc>Inc</button><!--M_*1 #button/2-->
 <script>
   ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-idle-unmount-before-load/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      )), p.after(d))
   }) => (self.requestIdleCallback || l)(l, {
     timeout: 100
   }))(document.currentScript,

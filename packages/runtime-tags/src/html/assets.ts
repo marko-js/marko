@@ -126,7 +126,7 @@ function flush(g: $Global, html: string) {
     const { id, triggers } = assets[di];
     const deferHTML = assetFlush(g, "defer", id);
     if (triggers) {
-      if (deferHTML) writeTriggerScript(deferHTML, triggers);
+      if (deferHTML) writeTriggerScript(id, deferHTML, triggers);
     } else {
       result += deferHTML;
     }
@@ -156,8 +156,18 @@ function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
   }
 }
 
-function writeTriggerScript(html: string, triggers: Trigger[]) {
+function writeTriggerScript(id: string, html: string, triggers: Trigger[]) {
   const htmlStr = _escape_script(JSON.stringify(html));
+  // A loader script that fails at the network level never evaluates, so the
+  // debug build reports from the script's own error event; matches the
+  // load-entry rejection arm's diagnostic.
+  const insert = MARKO_DEBUG
+    ? `(d=new Range().createContextualFragment(h),d.querySelectorAll("script").forEach(s=>s.onerror=()=>console.error(${_escape_script(
+        JSON.stringify(
+          `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
+        ),
+      )})),p.after(d))`
+    : `p.after(new Range().createContextualFragment(d=h))`;
   const exprs = triggers.map((trigger) => {
     const options = trigger.options && toObjectExpression(trigger.options);
     switch (trigger.type) {
@@ -174,7 +184,7 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
     }
   });
   writeScript(
-    `((p,h,d,l=$=>{d||p.after(new Range().createContextualFragment(d=h))})=>${
+    `((p,h,d,l=$=>{d||${insert}})=>${
       exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
     })(document.currentScript,${htmlStr})`,
   );

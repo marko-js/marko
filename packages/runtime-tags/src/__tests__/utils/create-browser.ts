@@ -167,6 +167,15 @@ export default function createBrowser(
 
         const imports: Promise<unknown>[] = [];
         for (const src of pending) {
+          // A lazy load SCRIPT that fails at the network level never
+          // evaluates: the browser fires `error` on the script element
+          // instead of surfacing the failure to anyone awaiting it.
+          if (src.endsWith(".load.mjs") && rejectLoad?.(src)) {
+            for (const el of window.document.scripts) {
+              if (el.src === src) el.dispatchEvent(new window.Event("error"));
+            }
+            continue;
+          }
           imports.push(
             importWithContext(
               path.join(dir, src),

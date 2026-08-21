@@ -1,0 +1,10 @@
+import Child from "./child.marko" with { load: "on-click body" }
+
+<main>
+  <try>
+    <Child label=input.label/>
+    <@catch>
+      <div id="error">failed</div>
+    </@catch>
+  </try>
+</main>

@@ -4,7 +4,10 @@
   class=grand>grand:<!>shared<!--M_*3 #text/1--></button><!--M_*3 #button/0-->
 <script>
   ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-visible-parent/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      )), p.after(d))
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l()).observe(e))(document
     .querySelector("body") || (console.warn(

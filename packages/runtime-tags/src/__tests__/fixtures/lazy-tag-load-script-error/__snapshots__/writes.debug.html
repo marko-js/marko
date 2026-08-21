@@ -1,0 +1,32 @@
+<main><!--M_[--><button>a:<!>
+      0<!--M_*3 #text/2--></button><!--M_*3 #button/0--><!--M_]1 #text/0 2-->
+</main>
+<script>
+  ((p, h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-load-script-error/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      )), p.after(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("body") || (console.warn(
+    "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
+    ), l())))(document.currentScript,
+    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-load-script-error/child.marko": [
+      _ => [3, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-load-script-error/child.marko_0 3"
+    ]
+  };
+  M._.r = [_ => [2, {
+    "#BranchAccessor": "#text/0",
+    "#CatchContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-load-script-error/template.marko_2*content"
+      )
+  }]];
+  M._.w()
+</script>

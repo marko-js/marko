@@ -160,13 +160,27 @@ export default {
         if (isLoadEntry) {
           const entryFile = program.hub.file;
           const { filename } = entryFile.opts;
+          const readyId = getReadyId(entryFile)!;
+          // A rejected chunk blocks this ready id forever: the debug build
+          // reports it instead of leaving the content silently inert, while
+          // production keeps the arm's bytes out (the failure still surfaces
+          // as a network error in devtools).
+          const report = !markoOpts.optimize;
           program.node.body = [
             t.importDeclaration(
-              [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
+              [
+                t.importSpecifier(t.identifier("ready"), t.identifier("ready")),
+                ...(report
+                  ? [
+                      t.importSpecifier(
+                        t.identifier("readyFailed"),
+                        t.identifier("readyFailed"),
+                      ),
+                    ]
+                  : []),
+              ],
               t.stringLiteral(getRuntimePath("dom")),
             ),
-            // A rejected chunk blocks this ready id, but already surfaces as a
-            // network error, so handling it is not worth the runtime bytes.
             // Dynamic so the template stays mergeable with its virtual signal
             // chunks; a static import splits it out, adding a chunk and bytes.
             t.expressionStatement(
@@ -181,9 +195,19 @@ export default {
                   t.arrowFunctionExpression(
                     [],
                     t.callExpression(t.identifier("ready"), [
-                      t.stringLiteral(getReadyId(entryFile)!),
+                      t.stringLiteral(readyId),
                     ]),
                   ),
+                  ...(report
+                    ? [
+                        t.arrowFunctionExpression(
+                          [],
+                          t.callExpression(t.identifier("readyFailed"), [
+                            t.stringLiteral(readyId),
+                          ]),
+                        ),
+                      ]
+                    : []),
                 ],
               ),
             ),

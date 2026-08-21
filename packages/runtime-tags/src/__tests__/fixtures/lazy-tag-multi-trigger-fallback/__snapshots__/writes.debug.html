@@ -1,7 +1,10 @@
 <span>1</span>
 <script>
   ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger-fallback/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      )), p.after(d))
   }) => {
     (e => e?.addEventListener("click", l, {
       once: 1
