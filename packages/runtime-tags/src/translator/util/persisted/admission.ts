@@ -6,6 +6,7 @@ import { types as t } from "@marko/compiler";
 import {
   getProgram,
   getTagDef,
+  isAttributeTag,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
@@ -16,9 +17,11 @@ import {
 } from "../../visitors/tag/native-tag";
 import * as BindingType from "../constants/binding-type";
 import evaluate from "../evaluate";
+import { getTagName } from "../get-tag-name";
 import { isConditionTag, isCoreTagName } from "../is-core-tag";
 import { isEventOrChangeHandler } from "../is-event-or-change-handler";
 import { getParamGroupFeeds, type ParamGroupFeeds } from "../known-tag";
+import { getAttrTagPaths } from "../nested-attribute-tags";
 import { every, forEach, type Opt } from "../optional";
 import { type Binding, getCanonicalExtra } from "../references";
 import { getSection, getSectionForBody } from "../sections";
@@ -173,25 +176,44 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               : instanceValueUnsafety(attrPath.get("value") as t.NodePath);
           if (reason) return;
         }
-        if (getTagDef(inner)?.template) {
-          if (node.var) {
-            reason = "renders a nested child with a tag variable";
-          } else if (node.attributeTags?.length || node.arguments?.length) {
-            reason = "renders a nested child with attribute tags or arguments";
-          } else {
-            // An inputless child has no groups: anything fed must analyze.
-            const feeds = node.extra && getParamGroupFeeds(node.extra);
-            if (!feeds && node.attributes.length) {
-              reason = "renders a nested child without analyzable input";
-            }
-            for (const group of feeds || []) {
-              if (group.sources?.global) {
-                reason = "feeds a nested child a `$global`-derived input";
-                break;
-              }
-            }
-            reason ||= getInstanceUnsafety(inner);
+        if (!isAttributeTag(inner) && getTagDef(inner)?.template) {
+          // The `_var_change` write-back is not wired for a pure client
+          // instance; an unassigned variable is just a local read.
+          if (
+            node.var?.type === "Identifier" &&
+            node.var.extra?.binding?.assignmentSections
+          ) {
+            reason = "renders a nested child with an assigned tag variable";
+            return;
           }
+          if (node.arguments?.length) {
+            for (const argPath of inner.get("arguments") as t.NodePath[]) {
+              reason ||= t.isSpreadElement(argPath.node)
+                ? "renders a nested child with a spread argument"
+                : instanceValueUnsafety(argPath);
+            }
+            if (reason) return;
+          }
+          // An inputless child has no groups: anything fed must analyze.
+          // (Attr-tag attribute values validate as this traverse reaches
+          // them; their bodies render here like any other content.)
+          const feeds = node.extra && getParamGroupFeeds(node.extra);
+          if (
+            !feeds &&
+            (node.attributes.length ||
+              node.arguments?.length ||
+              node.attributeTags?.length ||
+              node.body.attributeTags)
+          ) {
+            reason = "renders a nested child without analyzable input";
+          }
+          for (const group of feeds || []) {
+            if (group.sources?.global) {
+              reason = "feeds a nested child a `$global`-derived input";
+              break;
+            }
+          }
+          reason ||= getInstanceUnsafety(inner);
         }
       },
     });
@@ -273,19 +295,53 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   // Provenance-free feeds (imports, opaque reads) have no fill channel, so
   // only a tracked (param/state) or constant feed can gate structure.
   const groupFedUnsafely = (
-    attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
+    tag: t.NodePath<t.MarkoTag>,
     group: ParamGroupFeeds,
   ) => {
+    const { node } = tag;
     let names: Set<string> | undefined;
     forEach(group.params, (param) => {
       (names ??= new Set()).add(param.property ?? param.name);
     });
-    return attributes.some(
-      (attr) =>
-        attr.type === "MarkoAttribute" &&
-        names?.has(attr.name) &&
-        !evaluate(attr.value).confident &&
-        !getSerializeSourcesForExpr(attr.value.extra || {}),
+    if (!names) return false;
+    const fedNames = names;
+    const unsafeValue = (value: t.Expression) =>
+      !evaluate(value).confident &&
+      !getSerializeSourcesForExpr(value.extra || {});
+    if (
+      node.attributes.some(
+        (attr) =>
+          attr.type === "MarkoAttribute" &&
+          fedNames.has(attr.name) &&
+          unsafeValue(attr.value),
+      ) ||
+      node.arguments?.some(
+        (arg, i) =>
+          fedNames.has(i + "") && !t.isSpreadElement(arg) && unsafeValue(arg),
+      )
+    ) {
+      return true;
+    }
+    // An attr tag itself feeds like body content; only a provenance-free
+    // attribute VALUE anywhere inside one gates the group it feeds.
+    const attrTagFeedsUnsafely = (attrTag: t.NodePath<t.MarkoTag>): boolean =>
+      attrTag.node.attributes.some(
+        (attr) => attr.type === "MarkoAttribute" && unsafeValue(attr.value),
+      ) ||
+      getAttrTagPaths(attrTag).some(
+        (child) =>
+          child.isMarkoTag() &&
+          isAttributeTag(child) &&
+          attrTagFeedsUnsafely(child),
+      );
+    const lookup = node.extra?.attributeTags;
+    return (
+      !!lookup &&
+      getAttrTagPaths(tag).some((child) => {
+        if (!child.isMarkoTag() || !isAttributeTag(child)) return false;
+        const meta = lookup[getTagName(child)];
+        return !!meta && fedNames.has(meta.name) && attrTagFeedsUnsafely(child);
+      })
     );
   };
   program.traverse({
@@ -506,27 +562,48 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // Inside client-owned structure a child is a pure client instance
         // (input re-applies via tag-args signals; server values fill).
         if (inStatefulBranch(getSection(tag))) {
-          if (node.var) {
+          // The `_var_change` write-back is not wired for a pure client
+          // instance, so an assigned tag variable stays closed.
+          if (
+            node.var?.type === "Identifier" &&
+            node.var.extra?.binding?.assignmentSections
+          ) {
             unsupported(
               node,
-              "a tag variable on a child inside client-owned structure is not supported yet",
+              "assigning a child's tag variable inside client-owned structure is not supported yet",
             );
           }
-          // Body content compiles here, so its expressions are already
-          // checked in their own (client-owned) sections; attr tags are not.
-          if (node.attributeTags?.length) {
-            unsupported(
-              node,
-              "attribute tags for a child inside client-owned structure are not supported yet",
-            );
+          for (const arg of node.arguments || []) {
+            // A spread argument hides which params it feeds from the
+            // per-group analysis below.
+            if (t.isSpreadElement(arg)) {
+              unsupported(
+                arg,
+                "a spread argument for a child inside client-owned structure is not supported yet",
+              );
+            } else {
+              assertDeliverableInClientOwned(arg, arg, arg.extra);
+            }
           }
-          // Arguments have no per-group channel: only named attrs deliver.
-          if (node.arguments?.length) {
-            unsupported(
-              node,
-              "arguments for a child inside client-owned structure are not supported yet",
-            );
-          }
+          // Attr-tag bodies compile in this file (this traverse visits
+          // them); only their attribute expressions need checking here.
+          const checkAttrTagAttrs = (owner: t.NodePath<t.MarkoTag>) => {
+            for (const child of getAttrTagPaths(owner)) {
+              if (child.isMarkoTag() && isAttributeTag(child)) {
+                for (const attr of child.node.attributes) {
+                  assertDeliverableInClientOwned(
+                    attr,
+                    attr.value,
+                    attr.type === "MarkoAttribute"
+                      ? attr.value.extra
+                      : node.extra,
+                  );
+                }
+                checkAttrTagAttrs(child);
+              }
+            }
+          };
+          checkAttrTagAttrs(tag);
           // Transitive safety composes per-template facts with a memo:
           // every template below must be a self-contained client instance.
           const unsafety = getInstanceUnsafety(tag);
@@ -550,7 +627,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           // An inputless child has no groups to classify; anything fed
           // must analyze so each group's channel can be checked.
           const feeds = node.extra && getParamGroupFeeds(node.extra);
-          if (!feeds && (node.attributes.length || node.arguments?.length)) {
+          if (
+            !feeds &&
+            (node.attributes.length ||
+              node.arguments?.length ||
+              node.attributeTags?.length ||
+              node.body.attributeTags)
+          ) {
             unsupported(
               node,
               "a child inside client-owned structure must have analyzable input",
@@ -562,10 +645,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             // has no channel. (`$global`-derived feeds deliver as fills,
             // checked per attribute above; direct `$global` reads reject
             // there too.)
-            if (
-              group.structuralOrGlobal &&
-              groupFedUnsafely(node.attributes, group)
-            ) {
+            if (group.structuralOrGlobal && groupFedUnsafely(tag, group)) {
               unsupported(
                 node,
                 "an input the child needs server-owned cannot feed from client-owned structure",
