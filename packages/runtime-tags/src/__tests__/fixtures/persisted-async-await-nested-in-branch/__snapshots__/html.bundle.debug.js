@@ -25,14 +25,14 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					_html$1(`<em>${_patch_text($scope3_id, "#text/0", outer, $scope0_owned, 4)}${_el_resume($scope3_id, "#text/0")}:<!>${_patch_text($scope3_id, "#text/1", inner, $scope0_owned, 5)}${_el_resume($scope3_id, "#text/1")}</em>`);
 					_subscribe($scope0_reason && $await_content__outer__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 					_resume_branch($scope3_id);
-				}, void 0, "__tests__/template.marko_2_#text#0/await");
+				}, 1, "__tests__/template.marko_2_#text#0/await");
 				$scope0_reason && _subscribe(_source_if($scope0_reason, 5) && $input_inner__closures, writeScope($scope2_id, {
 					outer,
 					_: _scope_with_id($scope1_id),
 					"ClosureScopes:outer": $await_content__outer__closures
 				}, "__tests__/template.marko", "3:6", { outer: "3:12" }));
 				_resume_branch($scope2_id);
-			}, void 0, "__tests__/template.marko_1_#text#0/await");
+			}, 1, "__tests__/template.marko_1_#text#0/await");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		}

@@ -29,8 +29,9 @@ installReady(markReady, failReady);
 // Receives a frame's ready-channel record (an explicit call in the frame
 // text): data for a loaded channel merges into the live render's ready
 // record for this frame's run; the rest waits for its module.
-// Live-record pushes of the frame being applied, undone if it rejects.
-let framePushes: [batch: unknown[], length: number][] = [];
+// Live-record pushes of the frame being applied (alternating batch,
+// prior length), undone if it rejects.
+let framePushes: (unknown[] | number)[] = [];
 
 function acceptReady(record: Record<string, unknown[]>) {
   const render = patchRender as RenderData;
@@ -70,7 +71,7 @@ function acceptReady(record: Record<string, unknown[]>) {
 // strings keep their native resume handling.
 function pushBatch(render: RenderData, readyId: string, batch: unknown[]) {
   const target = ((render.b ??= {})[readyId] ??= []);
-  framePushes.push([target, target.length]);
+  framePushes.push(target, target.length);
   for (const partial of batch) {
     target.push(
       typeof partial === "object" && partial && !Array.isArray(partial)
@@ -116,7 +117,9 @@ function discardReady(render: RenderData) {
   // A rejected frame's channel pushes must not survive to a later run;
   // truncating is exact unless the batch was partially consumed mid-run —
   // then the caller is navigating anyway and dropping the rest is safe.
-  for (const [batch, length] of framePushes) {
+  for (let i = 0; i < framePushes.length; i += 2) {
+    const batch = framePushes[i] as unknown[];
+    const length = framePushes[i + 1] as number;
     if (batch.length > length) batch.length = length;
   }
   framePushes = [];

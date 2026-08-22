@@ -49,7 +49,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 							"ClosureSignalIndex:input_value": 1
 						}, "__tests__/template.marko", "5:10");
 						_resume_branch($scope4_id);
-					}, void 0, "__tests__/template.marko_3_#text#0/await");
+					}, 1, "__tests__/template.marko_3_#text#0/await");
 					$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_value__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 					_resume_branch($scope3_id);
 				}, $scope2_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_5*content", $scope2_id) }) });

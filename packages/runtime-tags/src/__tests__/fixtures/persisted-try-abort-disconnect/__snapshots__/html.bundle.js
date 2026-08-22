@@ -20,7 +20,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<p>A:<!>${_patch_text($scope4_id, "a", v, $scope0_owned, 0)}${_el_resume($scope4_id, "a")}</p>`);
 			writeScope($scope4_id, {});
-		}, void 0, "a3", 1);
+		}, 1, "a3", 1);
 		$scope0_reason && _subscribe($input_a__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {

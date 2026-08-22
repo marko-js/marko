@@ -25,7 +25,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				const $scope5_id = _scope_id();
 				_html(`<em>${_patch_text($scope5_id, "#text/0", value, $scope0_owned, 0)}${_el_resume($scope5_id, "#text/0")}</em>`);
 				writeScope($scope5_id, {}, "__tests__/template.marko", "4:8");
-			}, void 0, "__tests__/template.marko_2_#text#0/await", 1);
+			}, 1, "__tests__/template.marko_2_#text#0/await", 1);
 			$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 			_resume_branch($scope2_id);
 		}, $scope1_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_4*content", $scope1_id) }) }, 1);

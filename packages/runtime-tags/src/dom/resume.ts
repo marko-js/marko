@@ -160,14 +160,13 @@ export function installReady(
 // A module that will never arrive can never drain the data waiting on it:
 // the failure is recorded (later patches naming the channel reject
 // immediately), pending patches settle so their callers navigate, and the
-// debug build says so instead of staying silent (repeat reports fold). The
-// loader script's `onerror` reaches here through the render data (`e`);
-// runtime-managed loads report without an id (the failing load is not
-// tied to one channel).
+// debug build says so instead of staying silent. The loader script's
+// `onerror` reaches here through the render data (`e`); runtime-managed
+// loads report without an id (the failing load is not tied to one channel).
 export function readyFailed(readyId?: string) {
   if (readyId) {
     if (MARKO_DEBUG) {
-      if (!failedIds?.has(readyId) && !readyIds?.has(readyId)) {
+      if (!readyIds?.has(readyId)) {
         console.error(
           `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
         );

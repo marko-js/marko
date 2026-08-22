@@ -14,7 +14,7 @@ var loader_default = _template_persisted("__tests__/tags/loader.marko", (input) 
 		const $scope1_id = _scope_id();
 		_html$1(`${_patch_text($scope1_id, "#text/0", v, $scope0_owned, 0)}${_el_resume($scope1_id, "#text/0")}`);
 		writeScope($scope1_id, {}, "__tests__/tags/loader.marko", "1:18");
-	}, void 0, "__tests__/tags/loader.marko_0_#text#0/await", 1);
+	}, 1, "__tests__/tags/loader.marko_0_#text#0/await", 1);
 	_html$1("</div>");
 }, 0, 0);
 

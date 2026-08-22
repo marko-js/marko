@@ -17,7 +17,7 @@ var template_default = _template_persisted("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_patch_text($scope3_id, "a", value, $scope0_owned, 2)}${_el_resume($scope3_id, "a")}</em>`);
 				writeScope($scope3_id, {});
-			}, void 0, "a2");
+			}, 1, "a2");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		} else {

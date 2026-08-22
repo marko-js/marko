@@ -315,8 +315,9 @@ export function patchPartial(
     if (serializeState.readyId && !pending && scopeId !== state.rootScopeId) {
       const link = state.patchParents?.[scopeId];
       if (link && typeof link[1] === "string") {
-        // A channel tree re-links through the recorded parent hop; the
-        // live page resolves it when the channel applies.
+        // Hang this scope's partial off its parent's boundary child entry
+        // (parent scope `link[0]`, slot `link[1]`): the live page reaches
+        // it by following that slot when the channel's module applies.
         partial = partials[scopeId] = {};
         writePatch(
           link[0],

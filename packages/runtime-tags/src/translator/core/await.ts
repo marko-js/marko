@@ -210,7 +210,7 @@ export default {
                 // frame pairs its body through the branch link the marker
                 // resumes, wherever the boundary renders.
                 isPersisted() && !inStatefulBranch(section)
-                  ? undefined
+                  ? t.numericLiteral(1)
                   : getSerializeGuard(
                       section,
                       bodySection?.serializeReason,

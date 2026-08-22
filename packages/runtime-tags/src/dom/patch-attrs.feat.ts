@@ -13,14 +13,16 @@ import { patchers } from "./resume";
 // re-attaches.
 patchers[PatchKey.Attrs] = (scope, key, value) => {
   const accessor = key.slice(PatchKey.Attrs.length) as Accessor;
-  const [set, skip, claims] = (Array.isArray(value) ? value : [value]) as [
-    Record<string, unknown> | 0,
-    Record<string, 1> | 0,
-    1?,
-  ];
-  const controllable = claims
-    ? controllableRenders[(scope[accessor] as Element).tagName]
-    : undefined;
+  let set = value as Record<string, unknown> | 0;
+  let skip: Record<string, 1> | 0 | undefined;
+  let controllable: (typeof controllableRenders)[string] | undefined;
+  if (Array.isArray(value)) {
+    set = value[0] as typeof set;
+    skip = value[1] as typeof skip;
+    if (value[2]) {
+      controllable = controllableRenders[(scope[accessor] as Element).tagName];
+    }
+  }
   if (skip) {
     _attrs_partial(scope, accessor, set || undefined!, skip, controllable);
   } else {

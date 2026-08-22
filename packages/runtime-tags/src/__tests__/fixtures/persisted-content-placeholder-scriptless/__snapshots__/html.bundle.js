@@ -17,7 +17,7 @@ var card_default = _template_persisted("b", (input) => {
 		_await($scope2_id, "a", input.promise, () => {
 			_scope_id();
 			_html("<span>done</span>");
-		}, void 0, "b1");
+		}, 1, "b1");
 		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope2_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_elide("b3", () => {

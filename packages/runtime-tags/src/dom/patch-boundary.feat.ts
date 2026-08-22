@@ -145,7 +145,7 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // content record its frame shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
     const renderer = getShellContent(shells[value] || failPatch());
-    // A missing marker means the frame paired into the wrong scope (skew):
+    // Integrity backstop: no anchor means nothing to pair against, so
     // reject cleanly rather than corrupting.
     const marker = (scope[accessor as Accessor] || failPatch()) as ChildNode;
     const pendingScopes = collectScopes(

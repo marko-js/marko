@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-client-tag-var/template.marko:4:5
-      2 | <main>
-      3 |   <if=show>
-    > 4 |     <widget/w label="a"/>
-        |     ^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a tag variable on a child inside client-owned structure is not supported yet.
-      5 |   </if>
-      6 |   <button onClick() { show = !show }>t</button>
-      7 | </main>
