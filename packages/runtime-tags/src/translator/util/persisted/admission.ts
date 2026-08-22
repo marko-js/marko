@@ -319,9 +319,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     });
     // A param whose feed cannot be located has no checkable channel.
     if (unresolved) return true;
+    // Attr-tag and spread values merge their references into the group or
+    // tag extra: the canonical extra sees the tracked sources they carry.
     const unsafeValue = (value: t.Expression) =>
       !evaluate(value).confident &&
-      !getSerializeSourcesForExpr(value.extra || {});
+      !getSerializeSourcesForExpr(getCanonicalExtra(value.extra || {}));
     if (
       node.arguments?.some(
         (arg, i) =>
