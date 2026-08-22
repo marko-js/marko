@@ -17,6 +17,7 @@ import {
 } from "../../visitors/tag/native-tag";
 import * as BindingType from "../constants/binding-type";
 import evaluate from "../evaluate";
+import { forEachIdentifier } from "../for-each-identifier";
 import { getTagName } from "../get-tag-name";
 import { isConditionTag, isCoreTagName } from "../is-core-tag";
 import { isEventOrChangeHandler } from "../is-event-or-change-handler";
@@ -179,10 +180,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (!isAttributeTag(inner) && getTagDef(inner)?.template) {
           // The `_var_change` write-back is not wired for a pure client
           // instance; an unassigned variable is just a local read.
-          if (
-            node.var?.type === "Identifier" &&
-            node.var.extra?.binding?.assignmentSections
-          ) {
+          if (node.var && varAssigned(node.var)) {
             reason = "renders a nested child with an assigned tag variable";
             return;
           }
@@ -294,30 +292,58 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   };
   // Provenance-free feeds (imports, opaque reads) have no fill channel, so
   // only a tracked (param/state) or constant feed can gate structure.
+  // The child input root a group param feeds from: its program param
+  // index plus the property directly under it (none for a whole param).
+  const getGroupParamRoot = (param: Binding) => {
+    let prop: string | undefined;
+    for (let b: Binding | undefined = param; b; b = b.upstreamAlias) {
+      if (b.upstreamAlias === b.section.params) {
+        return b.property === undefined
+          ? undefined
+          : { index: b.property, prop };
+      }
+      if (b.property !== undefined) prop = b.property;
+    }
+  };
   const groupFedUnsafely = (
     tag: t.NodePath<t.MarkoTag>,
     group: ParamGroupFeeds,
   ) => {
     const { node } = tag;
-    let names: Set<string> | undefined;
+    const roots: { index: string; prop: string | undefined }[] = [];
+    let unresolved = false;
     forEach(group.params, (param) => {
-      (names ??= new Set()).add(param.property ?? param.name);
+      const root = getGroupParamRoot(param);
+      if (root) roots.push(root);
+      else unresolved = true;
     });
-    if (!names) return false;
-    const fedNames = names;
+    // A param whose feed cannot be located has no checkable channel.
+    if (unresolved) return true;
     const unsafeValue = (value: t.Expression) =>
       !evaluate(value).confident &&
       !getSerializeSourcesForExpr(value.extra || {});
     if (
-      node.attributes.some(
-        (attr) =>
-          attr.type === "MarkoAttribute" &&
-          fedNames.has(attr.name) &&
-          unsafeValue(attr.value),
-      ) ||
       node.arguments?.some(
         (arg, i) =>
-          fedNames.has(i + "") && !t.isSpreadElement(arg) && unsafeValue(arg),
+          !t.isSpreadElement(arg) &&
+          roots.some((root) => root.index === i + "") &&
+          unsafeValue(arg),
+      )
+    ) {
+      return true;
+    }
+    // Named attributes and attr tags feed the program param AFTER the
+    // positional arguments; a spread may carry any of its properties.
+    const attrsIndex = (node.arguments?.length || 0) + "";
+    const attrRoots = roots.filter((root) => root.index === attrsIndex);
+    if (!attrRoots.length) return false;
+    const feedsRoot = (name: string) =>
+      attrRoots.some((root) => root.prop === undefined || root.prop === name);
+    if (
+      node.attributes.some((attr) =>
+        attr.type === "MarkoAttribute"
+          ? feedsRoot(attr.name) && unsafeValue(attr.value)
+          : unsafeValue(attr.value),
       )
     ) {
       return true;
@@ -325,9 +351,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     // An attr tag itself feeds like body content; only a provenance-free
     // attribute VALUE anywhere inside one gates the group it feeds.
     const attrTagFeedsUnsafely = (attrTag: t.NodePath<t.MarkoTag>): boolean =>
-      attrTag.node.attributes.some(
-        (attr) => attr.type === "MarkoAttribute" && unsafeValue(attr.value),
-      ) ||
+      attrTag.node.attributes.some((attr) => unsafeValue(attr.value)) ||
       getAttrTagPaths(attrTag).some(
         (child) =>
           child.isMarkoTag() &&
@@ -340,9 +364,18 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
       getAttrTagPaths(tag).some((child) => {
         if (!child.isMarkoTag() || !isAttributeTag(child)) return false;
         const meta = lookup[getTagName(child)];
-        return !!meta && fedNames.has(meta.name) && attrTagFeedsUnsafely(child);
+        return !!meta && feedsRoot(meta.name) && attrTagFeedsUnsafely(child);
       })
     );
+  };
+  // Whether any binding the tag variable declares is assigned somewhere
+  // (destructured vars hang their bindings on the pattern's identifiers).
+  const varAssigned = (varNode: t.LVal) => {
+    let assigned = false;
+    forEachIdentifier(varNode, (id) => {
+      assigned ||= !!id.extra?.binding?.assignmentSections;
+    });
+    return assigned;
   };
   program.traverse({
     MarkoPlaceholder(placeholder) {
@@ -564,10 +597,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (inStatefulBranch(getSection(tag))) {
           // The `_var_change` write-back is not wired for a pure client
           // instance, so an assigned tag variable stays closed.
-          if (
-            node.var?.type === "Identifier" &&
-            node.var.extra?.binding?.assignmentSections
-          ) {
+          if (node.var && varAssigned(node.var)) {
             unsupported(
               node,
               "assigning a child's tag variable inside client-owned structure is not supported yet",
