@@ -1,4 +1,4 @@
-// size: 28301 (min) 10489 (brotli)
+// size: 28268 (min) 10475 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -106,7 +106,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   curRenders,
   embedRenders,
   readyIds,
-  failedIds,
   lazyEnabled,
   patchRender = 0,
   patching = 0,
@@ -973,9 +972,7 @@ function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
-function readyFailed(readyId) {
-  readyId && (failedIds ||= /* @__PURE__ */ new Set()).add(readyId);
-}
+function readyFailed(readyId) {}
 function withLazy(runtime) {
   return ((lazyEnabled = 1), runtime);
 }
@@ -2417,7 +2414,6 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
 function loadFailed(scope, awaitCounter, readyId) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
-      readyFailed(readyId),
       queueAsyncRender(scope, renderCatch, error));
   };
 }

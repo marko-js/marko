@@ -103,10 +103,6 @@ let embedRenders:
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
-let failedIds: undefined | Set<string>;
-// An unidentified load failure (the failing load names no channel): every
-// still-unready channel is suspect, so later patches reject conservatively.
-let anyFailed: undefined | 1;
 let patchReady: undefined | ((readyId: string) => void);
 let patchReadyFailed: undefined | ((readyId?: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
@@ -158,33 +154,24 @@ export function installReady(
 }
 
 // A module that will never arrive can never drain the data waiting on it:
-// the failure is recorded (later patches naming the channel reject
-// immediately), pending patches settle so their callers navigate, and the
-// debug build says so instead of staying silent. The loader script's
+// the debug build says so instead of staying silent, and the persisted
+// feature (when installed) records the failure so pending patches settle
+// and later patches naming the channel reject. The loader script's
 // `onerror` reaches here through the render data (`e`); runtime-managed
 // loads report without an id (the failing load is not tied to one channel).
 export function readyFailed(readyId?: string) {
-  if (readyId) {
-    if (MARKO_DEBUG) {
-      if (!readyIds?.has(readyId)) {
-        console.error(
-          `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
-        );
-      }
+  if (MARKO_DEBUG) {
+    if (readyId && !readyIds?.has(readyId)) {
+      console.error(
+        `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
+      );
     }
-    (failedIds ||= new Set()).add(readyId);
-  } else {
-    anyFailed = 1;
   }
   patchReadyFailed?.(readyId);
 }
 
 export function isReady(readyId: string) {
   return !!readyIds?.has(readyId);
-}
-
-export function isFailed(readyId: string) {
-  return !!(anyFailed || failedIds?.has(readyId)) && !readyIds?.has(readyId);
 }
 
 export function withLazy<T>(runtime: T) {

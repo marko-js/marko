@@ -3,7 +3,6 @@ import { applyReadyPatch, frameVars, installPatchReady } from "./patch";
 import {
   failPatch,
   installReady,
-  isFailed,
   isReady,
   patchRender,
   type RenderData,
@@ -19,6 +18,16 @@ interface Pending {
   runtimeId: string;
 }
 const pending = new Map<RenderData, Pending>();
+
+// Failures recorded so later frames naming a dead channel reject at once.
+// An id-less failure (a runtime-managed load names no channel) makes every
+// still-unready channel suspect, so those frames reject conservatively.
+let failedIds: undefined | Set<string>;
+let anyFailed: undefined | 1;
+
+function isFailed(readyId: string) {
+  return !!(anyFailed || failedIds?.has(readyId)) && !isReady(readyId);
+}
 
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program with a lazy load import in a persisted build.
@@ -105,6 +114,8 @@ function markReady(readyId: string) {
 }
 
 function failReady(readyId?: string) {
+  if (readyId) (failedIds ||= new Set()).add(readyId);
+  else anyFailed = 1;
   for (const [render, entry] of pending) {
     if (!readyId || entry.c.has(readyId)) {
       pending.delete(render);
