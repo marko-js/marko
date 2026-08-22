@@ -1902,14 +1902,16 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
     if (hasOwnProperty.call(val, key)) {
       const escapedKey = toObjectKey(key);
       state.buf.push(sep + escapedKey + ":");
-      if (
-        writeProp(
-          state,
-          (val as Record<PropertyKey, unknown>)[key],
-          ref,
-          escapedKey,
-        )
-      ) {
+      let value: unknown;
+      try {
+        // A throwing getter would otherwise escape without a file or state name.
+        value = (val as Record<PropertyKey, unknown>)[key];
+      } catch (err) {
+        if (!state.boundary?.abort) throw err;
+        throwUnserializable(state, err, ref, escapedKey);
+        return "";
+      }
+      if (writeProp(state, value, ref, escapedKey)) {
         sep = ",";
       } else {
         // A deferred circular value is reassigned last, so it also moves last in

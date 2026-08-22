@@ -1,4 +1,4 @@
-import { basename, dirname, join, relative, resolve } from "path";
+import { basename, dirname, join, relative, resolve, sep } from "path";
 
 import { types as t } from "@marko/compiler";
 import markoModules from "@marko/compiler/modules";
@@ -375,7 +375,9 @@ export function resolveTagImport(path, request) {
 
 function createNewFileOpts(opts, filename) {
   const sourceFileName = basename(filename);
-  const sourceRoot = dirname(filename);
+  // Trailing separator so Node's source-map join produces a real path.
+  const dir = dirname(filename);
+  const sourceRoot = dir.endsWith(sep) ? dir : dir + sep;
   const filenameRelative = relative(cwd, filename);
   return {
     ...opts,
