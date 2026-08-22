@@ -46,7 +46,7 @@ var template_default = _template_persisted("a", (input) => {
 							Cf: 1
 						});
 						_resume_branch($scope4_id);
-					}, void 0, "a2");
+					}, 1, "a2");
 					$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_value__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					_resume_branch($scope3_id);
 				}, $scope2_id), { placeholder: attrTag({ content: _content_record("a0", $scope2_id) }) });

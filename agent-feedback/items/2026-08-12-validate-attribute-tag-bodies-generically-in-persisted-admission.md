@@ -5,8 +5,19 @@ effort: low
 site: packages/runtime-tags/src/translator/util/persisted/admission.ts › assertSupportedPatch
 ---
 
-# Validate attribute-tag bodies generically in persisted admission
+# Make the attr-tag early return's body-coverage contract explicit in persisted admission
 
-`assertSupportedPatch`'s MarkoTag visitor returns early for any `@`-named tag so `<@catch>` under an admitted `<try>` doesn't hit the generic "unsupported tag" fallback; `<try>` then traverses its own attr tags for server reads. Attribute tags on other owners are still rejected at the owner (template children gate `attributeTags?.length`), so nothing leaks today, but a future owner that admits attr tags would silently skip validating their contents unless it re-traverses like `<try>` does. Validate attr-tag bodies generically (the placeholder/scriptlet visitors still visit them) or assert the parent is a core `<try>` in the early return.
+`assertSupportedPatch`'s MarkoTag visitor returns early for any `@`-named tag.
+Attribute-tag BODIES are still validated: the program traverse visits their
+children (placeholders, tags, scriptlets) generically, and owners that admit
+attr tags check the attr tags' own attribute expressions at the owner
+(`<try>` via its `traverseFast`, templated children via the client-owned
+child checks). Nothing leaks today, but that contract is implicit: the early
+return looks like it skips the subtree when it only skips the attr-tag node
+itself. Add a comment (or an assertion that the owner is one that performs
+its own attr checks) so a future owner cannot admit attr tags while assuming
+the early return already validated their attributes.
 
-Check: the `tagName[0] === "@"` early return in `assertSupportedPatch` and `<try>`'s `traverseFast` over `node.attributeTags`.
+Check: the `tagName[0] === "@"` early return in `assertSupportedPatch`; the
+owner-side attribute checks for `<try>` and for templated children inside
+client-owned structure.

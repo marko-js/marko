@@ -6,8 +6,12 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [0, {
       brand: "Marko"
+    }, {
+      $global_brand: "Marko"
+    }, {
+      _: _(1)
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1 2"
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1_$global_brand#5 2"
   ];
   M._.w()
 </script>

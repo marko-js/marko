@@ -4,10 +4,11 @@ _shells({ b: "b !b0;D ;<span> </span>" });
 var badge_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_patch_text($scope0_id, "a", $global().brand)}${_el_resume($scope0_id, "a")}</span>`);
+	const $global$1 = $global();
+	_html(`<span>${_patch_text($scope0_id, "a", $global$1.brand)}${_el_resume($scope0_id, "a")}</span>`);
 	_script($scope0_id, "b0");
-	_patch_effect($scope0_id, "b0", "! brand", 1);
-	$scope0_reason && writeScope($scope0_id, {});
+	_patch_effect($scope0_id, "b0", "b");
+	$scope0_reason ? writeScope($scope0_id, { b: $global$1?.brand }) : _patch_write($scope0_id, "b", $global$1?.brand);
 }, 0, 1);
 
 // template.marko

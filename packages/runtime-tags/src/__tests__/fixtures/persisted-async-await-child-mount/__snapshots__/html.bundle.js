@@ -38,7 +38,7 @@ var template_default = _template_persisted("a", (input) => {
 					start: 1
 				});
 				writeScope($scope2_id, { a: _existing_scope($childScope) });
-			}, void 0, "a2");
+			}, 1, "a2");
 			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

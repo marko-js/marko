@@ -254,7 +254,19 @@ function getOrCreateHtmlLoadWrapped(
               "withLoadAssets",
               originalIdentifier,
               t.stringLiteral(readyId),
-              triggers ? t.valueToNode(triggers) : undefined,
+              // A persisted page may hold a deferred patch on this channel,
+              // so its loader scripts report load errors.
+              ...(isPersisted()
+                ? [
+                    triggers
+                      ? t.valueToNode(triggers)
+                      : (t.unaryExpression(
+                          "void",
+                          t.numericLiteral(0),
+                        ) as t.Expression),
+                    t.numericLiteral(1),
+                  ]
+                : [triggers ? t.valueToNode(triggers) : undefined]),
             ),
           ),
         ]),

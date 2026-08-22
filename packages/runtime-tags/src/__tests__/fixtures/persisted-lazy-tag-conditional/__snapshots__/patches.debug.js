@@ -1,7 +1,7 @@
 // PATCH
-ready({
+(ready({
   "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko": [{
-    "PatchBranch:#main/0": [{
+    "PatchChild:BranchScopes:#main/0": {
       "PatchChild:#childScope/1": {
         "PatchText:#text/1": "b",
         "PatchSetup:": {
@@ -9,8 +9,10 @@ ready({
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko0": 0
         }
       }
-    }]
+    }
   }]
+}), {
+  "PatchBranch:#main/0": 1
 })
 
 // PATCH

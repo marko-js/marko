@@ -20,6 +20,7 @@ _shells({
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
 	let count = 0;
 	_html("<main>");
@@ -32,13 +33,15 @@ var template_default = _template_persisted("a", (input) => {
 			_persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<div>${_patch_text($scope1_id, "a", $global$1.brand)}${_el_resume($scope1_id, "a")}</div>`);
-			writeScope($scope1_id, {});
+			_subscribe($scope0_reason && $global_brand__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && writeScope($scope0_id, {
 		c: count,
+		e: $global_brand__closures,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

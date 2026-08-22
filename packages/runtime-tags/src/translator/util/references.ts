@@ -1134,8 +1134,13 @@ export function finalizeReferences() {
     const { name, section } = binding;
     // `$global` bindings resolve sources only: no collision rename (it
     // would burn a UID and shift later generated names), no section
-    // membership, no closures — reads compile verbatim.
-    if (binding.type === BindingType.global) {
+    // membership, no closures — reads compile verbatim. A persisted keyed
+    // read is the exception: it participates fully so its closures re-render
+    // from the fill channel patched globals ride.
+    if (
+      binding.type === BindingType.global &&
+      !(isPersisted() && binding.upstreamAlias)
+    ) {
       resolveBindingSources(binding);
       // LOCAL-only bit (no cross-file roll-up): the html output exports it
       // as the template's intrinsics, composed across templates at render.
@@ -2625,14 +2630,22 @@ function resolveReferencedBindings(
           if (upstreamRoot) {
             binding = upstreamRoot;
           }
-        } else if (binding.type !== BindingType.global) {
+        } else if (
+          binding.type !== BindingType.global ||
+          // A persisted patch delivers a keyed `$global` read like any
+          // other reference (signals, fills); only the bag stays verbatim.
+          (isPersisted() && binding.upstreamAlias)
+        ) {
           extra.section = expr.section;
           ({ binding } = extra.read ??= resolveExpressionReference(
             rootBindings,
             binding,
           ));
         }
-        if (binding.type === BindingType.global) {
+        if (
+          binding.type === BindingType.global &&
+          !(isPersisted() && binding.upstreamAlias)
+        ) {
           // `$global` reads stay verbatim member chains: no read slot,
           // no signal, no register-id participation.
           globalBindings = bindingUtil.add(globalBindings, binding);
@@ -2656,7 +2669,10 @@ function resolveReferencedBindings(
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
         hoistedBindings = bindingUtil.add(hoistedBindings, binding);
       }
-    } else if (binding.type === BindingType.global) {
+    } else if (
+      binding.type === BindingType.global &&
+      !(isPersisted() && binding.upstreamAlias)
+    ) {
       // `$global` reads stay verbatim member chains: no read slot,
       // no signal, no register-id participation.
       globalBindings = binding;

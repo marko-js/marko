@@ -11,7 +11,9 @@
     brand: "Acme"
   }, {
     input_prefix: "p",
-    "ClosureScopes:input_prefix": new Set([_(4), _(7)])
+    $global_brand: "Acme",
+    "ClosureScopes:input_prefix": new Set([_(4), _(7)]),
+    "ClosureScopes:$global_brand": new Set([_(4), _(7)])
   }, {
     _: _(1),
     "ClosureScopes:item": new Set([_(4)]),

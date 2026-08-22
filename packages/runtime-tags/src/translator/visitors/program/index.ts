@@ -173,10 +173,11 @@ export default {
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
           // A rejected chunk blocks this ready id forever: the debug build
-          // reports it instead of leaving the content silently inert, while
-          // production keeps the arm's bytes out (the failure still surfaces
-          // as a network error in devtools).
-          const report = !markoOpts.optimize;
+          // reports it instead of leaving the content silently inert, and a
+          // persisted page may be holding a deferred patch on the channel,
+          // so it reports in production too (elsewhere the failure still
+          // surfaces as a network error in devtools).
+          const report = !markoOpts.optimize || isPersisted();
           program.node.body = [
             t.importDeclaration(
               [

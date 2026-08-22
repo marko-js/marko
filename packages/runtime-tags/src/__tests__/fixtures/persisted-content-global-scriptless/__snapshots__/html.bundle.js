@@ -22,6 +22,7 @@ _shells({
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
 	_html("<main>");
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
@@ -33,7 +34,8 @@ var template_default = _template_persisted("a", (input) => {
 			_persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", $global$1.brand)}${_el_resume($scope1_id, "a")}</em>`);
-			writeScope($scope1_id, {});
+			_subscribe($scope0_reason && $global_brand__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_if(() => {
@@ -48,13 +50,24 @@ var template_default = _template_persisted("a", (input) => {
 					_persisted_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_patch_text($scope3_id, "a", $global$1.brand)}${_el_resume($scope3_id, "a")}</i>`);
-					writeScope($scope3_id, {});
+					_subscribe($scope0_reason && $global_brand__closures, writeScope($scope3_id, {
+						_: _scope_with_id($scope2_id),
+						Ch: 1
+					}));
+					_resume_branch($scope3_id);
 				}, $scope2_id)
 			});
-			writeScope($scope2_id, { a: _existing_scope($childScope2) });
+			writeScope($scope2_id, {
+				_: _scope_with_id($scope0_id),
+				a: _existing_scope($childScope2)
+			});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"]);
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && writeScope($scope0_id, {
+		g: $global$1?.brand,
+		h: $global_brand__closures,
+		a: _existing_scope($childScope)
+	});
 }, 1, 1);

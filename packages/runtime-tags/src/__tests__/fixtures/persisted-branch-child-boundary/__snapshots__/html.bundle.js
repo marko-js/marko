@@ -14,7 +14,7 @@ var loader_default = _template_persisted("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`${_patch_text($scope1_id, "a", v, $scope0_owned, 0)}${_el_resume($scope1_id, "a")}`);
 		writeScope($scope1_id, {});
-	}, void 0, "b1", 1);
+	}, 1, "b1", 1);
 	_html("</div>");
 }, 0, 0);
 

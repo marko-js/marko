@@ -145,6 +145,9 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // content record its frame shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
     const renderer = getShellContent(shells[value] || failPatch());
+    // Integrity backstop: no anchor means nothing to pair against, so
+    // reject cleanly rather than corrupting.
+    const marker = (scope[accessor as Accessor] || failPatch()) as ChildNode;
     const pendingScopes = collectScopes(
       () =>
         ((
@@ -152,7 +155,7 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
             scope[AccessorProp.Global],
             renderer,
             scope,
-            (scope[accessor as Accessor] as ChildNode).parentNode!,
+            marker.parentNode!,
           )) as BranchScope
         )[AccessorProp.DetachedAwait] = renderer),
     );

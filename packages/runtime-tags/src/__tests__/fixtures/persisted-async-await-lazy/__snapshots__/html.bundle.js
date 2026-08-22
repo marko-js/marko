@@ -22,7 +22,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "a", related, $scope0_owned, 0)}${_el_resume($scope3_id, "a")}</em>`);
 			writeScope($scope3_id, {});
-		}, void 0, "a3", 1);
+		}, 1, "a3", 1);
 		$scope0_reason && _subscribe(_source_if($scope0_reason, 6) && $input_slow__closures, _subscribe(_source_if($scope0_reason, 5) && $input_related__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("a2", $scope0_id) }) }, 1);
@@ -31,7 +31,7 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<span>${_patch_text($scope4_id, "a", note, $scope0_owned, 2)}${_el_resume($scope4_id, "a")}</span>`);
 		writeScope($scope4_id, {});
-	}, void 0, "a5", 1);
+	}, 1, "a5", 1);
 	_html(`</footer><button>Count <!>${_escape(count)}${_el_resume($scope0_id, "e")}</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a6");
 	$scope0_reason && writeScope($scope0_id, {

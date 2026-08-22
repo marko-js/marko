@@ -2,7 +2,9 @@
       0<!--M_*3 c--></button><!--M_*3 a--><!--M_]1 a 2--></main><!--M_*1 a-->
 <script>
   ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => self["M"]?.["_"]?.e?.(
+      "_a")), p.after(d))
   }) => (e => e?.addEventListener("click", l, {
     once: 1
   }))(document.querySelector("body") || l()))(document.currentScript,

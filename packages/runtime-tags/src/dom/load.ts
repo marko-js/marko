@@ -1,5 +1,6 @@
 import { LoadSignalValue } from "../common/accessor.debug";
 import { decodeAccessor } from "../common/helpers";
+import { toReadyId } from "../common/meta";
 import {
   AccessorProp,
   type BranchScope,
@@ -53,7 +54,7 @@ export const _load_template = /*@__PURE__*/ withLazy(
               ),
             );
           },
-          loadFailed(branch as BranchScope, awaitCounter),
+          loadFailed(branch as BranchScope, awaitCounter, toReadyId(id)),
         );
       },
       _load_signal(() =>
@@ -152,6 +153,7 @@ function insertLoaded(
 function loadFailed(
   scope: BranchScope,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
+  readyId?: string,
 ) {
   return (error: unknown) => {
     if (awaitCounter) {
@@ -160,7 +162,7 @@ function loadFailed(
       if (awaitCounter.m) awaitCounter.i = 0;
       else awaitCounter.c();
     }
-    readyFailed();
+    readyFailed(readyId);
     queueAsyncRender(scope, renderCatch, error);
   };
 }

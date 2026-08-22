@@ -3,7 +3,9 @@
   $: {
     brand: "Runtime"
   },
-  ta: "Runtime"
+  ta: "Runtime",
+  ea0: "e",
+  we: "Runtime"
 }
 
 // PATCH
@@ -11,5 +13,7 @@
   $: {
     brand: $
   },
-  ta: ""
+  ta: "",
+  ea0: "e",
+  we: $
 }

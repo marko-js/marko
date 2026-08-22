@@ -6,7 +6,9 @@
     other: "y"
   },
   ta: "y",
-  ga0: "! brand locale"
+  ea0: "c d",
+  wc: "Marko",
+  wd: "en"
 }
 
 // PATCH
@@ -17,7 +19,9 @@
     other: "y"
   },
   ta: "y",
-  ga0: "! brand locale"
+  ea0: "c d",
+  wc: "Marko",
+  wd: "fr"
 }
 
 // PATCH
@@ -28,5 +32,7 @@
     other: "y"
   },
   ta: "y",
-  ga0: "! brand locale"
+  ea0: "c d",
+  wc: "Fresh",
+  wd: "fr"
 }
