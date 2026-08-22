@@ -17,6 +17,8 @@
 
 ## Intro
 
+> **Note:** This package is Marko 5, which is in maintenance mode. New projects should use [Marko 6](https://markojs.com/docs/introduction/getting-started/) (`npm init marko` scaffolds it), and existing apps can run both APIs side by side — see the [Marko 5 interop guide](https://markojs.com/docs/guide/marko-5-interop/). These docs describe the Marko 5 Class API.
+
 Marko is HTML _reimagined_ as a language for building dynamic and reactive user interfaces. Almost any valid HTML is valid Marko, and Marko extends HTML for building modern applications more declaratively. Among these extensions are [conditionals and lists](https://markojs.com/docs/conditionals-and-lists/), [state](https://markojs.com/docs/state/), and [components](https://markojs.com/docs/class-components/).
 
 Marko supports both single-file components and components across separate files.

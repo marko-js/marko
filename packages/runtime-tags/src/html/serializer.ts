@@ -1902,6 +1902,8 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
     if (hasOwnProperty.call(val, key)) {
       const escapedKey = toObjectKey(key);
       state.buf.push(sep + escapedKey + ":");
+      // A throwing getter here escapes bare; wrapping every read for the rare
+      // case was judged not worth the hot-path cost.
       if (
         writeProp(
           state,

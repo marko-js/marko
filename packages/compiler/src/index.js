@@ -133,7 +133,10 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
     filenameRelative: filename
       ? path.relative(markoModules.cwd, filename)
       : undefined,
-    sourceRoot: filename ? path.dirname(filename) : undefined,
+    // Trailing separator so Node's source-map join produces a real path.
+    sourceRoot: filename
+      ? path.join(path.dirname(filename), path.sep)
+      : undefined,
     sourceFileName: filename ? path.basename(filename) : undefined,
     babelrc: loadConfig,
     configFile: loadConfig,

@@ -1,5 +1,7 @@
 # Getting started
 
+> **Note:** Marko 5 (this package) is in maintenance mode. `npm init marko -- -t basic` scaffolds a **Marko 6** app using the current [Tags API](https://markojs.com/docs/introduction/getting-started/); the Class API shown below is what existing Marko 5 apps use. To adopt Tags API components in a Marko 5 app, see the [Marko 5 interop guide](https://markojs.com/docs/guide/marko-5-interop/).
+
 ## Setup
 
 ### Marko Run (Recommended)

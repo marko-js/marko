@@ -25,21 +25,43 @@ class CompileError extends Error {
     Error.captureStackTrace?.(this, buildCodeFrameError);
     this.name = "CompileError";
     Error.stackTraceLimit = stackTraceLimit;
+    // Flat position fields so bundlers that read `{ file, line, column }`
+    // (rollup/vite) print the location instead of `undefined:undefined`.
     Object.defineProperties(this, {
+      file: {
+        value: filename,
+        enumerable: false,
+        writable: true,
+        configurable: true,
+      },
+      line: {
+        value: loc?.start.line,
+        enumerable: false,
+        writable: true,
+        configurable: true,
+      },
+      column: {
+        value: loc?.start.column,
+        enumerable: false,
+        writable: true,
+        configurable: true,
+      },
       loc: {
-        value: loc,
+        // Flat fields first so bundlers reading `{ file, line, column }`
+        // print the position; Babel's `start`/`end` stay for existing readers.
+        value: loc && {
+          file: filename,
+          line: loc.start.line,
+          column: loc.start.column,
+          start: loc.start,
+          end: loc.end,
+        },
         enumerable: false,
         writable: true,
         configurable: true,
       },
       label: {
         value: label,
-        enumerable: false,
-        writable: true,
-        configurable: true,
-      },
-      frame: {
-        value: prettyMessage,
         enumerable: false,
         writable: true,
         configurable: true,
@@ -82,6 +104,7 @@ export function buildCodeFrameError(filename, code, loc, label) {
   return new CompileError(filename, code, loc, label);
 }
 
+// Deliberately does not window the framed line: the full line is shown as-is.
 function buildMessage(code, loc, message) {
   return loc
     ? codeFrameColumns(
