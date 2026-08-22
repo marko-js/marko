@@ -695,6 +695,9 @@ export function _patch_attrs(
       writeEmbeddedBinds(state as PatchState, data);
       // `claims` marks a spread that owns the element's controllable (no
       // static attr does), so only then does the client re-claim it.
+      // A bare set is the common entry; the array form (`Array.isArray`
+      // discriminates — a set is itself a record, and any key could be an
+      // attr name) carries `skip`/`claims` without per-frame key bytes.
       writeOwned(
         scopeId,
         PatchKey.Attrs + accessor,
