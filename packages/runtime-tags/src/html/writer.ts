@@ -290,7 +290,10 @@ export function writePatch(
 
 // Partial trees are per serialize state: the main tree is the frame's value
 // and each ready channel ships its own root-anchored tree (its content must
-// not apply before the channel's module arrives).
+// not apply before the channel's module arrives). A tree is the flush's
+// merge index (one partial per scope, so writes coalesce until the frame
+// stringifies) while serialize states outlive flushes — the map on the
+// state is what lets `flushChunk` drop every tree at once.
 export function patchTree(state: State, serializeState: SerializeState) {
   const trees = (state.patchTrees ??= new Map());
   let tree = trees.get(serializeState);
