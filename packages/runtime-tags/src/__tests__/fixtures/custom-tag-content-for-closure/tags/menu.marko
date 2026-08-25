@@ -1,0 +1,9 @@
+<let/open=true>
+
+<button onClick() { open = !open; }>${open ? "collapse" : "expand"}</button>
+
+<if=open>
+  <if=input.content>
+    <${input.content} />
+  </if>
+</if>
