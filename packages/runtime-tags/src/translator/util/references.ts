@@ -1145,10 +1145,16 @@ export function finalizeReferences() {
       const { isEffect, section } = exprExtra;
       if (section.depth > binding.section.depth) {
         if (binding.type === BindingType.local) {
-          section.referencedLocalClosures = bindingUtil.add(
-            section.referencedLocalClosures,
-            binding,
-          );
+          // Every section between the read and the declaring one forwards the
+          // local, so a nested content body can be rebuilt on the client.
+          let localSection: Section | undefined = section;
+          while (localSection && localSection !== binding.section) {
+            localSection.referencedLocalClosures = bindingUtil.add(
+              localSection.referencedLocalClosures,
+              binding,
+            );
+            localSection = localSection.parent;
+          }
         } else if (binding.type !== BindingType.dom) {
           const canonicalUpstreamAlias = getCanonicalBinding(binding);
           // Lazy-only reads need the owner scope chain but no closure signal.

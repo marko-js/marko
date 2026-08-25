@@ -18,6 +18,7 @@ import {
   _html,
   _peek_scope_id,
   _resume,
+  _resume_locals,
   _scope,
   _scope_id,
   _script,
@@ -241,6 +242,15 @@ export function _content_resume(
   scopeId?: number,
 ) {
   return _resume(_content(id, fn, scopeId), id, scopeId);
+}
+
+export function _content_resume_locals(
+  id: string,
+  fn: ServerRenderer,
+  locals: Record<string, unknown>,
+  scopeId: number,
+) {
+  return _resume_locals(_content(id, fn, scopeId), id, locals, scopeId);
 }
 
 export const patchDynamicTag = /* @__PURE__ */ (

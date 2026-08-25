@@ -82,7 +82,12 @@ export {
   _load_visible_trigger,
 } from "./dom/load";
 export { run } from "./dom/queue";
-export { _content, _content_closures, _content_resume } from "./dom/renderer";
+export {
+  _content,
+  _content_closures,
+  _content_closures_resume,
+  _content_resume,
+} from "./dom/renderer";
 export {
   _el,
   _resume,

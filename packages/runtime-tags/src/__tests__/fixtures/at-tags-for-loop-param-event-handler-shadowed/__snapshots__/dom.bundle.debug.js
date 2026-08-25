@@ -16,7 +16,7 @@ var my_menu_default = /*@__PURE__*/ _template("__tests__/tags/my-menu/index.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&D l`)("b%c");
-const $item_content = /*@__PURE__*/ _content_closures(_content_resume("__tests__/template.marko_1*content", " ", " "), { $foo($scope) {
+const $item_content = _content_closures_resume("__tests__/template.marko_1*content", /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " "), { $foo($scope) {
 	_text($scope["#text/0"], $scope.$foo);
 } });
 const $foo2 = /*@__PURE__*/ _let("foo/2", ($scope) => _text($scope["#text/1"], $scope.foo));

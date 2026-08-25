@@ -21,10 +21,12 @@ import {
 import { toArray } from "./optional";
 import { getScopeAccessor } from "./references";
 import { callRuntime } from "./runtime";
+import { createScopeReadExpression } from "./scope-read";
 import {
   getScopeIdIdentifier,
   getSection,
   getSectionRegisterReasons,
+  type Section,
 } from "./sections";
 import { getScopeReasonDeclaration } from "./serialize-guard";
 import { isReasonDynamic } from "./serialize-reasons";
@@ -406,6 +408,29 @@ function getConditionTestValue({
   return attributes.length === 1 ? attributes[0].value : undefined;
 }
 
+// The DOM renderer call for a content section; locals it closes over ride
+// along as values, read from the scope when they were forwarded to here.
+export function buildContentRendererCall(bodySection: Section) {
+  return t.callExpression(
+    t.identifier(bodySection.name),
+    bodySection.referencedLocalClosures
+      ? [
+          scopeIdentifier,
+          t.objectExpression(
+            toArray(bodySection.referencedLocalClosures, (ref) =>
+              toObjectProperty(
+                getScopeAccessor(ref, true),
+                ref.section === bodySection.parent
+                  ? getDeclaredBindingExpression(ref)
+                  : createScopeReadExpression(ref),
+              ),
+            ),
+          ),
+        ]
+      : [scopeIdentifier],
+  );
+}
+
 function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
@@ -431,40 +456,49 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         );
       }
 
+      const registerId = t.stringLiteral(
+        getResumeRegisterId(bodySection, "content"),
+      );
+      const fn = t.arrowFunctionExpression(
+        body.node.params,
+        t.blockStatement(body.node.body),
+      );
+      const ownerScopeId = getScopeIdIdentifier(
+        getSection(
+          getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
+        )!,
+      );
+      // Locals only exist while this render runs; the client rebuilds the
+      // content from them when it re-renders this branch after resume.
+      if (serialized && bodySection.referencedLocalClosures) {
+        return callRuntime(
+          "_content_resume_locals",
+          registerId,
+          fn,
+          t.objectExpression(
+            toArray(bodySection.referencedLocalClosures, (ref) =>
+              toObjectProperty(
+                getScopeAccessor(ref, true),
+                getDeclaredBindingExpression(ref),
+              ),
+            ),
+          ),
+          ownerScopeId,
+        );
+      }
+
       return callRuntime(
         serialized ? "_content_resume" : "_content",
-        t.stringLiteral(getResumeRegisterId(bodySection, "content")),
-        t.arrowFunctionExpression(
-          body.node.params,
-          t.blockStatement(body.node.body),
-        ),
-        getScopeIdIdentifier(
-          getSection(
-            getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
-          )!,
-        ),
+        registerId,
+        fn,
+        ownerScopeId,
       );
     } else {
       // The section renderer declaration is elided when nothing reads the
       // content, so the property must be too.
       if (isSectionRendererElided(bodySection)) return;
 
-      return t.callExpression(
-        t.identifier(bodySection.name),
-        bodySection.referencedLocalClosures
-          ? [
-              scopeIdentifier,
-              t.objectExpression(
-                toArray(bodySection.referencedLocalClosures, (ref) => {
-                  return toObjectProperty(
-                    getScopeAccessor(ref, true),
-                    getDeclaredBindingExpression(ref),
-                  );
-                }),
-              ),
-            ]
-          : [scopeIdentifier],
-      );
+      return buildContentRendererCall(bodySection);
     }
   }
 }

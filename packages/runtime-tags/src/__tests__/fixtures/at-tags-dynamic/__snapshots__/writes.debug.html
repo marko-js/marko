@@ -1,18 +1,30 @@
-<div class=item style=color:red>foo</div><!--M_*3 #div/0-->
-<div class=item style=color:blue>bar</div><!--M_*5 #div/0-->
-<div class=item style=color:green>bar</div><!--M_*7 #div/0-->
-<div class=col x=0></div><!--M_*9 #div/0-->
-<div class=row row=a>a<!--M_*12 #text/0--></div><!--M_*11 #div/0-->
-<div class=row row=b>b<!--M_*14 #text/0--></div><!--M_*13 #div/0-->
-<div class=col x=1></div><!--M_*15 #div/0-->
-<div class=row row=c>c<!--M_*18 #text/0--></div><!--M_*17 #div/0-->
-<div class=row row=d>d<!--M_*20 #text/0--></div><!--M_*19 #div/0-->
-<div class=col outside></div><!--M_*21 #div/0-->
-<div class=row row=-1>Outside</div><!--M_*23 #div/0-->
+<div class=item style=color:red>foo</div><!--M_*7 #div/0-->
+<div class=item style=color:blue>bar</div><!--M_*9 #div/0-->
+<div class=item style=color:green>bar</div><!--M_*11 #div/0-->
+<div class=col x=0></div><!--M_*13 #div/0-->
+<div class=row row=a>a<!--M_*16 #text/0--></div><!--M_*15 #div/0-->
+<div class=row row=b>b<!--M_*18 #text/0--></div><!--M_*17 #div/0-->
+<div class=col x=1></div><!--M_*19 #div/0-->
+<div class=row row=c>c<!--M_*22 #text/0--></div><!--M_*21 #div/0-->
+<div class=row row=d>d<!--M_*24 #text/0--></div><!--M_*23 #div/0-->
+<div class=col outside></div><!--M_*25 #div/0-->
+<div class=row row=-1>Outside</div><!--M_*27 #div/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [
-    "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_1_attrs#5 3 5 7 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_attrs#5 11 13 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_attrs#5 9 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_attrs#5 17 19 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_attrs#5 15 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_attrs#5 23 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_attrs#5 21"
+  M._.r = [_ => [2, {
+      row: "a",
+      _: _(1)
+    }, {
+      row: "b",
+      _: _(1)
+    }, {
+      row: "c",
+      _: _(1)
+    }, {
+      row: "d",
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_1_attrs#5 7 9 11 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_attrs#5 15 17 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_attrs#5 13 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_attrs#5 21 23 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_attrs#5 19 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_attrs#5 27 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_attrs#5 25"
   ];
   M._.w()
 </script>

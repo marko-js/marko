@@ -1,23 +1,29 @@
-<button>a<!--M_*6 a--></button><!--M_*5 a--><button>b<!--M_*8 a--></button><!--M_*7 a-->
+<button>a<!--M_*8 a--></button><!--M_*7 a--><button>b<!--M_*10 a--></button><!--M_*9 a-->
 <div>outer</div>
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [2, {
     e: "a"
   }, {
+    4: "a",
+    _: _(1)
+  }, {
     e: "b"
+  }, {
+    4: "b",
+    _: _(1)
   }, 1, {
     Ia: {
       click: _(2, "a0")
     },
-    Aa: _(6),
+    Aa: _(8),
     Da: "a1 1"
   }, 1, {
     Ia: {
-      click: _(3, "a0")
+      click: _(4, "a0")
     },
-    Aa: _(8),
+    Aa: _(10),
     Da: "a1 1"
-  }], "b0 5 7"];
+  }], "b0 7 9"];
   M._.w()
 </script>

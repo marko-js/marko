@@ -1,5 +1,5 @@
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a2", " ", " "), { 4($scope) {
+const $item_content = _content_closures_resume("a2", /*@__PURE__*/ _content("a2", " ", " "), { 4($scope) {
 	_text($scope.a, $scope.e);
 } });
 const $for_content__item__script = _script("a0", ($scope) => _attrs_script($scope, "a"));

@@ -1,16 +1,28 @@
-<div class=item style=color:red>foo</div><!--M_*3 a-->
-<div class=item style=color:blue>bar</div><!--M_*5 a-->
-<div class=item style=color:green>bar</div><!--M_*7 a-->
-<div class=col x=0></div><!--M_*9 a-->
-<div class=row row=a>a<!--M_*12 a--></div><!--M_*11 a-->
-<div class=row row=b>b<!--M_*14 a--></div><!--M_*13 a-->
-<div class=col x=1></div><!--M_*15 a-->
-<div class=row row=c>c<!--M_*18 a--></div><!--M_*17 a-->
-<div class=row row=d>d<!--M_*20 a--></div><!--M_*19 a-->
-<div class=col outside></div><!--M_*21 a-->
-<div class=row row=-1>Outside</div><!--M_*23 a-->
+<div class=item style=color:red>foo</div><!--M_*7 a-->
+<div class=item style=color:blue>bar</div><!--M_*9 a-->
+<div class=item style=color:green>bar</div><!--M_*11 a-->
+<div class=col x=0></div><!--M_*13 a-->
+<div class=row row=a>a<!--M_*16 a--></div><!--M_*15 a-->
+<div class=row row=b>b<!--M_*18 a--></div><!--M_*17 a-->
+<div class=col x=1></div><!--M_*19 a-->
+<div class=row row=c>c<!--M_*22 a--></div><!--M_*21 a-->
+<div class=row row=d>d<!--M_*24 a--></div><!--M_*23 a-->
+<div class=col outside></div><!--M_*25 a-->
+<div class=row row=-1>Outside</div><!--M_*27 a-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = ["b0 3 5 7 b1 11 13 b2 9 b1 17 19 b2 15 b1 23 b2 21"];
+  M._.r = [_ => [2, {
+    2: "a",
+    _: _(1)
+  }, {
+    2: "b",
+    _: _(1)
+  }, {
+    2: "c",
+    _: _(1)
+  }, {
+    2: "d",
+    _: _(1)
+  }], "b0 7 9 11 b1 15 17 b2 13 b1 21 23 b2 19 b1 27 b2 25"];
   M._.w()
 </script>

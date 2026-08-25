@@ -137,6 +137,20 @@ export function _content_resume(
   );
 }
 
+// Serialized with `_content_resume_locals`, so the client resumes it from a
+// locals scope that carries the closure values and points at the real owner.
+export function _content_closures_resume(
+  id: string,
+  renderer: ReturnType<typeof _content>,
+  closureFns: Record<Accessor, SignalFn>,
+) {
+  const withClosures = _content_closures(renderer, closureFns);
+  _resume(id, (locals: Scope) =>
+    withClosures(locals[AccessorProp.Owner] as Scope, locals),
+  );
+  return withClosures;
+}
+
 export function _content_closures(
   renderer: ReturnType<typeof _content>,
   closureFns: Record<Accessor, SignalFn>,

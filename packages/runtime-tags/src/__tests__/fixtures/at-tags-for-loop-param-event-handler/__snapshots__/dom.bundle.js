@@ -9,7 +9,7 @@ const $for = /*@__PURE__*/ _for_of(0, "<button></button>", " ", 0, $for_content_
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a1", "Click <!>", "b%"), { 4($scope) {
+const $item_content = _content_closures_resume("a1", /*@__PURE__*/ _content("a1", "Click <!>", "b%"), { 4($scope) {
 	_text($scope.a, $scope.e);
 } });
 const $clicked = /*@__PURE__*/ _let(2, ($scope) => {

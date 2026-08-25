@@ -62,12 +62,12 @@ var template_default = _template("a", (input) => {
 		forOf(col, (row) => {
 			$row = attrTags($row, {
 				row,
-				content: _content_resume("a2", () => {
+				content: _content_resume_locals("a2", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`${_escape(row)}${_el_resume($scope3_id, "a")}`);
 					writeScope($scope3_id, {});
-				}, $scope0_id)
+				}, { 2: row }, $scope0_id)
 			});
 		});
 		$col = attrTags($col, {

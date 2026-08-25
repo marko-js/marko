@@ -1,0 +1,34 @@
+<button>collapse<!--M_*5 b--></button><!--M_*5 a--><!--M_[-->
+<div>person: <!>alice<!--M_*10 a--></div>
+<div>person: <!>bob<!--M_*14 a--></div>
+<div>person: <!>carol<!--M_*18 a--></div><!--M_]5 c 6-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    2: "alice",
+    _: _(1)
+  }, {
+    2: "bob",
+    _: _(1)
+  }, {
+    2: "carol",
+    _: _(1)
+  }, {
+    f: {
+      value: "alice",
+      content: _(2, "a4"),
+      *[(_.a = [{
+        value: "bob",
+        content: _(3, "a4")
+      }, {
+        value: "carol",
+        content: _(4, "a4")
+      }], Symbol.iterator)]() {
+        yield this;
+        yield* _.a
+      }
+    },
+    g: !0
+  }], "a1 5"];
+  M._.w()
+</script>

@@ -38,7 +38,12 @@ export {
   _to_text,
   _unescaped,
 } from "./html/content";
-export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
+export {
+  _content,
+  _content_resume,
+  _content_resume_locals,
+  _dynamic_tag,
+} from "./html/dynamic-tag";
 export { forIn, forOf, forTo, forUntil } from "./html/for";
 export { _template } from "./html/template";
 export {

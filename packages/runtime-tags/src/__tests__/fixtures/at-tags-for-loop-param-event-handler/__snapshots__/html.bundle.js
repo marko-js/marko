@@ -25,12 +25,12 @@ var template_default = _template("a", (input) => {
 			onClick: _resume_locals(function() {
 				clicked += foo;
 			}, "a0", { e: foo }, $scope0_id),
-			content: _content_resume("a1", () => {
+			content: _content_resume_locals("a1", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html(`Click <!>${_escape(foo)}${_el_resume($scope1_id, "a")}`);
 				writeScope($scope1_id, {});
-			}, $scope0_id)
+			}, { 4: foo }, $scope0_id)
 		});
 	});
 	const $childScope = _peek_scope_id();

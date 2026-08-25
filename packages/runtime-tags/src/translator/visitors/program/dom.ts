@@ -108,11 +108,14 @@ export default {
                 tagParamsIdentifier,
               ]);
             } else {
+              const registerId = t.stringLiteral(
+                getResumeRegisterId(childSection, "content"),
+              );
+              const registered = getSectionRegisterReasons(childSection);
+              const localClosures = childSection.referencedLocalClosures;
               let renderer = callRuntime(
-                getSectionRegisterReasons(childSection)
-                  ? "_content_resume"
-                  : "_content",
-                t.stringLiteral(getResumeRegisterId(childSection, "content")),
+                registered && !localClosures ? "_content_resume" : "_content",
+                registerId,
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
                   walks,
@@ -124,9 +127,9 @@ export default {
                 ]),
               );
 
-              if (childSection.referencedLocalClosures) {
+              if (localClosures) {
                 const objProps: t.ObjectExpression["properties"] = [];
-                forEach(childSection.referencedLocalClosures, (closure) => {
+                forEach(localClosures, (closure) => {
                   const closureSignal = getSignal(childSection, closure);
                   const key = toPropertyName(getScopeAccessor(closure, true));
                   if (signalHasStatements(closureSignal)) {
@@ -138,10 +141,23 @@ export default {
                     } else {
                       objProps.push(t.objectProperty(key, expr));
                     }
+                  } else {
+                    // Nothing here renders it, but nested content reads it
+                    // from this scope, so the value must still be stored.
+                    objProps.push(
+                      t.objectMethod("method", key, [], t.blockStatement([])),
+                    );
                   }
                 });
 
-                if (objProps.length) {
+                if (registered) {
+                  renderer = callRuntime(
+                    "_content_closures_resume",
+                    registerId,
+                    renderer,
+                    t.objectExpression(objProps),
+                  );
+                } else if (objProps.length) {
                   renderer = callRuntime(
                     "_content_closures",
                     renderer,

@@ -24,12 +24,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			onClick: _resume_locals(function(ev) {
 				ev.target.textContent = $foo;
 			}, "__tests__/template.marko_0/onClick", { "$foo/4": $foo }),
-			content: _content_resume("__tests__/template.marko_1*content", () => {
+			content: _content_resume_locals("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html(`${_escape($foo)}${_el_resume($scope1_id, "#text/0")}`);
 				writeScope($scope1_id, {}, "__tests__/template.marko", "4:6");
-			}, $scope0_id)
+			}, { $foo }, $scope0_id)
 		});
 	});
 	my_menu_default({ item: $item });
