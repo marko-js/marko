@@ -1,0 +1,15 @@
+import childTemplate from "./components/class-child/index.marko";
+class {
+  onCreate() {
+    this.state = { clicked: 0 };
+  }
+  handleClick() {
+    this.state.clicked++;
+  }
+  getChild() {
+    return childTemplate;
+  }
+}
+<div id="count">${state.clicked}</div>
+<${component.getChild()} on-click("handleClick")/>
+<init-components/>
