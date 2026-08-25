@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef } from "@marko/compiler/babel-utils";
+import { isNativeTag } from "@marko/compiler/babel-utils";
 
 import { kNativeTagBinding } from "../visitors/tag/native-tag";
 import { getParentTag } from "./get-parent-tag";
@@ -27,7 +27,7 @@ export function getOnlyChildParentTagName(
   const parentTag = getParentTag(tag);
   return (extra[kOnlyChildInParent] =
     parentTag &&
-    getTagDef(parentTag)?.html &&
+    isNativeTag(parentTag) &&
     parentTag.node.name.type === "StringLiteral" &&
     (tag.parent as t.MarkoTagBody).body.filter(
       (node) => node.type !== "MarkoComment",
