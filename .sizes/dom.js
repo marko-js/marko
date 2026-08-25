@@ -1,4 +1,4 @@
-// size: 26585 (min) 9921 (brotli)
+// size: 26586 (min) 9907 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1155,7 +1155,7 @@ function _content_resume(id, template, walks, setup, params, dynamicScopesAccess
 }
 function _content_closures_resume(id, renderer, closureFns) {
   let withClosures = _content_closures(renderer, closureFns);
-  return (_resume(id, (locals) => withClosures(locals._, locals)), withClosures);
+  return (_resume(id, (owner) => (locals) => withClosures(owner, locals)), withClosures);
 }
 function _content_closures(renderer, closureFns) {
   let closureSignals = {};

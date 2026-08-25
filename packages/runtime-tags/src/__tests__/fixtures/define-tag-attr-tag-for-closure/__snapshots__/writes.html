@@ -1,34 +1,31 @@
-<button>collapse<!--M_*5 b--></button><!--M_*5 a--><!--M_[-->
-<div>person: <!>alice<!--M_*8 a--></div>
-<div>person: <!>bob<!--M_*10 a--></div>
-<div>person: <!>carol<!--M_*12 a--></div><!--M_]5 c 6-->
+<button>collapse<!--M_*2 b--></button><!--M_*2 a--><!--M_[-->
+<div>person: <!>alice<!--M_*5 a--></div>
+<div>person: <!>bob<!--M_*7 a--></div>
+<div>person: <!>carol<!--M_*9 a--></div><!--M_]2 c 3-->
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [2, {
-    2: "alice",
-    _: _(1)
-  }, {
-    2: "bob",
-    _: _(1)
-  }, {
-    2: "carol",
-    _: _(1)
-  }, {
     f: {
       value: "alice",
-      content: _(2, "a2"),
+      content: _(1, "a2")({
+        2: "alice"
+      }),
       *[(_.a = [{
         value: "bob",
-        content: _(3, "a2")
+        content: _(1, "a2")({
+          2: "bob"
+        })
       }, {
         value: "carol",
-        content: _(4, "a2")
+        content: _(1, "a2")({
+          2: "carol"
+        })
       }], Symbol.iterator)]() {
         yield this;
         yield* _.a
       }
     },
     g: !0
-  }], "a1 5"];
+  }], "a1 2"];
   M._.w()
 </script>

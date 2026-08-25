@@ -17,6 +17,8 @@ interface Registered {
   id: string;
   access: string;
   scope: unknown;
+  locals?: object;
+  localsAccessor?: string;
 }
 
 interface ScopeInternals {
@@ -430,10 +432,14 @@ export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
+  locals?: object,
+  localsAccessor?: string,
 ) {
   REGISTRY.set(val, {
     id,
     scope,
+    locals,
+    localsAccessor,
     access: "_._" + toAccess(toObjectKey(id)),
   });
   return val;
@@ -779,6 +785,18 @@ function writeRegistered(
     const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
     trackScope(state, scope, scopeId);
     state.buf.push("_(" + scopeId + "," + quote(registered.id, 0) + ")");
+    if (registered.locals) {
+      // Render-only locals are applied by calling the resumed value; the
+      // client keeps them at `localsAccessor`, where later paths resolve.
+      const argIndex = state.buf.push("(");
+      if (
+        writeProp(state, registered.locals, ref, registered.localsAccessor!)
+      ) {
+        state.buf.push(")");
+      } else {
+        state.buf.length = argIndex - 1;
+      }
+    }
   } else {
     state.buf.push(registered.access);
   }

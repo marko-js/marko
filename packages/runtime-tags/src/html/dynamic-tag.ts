@@ -12,13 +12,13 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import { register } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _el,
   _html,
   _peek_scope_id,
   _resume,
-  _resume_locals,
   _scope,
   _scope_id,
   _script,
@@ -30,6 +30,7 @@ import {
   getState,
   rendererKey,
   withBranchId,
+  _scope_with_id,
 } from "./writer";
 
 const voidElementsReg =
@@ -244,13 +245,21 @@ export function _content_resume(
   return _resume(_content(id, fn, scopeId), id, scopeId);
 }
 
+// Locals ride inline with each serialized reference to the content, so they
+// cost nothing when nothing on the client reaches it.
 export function _content_resume_locals(
   id: string,
   fn: ServerRenderer,
   locals: Record<string, unknown>,
   scopeId: number,
 ) {
-  return _resume_locals(_content(id, fn, scopeId), id, locals, scopeId);
+  return register(
+    id,
+    _content(id, fn, scopeId),
+    _scope_with_id(scopeId),
+    locals,
+    RendererProp.LocalClosureValues,
+  );
 }
 
 export const patchDynamicTag = /* @__PURE__ */ (
