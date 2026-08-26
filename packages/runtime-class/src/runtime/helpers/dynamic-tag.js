@@ -83,6 +83,7 @@ module.exports = function dynamicTag(
         }
       }
 
+      var classRenderer = renderer;
       if (dynamicTag.___runtimeCompat) {
         renderer = dynamicTag.___runtimeCompat(
           renderer,
@@ -94,7 +95,12 @@ module.exports = function dynamicTag(
 
       if (renderer) {
         out.c(componentDef, key, customEvents);
-        renderer(addTagsEvents(attrs, componentDef, customEvents), out);
+        renderer(
+          renderer === classRenderer
+            ? attrs
+            : addTagsEvents(attrs, componentDef, customEvents),
+          out,
+        );
         out.___assignedComponentDef = null;
       } else {
         var isFn = typeof render === "function";
