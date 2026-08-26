@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.38
+
+### Patch Changes
+
+- [#4061](https://github.com/marko-js/marko/pull/4061) [`c3411b7`](https://github.com/marko-js/marko/commit/c3411b72c3e30404f3230afc0fa82ee3bf5e6549) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Only fold a Class parent's `on-x(...)` bindings into a dynamic tag child's input when the child is a Tags API component. Class API children rendered through a dynamic tag were also receiving the injected `onX` handler, which leaked into the DOM as a serialized `on-click="function () {...}"` attribute when the child spread its input onto a native element.
+
+- Updated dependencies [[`a9a95c3`](https://github.com/marko-js/marko/commit/a9a95c3ab64573ac5fa48f19a43f401fafe6061c), [`d8973d8`](https://github.com/marko-js/marko/commit/d8973d8550f413b1ed499da757f68debbed51a9f), [`cfa45f2`](https://github.com/marko-js/marko/commit/cfa45f269e926ba6df42f9bb493dbd43615eab5c), [`121d28c`](https://github.com/marko-js/marko/commit/121d28cdc11d1f0e7e8f5d83a317a0fadf8d4503), [`13a4d9c`](https://github.com/marko-js/marko/commit/13a4d9c37ca16fbca4f2982e983b12dfc78dfacc)]:
+  - @marko/runtime-tags@6.3.46
+
 ## 5.39.37
 
 ### Patch Changes
