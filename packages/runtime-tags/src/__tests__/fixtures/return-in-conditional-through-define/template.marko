@@ -1,0 +1,11 @@
+<define/Wrapper|input|>
+  <return=input.value/>
+</define>
+
+<let/open=false/>
+<button onClick() { open = !open }>Toggle</button>
+<if=open>
+  <child/value/>
+  <Wrapper/wrapped=value/>
+  <div>Value: ${wrapped}</div>
+</if>
