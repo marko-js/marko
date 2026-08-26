@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { isNativeTag } from "@marko/compiler/babel-utils";
 
 import { kNativeTagBinding } from "../visitors/tag/native-tag";
 import { getParentTag } from "./get-parent-tag";
 import { type Binding, BindingType, createBinding } from "./references";
 import type { Section } from "./sections";
+import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 const kOnlyChildInParent = Symbol("only child in parent");
 const kNodeRef = Symbol("potential only child node ref");
@@ -27,7 +27,7 @@ export function getOnlyChildParentTagName(
   const parentTag = getParentTag(tag);
   return (extra[kOnlyChildInParent] =
     parentTag &&
-    isNativeTag(parentTag) &&
+    analyzeTagNameType(parentTag) === TagNameType.NativeTag &&
     parentTag.node.name.type === "StringLiteral" &&
     (tag.parent as t.MarkoTagBody).body.filter(
       (node) => node.type !== "MarkoComment",
