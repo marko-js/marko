@@ -365,7 +365,7 @@ export function knownTagTranslateDOM(
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
     addStatement(
-      "render",
+      "prepare",
       tagSection,
       undefined,
       t.expressionStatement(

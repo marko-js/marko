@@ -23,8 +23,8 @@ const $clickTwiceCount = /*@__PURE__*/ _let("clickTwiceCount/10", ($scope) => {
 });
 function $setup($scope) {
 	_var($scope, "#childScope/0", $onClickOnce2);
-	$Once_content__setup._($scope["#childScope/0"], $scope);
 	_var($scope, "#childScope/4", $onClickTwice2);
+	$Once_content__setup._($scope["#childScope/0"], $scope);
 	$Twice_content__setup._($scope["#childScope/4"], $scope);
 	$clickOnceCount($scope, 0);
 	$clickTwiceCount($scope, 0);

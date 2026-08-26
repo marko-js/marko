@@ -85,6 +85,9 @@ export interface Signal {
   /** Signals this one forwards into: they must declare first when the
    * forward simplifies to a bare, eagerly evaluated reference. */
   forwards: Opt<Signal>;
+  /** Runs before `render`: registrations (eg `_var`) that an earlier tag's
+   * synchronous `_return` may reach before the registering tag's own setup. */
+  prepare: t.Statement[];
   render: t.Statement[];
   effect: t.Statement[];
   hasHTMLEffect: boolean;
@@ -298,6 +301,7 @@ export function getSignal(
         values: [],
         intersection: undefined,
         forwards: undefined,
+        prepare: [],
         render: [],
         effect: [],
         hasHTMLEffect: false,
@@ -456,6 +460,7 @@ export function signalHasStatements(signal: Signal): boolean {
   if (
     signal.extraArgs ||
     signal.forcePersist ||
+    signal.prepare.length ||
     signal.render.length ||
     signal.effect.length ||
     signal.hasHTMLEffect ||
@@ -732,11 +737,15 @@ export function getSignalFn(signal: Signal): t.Expression {
     signal.hasSideEffect = true;
   }
 
+  const render = signal.prepare.length
+    ? signal.prepare.concat(signal.render)
+    : signal.render;
+
   if (!signal.hasSideEffect) {
-    if (isValue && signal.render.length === 1) {
-      const render = signal.render[0];
-      if (render.type === "ExpressionStatement") {
-        const { expression } = render;
+    if (isValue && render.length === 1) {
+      const first = render[0];
+      if (first.type === "ExpressionStatement") {
+        const { expression } = first;
         if (
           expression.type === "CallExpression" &&
           expression.callee.type === "Identifier" &&
@@ -755,14 +764,14 @@ export function getSignalFn(signal: Signal): t.Expression {
       isValue
         ? [scopeIdentifier, getSignalValueIdentifier(signal)]
         : [scopeIdentifier],
-      toFirstExpressionOrBlock(signal.render),
+      toFirstExpressionOrBlock(render),
     );
   }
 
-  if (signal.render.length === 1) {
-    const render = signal.render[0];
-    if (render.type === "ExpressionStatement") {
-      const { expression } = render;
+  if (render.length === 1) {
+    const first = render[0];
+    if (first.type === "ExpressionStatement") {
+      const { expression } = first;
       if (expression.type === "CallExpression") {
         const args = expression.arguments;
         if (args.length === 1 && args[0] === scopeIdentifier) {
@@ -781,10 +790,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     }
   }
 
-  return t.arrowFunctionExpression(
-    [scopeIdentifier],
-    t.blockStatement(signal.render),
-  );
+  return t.arrowFunctionExpression([scopeIdentifier], t.blockStatement(render));
 }
 
 const hasTranslatedExtraArgs = new WeakSet<{ extraArgs?: t.Expression[] }>();
@@ -883,7 +889,7 @@ export function replaceNullishAndEmptyFunctionsWith0(
   return args as t.Expression[];
 }
 export function addStatement(
-  type: "render" | "effect",
+  type: "prepare" | "render" | "effect",
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
