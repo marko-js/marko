@@ -1,5 +1,22 @@
 # @marko/runtime-tags
 
+## 6.3.46
+
+### Patch Changes
+
+- [#4058](https://github.com/marko-js/marko/pull/4058) [`a9a95c3`](https://github.com/marko-js/marko/commit/a9a95c3ab64573ac5fa48f19a43f401fafe6061c) Thanks [@rturnq](https://github.com/rturnq)! - Fix `<if>`/`<for>` as the only child of a custom tag whose name shadows a native element (eg `tags/menu.marko`) borrowing that tag's node marker; the content crashed when re-rendered on the client because the marker lives in the parent's scope.
+
+- [#4055](https://github.com/marko-js/marko/pull/4055) [`d8973d8`](https://github.com/marko-js/marko/commit/d8973d8550f413b1ed499da757f68debbed51a9f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make the server runtime tree-shakable: `patchDynamicTag`, the generator prototype patch, and the serializer's well-known tables are no longer module-import side effects, so bundlers can drop unused SSR runtime (a bare static-page SSR bundle drops ~4.7 kB minified / ~1.6 kB brotli).
+
+- [#4062](https://github.com/marko-js/marko/pull/4062) [`cfa45f2`](https://github.com/marko-js/marko/commit/cfa45f269e926ba6df42f9bb493dbd43615eab5c) Thanks [@rturnq](https://github.com/rturnq)! - Fix a custom tag's returned value not reaching a later tag's variable in the browser when an earlier tag returns synchronously during setup (eg `<child/value/>` feeding `<Wrapper/wrapped=value/>`).
+
+- [#4048](https://github.com/marko-js/marko/pull/4048) [`121d28c`](https://github.com/marko-js/marko/commit/121d28cdc11d1f0e7e8f5d83a317a0fadf8d4503) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report lazy module load failures in development: a loader script error or a
+  rejected chunk import now logs a diagnostic (and records the dead channel)
+  instead of leaving server-rendered content silently inert. Production
+  output is unchanged.
+
+- [#4053](https://github.com/marko-js/marko/pull/4053) [`13a4d9c`](https://github.com/marko-js/marko/commit/13a4d9c37ca16fbca4f2982e983b12dfc78dfacc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `<try>` boundaries with a `<@catch>` now share their parent's abort signal, so a consumer disconnecting mid-stream stops pending `<await>` regions under the try instead of leaving them rendering into a dead stream. Disconnects never fire the `@catch` content.
+
 ## 6.3.45
 
 ### Patch Changes
