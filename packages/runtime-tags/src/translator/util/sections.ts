@@ -398,7 +398,10 @@ export function getNodeContentType(
   return ContentType.Dynamic;
 }
 
-export function getSectionRegisterReasons(section: Section) {
+export function getSectionRegisterReasons(
+  section: Section,
+  instantiation?: boolean,
+) {
   if (section.isBranch) return false; // Branches handle whether to register their section/renderer.
 
   const { downstreamBinding } = section;
@@ -406,6 +409,7 @@ export function getSectionRegisterReasons(section: Section) {
     let downstreamReasons = getAllSerializeReasonsForBinding(
       downstreamBinding.binding,
       downstreamBinding.properties,
+      instantiation,
     );
     if (downstreamReasons && downstreamReasons !== true) {
       downstreamReasons = mapCrossProgramReason(

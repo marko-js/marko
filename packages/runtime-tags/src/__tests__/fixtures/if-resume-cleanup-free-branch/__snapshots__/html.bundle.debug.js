@@ -11,7 +11,7 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_n, $sg__input_n, $sg__input_n, 0, 1);
-	$si__input_n && writeScope($scope0_id, { n }, "__tests__/tags/leaf.marko", 0, { n: "1:10" });
+	$si__input_n && writeScope($scope0_id, {}, "__tests__/tags/leaf.marko", 0);
 });
 
 // template.marko

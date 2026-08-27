@@ -19,7 +19,6 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", _serialize_guard($scope1_reason, 0) || $sg__input_bar, $sg__input_bar, $sg__input_bar);
 		$si__input_bar && writeScope($scope1_id, {
-			d: input?.bar,
 			e: input?.message,
 			_: _scope_with_id($scope0_id)
 		});

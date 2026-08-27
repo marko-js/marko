@@ -647,6 +647,11 @@ export function getSignalFn(signal: Signal): t.Expression {
     }
   }
 
+  // Emission order is load-bearing for resume: `derivesFromAll` in
+  // references.ts skips serializing a closure value whose branch this same
+  // signal creates, trusting the value reaches scope first. Member forwards
+  // above therefore precede `values`, and `values` keep document order, so a
+  // `<const>` or member value lands before the `<if>`/`<for>` reading it.
   for (const value of signal.values) {
     if (value.signal.inline) {
       continue;

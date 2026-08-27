@@ -16,5 +16,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value);
-	writeScope($scope0_id, { foo: _serialize_if($scope0_reason, 0) && value?.foo }, "__tests__/template.marko", 0, { foo: "4:12" });
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

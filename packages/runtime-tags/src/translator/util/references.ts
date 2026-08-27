@@ -19,6 +19,7 @@ import {
   addSorted,
   concat,
   filter,
+  find,
   findSorted,
   forEach,
   fromIter,
@@ -1267,6 +1268,45 @@ export function finalizeReferences() {
     }
   });
 
+  // Pre-pass: record every branch hop `derivesFromAll` will excuse from a
+  // closure's serialize reason, so instantiation-flavored queries (which the
+  // main walk's downstream hops consume, in any order) already see them.
+  forEachSection((section) => {
+    forEach(section.referencedClosures, (closure) => {
+      let currentSection = section;
+      let sourceDriven = true;
+      let skippedSources: undefined | Sources;
+      while (currentSection !== closure.section) {
+        sourceDriven &&= currentSection.isBranch;
+        if (
+          sourceDriven &&
+          !currentSection.downstreamBinding &&
+          currentSection.upstreamExpression
+        ) {
+          const upstreamReason = getSerializeSourcesForExpr(
+            currentSection.upstreamExpression,
+          );
+          if (
+            upstreamReason &&
+            derivesFromAll(closure.sources, upstreamReason)
+          ) {
+            skippedSources = mergeSources(skippedSources, upstreamReason);
+          }
+        }
+        currentSection = currentSection.parent!;
+      }
+      if (skippedSources) {
+        instantiationSourcesByBinding.set(
+          closure,
+          mergeSources(
+            instantiationSourcesByBinding.get(closure),
+            skippedSources,
+          )!,
+        );
+      }
+    });
+  });
+
   forEachSection((section) => {
     forEach(section.referencedLocalClosures, (closure) => {
       // Local closures inherit serialize reasons from the owner section.
@@ -1283,16 +1323,28 @@ export function finalizeReferences() {
       let currentSection = section;
       let branchesForced = false;
       let branchesSources: undefined | Sources;
+      // Only `<if>`/`<for>` bodies are created by their own signal; an async
+      // or content hop below a branch can create the reader at any time.
+      let sourceDriven = true;
 
       // The walk keeps merging through a forced hop: the force decides the
       // reason, but later hops' sources still feed provenance.
       while (currentSection !== sourceSection) {
+        sourceDriven &&= currentSection.isBranch;
         const upstreamReason = currentSection.downstreamBinding
-          ? getSectionRegisterReasons(currentSection) || undefined
+          ? getSectionRegisterReasons(currentSection, true) || undefined
           : !currentSection.upstreamExpression ||
             getSerializeSourcesForExpr(currentSection.upstreamExpression);
         if (upstreamReason === true) {
           branchesForced = true;
+        } else if (
+          upstreamReason &&
+          sourceDriven &&
+          derivesFromAll(closure.sources, upstreamReason)
+        ) {
+          // The value is repushed before this branch can be created, so its
+          // serialized copy is never read; the pre-pass above already kept
+          // these sources visible to instantiation-flavored reason queries.
         } else if (upstreamReason) {
           branchesSources = mergeSources(branchesSources, upstreamReason);
         }
@@ -1662,6 +1714,29 @@ function resolveDerivedSources(binding: Binding) {
       }
     });
   }
+}
+
+// Whether every source of `condition` also drives `value`, so any change
+// that re-creates a branch on `condition` recomputes `value` in the same
+// signal (before the branch), and its serialized copy is never read.
+function derivesFromAll(
+  value: Sources | undefined,
+  condition: Sources,
+): boolean {
+  if (!value) return false;
+  if (condition.global && !value.global) return false;
+  let derives = true;
+  forEach(condition.state, (state) => {
+    derives &&= bindingUtil.has(value.state, state);
+  });
+  forEach(condition.param, (param) => {
+    derives &&= !!find(value.param, (valueParam) => {
+      let cur: Binding | undefined = valueParam;
+      while (cur && cur !== param) cur = cur.upstreamAlias;
+      return cur === param;
+    });
+  });
+  return derives;
 }
 
 export function createSources(
@@ -2736,19 +2811,34 @@ const serializeReasonCache = new WeakMap<
   t.NodeExtra | Binding,
   boolean | SerializeReason
 >();
+// The instantiation flavor additionally counts branch sources that
+// `derivesFromAll` excused from serializing a value: they cannot make the
+// value's serialized copy readable, but they can still create content
+// downstream of it after resume.
+const instantiationReasonCache = new WeakMap<
+  t.NodeExtra | Binding,
+  boolean | SerializeReason
+>();
+const instantiationSourcesByBinding = new WeakMap<Binding, Sources>();
 export function getAllSerializeReasonsForExtra(
   extra: t.NodeExtra,
+  instantiation?: boolean,
 ): undefined | SerializeReason {
   if (extra.isEffect) return true;
-  let reason = serializeReasonCache.get(extra);
+  const cache = instantiation ? instantiationReasonCache : serializeReasonCache;
+  let reason = cache.get(extra);
   if (reason === false) return;
   if (reason === undefined) {
     if (extra === getProgram().node.extra?.section!.returnValueExpr) {
       reason = true;
     } else {
-      serializeReasonCache.set(extra, false);
+      cache.set(extra, false);
       forEach(extra.downstream, (binding) => {
-        let linked = getAllSerializeReasonsForBinding(binding, true);
+        let linked = getAllSerializeReasonsForBinding(
+          binding,
+          true,
+          instantiation,
+        );
         if (linked && linked !== true) {
           const exprs = extra.downstreamExprs;
           if (exprs) {
@@ -2764,7 +2854,7 @@ export function getAllSerializeReasonsForExtra(
     }
 
     if (reason) {
-      serializeReasonCache.set(extra, reason);
+      cache.set(extra, reason);
     }
   }
 
@@ -2774,18 +2864,26 @@ export function getAllSerializeReasonsForExtra(
 export function getAllSerializeReasonsForBinding(
   binding: Binding,
   properties?: Opt<string> | true,
+  instantiation?: boolean,
 ): undefined | SerializeReason {
   // The upstream-alias term is merged only for `properties !== true`, but it can
   // only promote a binding that has no other reason — i.e. one never read in an
   // expression, so never queried with `true`. A binding seen in both flavors
   // therefore can't differ by flavor, so a single binding key is safe.
-  let reason = serializeReasonCache.get(binding);
+  const cache = instantiation ? instantiationReasonCache : serializeReasonCache;
+  let reason = cache.get(binding);
 
   if (reason === undefined) {
     reason = getSerializeReason(binding.section, binding);
+    if (instantiation && reason !== true) {
+      reason = mergeSerializeReasons(
+        reason,
+        instantiationSourcesByBinding.get(binding),
+      );
+    }
 
     if (reason !== true) {
-      serializeReasonCache.set(binding, reason || false);
+      cache.set(binding, reason || false);
 
       if (properties !== true && binding.upstreamAlias) {
         reason = mergeSerializeReasons(
@@ -2793,6 +2891,7 @@ export function getAllSerializeReasonsForBinding(
           getAllSerializeReasonsForBinding(
             binding.upstreamAlias,
             binding.property,
+            instantiation,
           ),
         );
       }
@@ -2801,7 +2900,7 @@ export function getAllSerializeReasonsForBinding(
         for (const expr of binding.reads) {
           reason = mergeSerializeReasons(
             reason,
-            getAllSerializeReasonsForExtra(expr),
+            getAllSerializeReasonsForExtra(expr, instantiation),
           );
           if (reason === true) break;
         }
@@ -2810,7 +2909,11 @@ export function getAllSerializeReasonsForBinding(
           for (const alias of binding.aliases) {
             reason = mergeSerializeReasons(
               reason,
-              getAllSerializeReasonsForBinding(alias, properties),
+              getAllSerializeReasonsForBinding(
+                alias,
+                properties,
+                instantiation,
+              ),
             );
             if (reason === true) break;
           }
@@ -2819,7 +2922,7 @@ export function getAllSerializeReasonsForBinding(
     }
 
     if (reason) {
-      serializeReasonCache.set(binding, reason);
+      cache.set(binding, reason);
     }
   }
 
@@ -2833,7 +2936,7 @@ export function getAllSerializeReasonsForBinding(
         for (const propBinding of binding.propertyAliases.values()) {
           reason = mergeSerializeReasons(
             reason,
-            getAllSerializeReasonsForBinding(propBinding, true),
+            getAllSerializeReasonsForBinding(propBinding, true, instantiation),
           );
           if (reason === true) break;
         }
@@ -2859,7 +2962,7 @@ export function getAllSerializeReasonsForBinding(
         if (propBinding) {
           reason = mergeSerializeReasons(
             reason,
-            getAllSerializeReasonsForBinding(propBinding, rest),
+            getAllSerializeReasonsForBinding(propBinding, rest, instantiation),
           );
         }
 
@@ -2869,7 +2972,11 @@ export function getAllSerializeReasonsForBinding(
             if (propBinding) {
               reason = mergeSerializeReasons(
                 reason,
-                getAllSerializeReasonsForBinding(propBinding, rest),
+                getAllSerializeReasonsForBinding(
+                  propBinding,
+                  rest,
+                  instantiation,
+                ),
               );
               if (reason === true) break;
             }

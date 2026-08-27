@@ -25,10 +25,7 @@ var template_default = _template("a", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "a", _serialize_guard($scope1_reason, 0) || $sg__input_bar, $sg__input_bar, $sg__input_bar);
-		$si__input_bar && writeScope($scope1_id, {
-			d: input.bar,
-			e: input.message
-		});
+		$si__input_bar && writeScope($scope1_id, { e: input.message });
 	}, _scope_id()) };
 	Foo.content({ bar: "hi" });
 }, 1);

@@ -1,6 +1,6 @@
 // tags/comments.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_comments = _serialize_guard($scope0_reason, 1), $sg__input_comments__OR__input_path = _serialize_guard($scope0_reason, 0), $si__input_comments = _serialize_if($scope0_reason, 1), $si__input_comments__OR__input_path = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_comments = _serialize_guard($scope0_reason, 1), $sg__input_comments__OR__input_path = _serialize_guard($scope0_reason, 0), $si__input_comments__OR__input_path = _serialize_if($scope0_reason, 0), $si__input_comments = _serialize_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.comments, (comment, i) => {
@@ -31,7 +31,6 @@ const $content = (input) => {
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		writeScope($scope1_id, {
-			i: $si__input_comments && comment?.comments,
 			M: _serialize_if($scope0_reason, 2) && i,
 			l: $si__input_comments && id,
 			m: open,

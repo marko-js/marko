@@ -12,7 +12,7 @@ var sections_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
-		$si__input_section && writeScope($scope1_id, { d: content });
+		$si__input_section && writeScope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
 	$si__input_section && writeScope($scope0_id, {});
 });

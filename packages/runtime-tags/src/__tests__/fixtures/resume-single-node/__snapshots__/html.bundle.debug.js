@@ -21,12 +21,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		itemId,
-		items,
-		items_length: items?.length
+		items
 	}, "__tests__/template.marko", 0, {
 		itemId: "1:6",
-		items: "2:6",
-		items_length: ["items.length", "2:6"]
+		items: "2:6"
 	});
 	_resume_branch($scope0_id);
 }, 1);

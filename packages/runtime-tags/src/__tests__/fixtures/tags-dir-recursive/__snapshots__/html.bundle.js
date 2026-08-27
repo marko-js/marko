@@ -17,7 +17,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "b", $sg__input_depth, $sg__input_depth, $sg__input_depth, 0, 1);
 	_html("</div>");
-	$si__input_depth && writeScope($scope0_id, { e: input.depth });
+	$si__input_depth && writeScope($scope0_id, {});
 };
 var tree_default = _template("b", $content);
 

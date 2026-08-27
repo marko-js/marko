@@ -7,21 +7,18 @@ const $for_content__content = /*@__PURE__*/ _const(3, ($scope) => {
 	$if_content__content($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__content($scope, ($params2?.[0]).content);
-const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<div></div>", " ", 0, $for_content__$params);
 const $input_section = ($scope, input_section) => $for($scope, [input_section]);
 
 // template.marko
-const $section_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b));
-const $section_content = _content_resume("a1", " ", " ", $section_content__count);
-const $count__closure = /*@__PURE__*/ _closure($section_content__count);
-const $count = /*@__PURE__*/ _let(1, ($scope) => {
-	$input_section($scope.a, attrTag({
-		onClick: $onClick($scope),
-		content: $section_content($scope)
-	}));
-	$count__closure($scope);
+const $section_content = /*@__PURE__*/ _content("a0", " ", " ", /* @__PURE__ */ _closure_get(4, ($scope) => _text($scope.a, $scope._.c)));
+const $n = /*@__PURE__*/ _let(3, ($scope) => {
+	let $section;
+	forTo($scope.d, 1, 1, (i) => {
+		$section = attrTags($section, { content: $section_content($scope) });
+	});
+	$input_section($scope.b, $section);
 });
-const $onClick = ($scope) => function() {
-	$count($scope, +$scope.b + 1);
-};
-_resume("a0", $onClick);
+const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
+	$n($scope, +$scope.d + 1);
+}));
