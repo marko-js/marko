@@ -1,0 +1,9 @@
+<let/volume=1/>
+<let/muted=false/>
+<const/audioOff=muted || volume === 0/>
+<div>
+  <if=audioOff>off</if>
+  <else if=(volume < 0.5)>low</else>
+  <else>high</else>
+</div>
+<button onClick() { volume = 0 }>zero</button>

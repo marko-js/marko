@@ -27,3 +27,14 @@ static function feed(inc, sfx) { return { status: inc.status, label: inc.status 
 ```
 
 Check: with `test.ts` steps `[{}, (document) => document.querySelector("button").click()]`, `pnpm run test:update -- --grep "runtime-tags/translator <name> "` writes a `__snapshots__/render.md` (identical for dom, ssr and csr) whose post-click `## Change` is only `REMOVE: .derived + form` and `UPDATE: .badge::text "open!" => "resolved!"`, leaving `<div class="row open">` and `<form class="derived"/>` in place although `item.status === "resolved"`. Dropping `<let/sfx>` and the `sfx` argument, or making `sfx` assignable, or passing the suffix as `input.sfx`, each updates the class and removes both forms. Mechanism, from `pnpm run compile -- -o dom -d tags/row.marko`: `_const("item_status")` has no downstream and `$input_inc_pending__OR__item_status` is a plain function called at the end of `$input_inc`, after `$input_inc__OR__sfx` (an `_or`) has only queued the recompute of `item`; the controls instead emit `_or(...)` plus `_const("item_status", $input_inc_pending__OR__item_status)`. Bisect: the same `row.marko` compiled against `@marko/runtime-tags@6.1.23` emits the subscribed `_or` shape, and `@6.1.24`, the release carrying "collapse single-source intersections" (#3310), emits the collapsed one.
+
+Pinned by `packages/runtime-tags/src/__tests__/fixtures/intersection-collapse-deferred-member`
+— a 9-line single-file repro (two `<let>`s where only one is ever assigned, a
+`<const>` intersection over both, and an `<if>`/`<else if>` chain reading both
+the const and the assigned `<let>`): clicking sets `volume = 0` and the branch
+renders `low` instead of `off`. Its committed snapshots capture the current
+incorrect output, so the fix will surface as a snapshot diff (`low` → `off` in
+`render.md`). Both the never-assigned member and the chain's direct read of the
+assigned source are required — dropping either makes the collapse sound and the
+fixture render correctly. Reproduced identically on marko 6.3.35 (eBay/evo-web,
+where it presented as a stale mute-icon branch) and current `main`.
