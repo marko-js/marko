@@ -1,8 +1,20 @@
 import type { TestConfig } from "../../main.test";
 
-// Attribute tags have per-name channels the region checks cannot see
-// through yet: fail closed at the call site.
+const toggle = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// An attr tag feeds a client-owned child like body content: its body
+// compiles in this file and its filled reads stay fresh across patches.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { title: "a" },
+    toggle,
+    { title: "b" },
+    toggle,
+    { title: "c" },
+    toggle,
+    { title: "d" },
+  ],
 };

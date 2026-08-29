@@ -2,7 +2,11 @@
 // facts (nothing is stored on the AST); they outlive the admission guard's
 // removal.
 import { types as t } from "@marko/compiler";
-import { isAttributeTag, loadFileForTag } from "@marko/compiler/babel-utils";
+import {
+  getProgram,
+  isAttributeTag,
+  loadFileForTag,
+} from "@marko/compiler/babel-utils";
 
 import evaluate from "../evaluate";
 import isStatic from "../is-static";
@@ -42,7 +46,12 @@ export function hasInertCall(value: t.Node) {
 // A dynamic tag rendering `input` content (a body or attribute tag) and
 // nothing else: its name reads one property of the template's input, through
 // any alias; resolved references are required, so call at finalize or later.
-export function isContentRenderTag(tag: t.NodePath<t.MarkoTag>) {
+export function isContentRenderTag(
+  tag: t.NodePath<t.MarkoTag>,
+  // The admission guard walks a loaded child file's AST while `getProgram()`
+  // still points at the compiling parent; it passes the child program.
+  program: t.NodePath<t.Program> = getProgram(),
+) {
   const { node } = tag;
   if (
     t.isStringLiteral(node.name) ||
@@ -60,7 +69,7 @@ export function isContentRenderTag(tag: t.NodePath<t.MarkoTag>) {
     !Array.isArray(binding) &&
     binding.property !== undefined &&
     !!binding.upstreamAlias &&
-    getCanonicalBinding(binding.upstreamAlias) === getInputBinding(tag)
+    getCanonicalBinding(binding.upstreamAlias) === getInputBinding(program)
   );
 }
 // A dynamic tag whose renderer and every input the server owns (any client
@@ -100,11 +109,9 @@ export function hasStateFeed(extra: t.NodeExtra | undefined) {
   );
 }
 
-// The template's `input` param binding (the first program param).
-function getInputBinding(tag: t.NodePath<t.MarkoTag>) {
-  return (
-    tag.hub.file as { ast: { program: t.Program } }
-  ).ast.program.extra?.binding?.propertyAliases.get("0");
+// The `input` param binding of the given template program.
+function getInputBinding(program: t.NodePath<t.Program>) {
+  return program.node.extra?.binding?.propertyAliases.get("0");
 }
 
 export interface ChildPatchPlan {

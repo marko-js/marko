@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A `$global`-derived value never re-ships, so reading it inside `<@catch>`
-// content on an interactive page stays closed.
+// `@catch` content reading a `$global`-derived value: the derivation
+// delivers as a fill each frame, so the catch UI renders the rejecting
+// patch's brand, not the initial render's.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: () => [
+    { promise: Promise.resolve("ok"), $global: { brand: "acme" } },
+    { promise: Promise.reject(new Error("boom")), $global: { brand: "bmce" } },
+  ],
 };

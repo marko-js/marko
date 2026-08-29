@@ -4,7 +4,8 @@
     brand: "Marko"
   },
   ta: "Marko",
-  ga0: "! brand"
+  ea0: "b",
+  wb: "Marko"
 }
 
 // PATCH
@@ -13,5 +14,6 @@
     brand: "Runtime"
   },
   ta: "Runtime",
-  ga0: "! brand"
+  ea0: "b",
+  wb: "Runtime"
 }

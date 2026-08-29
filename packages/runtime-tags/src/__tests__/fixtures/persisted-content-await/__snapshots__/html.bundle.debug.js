@@ -44,7 +44,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 						"ClosureSignalIndex:input_value": 1
 					}, "__tests__/template.marko", "4:8"));
 					_resume_branch($scope3_id);
-				}, void 0, "__tests__/template.marko_2_#text#0/await");
+				}, 1, "__tests__/template.marko_2_#text#0/await");
 				$scope0_reason && _subscribe($si__input_value && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 				_resume_branch($scope2_id);
 			}, $scope1_id) });

@@ -24,6 +24,7 @@ _shells({
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = new Set();
 	const $global$1 = $global();
 	_html("<main>");
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
@@ -35,7 +36,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "#text/0", $global$1.brand)}</em>`);
-			_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
+			_subscribe($scope0_reason && $global_brand__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_if(() => {
@@ -50,13 +52,24 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					const $scope3_reason = _persisted_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_patch_text($scope3_id, "#text/0", $global$1.brand)}</i>`);
-					_scope($scope3_id, {}, "__tests__/template.marko", "6:6");
+					_subscribe($scope0_reason && $global_brand__closures, _scope($scope3_id, {
+						_: _scope_with_id($scope2_id),
+						"ClosureSignalIndex:$global_brand": 1
+					}, "__tests__/template.marko", "6:6"));
+					_resume_branch($scope3_id);
 				}, $scope2_id)
 			});
-			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "5:4");
+			_scope($scope2_id, {
+				_: _scope_with_id($scope0_id),
+				"#childScope/0": _existing_scope($childScope2)
+			}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"]);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	$scope0_reason && _scope($scope0_id, {
+		$global_brand: $global$1?.brand,
+		"ClosureScopes:$global_brand": $global_brand__closures,
+		"#childScope/0": _existing_scope($childScope)
+	}, "__tests__/template.marko", 0, { $global_brand: ["$global.brand"] });
 }, 1, 1);

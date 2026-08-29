@@ -446,9 +446,11 @@ export default {
         setClosureSignalBuilder(
           tag,
           { kind: "for", ref: nodeRef },
-          (closure, render, initId) => {
+          (closure, render, initId, retain) => {
             const selectorKeyBinding = getForSelectorKey(bodySection, closure);
             const init = initId && t.stringLiteral(initId);
+            // The `_resume` aliases keep a `tagNameLoad` input's registration
+            // out of the pure-call list (nothing else references it).
             if (selectorKeyBinding) {
               const args = [
                 getScopeAccessorLiteral(nodeRef, true),
@@ -457,12 +459,16 @@ export default {
                 render,
               ];
               return init
-                ? callRuntime("_init_for_selector", init, ...args)
+                ? callRuntime(
+                    retain ? "_resume_init_for_selector" : "_init_for_selector",
+                    init,
+                    ...args,
+                  )
                 : callRuntime("_for_selector", ...args);
             }
             return init
               ? callRuntime(
-                  "_init_for_closure",
+                  retain ? "_resume_init_for_closure" : "_init_for_closure",
                   init,
                   getScopeAccessorLiteral(nodeRef, true),
                   render,

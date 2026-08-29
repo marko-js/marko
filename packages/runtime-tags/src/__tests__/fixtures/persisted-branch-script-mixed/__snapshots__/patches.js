@@ -5,9 +5,10 @@
   },
   ta: "Store",
   bb: [{
-    ga1: "g 1 ! brand"
+    ea1: "g h 1"
   }, "a0"],
-  wg: "b"
+  wg: "b",
+  wh: "Marko"
 }]
 
 // PATCH
@@ -17,9 +18,10 @@
   },
   ta: "Store!",
   bb: [{
-    ga1: "g 1 ! brand"
+    ea1: "g h 1"
   }, "a0"],
-  wg: "b"
+  wg: "b",
+  wh: "Marko"
 }]
 
 // PATCH
@@ -29,7 +31,8 @@
   },
   ta: "Store",
   bb: [{
-    ga1: "g 1 ! brand"
+    ea1: "g h 1"
   }, "a0"],
-  wg: "b"
+  wg: "b",
+  wh: "Fresh"
 }]

@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-controllable-checked-value/template.marko:1:1
-    > 1 | <input type="checkbox" checkedValue=input.picked checkedValueChange(next: unknown) {} value="a">
-        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: `checkedValue` groups are not patchable.
-      2 |

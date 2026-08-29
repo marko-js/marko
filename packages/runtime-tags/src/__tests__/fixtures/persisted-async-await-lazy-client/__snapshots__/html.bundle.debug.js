@@ -21,7 +21,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope3_id = _scope_id();
 			_html(`<em>${_text_resume($scope3_id, "#text/0", value)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "8:6");
-		}, void 0, 0, 1);
+		}, 1, 0, 1);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) }, 1);

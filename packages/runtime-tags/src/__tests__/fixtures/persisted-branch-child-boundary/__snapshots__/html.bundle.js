@@ -14,7 +14,7 @@ var loader_default = _template_persisted("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_patch_text($scope1_id, "a", v, void 0, $scope0_owned, 0));
 		_scope($scope1_id, {});
-	}, void 0, "b1", 1);
+	}, 1, "b1", 1);
 	_html("</div>");
 }, 0, 0);
 

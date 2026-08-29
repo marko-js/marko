@@ -30,7 +30,12 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPersisted,
+} from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -41,7 +46,12 @@ import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
-import { addStatement, getSignal } from "../../util/signals";
+import {
+  addStatement,
+  getResumeRegisterId,
+  getSignal,
+  sectionConstructs,
+} from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -93,11 +103,19 @@ export default {
       }
 
       if (tagExtra.tagNameLoad) {
+        const section = getOrCreateSection(tag);
         tagExtra[kLoadTagBinding] = createBinding(
           "#text",
           BindingType.dom,
-          getOrCreateSection(tag),
+          section,
         );
+        (section.loadSites ??= []).push(tagExtra[kLoadTagBinding]!);
+        tagExtra.tagNameLoadInput = true;
+        // Reference tracking fills these same extras later, so the fact is
+        // recorded ahead of it on each attr value.
+        for (const attr of tag.node.attributes) {
+          (attr.value.extra ??= {}).tagNameLoadInput = true;
+        }
       }
 
       if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {
@@ -253,22 +271,42 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           ]),
         );
         importRuntimeFeature("catch");
+        const loadSetupCall = callRuntime(
+          "_load_setup",
+          getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
+          getScopeAccessorLiteral(childBinding, true),
+          triggerIdent
+            ? t.addComment(
+                t.callExpression(triggerIdent, [setupLoadExpr]),
+                "leading",
+                "@__PURE__",
+              )
+            : setupLoadExpr,
+          // A construct's client-side load drives the child's ready
+          // channel, so its deferred frame data drains after insert.
+          isPersisted() &&
+            getReadyId(childFile) !== undefined &&
+            t.stringLiteral(getReadyId(childFile)!),
+        );
         getProgram().node.body.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(
               setupIdent,
-              callRuntime(
-                "_load_setup",
-                getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
-                getScopeAccessorLiteral(childBinding, true),
-                triggerIdent
-                  ? t.addComment(
-                      t.callExpression(triggerIdent, [setupLoadExpr]),
-                      "leading",
-                      "@__PURE__",
-                    )
-                  : setupLoadExpr,
-              ),
+              // A constructing branch runs the site's load wiring as a shell
+              // init; `_resume` (impure) survives tree-shaking to deliver it.
+              isPersisted() && sectionConstructs(section)
+                ? callRuntime(
+                    "_resume",
+                    t.stringLiteral(
+                      getResumeRegisterId(
+                        section,
+                        node.extra![kLoadTagBinding]!,
+                        "init",
+                      ),
+                    ),
+                    loadSetupCall,
+                  )
+                : loadSetupCall,
             ),
           ]),
         );

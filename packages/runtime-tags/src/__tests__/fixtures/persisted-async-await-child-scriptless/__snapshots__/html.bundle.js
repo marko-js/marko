@@ -30,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 				_patch_child($scope3_id, "a", $childScope);
 				pill_default({ text: value });
 				_scope($scope3_id, { a: _existing_scope($childScope) });
-			}, void 0, "a2");
+			}, 1, "a2");
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		} else {

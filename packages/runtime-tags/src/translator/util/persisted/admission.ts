@@ -6,19 +6,23 @@ import { types as t } from "@marko/compiler";
 import {
   getProgram,
   getTagDef,
+  isAttributeTag,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
 import { isEventHandler } from "../../../common/helpers";
 import {
   getRelatedControllable,
-  isAttrsOnlySpread,
+  isAttrSetSpread,
 } from "../../visitors/tag/native-tag";
 import * as BindingType from "../constants/binding-type";
 import evaluate from "../evaluate";
+import { forEachIdentifier } from "../for-each-identifier";
+import { getTagName } from "../get-tag-name";
 import { isConditionTag, isCoreTagName } from "../is-core-tag";
 import { isEventOrChangeHandler } from "../is-event-or-change-handler";
 import { getParamGroupFeeds, type ParamGroupFeeds } from "../known-tag";
+import { getAttrTagPaths } from "../nested-attribute-tags";
 import { every, forEach, type Opt } from "../optional";
 import { type Binding, getCanonicalExtra } from "../references";
 import { getSection, getSectionForBody } from "../sections";
@@ -81,14 +85,11 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
     }
     forEach(extra?.referencedBindings, (binding) => {
       const sources = getSerializeSourcesForRef(binding);
-      if (sources?.global) {
-        unsupported(
-          node,
-          "`$global` cannot be read inside client-owned structure",
-        );
-      }
+      // A `$global`-derived value delivers like any server value: its fill
+      // re-ships each frame, so only an unfillable read rejects.
       if (
-        sources?.param &&
+        sources &&
+        (sources.param || sources.global) &&
         !sources.state &&
         !isPatchFillBinding(binding) &&
         !inStatefulBranch(binding.section)
@@ -153,7 +154,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (!t.isStringLiteral(node.name)) {
           // Rendering an `input` property is the body-content channel:
           // what it renders is validated where it was compiled.
-          if (!isContentRenderTag(inner)) {
+          if (!isContentRenderTag(inner, file.path)) {
             reason = "renders a dynamic tag";
           }
           return;
@@ -177,25 +178,40 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               : instanceValueUnsafety(attrPath.get("value") as t.NodePath);
           if (reason) return;
         }
-        if (getTagDef(inner)?.template) {
-          if (node.var) {
-            reason = "renders a nested child with a tag variable";
-          } else if (node.attributeTags?.length || node.arguments?.length) {
-            reason = "renders a nested child with attribute tags or arguments";
-          } else {
-            // An inputless child has no groups: anything fed must analyze.
-            const feeds = node.extra && getParamGroupFeeds(node.extra);
-            if (!feeds && node.attributes.length) {
-              reason = "renders a nested child without analyzable input";
-            }
-            for (const group of feeds || []) {
-              if (group.sources?.global) {
-                reason = "feeds a nested child a `$global`-derived input";
-                break;
-              }
-            }
-            reason ||= getInstanceUnsafety(inner);
+        if (!isAttributeTag(inner) && getTagDef(inner)?.template) {
+          // The `_var_change` write-back is not wired for a pure client
+          // instance; an unassigned variable is just a local read.
+          if (node.var && varAssigned(node.var)) {
+            reason = "renders a nested child with an assigned tag variable";
+            return;
           }
+          if (node.arguments?.length) {
+            for (const argPath of inner.get("arguments") as t.NodePath[]) {
+              reason ||= t.isSpreadElement(argPath.node)
+                ? "renders a nested child with a spread argument"
+                : instanceValueUnsafety(argPath);
+            }
+            if (reason) return;
+          }
+          // An inputless child has no groups: anything fed must analyze
+          // (attr-tag attribute values validate as this traverse reaches them).
+          const feeds = node.extra && getParamGroupFeeds(node.extra);
+          if (
+            !feeds &&
+            (node.attributes.length ||
+              node.arguments?.length ||
+              node.attributeTags?.length ||
+              node.body.attributeTags)
+          ) {
+            reason = "renders a nested child without analyzable input";
+          }
+          for (const group of feeds || []) {
+            if (group.sources?.global) {
+              reason = "feeds a nested child a `$global`-derived input";
+              break;
+            }
+          }
+          reason ||= getInstanceUnsafety(inner);
         }
       },
     });
@@ -276,21 +292,92 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
   };
   // Provenance-free feeds (imports, opaque reads) have no fill channel, so
   // only a tracked (param/state) or constant feed can gate structure.
+  // The child input root a group param feeds from: its program param
+  // index plus the property directly under it (none for a whole param).
+  const getGroupParamRoot = (param: Binding) => {
+    let prop: string | undefined;
+    for (let b: Binding | undefined = param; b; b = b.upstreamAlias) {
+      if (b.upstreamAlias === b.section.params) {
+        return b.property === undefined
+          ? undefined
+          : { index: b.property, prop };
+      }
+      if (b.property !== undefined) prop = b.property;
+    }
+  };
   const groupFedUnsafely = (
-    attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
+    tag: t.NodePath<t.MarkoTag>,
     group: ParamGroupFeeds,
   ) => {
-    let names: Set<string> | undefined;
+    const { node } = tag;
+    const roots: { index: string; prop: string | undefined }[] = [];
+    let unresolved = false;
     forEach(group.params, (param) => {
-      (names ??= new Set()).add(param.property ?? param.name);
+      const root = getGroupParamRoot(param);
+      if (root) roots.push(root);
+      else unresolved = true;
     });
-    return attributes.some(
-      (attr) =>
-        attr.type === "MarkoAttribute" &&
-        names?.has(attr.name) &&
-        !evaluate(attr.value).confident &&
-        !getSerializeSourcesForExpr(attr.value.extra || {}),
+    // A param whose feed cannot be located has no checkable channel.
+    if (unresolved) return true;
+    // Attr-tag and spread values merge their references into the group or
+    // tag extra: the canonical extra sees the tracked sources they carry.
+    const unsafeValue = (value: t.Expression) =>
+      !evaluate(value).confident &&
+      !getSerializeSourcesForExpr(getCanonicalExtra(value.extra || {}));
+    if (
+      node.arguments?.some(
+        (arg, i) =>
+          !t.isSpreadElement(arg) &&
+          roots.some((root) => root.index === i + "") &&
+          unsafeValue(arg),
+      )
+    ) {
+      return true;
+    }
+    // Named attributes and attr tags feed the program param AFTER the
+    // positional arguments; a spread may carry any of its properties.
+    const attrsIndex = (node.arguments?.length || 0) + "";
+    const attrRoots = roots.filter((root) => root.index === attrsIndex);
+    if (!attrRoots.length) return false;
+    const feedsRoot = (name: string) =>
+      attrRoots.some((root) => root.prop === undefined || root.prop === name);
+    if (
+      node.attributes.some((attr) =>
+        attr.type === "MarkoAttribute"
+          ? feedsRoot(attr.name) && unsafeValue(attr.value)
+          : unsafeValue(attr.value),
+      )
+    ) {
+      return true;
+    }
+    // An attr tag itself feeds like body content; only a provenance-free
+    // attribute VALUE anywhere inside one gates the group it feeds.
+    const attrTagFeedsUnsafely = (attrTag: t.NodePath<t.MarkoTag>): boolean =>
+      attrTag.node.attributes.some((attr) => unsafeValue(attr.value)) ||
+      getAttrTagPaths(attrTag).some(
+        (child) =>
+          child.isMarkoTag() &&
+          isAttributeTag(child) &&
+          attrTagFeedsUnsafely(child),
+      );
+    const lookup = node.extra?.attributeTags;
+    return (
+      !!lookup &&
+      getAttrTagPaths(tag).some((child) => {
+        if (!child.isMarkoTag() || !isAttributeTag(child)) return false;
+        const meta = lookup[getTagName(child)];
+        return !!meta && feedsRoot(meta.name) && attrTagFeedsUnsafely(child);
+      })
     );
+  };
+  // Whether any binding the tag variable declares is assigned somewhere
+  // (destructured vars hang their bindings on the pattern's identifiers).
+  const varAssigned = (varNode: t.LVal) => {
+    let assigned = false;
+    forEachIdentifier(varNode, (id) => {
+      assigned ||= !!id.extra?.binding?.assignmentSections;
+    });
+    return assigned;
   };
   program.traverse({
     MarkoPlaceholder(placeholder) {
@@ -330,14 +417,9 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
             forEach(ref as Opt<Binding>, (binding) => {
               if (binding.section === localSection) return;
               const sources = getSerializeSourcesForRef(binding);
-              if (sources?.global) {
-                unsupported(
-                  n,
-                  `a \`$global\`-derived value inside \`<${attrName}>\` content would go stale`,
-                );
-              }
               if (
-                sources?.param &&
+                sources &&
+                (sources.param || sources.global) &&
                 !sources.state &&
                 !isPatchFillBinding(binding) &&
                 !inStatefulBranch(binding.section)
@@ -382,10 +464,18 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (stateful) {
           for (const attr of node.attributes) {
             if (attr.type !== "MarkoAttribute") continue;
-            // A local `by` invokes client-side per re-list; any server
-            // source anywhere in the keyer would read stale.
+            // A locally written keyer re-invokes client-side (reads stay
+            // current via fills); a server-provided keyer VALUE cannot ship.
             if (attr.name === "by") {
-              if (exprHasServerSources(attr.value)) {
+              if (
+                t.isFunction(attr.value)
+                  ? attr.value.extra?.globalBindings ||
+                    hasUnfillablePatchReads(
+                      (attr.value.extra as t.FunctionExtra | undefined)
+                        ?.referencedBindingsInFunction,
+                    )
+                  : exprHasServerSources(attr.value)
+              ) {
                 unsupported(
                   attr,
                   "a server-derived `by` key inside a client-owned loop would read stale",
@@ -439,16 +529,12 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         }
         return;
       }
-      // Fills and direct `$global` reads stay current over the wire; a
-      // global-DERIVED binding never re-ships, so its reads reject as stale.
       if (tagName === "script") {
         for (const attr of node.attributes) {
           if (attr.type === "MarkoAttribute" && attr.name === "value") {
-            if (
-              getSerializeSourcesForRef(attr.value.extra?.referencedBindings)
-                ?.global ||
-              hasUnfillablePatchReads(attr.value.extra?.referencedBindings)
-            ) {
+            // `$global`-derived reads deliver like any server value, so
+            // only an unfillable read rejects.
+            if (hasUnfillablePatchReads(attr.value.extra?.referencedBindings)) {
               unsupported(attr);
             }
             // A script's re-run entry rides the branch partial the frame no
@@ -509,27 +595,45 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         // Inside client-owned structure a child is a pure client instance
         // (input re-applies via tag-args signals; server values fill).
         if (inStatefulBranch(getSection(tag))) {
-          if (node.var) {
+          // The `_var_change` write-back is not wired for a pure client
+          // instance, so an assigned tag variable stays closed.
+          if (node.var && varAssigned(node.var)) {
             unsupported(
               node,
-              "a tag variable on a child inside client-owned structure is not supported yet",
+              "assigning a child's tag variable inside client-owned structure is not supported yet",
             );
           }
-          // Body content compiles here, so its expressions are already
-          // checked in their own (client-owned) sections; attr tags are not.
-          if (node.attributeTags?.length) {
-            unsupported(
-              node,
-              "attribute tags for a child inside client-owned structure are not supported yet",
-            );
+          for (const arg of node.arguments || []) {
+            // A spread argument hides which params it feeds from the
+            // per-group analysis below.
+            if (t.isSpreadElement(arg)) {
+              unsupported(
+                arg,
+                "a spread argument for a child inside client-owned structure is not supported yet",
+              );
+            } else {
+              assertDeliverableInClientOwned(arg, arg, arg.extra);
+            }
           }
-          // Arguments have no per-group channel: only named attrs deliver.
-          if (node.arguments?.length) {
-            unsupported(
-              node,
-              "arguments for a child inside client-owned structure are not supported yet",
-            );
-          }
+          // Attr-tag bodies compile in this file (this traverse visits
+          // them); only their attribute expressions need checking here.
+          const checkAttrTagAttrs = (owner: t.NodePath<t.MarkoTag>) => {
+            for (const child of getAttrTagPaths(owner)) {
+              if (child.isMarkoTag() && isAttributeTag(child)) {
+                for (const attr of child.node.attributes) {
+                  assertDeliverableInClientOwned(
+                    attr,
+                    attr.value,
+                    attr.type === "MarkoAttribute"
+                      ? attr.value.extra
+                      : node.extra,
+                  );
+                }
+                checkAttrTagAttrs(child);
+              }
+            }
+          };
+          checkAttrTagAttrs(tag);
           // Transitive safety composes per-template facts with a memo:
           // every template below must be a self-contained client instance.
           const unsafety = getInstanceUnsafety(tag);
@@ -553,21 +657,22 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           // An inputless child has no groups to classify; anything fed
           // must analyze so each group's channel can be checked.
           const feeds = node.extra && getParamGroupFeeds(node.extra);
-          if (!feeds && (node.attributes.length || node.arguments?.length)) {
+          if (
+            !feeds &&
+            (node.attributes.length ||
+              node.arguments?.length ||
+              node.attributeTags?.length ||
+              node.body.attributeTags)
+          ) {
             unsupported(
               node,
               "a child inside client-owned structure must have analyzable input",
             );
           }
           for (const group of feeds || []) {
-            // Fills keep tracked params current and the instance
-            // re-selects client-side; a provenance-free structural feed
-            // has no channel, and `$global` never re-ships.
-            if (
-              (group.structuralOrGlobal &&
-                groupFedUnsafely(node.attributes, group)) ||
-              group.sources?.global
-            ) {
+            // Fills keep tracked params current and the instance re-selects
+            // client-side; a provenance-free structural feed has no channel.
+            if (group.structuralOrGlobal && groupFedUnsafely(tag, group)) {
               unsupported(
                 node,
                 "an input the child needs server-owned cannot feed from client-owned structure",
@@ -687,12 +792,8 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
         if (attr.type === "MarkoAttribute") seen[attr.name] = attr;
       }
       const related = getRelatedControllable(tagName as string, seen);
-      if (related) {
-        if (related.helper === "_attr_input_checkedValue") {
-          unsupported(node, "`checkedValue` groups are not patchable");
-        } else if ("valueMode" in related && related.valueMode) {
-          unsupported(node, "a dynamic `type=` can change the control kind");
-        }
+      if (related && "valueMode" in related && related.valueMode) {
+        unsupported(node, "a dynamic `type=` can change the control kind");
       }
       const controlled = new Set<t.Node>(
         related ? (related.attrs.filter(Boolean) as t.Node[]) : [],
@@ -710,10 +811,13 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
               (attr.value.extra as t.FunctionExtra | undefined)
                 ?.referencedBindingsInFunction,
               (binding) => {
-                // Direct reads (BindingType.global) see the live bag.
+                // Direct reads (BindingType.global) see the live bag; a
+                // derived value stays current through its fill/wire write.
                 if (
                   binding.type !== BindingType.global &&
-                  getSerializeSourcesForRef(binding)?.global
+                  getSerializeSourcesForRef(binding)?.global &&
+                  !isPatchFillBinding(binding) &&
+                  !isPatchWriteBinding(binding)
                 ) {
                   unsupported(
                     attr,
@@ -755,7 +859,7 @@ export function assertSupportedPatch(program: t.NodePath<t.Program>) {
           attr.type === "MarkoSpreadAttribute"
             ? // A controllable or content-carrying spread cannot patch.
               !evaluate(attr.value).confident &&
-              !isAttrsOnlySpread(tag, tagName as string)
+              !isAttrSetSpread(tag, tagName as string)
             : !evaluate(attr.value).confident &&
               ((isEventOrChangeHandler(attr.name) &&
                 !isEventHandler(attr.name)) ||

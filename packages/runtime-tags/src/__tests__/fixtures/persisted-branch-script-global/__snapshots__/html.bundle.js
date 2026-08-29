@@ -6,17 +6,18 @@ _shells({
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", $global().brand)}</h1>`);
+	const $global$1 = $global();
+	_html(`<main><h1>${_patch_text($scope0_id, "a", $global$1.brand)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_script($scope1_id, "a1");
-			_patch_effect($scope1_id, "a1", "! brand", 1);
-			$scope0_reason && _scope($scope1_id, {});
+			_patch_effect($scope1_id, "a1", "f 1");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_reason ? _scope($scope0_id, { f: $global$1?.brand }) : _patch_write($scope0_id, "f", $global$1?.brand);
 }, 1, 1);

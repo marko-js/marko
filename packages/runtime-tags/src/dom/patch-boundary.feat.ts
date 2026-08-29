@@ -141,10 +141,12 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // The server now owns this await frame. Invalidate a promise started while
   // setting up a newly constructed parent body so its stale resolution drops.
   scope[(AccessorPrefix.Promise + accessor) as Accessor] = 0 as never;
+  // A settle from an earlier response must not hide this frame's pending UI.
+  settled.get(scope)?.delete(accessor);
   // A construct has no live await branch: the entry's id delivers the body
   // content record its frame shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
-    const renderer = getShellContent(shells[value] || failPatch());
+    const renderer = getShellContent(shells[value]);
     const pendingScopes = collectScopes(
       () =>
         ((
@@ -207,10 +209,7 @@ function resolveBoundaryContent(id: string | 0, owner: Scope) {
   if (id === 0) return 0;
   const shell = shells[id];
   if (shell) return getShellContent(shell, id, owner);
-  const registered = getRegisteredWithScope(id) as
-    | ((owner: Scope) => unknown)
-    | undefined;
-  return registered ? registered(owner) : failPatch();
+  return (getRegisteredWithScope(id) as (owner: Scope) => unknown)(owner);
 }
 
 const applyChild = patchers[PatchKey.Child];
@@ -230,9 +229,8 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     if (!scope[link]) {
       const shell = shells[contentId];
       const renderer = ((shell && getShellContent(shell, contentId)) ||
-        getRegisteredWithScope(contentId) ||
-        failPatch()) as Renderer;
-      const marker = (scope[accessor as Accessor] || failPatch()) as ChildNode;
+        getRegisteredWithScope(contentId)) as Renderer;
+      const marker = scope[accessor as Accessor] as ChildNode;
       const inside = marker.nodeType === 1;
       const parentNode = inside
         ? (marker as unknown as Element)

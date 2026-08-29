@@ -10,12 +10,7 @@ import { _dynamic_tag } from "./control-flow";
 import "./patch-child.feat";
 import { getShellContent, shells } from "./patch-shells";
 import type { Renderer } from "./renderer";
-import {
-  constructPatchers,
-  failPatch,
-  getRegisteredWithScope,
-  patchers,
-} from "./resume";
+import { constructPatchers, getRegisteredWithScope, patchers } from "./resume";
 
 // Re-renders the tag's `input` content through its signal; an id-only
 // entry constructs its content record, else pairs the same one or rejects.
@@ -34,10 +29,7 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
     const shell = shells[id];
     renderer = shell
       ? getShellContent(shell, id)
-      : (getRegisteredWithScope(id) as Renderer) || failPatch();
-  } else if (renderer === undefined) {
-    // Its registration was shaken or never loaded: skew, reject (`0` is none).
-    failPatch();
+      : (getRegisteredWithScope(id) as Renderer);
   }
   _dynamic_tag(
     (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,

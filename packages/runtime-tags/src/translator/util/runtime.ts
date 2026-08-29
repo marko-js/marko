@@ -130,6 +130,7 @@ export type DOMRuntimeFeature =
   | "patch-child"
   | "patch-content"
   | "patch-control"
+  | "patch-control-checked-value"
   | "patch-control-input"
   | "patch-control-open"
   | "patch-control-select"

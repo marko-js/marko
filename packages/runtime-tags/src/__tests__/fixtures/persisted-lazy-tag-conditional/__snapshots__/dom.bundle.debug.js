@@ -18,9 +18,9 @@ const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
+let $load_Child_setup = _resume("__tests__/template.marko_1_#text#0/init", /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")), "ready:__tests__/child.marko"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_label.mjs")));
-const $if_content__input_label = /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label));
+const $if_content__input_label = _resume_init_if_closure("__tests__/template.marko_1_input_label#4/init", "#main/0", 0, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$load_Child_setup($scope);
