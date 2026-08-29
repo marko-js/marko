@@ -5,11 +5,11 @@ _shells({ "__tests__/tags/frame.marko": "__tests__/tags/frame.marko;D%;<section>
 var frame_default = _template_persisted("__tests__/tags/frame.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html$1("<section>");
+	_html("<section>");
 	_patch_dynamic_tag($scope0_id, "#text/0", input.content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
-	_html$1("</section>");
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_html("</section>");
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -28,7 +28,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $input_first__closures = new Set();
 	const $showSecond__closures = new Set();
 	let showSecond = false;
-	_html$1("<main>");
+	_html("<main>");
 	_set_serialize_reason(0);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
@@ -37,15 +37,15 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", showSecond ? input.second : input.first, (value) => {
 			const $scope2_id = _scope_id();
-			_html$1(`<p>${_escape(value)}${_el_resume($scope2_id, "#text/0")}</p>`);
-			writeScope($scope2_id, {}, "__tests__/template.marko", "4:6");
+			_html(`<p>${_text_resume($scope2_id, "#text/0", value)}</p>`);
+			_scope($scope2_id, {}, "__tests__/template.marko", "4:6");
 		}, void 0, "__tests__/template.marko_1_#text#0/await", 1);
-		_subscribe($showSecond__closures, _subscribe(_source_if($scope0_reason, 1) && $input_first__closures, _subscribe(_source_if($scope0_reason, 0) && $input_second__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"))));
+		_subscribe($showSecond__closures, _subscribe(_source_if($scope0_reason, 1) && $input_first__closures, _subscribe(_source_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"))));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
-	_html$1(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}</main>`);
-	_script$1($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_reason ? _scope($scope0_id, {
 		input_second: input.second,
 		input_first: input.first,
 		showSecond,

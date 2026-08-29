@@ -13,21 +13,21 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "#text/0", item, $scope0_owned, 0)}${_el_resume($scope1_id, "#text/0")}`);
+		_html(`<li>${_patch_text($scope1_id, "#text/0", item, void 0, $scope0_owned, 0)}`);
 		if ($scope0_reason) _if(() => {
 			if (expand) {
 				const $scope2_id = _scope_id();
-				_html(`<p>${_escape(input.note)}${_el_resume($scope2_id, "#text/0")}</p>`);
-				_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, writeScope($scope2_id, {}, "__tests__/template.marko", "6:8"));
+				_html(`<p>${_text_resume($scope2_id, "#text/0", input.note)}</p>`);
+				_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:8"));
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
 		_html("</li>");
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 	}, 0, $scope0_id, "#text/0", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "__tests__/template.marko_1*shell");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_note: input.note,
 		expand,
 		"ClosureScopes:input_note": $input_note__closures

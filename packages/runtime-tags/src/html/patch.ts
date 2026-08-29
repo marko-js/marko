@@ -20,7 +20,7 @@ import {
   _attrs_partial,
   stringAttr,
 } from "./attrs";
-import { _escape, _to_text } from "./content";
+import { _to_text } from "./content";
 import {
   getRegistered,
   K_SCOPE_ID,
@@ -31,6 +31,7 @@ import { shells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _peek_scope_id,
+  _text_resume,
   addSetupId,
   getChunk,
   getState,
@@ -663,6 +664,7 @@ export function _patch_text(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
+  shouldResume?: number,
   owned?: SerializeReasonValue,
   group?: number,
 ) {
@@ -679,7 +681,9 @@ export function _patch_text(
     getChunk()!.needsWalk = true;
   }
 
-  return _escape(value);
+  // The patch write doubles as the output writer, so the text rides the
+  // same resume marking a plain placeholder gets.
+  return _text_resume(scopeId, accessor, value, shouldResume);
 }
 
 // A spread's attribute set: the entry carries the merged object and the

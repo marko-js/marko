@@ -10,23 +10,23 @@ var template_default = _template_persisted("a", (input) => {
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.heading, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.heading, void 0, $scope0_owned, 0)}</h1>`);
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
 			_owned_guard($scope0_owned, 1) ? _patch_value($scope2_id, "a1", cell) : _patch_init($scope2_id, "a2");
-			_html(`<p>${_escape(cell + ":" + input.suffix + "@0")}${_el_resume($scope2_id, "a")}</p>`);
-			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 2) && $input_suffix__closures, writeScope($scope2_id, {
+			_html(`<p>${_text_resume($scope2_id, "a", cell + ":" + input.suffix + "@0")}</p>`);
+			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 2) && $input_suffix__closures, _scope($scope2_id, {
 				c: cell,
 				_: _scope_with_id($scope1_id)
 			})));
 		}, (cell) => cell, $scope1_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a1");
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, (row) => row.id, $scope0_id, "b", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		h: input.suffix,
 		i: count,
 		j: $input_suffix__closures,

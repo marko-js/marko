@@ -5,9 +5,9 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let other = 10;
-	_html(`<div><h1>${_escape(input.title + " #0")}${_el_resume($scope0_id, "a")}</h1><h2>${_escape(input.title + " / 10")}${_el_resume($scope0_id, "b")}</h2><button>+</button>${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<div><h1>${_text_resume($scope0_id, "a", input.title + " #0")}</h1><h2>${_text_resume($scope0_id, "b", input.title + " / 10")}</h2><button>+</button>${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		f: input.title,
 		g: count,
 		i: other

@@ -5,8 +5,8 @@ _shells({ b: "b;D%b%;<span class=badge><!><!></span>" });
 var badge_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=badge>${_patch_text($scope0_id, "a", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}<!>${_patch_text($scope0_id, "b", input.note ? ` (${_to_text(input.note)})` : "", $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</span>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`<span class=badge>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_owned, 0)}${_patch_text($scope0_id, "b", input.note ? ` (${_to_text(input.note)})` : "", 2, $scope0_owned, 1)}</span>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -33,7 +33,7 @@ var template_default = _template_persisted("a", (input) => {
 				label: input.title,
 				note: input.note
 			});
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
@@ -41,13 +41,13 @@ var template_default = _template_persisted("a", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<em>closed</em>");
-			$scope0_reason && writeScope($scope2_id, {});
+			$scope0_reason && _scope($scope2_id, {});
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0", "a1"]);
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}</main>`);
+	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		g: input.title,
 		h: input.note,
 		i: count

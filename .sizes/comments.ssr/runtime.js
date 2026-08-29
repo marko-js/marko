@@ -1,4 +1,4 @@
-// size: 2855 (min) 1376 (brotli)
+// size: 2817 (min) 1362 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -209,19 +209,14 @@ function init(runtimeId = "M") {
               if ((processResumes(render.r, effects), readyIds));
               let retained = 0;
               for (visit of (visits = render.v))
-                if (
-                  ((lastTokenIndex = render.i.length),
+                ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
-                  visitType === "*")
-                ) {
-                  let prev = visit.previousSibling;
-                  visitScope[nextToken()] =
-                    prev && (prev.nodeType < 8 || prev.data)
-                      ? prev
-                      : visit.parentNode.insertBefore(new Text(), visit);
-                }
+                  (visitScope[nextToken()] =
+                    visitType === "$"
+                      ? visit.previousSibling
+                      : visit.parentNode.insertBefore(new Text(), visit)));
               return ((visits.length = retained), effects);
             }),
             (render.w = () => {

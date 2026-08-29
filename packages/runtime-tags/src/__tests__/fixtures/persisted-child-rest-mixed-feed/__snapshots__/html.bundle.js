@@ -5,8 +5,8 @@ var echo_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const { ...rest } = input;
-	_html(`<em>${_patch_text($scope0_id, "a", rest.label, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</em>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`<em>${_patch_text($scope0_id, "a", rest.label, void 0, $scope0_owned, 0)}</em>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -25,7 +25,7 @@ var template_default = _template_persisted("a", (input) => {
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.label,
 		f: other,
 		a: _existing_scope($childScope)

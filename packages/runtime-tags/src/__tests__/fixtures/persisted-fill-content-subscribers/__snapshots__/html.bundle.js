@@ -6,9 +6,9 @@ var frame_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
-	$scope0_reason && writeScope($scope0_id, {});
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -32,8 +32,8 @@ var template_default = _template_persisted("a", (input) => {
 	frame_default({ content: _content_elide("a1", () => {
 		_persisted_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p class=a>${_escape(input.label + ":0")}${_el_resume($scope1_id, "a")}</p>`);
-		_subscribe($a__closures, _subscribe($si__input_label && $input_label__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) })));
+		_html(`<p class=a>${_text_resume($scope1_id, "a", input.label + ":0")}</p>`);
+		_subscribe($a__closures, _subscribe($si__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_set_serialize_reason(0);
@@ -42,8 +42,8 @@ var template_default = _template_persisted("a", (input) => {
 	frame_default({ content: _content_elide("a0", () => {
 		_persisted_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p class=b>${_escape(input.label + ":0")}${_el_resume($scope2_id, "a")}</p>`);
-		_subscribe($b__closures, _subscribe($si__input_label && $input_label__closures, writeScope($scope2_id, {
+		_html(`<p class=b>${_text_resume($scope2_id, "a", input.label + ":0")}</p>`);
+		_subscribe($b__closures, _subscribe($si__input_label && $input_label__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Cj: 1
 		})));
@@ -51,7 +51,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id) });
 	_html(`<button class=a>a</button>${_el_resume($scope0_id, "c")}<button class=b>b</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		g: input.label,
 		h: a,
 		i: b,

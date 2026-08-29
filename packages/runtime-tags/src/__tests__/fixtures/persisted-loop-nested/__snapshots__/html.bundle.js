@@ -11,14 +11,14 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		if ($scope0_reason) _for_of(inner, (i) => {
 			const $scope2_id = _scope_id();
-			_html(`<div>${_escape(o)}${_el_resume($scope2_id, "a")}<!>${_escape(i)}${_el_resume($scope2_id, "b")}: <!>${_escape(input.note)}${_el_resume($scope2_id, "c")}</div>`);
-			_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, writeScope($scope2_id, {}));
+			_html(`<div>${_text_resume($scope2_id, "a", o)}${_text_resume($scope2_id, "b", i, 2)}: ${_text_resume($scope2_id, "c", input.note, 2)}</div>`);
+			_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, _scope($scope2_id, {}));
 		}, 0, $scope1_id, "a", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, { c: o });
+		_scope($scope1_id, { c: o });
 	}, 0, $scope0_id, "a");
 	_html(`<button class=o>o</button>${_el_resume($scope0_id, "b")}<button class=i>i</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		f: input.note,
 		g: outer,
 		h: inner,

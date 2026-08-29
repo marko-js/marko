@@ -16,17 +16,17 @@ var template_default = _template_persisted("a", (input) => {
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
 			_owned_guard($scope0_owned, 0) ? _patch_value($scope2_id, "a1", cell) : _patch_init($scope2_id, "a2");
-			_html(`<p>${_escape(cell + ":" + input.suffix + "@0")}${_el_resume($scope2_id, "a")}</p>`);
-			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 1) && $input_suffix__closures, writeScope($scope2_id, {
+			_html(`<p>${_text_resume($scope2_id, "a", cell + ":" + input.suffix + "@0")}</p>`);
+			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 1) && $input_suffix__closures, _scope($scope2_id, {
 				c: cell,
 				_: _scope_with_id($scope1_id)
 			})));
 		}, (cell) => cell, $scope1_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a1");
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, (row) => row.id, $scope0_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		f: input.suffix,
 		g: count,
 		h: $input_suffix__closures,

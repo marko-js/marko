@@ -386,10 +386,6 @@ export function patchPartial(
   return partial;
 }
 
-export function _sep(shouldResume: number) {
-  return shouldResume === 0 ? "" : "<!>";
-}
-
 export function _resume_branch(scopeId: number) {
   const branchId = $chunk.context?.[kBranchId];
   if (branchId !== undefined && branchId !== scopeId) {

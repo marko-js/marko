@@ -11,21 +11,21 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h1>`);
 	_try($scope0_id, "b", _content_resume("a3", () => {
 		const $scope1_id = _scope_id();
 		_persisted_reason();
 		_await($scope1_id, "a", resolveAfter("v0", n), (value) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_escape(value)}${_el_resume($scope3_id, "a")}</em>`);
-			writeScope($scope3_id, {});
+			_html(`<em>${_text_resume($scope3_id, "a", value)}</em>`);
+			_scope($scope3_id, {});
 		}, void 0, 0, 1);
-		_subscribe($n__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("a1", $scope0_id) }) }, 1);
 	_html(`<button>Next</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a4");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		g: n,
 		h: $n__closures
 	});

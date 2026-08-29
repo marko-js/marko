@@ -24,23 +24,23 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					_for_of(input.items, (item) => {
 						const $scope3_id = _scope_id();
 						_owned_guard($scope0_owned, 3) ? _patch_value($scope3_id, "__tests__/template.marko1", item) : _patch_init($scope3_id, "__tests__/template.marko_3_input_items#6/init");
-						_html(`<p>${_escape(item + ":" + input.suffix + "@" + count)}${_el_resume($scope3_id, "#text/0")}</p>`);
-						_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 4) && $input_suffix__closures, writeScope($scope3_id, {
+						_html(`<p>${_text_resume($scope3_id, "#text/0", item + ":" + input.suffix + "@" + count)}</p>`);
+						_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 4) && $input_suffix__closures, _scope($scope3_id, {
 							item,
 							_: _scope_with_id($scope2_id)
 						}, "__tests__/template.marko", "5:8", { item: "5:12" })));
 					}, (item) => item, $scope2_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell");
-					_subscribe(_source_if($scope0_reason, 3) && $input_items__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
+					_subscribe(_source_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2*shell"]);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_inner: input.inner,
 		input_items: input.items,
 		input_suffix: input.suffix,

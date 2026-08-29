@@ -24,9 +24,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let double = doubler_default({ value: count });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double#5/var");
-	_html(`<p>${_escape(double)}${_el_resume($scope0_id, "#text/2")}</p><button>+</button>${_el_resume($scope0_id, "#button/3")}</main>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/2", double)}</p><button>+</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });

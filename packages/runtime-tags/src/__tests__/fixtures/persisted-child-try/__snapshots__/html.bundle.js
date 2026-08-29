@@ -26,12 +26,12 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
 			widget_default({});
-			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && writeScope($scope0_id, { c: show });
+	$scope0_reason && _scope($scope0_id, { c: show });
 	_resume_branch($scope0_id);
 }, 1, () => [widget_default]);

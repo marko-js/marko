@@ -12,13 +12,13 @@ var card_default = _template_persisted("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_patch_dynamic_tag($scope1_id, "a", input.content, $scope0_owned, 2);
-			_dynamic_tag$1($scope1_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
-			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
+			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
 	_html(`</section>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_reason && writeScope($scope0_id, { e: input.content });
+	$scope0_reason && _scope($scope0_id, { e: input.content });
 }, 0, 0);
 
 // template.marko
@@ -42,13 +42,13 @@ var template_default = _template_persisted("a", (input) => {
 		content: _content_elide("a0", () => {
 			_persisted_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "a", input.note, $scope0_owned, 2)}${_el_resume($scope1_id, "a")}</em>`);
-			_subscribe(_source_if($scope0_reason, 2) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_owned, 2)}</em>`);
+			_subscribe(_source_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		e: input.note,
 		f: $input_note__closures,
 		a: _existing_scope($childScope)

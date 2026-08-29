@@ -14,15 +14,15 @@ var template_default = _template_persisted("a", (input) => {
 			_html("<ul>");
 			if ($scope0_reason) _for_of(items, (item) => {
 				const $scope2_id = _scope_id();
-				_html(`<li>${_escape(item)}${_el_resume($scope2_id, "a")}</li>`);
-				writeScope($scope2_id, {});
+				_html(`<li>${_text_resume($scope2_id, "a", item)}</li>`);
+				_scope($scope2_id, {});
 			}, 0, $scope1_id, "a", 1, 1, 1, "</ul>", 1);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason && writeScope($scope0_id, { f: items });
+	$scope0_reason && _scope($scope0_id, { f: items });
 	_resume_branch($scope0_id);
 }, 1, 0);

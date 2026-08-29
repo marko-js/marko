@@ -18,12 +18,12 @@ var template_default = _template_persisted("a", (input) => {
 				}, "a0", $scope1_id)
 			}, "a", $scope1_id, "a", $scope0_owned, 2)}>go</a>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a2");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"]);
-	_html(`<em>${_escape(count)}${_el_resume($scope0_id, "b")}</em></main>`);
-	$scope0_reason && writeScope($scope0_id, {
+	_html(`<em>${_text_resume($scope0_id, "b", count)}</em></main>`);
+	$scope0_reason && _scope($scope0_id, {
 		f: input.attrs,
 		g: count
 	});

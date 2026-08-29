@@ -12,12 +12,12 @@ var badge_default = _template_persisted("b", (input) => {
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			_html("<em>on</em>");
-			$scope0_reason && writeScope($scope1_id, {});
+			$scope0_reason && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["b0"]);
-	_html(`<p>${_patch_text($scope0_id, "b", input.text, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</p>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`<p>${_patch_text($scope0_id, "b", input.text, void 0, $scope0_owned, 1)}</p>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // tags/wrap/index.marko
@@ -31,7 +31,7 @@ var wrap_default = _template_persisted("c", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	badge_default({ text: input.label });
 	_html("</div>");
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 0, () => [badge_default]);
 
 // template.marko
@@ -44,7 +44,7 @@ var template_default = _template_persisted("a", (input) => {
 	if ($scope0_reason) _if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.a,
 		f: show
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.a);

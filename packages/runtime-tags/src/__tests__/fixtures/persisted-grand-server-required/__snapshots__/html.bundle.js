@@ -11,11 +11,11 @@ var inner_default = _template_persisted("c", (input) => {
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			_html("<em>o</em>");
-			$scope0_reason && writeScope($scope1_id, {});
+			$scope0_reason && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["c0"]);
-	$scope0_reason && writeScope($scope0_id, {});
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // tags/outer/index.marko
@@ -27,7 +27,7 @@ var outer_default = _template_persisted("b", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
 	inner_default({ open: input.o });
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 0, () => [inner_default]);
 
 // template.marko
@@ -43,13 +43,13 @@ var template_default = _template_persisted("a", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			outer_default({ o: input.o });
-			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.o,
 		f: show
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.o);

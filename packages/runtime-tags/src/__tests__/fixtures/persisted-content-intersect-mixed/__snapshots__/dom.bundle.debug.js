@@ -18,7 +18,7 @@ const $box_content__setup = ($scope) => {
 	$box_content__count($scope);
 };
 const $box_content__count = /*@__PURE__*/ _closure_get("count", $box_content__input_a__OR__count, ($scope) => $scope._._);
-const $box_content = /*@__PURE__*/ _content$1("__tests__/template.marko_2*content", "<p> </p>", "D ", $box_content__setup);
+const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $box_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $box_content($scope));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));

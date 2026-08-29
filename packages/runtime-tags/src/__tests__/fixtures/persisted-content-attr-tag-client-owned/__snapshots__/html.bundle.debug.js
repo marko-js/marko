@@ -11,14 +11,14 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 		if (open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.header, {}, 0, 0, _source_guard($scope0_reason, 0));
-			writeScope($scope1_id, {}, "__tests__/tags/card/index.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/tags/card/index.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</section>`);
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/card/index.marko1", open, 1);
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_header: input.header,
 		open
 	}, "__tests__/tags/card/index.marko", 0, {
@@ -42,12 +42,12 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	card_default({ header: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _persisted_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_escape(input.note)}${_el_resume($scope1_id, "#text/0")}</em>`);
-		_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:6"));
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.note)}</em>`);
+		_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:6"));
 		_resume_branch($scope1_id);
 	}, $scope0_id) }) });
 	_html("</main>");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_note: input.note,
 		"ClosureScopes:input_note": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)

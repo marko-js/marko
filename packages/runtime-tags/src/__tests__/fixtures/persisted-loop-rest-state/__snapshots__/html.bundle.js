@@ -12,8 +12,8 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a0", id) : _patch_init($scope1_id, "a1");
 		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a1", rest) : _patch_init($scope1_id, "a1");
-		_html(`<p>${_escape(id + ":" + Object.keys(rest).join("+") + "#0")}${_el_resume($scope1_id, "a")}</p>`);
-		writeScope($scope1_id, {
+		_html(`<p>${_text_resume($scope1_id, "a", id + ":" + Object.keys(rest).join("+") + "#0")}</p>`);
+		_scope($scope1_id, {
 			d: id,
 			e: rest,
 			_: _scope_with_id($scope0_id)
@@ -21,6 +21,6 @@ var template_default = _template_persisted("a", (input) => {
 	}, (item) => item.id, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_reason && writeScope($scope0_id, { f: count });
+	$scope0_reason && _scope($scope0_id, { f: count });
 	_resume_branch($scope0_id);
 }, 1, 0);

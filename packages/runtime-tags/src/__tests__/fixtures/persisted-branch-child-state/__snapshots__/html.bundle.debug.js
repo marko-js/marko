@@ -6,10 +6,10 @@ var counter_default = _template_persisted("__tests__/tags/counter.marko", (input
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let n = input.start;
-	_html(`<div class=counter><span>${_patch_text($scope0_id, "#text/0", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}: <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</span><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}</div>`);
+	_html(`<div class=counter><span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_owned, 0)}: ${_text_resume($scope0_id, "#text/1", n, 2)}</span><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/counter.marko0", n, 1);
-	$scope0_reason && writeScope($scope0_id, { n }, "__tests__/tags/counter.marko", 0, { n: "1:6" });
+	$scope0_reason && _scope($scope0_id, { n }, "__tests__/tags/counter.marko", 0, { n: "1:6" });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
@@ -34,7 +34,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				label: input.title,
 				start: input.start
 			});
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "2:4");
@@ -42,7 +42,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		}
 	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		input_title: input.title,
 		input_start: input.start
 	}, "__tests__/template.marko", 0, {

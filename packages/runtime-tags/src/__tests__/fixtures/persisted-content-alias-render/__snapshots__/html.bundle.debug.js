@@ -6,11 +6,11 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const { content, title } = input;
-	_html$1(`<section><h2>${_patch_text($scope0_id, "#text/0", title, $scope0_owned, 1)}${_el_resume($scope0_id, "#text/0")}</h2>`);
+	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", title, void 0, $scope0_owned, 1)}</h2>`);
 	_patch_dynamic_tag($scope0_id, "#text/1", content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "#text/1", content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
-	_html$1("</section>");
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
+	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_html("</section>");
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -24,7 +24,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
-	_html$1("<main>");
+	_html("<main>");
 	_set_serialize_reason({ 1: _mask_group($scope0_owned, 0) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
@@ -33,13 +33,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		content: _content_elide("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
-			_html$1(`<em>${_patch_text($scope1_id, "#text/0", input.note, $scope0_owned, 1)}${_el_resume($scope1_id, "#text/0")}</em>`);
-			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_owned, 1)}</em>`);
+			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
-	_html$1("</main>");
-	$scope0_reason && writeScope($scope0_id, {
+	_html("</main>");
+	$scope0_reason && _scope($scope0_id, {
 		"ClosureScopes:input_note": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);

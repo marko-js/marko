@@ -18,13 +18,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				class: on ? "on" : "off"
 			}, "#a/0", $scope1_id, "a")}>go</a>${_el_resume($scope1_id, "#a/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1_input_attrs#5_on#6");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4", { "EventAttributes:#a/0": ["...{ ...input.attrs, class: on ? \"on\" : \"off\" }", "4:11"] });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4", { "EventAttributes:#a/0": ["...{ ...input.attrs, class: on ? \"on\" : \"off\" }", "4:11"] });
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_attrs: input.attrs,
 		on
 	}, "__tests__/template.marko", 0, {

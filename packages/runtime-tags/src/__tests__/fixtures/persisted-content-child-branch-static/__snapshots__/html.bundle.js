@@ -13,12 +13,12 @@ var card_default = _template_persisted("b", (input) => {
 			const $scope1_id = _scope_id();
 			_patch_dynamic_tag($scope1_id, "a", input.content, $scope0_owned, 2);
 			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
-			$scope0_reason && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
 	_html(`</section>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_reason && writeScope($scope0_id, { e: input.content });
+	$scope0_reason && _scope($scope0_id, { e: input.content });
 }, 0, 0);
 
 // template.marko
@@ -41,5 +41,5 @@ var template_default = _template_persisted("a", (input) => {
 		content: _content_record("a0", $scope0_id)
 	});
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1, () => [card_default]);

@@ -23,13 +23,13 @@ var template_default = _template_persisted("a", (input) => {
 		if (double > 2) {
 			const $scope1_id = _scope_id();
 			_html("<p>big</p>");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		e: count,
 		a: _existing_scope($childScope)
 	});

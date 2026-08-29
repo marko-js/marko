@@ -1,4 +1,4 @@
-// size: 28248 (min) 10449 (brotli)
+// size: 28306 (min) 10486 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -19,6 +19,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
+  dynamicHtmlEnabled,
   rendering,
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
@@ -111,6 +112,19 @@ let unsafeStyleAttrReg = /[\\;]/g,
   patchId = 0,
   isResuming,
   cloneCache = {},
+  _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
+    let firstChild = scope[accessor],
+      parentNode = firstChild.parentNode,
+      lastChild = scope["H" + accessor] || firstChild,
+      newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
+    (insertChildNodes(
+      parentNode,
+      firstChild,
+      (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
+      (scope["H" + accessor] = newContent.lastChild),
+    ),
+      removeChildNodes(firstChild, lastChild));
+  }),
   R = /[\p{L}\p{N}]/gu,
   inputType = "",
   controllableScripts = {},
@@ -415,6 +429,9 @@ function normalizeAttrValue(value) {
 }
 function withBranches(runtime) {
   return ((branchesEnabled = 1), runtime);
+}
+function withDynamicHtml(runtime) {
+  return ((dynamicHtmlEnabled = 1), runtime);
 }
 function rendererKey(renderer) {
   return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
@@ -1084,7 +1101,7 @@ function init(runtimeId = "M") {
                     );
                     ((branch._ ??= visitScope),
                       (branch.K = branch.S = startVisit),
-                      visitType === "'" && (branch.a = startVisit));
+                      visitType === "(" && (branch.a = startVisit));
                   } else
                     ((curBranchScopes = push(curBranchScopes, branch)),
                       accessor &&
@@ -1161,6 +1178,7 @@ function init(runtimeId = "M") {
             lastToken,
             lastTokenIndex,
             visitBranches,
+            htmlStart,
             embedAnchor;
           return (
             (serializeContext._ = registeredValues),
@@ -1175,22 +1193,23 @@ function init(runtimeId = "M") {
                 }
               let retained = 0;
               for (visit of (visits = render.v))
-                if (
-                  ((lastTokenIndex = render.i.length),
+                ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
-                  visitType === "*")
-                ) {
-                  let prev = visit.previousSibling;
-                  visitScope[nextToken()] =
-                    prev && (prev.nodeType < 8 || prev.data)
-                      ? prev
-                      : visit.parentNode.insertBefore(new Text(), visit);
-                } else
-                  branchesEnabled
-                    ? (visitBranches ||= createVisitBranches())()
-                    : lazyEnabled && render.b && (visits[retained++] = visit);
+                  dynamicHtmlEnabled && visitType > "%" && visitType <= "'"
+                    ? visitType === "&"
+                      ? (htmlStart = visit)
+                      : ((visitScope[nextToken()] = htmlStart),
+                        (visitScope["H" + lastToken] = visit))
+                    : branchesEnabled && visitType > "'"
+                      ? (visitBranches ||= createVisitBranches())()
+                      : lazyEnabled && render.b && visitType > "%"
+                        ? (visits[retained++] = visit)
+                        : (visitScope[nextToken()] =
+                            visitType === "$"
+                              ? visit.previousSibling
+                              : visit.parentNode.insertBefore(new Text(), visit)));
               return (
                 embedRenders &&
                   !embedAnchor &&
@@ -1456,19 +1475,6 @@ function _attrs_script(scope, nodeAccessor) {
     events = scope["I" + nodeAccessor];
   controllableScripts[scope["F" + nodeAccessor]]?.(scope, nodeAccessor);
   for (let name in events) _on(el, name, events[name]);
-}
-function _html(scope, value, accessor) {
-  let firstChild = scope[accessor],
-    parentNode = firstChild.parentNode,
-    lastChild = scope["H" + accessor] || firstChild,
-    newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
-  (insertChildNodes(
-    parentNode,
-    firstChild,
-    (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
-    (scope["H" + accessor] = newContent.lastChild),
-  ),
-    removeChildNodes(firstChild, lastChild));
 }
 function normalizeClientRender(value) {
   let renderer = normalizeDynamicRenderer(value);

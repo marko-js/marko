@@ -18,7 +18,7 @@ const $frame_content2__setup = ($scope) => {
 	$frame_content2__b($scope);
 };
 const $frame_content2__b = /*@__PURE__*/ _closure_get("b", $frame_content2__input_label__OR__b);
-const $frame_content2 = /*@__PURE__*/ _content$1("__tests__/template.marko_2*content", "<p class=b> </p>", "D ", $frame_content2__setup);
+const $frame_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p class=b> </p>", "D ", $frame_content2__setup);
 const $frame_content__input_label__OR__a = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko0", "input_label", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.input_label + ":" + $scope._.a)), () => $frame_content__input_label, 0);
 const $frame_content__input_label = /*@__PURE__*/ _closure_get("input_label", $frame_content__input_label__OR__a);
 const $frame_content__setup = ($scope) => {
@@ -26,7 +26,7 @@ const $frame_content__setup = ($scope) => {
 	$frame_content__a($scope);
 };
 const $frame_content__a = /*@__PURE__*/ _closure_get("a", $frame_content__input_label__OR__a);
-const $frame_content = /*@__PURE__*/ _content$1("__tests__/template.marko_1*content", "<p class=a> </p>", "D ", $frame_content__setup);
+const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p class=a> </p>", "D ", $frame_content__setup);
 const $a__closure = /*@__PURE__*/ _closure($frame_content__a);
 const $a = /*@__PURE__*/ _let("a/7", $a__closure);
 const $b__closure = /*@__PURE__*/ _closure($frame_content2__b);

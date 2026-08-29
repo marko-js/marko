@@ -6,9 +6,9 @@ var frame_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
-	$scope0_reason && writeScope($scope0_id, {});
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -29,13 +29,13 @@ var template_default = _template_persisted("a", (input) => {
 	frame_default({ content: _content_elide("a0", () => {
 		_persisted_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_escape(input.label + ":0")}${_el_resume($scope1_id, "a")}</p>`);
-		_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_label__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) })));
+		_html(`<p>${_text_resume($scope1_id, "a", input.label + ":0")}</p>`);
+		_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.label,
 		f: count,
 		g: $input_label__closures,

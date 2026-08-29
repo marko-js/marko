@@ -16,7 +16,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
 const $widget_content__setup = ($scope) => _text($scope["#text/0"], $scope.$global.brand);
-const $widget_content = /*@__PURE__*/ _content$1("__tests__/template.marko_1*content", "<div> </div>", "D ", $widget_content__setup);
+const $widget_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<div> </div>", "D ", $widget_content__setup);
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => $input_value($scope["#childScope/0"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);

@@ -212,39 +212,44 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     if (isPatch && !isHTML) importRuntimeFeature("patch-text");
 
     if (isHTML) {
-      if (markerSerializeReason) {
-        // `2` (or a guard scaled to 0/2) also asks the runtime to write a
-        // `<!>` between non-empty text and the mergeable text before it.
-        const guard = getSerializeGuard(section, markerSerializeReason, true);
-        write`${callRuntime(
-          node.escape ? "_text_resume" : "_html_resume",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(nodeBinding!),
-          value,
-          siblingText === SiblingText.Before
-            ? guard
-              ? t.binaryExpression("*", guard, t.numericLiteral(2))
-              : t.numericLiteral(2)
-            : guard,
-        )}`;
-      } else {
-        // The patch write emits the escaped text itself, so the expression
-        // appears (and evaluates) once; a param-fed write's ownership
-        // bit rides as trailing args.
-        write`${
-          isPatchText
+      // `2` (or a guard scaled to 0/2) also asks the runtime to write a
+      // `<!>` between non-empty text and the mergeable text before it; `0`
+      // skips the resume marker entirely (a patched but unresumed node).
+      const guard =
+        markerSerializeReason &&
+        getSerializeGuard(section, markerSerializeReason, true);
+      const shouldResume = markerSerializeReason
+        ? siblingText === SiblingText.Before
+          ? guard
+            ? t.binaryExpression("*", guard, t.numericLiteral(2))
+            : t.numericLiteral(2)
+          : guard
+        : isPatchText && t.numericLiteral(0);
+      write`${
+        isPatchText
+          ? // The patch write doubles as the output (and resume) writer, so
+            // the expression appears (and evaluates) once; a param-fed
+            // write's ownership bit rides as trailing args.
+            callRuntime(
+              "_patch_text",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeBinding),
+              value,
+              shouldResume,
+              ...getPatchWriteOwnership(holeSources),
+            )
+          : markerSerializeReason
             ? callRuntime(
-                "_patch_text",
+                node.escape ? "_text_resume" : "_html_resume",
                 getScopeIdIdentifier(section),
-                getScopeAccessorLiteral(nodeBinding),
+                getScopeAccessorLiteral(nodeBinding!),
                 value,
-                ...getPatchWriteOwnership(holeSources),
+                shouldResume,
               )
             : method === "_escape"
               ? buildEscapedTextExpression(value)
               : callRuntime(method as HTMLMethod, value)
-        }`;
-      }
+      }`;
     } else {
       addStatement(
         "render",

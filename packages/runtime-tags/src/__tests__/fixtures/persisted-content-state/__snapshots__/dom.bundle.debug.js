@@ -21,7 +21,7 @@ const $card_content__setup = ($scope) => {
 	$card_content__count($scope);
 };
 const $card_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
-const $card_content = /*@__PURE__*/ _content$1("__tests__/template.marko_1*content", "<em><!>:<!></em>", "D%c%", $card_content__setup);
+const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em><!>:<!></em>", "D%c%", $card_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($card_content__count);
 const $count = /*@__PURE__*/ _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

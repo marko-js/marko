@@ -23,11 +23,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let label = labeler_default({ title: input.title });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_label#8/var");
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
+	_html(`<button>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_label#8");
 	_patch_effect($scope0_id, "__tests__/template.marko_0_label#8", "label");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		count,
 		label,
 		"#childScope/0": _existing_scope($childScope)

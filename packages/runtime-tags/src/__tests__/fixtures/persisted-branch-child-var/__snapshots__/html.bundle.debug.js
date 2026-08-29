@@ -6,9 +6,9 @@ var box_default = _template_persisted("__tests__/tags/box.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const root = _el($scope0_id, "__tests__/tags/box.marko_0_#div#0");
-	_html(`<div class=box>${_patch_text($scope0_id, "#text/1", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/1")}</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div class=box>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_owned, 0)}</div>${_el_resume($scope0_id, "#div/0")}`);
 	const $return = root;
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/box.marko", 0);
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/box.marko", 0);
 	return $return;
 }, 0, 0);
 
@@ -31,7 +31,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_el#3/var");
 			_html(`<button id=read>read</button>${_el_resume($scope1_id, "#button/2")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				el,
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
@@ -39,9 +39,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
-	_html(`<button id=c>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_html(`<button id=c>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		input_label: input.label,
 		count
 	}, "__tests__/template.marko", 0, {

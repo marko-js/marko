@@ -7,7 +7,7 @@ _shells({
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 3), $sg__input_outer = _source_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "a")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 1)}</h1>`);
 	_if(() => {
 		if (input.outer) {
 			const $scope1_id = _scope_id();
@@ -16,14 +16,14 @@ var template_default = _template_persisted("a", (input) => {
 			_if(() => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
-					_html(`<p>Seen <!>${_escape(count)}${_el_resume($scope2_id, "a")}</p>`);
-					writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+					_html(`<p>Seen ${_text_resume($scope2_id, "a", count, 2)}</p>`);
+					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 					return 0;
 				}
 			}, $scope1_id, "b", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"]);
 			_script($scope1_id, "a2");
 			_patch_value($scope1_id, "a0", count, 1);
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				c: count,
 				_: _scope_with_id($scope0_id)
 			});
@@ -31,5 +31,5 @@ var template_default = _template_persisted("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["a0"]);
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { g: input.inner });
+	$scope0_reason && _scope($scope0_id, { g: input.inner });
 }, 1, 0);

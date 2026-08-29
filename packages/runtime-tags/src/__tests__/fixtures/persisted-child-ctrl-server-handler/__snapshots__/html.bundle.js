@@ -5,7 +5,7 @@ var field_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange)}${_patch_bind($scope0_id, "Ea", input.valueChange)}${_patch_control($scope0_id, "a", 2, input.value, $scope0_owned, 0)}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		d: input.value,
 		e: input.valueChange
 	});
@@ -24,7 +24,7 @@ var template_default = _template_persisted("a", (input) => {
 	if ($scope0_reason) _if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}<output></output></main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.prefix,
 		f: handle,
 		g: open

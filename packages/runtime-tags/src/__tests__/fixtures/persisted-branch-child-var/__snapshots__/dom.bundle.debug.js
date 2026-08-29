@@ -17,8 +17,8 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 	document.querySelector("main").dataset.tag = $scope.el().tagName;
 }));
 const $if_content__setup = ($scope) => {
-	$if_content__input_label._($scope);
 	_var($scope, "#childScope/0", $if_content__el);
+	$if_content__input_label._($scope);
 	$setup$1($scope["#childScope/0"]);
 	$if_content__setup__script($scope);
 };

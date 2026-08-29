@@ -14,9 +14,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const seen = count + 1;
-			_html(`<p>Seen <!>${_escape(seen)}${_el_resume($scope1_id, "#text/0")}</p>`);
+			_html(`<p>Seen ${_text_resume($scope1_id, "#text/0", seen, 2)}</p>`);
 			_script($scope1_id, "__tests__/template.marko_1_seen#1");
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				seen,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "3:4", { seen: "4:12" });
@@ -25,6 +25,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1, 0);

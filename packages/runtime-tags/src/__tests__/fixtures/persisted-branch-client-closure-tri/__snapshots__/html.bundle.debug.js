@@ -12,30 +12,30 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	if ($scope0_reason) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_html(`<b>${_escape("x:" + input.title)}${_el_resume($scope1_id, "#text/0")}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "#text/0", "x:" + input.title)}</b>`);
 			if ($scope0_reason) _if(() => {
 				if (open) {
 					const $scope2_id = _scope_id();
-					_html(`<i>${_escape("y:" + input.title)}${_el_resume($scope2_id, "#text/0")}</i>`);
+					_html(`<i>${_text_resume($scope2_id, "#text/0", "y:" + input.title)}</i>`);
 					if ($scope0_reason) _if(() => {
 						if (open) {
 							const $scope3_id = _scope_id();
-							_html(`<u>${_escape("z:" + input.title)}${_el_resume($scope3_id, "#text/0")}</u>`);
-							_subscribe($si__input_title && $input_title__closures, writeScope($scope3_id, { "ClosureSignalIndex:input_title": 1 }, "__tests__/template.marko", "7:8"));
+							_html(`<u>${_text_resume($scope3_id, "#text/0", "z:" + input.title)}</u>`);
+							_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { "ClosureSignalIndex:input_title": 1 }, "__tests__/template.marko", "7:8"));
 							return 0;
 						}
 					}, $scope2_id, "#text/1", 1, 1, 1, 0, 1);
-					_subscribe($open__closures, _subscribe($si__input_title && $input_title__closures, writeScope($scope2_id, {}, "__tests__/template.marko", "5:6")));
+					_subscribe($open__closures, _subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6")));
 					return 0;
 				}
 			}, $scope1_id, "#text/1");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_title: input.title,
 		open,
 		"ClosureScopes:input_title": $input_title__closures,

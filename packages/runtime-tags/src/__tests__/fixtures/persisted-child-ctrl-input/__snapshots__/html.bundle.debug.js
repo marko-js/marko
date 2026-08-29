@@ -5,9 +5,9 @@ _shells({ "__tests__/tags/field/index.marko": "__tests__/tags/field/index.marko 
 var field_default = _template_persisted("__tests__/tags/field/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", input.valueChange)}${_patch_control($scope0_id, "#input/0", 2, input.value, $scope0_owned, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", input.value, $scope0_owned, 1)}${_el_resume($scope0_id, "#text/1")}</em>`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", input.valueChange)}${_patch_control($scope0_id, "#input/0", 2, input.value, $scope0_owned, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", input.value, void 0, $scope0_owned, 1)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		input_value: input.value,
 		input_valueChange: input.valueChange
 	}, "__tests__/tags/field/index.marko", 0, {
@@ -38,13 +38,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					text = _new_text;
 				}, "__tests__/template.marko_1/valueChange", $scope1_id)
 			});
-			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
-	_html(`<p>${_escape(text)}${_el_resume($scope0_id, "#text/1")}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/1", text)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		text,
 		open
 	}, "__tests__/template.marko", 0, {

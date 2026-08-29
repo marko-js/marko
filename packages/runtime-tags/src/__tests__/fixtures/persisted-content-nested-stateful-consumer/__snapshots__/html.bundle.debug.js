@@ -5,11 +5,11 @@ _shells({ "__tests__/tags/grand/index.marko": "__tests__/tags/grand/index.marko;
 var grand_default = _template_persisted("__tests__/tags/grand/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html$1("<div>");
+	_html("<div>");
 	_patch_dynamic_tag($scope0_id, "#text/0", input.content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
-	_html$1("</div>");
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/grand/index.marko", 0);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_html("</div>");
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/grand/index.marko", 0);
 }, 0, 0);
 
 // tags/card/index.marko
@@ -20,21 +20,21 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html$1(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</h2>`);
-	if ($scope0_reason) _if$1(() => {
+	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h2>`);
+	if ($scope0_reason) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			grand_default({ content: input.content });
-			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/card/index.marko", "4:4");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/card/index.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
-	_html$1(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</section>`);
-	_script$1($scope0_id, "__tests__/tags/card/index.marko_0");
+	_html(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</section>`);
+	_script($scope0_id, "__tests__/tags/card/index.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/card/index.marko1", open, 1);
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_content: input.content,
 		open
 	}, "__tests__/tags/card/index.marko", 0, {
@@ -51,22 +51,22 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
-	_html$1("<main>");
+	_html("<main>");
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	card_default({
 		title: input.title,
-		content: _content_resume$1("__tests__/template.marko_1*content", () => {
+		content: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
-			_html$1(`<em>${_escape(input.note)}${_el_resume($scope1_id, "#text/0")}</em>`);
-			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+			_html(`<em>${_text_resume($scope1_id, "#text/0", input.note)}</em>`);
+			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
-	_html$1("</main>");
-	$scope0_reason ? writeScope($scope0_id, {
+	_html("</main>");
+	$scope0_reason ? _scope($scope0_id, {
 		input_note: input.note,
 		"ClosureScopes:input_note": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)

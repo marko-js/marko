@@ -169,7 +169,7 @@ function createBuilds(
     plugins: [
       virtual.plugin,
       domEntry.plugin,
-      !optimize && externalRuntimePlugin("dom", false),
+      !optimize && externalRuntimePlugin(false),
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
@@ -253,7 +253,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     experimental: { nativeMagicString: true },
     plugins: [
       virtual.plugin,
-      externalRuntimePlugin("html", optimize),
+      externalRuntimePlugin(optimize),
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "html" }, collectDiagnostics),
@@ -472,17 +472,19 @@ function virtualPlugin(cwd: string): {
 
 // Only the optimize dom bundle is measured, so every other build links one
 // shared runtime instead of re-emitting it into each fixture.
-function externalRuntimePlugin(
-  kind: "dom" | "html",
-  optimize: boolean,
-): Plugin {
+function externalRuntimePlugin(optimize: boolean): Plugin {
   return {
     name: "external-runtime",
     resolveId: {
       filter: { id: runtimeEntryRe },
       async handler(id) {
-        const feature = runtimeEntryRe.exec(id)![2];
-        const dir = await prebuiltRuntime(kind, optimize);
+        // Persisted pages link dom `*.feat` assets from the html output, so
+        // the import's own kind wins over the bundle's.
+        const [, importKind, feature] = runtimeEntryRe.exec(id)!;
+        const dir = await prebuiltRuntime(
+          importKind as "dom" | "html",
+          optimize,
+        );
         return {
           id: path.join(dir, feature ? `${feature}.feat.mjs` : "runtime.mjs"),
           external: true,

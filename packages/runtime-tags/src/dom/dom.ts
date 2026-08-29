@@ -8,7 +8,6 @@ import {
   escapeStyleValue,
   getEventHandlerName,
   isEventHandler,
-  isNotVoid,
   normalizeAttrValue,
   withDynamicHtml,
   normalizeDynamicRenderer,

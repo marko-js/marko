@@ -12,8 +12,8 @@ const $walks = " b";
 const $setup = () => {};
 const $await_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => $input_label($scope["#childScope/0"], $scope._._.input_value), ($scope) => $scope._._);
 const $await_content__setup = ($scope) => {
-	$await_content__input_value($scope);
 	_var($scope, "#childScope/0", $await_content__w);
+	$await_content__input_value($scope);
 };
 const $await_content__w = _var_resume("__tests__/template.marko_2_w#3/var", ($scope, w) => _text($scope["#text/2"], w));
 const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<em> </em>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $await_content__setup);

@@ -5,11 +5,11 @@ _shells({ "__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.mark
 var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html$1("<section>");
+	_html("<section>");
 	_patch_dynamic_tag($scope0_id, "#text/0", input.content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
-	_html$1("</section>");
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_html("</section>");
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -28,33 +28,33 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $input_kind__closures = new Set();
 	const $input_inner__closures = new Set();
 	let open = true;
-	_html$1("<main>");
+	_html("<main>");
 	_set_serialize_reason(0);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	widget_default({ content: _content_elide("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _persisted_reason();
 		const $scope1_id = _scope_id();
-		_if$1(() => {
+		_if(() => {
 			if (input.kind === "a") {
 				const $scope6_id = _scope_id();
-				_html$1("<b>A</b>");
-				$scope0_reason && writeScope($scope6_id, {}, "__tests__/template.marko", "4:6");
+				_html("<b>A</b>");
+				$scope0_reason && _scope($scope6_id, {}, "__tests__/template.marko", "4:6");
 				return 0;
 			} else if (input.kind === "b") {
 				const $scope2_id = _scope_id();
-				_html$1(`<i>B:<!>${_patch_text($scope2_id, "#text/0", input.kind, $scope0_owned, 0)}${_el_resume($scope2_id, "#text/0")}</i>`);
-				_subscribe(_source_if($scope0_reason, 0) && $input_kind__closures, writeScope($scope2_id, {
+				_html(`<i>B:${_patch_text($scope2_id, "#text/0", input.kind, 2, $scope0_owned, 0)}</i>`);
+				_subscribe(_source_if($scope0_reason, 0) && $input_kind__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_kind": 1
 				}, "__tests__/template.marko", "5:6"));
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 1, $sg__input_kind, $sg__input_kind, void 0, void 0, ["__tests__/template.marko_6*shell", "__tests__/template.marko_2*shell"]);
-		$scope0_reason && _subscribe($input_kind__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+		$scope0_reason && _subscribe($input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
-	if ($scope0_reason) _if$1(() => {
+	if ($scope0_reason) _if(() => {
 		if (open) {
 			const $scope3_id = _scope_id();
 			_set_serialize_reason(1);
@@ -62,32 +62,32 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			widget_default({ content: _content_elide("__tests__/template.marko_4*content", () => {
 				const $scope4_reason = _persisted_reason();
 				const $scope4_id = _scope_id();
-				if ($scope0_reason) _if$1(() => {
+				if ($scope0_reason) _if(() => {
 					if (input.inner === "a") {
 						const $scope7_id = _scope_id();
-						_html$1("<b>A</b>");
-						$scope0_reason && writeScope($scope7_id, {}, "__tests__/template.marko", "9:8");
+						_html("<b>A</b>");
+						$scope0_reason && _scope($scope7_id, {}, "__tests__/template.marko", "9:8");
 						return 0;
 					} else if (input.inner === "b") {
 						const $scope5_id = _scope_id();
-						_html$1(`<i>B:<!>${_escape(input.inner)}${_el_resume($scope5_id, "#text/0")}</i>`);
-						_subscribe($si__input_inner && $input_inner__closures, writeScope($scope5_id, {
+						_html(`<i>B:${_text_resume($scope5_id, "#text/0", input.inner, 2)}</i>`);
+						_subscribe($si__input_inner && $input_inner__closures, _scope($scope5_id, {
 							_: _scope_with_id($scope4_id),
 							"ClosureSignalIndex:input_inner": 1
 						}, "__tests__/template.marko", "10:8"));
 						return 1;
 					}
 				}, $scope4_id, "#text/0", $sg__input_inner, $sg__input_inner, $sg__input_inner, 0, 1);
-				_subscribe($si__input_inner && $input_inner__closures, writeScope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "8:6"));
+				_subscribe($si__input_inner && $input_inner__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "8:6"));
 				_resume_branch($scope4_id);
 			}, $scope3_id) });
-			writeScope($scope3_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "7:4");
+			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "7:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
-	_html$1(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
-	_script$1($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	_html(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_reason ? _scope($scope0_id, {
 		input_kind: input.kind,
 		input_inner: input.inner,
 		open,

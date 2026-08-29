@@ -8,12 +8,12 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<main><ul>");
 	if ($scope0_reason) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(input.note + item + count)}${_el_resume($scope1_id, "a")}</li>`);
-		writeScope($scope1_id, { c: item });
+		_html(`<li>${_text_resume($scope1_id, "a", input.note + item + count)}</li>`);
+		_scope($scope1_id, { c: item });
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=add>+</button>${_el_resume($scope0_id, "b")}<button class=inc>c</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		f: input.note,
 		g: items,
 		h: count

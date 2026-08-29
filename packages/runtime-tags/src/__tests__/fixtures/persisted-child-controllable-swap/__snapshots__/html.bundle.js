@@ -11,11 +11,11 @@ var counter_default = _template_persisted("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let count = 0;
-			_html(`<span>Seen <!>${_escape(count)}${_el_resume($scope1_id, "a")}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
+			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "b1");
 			_patch_value($scope1_id, "b0", count, 1);
 			_patch_bind($scope1_id, "d", input.onCount || void 0);
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				c: count,
 				_: _scope_with_id($scope0_id),
 				d: input.onCount || void 0
@@ -23,7 +23,7 @@ var counter_default = _template_persisted("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
-	$scope0_reason && writeScope($scope0_id, { e: input.onCount });
+	$scope0_reason && _scope($scope0_id, { e: input.onCount });
 }, 0, 0);
 
 // template.marko
@@ -38,7 +38,7 @@ var template_default = _template_persisted("a", (input) => {
 	const tenfold = _resume((next) => {
 		last = next * 10;
 	}, "a1", $scope0_id);
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 1)}${_el_resume($scope0_id, "a")}</h1><p>Last <!>${_escape(last)}${_el_resume($scope0_id, "b")}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 1)}</h1><p>Last ${_text_resume($scope0_id, "b", last, 2)}</p>`);
 	_set_serialize_reason({
 		0: _mask_group($scope0_owned, 0),
 		1: _mask_group($scope0_owned, 2),
@@ -51,7 +51,7 @@ var template_default = _template_persisted("a", (input) => {
 		onCount: input.big ? tenfold : plain
 	});
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		j: plain,
 		k: tenfold,
 		c: _existing_scope($childScope)

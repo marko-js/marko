@@ -7,9 +7,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let other = 10;
-	_html(`<div><h1>${_escape(input.title + " #" + count)}${_el_resume($scope0_id, "#text/0")}</h1><h2>${_escape(input.title + " / " + other)}${_el_resume($scope0_id, "#text/1")}</h2><button>+</button>${_el_resume($scope0_id, "#button/2")}</div>`);
+	_html(`<div><h1>${_text_resume($scope0_id, "#text/0", input.title + " #" + count)}</h1><h2>${_text_resume($scope0_id, "#text/1", input.title + " / " + other)}</h2><button>+</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_title: input.title,
 		count,
 		other

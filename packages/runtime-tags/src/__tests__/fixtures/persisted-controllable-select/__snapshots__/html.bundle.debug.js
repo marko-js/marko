@@ -5,7 +5,7 @@ _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/templ
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h1>`);
 	_attr_select_value($scope0_id, "#select/1", input.choice, _resume(function(next) {
 		document.querySelector("main").dataset.choice = next;
 	}, "__tests__/template.marko_0/valueChange"), () => {
@@ -15,5 +15,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	});
 	_html(`${_el_resume($scope0_id, "#select/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#select/1": ["valueChange", "3:30"] });
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#select/1": ["valueChange", "3:30"] });
 }, 1, 0);

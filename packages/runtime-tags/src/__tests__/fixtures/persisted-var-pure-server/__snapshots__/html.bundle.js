@@ -32,7 +32,7 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "c", $childScope2);
 	labeler_default({ title: double });
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		a: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});
