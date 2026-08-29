@@ -7,7 +7,7 @@ var field_default = _template_persisted("__tests__/tags/field/index.marko", (inp
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", input.valueChange)}${_patch_control($scope0_id, "#input/0", 2, input.value, $scope0_owned, 0)}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		input_value: input.value,
 		input_valueChange: input.valueChange
 	}, "__tests__/tags/field/index.marko", 0, {
@@ -38,13 +38,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				value: "a",
 				valueChange: handle
 			});
-			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:4");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}<output></output></main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_prefix: input.prefix,
 		handle,
 		open

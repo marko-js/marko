@@ -6,10 +6,10 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<div class=card><h2>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h2><p>${_patch_text($scope0_id, "b", input.note, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</p><button class=t>show${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<div class=card><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h2><p>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_owned, 1)}</p><button class=t>${_text_resume($scope0_id, "d", "show")}</button>${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "b0");
 	_patch_value($scope0_id, "b0", open, 1);
-	$scope0_reason && writeScope($scope0_id, { i: open });
+	$scope0_reason && _scope($scope0_id, { i: open });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
@@ -43,16 +43,16 @@ var template_default = _template_persisted("a", (input) => {
 				title: "fixed",
 				...input.more
 			});
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope2)
 			});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
-	_html(`<button id=c>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}</main>`);
+	_html(`<button id=c>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		i: input.more,
 		j: count,
 		a: _existing_scope($childScope)

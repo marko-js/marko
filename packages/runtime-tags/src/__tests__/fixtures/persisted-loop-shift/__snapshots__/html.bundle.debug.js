@@ -13,21 +13,21 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main><ul>");
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`<li>${_patch_text($scope2_id, "#text/0", item.label, $scope0_owned, 0)}${_el_resume($scope2_id, "#text/0")}</li>`);
-		writeScope($scope2_id, {}, "__tests__/template.marko", "4:6");
+		_html(`<li>${_patch_text($scope2_id, "#text/0", item.label, void 0, $scope0_owned, 0)}</li>`);
+		_scope($scope2_id, {}, "__tests__/template.marko", "4:6");
 	}, "id", $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_2*shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
 	_if(() => {
 		if (input.promo) {
 			const $scope1_id = _scope_id();
-			_html(`<aside>${_patch_text($scope1_id, "#text/0", input.promo, $scope0_owned, 1)}${_el_resume($scope1_id, "#text/0")}</aside>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
+			_html(`<aside>${_patch_text($scope1_id, "#text/0", input.promo, void 0, $scope0_owned, 1)}</aside>`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, $sg__input_promo, $sg__input_promo, void 0, void 0, ["__tests__/template.marko_1*shell"]);
-	_html(`<p>${_patch_text($scope0_id, "#text/2", input.note, $scope0_owned, 2)}${_el_resume($scope0_id, "#text/2")}</p><button>Count <!>${_escape(count)}${_el_resume($scope0_id, "#text/4")}</button>${_el_resume($scope0_id, "#button/3")}</main>`);
+	_html(`<p>${_patch_text($scope0_id, "#text/2", input.note, void 0, $scope0_owned, 2)}</p><button>Count ${_text_resume($scope0_id, "#text/4", count, 2)}</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		input_promo: input.promo,
 		count
 	}, "__tests__/template.marko", 0, {

@@ -14,22 +14,22 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				if (input.on) {
 					const $scope2_id = _scope_id();
 					_html("<p>on</p>");
-					$scope0_reason && writeScope($scope2_id, {}, "__tests__/template.marko", "4:6");
+					$scope0_reason && _scope($scope2_id, {}, "__tests__/template.marko", "4:6");
 					return 0;
 				} else {
 					const $scope3_id = _scope_id();
 					_html("<span>off</span>");
-					$scope0_reason && writeScope($scope3_id, {}, "__tests__/template.marko", "7:6");
+					$scope0_reason && _scope($scope3_id, {}, "__tests__/template.marko", "7:6");
 					return 1;
 				}
 			}, $scope1_id, "#text/0", $sg__input_on, $sg__input_on, $sg__input_on, 0, 1);
-			writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_on: input.on,
 		open
 	}, "__tests__/template.marko", 0, {

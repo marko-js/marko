@@ -16,14 +16,14 @@ const $elseif_content2__setup = $elseif_content2__input_inner;
 const $widget_content2__if = /*@__PURE__*/ _if("#text/0", "<b>A</b>", 0, 0, "<i>B:<!></i>", "Db%", $elseif_content2__setup);
 const $widget_content2__input_inner = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_inner", /*@__PURE__*/ _closure_get("input_inner", ($scope) => $widget_content2__if($scope, $scope._._.input_inner === "a" ? 0 : $scope._._.input_inner === "b" ? 1 : 2), ($scope) => $scope._._), 0);
 const $widget_content2__setup = $widget_content2__input_inner;
-const $widget_content2 = /*@__PURE__*/ _content$1("__tests__/template.marko_4*content", "<!><!><!>", "b%", $widget_content2__setup);
+const $widget_content2 = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "<!><!><!>", "b%", $widget_content2__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $widget_content2($scope));
 const $elseif_content__input_kind = /*@__PURE__*/ _closure_get("input_kind", ($scope) => _text($scope["#text/0"], $scope._._.input_kind), ($scope) => $scope._._);
 const $elseif_content__setup = $elseif_content__input_kind;
 const $widget_content__if = /*@__PURE__*/ _if("#text/0", "<b>A</b>", 0, 0, "<i>B:<!></i>", "Db%", $elseif_content__setup);
 const $widget_content__input_kind = /*@__PURE__*/ _closure_get("input_kind", ($scope) => $widget_content__if($scope, $scope._.input_kind === "a" ? 0 : $scope._.input_kind === "b" ? 1 : 2));
 const $widget_content__setup = $widget_content__input_kind;
-const $widget_content = /*@__PURE__*/ _content$1("__tests__/template.marko_1*content", "<!><!><!>", "b%", $widget_content__setup);
+const $widget_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $widget_content__setup);
 const $if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {

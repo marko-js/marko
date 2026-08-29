@@ -28,14 +28,14 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_if(() => {
 		if (double > 4) {
 			const $scope1_id = _scope_id();
-			_html(`<p>big <!>${_escape(count)}${_el_resume($scope1_id, "#text/0")}</p>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
+			_html(`<p>big ${_text_resume($scope1_id, "#text/0", count, 2)}</p>`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, $sg__input_n, $sg__input_n, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });

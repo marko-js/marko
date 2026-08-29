@@ -9,21 +9,21 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main><ul>");
 	if ($scope0_reason) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(item.id)}${_el_resume($scope1_id, "#text/0")}`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", item.id)}`);
 		if ($scope0_reason) _if(() => {
 			if (input.selected === item.id) {
 				const $scope2_id = _scope_id();
 				_html("<span>*</span>");
-				writeScope($scope2_id, {}, "__tests__/template.marko", "5:22");
+				_scope($scope2_id, {}, "__tests__/template.marko", "5:22");
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
 		_html("</li>");
-		writeScope($scope1_id, { item_id: item?.id }, "__tests__/template.marko", "4:6", { item_id: ["item.id", "4:10"] });
+		_scope($scope1_id, { item_id: item?.id }, "__tests__/template.marko", "4:6", { item_id: ["item.id", "4:10"] });
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_selected: input.selected,
 		items
 	}, "__tests__/template.marko", 0, {

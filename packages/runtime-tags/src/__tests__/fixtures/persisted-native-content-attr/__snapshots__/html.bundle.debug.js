@@ -28,6 +28,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main><section>");
 	_patch_dynamic_tag($scope0_id, "#section/0", input.mode === "a" ? frag_a_default : frag_b_default, $scope0_owned, 0);
 	_attr_content("#section/0", $scope0_id, input.mode === "a" ? frag_a_default : frag_b_default);
-	_html(`</section>${_el_resume($scope0_id, "#section/0")}<p>${_patch_text($scope0_id, "#text/1", input.note, $scope0_owned, 1)}${_el_resume($scope0_id, "#text/1")}</p></main>`);
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_html(`</section>${_el_resume($scope0_id, "#section/0")}<p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_owned, 1)}</p></main>`);
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

@@ -11,7 +11,7 @@ var template_default = _template_persisted("a", (input) => {
 	if ($scope0_reason) _if(() => {}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.a,
 		f: input.b,
 		g: open,

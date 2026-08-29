@@ -4,8 +4,8 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><h1>Static title</h1><button>Count <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</main>`);
+	_html(`<main><h1>Static title</h1><button>Count ${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && writeScope($scope0_id, { c: count });
+	$scope0_reason && _scope($scope0_id, { c: count });
 	_resume_branch($scope0_id);
 }, 1, 0);

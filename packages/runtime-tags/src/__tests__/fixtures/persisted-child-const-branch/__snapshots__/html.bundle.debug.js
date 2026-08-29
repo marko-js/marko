@@ -12,13 +12,13 @@ var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (inp
 	_if(() => {
 		if (input.label) {
 			const $scope1_id = _scope_id();
-			_html(`<i>${_patch_text($scope1_id, "#text/0", input.note, $scope0_owned, 2)}${_el_resume($scope1_id, "#text/0")}</i>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/badge/index.marko", "2:4");
+			_html(`<i>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_owned, 2)}</i>`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/badge/index.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"]);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_label)}`);
-	$scope0_reason && writeScope($scope0_id, { input_note: input.note }, "__tests__/tags/badge/index.marko", 0, { input_note: ["input.note"] });
+	$scope0_reason && _scope($scope0_id, { input_note: input.note }, "__tests__/tags/badge/index.marko", 0, { input_note: ["input.note"] });
 }, 0, 0);
 
 // template.marko
@@ -40,9 +40,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		label: "hi",
 		note: input.title
 	});
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });

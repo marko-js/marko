@@ -12,11 +12,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		let votes = item.start;
-		_html(`<li>${_patch_text($scope1_id, "#text/0", item.label, $scope0_owned, 0)}${_el_resume($scope1_id, "#text/0")}<span>${_escape(votes)}${_el_resume($scope1_id, "#text/1")}</span><button>+</button>${_el_resume($scope1_id, "#button/2")}</li>`);
+		_html(`<li>${_patch_text($scope1_id, "#text/0", item.label, void 0, $scope0_owned, 0)}<span>${_text_resume($scope1_id, "#text/1", votes)}</span><button>+</button>${_el_resume($scope1_id, "#button/2")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_value($scope1_id, "__tests__/template.marko0", votes, 1);
-		writeScope($scope1_id, { votes }, "__tests__/template.marko", "2:4", { votes: "5:12" });
+		_scope($scope1_id, { votes }, "__tests__/template.marko", "2:4", { votes: "5:12" });
 	}, "id", $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

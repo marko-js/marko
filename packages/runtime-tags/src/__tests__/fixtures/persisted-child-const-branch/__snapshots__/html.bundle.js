@@ -11,13 +11,13 @@ var badge_default = _template_persisted("b", (input) => {
 	_if(() => {
 		if (input.label) {
 			const $scope1_id = _scope_id();
-			_html(`<i>${_patch_text($scope1_id, "a", input.note, $scope0_owned, 2)}${_el_resume($scope1_id, "a")}</i>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_html(`<i>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_owned, 2)}</i>`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["b0"]);
 	_html(`</div>${_el_resume($scope0_id, "a", $sg__input_label)}`);
-	$scope0_reason && writeScope($scope0_id, { e: input.note });
+	$scope0_reason && _scope($scope0_id, { e: input.note });
 }, 0, 0);
 
 // template.marko
@@ -37,9 +37,9 @@ var template_default = _template_persisted("a", (input) => {
 		label: "hi",
 		note: input.title
 	});
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}</main>`);
+	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		g: count,
 		a: _existing_scope($childScope)
 	});

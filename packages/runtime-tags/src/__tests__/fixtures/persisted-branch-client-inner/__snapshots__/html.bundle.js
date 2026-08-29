@@ -13,13 +13,13 @@ var template_default = _template_persisted("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			if ($scope0_reason) _if(() => {}, $scope1_id, "a", 1, 1, 1, 0, 1);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		f: input.title,
 		g: count,
 		h: $input_title__closures

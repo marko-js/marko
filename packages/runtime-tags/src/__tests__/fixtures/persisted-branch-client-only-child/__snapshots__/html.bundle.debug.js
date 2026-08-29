@@ -10,14 +10,14 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	if ($scope0_reason) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_escape(input.title)}${_el_resume($scope1_id, "#text/0")}</p>`);
-			writeScope($scope1_id, {}, "__tests__/template.marko", "4:6");
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.title)}</p>`);
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
-	_html(`<span>${_patch_text($scope0_id, "#text/1", input.label, $scope0_owned, 1)}${_el_resume($scope0_id, "#text/1")}</span><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
+	_html(`<span>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_owned, 1)}</span><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_title: input.title,
 		show
 	}, "__tests__/template.marko", 0, {

@@ -6,10 +6,10 @@ var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (inp
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.brand)}${_el_resume($scope0_id, "#text/0")}</span>`);
+	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</span>`);
 	_script($scope0_id, "__tests__/tags/badge/index.marko_0");
 	_patch_effect($scope0_id, "__tests__/tags/badge/index.marko_0", "! brand", 1);
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 }, 0, 1);
 
 // template.marko
@@ -24,5 +24,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	badge_default({});
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	$scope0_reason && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1, () => [badge_default]);

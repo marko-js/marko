@@ -11,13 +11,13 @@ var card_default = _template_persisted("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<h2${_patch_attr_class($scope1_id, "a", input.title, $scope0_owned, 3)}>${_patch_text($scope1_id, "b", input.title, $scope0_owned, 3)}${_el_resume($scope1_id, "b")}</h2>${_el_resume($scope1_id, "a")}<p>${_patch_text($scope1_id, "c", input.note, $scope0_owned, 4)}${_el_resume($scope1_id, "c")}</p>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_html(`<h2${_patch_attr_class($scope1_id, "a", input.title, $scope0_owned, 3)}>${_patch_text($scope1_id, "b", input.title, void 0, $scope0_owned, 3)}</h2>${_el_resume($scope1_id, "a")}<p>${_patch_text($scope1_id, "c", input.note, void 0, $scope0_owned, 4)}</p>`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
 	_html(`</section>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		e: input.title,
 		f: input.note
 	});
@@ -43,5 +43,5 @@ var template_default = _template_persisted("a", (input) => {
 		note: input.note
 	});
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1, () => [card_default]);

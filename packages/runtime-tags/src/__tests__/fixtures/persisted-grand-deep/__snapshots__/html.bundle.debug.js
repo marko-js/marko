@@ -5,8 +5,8 @@ _shells({ "__tests__/tags/l1/tags/l2/tags/l3/index.marko": "__tests__/tags/l1/ta
 var l3_default = _template_persisted("__tests__/tags/l1/tags/l2/tags/l3/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "#text/0", input.note, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</em>`);
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/l1/tags/l2/tags/l3/index.marko", 0);
+	_html(`<em>${_patch_text($scope0_id, "#text/0", input.note, void 0, $scope0_owned, 0)}</em>`);
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/l1/tags/l2/tags/l3/index.marko", 0);
 }, 0, 0);
 
 // tags/l1/tags/l2/index.marko
@@ -17,14 +17,14 @@ var l2_default = _template_persisted("__tests__/tags/l1/tags/l2/index.marko", (i
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=n>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=n>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/2", $childScope);
 	l3_default({ note: input.note });
 	_script($scope0_id, "__tests__/tags/l1/tags/l2/index.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/l1/tags/l2/index.marko0", n, 1);
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		n,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/tags/l1/tags/l2/index.marko", 0, { n: "1:6" });
@@ -42,7 +42,7 @@ var l1_default = _template_persisted("__tests__/tags/l1/index.marko", (input) =>
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	l2_default({ note: input.note });
-	$scope0_reason && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/l1/index.marko", 0);
+	$scope0_reason && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/l1/index.marko", 0);
 }, 0, () => [l2_default]);
 
 // template.marko
@@ -60,13 +60,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			l1_default({ note: input.note });
-			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_note: input.note,
 		show
 	}, "__tests__/template.marko", 0, {

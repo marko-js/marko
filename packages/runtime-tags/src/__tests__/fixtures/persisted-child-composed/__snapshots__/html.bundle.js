@@ -5,8 +5,8 @@ _shells({ c: "c;D lD ;<b> </b><i> </i>" });
 var leaf_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_patch_text($scope0_id, "a", input.text, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</b><i>${_patch_text($scope0_id, "b", input.note, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</i>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`<b>${_patch_text($scope0_id, "a", input.text, void 0, $scope0_owned, 0)}</b><i>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_owned, 1)}</i>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // tags/relay/index.marko
@@ -28,7 +28,7 @@ var relay_default = _template_persisted("b", (input) => {
 		note: input.qty
 	});
 	_html("</section>");
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 0, () => [leaf_default]);
 
 // template.marko
@@ -50,7 +50,7 @@ var template_default = _template_persisted("a", (input) => {
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		f: count,
 		a: _existing_scope($childScope)
 	});

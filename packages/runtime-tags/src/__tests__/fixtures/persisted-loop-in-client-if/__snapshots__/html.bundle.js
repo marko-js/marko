@@ -10,7 +10,7 @@ var template_default = _template_persisted("a", (input) => {
 	if ($scope0_reason) _if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "b")}<button class=add>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		f: input.note,
 		g: show,
 		h: items,

@@ -4,10 +4,10 @@ var child_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_patch_text($scope0_id, "b", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "b")}:<!>${_escape(count)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_owned, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_value($scope0_id, "a0", count, 1);
-	$scope0_reason && writeScope($scope0_id, { g: count });
+	$scope0_reason && _scope($scope0_id, { g: count });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
@@ -28,7 +28,7 @@ var template_default = _template_persisted("b", (input) => {
 			const $childScope = _peek_scope_id();
 			_patch_child($scope1_id, "b", $childScope);
 			$Child_withLoadAssets({ label: input.label });
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				b: _existing_scope($childScope)
 			});
@@ -36,5 +36,5 @@ var template_default = _template_persisted("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_reason && writeScope($scope0_id, { e: input.label });
+	$scope0_reason && _scope($scope0_id, { e: input.label });
 }, 1, () => [$Child_withLoadAssets]);

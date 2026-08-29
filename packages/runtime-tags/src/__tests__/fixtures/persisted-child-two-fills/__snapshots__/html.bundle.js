@@ -3,8 +3,8 @@ _shells({ b: "b;D lD ;<h3> </h3><p> </p>" });
 var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<h3>${_patch_text($scope0_id, "a", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</h3><p>${_patch_text($scope0_id, "b", input.body, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</p>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`<h3>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h3><p>${_patch_text($scope0_id, "b", input.body, void 0, $scope0_owned, 1)}</p>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -17,7 +17,7 @@ var template_default = _template_persisted("a", (input) => {
 	if ($scope0_reason) _if(() => {}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.title,
 		f: input.body,
 		g: show

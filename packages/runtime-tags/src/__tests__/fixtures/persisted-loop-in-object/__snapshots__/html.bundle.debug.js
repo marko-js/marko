@@ -9,12 +9,12 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main><ul>");
 	if ($scope0_reason) _for_in(pairs, (k, v) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(k)}${_el_resume($scope1_id, "#text/0")}=<!>${_escape(v)}${_el_resume($scope1_id, "#text/1")} (<!>${_escape(input.note)}${_el_resume($scope1_id, "#text/2")})</li>`);
-		writeScope($scope1_id, {}, "__tests__/template.marko", "4:6");
+		_html(`<li>${_text_resume($scope1_id, "#text/0", k)}=${_text_resume($scope1_id, "#text/1", v, 2)} (${_text_resume($scope1_id, "#text/2", input.note, 2)})</li>`);
+		_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_note: input.note,
 		pairs
 	}, "__tests__/template.marko", 0, {

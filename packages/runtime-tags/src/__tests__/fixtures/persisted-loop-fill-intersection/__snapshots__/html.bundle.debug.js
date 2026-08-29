@@ -10,12 +10,12 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main><ul>");
 	if ($scope0_reason) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(input.note + item + count)}${_el_resume($scope1_id, "#text/0")}</li>`);
-		writeScope($scope1_id, { item }, "__tests__/template.marko", "5:6", { item: "5:10" });
+		_html(`<li>${_text_resume($scope1_id, "#text/0", input.note + item + count)}</li>`);
+		_scope($scope1_id, { item }, "__tests__/template.marko", "5:6", { item: "5:10" });
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=add>+</button>${_el_resume($scope0_id, "#button/1")}<button class=inc>c</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_note: input.note,
 		items,
 		count

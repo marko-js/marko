@@ -4,8 +4,8 @@ _shells({ c: "c;D ;<b> </b>" });
 var leaf_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_patch_text($scope0_id, "a", input.text, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</b>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`<b>${_patch_text($scope0_id, "a", input.text, void 0, $scope0_owned, 0)}</b>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // tags/relay/index.marko
@@ -21,7 +21,7 @@ var relay_default = _template_persisted("b", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	leaf_default({ text: input.val });
 	_html("</section>");
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 0, () => [leaf_default]);
 
 // template.marko
@@ -37,7 +37,7 @@ var template_default = _template_persisted("a", (input) => {
 	relay_default({ val: input.base + count });
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.base,
 		f: count,
 		a: _existing_scope($childScope)

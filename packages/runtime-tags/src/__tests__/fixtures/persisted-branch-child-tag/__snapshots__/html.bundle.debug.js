@@ -5,8 +5,8 @@ _shells({ "__tests__/tags/badge.marko": "__tests__/tags/badge.marko;D%b%;<span c
 var badge_default = _template_persisted("__tests__/tags/badge.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=badge>${_patch_text($scope0_id, "#text/0", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}<!>${_patch_text($scope0_id, "#text/1", input.note ? ` (${_to_text(input.note)})` : "", $scope0_owned, 1)}${_el_resume($scope0_id, "#text/1")}</span>`);
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
+	_html(`<span class=badge>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_owned, 0)}${_patch_text($scope0_id, "#text/1", input.note ? ` (${_to_text(input.note)})` : "", 2, $scope0_owned, 1)}</span>`);
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -35,7 +35,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				label: input.title,
 				note: input.note
 			});
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "3:4");
@@ -43,13 +43,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<em>closed</em>");
-			$scope0_reason && writeScope($scope2_id, {}, "__tests__/template.marko", "6:4");
+			$scope0_reason && _scope($scope2_id, {}, "__tests__/template.marko", "6:4");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"]);
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		input_title: input.title,
 		input_note: input.note,
 		count

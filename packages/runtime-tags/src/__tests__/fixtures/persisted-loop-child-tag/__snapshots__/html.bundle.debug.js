@@ -5,8 +5,8 @@ _shells({ "__tests__/tags/row.marko": "__tests__/tags/row.marko;D%b%;<li><!><!><
 var row_default = _template_persisted("__tests__/tags/row.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<li>${_patch_text($scope0_id, "#text/0", input.item.name, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}<!>${_patch_text($scope0_id, "#text/1", input.item.hot ? " 🔥" : "", $scope0_owned, 1)}${_el_resume($scope0_id, "#text/1")}</li>`);
-	$scope0_reason && writeScope($scope0_id, {}, "__tests__/tags/row.marko", 0);
+	_html(`<li>${_patch_text($scope0_id, "#text/0", input.item.name, void 0, $scope0_owned, 0)}${_patch_text($scope0_id, "#text/1", input.item.hot ? " 🔥" : "", 2, $scope0_owned, 1)}</li>`);
+	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/row.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -30,10 +30,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "#childScope/0", $childScope);
 		row_default({ item });
-		writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 	}, (item) => item.id, $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell");
-	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}<button>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1, () => [row_default]);

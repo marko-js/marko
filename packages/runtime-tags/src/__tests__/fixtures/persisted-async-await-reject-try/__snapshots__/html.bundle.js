@@ -15,20 +15,20 @@ var template_default = _template_persisted("a", (input) => {
 		_persisted_reason();
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope4_id = _scope_id();
-			_html(`<em>${_patch_text($scope4_id, "a", value, $scope0_owned, 0)}${_el_resume($scope4_id, "a")}</em>`);
-			writeScope($scope4_id, {});
+			_html(`<em>${_patch_text($scope4_id, "a", value, void 0, $scope0_owned, 0)}</em>`);
+			_scope($scope4_id, {});
 		}, void 0, "a2", 1);
-		$scope0_reason && _subscribe($input_promise__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$scope0_reason && _subscribe($input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_record("a1", $scope0_id) }),
 		catch: attrTag({ content: _content_elide("a4", (err) => {
 			_persisted_reason();
 			const $scope3_id = _scope_id();
-			_html(`<em>${_escape(err.message)}${_el_resume($scope3_id, "a")}</em>`);
-			writeScope($scope3_id, {});
+			_html(`<em>${_text_resume($scope3_id, "a", err.message)}</em>`);
+			_scope($scope3_id, {});
 		}, $scope0_id) })
 	}, 1);
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { e: $input_promise__closures });
+	$scope0_reason && _scope($scope0_id, { e: $input_promise__closures });
 }, 1, 0);

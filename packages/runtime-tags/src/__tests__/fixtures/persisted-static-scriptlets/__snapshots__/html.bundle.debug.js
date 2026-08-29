@@ -12,18 +12,18 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><p>${_patch_text($scope0_id, "#text/0", shout(input.title), $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")} <!>${_patch_text($scope0_id, "#text/1", stamp)}${_el_resume($scope0_id, "#text/1")}</p>`);
+	_html(`<main><p>${_patch_text($scope0_id, "#text/0", shout(input.title), void 0, $scope0_owned, 0)} ${_patch_text($scope0_id, "#text/1", stamp, 2)}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_escape(shout(input.title) + " #" + count)}${_el_resume($scope1_id, "#text/0")}</span>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4");
+			_html(`<span>${_text_resume($scope1_id, "#text/0", shout(input.title) + " #" + count)}</span>`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_title: input.title,
 		count
 	}, "__tests__/template.marko", 0, {

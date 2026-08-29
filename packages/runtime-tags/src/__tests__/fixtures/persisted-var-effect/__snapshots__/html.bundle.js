@@ -18,11 +18,11 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let label = labeler_default({ title: input.title });
 	_var($scope0_id, "b", $childScope, "a0");
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}</main>`);
+	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	_patch_effect($scope0_id, "a2", "i");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		h: count,
 		i: label,
 		a: _existing_scope($childScope)

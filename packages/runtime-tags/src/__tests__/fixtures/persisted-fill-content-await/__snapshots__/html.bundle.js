@@ -6,9 +6,9 @@ var frame_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
-	$scope0_reason && writeScope($scope0_id, {});
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -34,15 +34,15 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.first, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<p>${_escape(value)}${_el_resume($scope2_id, "a")}</p>`);
-			writeScope($scope2_id, {});
+			_html(`<p>${_text_resume($scope2_id, "a", value)}</p>`);
+			_scope($scope2_id, {});
 		}, void 0, "a1", 1);
-		_subscribe($showSecond__closures, _subscribe(_source_if($scope0_reason, 1) && $input_first__closures, _subscribe(_source_if($scope0_reason, 0) && $input_second__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }))));
+		_subscribe($showSecond__closures, _subscribe(_source_if($scope0_reason, 1) && $input_first__closures, _subscribe(_source_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.second,
 		f: input.first,
 		g: showSecond,

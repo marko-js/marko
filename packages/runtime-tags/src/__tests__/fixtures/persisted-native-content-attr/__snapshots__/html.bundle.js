@@ -22,6 +22,6 @@ var template_default = _template_persisted("c", (input) => {
 	_html("<main><section>");
 	_patch_dynamic_tag($scope0_id, "a", input.mode === "a" ? frag_a_default : frag_b_default, $scope0_owned, 0);
 	_attr_content("a", $scope0_id, input.mode === "a" ? frag_a_default : frag_b_default);
-	_html(`</section>${_el_resume($scope0_id, "a")}<p>${_patch_text($scope0_id, "b", input.note, $scope0_owned, 1)}${_el_resume($scope0_id, "b")}</p></main>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`</section>${_el_resume($scope0_id, "a")}<p>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_owned, 1)}</p></main>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 1, 0);

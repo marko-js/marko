@@ -6,10 +6,10 @@ var badge_default = _template_persisted("__tests__/tags/badge.marko", (input) =>
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let seen = 0;
-	_html(`<footer><span>${_patch_text($scope0_id, "#text/0", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")} (<!>${_escape(seen)}${_el_resume($scope0_id, "#text/1")})</span><button>ack</button>${_el_resume($scope0_id, "#button/2")}</footer>`);
+	_html(`<footer><span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_owned, 0)} (${_text_resume($scope0_id, "#text/1", seen, 2)})</span><button>ack</button>${_el_resume($scope0_id, "#button/2")}</footer>`);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/badge.marko0", seen, 1);
-	$scope0_reason && writeScope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
+	$scope0_reason && _scope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
 	_resume_branch($scope0_id);
 }, 0, 0);
 
@@ -30,33 +30,33 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main><ul>");
 	_for_of(input.items, (item) => {
 		const $scope3_id = _scope_id();
-		_html(`<li>${_patch_text($scope3_id, "#text/0", item.label, $scope0_owned, 1)}${_el_resume($scope3_id, "#text/0")}`);
+		_html(`<li>${_patch_text($scope3_id, "#text/0", item.label, void 0, $scope0_owned, 1)}`);
 		_if(() => {
 			if (item.sale) {
 				const $scope4_id = _scope_id();
 				_html("<em>on sale</em>");
-				$scope0_reason && writeScope($scope4_id, {}, "__tests__/template.marko", "6:10");
+				$scope0_reason && _scope($scope4_id, {}, "__tests__/template.marko", "6:10");
 				return 0;
 			}
 		}, $scope3_id, "#text/1", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["__tests__/template.marko_4*shell"]);
 		_html("</li>");
-		writeScope($scope3_id, {}, "__tests__/template.marko", "3:6");
+		_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
 	}, "id", $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
 	_if(() => {
 		if (input.summary) {
 			const $scope1_id = _scope_id();
-			_html(`<section>${_patch_text($scope1_id, "#text/0", input.summary, $scope0_owned, 2)}${_el_resume($scope1_id, "#text/0")}`);
+			_html(`<section>${_patch_text($scope1_id, "#text/0", input.summary, void 0, $scope0_owned, 2)}`);
 			_if(() => {
 				if (input.detail) {
 					const $scope2_id = _scope_id();
-					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail, $scope0_owned, 3)}${_el_resume($scope2_id, "#text/0")}</small>`);
-					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"));
+					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail, void 0, $scope0_owned, 3)}</small>`);
+					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"));
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["__tests__/template.marko_2*shell"]);
 			_html("</section>");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, $sg__input_summary, $sg__input_summary, void 0, void 0, ["__tests__/template.marko_1*shell"]);
@@ -65,7 +65,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/2", $childScope);
 	badge_default({ label: input.badge });
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		input_summary: input.summary,
 		input_detail: input.detail,
 		"ClosureScopes:input_detail": $input_detail__closures,

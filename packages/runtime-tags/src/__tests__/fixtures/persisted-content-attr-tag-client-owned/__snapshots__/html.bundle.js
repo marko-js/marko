@@ -9,14 +9,14 @@ var card_default = _template_persisted("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.header, {}, 0, 0, _source_guard($scope0_reason, 0));
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</section>`);
 	_script($scope0_id, "b0");
 	_patch_value($scope0_id, "b1", open, 1);
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.header,
 		f: open
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "b0", input.header);
@@ -35,12 +35,12 @@ var template_default = _template_persisted("a", (input) => {
 	card_default({ header: attrTag({ content: _content_resume("a0", () => {
 		_persisted_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_escape(input.note)}${_el_resume($scope1_id, "a")}</em>`);
-		_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_html(`<em>${_text_resume($scope1_id, "a", input.note)}</em>`);
+		_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) }) });
 	_html("</main>");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		d: input.note,
 		e: $input_note__closures,
 		a: _existing_scope($childScope)

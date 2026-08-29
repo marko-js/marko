@@ -13,14 +13,14 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
 			const doubled = count * 2;
-			_html(`<p>${_patch_text($scope1_id, "a", label, $scope0_owned, 1)}${_el_resume($scope1_id, "a")} <!>${_escape(doubled)}${_el_resume($scope1_id, "b")}</p>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_html(`<p>${_patch_text($scope1_id, "a", label, void 0, $scope0_owned, 1)} ${_text_resume($scope1_id, "b", doubled, 2)}</p>`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		f: input.title,
 		g: count
 	});

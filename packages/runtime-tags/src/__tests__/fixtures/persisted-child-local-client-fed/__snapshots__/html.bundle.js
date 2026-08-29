@@ -15,8 +15,8 @@ var child_default = _template_persisted("b", (input) => {
 			const $scope1_id = _scope_id();
 			const l = input.label + "!";
 			_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "b1", l) : _patch_init($scope1_id, "b1");
-			_html(`<p>${_escape(l + "#0")}${_el_resume($scope1_id, "a")}</p>`);
-			writeScope($scope1_id, {
+			_html(`<p>${_text_resume($scope1_id, "a", l + "#0")}</p>`);
+			_scope($scope1_id, {
 				b: l,
 				_: _scope_with_id($scope0_id)
 			});
@@ -26,7 +26,7 @@ var child_default = _template_persisted("b", (input) => {
 	_html(`<button id=c>c</button>${_el_resume($scope0_id, "b")}</div>`);
 	_script($scope0_id, "b2");
 	_patch_value($scope0_id, "b0", c, 1);
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		f: input.label,
 		g: c
 	});
@@ -52,7 +52,7 @@ var template_default = _template_persisted("a", (input) => {
 	});
 	_html(`<button id=p>p</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		f: n,
 		a: _existing_scope($childScope)
 	});

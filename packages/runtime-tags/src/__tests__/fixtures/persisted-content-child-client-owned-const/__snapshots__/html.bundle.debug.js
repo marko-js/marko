@@ -6,19 +6,19 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
-	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, $scope0_owned, 0)}${_el_resume($scope0_id, "#text/0")}</h2>`);
+	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h2>`);
 	if ($scope0_reason) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 1));
-			writeScope($scope1_id, {}, "__tests__/tags/card/index.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/tags/card/index.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</section>`);
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/card/index.marko1", open, 1);
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_content: input.content,
 		open
 	}, "__tests__/tags/card/index.marko", 0, {
@@ -42,12 +42,12 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	card_default({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _persisted_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_escape(input.note)}${_el_resume($scope1_id, "#text/0")}</em>`);
-		_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.note)}</em>`);
+		_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_html("</main>");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_note: input.note,
 		"ClosureScopes:input_note": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)

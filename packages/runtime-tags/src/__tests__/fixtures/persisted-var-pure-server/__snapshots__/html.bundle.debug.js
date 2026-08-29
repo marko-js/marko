@@ -40,7 +40,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/2", $childScope2);
 	labeler_default({ title: double });
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0);

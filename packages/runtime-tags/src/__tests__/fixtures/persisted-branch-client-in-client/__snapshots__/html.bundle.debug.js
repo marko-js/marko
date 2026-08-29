@@ -12,22 +12,22 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	if ($scope0_reason) _if(() => {
 		if (count > 1) {
 			const $scope1_id = _scope_id();
-			_html(`<h2>${_escape(input.outer)}${_el_resume($scope1_id, "#text/0")}</h2>`);
+			_html(`<h2>${_text_resume($scope1_id, "#text/0", input.outer)}</h2>`);
 			if ($scope0_reason) _if(() => {
 				if (on) {
 					const $scope2_id = _scope_id();
-					_html(`<p>${_escape(input.inner)}${_el_resume($scope2_id, "#text/0")}</p>`);
-					_subscribe(_source_if($scope0_reason, 1) && $input_inner__closures, writeScope($scope2_id, {}, "__tests__/template.marko", "6:6"));
+					_html(`<p>${_text_resume($scope2_id, "#text/0", input.inner)}</p>`);
+					_subscribe(_source_if($scope0_reason, 1) && $input_inner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:6"));
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
-			writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_outer: input.outer,
 		input_inner: input.inner,
 		count,

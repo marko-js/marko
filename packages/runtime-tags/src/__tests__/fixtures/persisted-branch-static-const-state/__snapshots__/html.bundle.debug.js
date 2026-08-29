@@ -16,8 +16,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const base = 10 * 2;
 			_patch_value($scope1_id, "__tests__/template.marko0", base);
 			const alias = base;
-			_html(`<p>${_escape(alias + count)}${_el_resume($scope1_id, "#text/0")}</p>`);
-			writeScope($scope1_id, {
+			_html(`<p>${_text_resume($scope1_id, "#text/0", alias + count)}</p>`);
+			_scope($scope1_id, {
 				base,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "3:4", { base: "4:12" });
@@ -26,6 +26,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1, 0);

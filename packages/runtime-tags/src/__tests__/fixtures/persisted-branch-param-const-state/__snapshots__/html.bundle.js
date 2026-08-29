@@ -13,8 +13,8 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			const label = "[" + input.title + "]";
 			_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "a0", label) : _patch_init($scope1_id, "a1");
-			_html(`<p>${_escape(label + " #0")}${_el_resume($scope1_id, "a")}</p>`);
-			writeScope($scope1_id, {
+			_html(`<p>${_text_resume($scope1_id, "a", label + " #0")}</p>`);
+			_scope($scope1_id, {
 				b: label,
 				_: _scope_with_id($scope0_id)
 			});
@@ -23,7 +23,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_reason && writeScope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		f: input.title,
 		g: count
 	});

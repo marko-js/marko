@@ -4,8 +4,8 @@ _shells({ b: "b;D ;<em> </em>" });
 var echo_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "a", input.label, $scope0_owned, 0)}${_el_resume($scope0_id, "a")}</em>`);
-	$scope0_reason && writeScope($scope0_id, {});
+	_html(`<em>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_owned, 0)}</em>`);
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -19,5 +19,5 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	echo_default({ label: input.label });
 	_html("</main>");
-	$scope0_reason && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1, () => [echo_default]);

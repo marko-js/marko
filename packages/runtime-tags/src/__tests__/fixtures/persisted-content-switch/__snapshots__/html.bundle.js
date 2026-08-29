@@ -6,9 +6,9 @@ var widget_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag$1($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
-	$scope0_reason && writeScope($scope0_id, {});
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -36,19 +36,19 @@ var template_default = _template_persisted("a", (input) => {
 			if (input.kind === "a") {
 				const $scope6_id = _scope_id();
 				_html("<b>A</b>");
-				$scope0_reason && writeScope($scope6_id, {});
+				$scope0_reason && _scope($scope6_id, {});
 				return 0;
 			} else if (input.kind === "b") {
 				const $scope2_id = _scope_id();
-				_html(`<i>B:<!>${_patch_text($scope2_id, "a", input.kind, $scope0_owned, 0)}${_el_resume($scope2_id, "a")}</i>`);
-				_subscribe(_source_if($scope0_reason, 0) && $input_kind__closures, writeScope($scope2_id, {
+				_html(`<i>B:${_patch_text($scope2_id, "a", input.kind, 2, $scope0_owned, 0)}</i>`);
+				_subscribe(_source_if($scope0_reason, 0) && $input_kind__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: 1
 				}));
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $sg__input_kind, $sg__input_kind, void 0, void 0, ["a3", "a2"]);
-		$scope0_reason && _subscribe($input_kind__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$scope0_reason && _subscribe($input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	if ($scope0_reason) _if(() => {
@@ -63,28 +63,28 @@ var template_default = _template_persisted("a", (input) => {
 					if (input.inner === "a") {
 						const $scope7_id = _scope_id();
 						_html("<b>A</b>");
-						$scope0_reason && writeScope($scope7_id, {});
+						$scope0_reason && _scope($scope7_id, {});
 						return 0;
 					} else if (input.inner === "b") {
 						const $scope5_id = _scope_id();
-						_html(`<i>B:<!>${_escape(input.inner)}${_el_resume($scope5_id, "a")}</i>`);
-						_subscribe($si__input_inner && $input_inner__closures, writeScope($scope5_id, {
+						_html(`<i>B:${_text_resume($scope5_id, "a", input.inner, 2)}</i>`);
+						_subscribe($si__input_inner && $input_inner__closures, _scope($scope5_id, {
 							_: _scope_with_id($scope4_id),
 							Cj: 1
 						}));
 						return 1;
 					}
 				}, $scope4_id, "a", $sg__input_inner, $sg__input_inner, $sg__input_inner, 0, 1);
-				_subscribe($si__input_inner && $input_inner__closures, writeScope($scope4_id, { _: _scope_with_id($scope3_id) }));
+				_subscribe($si__input_inner && $input_inner__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }));
 				_resume_branch($scope4_id);
 			}, $scope3_id) });
-			writeScope($scope3_id, { a: _existing_scope($childScope2) });
+			_scope($scope3_id, { a: _existing_scope($childScope2) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a4");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		f: input.kind,
 		g: input.inner,
 		h: open,

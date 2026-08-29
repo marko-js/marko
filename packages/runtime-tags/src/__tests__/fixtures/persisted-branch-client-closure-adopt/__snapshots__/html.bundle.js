@@ -10,30 +10,30 @@ var template_default = _template_persisted("a", (input) => {
 	if ($scope0_reason) _if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(`<b>${_escape("x:" + input.title)}${_el_resume($scope1_id, "a")}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "a", "x:" + input.title)}</b>`);
 			if ($scope0_reason) _if(() => {
 				{
 					const $scope2_id = _scope_id();
-					_html(`<i>${_escape("y:" + input.title)}${_el_resume($scope2_id, "a")}</i>`);
+					_html(`<i>${_text_resume($scope2_id, "a", "y:" + input.title)}</i>`);
 					if ($scope0_reason) _if(() => {
 						{
 							const $scope3_id = _scope_id();
-							_html(`<u>${_escape("z:" + input.title)}${_el_resume($scope3_id, "a")}</u>`);
-							_subscribe($si__input_title && $input_title__closures, writeScope($scope3_id, { Cg: 1 }));
+							_html(`<u>${_text_resume($scope3_id, "a", "z:" + input.title)}</u>`);
+							_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { Cg: 1 }));
 							return 0;
 						}
 					}, $scope2_id, "b", 1, 1, 1, 0, 1);
-					_subscribe($open__closures, _subscribe($si__input_title && $input_title__closures, writeScope($scope2_id, {})));
+					_subscribe($open__closures, _subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {})));
 					return 0;
 				}
 			}, $scope1_id, "b");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? writeScope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.title,
 		f: open,
 		g: $input_title__closures,

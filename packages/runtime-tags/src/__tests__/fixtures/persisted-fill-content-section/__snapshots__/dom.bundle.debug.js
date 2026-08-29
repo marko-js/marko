@@ -18,7 +18,7 @@ const $frame_content__setup = ($scope) => {
 	$frame_content__count($scope);
 };
 const $frame_content__count = /*@__PURE__*/ _closure_get("count", $frame_content__input_label__OR__count);
-const $frame_content = /*@__PURE__*/ _content$1("__tests__/template.marko_1*content", "<p> </p>", "D ", $frame_content__setup);
+const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p> </p>", "D ", $frame_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($frame_content__count);
 const $count = /*@__PURE__*/ _let("count/5", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
