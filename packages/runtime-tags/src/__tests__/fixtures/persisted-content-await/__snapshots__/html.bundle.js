@@ -41,7 +41,7 @@ var template_default = _template_persisted("a", (input) => {
 						Cf: 1
 					}));
 					_resume_branch($scope3_id);
-				}, void 0, "a1");
+				}, 1, "a1");
 				$scope0_reason && _subscribe($si__input_value && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				_resume_branch($scope2_id);
 			}, $scope1_id) });

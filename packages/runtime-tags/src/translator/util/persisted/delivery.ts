@@ -64,19 +64,21 @@ function hasWritableShape(binding: Binding) {
   );
 }
 
-// The shape a patch can keep current: a canonical root server value (only
-// canonical bindings get ordinals and server writes — an alias never
-// qualifies, so its reads reject rather than going silently stale).
+// The shape a patch can keep current: a canonical root server value (an
+// alias never gets ordinals or writes, so its reads reject, never go stale).
 function isPatchRefreshableBinding(binding: Binding) {
   return (
     isPersisted() &&
     getCanonicalBinding(binding) === binding &&
     !binding.section.parent &&
-    !!binding.sources?.param &&
+    !!binding.sources &&
+    !!(binding.sources.param || binding.sources.global) &&
     !binding.sources.state &&
     (binding.type === BindingType.input ||
       binding.type === BindingType.param ||
       binding.type === BindingType.derived ||
+      // A keyed `$global` read; the bag itself never re-ships.
+      (binding.type === BindingType.global && !!binding.upstreamAlias) ||
       (binding.type === BindingType.let && !binding.assignmentSections))
   );
 }
@@ -163,18 +165,30 @@ export function isPatchWriteBinding(binding: Binding) {
 export function hasPatchEffectReads(binding: Binding) {
   for (const read of binding.reads) {
     // A serialized spread's set is its own delivery.
-    if (read.isEffect && !read.serializedSpread) return true;
+    if (read.isEffect && !read.attrSetSpread) return true;
   }
   return false;
 }
 
 // Closures whose construct INITs render a fresh scope: state closures
-// through their own signal, fill closures as arrivals at the joins they feed.
+// through their own signal, fill closures as arrivals at the joins they feed,
+// and lazy-child input feeds (the stash must exist before the module loads).
 export function getConstructInitClosures(section: Section) {
   return filter(
     section.referencedClosures as Opt<Binding>,
-    (closure) => !!closure.sources?.state || fillJoinsIn(closure, section),
+    (closure) =>
+      !!closure.sources?.state ||
+      fillJoinsIn(closure, section) ||
+      feedsTagNameLoadIn(closure, section),
   );
+}
+
+// A closure read in `section` that is a `tagNameLoad` tag's input.
+export function feedsTagNameLoadIn(closure: Binding, section: Section) {
+  for (const read of closure.reads) {
+    if (read.section === section && read.tagNameLoadInput) return true;
+  }
+  return false;
 }
 
 // A fill closure feeding a state intersection read in `section` (which
@@ -210,11 +224,11 @@ export function getLocalFillFeeds(section: Section) {
 }
 
 // A local the server computes without client state: a param property
-// (or rest, a declared object), or a derivation/never-assigned let.
+// (or rest, a declared object), or a derivation/never-assigned let. A
+// `$global` contribution is fine — the shipped value is per-frame current.
 function isSeedableLocal(binding: Binding) {
   return (
     !binding.sources?.state &&
-    !binding.sources?.global &&
     (isSectionParam(binding) ||
       binding.type === BindingType.derived ||
       (binding.type === BindingType.let && !binding.assignmentSections))
@@ -233,11 +247,12 @@ function isSectionParam(binding: Binding) {
 // Server-sourced reads a patch cannot keep current: param-sourced bindings
 // that neither fill nor refresh over the wire read stale after any patch.
 export function hasUnfillablePatchReads(refs: Opt<Binding>) {
-  return some(
-    refs,
-    (binding) =>
-      !!getSerializeSourcesForRef(binding)?.param &&
+  return some(refs, (binding) => {
+    const sources = getSerializeSourcesForRef(binding);
+    return (
+      !!(sources?.param || sources?.global) &&
       !isPatchFillBinding(binding) &&
-      !isPatchWriteBinding(binding),
-  );
+      !isPatchWriteBinding(binding)
+    );
+  });
 }

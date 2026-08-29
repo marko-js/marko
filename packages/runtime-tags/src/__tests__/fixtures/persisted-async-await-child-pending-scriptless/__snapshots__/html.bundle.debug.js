@@ -40,7 +40,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					start: 2
 				});
 				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:6");
-			}, void 0, "__tests__/template.marko_1_#text#0/await");
+			}, 1, "__tests__/template.marko_1_#text#0/await");
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		} else {

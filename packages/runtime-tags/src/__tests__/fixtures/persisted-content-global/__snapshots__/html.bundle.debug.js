@@ -22,6 +22,7 @@ _shells({
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = new Set();
 	const $global$1 = $global();
 	let count = 0;
 	_html("<main>");
@@ -34,13 +35,15 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<div>${_patch_text($scope1_id, "#text/0", $global$1.brand)}</div>`);
-			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_subscribe($scope0_reason && $global_brand__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {
 		count,
+		"ClosureScopes:$global_brand": $global_brand__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);

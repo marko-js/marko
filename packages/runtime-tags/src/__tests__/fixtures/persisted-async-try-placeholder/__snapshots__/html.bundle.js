@@ -18,7 +18,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_owned, 1)}</em>`);
 			_scope($scope3_id, {});
-		}, void 0, "a2", 1);
+		}, 1, "a2", 1);
 		$scope0_reason && _subscribe($input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("a1", $scope0_id) }) }, 1);

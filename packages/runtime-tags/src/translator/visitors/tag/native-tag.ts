@@ -56,6 +56,7 @@ import {
   getPrefixedScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
+  mergeSources,
   trackDomVarReferences,
 } from "../../util/references";
 import {
@@ -363,10 +364,13 @@ export default {
               ensurePersistedWriteGroups(() => value.extra || {});
             }
           }
-          if (spreadReferenceNodes && isAttrsOnlySpread(tag, tagName)) {
+          if (spreadReferenceNodes && isAttrSetSpread(tag, tagName)) {
             addRuntimeFeatureAsset("patch-attrs");
+            if (controllableClaimFor(tagName)) {
+              addRuntimeFeatureAsset("controllable");
+            }
             ensurePersistedWriteGroups(() => node.extra || {});
-            (node.extra ??= {}).serializedSpread = true;
+            (node.extra ??= {}).attrSetSpread = true;
           }
         }
 
@@ -648,11 +652,10 @@ export default {
           }
 
           // A patched control wires like a fill: the handler installs first
-          // (binds queue ahead of the control's apply), then the value entry
-          // makes the server's value authoritative through the registered
-          // controlled helper — paired refresh and construct alike.
+          // (binds queue ahead), then the value entry applies authoritatively.
           if (isPersisted() && isBranchPathSection(tagSection)) {
-            const [valueAttr, changeAttr] = staticControllable.attrs;
+            const [valueAttr, changeAttr, groupValueAttr] =
+              staticControllable.attrs;
             if (changeAttr) {
               // A param-fed handler binds only under server ownership, so
               // a client-owned control never rebinds a stale handler.
@@ -672,17 +675,38 @@ export default {
               )}`;
             }
             // A param-fed control value writes only under server ownership.
+            // A group entry (`checkedValue`) also carries the input's own
+            // `value`: each node applies its own comparison client-side.
+            const groupEntry =
+              staticControllable.helper === "_attr_input_checkedValue";
             write`${callRuntime(
               "_patch_control",
               getScopeIdIdentifier(tagSection),
               t.cloneNode(visitAccessor!, true),
               t.numericLiteral(getControlledType(staticControllable)),
-              valueAttr ? t.cloneNode(valueAttr.value, true) : buildUndefined(),
-              ...(valueAttr
-                ? getPatchWriteOwnership(
-                    getSerializeSourcesForExpr(valueAttr.value.extra || {}),
-                  )
-                : []),
+              groupEntry
+                ? t.arrayExpression([
+                    valueAttr
+                      ? t.cloneNode(valueAttr.value, true)
+                      : buildUndefined(),
+                    groupValueAttr
+                      ? t.cloneNode(groupValueAttr.value, true)
+                      : buildUndefined(),
+                  ])
+                : valueAttr && t.cloneNode(valueAttr.value, true),
+              ...getPatchWriteOwnership(
+                groupEntry
+                  ? mergeSources(
+                      valueAttr &&
+                        getSerializeSourcesForExpr(valueAttr.value.extra || {}),
+                      groupValueAttr &&
+                        getSerializeSourcesForExpr(
+                          groupValueAttr.value.extra || {},
+                        ),
+                    )
+                  : valueAttr &&
+                      getSerializeSourcesForExpr(valueAttr.value.extra || {}),
+              ),
             )}`;
           }
         }
@@ -879,7 +903,7 @@ export default {
 
           if (isTextOnly || isOpenOnly || hasChildren || staticContentAttr) {
             const patches =
-              isAttrsOnlySpread(tag, tagName) &&
+              isAttrSetSpread(tag, tagName) &&
               writesPatchAttr(tag, tagSection, "spread", tag.node.extra);
             if (skipExpression) {
               write`${callRuntime(
@@ -890,9 +914,14 @@ export default {
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
                 ...(patches
-                  ? getPatchWriteOwnership(
-                      getSerializeSourcesForExpr(tag.node.extra || {}),
-                    )
+                  ? [
+                      !staticControllable &&
+                        controllableClaimFor(tagName) &&
+                        t.numericLiteral(1),
+                      ...getPatchWriteOwnership(
+                        getSerializeSourcesForExpr(tag.node.extra || {}),
+                      ),
+                    ]
                   : []),
               )}`;
             } else if (patches) {
@@ -904,6 +933,9 @@ export default {
                 visitAccessor,
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
+                !staticControllable &&
+                  controllableClaimFor(tagName) &&
+                  t.numericLiteral(1),
                 ...getPatchWriteOwnership(
                   getSerializeSourcesForExpr(tag.node.extra || {}),
                 ),
@@ -1321,9 +1353,14 @@ export default {
           if (
             isPersisted() &&
             isBranchPathSection(tagSection) &&
-            isAttrsOnlySpread(tag, staticName)
+            isAttrSetSpread(tag, staticName)
           ) {
             importRuntimeFeature("patch-attrs");
+            // A spread that owns the element's controllable (no static attr
+            // does) re-claims it through the run-time claim table.
+            if (!staticControllable && controllableClaimFor(staticName)) {
+              importRuntimeFeature("controllable");
+            }
           }
           if (skipExpression) {
             addStatement(
@@ -1463,15 +1500,15 @@ function writesPatchAttr(
   return false;
 }
 
-// A spread whose set is plain attributes: no controllable descriptor and no
-// `content` renderer (the tag has its own body or admits none).
-export function isAttrsOnlySpread(
+// A spread that is the element's whole attribute set: no `content` renderer
+// can ride it (the tag has its own body or admits none). Patches re-apply
+// such a set as-is, controllable claims included.
+export function isAttrSetSpread(
   tag: t.NodePath<t.MarkoTag>,
   tagName: string | undefined,
 ) {
   return (
     !!tagName &&
-    !controllableClaimFor(tagName) &&
     tagName !== "option" &&
     !!(
       isTextOnlyNativeTag(tag) ||
@@ -1581,7 +1618,9 @@ function getPatchControlFeature(
     ? ("patch-control-select" as const)
     : controllable.helper.endsWith("_open")
       ? ("patch-control-open" as const)
-      : ("patch-control-input" as const);
+      : controllable.helper === "_attr_input_checkedValue"
+        ? ("patch-control-checked-value" as const)
+        : ("patch-control-input" as const);
 }
 
 // The wire's control kind ids mirror `ControlledType`.
@@ -1589,6 +1628,8 @@ function getControlledType(controllable: NonNullable<RelatedControllable>) {
   switch (controllable.helper) {
     case "_attr_input_checked":
       return ControlledType.InputChecked;
+    case "_attr_input_checkedValue":
+      return ControlledType.InputCheckedValue;
     case "_attr_select_value":
       return ControlledType.SelectValue;
     case "_attr_input_value":

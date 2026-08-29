@@ -39,7 +39,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", value)}</p>`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "4:6");
-		}, void 0, "__tests__/template.marko_1_#text#0/await", 1);
+		}, 1, "__tests__/template.marko_1_#text#0/await");
 		_subscribe($showSecond__closures, _subscribe(_source_if($scope0_reason, 1) && $input_first__closures, _subscribe(_source_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"))));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });

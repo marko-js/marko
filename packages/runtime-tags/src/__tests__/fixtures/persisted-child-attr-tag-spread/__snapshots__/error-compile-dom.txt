@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-attr-tag-spread/template.marko:5:5
+      3 | <main>
+      4 |   <if=show>
+    > 5 |     <tabs>
+        |     ^ Persisted templates cannot patch this faithfully yet: an input the child needs server-owned cannot feed from client-owned structure.
+      6 |       <@tab ...thing2/>
+      7 |     </tabs>
+      8 |   </if>

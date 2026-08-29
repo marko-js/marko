@@ -120,6 +120,13 @@ export {
   _init_for_closure,
   _init_for_selector,
   _init_if_closure,
+  // A `tagNameLoad` input init has no module-graph reference (a construct
+  // resolves it by serialized id), so the translator emits these `_resume`
+  // aliases — which the pure-call list excludes — to keep the registration.
+  _init_closure_get as _resume_init_closure_get,
+  _init_for_closure as _resume_init_for_closure,
+  _init_for_selector as _resume_init_for_selector,
+  _init_if_closure as _resume_init_if_closure,
   _let,
   _let_change,
   _or,

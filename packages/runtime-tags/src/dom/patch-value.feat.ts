@@ -12,17 +12,16 @@ import {
 import { patchFills } from "./signals";
 
 // A soft miss is a fill whose intersection was tree-shaken: nothing to
-// update. A construct's seed missing means required client code is gone.
+// update. A construct's seed is required, so a miss crashes to reject.
 patchers[PatchKey.Value] = (scope, key, value) =>
   patchFills[key.slice(PatchKey.Value.length)]?.(scope, value);
 constructPatchers[PatchKey.Value] = (scope, key, value) =>
-  (patchFills[key.slice(PatchKey.Value.length)] || failPatch())(scope, value);
+  patchFills[key.slice(PatchKey.Value.length)](scope, value);
 
 // A bind installs a handler the way CSR setup does: anchored at the scope
 // its factory was registered against, writing down the child-link path
 // (`[registerId, ...links, slot]`) after the apply so freshly constructed
-// targets exist. Any break — poison `0`, missing link, missing
-// registration — rejects the patch.
+// targets exist. A poison `0` (withheld handler path) rejects the patch.
 patchers[PatchKey.Bind] = (scope, _key, entry) => {
   if (!entry) failPatch();
   queueEffect(scope, (scope) => {
@@ -42,12 +41,9 @@ patchers[PatchKey.Bind] = (scope, _key, entry) => {
             )
           : target[link as Accessor]
       ) as Scope;
-      if (!target) failPatch();
     }
     target[slot] = (
-      (getRegisteredWithScope(registerId) || failPatch()) as (
-        scope: Scope,
-      ) => unknown
+      getRegisteredWithScope(registerId) as (scope: Scope) => unknown
     )(scope);
   });
 };

@@ -34,7 +34,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/template.marko", "3:6"));
 				_resume_branch($scope2_id);
-			});
+			}, 1);
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		}

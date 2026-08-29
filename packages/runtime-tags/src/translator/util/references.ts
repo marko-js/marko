@@ -213,10 +213,13 @@ declare module "@marko/compiler/dist/types" {
      * (dynamic/aliased) read, a property alias names the key. */
     globalBindings?: ReferencedBindings;
     spreadFrom?: Binding;
+    /** An input expression of a `tagNameLoad` tag (its value stashes until
+     * the child's module arrives). */
+    tagNameLoadInput?: true;
     nativeTagSpread?: true;
-    /** A native tag spread whose attribute set is serialized with the
-     * persisted structure, so its effect read needs no other delivery. */
-    serializedSpread?: true;
+    /** A native tag spread that is the element's whole attribute set (no
+     * content renderer it could carry). */
+    attrSetSpread?: true;
     nativeTagSpreadMerged?: true;
     merged?: NodeExtra;
   }
@@ -1132,10 +1135,9 @@ export function finalizeReferences() {
 
   for (const binding of bindings) {
     const { name, section } = binding;
-    // `$global` bindings resolve sources only: no collision rename (it
-    // would burn a UID and shift later generated names), no section
-    // membership, no closures — reads compile verbatim.
-    if (binding.type === BindingType.global) {
+    // Verbatim globals resolve sources only: no collision rename (it would
+    // burn a UID and shift later generated names), no section, no closures.
+    if (isVerbatimGlobal(binding)) {
       resolveBindingSources(binding);
       // LOCAL-only bit (no cross-file roll-up): the html output exports it
       // as the template's intrinsics, composed across templates at render.
@@ -1669,6 +1671,15 @@ const [getResolvedSources] = createProgramState(() => new Set<Binding>());
 const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
+// A `$global` read compiles verbatim (no read slot, signal, or register
+// id) unless persisted keys it: a keyed read delivers like any reference.
+function isVerbatimGlobal(binding: Binding) {
+  return (
+    binding.type === BindingType.global &&
+    !(isPersisted() && binding.upstreamAlias)
+  );
+}
+
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
@@ -2625,16 +2636,14 @@ function resolveReferencedBindings(
           if (upstreamRoot) {
             binding = upstreamRoot;
           }
-        } else if (binding.type !== BindingType.global) {
+        } else if (!isVerbatimGlobal(binding)) {
           extra.section = expr.section;
           ({ binding } = extra.read ??= resolveExpressionReference(
             rootBindings,
             binding,
           ));
         }
-        if (binding.type === BindingType.global) {
-          // `$global` reads stay verbatim member chains: no read slot,
-          // no signal, no register-id participation.
+        if (isVerbatimGlobal(binding)) {
           globalBindings = bindingUtil.add(globalBindings, binding);
         } else if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
           lazyBindings = bindingUtil.add(lazyBindings, binding);
@@ -2656,9 +2665,7 @@ function resolveReferencedBindings(
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
         hoistedBindings = bindingUtil.add(hoistedBindings, binding);
       }
-    } else if (binding.type === BindingType.global) {
-      // `$global` reads stay verbatim member chains: no read slot,
-      // no signal, no register-id participation.
+    } else if (isVerbatimGlobal(binding)) {
       globalBindings = binding;
     } else {
       extra.read = createRead(binding, undefined, ownVar);

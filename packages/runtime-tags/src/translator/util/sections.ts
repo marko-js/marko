@@ -171,6 +171,8 @@ export interface Section {
   /** Awaits a construct must deliver body content for (marker binding +
    * body section); `buildShells` prunes those no shipped shell reaches. */
   constructSetups: { binding: Binding; body: Section }[] | undefined;
+  /** Lazily loaded child sites in this section, by their marker binding. */
+  loadSites: Binding[] | undefined;
   /** Branch whose shell would construct unfaithfully: the first blocker's
    * reason code sticks, no shell ships, patches fail closed. */
   shellBlocked: ShellBlocker.Value | undefined;
@@ -262,6 +264,7 @@ export function startSection(
       boundaryContent: false,
       contentRecord: false,
       constructSetups: undefined,
+      loadSites: undefined,
       shellBlocked: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };

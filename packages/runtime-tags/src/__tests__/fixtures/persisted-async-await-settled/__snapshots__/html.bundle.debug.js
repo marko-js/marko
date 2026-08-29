@@ -15,7 +15,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", value, void 0, $scope0_owned, 1)}</em>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
-	}, void 0, "__tests__/template.marko_0_#text#1/await", 1);
+	}, 1, "__tests__/template.marko_0_#text#1/await", 1);
 	_html(`<button>Count ${_text_resume($scope0_id, "#text/3", count, 2)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });

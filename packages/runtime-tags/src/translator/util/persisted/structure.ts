@@ -20,6 +20,9 @@ export function boundaryAlwaysPairs(bodySection: Section) {
   if (!bodySection.serializeReason) return false;
   for (let s: Section | undefined = bodySection; s; s = s.parent) {
     if (s.isBranch || s.boundaryContent) return false;
+    // A content section can materialize at any site (or none), so nothing
+    // below it is provably live and unique on every page.
+    if (s !== bodySection && !s.isBoundary && s.parent) return false;
   }
   return true;
 }

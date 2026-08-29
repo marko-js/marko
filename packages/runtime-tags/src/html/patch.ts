@@ -38,6 +38,7 @@ import {
   isInResumedBranch,
   maskGroup,
   patchPartial,
+  peekPatchPartial,
   type ScopeInternals,
   type SerializeReasonValue,
   State,
@@ -147,7 +148,7 @@ class PatchState extends State {
     contentId?: string,
     slotIds?: (string | 0 | undefined)[],
   ) {
-    if (!this.patchInert && !this.patchPartials?.[branchId]) {
+    if (!this.patchInert && !peekPatchPartial(this, branchId)) {
       const link = AccessorPrefix.BranchScopes + accessor;
       (this.patchParents ??= {})[branchId] = [scopeId, link];
       (this.patchPending ??= {})[branchId] = [
@@ -179,8 +180,7 @@ class PatchState extends State {
     }
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
-    this.patchPartials = undefined;
-    this.patchSerializeStates = undefined;
+    this.patchTrees = undefined;
     this.serializer = new Serializer();
     return out;
   }
@@ -233,27 +233,23 @@ class PatchState extends State {
     // Shape-typed entry, densest form first: a bare number is the
     // selection + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =
-      branchIndex === undefined ? undefined : this.patchPartials?.[branchId];
-    writePatch(
-      scopeId,
-      {
-        [PatchKey.Branch + accessor]:
-          branchIndex === undefined
-            ? 0
-            : branchIndex
-              ? branchPartial || shellId
-                ? shellId
-                  ? [branchIndex, branchPartial || {}, shellId]
-                  : [branchIndex, branchPartial || {}]
-                : branchIndex + 1
-              : branchPartial
-                ? shellId
-                  ? [branchPartial, shellId]
-                  : [branchPartial]
-                : shellId || 1,
-      },
-      this.patchSerializeStates?.[branchId],
-    );
+      branchIndex === undefined ? undefined : peekPatchPartial(this, branchId);
+    writePatch(scopeId, {
+      [PatchKey.Branch + accessor]:
+        branchIndex === undefined
+          ? 0
+          : branchIndex
+            ? branchPartial || shellId
+              ? shellId
+                ? [branchIndex, branchPartial || {}, shellId]
+                : [branchIndex, branchPartial || {}]
+              : branchIndex + 1
+            : branchPartial
+              ? shellId
+                ? [branchPartial, shellId]
+                : [branchPartial]
+              : shellId || 1,
+    });
     // Later settle frames nest under the live branch as a Child apply.
     if (branchIndex !== undefined) {
       (this.patchPending ??= {})[branchId] = [
@@ -397,7 +393,7 @@ export function _patch_child(
   const state = getState();
   if (state.writesPatches) {
     (state.patchParents ??= {})[childScopeId] = [scopeId, accessor];
-    const partial = state.patchPartials?.[childScopeId];
+    const partial = peekPatchPartial(state, childScopeId);
     if (partial) {
       writePatch(scopeId, {
         [PatchKey.Child + accessor]: partial,
@@ -693,6 +689,7 @@ export function _patch_attrs(
   accessor: Accessor,
   scopeId: number,
   tagName: string,
+  controllable?: 1,
   owned?: SerializeReasonValue,
   group?: number,
 ) {
@@ -700,7 +697,17 @@ export function _patch_attrs(
   if (state.writesPatches) {
     if (ownedWrite(owned, group)) {
       writeEmbeddedBinds(state as PatchState, data);
-      writeOwned(scopeId, PatchKey.Attrs + accessor, data ?? 0, owned, group);
+      // `controllable` marks a spread that owns the element's controllable
+      // (no static attr does), so only then does the client re-claim it.
+      // A bare set is the common entry; the array form (`Array.isArray`
+      // discriminates) carries `skip`/`controllable` without key bytes.
+      writeOwned(
+        scopeId,
+        PatchKey.Attrs + accessor,
+        controllable ? [data ?? 0, 0, 1] : (data ?? 0),
+        owned,
+        group,
+      );
     }
   } else {
     getChunk()!.needsWalk = true;
@@ -715,6 +722,7 @@ export function _patch_attrs_partial(
   accessor: Accessor,
   scopeId: number,
   tagName: string,
+  controllable?: 1,
   owned?: SerializeReasonValue,
   group?: number,
 ) {
@@ -725,7 +733,7 @@ export function _patch_attrs_partial(
       writeOwned(
         scopeId,
         PatchKey.Attrs + accessor,
-        [data ?? 0, skip],
+        controllable ? [data ?? 0, skip, 1] : [data ?? 0, skip],
         owned,
         group,
       );

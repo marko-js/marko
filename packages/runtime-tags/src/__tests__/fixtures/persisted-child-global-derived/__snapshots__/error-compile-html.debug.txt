@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-global-derived/template.marko:5:13
-      3 | <main>
-      4 |   <if=show>
-    > 5 |     <widget text=brand/>
-        |             ^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: `$global` cannot be read inside client-owned structure.
-      6 |   </if>
-      7 |   <button onClick() { show = !show }>t</button>
-      8 | </main>

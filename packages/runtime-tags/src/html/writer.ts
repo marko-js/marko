@@ -181,6 +181,12 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
+// Guarantees the walker bootstrap (which creates `self[runtimeId][renderId]`)
+// flushes with or before this chunk's scripts.
+export function requireMainRuntime() {
+  $chunk.boundary.state.needsMainRuntime = true;
+}
+
 export function _script(scopeId: number, registryId: string) {
   if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
     _resume_branch(scopeId);
@@ -339,20 +345,44 @@ export function writePatch(
   }
 }
 
+export function peekPatchPartial(state: State, scopeId: number) {
+  return state.patchTrees?.get($chunk.serializeState)?.[scopeId];
+}
+
 export function patchPartial(
   state: State,
   scopeId: number,
-  serializeState = $chunk.serializeState,
-) {
+  serializeState: SerializeState = $chunk.serializeState,
+): Record<string, unknown> {
   if (state.patchInert) return {};
-  const partials = (state.patchPartials ??= {});
+  // One flush-lived merge tree per serialize state (a ready channel's
+  // content must not apply before its module); `flushChunk` drops the map.
+  const trees = (state.patchTrees ??= new Map());
+  let partials = trees.get(serializeState);
+  if (!partials) trees.set(serializeState, (partials = {}));
   let partial = partials[scopeId];
   if (!partial) {
-    partial = partials[scopeId] = {};
-    if (serializeState.readyId) {
-      (state.patchSerializeStates ??= {})[scopeId] = serializeState;
-    }
     const pending = state.patchPending?.[scopeId];
+    if (serializeState.readyId && !pending && scopeId !== state.rootScopeId) {
+      const link = state.patchParents?.[scopeId];
+      if (link && typeof link[1] === "string") {
+        // Hang this scope's partial off its parent's boundary child entry
+        // (parent scope `link[0]`, slot `link[1]`): the live page reaches
+        // it by following that slot when the channel's module applies.
+        partial = partials[scopeId] = {};
+        writePatch(
+          link[0],
+          { [PatchKey.Child + link[1]]: partial },
+          serializeState,
+        );
+        return partial;
+      }
+      // No linkable hop (keyed loop items): the write rides the main tree
+      // embedded in its structural entry, so it cannot defer — construct
+      // data naming a not-yet-registered id then rejects at apply.
+      return patchPartial(state, scopeId, state);
+    }
+    partial = partials[scopeId] = {};
     if (pending) {
       // A child links into its parent's entry on its first write; boundary
       // construct ids ride it and a paired branch ignores them.
@@ -1147,6 +1177,9 @@ export function _await<T>(
             if (resumeMarker) {
               const branchId = _peek_scope_id();
               $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
+              // The Child entry is the settle signal: force it so a body
+              // with no writes of its own still attaches the pending UI.
+              if (writesPatches) patchPartial(boundary.state, branchId);
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
@@ -1443,7 +1476,10 @@ export class State implements SerializeState {
     slotIds?: (string | 0 | undefined)[],
   ): void;
   declare rootScopeId?: number;
-  declare patchPartials?: Record<number, Record<string, unknown>>;
+  declare patchTrees?: Map<
+    SerializeState,
+    Record<number, Record<string, unknown>>
+  >;
   declare patchBinds?: number;
   declare patchParents?: Record<
     number,
@@ -1458,7 +1494,6 @@ export class State implements SerializeState {
       slotIds?: (string | 0 | undefined)[],
     ]
   >;
-  declare patchSerializeStates?: Record<number, SerializeState>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
   declare patchDeferred?: 1;

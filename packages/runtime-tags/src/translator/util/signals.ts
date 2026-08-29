@@ -25,6 +25,7 @@ import {
   toArray,
 } from "./optional";
 import {
+  feedsTagNameLoadIn,
   getLocalFillFeeds,
   getPatchFillBindings,
   getPatchFillKey,
@@ -136,6 +137,7 @@ type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
   initId?: string,
+  retain?: boolean,
 ) => t.Expression;
 // Structured facts about a branch section's closure hop: what kind of
 // branch it is and which accessor (plus branch index) addresses it.
@@ -152,8 +154,8 @@ const [getClosureSignal, _setClosureSignal] = createSectionState<
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
   hop: ClosureHop,
-  build: closureSignalBuilder = (_closure, render, initId) =>
-    buildClosureHop(hop, render, initId),
+  build: closureSignalBuilder = (_closure, render, initId, retain) =>
+    buildClosureHop(hop, render, initId, retain),
 ) {
   _setClosureSignal(getSectionForBody(tag.get("body"))!, { hop, build });
 }
@@ -162,13 +164,16 @@ function buildClosureHop(
   hop: ClosureHop,
   render: t.Expression,
   initId?: string,
+  retain?: boolean,
 ) {
   const accessor = getScopeAccessorLiteral(hop.ref, true);
   const init = initId && t.stringLiteral(initId);
   return hop.kind === "if"
     ? init
       ? callRuntime(
-          "_init_if_closure",
+          // The `_resume` alias keeps a `tagNameLoad` input's registration
+          // out of the pure-call list (nothing else references it).
+          retain ? "_resume_init_if_closure" : "_init_if_closure",
           init,
           accessor,
           t.numericLiteral(hop.index),
@@ -181,7 +186,12 @@ function buildClosureHop(
           render,
         )
     : init
-      ? callRuntime("_init_for_closure", init, accessor, render)
+      ? callRuntime(
+          retain ? "_resume_init_for_closure" : "_init_for_closure",
+          init,
+          accessor,
+          render,
+        )
       : callRuntime("_for_closure", accessor, render);
 }
 
@@ -441,13 +451,20 @@ export function getSignal(
         const initId = constructsWithInit(section, closure)
           ? getResumeRegisterId(section, closure, "init")
           : undefined;
+        const retain = !!initId && feedsTagNameLoadIn(closure, section);
 
         if (closureSignal && !isDynamicClosure(section, closure)) {
-          return closureSignal.build(closure, render, initId);
+          return closureSignal.build(closure, render, initId, retain);
         }
 
         return callRuntime(
-          initId ? "_init_closure_get" : "_closure_get",
+          initId
+            ? // The `_resume` alias keeps a `tagNameLoad` input's registration
+              // out of the pure-call list (nothing else references it).
+              retain
+              ? "_resume_init_closure_get"
+              : "_init_closure_get"
+            : "_closure_get",
           ...(initId ? [t.stringLiteral(initId)] : []),
           // Optimized builds pass the reserved closure accessor id.
           isOptimize()
@@ -471,6 +488,15 @@ export function getSignal(
     }
   }
   return signal;
+}
+
+// A dynamic content record elides the chain's dom renderers, and with them
+// the `_closure_get` pending registration the replay script would look up.
+function inRecordDeliveredChain(section: Section) {
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur.contentRecord === true) return true;
+  }
+  return false;
 }
 
 function underTryPlaceholder(section: Section) {
@@ -1129,10 +1155,7 @@ export function writeSignals(section: Section) {
                 // A chain that leaves the branch ladder delivers through the
                 // member's own closure signal (`_fill_join_closure`) instead.
                 if (!isBranchSectionChain(signal.section, member.section)) {
-                  if (
-                    inStatefulBranch(signal.section) ||
-                    inBoundaryContent(signal.section)
-                  ) {
+                  if (inStatefulBranch(signal.section)) {
                     continue;
                   }
                   const closureSignal = getSignal(signal.section, member);
@@ -1217,7 +1240,10 @@ export function writeSignals(section: Section) {
             inBoundaryContent(signal.section)) &&
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section !== signal.referencedBindings.section &&
-          isBranchChainTo(signal.section, signal.referencedBindings.section) &&
+          // A dynamic closure dispatches through its owner-anchored
+          // subscriber set, so its chain shape does not matter.
+          (isBranchChainTo(signal.section, signal.referencedBindings.section) ||
+            isDynamicClosure(signal.section, signal.referencedBindings)) &&
           hasFillDeliveredRead(signal.referencedBindings, signal.section)
         ) {
           // Inside client-owned structure a lone closure over a server
@@ -1533,12 +1559,14 @@ export function sectionHasGlobalEffect(section: Section) {
 function constructsWithInit(section: Section, closure: Binding) {
   return (
     sectionConstructs(section) &&
-    (!!closure.sources?.state || includes(getLocalFillFeeds(section), closure))
+    (!!closure.sources?.state ||
+      includes(getLocalFillFeeds(section), closure) ||
+      feedsTagNameLoadIn(closure, section))
   );
 }
 
 // A branch body that ships a shell, so a patch may construct it.
-function sectionConstructs(section: Section) {
+export function sectionConstructs(section: Section) {
   return (
     isPersisted() &&
     section.isBranch &&
@@ -1591,23 +1619,20 @@ function isSerializedSpreadEffect(signal: Signal) {
     !!refs &&
     some(refs, (binding) => {
       for (const read of binding.reads) {
-        if (read.referencedBindings === refs && read.serializedSpread)
-          return true;
+        if (read.referencedBindings === refs && read.attrSetSpread) return true;
       }
       return false;
     })
   );
 }
 
-// An effect read the wire cannot keep current (unfillable params, global-
-// derived bindings) blocks constructs; direct `$global` reads re-queue.
+// An effect read the wire cannot keep current blocks constructs; fill and
+// wire-write deliveries (param- and `$global`-derived alike) stay current,
+// and direct `$global` reads re-queue against the live bag.
 export function sectionHasServerEffect(section: Section) {
   for (const signal of getSignals(section).values()) {
     if (signal.hasHTMLEffect && !isSerializedSpreadEffect(signal)) {
-      if (
-        getSerializeSourcesForRef(signal.referencedBindings)?.global ||
-        hasUnfillablePatchReads(signal.referencedBindings)
-      ) {
+      if (hasUnfillablePatchReads(signal.referencedBindings)) {
         return true;
       }
     }
@@ -1685,10 +1710,12 @@ export function writeHTMLResumeStatements(
         }
 
         if (underTryPlaceholder(section)) {
-          // A scriptless page never registers the pending replay (constructs
-          // get content via patch entries), so the envelope must not need it.
+          // A scriptless page or a record-delivered chain never registers
+          // the pending replay, so the envelope must not reference it.
           const reason =
-            isPersisted() && !getProgram().node.extra.isInteractive
+            isPersisted() &&
+            (!getProgram().node.extra.isInteractive ||
+              inRecordDeliveredChain(section))
               ? undefined
               : getSerializeReason(section);
           if (reason) {

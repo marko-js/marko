@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-global/template.marko:4:8
-      2 | <main>
-      3 |   <if=(count > 1)>
-    > 4 |     <p>${$global.brand}</p>
-        |        ^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: `$global` cannot be read inside client-owned structure.
-      5 |   </if>
-      6 |   <button onClick() { count++ }>+</button>
-      7 | </main>

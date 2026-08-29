@@ -29,7 +29,7 @@ var template_default = _template_persisted("a", (input) => {
 					a: _existing_scope($childScope)
 				}));
 				_resume_branch($scope2_id);
-			});
+			}, 1);
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

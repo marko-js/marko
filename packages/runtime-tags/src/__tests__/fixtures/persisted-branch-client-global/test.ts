@@ -1,8 +1,18 @@
 import type { TestConfig } from "../../main.test";
 
-// A `$global` hole inside client-owned structure has no delivery channel:
-// its capture would ride the branch body patch renders skip.
+const inc = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A `$global` hole inside client-owned structure: the read hoists into a
+// root derivation delivered as a fill, so the client-revealed branch
+// renders the latest patched brand.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { $global: { brand: "acme" } },
+    inc,
+    { $global: { brand: "bmce" } },
+    inc,
+  ],
 };

@@ -1,15 +1,15 @@
 // tags/badge/index.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-_shells({ "__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko !__tests__/tags/badge/index.marko_0;D ;<span> </span>" });
+_shells({ "__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko !__tests__/tags/badge/index.marko_0_$global_brand#1;D ;<span> </span>" });
 var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</span>`);
-	_script($scope0_id, "__tests__/tags/badge/index.marko_0");
-	_patch_effect($scope0_id, "__tests__/tags/badge/index.marko_0", "! brand", 1);
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
+	_script($scope0_id, "__tests__/tags/badge/index.marko_0_$global_brand#1");
+	_patch_effect($scope0_id, "__tests__/tags/badge/index.marko_0_$global_brand#1", "$global_brand");
+	$scope0_reason ? _scope($scope0_id, { $global_brand: $global$1?.brand }, "__tests__/tags/badge/index.marko", 0, { $global_brand: ["$global.brand"] }) : _patch_write($scope0_id, "$global_brand", $global$1?.brand);
 }, 0, 1);
 
 // template.marko

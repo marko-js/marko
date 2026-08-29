@@ -15,9 +15,10 @@ const $setup = () => {};
 const $card_content__input_prefix = /*@__PURE__*/ _closure_get("input_prefix", ($scope) => _text($scope["#text/1"], $scope._._.input_prefix), ($scope) => $scope._._);
 const $card_content__setup = ($scope) => {
 	$card_content__input_prefix($scope);
+	$card_content__$global_brand($scope);
 	$card_content__item($scope);
-	_text($scope["#text/0"], $scope.$global.brand);
 };
+const $card_content__$global_brand = /*@__PURE__*/ _closure_get("$global_brand", ($scope) => _text($scope["#text/0"], $scope._._.$global_brand), ($scope) => $scope._._);
 const $card_content__item = /*@__PURE__*/ _closure_get("item", ($scope) => _text($scope["#text/2"], $scope._.item));
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<i><!>:<!>:<!></i>", "D%c%c%", $card_content__setup);
 const $for_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $card_content($scope));

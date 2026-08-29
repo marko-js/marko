@@ -36,7 +36,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", value)}</p>`);
 			_scope($scope2_id, {});
-		}, void 0, "a1", 1);
+		}, 1, "a1");
 		_subscribe($showSecond__closures, _subscribe(_source_if($scope0_reason, 1) && $input_first__closures, _subscribe(_source_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });

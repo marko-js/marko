@@ -13,7 +13,7 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "a", value, void 0, $scope0_owned, 1)}</em>`);
 		_scope($scope1_id, {});
-	}, void 0, "a1", 1);
+	}, 1, "a1", 1);
 	_html(`<button>Count ${_text_resume($scope0_id, "d", count, 2)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, { i: count });

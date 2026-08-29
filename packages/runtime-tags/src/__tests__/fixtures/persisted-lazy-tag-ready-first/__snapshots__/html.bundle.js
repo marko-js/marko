@@ -12,7 +12,8 @@ var child_default = _template_persisted("a", (input) => {
 }, 0, 0);
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_a");
+const $Child_withLoadAssets = withLoadAssets(child_default, "_a", void 0, 1);
+_shells({ b: "b b1;D%/&;<main><!></main>" });
 var template_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
