@@ -3,7 +3,7 @@
       2 | <main>
       3 |   <if=show>
     > 4 |     <outer/>
-        |     ^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure reads `$global` (it would go stale).
+        |     ^^^^^^^^ Persisted templates cannot patch this faithfully yet: a child inside client-owned structure reads a `$global`-derived value (it would go stale).
       5 |   </if>
       6 |   <button onClick() { show = !show }>t</button>
       7 | </main>

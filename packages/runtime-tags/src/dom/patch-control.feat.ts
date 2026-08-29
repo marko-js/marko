@@ -7,7 +7,7 @@ import {
   type Scope,
 } from "../common/types";
 import { queueRender } from "./queue";
-import { failPatch, patchers } from "./resume";
+import { patchers } from "./resume";
 
 // Kind-keyed control applies, filled by the per-kind patch feats a page's
 // controls link: the wire keys `kind + accessor` (kind is a
@@ -27,11 +27,10 @@ export const patchControls: {
 patchers[PatchKey.Control] = (scope, key, value) => {
   const type = +key[PatchKey.Control.length] as ControlledType;
   const accessor = key.slice(PatchKey.Control.length + 1) as Accessor;
-  const apply = patchControls[type] || failPatch();
   queueRender(
     scope,
     (scope) =>
-      apply(
+      patchControls[type]!(
         scope,
         accessor,
         value,

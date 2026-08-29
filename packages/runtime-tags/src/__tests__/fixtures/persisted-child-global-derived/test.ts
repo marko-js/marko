@@ -1,7 +1,18 @@
 import type { TestConfig } from "../../main.test";
 
-// A `$global`-derived feed never re-ships, so it fails closed.
+const toggle = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A child inside client-owned structure fed a `$global`-derived value: the
+// derivation delivers as a fill, so the re-shown child renders the latest
+// patch's brand.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { $global: { brand: "acme" } },
+    { $global: { brand: "bmce" } },
+    toggle,
+    toggle,
+  ],
 };

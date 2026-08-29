@@ -20,9 +20,7 @@ const binds = () => {
 };
 patchers[PatchKey.BindSource] = (scope, key, id) => {
   binds()[key.slice(PatchKey.BindSource.length)] = (
-    (getRegisteredWithScope(id as string) || failPatch()) as (
-      scope: Scope,
-    ) => unknown
+    getRegisteredWithScope(id as string) as (scope: Scope) => unknown
   )(scope);
 };
 // The frame's bind references: each wrapper resolves lazily (its bind

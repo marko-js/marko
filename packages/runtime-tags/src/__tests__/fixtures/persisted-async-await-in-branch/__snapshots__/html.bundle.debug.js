@@ -20,7 +20,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				const $scope3_id = _scope_id();
 				_html(`<em>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_owned, 3)}</em>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "5:6");
-			}, void 0, "__tests__/template.marko_1_#text#0/await");
+			}, 1, "__tests__/template.marko_1_#text#0/await");
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 			return 0;
 		} else {

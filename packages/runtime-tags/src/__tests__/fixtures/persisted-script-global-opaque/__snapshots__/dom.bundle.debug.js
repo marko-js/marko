@@ -8,8 +8,5 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		el.dataset.log = (el.dataset.log || "") + "[" + g.brand + "]";
 	}
 });
-function $setup($scope) {
-	_text($scope["#text/0"], $scope.$global.other);
-	$setup__script($scope);
-}
+const $setup = $setup__script;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);

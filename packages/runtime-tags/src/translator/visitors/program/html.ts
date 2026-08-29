@@ -252,6 +252,11 @@ export default {
               marker +=
                 (marker && " ") + getResumeRegisterId(section, closure, "init");
             });
+            // Lazy sites wire their load (and channel) as construct inits.
+            for (const site of section.loadSites || []) {
+              marker +=
+                (marker && " ") + getResumeRegisterId(section, site, "init");
+            }
             // An effect the construct's own renders queue (an init, seed,
             // or item write cascades into it) is not replayed.
             const effectIds = getSectionEffectRegisterIds(

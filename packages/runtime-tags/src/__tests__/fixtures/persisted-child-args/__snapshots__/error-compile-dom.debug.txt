@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-args/template.marko:4:5
-      2 | <main>
-      3 |   <if=show>
-    > 4 |     <badge("x")/>
-        |     ^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: arguments for a child inside client-owned structure are not supported yet.
-      5 |   </if>
-      6 |   <button onClick() { show = !show }>t</button>
-      7 | </main>

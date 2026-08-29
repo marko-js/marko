@@ -9,9 +9,9 @@ import {
   type Template,
 } from "../common/types";
 import { addAwaitCounter, renderCatch } from "./control-flow";
-import { queueAsyncRender, runId } from "./queue";
+import { queueAsyncRender, queueEffect, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
-import { readyFailed, withLazy } from "./resume";
+import { ready, readyFailed, withLazy } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -53,7 +53,13 @@ export const _load_template = /*@__PURE__*/ withLazy(
               ),
             );
           },
-          loadFailed(branch as BranchScope, awaitCounter),
+          // The template's ready-channel id (the client half of the
+          // translator's `getReadyId`; the prefix pairs with its optimize flag).
+          loadFailed(
+            branch as BranchScope,
+            awaitCounter,
+            (MARKO_DEBUG ? "ready:" : "_") + id,
+          ),
         );
       },
       _load_signal(() =>
@@ -69,6 +75,9 @@ export const _load_setup = /*@__PURE__*/ withLazy(
     nodeAccessor: EncodedAccessor,
     childScopeAccessor: EncodedAccessor,
     load: () => Promise<LoadModule>,
+    // Only a persisted `linkAssets` build has a channel (and deferred frame
+    // data) for the load to drive; other builds omit it.
+    readyId?: string,
   ) => {
     if (!MARKO_DEBUG) {
       nodeAccessor = decodeAccessor(nodeAccessor as number);
@@ -81,6 +90,8 @@ export const _load_setup = /*@__PURE__*/ withLazy(
     return (owner: Scope) => {
       const child = owner[childScopeAccessor] as BranchScope;
       if (renderer) {
+        // A later instance of an already-loaded module: the first load
+        // already counted down and drove the channel.
         insertLoaded(renderer, child, owner[nodeAccessor] as ChildNode);
       } else {
         const awaitCounter = addAwaitCounter(owner);
@@ -94,10 +105,11 @@ export const _load_setup = /*@__PURE__*/ withLazy(
                 child,
                 owner[nodeAccessor] as ChildNode,
                 awaitCounter,
+                readyId,
               ),
             );
           },
-          loadFailed(child, awaitCounter),
+          loadFailed(child, awaitCounter, readyId),
         );
       }
     };
@@ -109,6 +121,7 @@ function insertLoaded(
   branch: BranchScope,
   marker: ChildNode,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
+  readyId?: string,
 ) {
   const parent = marker.parentNode as Element,
     values = branch[AccessorProp.Load] as LoadValues,
@@ -116,13 +129,16 @@ function insertLoaded(
       insertBranchBefore(branch, parent, marker);
       marker.remove();
       awaitCounter?.c();
+      // A constructed site drives its channel once the content is live, so
+      // deferred frame data (re-shipping this render's state) drains after.
+      if (readyId) queueEffect(branch, () => ready(readyId));
     };
   let remaining: number;
   syncGen(branch);
   renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
   branch[AccessorProp.Load] = 0;
   if ((remaining = values?.size as number)) {
-    const fail = loadFailed(branch, awaitCounter);
+    const fail = loadFailed(branch, awaitCounter, readyId);
     for (const [promise, entry] of values!) {
       promise.then(
         (signal) => {
@@ -152,6 +168,7 @@ function insertLoaded(
 function loadFailed(
   scope: BranchScope,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
+  readyId?: string,
 ) {
   return (error: unknown) => {
     if (awaitCounter) {
@@ -160,7 +177,7 @@ function loadFailed(
       if (awaitCounter.m) awaitCounter.i = 0;
       else awaitCounter.c();
     }
-    readyFailed();
+    readyFailed(readyId);
     queueAsyncRender(scope, renderCatch, error);
   };
 }

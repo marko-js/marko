@@ -1,4 +1,4 @@
-// size: 28306 (min) 10486 (brotli)
+// size: 28323 (min) 10466 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -97,11 +97,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
   registeredValues = {},
   patchers = {},
   onPatchRecord,
-  failPatch = () => {
-    throw 0;
-  },
   patchScope = (partial, live) => {
-    for (let key in partial) (patchers[key[0]] || failPatch())(live, key, partial[key]);
+    for (let key in partial) patchers[key[0]](live, key, partial[key]);
   },
   curRenders,
   embedRenders,
@@ -979,7 +976,7 @@ function walk(startNode, walkCodes, branch) {
 }
 function beginPatch(renderId) {
   let render = (patchRender = curRenders[renderId]);
-  return ((patching = 1), patchId++, render);
+  return (render.w(), (patching = 1), patchId++, render);
 }
 function abortPatch() {
   patchRender = patching = 0;
@@ -2268,14 +2265,14 @@ let empty = [],
                     insertLoaded(renderer, branch, branch.S, awaitCounter),
                   ));
               },
-              loadFailed(branch, awaitCounter),
+              loadFailed(branch, awaitCounter, "_" + id),
             ));
         },
         _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
       );
     return lazyTemplate;
   }),
-  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
+  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load, readyId) => {
     ((nodeAccessor = decodeAccessor(nodeAccessor)),
       (childScopeAccessor = decodeAccessor(childScopeAccessor)));
     let pending, renderer;
@@ -2289,10 +2286,10 @@ let empty = [],
             (mod) => {
               ((renderer = _content("", ...mod._)()),
                 queueAsyncRender(child, (child) =>
-                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
+                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter, readyId),
                 ));
             },
-            loadFailed(child, awaitCounter),
+            loadFailed(child, awaitCounter, readyId),
           ));
       }
     };
@@ -2386,11 +2383,14 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-function insertLoaded(renderer, branch, marker, awaitCounter) {
+function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
   let parent = marker.parentNode,
     values = branch.X,
     insert = () => {
-      (insertBranchBefore(branch, parent, marker), marker.remove(), awaitCounter?.c());
+      (insertBranchBefore(branch, parent, marker),
+        marker.remove(),
+        awaitCounter?.c(),
+        readyId && queueEffect(branch, () => ready(readyId)));
     },
     remaining;
   if (
@@ -2399,7 +2399,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
     (branch.X = 0),
     (remaining = values?.size))
   ) {
-    let fail = loadFailed(branch, awaitCounter);
+    let fail = loadFailed(branch, awaitCounter, readyId);
     for (let [promise, entry] of values)
       promise.then(
         (signal) => {
@@ -2416,7 +2416,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
       );
   } else (setupBranch(renderer, branch), insert());
 }
-function loadFailed(scope, awaitCounter) {
+function loadFailed(scope, awaitCounter, readyId) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
       queueAsyncRender(scope, renderCatch, error));

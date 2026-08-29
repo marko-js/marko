@@ -4,7 +4,8 @@
     brand: "Marko"
   },
   ta: "Marko",
-  bb: 0
+  bb: 0,
+  wf: "Marko"
 }
 
 // PATCH
@@ -14,8 +15,9 @@
   },
   ta: "Fresh",
   bb: [{
-    ga1: "! brand"
-  }, "a0"]
+    ea1: "f 1"
+  }, "a0"],
+  wf: "Fresh"
 }]
 
 // PATCH
@@ -25,6 +27,7 @@
   },
   ta: "Patch",
   bb: [{
-    ga1: "! brand"
-  }, "a0"]
+    ea1: "f 1"
+  }, "a0"],
+  wf: "Patch"
 }]

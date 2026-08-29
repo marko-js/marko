@@ -1,8 +1,22 @@
 import type { TestConfig } from "../../main.test";
 
-// A handler capturing a `$global`-derived value inside client-owned
-// structure would go stale: frames refresh the bag, never derived slots.
+const show = (document: Document) => {
+  document.querySelector<HTMLButtonElement>(".step")!.click();
+};
+const read = (document: Document) => {
+  document.querySelector<HTMLButtonElement>(".read")!.click();
+};
+
+// A handler inside client-owned structure reading a `$global`-derived
+// value: the derivation refreshes over the wire, so the handler reads the
+// latest patch's title.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { $global: { title: "first" } },
+    show,
+    read,
+    { $global: { title: "second" } },
+    read,
+  ],
 };

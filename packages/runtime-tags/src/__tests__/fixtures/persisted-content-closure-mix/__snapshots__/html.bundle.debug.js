@@ -24,6 +24,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_items = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = new Set();
+	const $global_brand__closures = new Set();
 	const $global$1 = $global();
 	_html("<main>");
 	_for_of(input.items, (item) => {
@@ -36,7 +37,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope2_reason = _persisted_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_patch_text($scope2_id, "#text/0", $global$1.brand)}:${_patch_text($scope2_id, "#text/1", input.prefix, 2, $scope0_owned, 2)}:${_patch_text($scope2_id, "#text/2", item, 2, $scope0_owned, 1)}</i>`);
-			_subscribe($scope0_reason && $for_content__item__closures, _subscribe(_source_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6")));
+			_subscribe($scope0_reason && $for_content__item__closures, _subscribe($scope0_reason && $global_brand__closures, _subscribe(_source_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"))));
 			_resume_branch($scope2_id);
 		}, $scope1_id) });
 		_scope($scope1_id, {
@@ -48,6 +49,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_items)}`);
 	$scope0_reason && _scope($scope0_id, {
 		input_prefix: input.prefix,
-		"ClosureScopes:input_prefix": $input_prefix__closures
-	}, "__tests__/template.marko", 0, { input_prefix: ["input.prefix"] });
+		$global_brand: $global$1?.brand,
+		"ClosureScopes:input_prefix": $input_prefix__closures,
+		"ClosureScopes:$global_brand": $global_brand__closures
+	}, "__tests__/template.marko", 0, {
+		input_prefix: ["input.prefix"],
+		$global_brand: ["$global.brand"]
+	});
 }, 1, 1);

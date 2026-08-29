@@ -172,11 +172,14 @@ function isShellExpressible(section: Section) {
       op.kind !== StructureKind.Text &&
       // A known child composes when its root is expressible (nested
       // branches/boundaries pair via their own entries) and has no tag var.
+      // A renderer-less child is a lazy site: only its marker expresses
+      // (the loaded module renders the markup client-side).
       !(
         op.kind === StructureKind.Child &&
         !op.hasVar &&
-        op.renderer?.kind === StructureKind.ExportRef &&
-        isShellExpressible(op.renderer.program.section!)
+        (!op.renderer ||
+          (op.renderer.kind === StructureKind.ExportRef &&
+            isShellExpressible(op.renderer.program.section!)))
       )
     ) {
       return false;

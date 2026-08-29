@@ -11,7 +11,6 @@ import {
   _patch_records,
   constructing,
   constructPatchers,
-  failPatch,
   getRegisteredWithScope,
   patchConstruct,
   patchers,
@@ -41,15 +40,13 @@ constructPatchers[PatchKey.Init] = (scope, _key, ids) =>
 
 type SetupFn = (branch: Scope) => void;
 type SetupIds = [inits: SetupFn[], effects?: SetupFn[]];
-// A missing registration means required client code was tree-shaken:
-// constructing would silently misrender. Closure renders ride as `._`.
+// Closure renders ride as `._`.
 export const resolveSetupIds = (ids: string) =>
   ids.split("!").map((part) =>
     part
       ? part.split(" ").map((id) => {
-          const fn = getRegisteredWithScope(id);
-          return ((fn && ((fn as { _?: unknown })._ || fn)) ||
-            failPatch()) as SetupFn;
+          const fn = getRegisteredWithScope(id) as { _?: unknown };
+          return (fn._ || fn) as SetupFn;
         })
       : [],
   ) as SetupIds;

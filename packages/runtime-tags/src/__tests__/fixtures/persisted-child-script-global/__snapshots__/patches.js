@@ -5,7 +5,8 @@
   },
   ca: {
     ta: "Marko",
-    gb0: "! brand"
+    eb0: "b",
+    wb: "Marko"
   }
 }
 
@@ -16,6 +17,7 @@
   },
   ca: {
     ta: "Runtime",
-    gb0: "! brand"
+    eb0: "b",
+    wb: "Runtime"
   }
 }

@@ -47,8 +47,6 @@ const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}&l`)($walks$3, $walks$2, "D l");
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 function $setup($scope) {
-	_attr($scope["#p/1"], "title", $scope.$global.locale);
-	_text($scope["#text/2"], $scope.$global.brand);
 	$setup$3($scope["#childScope/3"]);
 	$setup$2($scope["#childScope/4"]);
 	$input_text($scope["#childScope/4"], "Sale");

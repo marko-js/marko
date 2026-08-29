@@ -43,6 +43,11 @@ export interface RenderData {
   m?(effects: unknown[]): unknown[];
   // Blocking resumes keyed by ready id.
   b?: Record<string, ResumeData>;
+  // Load-error sink: a lazy loader script's `onerror` reports its channel
+  // id here once the runtime has installed it (`init`)...
+  e?(readyId?: string): void;
+  // ...and parks it here before then (`init` drains this queue).
+  f?: string[] | void;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -67,35 +72,32 @@ export let onPatchRecord: ((entry: string) => void) | undefined;
 export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
   (onPatchRecord = handler);
 // Rejects the applying patch: unwinds to `applyPatch`'s catch, and the
-// caller falls back to a full document navigation.
+// caller falls back to a full document navigation. Only conditions
+// reachable in a matched build guard explicitly (lazy load failures,
+// withheld handlers, server-decided sentinels); skew rejects upstream via
+// the build id, so anything else crashes naturally into the same catch.
 export const failPatch = () => {
   throw 0;
 };
 // Construct application dispatch: everything in a setup envelope is
-// REQUIRED, so misses fail (paired refresh via `patchers` stays soft —
-// a shaken fill is a correct no-op).
+// REQUIRED (paired refresh via `patchers` stays soft — a shaken fill is
+// a correct no-op).
 export const constructPatchers: typeof patchers = {};
 export const patchConstruct = (setup: Scope, live: Scope) => {
   for (const key in setup) {
-    (
-      constructPatchers[
-        MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
-      ] || failPatch()
-    )(live, key, setup[key as keyof Scope]);
+    constructPatchers[
+      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+    ](live, key, setup[key as keyof Scope]);
   }
 };
 // Applies a patch partial to its live counterpart; structural patchers
-// recurse back through here, so no scope is ever addressed by id. An
-// entry kind this bundle has no patcher for rejects: skew, never a
-// silently unapplied frame.
+// recurse back through here, so no scope is ever addressed by id.
 export const patchScope = (partial: Scope, live: Scope) => {
   for (const key in partial) {
-    (
-      patchers[
-        // Debug accessor prefixes are multi-character, ending ":".
-        MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
-      ] || failPatch()
-    )(live, key, partial[key as keyof Scope]);
+    patchers[
+      // Debug accessor prefixes are multi-character, ending ":".
+      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+    ](live, key, partial[key as keyof Scope]);
   }
 };
 let curRenders: Renders;
@@ -105,9 +107,8 @@ let embedRenders:
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
-let failedIds: undefined | Set<string>;
 let patchReady: undefined | ((readyId: string) => void);
-let patchReadyFailed: undefined | (() => void);
+let patchReadyFailed: undefined | ((readyId: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -120,6 +121,9 @@ export let patchId = 0;
 
 export function beginPatch(renderId: string) {
   const render = (patchRender = curRenders[renderId]);
+  // A page with no effects never wrote a walk call; pairing into resumed
+  // branches needs the walked links, so finish the resume before patching.
+  render.w();
   patching = 1;
   patchId++;
   return render;
@@ -150,26 +154,25 @@ export function ready(readyId: string) {
 
 export function installReady(
   onReady: (readyId: string) => void,
-  onFail: () => void,
+  onFail: (readyId: string) => void,
 ) {
   patchReady = onReady;
   patchReadyFailed = onFail;
 }
 
-// A lazy module that will never arrive can never drain a deferred patch;
-// pending patches settle as rejected so their callers navigate, and the
-// debug build reports the channel instead of staying silent (repeat
-// reports fold).
+// A channel module that will never arrive can never drain the data waiting
+// on it: the persisted feature (when installed) settles pending patches and
+// rejects later frames naming the channel. Id-less runtime-managed load
+// failures never gate a channel (each channel's entry reports itself).
 export function readyFailed(readyId?: string) {
   if (MARKO_DEBUG) {
-    if (readyId && !failedIds?.has(readyId) && !readyIds?.has(readyId)) {
-      (failedIds ||= new Set()).add(readyId);
+    if (readyId && !readyIds?.has(readyId)) {
       console.error(
         `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
       );
     }
   }
-  patchReadyFailed?.();
+  if (readyId) patchReadyFailed?.(readyId);
 }
 
 export function isReady(readyId: string) {
@@ -490,6 +493,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
         }
 
+        // Loader `onerror` sink (`html/assets.ts`); installed only when the
+        // patch-ready feature latches, which shakes it from other bundles.
+        // A loader that failed before this module evaluated parked its id
+        // on the queue; from here on failures report directly.
+        if (patchReadyFailed) {
+          render.e = readyFailed;
+          render.f = render.f?.forEach(readyFailed);
+        }
         render.m = (effects: unknown[]) => {
           processResumes(render.r, effects);
 

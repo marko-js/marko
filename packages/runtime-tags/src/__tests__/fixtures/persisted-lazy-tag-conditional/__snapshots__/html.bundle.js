@@ -15,8 +15,11 @@ var child_default = _template_persisted("a", (input) => {
 const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{
 	type: "on-click",
 	selector: "body"
-}]);
-_shells({ b: "b; ;<main></main>" });
+}], 1);
+_shells({
+	b: "b; ;<main></main>",
+	b0: "b0 b2 b3;b%/&;<!><!><!>"
+});
 var template_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -34,7 +37,7 @@ var template_default = _template_persisted("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, { e: input.label });
 }, 1, () => [$Child_withLoadAssets]);

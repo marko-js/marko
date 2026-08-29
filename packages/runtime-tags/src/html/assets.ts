@@ -7,6 +7,7 @@ import {
   _html,
   $global,
   getState,
+  requireMainRuntime,
   writeScript,
   writeWaitReady,
 } from "./writer";
@@ -43,6 +44,9 @@ type Trigger = LoadTrigger;
 interface Asset {
   id: string;
   triggers?: Trigger[];
+  /** A persisted page's loader reports load errors to the ready-failed
+   * sink (`render.e`) in production, so pending patches settle. */
+  reportErrors?: 1;
 }
 
 declare module "../common/types" {
@@ -66,13 +70,14 @@ export function withLoadAssets(
   renderer: ServerRenderer,
   assetId: string,
   triggers?: Trigger[],
+  reportErrors?: 1,
 ): ServerRenderer {
   return Object.assign((input: unknown) => {
     if (getState().writesPatches) {
       return writeWaitReady(assetId, renderer, input);
     }
     const g = $global();
-    addAsset(g, assetId, triggers);
+    addAsset(g, assetId, triggers, reportErrors);
     _html(flush(g, ""));
     return writeWaitReady(assetId, renderer, input);
   }, renderer);
@@ -132,10 +137,12 @@ function flush(g: $Global, html: string) {
   }
 
   for (; di < length; di++) {
-    const { id, triggers } = assets[di];
+    const { id, triggers, reportErrors } = assets[di];
     const deferHTML = assetFlush(g, "defer", id);
     if (triggers) {
-      if (deferHTML) writeTriggerScript(id, deferHTML, triggers);
+      if (deferHTML) {
+        writeTriggerScript(g, id, deferHTML, triggers, reportErrors);
+      }
     } else {
       result += deferHTML;
     }
@@ -146,13 +153,18 @@ function flush(g: $Global, html: string) {
   return result + html;
 }
 
-function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
+function addAsset(
+  g: $Global,
+  id: string,
+  triggers?: Trigger[],
+  reportErrors?: 1,
+) {
   const assets = g[kAssets];
   if (!assets) {
-    g[kAssets] = [{ id, triggers }];
+    g[kAssets] = [{ id, triggers, reportErrors }];
     g[kBlockIndex] = g[kDeferIndex] = 0;
   } else if (!assets.find((a) => a.id === id)) {
-    assets.push({ id, triggers });
+    assets.push({ id, triggers, reportErrors });
   } else if (MARKO_DEBUG) {
     // Invariant: an asset streams one trigger script, so it must be requested
     // with a single consistent `load` trigger; only the first one applies.
@@ -165,17 +177,39 @@ function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
   }
 }
 
-function writeTriggerScript(id: string, html: string, triggers: Trigger[]) {
+function writeTriggerScript(
+  g: $Global,
+  id: string,
+  html: string,
+  triggers: Trigger[],
+  reportErrors?: 1,
+) {
   const htmlStr = _escape_script(JSON.stringify(html));
-  // A loader script that fails at the network level never evaluates, so the
-  // debug build reports from the script's own error event; matches the
-  // load-entry rejection arm's diagnostic.
-  const insert = MARKO_DEBUG
-    ? `(d=new Range().createContextualFragment(h),d.querySelectorAll("script").forEach(s=>s.onerror=()=>console.error(${_escape_script(
+  // The error sink hangs off the walker-created render object; make sure the
+  // bootstrap is emitted even if no resume content needed it yet.
+  if (reportErrors) requireMainRuntime();
+  // A loader that fails at the network level never evaluates, so its own
+  // error event reports to the ready-failed sink (`render.e`).
+  const onError = [
+    MARKO_DEBUG &&
+      `console.error(${_escape_script(
         JSON.stringify(
           `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
         ),
-      )})),p.after(d))`
+      )})`,
+    reportErrors &&
+      // The runtime installs the sink (`render.e`) only once its module
+      // evaluates; a failure before then parks its id on `render.f`, which
+      // `init` (dom/resume.ts) drains. Both ids are identifier-safe
+      // (`runtimePrefix` dot-joins them).
+      `((r,f)=>r.e?r.e(f):(r.f||=[]).push(f))(self.${g.runtimeId}.${
+        g.renderId
+      },${_escape_script(JSON.stringify(id))})`,
+  ].filter(Boolean);
+  const insert = onError.length
+    ? `(d=new Range().createContextualFragment(h),d.querySelectorAll("script").forEach(s=>s.onerror=()=>${
+        onError.length > 1 ? `(${onError.join(",")})` : onError[0]
+      }),p.after(d))`
     : `p.after(new Range().createContextualFragment(d=h))`;
   const exprs = triggers.map((trigger) => {
     const options = trigger.options && toObjectExpression(trigger.options);
