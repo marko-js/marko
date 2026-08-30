@@ -9,6 +9,10 @@ const { resolveSync } = require("resolve-sync");
 
 exports.createBrowser = createBrowser;
 
+// Every browser resolves the same way against the same files, so the cache is
+// shared by the process instead of being rebuilt per fixture.
+const resolveCache = new Map();
+
 /**
  * Creates a jsdom instance with a `require` that loads CommonJS modules into
  * the jsdom vm context. The loader owns its own registry and never touches
@@ -147,7 +151,6 @@ class ContextLoader {
     this.entryDir = dir;
     this.hooks = hooks || {};
     this.registry = new Map();
-    this.resolveCache = new Map();
     this.extensions = [
       ...new Set([...Object.keys(this.hooks), ".js", ".cjs", ".json"]),
     ];
@@ -190,7 +193,7 @@ class ContextLoader {
 
     const from = parentFilename || path.join(this.entryDir, "__entry__.js");
     const cacheKey = `${from}\0${request}`;
-    let resolved = this.resolveCache.get(cacheKey);
+    let resolved = resolveCache.get(cacheKey);
     if (!resolved) {
       resolved = resolveSync(request, {
         from,
@@ -207,7 +210,7 @@ class ContextLoader {
         );
       }
       resolved = fs.realpathSync(resolved);
-      this.resolveCache.set(cacheKey, resolved);
+      resolveCache.set(cacheKey, resolved);
     }
 
     return resolved;

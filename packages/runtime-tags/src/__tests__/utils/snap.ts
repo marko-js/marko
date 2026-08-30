@@ -118,7 +118,7 @@ if (UPDATE) {
 
 export function allTestsPassed(suite: Mocha.Suite): boolean {
   return (
-    suite.tests.every((test) => test.pending || test.state === "passed") &&
+    suite.tests.every((test) => test.state === "passed") &&
     suite.suites.every(allTestsPassed)
   );
 }

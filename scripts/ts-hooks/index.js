@@ -4,6 +4,10 @@
 globalThis.MARKO_DEBUG = true;
 require("complain").silence = true;
 
+// Every fixture compiles unique sources into its own vm context, so V8's
+// compilation cache never hits but pins each context (jsdom windows, bundles).
+require("v8").setFlagsFromString("--no-compilation-cache");
+
 const { registerHooks } = require("module");
 const { fileURLToPath, pathToFileURL } = require("url");
 const { resolveSync } = require("resolve-sync");
