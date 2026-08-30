@@ -382,11 +382,13 @@ function assertHasValueAttribute(tag: t.NodePath<t.MarkoTag>) {
     !t.isMarkoAttribute(valueAttr) ||
     !(valueAttr.default || valueAttr.name === "value")
   ) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) requires a [\`value=\` attribute](https://markojs.com/docs/reference/language#shorthand-value).`,
-      );
+    // `<show if=condition>` is the common miss, so name the rename.
+    const wrongName = t.isMarkoAttribute(valueAttr) && valueAttr.name;
+    throw (
+      wrongName ? tag.get("attributes")[0] : tag.get("name")
+    ).buildCodeFrameError(
+      `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) requires the [\`value=\` attribute](https://markojs.com/docs/reference/language#shorthand-value).${wrongName ? ` Use \`<${getTagName(tag)}=condition>\` instead of \`<${getTagName(tag)} ${wrongName}=condition>\`.` : ""}`,
+    );
   }
 
   if (node.attributes.length > 1) {
