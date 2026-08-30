@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-show-wrong-attr/template.marko:2:7
+      1 | <let/open=false>
+    > 2 | <show if=open>Hello</show>
+        |       ^^^^^^^ The [`<show>` tag](https://markojs.com/docs/reference/core-tag#show) requires the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value). Use `<show=condition>` instead of `<show if=condition>`.
+      3 |

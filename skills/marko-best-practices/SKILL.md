@@ -24,6 +24,7 @@ Documentation and this skill target **Marko 6**. Do not use Marko 5 syntax.
 - [ ] Uses Marko 6 syntax only (no scriptlets, old event syntax, or Marko 5 blocks).
 - [ ] `<script>` is never used when state (`<let>` or `<const>`) could accomplish the same behavior.
 - [ ] Event handlers use function form: `onClick() { ... }` or a reference, not string names.
+- [ ] `<show=cond>` for toggled content that should keep its state; `<if>` destroys and rebuilds.
 - [ ] Component stays small and readable; consider splitting large templates.
 - [ ] No unnecessary client-side JS; prefer built-in browser APIs and HTML/CSS features over scripts.
 - [ ] Props are declared with an exported `Input` interface, and templates are type checked with `mtc` (`@marko/type-check`) — `tsc` skips `.marko` files and reports nothing.
