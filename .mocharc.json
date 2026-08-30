@@ -4,9 +4,7 @@
   "node-option": [
     "no-warnings",
     "enable-source-maps",
-    "experimental-vm-modules",
-    "max-old-space-size=8192",
-    "max-semi-space-size=128"
+    "experimental-vm-modules"
   ],
   "require": ["~ts"]
 }
