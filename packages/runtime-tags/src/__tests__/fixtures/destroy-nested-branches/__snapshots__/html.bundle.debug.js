@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const { name } = input;
 	_html(`<p>${_text_resume($scope0_id, "#text/0", name, _serialize_guard($scope0_reason, 0))}</p>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_name#3");
-	writeScope($scope0_id, { name }, "__tests__/tags/child.marko", 0, { name: "1:9" });
+	_scope($scope0_id, { name }, "__tests__/tags/child.marko", 0, { name: "1:9" });
 	_resume_branch($scope0_id);
 });
 

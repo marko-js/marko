@@ -9,6 +9,6 @@ var template_default = _template("a", (input) => {
   }
 `)}</style>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { b: count });
+	_scope($scope0_id, { b: count });
 	_resume_branch($scope0_id);
 }, 1);

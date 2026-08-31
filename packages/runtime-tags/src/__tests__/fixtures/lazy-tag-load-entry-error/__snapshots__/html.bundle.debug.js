@@ -5,7 +5,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, _serialize_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
-	writeScope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
+	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 });
 
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_set_serialize_reason(_serialize_guard($scope0_reason, 0));
 		const $childScope = _peek_scope_id();
 		$Child_withLoadAssets({ label: input.label });
-		$si__input_label && _subscribe($input_label__closures, writeScope($scope1_id, {
+		$si__input_label && _subscribe($input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/template.marko", "4:4"));
@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<div id=error>failed</div>");
 	}, $scope0_id) }) });
 	_html("</main>");
-	$si__input_label && writeScope($scope0_id, { "ClosureScopes:input_label": $input_label__closures }, "__tests__/template.marko", 0);
+	$si__input_label && _scope($scope0_id, { "ClosureScopes:input_label": $input_label__closures }, "__tests__/template.marko", 0);
 }, 1);

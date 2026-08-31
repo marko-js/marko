@@ -10,14 +10,14 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 			if (input.x) {
 				const $scope2_id = _scope_id();
 				_html(`<div>${_escape(count)}</div>`);
-				$si__input_x && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/test.marko", "3:4");
+				$si__input_x && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/test.marko", "3:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $sg__input_x, $sg__input_x, $sg__input_x, 0, 1);
-		$si__input_x && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/test.marko", "2:2");
+		$si__input_x && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/test.marko", "2:2");
 	}, $scope0_id) };
 	Tag.content({ x: 1 });
-	writeScope($scope0_id, { count }, "__tests__/tags/test.marko", 0, { count: "1:8" });
+	_scope($scope0_id, { count }, "__tests__/tags/test.marko", 0, { count: "1:8" });
 });
 
 // template.marko
@@ -30,12 +30,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (m) {
 			const $scope1_id = _scope_id();
 			test_default({});
-			writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html("</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

@@ -8,7 +8,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}<button type=button class=cap>check</button>${_el_resume($scope0_id, "#button/1")}<div class=out>${_text_resume($scope0_id, "#text/2", captured)}</div>`);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0");
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#4");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input,
 		input_content: input.content
 	}, "__tests__/tags/my-box.marko", 0, {

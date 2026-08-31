@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div>a</div><span>b</span><p>c</p>");
 	_script($scope0_id, "__tests__/tags/child.marko_0_input#1");
-	writeScope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 });
+	_scope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 });
 	_resume_branch($scope0_id);
 });
 
@@ -20,11 +20,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			child_default({ write: _resume(function(state) {
 				((el) => el())(_el_read_error).innerHTML = state;
 			}, "__tests__/template.marko_1/write", $scope1_id) });
-			writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

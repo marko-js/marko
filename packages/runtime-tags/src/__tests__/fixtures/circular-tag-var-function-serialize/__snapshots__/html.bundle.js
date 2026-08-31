@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { c: input.valueChange });
+	_scope($scope0_id, { c: input.valueChange });
 });
 
 // template.marko
@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		child_default({ valueChange: _resume(function() {
 			setter();
 		}, "a1", $scope1_id) });
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}
-	writeScope($scope0_id, { b: setter });
+	_scope($scope0_id, { b: setter });
 }, 1);

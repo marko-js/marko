@@ -6,7 +6,7 @@ var let_global_default = _template("c", (input) => {
 	const $global$1 = $global();
 	const $return = $global$1[input.value];
 	_script($scope0_id, "c1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: input.value,
 		U: _resume(function(next) {
 			$global$1[input.value] = next;
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	let b = a + 1;
 	_html(`<div>${_text_resume($scope0_id, "c", a)}</div><div>${_text_resume($scope0_id, "d", b)}</div><button>${_text_resume($scope0_id, "f", `${a},${b}`)}</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: a,
 		h: b,
 		a: _existing_scope($childScope)

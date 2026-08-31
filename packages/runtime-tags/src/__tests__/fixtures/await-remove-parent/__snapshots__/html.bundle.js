@@ -17,11 +17,11 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				_html("loading...");
 			}, $scope1_id) }) });
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_script($scope0_id, "a3");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

@@ -4,7 +4,7 @@ var list_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { d: input.item });
+	_scope($scope0_id, { d: input.item });
 });
 
 // template.marko

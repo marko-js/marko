@@ -21,7 +21,7 @@ const $content = (input) => {
 					comments: comment.comments,
 					path: id
 				});
-				$si__input_comments__OR__input_path && writeScope($scope2_id, {
+				$si__input_comments__OR__input_path && _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
 				});
@@ -30,7 +30,7 @@ const $content = (input) => {
 		}, $scope1_id, "e", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, 0, 1);
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			i: $si__input_comments && comment?.comments,
 			M: _serialize_if($scope0_reason, 2) && i,
 			l: $si__input_comments && id,
@@ -38,7 +38,7 @@ const $content = (input) => {
 			_: $si__input_comments__OR__input_path && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, "</ul>", 1);
-	$si__input_comments && writeScope($scope0_id, { e: input.path });
+	$si__input_comments && _scope($scope0_id, { e: input.path });
 };
 var comments_default = _template("b", $content);
 
@@ -53,5 +53,5 @@ var template_default = _template("a", (input) => {
 	});
 	const $childScope = _peek_scope_id();
 	comments_default(input);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

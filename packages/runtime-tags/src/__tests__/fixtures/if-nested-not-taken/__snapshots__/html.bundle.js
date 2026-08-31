@@ -9,11 +9,11 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<b>outer</b>");
 			_if(() => {}, $scope1_id, "a");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: x });
+	_scope($scope0_id, { d: x });
 	_resume_branch($scope0_id);
 }, 1);

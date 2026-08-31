@@ -12,5 +12,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const onClick = updateText;
 	_html(`<div>${_escape(sum(1, 2))}</div><button>before</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0_onClick#3");
-	writeScope($scope0_id, { onClick }, "__tests__/template.marko", 0, { onClick: "10:7" });
+	_scope($scope0_id, { onClick }, "__tests__/template.marko", 0, { onClick: "10:7" });
 }, 1);

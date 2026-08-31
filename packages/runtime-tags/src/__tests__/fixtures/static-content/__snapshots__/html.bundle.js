@@ -3,7 +3,7 @@ var inner_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/outer.marko
@@ -17,10 +17,10 @@ var outer_default = _template("c", (input) => {
 		_html(`<button>click</button>${_el_resume($scope1_id, "a")}`);
 		_dynamic_tag($scope1_id, "b", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 		_script($scope1_id, "c0");
-		_subscribe($si__input_content && $input_content__closures, writeScope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }));
+		_subscribe($si__input_content && $input_content__closures, _scope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
-	$si__input_content && writeScope($scope0_id, { e: $input_content__closures });
+	$si__input_content && _scope($scope0_id, { e: $input_content__closures });
 });
 
 // template.marko

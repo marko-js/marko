@@ -9,6 +9,6 @@ var template_default = _template("a", (input) => {
 	const viaAndAssign = box.inner &&= { label: "andassign" };
 	_html(`<ul><li>${_text_resume($scope0_id, "a", viaAnd.label ?? "none")}</li><li>${_text_resume($scope0_id, "b", viaTernary.label ?? "none")}</li><li>${_text_resume($scope0_id, "c", viaAndAssign.label ?? "none")}</li></ul><button>toggle</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { e: on });
+	_scope($scope0_id, { e: on });
 	_resume_branch($scope0_id);
 }, 1);

@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				value();
 			}
 		}, "__tests__/template.marko_1/_return", $scope1_id);
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			value,
 			call
 		}, "__tests__/template.marko", "1:1", {
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				value();
 			}
 		}, "__tests__/template.marko_2/_return2", $scope2_id);
-		writeScope($scope2_id, {
+		_scope($scope2_id, {
 			value,
 			call
 		}, "__tests__/template.marko", "15:1", {
@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button class=twice>${_text_resume($scope0_id, "#text/7", clickTwiceCount)}</button>${_el_resume($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/template.marko_0_onClickTwice#11");
 	_script($scope0_id, "__tests__/template.marko_0_onClickOnce#9");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		clickOnceCount,
 		onClickOnce,
 		clickTwiceCount,

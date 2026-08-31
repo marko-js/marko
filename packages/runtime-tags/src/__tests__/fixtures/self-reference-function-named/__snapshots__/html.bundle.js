@@ -11,6 +11,6 @@ var template_default = _template("a", (input) => {
 		return i >= items.length ? 0 : items[i] + sum(i + 1);
 	}())}</div>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: items });
+	_scope($scope0_id, { c: items });
 	_resume_branch($scope0_id);
 }, 1);

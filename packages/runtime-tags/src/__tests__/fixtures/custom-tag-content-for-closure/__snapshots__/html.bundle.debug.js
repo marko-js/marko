@@ -12,16 +12,16 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 				if (input.content) {
 					const $scope2_id = _scope_id();
 					_dynamic_tag($scope2_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
-					_subscribe($si__input_content && $input_content__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/menu.marko", "6:4"));
+					_subscribe($si__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/menu.marko", "6:4"));
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_content, $sg__input_content, $sg__input_content);
-			writeScope($scope1_id, {}, "__tests__/tags/menu.marko", "5:2");
+			_scope($scope1_id, {}, "__tests__/tags/menu.marko", "5:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/tags/menu.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_content: input.content,
 		open,
 		"ClosureScopes:input_content": $si__input_content && $input_content__closures

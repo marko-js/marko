@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const selected = filtered[index];
 	_html(`<div>${_text_resume($scope0_id, "a", filtered.join(" "))} selected ${_text_resume($scope0_id, "b", selected, 2)}</div><button id=update>update</button>${_el_resume($scope0_id, "c")}<button id=reselect>reselect</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: items,
 		f: min,
 		g: max,

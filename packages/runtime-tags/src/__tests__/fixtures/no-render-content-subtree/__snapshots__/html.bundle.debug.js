@@ -14,7 +14,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let x = my_const_default({ value: input.foo });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/child.marko_0_x#5/var");
 	_script($scope0_id, "__tests__/tags/child.marko_0_input#3_x#5");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input,
 		x,
 		"#childScope/0": _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
@@ -37,9 +37,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				foo: "bar",
 				output
 			});
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:1");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:1");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", $sg__input_show, $sg__input_show, $sg__input_show);
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

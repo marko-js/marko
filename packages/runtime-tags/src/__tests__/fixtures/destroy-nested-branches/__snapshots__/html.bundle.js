@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	const { name } = input;
 	_html(`<p>${_text_resume($scope0_id, "a", name, _serialize_guard($scope0_reason, 0))}</p>`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { d: name });
+	_scope($scope0_id, { d: name });
 	_resume_branch($scope0_id);
 });
 

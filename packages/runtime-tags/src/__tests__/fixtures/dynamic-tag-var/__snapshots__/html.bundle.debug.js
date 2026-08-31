@@ -20,5 +20,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $inputshowdiv_scope = _peek_scope_id();
 	let el1 = _dynamic_tag($scope0_id, "#text/6", input.show && "div", {});
 	_var($scope0_id, "#scopeOffset/7", $inputshowdiv_scope, "__tests__/template.marko_0_el1#14/var");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

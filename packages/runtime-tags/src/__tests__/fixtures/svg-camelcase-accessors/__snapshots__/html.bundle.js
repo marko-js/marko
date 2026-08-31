@@ -9,12 +9,12 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html("<rect width=10 height=10></rect>");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 1, "</clipPath>", 1);
 	_html(`</svg><button>toggle</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { e: show });
+	_scope($scope0_id, { e: show });
 	_resume_branch($scope0_id);
 }, 1);

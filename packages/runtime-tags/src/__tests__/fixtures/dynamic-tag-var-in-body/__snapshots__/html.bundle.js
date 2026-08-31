@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`<div></div>${_el_resume($scope0_id, "b")}`);
 	const $return = _resume(() => (html) => ((el) => el())(_el_read_error).innerHTML = html, "b0", $scope0_id);
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	return $return;
 });
 
@@ -19,11 +19,11 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_script($scope1_id, "a1");
-		_subscribe($setHtml__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($setHtml__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id));
 	_var($scope0_id, "b", $Child_scope, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: setHtml,
 		d: $setHtml__closures
 	});

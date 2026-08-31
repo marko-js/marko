@@ -16,11 +16,11 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			leaf_default({});
-			$si__input_show && writeScope($scope1_id, {}, "__tests__/tags/wrapper.marko", "2:2");
+			$si__input_show && _scope($scope1_id, {}, "__tests__/tags/wrapper.marko", "2:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
-	$si__input_show && writeScope($scope0_id, {}, "__tests__/tags/wrapper.marko", 0);
+	$si__input_show && _scope($scope0_id, {}, "__tests__/tags/wrapper.marko", 0);
 });
 
 // template.marko
@@ -36,12 +36,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			wrapper_default({ show });
-			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:2");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		outer,
 		show
 	}, "__tests__/template.marko", 0, {

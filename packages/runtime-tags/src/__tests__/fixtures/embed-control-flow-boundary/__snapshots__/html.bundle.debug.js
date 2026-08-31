@@ -8,11 +8,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (!hide) {
 			const $scope1_id = _scope_id();
 			_html("<div>Hello</div>");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "20:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "20:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { hide }, "__tests__/template.marko", 0, { hide: "7:6" });
+	_scope($scope0_id, { hide }, "__tests__/template.marko", 0, { hide: "7:6" });
 	_resume_branch($scope0_id);
 });

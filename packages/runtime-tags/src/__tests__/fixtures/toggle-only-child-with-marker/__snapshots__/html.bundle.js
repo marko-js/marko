@@ -7,10 +7,10 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<span id=count>0</span>");
-			_serialize_if($scope0_reason, 0) && writeScope($scope1_id, {});
+			_serialize_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", $sg__input_show, 1, $sg__input_show, "</button>", 1);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

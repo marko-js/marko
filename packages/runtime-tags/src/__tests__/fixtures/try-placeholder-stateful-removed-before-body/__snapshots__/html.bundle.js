@@ -20,11 +20,11 @@ var template_default = _template("a", (input) => {
 				_script($scope3_id, "a0");
 				_resume_branch($scope3_id);
 			}, $scope1_id) }) });
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_script($scope0_id, "a3");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

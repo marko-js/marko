@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const { name, write } = input;
 	_html(`<div>${_text_resume($scope0_id, "#text/0", name, _serialize_guard($scope0_reason, 0))}</div>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_name#3_write#4");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		name,
 		write
 	}, "__tests__/tags/child.marko", 0, {
@@ -47,16 +47,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				name: `${outerItem}.${middleItem}`
 			});
 			_html("</div>");
-			writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "10:6");
+			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "10:6");
 		}, 0, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
 		_html("</div>");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			outerItem,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "7:2", { outerItem: "7:6" });
 	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		items,
 		write
 	}, "__tests__/template.marko", 0, {

@@ -12,9 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_attrs_content(option, "#option/0", $scope3_id, "option");
 			_html(`</option>${_el_resume($scope3_id, "#option/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3_option#2");
-			writeScope($scope3_id, {}, "__tests__/template.marko", "3:6", { "EventAttributes:#option/0": ["...option", "4:18"] });
+			_scope($scope3_id, {}, "__tests__/template.marko", "3:6", { "EventAttributes:#option/0": ["...option", "4:18"] });
 		}, 0, $scope1_id, "#select/0", $sg__input_option, _serialize_guard($scope1_reason, 0), $sg__input_option, "</select>", 1);
-		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
+		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_2*content", ({ class: _class, ...rest }) => {
 		const $scope2_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			class: _class,
 			...rest
 		});
-		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "9:2");
+		_serialize_if($scope2_reason, 0) && _scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "9:2");
 	}, $scope0_id) };
 	Wrap.content({
 		class: "foo",

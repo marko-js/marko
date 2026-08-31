@@ -8,5 +8,5 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("Hello World");
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 }, 1);

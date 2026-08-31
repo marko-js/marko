@@ -10,14 +10,14 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html("<b>B</b>");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "d", 1, 1, 1, 0, 1);
 	_show_end($scope0_id, "f", visible);
 	_html(" y</div>");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: visible,
 		h: inner
 	});

@@ -7,11 +7,11 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "a", input.item, _serialize_guard($scope0_reason, 2))}</span>`);
 			_script($scope1_id, "b0");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, 0, 1);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: input,
 		e: _serialize_if($scope0_reason, 1) && input.item
 	});
@@ -36,12 +36,12 @@ var template_default = _template("a", (input) => {
 			log
 		});
 		_html("</div>");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			c: item,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "d", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { f: show });
+	_scope($scope0_id, { f: show });
 	_resume_branch($scope0_id);
 }, 1);

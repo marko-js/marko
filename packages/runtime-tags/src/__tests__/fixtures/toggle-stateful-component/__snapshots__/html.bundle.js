@@ -5,7 +5,7 @@ var counter_default = _template("b", (input) => {
 	let clickCount = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", clickCount)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.onCount,
 		f: clickCount
 	});
@@ -27,10 +27,10 @@ var template_default = _template("a", (input) => {
 			_html("<div>");
 			counter_default({ onCount });
 			_html("</div>");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
-	writeScope($scope0_id, { c: onCount });
+	_scope($scope0_id, { c: onCount });
 	_resume_branch($scope0_id);
 }, 1);

@@ -9,12 +9,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_html("<rect width=10 height=10></rect>");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "8:6");
+			_scope($scope1_id, {}, "__tests__/template.marko", "8:6");
 			return 0;
 		}
 	}, $scope0_id, "#clippath/1", 1, 1, 1, "</clipPath>", 1);
 	_html(`</svg><button>toggle</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:6" });
 	_resume_branch($scope0_id);
 }, 1);

@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_until(input.until, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(i)}</li>`);
-		$si__input_until && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
+		$si__input_until && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_until, $sg__input_until, $sg__input_until, 0, 1);
-	$si__input_until && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	$si__input_until && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

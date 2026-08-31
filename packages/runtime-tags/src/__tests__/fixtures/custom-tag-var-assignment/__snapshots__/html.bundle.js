@@ -6,7 +6,7 @@ var counter_default = _template("b", (input) => {
 	_html(`<button class=inc-child>${_text_resume($scope0_id, "b", x)}</button>${_el_resume($scope0_id, "a")}`);
 	const $return = x;
 	_script($scope0_id, "b1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: x,
 		U: _resume((_new_x) => {
 			x = _new_x;
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<button class=inc-parent>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}<button class=reset>reset</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: count,
 		a: _existing_scope($childScope)
 	});

@@ -12,16 +12,16 @@ var template_default = _template("a", (input) => {
 			_script($scope2_id, "a0");
 			_html(_text_resume($scope2_id, "a", value));
 			_script($scope2_id, "a1");
-			writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			_resume_branch($scope2_id);
 		});
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a2", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
 	}, $scope0_id) }) });
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: value,
 		c: $value__closures
 	});

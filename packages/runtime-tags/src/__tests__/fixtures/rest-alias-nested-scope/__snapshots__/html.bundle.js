@@ -12,9 +12,9 @@ var template_default = _template("a", (input) => {
 			_attrs_content(rest, "b", $scope1_id, "span");
 			_html(`</span>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a0");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value);
-	writeScope($scope0_id, { e: _serialize_if($scope0_reason, 0) && value?.foo });
+	_scope($scope0_id, { e: _serialize_if($scope0_reason, 0) && value?.foo });
 }, 1);

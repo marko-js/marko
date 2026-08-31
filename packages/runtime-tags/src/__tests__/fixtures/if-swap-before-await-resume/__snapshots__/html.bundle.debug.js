@@ -40,15 +40,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (!hasHydrate) {
 			const $scope3_id = _scope_id();
 			_html("<a href=/go-to>Go</a>");
-			writeScope($scope3_id, {}, "__tests__/template.marko", "13:6");
+			_scope($scope3_id, {}, "__tests__/template.marko", "13:6");
 			return 0;
 		} else {
 			const $scope4_id = _scope_id();
 			_html("<button>Go to</button>");
-			writeScope($scope4_id, {}, "__tests__/template.marko", "14:6");
+			_scope($scope4_id, {}, "__tests__/template.marko", "14:6");
 			return 1;
 		}
 	}, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
 	_html("</div></header>");
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

@@ -7,9 +7,9 @@ var box_default = _template("b", (input) => {
 		_html("<div class=item>");
 		_dynamic_tag($scope1_id, "a", content, {}, 0, 0, $sg__input_item);
 		_html("</div>");
-		$si__input_item && writeScope($scope1_id, {});
+		$si__input_item && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
-	$si__input_item && writeScope($scope0_id, {});
+	$si__input_item && _scope($scope0_id, {});
 });
 
 // template.marko

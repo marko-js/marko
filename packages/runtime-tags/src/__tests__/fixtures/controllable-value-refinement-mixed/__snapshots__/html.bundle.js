@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	}, "a1", $scope0_id);
 	_html(`<input${_attr_input_value($scope0_id, "a", value, $valueChange)} id=refined>${_el_resume($scope0_id, "a")}<input${_attr_input_value($scope0_id, "b", value, $valueChange)} id=refined2>${_el_resume($scope0_id, "b")}<input${_attr_input_value($scope0_id, "c", value, $valueChange2)} id=plain>${_el_resume($scope0_id, "c")}<input${_attr_input_value($scope0_id, "d", value, $valueChange2)} id=plain2>${_el_resume($scope0_id, "d")}<div>${_text_resume($scope0_id, "e", typeof value)} ${_text_resume($scope0_id, "f", value, 2)}</div>`);
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		h: $valueChange2,
 		j: $valueChange
 	});

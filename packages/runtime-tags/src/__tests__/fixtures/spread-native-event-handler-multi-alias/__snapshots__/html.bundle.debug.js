@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`</button>${_el_resume($scope1_id, "#button/0")} `);
 		_script($scope1_id, "__tests__/template.marko_1_input#2");
 		_script($scope1_id, "__tests__/template.marko_1");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			input: {
 				...input,
 				content: undefined

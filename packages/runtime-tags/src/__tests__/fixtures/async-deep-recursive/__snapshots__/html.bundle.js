@@ -16,24 +16,24 @@ const $content = (input) => {
 					_set_serialize_reason($sg__input_level);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
-					$si__input_level && writeScope($scope3_id, {
+					$si__input_level && _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						a: _existing_scope($childScope)
 					});
 					_resume_branch($scope3_id);
 				}, $sg__input_level);
-				$si__input_level && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+				$si__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("b1", () => {
 				_scope_reason();
 				_scope_id();
 				_html("LOADING...");
 			}, $scope1_id) }) });
 			_html(`</div>${_el_resume($scope1_id, "a", $sg__input_level)}`);
-			$si__input_level && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			$si__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", $sg__input_level, $sg__input_level, $sg__input_level, 0, 1);
-	$si__input_level && writeScope($scope0_id, {
+	$si__input_level && _scope($scope0_id, {
 		d: input.level,
 		e: $input_level__closures
 	});

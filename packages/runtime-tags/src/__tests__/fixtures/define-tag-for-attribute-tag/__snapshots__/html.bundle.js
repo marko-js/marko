@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	_html(`<div${_attr_class({ "selected": input.thing.selected })}>`);
 	_dynamic_tag($scope0_id, "b", input.thing.content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
 	_html(`</div>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	child_default({ thing: myThing });
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: selected,
 		a: _existing_scope($childScope)
 	});

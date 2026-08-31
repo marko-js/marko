@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		phase = 0;
 	}, "a2", $scope0_id) }, "a", $scope0_id, "div")}>${_text_resume($scope0_id, "b", phase)}:${_text_resume($scope0_id, "c", log, 2)}</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a3");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: phase,
 		e: log
 	});

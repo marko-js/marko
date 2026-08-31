@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let message = "start";
 	_html(`<button>go</button>${_el_resume($scope0_id, "#button/0")}<div>${_text_resume($scope0_id, "#text/1", message)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		first,
 		second,
 		message

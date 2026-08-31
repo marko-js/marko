@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { value } = input;
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { b: input });
+	_scope($scope0_id, { b: input });
 });
 
 // template.marko
@@ -19,6 +19,6 @@ var template_default = _template("a", (input) => {
 			count = _new_count;
 		}, "a0", $scope0_id)
 	});
-	writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
 }, 1);

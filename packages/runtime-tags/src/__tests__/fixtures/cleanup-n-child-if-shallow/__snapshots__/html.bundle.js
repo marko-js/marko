@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div>a</div><span>b</span><p>c</p>");
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { b: input });
+	_scope($scope0_id, { b: input });
 	_resume_branch($scope0_id);
 });
 
@@ -20,11 +20,11 @@ var template_default = _template("a", (input) => {
 			child_default({ write: _resume(function(state) {
 				((el) => el())(_el_read_error).innerHTML = state;
 			}, "a0", $scope1_id) });
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { d: show });
+	_scope($scope0_id, { d: show });
 	_resume_branch($scope0_id);
 }, 1);

@@ -4,7 +4,7 @@ var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<input${_attrs(input, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}<span>${_text_resume($scope0_id, "#text/1", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "__tests__/tags/my-input.marko_0_input#3");
-	writeScope($scope0_id, { input: {
+	_scope($scope0_id, { input: {
 		...input,
 		checked: undefined,
 		checkedValue: undefined
@@ -28,6 +28,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			value = _new_value;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

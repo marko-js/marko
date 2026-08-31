@@ -19,17 +19,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<li${selected === row.id ? " class=danger" : ""}><button class=select>${_escape(row.label)}</button>${_el_resume($scope2_id, "#button/1")}</li>${_el_resume($scope2_id, "#li/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
-				_subscribe($selected__closures, writeScope($scope2_id, {
+				_subscribe($selected__closures, _scope($scope2_id, {
 					row_id: row?.id,
 					_: _scope_with_id($scope1_id)
 				}, "__tests__/template.marko", "5:6", { row_id: ["row.id", "5:10"] }));
 			});
 			_html("</ul>");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		selected: $si__input_show && selected,
 		rows: $si__input_show && rows,
 		"ClosureScopes:selected": $selected__closures

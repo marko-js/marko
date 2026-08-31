@@ -1,4 +1,5 @@
 // components/tags-child.marko
+var import_vdom = require_vdom();
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);

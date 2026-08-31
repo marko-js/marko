@@ -5,9 +5,9 @@ var list_default = _template("b", (input) => {
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", item.content, {}, 0, 0, $sg__input_item);
-		$si__input_item && writeScope($scope1_id, {});
+		$si__input_item && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_item, $sg__input_item, $sg__input_item);
-	$si__input_item && writeScope($scope0_id, {});
+	$si__input_item && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -25,9 +25,9 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
-			writeScope($scope1_id, { c: item });
+			_scope($scope1_id, { c: item });
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

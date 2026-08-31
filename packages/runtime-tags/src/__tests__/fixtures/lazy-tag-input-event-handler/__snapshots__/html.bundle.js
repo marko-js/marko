@@ -5,7 +5,7 @@ var child_default = _template("a", (input) => {
 	let data = input.data;
 	_html(`<button class=child>child:${_text_resume($scope0_id, "b", "?", 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: input,
 		f: data
 	});
@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 		}, "b0", $scope0_id)
 	});
 	_script($scope0_id, "b1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: shared,
 		f: count
 	});

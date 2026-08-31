@@ -12,16 +12,16 @@ var menu_default = _template("b", (input) => {
 				if (input.content) {
 					const $scope2_id = _scope_id();
 					_dynamic_tag($scope2_id, "a", input.content, {}, 0, 0, $sg__input_content);
-					_subscribe($si__input_content && $input_content__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					_subscribe($si__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", $sg__input_content, $sg__input_content, $sg__input_content);
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.content,
 		g: open,
 		h: $si__input_content && $input_content__closures

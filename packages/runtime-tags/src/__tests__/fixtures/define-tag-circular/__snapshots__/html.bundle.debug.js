@@ -14,12 +14,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					Foo.content({});
 				}, $scope2_id) };
 				Bar.content({});
-				$si__show && writeScope($scope2_id, {}, "__tests__/template.marko", "2:4");
+				$si__show && _scope($scope2_id, {}, "__tests__/template.marko", "2:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $sg__show, $sg__show, $sg__show);
 		_html(" foo");
-		$si__show && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
+		$si__show && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	Foo.content({ show: true });
 }, 1);

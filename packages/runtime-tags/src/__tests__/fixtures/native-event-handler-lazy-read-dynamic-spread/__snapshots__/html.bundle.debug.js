@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/onClick", $scope0_id) }, { class: 1 }, "#button/3", $scope0_id, "button")}>b</button>${_el_resume($scope0_id, "#button/3")}<div class=state>${_text_resume($scope0_id, "#text/4", enabled)}:${_text_resume($scope0_id, "#text/5", count, 2)}</div><div class=log>${_text_resume($scope0_id, "#text/6", log)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_enabled#7");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		enabled,
 		count,
 		log

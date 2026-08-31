@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_attrs_content(input, "#div/0", $scope3_id, "div");
 		_html(`</div>${_el_resume($scope3_id, "#div/0")}`);
 		_script($scope3_id, "__tests__/template.marko_3_input#2");
-		writeScope($scope3_id, {}, "__tests__/template.marko", "2:2", { "EventAttributes:#div/0": ["...input", "3:13"] });
+		_scope($scope3_id, {}, "__tests__/template.marko", "2:2", { "EventAttributes:#div/0": ["...input", "3:13"] });
 	}, $scope0_id) };
 	Child.content({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
@@ -19,12 +19,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const { text } = value;
 			_html(`<span${_attr_class(value.class)}>${_escape(text)}</span>`);
-			writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
+			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
 		}
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		value,
 		value_class: value?.class,
 		text: value?.text

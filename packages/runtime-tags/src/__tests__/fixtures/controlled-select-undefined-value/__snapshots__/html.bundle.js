@@ -6,5 +6,5 @@ var template_default = _template("a", (input) => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("")}>None</option></select>`);
 	});
 	_html(_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0)));
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 }, 1);

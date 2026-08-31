@@ -7,7 +7,7 @@ var let_global_default = _template("__tests__/tags/let-global.marko", (input) =>
 	let value = $global$1[input.value];
 	const $return = value;
 	_script($scope0_id, "__tests__/tags/let-global.marko_0_input_value#2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_value: input.value,
 		"#TagVariableChange": _resume(function(next) {
 			$global$1[input.value] = next;
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let b = a + 1;
 	_html(`<div>${_text_resume($scope0_id, "#text/2", a)}</div><div>${_text_resume($scope0_id, "#text/3", b)}</div><button>${_text_resume($scope0_id, "#text/5", `${a},${b}`)}</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		a,
 		b,
 		"#childScope/0": _existing_scope($childScope)

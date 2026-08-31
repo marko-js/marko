@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/parent-a.marko
@@ -15,7 +15,7 @@ var parent_a_default = _template("c", (input) => {
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets$1({ value: input.value });
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { b: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
 });
 
 // tags/parent-b.marko
@@ -26,7 +26,7 @@ var parent_b_default = _template("d", (input) => {
 	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value * 2 });
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { b: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
 });
 
 // template.marko
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	const $childScope2 = _peek_scope_id();
 	parent_b_default({ value });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: value,
 		b: _existing_scope($childScope),
 		c: _existing_scope($childScope2)

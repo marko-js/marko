@@ -5,7 +5,7 @@ var echo_default = _template("__tests__/tags/echo.marko", (input) => {
 	_html("<div class=echo>");
 	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/echo.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/echo.marko", 0);
 });
 
 // tags/my-box.marko
@@ -19,7 +19,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	echo_default(input);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#3");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input,
 		"#childScope/1": _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
 	}, "__tests__/tags/my-box.marko", 0, {

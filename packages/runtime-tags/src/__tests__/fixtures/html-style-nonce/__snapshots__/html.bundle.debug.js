@@ -20,12 +20,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<style${_attr_nonce()}>
     D {}
   </style>`);
-			writeScope($scope1_id, {}, "__tests__/template.marko", "17:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "17:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_spreadAttrs#3");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0, { "EventAttributes:#style/1": ["...spreadAttrs", "11:16"] });
+	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "EventAttributes:#style/1": ["...spreadAttrs", "11:16"] });
 	_resume_branch($scope0_id);
 }, 1);

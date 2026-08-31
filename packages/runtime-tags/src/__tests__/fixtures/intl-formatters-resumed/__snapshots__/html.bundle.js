@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	});
 	_html(`<button>${_text_resume($scope0_id, "b", money.format(n))} ${_text_resume($scope0_id, "c", day.format(/* @__PURE__ */ new Date(n)), 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: n,
 		e: money,
 		g: day

@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.words, (w) => {
 		const $scope1_id = _scope_id();
 		_html("constructor");
-		$si__input_words && writeScope($scope1_id, {});
+		$si__input_words && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_words, $sg__input_words, $sg__input_words, "</div>");
-	$si__input_words && writeScope($scope0_id, {});
+	$si__input_words && _scope($scope0_id, {});
 }, 1);

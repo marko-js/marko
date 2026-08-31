@@ -10,14 +10,14 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			if (button) {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "#text/0", button, {}, 0, 0, $sg__input_button);
-				$si__input_button && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:8");
+				$si__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:8");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $sg__input_button, $sg__input_button, $sg__input_button);
-		$si__input_button && writeScope($scope1_id, { button }, "__tests__/tags/child.marko", "3:4", { button: "3:8" });
+		$si__input_button && _scope($scope1_id, { button }, "__tests__/tags/child.marko", "3:4", { button: "3:8" });
 	}, 0, $scope0_id, "#div/0", $sg__input_button, 1, $sg__input_button, "</div>");
 	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput#4");
-	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0, { "EventAttributes:#div/0": ["...htmlInput", "2:9"] });
+	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0, { "EventAttributes:#div/0": ["...htmlInput", "2:9"] });
 });
 
 // template.marko

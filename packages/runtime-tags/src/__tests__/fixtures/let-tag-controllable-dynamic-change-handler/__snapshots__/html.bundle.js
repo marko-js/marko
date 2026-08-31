@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	let y = x;
 	_html(`<button id=inc>${_text_resume($scope0_id, "b", x)}|${_text_resume($scope0_id, "c", y, 2)}</button>${_el_resume($scope0_id, "a")}<button id=toggle>toggle</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: x,
 		f: yChange,
 		h: y,

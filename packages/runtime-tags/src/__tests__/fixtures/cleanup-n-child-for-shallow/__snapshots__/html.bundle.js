@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	const { name, write } = input;
 	_html(`<div>${_text_resume($scope0_id, "a", name, $sg__input_name)}</div><span>${_text_resume($scope0_id, "b", name, $sg__input_name)}</span><p>${_text_resume($scope0_id, "c", name, $sg__input_name)}</p>`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: name,
 		g: write
 	});
@@ -33,10 +33,10 @@ var template_default = _template("a", (input) => {
 			write,
 			name: item
 		});
-		writeScope($scope1_id, { a: _existing_scope($childScope) });
+		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, 0, $scope0_id, "c");
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: items,
 		e: write
 	});

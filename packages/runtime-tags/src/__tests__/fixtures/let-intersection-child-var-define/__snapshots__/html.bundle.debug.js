@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		let internal = 0;
 		const $return = internal;
-		writeScope($scope1_id, { "#TagVariableChange": _resume((_new_internal) => {
+		_scope($scope1_id, { "#TagVariableChange": _resume((_new_internal) => {
 			internal = _new_internal;
 		}, "__tests__/template.marko_1/valueChange", $scope1_id) || void 0 }, "__tests__/template.marko", "1:2");
 		_resume_branch($scope1_id);
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let b = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/3", `${a},${b}`)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		a,
 		b,
 		"#childScope/0": _existing_scope($childScope)

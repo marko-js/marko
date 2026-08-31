@@ -4,7 +4,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span class=child>${_text_resume($scope0_id, "b", input.value, _serialize_guard($scope0_reason, 0))}</span>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko

@@ -6,9 +6,9 @@ var list_default = _template("b", (input) => {
 	_for_to(count, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>item ${_escape(i)}</li>`);
-		$si__input_count && writeScope($scope1_id, {});
+		$si__input_count && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_count, $sg__input_count, $sg__input_count, 0, 1);
-	$si__input_count && writeScope($scope0_id, {});
+	$si__input_count && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -24,12 +24,12 @@ var template_default = _template("a", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			list_default({ count });
-			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: outer,
 		e: count
 	});

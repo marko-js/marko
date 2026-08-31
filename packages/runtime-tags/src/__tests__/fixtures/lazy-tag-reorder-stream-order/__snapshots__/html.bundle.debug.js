@@ -6,7 +6,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	let count = 0;
 	_html(`<button${_attr_class(input.label)}>${_text_resume($scope0_id, "#text/1", input.label, _serialize_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_label: input.label,
 		shared,
 		count

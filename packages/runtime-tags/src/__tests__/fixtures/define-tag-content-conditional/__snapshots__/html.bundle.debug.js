@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<section>");
 		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
 		_html("</section>");
-		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
+		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {
@@ -20,11 +20,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html("shown content");
 			}, $scope2_id) });
-			writeScope($scope2_id, {}, "__tests__/template.marko", "6:2");
+			_scope($scope2_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

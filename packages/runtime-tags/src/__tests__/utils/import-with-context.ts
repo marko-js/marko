@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import path from "node:path";
 import { pathToFileURL } from "node:url";
 import vm from "node:vm";
 
@@ -96,7 +97,10 @@ export async function importWithContext<T>(
       return Promise.reject(new Error(`simulated chunk load failure: ${id}`));
     }
     const from = parent.identifier;
-    const resolved = resolveSync(id, { ...resolveOpts, from });
+    // The shared debug runtime bundle is linked by absolute path.
+    const resolved = path.isAbsolute(id)
+      ? id
+      : resolveSync(id, { ...resolveOpts, from });
 
     if (!resolved) {
       throw new Error(

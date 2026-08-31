@@ -5,7 +5,7 @@ var child_default = _template("a", (input) => {
 	let count = input.value;
 	_html(`<button${_attr("id", input.id)}>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 	_resume_branch($scope0_id);
 });
 
@@ -26,7 +26,7 @@ var template_default = _template("b", (input) => {
 			id: "async",
 			value
 		});
-		$si__input_value && writeScope($scope1_id, { b: _existing_scope($childScope2) });
+		$si__input_value && _scope($scope1_id, { b: _existing_scope($childScope2) });
 	}, _serialize_guard($scope0_reason, 0));
-	$si__input_value && writeScope($scope0_id, { b: _existing_scope($childScope) });
+	$si__input_value && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

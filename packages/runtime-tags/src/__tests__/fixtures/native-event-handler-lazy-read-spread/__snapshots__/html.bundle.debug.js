@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		log = `${log}[${count}]`;
 	}, "__tests__/template.marko_0/onClick", $scope0_id) }, { class: 1 }, "#button/1", $scope0_id, "button")}>act</button>${_el_resume($scope0_id, "#button/1")}<div class=log>${_text_resume($scope0_id, "#text/2", log)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		log
 	}, "__tests__/template.marko", 0, {

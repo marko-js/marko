@@ -16,11 +16,11 @@ var wrapper_default = _template("c", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			leaf_default({});
-			$si__input_show && writeScope($scope1_id, {});
+			$si__input_show && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
-	$si__input_show && writeScope($scope0_id, {});
+	$si__input_show && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -36,12 +36,12 @@ var template_default = _template("a", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			wrapper_default({ show });
-			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: outer,
 		e: show
 	});

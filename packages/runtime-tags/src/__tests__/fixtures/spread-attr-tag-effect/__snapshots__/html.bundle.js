@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { d: input.option });
+	_scope($scope0_id, { d: input.option });
 });
 
 // tags/wrap.marko
@@ -13,7 +13,7 @@ var wrap_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	child_default(input);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
 // template.marko

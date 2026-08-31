@@ -6,7 +6,7 @@ var child_s_default = _template("b", (input) => {
 	let holder = input.holder;
 	_html(`<button class=s>s:${_text_resume($scope0_id, "b", "?", 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: isShared,
 		h: holder
 	});
@@ -21,7 +21,7 @@ var child_b_default = _template("a", (input) => {
 	let inner = input.inner;
 	_html(`<button class=b>b:${_text_resume($scope0_id, "b", "?", 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: isInner,
 		h: inner
 	});
@@ -50,7 +50,7 @@ var template_default = _template("c", (input) => {
 		}, "c1", $scope0_id)
 	});
 	_script($scope0_id, "c2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: shared,
 		i: count
 	});

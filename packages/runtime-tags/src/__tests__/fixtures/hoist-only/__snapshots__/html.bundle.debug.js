@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $if_content2__hoist3_getter = _hoist($scope2_id, "__tests__/template.marko_2_hoist3#0/hoist");
 					const z = $if_content2__hoist3_getter;
 					const hoist3 = _resume(() => input.value, "__tests__/template.marko_2/hoist2", $scope2_id);
-					_subscribe($si__input_value && $input_value__closures, writeScope($scope2_id, {
+					_subscribe($si__input_value && $input_value__closures, _scope($scope2_id, {
 						hoist3,
 						_: _scope_with_id($scope1_id)
 					}, "__tests__/template.marko", "8:4", { hoist3: "10:12" }));
@@ -25,11 +25,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, 0, 0);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 0, 0);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_value: input.value,
 		hoist1,
 		"ClosureScopes:input_value": $si__input_value && $input_value__closures

@@ -5,7 +5,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	let count = input.value;
 	_html(`<button class=child>child ${_text_resume($scope0_id, "#text/1", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
-	writeScope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
+	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 });
 
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		"#childScope/3": _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "3:6" });

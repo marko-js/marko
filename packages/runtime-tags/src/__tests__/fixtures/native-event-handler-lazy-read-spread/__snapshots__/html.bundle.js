@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		log = `${log}[${count}]`;
 	}, "a0", $scope0_id) }, { class: 1 }, "b", $scope0_id, "button")}>act</button>${_el_resume($scope0_id, "b")}<div class=log>${_text_resume($scope0_id, "c", log)}</div>`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: count,
 		e: log
 	});

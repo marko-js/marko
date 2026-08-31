@@ -6,6 +6,6 @@ var template_default = _template("a", (input) => {
 	_html(`<div>x=<span>${_text_resume($scope0_id, "a", x)}</span>, was=${_text_resume($scope0_id, "b", false, 2)}</div><button id=increment>Increment</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { d: x });
+	_scope($scope0_id, { d: x });
 	_resume_branch($scope0_id);
 }, 1);

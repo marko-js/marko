@@ -7,9 +7,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>item ${_escape(i)}</p>`);
 		_script($scope1_id, "__tests__/tags/child.marko_1");
-		$si__input_count && writeScope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
+		$si__input_count && _scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_count, $sg__input_count, $sg__input_count, 0, 1);
-	$si__input_count && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	$si__input_count && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // template.marko
@@ -25,12 +25,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			child_default({ count });
-			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:2");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		outer,
 		count
 	}, "__tests__/template.marko", 0, {

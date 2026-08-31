@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $valueChange = $aChange;
 		_html(`<input${_attr_input_value($scope1_id, "#input/0", a, $valueChange)}>${_el_resume($scope1_id, "#input/0")}<input${_attr_input_value($scope1_id, "#input/1", a, $valueChange)}>${_el_resume($scope1_id, "#input/1")}<input${_attr_input_value($scope1_id, "#input/2", a, $valueChange)}>${_el_resume($scope1_id, "#input/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			$aChange: _serialize_if($scope1_reason, 0) && $aChange,
 			a: _serialize_if($scope1_reason, 1) && a
 		}, "__tests__/template.marko", "1:2", {
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z" + n });
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		n,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { n: "6:6" });

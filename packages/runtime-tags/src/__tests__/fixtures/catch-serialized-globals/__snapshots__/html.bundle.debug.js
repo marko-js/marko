@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let clicked = false;
 		_html(`<button>${_text_resume($scope2_id, "#text/1", clicked ? message : error.message)}</button>${_el_resume($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2");
-		writeScope($scope2_id, {
+		_scope($scope2_id, {
 			error_message: error?.message,
 			message,
 			clicked: _serialize_if($scope2_reason, 0) && clicked

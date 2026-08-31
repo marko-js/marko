@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
 	const $return = _resume(() => (html) => ((el) => el())(_el_read_error).innerHTML = html, "__tests__/tags/child.marko_0/_return", $scope0_id);
-	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 	return $return;
 });
 
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $Child_scope = _peek_scope_id();
 		let setHtml = _dynamic_tag($scope1_id, "#text/0", 1 && child_default, {});
 		_var($scope1_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_1_setHtml#2/var");
-		writeScope($scope1_id, { setHtml }, "__tests__/template.marko", "3:2", { setHtml: "4:18" });
+		_scope($scope1_id, { setHtml }, "__tests__/template.marko", "3:2", { setHtml: "4:18" });
 		_assert_hoist(setHtml);
 	}, 0, $scope0_id, "#text/0", 1, 0, 0);
 	let to = 3;
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $Child_scope2 = _peek_scope_id();
 		let setHtml2 = _dynamic_tag($scope2_id, "#text/0", 1 && child_default, {});
 		_var($scope2_id, "#scopeOffset/1", $Child_scope2, "__tests__/template.marko_2_setHtml2#2/var");
-		writeScope($scope2_id, { setHtml2 }, "__tests__/template.marko", "14:2", { setHtml2: "15:18" });
+		_scope($scope2_id, { setHtml2 }, "__tests__/template.marko", "14:2", { setHtml2: "15:18" });
 		_assert_hoist(setHtml2);
 	}, 0, $scope0_id, "#text/1", 1, 0, 0);
 	_html("<hr>");
@@ -40,11 +40,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $Child_scope3 = _peek_scope_id();
 			let setHtml3 = _dynamic_tag($scope4_id, "#text/0", 1 && child_default, {});
 			_var($scope4_id, "#scopeOffset/1", $Child_scope3, "__tests__/template.marko_4_setHtml3#2/var");
-			writeScope($scope4_id, { setHtml3 }, "__tests__/template.marko", "26:4", { setHtml3: "27:20" });
+			_scope($scope4_id, { setHtml3 }, "__tests__/template.marko", "26:4", { setHtml3: "27:20" });
 			_assert_hoist(setHtml3);
 		}, 0, $scope3_id, "#ul/0", 1, 0, 0);
 		_html("</ul>");
-		writeScope($scope3_id, {}, "__tests__/template.marko", "24:2");
+		_scope($scope3_id, {}, "__tests__/template.marko", "24:2");
 	}, 0, $scope0_id, "#text/2", 1, 0, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 }, 1);

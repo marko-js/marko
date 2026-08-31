@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>inc:${_text_resume($scope0_id, "#text/1", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}<div id=ref>0</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_promise#4");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		promise
 	}, "__tests__/template.marko", 0, {

@@ -10,7 +10,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "#span/0", $scope0_id, "span");
 	_html(`</span>${_el_resume($scope0_id, "#span/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0__class#3_rest#4");
-	writeScope($scope0_id, { _class }, "__tests__/tags/child.marko", 0, {
+	_scope($scope0_id, { _class }, "__tests__/tags/child.marko", 0, {
 		_class: "1:17",
 		"EventAttributes:#span/0": ["...rest", "2:23"]
 	});
@@ -27,5 +27,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</div><div id=dynamic>");
 	_dynamic_tag($scope0_id, "#text/1", Child, input, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

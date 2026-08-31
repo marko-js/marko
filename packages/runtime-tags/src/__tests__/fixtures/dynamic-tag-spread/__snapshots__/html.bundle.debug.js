@@ -11,7 +11,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		_scope_reason();
 		_html("hi");
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 3));
-	_serialize_if($scope0_reason, 3) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 3) && _scope($scope0_id, {
 		inputAs: _serialize_if($scope0_reason, 2) && inputAs,
 		foo: _serialize_if($scope0_reason, 1) && foo,
 		htmlInput: _serialize_if($scope0_reason, 0) && htmlInput

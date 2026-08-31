@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $sg__input_content);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $sg__input_content);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<span></span>${_el_resume($scope1_id, "a")}`);
-		_subscribe($child_content__subscribers, writeScope($scope1_id, {}));
+		_subscribe($child_content__subscribers, _scope($scope1_id, {}));
 	}, $scope0_id) });
 	_dynamic_tag($scope0_id, "b", input.show ? child_default : null, {}, _content_resume("a5", () => {
 		const $scope2_id = _scope_id();
@@ -31,10 +31,10 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope3_id, "a")}`);
-			_subscribe($child_content2__subscribers, writeScope($scope3_id, {}));
+			_subscribe($child_content2__subscribers, _scope($scope3_id, {}));
 		}, $scope2_id) });
 		_script($scope2_id, "a6");
-		_subscribe($inputshowChildnull_content__subscribers, writeScope($scope2_id, {
+		_subscribe($inputshowChildnull_content__subscribers, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			B3: $child_content2__subscribers
 		}));
@@ -43,10 +43,10 @@ var template_default = _template("a", (input) => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		_html(`<p></p>${_el_resume($scope4_id, "a")}`);
-		_subscribe($inputshowsectionnull_content__subscribers, writeScope($scope4_id, {}));
+		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, {}));
 	}, $scope0_id), 0, $sg__input_show);
 	_script($scope0_id, "a8");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		B1: $child_content__subscribers,
 		B2: $inputshowChildnull_content__subscribers,
 		B4: $inputshowsectionnull_content__subscribers

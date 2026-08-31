@@ -9,9 +9,9 @@ var child_default = _template("b", (input) => {
 		_attrs_content(option, "a", $scope1_id, "option");
 		_html(`</option>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_option, _serialize_guard($scope0_reason, 0), $sg__input_option, "</select>", 1);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/wrap.marko
@@ -28,7 +28,7 @@ var wrap_default = _template("c", (input) => {
 		class: _class,
 		...rest
 	});
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
 // template.marko

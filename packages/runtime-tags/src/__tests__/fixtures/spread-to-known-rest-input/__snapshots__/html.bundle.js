@@ -10,7 +10,7 @@ var child_default = _template("b", (input) => {
 	}, "a", $scope0_id, "span");
 	_html(`</span>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { d: _class });
+	_scope($scope0_id, { d: _class });
 });
 
 // template.marko
@@ -24,5 +24,5 @@ var template_default = _template("a", (input) => {
 	_html("</div><div id=dynamic>");
 	_dynamic_tag($scope0_id, "b", Child, input, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

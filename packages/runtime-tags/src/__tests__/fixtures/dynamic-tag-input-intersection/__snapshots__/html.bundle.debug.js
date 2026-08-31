@@ -15,7 +15,7 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 		content
 	});
 	_script($scope0_id, "__tests__/tags/my-tag.marko_0_inputContent#5");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		inputAs,
 		inputClass,
 		inputContent,

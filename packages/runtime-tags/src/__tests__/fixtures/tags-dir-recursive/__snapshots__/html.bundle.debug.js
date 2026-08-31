@@ -9,7 +9,7 @@ const $content = (input) => {
 			_set_serialize_reason($sg__input_depth);
 			const $childScope = _peek_scope_id();
 			$content({ depth: input.depth - 1 });
-			$si__input_depth && writeScope($scope1_id, {
+			$si__input_depth && _scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/tags/tree/index.marko", "3:4");
@@ -17,7 +17,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "#text/1", $sg__input_depth, $sg__input_depth, $sg__input_depth, 0, 1);
 	_html("</div>");
-	$si__input_depth && writeScope($scope0_id, { input_depth: input.depth }, "__tests__/tags/tree/index.marko", 0, { input_depth: ["input.depth"] });
+	$si__input_depth && _scope($scope0_id, { input_depth: input.depth }, "__tests__/tags/tree/index.marko", 0, { input_depth: ["input.depth"] });
 };
 var tree_default = _template("__tests__/tags/tree/index.marko", $content);
 
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	tree_default({ depth: n });
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		n,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { n: "1:6" });

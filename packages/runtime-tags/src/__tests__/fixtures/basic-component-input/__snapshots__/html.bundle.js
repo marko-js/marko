@@ -5,7 +5,7 @@ var my_button_default = _template("b", (input) => {
 	const { onClick, text } = input;
 	_html(`<button>${_text_resume($scope0_id, "b", text, _serialize_guard($scope0_reason, 0))}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { e: onClick });
+	_scope($scope0_id, { e: onClick });
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			clickCount++;
 		}, "a0", $scope0_id)
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: clickCount,
 		a: _existing_scope($childScope)
 	});

@@ -11,13 +11,13 @@ var template_default = _template("a", (input) => {
 			if (i > 9) {
 				const $scope2_id = _scope_id();
 				_html("never");
-				writeScope($scope2_id, {});
+				_scope($scope2_id, {});
 				return 0;
 			}
 		}, $scope1_id, "b");
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "b");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

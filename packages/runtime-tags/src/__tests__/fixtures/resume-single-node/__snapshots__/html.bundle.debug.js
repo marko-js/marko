@@ -11,15 +11,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (items.length > 1) {
 				const $scope2_id = _scope_id();
 				_html("<div>b</div>");
-				writeScope($scope2_id, {}, "__tests__/template.marko", "6:4");
+				_scope($scope2_id, {}, "__tests__/template.marko", "6:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, {}, "__tests__/template.marko", "4:2");
+		_scope($scope1_id, {}, "__tests__/template.marko", "4:2");
 	}, 0, $scope0_id, "#text/0");
 	_html(`<button>More</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		itemId,
 		items,
 		items_length: items?.length

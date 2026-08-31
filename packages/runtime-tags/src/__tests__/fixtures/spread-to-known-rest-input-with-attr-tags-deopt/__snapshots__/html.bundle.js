@@ -9,9 +9,9 @@ var child_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "b", desc, {}, 0, 0, $sg__input_foo);
 		_html(`</span>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_foo, $sg__input_foo, $sg__input_foo, 0, 1);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/wrap.marko
@@ -30,13 +30,13 @@ var wrap_default = _template("c", (input) => {
 		_set_serialize_reason(_serialize_guard($scope0_reason, 1));
 		const $childScope = _peek_scope_id();
 		child_default({ foo: input.foo });
-		_subscribe($si__input_foo && $input_foo__closures, writeScope($scope1_id, {
+		_subscribe($si__input_foo && $input_foo__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: $si__input_foo && _existing_scope($childScope)
 		}));
 		_resume_branch($scope1_id);
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: input.foo,
 		e: _serialize_if($scope0_reason, 3) && _class,
 		f: _serialize_if($scope0_reason, 2) && rest,
@@ -74,5 +74,5 @@ var template_default = _template("a", (input) => {
 			}, $scope0_id) })
 		})
 	});
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

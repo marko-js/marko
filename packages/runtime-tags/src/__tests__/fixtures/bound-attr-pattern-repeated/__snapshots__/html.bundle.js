@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		const $valueChange = $aChange;
 		_html(`<input${_attr_input_value($scope1_id, "a", a, $valueChange)}>${_el_resume($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", a, $valueChange)}>${_el_resume($scope1_id, "b")}<input${_attr_input_value($scope1_id, "c", a, $valueChange)}>${_el_resume($scope1_id, "c")}`);
 		_script($scope1_id, "a1");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			f: _serialize_if($scope1_reason, 0) && $aChange,
 			g: _serialize_if($scope1_reason, 1) && a
 		});
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z1" });
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: n,
 		c: _existing_scope($childScope)
 	});

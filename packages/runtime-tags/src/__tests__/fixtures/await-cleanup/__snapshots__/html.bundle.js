@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 					_script($scope3_id, "a0");
 					_html(_text_resume($scope3_id, "a", show));
 					_script($scope3_id, "a1");
-					writeScope($scope3_id, { _: _scope_with_id($scope2_id) });
+					_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 					_resume_branch($scope3_id);
 				});
 				_await($scope2_id, "b", resolveAfter(0, 1), () => {
@@ -24,18 +24,18 @@ var template_default = _template("a", (input) => {
 					_script($scope5_id, "a2");
 					_resume_branch($scope5_id);
 				}, 0);
-				writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading...");
 			}, $scope1_id) }) });
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_script($scope0_id, "a5");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: show,
 		d: $show__closures
 	});

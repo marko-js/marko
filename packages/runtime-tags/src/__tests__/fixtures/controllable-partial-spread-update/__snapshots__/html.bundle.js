@@ -12,6 +12,6 @@ var template_default = _template("a", (input) => {
 	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<div>${_text_resume($scope0_id, "c", v)}</div>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, { e: rest });
+	_scope($scope0_id, { e: rest });
 	_resume_branch($scope0_id);
 }, 1);

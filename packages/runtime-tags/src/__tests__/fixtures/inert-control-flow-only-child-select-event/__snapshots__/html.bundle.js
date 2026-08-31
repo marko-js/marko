@@ -7,12 +7,12 @@ var template_default = _template("a", (input) => {
 	_for_until(3, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<option${_attr("selected", selected === i)}>${_escape(i)}</option>${_el_resume($scope1_id, "a")}`);
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			M: i,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 0, "</select>", 1);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

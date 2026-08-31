@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		...moreStyles
 	])}></div>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d,
 		e: more,
 		f: moreStyles,

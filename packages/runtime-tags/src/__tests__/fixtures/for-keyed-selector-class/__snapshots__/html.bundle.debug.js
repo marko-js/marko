@@ -22,11 +22,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<tr${selected === row.id ? " class=danger" : ""}><td><button class=select>${_text_resume($scope1_id, "#text/2", row.label)}</button>${_el_resume($scope1_id, "#button/1")}</td></tr>${_el_resume($scope1_id, "#tr/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		writeScope($scope1_id, { row_id: row?.id }, "__tests__/template.marko", "5:4", { row_id: ["row.id", "5:8"] });
+		_scope($scope1_id, { row_id: row?.id }, "__tests__/template.marko", "5:4", { row_id: ["row.id", "5:8"] });
 	}, "id", $scope0_id, "#tbody/0", 1, 1, 1, "</tbody>", 1);
 	_html(`</table><button class=remove>remove selected</button>${_el_resume($scope0_id, "#button/1")}<button class=rotate>rotate</button>${_el_resume($scope0_id, "#button/2")}<button class=clear>clear</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		selected,
 		rows
 	}, "__tests__/template.marko", 0, {

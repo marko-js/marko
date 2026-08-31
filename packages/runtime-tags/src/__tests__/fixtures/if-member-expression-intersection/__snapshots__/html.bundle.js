@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 	_html(`<div${_attr("id", id)}>`);
 	_if(() => {}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: hide,
 		c: text,
 		d: 0,

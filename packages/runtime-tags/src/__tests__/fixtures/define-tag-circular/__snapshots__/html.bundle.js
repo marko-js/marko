@@ -12,12 +12,12 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					Foo.content({});
 				}, $scope2_id) }).content({});
-				$si__show && writeScope($scope2_id, {});
+				$si__show && _scope($scope2_id, {});
 				return 0;
 			}
 		}, $scope1_id, "a", $sg__show, $sg__show, $sg__show);
 		_html(" foo");
-		$si__show && writeScope($scope1_id, {});
+		$si__show && _scope($scope1_id, {});
 	}, _scope_id()) };
 	Foo.content({ show: true });
 }, 1);

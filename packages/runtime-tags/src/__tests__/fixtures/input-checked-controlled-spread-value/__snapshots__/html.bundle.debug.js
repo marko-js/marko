@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		...input.rest
 	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_rest#3_checked#4");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_rest: input.rest,
 		checked
 	}, "__tests__/template.marko", 0, {

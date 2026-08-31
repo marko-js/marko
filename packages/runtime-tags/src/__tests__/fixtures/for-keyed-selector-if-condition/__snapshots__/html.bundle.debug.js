@@ -25,13 +25,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (selected === row.id) {
 				const $scope2_id = _scope_id();
 				_html("<strong>*</strong>");
-				writeScope($scope2_id, {}, "__tests__/template.marko", "6:8");
+				_scope($scope2_id, {}, "__tests__/template.marko", "6:8");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
 		_html(`<button class=select>${_escape(row.label)}</button>${_el_resume($scope1_id, "#button/1")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			row_id: row?.id,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "4:4", { row_id: ["row.id", "4:8"] });

@@ -10,13 +10,13 @@ var test_default = _template("b", (input) => {
 			if (input.x) {
 				const $scope2_id = _scope_id();
 				_html(`<div>${_escape(count)}</div>`);
-				$si__input_x && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+				$si__input_x && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
 		}, $scope1_id, "a", $sg__input_x, $sg__input_x, $sg__input_x, 0, 1);
-		$si__input_x && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		$si__input_x && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) }).content({ x: 1 });
-	writeScope($scope0_id, { b: count });
+	_scope($scope0_id, { b: count });
 });
 
 // template.marko
@@ -27,6 +27,6 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a");
 	_html("</div>");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);
