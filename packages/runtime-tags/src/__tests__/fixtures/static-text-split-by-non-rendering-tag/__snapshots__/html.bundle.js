@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const m = n * 2;
 	_html(`<div>Hello  World <button>click</button>${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "b", n)}</span></div>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: n,
 		d: m
 	});

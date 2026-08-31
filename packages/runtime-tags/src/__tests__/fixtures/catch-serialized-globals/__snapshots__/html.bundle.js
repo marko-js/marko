@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		let clicked = false;
 		_html(`<button>${_text_resume($scope2_id, "b", error.message)}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a0");
-		writeScope($scope2_id, {
+		_scope($scope2_id, {
 			e: error?.message,
 			f: message,
 			g: _serialize_if($scope2_reason, 0) && clicked

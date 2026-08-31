@@ -4,7 +4,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 	const $scope0_id = _scope_id();
 	_html(`<div>Child: ${_text_resume($scope0_id, "#text/0", input, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
 	const $return = input;
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
 	return $return;
 });
 
@@ -20,6 +20,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/3", $tags0_scope, "__tests__/template.marko_0_y#6/var");
 	_html(`<div>Parent: ${_text_resume($scope0_id, "#text/4", y, 2)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "3:6" });
+	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);

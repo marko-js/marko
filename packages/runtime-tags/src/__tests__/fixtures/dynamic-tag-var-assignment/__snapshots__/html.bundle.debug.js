@@ -6,7 +6,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", x)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $return = x;
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		x,
 		"#TagVariableChange": _resume((_new_x) => {
 			x = _new_x;
@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $getCounter_scope, "__tests__/template.marko_0_count#3/var", "#text/0");
 	_html(`<button class=reset>reset</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

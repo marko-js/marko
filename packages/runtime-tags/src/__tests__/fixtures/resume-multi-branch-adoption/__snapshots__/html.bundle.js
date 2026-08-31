@@ -12,13 +12,13 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "a", item)}</span>`);
 				_script($scope2_id, "a0");
-				writeScope($scope2_id, {});
+				_scope($scope2_id, {});
 				return 0;
 			}
 		}, $scope1_id, "a", 1, 1, 1, "</div>", 1);
-		writeScope($scope1_id, { c: item });
+		_scope($scope1_id, { c: item });
 	}, 0, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	};
 	_html(`<button>${_text_resume($scope0_id, "#text/1", foo)}:${_text_resume($scope0_id, "#text/2", bar, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_foo#5_$fooChange#6");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		foo,
 		$fooChange
 	}, "__tests__/template.marko", 0, {

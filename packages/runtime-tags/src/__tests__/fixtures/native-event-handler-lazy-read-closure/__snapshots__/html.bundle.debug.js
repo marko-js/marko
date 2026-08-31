@@ -12,14 +12,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>pick ${_escape(i)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			i,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "4:2", { i: "4:6" });
 	});
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/1")}<div class=total>${_text_resume($scope0_id, "#text/2", total)}</div><div class=seen>${_text_resume($scope0_id, "#text/3", seen)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		total,
 		seen
 	}, "__tests__/template.marko", 0, {

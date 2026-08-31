@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const { name, write } = input;
 	_html(`<div>${_text_resume($scope0_id, "#text/0", name, $sg__input_name)}</div><span>${_text_resume($scope0_id, "#text/1", name, $sg__input_name)}</span><p>${_text_resume($scope0_id, "#text/2", name, $sg__input_name)}</p>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_name#5_write#6");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		name,
 		write
 	}, "__tests__/tags/child.marko", 0, {
@@ -36,10 +36,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			write,
 			name: item
 		});
-		writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
+		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
 	}, 0, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		items,
 		write
 	}, "__tests__/template.marko", 0, {

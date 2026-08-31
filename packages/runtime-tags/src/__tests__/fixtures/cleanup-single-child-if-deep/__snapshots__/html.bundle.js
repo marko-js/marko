@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	const { name, write } = input;
 	_html(`<p>${_text_resume($scope0_id, "a", name, _serialize_guard($scope0_reason, 0))}</p>`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: name,
 		e: write
 	});
@@ -47,22 +47,22 @@ var template_default = _template("a", (input) => {
 								write,
 								name: "Inner"
 							});
-							writeScope($scope3_id, {});
+							_scope($scope3_id, {});
 							return 0;
 						}
 					}, $scope2_id, "b", 1, 1, 1, 0, 1);
 					_html("</div>");
-					_subscribe($showInner__closures, writeScope($scope2_id, {}));
+					_subscribe($showInner__closures, _scope($scope2_id, {}));
 					return 0;
 				}
 			}, $scope1_id, "b", 1, 1, 1, 0, 1);
 			_html("</div>");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "e", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: showOuter,
 		g: showMiddle,
 		h: showInner,

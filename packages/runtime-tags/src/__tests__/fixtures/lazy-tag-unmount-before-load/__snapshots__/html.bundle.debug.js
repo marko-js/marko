@@ -4,7 +4,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_resume($scope0_id, "#text/0", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "__tests__/child.marko_0");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/child.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
 // template.marko
@@ -29,11 +29,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html("loading");
 			}, $scope1_id) }) });
-			writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "4:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "4:6" });
 	_resume_branch($scope0_id);
 }, 1);

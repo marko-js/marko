@@ -21,7 +21,7 @@ const $content = (input) => {
 					comments: comment.comments,
 					path: id
 				});
-				$si__input_comments__OR__input_path && writeScope($scope2_id, {
+				$si__input_comments__OR__input_path && _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/tags/comments.marko", "10:8");
@@ -30,7 +30,7 @@ const $content = (input) => {
 		}, $scope1_id, "#text/4", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, 0, 1);
 		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/comments.marko_1");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			comment_comments: $si__input_comments && comment?.comments,
 			"#LoopKey": _serialize_if($scope0_reason, 2) && i,
 			id: $si__input_comments && id,
@@ -43,7 +43,7 @@ const $content = (input) => {
 			open: "4:10"
 		});
 	}, 0, $scope0_id, "#ul/0", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, "</ul>", 1);
-	$si__input_comments && writeScope($scope0_id, { input_path: input.path }, "__tests__/tags/comments.marko", 0, { input_path: ["input.path"] });
+	$si__input_comments && _scope($scope0_id, { input_path: input.path }, "__tests__/tags/comments.marko", 0, { input_path: ["input.path"] });
 };
 var comments_default = _template("__tests__/tags/comments.marko", $content);
 
@@ -58,5 +58,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	const $childScope = _peek_scope_id();
 	comments_default(input);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

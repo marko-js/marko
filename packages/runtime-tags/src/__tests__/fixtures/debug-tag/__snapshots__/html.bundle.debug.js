@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let y = 0;
 	debugger;
 	_script($scope0_id, "__tests__/template.marko_0_x#0_y#1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		x,
 		y
 	}, "__tests__/template.marko", 0, {

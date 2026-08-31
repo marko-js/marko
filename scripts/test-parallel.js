@@ -23,8 +23,11 @@ const { setTimeout: sleep } = require("node:timers/promises");
 const glob = require("tiny-glob");
 
 const ROOT = path.resolve(__dirname, "..");
-const MOCHA = require.resolve("mocha/bin/mocha.js");
+// `bin/_mocha` is the runner; `bin/mocha.js` only re-execs it with the config's
+// node flags, doubling the process per worker.
+const MOCHA = require.resolve("mocha/bin/_mocha");
 const CONFIG = path.join(ROOT, ".mocharc.parallel.cjs");
+const NODE_ARGS = require(CONFIG)["node-option"].map((flag) => `--${flag}`);
 // Exit code a worker uses when it handed its remaining suites off.
 const RECYCLE_EXIT_CODE = 75;
 const SPEC_GLOB = "packages/*/@(src|test)/**/*.test.@(js|ts)";
@@ -51,9 +54,9 @@ const DEFAULT_FILE_MS = 2_000;
 
 const CORES = os.availableParallelism();
 const WORKERS = Math.max(1, Number(process.env.MARKO_TEST_WORKERS) || CORES);
-// Memory a worker may grow to (enforced by test-parallel-worker.cjs). Runs on
-// a machine share one slot per core (and per 2GB) through files in tmpdir.
-const WORKER_MEM = 2 * 1024 ** 3;
+// Memory a worker may grow to: room above the heap cap, tighter under coverage.
+// Runs on a machine share one slot per core (and per budget) through tmpdir.
+const WORKER_MEM = (process.env.NODE_V8_COVERAGE ? 2 : 3) * 1024 ** 3;
 const SLOT_DIR = path.join(os.tmpdir(), "marko-test-parallel");
 const SLOT_COUNT = Math.max(
   1,
@@ -248,7 +251,15 @@ async function runBin(bin, index, slicedFiles, mochaArgs) {
 function runProcess(bin, index, slicedFiles, mochaArgs, skipped) {
   // `--exit` so a stray timer/handle leaked by a test can't wedge the worker
   // (and with it the whole run) after its suite finishes.
-  const args = [MOCHA, "--config", CONFIG, "--reporter", "dot", "--exit"];
+  const args = [
+    ...NODE_ARGS,
+    MOCHA,
+    "--config",
+    CONFIG,
+    "--reporter",
+    "dot",
+    "--exit",
+  ];
   args.push(...mochaArgs);
   const env = { ...process.env, MARKO_TEST_WORKER_MEM: String(WORKER_MEM) };
   if (skipped) env.MARKO_TEST_SKIPPED = String(skipped);

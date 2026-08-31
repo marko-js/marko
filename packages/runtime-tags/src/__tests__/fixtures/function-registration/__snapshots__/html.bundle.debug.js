@@ -11,5 +11,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div>${_escape(sum(1, 2))}</div><div>${_escape(add1(3))}</div><button>before</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

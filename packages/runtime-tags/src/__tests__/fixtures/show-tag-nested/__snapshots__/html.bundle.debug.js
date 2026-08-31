@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(" after");
 	_show_end($scope0_id, "#text/6", outer);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		outer,
 		inner
 	}, "__tests__/template.marko", 0, {

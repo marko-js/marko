@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	{
 		const $scope1_id = _scope_id();
 		_script($scope1_id, "a0");
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

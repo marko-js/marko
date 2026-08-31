@@ -13,9 +13,9 @@ var template_default = _template("a", (input) => {
 			_html(`<div id=inside>${_text_resume($scope3_id, "a", value)}</div>`);
 			_script($scope3_id, "a0");
 			_script($scope3_id, "a1");
-			writeScope($scope3_id, { c: value });
+			_scope($scope3_id, { c: value });
 		});
-		_subscribe($value__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a2", () => {
 		_scope_reason();
@@ -23,6 +23,6 @@ var template_default = _template("a", (input) => {
 		_html("loading...");
 	}, $scope0_id) }) });
 	_script($scope0_id, "a4");
-	writeScope($scope0_id, { d: $value__closures });
+	_scope($scope0_id, { d: $value__closures });
 	_resume_branch($scope0_id);
 }, 1);

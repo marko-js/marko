@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/valueChange4", $scope0_id);
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", value, $valueChange)} id=refined>${_el_resume($scope0_id, "#input/0")}<input${_attr_input_value($scope0_id, "#input/1", value, $valueChange)} id=refined2>${_el_resume($scope0_id, "#input/1")}<input${_attr_input_value($scope0_id, "#input/2", value, $valueChange2)} id=plain>${_el_resume($scope0_id, "#input/2")}<input${_attr_input_value($scope0_id, "#input/3", value, $valueChange2)} id=plain2>${_el_resume($scope0_id, "#input/3")}<div>${_text_resume($scope0_id, "#text/4", typeof value)} ${_text_resume($scope0_id, "#text/5", value, 2)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		$valueChange2,
 		$valueChange
 	}, "__tests__/template.marko", 0, {

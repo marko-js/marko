@@ -13,11 +13,11 @@ var template_default = _template("a", (input) => {
 				_html(`<i>${_escape(v)}</i>`);
 			}, 0);
 			_if(() => {}, $scope1_id, "b");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: x });
+	_scope($scope0_id, { d: x });
 	_resume_branch($scope0_id);
 }, 1);

@@ -6,7 +6,7 @@ var my_button_default = _template("__tests__/tags/my-button.marko", (input) => {
 	const { value: { text: textAlias } } = input;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", text, $sg__input_value_text)} ${_text_resume($scope0_id, "#text/2", textAlias, $sg__input_value_text * 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/my-button.marko_0_onClick#5");
-	writeScope($scope0_id, { onClick }, "__tests__/tags/my-button.marko", 0, { onClick: "1:10" });
+	_scope($scope0_id, { onClick }, "__tests__/tags/my-button.marko", 0, { onClick: "1:10" });
 });
 
 // template.marko
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/onClick2", $scope0_id),
 		value: attrTag({ text: clickCount })
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		clickCount,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)

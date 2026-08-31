@@ -10,6 +10,6 @@ var template_default = _template("a", (input) => {
 	_show_end($scope0_id, "e", visible);
 	_html(" y</div>");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { f: visible });
+	_scope($scope0_id, { f: visible });
 	_resume_branch($scope0_id);
 }, 1);

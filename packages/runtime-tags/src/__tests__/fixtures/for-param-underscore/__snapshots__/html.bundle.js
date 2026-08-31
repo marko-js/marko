@@ -7,11 +7,11 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<div>${_escape(_)}:${_text_resume($scope1_id, "c", n, 2)}</div>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			f: _?.length,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 0, 0, 0, 1);
-	writeScope($scope0_id, { b: n });
+	_scope($scope0_id, { b: n });
 	_resume_branch($scope0_id);
 }, 1);

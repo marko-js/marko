@@ -9,7 +9,7 @@ var hello_default = _template("b", (input) => {
 	_html(`</main><footer${_attr_class(input.footer.class)}>`);
 	_dynamic_tag($scope0_id, "e", input.footer.content, {}, 0, 0, _serialize_guard($scope0_reason, 5));
 	_html(`</footer>${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 4))}`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko

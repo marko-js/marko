@@ -4,7 +4,7 @@ var custom_tag_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div>Child: ${_text_resume($scope0_id, "a", input, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
 	const $return = input;
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 	return $return;
 });
 
@@ -20,6 +20,6 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "d", $tags0_scope, "a0");
 	_html(`<div>Parent: ${_text_resume($scope0_id, "e", y, 2)}</div>`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { f: x });
+	_scope($scope0_id, { f: x });
 	_resume_branch($scope0_id);
 }, 1);

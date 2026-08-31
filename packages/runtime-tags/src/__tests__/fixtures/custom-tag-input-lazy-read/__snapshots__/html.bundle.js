@@ -4,7 +4,7 @@ var press_button_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<button class=act>press</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { d: input.onPress });
+	_scope($scope0_id, { d: input.onPress });
 });
 
 // template.marko
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id) });
 	_html(`<div class=log>${_text_resume($scope0_id, "c", log)}</div>`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: count,
 		e: log
 	});

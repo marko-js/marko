@@ -9,11 +9,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button></button>${_el_resume($scope1_id, "#button/0")}`);
 		const $return = $el;
 		_script($scope1_id, "__tests__/template.marko_1_input_onClick#3");
-		writeScope($scope1_id, { input_onClick: input.onClick }, "__tests__/template.marko", "1:2", { input_onClick: ["input.onClick", "1:15"] });
+		_scope($scope1_id, { input_onClick: input.onClick }, "__tests__/template.marko", "1:2", { input_onClick: ["input.onClick", "1:15"] });
 		return $return;
 	}, $scope0_id) };
 	let foo = Child.content({ onClick: _resume(function() {
 		foo().innerHTML = "clicked";
 	}, "__tests__/template.marko_0/onClick", $scope0_id) });
-	writeScope($scope0_id, { foo }, "__tests__/template.marko", 0, { foo: "6:8" });
+	_scope($scope0_id, { foo }, "__tests__/template.marko", 0, { foo: "6:8" });
 }, 1);

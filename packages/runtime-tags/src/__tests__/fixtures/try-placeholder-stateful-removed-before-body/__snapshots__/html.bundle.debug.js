@@ -21,11 +21,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_script($scope3_id, "__tests__/template.marko_3");
 				_resume_branch($scope3_id);
 			}, $scope1_id) }) });
-			writeScope($scope1_id, {}, "__tests__/template.marko", "5:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

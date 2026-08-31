@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	const sometimesBaz = baz;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}<div${_attr("id", alwaysFoo)}>foo</div><div${_attr("id", sometimesBar)}>bar</div>${_el_resume($scope0_id, "c")}<div${_attr("id", sometimesBaz)}>baz</div>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: bar,
 		f: baz
 	});

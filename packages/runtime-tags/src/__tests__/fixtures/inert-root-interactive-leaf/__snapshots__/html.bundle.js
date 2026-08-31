@@ -5,7 +5,7 @@ var counter_default = _template("a", (input) => {
 	let n = 0;
 	_html(`<button class=counter>count:${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: n });
+	_scope($scope0_id, { c: n });
 	_resume_branch($scope0_id);
 });
 

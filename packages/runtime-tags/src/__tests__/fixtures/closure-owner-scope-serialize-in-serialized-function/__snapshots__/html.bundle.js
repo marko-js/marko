@@ -12,10 +12,10 @@ var template_default = _template("a", (input) => {
 		}, "a1", $scope1_id);
 		_html(`<div></div>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a2");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			b: run,
 			_: _scope_with_id($scope0_id)
 		});
 	}
-	writeScope($scope0_id, { b: text });
+	_scope($scope0_id, { b: text });
 }, 1);

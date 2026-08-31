@@ -9,7 +9,7 @@ var child_default = _template("b", (input) => {
 		_script($scope1_id, "b1");
 		_resume_branch($scope1_id);
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -25,12 +25,12 @@ var template_default = _template("a", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			child_default({ show });
-			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: outer,
 		e: show
 	});

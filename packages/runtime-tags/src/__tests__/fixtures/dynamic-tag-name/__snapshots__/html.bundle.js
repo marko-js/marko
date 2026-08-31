@@ -6,7 +6,7 @@ var tag_a_default = _template("b", (input) => {
 	_html(`<div${_attr_class(className)}${_attr("data-other", other)}>A `);
 	_dynamic_tag($scope0_id, "b", content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
 	_html(`</div>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}`);
-	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 1) && _scope($scope0_id, {});
 });
 
 // tags/tag-b/index.marko
@@ -17,7 +17,7 @@ var tag_b_default = _template("c", (input) => {
 	_html(`<div${_attr_class(className)}${_attr("data-other", other)}>B `);
 	_dynamic_tag($scope0_id, "b", content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
 	_html(`</div>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}`);
-	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 1) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -105,7 +105,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "s", "div", {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "t", "div", {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "u", "div", {}, 0, 0, 0);
-	_serialize_if($scope0_reason, 8) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 8) && _scope($scope0_id, {
 		x: $si__input_other && content,
 		y: $si__input_other && x,
 		z: $si__input_other && show,

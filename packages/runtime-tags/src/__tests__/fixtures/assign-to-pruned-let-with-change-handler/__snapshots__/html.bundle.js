@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let liveCount = 0;
 	_html(`<button>Before</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", liveCount)}</div>`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { e: _resume(function(v) {
+	_scope($scope0_id, { e: _resume(function(v) {
 		liveCount = v;
 	}, "a0", $scope0_id) || void 0 });
 	_resume_branch($scope0_id);

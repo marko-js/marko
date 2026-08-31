@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	const { name, write } = input;
 	_html(`<div>${_text_resume($scope0_id, "a", name, _serialize_guard($scope0_reason, 0))}</div>`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: name,
 		e: write
 	});
@@ -44,16 +44,16 @@ var template_default = _template("a", (input) => {
 				name: `${outerItem}.${middleItem}`
 			});
 			_html("</div>");
-			writeScope($scope2_id, { a: _existing_scope($childScope2) });
+			_scope($scope2_id, { a: _existing_scope($childScope2) });
 		}, 0, $scope1_id, "b", 1, 1, 1, 0, 1);
 		_html("</div>");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			d: outerItem,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: items,
 		e: write
 	});

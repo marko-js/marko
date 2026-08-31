@@ -12,15 +12,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (x > 9) {
 					const $scope2_id = _scope_id();
 					_html("inner");
-					writeScope($scope2_id, {}, "__tests__/template.marko", "5:4");
+					_scope($scope2_id, {}, "__tests__/template.marko", "5:4");
 					return 0;
 				}
 			}, $scope1_id, "#text/0");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
+	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

@@ -9,7 +9,7 @@ var grand_child_default = _template("__tests__/grand-child.marko", (input) => {
 		_html(`<span id=grand-await>${_escape(v)}</span>`);
 	}, 0);
 	_script($scope0_id, "__tests__/grand-child.marko_0");
-	writeScope($scope0_id, { n }, "__tests__/grand-child.marko", 0, { n: "3:6" });
+	_scope($scope0_id, { n }, "__tests__/grand-child.marko", 0, { n: "3:6" });
 	_resume_branch($scope0_id);
 });
 
@@ -27,14 +27,14 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		_set_serialize_reason(1);
 		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
-		_subscribe($count__closures, writeScope($scope1_id, {
+		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/2": _existing_scope($childScope)
 		}, "__tests__/child.marko", "6:2"));
 		_resume_branch($scope1_id);
 	});
 	_script($scope0_id, "__tests__/child.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count": $count__closures
 	}, "__tests__/child.marko", 0, { count: "4:6" });
@@ -50,5 +50,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_html("<div id=after>after</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

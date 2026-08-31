@@ -5,7 +5,7 @@ var grand_child_default = _template("b", (input) => {
 	let copy = input.obj;
 	_html(`<button class=grand>grand:${_text_resume($scope0_id, "b", copy.name, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { f: copy });
+	_scope($scope0_id, { f: copy });
 	_resume_branch($scope0_id);
 });
 
@@ -19,7 +19,7 @@ var child_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	$GrandChild_withLoadAssets({ obj });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: obj,
 		d: _existing_scope($childScope)
 	});

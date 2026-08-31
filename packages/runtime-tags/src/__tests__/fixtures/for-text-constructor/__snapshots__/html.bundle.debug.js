@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.words, (w) => {
 		const $scope1_id = _scope_id();
 		_html("constructor");
-		$si__input_words && writeScope($scope1_id, {}, "__tests__/template.marko", "1:7");
+		$si__input_words && _scope($scope1_id, {}, "__tests__/template.marko", "1:7");
 	}, 0, $scope0_id, "#div/0", $sg__input_words, $sg__input_words, $sg__input_words, "</div>");
-	$si__input_words && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	$si__input_words && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

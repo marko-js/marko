@@ -7,10 +7,10 @@ var template_default = _template("a", (input) => {
 	_for_of(children, () => {
 		const $scope1_id = _scope_id();
 		_html("Child");
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "b");
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: children });
+	_scope($scope0_id, { c: children });
 	_resume_branch($scope0_id);
 }, 1);

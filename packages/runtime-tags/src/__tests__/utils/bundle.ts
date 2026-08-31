@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import fs, { readFileSync } from "fs";
 import path from "path";
 import zlib from "zlib";
 
@@ -27,7 +27,10 @@ const testUtilChunkName = "test-utils";
 // Totals every chunk that holds only shared runtime, under one stable key
 // (chunk file names for those follow the module graph and would churn).
 const sharedChunkKey = "shared";
-
+const runtimeEntryRe =
+  /^@marko\/runtime-tags\/(?:debug\/)?(dom|html)(?:\/([^/]+)\.feat)?$/;
+const featExt = ".feat.ts";
+const DAY = 24 * 60 * 60 * 1000;
 interface Diagnostic {
   type: string;
   label: string;
@@ -155,12 +158,13 @@ function createBuilds(
     ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
     platform: "browser",
     treeshake: optimize,
-    experimental: { nativeMagicString: true },
+    experimental: { lazyBarrel: true, nativeMagicString: true },
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
     plugins: [
       virtual.plugin,
       domEntry.plugin,
+      !optimize && externalRuntimePlugin("dom", optimize),
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
@@ -235,9 +239,10 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     treeshake: optimize,
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
-    experimental: { nativeMagicString: true },
+    experimental: { lazyBarrel: true, nativeMagicString: true },
     plugins: [
       virtual.plugin,
+      !interop && externalRuntimePlugin("html", optimize),
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "html" }, collectDiagnostics),
@@ -452,6 +457,96 @@ function virtualPlugin(cwd: string): {
       },
     },
   };
+}
+
+// Only the optimize dom bundle is measured, so every other build links one
+// process-wide runtime instead of re-emitting it into each fixture.
+function externalRuntimePlugin(
+  kind: "dom" | "html",
+  optimize: boolean,
+): Plugin {
+  return {
+    name: "external-runtime",
+    resolveId: {
+      filter: { id: runtimeEntryRe },
+      async handler(id) {
+        const feature = runtimeEntryRe.exec(id)![2];
+        const dir = await prebuiltRuntime(kind, optimize);
+        return {
+          id: path.join(dir, feature ? `${feature}.feat.mjs` : "runtime.mjs"),
+          external: true,
+        };
+      },
+    },
+  };
+}
+
+// The `*.feat` modules enable behavior by reassigning the runtime's own
+// bindings, so they are entries of that bundle rather than fixture copies.
+const prebuiltRuntimes = new Map<string, Promise<string>>();
+function prebuiltRuntime(kind: "dom" | "html", optimize: boolean) {
+  const variant = optimize ? `${kind}-optimize` : kind;
+  let built = prebuiltRuntimes.get(variant);
+  if (!built) {
+    const dir = path.join(prebuiltRuntimeDir(), variant);
+    const srcDir = path.join(import.meta.dirname, "../..");
+    const input: Record<string, string> = {
+      runtime: path.join(srcDir, `${kind}.ts`),
+    };
+    for (const file of fs.readdirSync(path.join(srcDir, kind))) {
+      if (file.endsWith(featExt)) {
+        input[file.slice(0, -3)] = path.join(srcDir, kind, file);
+      }
+    }
+    prebuiltRuntimes.set(
+      variant,
+      (built = build({
+        input,
+        platform: kind === "dom" ? "browser" : "node",
+        treeshake: false,
+        plugins: [optimize && remapDebugPlugin()],
+        experimental: { lazyBarrel: true, nativeMagicString: true },
+        transform: { define: { MARKO_DEBUG: String(!optimize) } },
+        output: {
+          dir,
+          entryFileNames: "[name].mjs",
+          chunkFileNames: "[name].mjs",
+          sourcemap: true,
+          sourcemapExcludeSources: true,
+        },
+      }).then(() => dir)),
+    );
+  }
+  return built;
+}
+
+// Inside coverage's `packages/*/src/**` scope so its scripts remap; the sweep
+// collects what a killed run, or a coverage run's deferred remap, left behind.
+let runtimeDir: string | undefined;
+function prebuiltRuntimeDir() {
+  if (!runtimeDir) {
+    const root = path.join(import.meta.dirname, "..", "dist");
+    fs.mkdirSync(root, { recursive: true });
+    for (const entry of fs.readdirSync(root)) {
+      // Old enough that no run can still be reporting on it, and tolerant of
+      // another worker sweeping the same directory first.
+      const dir = path.join(root, entry);
+      const stat = fs.statSync(dir, { throwIfNoEntry: false });
+      if (stat && stat.mtimeMs < Date.now() - DAY) {
+        fs.rmSync(dir, { force: true, recursive: true });
+      }
+    }
+    fs.mkdirSync((runtimeDir = path.join(root, String(process.pid))), {
+      recursive: true,
+    });
+    // A coverage run's files outlive it, because that remapping runs last.
+    if (!process.env.NODE_V8_COVERAGE) {
+      process.on("exit", () =>
+        fs.rmSync(runtimeDir!, { force: true, recursive: true }),
+      );
+    }
+  }
+  return runtimeDir;
 }
 
 function remapDebugPlugin(): Plugin {

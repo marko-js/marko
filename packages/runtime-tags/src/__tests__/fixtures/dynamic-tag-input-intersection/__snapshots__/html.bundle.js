@@ -14,7 +14,7 @@ var my_tag_default = _template("b", (input) => {
 		content
 	});
 	_script($scope0_id, "b1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: inputAs,
 		e: inputClass,
 		f: inputContent,

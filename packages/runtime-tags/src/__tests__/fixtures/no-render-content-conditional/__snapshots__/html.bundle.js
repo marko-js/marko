@@ -13,7 +13,7 @@ var child_default = _template("b", (input) => {
 	let x = my_const_default({ value: input.foo });
 	_var($scope0_id, "b", $childScope, "b0");
 	_script($scope0_id, "b1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: input,
 		f: x,
 		a: _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
@@ -32,5 +32,5 @@ var template_default = _template("a", (input) => {
 		foo: input.foo,
 		output
 	});
-	writeScope($scope0_id, { b: _serialize_if($scope0_reason, 0) && _existing_scope($childScope) });
+	_scope($scope0_id, { b: _serialize_if($scope0_reason, 0) && _existing_scope($childScope) });
 }, 1);

@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_html(`${_el_resume($scope0_id, "#select/1")}<button>Swap</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { tag }, "__tests__/template.marko", 0, {
+	_scope($scope0_id, { tag }, "__tests__/template.marko", 0, {
 		tag: "1:6",
 		"ControlledHandler:#select/1": ["valueChange", "4:16"]
 	});

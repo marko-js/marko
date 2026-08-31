@@ -3,7 +3,7 @@ var render_input_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.data.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/my-box.marko
@@ -17,7 +17,7 @@ var my_box_default = _template("b", (input) => {
 	_if(() => {}, $scope0_id, "c", 1, 1, 1, "</div>");
 	_script($scope0_id, "b0");
 	_script($scope0_id, "b1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: input,
 		f: show
 	});

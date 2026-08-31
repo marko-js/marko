@@ -6,7 +6,7 @@ var setter_default = _template("b", (input) => {
 		input.valueChange(1);
 	}, "b0", $scope0_id);
 	const $return = (input.value, setter);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: input.valueChange,
 		d: _serialize_if($scope0_reason, 0) && input.value,
 		e: _serialize_if($scope0_reason, 1) && setter
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $childScope, "a1");
 	_html(`<div>${_text_resume($scope0_id, "c", count)}</div>`);
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: setCount,
 		a: _existing_scope($childScope)
 	});

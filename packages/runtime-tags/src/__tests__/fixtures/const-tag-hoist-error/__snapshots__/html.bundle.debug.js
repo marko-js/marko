@@ -6,6 +6,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const x = 1;
 	const y = 1;
 	_html(`<div>${_escape(x)}</div>${_escape($y_getter)}`);
-	writeScope($scope0_id, { y }, "__tests__/template.marko", 0, { y: "3:10" });
+	_scope($scope0_id, { y }, "__tests__/template.marko", 0, { y: "3:10" });
 	_assert_hoist(y);
 }, 1);

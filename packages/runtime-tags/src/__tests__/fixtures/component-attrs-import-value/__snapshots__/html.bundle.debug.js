@@ -10,7 +10,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", input.format(count))}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input,
 		count
 	}, "__tests__/tags/counter.marko", 0, {

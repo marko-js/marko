@@ -9,7 +9,7 @@ var grand_child_default = _template("b", (input) => {
 		_html(`<span id=grand-await>${_escape(v)}</span>`);
 	}, 0);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { h: n });
+	_scope($scope0_id, { h: n });
 	_resume_branch($scope0_id);
 });
 
@@ -27,14 +27,14 @@ var child_default = _template("a", (input) => {
 		_set_serialize_reason(1);
 		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
-		_subscribe($count__closures, writeScope($scope1_id, {
+		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			c: _existing_scope($childScope)
 		}));
 		_resume_branch($scope1_id);
 	});
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: count,
 		h: $count__closures
 	});
@@ -50,5 +50,5 @@ var template_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_html("<div id=after>after</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { b: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

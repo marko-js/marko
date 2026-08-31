@@ -7,5 +7,5 @@ var template_default = _template("a", (input) => {
   `)}<\/script><style${_attr_nonce()}>${_escape_style(`
     ${_to_text(".test { content: 'Hello <b> </style>' }")}
   `)}</style></div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 }, 1);

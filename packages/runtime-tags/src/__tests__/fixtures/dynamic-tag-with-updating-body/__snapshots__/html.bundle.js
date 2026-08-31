@@ -5,7 +5,7 @@ var counter_default = _template("b", (input) => {
 	let count = 0;
 	_html(`<button id=count>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { c: count });
+	_scope($scope0_id, { c: count });
 	_resume_branch($scope0_id);
 });
 
@@ -21,6 +21,6 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id));
 	_html(`<button id=changeTag></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { c: tagName });
+	_scope($scope0_id, { c: tagName });
 	_resume_branch($scope0_id);
 }, 1);

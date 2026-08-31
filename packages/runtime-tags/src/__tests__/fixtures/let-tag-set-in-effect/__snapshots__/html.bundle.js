@@ -5,6 +5,6 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	_html(`<span>${_text_resume($scope0_id, "a", x)}</span><span>${_text_resume($scope0_id, "b", 0)}</span>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: x });
+	_scope($scope0_id, { c: x });
 	_resume_branch($scope0_id);
 }, 1);

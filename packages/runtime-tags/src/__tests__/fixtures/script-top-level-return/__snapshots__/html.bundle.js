@@ -4,6 +4,6 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let x = true;
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { a: x });
+	_scope($scope0_id, { a: x });
 	_resume_branch($scope0_id);
 }, 1);

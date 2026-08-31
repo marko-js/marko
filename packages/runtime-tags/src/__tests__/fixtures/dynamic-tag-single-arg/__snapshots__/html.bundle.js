@@ -4,7 +4,7 @@ var custom_tag_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div>${_text_resume($scope0_id, "a", input, _serialize_guard($scope0_reason, 0))}</div>`);
 	const $return = "hello from other";
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 	return $return;
 });
 
@@ -17,6 +17,6 @@ var template_default = _template("a", (input) => {
 	_html(`<button>Count: ${_text_resume($scope0_id, "b", x, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "c", tags[0], [x], 0, 1);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: x });
+	_scope($scope0_id, { d: x });
 	_resume_branch($scope0_id);
 }, 1);

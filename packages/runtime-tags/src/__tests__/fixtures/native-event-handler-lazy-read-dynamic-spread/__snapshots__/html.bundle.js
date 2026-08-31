@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	}, "a1", $scope0_id) }, { class: 1 }, "d", $scope0_id, "button")}>b</button>${_el_resume($scope0_id, "d")}<div class=state>${_text_resume($scope0_id, "e", enabled)}:${_text_resume($scope0_id, "f", count, 2)}</div><div class=log>${_text_resume($scope0_id, "g", log)}</div>`);
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		h: enabled,
 		i: count,
 		j: log

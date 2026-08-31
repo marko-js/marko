@@ -8,10 +8,10 @@ var child_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>${_text_resume($scope1_id, "b", count)}:${_escape(value)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
-		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: count,
 		f: $count__closures
 	});
@@ -27,5 +27,5 @@ var template_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_html("<div id=after>after</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { b: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

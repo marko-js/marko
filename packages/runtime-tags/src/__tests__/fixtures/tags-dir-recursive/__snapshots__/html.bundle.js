@@ -9,7 +9,7 @@ const $content = (input) => {
 			_set_serialize_reason($sg__input_depth);
 			const $childScope = _peek_scope_id();
 			$content({ depth: input.depth - 1 });
-			$si__input_depth && writeScope($scope1_id, {
+			$si__input_depth && _scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
@@ -17,7 +17,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "b", $sg__input_depth, $sg__input_depth, $sg__input_depth, 0, 1);
 	_html("</div>");
-	$si__input_depth && writeScope($scope0_id, { e: input.depth });
+	$si__input_depth && _scope($scope0_id, { e: input.depth });
 };
 var tree_default = _template("b", $content);
 
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	tree_default({ depth: n });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: n,
 		c: _existing_scope($childScope)
 	});

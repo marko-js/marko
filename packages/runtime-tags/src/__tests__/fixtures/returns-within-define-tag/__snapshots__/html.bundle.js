@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 				value();
 			}
 		}, "a0", $scope1_id);
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			c: value,
 			d: call
 		});
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 				value();
 			}
 		}, "a2", $scope2_id);
-		writeScope($scope2_id, {
+		_scope($scope2_id, {
 			c: value,
 			d: call
 		});
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=twice>${_text_resume($scope0_id, "h", clickTwiceCount)}</button>${_el_resume($scope0_id, "g")}`);
 	_script($scope0_id, "a8");
 	_script($scope0_id, "a9");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		i: clickOnceCount,
 		j: onClickOnce,
 		k: clickTwiceCount,

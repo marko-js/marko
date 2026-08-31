@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<button>Before</button>${_el_resume($scope0_id, "#button/0")}<div>${_text_resume($scope0_id, "#text/1", liveCount)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { "TagVariableChange:count": _resume(function(v) {
+	_scope($scope0_id, { "TagVariableChange:count": _resume(function(v) {
 		liveCount = v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/template.marko", 0, { "TagVariableChange:count": ["countChange", "2:6"] });
 	_resume_branch($scope0_id);

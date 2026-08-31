@@ -8,13 +8,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_script($scope1_id, "__tests__/template.marko_1_x#3");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<div id=ref></div><button id=increment>Increment</button>${_el_resume($scope0_id, "#button/1")}<button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		x,
 		show
 	}, "__tests__/template.marko", 0, {

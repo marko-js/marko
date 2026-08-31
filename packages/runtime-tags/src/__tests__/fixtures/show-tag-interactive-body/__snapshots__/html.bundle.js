@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=inc>count ${_text_resume($scope0_id, "d", count, 2)}</button>${_el_resume($scope0_id, "c")}`);
 	_show_end($scope0_id, "f", visible);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: visible,
 		h: count
 	});

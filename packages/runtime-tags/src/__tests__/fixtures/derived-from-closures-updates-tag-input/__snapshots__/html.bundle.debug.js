@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, _serialize_guard($scope0_reason, 1))}</button>${_el_resume($scope0_id, "#button/0")}<a${_attr("href", input.hrefFor("x"))} class=${input.count % 2 ? "odd" : "even"}>x</a>${_el_resume($scope0_id, "#a/2", _serialize_guard($scope0_reason, 0))}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	writeScope($scope0_id, { input_onToggle: input.onToggle }, "__tests__/tags/child.marko", 0, { input_onToggle: ["input.onToggle"] });
+	_scope($scope0_id, { input_onToggle: input.onToggle }, "__tests__/tags/child.marko", 0, { input_onToggle: ["input.onToggle"] });
 });
 
 // tags/parent.marko
@@ -29,7 +29,7 @@ var parent_default = _template("__tests__/tags/parent.marko", (input) => {
 					input.onToggle();
 				}, "__tests__/tags/parent.marko_1/onToggle", $scope1_id)
 			});
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				label: _serialize_if($scope0_reason, 0) && label,
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
@@ -37,7 +37,7 @@ var parent_default = _template("__tests__/tags/parent.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 0, 0);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_count: input.count,
 		input_onToggle: input.onToggle,
 		prefix,
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			count++;
 		}, "__tests__/template.marko_0/onToggle", $scope0_id)
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });

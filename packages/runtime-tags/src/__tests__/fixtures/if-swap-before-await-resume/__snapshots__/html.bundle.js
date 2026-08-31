@@ -33,15 +33,15 @@ var template_default = _template("a", (input) => {
 		if (!hasHydrate) {
 			const $scope3_id = _scope_id();
 			_html("<a href=/go-to>Go</a>");
-			writeScope($scope3_id, {});
+			_scope($scope3_id, {});
 			return 0;
 		} else {
 			const $scope4_id = _scope_id();
 			_html("<button>Go to</button>");
-			writeScope($scope4_id, {});
+			_scope($scope4_id, {});
 			return 1;
 		}
 	}, $scope0_id, "d", 1, 1, 1, 0, 1);
 	_html("</div></header>");
-	writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

@@ -9,11 +9,11 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 			_html(`<div${_attr_class(input.test.class)} id=test>`);
 			_dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, _serialize_guard($scope0_reason, 5));
 			_html(`</div>${_el_resume($scope1_id, "#div/0", _serialize_guard($scope0_reason, 4))}`);
-			$si__input_test && writeScope($scope1_id, { _: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/custom-tag.marko", "3:2");
+			$si__input_test && _scope($scope1_id, { _: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/custom-tag.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", $sg__input_test, $sg__input_test, $sg__input_test, 0, 1);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		input_test_class: $si__input_test && input.test?.class,
 		input_test_content: $si__input_test && input.test?.content
 	}, "__tests__/tags/custom-tag.marko", 0, {
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope0_id)
 		})
 	}, 0, 0, $sg__input_c__OR__input_d);
-	_serialize_if($scope0_reason, 7) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 7) && _scope($scope0_id, {
 		c: _serialize_if($scope0_reason, 6) && c,
 		d: _serialize_if($scope0_reason, 5) && d,
 		e: _serialize_if($scope0_reason, 4) && e,

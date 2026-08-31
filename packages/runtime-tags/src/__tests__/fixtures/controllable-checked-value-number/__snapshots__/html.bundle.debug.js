@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		checked = +v;
 	}, "__tests__/template.marko_0/checkedValueChange3", $scope0_id), 2)} type=radio>${_el_resume($scope0_id, "#input/2")}<span>${_text_resume($scope0_id, "#text/3", checked)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {}, "__tests__/template.marko", 0, {
+	_scope($scope0_id, {}, "__tests__/template.marko", 0, {
 		"ControlledHandler:#input/0": ["checkedValueChange", "3:53"],
 		"ControlledHandler:#input/1": ["checkedValueChange", "4:52"],
 		"ControlledHandler:#input/2": ["checkedValueChange", "5:50"]

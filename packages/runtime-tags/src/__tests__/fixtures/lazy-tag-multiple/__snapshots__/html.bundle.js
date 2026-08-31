@@ -4,7 +4,7 @@ var child_a_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span class=a>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "a0");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // child-b.marko
@@ -13,7 +13,7 @@ var child_b_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span class=b>${_text_resume($scope0_id, "a", input.value * 2, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -31,7 +31,7 @@ var template_default = _template("c", (input) => {
 	const $childScope2 = _peek_scope_id();
 	$ChildB_withLoadAssets({ value });
 	_script($scope0_id, "c0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: value,
 		c: _existing_scope($childScope),
 		e: _existing_scope($childScope2)

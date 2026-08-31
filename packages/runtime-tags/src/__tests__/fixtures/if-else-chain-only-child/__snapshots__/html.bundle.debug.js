@@ -8,21 +8,21 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (count % 3 === 0) {
 			const $scope1_id = _scope_id();
 			_html("<p>a</p>");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "7:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "7:4");
 			return 0;
 		} else if (count % 3 === 1) {
 			const $scope2_id = _scope_id();
 			_html("<i>b</i>");
-			writeScope($scope2_id, {}, "__tests__/template.marko", "10:4");
+			_scope($scope2_id, {}, "__tests__/template.marko", "10:4");
 			return 1;
 		} else {
 			const $scope3_id = _scope_id();
 			_html("<b>c</b>");
-			writeScope($scope3_id, {}, "__tests__/template.marko", "13:4");
+			_scope($scope3_id, {}, "__tests__/template.marko", "13:4");
 			return 2;
 		}
 	}, $scope0_id, "#div/2", 1, 1, 1, "</div>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

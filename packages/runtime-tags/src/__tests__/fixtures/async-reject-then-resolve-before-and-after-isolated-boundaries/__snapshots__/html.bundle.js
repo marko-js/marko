@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			const $scope9_id = _scope_id();
 			_html(`<div>Resolved C: ${_escape(v)}</div><button>Before</button>${_el_resume($scope9_id, "b")}`);
 			_script($scope9_id, "a4");
-			writeScope($scope9_id, {});
+			_scope($scope9_id, {});
 		});
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a5", () => {
 		_scope_reason();

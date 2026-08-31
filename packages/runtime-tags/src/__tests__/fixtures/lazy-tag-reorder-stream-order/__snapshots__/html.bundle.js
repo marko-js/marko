@@ -6,7 +6,7 @@ var child_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<button${_attr_class(input.label)}>${_text_resume($scope0_id, "b", input.label, _serialize_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: input.label,
 		h: shared,
 		i: count

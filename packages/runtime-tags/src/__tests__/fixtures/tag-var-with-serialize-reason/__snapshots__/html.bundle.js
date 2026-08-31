@@ -6,12 +6,12 @@ var child_default = _template("b", (input) => {
 		if (input.value) {
 			const $scope1_id = _scope_id();
 			_html("<span></span>");
-			$si__input_value && writeScope($scope1_id, {});
+			$si__input_value && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1);
 	const $return = 1;
-	$si__input_value && writeScope($scope0_id, {});
+	$si__input_value && _scope($scope0_id, {});
 	return $return;
 });
 
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	child_default({ value: count });
 	_var($scope0_id, "d", $childScope, "a0");
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: count,
 		c: _existing_scope($childScope)
 	});

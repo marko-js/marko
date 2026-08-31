@@ -5,7 +5,7 @@ var child_default = _template("a", (input) => {
 	let count = input.value;
 	_html(`<button${_attr("id", input.id)}>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 	_resume_branch($scope0_id);
 });
 
@@ -24,7 +24,7 @@ var template_default = _template("b", (input) => {
 		id: "b",
 		value: input.value * 10
 	});
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		b: _existing_scope($childScope),
 		d: _existing_scope($childScope2)
 	});

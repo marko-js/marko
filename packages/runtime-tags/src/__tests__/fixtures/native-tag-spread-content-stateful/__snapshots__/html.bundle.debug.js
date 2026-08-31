@@ -6,7 +6,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_attrs_content(input, "#div/0", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#2");
-	writeScope($scope0_id, {}, "__tests__/tags/my-box.marko", 0, { "EventAttributes:#div/0": ["...input", "1:9"] });
+	_scope($scope0_id, {}, "__tests__/tags/my-box.marko", 0, { "EventAttributes:#div/0": ["...input", "1:9"] });
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let count = 0;
 			_html(`<button type=button class=inc>increment</button>${_el_resume($scope1_id, "#button/0")}<span class=count>${_text_resume($scope1_id, "#text/1", count)}</span>`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			writeScope($scope1_id, { count }, "__tests__/template.marko", "1:1", { count: "2:8" });
+			_scope($scope1_id, { count }, "__tests__/template.marko", "1:1", { count: "2:8" });
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});

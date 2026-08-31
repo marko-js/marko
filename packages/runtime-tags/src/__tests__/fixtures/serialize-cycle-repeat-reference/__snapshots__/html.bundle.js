@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	let graph = buildGraph();
 	_html(`<button id=go>go</button>${_el_resume($scope0_id, "a")}<div id=out>${_text_resume($scope0_id, "b", "pending")}</div>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: graph?.byId,
 		e: graph?.current,
 		f: graph?.all

@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let n = 1;
 	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}<title>${_escape(input.a)} - ${_escape(n)}</title>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.a,
 		g: n
 	});

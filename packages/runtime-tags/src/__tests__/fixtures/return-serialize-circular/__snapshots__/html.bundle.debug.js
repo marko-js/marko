@@ -6,7 +6,7 @@ var setter_default = _template("__tests__/tags/setter.marko", (input) => {
 		input.valueChange(1);
 	}, "__tests__/tags/setter.marko_0/setter", $scope0_id);
 	const $return = (input.value, setter);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_valueChange: input.valueChange,
 		input_value: _serialize_if($scope0_reason, 0) && input.value,
 		setter: _serialize_if($scope0_reason, 1) && setter
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_setCount#4/var");
 	_html(`<div>${_text_resume($scope0_id, "#text/2", count)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_setCount#4");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		setCount,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { setCount: "2:9" });

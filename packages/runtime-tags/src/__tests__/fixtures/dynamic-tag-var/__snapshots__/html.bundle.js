@@ -19,5 +19,5 @@ var template_default = _template("a", (input) => {
 	const $inputshowdiv_scope = _peek_scope_id();
 	_dynamic_tag($scope0_id, "g", input.show && "div", {});
 	_var($scope0_id, "h", $inputshowdiv_scope, "a2");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

@@ -8,5 +8,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html("Hello World");
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

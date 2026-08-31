@@ -4,7 +4,7 @@ var note_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_resume($scope0_id, "a", input.label, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { d: input.label });
+	_scope($scope0_id, { d: input.label });
 	_resume_branch($scope0_id);
 });
 
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 					_set_serialize_reason(1);
 					const $childScope = _peek_scope_id();
 					note_default({ label: `${inner} ${clicks}` });
-					writeScope($scope4_id, {
+					_scope($scope4_id, {
 						c: inner,
 						_: _scope_with_id($scope3_id),
 						a: _existing_scope($childScope),
@@ -39,23 +39,23 @@ var template_default = _template("a", (input) => {
 					});
 					_resume_branch($scope4_id);
 				});
-				writeScope($scope3_id, { _: _scope_with_id($scope2_id) });
+				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a1", () => {
 				_scope_reason();
 				_scope_id();
 				note_default({ label: "inner placeholder" });
 			}, $scope2_id) }) });
-			writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			_resume_branch($scope2_id);
 		});
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 		_scope_reason();
 		_scope_id();
 		note_default({ label: "outer placeholder" });
 	}, $scope0_id) }) });
 	_script($scope0_id, "a6");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: clicks,
 		e: $clicks__closures
 	});

@@ -10,7 +10,7 @@ var child_default = _template("b", (input) => {
 	}, "a", $scope0_id, "p");
 	_html(`</p>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { d: input.class });
+	_scope($scope0_id, { d: input.class });
 });
 
 // tags/wrap.marko
@@ -23,7 +23,7 @@ var wrap_default = _template("c", (input) => {
 		...rest,
 		class: _class
 	});
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
 // template.marko

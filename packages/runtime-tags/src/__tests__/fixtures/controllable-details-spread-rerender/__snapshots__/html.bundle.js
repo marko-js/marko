@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>bump</button>${_el_resume($scope0_id, "a")}<details${_attrs(attrs, "b", $scope0_id, "details")}><summary>s</summary>body</details>${_el_resume($scope0_id, "b")}<output>${_text_resume($scope0_id, "c", open ? "open" : "closed")}/${_text_resume($scope0_id, "d", n, 2)}</output>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: open,
 		f: n
 	});

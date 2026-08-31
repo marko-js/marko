@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_valueChange#2");
-	writeScope($scope0_id, { input_valueChange: input.valueChange }, "__tests__/tags/child.marko", 0, { input_valueChange: ["input.valueChange"] });
+	_scope($scope0_id, { input_valueChange: input.valueChange }, "__tests__/tags/child.marko", 0, { input_valueChange: ["input.valueChange"] });
 });
 
 // template.marko
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		child_default({ valueChange: _resume(function() {
 			setter();
 		}, "__tests__/template.marko_1/valueChange", $scope1_id) });
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 	}
-	writeScope($scope0_id, { setter }, "__tests__/template.marko", 0, { setter: "2:8" });
+	_scope($scope0_id, { setter }, "__tests__/template.marko", 0, { setter: "2:8" });
 }, 1);

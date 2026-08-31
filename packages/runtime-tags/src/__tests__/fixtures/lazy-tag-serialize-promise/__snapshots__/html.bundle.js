@@ -5,7 +5,7 @@ var child_default = _template("a", (input) => {
 	const promise = Promise.resolve("hello");
 	_html("<div id=ref>0</div>");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { a: promise });
+	_scope($scope0_id, { a: promise });
 });
 
 // template.marko

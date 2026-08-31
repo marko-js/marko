@@ -7,11 +7,11 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "#text/0", input.item, _serialize_guard($scope0_reason, 2))}</span>`);
 			_script($scope1_id, "__tests__/tags/child.marko_1_input#2");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, 0, 1);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input,
 		input_item: _serialize_if($scope0_reason, 1) && input.item
 	}, "__tests__/tags/child.marko", 0, {
@@ -39,12 +39,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			log
 		});
 		_html("</div>");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			item,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "7:2", { item: "7:6" });
 	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:6" });
 	_resume_branch($scope0_id);
 }, 1);

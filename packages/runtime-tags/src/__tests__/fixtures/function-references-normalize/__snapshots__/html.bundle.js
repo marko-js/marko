@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	};
 	_html(`<div></div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: foo,
 		c: baz
 	});

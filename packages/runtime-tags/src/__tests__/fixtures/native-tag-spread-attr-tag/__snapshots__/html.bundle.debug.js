@@ -9,7 +9,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_html(`</footer>${_el_resume($scope0_id, "#footer/1")}`);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_foot#5");
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_head#4");
-	writeScope($scope0_id, {}, "__tests__/tags/my-box.marko", 0, {
+	_scope($scope0_id, {}, "__tests__/tags/my-box.marko", 0, {
 		"EventAttributes:#section/0": ["...input.head", "1:13"],
 		"EventAttributes:#footer/1": ["...input.foot", "2:12"]
 	});
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				let n = 0;
 				_html(`<button>${_text_resume($scope1_id, "#text/1", n)}</button>${_el_resume($scope1_id, "#button/0")}`);
 				_script($scope1_id, "__tests__/template.marko_1");
-				writeScope($scope1_id, { n }, "__tests__/template.marko", "2:4", { n: "3:10" });
+				_scope($scope1_id, { n }, "__tests__/template.marko", "2:4", { n: "3:10" });
 				_resume_branch($scope1_id);
 			}, $scope0_id)
 		}),

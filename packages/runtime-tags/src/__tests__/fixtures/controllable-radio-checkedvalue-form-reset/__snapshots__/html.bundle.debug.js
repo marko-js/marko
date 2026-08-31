@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
 	_html(`<form><input${_attr_input_checkedValue($scope0_id, "#input/0", checkedValue, $checkedValueChange, "a")} type=radio name=p>${_el_resume($scope0_id, "#input/0")}<input${_attr_input_checkedValue($scope0_id, "#input/1", checkedValue, $checkedValueChange, "b")} type=radio name=p>${_el_resume($scope0_id, "#input/1")}<input${_attr_input_checkedValue($scope0_id, "#input/2", checkedValue, $checkedValueChange, "c")} type=radio name=p>${_el_resume($scope0_id, "#input/2")}<button type=reset>reset</button></form><span>v=${_text_resume($scope0_id, "#text/3", checkedValue, 2)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { $checkedValueChange }, "__tests__/template.marko", 0, {
+	_scope($scope0_id, { $checkedValueChange }, "__tests__/template.marko", 0, {
 		$checkedValueChange: 0,
 		"ControlledHandler:#input/0": ["checkedValueChange"],
 		"ControlledHandler:#input/1": ["checkedValueChange"],

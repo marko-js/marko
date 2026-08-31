@@ -7,5 +7,8 @@ module.exports = {
   ...base,
   bail: false,
   timeout: 30000,
+  // V8's default limit sits above `MARKO_TEST_WORKER_MEM`, so a worker hands its
+  // slice to a fresh process before collecting; a major GC is the cheaper trade.
+  "node-option": [...base["node-option"], "max-old-space-size=2048"],
   require: [...base.require, "./scripts/test-parallel-worker.cjs"],
 };

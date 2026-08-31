@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1, _serialize_guard($scope3_reason, 0));
-		_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {
+		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {
 			input_content: _serialize_if($scope3_reason, 2) && input.content,
 			input_value: _serialize_if($scope3_reason, 1) && input.value
 		}, "__tests__/template.marko", "3:2", {
@@ -28,15 +28,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (v) {
 					const $scope2_id = _scope_id();
 					_html(_escape(a));
-					writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4");
+					_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__v, $sg__v, $sg__v, 0, 1);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2");
 		}, $scope0_id)
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		a,
 		"#childScope/1": _existing_scope($childScope)

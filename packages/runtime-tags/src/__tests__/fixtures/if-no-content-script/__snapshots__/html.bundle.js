@@ -8,11 +8,11 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_script($scope1_id, "a0");
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "d");
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { e: count });
+	_scope($scope0_id, { e: count });
 	_resume_branch($scope0_id);
 }, 1);

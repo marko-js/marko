@@ -6,7 +6,7 @@ var my_button_default = _template("b", (input) => {
 	const { text: textAlias } = input;
 	_html(`<button>${_text_resume($scope0_id, "b", text, $sg__input_text)} ${_text_resume($scope0_id, "c", textAlias, $sg__input_text * 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { f: onClick });
+	_scope($scope0_id, { f: onClick });
 });
 
 // template.marko
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			clickCount++;
 		}, "a0", $scope0_id)
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: clickCount,
 		a: _existing_scope($childScope)
 	});

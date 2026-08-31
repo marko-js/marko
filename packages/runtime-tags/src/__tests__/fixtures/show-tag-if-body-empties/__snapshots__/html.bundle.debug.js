@@ -10,14 +10,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (inner) {
 			const $scope1_id = _scope_id();
 			_html("<b>B</b>");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "5:30");
+			_scope($scope1_id, {}, "__tests__/template.marko", "5:30");
 			return 0;
 		}
 	}, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
 	_show_end($scope0_id, "#text/5", visible);
 	_html(" y</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		visible,
 		inner
 	}, "__tests__/template.marko", 0, {

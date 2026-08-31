@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return unserializable;
 		}, "__tests__/template.marko_1/test", $scope1_id);
 		_script($scope1_id, "__tests__/template.marko_1_test#1");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			unserializable,
 			test
 		}, "__tests__/template.marko", "1:2", {

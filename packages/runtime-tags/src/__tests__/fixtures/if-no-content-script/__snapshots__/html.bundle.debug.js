@@ -8,11 +8,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (!count) {
 			const $scope1_id = _scope_id();
 			_script($scope1_id, "__tests__/template.marko_1");
-			writeScope($scope1_id, {}, "__tests__/template.marko", "5:1");
+			_scope($scope1_id, {}, "__tests__/template.marko", "5:1");
 			return 0;
 		}
 	}, $scope0_id, "#text/3");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:5" });
+	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:5" });
 	_resume_branch($scope0_id);
 }, 1);

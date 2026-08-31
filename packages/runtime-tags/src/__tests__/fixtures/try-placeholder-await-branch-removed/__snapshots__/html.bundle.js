@@ -15,12 +15,12 @@ var template_default = _template("a", (input) => {
 					_scope_id();
 					_html(_escape(value));
 				}, 0);
-				writeScope($scope3_id, {});
+				_scope($scope3_id, {});
 				return 0;
 			}
 		}, $scope1_id, "a");
 		_html("<div>settled</div>");
-		_subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		_html("LOADING...");
 	}, $scope0_id) }) });
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: show,
 		d: $show__closures
 	});

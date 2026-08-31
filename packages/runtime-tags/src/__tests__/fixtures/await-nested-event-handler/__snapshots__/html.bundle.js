@@ -17,24 +17,24 @@ var template_default = _template("a", (input) => {
 					_script($scope4_id, "a0");
 					_html(`<div>changes: ${_text_resume($scope4_id, "b", changes, 2)}</div>${_el_resume($scope4_id, "a")}`);
 					_script($scope4_id, "a1");
-					writeScope($scope4_id, { _: _scope_with_id($scope3_id) });
+					_scope($scope4_id, { _: _scope_with_id($scope3_id) });
 					_resume_branch($scope4_id);
 				});
-				writeScope($scope3_id, { _: _scope_with_id($scope2_id) });
+				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a2", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading inner...");
 			}, $scope2_id) }) });
-			writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		});
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading outer...");
 	}, $scope0_id) }) });
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: changes,
 		c: $changes__closures
 	});

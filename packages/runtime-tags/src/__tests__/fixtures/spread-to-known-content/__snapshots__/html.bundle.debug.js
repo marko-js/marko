@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<p${_attr_class(input.class)}>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
 	_html(`</p>${_el_resume($scope0_id, "#p/0", _serialize_guard($scope0_reason, 1))}`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // tags/wrap.marko
@@ -23,7 +23,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		class: _class,
 		...rest
 	});
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/wrap.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/wrap.marko", 0);
 });
 
 // template.marko

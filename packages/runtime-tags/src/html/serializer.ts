@@ -5,7 +5,7 @@ export const K_SCOPE_ID = Symbol("Scope ID");
 const kTouchedIterator = /* @__PURE__ */ Symbol.for("marko.touchedIterator");
 const { hasOwnProperty } = {};
 const objectProto = Object.prototype;
-const arrayProto = /* @__PURE__ */ Array.prototype;
+const arrayProto = Array.prototype;
 const Generator = /* @__PURE__ */ (function* () {})().constructor;
 const AsyncGenerator = /* @__PURE__ */ (async function* () {})().constructor;
 // `Intl.DurationFormat` is newer than the TypeScript lib types.

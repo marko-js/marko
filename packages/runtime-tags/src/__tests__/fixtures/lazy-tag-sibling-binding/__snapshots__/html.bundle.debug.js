@@ -7,7 +7,7 @@ var child_s_default = _template("__tests__/child-s.marko", (input) => {
 	let verified = "?";
 	_html(`<button class=s>s:${_text_resume($scope0_id, "#text/1", verified, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child-s.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		isShared,
 		holder
 	}, "__tests__/child-s.marko", 0, {
@@ -26,7 +26,7 @@ var child_b_default = _template("__tests__/child-b.marko", (input) => {
 	let verified = "?";
 	_html(`<button class=b>b:${_text_resume($scope0_id, "#text/1", verified, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child-b.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		isInner,
 		inner
 	}, "__tests__/child-b.marko", 0, {
@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/isInner", $scope0_id)
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		shared,
 		count
 	}, "__tests__/template.marko", 0, {

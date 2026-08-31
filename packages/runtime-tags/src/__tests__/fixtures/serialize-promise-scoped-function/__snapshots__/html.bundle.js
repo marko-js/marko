@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>inc:${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}<div id=ref>0</div>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: count,
 		e: promise
 	});

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_c#7");
 	_script($scope0_id, "__tests__/template.marko_0_b#6");
 	_script($scope0_id, "__tests__/template.marko_0_a#5");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		foo,
 		foo_bar: foo?.bar,
 		a,

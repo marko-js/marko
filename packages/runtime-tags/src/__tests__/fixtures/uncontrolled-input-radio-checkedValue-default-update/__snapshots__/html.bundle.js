@@ -5,6 +5,6 @@ var template_default = _template("a", (input) => {
 	let value = "a";
 	_html(`<input${_attr_input_checkedValue($scope0_id, "a", "a", void 0, "a")} type=radio><input${_attr_input_checkedValue($scope0_id, "b", "a", void 0, "b")} type=radio><input${_attr_input_checkedValue($scope0_id, "c", value, void 0, "b")} type=radio>${_el_resume($scope0_id, "c")}<input${_attr_input_checkedValue($scope0_id, "d", value, void 0, "b")} type=radio>${_el_resume($scope0_id, "d")}<button>Update</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

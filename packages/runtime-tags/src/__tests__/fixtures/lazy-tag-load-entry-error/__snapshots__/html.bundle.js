@@ -5,7 +5,7 @@ var child_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", input.label, _serialize_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 	_resume_branch($scope0_id);
 });
 
@@ -25,7 +25,7 @@ var template_default = _template("b", (input) => {
 		_set_serialize_reason(_serialize_guard($scope0_reason, 0));
 		const $childScope = _peek_scope_id();
 		$Child_withLoadAssets({ label: input.label });
-		$si__input_label && _subscribe($input_label__closures, writeScope($scope1_id, {
+		$si__input_label && _subscribe($input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		}));
@@ -36,5 +36,5 @@ var template_default = _template("b", (input) => {
 		_html("<div id=error>failed</div>");
 	}, $scope0_id) }) });
 	_html("</main>");
-	$si__input_label && writeScope($scope0_id, { e: $input_label__closures });
+	$si__input_label && _scope($scope0_id, { e: $input_label__closures });
 }, 1);

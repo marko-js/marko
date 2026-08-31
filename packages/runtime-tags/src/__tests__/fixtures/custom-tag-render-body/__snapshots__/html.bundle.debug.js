@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const { name, content } = input;
 	_html(_text_resume($scope0_id, "#text/0", name, _serialize_guard($scope0_reason, 1) * 2));
 	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child/index.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child/index.marko", 0);
 });
 
 // template.marko
