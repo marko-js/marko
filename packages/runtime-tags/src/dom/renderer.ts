@@ -137,6 +137,22 @@ export function _content_resume(
   );
 }
 
+// Resumed as `_(owner, id)(locals)`: the serialized reference is called with
+// the closure values `_content_resume_locals` wrote next to it.
+export function _content_closures_resume(
+  id: string,
+  renderer: ReturnType<typeof _content>,
+  closureFns: Record<Accessor, SignalFn>,
+) {
+  const withClosures = _content_closures(renderer, closureFns);
+  _resume(
+    id,
+    (owner: Scope) => (locals: Record<Accessor, unknown>) =>
+      withClosures(owner, locals),
+  );
+  return withClosures;
+}
+
 export function _content_closures(
   renderer: ReturnType<typeof _content>,
   closureFns: Record<Accessor, SignalFn>,

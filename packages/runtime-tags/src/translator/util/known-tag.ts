@@ -74,6 +74,7 @@ import {
 } from "./to-property-name";
 import {
   addDynamicAttrTagStatements,
+  buildContentRendererCall,
   propsToExpression,
   translateAttrs,
 } from "./translate-attrs";
@@ -1203,9 +1204,7 @@ function writeAttrsToSignals(
     const bodySection = getSectionForBody(tag.get("body"));
     if (bodySection) {
       seen.add("content");
-      const bodyValue = t.callExpression(t.identifier(bodySection.name), [
-        scopeIdentifier,
-      ]);
+      const bodyValue = buildContentRendererCall(bodySection);
       if (contentExport === true) {
         (restProps ||= []).push(toObjectProperty("content", bodyValue));
       } else {

@@ -19,12 +19,12 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(1);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_resume("a2", () => {
+		$item = attrTags($item, { content: _content_resume_locals("a2", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`${_escape(i)}${_el_resume($scope3_id, "a")}`);
 			writeScope($scope3_id, {});
-		}, $scope0_id) });
+		}, { 4: i }, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });

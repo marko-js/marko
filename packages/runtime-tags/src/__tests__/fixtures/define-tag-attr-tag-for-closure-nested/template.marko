@@ -1,0 +1,23 @@
+static const PEOPLE = ["alice", "bob", "carol"];
+
+<define/Menu|input|>
+  <let/open=true>
+  <button onClick() { open = !open }>${open ? "collapse" : "expand"}</button>
+  <if=open>
+    <for|entry| of=input.item>
+      <${entry.content}/>
+    </for>
+  </if>
+</define>
+
+<define/Wrapper|input|>
+  <div><${input.content}/></div>
+</define>
+
+<Menu>
+  <for|person| of=PEOPLE>
+    <@item value=person>
+      <Wrapper>person: ${person}</Wrapper>
+    </@item>
+  </for>
+</Menu>

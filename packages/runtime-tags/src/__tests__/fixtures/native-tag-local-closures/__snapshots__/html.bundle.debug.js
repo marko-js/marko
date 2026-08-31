@@ -19,12 +19,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_3*content", () => {
+		$item = attrTags($item, { content: _content_resume_locals("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`${_escape(i)}${_el_resume($scope3_id, "#text/0")}`);
 			writeScope($scope3_id, {}, "__tests__/template.marko", "11:6");
-		}, $scope0_id) });
+		}, { i }, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
