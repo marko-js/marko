@@ -19,9 +19,9 @@ var template_default = _template("a", (input) => {
 	my_for_default({
 		to: 5,
 		content: _content("a0", (i) => {
-			const $scope1_reason = _scope_reason();
+			const $scope1_reason = _scope_reason(), $sg__i = _serialize_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(`${_escape(i)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}`);
+			_html(`${_escape(i) || _sep($sg__i)}${_el_resume($scope1_id, "a", $sg__i)}`);
 			_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 		}, _scope_id())
 	});

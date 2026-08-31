@@ -4,8 +4,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const A = { content: _content("__tests__/template.marko_1*content", ({ value }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_html(`${_escape(value)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 0))}`);
+		const $scope1_reason = _scope_reason(), $sg__value = _serialize_guard($scope1_reason, 0);
+		_html(`${_escape(value) || _sep($sg__value)}${_el_resume($scope1_id, "#text/0", $sg__value)}`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:1");
 	}, $scope0_id) };
 	const B = { content: _content("__tests__/template.marko_2*content", ({ value }) => {

@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				content: _content_resume("__tests__/template.marko_3*content", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`${_escape(row)}${_el_resume($scope3_id, "#text/0")}`);
+					_html(`${_escape(row) || "<!>"}${_el_resume($scope3_id, "#text/0")}`);
 					writeScope($scope3_id, {}, "__tests__/template.marko", "16:18");
 				}, $scope0_id)
 			});

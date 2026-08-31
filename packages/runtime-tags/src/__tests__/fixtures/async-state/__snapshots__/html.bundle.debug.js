@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter(clickCount), (value) => {
 			const $scope3_id = _scope_id();
-			_html(`${_escape(value)}${_el_resume($scope3_id, "#text/0")}`);
+			_html(`${_escape(value) || "<!>"}${_el_resume($scope3_id, "#text/0")}`);
 			writeScope($scope3_id, {}, "__tests__/template.marko", "7:4");
 		});
 		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));

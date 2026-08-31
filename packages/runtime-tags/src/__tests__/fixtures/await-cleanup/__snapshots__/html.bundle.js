@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 				_await($scope2_id, "a", resolveAfter(0, 1), () => {
 					const $scope3_id = _scope_id();
 					_script($scope3_id, "a0");
-					_html(`${_escape(show)}${_el_resume($scope3_id, "a")}`);
+					_html(`${_escape(show) || "<!>"}${_el_resume($scope3_id, "a")}`);
 					_script($scope3_id, "a1");
 					writeScope($scope3_id, { _: _scope_with_id($scope2_id) });
 					_resume_branch($scope3_id);

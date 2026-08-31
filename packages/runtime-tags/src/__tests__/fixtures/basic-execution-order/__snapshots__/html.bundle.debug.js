@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_html(`${_escape(message.text)}${_el_resume($scope1_id, "#text/0")}`);
+			_html(`${_escape(message.text) || "<!>"}${_el_resume($scope1_id, "#text/0")}`);
 			writeScope($scope1_id, {}, "__tests__/template.marko", "8:2");
 			return 0;
 		}

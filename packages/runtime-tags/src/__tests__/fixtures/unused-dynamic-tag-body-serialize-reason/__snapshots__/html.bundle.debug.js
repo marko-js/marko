@@ -21,8 +21,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Message = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
-		_html(`${_escape(input.before + input.after)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope2_reason, 0))}`);
+		const $scope2_reason = _scope_reason(), $sg__input_before__OR__input_after = _serialize_guard($scope2_reason, 0);
+		_html(`${_escape(input.before + input.after) || _sep($sg__input_before__OR__input_after)}${_el_resume($scope2_id, "#text/0", $sg__input_before__OR__input_after)}`);
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {
 			input_before: _serialize_if($scope2_reason, 2) && input.before,
 			input_after: _serialize_if($scope2_reason, 1) && input.after

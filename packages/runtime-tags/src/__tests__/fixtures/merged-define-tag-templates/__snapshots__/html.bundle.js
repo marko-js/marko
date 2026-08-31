@@ -4,8 +4,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const A = { content: _content("a0", ({ value }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_html(`${_escape(value)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}`);
+		const $scope1_reason = _scope_reason(), $sg__value = _serialize_guard($scope1_reason, 0);
+		_html(`${_escape(value) || _sep($sg__value)}${_el_resume($scope1_id, "a", $sg__value)}`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}, $scope0_id) };
 	const B = { content: _content("a1", ({ value }) => {

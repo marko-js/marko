@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		$item = attrTags($item, { content: _content("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`${_escape(item * mult)}${_el_resume($scope1_id, "a")}`);
+			_html(`${_escape(item * mult) || "<!>"}${_el_resume($scope1_id, "a")}`);
 			_subscribe($mult__closures, writeScope($scope1_id, {
 				f: item,
 				_: _scope_with_id($scope0_id)

@@ -12,9 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", (err) => {
-		const $scope2_reason = _scope_reason();
+		const $scope2_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(`${_escape(err.message)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope2_reason, 0))}`);
+		_html(`${_escape(err.message) || _sep($sg__err_message)}${_el_resume($scope2_id, "#text/0", $sg__err_message)}`);
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {}, "__tests__/template.marko", "7:4");
 	}, $scope0_id) }) });
 	_html(`<div></div>${_el_resume($scope0_id, "#div/2")}`);

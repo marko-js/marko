@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/5", Parent, {}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`${_unescaped(input.value)}${_el_resume($scope1_id, "#text/0", $sg__input_value)}`);
+		_html(`${_unescaped(input.value) || _sep($sg__input_value)}${_el_resume($scope1_id, "#text/0", $sg__input_value)}`);
 		_subscribe($si__input_value && $input_value__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:3"));
 		_resume_branch($scope1_id);
 	}, $scope0_id));

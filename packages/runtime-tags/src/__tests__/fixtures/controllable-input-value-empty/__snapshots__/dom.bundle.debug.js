@@ -1,0 +1,17 @@
+// template.marko
+const $template = "<input><!>";
+const $walks = " b%b";
+const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
+	_attr_input_value($scope, "#input/0", $scope.value, $valueChange($scope));
+	_text($scope["#text/1"], $scope.value);
+});
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/0"));
+function $setup($scope) {
+	$value($scope, undefined);
+	$setup__script($scope);
+}
+const $valueChange = ($scope) => (_new_value) => {
+	$value($scope, _new_value);
+};
+_resume("__tests__/template.marko_0/valueChange", $valueChange);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

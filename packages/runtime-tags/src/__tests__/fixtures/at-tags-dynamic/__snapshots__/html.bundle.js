@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 				content: _content_resume("a2", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`${_escape(row)}${_el_resume($scope3_id, "a")}`);
+					_html(`${_escape(row) || "<!>"}${_el_resume($scope3_id, "a")}`);
 					writeScope($scope3_id, {});
 				}, $scope0_id)
 			});

@@ -14,9 +14,9 @@ var template_default = _template("a", (input) => {
 		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a0", (err) => {
-		const $scope2_reason = _scope_reason();
+		const $scope2_reason = _scope_reason(), $sg__err = _serialize_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(`${_escape(err)}${_el_resume($scope2_id, "a", _serialize_guard($scope2_reason, 0))}`);
+		_html(`${_escape(err) || _sep($sg__err)}${_el_resume($scope2_id, "a", $sg__err)}`);
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {});
 	}, $scope0_id) }) });
 	writeScope($scope0_id, {

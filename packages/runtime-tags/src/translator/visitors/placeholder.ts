@@ -38,11 +38,13 @@ import { scopeIdentifier } from "./program";
 
 const kNodeBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
+const kSeparateWhenEmpty = Symbol("placeholder must resume as its own node");
 type SiblingText = SiblingText.Value;
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
     [kNodeBinding]?: Binding;
     [kSiblingText]?: SiblingText;
+    [kSeparateWhenEmpty]?: true;
   }
 }
 
@@ -162,22 +164,27 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
 
-    if (isHTML && markerSerializeReason) {
-      if (siblingText === SiblingText.Before) {
-        writeSeparator(write, section, markerSerializeReason);
-      } else if (siblingText === SiblingText.NodeBefore) {
-        // A preceding element/comment would be claimed as the text node when
-        // the value serializes empty, so it gets the same protective separator.
-        writeSeparator(write, section, markerSerializeReason);
-      }
-    }
-
     if (isHTML) {
-      write`${
+      let text =
         method === "_escape"
           ? buildEscapedTextExpression(value)
-          : callRuntime(method as HTMLMethod | DOMMethod, value)
-      }`;
+          : callRuntime(method as HTMLMethod | DOMMethod, value);
+
+      if (markerSerializeReason) {
+        if (siblingText === SiblingText.Before) {
+          // Sibling text merges into this node, so it always needs separating.
+          write`${buildSeparator(section, markerSerializeReason)}`;
+        } else if (extra[kSeparateWhenEmpty]) {
+          // A sibling node is only claimed when there is no text node at all.
+          text = t.logicalExpression(
+            "||",
+            text,
+            buildSeparator(section, markerSerializeReason),
+          );
+        }
+      }
+
+      write`${text}`;
       if (nodeBinding) {
         writer.markNode(placeholder, nodeBinding, markerSerializeReason);
       }
@@ -254,23 +261,18 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
   }
 }
 
-// The `<!>` separator keeps resume from claiming the previous node as the
-// placeholder's text node when the serialized text is empty.
-function writeSeparator(
-  write: ReturnType<typeof writer.writeTo>,
+// An empty comment for resume to replace with the placeholder's own text node.
+function buildSeparator(
   section: Section,
   reason: Exclude<ReturnType<typeof getSerializeReason>, undefined | false>,
 ) {
-  if (reason === true || reason.state) {
-    write`<!>`;
-  } else {
-    write`${callRuntime("_sep", getSerializeGuard(section, reason, true))}`;
-  }
+  return reason === true || reason.state
+    ? t.stringLiteral("<!>")
+    : callRuntime("_sep", getSerializeGuard(section, reason, true));
 }
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;
-  let hasNodeBefore = false;
   let prev = placeholder.getPrevSibling();
   let prevParent: t.NodePath = placeholder.parentPath;
   for (;;) {
@@ -298,12 +300,19 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     ) {
       return (placeholderExtra[kSiblingText] = SiblingText.Before);
     } else {
-      hasNodeBefore = true;
+      placeholderExtra[kSeparateWhenEmpty] = true;
       break;
     }
   }
-  if (!prev.node && prevParent.isProgram()) {
-    return (placeholderExtra[kSiblingText] = SiblingText.Before);
+  if (!prev.node) {
+    if (prevParent.isProgram()) {
+      return (placeholderExtra[kSiblingText] = SiblingText.Before);
+    }
+    // A section's content is resumed as its own range, so its first node
+    // cannot be borrowed from whatever the section was rendered against.
+    if (prevParent.node.extra?.section) {
+      placeholderExtra[kSeparateWhenEmpty] = true;
+    }
   }
   let next = placeholder.getNextSibling();
   let nextParent: t.NodePath = placeholder.parentPath;
@@ -337,9 +346,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 
-  return (placeholderExtra[kSiblingText] = hasNodeBefore
-    ? SiblingText.NodeBefore
-    : SiblingText.None);
+  return (placeholderExtra[kSiblingText] = SiblingText.None);
 }
 
 // Returns the owner tag when `parent` is the body of a tag that inlines its

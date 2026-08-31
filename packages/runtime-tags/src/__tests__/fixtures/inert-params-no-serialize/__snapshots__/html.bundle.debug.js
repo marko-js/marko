@@ -19,9 +19,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	child_default({
 		value: "Hi",
 		content: _content("__tests__/template.marko_1*content", (x) => {
-			const $scope1_reason = _scope_reason();
+			const $scope1_reason = _scope_reason(), $sg__x = _serialize_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(`${_escape(x)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 0))}`);
+			_html(`${_escape(x) || _sep($sg__x)}${_el_resume($scope1_id, "#text/0", $sg__x)}`);
 			_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
 		}, $scope0_id)
 	});
