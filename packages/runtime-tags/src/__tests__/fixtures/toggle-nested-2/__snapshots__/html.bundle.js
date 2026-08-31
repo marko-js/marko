@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			_if(() => {
 				{
 					const $scope2_id = _scope_id();
-					_html(`<button id=count>${_escape(count)}${_el_resume($scope2_id, "b")}</button>${_el_resume($scope2_id, "a")}`);
+					_html(`<button id=count>${_text_resume($scope2_id, "b", count)}</button>${_el_resume($scope2_id, "a")}`);
 					_script($scope2_id, "a0");
 					_subscribe($count__closures, writeScope($scope2_id, {}));
 					return 0;

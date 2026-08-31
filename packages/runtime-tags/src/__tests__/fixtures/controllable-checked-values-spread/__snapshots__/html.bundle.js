@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 		checkedValueChange: $checkedValueChange,
 		value: "c"
 	});
-	_html(`<span>${_escape(checkedValue)}${_el_resume($scope0_id, "d")}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "d", checkedValue)}</span>`);
 	writeScope($scope0_id, {
 		f: $checkedValueChange,
 		a: _existing_scope($childScope),

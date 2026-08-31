@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			content: _content_resume("a1", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
-				_html(`${_escape($foo)}${_el_resume($scope1_id, "a")}`);
+				_html(_text_resume($scope1_id, "a", $foo));
 				writeScope($scope1_id, {});
 			}, $scope0_id)
 		});

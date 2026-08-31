@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$item = attrTags($item, { content: _content("__tests__/template.marko_4*content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
-				_html(`${_escape(item.text)}${_el_resume($scope4_id, "#text/0")}`);
+				_html(_text_resume($scope4_id, "#text/0", item.text));
 				writeScope($scope4_id, {}, "__tests__/template.marko", "11:14");
 			}, $scope2_id) });
 		});

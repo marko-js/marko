@@ -5,6 +5,6 @@ var template_default = _template("a", (input) => {
 	const x = _id();
 	const z = input.z || _id();
 	const y = _id();
-	_html(`<div${_attr("id", z)}>${_escape(x)} ${_escape(y)} ${_sep($sg__input_z)}${_escape(z)}${_el_resume($scope0_id, "d", $sg__input_z)}</div>${_el_resume($scope0_id, "a", $sg__input_z)}`);
+	_html(`<div${_attr("id", z)}>${_escape(x)} ${_escape(y)} ${_text_resume($scope0_id, "d", z, $sg__input_z * 2)}</div>${_el_resume($scope0_id, "a", $sg__input_z)}`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 }, 1);

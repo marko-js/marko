@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let show = true;
-	_html(`<button id=tags>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<button id=toggle>toggle</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button id=tags>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}<button id=toggle>toggle</button>${_el_resume($scope0_id, "c")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();

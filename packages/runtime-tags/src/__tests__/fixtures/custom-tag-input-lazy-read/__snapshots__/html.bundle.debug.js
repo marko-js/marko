@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	press_button_default({ onPress: _resume(function() {
 		log = `${log}[${count}]`;
 	}, "__tests__/template.marko_0/onPress", $scope0_id) });
-	_html(`<div class=log>${_escape(log)}${_el_resume($scope0_id, "#text/2")}</div>`);
+	_html(`<div class=log>${_text_resume($scope0_id, "#text/2", log)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count,

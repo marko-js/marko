@@ -10,9 +10,9 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter(clickCount), (value) => {
 			const $scope4_id = _scope_id();
-			_html(`Async: <!>${value > 1 ? _escape((() => {
+			_html(`Async: ${_text_resume($scope4_id, "a", value > 1 ? (() => {
 				throw new Error("ERROR!");
-			})()) : _escape(value)}${_el_resume($scope4_id, "a")}`);
+			})() : value, 2)}`);
 			writeScope($scope4_id, {});
 		});
 		_script($scope1_id, "a3");
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		catch: attrTag({ content: _content_resume("a1", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`${_escape(err)}${_el_resume($scope3_id, "a", _serialize_guard($scope3_reason, 0))}`);
+			_html(_text_resume($scope3_id, "a", err, _serialize_guard($scope3_reason, 0)));
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {});
 		}, $scope0_id) })
 	});

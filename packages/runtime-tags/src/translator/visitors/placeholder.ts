@@ -19,8 +19,8 @@ import {
   ContentType,
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
-  type Section,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
@@ -47,7 +47,6 @@ declare module "@marko/compiler/dist/types" {
 }
 
 type HTMLMethod = "_escape" | "_unescaped";
-type DOMMethod = "_html" | "_text";
 
 export default {
   analyze: {
@@ -162,24 +161,28 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
 
-    if (isHTML && markerSerializeReason) {
-      if (siblingText === SiblingText.Before) {
-        writeSeparator(write, section, markerSerializeReason);
-      } else if (siblingText === SiblingText.NodeBefore) {
-        // A preceding element/comment would be claimed as the text node when
-        // the value serializes empty, so it gets the same protective separator.
-        writeSeparator(write, section, markerSerializeReason);
-      }
-    }
-
     if (isHTML) {
-      write`${
-        method === "_escape"
-          ? buildEscapedTextExpression(value)
-          : callRuntime(method as HTMLMethod | DOMMethod, value)
-      }`;
-      if (nodeBinding) {
-        writer.markNode(placeholder, nodeBinding, markerSerializeReason);
+      if (markerSerializeReason) {
+        // `2` (or a guard scaled to 0/2) also asks the runtime to write a
+        // `<!>` between non-empty text and the mergeable text before it.
+        const guard = getSerializeGuard(section, markerSerializeReason, true);
+        write`${callRuntime(
+          node.escape ? "_text_resume" : "_html_resume",
+          getScopeIdIdentifier(section),
+          getScopeAccessorLiteral(nodeBinding!),
+          value,
+          siblingText === SiblingText.Before
+            ? guard
+              ? t.binaryExpression("*", guard, t.numericLiteral(2))
+              : t.numericLiteral(2)
+            : guard,
+        )}`;
+      } else {
+        write`${
+          method === "_escape"
+            ? buildEscapedTextExpression(value)
+            : callRuntime(method as HTMLMethod, value)
+        }`;
       }
     } else {
       addStatement(
@@ -254,23 +257,8 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
   }
 }
 
-// The `<!>` separator keeps resume from claiming the previous node as the
-// placeholder's text node when the serialized text is empty.
-function writeSeparator(
-  write: ReturnType<typeof writer.writeTo>,
-  section: Section,
-  reason: Exclude<ReturnType<typeof getSerializeReason>, undefined | false>,
-) {
-  if (reason === true || reason.state) {
-    write`<!>`;
-  } else {
-    write`${callRuntime("_sep", getSerializeGuard(section, reason, true))}`;
-  }
-}
-
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;
-  let hasNodeBefore = false;
   let prev = placeholder.getPrevSibling();
   let prevParent: t.NodePath = placeholder.parentPath;
   for (;;) {
@@ -298,7 +286,6 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     ) {
       return (placeholderExtra[kSiblingText] = SiblingText.Before);
     } else {
-      hasNodeBefore = true;
       break;
     }
   }
@@ -337,9 +324,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 
-  return (placeholderExtra[kSiblingText] = hasNodeBefore
-    ? SiblingText.NodeBefore
-    : SiblingText.None);
+  return (placeholderExtra[kSiblingText] = SiblingText.None);
 }
 
 // Returns the owner tag when `parent` is the body of a tag that inlines its

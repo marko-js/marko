@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (item) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_escape(item)}${_el_resume($scope2_id, "a")}</span>`);
+				_html(`<span>${_text_resume($scope2_id, "a", item)}</span>`);
 				_script($scope2_id, "a0");
 				writeScope($scope2_id, {});
 				return 0;

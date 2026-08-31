@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=flip>flip</button>${_el_resume($scope0_id, "a")}<ul>`);
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li${input.selected === row.id ? " class=sel" : ""}>${_escape(row.label)}${_el_resume($scope1_id, "b", $sg__input_rows)}</li>${_el_resume($scope1_id, "a")}`);
+		_html(`<li${input.selected === row.id ? " class=sel" : ""}>${_text_resume($scope1_id, "b", row.label, $sg__input_rows)}</li>${_el_resume($scope1_id, "a")}`);
 		writeScope($scope1_id, {
 			e: row?.id,
 			_: _scope_with_id($scope0_id)

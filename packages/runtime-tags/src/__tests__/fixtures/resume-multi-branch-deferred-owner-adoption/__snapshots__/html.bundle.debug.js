@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_escape(input.item)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope0_reason, 2))}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "#text/0", input.item, _serialize_guard($scope0_reason, 2))}</span>`);
 			_script($scope1_id, "__tests__/tags/child.marko_1_input#2");
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;

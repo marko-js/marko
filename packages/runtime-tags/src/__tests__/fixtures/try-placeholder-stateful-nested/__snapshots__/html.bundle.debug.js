@@ -2,7 +2,7 @@
 var note_default = _template("__tests__/tags/note.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_escape(input.label)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.label, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "__tests__/tags/note.marko_0_input_label#3");
 	writeScope($scope0_id, { input_label: input.label }, "__tests__/tags/note.marko", 0, { input_label: ["input.label"] });
 	_resume_branch($scope0_id);
@@ -14,14 +14,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $clicks__closures = new Set();
 	let clicks = 0;
-	_html(`<button>clicks <!>${_escape(clicks)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>clicks ${_text_resume($scope0_id, "#text/1", clicks, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/2", _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter("outer", 2), (outer) => {
 			const $scope2_id = _scope_id();
 			_script($scope2_id, "__tests__/template.marko_2_clicks#3/pending");
-			_html(`<p>${_escape(outer)} <!>${_escape(clicks)}${_el_resume($scope2_id, "#text/1")}</p>`);
+			_html(`<p>${_escape(outer)} ${_text_resume($scope2_id, "#text/1", clicks, 2)}</p>`);
 			_try($scope2_id, "#text/2", _content_resume("__tests__/template.marko_3*content", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();

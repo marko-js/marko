@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const doubled = input.n * 2;
 	const tripled = input.n * 3;
-	_html(`<div>${_escape(doubled + tripled)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", doubled + tripled, _serialize_guard($scope0_reason, 0))}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

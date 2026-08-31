@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id();
 			let wrapped = Wrapper.content({ value });
 			_var($scope2_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_2_wrapped#6/var");
-			_html(`<div>Value: ${_sep()}${_escape(wrapped)}${_el_resume($scope2_id, "#text/4")}</div>`);
+			_html(`<div>Value: ${_text_resume($scope2_id, "#text/4", wrapped, 2)}</div>`);
 			writeScope($scope2_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
 			return 0;
 		}

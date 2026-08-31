@@ -4,7 +4,7 @@ var tags_counter_default = _template("__tests__/components/tags-counter.marko", 
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button id=counter>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=counter>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/components/tags-counter.marko_0");
 	writeScope($scope0_id, { n }, "__tests__/components/tags-counter.marko", 0, { n: "1:6" });
 	_resume_branch($scope0_id);

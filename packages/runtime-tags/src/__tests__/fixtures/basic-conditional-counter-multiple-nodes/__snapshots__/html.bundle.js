@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(`The count is <!>${_escape(count)}${_el_resume($scope1_id, "a")}`);
+			_html(`The count is ${_text_resume($scope1_id, "a", count, 2)}`);
 			writeScope($scope1_id, {});
 			return 0;
 		}

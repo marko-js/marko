@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let fn = alias;
 	let message = "Hello";
-	_html(`<button>go</button>${_el_resume($scope0_id, "a")}<div>${_escape(message)}${_el_resume($scope0_id, "b")}</div>`);
+	_html(`<button>go</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", message)}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		c: fn,

@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			bar = v;
 		}, "__tests__/template.marko_0/foo", $scope0_id)
 	};
-	_html(`<button>${_escape(foo)}:<!>${_escape(bar)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_escape(foo)}:${_text_resume($scope0_id, "#text/2", bar, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_$fooChange#6");
 	writeScope($scope0_id, {
 		bar,

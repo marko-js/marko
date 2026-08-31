@@ -7,14 +7,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	_for_of(messages, (message, index) => {
 		const $scope1_id = _scope_id();
-		_html(`<button>${_unescaped(message)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>${_html_resume($scope1_id, "#text/1", message)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, { index }, "__tests__/template.marko", "4:4", { index: "4:17" });
 	}, (f) => f, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
 	_if(() => {
 		if (last !== undefined) {
 			const $scope2_id = _scope_id();
-			_html(`<div>${_escape(last)}${_el_resume($scope2_id, "#text/0")}</div>`);
+			_html(`<div>${_text_resume($scope2_id, "#text/0", last)}</div>`);
 			writeScope($scope2_id, {}, "__tests__/template.marko", "15:2");
 			return 0;
 		}

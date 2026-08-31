@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($text__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
 		_resume_branch($scope1_id);
 	}, $scope0_id));
-	_html(`<output>${open ? "open" : "closed"}${_el_resume($scope0_id, "#text/1")}/<!>${_escape(text)}${_el_resume($scope0_id, "#text/2")}</output>`);
+	_html(`<output>${_text_resume($scope0_id, "#text/1", open ? "open" : "closed")}/${_text_resume($scope0_id, "#text/2", text, 2)}</output>`);
 	writeScope($scope0_id, {
 		text,
 		detailsTag,

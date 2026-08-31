@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const Foo = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`${_escape(input.foo || "fallback")}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}`);
+		_html(_text_resume($scope1_id, "a", input.foo || "fallback", _serialize_guard($scope1_reason, 0)));
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}, $scope0_id) };
 	({ content: _content("a1", (input) => {

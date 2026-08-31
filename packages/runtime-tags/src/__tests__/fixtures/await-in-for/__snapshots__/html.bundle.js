@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		_html("<li>");
 		_await($scope1_id, "a", resolveAfter(item.label, 1), (v) => {
 			const $scope2_id = _scope_id();
-			_html(`${_escape(v)}${_el_resume($scope2_id, "a", $sg__input_items)}`);
+			_html(_text_resume($scope2_id, "a", v, $sg__input_items));
 			$si__input_items && writeScope($scope2_id, {});
 		}, $sg__input_items);
 		_html("</li>");

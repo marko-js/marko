@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_html("<ul>");
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(row.id)}${_el_resume($scope1_id, "a")}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", row.id)}</li>`);
 		writeScope($scope1_id, {});
 	}, "id", $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=reorder>stable prefix, drop tail, swap</button>${_el_resume($scope0_id, "b")}<button class=front>reorder from front and shrink</button>${_el_resume($scope0_id, "c")}<button class=append>append</button>${_el_resume($scope0_id, "d")}`);

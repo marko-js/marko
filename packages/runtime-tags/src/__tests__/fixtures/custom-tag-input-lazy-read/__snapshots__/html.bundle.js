@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	press_button_default({ onPress: _resume(function() {
 		log = `${log}[${count}]`;
 	}, "a0", $scope0_id) });
-	_html(`<div class=log>${_escape(log)}${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<div class=log>${_text_resume($scope0_id, "c", log)}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		d: count,

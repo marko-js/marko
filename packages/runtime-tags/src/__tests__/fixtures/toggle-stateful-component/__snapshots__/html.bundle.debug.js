@@ -3,9 +3,9 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	_html(`<button>${_escape(((() => {
+	_html(`<button>${_text_resume($scope0_id, "#text/1", ((() => {
 		if (clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
-	})(), clickCount))}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	})(), clickCount))}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	writeScope($scope0_id, {
 		input_onCount: input.onCount,

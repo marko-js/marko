@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_html("<ul>");
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(item.a + item.b)}${_el_resume($scope1_id, "a")}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", item.a + item.b)}</li>`);
 		writeScope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button>rev</button>${_el_resume($scope0_id, "b")}`);

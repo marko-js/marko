@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(`${_escape(JSON.stringify(input.message))}${_el_resume($scope3_id, "a", _serialize_guard($scope1_reason, 2))}`);
+				_html(_text_resume($scope3_id, "a", JSON.stringify(input.message), _serialize_guard($scope1_reason, 2)));
 				_serialize_if($scope1_reason, 0) && writeScope($scope3_id, { _: _serialize_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 1;
 			}

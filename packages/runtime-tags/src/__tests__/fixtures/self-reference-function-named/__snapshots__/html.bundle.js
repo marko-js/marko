@@ -7,9 +7,9 @@ var template_default = _template("a", (input) => {
 		1,
 		2
 	];
-	_html(`<button></button>${_el_resume($scope0_id, "a")}<div>${_escape(function sum(i = 0) {
+	_html(`<button></button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", function sum(i = 0) {
 		return i >= items.length ? 0 : items[i] + sum(i + 1);
-	}())}${_el_resume($scope0_id, "b")}</div>`);
+	}())}</div>`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { c: items });
 	_resume_branch($scope0_id);

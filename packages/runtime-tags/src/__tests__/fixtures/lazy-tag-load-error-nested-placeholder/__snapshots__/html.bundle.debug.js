@@ -18,9 +18,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			$Child_withLoadAssets({});
 		}, $scope1_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_4*content", (err) => {
-			const $scope4_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope4_reason, 0);
+			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
-			_html(`caught: ${_sep($sg__err_message)}${_escape(err.message)}${_el_resume($scope4_id, "#text/0", $sg__err_message)}`);
+			_html(`caught: ${_text_resume($scope4_id, "#text/0", err.message, _serialize_guard($scope4_reason, 0) * 2)}`);
 			_serialize_if($scope4_reason, 0) && writeScope($scope4_id, {}, "__tests__/template.marko", "7:6");
 		}, $scope1_id) }) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {

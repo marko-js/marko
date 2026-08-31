@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			wrong = x;
 		}, "a1", $scope0_id)
 	};
-	_html(`<div>v=<!>${_escape(v)}${_el_resume($scope0_id, "a")}|wrong=<!>${_escape(wrong)}${_el_resume($scope0_id, "b")}</div><input${_attr_input_value($scope0_id, "c", state[key], state["vChange"])}>${_el_resume($scope0_id, "c")}`);
+	_html(`<div>v=${_text_resume($scope0_id, "a", v, 2)}|wrong=${_text_resume($scope0_id, "b", wrong, 2)}</div><input${_attr_input_value($scope0_id, "c", state[key], state["vChange"])}>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		f: key,

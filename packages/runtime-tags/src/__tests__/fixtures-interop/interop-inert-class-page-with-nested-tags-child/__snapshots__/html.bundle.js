@@ -2,7 +2,7 @@
 var tags_label_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_escape(input.text)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.text, _serialize_guard($scope0_reason, 0))}</span>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });
 
@@ -12,7 +12,7 @@ var tags_counter_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button id=counter>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=counter>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
 	writeScope($scope0_id, { c: n });
 	_resume_branch($scope0_id);

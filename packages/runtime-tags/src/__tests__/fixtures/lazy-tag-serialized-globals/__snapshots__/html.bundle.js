@@ -4,7 +4,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	$global();
 	let count = 0;
-	_html(`<button>count: <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>count: ${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { c: count });
 	_resume_branch($scope0_id);

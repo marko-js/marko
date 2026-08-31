@@ -227,3 +227,12 @@ export function withBranches<T>(runtime?: T) {
   branchesEnabled = 1;
   return runtime as T;
 }
+
+// Dynamic html support latch, same idea: only `_html` writes it, so resume's
+// html range handling folds out of bundles without unescaped placeholders.
+export let dynamicHtmlEnabled: undefined | 1;
+
+export function withDynamicHtml<T>(runtime: T) {
+  dynamicHtmlEnabled = 1;
+  return runtime;
+}

@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>Clear</button>${_el_resume($scope0_id, "#button/2")}<ul>`);
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(item)}${_el_resume($scope1_id, "#text/0")}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", item)}</li>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "10:4");
 	}, 0, $scope0_id, "#ul/3", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/template.marko_0_store_clear#8");

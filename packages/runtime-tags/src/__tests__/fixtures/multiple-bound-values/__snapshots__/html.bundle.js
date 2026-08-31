@@ -4,7 +4,7 @@ var _2counters_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let count1 = input.count1;
 	let count2 = input.count2;
-	_html(`<button>${_escape(count1)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<button>${_escape(count2)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", count1)}</button>${_el_resume($scope0_id, "a")}<button>${_text_resume($scope0_id, "d", count2)}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
 		g: _serialize_if($scope0_reason, 1) && input.count1,
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			count2 = _new_count2;
 		}, "a1", $scope0_id)
 	});
-	_html(`<div>${_escape(count1)}${_el_resume($scope0_id, "b")} <!>${_escape(count2)}${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "b", count1)} ${_text_resume($scope0_id, "c", count2, 2)}</div>`);
 	writeScope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
 }, 1);

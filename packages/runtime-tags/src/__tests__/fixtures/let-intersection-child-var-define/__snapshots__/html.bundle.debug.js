@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let a = Let.content({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_a#4/var");
 	let b = 0;
-	_html(`<button>${_escape(`${a}`)},${_escape(`${b}`)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/3", `${a},${b}`)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		a,

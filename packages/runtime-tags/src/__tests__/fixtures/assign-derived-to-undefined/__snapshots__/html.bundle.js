@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		2,
 		3
 	];
-	_html(`<div>${_escape(first)}${_el_resume($scope0_id, "a")}|<!>${_escape(second)}${_el_resume($scope0_id, "b")}</div><button>update</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<div>${_text_resume($scope0_id, "a", first)}|${_text_resume($scope0_id, "b", second, 2)}</div><button>update</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {});
 	_resume_branch($scope0_id);

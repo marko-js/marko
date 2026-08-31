@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		go = this.#hidden;
 	}();
 	let n = 1;
-	_html(`<button id=a>a</button>${_el_resume($scope0_id, "#button/0")}<button id=b>b <!>${_escape(n)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button id=a>a</button>${_el_resume($scope0_id, "#button/0")}<button id=b>b ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_obj_go#4");
 	writeScope($scope0_id, {

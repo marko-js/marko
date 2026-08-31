@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", input.a, (v) => {
 			const $scope4_id = _scope_id();
-			_html(`<p>A:${_sep($sg__input_a)}${_escape((console.log("body-ran:a", v), v))}${_el_resume($scope4_id, "a", $sg__input_a)}</p>`);
+			_html(`<p>A:${_text_resume($scope4_id, "a", (console.log("body-ran:a", v), v), $sg__input_a * 2)}</p>`);
 			$si__input_a && writeScope($scope4_id, {});
 		}, $sg__input_a);
 		$si__input_a && _subscribe($input_a__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope2_id, "a", input.b, (v) => {
 			const $scope6_id = _scope_id();
-			_html(`<p>B:${_sep($sg__input_b)}${_escape((console.log("body-ran:b", v), v))}${_el_resume($scope6_id, "a", $sg__input_b)}</p>`);
+			_html(`<p>B:${_text_resume($scope6_id, "a", (console.log("body-ran:b", v), v), $sg__input_b * 2)}</p>`);
 			$si__input_b && writeScope($scope6_id, {});
 		}, $sg__input_b);
 		$si__input_b && _subscribe($input_b__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }));

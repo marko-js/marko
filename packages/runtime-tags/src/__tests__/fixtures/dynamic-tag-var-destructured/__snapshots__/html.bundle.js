@@ -9,7 +9,7 @@ var child_default = _template("b", (input) => {
 			count++;
 		}, "b0", $scope0_id)
 	};
-	_html(`<span>child:<!>${_escape(count)}${_el_resume($scope0_id, "a")}</span>`);
+	_html(`<span>child:${_text_resume($scope0_id, "a", count, 2)}</span>`);
 	writeScope($scope0_id, { b: count });
 	_resume_branch($scope0_id);
 	return $return;
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let { count, inc } = child_default({});
 	_var($scope0_id, "b", $childScope, "a0");
-	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "c")}<div>${_escape(count)}${_el_resume($scope0_id, "d")}</div>`);
+	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "c")}<div>${_text_resume($scope0_id, "d", count)}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		g: inc,

@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		clickOnceCount++;
 	}, "a1", $scope0_id) });
 	_var($scope0_id, "b", $childScope, "a5");
-	_html(`<button class=once>${_escape(clickOnceCount)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button class=once>${_text_resume($scope0_id, "d", clickOnceCount)}</button>${_el_resume($scope0_id, "c")}`);
 	const Twice = { content: _content("a6", ({ value }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 		clickTwiceCount++;
 	}, "a3", $scope0_id) });
 	_var($scope0_id, "f", $childScope2, "a7");
-	_html(`<button class=twice>${_escape(clickTwiceCount)}${_el_resume($scope0_id, "h")}</button>${_el_resume($scope0_id, "g")}`);
+	_html(`<button class=twice>${_text_resume($scope0_id, "h", clickTwiceCount)}</button>${_el_resume($scope0_id, "g")}`);
 	_script($scope0_id, "a8");
 	_script($scope0_id, "a9");
 	writeScope($scope0_id, {

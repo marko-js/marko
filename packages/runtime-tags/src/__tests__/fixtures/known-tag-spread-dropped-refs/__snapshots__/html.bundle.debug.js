@@ -2,7 +2,7 @@
 var child_b_default = _template("__tests__/tags/child-b/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.a)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, _serialize_guard($scope0_reason, 0))}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child-b/index.marko", 0);
 });
 
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const j1 = { a: 5 };
 	const j2 = { a: 6 };
 	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>inc ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	child_b_default({

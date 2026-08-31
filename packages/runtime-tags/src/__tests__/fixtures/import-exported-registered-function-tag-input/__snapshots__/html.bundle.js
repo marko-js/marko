@@ -12,7 +12,7 @@ var press_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let label = "quiet";
-	_html(`<button>press</button>${_el_resume($scope0_id, "a")}<div>${_escape(label)}${_el_resume($scope0_id, "b")}</div>`);
+	_html(`<button>press</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", label)}</div>`);
 	_script($scope0_id, "c0");
 	writeScope($scope0_id, {
 		d: input,

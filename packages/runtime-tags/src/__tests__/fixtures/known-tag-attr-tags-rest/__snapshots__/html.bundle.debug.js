@@ -1,13 +1,13 @@
 // tags/inner/index.marko
 var inner_default = _template("__tests__/tags/inner/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_stuff_row = _serialize_guard($scope0_reason, 1), $sg__input_stuff_other_y = _serialize_guard($scope0_reason, 2), $sg__input_stuff_cond_a = _serialize_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $sg__input_stuff_row = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.stuff.row, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<div>row ${_sep($sg__input_stuff_row)}${_escape(row.x)}${_el_resume($scope1_id, "#text/0", $sg__input_stuff_row)}</div>`);
+		_html(`<div>row ${_text_resume($scope1_id, "#text/0", row.x, $sg__input_stuff_row * 2)}</div>`);
 		_serialize_if($scope0_reason, 1) && writeScope($scope1_id, {}, "__tests__/tags/inner/index.marko", "1:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_stuff_row, $sg__input_stuff_row, $sg__input_stuff_row, 0, 1);
-	_html(`<div>other ${_sep($sg__input_stuff_other_y)}${_escape(input.stuff.other.y)}${_el_resume($scope0_id, "#text/1", $sg__input_stuff_other_y)}</div><div>cond ${_sep($sg__input_stuff_cond_a)}${_escape(input.stuff.cond.a)}${_el_resume($scope0_id, "#text/2", $sg__input_stuff_cond_a)}</div>`);
+	_html(`<div>other ${_text_resume($scope0_id, "#text/1", input.stuff.other.y, _serialize_guard($scope0_reason, 2) * 2)}</div><div>cond ${_text_resume($scope0_id, "#text/2", input.stuff.cond.a, _serialize_guard($scope0_reason, 3) * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/inner/index.marko", 0);
 });
 
@@ -16,7 +16,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__rest = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { title, ...rest } = input;
-	_html(`<h1>${_escape(title)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))}</h1>`);
+	_html(`<h1>${_text_resume($scope0_id, "#text/0", title, _serialize_guard($scope0_reason, 1))}</h1>`);
 	_set_serialize_reason({
 		0: $sg__rest,
 		1: $sg__rest,

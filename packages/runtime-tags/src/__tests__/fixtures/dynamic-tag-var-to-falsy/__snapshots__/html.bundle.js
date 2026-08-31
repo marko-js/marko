@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const $inputtag_scope = _peek_scope_id();
 	let el = _dynamic_tag($scope0_id, "a", input.tag, {});
 	_var($scope0_id, "b", $inputtag_scope, "a0");
-	_html(`<button>${_escape(clicks)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_text_resume($scope0_id, "d", clicks)}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		h: clicks,

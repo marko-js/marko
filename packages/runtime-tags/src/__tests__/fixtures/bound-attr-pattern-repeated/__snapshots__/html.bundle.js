@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		});
 	}, $scope0_id) };
 	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z1" });

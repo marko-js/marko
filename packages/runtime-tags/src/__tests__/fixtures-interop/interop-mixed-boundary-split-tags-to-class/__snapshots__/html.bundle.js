@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button id=bump>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=bump>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "c", _marko_template, {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "d", _marko_template, { count: n });
 	_script($scope0_id, "a0");

@@ -2,7 +2,7 @@
 var note_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_escape(input.label)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.label, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, { d: input.label });
 	_resume_branch($scope0_id);
@@ -14,14 +14,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $clicks__closures = /* @__PURE__ */ new Set();
 	let clicks = 0;
-	_html(`<button>clicks <!>${_escape(clicks)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>clicks ${_text_resume($scope0_id, "b", clicks, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_try($scope0_id, "c", _content_resume("a5", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter("outer", 2), (outer) => {
 			const $scope2_id = _scope_id();
 			_script($scope2_id, "a3");
-			_html(`<p>${_escape(outer)} <!>${_escape(clicks)}${_el_resume($scope2_id, "b")}</p>`);
+			_html(`<p>${_escape(outer)} ${_text_resume($scope2_id, "b", clicks, 2)}</p>`);
 			_try($scope2_id, "c", _content_resume("a2", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();

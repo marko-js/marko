@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	_for_of(["ab", "cde"], (_, i) => {
 		const $scope1_id = _scope_id();
-		_html(`<div>${_escape(_)}:<!>${_escape(n)}${_el_resume($scope1_id, "#text/2")}</div>${_el_resume($scope1_id, "#div/0")}`);
+		_html(`<div>${_escape(_)}:${_text_resume($scope1_id, "#text/2", n, 2)}</div>${_el_resume($scope1_id, "#div/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			__length: _?.length,

@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 			v = _new_v;
 		}, "a0", $scope0_id)
 	});
-	_html(`<output>${_escape(v)}${_el_resume($scope0_id, "b")}</output>`);
+	_html(`<output>${_text_resume($scope0_id, "b", v)}</output>`);
 	writeScope($scope0_id, { f: tag });
 	_resume_branch($scope0_id);
 }, 1);

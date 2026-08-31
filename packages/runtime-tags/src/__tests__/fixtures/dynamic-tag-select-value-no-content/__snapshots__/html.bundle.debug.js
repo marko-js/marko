@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			v = _new_v;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
-	_html(`<output>${_escape(v)}${_el_resume($scope0_id, "#text/1")}</output>`);
+	_html(`<output>${_text_resume($scope0_id, "#text/1", v)}</output>`);
 	writeScope($scope0_id, { tag }, "__tests__/template.marko", 0, { tag: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

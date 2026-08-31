@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		{
 			const $scope2_id = _scope_id();
-			_html(`<div>${_escape(a)}${_el_resume($scope2_id, "a")}</div><div>${_escape(b)}${_el_resume($scope2_id, "b")}</div>`);
+			_html(`<div>${_text_resume($scope2_id, "a", a)}</div><div>${_text_resume($scope2_id, "b", b)}</div>`);
 			_subscribe($b__closures, _subscribe($a__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) })));
 		}
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });

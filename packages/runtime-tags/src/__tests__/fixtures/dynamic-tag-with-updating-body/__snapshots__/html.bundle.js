@@ -3,7 +3,7 @@ var counter_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button id=count>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=count>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, { c: count });
 	_resume_branch($scope0_id);

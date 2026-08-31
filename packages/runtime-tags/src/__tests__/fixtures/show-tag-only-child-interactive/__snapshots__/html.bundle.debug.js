@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}<div>`);
 	_show_start(open);
-	_html(`<button id=inc>count <!>${_escape(n)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button id=inc>count ${_text_resume($scope0_id, "#text/3", n, 2)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_show_end($scope0_id, "#div/1", open, 1, 1, "</div>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

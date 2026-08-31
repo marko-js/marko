@@ -14,9 +14,9 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(1);
 	let $item;
 	$item = attrTag({ content: _content("a0", (y) => {
-		const $scope1_reason = _scope_reason(), $sg__y = _serialize_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`y: ${_sep($sg__y)}${_escape(y)}${_el_resume($scope1_id, "a", $sg__y)}`);
+		_html(`y: ${_text_resume($scope1_id, "a", y, _serialize_guard($scope1_reason, 0) * 2)}`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}, $scope0_id) });
 	const $childScope = _peek_scope_id();

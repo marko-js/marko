@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		"c"
 	];
 	let index = 0;
-	_html(`<div>${_escape(items[0])}${_el_resume($scope0_id, "a")}</div><div>${_escape(items[index])}${_el_resume($scope0_id, "b")}</div><button>Update</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<div>${_text_resume($scope0_id, "a", items[0])}</div><div>${_text_resume($scope0_id, "b", items[index])}</div><button>Update</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		d: items,

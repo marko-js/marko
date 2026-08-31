@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		dateStyle: "medium",
 		timeZone: "UTC"
 	});
-	_html(`<button>${_escape(money.format(n))}${_el_resume($scope0_id, "#text/1")} <!>${_escape(day.format(new Date(n)))}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", money.format(n))} ${_text_resume($scope0_id, "#text/2", day.format(new Date(n)), 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		n,

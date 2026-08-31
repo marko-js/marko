@@ -15,9 +15,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item;
 	if (x) {
 		$item = attrTag({ content: _content("__tests__/template.marko_1*content", (y) => {
-			const $scope1_reason = _scope_reason(), $sg__y = _serialize_guard($scope1_reason, 0);
+			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`y: ${_sep($sg__y)}${_escape(y)}${_el_resume($scope1_id, "#text/0", $sg__y)}`);
+			_html(`y: ${_text_resume($scope1_id, "#text/0", y, _serialize_guard($scope1_reason, 0) * 2)}`);
 			_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "4:10");
 		}, $scope0_id) });
 	}

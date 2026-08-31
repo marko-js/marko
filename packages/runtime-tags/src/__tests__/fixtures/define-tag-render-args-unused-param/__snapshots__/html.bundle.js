@@ -5,14 +5,14 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	const MyTag = { content: _content("a0", (a, b, c) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__c = _serialize_guard($scope1_reason, 2);
-		_html(`<div>${_escape(b)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 1))}|${_sep($sg__c)}${_escape(c)}${_el_resume($scope1_id, "b", $sg__c)}</div>`);
+		const $scope1_reason = _scope_reason();
+		_html(`<div>${_text_resume($scope1_id, "a", b, _serialize_guard($scope1_reason, 1))}|${_text_resume($scope1_id, "b", c, _serialize_guard($scope1_reason, 2) * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason(10);
 	const $childScope = _peek_scope_id();
 	MyTag.content(1, "Hello", x);
-	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>${_text_resume($scope0_id, "c", x)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		d: x,

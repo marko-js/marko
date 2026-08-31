@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const $checkedValueChange = _resume((_new_checkedValue) => {
 		checkedValue = _new_checkedValue;
 	}, "a0", $scope0_id);
-	_html(`<input${_attr_input_checkedValue($scope0_id, "a", checkedValue, $checkedValueChange, "a")} type=radio>${_el_resume($scope0_id, "a")}<input${_attr_input_checkedValue($scope0_id, "b", checkedValue, $checkedValueChange, "b")} type=radio>${_el_resume($scope0_id, "b")}<input${_attr_input_checkedValue($scope0_id, "c", checkedValue, $checkedValueChange, "c")} type=radio>${_el_resume($scope0_id, "c")}<span>${_escape(checkedValue)}${_el_resume($scope0_id, "d")}</span>`);
+	_html(`<input${_attr_input_checkedValue($scope0_id, "a", checkedValue, $checkedValueChange, "a")} type=radio>${_el_resume($scope0_id, "a")}<input${_attr_input_checkedValue($scope0_id, "b", checkedValue, $checkedValueChange, "b")} type=radio>${_el_resume($scope0_id, "b")}<input${_attr_input_checkedValue($scope0_id, "c", checkedValue, $checkedValueChange, "c")} type=radio>${_el_resume($scope0_id, "c")}<span>${_text_resume($scope0_id, "d", checkedValue)}</span>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, { f: $checkedValueChange });
 	_resume_branch($scope0_id);

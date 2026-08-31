@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		type: "radio",
 		checkedValue: v,
 		...rest
-	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<span>${_escape(v)}${_el_resume($scope0_id, "c")}</span>`);
+	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<span>${_text_resume($scope0_id, "c", v)}</span>`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {

@@ -1,18 +1,18 @@
 // tags/child1.marko
 var child1_default = _template("__tests__/tags/child1.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { value } = input;
-	_html(`<div>Child 1 has ${_sep($sg__input_value)}${_escape(value)}${_el_resume($scope0_id, "#text/0", $sg__input_value)}</div>`);
+	_html(`<div>Child 1 has ${_text_resume($scope0_id, "#text/0", value, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child1.marko", 0);
 });
 
 // tags/child2.marko
 var child2_default = _template("__tests__/tags/child2.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { value } = input;
-	_html(`<div>Child 2 has ${_sep($sg__input_value)}${_escape(value)}${_el_resume($scope0_id, "#text/0", $sg__input_value)}</div>`);
+	_html(`<div>Child 2 has ${_text_resume($scope0_id, "#text/0", value, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child2.marko", 0);
 });
 

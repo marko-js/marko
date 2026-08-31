@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html("aliased");
 	}, $scope0_id));
-	_html(`<div>${_escape(n)}${_el_resume($scope0_id, "#text/3")}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/3", n)}</div>`);
 	writeScope($scope0_id, {
 		input_tag: input.tag,
 		n,

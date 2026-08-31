@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	_for_in(entries, (key, value) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_escape(key)}${_el_resume($scope1_id, "#text/0")}:<!>${_escape(value)}${_el_resume($scope1_id, "#text/1")}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", key)}:${_text_resume($scope1_id, "#text/1", value, 2)}</p>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
 	}, (key) => key, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
 	_html(`<button>Change</button>${_el_resume($scope0_id, "#button/1")}</div>`);

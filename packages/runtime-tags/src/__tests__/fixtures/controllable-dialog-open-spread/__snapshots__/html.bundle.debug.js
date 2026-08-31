@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			open = _new_open;
 		}, "__tests__/template.marko_0/openChange", $scope0_id)
 	});
-	_html(`<span>${_escape(String(open))}${_el_resume($scope0_id, "#text/1")}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/1", String(open))}</span>`);
 	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

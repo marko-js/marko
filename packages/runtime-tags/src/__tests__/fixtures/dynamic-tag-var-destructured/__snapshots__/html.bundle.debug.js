@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 			count++;
 		}, "__tests__/tags/child/index.marko_0/_return", $scope0_id)
 	};
-	_html(`<span>child:<!>${_escape(count)}${_el_resume($scope0_id, "#text/0")}</span>`);
+	_html(`<span>child:${_text_resume($scope0_id, "#text/0", count, 2)}</span>`);
 	writeScope($scope0_id, { count }, "__tests__/tags/child/index.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 	return $return;
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	let { count, inc } = child_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_$pattern#4/var");
-	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/2")}<div>${_escape(count)}${_el_resume($scope0_id, "#text/3")}</div>`);
+	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/2")}<div>${_text_resume($scope0_id, "#text/3", count)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_inc#6");
 	writeScope($scope0_id, {
 		inc,

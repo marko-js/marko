@@ -6,7 +6,7 @@ var leaf_default = _template("b", (input) => {
 	_if(() => {
 		if (n) {
 			const $scope1_id = _scope_id();
-			_html(`<div>n is ${_sep($sg__input_n)}${_escape(n)}${_el_resume($scope1_id, "a", $sg__input_n)}</div>`);
+			_html(`<div>n is ${_text_resume($scope1_id, "a", n, $sg__input_n * 2)}</div>`);
 			$si__input_n && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

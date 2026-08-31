@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clickOnceCount++;
 	}, "__tests__/template.marko_0/onClickOnce", $scope0_id) });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_onClickOnce#9/var");
-	_html(`<button class=once>${_escape(clickOnceCount)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button class=once>${_text_resume($scope0_id, "#text/3", clickOnceCount)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	const Twice = { content: _content("__tests__/template.marko_2*content", ({ value }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clickTwiceCount++;
 	}, "__tests__/template.marko_0/onClickTwice", $scope0_id) });
 	_var($scope0_id, "#scopeOffset/5", $childScope2, "__tests__/template.marko_0_onClickTwice#11/var");
-	_html(`<button class=twice>${_escape(clickTwiceCount)}${_el_resume($scope0_id, "#text/7")}</button>${_el_resume($scope0_id, "#button/6")}`);
+	_html(`<button class=twice>${_text_resume($scope0_id, "#text/7", clickTwiceCount)}</button>${_el_resume($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/template.marko_0_onClickTwice#11");
 	_script($scope0_id, "__tests__/template.marko_0_onClickOnce#9");
 	writeScope($scope0_id, {

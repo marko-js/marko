@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const increment = _resume(function() {
 		clickCount++;
 	}, "__tests__/template.marko_0/increment", $scope0_id);
-	_html(`<button>${_escape(clickCount)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", clickCount)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_increment#3");
 	writeScope($scope0_id, {
 		clickCount,

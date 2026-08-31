@@ -5,7 +5,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	let captured = "(unchecked)";
 	_html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}<button type=button class=cap>check</button>${_el_resume($scope0_id, "#button/1")}<div class=out>${_escape(captured)}${_el_resume($scope0_id, "#text/2")}</div>`);
+	_html(`</div>${_el_resume($scope0_id, "#div/0")}<button type=button class=cap>check</button>${_el_resume($scope0_id, "#button/1")}<div class=out>${_text_resume($scope0_id, "#text/2", captured)}</div>`);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0");
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#4");
 	writeScope($scope0_id, {

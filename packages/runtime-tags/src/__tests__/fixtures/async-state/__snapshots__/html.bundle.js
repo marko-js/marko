@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter(clickCount), (value) => {
 			const $scope3_id = _scope_id();
-			_html(`${_escape(value)}${_el_resume($scope3_id, "a")}`);
+			_html(_text_resume($scope3_id, "a", value));
 			writeScope($scope3_id, {});
 		});
 		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));

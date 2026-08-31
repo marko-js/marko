@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		}, "a1", $scope0_id)
 	} : { onClick: _resume(function() {
 		phase = 0;
-	}, "a2", $scope0_id) }, "a", $scope0_id, "div")}>${_escape(phase)}${_el_resume($scope0_id, "b")}:<!>${_escape(log)}${_el_resume($scope0_id, "c")}</div>${_el_resume($scope0_id, "a")}`);
+	}, "a2", $scope0_id) }, "a", $scope0_id, "div")}>${_text_resume($scope0_id, "b", phase)}:${_text_resume($scope0_id, "c", log, 2)}</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		d: phase,

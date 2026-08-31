@@ -1,16 +1,16 @@
 // tags/child-a/index.marko
 var child_a_default = _template("__tests__/tags/child-a/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_b = _serialize_guard($scope0_reason, 2), $sg__input_c = _serialize_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.a)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))} ${_sep($sg__input_b)}${_escape(input.b)}${_el_resume($scope0_id, "#text/1", $sg__input_b)} ${_sep($sg__input_c)}${_escape(input.c)}${_el_resume($scope0_id, "#text/2", $sg__input_c)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, _serialize_guard($scope0_reason, 1))} ${_text_resume($scope0_id, "#text/1", input.b, _serialize_guard($scope0_reason, 2) * 2)} ${_text_resume($scope0_id, "#text/2", input.c, _serialize_guard($scope0_reason, 3) * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child-a/index.marko", 0);
 });
 
 // tags/child-c/index.marko
 var child_c_default = _template("__tests__/tags/child-c/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_b = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.a)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))} ${_sep($sg__input_b)}${_escape(input.b)}${_el_resume($scope0_id, "#text/1", $sg__input_b)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, _serialize_guard($scope0_reason, 1))} ${_text_resume($scope0_id, "#text/1", input.b, _serialize_guard($scope0_reason, 2) * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child-c/index.marko", 0);
 });
 
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		c: 3
 	};
 	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>inc ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(1);
 	const $childScope = _peek_scope_id();
 	child_a_default({

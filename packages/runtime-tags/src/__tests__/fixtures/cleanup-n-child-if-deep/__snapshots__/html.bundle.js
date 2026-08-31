@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	const $sg__input_name = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	const { name, write } = input;
-	_html(`<div>${_escape(name)}${_el_resume($scope0_id, "a", $sg__input_name)} a</div><span>${_escape(name)}${_el_resume($scope0_id, "b", $sg__input_name)} a</span><p>${_escape(name)}${_el_resume($scope0_id, "c", $sg__input_name)} a</p>`);
+	_html(`<div>${_text_resume($scope0_id, "a", name, $sg__input_name)} a</div><span>${_text_resume($scope0_id, "b", name, $sg__input_name)} a</span><p>${_text_resume($scope0_id, "c", name, $sg__input_name)} a</p>`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
 		f: name,

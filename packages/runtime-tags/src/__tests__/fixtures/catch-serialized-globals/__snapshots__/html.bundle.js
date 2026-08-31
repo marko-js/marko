@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const message = $global$1.settings.message;
 		let clicked = false;
-		_html(`<button>${_escape(error.message)}${_el_resume($scope2_id, "b")}</button>${_el_resume($scope2_id, "a")}`);
+		_html(`<button>${_text_resume($scope2_id, "b", error.message)}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a0");
 		writeScope($scope2_id, {
 			e: error?.message,

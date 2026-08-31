@@ -23,12 +23,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html("never");
 				}, 0);
 			}, $scope2_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_5*content", (err) => {
-				const $scope5_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope5_reason, 0);
+				const $scope5_reason = _scope_reason();
 				const $scope5_id = _scope_id();
-				_html(`caught: ${_sep($sg__err_message)}${_escape(err.message)}${_el_resume($scope5_id, "#text/0", $sg__err_message)}`);
+				_html(`caught: ${_text_resume($scope5_id, "#text/0", err.message, _serialize_guard($scope5_reason, 0) * 2)}`);
 				_serialize_if($scope5_reason, 0) && writeScope($scope5_id, {}, "__tests__/template.marko", "18:8");
 			}, $scope2_id) }) });
-			_html(`<div>changes: <!>${_escape(changes)}${_el_resume($scope2_id, "#text/2")}</div>${_el_resume($scope2_id, "#div/1")}`);
+			_html(`<div>changes: ${_text_resume($scope2_id, "#text/2", changes, 2)}</div>${_el_resume($scope2_id, "#div/1")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4");
 			_resume_branch($scope2_id);

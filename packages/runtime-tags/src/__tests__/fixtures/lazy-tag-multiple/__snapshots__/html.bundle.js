@@ -2,7 +2,7 @@
 var child_a_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=a>${_escape(input.value)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span class=a>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "a0");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });
@@ -11,7 +11,7 @@ var child_a_default = _template("a", (input) => {
 var child_b_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=b>${_escape(input.value * 2)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span class=b>${_text_resume($scope0_id, "a", input.value * 2, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });

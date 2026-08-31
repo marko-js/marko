@@ -3,7 +3,7 @@ var child_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = input.value;
-	_html(`<button class=child>child <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=child>child ${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { f: count });
 	_resume_branch($scope0_id);
@@ -19,7 +19,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = input.value;
-	_html(`<button class=parent>parent <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=parent>parent ${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_script($scope0_id, "b0");

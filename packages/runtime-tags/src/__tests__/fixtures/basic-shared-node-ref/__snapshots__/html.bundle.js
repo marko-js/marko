@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	_html(`<ul${_attr("hidden", false)}>`);
 	_for_of(list, (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(x)}${_el_resume($scope1_id, "a")}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", x)}</li>`);
 		writeScope($scope1_id, {});
 	}, function(x) {
 		return x;

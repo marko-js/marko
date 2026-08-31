@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<ul>");
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(item.text)}${_el_resume($scope1_id, "#text/0")}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", item.text)}</li>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "6:4");
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button>refresh</button>${_el_resume($scope0_id, "#button/1")}`);

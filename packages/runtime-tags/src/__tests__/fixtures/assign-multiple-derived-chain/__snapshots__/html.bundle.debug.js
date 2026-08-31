@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let index = 0;
 	const filtered = items.filter((item) => item >= min && item <= max);
 	const selected = filtered[index];
-	_html(`<div>${_escape(filtered.join(" "))}${_el_resume($scope0_id, "#text/0")} selected <!>${_escape(selected)}${_el_resume($scope0_id, "#text/1")}</div><button id=update>update</button>${_el_resume($scope0_id, "#button/2")}<button id=reselect>reselect</button>${_el_resume($scope0_id, "#button/3")}`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", filtered.join(" "))} selected ${_text_resume($scope0_id, "#text/1", selected, 2)}</div><button id=update>update</button>${_el_resume($scope0_id, "#button/2")}<button id=reselect>reselect</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		items,

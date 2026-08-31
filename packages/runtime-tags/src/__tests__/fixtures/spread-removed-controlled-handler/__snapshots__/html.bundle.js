@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		valueChange: _resume(function(next) {
 			value = next;
 		}, "a0", $scope0_id)
-	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<span>value=[<!>${_escape(value)}${_el_resume($scope0_id, "b")}]</span><button>drop</button>${_el_resume($scope0_id, "c")}`);
+	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<span>value=[${_text_resume($scope0_id, "b", value, 2)}]</span><button>drop</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {});
