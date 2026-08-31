@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, 0, $sg__input_show, 0, 1);
 	_script($scope0_id, "a2");
-	$si__input_show && writeScope($scope0_id, { f: input.show });
+	$si__input_show && writeScope($scope0_id, {});
 }, 1);

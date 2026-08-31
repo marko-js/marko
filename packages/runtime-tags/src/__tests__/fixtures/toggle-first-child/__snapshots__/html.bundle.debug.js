@@ -13,5 +13,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1);
 	_html("<span></span><span></span></div>");
-	$si__input_value && writeScope($scope0_id, { value }, "__tests__/template.marko", 0, { value: "1:10" });
+	$si__input_value && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

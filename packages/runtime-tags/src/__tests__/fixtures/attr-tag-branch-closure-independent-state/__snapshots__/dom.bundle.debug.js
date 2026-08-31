@@ -1,0 +1,41 @@
+// tags/sections.marko
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+const $setup$1 = () => {};
+const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
+const $if_content__content = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.content));
+const $if_content__setup = $if_content__content;
+const $for_content__if = /*@__PURE__*/ _if("#div/0", "<!><!><!>", "b%", $if_content__setup);
+const $for_content__content = /*@__PURE__*/ _const("content", ($scope) => {
+	$for_content__if($scope, $scope.content ? 0 : 1);
+	$if_content__content($scope);
+});
+const $for_content__$params = ($scope, $params2) => $for_content__content($scope, ($params2?.[0]).content);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div></div>", " ", 0, $for_content__$params);
+const $input_section = ($scope, input_section) => $for($scope, [input_section]);
+const $input = ($scope, input) => $input_section($scope, input.section);
+var sections_default = /*@__PURE__*/ _template("__tests__/tags/sections.marko", $template$1, "b%c", 0, $input);
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
+const $section_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $section_content__setup = $section_content__count;
+const $section_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $section_content__setup);
+const $count = /*@__PURE__*/ _let("count/2");
+const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
+	let $section;
+	forTo($scope.n, 1, 1, (i) => {
+		$section = attrTags($section, { content: $section_content($scope) });
+	});
+	$input_section($scope["#childScope/1"], $section);
+});
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$n($scope, +$scope.n + 1);
+}));
+function $setup($scope) {
+	$count($scope, 5);
+	$n($scope, 1);
+	$setup__script($scope);
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

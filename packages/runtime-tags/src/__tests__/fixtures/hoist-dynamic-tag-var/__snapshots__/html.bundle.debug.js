@@ -68,5 +68,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		writeScope($scope5_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "28:2");
 	}
 	_script($scope0_id, "__tests__/template.marko_0");
-	$si__input_show && writeScope($scope0_id, { input_show: input.show }, "__tests__/template.marko", 0, { input_show: ["input.show"] });
+	$si__input_show && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

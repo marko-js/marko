@@ -19,12 +19,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
-	writeScope($scope0_id, {
-		messages,
-		last
-	}, "__tests__/template.marko", 0, {
-		messages: "1:6",
-		last: "2:6"
-	});
+	writeScope($scope0_id, { messages }, "__tests__/template.marko", 0, { messages: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

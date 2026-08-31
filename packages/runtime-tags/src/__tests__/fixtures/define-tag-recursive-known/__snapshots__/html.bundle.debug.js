@@ -26,13 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "#text/0", _serialize_guard($scope1_reason, 0) || $sg__input_bar, $sg__input_bar, $sg__input_bar);
-		$si__input_bar && writeScope($scope1_id, {
-			input_bar: input.bar,
-			input_message: input.message
-		}, "__tests__/template.marko", "1:1", {
-			input_bar: ["input.bar", "1:12"],
-			input_message: ["input.message", "1:12"]
-		});
+		$si__input_bar && writeScope($scope1_id, { input_message: input.message }, "__tests__/template.marko", "1:1", { input_message: ["input.message", "1:12"] });
 	}, $scope0_id) };
 	Foo.content({ bar: "hi" });
 }, 1);

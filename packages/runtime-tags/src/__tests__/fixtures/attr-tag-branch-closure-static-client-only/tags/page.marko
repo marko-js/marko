@@ -1,0 +1,8 @@
+static const items = [{ title: "First" }];
+
+<const/next = items[input.index]/>
+<pager>
+  <if=next>
+    <@start>${next.title}</@start>
+  </if>
+</pager>

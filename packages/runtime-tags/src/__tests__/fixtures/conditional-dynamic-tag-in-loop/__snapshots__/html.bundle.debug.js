@@ -12,7 +12,7 @@ var sections_default = _template("__tests__/tags/sections.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $sg__input_section, $sg__input_section, $sg__input_section);
-		$si__input_section && writeScope($scope1_id, { content }, "__tests__/tags/sections.marko", "1:2", { content: "1:8" });
+		$si__input_section && writeScope($scope1_id, {}, "__tests__/tags/sections.marko", "1:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_section, $sg__input_section, $sg__input_section);
 	$si__input_section && writeScope($scope0_id, {}, "__tests__/tags/sections.marko", 0);
 });

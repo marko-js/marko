@@ -47,10 +47,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope2_id, { a: _existing_scope($childScope2) });
 		}, 0, $scope1_id, "b", 1, 1, 1, 0, 1);
 		_html("</div>");
-		writeScope($scope1_id, {
-			d: outerItem,
-			a: _existing_scope($childScope)
-		});
+		writeScope($scope1_id, { a: _existing_scope($childScope) });
 	}, 0, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {

@@ -1,6 +1,6 @@
 // tags/comments.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_comments = _serialize_guard($scope0_reason, 1), $sg__input_comments__OR__input_path = _serialize_guard($scope0_reason, 0), $si__input_comments = _serialize_if($scope0_reason, 1), $si__input_comments__OR__input_path = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_comments = _serialize_guard($scope0_reason, 1), $sg__input_comments__OR__input_path = _serialize_guard($scope0_reason, 0), $si__input_comments__OR__input_path = _serialize_if($scope0_reason, 0), $si__input_comments = _serialize_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.comments, (comment, i) => {
@@ -31,13 +31,11 @@ const $content = (input) => {
 		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/comments.marko_1");
 		writeScope($scope1_id, {
-			comment_comments: $si__input_comments && comment?.comments,
 			"#LoopKey": _serialize_if($scope0_reason, 2) && i,
 			id: $si__input_comments && id,
 			open,
 			_: $si__input_comments__OR__input_path && _scope_with_id($scope0_id)
 		}, "__tests__/tags/comments.marko", "2:4", {
-			comment_comments: ["comment.comments", "2:8"],
 			"#LoopKey": "2:17",
 			id: "3:12",
 			open: "4:10"

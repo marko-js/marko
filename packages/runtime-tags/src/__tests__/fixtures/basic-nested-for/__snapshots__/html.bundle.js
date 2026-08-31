@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			child_default({ name: `${outer}.${inner}` });
 			writeScope($scope2_id, { a: _existing_scope($childScope) });
 		}, 0, $scope1_id, "a", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, { c: outer });
+		writeScope($scope1_id, {});
 	}, 0, $scope0_id, "b");
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { c: items });
