@@ -22,12 +22,12 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (item.code) {
 				const $scope2_id = _scope_id();
-				_html(`<pre>code <!>${_escape(item.id)}${_el_resume($scope2_id, "a")}</pre>`);
+				_html(`<pre>code ${_text_resume($scope2_id, "a", item.id, 2)}</pre>`);
 				writeScope($scope2_id, {});
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(`<p>text <!>${_escape(item.id)}${_el_resume($scope3_id, "a")}</p>`);
+				_html(`<p>text ${_text_resume($scope3_id, "a", item.id, 2)}</p>`);
 				writeScope($scope3_id, {});
 				return 1;
 			}

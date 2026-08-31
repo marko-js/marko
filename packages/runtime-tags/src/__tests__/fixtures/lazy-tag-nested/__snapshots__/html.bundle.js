@@ -2,7 +2,7 @@
 var grand_child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_escape(input.value)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });

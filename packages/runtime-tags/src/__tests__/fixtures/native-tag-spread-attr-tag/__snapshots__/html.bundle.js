@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				let n = 0;
-				_html(`<button>${_escape(n)}${_el_resume($scope1_id, "b")}</button>${_el_resume($scope1_id, "a")}`);
+				_html(`<button>${_text_resume($scope1_id, "b", n)}</button>${_el_resume($scope1_id, "a")}`);
 				_script($scope1_id, "a0");
 				writeScope($scope1_id, { c: n });
 				_resume_branch($scope1_id);

@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id))}${_attrs_partial(rest, {
 		value: 1,
 		valueChange: 1
-	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<div>${_escape(v)}${_el_resume($scope0_id, "c")}</div>`);
+	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<div>${_text_resume($scope0_id, "c", v)}</div>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, { e: rest });

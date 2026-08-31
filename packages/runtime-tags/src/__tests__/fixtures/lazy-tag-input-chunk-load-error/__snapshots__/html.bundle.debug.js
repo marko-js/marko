@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span id=child>${_escape(input.value)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span id=child>${_text_resume($scope0_id, "#text/0", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<div id=error>${_escape(err.message)}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope3_reason, 0))}</div>`);
+			_html(`<div id=error>${_text_resume($scope3_id, "#text/0", err.message, _serialize_guard($scope3_reason, 0))}</div>`);
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {}, "__tests__/template.marko", "12:4");
 		}, $scope0_id) })
 	});

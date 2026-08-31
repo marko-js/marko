@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			count = 0;
 		}
 	}, "__tests__/template.marko_0/resetCount", $scope0_id);
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<button></button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}<button></button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_count#3");
 	_script($scope0_id, "__tests__/template.marko_0_resetCount#4");
 	_script($scope0_id, "__tests__/template.marko_0");

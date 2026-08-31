@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_html("<div>");
 	_for_of(items, ({ name, description }) => {
 		const $scope1_id = _scope_id();
-		_html(`<div>${_escape(name)}${_el_resume($scope1_id, "a")}: <!>${_escape(description)}${_el_resume($scope1_id, "b")}</div>`);
+		_html(`<div>${_text_resume($scope1_id, "a", name)}: ${_text_resume($scope1_id, "b", description, 2)}</div>`);
 		writeScope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button id=add>Add</button>${_el_resume($scope0_id, "b")}<button id=remove>Remove</button>${_el_resume($scope0_id, "c")}</div>`);

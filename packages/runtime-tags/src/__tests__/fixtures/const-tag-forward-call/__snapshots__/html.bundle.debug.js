@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		result = ((defaulted) => defaulted("x"))(_hoist_read_error);
 	}, "__tests__/template.marko_0/callDefaulted", $scope0_id);
 	const defaulted = _resume((a, b = "def") => a + ":" + b, "__tests__/template.marko_0/defaulted");
-	_html(`<button id=direct>direct</button>${_el_resume($scope0_id, "#button/0")}<button id=alias>alias</button>${_el_resume($scope0_id, "#button/1")}<button id=nullary>nullary</button>${_el_resume($scope0_id, "#button/2")}<button id=defaulted>defaulted</button>${_el_resume($scope0_id, "#button/3")}<div>${_escape(result)}${_el_resume($scope0_id, "#text/4")}</div>`);
+	_html(`<button id=direct>direct</button>${_el_resume($scope0_id, "#button/0")}<button id=alias>alias</button>${_el_resume($scope0_id, "#button/1")}<button id=nullary>nullary</button>${_el_resume($scope0_id, "#button/2")}<button id=defaulted>defaulted</button>${_el_resume($scope0_id, "#button/3")}<div>${_text_resume($scope0_id, "#text/4", result)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		first,

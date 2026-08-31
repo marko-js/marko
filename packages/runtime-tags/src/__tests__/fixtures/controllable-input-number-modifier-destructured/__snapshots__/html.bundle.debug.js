@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			value = _new_value;
 		}, "__tests__/template.marko_0/countChange", $scope0_id)
 	});
-	_html(`<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")} <!>${_escape(typeof value)}${_el_resume($scope0_id, "#text/2")}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/1", value)} ${_text_resume($scope0_id, "#text/2", typeof value, 2)}</span>`);
 	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

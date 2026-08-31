@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`${_escape(x)}${_el_resume($scope1_id, "a")}`);
+			_html(_text_resume($scope1_id, "a", x));
 			_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a2", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`${_escape(x)}${_el_resume($scope2_id, "a")}`);
+			_html(_text_resume($scope2_id, "a", x));
 			_subscribe($x__closures, writeScope($scope2_id, {
 				_: _scope_with_id($scope0_id),
 				Cd: 1

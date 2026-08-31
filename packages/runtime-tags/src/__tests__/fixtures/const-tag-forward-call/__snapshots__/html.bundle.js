@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		result = ((defaulted) => defaulted("x"))(_hoist_read_error);
 	}, "a6", $scope0_id);
 	const defaulted = _resume((a, b = "def") => a + ":" + b, "a7");
-	_html(`<button id=direct>direct</button>${_el_resume($scope0_id, "a")}<button id=alias>alias</button>${_el_resume($scope0_id, "b")}<button id=nullary>nullary</button>${_el_resume($scope0_id, "c")}<button id=defaulted>defaulted</button>${_el_resume($scope0_id, "d")}<div>${_escape(result)}${_el_resume($scope0_id, "e")}</div>`);
+	_html(`<button id=direct>direct</button>${_el_resume($scope0_id, "a")}<button id=alias>alias</button>${_el_resume($scope0_id, "b")}<button id=nullary>nullary</button>${_el_resume($scope0_id, "c")}<button id=defaulted>defaulted</button>${_el_resume($scope0_id, "d")}<div>${_text_resume($scope0_id, "e", result)}</div>`);
 	_script($scope0_id, "a9");
 	writeScope($scope0_id, {
 		g: first,

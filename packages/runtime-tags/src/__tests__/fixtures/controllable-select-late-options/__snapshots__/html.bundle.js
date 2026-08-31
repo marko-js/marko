@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		}, 0);
 		_html("</select>");
 	});
-	_html(`${_el_resume($scope0_id, "a")}<div>${_escape(v)}${_el_resume($scope0_id, "c")}:<!>${_escape(calls)}${_el_resume($scope0_id, "d")}</div>`);
+	_html(`${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "c", v)}:${_text_resume($scope0_id, "d", calls, 2)}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		e: v,

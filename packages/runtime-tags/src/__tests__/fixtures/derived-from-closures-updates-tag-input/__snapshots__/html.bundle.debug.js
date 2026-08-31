@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button>${_escape(input.label)}${_el_resume($scope0_id, "#text/1", _serialize_guard($scope0_reason, 1))}</button>${_el_resume($scope0_id, "#button/0")}<a${_attr("href", input.hrefFor("x"))} class=${input.count % 2 ? "odd" : "even"}>x</a>${_el_resume($scope0_id, "#a/2", _serialize_guard($scope0_reason, 0))}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, _serialize_guard($scope0_reason, 1))}</button>${_el_resume($scope0_id, "#button/0")}<a${_attr("href", input.hrefFor("x"))} class=${input.count % 2 ? "odd" : "even"}>x</a>${_el_resume($scope0_id, "#a/2", _serialize_guard($scope0_reason, 0))}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	writeScope($scope0_id, { input_onToggle: input.onToggle }, "__tests__/tags/child.marko", 0, { input_onToggle: ["input.onToggle"] });
 });

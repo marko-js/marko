@@ -4,9 +4,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrap = { content: _content("__tests__/template.marko_1*content", ([$a, b]) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__b = _serialize_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason();
 		const a = void 0 !== $a ? $a : 1;
-		_html(`<div>${_escape(a)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))}|${_sep($sg__b)}${_escape(b)}${_el_resume($scope1_id, "#text/1", $sg__b)}</div>`);
+		_html(`<div>${_text_resume($scope1_id, "#text/0", a, _serialize_guard($scope1_reason, 1))}|${_text_resume($scope1_id, "#text/1", b, _serialize_guard($scope1_reason, 2) * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	let n = 2;

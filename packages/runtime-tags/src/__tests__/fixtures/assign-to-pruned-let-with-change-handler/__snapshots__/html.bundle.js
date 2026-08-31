@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let liveCount = 0;
-	_html(`<button>Before</button>${_el_resume($scope0_id, "a")}<div>${_escape(liveCount)}${_el_resume($scope0_id, "b")}</div>`);
+	_html(`<button>Before</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", liveCount)}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, { e: _resume(function(v) {
 		liveCount = v;

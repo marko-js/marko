@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:2", { label: "3:6" });
 	});
-	_html(`<div class=log>${_escape(log)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	_html(`<div class=log>${_text_resume($scope0_id, "#text/1", log)}</div>`);
 	writeScope($scope0_id, { log }, "__tests__/template.marko", 0, { log: "2:6" });
 	_resume_branch($scope0_id);
 }, 1);

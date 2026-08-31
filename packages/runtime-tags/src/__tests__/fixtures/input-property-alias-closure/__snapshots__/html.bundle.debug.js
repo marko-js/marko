@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Child = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`${_escape(input.text)}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope1_reason, 1))} and `);
+		_html(`${_text_resume($scope1_id, "#text/0", input.text, _serialize_guard($scope1_reason, 1))} and `);
 		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope1_reason, 2));
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:1");
 	}, $scope0_id) };
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`${_escape(text)}${_el_resume($scope2_id, "#text/0", $sg__input_text)}`);
+			_html(_text_resume($scope2_id, "#text/0", text, $sg__input_text));
 			$si__input_text && _subscribe($input_text__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:1"));
 			_resume_branch($scope2_id);
 		}, $scope0_id)

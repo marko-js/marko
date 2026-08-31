@@ -3,7 +3,7 @@ var echo_default = _template("__tests__/tags/echo/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { ...rest } = input;
-	_html(`<em>${_escape(rest.label)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", rest.label, _serialize_guard($scope0_reason, 0))}</em>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/echo/index.marko", 0);
 });
 

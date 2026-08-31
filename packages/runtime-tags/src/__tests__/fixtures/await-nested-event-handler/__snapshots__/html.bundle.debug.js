@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_await($scope3_id, "#text/0", resolveAfter("inner", 2), () => {
 					const $scope4_id = _scope_id();
 					_script($scope4_id, "__tests__/template.marko_4_changes#1/pending");
-					_html(`<div>changes: <!>${_escape(changes)}${_el_resume($scope4_id, "#text/1")}</div>${_el_resume($scope4_id, "#div/0")}`);
+					_html(`<div>changes: ${_text_resume($scope4_id, "#text/1", changes, 2)}</div>${_el_resume($scope4_id, "#div/0")}`);
 					_script($scope4_id, "__tests__/template.marko_4");
 					writeScope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "9:8");
 					_resume_branch($scope4_id);

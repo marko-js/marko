@@ -10,9 +10,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter(clickCount), (value) => {
 			const $scope4_id = _scope_id();
-			_html(`Async: <!>${value > 1 ? _escape((() => {
+			_html(`Async: ${_text_resume($scope4_id, "#text/0", value > 1 ? (() => {
 				throw new Error("ERROR!");
-			})()) : _escape(value)}${_el_resume($scope4_id, "#text/0")}`);
+			})() : value, 2)}`);
 			writeScope($scope4_id, {}, "__tests__/template.marko", "11:4");
 		});
 		_script($scope1_id, "__tests__/template.marko_1_clickCount#3");
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`${_escape(err)}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope3_reason, 0))}`);
+			_html(_text_resume($scope3_id, "#text/0", err, _serialize_guard($scope3_reason, 0)));
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {}, "__tests__/template.marko", "17:4");
 		}, $scope0_id) })
 	});

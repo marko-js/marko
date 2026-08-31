@@ -28,14 +28,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: _content_resume("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
-				_html(`Click <!>${_escape(foo)}${_el_resume($scope1_id, "#text/0")}`);
+				_html(`Click ${_text_resume($scope1_id, "#text/0", foo, 2)}`);
 				writeScope($scope1_id, {}, "__tests__/template.marko", "4:6");
 			}, $scope0_id)
 		});
 	});
 	const $childScope = _peek_scope_id();
 	my_menu_default({ item: $item });
-	_html(`<div>${_escape(clicked)}${_el_resume($scope0_id, "#text/1")}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/1", clicked)}</div>`);
 	writeScope($scope0_id, {
 		clicked,
 		"#childScope/0": _existing_scope($childScope)

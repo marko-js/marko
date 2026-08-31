@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		checked = v.map((it) => Number(it));
 	}, "a1", $scope0_id), "1")} type=checkbox>${_el_resume($scope0_id, "b")}<input${_attr_input_checkedValue($scope0_id, "c", checked, _resume(function(v) {
 		checked = v.map((it) => Number(it));
-	}, "a2", $scope0_id), 2)} type=checkbox>${_el_resume($scope0_id, "c")}<span>${_escape(checked)}${_el_resume($scope0_id, "d")}</span><button>Reset</button>${_el_resume($scope0_id, "e")}`);
+	}, "a2", $scope0_id), 2)} type=checkbox>${_el_resume($scope0_id, "c")}<span>${_text_resume($scope0_id, "d", checked)}</span><button>Reset</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a3");
 	writeScope($scope0_id, {});
 	_resume_branch($scope0_id);

@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option></select>`);
 	});
-	_html(`${_el_resume($scope0_id, "#select/0")}<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</span>`);
+	_html(`${_el_resume($scope0_id, "#select/0")}<span>${_text_resume($scope0_id, "#text/1", value)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#select/0": ["valueChange", "2:21"] });
 	_resume_branch($scope0_id);

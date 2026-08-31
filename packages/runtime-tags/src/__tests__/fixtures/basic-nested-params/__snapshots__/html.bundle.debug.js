@@ -33,9 +33,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			child_default({
 				value: y,
 				content: _content("__tests__/template.marko_2*content", (inner) => {
-					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0);
+					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
-					_html(`<div>${_escape(outer)}${_el_resume($scope2_id, "#text/0", _serialize_guard($scope1_reason, 0))}.${_sep($sg__inner)}${_escape(inner)}${_el_resume($scope2_id, "#text/1", $sg__inner)}</div>`);
+					_html(`<div>${_text_resume($scope2_id, "#text/0", outer, _serialize_guard($scope1_reason, 0))}.${_text_resume($scope2_id, "#text/1", inner, _serialize_guard($scope2_reason, 0) * 2)}</div>`);
 					(_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"));
 					_resume_branch($scope2_id);
 				}, $scope1_id)

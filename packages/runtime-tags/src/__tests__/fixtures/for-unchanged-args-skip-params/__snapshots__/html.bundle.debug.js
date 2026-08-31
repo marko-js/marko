@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<ul>");
 	_for_of(items, (item, index) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_escape(index)}${_el_resume($scope1_id, "#text/0")}:<!>${_escape(item.id)}${_el_resume($scope1_id, "#text/1")}=<!>${_escape(item.n)}${_el_resume($scope1_id, "#text/2")}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", index)}:${_text_resume($scope1_id, "#text/1", item.id, 2)}=${_text_resume($scope1_id, "#text/2", item.n, 2)}</li>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=rotate>Rotate</button>${_el_resume($scope0_id, "#button/1")}<button class=bump>Bump b</button>${_el_resume($scope0_id, "#button/2")}<button class=resettle>Same items</button>${_el_resume($scope0_id, "#button/3")}`);

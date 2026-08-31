@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let changes = 0;
 	let value = 1;
 	let x = value;
-	_html(`<button id=or>or</button>${_el_resume($scope0_id, "a")}<button id=and>and</button>${_el_resume($scope0_id, "b")}<button id=nullish>nullish</button>${_el_resume($scope0_id, "c")}<div>value=<!>${_escape(value)}${_el_resume($scope0_id, "d")} changes=<!>${_escape(changes)}${_el_resume($scope0_id, "e")}</div>`);
+	_html(`<button id=or>or</button>${_el_resume($scope0_id, "a")}<button id=and>and</button>${_el_resume($scope0_id, "b")}<button id=nullish>nullish</button>${_el_resume($scope0_id, "c")}<div>value=${_text_resume($scope0_id, "d", value, 2)} changes=${_text_resume($scope0_id, "e", changes, 2)}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		f: changes,

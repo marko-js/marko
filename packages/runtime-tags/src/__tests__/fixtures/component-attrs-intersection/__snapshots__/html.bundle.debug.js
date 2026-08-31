@@ -4,7 +4,7 @@ var display_intersection_default = _template("__tests__/tags/display-intersectio
 	const $scope0_id = _scope_id();
 	const { value } = input;
 	let dummy = {};
-	_html(`<div>${_escape((dummy, value))}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", (dummy, value), _serialize_guard($scope0_reason, 0))}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { dummy }, "__tests__/tags/display-intersection.marko", 0, { dummy: "2:6" });
 	_resume_branch($scope0_id);
 });

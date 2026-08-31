@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let value = 0;
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", value, _resume((_new_value) => {
 		value = parseInt(_new_value);
-	}, "__tests__/template.marko_0/valueChange", $scope0_id))} type=number>${_el_resume($scope0_id, "#input/0")}<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")} <!>${_escape(typeof value)}${_el_resume($scope0_id, "#text/2")}</span>`);
+	}, "__tests__/template.marko_0/valueChange", $scope0_id))} type=number>${_el_resume($scope0_id, "#input/0")}<span>${_text_resume($scope0_id, "#text/1", value)} ${_text_resume($scope0_id, "#text/2", typeof value, 2)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/0": ["valueChange"] });
 	_resume_branch($scope0_id);

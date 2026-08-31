@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const [first, $second, ...others] = input.list;
 	const second = void 0 !== $second ? $second : "dflt";
 	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<div>${_escape(first)}${_el_resume($scope0_id, "c", $sg__input_list)}|${_sep($sg__input_list)}${_escape(second)}${_el_resume($scope0_id, "d", $sg__input_list)}|${_sep($sg__input_list)}${_escape(others.join(","))}${_el_resume($scope0_id, "e", $sg__input_list)}</div>`);
+	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "c", first, $sg__input_list)}|${_text_resume($scope0_id, "d", second, $sg__input_list * 2)}|${_text_resume($scope0_id, "e", others.join(","), $sg__input_list * 2)}</div>`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { n });
 	_resume_branch($scope0_id);

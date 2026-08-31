@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const { a, b } = input;
-		_html(`<div>${_escape(a)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}</div><div>${_escape(b)}${_el_resume($scope1_id, "b", _serialize_guard($scope1_reason, 1))}</div>`);
+		_html(`<div>${_text_resume($scope1_id, "a", a, _serialize_guard($scope1_reason, 0))}</div><div>${_text_resume($scope1_id, "b", b, _serialize_guard($scope1_reason, 1))}</div>`);
 		_script($scope1_id, "a1");
 		_script($scope1_id, "a2");
 		writeScope($scope1_id, { e: input.a });

@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<input type=checkbox${_attrs_partial({
 		checkedValue: sel,
 		value: "a"
-	}, { type: 1 }, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}<button>t</button>${_el_resume($scope0_id, "#button/1")}<div>${_escape(sel.join(","))}${_el_resume($scope0_id, "#text/2")}</div>`);
+	}, { type: 1 }, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}<button>t</button>${_el_resume($scope0_id, "#button/1")}<div>${_text_resume($scope0_id, "#text/2", sel.join(","))}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_sel#3");
 	writeScope($scope0_id, { sel }, "__tests__/template.marko", 0, {

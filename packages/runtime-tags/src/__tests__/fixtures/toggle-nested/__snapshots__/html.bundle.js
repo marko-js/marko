@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			_if(() => {
 				if (value1) {
 					const $scope2_id = _scope_id();
-					_html(`<span>${_escape(value1)}${_el_resume($scope2_id, "a", $sg__input_value)}</span>`);
+					_html(`<span>${_text_resume($scope2_id, "a", value1, $sg__input_value)}</span>`);
 					$si__input_show__OR__input_value && _subscribe($si__input_value && $value__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 			_if(() => {
 				if (value2) {
 					const $scope3_id = _scope_id();
-					_html(`<span>${_escape(value2)}${_el_resume($scope3_id, "a", $sg__input_value2)}</span>`);
+					_html(`<span>${_text_resume($scope3_id, "a", value2, $sg__input_value2)}</span>`);
 					$si__input_show__OR__input_value2 && _subscribe($si__input_value2 && $value2__closures, writeScope($scope3_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}

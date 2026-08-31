@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b);
-	_html(`<div>${input.x ? "A" : input.y ? "B" : "C"}${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 1))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "c", input.x ? "A" : input.y ? "B" : "C", _serialize_guard($scope0_reason, 1))}</div>`);
 	_serialize_if($scope0_reason, 2) && writeScope($scope0_id, {
 		f: _serialize_if($scope0_reason, 4) && input.a,
 		g: _serialize_if($scope0_reason, 3) && input.b,

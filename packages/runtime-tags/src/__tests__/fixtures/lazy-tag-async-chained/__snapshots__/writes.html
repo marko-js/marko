@@ -1,5 +1,5 @@
 <script async type=module src="child.marko.load.mjs"></script><button
-  id=sync>1<!--M_*2 b--></button><!--M_*2 a-->
+  id=sync>1<!--M_$2 b--></button><!--M_$2 a-->
 <script>
   WALKER_RUNTIME("M")("_");
   M._.b = {
@@ -12,7 +12,7 @@
 
 <!-- FLUSH -->
 
-<button id=async>2<!--M_*4 b--></button><!--M_*4 a-->
+<button id=async>2<!--M_$4 b--></button><!--M_$4 a-->
 <script>
   M._.b._a.push(_ => [4, {
     g: 2

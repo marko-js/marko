@@ -4,7 +4,7 @@ var my_button_default = _template("__tests__/tags/my-button.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { onClick, value: { text } } = input;
 	const { value: { text: textAlias } } = input;
-	_html(`<button>${_escape(text)}${_el_resume($scope0_id, "#text/1", $sg__input_value_text)} ${_sep($sg__input_value_text)}${_escape(textAlias)}${_el_resume($scope0_id, "#text/2", $sg__input_value_text)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", text, $sg__input_value_text)} ${_text_resume($scope0_id, "#text/2", textAlias, $sg__input_value_text * 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/my-button.marko_0_onClick#5");
 	writeScope($scope0_id, { onClick }, "__tests__/tags/my-button.marko", 0, { onClick: "1:10" });
 });

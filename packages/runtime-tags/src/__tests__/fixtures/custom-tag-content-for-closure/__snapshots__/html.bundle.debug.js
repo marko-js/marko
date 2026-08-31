@@ -4,7 +4,7 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	let open = true;
-	_html(`<button>${open ? "collapse" : "expand"}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", open ? "collapse" : "expand")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			checked = _new_checked;
 		}, "a0", $scope0_id)
 	});
-	_html(`<span>${_escape(String(checked))}${_el_resume($scope0_id, "b")}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "b", String(checked))}</span>`);
 	writeScope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
 }, 1);

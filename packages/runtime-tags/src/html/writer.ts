@@ -21,6 +21,7 @@ import { attrAssignment } from "./attrs";
 import * as FlushStatus from "./constants/flush-status";
 import * as Mark from "./constants/mark";
 import * as RuntimeKey from "./constants/runtime-key";
+import { _escape, _unescaped } from "./content";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -233,8 +234,54 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
-export function _sep(shouldResume: number) {
-  return shouldResume === 0 ? "" : "<!>";
+export function _text_resume(
+  scopeId: number,
+  accessor: Accessor,
+  val: unknown,
+  shouldResume?: number,
+) {
+  return markText(scopeId, accessor, _escape(val), shouldResume);
+}
+
+export function _html_resume(
+  scopeId: number,
+  accessor: Accessor,
+  val: unknown,
+  shouldResume?: number,
+) {
+  const html = _unescaped(val);
+  // Markup may parse to several nodes, so it is bracketed for resume to claim
+  // the whole range; markup-free text is one node and uses the text encoding.
+  if (shouldResume === 0 || !~html.indexOf("<")) {
+    return markText(scopeId, accessor, html, shouldResume);
+  }
+
+  const { state } = $chunk.boundary;
+  state.needsMainRuntime = true;
+  return (
+    state.mark(ResumeSymbol.HtmlStart, "") +
+    html +
+    state.mark(ResumeSymbol.HtmlEnd, scopeId + " " + accessor)
+  );
+}
+
+// Empty text writes only an `EmptyText` marker for resume to create the node;
+// `shouldResume` 2 also separates text from a mergeable preceding text node.
+function markText(
+  scopeId: number,
+  accessor: Accessor,
+  text: string,
+  shouldResume?: number,
+) {
+  if (shouldResume === 0) return text;
+
+  const { state } = $chunk.boundary;
+  state.needsMainRuntime = true;
+  return text
+    ? (shouldResume === 2 ? "<!>" : "") +
+        text +
+        state.mark(ResumeSymbol.Node, scopeId + " " + accessor)
+    : state.mark(ResumeSymbol.EmptyText, scopeId + " " + accessor);
 }
 
 export function _resume_branch(scopeId: number) {

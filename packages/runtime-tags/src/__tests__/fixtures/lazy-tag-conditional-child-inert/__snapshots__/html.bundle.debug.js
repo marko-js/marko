@@ -1,8 +1,8 @@
 // child.marko
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.label)}${_el_resume($scope0_id, "#text/0", _serialize_guard($scope0_reason, 1))}: ${_sep($sg__input_value)}${_escape(input.value)}${_el_resume($scope0_id, "#text/1", $sg__input_value)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.label, _serialize_guard($scope0_reason, 1))}: ${_text_resume($scope0_id, "#text/1", input.value, _serialize_guard($scope0_reason, 2) * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 

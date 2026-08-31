@@ -1,10 +1,10 @@
 // tags/echo/index.marko
 var echo_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { skip, ...r } = input;
 	const { ...s } = r;
-	_html(`<em>${_escape(skip)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}${_sep($sg__input_label)}${_escape(s.label)}${_el_resume($scope0_id, "b", $sg__input_label)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", skip, _serialize_guard($scope0_reason, 1))}${_text_resume($scope0_id, "b", s.label, _serialize_guard($scope0_reason, 2) * 2)}</em>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });
 

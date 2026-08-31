@@ -9,6 +9,7 @@ import {
   getEventHandlerName,
   isEventHandler,
   isNotVoid,
+  withDynamicHtml,
   normalizeDynamicRenderer,
   stringifyClassObject,
   stringifyStyleObject,
@@ -345,7 +346,11 @@ export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
   }
 }
 
-export function _html(scope: Scope, value: unknown, accessor: Accessor) {
+export const _html = /*@__PURE__*/ withDynamicHtml(function _html(
+  scope: Scope,
+  value: unknown,
+  accessor: Accessor,
+) {
   const firstChild = scope[accessor] as ChildNode;
   const parentNode = firstChild.parentNode!;
   const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
@@ -364,7 +369,7 @@ export function _html(scope: Scope, value: unknown, accessor: Accessor) {
       newContent.lastChild!),
   );
   removeChildNodes(firstChild, lastChild);
-}
+});
 
 function normalizeClientRender(value: any) {
   const renderer = normalizeDynamicRenderer<Renderer>(value);

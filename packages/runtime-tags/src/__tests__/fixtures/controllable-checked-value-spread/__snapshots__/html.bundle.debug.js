@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		checkedValueChange: $checkedValueChange,
 		value: "c"
 	});
-	_html(`<span>${_escape(checkedValue)}${_el_resume($scope0_id, "#text/3")}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/3", checkedValue)}</span>`);
 	writeScope($scope0_id, {
 		$checkedValueChange,
 		"#childScope/0": _existing_scope($childScope),

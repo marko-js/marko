@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let graph = buildGraph();
-	_html(`<button id=go>go</button>${_el_resume($scope0_id, "a")}<div id=out>${_escape("pending")}${_el_resume($scope0_id, "b")}</div>`);
+	_html(`<button id=go>go</button>${_el_resume($scope0_id, "a")}<div id=out>${_text_resume($scope0_id, "b", "pending")}</div>`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		d: graph?.byId,

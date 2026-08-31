@@ -1,4 +1,8 @@
-import { branchesEnabled, decodeAccessor } from "../common/helpers";
+import {
+  branchesEnabled,
+  decodeAccessor,
+  dynamicHtmlEnabled,
+} from "../common/helpers";
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { forEach, type Opt, push } from "../common/opt";
 import {
@@ -372,6 +376,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let lastToken: string;
         let lastTokenIndex: number;
         let visitBranches: undefined | (() => void);
+        let htmlStart: Comment | undefined;
         let embedAnchor: Text | undefined;
         serializeContext._ = registeredValues;
 
@@ -407,20 +412,37 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             visitType = visitText[lastTokenIndex++] as ResumeSymbol;
             visitScope = getScope(nextToken(/* read scope id */));
 
-            if (visitType === ResumeSymbol.Node) {
-              const prev = visit.previousSibling;
-              visitScope[nextToken(/* read accessor */)] =
-                prev &&
-                (prev.nodeType < 8 /* Node.COMMENT_NODE */ ||
-                  (prev as Comment).data)
-                  ? prev
-                  : visit.parentNode!.insertBefore(new Text(), visit);
-            } else if (branchesEnabled) {
+            // Range checks sit behind their latch so they fold away with it;
+            // a marker implies its consumer is bundled, so text needs no guard.
+            if (
+              dynamicHtmlEnabled &&
+              visitType > ResumeSymbol.EmptyText &&
+              visitType <= ResumeSymbol.HtmlEnd
+            ) {
+              if (visitType === ResumeSymbol.HtmlStart) {
+                htmlStart = visit;
+              } else {
+                // Both markers join the claimed range so the first update
+                // replaces them along with the server-rendered markup.
+                visitScope[nextToken(/* read accessor */)] = htmlStart!;
+                visitScope[AccessorPrefix.DynamicHTMLLastChild + lastToken] =
+                  visit;
+              }
+            } else if (branchesEnabled && visitType > ResumeSymbol.HtmlEnd) {
               (visitBranches ||= createVisitBranches())();
-            } else if (lazyEnabled && render.b) {
-              // A lazily loaded module may still enable branches, so retain
-              // (compact) these visits to reprocess once the ready data lands.
+            } else if (
+              // Html and branch visits both retain (compact) here until the
+              // lazy module that enables them lands, keeping html pairs whole.
+              lazyEnabled &&
+              render.b &&
+              visitType > ResumeSymbol.EmptyText
+            ) {
               visits[retained++] = visit;
+            } else {
+              visitScope[nextToken(/* read accessor */)] =
+                visitType === ResumeSymbol.Node
+                  ? visit.previousSibling!
+                  : visit.parentNode!.insertBefore(new Text(), visit);
             }
           }
 

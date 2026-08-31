@@ -22,12 +22,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (item.code) {
 				const $scope2_id = _scope_id();
-				_html(`<pre>code <!>${_escape(item.id)}${_el_resume($scope2_id, "#text/0")}</pre>`);
+				_html(`<pre>code ${_text_resume($scope2_id, "#text/0", item.id, 2)}</pre>`);
 				writeScope($scope2_id, {}, "__tests__/template.marko", "5:6");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(`<p>text <!>${_escape(item.id)}${_el_resume($scope3_id, "#text/0")}</p>`);
+				_html(`<p>text ${_text_resume($scope3_id, "#text/0", item.id, 2)}</p>`);
 				writeScope($scope3_id, {}, "__tests__/template.marko", "8:6");
 				return 1;
 			}

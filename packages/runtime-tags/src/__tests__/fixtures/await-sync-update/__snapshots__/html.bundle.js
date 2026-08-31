@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	_await($scope0_id, "a", `v${n}`, (value) => {
 		const $scope1_id = _scope_id();
-		_html(`Got: <!>${_escape(value)}${_el_resume($scope1_id, "a")}`);
+		_html(`Got: ${_text_resume($scope1_id, "a", value, 2)}`);
 		writeScope($scope1_id, {});
 	});
 	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}`);

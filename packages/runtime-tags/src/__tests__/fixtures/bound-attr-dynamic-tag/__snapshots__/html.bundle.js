@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		value: state?.b,
 		valueChange: state?.bChange
 	});
-	_html(`<div>${_escape(a)}${_el_resume($scope0_id, "c")}|<!>${_escape(b)}${_el_resume($scope0_id, "d")}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "c", a)}|${_text_resume($scope0_id, "d", b, 2)}</div>`);
 	writeScope($scope0_id, {
 		e: a,
 		f: b,

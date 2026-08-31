@@ -1,9 +1,9 @@
 // grand-child.marko
 var grand_child_default = _template("b", (input) => {
-	const $sg__input_value = _serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.value;
-	_html(`<button id=grand>grand:<!>${_escape(n)}${_el_resume($scope0_id, "b")}:${_sep($sg__input_value)}${_escape(input.value)}${_el_resume($scope0_id, "c", $sg__input_value)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=grand>grand:${_text_resume($scope0_id, "b", n, 2)}:${_text_resume($scope0_id, "c", input.value, _serialize_guard($scope0_reason, 0) * 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_await($scope0_id, "d", resolveAfter(20, 2), (v) => {
 		_scope_id();
 		_html(`<span id=grand-await>${_escape(v)}</span>`);
@@ -20,7 +20,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = input.value;
-	_html(`<button id=child>child:<!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=child>child:${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_await($scope0_id, "c", resolveAfter(10, 1), (value) => {
 		const $scope1_id = _scope_id();
 		_html(`<span id=child-await>${_escape(value)}</span>`);

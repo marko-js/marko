@@ -1,8 +1,8 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_ = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>tag ${_sep($sg__input_)}${_escape(input[0])}${_el_resume($scope0_id, "#text/0", $sg__input_)}</div>`);
+	_html(`<div>tag ${_text_resume($scope0_id, "#text/0", input[0], _serialize_guard($scope0_reason, 0) * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
 });
 

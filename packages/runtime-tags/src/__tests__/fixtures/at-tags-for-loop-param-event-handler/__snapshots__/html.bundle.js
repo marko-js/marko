@@ -28,14 +28,14 @@ var template_default = _template("a", (input) => {
 			content: _content_resume("a1", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
-				_html(`Click <!>${_escape(foo)}${_el_resume($scope1_id, "a")}`);
+				_html(`Click ${_text_resume($scope1_id, "a", foo, 2)}`);
 				writeScope($scope1_id, {});
 			}, $scope0_id)
 		});
 	});
 	const $childScope = _peek_scope_id();
 	my_menu_default({ item: $item });
-	_html(`<div>${_escape(clicked)}${_el_resume($scope0_id, "b")}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "b", clicked)}</div>`);
 	writeScope($scope0_id, {
 		c: clicked,
 		a: _existing_scope($childScope)

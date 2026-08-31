@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			{
 				const $scope3_id = _scope_id();
-				_html(`<button>Increment <!>${_escape(count)}${_el_resume($scope3_id, "b")}</button>${_el_resume($scope3_id, "a")}`);
+				_html(`<button>Increment ${_text_resume($scope3_id, "b", count, 2)}</button>${_el_resume($scope3_id, "a")}`);
 				_script($scope3_id, "a1");
 				writeScope($scope3_id, {});
 				return 1;

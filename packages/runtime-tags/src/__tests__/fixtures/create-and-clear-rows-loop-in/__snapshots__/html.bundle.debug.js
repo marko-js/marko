@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	_for_in(input.children, (key, text) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_escape(key)}: ${_sep($sg__input_children)}${_escape(text)}${_el_resume($scope1_id, "#text/1", $sg__input_children)}</p>`);
+		_html(`<p>${_escape(key)}: ${_text_resume($scope1_id, "#text/1", text, $sg__input_children * 2)}</p>`);
 		$si__input_children && writeScope($scope1_id, {}, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#text/0", $sg__input_children, $sg__input_children, $sg__input_children, 0, 1);
 	_for_in(input.children, (key) => {

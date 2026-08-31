@@ -14,6 +14,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: "guarded",
 		size: 3
 	};
-	_html(`<div>${_escape(nullish.label)}${_el_resume($scope0_id, "#text/0", $sg__input_opts)}/${_sep($sg__input_opts)}${_escape(nullish.size)}${_el_resume($scope0_id, "#text/1", $sg__input_opts)} ${_sep($sg__input_opts)}${_escape(falsy.label)}${_el_resume($scope0_id, "#text/2", $sg__input_opts)}/${_sep($sg__input_opts)}${_escape(falsy.size)}${_el_resume($scope0_id, "#text/3", $sg__input_opts)} ${_sep($sg__input_opts)}${_escape(guarded?.label)}${_el_resume($scope0_id, "#text/4", $sg__input_opts)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", nullish.label, $sg__input_opts)}/${_text_resume($scope0_id, "#text/1", nullish.size, $sg__input_opts * 2)} ${_text_resume($scope0_id, "#text/2", falsy.label, $sg__input_opts * 2)}/${_text_resume($scope0_id, "#text/3", falsy.size, $sg__input_opts * 2)} ${_text_resume($scope0_id, "#text/4", guarded?.label, $sg__input_opts * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

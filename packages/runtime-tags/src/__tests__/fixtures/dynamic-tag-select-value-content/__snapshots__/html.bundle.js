@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", tag, { value: "b" }, _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<option${_attr_option_value("a")}>A<!>${_escape(n)}${_el_resume($scope1_id, "a")}</option>`);
+		_html(`<option${_attr_option_value("a")}>A${_text_resume($scope1_id, "a", n, 2)}</option>`);
 		_subscribe($n__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id));

@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	_for_of(items, ({ name, description }) => {
 		const $scope1_id = _scope_id();
-		_html(`<div>${_escape(name)}${_el_resume($scope1_id, "#text/0")}: <!>${_escape(description)}${_el_resume($scope1_id, "#text/1")}</div>`);
+		_html(`<div>${_text_resume($scope1_id, "#text/0", name)}: ${_text_resume($scope1_id, "#text/1", description, 2)}</div>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "5:4");
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
 	_html(`<button id=add>Add</button>${_el_resume($scope0_id, "#button/1")}<button id=remove>Remove</button>${_el_resume($scope0_id, "#button/2")}</div>`);

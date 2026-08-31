@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const resetCount = _resume(function() {
 		if (count > 0) count = 0;
 	}, "a0", $scope0_id);
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<button></button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}<button></button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");

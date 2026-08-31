@@ -4,7 +4,7 @@ var my_button_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { onClick, value: { text } } = input;
 	const { value: { text: textAlias } } = input;
-	_html(`<button>${_escape(text)}${_el_resume($scope0_id, "b", $sg__input_value_text)} ${_sep($sg__input_value_text)}${_escape(textAlias)}${_el_resume($scope0_id, "c", $sg__input_value_text)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", text, $sg__input_value_text)} ${_text_resume($scope0_id, "c", textAlias, $sg__input_value_text * 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, { f: onClick });
 });

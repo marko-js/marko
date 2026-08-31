@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	const Message = { content: _content("a2", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`${_escape(input.before + input.after)}${_el_resume($scope2_id, "a", _serialize_guard($scope2_reason, 0))}`);
+		_html(_text_resume($scope2_id, "a", input.before + input.after, _serialize_guard($scope2_reason, 0)));
 		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {
 			d: _serialize_if($scope2_reason, 2) && input.before,
 			e: _serialize_if($scope2_reason, 1) && input.after

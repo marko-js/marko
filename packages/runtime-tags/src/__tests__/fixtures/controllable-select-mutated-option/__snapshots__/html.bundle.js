@@ -15,11 +15,11 @@ var template_default = _template("a", (input) => {
 		_html("<select>");
 		_for_of(options, (opt) => {
 			const $scope1_id = _scope_id();
-			_html(`<option${_attr_option_value(opt)}>${_escape(opt)}${_el_resume($scope1_id, "b")}</option>${_el_resume($scope1_id, "a")}`);
+			_html(`<option${_attr_option_value(opt)}>${_text_resume($scope1_id, "b", opt)}</option>${_el_resume($scope1_id, "a")}`);
 			writeScope($scope1_id, {});
 		}, (v) => v, $scope0_id, "a", 1, 1, 1, "</select>", 1);
 	});
-	_html(`<button type=reset>reset</button></form><div>${_escape(value)}${_el_resume($scope0_id, "b")}</div><button class=remove>Remove option</button>${_el_resume($scope0_id, "c")}<button class=add>Add option</button>${_el_resume($scope0_id, "d")}`);
+	_html(`<button type=reset>reset</button></form><div>${_text_resume($scope0_id, "b", value)}</div><button class=remove>Remove option</button>${_el_resume($scope0_id, "c")}<button class=add>Add option</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, { e: options });
 	_resume_branch($scope0_id);

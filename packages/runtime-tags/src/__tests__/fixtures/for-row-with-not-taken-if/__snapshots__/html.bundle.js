@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>drop</button>${_el_resume($scope0_id, "a")}`);
 	_for_of(items, (i) => {
 		const $scope1_id = _scope_id();
-		_html(`<div>item <!>${_escape(i)}${_el_resume($scope1_id, "a")}</div>`);
+		_html(`<div>item ${_text_resume($scope1_id, "a", i, 2)}</div>`);
 		_if(() => {
 			if (i > 9) {
 				const $scope2_id = _scope_id();

@@ -5,13 +5,13 @@ var template_default = _template("a", (input) => {
 	const $input_value__closures = /* @__PURE__ */ new Set();
 	let Parent = "div";
 	let Child = "a";
-	_html(`<div><svg>${_unescaped(input.value)}${_el_resume($scope0_id, "b", $sg__input_value)}`);
+	_html(`<div><svg>${_html_resume($scope0_id, "b", input.value, $sg__input_value)}`);
 	_dynamic_tag($scope0_id, "c", Child, { href: "#bar" }, _content_resume("a0", () => {
 		_scope_id();
 		_scope_reason();
 		_html("Hi");
 	}, $scope0_id));
-	_html(`</svg><math>${_unescaped(input.value)}${_el_resume($scope0_id, "d", $sg__input_value)}`);
+	_html(`</svg><math>${_html_resume($scope0_id, "d", input.value, $sg__input_value)}`);
 	_dynamic_tag($scope0_id, "e", Child, { href: "#bar" }, _content_resume("a1", () => {
 		_scope_id();
 		_scope_reason();
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "f", Parent, {}, _content_resume("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`${_unescaped(input.value)}${_el_resume($scope1_id, "a", $sg__input_value)}`);
+		_html(_html_resume($scope1_id, "a", input.value, $sg__input_value));
 		_subscribe($si__input_value && $input_value__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id));

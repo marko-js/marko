@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_escape(input.a)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}</div><div>${_escape(input.b)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 2))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.a, _serialize_guard($scope0_reason, 1))}</div><div>${_text_resume($scope0_id, "b", input.b, _serialize_guard($scope0_reason, 2))}</div>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });
 
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	const Child = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<div>${_escape(input.a)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 1))}</div><div>${_escape(input.b)}${_el_resume($scope1_id, "b", _serialize_guard($scope1_reason, 2))}</div>`);
+		_html(`<div>${_text_resume($scope1_id, "a", input.a, _serialize_guard($scope1_reason, 1))}</div><div>${_text_resume($scope1_id, "b", input.b, _serialize_guard($scope1_reason, 2))}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason({

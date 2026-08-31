@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			$item = attrTags($item, { content: _content("a1", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
-				_html(`${_escape(item.text)}${_el_resume($scope4_id, "a")}`);
+				_html(_text_resume($scope4_id, "a", item.text));
 				writeScope($scope4_id, {});
 			}, $scope2_id) });
 		});

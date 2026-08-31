@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let count = 1;
 	const getCount = _resume(() => count, "a0", $scope0_id);
 	const promise = Promise.resolve(getCount);
-	_html(`<button>inc:<!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<div id=ref>0</div>`);
+	_html(`<button>inc:${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}<div id=ref>0</div>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {

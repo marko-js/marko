@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_setCount#4/var");
-	_html(`<div>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/2", count)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_setCount#4");
 	writeScope($scope0_id, {
 		setCount,

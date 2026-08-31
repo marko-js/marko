@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	const Child = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $Child_content__input_name__closures = /* @__PURE__ */ new Set();
@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				{
 					const $scope3_id = _scope_id();
-					_html(`<div>${_escape(input.name || "Fallback")}${_el_resume($scope3_id, "a", _serialize_guard($scope1_reason, 2))}</div>`);
+					_html(`<div>${_text_resume($scope3_id, "a", input.name || "Fallback", _serialize_guard($scope1_reason, 2))}</div>`);
 					$si__input_count__OR__input_name && _subscribe($si__input_name && $Child_content__input_name__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }));
 				}
 				$si__input_count__OR__input_name && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });

@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id), () => {
 		_html(`<select id=controlled><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
 	});
-	_html(`${_el_resume($scope0_id, "a")}<div>${_escape(value)}${_el_resume($scope0_id, "b")}</div>`);
+	_html(`${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", value)}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {});
 	_resume_branch($scope0_id);

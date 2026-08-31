@@ -2,7 +2,7 @@
 var my_input_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attrs(input, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<span>${_escape(input.value)}${_el_resume($scope0_id, "b", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<input${_attrs(input, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "b", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, { d: {
 		...input,

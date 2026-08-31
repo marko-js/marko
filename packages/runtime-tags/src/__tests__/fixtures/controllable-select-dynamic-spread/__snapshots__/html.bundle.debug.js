@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"EventAttributes:#option/2": ["...{ value:\"c\" }", "6:14"]
 		});
 	}, $scope0_id));
-	_html(`<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/1", value)}</span>`);
 	writeScope($scope0_id, { tag }, "__tests__/template.marko", 0, { tag: "2:8" });
 	_resume_branch($scope0_id);
 }, 1);

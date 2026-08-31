@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { initial, onValue } = input;
-	_html(`<span>${_escape(initial)}${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", initial, _serialize_guard($scope0_reason, 0))}</span>`);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
 		d: _serialize_if($scope0_reason, 2) && initial,
 		e: _serialize_if($scope0_reason, 1) && onValue

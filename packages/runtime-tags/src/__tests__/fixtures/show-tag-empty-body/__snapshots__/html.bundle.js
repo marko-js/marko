@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let reveal = false;
 	_html(`<button>reveal</button>${_el_resume($scope0_id, "a")}`);
 	_show_start(reveal, 1);
-	_html(`${_escape(input.note)}${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 0))}`);
+	_html(_text_resume($scope0_id, "c", input.note, _serialize_guard($scope0_reason, 0)));
 	_show_end($scope0_id, "e", reveal);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { i: reveal });

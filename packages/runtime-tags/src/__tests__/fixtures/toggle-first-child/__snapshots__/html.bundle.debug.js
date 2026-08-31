@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (value) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_escape(value)}${_el_resume($scope1_id, "#text/0", $sg__input_value)}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "#text/0", value, $sg__input_value)}</span>`);
 			$si__input_value && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}

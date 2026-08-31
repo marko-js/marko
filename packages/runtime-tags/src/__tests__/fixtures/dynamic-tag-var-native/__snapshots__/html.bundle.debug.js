@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $tag_scope = _peek_scope_id();
 	let el = _dynamic_tag($scope0_id, "#text/0", tag, {});
 	_var($scope0_id, "#scopeOffset/1", $tag_scope, "__tests__/template.marko_0_el#7/var");
-	_html(`<button id=swap>swap</button>${_el_resume($scope0_id, "#button/2")}<button id=read>read</button>${_el_resume($scope0_id, "#button/3")}<output>${_escape(text)}${_el_resume($scope0_id, "#text/4")}</output>`);
+	_html(`<button id=swap>swap</button>${_el_resume($scope0_id, "#button/2")}<button id=read>read</button>${_el_resume($scope0_id, "#button/3")}<output>${_text_resume($scope0_id, "#text/4", text)}</output>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		tag,

@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			received = value;
 		}, "a0", $scope0_id)
 	}, 0, 0, 0);
-	_html(`<div id=tags-api>${_escape(received)}${_el_resume($scope0_id, "b")}</div>`);
+	_html(`<div id=tags-api>${_text_resume($scope0_id, "b", received)}</div>`);
 	writeScope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

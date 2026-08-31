@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const { a, a: b } = createWrapper(count);
-	_html(`<button>${_escape(a)}${_el_resume($scope0_id, "b")} <!>${_escape(b)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", a)} ${_text_resume($scope0_id, "c", b, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { d: count });
 	_resume_branch($scope0_id);

@@ -11,14 +11,14 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 0), $si__input_name = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $si__input_name = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $name__closures = new Set();
 	const { name } = input;
 	layout_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<h1>Hello ${_sep($sg__input_name)}${_escape(name)}${_el_resume($scope1_id, "#text/0", $sg__input_name)}</h1>`);
+		_html(`<h1>Hello ${_text_resume($scope1_id, "#text/0", name, _serialize_guard($scope0_reason, 0) * 2)}</h1>`);
 		$si__input_name && _subscribe($name__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });

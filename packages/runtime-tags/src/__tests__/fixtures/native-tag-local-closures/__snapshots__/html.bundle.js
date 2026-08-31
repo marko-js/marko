@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		$item = attrTags($item, { content: _content_resume("a2", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`${_escape(i)}${_el_resume($scope3_id, "a")}`);
+			_html(_text_resume($scope3_id, "a", i));
 			writeScope($scope3_id, {});
 		}, $scope0_id) });
 	});
