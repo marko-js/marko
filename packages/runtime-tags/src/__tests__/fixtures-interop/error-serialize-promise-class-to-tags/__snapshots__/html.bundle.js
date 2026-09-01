@@ -7,7 +7,7 @@ var tags_child_default = _template("b", (input) => {
 	let pending = Promise.resolve("hi");
 	_html(`<button id=tags>go</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { b: pending });
+	_scope($scope0_id, { b: pending });
 	_resume_branch($scope0_id);
 });
 

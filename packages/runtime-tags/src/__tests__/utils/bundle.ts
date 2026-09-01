@@ -247,7 +247,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     experimental: { nativeMagicString: true },
     plugins: [
       virtual.plugin,
-      !interop && externalRuntimePlugin("html", optimize),
+      externalRuntimePlugin("html", optimize),
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "html" }, collectDiagnostics),

@@ -36,13 +36,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<h1>${_text_resume($scope1_id, "#text/0", message, _serialize_guard($scope1_reason, 1))}</h1><button id=tags>${_text_resume($scope1_id, "#text/2", multiplier)} * ${_text_resume($scope1_id, "#text/3", baseCount, _serialize_guard($scope1_reason, 0) * 2)} = ${_text_resume($scope1_id, "#text/4", multiplier * baseCount, 2)}</button>${_el_resume($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_subscribe($multiplier__closures, writeScope($scope1_id, {
+		_subscribe($multiplier__closures, _scope($scope1_id, {
 			baseCount,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { baseCount: "2:15" }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), 0, 0);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		multiplier,
 		"ClosureScopes:multiplier": $multiplier__closures
 	}, "__tests__/template.marko", 0, { multiplier: "1:6" });

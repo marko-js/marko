@@ -6,7 +6,7 @@ var tags_counter_default = _template("c", (input) => {
 	let n = 0;
 	_html(`<button id=counter>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
-	writeScope($scope0_id, { c: n });
+	_scope($scope0_id, { c: n });
 	_resume_branch($scope0_id);
 });
 

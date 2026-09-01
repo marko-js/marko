@@ -34,6 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<button id=tags>${_text_resume($scope1_id, "#text/1", count, _serialize_guard($scope1_reason, 0))}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		writeScope($scope1_id, { onBump }, "__tests__/template.marko", "2:2", { onBump: "2:22" });
+		_scope($scope1_id, { onBump }, "__tests__/template.marko", "2:2", { onBump: "2:22" });
 	}, $scope0_id), 0, 0);
 }, 1);

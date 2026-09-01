@@ -7,7 +7,7 @@ var tags_counter_default = _template("b", (input) => {
 	let count = 0;
 	_html(`<button id=tags${_attr("data-parent", input.count)}>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { f: count });
+	_scope($scope0_id, { f: count });
 	_resume_branch($scope0_id);
 });
 

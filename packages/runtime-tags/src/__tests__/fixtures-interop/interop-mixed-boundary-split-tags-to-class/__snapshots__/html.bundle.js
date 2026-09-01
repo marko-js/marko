@@ -20,6 +20,6 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", _marko_template, {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "d", _marko_template, { count: n });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { e: n });
+	_scope($scope0_id, { e: n });
 	_resume_branch($scope0_id);
 }, 1);

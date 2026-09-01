@@ -29,13 +29,13 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<h1>${_text_resume($scope1_id, "a", message, _serialize_guard($scope1_reason, 1))}</h1><button id=tags>${_text_resume($scope1_id, "c", multiplier)} * ${_text_resume($scope1_id, "d", baseCount, _serialize_guard($scope1_reason, 0) * 2)} = ${_text_resume($scope1_id, "e", multiplier * baseCount, 2)}</button>${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a1");
-		_subscribe($multiplier__closures, writeScope($scope1_id, {
+		_subscribe($multiplier__closures, _scope($scope1_id, {
 			g: baseCount,
 			_: _scope_with_id($scope0_id)
 		}));
 		_resume_branch($scope1_id);
 	}, $scope0_id), 0, 0);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: multiplier,
 		c: $multiplier__closures
 	});

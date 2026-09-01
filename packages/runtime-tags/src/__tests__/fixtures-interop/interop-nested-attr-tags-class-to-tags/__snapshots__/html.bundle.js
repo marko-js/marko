@@ -10,7 +10,7 @@ var tags_layout_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "c", input.stuff.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html("</div>");
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { h: count });
+	_scope($scope0_id, { h: count });
 	_resume_branch($scope0_id);
 });
 

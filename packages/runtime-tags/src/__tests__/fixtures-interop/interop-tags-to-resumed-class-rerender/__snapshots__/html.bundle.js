@@ -22,12 +22,12 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", _marko_template, { value: count });
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "d");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: count,
 		f: show
 	});

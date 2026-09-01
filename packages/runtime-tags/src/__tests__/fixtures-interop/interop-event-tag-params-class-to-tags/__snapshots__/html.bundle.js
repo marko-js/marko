@@ -26,6 +26,6 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button id=tags>${_text_resume($scope1_id, "b", count, _serialize_guard(_scope_reason(), 0))}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
-		writeScope($scope1_id, { e: onBump });
+		_scope($scope1_id, { e: onBump });
 	}, $scope0_id), 0, 0);
 }, 1);

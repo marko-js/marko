@@ -9,7 +9,7 @@ var tags_layout_default = _template("__tests__/components/tags-layout.marko", (i
 	_dynamic_tag($scope0_id, "#text/2", input.content, [count, "hello"], 0, 1);
 	_html("</div>");
 	_script($scope0_id, "__tests__/components/tags-layout.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_content: input.content,
 		count
 	}, "__tests__/components/tags-layout.marko", 0, {
