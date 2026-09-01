@@ -11,6 +11,8 @@ import { type ResolveOptions, resolveSync } from "resolve-sync";
  * the process. Path imports (chunks, the prebuilt runtime) load the same way,
  * so module state stays per caller; bare specifiers use the host loader. */
 export async function importEvictable<T>(entry: string): Promise<T> {
+  // One graph per call: chunks importing the same file share an instance, and
+  // nothing outlives the namespace returned.
   const cache = new Map<string, Promise<vm.Module>>();
   return (await load(pathToFileURL(entry).href)).namespace as T;
 
