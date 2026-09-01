@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.3.47
+
+### Patch Changes
+
+- [#4071](https://github.com/marko-js/marko/pull/4071) [`1080f81`](https://github.com/marko-js/marko/commit/1080f81799b576c04abb252979a9dd4935981d5b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix resume claiming the wrong DOM node for a placeholder that renders empty on the server (eg `<div/>${value}` where `value` starts empty and is assigned later). Placeholders now serialize a single `_text_resume`/`_html_resume` call which writes an `EmptyText` resume marker when the rendered text is empty, letting resume create the text node instead of guessing a neighbor.
+
+  Fix resume of an unescaped placeholder (`$!{value}`) whose markup parses to multiple top-level nodes: the server now brackets the markup with range markers so resume reconstructs the full range (including its last-child accessor), instead of claiming only the final node and orphaning the rest on the first client update.
+
+  This also removes the `<!>` separator comments previously written for empty positions and shrinks both the SSR output and the client resume runtime.
+
+- [#4068](https://github.com/marko-js/marko/pull/4068) [`a0d1bc1`](https://github.com/marko-js/marko/commit/a0d1bc1e215b14e30a91e1381e3b75333b0f2849) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Improve the `<show>` missing-`value=` error when the condition was written as another attribute: `<show if=cond>` now suggests `<show=condition>` and points the code frame at the offending attribute.
+
 ## 6.3.46
 
 ### Patch Changes
