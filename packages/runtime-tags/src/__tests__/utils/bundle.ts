@@ -169,7 +169,7 @@ function createBuilds(
     plugins: [
       virtual.plugin,
       domEntry.plugin,
-      !optimize && externalRuntimePlugin("dom", optimize),
+      !optimize && externalRuntimePlugin("dom", false),
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
