@@ -1,10 +1,16 @@
+import { createHash } from "crypto";
 import fs, { readFileSync } from "fs";
 import path from "path";
 import zlib from "zlib";
 
 import * as compiler from "@marko/compiler";
 import type { Template } from "@marko/runtime-tags/common/types";
-import { build, type Plugin, type RolldownOutput } from "rolldown";
+import {
+  build,
+  type Plugin,
+  type RolldownOutput,
+  VERSION as rolldownVersion,
+} from "rolldown";
 import { minifySync } from "rolldown/utils";
 
 import { importEvictable, importWithContext } from "./import-with-context";
@@ -30,7 +36,6 @@ const sharedChunkKey = "shared";
 const runtimeEntryRe =
   /^@marko\/runtime-tags\/(?:debug\/)?(dom|html)(?:\/([^/]+)\.feat)?$/;
 const featExt = ".feat.ts";
-const DAY = 24 * 60 * 60 * 1000;
 interface Diagnostic {
   type: string;
   label: string;
@@ -158,7 +163,7 @@ function createBuilds(
     ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
     platform: "browser",
     treeshake: optimize,
-    experimental: { lazyBarrel: true, nativeMagicString: true },
+    experimental: { nativeMagicString: true },
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
     plugins: [
@@ -239,7 +244,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     treeshake: optimize,
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
-    experimental: { lazyBarrel: true, nativeMagicString: true },
+    experimental: { nativeMagicString: true },
     plugins: [
       virtual.plugin,
       !interop && externalRuntimePlugin("html", optimize),
@@ -460,7 +465,7 @@ function virtualPlugin(cwd: string): {
 }
 
 // Only the optimize dom bundle is measured, so every other build links one
-// process-wide runtime instead of re-emitting it into each fixture.
+// shared runtime instead of re-emitting it into each fixture.
 function externalRuntimePlugin(
   kind: "dom" | "html",
   optimize: boolean,
@@ -488,65 +493,78 @@ function prebuiltRuntime(kind: "dom" | "html", optimize: boolean) {
   const variant = optimize ? `${kind}-optimize` : kind;
   let built = prebuiltRuntimes.get(variant);
   if (!built) {
-    const dir = path.join(prebuiltRuntimeDir(), variant);
-    const srcDir = path.join(import.meta.dirname, "../..");
-    const input: Record<string, string> = {
-      runtime: path.join(srcDir, `${kind}.ts`),
-    };
-    for (const file of fs.readdirSync(path.join(srcDir, kind))) {
-      if (file.endsWith(featExt)) {
-        input[file.slice(0, -3)] = path.join(srcDir, kind, file);
-      }
-    }
-    prebuiltRuntimes.set(
-      variant,
-      (built = build({
-        input,
-        platform: kind === "dom" ? "browser" : "node",
-        treeshake: false,
-        plugins: [optimize && remapDebugPlugin()],
-        experimental: { lazyBarrel: true, nativeMagicString: true },
-        transform: { define: { MARKO_DEBUG: String(!optimize) } },
-        output: {
-          dir,
-          entryFileNames: "[name].mjs",
-          chunkFileNames: "[name].mjs",
-          sourcemap: true,
-          sourcemapExcludeSources: true,
-        },
-      }).then(() => dir)),
-    );
+    prebuiltRuntimes.set(variant, (built = buildRuntime(kind, optimize)));
   }
   return built;
 }
 
-// Inside coverage's `packages/*/src/**` scope so its scripts remap; the sweep
-// collects what a killed run, or a coverage run's deferred remap, left behind.
-let runtimeDir: string | undefined;
-function prebuiltRuntimeDir() {
-  if (!runtimeDir) {
-    const root = path.join(import.meta.dirname, "..", "dist");
-    fs.mkdirSync(root, { recursive: true });
-    for (const entry of fs.readdirSync(root)) {
-      // Old enough that no run can still be reporting on it, and tolerant of
-      // another worker sweeping the same directory first.
-      const dir = path.join(root, entry);
-      const stat = fs.statSync(dir, { throwIfNoEntry: false });
-      if (stat && stat.mtimeMs < Date.now() - DAY) {
-        fs.rmSync(dir, { force: true, recursive: true });
-      }
-    }
-    fs.mkdirSync((runtimeDir = path.join(root, String(process.pid))), {
-      recursive: true,
-    });
-    // A coverage run's files outlive it, because that remapping runs last.
-    if (!process.env.NODE_V8_COVERAGE) {
-      process.on("exit", () =>
-        fs.rmSync(runtimeDir!, { force: true, recursive: true }),
-      );
+// Keyed by the runtime source, so every worker and every later run shares one
+// build (and coverage can remap it after the run); stale keys are swept.
+async function buildRuntime(kind: "dom" | "html", optimize: boolean) {
+  const root = path.join(import.meta.dirname, "..", "dist");
+  const key = runtimeSourceKey();
+  const dir = path.join(root, `${optimize ? `${kind}-optimize` : kind}-${key}`);
+  fs.mkdirSync(root, { recursive: true });
+  for (const entry of fs.readdirSync(root)) {
+    if (!entry.includes(key)) {
+      fs.rmSync(path.join(root, entry), { force: true, recursive: true });
     }
   }
-  return runtimeDir;
+  if (fs.existsSync(dir)) return dir;
+
+  const srcDir = path.join(import.meta.dirname, "../..");
+  const input: Record<string, string> = {
+    runtime: path.join(srcDir, `${kind}.ts`),
+  };
+  for (const file of fs.readdirSync(path.join(srcDir, kind))) {
+    if (file.endsWith(featExt)) {
+      input[file.slice(0, -3)] = path.join(srcDir, kind, file);
+    }
+  }
+  const tmp = `${dir}.${process.pid}`;
+  await build({
+    input,
+    platform: kind === "dom" ? "browser" : "node",
+    treeshake: false,
+    plugins: [optimize && remapDebugPlugin()],
+    experimental: { nativeMagicString: true },
+    transform: { define: { MARKO_DEBUG: String(!optimize) } },
+    output: {
+      dir: tmp,
+      entryFileNames: "[name].mjs",
+      chunkFileNames: "[name].mjs",
+      sourcemap: true,
+      sourcemapExcludeSources: true,
+    },
+  });
+  try {
+    fs.renameSync(tmp, dir);
+  } catch {
+    // Another worker finished the same build first.
+    fs.rmSync(tmp, { force: true, recursive: true });
+  }
+  return dir;
+}
+
+let sourceKey: string | undefined;
+function runtimeSourceKey() {
+  if (!sourceKey) {
+    const hash = createHash("sha1").update(rolldownVersion);
+    const srcDir = path.join(import.meta.dirname, "../..");
+    for (const file of fs.readdirSync(srcDir, {
+      recursive: true,
+    }) as string[]) {
+      if (
+        file.endsWith(".ts") &&
+        !file.startsWith("__tests__") &&
+        !file.startsWith("translator")
+      ) {
+        hash.update(file).update(fs.readFileSync(path.join(srcDir, file)));
+      }
+    }
+    sourceKey = hash.digest("hex").slice(0, 12);
+  }
+  return sourceKey;
 }
 
 function remapDebugPlugin(): Plugin {
