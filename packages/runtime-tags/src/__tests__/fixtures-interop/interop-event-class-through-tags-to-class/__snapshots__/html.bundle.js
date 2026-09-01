@@ -17,7 +17,7 @@ var tags_child_default = _template("c", (input) => {
 	_dynamic_tag($scope0_id, "a", _marko_template$1, { "on-change": _resume(function() {
 		input.onChange?.();
 	}, "c0", $scope0_id) }, 0, 0, _serialize_guard($scope0_reason, 0));
-	writeScope($scope0_id, { d: input.onChange });
+	_scope($scope0_id, { d: input.onChange });
 });
 
 // template.marko

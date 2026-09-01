@@ -9,7 +9,7 @@ var tags_layout_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "c", input.content, [count, "hello"], 0, 1);
 	_html("</div>");
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.content,
 		g: count
 	});

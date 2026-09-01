@@ -39,7 +39,7 @@ var tags_mid_default = _template("__tests__/components/tags-mid.marko", (input) 
 		_html("<span>deep body</span>");
 	}, $scope0_id));
 	_script($scope0_id, "__tests__/components/tags-mid.marko_0");
-	writeScope($scope0_id, { count }, "__tests__/components/tags-mid.marko", 0, { count: "2:6" });
+	_scope($scope0_id, { count }, "__tests__/components/tags-mid.marko", 0, { count: "2:6" });
 	_resume_branch($scope0_id);
 });
 

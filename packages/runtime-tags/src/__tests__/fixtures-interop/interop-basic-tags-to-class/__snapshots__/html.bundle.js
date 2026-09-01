@@ -24,6 +24,6 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=tags>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "c", _marko_template, { count });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: count });
+	_scope($scope0_id, { d: count });
 	_resume_branch($scope0_id);
 }, 1);

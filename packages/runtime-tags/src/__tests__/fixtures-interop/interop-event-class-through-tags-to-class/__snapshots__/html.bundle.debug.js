@@ -23,7 +23,7 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 	_dynamic_tag($scope0_id, "#text/0", _marko_template$1, { "on-change": _resume(function() {
 		input.onChange?.();
 	}, "__tests__/components/tags-child.marko_0/onchange", $scope0_id) }, 0, 0, _serialize_guard($scope0_reason, 0));
-	writeScope($scope0_id, { input_onChange: input.onChange }, "__tests__/components/tags-child.marko", 0, { input_onChange: ["input.onChange"] });
+	_scope($scope0_id, { input_onChange: input.onChange }, "__tests__/components/tags-child.marko", 0, { input_onChange: ["input.onChange"] });
 });
 
 // template.marko
