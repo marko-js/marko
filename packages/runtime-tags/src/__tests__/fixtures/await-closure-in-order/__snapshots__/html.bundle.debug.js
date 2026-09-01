@@ -12,11 +12,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (value) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "#text/0", value)}</span>`);
-			writeScope($scope1_id, {}, "__tests__/template.marko", "6:1");
+			_scope($scope1_id, {}, "__tests__/template.marko", "6:1");
 			return 0;
 		}
 	}, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { value }, "__tests__/template.marko", 0, { value: "2:5" });
+	_scope($scope0_id, { value }, "__tests__/template.marko", 0, { value: "2:5" });
 	_resume_branch($scope0_id);
 }, 1);

@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(_text_resume($scope1_id, "a", input.foo || "fallback", _serialize_guard($scope1_reason, 0)));
-		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
+		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	({ content: _content("a1", (input) => {
 		const $scope2_id = _scope_id();
@@ -14,6 +14,6 @@ var template_default = _template("a", (input) => {
 		_set_serialize_reason(_serialize_guard($scope2_reason, 0));
 		const $childScope = _peek_scope_id();
 		Foo.content(input);
-		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, { a: _existing_scope($childScope) });
+		_serialize_if($scope2_reason, 0) && _scope($scope2_id, { a: _existing_scope($childScope) });
 	}, $scope0_id) }).content({});
 }, 1);

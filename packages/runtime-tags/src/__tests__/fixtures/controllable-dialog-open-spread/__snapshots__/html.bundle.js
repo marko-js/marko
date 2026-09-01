@@ -6,7 +6,7 @@ var my_dialog_default = _template("b", (input) => {
 	_attrs_content(input, "a", $scope0_id, "dialog");
 	_html(`</dialog>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -22,6 +22,6 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id)
 	});
 	_html(`<span>${_text_resume($scope0_id, "b", String(open))}</span>`);
-	writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
 }, 1);

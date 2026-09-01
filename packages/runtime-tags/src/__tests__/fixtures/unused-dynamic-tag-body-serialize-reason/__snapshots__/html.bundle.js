@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 			onClick,
 			content
 		}, 0, 0, _serialize_guard($scope1_reason, 3));
-		_serialize_if($scope1_reason, 3) && writeScope($scope1_id, {
+		_serialize_if($scope1_reason, 3) && _scope($scope1_id, {
 			d: _serialize_if($scope1_reason, 2) && as,
 			e: _serialize_if($scope1_reason, 1) && onClick,
 			f: _serialize_if($scope1_reason, 0) && content
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(_text_resume($scope2_id, "a", input.before + input.after, _serialize_guard($scope2_reason, 0)));
-		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {
+		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {
 			d: _serialize_if($scope2_reason, 2) && input.before,
 			e: _serialize_if($scope2_reason, 1) && input.after
 		});
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			});
 		}, $scope0_id)
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: x,
 		a: _existing_scope($childScope)
 	});

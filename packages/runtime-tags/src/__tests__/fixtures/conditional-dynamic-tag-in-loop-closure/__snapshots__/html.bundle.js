@@ -8,13 +8,13 @@ var sections_default = _template("b", (input) => {
 			if (content) {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "a", content, {}, 0, 0, $sg__input_section);
-				$si__input_section && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+				$si__input_section && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
 		}, $scope1_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
-		$si__input_section && writeScope($scope1_id, { d: content });
+		$si__input_section && _scope($scope1_id, { d: content });
 	}, 0, $scope0_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
-	$si__input_section && writeScope($scope0_id, {});
+	$si__input_section && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -33,11 +33,11 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", count));
-			_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	}) });
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: count,
 		c: $count__closures,
 		a: _existing_scope($childScope)

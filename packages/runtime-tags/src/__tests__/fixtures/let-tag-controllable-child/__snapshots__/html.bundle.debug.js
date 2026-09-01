@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let thirdState = input.value;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", input.value, $sg__input_value)}|${_text_resume($scope0_id, "#text/2", state, 2)}</button>${_el_resume($scope0_id, "#button/0")}<button>${_text_resume($scope0_id, "#text/4", input.value, $sg__input_value)}|${_text_resume($scope0_id, "#text/5", otherState, 2)}</button>${_el_resume($scope0_id, "#button/3")}<button>${_text_resume($scope0_id, "#text/7", input.value, $sg__input_value)}|${_text_resume($scope0_id, "#text/8", thirdState, 2)}</button>${_el_resume($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_value: _serialize_if($scope0_reason, 1) && input.value,
 		input_valueChange: _serialize_if($scope0_reason, 0) && input.valueChange,
 		state,
@@ -43,6 +43,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_html(`source=${_text_resume($scope0_id, "#text/1", source, 2)}`);
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

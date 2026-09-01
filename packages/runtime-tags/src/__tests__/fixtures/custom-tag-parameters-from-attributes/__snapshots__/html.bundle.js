@@ -9,7 +9,7 @@ var custom_tag_default = _template("b", (input) => {
 		name: input.name
 	});
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.content,
 		g: input.name,
 		h: x
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<div>Count (${_text_resume($scope1_id, "a", name, _serialize_guard($scope1_reason, 2) * 2)}): ${_text_resume($scope1_id, "b", count, _serialize_guard($scope1_reason, 1) * 2)}</div>`);
-			_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
+			_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 		}, _scope_id())
 	});
 }, 1);

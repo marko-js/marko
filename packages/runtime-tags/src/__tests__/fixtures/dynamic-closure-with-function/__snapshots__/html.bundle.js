@@ -14,18 +14,18 @@ var template_default = _template("a", (input) => {
 				if (input.b) {
 					const $scope2_id = _scope_id();
 					_html(`<div>${_text_resume($scope2_id, "a", bar(foo), _serialize_guard($scope0_reason, 3))}</div>`);
-					$si__input_c__OR__input_a__OR__input_b && _subscribe($si__input_c && $bar2__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					$si__input_c__OR__input_a__OR__input_b && _subscribe($si__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", $sg__input_b, $sg__input_b, $sg__input_b, 0, 1);
-			$si__input_c__OR__input_a__OR__input_b && writeScope($scope1_id, {
+			$si__input_c__OR__input_a__OR__input_b && _scope($scope1_id, {
 				b: _serialize_if($scope0_reason, 0) && foo,
 				_: _scope_with_id($scope0_id)
 			});
 			return 0;
 		}
 	}, $scope0_id, "a", _serialize_guard($scope0_reason, 1), $sg__input_a, $sg__input_a);
-	$si__input_c__OR__input_a__OR__input_b && writeScope($scope0_id, {
+	$si__input_c__OR__input_a__OR__input_b && _scope($scope0_id, {
 		d: $si__input_a__OR__input_b && input.c,
 		f: _serialize_if($scope0_reason, 4) && input.b,
 		g: $si__input_a__OR__input_b && bar,

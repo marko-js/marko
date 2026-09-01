@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		_html("aliased");
 	}, $scope0_id));
 	_html(`<div>${_text_resume($scope0_id, "d", n)}</div>`);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: input.tag,
 		h: n,
 		j: _serialize_if($scope0_reason, 0) && attrs

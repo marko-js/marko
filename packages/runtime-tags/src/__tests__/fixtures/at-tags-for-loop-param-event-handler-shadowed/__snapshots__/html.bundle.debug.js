@@ -8,9 +8,9 @@ var my_menu_default = _template("__tests__/tags/my-menu/index.marko", (input) =>
 		_attrs_content(item, "#button/0", $scope1_id, "button");
 		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/my-menu/index.marko_1_item#2");
-		writeScope($scope1_id, {}, "__tests__/tags/my-menu/index.marko", "1:2", { "EventAttributes:#button/0": ["...item", "2:14"] });
+		_scope($scope1_id, {}, "__tests__/tags/my-menu/index.marko", "1:2", { "EventAttributes:#button/0": ["...item", "2:14"] });
 	}, 0, $scope0_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/my-menu/index.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/my-menu/index.marko", 0);
 });
 
 // template.marko
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html(_text_resume($scope1_id, "#text/0", $foo));
-				writeScope($scope1_id, {}, "__tests__/template.marko", "4:6");
+				_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 			}, $scope0_id)
 		});
 	});

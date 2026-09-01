@@ -3,7 +3,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>${_text_resume($scope0_id, "#text/0", JSON.stringify(input), _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
 });
 
 // template.marko
@@ -18,6 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/4", tags[0], [true], 0, 1, 0);
 	_dynamic_tag($scope0_id, "#text/5", tags[0], [...["spread1", "spread2"]], 0, 1, 0);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "3:6" });
+	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);

@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
 			_html(`caught: ${_text_resume($scope4_id, "#text/0", err.message, _serialize_guard($scope4_reason, 0) * 2)}`);
-			_serialize_if($scope4_reason, 0) && writeScope($scope4_id, {}, "__tests__/template.marko", "7:6");
+			_serialize_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "7:6");
 		}, $scope1_id) }) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();

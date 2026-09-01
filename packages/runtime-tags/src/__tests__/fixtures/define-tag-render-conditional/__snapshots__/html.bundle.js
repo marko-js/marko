@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(`<div>Hello ${_text_resume($scope2_id, "a", value, _serialize_guard($scope2_reason, 0) * 2)}</div>`);
-		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {});
+		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) };
 	_if(() => {
 		{
@@ -15,12 +15,12 @@ var template_default = _template("a", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			MyTag.content({ value: x });
-			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>${_text_resume($scope0_id, "c", x)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { e: x });
+	_scope($scope0_id, { e: x });
 	_resume_branch($scope0_id);
 }, 1);

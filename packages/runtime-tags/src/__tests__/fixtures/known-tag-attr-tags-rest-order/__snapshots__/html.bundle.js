@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { first, ...rest } = input;
 	_html(`<div>${_text_resume($scope0_id, "a", first, _serialize_guard($scope0_reason, 1))}:${_text_resume($scope0_id, "b", Object.keys(rest).join(","), _serialize_guard($scope0_reason, 2) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		other: attrTag({ y: 2 })
 	});
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: n,
 		c: _existing_scope($childScope)
 	});

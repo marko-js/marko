@@ -7,7 +7,7 @@ var greeting_default = _template("__tests__/tags/greeting.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>${_text_resume($scope0_id, "#text/0", input.message, _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/greeting.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/greeting.marko", 0);
 });
 
 // template.marko
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		loud,
 		quiet,
 		message,

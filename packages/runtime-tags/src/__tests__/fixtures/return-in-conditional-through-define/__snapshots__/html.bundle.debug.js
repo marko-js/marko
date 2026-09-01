@@ -26,11 +26,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let wrapped = Wrapper.content({ value });
 			_var($scope2_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_2_wrapped#6/var");
 			_html(`<div>Value: ${_text_resume($scope2_id, "#text/4", wrapped, 2)}</div>`);
-			writeScope($scope2_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
+			_scope($scope2_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "5:6" });
+	_scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "5:6" });
 	_resume_branch($scope0_id);
 }, 1);

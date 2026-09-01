@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (value) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "#text/0", value)}</span>`);
-			writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		value = _new_value;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_resume($scope0_id, "#input/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { value }, "__tests__/template.marko", 0, {
+	_scope($scope0_id, { value }, "__tests__/template.marko", 0, {
 		value: "1:6",
 		"ControlledHandler:#input/1": ["valueChange"]
 	});

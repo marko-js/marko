@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}, "__tests__/tags/child.marko_0/_return2", $scope0_id)
 	};
 	_html(`<span>child:${_text_resume($scope0_id, "#text/0", count, 2)}</span>`);
-	writeScope($scope0_id, { count }, "__tests__/tags/child.marko", 0, { count: "1:6" });
+	_scope($scope0_id, { count }, "__tests__/tags/child.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 	return $return;
 });
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/2")}<button class=assign>assign</button>${_el_resume($scope0_id, "#button/3")}<div>${_text_resume($scope0_id, "#text/4", count)}:${_text_resume($scope0_id, "#text/5", missing, 2)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_count#7_$countChange#8");
 	_script($scope0_id, "__tests__/template.marko_0_inc#10");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		$countChange,
 		inc,

@@ -7,11 +7,11 @@ var leaf_default = _template("b", (input) => {
 		if (n) {
 			const $scope1_id = _scope_id();
 			_html(`<div>n is ${_text_resume($scope1_id, "a", n, $sg__input_n * 2)}</div>`);
-			$si__input_n && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			$si__input_n && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", $sg__input_n, $sg__input_n, $sg__input_n, 0, 1);
-	$si__input_n && writeScope($scope0_id, { d: n });
+	$si__input_n && _scope($scope0_id, { d: n });
 });
 
 // template.marko
@@ -27,12 +27,12 @@ var template_default = _template("a", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			leaf_default({ n });
-			writeScope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: outer,
 		e: n
 	});

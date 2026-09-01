@@ -8,11 +8,11 @@ var template_default = _template("a", (input) => {
 	_await($scope0_id, "b", resolveAfter(n, 0), (v) => {
 		const $scope1_id = _scope_id();
 		_html(`<div id=out>done ${_text_resume($scope1_id, "a", n, 2)}</div>`);
-		_subscribe($n__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	});
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: n,
 		d: $n__closures
 	});

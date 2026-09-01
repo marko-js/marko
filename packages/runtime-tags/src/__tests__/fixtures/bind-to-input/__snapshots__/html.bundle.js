@@ -8,7 +8,7 @@ var counter_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: _serialize_if($scope0_reason, 2) && $countChange,
 		h: _serialize_if($scope0_reason, 1) && count,
 		j: x,
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", x));
-			_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
@@ -48,14 +48,14 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(_text_resume($scope2_id, "a", x));
-			_subscribe($x__closures, writeScope($scope2_id, {
+			_subscribe($x__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope0_id),
 				Cd: 1
 			}));
 			_resume_branch($scope2_id);
 		}, $scope0_id)
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: $x__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)

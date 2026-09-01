@@ -11,15 +11,15 @@ var template_default = _template("a", (input) => {
 		_html(`<button>inc</button>${_el_resume($scope1_id, "a")} -- ${_text_resume($scope1_id, "b", void 0, 2)}`);
 		_script($scope1_id, "a2");
 		_script($scope1_id, "a3");
-		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a0", (err) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "a", err, _serialize_guard($scope2_reason, 0)));
-		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {});
+		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) }) });
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: clickCount,
 		d: $clickCount__closures
 	});

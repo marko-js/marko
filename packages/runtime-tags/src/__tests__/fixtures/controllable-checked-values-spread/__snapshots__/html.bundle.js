@@ -7,7 +7,7 @@ var checkbox_default = _template("b", (input) => {
 		...input
 	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		value: "c"
 	});
 	_html(`<span>${_text_resume($scope0_id, "d", checkedValue)}</span>`);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		f: $checkedValueChange,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),

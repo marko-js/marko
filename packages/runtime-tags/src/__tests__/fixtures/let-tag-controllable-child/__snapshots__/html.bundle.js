@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 	let thirdState = input.value;
 	_html(`<button>${_text_resume($scope0_id, "b", input.value, $sg__input_value)}|${_text_resume($scope0_id, "c", state, 2)}</button>${_el_resume($scope0_id, "a")}<button>${_text_resume($scope0_id, "e", input.value, $sg__input_value)}|${_text_resume($scope0_id, "f", otherState, 2)}</button>${_el_resume($scope0_id, "d")}<button>${_text_resume($scope0_id, "h", input.value, $sg__input_value)}|${_text_resume($scope0_id, "i", thirdState, 2)}</button>${_el_resume($scope0_id, "g")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		l: _serialize_if($scope0_reason, 1) && input.value,
 		m: _serialize_if($scope0_reason, 0) && input.valueChange,
 		o: state,
@@ -34,6 +34,6 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id)
 	});
 	_html(`source=${_text_resume($scope0_id, "b", source, 2)}`);
-	writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
 }, 1);

@@ -3,7 +3,7 @@ var cell_default = _template("__tests__/tags/cell/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span class=cell>${_text_resume($scope0_id, "#text/0", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/cell/index.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/cell/index.marko", 0);
 });
 
 // tags/row/index.marko
@@ -18,7 +18,7 @@ var row_default = _template("__tests__/tags/row/index.marko", (input) => {
 	const $childScope2 = _peek_scope_id();
 	cell_default({ value: input.quantity });
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		"#childScope/0": _serialize_if($scope0_reason, 1) && _existing_scope($childScope),
 		"#childScope/1": _serialize_if($scope0_reason, 2) && _existing_scope($childScope2)
 	}, "__tests__/tags/row/index.marko", 0);
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		quantity
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		quantity,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { quantity: "1:6" });

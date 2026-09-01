@@ -10,7 +10,7 @@ var my_select_default = _template("b", (input) => {
 	}, 1);
 	_html(_el_resume($scope0_id, "a"));
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -31,6 +31,6 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id)
 	});
 	_html(`<span>${_text_resume($scope0_id, "b", value)}</span>`);
-	writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
 }, 1);

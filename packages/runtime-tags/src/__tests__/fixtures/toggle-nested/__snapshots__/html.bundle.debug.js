@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (value1) {
 					const $scope2_id = _scope_id();
 					_html(`<span>${_text_resume($scope2_id, "#text/0", value1, $sg__input_value)}</span>`);
-					$si__input_show__OR__input_value && _subscribe($si__input_value && $value__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
+					$si__input_show__OR__input_value && _subscribe($si__input_value && $value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value1__OR__input_value, 0, 1);
@@ -21,15 +21,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (value2) {
 					const $scope3_id = _scope_id();
 					_html(`<span>${_text_resume($scope3_id, "#text/0", value2, $sg__input_value2)}</span>`);
-					$si__input_show__OR__input_value2 && _subscribe($si__input_value2 && $value2__closures, writeScope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"));
+					$si__input_show__OR__input_value2 && _subscribe($si__input_value2 && $value2__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"));
 					return 0;
 				}
 			}, $scope1_id, "#text/1", $sg__input_value2, $sg__input_value2, $sg__input_value1__OR__input_value, 0, 1);
-			$si__input_show__OR__input_value1__OR__input_value && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
+			$si__input_show__OR__input_value1__OR__input_value && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#div/0", _serialize_guard($scope0_reason, 3), $sg__input_show, $sg__input_show, "</div>");
-	$si__input_show__OR__input_value1__OR__input_value && writeScope($scope0_id, {
+	$si__input_show__OR__input_value1__OR__input_value && _scope($scope0_id, {
 		value1: $si__input_show__OR__input_value && value1,
 		value2: $si__input_show__OR__input_value2 && value2,
 		"ClosureScopes:value1": $si__input_value && $value__closures,

@@ -10,7 +10,7 @@ var my_select_default = _template("__tests__/tags/my-select.marko", (input) => {
 	}, 1);
 	_html(_el_resume($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/tags/my-select.marko_0_input#2");
-	writeScope($scope0_id, {}, "__tests__/tags/my-select.marko", 0, {
+	_scope($scope0_id, {}, "__tests__/tags/my-select.marko", 0, {
 		"ControlledHandler:#select/0": ["...input", "1:12"],
 		"EventAttributes:#select/0": ["...input", "1:12"]
 	});
@@ -34,6 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id)
 	});
 	_html(`<span>${_text_resume($scope0_id, "#text/1", value)}</span>`);
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

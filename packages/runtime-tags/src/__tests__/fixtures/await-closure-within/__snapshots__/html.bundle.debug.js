@@ -13,12 +13,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (value > 0) {
 					const $scope4_id = _scope_id();
 					_html(`<span>${_text_resume($scope4_id, "#text/0", value)}</span>`);
-					writeScope($scope4_id, {}, "__tests__/template.marko", "7:5");
+					_scope($scope4_id, {}, "__tests__/template.marko", "7:5");
 					return 0;
 				}
 			}, $scope3_id, "#text/2", 1, 1, 1, 0, 1);
 			_script($scope3_id, "__tests__/template.marko_3");
-			writeScope($scope3_id, { value }, "__tests__/template.marko", "4:3", { value: "5:9" });
+			_scope($scope3_id, { value }, "__tests__/template.marko", "4:3", { value: "5:9" });
 			_resume_branch($scope3_id);
 		});
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {

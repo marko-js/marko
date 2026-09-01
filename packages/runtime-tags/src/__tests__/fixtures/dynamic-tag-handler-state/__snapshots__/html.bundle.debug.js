@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("aliased");
 	}, $scope0_id));
 	_html(`<div>${_text_resume($scope0_id, "#text/3", n)}</div>`);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_tag: input.tag,
 		n,
 		attrs: _serialize_if($scope0_reason, 0) && attrs

@@ -8,11 +8,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_await($scope0_id, "#text/1", resolveAfter(n, 0), (v) => {
 		const $scope1_id = _scope_id();
 		_html(`<div id=out>done ${_text_resume($scope1_id, "#text/0", n, 2)}</div>`);
-		_subscribe($n__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
 		_resume_branch($scope1_id);
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		n,
 		"ClosureScopes:n": $n__closures
 	}, "__tests__/template.marko", 0, { n: "2:6" });

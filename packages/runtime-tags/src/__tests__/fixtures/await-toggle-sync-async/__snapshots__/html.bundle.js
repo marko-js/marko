@@ -6,10 +6,10 @@ var template_default = _template("a", (input) => {
 	_await($scope0_id, "a", "SYNC", (value) => {
 		const $scope1_id = _scope_id();
 		_html(`Got: ${_text_resume($scope1_id, "a", value, 2)}`);
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	});
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: showAsync });
+	_scope($scope0_id, { c: showAsync });
 	_resume_branch($scope0_id);
 }, 1);

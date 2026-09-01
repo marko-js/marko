@@ -6,7 +6,7 @@ var greeting_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>${_text_resume($scope0_id, "a", input.message, _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/panel.marko
@@ -21,7 +21,7 @@ var panel_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });
 	_script($scope0_id, "c0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: format,
 		d: message,
 		b: _existing_scope($childScope)
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	greeting_default({ message });
 	panel_default({});
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: format,
 		e: message,
 		b: _existing_scope($childScope)

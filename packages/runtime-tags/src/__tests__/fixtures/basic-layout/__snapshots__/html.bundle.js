@@ -6,7 +6,7 @@ var layout_default = _template("b", (input) => {
 	_html("<body>");
 	_dynamic_tag($scope0_id, "a", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_trailers("</body>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 }, 1);
 
 // template.marko
@@ -19,8 +19,8 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<h1>Hello ${_text_resume($scope1_id, "a", name, _serialize_guard($scope0_reason, 0) * 2)}</h1>`);
-		$si__input_name && _subscribe($name__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$si__input_name && _subscribe($name__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
-	$si__input_name && writeScope($scope0_id, { e: $name__closures });
+	$si__input_name && _scope($scope0_id, { e: $name__closures });
 }, 1);

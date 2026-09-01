@@ -3,7 +3,7 @@ var show_result_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div class=result>${_text_resume($scope0_id, "a", input.get(), _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		return count;
 	} });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: count,
 		b: _existing_scope($childScope)
 	});

@@ -10,9 +10,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", input.a, (v) => {
 			const $scope4_id = _scope_id();
 			_html(`<p>A:${_text_resume($scope4_id, "#text/0", (console.log("body-ran:a", v), v), $sg__input_a * 2)}</p>`);
-			$si__input_a && writeScope($scope4_id, {}, "__tests__/template.marko", "2:4");
+			$si__input_a && _scope($scope4_id, {}, "__tests__/template.marko", "2:4");
 		}, $sg__input_a);
-		$si__input_a && _subscribe($input_a__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
+		$si__input_a && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
 		_scope_reason();
@@ -25,16 +25,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope2_id, "#text/0", input.b, (v) => {
 			const $scope6_id = _scope_id();
 			_html(`<p>B:${_text_resume($scope6_id, "#text/0", (console.log("body-ran:b", v), v), $sg__input_b * 2)}</p>`);
-			$si__input_b && writeScope($scope6_id, {}, "__tests__/template.marko", "8:4");
+			$si__input_b && _scope($scope6_id, {}, "__tests__/template.marko", "8:4");
 		}, $sg__input_b);
-		$si__input_b && _subscribe($input_b__closures, writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"));
+		$si__input_b && _subscribe($input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"));
 		_resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html("caught-b");
 	}, $scope0_id) }) });
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		"ClosureScopes:input_a": $si__input_a && $input_a__closures,
 		"ClosureScopes:input_b": $si__input_b && $input_b__closures
 	}, "__tests__/template.marko", 0);

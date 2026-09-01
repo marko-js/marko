@@ -23,20 +23,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (item.on) {
 				const $scope2_id = _scope_id();
 				_html(`<span>A${_text_resume($scope2_id, "#text/0", item.id, 2)}</span>`);
-				writeScope($scope2_id, {}, "__tests__/template.marko", "6:6");
+				_scope($scope2_id, {}, "__tests__/template.marko", "6:6");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
 				_html(`<b>B${_text_resume($scope3_id, "#text/0", item.id, 2)}</b>`);
-				writeScope($scope3_id, {}, "__tests__/template.marko", "9:6");
+				_scope($scope3_id, {}, "__tests__/template.marko", "9:6");
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, { item_id: item?.id }, "__tests__/template.marko", "5:4", { item_id: ["item.id", "5:8"] });
+		_scope($scope1_id, { item_id: item?.id }, "__tests__/template.marko", "5:4", { item_id: ["item.id", "5:8"] });
 	}, "id", $scope0_id, "#div/0", 1, 1, 1, "</div>");
 	_html(`<button>rot</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0_list_2#3_list_0#4_list_1#5");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		list_2: list?.[2],
 		list_0: list?.[0],
 		list_1: list?.[1]

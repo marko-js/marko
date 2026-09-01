@@ -7,11 +7,11 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 		if (n) {
 			const $scope1_id = _scope_id();
 			_html(`<div>n is ${_text_resume($scope1_id, "#text/0", n, $sg__input_n * 2)}</div>`);
-			$si__input_n && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/leaf.marko", "2:2");
+			$si__input_n && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/leaf.marko", "2:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_n, $sg__input_n, $sg__input_n, 0, 1);
-	$si__input_n && writeScope($scope0_id, { n }, "__tests__/tags/leaf.marko", 0, { n: "1:10" });
+	$si__input_n && _scope($scope0_id, { n }, "__tests__/tags/leaf.marko", 0, { n: "1:10" });
 });
 
 // template.marko
@@ -27,12 +27,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			leaf_default({ n });
-			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "5:2");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "5:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		outer,
 		n
 	}, "__tests__/template.marko", 0, {

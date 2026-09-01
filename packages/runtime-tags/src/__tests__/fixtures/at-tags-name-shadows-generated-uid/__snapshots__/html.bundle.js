@@ -5,9 +5,9 @@ var child_default = _template("b", (input) => {
 	_for_of(input.scope, (s) => {
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "a", s.a, $sg__input_scope));
-		$si__input_scope && writeScope($scope1_id, {});
+		$si__input_scope && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_scope, $sg__input_scope, $sg__input_scope, 0, 1);
-	$si__input_scope && writeScope($scope0_id, {});
+	$si__input_scope && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({ scope: $scope });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: cond,
 		b: _existing_scope($childScope)
 	});

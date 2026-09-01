@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.a + input.b) {
 			const $scope1_id = _scope_id();
 			_html("Hello");
-			$si__input_a__OR__input_b && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
+			$si__input_a__OR__input_b && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b);
@@ -14,12 +14,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.a, input.b) {
 			const $scope2_id = _scope_id();
 			_html("World");
-			$si__input_a__OR__input_b && writeScope($scope2_id, {}, "__tests__/template.marko", "5:2");
+			$si__input_a__OR__input_b && _scope($scope2_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b);
 	_html(`<div>${_text_resume($scope0_id, "#text/2", input.x ? "A" : input.y ? "B" : "C", _serialize_guard($scope0_reason, 1))}</div>`);
-	_serialize_if($scope0_reason, 2) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 2) && _scope($scope0_id, {
 		input_a: _serialize_if($scope0_reason, 4) && input.a,
 		input_b: _serialize_if($scope0_reason, 3) && input.b,
 		input_x: _serialize_if($scope0_reason, 6) && input.x,

@@ -10,7 +10,7 @@ var greeting_default = _template("__tests__/tags/util/greeting.marko", (input) =
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<p>Hello, ${_text_resume($scope0_id, "#text/0", input.name, _serialize_guard($scope0_reason, 0) * 2)}!</p>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/util/greeting.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/util/greeting.marko", 0);
 });
 
 // template.marko

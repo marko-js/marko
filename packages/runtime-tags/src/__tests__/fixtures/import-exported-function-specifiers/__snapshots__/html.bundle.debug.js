@@ -6,7 +6,7 @@ var handlers_default = _template("__tests__/tags/handlers.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>${_text_resume($scope0_id, "#text/0", input.message, _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/handlers.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/handlers.marko", 0);
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>${_escape(label)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/2", handlers_default, { message });
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		loud,
 		quiet,
 		message

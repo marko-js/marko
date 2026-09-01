@@ -10,7 +10,7 @@ var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 		$countChange(num($next));
 	}, "__tests__/tags/my-input.marko_0/valueChange", $scope0_id))} type=number>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/my-input.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		$countChange,
 		count: _serialize_if($scope0_reason, 0) && count
 	}, "__tests__/tags/my-input.marko", 0, {
@@ -33,6 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/countChange", $scope0_id)
 	});
 	_html(`<span>${_text_resume($scope0_id, "#text/1", value)} ${_text_resume($scope0_id, "#text/2", typeof value, 2)}</span>`);
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

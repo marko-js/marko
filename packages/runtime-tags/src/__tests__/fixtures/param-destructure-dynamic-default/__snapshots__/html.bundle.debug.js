@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const { bar: $bar } = void 0 !== $foo ? $foo : { bar: count + 2 };
 		const bar = void 0 !== $bar ? $bar : count + 1;
 		_html(`<div${_attr("id", id)} class=a>${_text_resume($scope1_id, "#text/1", bar)} ${_text_resume($scope1_id, "#text/2", typeof foo, _serialize_guard($scope1_reason, 1) * 2)}</div>${_el_resume($scope1_id, "#div/0", _serialize_guard($scope1_reason, 0))}`);
-		_subscribe($count__closures, writeScope($scope1_id, {
+		_subscribe($count__closures, _scope($scope1_id, {
 			foo,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:1", { foo: "2:21" }));
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const { bar: $bar2 } = void 0 !== $foo2 ? $foo2 : { bar: count + 2 };
 		const bar = void 0 !== $bar2 ? $bar2 : count + 1;
 		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "#text/1", bar)} ${_text_resume($scope2_id, "#text/2", typeof foo, _serialize_guard($scope2_reason, 1) * 2)}</div>${_el_resume($scope2_id, "#div/0", _serialize_guard($scope2_reason, 0))}`);
-		_subscribe($count__closures, writeScope($scope2_id, {
+		_subscribe($count__closures, _scope($scope2_id, {
 			foo,
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:count": 1
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	ChildB.content({ id: "f" });
 	_html(`<button>Increment default</button>${_el_resume($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count": $count__closures
 	}, "__tests__/template.marko", 0, { count: "1:5" });

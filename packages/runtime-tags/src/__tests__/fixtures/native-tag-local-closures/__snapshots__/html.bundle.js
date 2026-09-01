@@ -12,9 +12,9 @@ var template_default = _template("a", (input) => {
 			_attrs_content(item, "a", $scope2_id, "div");
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
-			writeScope($scope2_id, {});
+			_scope($scope2_id, {});
 		}, 0, $scope1_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
-		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
+		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason(1);
 	let $item;
@@ -23,14 +23,14 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(_text_resume($scope3_id, "a", i));
-			writeScope($scope3_id, {});
+			_scope($scope3_id, {});
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
 	_html(`<button>Add</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: size,
 		a: _existing_scope($childScope)
 	});

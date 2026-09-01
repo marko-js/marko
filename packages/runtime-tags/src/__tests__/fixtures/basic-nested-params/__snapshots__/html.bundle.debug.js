@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html("<div>");
 	_dynamic_tag($scope0_id, "#text/0", content, [value], 0, 1, _serialize_guard($scope0_reason, 0));
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		content: _serialize_if($scope0_reason, 2) && content,
 		value: _serialize_if($scope0_reason, 1) && value
 	}, "__tests__/tags/child.marko", 0, {
@@ -36,11 +36,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
 					_html(`<div>${_text_resume($scope2_id, "#text/0", outer, _serialize_guard($scope1_reason, 0))}.${_text_resume($scope2_id, "#text/1", inner, _serialize_guard($scope2_reason, 0) * 2)}</div>`);
-					(_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"));
+					(_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _subscribe($si__outer && $child_content__outer__closures, _scope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"));
 					_resume_branch($scope2_id);
 				}, $scope1_id)
 			});
-			writeScope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				"ClosureScopes:outer": $si__outer && $child_content__outer__closures
 			}, "__tests__/template.marko", "6:2");
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id)
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		x,
 		y,
 		"#childScope/1": _existing_scope($childScope)

@@ -5,7 +5,7 @@ var display_intersection_default = _template("b", (input) => {
 	const { value } = input;
 	let dummy = {};
 	_html(`<div>${_text_resume($scope0_id, "a", value, _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { e: dummy });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { e: dummy });
 	_resume_branch($scope0_id);
 });
 
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	display_intersection_default({ value: count });
 	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: count,
 		a: _existing_scope($childScope)
 	});

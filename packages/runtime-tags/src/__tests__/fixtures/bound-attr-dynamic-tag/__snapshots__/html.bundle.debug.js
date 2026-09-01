@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		valueChange: state?.bChange
 	});
 	_html(`<div>${_text_resume($scope0_id, "#text/2", a)}|${_text_resume($scope0_id, "#text/3", b, 2)}</div>`);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		a,
 		b,
 		state_aChange: state.aChange,
