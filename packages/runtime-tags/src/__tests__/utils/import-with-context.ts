@@ -44,6 +44,11 @@ export async function importEvictable<T>(entry: string): Promise<T> {
     if (/^[./]/.test(id)) {
       return load(new URL(id, (parent as vm.Module).identifier).href);
     }
+    // Server bundles only; anything but a node builtin means a browser-side
+    // module is about to run in the wrong realm.
+    if (!id.startsWith("node:")) {
+      throw new Error(`Unexpected host import ${JSON.stringify(id)}`);
+    }
     const target = await import(id);
     const keys = Object.keys(target);
     return new vm.SyntheticModule(
