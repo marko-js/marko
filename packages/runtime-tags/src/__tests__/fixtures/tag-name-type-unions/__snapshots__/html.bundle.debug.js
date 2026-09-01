@@ -3,7 +3,7 @@ var a_default = _template("__tests__/tags/a/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>A ${_text_resume($scope0_id, "#text/0", input.label, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/a/index.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/a/index.marko", 0);
 });
 
 // tags/b/index.marko
@@ -11,7 +11,7 @@ var b_default = _template("__tests__/tags/b/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>B ${_text_resume($scope0_id, "#text/0", input.label, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/b/index.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/b/index.marko", 0);
 });
 
 // template.marko
@@ -44,6 +44,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id));
 	_dynamic_tag($scope0_id, "#text/6", x ? localTag : a_default, { label: "la" });
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "4:6" });
+	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "4:6" });
 	_resume_branch($scope0_id);
 }, 1);

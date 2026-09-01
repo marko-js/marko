@@ -5,9 +5,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.children, (child) => {
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "#text/0", child.text, $sg__input_children));
-		$si__input_children && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
+		$si__input_children && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, function(c) {
 		return c.id;
 	}, $scope0_id, "#text/0", $sg__input_children, $sg__input_children, $sg__input_children, 0, 1);
-	$si__input_children && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+	$si__input_children && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

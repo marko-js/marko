@@ -6,7 +6,7 @@ var my_dialog_default = _template("__tests__/tags/my-dialog.marko", (input) => {
 	_attrs_content(input, "#dialog/0", $scope0_id, "dialog");
 	_html(`</dialog>${_el_resume($scope0_id, "#dialog/0")}`);
 	_script($scope0_id, "__tests__/tags/my-dialog.marko_0_input#2");
-	writeScope($scope0_id, {}, "__tests__/tags/my-dialog.marko", 0, {
+	_scope($scope0_id, {}, "__tests__/tags/my-dialog.marko", 0, {
 		"ControlledHandler:#dialog/0": ["...input", "1:12"],
 		"EventAttributes:#dialog/0": ["...input", "1:12"]
 	});
@@ -25,6 +25,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/openChange", $scope0_id)
 	});
 	_html(`<span>${_text_resume($scope0_id, "#text/1", String(open))}</span>`);
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

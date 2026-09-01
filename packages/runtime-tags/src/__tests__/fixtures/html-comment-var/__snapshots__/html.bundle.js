@@ -4,7 +4,7 @@ var parent_el_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<!--Body Text-->${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 });
 
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	let spanName = parent_el_default({});
 	_var($scope0_id, "e", $childScope2, "a1");
 	_html(`${_text_resume($scope0_id, "f", spanName)}</span>`);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		a: _existing_scope($childScope),
 		d: _existing_scope($childScope2)
 	});

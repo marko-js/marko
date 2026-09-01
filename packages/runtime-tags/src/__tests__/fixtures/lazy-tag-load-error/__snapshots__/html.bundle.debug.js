@@ -3,7 +3,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span id=child>${_text_resume($scope0_id, "#text/0", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/child.marko", 0);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
 // template.marko
@@ -21,11 +21,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (show) {
 				const $scope4_id = _scope_id();
 				$Child_withLoadAssets({ value: 1 });
-				writeScope($scope4_id, {}, "__tests__/template.marko", "6:4");
+				_scope($scope4_id, {}, "__tests__/template.marko", "6:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0");
-		_subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"));
+		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
@@ -37,10 +37,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<div id=error>${_text_resume($scope3_id, "#text/0", err.message, _serialize_guard($scope3_reason, 0))}</div>`);
-			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {}, "__tests__/template.marko", "12:4");
+			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "12:4");
 		}, $scope0_id) })
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { "ClosureScopes:show": $show__closures }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "ClosureScopes:show": $show__closures }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

@@ -9,11 +9,11 @@ var provider_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<div>value ${_text_resume($scope1_id, "a", count, 2)}</div>`);
-		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_script($scope0_id, "b1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: count,
 		g: $count__closures
 	});
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "e")}`);
 	_dynamic_tag($scope0_id, "f", a, {});
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: a,
 		h: b,
 		i: sel

@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { name } = input;
 	_html(`<div>${_text_resume($scope0_id, "a", name, _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -20,11 +20,11 @@ var template_default = _template("a", (input) => {
 			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			child_default({ name: `${outer}.${inner}` });
-			writeScope($scope2_id, { a: _existing_scope($childScope) });
+			_scope($scope2_id, { a: _existing_scope($childScope) });
 		}, 0, $scope1_id, "a", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, { c: outer });
+		_scope($scope1_id, { c: outer });
 	}, 0, $scope0_id, "b");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: items });
+	_scope($scope0_id, { c: items });
 	_resume_branch($scope0_id);
 }, 1);

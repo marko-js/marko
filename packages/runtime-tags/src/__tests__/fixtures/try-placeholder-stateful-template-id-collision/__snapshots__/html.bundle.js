@@ -3,7 +3,7 @@ var n2_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div class=n2>${_text_resume($scope0_id, "a", input.label, _serialize_guard($scope0_reason, 0))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/n5.marko
@@ -13,7 +13,7 @@ var n5_default = _template("f", (input) => {
 	let n = 0;
 	_html(`<button class=n5>${_text_resume($scope0_id, "b", input.label, _serialize_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "f0");
-	writeScope($scope0_id, { g: n });
+	_scope($scope0_id, { g: n });
 	_resume_branch($scope0_id);
 });
 
@@ -24,7 +24,7 @@ var n1_default = _template("b", (input) => {
 	let n = 0;
 	_html(`<button class=n1>${_text_resume($scope0_id, "b", input.label, _serialize_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { g: n });
+	_scope($scope0_id, { g: n });
 	_resume_branch($scope0_id);
 });
 
@@ -45,28 +45,28 @@ var template_default = _template("a", (input) => {
 			_script($scope3_id, "a0");
 			_script($scope3_id, "a1");
 			_dynamic_tag($scope3_id, "a", tag, { label: `${body} ${clicks}` });
-			writeScope($scope3_id, {
+			_scope($scope3_id, {
 				c: body,
 				_: _scope_with_id($scope2_id),
 				Cg: 1
 			});
 			_resume_branch($scope3_id);
 		});
-		writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_set_serialize_reason(1);
 		const $childScope = _peek_scope_id();
 		n1_default({ label: `placeholder ${clicks}` });
-		_subscribe($clicks__closures, writeScope($scope1_id, {
+		_subscribe($clicks__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}));
 		_resume_branch($scope1_id);
 	}, $scope0_id) }) });
 	_script($scope0_id, "a4");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: clicks,
 		f: tag,
 		g: $clicks__closures,

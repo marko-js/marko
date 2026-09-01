@@ -13,10 +13,10 @@ var template_default = _template("a", (input) => {
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "a", item.a + item.b)}</li>`);
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button>rev</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: list });
+	_scope($scope0_id, { c: list });
 	_resume_branch($scope0_id);
 }, 1);

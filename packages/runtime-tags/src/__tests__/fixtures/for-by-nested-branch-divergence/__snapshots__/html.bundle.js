@@ -23,20 +23,20 @@ var template_default = _template("a", (input) => {
 			if (item.on) {
 				const $scope2_id = _scope_id();
 				_html(`<span>A${_text_resume($scope2_id, "a", item.id, 2)}</span>`);
-				writeScope($scope2_id, {});
+				_scope($scope2_id, {});
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
 				_html(`<b>B${_text_resume($scope3_id, "a", item.id, 2)}</b>`);
-				writeScope($scope3_id, {});
+				_scope($scope3_id, {});
 				return 1;
 			}
 		}, $scope1_id, "a", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, { e: item?.id });
+		_scope($scope1_id, { e: item?.id });
 	}, "id", $scope0_id, "a", 1, 1, 1, "</div>");
 	_html(`<button>rot</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: list?.[2],
 		e: list?.[0],
 		f: list?.[1]

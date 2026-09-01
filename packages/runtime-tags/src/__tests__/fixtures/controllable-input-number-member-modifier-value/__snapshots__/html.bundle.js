@@ -6,7 +6,7 @@ var custom_input_default = _template("b", (input) => {
 		input.valueChange(parseInt($next));
 	}, "b0", $scope0_id))} type=number>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: _serialize_if($scope0_reason, 0) && input.value,
 		e: input.valueChange
 	});
@@ -25,6 +25,6 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id)
 	});
 	_html(`<span>${_text_resume($scope0_id, "b", value)} ${_text_resume($scope0_id, "c", typeof value, 2)}</span>`);
-	writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);
 }, 1);

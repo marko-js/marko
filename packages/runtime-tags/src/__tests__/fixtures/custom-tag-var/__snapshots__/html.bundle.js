@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 	_html(`<button class=inc>${_text_resume($scope0_id, "b", x)}</button>${_el_resume($scope0_id, "a")}`);
 	const $return = x;
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { c: x });
+	_scope($scope0_id, { c: x });
 	_resume_branch($scope0_id);
 	return $return;
 });
@@ -19,5 +19,5 @@ var template_default = _template("a", (input) => {
 	let data = child_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<div>${_text_resume($scope0_id, "c", data)}</div>`);
-	writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

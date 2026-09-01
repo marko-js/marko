@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				});
 				const $childScope = _peek_scope_id();
 				Foo.content({ message: input.bar });
-				$si__input_bar && writeScope($scope2_id, {
+				$si__input_bar && _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/template.marko", "2:3");
@@ -22,11 +22,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			} else {
 				const $scope3_id = _scope_id();
 				_html(_text_resume($scope3_id, "#text/0", JSON.stringify(input.message), _serialize_guard($scope1_reason, 2)));
-				_serialize_if($scope1_reason, 0) && writeScope($scope3_id, { _: _serialize_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:3");
+				_serialize_if($scope1_reason, 0) && _scope($scope3_id, { _: _serialize_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:3");
 				return 1;
 			}
 		}, $scope1_id, "#text/0", _serialize_guard($scope1_reason, 0) || $sg__input_bar, $sg__input_bar, $sg__input_bar);
-		$si__input_bar && writeScope($scope1_id, {
+		$si__input_bar && _scope($scope1_id, {
 			input_bar: input.bar,
 			input_message: input.message
 		}, "__tests__/template.marko", "1:1", {

@@ -15,5 +15,5 @@ var template_default = _template("a", (input) => {
 		size: 3
 	};
 	_html(`<div>${_text_resume($scope0_id, "a", nullish.label, $sg__input_opts)}/${_text_resume($scope0_id, "b", nullish.size, $sg__input_opts * 2)} ${_text_resume($scope0_id, "c", falsy.label, $sg__input_opts * 2)}/${_text_resume($scope0_id, "d", falsy.size, $sg__input_opts * 2)} ${_text_resume($scope0_id, "e", guarded?.label, $sg__input_opts * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 }, 1);

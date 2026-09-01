@@ -26,10 +26,10 @@ var template_default = _template("a", (input) => {
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "a", item)}</li>`);
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "d", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		g: clear,
 		a: _existing_scope($childScope)
 	});

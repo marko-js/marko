@@ -12,13 +12,13 @@ var template_default = _template("a", (input) => {
 	_for_of(list, (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "a", x)}</li>`);
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, function(x) {
 		return x;
 	}, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button id=toggle>Toggle</button>${_el_resume($scope0_id, "b")}<button id=reverse>Reverse</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: open,
 		e: list
 	});

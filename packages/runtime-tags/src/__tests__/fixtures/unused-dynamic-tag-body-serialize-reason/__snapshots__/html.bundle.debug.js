@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			onClick,
 			content
 		}, 0, 0, _serialize_guard($scope1_reason, 3));
-		_serialize_if($scope1_reason, 3) && writeScope($scope1_id, {
+		_serialize_if($scope1_reason, 3) && _scope($scope1_id, {
 			as: _serialize_if($scope1_reason, 2) && as,
 			onClick: _serialize_if($scope1_reason, 1) && onClick,
 			content: _serialize_if($scope1_reason, 0) && content
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(_text_resume($scope2_id, "#text/0", input.before + input.after, _serialize_guard($scope2_reason, 0)));
-		_serialize_if($scope2_reason, 0) && writeScope($scope2_id, {
+		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {
 			input_before: _serialize_if($scope2_reason, 2) && input.before,
 			input_after: _serialize_if($scope2_reason, 1) && input.after
 		}, "__tests__/template.marko", "4:1", {
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			});
 		}, $scope0_id)
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		x,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { x: "7:5" });

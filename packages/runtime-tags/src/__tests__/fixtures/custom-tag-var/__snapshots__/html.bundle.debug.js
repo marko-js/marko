@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", x)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $return = x;
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	writeScope($scope0_id, { x }, "__tests__/tags/child.marko", 0, { x: "1:6" });
+	_scope($scope0_id, { x }, "__tests__/tags/child.marko", 0, { x: "1:6" });
 	_resume_branch($scope0_id);
 	return $return;
 });
@@ -19,5 +19,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let data = child_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_data#3/var");
 	_html(`<div>${_text_resume($scope0_id, "#text/2", data)}</div>`);
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let r = _dynamic_tag($scope0_id, "#text/0", input.content, {});
 	_var($scope0_id, "#scopeOffset/1", $inputcontent_scope, "__tests__/tags/child.marko_0_r#5/var");
 	const $return = r;
-	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 	return $return;
 });
 
@@ -21,13 +21,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span>${_text_resume($scope1_id, "#text/0", x)}</span>`);
 		const $return = 1;
-		_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
+		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
 		_resume_branch($scope1_id);
 		return $return;
 	}, $scope0_id) });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#3/var");
 	_html(`<div>${_text_resume($scope0_id, "#text/2", x)}</div>`);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		"ClosureScopes:x": $x__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);

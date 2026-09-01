@@ -8,11 +8,11 @@ var template_default = _template("a", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "a", item));
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button id=add>Add</button>${_el_resume($scope0_id, "b")}<button id=remove>Remove</button>${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: id,
 		e: items
 	});

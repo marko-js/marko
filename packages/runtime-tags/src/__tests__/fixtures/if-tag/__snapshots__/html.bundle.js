@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		if (input.a + input.b) {
 			const $scope1_id = _scope_id();
 			_html("Hello");
-			$si__input_a__OR__input_b && writeScope($scope1_id, {});
+			$si__input_a__OR__input_b && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b);
@@ -14,12 +14,12 @@ var template_default = _template("a", (input) => {
 		if (input.a, input.b) {
 			const $scope2_id = _scope_id();
 			_html("World");
-			$si__input_a__OR__input_b && writeScope($scope2_id, {});
+			$si__input_a__OR__input_b && _scope($scope2_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b);
 	_html(`<div>${_text_resume($scope0_id, "c", input.x ? "A" : input.y ? "B" : "C", _serialize_guard($scope0_reason, 1))}</div>`);
-	_serialize_if($scope0_reason, 2) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 2) && _scope($scope0_id, {
 		f: _serialize_if($scope0_reason, 4) && input.a,
 		g: _serialize_if($scope0_reason, 3) && input.b,
 		i: _serialize_if($scope0_reason, 6) && input.x,

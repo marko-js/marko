@@ -5,7 +5,7 @@ var custom_tag_default = _template("b", (input) => {
 	_html("<div>");
 	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope1_id, "c", c, 2)}`);
-		_subscribe($c__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($c__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_html("<div>");
@@ -30,15 +30,15 @@ var template_default = _template("a", (input) => {
 		if (Math.random()) {
 			const $scope3_id = _scope_id();
 			_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope3_id, "c", c, 2)}`);
-			_subscribe($c__closures, writeScope($scope3_id, {
+			_subscribe($c__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope2_id),
 				Cg: 1
 			}));
 		}
-		writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}
 	_html("</div>");
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { g: $c__closures });
+	_scope($scope0_id, { g: $c__closures });
 	_resume_branch($scope0_id);
 }, 1);

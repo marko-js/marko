@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { initial, onValue } = input;
 	_html(`<span>${_text_resume($scope0_id, "a", initial, _serialize_guard($scope0_reason, 0))}</span>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		d: _serialize_if($scope0_reason, 2) && initial,
 		e: _serialize_if($scope0_reason, 1) && onValue
 	});
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	});
 	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: initial,
 		a: _existing_scope($childScope)
 	});

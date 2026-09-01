@@ -11,9 +11,9 @@ var template_default = _template("a", (input) => {
 		_await($scope1_id, "a", resolveAfter(clickCount), (value) => {
 			const $scope3_id = _scope_id();
 			_html(_text_resume($scope3_id, "a", value));
-			writeScope($scope3_id, {});
+			_scope($scope3_id, {});
 		});
-		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		_html("LOADING...");
 	}, $scope0_id) }) });
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: clickCount,
 		d: $clickCount__closures
 	});

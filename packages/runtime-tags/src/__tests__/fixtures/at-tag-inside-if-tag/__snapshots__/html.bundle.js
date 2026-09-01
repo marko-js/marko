@@ -5,7 +5,7 @@ var custom_tag_default = _template("b", (input) => {
 	const { thing: { x, content } } = input;
 	_dynamic_tag($scope0_id, "a", content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
 	_html(`<div>${_text_resume($scope0_id, "b", x, _serialize_guard($scope0_reason, 1))}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -37,5 +37,5 @@ var template_default = _template("a", (input) => {
 	});
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ thing: $thing });
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { a: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

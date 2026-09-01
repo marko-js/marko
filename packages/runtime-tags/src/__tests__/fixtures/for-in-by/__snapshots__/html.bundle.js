@@ -10,10 +10,10 @@ var template_default = _template("a", (input) => {
 	_for_in(entries, (key, value) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_resume($scope1_id, "a", key)}:${_text_resume($scope1_id, "b", value, 2)}</p>`);
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, (key) => key, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button>Change</button>${_el_resume($scope0_id, "b")}</div>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {});
+	_scope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

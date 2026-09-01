@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_rest#4");
 	_script($scope0_id, "__tests__/tags/child.marko_0_$valueChange#3");
-	writeScope($scope0_id, { $valueChange }, "__tests__/tags/child.marko", 0, {
+	_scope($scope0_id, { $valueChange }, "__tests__/tags/child.marko", 0, {
 		$valueChange: "3:11",
 		"EventAttributes:#div/0": ["...rest", "5:8"]
 	});
@@ -28,11 +28,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "#text/0", value));
-			_subscribe($value__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:1"));
+			_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:1"));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		value,
 		"ClosureScopes:value": $value__closures
 	}, "__tests__/template.marko", 0, { value: "1:5" });

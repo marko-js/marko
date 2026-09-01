@@ -6,7 +6,7 @@ var _2counters_default = _template("__tests__/tags/2counters.marko", (input) => 
 	let count2 = input.count2;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", count1)}</button>${_el_resume($scope0_id, "#button/0")}<button>${_text_resume($scope0_id, "#text/3", count2)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/2counters.marko_0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		input_count1: _serialize_if($scope0_reason, 1) && input.count1,
 		input_count1Change: _serialize_if($scope0_reason, 0) && input.count1Change,
 		input_count2: _serialize_if($scope0_reason, 3) && input.count2,
@@ -47,6 +47,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/count2Change", $scope0_id)
 	});
 	_html(`<div>${_text_resume($scope0_id, "#text/1", count1)} ${_text_resume($scope0_id, "#text/2", count2, 2)}</div>`);
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

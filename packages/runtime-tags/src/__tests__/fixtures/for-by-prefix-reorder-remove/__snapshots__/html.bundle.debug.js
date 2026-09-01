@@ -13,13 +13,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", row.id)}</li>`);
-		writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
+		_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=reorder>stable prefix, drop tail, swap</button>${_el_resume($scope0_id, "#button/1")}<button class=front>reorder from front and shrink</button>${_el_resume($scope0_id, "#button/2")}<button class=append>append</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_rows_0#5_rows_1#6");
 	_script($scope0_id, "__tests__/template.marko_0_rows_0#5_rows_1#6_rows_3#7_rows_2#8");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		rows,
 		rows_0: rows?.[0],
 		rows_1: rows?.[1],

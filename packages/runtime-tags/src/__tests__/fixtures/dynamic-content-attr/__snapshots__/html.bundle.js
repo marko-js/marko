@@ -9,14 +9,14 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`${_text_resume($scope1_id, "a", count)} ${_escape(sideEffect++)}`);
-		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html("<button>");
 	_attr_content("a", $scope0_id, MyThing);
 	_html(`</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: count,
 		c: MyThing,
 		e: $count__closures

@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 	_html(`<button class=inc>${_text_resume($scope0_id, "b", x)}</button>${_el_resume($scope0_id, "a")}`);
 	const $return = x + input.extra;
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.extra,
 		f: x
 	});
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	let data = child_default({ extra: 1 });
 	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<div>${_text_resume($scope0_id, "c", `${name} ${data}`)}</div>`);
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: name,
 		a: _existing_scope($childScope)
 	});

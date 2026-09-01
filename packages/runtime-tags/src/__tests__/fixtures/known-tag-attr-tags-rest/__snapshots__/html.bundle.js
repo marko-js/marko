@@ -5,10 +5,10 @@ var inner_default = _template("c", (input) => {
 	_for_of(input.stuff.row, (row) => {
 		const $scope1_id = _scope_id();
 		_html(`<div>row ${_text_resume($scope1_id, "a", row.x, $sg__input_stuff_row * 2)}</div>`);
-		_serialize_if($scope0_reason, 1) && writeScope($scope1_id, {});
+		_serialize_if($scope0_reason, 1) && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_stuff_row, $sg__input_stuff_row, $sg__input_stuff_row, 0, 1);
 	_html(`<div>other ${_text_resume($scope0_id, "b", input.stuff.other.y, _serialize_guard($scope0_reason, 2) * 2)}</div><div>cond ${_text_resume($scope0_id, "c", input.stuff.cond.a, _serialize_guard($scope0_reason, 3) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child/index.marko
@@ -25,7 +25,7 @@ var child_default = _template("b", (input) => {
 	});
 	const $childScope = _peek_scope_id();
 	inner_default({ stuff: rest });
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { b: _serialize_if($scope0_reason, 2) && _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _serialize_if($scope0_reason, 2) && _existing_scope($childScope) });
 });
 
 // template.marko
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 		other: attrTag({ y: 1 })
 	});
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: cond,
 		b: _existing_scope($childScope)
 	});

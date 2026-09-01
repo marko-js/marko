@@ -7,9 +7,9 @@ var template_default = _template("a", (input) => {
 		_for_of(items, (item) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "a", item, {}, 0, 0, $sg__items);
-			$si__items && writeScope($scope3_id, {});
+			$si__items && _scope($scope3_id, {});
 		}, 0, $scope1_id, "a", $sg__items, $sg__items, $sg__items);
-		$si__items && writeScope($scope1_id, {});
+		$si__items && _scope($scope1_id, {});
 	}, _scope_id()) };
 	forOf([[{ text: "hello" }, { text: "world" }]], (texts) => {
 		const $scope2_id = _scope_id();
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html(_text_resume($scope4_id, "a", item.text));
-				writeScope($scope4_id, {});
+				_scope($scope4_id, {});
 			}, $scope2_id) });
 		});
 		Child.content({ item: $item });

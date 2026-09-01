@@ -3,7 +3,7 @@ var custom_tag_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>tag ${_text_resume($scope0_id, "a", input[0], _serialize_guard($scope0_reason, 0) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -26,6 +26,6 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id), 1);
 	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { c: x });
+	_scope($scope0_id, { c: x });
 	_resume_branch($scope0_id);
 }, 1);

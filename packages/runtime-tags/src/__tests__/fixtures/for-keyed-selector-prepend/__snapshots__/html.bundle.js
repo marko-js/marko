@@ -15,10 +15,10 @@ var template_default = _template("a", (input) => {
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
 		_html(`<li${selected === row.id ? " class=danger" : ""}>${_text_resume($scope1_id, "b", row.label)}</li>${_el_resume($scope1_id, "a")}`);
-		writeScope($scope1_id, { e: row?.id });
+		_scope($scope1_id, { e: row?.id });
 	}, "id", $scope0_id, "b", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: rows,
 		d: selected,
 		e: nextId

@@ -3,7 +3,7 @@ var tags_label_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_resume($scope0_id, "a", input.text, _serialize_guard($scope0_reason, 0))}</span>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/tags-counter.marko
@@ -14,7 +14,7 @@ var tags_counter_default = _template("c", (input) => {
 	let n = 0;
 	_html(`<button id=counter>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
-	writeScope($scope0_id, { c: n });
+	_scope($scope0_id, { c: n });
 	_resume_branch($scope0_id);
 });
 

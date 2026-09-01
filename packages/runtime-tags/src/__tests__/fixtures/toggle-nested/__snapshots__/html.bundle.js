@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 				if (value1) {
 					const $scope2_id = _scope_id();
 					_html(`<span>${_text_resume($scope2_id, "a", value1, $sg__input_value)}</span>`);
-					$si__input_show__OR__input_value && _subscribe($si__input_value && $value__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					$si__input_show__OR__input_value && _subscribe($si__input_value && $value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", $sg__input_value, $sg__input_value, $sg__input_value1__OR__input_value, 0, 1);
@@ -21,15 +21,15 @@ var template_default = _template("a", (input) => {
 				if (value2) {
 					const $scope3_id = _scope_id();
 					_html(`<span>${_text_resume($scope3_id, "a", value2, $sg__input_value2)}</span>`);
-					$si__input_show__OR__input_value2 && _subscribe($si__input_value2 && $value2__closures, writeScope($scope3_id, { _: _scope_with_id($scope1_id) }));
+					$si__input_show__OR__input_value2 && _subscribe($si__input_value2 && $value2__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "b", $sg__input_value2, $sg__input_value2, $sg__input_value1__OR__input_value, 0, 1);
-			$si__input_show__OR__input_value1__OR__input_value && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			$si__input_show__OR__input_value1__OR__input_value && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", _serialize_guard($scope0_reason, 3), $sg__input_show, $sg__input_show, "</div>");
-	$si__input_show__OR__input_value1__OR__input_value && writeScope($scope0_id, {
+	$si__input_show__OR__input_value1__OR__input_value && _scope($scope0_id, {
 		e: $si__input_show__OR__input_value && value1,
 		f: $si__input_show__OR__input_value2 && value2,
 		g: $si__input_value && $value__closures,

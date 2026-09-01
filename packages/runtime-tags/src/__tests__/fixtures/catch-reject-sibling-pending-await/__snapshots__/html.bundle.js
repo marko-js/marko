@@ -26,20 +26,20 @@ var template_default = _template("a", (input) => {
 				const $scope5_reason = _scope_reason();
 				const $scope5_id = _scope_id();
 				_html(`caught: ${_text_resume($scope5_id, "a", err.message, _serialize_guard($scope5_reason, 0) * 2)}`);
-				_serialize_if($scope5_reason, 0) && writeScope($scope5_id, {});
+				_serialize_if($scope5_reason, 0) && _scope($scope5_id, {});
 			}, $scope2_id) }) });
 			_html(`<div>changes: ${_text_resume($scope2_id, "c", changes, 2)}</div>${_el_resume($scope2_id, "b")}`);
 			_script($scope2_id, "a3");
-			writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			_resume_branch($scope2_id);
 		});
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading outer...");
 	}, $scope0_id) }) });
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		b: changes,
 		c: $changes__closures
 	});

@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_await($scope0_id, "#text/0", input.sync, (a) => {
 		const $scope1_id = _scope_id();
 		_html(`Sync: ${_text_resume($scope1_id, "#text/0", a, $sg__input_sync * 2)}`);
-		_serialize_if($scope0_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
+		_serialize_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	}, $sg__input_sync);
 	_await($scope0_id, "#text/1", resolveAfter("async", 1), (b) => {
 		const $scope2_id = _scope_id();

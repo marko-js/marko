@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<div>Hello ${_text_resume($scope1_id, "a", name, _serialize_guard($scope1_reason, 1) * 2)} ${_text_resume($scope1_id, "b", count, _serialize_guard($scope1_reason, 2) * 2)}</div>`);
-		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
+		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason(10);
 	const $childScope = _peek_scope_id();
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		count
 	});
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: count,
 		c: _existing_scope($childScope)
 	});

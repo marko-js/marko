@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<div>${_text_resume($scope1_id, "a", x)}</div>`);
-		_subscribe($x__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	MyTag.content({});
@@ -16,13 +16,13 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope2_id = _scope_id();
 			MyTag.content({});
-			writeScope($scope2_id, {});
+			_scope($scope2_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_html(`<button>${_text_resume($scope0_id, "d", x)}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		e: x,
 		f: $x__closures
 	});

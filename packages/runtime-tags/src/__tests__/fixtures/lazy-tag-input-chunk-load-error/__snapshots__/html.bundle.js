@@ -3,7 +3,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span id=child>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -17,7 +17,7 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_if(() => {}, $scope1_id, "a");
-		_subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_resume("b0", () => {
@@ -29,10 +29,10 @@ var template_default = _template("b", (input) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<div id=error>${_text_resume($scope3_id, "a", err.message, _serialize_guard($scope3_reason, 0))}</div>`);
-			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {});
+			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) })
 	});
 	_script($scope0_id, "b3");
-	writeScope($scope0_id, { d: $show__closures });
+	_scope($scope0_id, { d: $show__closures });
 	_resume_branch($scope0_id);
 }, 1);

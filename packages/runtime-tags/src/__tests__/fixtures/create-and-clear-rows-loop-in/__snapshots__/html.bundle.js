@@ -6,13 +6,13 @@ var template_default = _template("a", (input) => {
 	_for_in(input.children, (key, text) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_escape(key)}: ${_text_resume($scope1_id, "b", text, $sg__input_children * 2)}</p>`);
-		$si__input_children && writeScope($scope1_id, {});
+		$si__input_children && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_children, $sg__input_children, $sg__input_children, 0, 1);
 	_for_in(input.children, (key) => {
 		const $scope2_id = _scope_id();
 		_html(`<p>${_escape(key)}</p>`);
-		$si__input_children && writeScope($scope2_id, {});
+		$si__input_children && _scope($scope2_id, {});
 	}, 0, $scope0_id, "b", $sg__input_children, $sg__input_children, $sg__input_children, 0, 1);
 	_html("</div>");
-	$si__input_children && writeScope($scope0_id, {});
+	$si__input_children && _scope($scope0_id, {});
 }, 1);

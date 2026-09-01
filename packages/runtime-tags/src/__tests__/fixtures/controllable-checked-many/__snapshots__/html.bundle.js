@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			checked = _new_checked;
 		}, "a1", $scope1_id))} type=checkbox>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a2");
-		writeScope($scope1_id, {
+		_scope($scope1_id, {
 			M: i,
 			h: _resume(function(value) {
 				if (i === void 0) throw new Error("LoopKey is undefined");
@@ -25,6 +25,6 @@ var template_default = _template("a", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<div>${_text_resume($scope0_id, "b", states.join(","))}</div>`);
-	writeScope($scope0_id, { c: states });
+	_scope($scope0_id, { c: states });
 	_resume_branch($scope0_id);
 }, 1);

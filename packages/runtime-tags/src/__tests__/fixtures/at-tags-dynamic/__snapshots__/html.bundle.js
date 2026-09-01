@@ -8,7 +8,7 @@ var hello_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "b", content, {}, 0, 0, $sg__input_list_item);
 		_html(`</div>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
-		writeScope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_list_item, $sg__input_list_item, $sg__input_list_item__OR__input_col, 0, 1);
 	_for_of(input.col, ({ content, row, ...attrs }) => {
 		const $scope2_id = _scope_id();
@@ -21,12 +21,12 @@ var hello_default = _template("b", (input) => {
 			_dynamic_tag($scope3_id, "b", content, {}, 0, 0, $sg__input_col);
 			_html(`</div>${_el_resume($scope3_id, "a")}`);
 			_script($scope3_id, "b1");
-			writeScope($scope3_id, {});
+			_scope($scope3_id, {});
 		}, 0, $scope2_id, "b", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1);
 		_script($scope2_id, "b2");
-		writeScope($scope2_id, {});
+		_scope($scope2_id, {});
 	}, 0, $scope0_id, "b", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(_text_resume($scope3_id, "a", row));
-					writeScope($scope3_id, {});
+					_scope($scope3_id, {});
 				}, $scope0_id)
 			});
 		});

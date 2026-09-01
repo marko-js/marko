@@ -3,7 +3,7 @@ var leaf_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>val ${_text_resume($scope0_id, "a", input.data.val, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/mid.marko
@@ -15,7 +15,7 @@ var mid_default = _template("c", (input) => {
 	_set_serialize_reason(_serialize_guard($scope0_reason, 3));
 	const $childScope = _peek_scope_id();
 	leaf_default({ data: rest });
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { c: _serialize_if($scope0_reason, 3) && _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { c: _serialize_if($scope0_reason, 3) && _existing_scope($childScope) });
 });
 
 // template.marko
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		}
 	});
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		d: n,
 		c: _existing_scope($childScope)
 	});

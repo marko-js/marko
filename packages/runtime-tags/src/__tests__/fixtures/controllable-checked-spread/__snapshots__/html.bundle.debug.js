@@ -7,7 +7,7 @@ var checkbox_default = _template("__tests__/tags/checkbox.marko", (input) => {
 		...input
 	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/checkbox.marko_0_input#2");
-	writeScope($scope0_id, {}, "__tests__/tags/checkbox.marko", 0, {
+	_scope($scope0_id, {}, "__tests__/tags/checkbox.marko", 0, {
 		"ControlledHandler:#input/0": ["...input", "1:27"],
 		"EventAttributes:#input/0": ["...input", "1:27"]
 	});
@@ -26,6 +26,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/checkedChange", $scope0_id)
 	});
 	_html(`<span>${_text_resume($scope0_id, "#text/1", String(checked))}</span>`);
-	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

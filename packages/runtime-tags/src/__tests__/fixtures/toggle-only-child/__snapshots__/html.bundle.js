@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		if (value) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "a", value)}</span>`);
-			writeScope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
@@ -16,6 +16,6 @@ var template_default = _template("a", (input) => {
 		value = _new_value;
 	}, "a0", $scope0_id))}>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { f: value });
+	_scope($scope0_id, { f: value });
 	_resume_branch($scope0_id);
 }, 1);

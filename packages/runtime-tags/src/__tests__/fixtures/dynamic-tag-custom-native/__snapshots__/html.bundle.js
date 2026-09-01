@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { id } = input;
 	_html(`<div>Id is ${_text_resume($scope0_id, "a", id, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -15,6 +15,6 @@ var template_default = _template("a", (input) => {
 	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "b", tagName, { id: "dynamic" });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: tagName });
+	_scope($scope0_id, { c: tagName });
 	_resume_branch($scope0_id);
 }, 1);

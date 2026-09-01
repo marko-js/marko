@@ -4,7 +4,7 @@ var child1_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { value } = input;
 	_html(`<div>Child 1 has ${_text_resume($scope0_id, "a", value, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child2.marko
@@ -13,7 +13,7 @@ var child2_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const { value } = input;
 	_html(`<div>Child 2 has ${_text_resume($scope0_id, "a", value, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", tagName, { value: val });
 	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, {
+	_scope($scope0_id, {
 		c: tagName,
 		d: val
 	});
