@@ -1,41 +1,57 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import vm from "node:vm";
 
 import { type ResolveOptions, resolveSync } from "resolve-sync";
 
-/** Imports an ESM file into the *current* realm through a vm module, so its
+/** Imports an ESM file into the *current* realm through vm modules, so its
  * namespace is collectable once the caller drops it — Node's ESM loader cache
  * (`ModuleLoader.loadCache`) retains ordinary dynamic imports for the life of
- * the process. Imports it contains delegate to the host loader (shared
- * externals stay cached). */
+ * the process. Path imports (chunks, the prebuilt runtime) load the same way,
+ * so module state stays per caller; bare specifiers use the host loader. */
 export async function importEvictable<T>(entry: string): Promise<T> {
-  const url = pathToFileURL(entry).href;
-  const mod = new vm.SourceTextModule(readFileSync(entry, "utf8"), {
-    identifier: url,
-    initializeImportMeta(meta) {
-      meta.url = url;
-    },
-    importModuleDynamically: linkHosted,
-  });
-  await mod.link(linkHosted);
-  await mod.evaluate();
-  return mod.namespace as T;
-}
+  const cache = new Map<string, Promise<vm.Module>>();
+  return (await load(pathToFileURL(entry).href)).namespace as T;
 
-async function linkHosted(id: string, parent: vm.Module | vm.Script) {
-  const target = await import(
-    /^[./]/.test(id) ? new URL(id, (parent as vm.Module).identifier).href : id
-  );
-  const keys = Object.keys(target);
-  return new vm.SyntheticModule(
-    keys,
-    function (this: vm.SyntheticModule) {
-      for (const key of keys) this.setExport(key, target[key]);
-    },
-    { identifier: id },
-  );
+  function load(url: string): Promise<vm.Module> {
+    let cached = cache.get(url);
+    if (!cached) {
+      const mod = new vm.SourceTextModule(
+        readFileSync(fileURLToPath(url), "utf8"),
+        {
+          identifier: url,
+          initializeImportMeta(meta) {
+            meta.url = url;
+          },
+          importModuleDynamically: link,
+        },
+      );
+      cache.set(
+        url,
+        (cached = mod
+          .link(link)
+          .then(() => mod.evaluate())
+          .then(() => mod)),
+      );
+    }
+    return cached;
+  }
+
+  async function link(id: string, parent: vm.Module | vm.Script) {
+    if (/^[./]/.test(id)) {
+      return load(new URL(id, (parent as vm.Module).identifier).href);
+    }
+    const target = await import(id);
+    const keys = Object.keys(target);
+    return new vm.SyntheticModule(
+      keys,
+      function (this: vm.SyntheticModule) {
+        for (const key of keys) this.setExport(key, target[key]);
+      },
+      { identifier: id },
+    );
+  }
 }
 
 interface State {
